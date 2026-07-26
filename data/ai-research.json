@@ -57,7 +57,7 @@
         "relevance": 90,
         "newness": 25,
         "composite": 65.5,
-        "scored_at": "2026-07-26T05:30:58+00:00",
+        "scored_at": "2026-07-26T06:13:35+00:00",
         "credibility": 55.0
       },
       "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
@@ -127,7 +127,7 @@
         "newness": 25,
         "credibility": 75.0,
         "composite": 62.5,
-        "scored_at": "2026-07-26T05:30:58+00:00"
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.",
       "threat": "Prompt injection and sandbox escape against coding agents that are 'influenced by anyone who can talk to it' (public Slack/feedback channels), and secret exposure when credentials are stored in agent-readable memory.",
@@ -215,7 +215,7 @@
         "newness": 25,
         "credibility": 75.0,
         "composite": 62.5,
-        "scored_at": "2026-07-26T05:30:58+00:00"
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.",
       "conditions": "Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol — a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.",
@@ -299,7 +299,7 @@
         "newness": 25,
         "credibility": 75.0,
         "composite": 61.9,
-        "scored_at": "2026-07-26T05:30:58+00:00"
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
@@ -361,7 +361,7 @@
         "newness": 25,
         "credibility": 55.0,
         "composite": 57.4,
-        "scored_at": "2026-07-26T05:30:58+00:00"
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "Counterfactual and metamorphic testing are established ML-evaluation techniques and benchmark-gaming concerns are widespread. The contribution is applying them to a security-detection benchmark and publishing a negative result - notably that five-model union recall (29.6%) barely exceeds the best single model (26%). Single-vendor, single-repo, self-evaluated: the source itself says to treat these as the hardest case, not a general result.",
       "verified": true,
@@ -415,7 +415,7 @@
         "relevance": 84,
         "newness": 5,
         "composite": 57.35,
-        "scored_at": "2026-07-26T05:30:58+00:00",
+        "scored_at": "2026-07-26T06:13:35+00:00",
         "credibility": 50.0
       },
       "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
@@ -464,7 +464,7 @@
         "relevance": 75,
         "newness": 25,
         "composite": 53.5,
-        "scored_at": "2026-07-26T05:30:58+00:00",
+        "scored_at": "2026-07-26T06:13:35+00:00",
         "credibility": 55.0
       },
       "id": "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0",
@@ -531,7 +531,7 @@
         "newness": 25,
         "credibility": 55.0,
         "composite": 48.7,
-        "scored_at": "2026-07-26T05:30:58+00:00"
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "Standard ML eval practice (precision/recall trade-off, per-slice vs aggregate scoring) plus the sibling Semgrep 'groundedness' benchmark critique cited by the analyst; both argue against ranking security scanners on a single aggregate metric.",
       "threat": "Choosing an LLM code-security scanner on a competitive-looking aggregate F1/recall, then absorbing a hidden operational cost: a flood of low-precision findings that overwhelm analyst triage and erode trust in the tool, plus severe recall collapse on large real-world repositories.",

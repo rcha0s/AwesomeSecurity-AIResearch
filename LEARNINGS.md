@@ -88,6 +88,18 @@
 - **Action (takeaway):** Detect browser-assembled malware by chain, not by final-file hash — Do not rely on hashing the downloaded executable: SourTrade rotates a per-session AES-CTR seed so every build differs. Instead correlate the delivery chain: ad/malvertising referral -> cloaked landing page -> ServiceWorker registration at /sw.js -> a /config request returning Base64 PE headers and a .bun bytecode section -> a secondary-domain fetch of a legitimate Bun runtime -> a same-origin worker download with Content-Disposition attachment. Flag pages that register ServiceWorkers and then trigger attachment downloads via a hidden iframe, and alert on standalone Bun executables assembled from downloaded parts. Block the published domains/hashes as IOCs but treat them as low-shelf-life. User-facing control: install trading/wallet software only from the vendor's own site, never from an ad.
 - **Source:** [@TheHackersNews](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)
 
+### A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data · `54.05`
+- **Topic:** ai-security / Model Supply Chain
+- **Takeaway:** In federated training the aggregator is a trust boundary, not a neutral party - protect gradients and test the global model for triggers.
+- **Action (takeaway):** Treat the FL aggregator as untrusted — If you participate in federated fine-tuning you do not operate, assume uploaded gradients are recoverable into training samples. Our recommendation, not the paper's: require secure aggregation or DP noise as a condition of participation, and test the returned global model for triggered behavior, since clean-task accuracy is explicitly preserved by this attack.
+- **Source:** [source](https://arxiv.org/abs/2606.27511)
+
+### QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize · `53.45`
+- **Topic:** ai-security / Model Supply Chain
+- **Takeaway:** Audit models at deployment precision, not the precision you were handed - some backdoors only exist after you quantize.
+- **Action (takeaway):** Treat quantization as part of the model supply chain — Where a third-party model passes through quantization on the way to production, recognise that auditing the full-precision artifact does not cover this attack class. The paper's position is that reactive detection is unreliable and a proactive pre-quantization defense is required - post-hoc behavioural evals would also need the attacker's trigger to surface anything, so do not treat them as the control. Whether post-quantization evaluation detects QCB at all would need the full paper's detection baselines.
+- **Source:** [source](https://arxiv.org/abs/2606.29239)
+
 
 ---
 
