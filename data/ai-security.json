@@ -348,7 +348,18 @@
       "id": "provider-safety-guardrails-blocked-incident-resp-5fb920778d",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach.",
+        "signals": [
+          "newsworthy",
+          "trending",
+          "high-relevance",
+          "timely"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
     },
     {
       "topic": "ai-security",
@@ -819,7 +830,17 @@
       "id": "treat-mcp-tool-descriptions-as-system-prompts-si-bef4e855af",
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster.",
+        "signals": [
+          "trending",
+          "newsworthy",
+          "timely"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
     },
     {
       "topic": "ai-security",
@@ -884,7 +905,16 @@
       "id": "self-state-attacks-corrupting-an-agent-s-own-mem-497dc1cdff",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files.",
+        "signals": [
+          "trending",
+          "timely"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
     },
     {
       "topic": "ai-security",

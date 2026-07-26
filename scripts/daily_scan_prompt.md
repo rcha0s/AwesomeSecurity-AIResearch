@@ -31,16 +31,30 @@ Follow the `/research-scan` skill (`.claude/skills/research-scan/SKILL.md`) step
 
 5. Emit `data/analysis_out.json`, then run, in order:
    `python scripts/merge_analysis.py`, `python scripts/verify_citations.py`,
-   `python scripts/generate_site.py`, `python scripts/trends.py`,
-   `python scripts/generate_newsletter.py`, `python scripts/generate_review.py`,
-   `python scripts/generate_skills.py`.
+   `python scripts/generate_site.py`, `python scripts/trends.py`.
 
-6. Finally, print a one-block RUN SUMMARY (plain text, no code fence):
-   `SCAN_RESULT: merged=<n> curated=<n> review=<n> topics=<...> titles=<comma-list>`
+6. **Editorial review pass** (separate from the novelty gate — follow the
+   `editorial-review` skill, `.claude/skills/editorial-review/SKILL.md`). The
+   novelty gate has just held its rejects in REVIEW.md; now decide which of those
+   are worth surfacing anyway for being trending / newsworthy / teachable:
+   - `python scripts/importance.py --top 15` to rank the held queue.
+   - For the top eligible items (skip any whose reason is "ungrounded" or "failed
+     verification"), judge each on the four editorial questions and emit
+     `data/editorial_out.json` (3-6 promotions is healthy; `[]` if none qualify).
+   - `python scripts/promote_editorial.py` to apply them (it re-enforces the
+     integrity floor).
+
+7. Re-render with the editorial results folded in, in order:
+   `python scripts/generate_site.py`, `python scripts/generate_newsletter.py`,
+   `python scripts/generate_review.py`, `python scripts/generate_skills.py`.
+
+8. Finally, print a one-block RUN SUMMARY (plain text, no code fence):
+   `SCAN_RESULT: merged=<n> curated=<n> review=<n> promoted=<n> topics=<...> titles=<comma-list>`
    so the wrapper can put it in the PR body. If there were no worthwhile new
-   findings, print exactly `SCAN_RESULT: merged=0` and stop — the wrapper will
-   skip the PR.
+   findings AND no editorial promotions, print exactly `SCAN_RESULT: merged=0`
+   and stop — the wrapper will skip the PR.
 
 Be conservative: it is better to curate 4 excellent findings than 10 mediocre
 ones. Nothing you can't ground gets published — the curation gate holds the rest
-in REVIEW.md automatically.
+in REVIEW.md automatically, and the editorial pass can never surface an ungrounded
+or refuted item.

@@ -22,7 +22,13 @@ import common as c
 
 
 def review_items(topic: str, conf: c.Config) -> list[dict]:
-    return [e for e in c.load_pool(topic)["entries"] if not c.is_curated(e, conf)]
+    # Held findings still awaiting a verdict — excludes anything the editorial
+    # track already surfaced (those move to the "Trending & In the News" section).
+    return [
+        e
+        for e in c.load_pool(topic)["entries"]
+        if not c.is_curated(e, conf) and not c.is_editorial(e)
+    ]
 
 
 def build(conf: c.Config, now: str) -> str:

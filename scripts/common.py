@@ -491,6 +491,31 @@ def is_curated(entry: dict, conf: Config) -> bool:
     return entry_composite(entry, conf) >= conf.curation.get("min_composite", 0)
 
 
+def is_editorial(entry: dict) -> bool:
+    """True if the SEPARATE editorial track promoted this held finding for being
+    trending/newsworthy. Independent of is_curated: the novelty gate still holds
+    it (needs_review stays set), but it surfaces in the 'Trending & In the News'
+    section instead of the review queue."""
+    return bool((entry.get("editorial") or {}).get("promoted"))
+
+
+def editorial_eligible(entry: dict, conf: Config) -> bool:
+    """Whether the editorial agent is even ALLOWED to promote this held finding.
+
+    The editorial track can bypass the novelty gate but never the integrity
+    floors: an ungrounded quote or a verifier-refuted claim is not a matter of
+    editorial taste. Only findings the novelty gate held (i.e. not already
+    curated), that are scored, grounded, and not refuted, are in play."""
+    if is_curated(entry, conf) or not is_scored(entry):
+        return False
+    if entry.get("verified") is False:
+        return False
+    gs = entry.get("grounding_score")
+    if gs is not None and gs < 1.0:
+        return False
+    return True
+
+
 def review_reason(entry: dict, conf: Config) -> str:
     """Why an entry is in the review queue (for REVIEW.md)."""
     if entry.get("verified") is False:

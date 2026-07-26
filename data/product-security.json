@@ -347,7 +347,17 @@
       "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
+        "signals": [
+          "trending",
+          "high-relevance",
+          "teachable"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
     },
     {
       "topic": "product-security",

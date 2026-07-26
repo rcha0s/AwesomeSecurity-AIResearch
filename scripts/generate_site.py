@@ -223,7 +223,31 @@ def _write_entry_pages(base: c.Path, by_domain: dict[str, list[dict]], conf: c.C
             (dpath / entry_filename(e)).write_text(render_entry_page(e, conf), encoding="utf-8")
 
 
-def _topic_index_md(topic: str, by_domain: dict, curated: list, held: int, conf, now) -> str:
+def _editorial_section(editorial: list[dict]) -> list[str]:
+    """A compact 'Trending & In the News' block for a topic page (links to source)."""
+    if not editorial:
+        return []
+    editorial = sorted(
+        editorial, key=lambda e: (e.get("editorial") or {}).get("at", ""), reverse=True
+    )
+    out = [
+        "## 📈 Trending & In the News",
+        "",
+        "_Not new ideas — what the field is watching now, surfaced by the editorial pass._",
+        "",
+    ]
+    for e in editorial:
+        ed = e.get("editorial") or {}
+        note = " · ".join(
+            part for part in (ed.get("reason"), " · ".join(ed.get("signals") or [])) if part
+        )
+        out.append(f"- **[{e.get('title','')}]({e.get('source_url','')})**")
+        if note:
+            out.append(f"  _Why now: {note}_")
+    return out + [""]
+
+
+def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) -> str:
     meta = c.TOPICS[topic]
     held_note = f" · [{held} held for review](../REVIEW.md)" if held else ""
     out = [
@@ -234,9 +258,9 @@ def _topic_index_md(topic: str, by_domain: dict, curated: list, held: int, conf,
         f"_{len(curated)} vetted findings · updated {now} · ranked by composite · "
         f"latest {conf.max_age_days} days only{held_note}._",
         "",
-        "| Domain | Findings |",
-        "| --- | --- |",
     ]
+    out += _editorial_section(list(editorial))
+    out += ["| Domain | Findings |", "| --- | --- |"]
     order = sorted(by_domain, key=lambda d: -len(by_domain[d]))
     out += [f"| {d} | {len(by_domain[d])} |" for d in order] + [""]
     for domain in order:
@@ -265,7 +289,9 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
         by_domain[e.get("domain") or "General"].append(e)
     _write_entry_pages(base, by_domain, conf)
     base.mkdir(parents=True, exist_ok=True)
-    md = _topic_index_md(topic, by_domain, curated, len(all_entries) - len(curated), conf, now)
+    editorial = [e for e in all_entries if c.is_editorial(e)]
+    held = len(all_entries) - len(curated) - len(editorial)
+    md = _topic_index_md(topic, by_domain, curated, held, conf, now, editorial)
     (base / "README.md").write_text(md, encoding="utf-8")
     return curated
 
