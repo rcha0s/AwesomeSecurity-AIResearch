@@ -2,7 +2,7 @@
 
 **Topic:** Product Security  ·  **Domain:** AI coding assistant sandbox escape / path traversal  
 **Source:** [Snyk Blog](https://snyk.io/blog/symlinks-are-still-scary/)  ·  **Published:** Jul 9, 2026  ·  **Retrieved:** 2026-07-26  
-**Scores:** 🆕 Newness 25 · ✨ Novelty 70 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 60.1**  
+**Scores:** 🆕 Newness 24 · ✨ Novelty 70 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 59.85**  
 **Tags:** `prompt-injection`, `supply-chain`, `path-traversal`, `symlink`, `ai-coding-assistant`, `sandbox-escape`, `agent-security`  
 **Verification:** ✓ independently verified · closest prior art: Classic symlink path-traversal / TOCTOU (CWE-59) and git's long-known preservation of symlinks; the new delta is the class-wide application to AI coding-assistant sandbox escapes plus the misleading approval-dialog (Wiz 'GhostApproval') trust gap across six assistants.
 

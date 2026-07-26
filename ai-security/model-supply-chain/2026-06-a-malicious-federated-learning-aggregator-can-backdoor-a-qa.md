@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Model Supply Chain  
 **Source:** [source](https://arxiv.org/abs/2606.27511)  ·  **Author:** Chenqing Zhu et al.  ·  **Published:** Jun 25, 2026  ·  **Retrieved:** 2026-07-21  
-**Scores:** 🆕 Newness 5 · ✨ Novelty 68 · 🎯 Relevance 72 · 🏛️ Credibility 72 · **Composite 54.05**  
+**Scores:** 🆕 Newness 4 · ✨ Novelty 68 · 🎯 Relevance 72 · 🏛️ Credibility 72 · **Composite 53.8**  
 **Tags:** `federated-learning`, `backdoor`, `gradient-inversion`, `model-supply-chain`, `llm-training`  
 **Verification:** ✓ independently verified · closest prior art: Gradient inversion and federated backdoors are each established literatures. The delta is a genuinely novel threat model - the *aggregator* mounting a data-free backdoor by reconstructing samples specifically to build the poisoning set - validated across datasets, LLM families, and both full fine-tuning and LoRA. Held below 70 because the demonstrated payload is narrowly advertisement injection. Accepted at the 35th USENIX Security Symposium (2026).
 
