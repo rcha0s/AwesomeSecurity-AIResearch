@@ -3,13 +3,19 @@
     {
       "topic": "ai-security",
       "tag": "agent-security",
-      "count": 9,
-      "recent": 5,
-      "sources": 9,
-      "momentum": 14.0,
+      "count": 11,
+      "recent": 6,
+      "sources": 11,
+      "momentum": 17.0,
       "first_seen": "2026-02",
-      "last_seen": "2026-07-20",
+      "last_seen": "2026-07-24",
       "members": [
+        {
+          "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
+          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+          "date": "2026-07-24",
+          "fresh": true
+        },
         {
           "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
           "url": "https://arxiv.org/abs/2607.17986",
@@ -35,10 +41,16 @@
           "fresh": true
         },
         {
+          "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
+          "url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
+          "date": "2026-06-25",
+          "fresh": true
+        },
+        {
           "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
           "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
           "date": "2026-06-23",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
@@ -68,47 +80,11 @@
     },
     {
       "topic": "ai-security",
-      "tag": "supply-chain",
-      "count": 4,
-      "recent": 4,
-      "sources": 4,
-      "momentum": 8.0,
-      "first_seen": "2026-06-23",
-      "last_seen": "2026-07-19",
-      "members": [
-        {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
-          "fresh": true
-        },
-        {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
-          "fresh": true
-        },
-        {
-          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-          "date": "2026-06-30",
-          "fresh": true
-        },
-        {
-          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-          "date": "2026-06-23",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "prompt-injection",
-      "count": 5,
-      "recent": 2,
-      "sources": 5,
-      "momentum": 7.0,
+      "count": 6,
+      "recent": 3,
+      "sources": 6,
+      "momentum": 9.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-16",
       "members": [
@@ -122,6 +98,12 @@
           "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
           "date": "2026-06-30",
+          "fresh": true
+        },
+        {
+          "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
+          "url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
+          "date": "2026-06-25",
           "fresh": true
         },
         {
@@ -146,14 +128,62 @@
     },
     {
       "topic": "ai-security",
-      "tag": "mcp",
-      "count": 3,
-      "recent": 2,
-      "sources": 3,
-      "momentum": 5.0,
-      "first_seen": "2026-02",
-      "last_seen": "2026-07-15",
+      "tag": "supply-chain",
+      "count": 5,
+      "recent": 4,
+      "sources": 5,
+      "momentum": 9.0,
+      "first_seen": "2026-06-23",
+      "last_seen": "2026-07-24",
       "members": [
+        {
+          "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
+          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
+          "fresh": true
+        },
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+          "date": "2026-06-30",
+          "fresh": true
+        },
+        {
+          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+          "date": "2026-06-23",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "mcp",
+      "count": 4,
+      "recent": 3,
+      "sources": 4,
+      "momentum": 7.0,
+      "first_seen": "2026-02",
+      "last_seen": "2026-07-24",
+      "members": [
+        {
+          "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
+          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+          "date": "2026-07-24",
+          "fresh": true
+        },
         {
           "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
           "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
@@ -206,24 +236,24 @@
     },
     {
       "topic": "ai-security",
-      "tag": "skill-scanning",
+      "tag": "sandbox-escape",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-06-23",
-      "last_seen": "2026-07-16",
+      "first_seen": "2026-07-15",
+      "last_seen": "2026-07-24",
       "members": [
         {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
+          "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
+          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+          "date": "2026-07-24",
           "fresh": true
         },
         {
-          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-          "date": "2026-06-23",
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "date": "2026-07-15",
           "fresh": true
         }
       ]
@@ -249,6 +279,30 @@
           "url": "https://arxiv.org/abs/2607.13987",
           "date": "2026-07-16",
           "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "skill-scanning",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-23",
+      "last_seen": "2026-07-16",
+      "members": [
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+          "date": "2026-06-23",
+          "fresh": false
         }
       ]
     },
@@ -305,13 +359,19 @@
     {
       "topic": "product-security",
       "tag": "supply-chain",
-      "count": 3,
-      "recent": 3,
-      "sources": 3,
-      "momentum": 6.0,
+      "count": 5,
+      "recent": 5,
+      "sources": 5,
+      "momentum": 10.0,
       "first_seen": "2026-06-30",
-      "last_seen": "2026-07-19",
+      "last_seen": "2026-07-24",
       "members": [
+        {
+          "title": "Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses",
+          "url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
+          "date": "2026-07-24",
+          "fresh": true
+        },
         {
           "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
           "url": "https://arxiv.org/abs/2607.12428",
@@ -325,9 +385,87 @@
           "fresh": true
         },
         {
+          "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
+          "url": "https://snyk.io/blog/symlinks-are-still-scary/",
+          "date": "2026-07-09",
+          "fresh": true
+        },
+        {
           "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
           "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
           "date": "2026-06-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "phishing",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-07-24",
+      "members": [
+        {
+          "title": "Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables",
+          "url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+          "date": "2026-06-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "unit42",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-07-20",
+      "members": [
+        {
+          "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
+          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+          "date": "2026-06-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "command-injection",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-07-24",
+      "members": [
+        {
+          "title": "Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses",
+          "url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
+          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+          "date": "2026-07-20",
           "fresh": true
         }
       ]
@@ -352,6 +490,30 @@
           "title": "Google brings Rust (memory safety) to the Pixel baseband",
           "url": "http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html",
           "date": "2026-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "exploit-chain",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-05",
+      "last_seen": "2026-07-20",
+      "members": [
+        {
+          "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
+          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "Project Zero: a 0-click exploit chain for the Pixel 10",
+          "url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
+          "date": "2026-05",
           "fresh": false
         }
       ]
@@ -427,13 +589,25 @@
     {
       "topic": "ai-research",
       "tag": "evals",
-      "count": 3,
-      "recent": 2,
-      "sources": 3,
-      "momentum": 5.0,
+      "count": 5,
+      "recent": 4,
+      "sources": 5,
+      "momentum": 9.0,
       "first_seen": "2026-05",
-      "last_seen": "2026-07-17",
+      "last_seen": "2026-07-22",
       "members": [
+        {
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": true
+        },
         {
           "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
           "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
@@ -451,6 +625,72 @@
           "url": "https://github.com/agentscope-ai/PawBench",
           "date": "2026-05",
           "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "harness",
+      "count": 4,
+      "recent": 3,
+      "sources": 4,
+      "momentum": 7.0,
+      "first_seen": "2026-05",
+      "last_seen": "2026-07-22",
+      "members": [
+        {
+          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+          "url": "https://github.com/algal/pi-openai-server-compaction",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": true
+        },
+        {
+          "title": "PawBench: benchmarking LLM x harness performance",
+          "url": "https://github.com/agentscope-ai/PawBench",
+          "date": "2026-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "benchmarks",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-07-22",
+      "members": [
+        {
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
+          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+          "date": "2026-07-17",
+          "fresh": true
+        },
+        {
+          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
+          "date": "2026-07-09",
+          "fresh": true
         }
       ]
     },
@@ -480,18 +720,42 @@
     },
     {
       "topic": "ai-research",
-      "tag": "benchmarks",
+      "tag": "context-management",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-07-22",
+      "members": [
+        {
+          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+          "url": "https://github.com/algal/pi-openai-server-compaction",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "openai",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
       "first_seen": "2026-07-09",
-      "last_seen": "2026-07-17",
+      "last_seen": "2026-07-22",
       "members": [
         {
-          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
-          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
-          "date": "2026-07-17",
+          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+          "url": "https://github.com/algal/pi-openai-server-compaction",
+          "date": "2026-07-22",
           "fresh": true
         },
         {
@@ -504,25 +768,25 @@
     },
     {
       "topic": "ai-research",
-      "tag": "harness",
+      "tag": "ai-code-security",
       "count": 2,
-      "recent": 1,
+      "recent": 2,
       "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-05",
-      "last_seen": "2026-07-04",
+      "momentum": 4.0,
+      "first_seen": "2026-07-17",
+      "last_seen": "2026-07-22",
       "members": [
         {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
           "fresh": true
         },
         {
-          "title": "PawBench: benchmarking LLM x harness performance",
-          "url": "https://github.com/agentscope-ai/PawBench",
-          "date": "2026-05",
-          "fresh": false
+          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
+          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+          "date": "2026-07-17",
+          "fresh": true
         }
       ]
     }

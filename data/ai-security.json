@@ -66,76 +66,16 @@
       "scores": {
         "novelty": 78,
         "relevance": 85,
-        "newness": 32,
+        "newness": 25,
         "credibility": 70.0,
-        "composite": 67.4,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 65.65,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Classic cloud-metadata SSRF (169.254.169.254) is well known; the novel delta is the MCP-specific vector — a control running host-side, outside the very container sandbox the tool advertises, reached purely through a server's auth-discovery response.",
       "verified": true,
       "verify_note": "Independent verifier: lessons supported; qualified IAM-cred read to AWS IMDSv1 (IMDSv2/GCP = internal-GET surface).",
       "id": "toolhive-mcp-ssrf-host-side-discovery-runs-outsi-2efcb63df1",
       "retrieved_at": "2026-07-16T07:43:12+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-      "article_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-      "source_name": "Palo Alto Networks Unit 42",
-      "source_type": "Vendor research",
-      "published": "2026-06-23",
-      "date": "2026-06",
-      "discovered_via": "rss",
-      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-      "source_rank": 75.0,
-      "topic": "ai-security",
-      "domain": "Harness & Agent Security",
-      "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-      "summary": "Unit 42 found five evasive malicious 'skills' persisting on ClawHub — the marketplace OpenClaw's agent pulls third-party, markdown-driven packages from with broad local system access — despite VirusTotal + ClawScan screening added after February's incidents. The five span infostealers (macOS, C2), scanner evasion (inflated file size to exceed thresholds), and two NOVEL agentic threats: runtime agentic affiliate injection and agentic front-running.",
-      "takeaway": "Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.",
-      "lessons": [
-        {
-          "point": "Agent skills are broad-access packages; the marketplace is a supply-chain link to treat as untrusted",
-          "excerpt": "markdown-driven packages with broad local system access, making ClawHub a critical link in the agentic software supply chain",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Malware evades marketplace scanners with simple tricks (oversized files exceed scan thresholds)",
-          "excerpt": "inflated file size to exceed scanner thresholds, bypassing both ClawScan and VirusTotal detection",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "New 'agentic' threat classes are emerging — affiliate injection and front-running done at agent runtime",
-          "excerpt": "runtime agentic affiliate injection and agentic front-running. Both are novel techniques",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "agent-security",
-        "skill-scanning",
-        "supply-chain",
-        "agentic-threats",
-        "unit42"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Vet and sandbox agent skills",
-        "detail": "Pin and review third-party agent skills from trusted publishers, sandbox their execution with least-privilege, and don't rely on marketplace scanning — add your own allow-list + runtime policy."
-      },
-      "scores": {
-        "novelty": 82,
-        "relevance": 88,
-        "newness": 6,
-        "composite": 63.75,
-        "scored_at": "2026-07-21T07:37:44+00:00",
-        "credibility": 75.0
-      },
-      "id": "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b",
-      "retrieved_at": "2026-07-13T04:19:32+00:00",
       "needs_review": false,
       "grounding_score": 1.0
     },
@@ -191,10 +131,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 84,
-        "newness": 32,
+        "newness": 25,
         "credibility": 57.5,
-        "composite": 62.22,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 60.47,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Malicious pickles in ML model hubs are a well-established attack class (pickle RCE documented since at least 2022, incl. Rehberger's ML Attack Series). The delta is the specific external-module-import evasion primitive plus a measured evasion rate across ten scanners and an injectable benchmark, rather than a new concept.",
       "verified": true,
@@ -257,10 +197,10 @@
       "scores": {
         "novelty": 72,
         "relevance": 80,
-        "newness": 32,
+        "newness": 25,
         "credibility": 55.0,
-        "composite": 61.85,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 60.1,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "OpenClaw/ClawHub agentic supply-chain and MCP tool-poisoning work cover parts of this; the novel delta is the explicit lifecycle taxonomy (five stages) plus an empirical study over 327 real skills rather than a single attack demo.",
       "verified": true,
@@ -269,6 +209,80 @@
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "MCP server security / agentic AWS access",
+      "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
+      "source_url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+      "summary": "The AWS API MCP Server (awslabs.aws-api-mcp-server) loads the data needed to enforce its configured deny/gate security policy at process startup. If that load fails, the server keeps running with no enforcement in place, so the per-request security check is skipped for the entire life of the process and AWS operations the policy was meant to restrict execute unchecked. This is a fail-open (CWE-455) design flaw that turns a transient startup error into a durable, silent policy bypass on an agent's path to real AWS infrastructure.",
+      "lessons": [
+        {
+          "point": "Security enforcement that depends on data loaded at startup must fail closed: if the policy data can't load, the server should refuse to serve rather than run unguarded.",
+          "excerpt": "If that load fails, the server continues running without the enforcement data in place.",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "The bypass is not per-request but persistent — once a process starts with a failed init, every subsequent request skips the deny/gate rules until the process is restarted successfully.",
+          "excerpt": "the per-request security check is then bypassed for the lifetime of the process: configured deny and gate rules are not consulted",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "The failure is attacker-influenceable: startup during degraded connectivity or adverse conditions can cause the policy data load to fail, yielding an unrestricted server after restart.",
+          "excerpt": "Triggering startup during degraded connectivity or adverse conditions causing policy data load failures",
+          "confidence": 0.75,
+          "grounded": false
+        },
+        {
+          "point": "Least-privilege IAM credentials are the correct defense-in-depth: the MCP policy layer is not the only control, and scoping the underlying AWS credentials limits blast radius when the policy layer fails.",
+          "excerpt": "Use least-privilege IAM credentials as interim mitigation",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "takeaway": "An MCP server's in-app allow/deny policy is worthless as a security boundary if a startup load failure makes it silently fail open — enforce fail-closed and always back it with least-privilege credentials.",
+      "tags": [
+        "mcp",
+        "fail-open",
+        "cwe-455",
+        "aws",
+        "agent-security",
+        "authorization-bypass",
+        "least-privilege"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit agent/MCP tool gateways for fail-open on init",
+        "detail": "For any MCP server or tool broker whose access control depends on config/policy data loaded at startup (allow/deny lists, gate rules, permission maps), verify the load path fails closed: on load error, refuse requests or exit non-zero rather than serving with enforcement disabled. Add a startup assertion that the policy is present and a per-request guard that denies when the policy object is unset. Never treat the in-process policy as the sole boundary — always scope the underlying cloud credentials (least-privilege IAM) so a policy-layer failure can't grant unrestricted infrastructure access. Upgrade awslabs.aws-api-mcp-server to >= 1.3.47."
+      },
+      "scores": {
+        "novelty": 58,
+        "relevance": 80,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 58.15,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "CWE-455 (Non-exit on Failed Initialization) fail-open patterns generally, and MCP enforcement-layer bypass cases like the ToolHive SSRF; no known prior case of an MCP agent security policy silently failing open for the process lifetime on failed startup init.",
+      "threat": "An AI agent using the AWS API MCP server can execute AWS CLI operations that the configured deny/gate policy was meant to block, because a failed startup init silently disables enforcement for the whole process — enabling privilege escalation and unauthorized infrastructure changes within the credentials' scope.",
+      "conditions": "Server version >= 0.2.13 and < 1.3.47; Startup-time policy/enforcement data load fails (e.g. degraded connectivity or adverse startup conditions); Server continues running instead of exiting; agent then issues AWS operations the policy intended to restrict",
+      "mitigations": "Upgrade to awslabs.aws-api-mcp-server 1.3.47 or later; Scope the AWS credentials the server uses to least privilege (IAM); Ensure stable connectivity/dependencies during server startup and monitor for init failures; Design MCP/tool policy layers to fail closed and assert policy presence before serving requests",
+      "verified": true,
+      "verify_note": "All four lessons match the GHSA/CVE-2026-16584 advisory verbatim or faithfully; only the 'attacker-influenceable' framing is mildly overstated (advisory cites degraded connectivity as a cause, CVSS vector is Local), not enough to refute.",
+      "article_url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+      "date": "2026-07",
+      "published": "2026-07-24",
+      "discovered_via": "github",
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "aws-api-mcp-server-fails-open-security-policy-is-12bfe0321f",
+      "retrieved_at": "2026-07-26T05:30:56+00:00",
+      "needs_review": true,
+      "grounding_score": 0.5,
+      "corroborating_sources": []
     },
     {
       "topic": "ai-security",
@@ -323,10 +337,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 90,
-        "newness": 32,
+        "newness": 25,
         "credibility": 75.0,
-        "composite": 59.75,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 58.0,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.",
       "verified": true,
@@ -389,10 +403,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 86,
-        "newness": 32,
+        "newness": 25,
         "credibility": 57.5,
-        "composite": 57.42,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 55.67,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Memory and context poisoning is an active area and RAG poisoning is well studied; this extends known memory-poisoning concepts rather than introducing a new primitive. The delta is a quantified measurement specific to stored *coding preferences* plus the risk-warning gap and the memory-vs-prompt mitigation comparison. The authors describe it as the first systematic study of this - their own characterization, not independently verified. Accepted to ISSTA 2026.",
       "verified": true,
@@ -401,6 +415,82 @@
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Agent runtime / code-interpreter sandbox",
+      "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
+      "source_url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+      "summary": "The AWS Bedrock AgentCore Python SDK (bedrock-agentcore) exposes a Code Interpreter client whose install_packages() method builds a pip invocation from caller-supplied package names without neutralizing argument delimiters (CWE-88). A crafted package specifier can smuggle extra pip options/arguments, so a remote authenticated user who can influence those arguments — including via model-generated output routed into the installer — can execute arbitrary commands inside the managed sandbox. Fixed in 1.18.1; CVSS 8.4 High.",
+      "lessons": [
+        {
+          "point": "Package-name arguments flow into a pip command line without delimiter neutralization, letting a crafted specifier inject additional pip options/arguments (classic CWE-88 argument injection).",
+          "excerpt": "Improper neutralization of argument delimiters in the install_packages() method",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The injection yields arbitrary command execution inside the Code Interpreter sandbox, not just unwanted package installs — an authenticated user who controls the arguments gets code execution.",
+          "excerpt": "A remote authenticated user who can influence the arguments to install_packages() can execute arbitrary commands within the Code Interpreter sandbox environment.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "In an agent runtime the 'authenticated user who influences arguments' is often the LLM itself; the documented workaround is to never pass untrusted or model-generated input to install_packages().",
+          "excerpt": "do not pass untrusted or model-generated input to install_packages()",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Remediation is upgrade to 1.18.1, or validate dynamic package names against strict PyPI naming conventions before invoking the SDK.",
+          "excerpt": "Validate dynamic package names against strict PyPI naming conventions before invoking the SDK.",
+          "confidence": 0.85,
+          "grounded": false
+        }
+      ],
+      "takeaway": "In agent SDKs, any helper that shells out (pip install, git, curl) from model- or user-influenced arguments is an RCE sink unless argument delimiters are neutralized — treat install_packages() and similar as a command boundary.",
+      "tags": [
+        "argument-injection",
+        "command-injection",
+        "cwe-88",
+        "agent-runtime",
+        "code-interpreter",
+        "sandbox-escape",
+        "supply-chain",
+        "ai-security",
+        "rce"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Guard package/tool installer sinks against argument-delimiter injection",
+        "detail": "Audit any agent-runtime helper that builds a subprocess command line from model- or user-supplied tokens (install_packages, pip/uv installs, git clone, shell tools). Never string-concatenate into a command; pass args as an argv list, insert a '--' end-of-options separator before untrusted tokens, and validate package names against the strict PyPI regex (^[A-Za-z0-9][A-Za-z0-9._-]*$, reject '-'/'--' prefixes and whitespace). For bedrock-agentcore, pin >=1.18.1."
+      },
+      "scores": {
+        "novelty": 47,
+        "relevance": 76,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 53.65,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "Generic CWE-88 argument-delimiter injection (historic pip/git argument-injection bugs) plus the well-known 'LLM output reaching a shell-out sink = RCE' class; this is a concrete named instance in the AWS Bedrock AgentCore SDK.",
+      "threat": "A remote authenticated caller — or the agent's own LLM output routed into install_packages() — smuggles pip options via a crafted package specifier to run arbitrary commands inside the managed Code Interpreter sandbox, breaking the sandbox's confidentiality/integrity boundary.",
+      "conditions": "Using AWS Bedrock AgentCore Python SDK (bedrock-agentcore) < 1.18.1; Code Interpreter client's install_packages() is reachable with attacker- or model-influenced package arguments; Attacker is authenticated / can influence the argument values",
+      "mitigations": "Upgrade bedrock-agentcore to >= 1.18.1; Do not pass untrusted or model-generated input to install_packages(); Validate package names against strict PyPI naming conventions and reject option-like tokens before invoking the SDK; Prefer argv-list invocation with a '--' end-of-options separator over string-built command lines",
+      "verified": false,
+      "verify_note": "novelty disagreement (analyst 68 vs verifier 47); Advisory confirms package name, CVE-2026-16796, CVSS 8.4, CWE-88, fix 1.18.1, and workaround verbatim; all four lessons faithfully reflect the source, though the underlying lesson is a known vuln class applied to a fresh SDK.",
+      "article_url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+      "date": "2026-07",
+      "published": "2026-07-24",
+      "discovered_via": "github",
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "aws-bedrock-agentcore-python-sdk-argument-delimi-e49a887318",
+      "retrieved_at": "2026-07-26T05:30:55+00:00",
+      "needs_review": true,
+      "grounding_score": 0.75,
+      "corroborating_sources": []
     },
     {
       "topic": "ai-security",
@@ -455,80 +545,15 @@
       "scores": {
         "novelty": 40,
         "relevance": 78,
-        "newness": 32,
+        "newness": 25,
         "credibility": 75.0,
-        "composite": 54.65,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 52.9,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Every primitive was already established: the ANSI-DNS behavior by David Leadbeater (2023), LLMs emitting ANSI escapes by Leon Derczynski, and the author's own Terminal DiLLMa research (2024). This is disclosure-closure - the marginal contribution is the full chained PoC and the resulting Apple fix, not a new technique.",
       "verified": true,
       "verify_note": "Independent verifier: the flaw spans two rendering components (terminal emulator, patched; CLI output encoding, unpatched), not one sink; prior-art attribution confirmed accurate; novelty 48->40.",
       "id": "apple-fixed-the-macos-terminal-ansi-dns-exfiltra-23f6fdd39e",
-      "retrieved_at": "2026-07-21T07:37:44+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-security",
-      "domain": "Harness & Agent Security",
-      "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
-      "source_url": "https://arxiv.org/abs/2607.17986",
-      "article_url": "https://arxiv.org/abs/2607.17986",
-      "published": "2026-07-20",
-      "date": "2026-07",
-      "author": "Yimeng Chen et al.",
-      "discovered_via": "rss",
-      "source_rank": 57.5,
-      "raw_path": "data/_raw/self-state-attacks-on-self-hosted-ai-agents-how-834e2d63ac.txt",
-      "summary": "Self-hosted agents read and write their own memory and configuration files, so once an attacker can write to that state the corruption itself is performed with legitimate OS system calls - the malicious step does not look anomalous at the OS layer. The authors formalize a four-axis attack space, realize 43 operations on real self-state files injected into traces from a representative self-hosted agent, and find a layered defense covers most cells with a small residual that stays structurally indistinguishable. Note the precondition: this assumes the attacker already has local write access; the paper does not address how that access is obtained.",
-      "lessons": [
-        {
-          "point": "Given an attacker who can already write to an agent's state files, the corruption step is performed with legitimate system calls - so the malicious action itself carries no distinguishing OS-level signal. This is a post-compromise finding, not a new access path.",
-          "excerpt": "An agent may get compromised via corruption of its own state -- a compromise realized via legitimate OS system call invocation.",
-          "confidence": 0.97,
-          "grounded": true
-        },
-        {
-          "point": "Layer the defense by state type: access-control prevention on instruction and configuration layers, workload-conditioned detection on the memory layer, periodic backup for recovery.",
-          "excerpt": "a layered defense stack (access-control prevention on the instruction and configuration layers, workload-conditioned detection on the memory layer, and periodic backup for recovery) is effective on most attack cells",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "For a small residual subset of attack cells, OS-level signals alone are structurally insufficient to separate malicious from legitimate state changes - even though the layered stack handles most cells. Plan for recovery, not prevention alone.",
-          "excerpt": "a small residual attack surface remains structurally indistinguishable at the OS level",
-          "confidence": 0.94,
-          "grounded": true
-        }
-      ],
-      "threat": "An attacker with write access to an agent's instruction, configuration, or memory files redirects its behavior persistently, without exploiting the agent or the OS.",
-      "conditions": "Self-hosted agents persisting memory and configuration to the local filesystem, AND an attacker who has already obtained local write access to those files (e.g. via prior code execution).",
-      "mitigations": "Apply mandatory access control to instruction/config files, use workload-conditioned detection on memory files, and take periodic backups so recovery is possible for the undetectable residual.",
-      "takeaway": "Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.",
-      "tags": [
-        "agent-security",
-        "self-hosted",
-        "os-defenses",
-        "memory-poisoning",
-        "threat-modeling"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Put MAC + backup on agent instruction/config/memory files",
-        "detail": "For self-hosted agents, separate the agent's write path from its instruction and configuration files (read-only mounts or MAC policy), apply anomaly detection conditioned on the agent's workload profile to the memory layer, and schedule periodic state backups so the structurally-undetectable cells remain recoverable."
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 80,
-        "newness": 32,
-        "credibility": 57.5,
-        "composite": 54.12,
-        "scored_at": "2026-07-21T07:37:44+00:00"
-      },
-      "prior_art": "Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.",
-      "verified": true,
-      "verify_note": "Independent verifier: surfaced the unstated precondition - the attacker must already hold local write access, making this post-compromise systematization rather than a new access path; 'representative' agent not 'real'; novelty 73->45.",
-      "id": "self-state-attacks-corrupting-an-agent-s-own-mem-497dc1cdff",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
       "grounding_score": 1.0
@@ -588,10 +613,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 84,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 52.95,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 52.7,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.",
       "verified": true,
@@ -600,6 +625,153 @@
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": true,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Harness & Agent Security",
+      "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+      "source_url": "https://arxiv.org/abs/2607.17986",
+      "article_url": "https://arxiv.org/abs/2607.17986",
+      "published": "2026-07-20",
+      "date": "2026-07",
+      "author": "Yimeng Chen et al.",
+      "discovered_via": "rss",
+      "source_rank": 57.5,
+      "raw_path": "data/_raw/self-state-attacks-on-self-hosted-ai-agents-how-834e2d63ac.txt",
+      "summary": "Self-hosted agents read and write their own memory and configuration files, so once an attacker can write to that state the corruption itself is performed with legitimate OS system calls - the malicious step does not look anomalous at the OS layer. The authors formalize a four-axis attack space, realize 43 operations on real self-state files injected into traces from a representative self-hosted agent, and find a layered defense covers most cells with a small residual that stays structurally indistinguishable. Note the precondition: this assumes the attacker already has local write access; the paper does not address how that access is obtained.",
+      "lessons": [
+        {
+          "point": "Given an attacker who can already write to an agent's state files, the corruption step is performed with legitimate system calls - so the malicious action itself carries no distinguishing OS-level signal. This is a post-compromise finding, not a new access path.",
+          "excerpt": "An agent may get compromised via corruption of its own state -- a compromise realized via legitimate OS system call invocation.",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "Layer the defense by state type: access-control prevention on instruction and configuration layers, workload-conditioned detection on the memory layer, periodic backup for recovery.",
+          "excerpt": "a layered defense stack (access-control prevention on the instruction and configuration layers, workload-conditioned detection on the memory layer, and periodic backup for recovery) is effective on most attack cells",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "For a small residual subset of attack cells, OS-level signals alone are structurally insufficient to separate malicious from legitimate state changes - even though the layered stack handles most cells. Plan for recovery, not prevention alone.",
+          "excerpt": "a small residual attack surface remains structurally indistinguishable at the OS level",
+          "confidence": 0.94,
+          "grounded": true
+        }
+      ],
+      "threat": "An attacker with write access to an agent's instruction, configuration, or memory files redirects its behavior persistently, without exploiting the agent or the OS.",
+      "conditions": "Self-hosted agents persisting memory and configuration to the local filesystem, AND an attacker who has already obtained local write access to those files (e.g. via prior code execution).",
+      "mitigations": "Apply mandatory access control to instruction/config files, use workload-conditioned detection on memory files, and take periodic backups so recovery is possible for the undetectable residual.",
+      "takeaway": "Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.",
+      "tags": [
+        "agent-security",
+        "self-hosted",
+        "os-defenses",
+        "memory-poisoning",
+        "threat-modeling"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Put MAC + backup on agent instruction/config/memory files",
+        "detail": "For self-hosted agents, separate the agent's write path from its instruction and configuration files (read-only mounts or MAC policy), apply anomaly detection conditioned on the agent's workload profile to the memory layer, and schedule periodic state backups so the structurally-undetectable cells remain recoverable."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 80,
+        "newness": 25,
+        "credibility": 57.5,
+        "composite": 52.38,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.",
+      "verified": true,
+      "verify_note": "Independent verifier: surfaced the unstated precondition - the attacker must already hold local write access, making this post-compromise systematization rather than a new access path; 'representative' agent not 'real'; novelty 73->45.",
+      "id": "self-state-attacks-corrupting-an-agent-s-own-mem-497dc1cdff",
+      "retrieved_at": "2026-07-21T07:37:44+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "computer-use agent security",
+      "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
+      "source_url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
+      "summary": "Computer-use agents capture a screenshot, reason about it for several seconds, then act on pixel coordinates — but an attacker-controlled page can change what sits at those coordinates during the reasoning window, so the agent clicks something other than what it saw. Johann Rehberger reproduces Jun Kokatsu's original ChatGPT Operator race condition against Claude Computer-Use, showing a reliable time-of-check-to-time-of-use (TOCTOU) attack where a 'Continue' button is swapped for a Send/consent button at identical coordinates. It is a classic race-condition bug surfacing in a novel agentic context, with the practical fix being a re-check of the UI at action time.",
+      "lessons": [
+        {
+          "point": "The gap between screenshot capture and action execution is a genuine race window because LLM inference takes seconds, giving an attacker ample time to mutate the page.",
+          "excerpt": "the computer screen could have changed while the LLM inference was happening",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Because the agent acts on pixel coordinates, swapping an element at the same location makes the agent click a different object than the one it reasoned about.",
+          "excerpt": "the action the AI Agent takes can happen on a different object than intended!",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The attack was reliably reproducible against a shipping agent, not just theoretical.",
+          "excerpt": "both Claude Computer-Use fell for this at the first time, and it repro'd regularly",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A concrete exploit tricks the agent into sending an attacker's drafted email by aligning a phishing 'Continue' button with Outlook's 'Send' button and padding reasoning time so the page finishes loading before the click.",
+          "excerpt": "The 'Continue' button is at the exact same location as the 'Send' button",
+          "confidence": 0.85,
+          "grounded": false
+        },
+        {
+          "point": "The recommended defense is to re-verify UI state at action time, not just at perception time.",
+          "excerpt": "take a snapshot when reasoning starts and when reasoning concludes check again that nothing significant changed",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A computer-use agent that clicks coordinates it decided on seconds ago is exploitable by TOCTOU: re-check the UI at action time, because what the model saw is not necessarily what it clicks.",
+      "tags": [
+        "computer-use",
+        "toctou",
+        "race-condition",
+        "agent-security",
+        "gui-agents",
+        "prompt-injection"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add an action-time UI re-check to computer-use agent loops",
+        "detail": "In any screenshot-reason-act loop (Claude Computer-Use, Operator-style agents), capture a screenshot/DOM snapshot both when reasoning starts and immediately before dispatching the click. If the region around the target coordinates changed materially between the two snapshots, abort and re-perceive instead of clicking. Additionally, treat time-sensitive/consequential actions (Send, Confirm, Allow, payment) as requiring a fresh perception step, and be suspicious of injected instructions that pad reasoning time (e.g. 'compute 1+1 in bash') which widen the race window."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 82,
+        "newness": 5,
+        "credibility": 75.0,
+        "composite": 52.1,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "Jun Kokatsu's ChatGPT Operator TOCTOU race-condition disclosure (GHSA-mp56-7vrw-qxvf, Google Security Research) — the same screenshot-to-action race, which this post explicitly reproduces and ports to Claude Computer-Use.",
+      "threat": "An attacker-controlled web page (reachable via indirect prompt injection or a lured navigation) mutates the DOM at fixed coordinates during the agent's multi-second reasoning window, causing the agent to click a consequential control (Send, Allow, Confirm, consent/permission dialog) it never intended, enabling actions like sending arbitrary emails or granting permissions.",
+      "conditions": "Agent acts on absolute pixel/screen coordinates chosen from an earlier screenshot; Reasoning latency of several seconds creates a wide, reliable race window; Attacker can control page content and time page changes (e.g. via a deep-link that loads a real app), optionally padding reasoning time via injected filler tasks; No re-verification of UI state between perception and action",
+      "mitigations": "Snapshot the UI at reasoning start and re-check at action time; abort the click if the target region changed significantly (Anthropic's documented fix); Force a fresh perception step for high-consequence actions (Send/Allow/Confirm/pay); Add human-in-the-loop confirmation for irreversible or sensitive actions; Detect and distrust injected instructions designed to stall reasoning and widen the race window",
+      "verified": true,
+      "verify_note": "All five excerpts appear verbatim in the source and the points are faithfully supported; the technique is a known TOCTOU class re-demonstrated on a new agent (Claude), so novelty is mid but defender relevance is high.",
+      "article_url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
+      "date": "2026-06",
+      "published": "2026-06-25",
+      "discovered_via": "rss",
+      "source_id": "rss:https-embracethered-com-blog-index-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "Embrace The Red",
+      "id": "toctou-race-condition-in-computer-use-agents-the-d27b5c8ca2",
+      "retrieved_at": "2026-07-26T05:30:54+00:00",
+      "needs_review": true,
+      "grounding_score": 0.8,
+      "corroborating_sources": []
     }
   ]
 }

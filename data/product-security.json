@@ -68,10 +68,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 32,
+        "newness": 25,
         "credibility": 87.5,
-        "composite": 72.12,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 70.38,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "The 2025 Shai-Hulud / npm postinstall-worm campaigns and the related @mastra scope takeover — same 'compromise a maintainer/bot identity' root cause, but those triggered on install hooks; the novel delta here is import-time execution plus abuse of trusted-publishing provenance.",
       "corroborating_sources": [
@@ -134,9 +134,9 @@
       "scores": {
         "novelty": 90,
         "relevance": 86,
-        "newness": 32,
-        "composite": 68.3,
-        "scored_at": "2026-07-21T07:37:44+00:00",
+        "newness": 25,
+        "composite": 66.55,
+        "scored_at": "2026-07-26T05:30:58+00:00",
         "credibility": 50.0
       },
       "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
@@ -145,6 +145,90 @@
       "published": "2026-06-30",
       "topic": "product-security",
       "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "AI coding assistant sandbox escape / path traversal",
+      "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
+      "source_url": "https://snyk.io/blog/symlinks-are-still-scary/",
+      "summary": "Git faithfully recreates symlinks stored in a repo (file mode 120000, blob is just the target path as text), so a file with an innocent name like project_settings.json can secretly point at ~/.ssh/authorized_keys or ~/.zshrc. When an AI coding assistant is asked to 'set up the workspace' and follows repo instructions, it follows the symlink transparently out of the sandbox, and the human approval dialog shows the benign in-repo name rather than the true resolved target. Wiz Research's GhostApproval tested six major assistants — Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf — and found all vulnerable.",
+      "lessons": [
+        {
+          "point": "Git preserves symlinks: mode 120000 stores only the target path as plain text, so a cloned repo can drop a pointer into your home directory under an innocent filename.",
+          "excerpt": "git faithfully recreates the symlink on your disk. You now have a file in your working copy, with an innocent JSON name, that is secretly a pointer into your home directory.",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "The exploit chains three failures: prompt injection in repo instructions, symlink-following without canonical path resolution, and an approval dialog that misrepresents the real target.",
+          "excerpt": "project_settings.json is a file whose entire contents are the string",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "The agent's own reasoning identified the true target, but the human was shown only the benign in-repo filename — a UI/trust gap, not just a parsing bug.",
+          "excerpt": "the human said, simply: \"Make this edit to project_settings.json ?\" The agent knew. You didn",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "All six tested AI coding assistants were affected, making this a class-wide weakness rather than a single-vendor bug.",
+          "excerpt": "Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Mitigation is canonical path resolution plus a containment check; on Linux openat2() with RESOLVE_BENEATH/RESOLVE_NO_SYMLINKS enforces it atomically.",
+          "excerpt": "Resolve every path to its canonical location before you open it, and check that the resolved path is still inside the workspace you meant to operate in.",
+          "confidence": 0.94,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys — resolve paths to canonical form and confirm they stay inside the workspace before any read/write.",
+      "tags": [
+        "prompt-injection",
+        "supply-chain",
+        "path-traversal",
+        "symlink",
+        "ai-coding-assistant",
+        "sandbox-escape",
+        "agent-security"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Enforce workspace containment on every agent file operation",
+        "detail": "In the agent harness, before any Read/Write/Edit, resolve the path to its canonical location (realpath / openat2 with RESOLVE_BENEATH or RESOLVE_NO_SYMLINKS on Linux) and reject anything outside the workspace root. Surface the RESOLVED absolute target in approval prompts, not the in-repo filename, so a write to ~/.ssh/authorized_keys looks alarming. After cloning untrusted repos, scan with `find . -type l` or `git ls-files -s | grep ^120000` and quarantine symlinks pointing outside the tree."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 82,
+        "newness": 25,
+        "credibility": 55.0,
+        "composite": 60.1,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "Classic symlink path-traversal / TOCTOU (CWE-59) and git's long-known preservation of symlinks; the new delta is the class-wide application to AI coding-assistant sandbox escapes plus the misleading approval-dialog (Wiz 'GhostApproval') trust gap across six assistants.",
+      "threat": "A malicious or compromised public repo ships symlinks (mode 120000) under benign names; an AI coding assistant following repo/README instructions reads secrets or writes attacker-controlled content (SSH authorized_keys, shell rc files) outside its workspace, yielding credential theft or code execution — while the approval dialog shows only the harmless in-repo path.",
+      "conditions": "Developer clones an untrusted repo and asks the assistant to 'set up the workspace' or follow README instructions; The assistant follows filesystem symlinks without resolving/validating the canonical path against the workspace boundary; Filesystem supports symlinks and core.symlinks is enabled (default on Unix)",
+      "mitigations": "Canonicalize paths and enforce workspace-containment before every file open (openat2 RESOLVE_BENEATH / RESOLVE_NO_SYMLINKS on Linux); Show the resolved absolute target (not the repo-relative alias) in approval dialogs; Scan freshly cloned untrusted repos for symlinks: `find . -type l`, `git ls-files -s | grep ^120000`; Disable or gate symlink following for agent file tools; treat out-of-tree targets as high-risk requiring explicit confirmation; Reference precedent: CVE-2024-32002 (git submodule symlink RCE), CVE-2021-32803 (tar symlink extraction)",
+      "verified": true,
+      "verify_note": "Every lesson and excerpt is faithfully reflected in the Snyk write-up of Wiz's GhostApproval research; the symlink primitive is old but the class-wide AI-assistant + spoofed-approval-dialog angle is genuinely new and directly actionable for appsec/red-team.",
+      "article_url": "https://snyk.io/blog/symlinks-are-still-scary/",
+      "date": "2026-07",
+      "published": "2026-07-09",
+      "discovered_via": "rss",
+      "source_id": "rss:https-snyk-io-blog-feed",
+      "source_rank": 55.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "Snyk Blog",
+      "id": "committed-git-symlinks-misleading-approval-dialo-d05775a628",
+      "retrieved_at": "2026-07-26T05:30:57+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "raw_path": "data/_raw/symlinks-full-8fx.txt",
+      "corroborating_sources": []
     },
     {
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
@@ -190,9 +274,9 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 32,
-        "composite": 61.25,
-        "scored_at": "2026-07-21T07:37:44+00:00",
+        "newness": 25,
+        "composite": 59.5,
+        "scored_at": "2026-07-26T05:30:58+00:00",
         "credibility": 75.0
       },
       "id": "gigawiper-modular-destructive-malware-that-fakes-2b20f20b50",
@@ -252,10 +336,10 @@
       "scores": {
         "novelty": 57,
         "relevance": 88,
-        "newness": 32,
+        "newness": 25,
         "credibility": 57.5,
-        "composite": 60.12,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 58.38,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -320,10 +404,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 82,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 58.35,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 58.1,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Uninitialized-memory and heap-spray techniques are classic; the novel delta is the specific n-day chain (patch-diff -> non-null-terminated escape buffer -> OOB read into sprayed JSON chunk) on a widely deployed edge load balancer.",
       "verified": true,
@@ -332,6 +416,344 @@
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "phishing / identity / OAuth device-code",
+      "title": "Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables",
+      "source_url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
+      "summary": "Unit 42 documents a Microsoft-impersonating OAuth device-code phishing campaign that layers four independent evasion techniques, each defeating a different class of defense: blob-URL delivery (no network-fetchable content for blocklists/safe-browsing), client-side-only CAPTCHA gates (block non-JS scanners), multi-step chains through legitimate SaaS platforms (bypass URL/domain reputation), and source-code corruption via Cyrillic confusables plus invisible characters and injected HTML (defeat substring and hash-based signatures). The takeaway for defenders is that static URL/content reputation and signature matching all fail here; detection must render the page (execute JS, recover DOM text) and normalize Unicode confusables before comparison.",
+      "lessons": [
+        {
+          "point": "Blob URLs give phishing pages no network existence: JS decrypts AES-GCM ciphertext client-side and hands it to URL.createObjectURL(), so blocklists, caches, and safe-browsing APIs have nothing to fetch or rate, and static analysis sees only ciphertext.",
+          "excerpt": "session-unique browser-internal address",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "Custom CAPTCHA gates are browser-only with no server-side validation - JavaScript compares user input against a random string stored in the DOM, which blocks scanners that don't execute JS while lending false legitimacy.",
+          "excerpt": "browser-based without server-side validation",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "Chaining through legitimate SaaS (Smartsheet, Polling.com, fake PDF viewers, fake reCAPTCHA) separates the initial delivered link from the phishing payload, so domain/URL reputation checks only ever see trusted intermediaries.",
+          "excerpt": "separates the initial link from the phishing content, evading URL reputation checks",
+          "confidence": 0.88,
+          "grounded": false
+        },
+        {
+          "point": "Source-code evasion corrupts detection two ways: substituting eleven Latin letters with visually identical Cyrillic characters plus 93 zero-width invisible characters, and injecting random alphanumeric strings inside <bdi> tags - both defeat substring matching and hash signatures while rendering identically to users.",
+          "excerpt": "93 invisible characters with no visual width",
+          "confidence": 0.85,
+          "grounded": false
+        },
+        {
+          "point": "Reliable detection requires a real HTML parser to recover rendered text plus Unicode-confusable normalization before any string comparison; the report ships 20 malicious URLs and 4 email hashes as IOCs.",
+          "excerpt": "robust HTML parsers to recover rendered text and Unicode confusable lookups before string comparison",
+          "confidence": 0.85,
+          "grounded": false
+        }
+      ],
+      "takeaway": "Modern phishing defeats URL reputation, static content scanning, and signature matching simultaneously - detection has to execute JS, render the DOM, and normalize Unicode confusables, not just fetch and hash a URL.",
+      "tags": [
+        "phishing",
+        "device-code",
+        "oauth",
+        "evasion",
+        "blob-url",
+        "unicode-confusables",
+        "saas-abuse",
+        "identity"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Render-and-normalize phishing detection instead of fetch-and-hash",
+        "detail": "For URL/content scanners: (1) execute page JavaScript in a headless browser and hook URL.createObjectURL / capture blob content so decrypted phishing HTML is analyzed, not the ciphertext; (2) drive/skip client-side CAPTCHA gates rather than bailing when JS validation appears; (3) follow multi-hop SaaS redirect chains and score the terminal page, not just the first-seen legitimate domain; (4) before substring/hash comparison, normalize the DOM's rendered text through a Unicode confusables map (Cyrillic->Latin) and strip zero-width/invisible characters and injected <bdi> noise. Ingest the 20 URL and 4 email-hash IOCs into blocklists as a stopgap."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 80,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 58.0,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "Unit42's own blob-URL phishing note (2025-10-02 'phishing pages using blob URLs') and classic IDN/Cyrillic homoglyph + zero-width-character phishing obfuscation; client-side CAPTCHA gates (KongTuke/White Lynx CAPTCHA pages) and SaaS-redirect chaining are each individually documented.",
+      "threat": "Attacker harvests Microsoft OAuth device codes / authentication tokens via a phishing page engineered to be invisible to network analyzers, URL/domain reputation, safe-browsing blocklists, and signature-based content scanners, yielding account takeover.",
+      "conditions": "Victim receives a lure link that routes through legitimate SaaS platforms (Smartsheet, Polling.com, fake PDF/reCAPTCHA pages); Victim's browser executes JavaScript (passes the client-side CAPTCHA gate and reconstructs the blob-URL page); Victim completes the impersonated Microsoft device-code / login flow, surrendering the device code or token",
+      "mitigations": "Detection: render pages with a headless browser, capture blob-URL content, and follow full redirect chains rather than rating only the initial URL; Normalize rendered DOM text through Unicode confusable lookups and strip zero-width/invisible characters before signature/substring matching; Harden identity: restrict or disable OAuth device-code flow where unused, apply Conditional Access, and phishing-resistant MFA (FIDO2) so stolen device codes are less useful; Block the 20 URL and 4 email-hash IOCs; user awareness that legitimate-looking SaaS chains can terminate in credential harvesting",
+      "verified": true,
+      "verify_note": "All five lessons and their excerpts faithfully reflect the source (blob/AES-GCM, browser-only CAPTCHA, SaaS chaining, 11 Cyrillic + 93 invisible chars/<bdi>, HTML-parser+confusable detection); only a minor off-by-one on IOC count (source says 21 URLs, claim says 20). Individual techniques are known, so novelty is mid — value is the defense-mapped combined stack plus concrete detection guidance.",
+      "article_url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
+      "tweet_url": "https://x.com/Unit42_Intel/status/2080764800620003330",
+      "author": "Unit42_Intel",
+      "date": "2026-07",
+      "published": "2026-07-24",
+      "raw_path": "data/_raw/four-evasion-techniques-deliver-stealthy-device-03f4d2746f.txt",
+      "discovered_via": "twitter",
+      "source_id": "x_account:unit42-intel",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "@Unit42_Intel",
+      "id": "four-stacked-evasion-techniques-hide-device-code-22419eea64",
+      "retrieved_at": "2026-07-26T05:30:54+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0,
+      "corroborating_sources": []
+    },
+    {
+      "topic": "product-security",
+      "domain": "browser-delivered malware / malvertising",
+      "title": "SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds",
+      "source_url": "https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html",
+      "summary": "The SourTrade malvertising campaign never serves a complete malicious binary. A cloaked landing page uses a ServiceWorker + SharedWorker to fetch a legitimate Bun runtime from one domain and the malicious PE headers plus JavaScriptCore bytecode (as Base64 in a /config response) from another, then byte-copies them together in the browser per a template recipe. An AES-CTR pseudorandom stream seeded per session changes the file hash on every build while keeping the payload code intact, so no finished malware ever traverses the wire as one artifact.",
+      "lessons": [
+        {
+          "point": "The final Windows executable is assembled client-side in the victim's browser, so no complete binary crosses the network for signature/hash inspection.",
+          "excerpt": "making victims' browsers build the final Windows executable themselves, using a legitimate Bun runtime as its base instead of serving one complete malicious file from a fixed URL",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The malicious material is delivered as pieces from different sources: a clean Bun runtime from a second domain, and the PE header/section table plus a .bun bytecode section arriving as Base64 in the /config response.",
+          "excerpt": "Base64 blobs in the configuration supply the Portable Executable (PE) header, section table, and a `.bun` section containing malicious JavaScriptCore bytecode for `app.js`",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Per-session randomization (rotating AES-CTR seed and size) gives each victim a different file hash while preserving the payload, defeating simple hash/IOC-based detection.",
+          "excerpt": "rotating the seed and size in each `/config` response changes the hash while retaining the executable payload code",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Delivery abuses same-origin ServiceWorker plumbing so the Mark of the Web attributes the download to the benign-looking landing page, not the domain that actually supplied the runtime; MotW is not removed, so this is evasion of attribution/detection rather than a security-control bypass.",
+          "excerpt": "The resulting MotW record identifies the landing page as the download source, not the separate domain that supplied the Bun runtime. MotW itself remains present.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The evasion is narrower than the framing suggests: the attacker-controlled PE structures and bytecode still cross the network (as Base64), so this mainly nullifies static hash detection, not all network/content inspection.",
+          "excerpt": "The attacker-controlled PE material and bytecode still cross the network.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The technique evolved from an earlier variant that loaded the open-source StreamSaver.js streamed-download library from GitHub; the current version inlines the streaming architecture so the worker source never appears as a separate fetch.",
+          "excerpt": "builds a SharedWorker from JavaScript already embedded in the page, so the worker source never appears as a separate fetch",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.",
+      "tags": [
+        "malvertising",
+        "browser-security",
+        "service-worker",
+        "living-off-trusted-runtimes",
+        "hash-evasion",
+        "mark-of-the-web"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Detect browser-assembled malware by chain, not by final-file hash",
+        "detail": "Do not rely on hashing the downloaded executable: SourTrade rotates a per-session AES-CTR seed so every build differs. Instead correlate the delivery chain: ad/malvertising referral -> cloaked landing page -> ServiceWorker registration at /sw.js -> a /config request returning Base64 PE headers and a .bun bytecode section -> a secondary-domain fetch of a legitimate Bun runtime -> a same-origin worker download with Content-Disposition attachment. Flag pages that register ServiceWorkers and then trigger attachment downloads via a hidden iframe, and alert on standalone Bun executables assembled from downloaded parts. Block the published domains/hashes as IOCs but treat them as low-shelf-life. User-facing control: install trading/wallet software only from the vendor's own site, never from an ad."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 74,
+        "newness": 25,
+        "credibility": 50.0,
+        "composite": 56.95,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "HTML smuggling (client-side reconstruction of a payload in the browser from embedded/encoded data to evade network inspection) combined with server-side polymorphism / hash rotation; SourTrade is a documented evolution of these adding split-source assembly over a legitimate Bun runtime with per-session AES-CTR filler.",
+      "threat": "A malvertising operator delivers per-session, unique-hash Windows malware by reassembling a Bun-based executable in the victim's browser from a legitimate runtime plus attacker-supplied PE headers and JavaScriptCore bytecode, evading hash/IOC-based detection and misattributing the Mark-of-the-Web download source to a benign landing page. Impersonates TradingView, Solana, and Luno to target retail/crypto traders across 12 countries in 25 languages; linked (unconfirmed for the current samples) to the JSCEAL/WeevilProxy stealer.",
+      "conditions": "Victim reaches a cloaked landing page via a malicious ad and is fingerprinted as a real target (researchers/bots get a blank page); Browser supports ServiceWorker/SharedWorker and streamed downloads (no browser vulnerability or MotW removal required); User runs the assembled executable (the report documents delivery only, not whether download is automatic or click-gated, nor execution)",
+      "mitigations": "Install trading and wallet software from the vendor's official site, not from ads; Behavioral/EDR detection of Bun standalone executables assembled from separately downloaded components rather than hash-only signatures; Monitor the full chain: ad referral, cloaked page, /config Base64 PE+bytecode, secondary-domain runtime fetch, ServiceWorker attachment download; Enforce MotW-aware execution policies and treat browser-initiated attachment downloads from newly-registered ServiceWorkers as suspicious; Block published SHA-256 hashes and ~96 malicious domains as short-lived IOCs",
+      "verified": true,
+      "verify_note": "Every lesson and excerpt is a faithful quote from the Confiant/THN article; technique is a genuine, well-scoped evolution of HTML smuggling + polymorphism, useful to detection/threat-hunting engineers.",
+      "article_url": "https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html",
+      "tweet_url": "https://x.com/TheHackersNews/status/2081089670923051127",
+      "author": "TheHackersNews",
+      "date": "2026-07",
+      "published": "2026-07-25",
+      "raw_path": "data/_raw/the-malware-arrives-in-pieces-the-victim-s-brows-2aa965375e.txt",
+      "discovered_via": "twitter",
+      "source_topics": [],
+      "source_name": "@TheHackersNews",
+      "id": "sourtrade-browser-reassembles-a-bun-based-execut-c0c754d8d7",
+      "retrieved_at": "2026-07-26T05:30:58+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "corroborating_sources": []
+    },
+    {
+      "topic": "product-security",
+      "domain": "OT/ICS device security",
+      "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
+      "source_url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+      "summary": "Unit 42 and Siemens disclosed a chained trilogy of zero-days in Ruggedcom ROX II OT switches (CVE-2025-40948 file disclosure, CVE-2025-40947 feature-key command injection, CVE-2025-40949 task-scheduler cron injection) that escalates from reconnaissance to persistent root. Each link abuses a root-privileged process that passes unsanitized user input to a shell command: xz misused as a file reader, a gpgv signature string injected via system(), and web-UI scheduler fields written into the root cron table. Fixed in firmware V2.17.1; the takeaway is that an OT switch built to secure the network is itself a full command-injection attack surface.",
+      "lessons": [
+        {
+          "point": "A root daemon that runs xz with user-supplied parameters becomes an arbitrary file-read primitive: xz -f -c -d behaves like cat, exposing password hashes and private keys.",
+          "excerpt": "By supplying the parameters -f, -c and -d at the same time, an attacker can instruct xz to view file contents.",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "The feature-key signature verifier copies the parsed signature straight into a command run via system() as root with no sanitization, so a signature field like $(python /tmp/rev_shell.py) executes as root.",
+          "excerpt": "there is no sanitization or validation of the input signature before it is inserted into the command string",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "Exploitation reuses the legitimate web-UI feature-key upload to stage the payload, then a crafted feature key to trigger injection - a two-step abuse of intended functionality.",
+          "excerpt": "a payload like $(python /tmp/rev_shell.py) could be used, where /tmp/rev_shell.py is the uploaded script",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The web task scheduler writes unsanitized control characters and commands into the system's root cron table, converting a persistence feature into root-level persistent code execution surviving reboots.",
+          "excerpt": "the attacker can inject control characters and commands into the underlying system configuration file responsible for task execution",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Air-gapped or isolated OT switches are not inherently safe; they carry the same software flaws as IT gear and can be turned into a platform for malicious activity.",
+          "excerpt": "A common misconception is that because these devices are often air-gapped or sit on isolated networks, they're inherently safe.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Never build a shell command from user input inside a root process - the same command-injection class that plagues web apps turns critical OT switches into attacker-controlled infrastructure.",
+      "tags": [
+        "ot-security",
+        "ics",
+        "command-injection",
+        "privilege-escalation",
+        "exploit-chain",
+        "arbitrary-file-read",
+        "persistence",
+        "unit42"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit privileged processes for user-input-to-shell sinks",
+        "detail": "For any daemon or handler running as root, enumerate every place external input (upload fields, license/feature keys, scheduler config, tool parameters) reaches system()/exec or is passed to a CLI utility. Replace shell string construction with argument-array exec and strict allowlist validation; never run compression/archive tools (xz, tar) with attacker-controlled flags/paths as root. For ROX II specifically, update to firmware V2.17.1 (Siemens SSA-973901, SSA-078743, SSA-081142) and virtual-patch until deployed."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 76,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 56.8,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "Generic CWE-78 OS command injection in embedded/OT web management (unsanitized input into system()); the 'xz -f -c -d as cat' file-read trick is a known GTFOBins-style LOLBin. Novelty here is finding-level: the specific Siemens ROX II zero-day trilogy (CVE-2025-40948/40947/40949), not a new vulnerability class.",
+      "threat": "An attacker with access to the ROX II management interface can read credentials/keys (CVE-2025-40948), inject a root reverse shell through the feature-key uploader (CVE-2025-40947), and plant a root cron job for reboot-persistent control (CVE-2025-40949), turning a network-segmentation security device into a foothold for OT disruption, data exfiltration, or DoS.",
+      "conditions": "Ruggedcom ROX II firmware before V2.17.1; Stage 1 (CVE-2025-40948) reachable against the root-privileged management/config daemon; Unit 42 characterizes initial file disclosure as reconnaissance; Stages 2 and 3 require access to the web management UI (file upload and task scheduler); CVE-2025-40949 is described as requiring an authenticated attacker; Network reachability to the switch's management plane",
+      "mitigations": "Update affected ROX II devices to firmware V2.17.1 per Siemens SSA-973901 / SSA-078743 / SSA-081142; Restrict and segment management-plane access to the OT switch; do not rely on air-gap assumptions; Apply compensating virtual-patching signatures (Palo Alto Threat Prevention 97246/97249/97250) while patching; Monitor for indicators: xz invoked with -f -c -d by a privileged daemon, and unexpected task-scheduler/cron entries invoking python/bash",
+      "verified": true,
+      "verify_note": "All five lesson excerpts are verbatim and faithfully reflect the Unit42 article; techniques are classic injection but the disclosed CVE chain in an OT switch is a fresh, useful finding for appsec/red-team readers.",
+      "article_url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+      "tweet_url": "https://x.com/Unit42_Intel/status/2079228625207910710",
+      "author": "Unit42_Intel",
+      "date": "2026-07",
+      "published": "2026-07-20",
+      "raw_path": "data/_raw/our-joint-research-with-siemens-details-a-critic-824d17acb7.txt",
+      "discovered_via": "twitter",
+      "source_id": "x_account:unit42-intel",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "@Unit42_Intel",
+      "id": "siemens-ruggedcom-rox-ii-three-cve-chain-file-di-a727935d7b",
+      "retrieved_at": "2026-07-26T05:30:54+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "corroborating_sources": []
+    },
+    {
+      "topic": "product-security",
+      "domain": "Shell escaping / command injection (Node.js)",
+      "title": "Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses",
+      "source_url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
+      "summary": "Shescape, a popular Node.js library whose whole purpose is to safely escape untrusted arguments for a shell, failed to neutralize parentheses on Windows CMD, letting an attacker break out of a conditional and inject commands via the escape/escapeAll APIs (CVSS 9.2, patched in 2.1.14 / 3.0.1). It is one of four Shescape advisories in this batch — alongside Zsh/Dash path-disclosure and quadratic-DoS bugs — showing that per-shell quoting edge cases keep producing bypasses. The recurring lesson: shell-escaping libraries are fragile across shells and OSes because each shell has its own metacharacter grammar, and a single missed construct re-opens injection.",
+      "lessons": [
+        {
+          "point": "An escaping library missing a single shell metacharacter class (parentheses in CMD) fully re-opens command injection despite doing its job everywhere else.",
+          "excerpt": "The escape functions do not neutralize parentheses `(` and `)` in Windows CMD contexts, enabling command injection through conditional statement manipulation.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "The bypass exploits CMD-specific syntax (closing a conditional block), so it only triggers when the command already places the escaped value inside a CMD construct — a per-shell, context-dependent edge case.",
+          "excerpt": "Payload: \"x) else if a==a (echo y\"  Command: if defined FALSY (echo ${escapedPayload})  Result: Outputs \"y\" instead of empty string",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "The root cause is classed as both OS command injection and improper neutralization of escape/control sequences — i.e. the escaping logic itself is the defect, not caller misuse.",
+          "excerpt": "CWE-78: OS Command Injection; CWE-150: Improper neutralization of escape/control sequences",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "This is one of four concurrent Shescape advisories (CMD injection, Zsh/Dash path disclosure, quadratic DoS), evidencing that shell-escaping is a recurring, cross-shell/cross-OS fragility rather than a one-off bug.",
+          "excerpt": "This impacts users of Shescape on Windows that explicitly configure `shell` to CMD, or `true` with the default shell being CMD, using the `escape` and `escapeAll` APIs.",
+          "confidence": 0.8,
+          "grounded": false
+        }
+      ],
+      "takeaway": "Escaping untrusted input for a shell is a leaky abstraction — prefer passing arguments as an argv array to a shell-less exec over trusting any escape library, because each shell keeps yielding new metacharacter bypasses.",
+      "tags": [
+        "command-injection",
+        "shell-escaping",
+        "nodejs",
+        "windows-cmd",
+        "supply-chain",
+        "input-neutralization"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Avoid shell interpolation entirely; if unavoidable, pin and monitor escaping libs",
+        "detail": "In Node.js, replace shell:true command construction with execFile/spawn using an argv array (no shell), which sidesteps metacharacter escaping altogether. Where a shell is truly required, upgrade Shescape to >=2.1.14 / >=3.0.1, pin the version, and treat every new per-shell advisory as a required bump. As a defense-in-depth check, add a lint/grep rule flagging child_process calls that combine untrusted input with shell:true or string-built commands."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 74,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 50.95,
+        "scored_at": "2026-07-26T05:30:58+00:00"
+      },
+      "prior_art": "The broader 'incomplete neutralization yields command injection' class (CWE-78/CWE-150) and Shescape's own prior per-shell escaping advisories; the analyst's cited Kemp LoadMaster null-byte-gap-to-RCE is the nearest thematic match.",
+      "threat": "An attacker who controls a command argument passed through Shescape's escape/escapeAll on Windows CMD can break out of the intended command context (e.g. a conditional block) and execute arbitrary commands (CVSS 9.2).",
+      "conditions": "Runtime is Windows with the shell resolved to CMD (explicit shell=CMD, or shell=true with CMD as default); Application uses Shescape escape or escapeAll APIs (v2.x < 2.1.14 or v3.x < 3.0.1); The escaped value is interpolated into a command where parentheses are syntactically meaningful (e.g. an if/for block)",
+      "mitigations": "Upgrade Shescape to 2.1.14 or 3.0.1+; Prefer argv-array exec (execFile/spawn without shell) over any string-escaping approach; Temporary workaround: strip or reject '(' and ')' in untrusted input before escaping; Plan v2->v3 migration before v2 EOL (2026-09-28)",
+      "verified": true,
+      "verify_note": "GHSA page confirms CVSS 9.2, CWE-78/150, the exact PoC payload and CMD conditional, and escape/escapeAll scope; a fresh concrete CVE instance of a well-known escaping-fragility class, so useful but low-novelty.",
+      "article_url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
+      "date": "2026-07",
+      "published": "2026-07-24",
+      "discovered_via": "github",
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "shescape-shell-injection-via-unescaped-cmd-paren-c6fe16b0f6",
+      "retrieved_at": "2026-07-26T05:30:56+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0,
+      "corroborating_sources": []
     },
     {
       "topic": "product-security",
@@ -381,10 +803,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 32,
+        "newness": 25,
         "credibility": 55.0,
-        "composite": 49.25,
-        "scored_at": "2026-07-21T07:37:44+00:00"
+        "composite": 47.5,
+        "scored_at": "2026-07-26T05:30:58+00:00"
       },
       "prior_art": "Tool round-ups are a common genre and every tool listed is publicly known; there is no new technique or tool. The contribution is the three-category taxonomy and constraint-based selection guidance. Vendor content rather than research: Semgrep competes in the category it ranks and has an unannounced product in it.",
       "verified": true,
@@ -411,11 +833,11 @@
       "discovered_via": "manual",
       "article_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
       "scores": {
-        "newness": 6,
+        "newness": 5,
         "novelty": 0,
         "relevance": 0,
-        "composite": 9.0,
-        "scored_at": "2026-07-21T07:37:44+00:00",
+        "composite": 8.75,
+        "scored_at": "2026-07-26T05:30:58+00:00",
         "credibility": 50.0
       },
       "published": "2026-06",

@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Meta-Harness  
 **Source:** [omnigent-ai/omnigent](https://github.com/omnigent-ai/omnigent)  ·  **Author:** omnigent-ai  ·  **Published:** Jun 2026  ·  **Retrieved:** 2026-07-13  
-**Scores:** 🆕 Newness 6 · ✨ Novelty 78 · 🎯 Relevance 84 · 🏛️ Credibility 50 · **Composite 57.6**  
+**Scores:** 🆕 Newness 5 · ✨ Novelty 78 · 🎯 Relevance 84 · 🏛️ Credibility 50 · **Composite 57.35**  
 **Tags:** `meta-harness`, `orchestration`, `agents`, `claude-code`, `tooling-2026`
 
 > **Takeaway —** The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.
@@ -15,8 +15,8 @@ Omnigent is an open-source meta-harness: a common orchestration layer over Claud
 
 ## What to learn
 
-- A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in — _"swap or combine harnesses without rewriting"_
-- Central policy + sandboxing at the meta-harness is a natural place to enforce agent security — _"enforce policies and sandboxing"_
+- A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in — _"swap or combine harnesses without rewriting"_ ✅
+- Central policy + sandboxing at the meta-harness is a natural place to enforce agent security — _"enforce policies and sandboxing"_ ✅
 
 ## Actionable leverage
 
