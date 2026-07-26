@@ -1,8 +1,8 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-07-21)
+# 📰 Security & AI Research — Daily Snapshot (2026-07-26)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-24 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md) · [all learnings](LEARNINGS.md)
+34 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md) · [all learnings](LEARNINGS.md)
 
 ---
 
@@ -12,30 +12,27 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54)** · _source_ · composite 67.4
+- **[ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54)** · _source_ · composite 65.65
   Put SSRF guards on every outbound client that touches untrusted input, re-validate redirect targets, and never suppress a taint warning on a 'trusted config' premise your threat model calls untrusted.
   → **Do:** (harness) SSRF-guard every host-side fetch in an agent/MCP runtime
-- **[OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/)** · _Palo Alto Networks Unit 42_ · composite 63.75
-  Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.
-  → **Do:** (harness) Vet and sandbox agent skills
-- **[ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503)** · _source_ · composite 62.22
+- **[ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503)** · _source_ · composite 60.47
   A clean model-scanner result is weak evidence - prefer non-executable formats and sandbox deserialization of any third-party model.
   → **Do:** (tool) Regression-test your model scanner with PickleBench
-- **[Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)](https://arxiv.org/abs/2607.13987)** · _source_ · composite 61.85
+- **[Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)](https://arxiv.org/abs/2607.13987)** · _source_ · composite 60.1
   When you scan or admit agent skills, cover the whole lifecycle (admission, retrieval, planner selection, evolution) — a runtime-only check misses where most of the risk actually lives.
   → **Do:** (tool) Lifecycle-aware skill scanning
-- **[A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511)** · _source_ · composite 54.3
+- **[A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511)** · _source_ · composite 54.05
   In federated training the aggregator is a trust boundary, not a neutral party - protect gradients and test the global model for triggers.
   → **Do:** (takeaway) Treat the FL aggregator as untrusted
-- **[QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239)** · _source_ · composite 53.7
+- **[QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239)** · _source_ · composite 53.45
   Audit models at deployment precision, not the precision you were handed - some backdoors only exist after you quantize.
   → **Do:** (takeaway) Treat quantization as part of the model supply chain
 
 **📈 Emerging trends**
 
-- **agent-security** (🔺 rising) — 9 findings from 9 sources since 2026-02.
-- **supply-chain** (🔺 rising) — 4 findings from 4 sources since 2026-06-23.
-- **model-supply-chain** (🔺 rising) — 4 findings from 4 sources since 2026-06-25.
+- **agent-security** (🔺 rising) — 11 findings from 11 sources since 2026-02.
+- **prompt-injection** (🔺 rising) — 6 findings from 6 sources since 2026-02.
+- **supply-chain** (🔺 rising) — 5 findings from 5 sources since 2026-06-23.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -47,24 +44,30 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/)** · _source_ · composite 72.12
+- **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/)** · _source_ · composite 70.38
   Import-time malware makes --ignore-scripts useless and a valid provenance attestation is not a trust signal when the pipeline itself is hijacked.
   → **Do:** (takeaway) Don't treat provenance/--ignore-scripts as sufficient supply-chain defenses
-- **[Phantom Squatting: attackers register the domains LLMs hallucinate](https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/)** · _Palo Alto Networks Unit 42_ · composite 68.3
+- **[Phantom Squatting: attackers register the domains LLMs hallucinate](https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/)** · _Palo Alto Networks Unit 42_ · composite 66.55
   LLM hallucinations are a predictable supply-chain attack surface: attackers pre-register the domains/packages models invent.
   → **Do:** (tool) Enumerate & monitor your brand's hallucinated domains
-- **[GigaWiper: modular destructive malware that fakes ransomware](https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/)** · _Microsoft Security Blog_ · composite 61.25
+- **[Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')](https://snyk.io/blog/symlinks-are-still-scary/)** · _Snyk Blog_ · composite 60.1
+  A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys — resolve paths to canonical form and confirm they stay inside the workspace before any read/write.
+  → **Do:** (harness) Enforce workspace containment on every agent file operation
+- **[GigaWiper: modular destructive malware that fakes ransomware](https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/)** · _Microsoft Security Blog_ · composite 59.5
   Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise — plan recovery accordingly.
   → **Do:** (takeaway) Assume fake-ransomware; harden recovery
-- **[Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/)** · _source_ · composite 58.35
+- **[Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/)** · _source_ · composite 58.1
   A minimal 'just null-terminate the buffer' patch can hide a pre-auth RCE — diff patches carefully, and treat missing null-termination next to attacker-controlled heap data as exploitable, not cosmetic.
   → **Do:** (takeaway) Prioritize edge-appliance patches and read the diff, not the CVE title
+- **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)** · _@TheHackersNews_ · composite 56.95
+  Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.
+  → **Do:** (takeaway) Detect browser-assembled malware by chain, not by final-file hash
 
 **📈 Emerging trends**
 
-- **supply-chain** (🔺 rising) — 3 findings from 3 sources since 2026-06-30.
-- **memory-safety** (🔺 rising) — 2 findings from 2 sources since 2026-04.
-- **android** (watching) — 2 findings from 2 sources since 2026-04.
+- **supply-chain** (🔺 rising) — 5 findings from 5 sources since 2026-06-30.
+- **phishing** (🔺 rising) — 2 findings from 2 sources since 2026-06-30.
+- **unit42** (🔺 rising) — 2 findings from 2 sources since 2026-06-30.
 
 [→ Full Product Security database](product-security/README.md)
 
@@ -76,21 +79,27 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
-- **[Better Models, Worse Tools: SOTA models regress on non-native tool schemas](https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything)** · _Simon Willison's Weblog_ · composite 67.25
+- **[Better Models, Worse Tools: SOTA models regress on non-native tool schemas](https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything)** · _Simon Willison's Weblog_ · composite 65.5
   Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.
   → **Do:** (harness) Offer model-matched edit tools
-- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)** · _source_ · composite 63.65
+- **[How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier](https://simonwillison.net/2026/Jul/21/cat-and-thariq/)** · _@simonw_ · composite 62.5
+  Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier that gates dangerous actions.
+  → **Do:** (harness) Adopt incident-driven evals + a context-aware permission gate in your scan harness
+- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction)** · _@kunchenguid_ · composite 62.5
+  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity — but treat 'it's better' as unproven at…
+  → **Do:** (harness) Wire OpenAI server-side compaction into your agent harness
+- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)** · _source_ · composite 61.9
   When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.
   → **Do:** (harness) Pair a durable goal with explicit reportability criteria
-- **[Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor](https://github.com/omnigent-ai/omnigent)** · _omnigent-ai/omnigent_ · composite 57.6
+- **[Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor](https://github.com/omnigent-ai/omnigent)** · _omnigent-ai/omnigent_ · composite 57.35
   The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.
   → **Do:** (harness) Consider a meta-harness for multi-agent work
 
 **📈 Emerging trends**
 
 - **agents** (🔺 rising) — 5 findings from 4 sources since 2026-05.
-- **evals** (🔺 rising) — 3 findings from 3 sources since 2026-05.
-- **claude-code** (🔺 rising) — 2 findings from 2 sources since 2026-06.
+- **evals** (🔺 rising) — 5 findings from 5 sources since 2026-05.
+- **harness** (🔺 rising) — 4 findings from 4 sources since 2026-05.
 
 [→ Full AI Research database](ai-research/README.md)
 
@@ -98,4 +107,4 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 _Every finding links its original source. Curated by the AwesomeSecurityResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-07-21.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-07-26.</sub>

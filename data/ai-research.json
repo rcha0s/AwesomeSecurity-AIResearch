@@ -55,15 +55,192 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 32,
-        "composite": 67.25,
-        "scored_at": "2026-07-21T14:42:55+00:00",
+        "newness": 25,
+        "composite": 65.5,
+        "scored_at": "2026-07-26T06:13:35+00:00",
         "credibility": 55.0
       },
       "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
       "retrieved_at": "2026-07-13T04:19:32+00:00",
       "needs_review": false,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "coding-agent harness design (first-party Anthropic practices)",
+      "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+      "source_url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+      "summary": "An annotated transcript of Simon Willison's interview with Cat Wu and Thariq from Anthropic's Claude Code team, giving a first-party account of how they actually build and dogfood a coding agent. Key transferable practices: keep the tool set small and each tool functionally distinct (they removed grep/glob in favor of bash), grow eval sets from real production incidents rather than speculation, and shrink the system prompt by removing examples and replacing hard rules with nuanced context. Security is enforced by a Sonnet 'auto mode' classifier that reads the tool call plus conversation context to grant dynamic permissions, plus credential injection and red-teamed sandbox evals.",
+      "lessons": [
+        {
+          "point": "Keep the tool set small and make each tool functionally distinct so the model can unambiguously pick one; prefer general tools (native bash) over specialized ones (grep/glob), and keep a tool mainly when it powers a dedicated UI (e.g. the file-edit approval prompt). Tool design is empirical ('models are more of a biology than a physics'), so validate with evals rather than rules.",
+          "excerpt": "every tool we add has a distinct function from every other tool, so that Claude can very easily distinguish when to call each",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Grow eval sets from real incidents, not speculation: when a bug ships, take the PRs that caused it and add them to the eval suite so the regression is caught next time. Complement capability evals with behavioral evals that catch UX annoyances (Claude declaring 'time to go to sleep' or stopping partway to ask if it should continue), and re-run the full suite on every model upgrade before dropping in a new model.",
+          "excerpt": "we look at the PRs that caused the incident and say, okay, how do we update code review to catch that",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Compact the system prompt by removing in-context examples (frontier models are 'more creative than the examples we gave it') and by replacing hard 'don't do X' constraints with nuanced reasoning the model can apply with judgment (explain WHY to run the app locally for front-end changes rather than a blanket 'always verify'). Pressure-test prompt wording for the ~10% of cases a well-intentioned human could misread.",
+          "excerpt": "because it was just more creative than the examples we gave it",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Enforce agent permissions with a model-in-the-loop classifier ('auto mode'): a Sonnet model evaluates the proposed tool call AND the conversation context to grant or deny dynamically, honoring user intent (no standing git-push rights, but allow it right after the user says 'push this to GitHub'). Pair this with credential injection via a proxy so secrets are usable-by but not readable-by the agent, and harden it against sandbox-escape / prompt-injection with commissioned red-team environments turned into regression evals.",
+          "excerpt": "the Datadog credentials are only usable by the agent but not accessible by the agent",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Let models write the prompts for downstream agents/tools: an orchestrator gives each specialized subagent 'a very detailed prompt', and modern models are now trusted to author those prompts ('a year ago I did not trust a model to write a prompt. Today the good models are very good at prompting'). Ship features to employees first and gate public release on internal active-user and retention bars ('ant fooding'); their own Claude Tag bot lands ~65% of product-engineering PRs.",
+          "excerpt": "Claude not just prompting a single subagent, but prompting the orchestration of many subagents",
+          "confidence": 0.82,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier that gates dangerous actions.",
+      "tags": [
+        "coding-agents",
+        "harness-design",
+        "tool-design",
+        "evals",
+        "system-prompt",
+        "prompt-injection",
+        "permissions",
+        "subagents",
+        "dogfooding",
+        "context-management"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Adopt incident-driven evals + a context-aware permission gate in your scan harness",
+        "detail": "Two concrete moves for the scan/analysis harness: (1) When a scan produces a bad or hallucinated finding, capture that exact input and expected output as a regression eval case so future runs are checked against it, mirroring 'take the PRs that caused the incident and add them to an eval set.' (2) For any auto-run tooling (PR creation, pushes), gate risky actions behind a small classifier/rule step that reads both the requested action and the surrounding task context rather than a static allowlist, and inject any credentials via env/proxy so they are usable-but-not-readable by the agent. Also audit the analyzer system prompt to remove redundant examples and convert blanket 'always/never' rules into short WHY-reasoning."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 90,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 62.5,
+        "scored_at": "2026-07-26T06:13:35+00:00"
+      },
+      "prior_art": "Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.",
+      "threat": "Prompt injection and sandbox escape against coding agents that are 'influenced by anyone who can talk to it' (public Slack/feedback channels), and secret exposure when credentials are stored in agent-readable memory.",
+      "conditions": "Agent runs with auto-approval / auto mode; Agent is reachable by untrusted parties (public channels, custom bots); Credentials stored in agent-accessible context rather than injected at request time",
+      "mitigations": "Sonnet auto-mode classifier that reads tool call + conversation context for dynamic permissioning; Credential injection via proxy so secrets are usable-but-not-readable by the agent; Red-team-generated adversarial environments converted into regression evals; Avoid hand-rolling custom bots with many attack vectors; rely on hardened auto mode",
+      "verified": true,
+      "verify_note": "Every lesson's excerpt appears verbatim (or faithfully) in the transcript; a first-party, concretely specified account (Sonnet auto-mode classifier reading conversation context, credential-injection proxy, remove-examples/reasoning-not-rules prompt compaction) that is highly actionable for harness builders even though the underlying principles echo known best practice.",
+      "article_url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+      "tweet_url": "https://x.com/simonw/status/2079551159514411437",
+      "author": "simonw",
+      "date": "2026-07",
+      "published": "2026-07-21",
+      "raw_path": "data/_raw/cat-thariq-full-8fx.txt",
+      "discovered_via": "twitter",
+      "source_id": "x_account:simonw",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "@simonw",
+      "id": "how-the-claude-code-team-designs-its-harness-too-1c1b63daf5",
+      "retrieved_at": "2026-07-26T05:30:54+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "corroborating_sources": []
+    },
+    {
+      "topic": "ai-research",
+      "domain": "Harness / context management",
+      "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+      "source_url": "https://github.com/algal/pi-openai-server-compaction",
+      "summary": "OpenAI's Codex compacts long-running sessions by calling the Responses API's server-side compaction protocol — sending a `compaction_trigger` through `POST /v1/responses` and getting back an opaque, encrypted `compaction` artifact instead of a text summary — which reportedly lets it 'keep hammering' on long tasks as if context were infinite. Because the endpoint is public and Codex is open source, a third party reconstructed exactly how Codex uses it and packaged it as a Pi extension, running it alongside a portable Pi text summary so non-OpenAI models and session forking still work. The author's own held-out benchmark shows this native/remote policy recalling more old state (78% vs 48% exact recall) but at 4.58x more compaction output tokens and a 29% larger billed context, with high run-to-run variance — so it is not shown to be better at an equal token budget.",
+      "lessons": [
+        {
+          "point": "OpenAI exposes a server-side compaction protocol on the Responses API: a `compaction_trigger` sent to POST /v1/responses returns an encrypted, provider-native `compaction` item rather than a text summary, and this is the mechanism behind Codex's strong long-task continuity.",
+          "excerpt": "That protocol sends a `compaction_trigger` through `POST /v1/responses` and receives an encrypted `compaction` item.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Between compactions, continuity is maintained by setting `store: true` and passing `previous_response_id`, so the model resumes from server-retained encrypted state instead of replaying full history — the core trick enabling effectively-infinite-context behavior on long tasks.",
+          "excerpt": "Uses `previous_response_id` for live continuation when safe",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "A provider's opaque compaction can be reproduced in a different harness by mimicking the open-source client's exact endpoint usage, but you should keep a portable text summary in parallel so forking, exports, and non-provider models still function.",
+          "excerpt": "since codex is an open source, we can mimic exactly how codex itself uses the endpoint",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The claim that this compaction 'works better than anything else' is weakly supported: the measured recall advantage came with 4.58x more output tokens and a 29% larger downstream context, was highly variable (small artifacts failed), and an earlier same-budget win was retracted as methodologically asymmetric.",
+          "excerpt": "Native did this while emitting 4.58x as many compaction output tokens and leaving a 29% larger billed downstream context.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The compaction request must mirror the surrounding normal requests (reasoning effort, tools, text config) rather than using endpoint defaults, and the encrypted blobs may just be encrypted text/structured state rather than a clever latent representation.",
+          "excerpt": "The compaction request mirrors the shape of surrounding normal requests (reasoning effort, text settings, tool definitions) rather than using endpoint defaults.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.",
+      "tags": [
+        "harness",
+        "context-management",
+        "compaction",
+        "responses-api",
+        "openai",
+        "codex",
+        "long-running-agents"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Wire OpenAI server-side compaction into your agent harness",
+        "detail": "For openai/* models, on your compaction event call POST /v1/responses with the full history plus a trailing compaction_trigger, mirroring your normal request's reasoning/tool/text config; store the returned opaque `compaction` item and replay it only for compatible OpenAI turns. Set store:true and use previous_response_id for between-compaction continuity, and generate a portable text summary in parallel so forks/exports/other models keep working. Budget for the cost: this policy emitted ~4.58x compaction output tokens and a ~29% larger billed context, so gate it behind a config/threshold and measure recall-per-token on your own tasks before trusting it."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 80,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 62.5,
+        "scored_at": "2026-07-26T06:13:35+00:00"
+      },
+      "prior_art": "OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.",
+      "conditions": "Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol — a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.",
+      "verified": true,
+      "verify_note": "Every lesson excerpt is a verbatim README quote and the points are supported; the reverse-engineered server-side encrypted compaction protocol plus honest same-budget caveats is genuinely novel and directly useful to harness builders.",
+      "article_url": "https://github.com/algal/pi-openai-server-compaction",
+      "tweet_url": "https://x.com/kunchenguid/status/2079824709240455241",
+      "author": "kunchenguid",
+      "date": "2026-07",
+      "published": "2026-07-22",
+      "raw_path": "data/_raw/pro-tip-when-you-use-openai-s-gpt-models-in-code-51fcaf480c.txt",
+      "discovered_via": "twitter",
+      "source_id": "x_account:kunchenguid",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "@kunchenguid",
+      "id": "server-side-encrypted-compaction-porting-codex-s-ee38bf09a0",
+      "retrieved_at": "2026-07-26T05:30:58+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "corroborating_sources": []
     },
     {
       "topic": "ai-research",
@@ -119,10 +296,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 88,
-        "newness": 32,
+        "newness": 25,
         "credibility": 75.0,
-        "composite": 63.65,
-        "scored_at": "2026-07-21T14:42:55+00:00"
+        "composite": 61.9,
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
@@ -181,10 +358,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 88,
-        "newness": 32,
+        "newness": 25,
         "credibility": 55.0,
-        "composite": 59.15,
-        "scored_at": "2026-07-21T14:42:55+00:00"
+        "composite": 57.4,
+        "scored_at": "2026-07-26T06:13:35+00:00"
       },
       "prior_art": "Counterfactual and metamorphic testing are established ML-evaluation techniques and benchmark-gaming concerns are widespread. The contribution is applying them to a security-detection benchmark and publishing a negative result - notably that five-model union recall (29.6%) barely exceeds the best single model (26%). Single-vendor, single-repo, self-evaluated: the source itself says to treat these as the hardest case, not a general result.",
       "verified": true,
@@ -211,12 +388,14 @@
         {
           "point": "A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in",
           "excerpt": "swap or combine harnesses without rewriting",
-          "confidence": 0.85
+          "confidence": 0.85,
+          "grounded": true
         },
         {
           "point": "Central policy + sandboxing at the meta-harness is a natural place to enforce agent security",
           "excerpt": "enforce policies and sandboxing",
-          "confidence": 0.8
+          "confidence": 0.8,
+          "grounded": true
         }
       ],
       "tags": [
@@ -234,9 +413,9 @@
       "scores": {
         "novelty": 78,
         "relevance": 84,
-        "newness": 6,
-        "composite": 57.6,
-        "scored_at": "2026-07-21T14:42:55+00:00",
+        "newness": 5,
+        "composite": 57.35,
+        "scored_at": "2026-07-26T06:13:35+00:00",
         "credibility": 50.0
       },
       "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
@@ -244,7 +423,7 @@
       "needs_review": false,
       "published": "2026-06",
       "topic": "ai-research",
-      "grounding_score": null
+      "grounding_score": 1.0
     },
     {
       "source_url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
@@ -283,15 +462,98 @@
       "scores": {
         "novelty": 55,
         "relevance": 75,
-        "newness": 32,
-        "composite": 55.25,
-        "scored_at": "2026-07-21T14:42:55+00:00",
+        "newness": 25,
+        "composite": 53.5,
+        "scored_at": "2026-07-26T06:13:35+00:00",
         "credibility": 55.0
       },
       "id": "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0",
       "retrieved_at": "2026-07-13T04:19:32+00:00",
       "needs_review": true,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "LLM security-eval methodology",
+      "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+      "source_url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+      "summary": "When benchmarking LLMs for code-security scanning (IDOR detection across repos), Kimi K3's aggregate F1 (0.340) sat within noise of GLM-5.2 and Claude Opus 4.8, but its precision (0.684 vs a 0.84-0.91 competitor band) was far lower and it collapsed to ~6% F1 on the largest enterprise-style repo while peers held ~20%. The transferable lesson: a headline F1 or recall number can mask where the real deployment cost lives (false positives your team must triage), so evaluate precision, per-repo behavior, and repos that resemble your own rather than a single aggregate score.",
+      "lessons": [
+        {
+          "point": "Aggregate F1 can be statistically tied across models while the underlying precision/recall trade-off (and thus real cost) differs sharply, so do not rank models on F1 alone.",
+          "excerpt": "This is why it's important not to just measure F1 and call it a day.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Lower precision is not a cosmetic gap: it directly converts into human triage load, shifting deployment cost from inference to your security team.",
+          "excerpt": "a meaningfully larger share of Kimi's findings are false positives that your team must investigate and dismiss",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "A model that looks competitive on small benchmarks can degrade badly at enterprise repo scale, so per-repo and large-repo evaluation matters more than the mean.",
+          "excerpt": "Kimi K3 averaged roughly 6% F1 on Repo D, the largest enterprise-style repository in our benchmark set",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Eval design choice: narrowing to one vulnerability class (IDOR) measures depth of reasoning rather than breadth, and results are scored deterministically with an agentic harness isolating the model from researcher influence.",
+          "excerpt": "focusing on a single vulnerability class lets us measure how deep a model can go rather than how broad",
+          "confidence": 0.85,
+          "grounded": false
+        },
+        {
+          "point": "The right model is task- and organization-dependent; benchmark on data that looks like your target environment.",
+          "excerpt": "Test on repos that look like yours.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "takeaway": "When you pick an LLM for security scanning, weigh precision and per-repo behavior on repos like yours, not a headline F1/recall - false positives move the cost onto human triage.",
+      "tags": [
+        "evals",
+        "ai-code-security",
+        "precision-recall",
+        "false-positives",
+        "benchmarks",
+        "sast",
+        "harness"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Score security-scanner evals on precision and per-repo spread, not just aggregate F1",
+        "detail": "In any LLM-for-security-scanning eval, report precision, recall, and F1 separately per repo (including at least one large enterprise-scale repo), and add a human-triage-cost proxy (false positives per true positive). Reject model choices made on a single tied aggregate F1; require the eval corpus to include repos representative of your own codebase. Use a minimal fixed agentic harness and deterministic scoring so the model's exploration is isolated from grader influence."
+      },
+      "scores": {
+        "novelty": 42,
+        "relevance": 72,
+        "newness": 25,
+        "credibility": 55.0,
+        "composite": 48.7,
+        "scored_at": "2026-07-26T06:13:35+00:00"
+      },
+      "prior_art": "Standard ML eval practice (precision/recall trade-off, per-slice vs aggregate scoring) plus the sibling Semgrep 'groundedness' benchmark critique cited by the analyst; both argue against ranking security scanners on a single aggregate metric.",
+      "threat": "Choosing an LLM code-security scanner on a competitive-looking aggregate F1/recall, then absorbing a hidden operational cost: a flood of low-precision findings that overwhelm analyst triage and erode trust in the tool, plus severe recall collapse on large real-world repositories.",
+      "conditions": "Evaluating or procuring an LLM (or LLM+harness) for automated code-security scanning; Decisions driven by a single aggregate metric (F1 or recall) over a small/uniform benchmark set; Target deployment involves large enterprise-scale repositories unlike the benchmark repos",
+      "mitigations": "Report and compare precision explicitly, not only F1/recall; Include large, enterprise-scale repos and inspect per-repo results rather than the mean; Benchmark on repositories representative of your own codebase; Model total cost of ownership including human triage of false positives, not just inference cost",
+      "verified": true,
+      "verify_note": "All five lessons match the Semgrep blog verbatim or faithfully (F1 0.340 within noise, precision 0.684 vs 0.84-0.91 band, ~6% vs ~20% F1 on Repo D, IDOR-depth rationale, 'test on repos that look like yours'); useful eval guidance but the underlying lesson is a known ML principle, so novelty is moderate.",
+      "article_url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+      "date": "2026-07",
+      "published": "2026-07-22",
+      "discovered_via": "rss",
+      "source_id": "rss:https-semgrep-dev-blog-rss",
+      "source_rank": 55.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "Semgrep Blog",
+      "id": "kimi-k3-code-security-eval-matching-f1-hides-a-p-05bd66768c",
+      "retrieved_at": "2026-07-26T05:30:57+00:00",
+      "needs_review": true,
+      "grounding_score": 0.8,
+      "corroborating_sources": []
     }
   ]
 }

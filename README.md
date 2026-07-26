@@ -2,26 +2,26 @@
 
 > An auto-updating, source-cited tracker of the most **teachable** security and AI research. It scans a ranked set of sources (X, GitHub, YouTube, blogs, newsletters, RSS), extracts the transferable lesson + a concrete action from each, curates hard, and files it into three rolling databases — **AI Security**, **Product Security**, and **AI Research** (practitioner).
 
-![Updated](https://img.shields.io/badge/updated-2026--07--21-blue) ![Vetted findings](https://img.shields.io/badge/vetted-13-success) ![Window](https://img.shields.io/badge/window-last_31_days-orange) ![License](https://img.shields.io/badge/license-CC--BY--4.0-lightgrey)
+![Updated](https://img.shields.io/badge/updated-2026--07--26-blue) ![Vetted findings](https://img.shields.io/badge/vetted-16-success) ![Window](https://img.shields.io/badge/window-last_31_days-orange) ![License](https://img.shields.io/badge/license-CC--BY--4.0-lightgrey)
 
 ## 📸 This week's snapshot
 
 > The top curated findings published in the last 7 days. Every entry is a **TL;DR** — we track the gist (what's new + why it matters + what to do), and each links to its writeup here **and** the original source for the full detail. For the full digest see the [📰 newsletter](NEWSLETTER.md).
 
-- **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](product-security/supply-chain-dependencies/2026-07-asyncapi-npm-compromise-import-time-payload-defeats-ignore-s.md)** · Product Security · Jul 16, 2026 · composite **72.12** · [source ↗](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/)  
-  Import-time malware makes --ignore-scripts useless and a valid provenance attestation is not a trust signal when the pipeline itself is hijacked.
-- **[ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](ai-security/mcp-tools/2026-07-toolhive-mcp-ssrf-host-side-discovery-runs-outside-the-sandb.md)** · AI Security · Jul 15, 2026 · composite **67.4** · [source ↗](https://github.com/advisories/GHSA-pr64-jmmf-jp54)  
-  Put SSRF guards on every outbound client that touches untrusted input, re-validate redirect targets, and never suppress a taint warning on a 'trusted config' premise your threat…
-- **[ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](ai-security/model-supply-chain/2026-07-shadowpickle-pickle-vm-import-tricks-evade-ten-model-scanner.md)** · AI Security · Jul 20, 2026 · composite **62.22** · [source ↗](https://arxiv.org/abs/2607.17503)  
+- **[How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier](ai-research/coding-agent-harness-design-first-party-anthropic-practices/2026-07-how-the-claude-code-team-designs-its-harness-tool-minimalism.md)** · AI Research · Jul 21, 2026 · composite **62.5** · [source ↗](https://simonwillison.net/2026/Jul/21/cat-and-thariq/)  
+  Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier…
+- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](ai-research/harness-context-management/2026-07-server-side-encrypted-compaction-porting-codex-s-responses-a.md)** · AI Research · Jul 22, 2026 · composite **62.5** · [source ↗](https://github.com/algal/pi-openai-server-compaction)  
+  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity —…
+- **[ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](ai-security/model-supply-chain/2026-07-shadowpickle-pickle-vm-import-tricks-evade-ten-model-scanner.md)** · AI Security · Jul 20, 2026 · composite **60.47** · [source ↗](https://arxiv.org/abs/2607.17503)  
   A clean model-scanner result is weak evidence - prefer non-executable formats and sandbox deserialization of any third-party model.
-- **[Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)](ai-security/skill-supply-chain/2026-07-agent-skill-security-is-a-lifecycle-problem-not-just-a-runti.md)** · AI Security · Jul 16, 2026 · composite **61.85** · [source ↗](https://arxiv.org/abs/2607.13987)  
-  When you scan or admit agent skills, cover the whole lifecycle (admission, retrieval, planner selection, evolution) — a runtime-only check misses where most of the risk actually…
+- **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](product-security/browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · Product Security · Jul 25, 2026 · composite **56.95** · [source ↗](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)  
+  Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.
 
 ## 📚 The three databases
 
-- 🤖🛡️ **[AI Security](ai-security/README.md)** — 6 vetted findings. Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
-- 🛡️ **[Product Security](product-security/README.md)** — 4 vetted findings. Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
-- 🧠 **[AI Research](ai-research/README.md)** — 3 vetted findings. Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
+- 🤖🛡️ **[AI Security](ai-security/README.md)** — 5 vetted findings. Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
+- 🛡️ **[Product Security](product-security/README.md)** — 6 vetted findings. Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
+- 🧠 **[AI Research](ai-research/README.md)** — 5 vetted findings. Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [📰 Newsletter](NEWSLETTER.md) (daily snapshot) · [📈 Trends](TRENDS.md) (emerging themes) · [🔍 Review queue](REVIEW.md) (not-yet-vetted) · [📓 Learnings](LEARNINGS.md) (takeaways + generated skills).
 
@@ -69,4 +69,4 @@ README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated — do not 
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors — every finding cites its original source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-07-21. Edit the pools in <code>data/</code> and regenerate — do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-07-26. Edit the pools in <code>data/</code> and regenerate — do not hand-edit rendered files.</sub>
