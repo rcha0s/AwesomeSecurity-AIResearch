@@ -1,4 +1,4 @@
-You are running the AwesomeSecurityResearch daily scan, unattended. Candidates
+You are running the AwesomeSecurity-AIResearch daily scan, unattended. Candidates
 have ALREADY been ingested into `data/candidates.json` by the wrapper script — do
 NOT re-run the ingestors, and do NOT run any git command (the wrapper handles the
 branch, commit, and PR). Your job is analysis → merge → render only.

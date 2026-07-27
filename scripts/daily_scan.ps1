@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# daily_scan.ps1 - Unattended daily research scan for AwesomeSecurityResearch.
+# daily_scan.ps1 - Unattended daily research scan for AwesomeSecurity-AIResearch.
 #
 # Ingests fresh candidates (deterministic, no LLM), then runs Claude Code headless
 # to analyze/verify/merge/render, and - if anything new was curated - commits on a
