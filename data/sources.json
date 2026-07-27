@@ -121,10 +121,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 1,
+      "ingested": 4,
       "curated": 1
     },
-    "rank": 57.5,
+    "rank": 51.9,
     "added": "2026-07-13",
     "active": true,
     "notes": "Academic preprints",
@@ -460,10 +460,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 2,
-      "curated": 0
+      "ingested": 3,
+      "curated": 1
     },
-    "rank": 70.8,
+    "rank": 73.2,
     "added": "2026-07-13",
     "active": true,
     "notes": null,
@@ -870,10 +870,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 0,
+      "ingested": 1,
       "curated": 0
     },
-    "rank": 55.0,
+    "rank": 52.5,
     "added": "2026-07-16",
     "active": true,
     "notes": "Offensive tooling research"

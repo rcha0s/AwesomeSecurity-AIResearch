@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Model Supply Chain  
 **Source:** [source](https://arxiv.org/abs/2606.29239)  ·  **Author:** Aoying Zheng et al.  ·  **Published:** Jun 28, 2026  ·  **Retrieved:** 2026-07-21  
-**Scores:** 🆕 Newness 5 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 72 · **Composite 53.45**  
+**Scores:** 🆕 Newness 4 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 72 · **Composite 53.2**  
 **Tags:** `model-supply-chain`, `backdoor`, `quantization`, `defenses`, `llm-deployment`  
 **Verification:** ✓ independently verified · closest prior art: The paper attributes quantization-conditioned backdoor attacks to prior work ('recent studies'), so the attack class is not new here; the contribution is the defense, and it is technically incremental (control variables plus regularization) rather than a new attack surface. Empirical breadth is solid: six LLMs, three precisions, three scenarios. Defenses remain systematically under-covered relative to attacks. Accepted at ACM CCS 2026.
 

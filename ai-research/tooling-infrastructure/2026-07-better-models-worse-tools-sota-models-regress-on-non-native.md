@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Tooling & Infrastructure  
 **Source:** [Simon Willison's Weblog](https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything)  ·  **Published:** Jul 4, 2026  ·  **Retrieved:** 2026-07-13  
-**Scores:** 🆕 Newness 25 · ✨ Novelty 80 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 65.5**  
+**Scores:** 🆕 Newness 24 · ✨ Novelty 80 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 65.25**  
 **Tags:** `harness`, `tool-use`, `agents`, `claude-code`, `architecture`
 
 > **Takeaway —** Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.
