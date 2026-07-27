@@ -71,8 +71,11 @@ if (-not $dirty) {
     git checkout main --quiet
     exit 0
 }
-if ($result -match "merged=0") {
-    Log "SCAN_RESULT merged=0 - discarding empty scan."
+# An editorial-only run (merged=0 but promoted>0) still surfaces trending items -
+# keep it. Discard only when nothing was curated AND nothing was promoted.
+$promotedNone = ($result -notmatch "promoted=") -or ($result -match "promoted=0")
+if (($result -match "merged=0") -and $promotedNone) {
+    Log "SCAN_RESULT merged=0 and no promotions - discarding empty scan."
     git checkout . --quiet; git checkout main --quiet
     exit 0
 }

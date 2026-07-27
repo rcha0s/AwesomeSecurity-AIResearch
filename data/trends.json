@@ -4,9 +4,9 @@
       "topic": "ai-security",
       "tag": "agent-security",
       "count": 11,
-      "recent": 6,
+      "recent": 5,
       "sources": 11,
-      "momentum": 17.0,
+      "momentum": 16.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-24",
       "members": [
@@ -44,7 +44,7 @@
           "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
           "url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
           "date": "2026-06-25",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
@@ -82,9 +82,9 @@
       "topic": "ai-security",
       "tag": "prompt-injection",
       "count": 7,
-      "recent": 4,
+      "recent": 3,
       "sources": 7,
-      "momentum": 11.0,
+      "momentum": 10.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-21",
       "members": [
@@ -110,7 +110,7 @@
           "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
           "url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
           "date": "2026-06-25",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
@@ -136,9 +136,9 @@
       "topic": "ai-security",
       "tag": "model-supply-chain",
       "count": 5,
-      "recent": 5,
+      "recent": 4,
       "sources": 5,
-      "momentum": 10.0,
+      "momentum": 9.0,
       "first_seen": "2026-06-25",
       "last_seen": "2026-07-21",
       "members": [
@@ -170,7 +170,7 @@
           "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
           "url": "https://arxiv.org/abs/2606.27511",
           "date": "2026-06-25",
-          "fresh": true
+          "fresh": false
         }
       ]
     },
@@ -254,36 +254,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "backdoor",
-      "count": 3,
-      "recent": 3,
-      "sources": 3,
-      "momentum": 6.0,
-      "first_seen": "2026-06-25",
-      "last_seen": "2026-07-21",
-      "members": [
-        {
-          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
-          "url": "https://arxiv.org/abs/2607.17550",
-          "date": "2026-07-21",
-          "fresh": true
-        },
-        {
-          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-          "url": "https://arxiv.org/abs/2606.29239",
-          "date": "2026-06-28",
-          "fresh": true
-        },
-        {
-          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
-          "url": "https://arxiv.org/abs/2606.27511",
-          "date": "2026-06-25",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "memory-poisoning",
       "count": 3,
       "recent": 2,
@@ -308,6 +278,36 @@
           "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
           "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
           "date": "2026-05-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "backdoor",
+      "count": 3,
+      "recent": 2,
+      "sources": 3,
+      "momentum": 5.0,
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-07-21",
+      "members": [
+        {
+          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+          "url": "https://arxiv.org/abs/2607.17550",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
+          "url": "https://arxiv.org/abs/2606.29239",
+          "date": "2026-06-28",
+          "fresh": true
+        },
+        {
+          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
+          "url": "https://arxiv.org/abs/2606.27511",
+          "date": "2026-06-25",
           "fresh": false
         }
       ]

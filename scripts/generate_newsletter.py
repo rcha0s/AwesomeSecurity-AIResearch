@@ -18,6 +18,7 @@ from datetime import UTC, datetime
 import common as c
 
 TOP_RESEARCH = 6  # latest findings shown per topic
+TOP_EDITORIAL = 5  # trending/newsworthy items promoted by the editorial track
 TOP_TRENDS = 3  # emerging themes shown per topic
 
 
@@ -40,9 +41,25 @@ def research_block(entry: dict, conf: c.Config) -> list[str]:
     return line
 
 
+def editorial_block(entry: dict) -> list[str]:
+    """A 'Trending & In the News' line: takeaway + why the editor surfaced it."""
+    take = entry.get("takeaway") or entry.get("summary") or ""
+    ed = entry.get("editorial") or {}
+    line = [f"- **[{entry.get('title','')}]({entry.get('source_url','')})**"]
+    if take:
+        line.append(f"  {c.clean_summary(take, 200)}")
+    reason = ed.get("reason")
+    tags = " · ".join(ed.get("signals") or [])
+    note = " · ".join(part for part in (reason, tags) if part)
+    if note:
+        line.append(f"  _Why now: {note}_")
+    return line
+
+
 def topic_section(topic: str, conf: c.Config, trends: list[dict]) -> list[str]:
     meta = c.TOPICS[topic]
-    curated = [e for e in c.load_pool(topic)["entries"] if c.is_curated(e, conf)]
+    pool = c.load_pool(topic)["entries"]
+    curated = [e for e in pool if c.is_curated(e, conf)]
     entries = sorted(curated, key=lambda e: -composite_of(e, conf))
     out = [f"## {meta['name']}", "", f"_{meta['blurb']}_", ""]
 
@@ -53,6 +70,20 @@ def topic_section(topic: str, conf: c.Config, trends: list[dict]) -> list[str]:
     else:
         out.append("- _Nothing new in the current window._")
     out.append("")
+
+    editorial = [e for e in pool if c.is_editorial(e)]
+    if editorial:
+        editorial.sort(key=lambda e: (e.get("editorial") or {}).get("at", ""), reverse=True)
+        out += [
+            "**📈 Trending & In the News**",
+            "",
+            "_Not new ideas, but what the field is watching right now — held back by the "
+            "novelty gate, surfaced by the editorial pass for being timely and teachable._",
+            "",
+        ]
+        for e in editorial[:TOP_EDITORIAL]:
+            out += editorial_block(e)
+        out.append("")
 
     out += ["**📈 Emerging trends**", ""]
     if trends:

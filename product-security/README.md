@@ -2,7 +2,14 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_8 vetted findings · updated 2026-07-26 · ranked by composite · latest 31 days only · [7 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-07-27 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
+
+## 📈 Trending & In the News
+
+_Not new ideas — what the field is watching now, surfaced by the editorial pass._
+
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
+  _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
 
 | Domain | Findings |
 | --- | --- |

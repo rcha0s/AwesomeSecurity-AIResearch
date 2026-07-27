@@ -1,10 +1,10 @@
 # 📈 Emerging Trends
 
-> Rising themes per topic, clustered from tagged findings (live + recent archive). Updated 2026-07-26. A theme needs ≥2 findings from ≥2 sources; **recent activity is weighted highest**.
+> Rising themes per topic, clustered from tagged findings (live + recent archive). Updated 2026-07-27. A theme needs ≥2 findings from ≥2 sources; **recent activity is weighted highest**.
 
 ## AI Security
 
-### 🔺 agent-security  ·  11 findings (6 recent) · 11 sources · momentum 17.0
+### 🔺 agent-security  ·  11 findings (5 recent) · 11 sources · momentum 16.0
 _First seen 2026-02 · latest 2026-07-24._
 
 - [AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)](https://github.com/advisories/GHSA-29w2-fq35-v728) (2026-07-24) · _latest_
@@ -12,26 +12,26 @@ _First seen 2026-02 · latest 2026-07-24._
 - [Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/) (2026-07-19) · _latest_
 - [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) (2026-07-15) · _latest_
 - [Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/) (2026-06-30) · _latest_
-- [TOCTOU race condition in computer-use agents: the screen changes between screenshot and click](https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/) (2026-06-25) · _latest_
+- [TOCTOU race condition in computer-use agents: the screen changes between screenshot and click](https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/) (2026-06-25)
 
-### 🔺 prompt-injection  ·  7 findings (4 recent) · 7 sources · momentum 11.0
+### 🔺 prompt-injection  ·  7 findings (3 recent) · 7 sources · momentum 10.0
 _First seen 2026-02 · latest 2026-07-21._
 
 - [Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions](https://arxiv.org/abs/2607.17535) (2026-07-21) · _latest_
 - [Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection](https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/) (2026-07-16) · _latest_
 - [Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/) (2026-06-30) · _latest_
-- [TOCTOU race condition in computer-use agents: the screen changes between screenshot and click](https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/) (2026-06-25) · _latest_
+- [TOCTOU race condition in computer-use agents: the screen changes between screenshot and click](https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/) (2026-06-25)
 - [MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)](https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/) (2026-05-14)
 - [Prompt injection in the wild: Google on the current state](http://security.googleblog.com/2026/04/ai-threats-in-wild-current-state-of.html) (2026-04)
 
-### 🔺 model-supply-chain  ·  5 findings (5 recent) · 5 sources · momentum 10.0
+### 🔺 model-supply-chain  ·  5 findings (4 recent) · 5 sources · momentum 9.0
 _First seen 2026-06-25 · latest 2026-07-21._
 
 - [(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550) (2026-07-21) · _latest_
 - [ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503) (2026-07-20) · _latest_
 - [Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors](https://arxiv.org/abs/2606.30373) (2026-06-29) · _latest_
 - [QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239) (2026-06-28) · _latest_
-- [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25) · _latest_
+- [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
 
 ### 🔺 supply-chain  ·  5 findings (4 recent) · 5 sources · momentum 9.0
 _First seen 2026-06-23 · latest 2026-07-24._
@@ -50,19 +50,19 @@ _First seen 2026-02 · latest 2026-07-24._
 - [Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/) (2026-06-30) · _latest_
 - [Prismor: a runtime firewall that blocks rogue AI-agent tool calls](https://github.com/PrismorSec/prismor) (2026-02)
 
-### 🔺 backdoor  ·  3 findings (3 recent) · 3 sources · momentum 6.0
-_First seen 2026-06-25 · latest 2026-07-21._
-
-- [(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550) (2026-07-21) · _latest_
-- [QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239) (2026-06-28) · _latest_
-- [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25) · _latest_
-
 ### 🔺 memory-poisoning  ·  3 findings (2 recent) · 3 sources · momentum 5.0
 _First seen 2026-05-14 · latest 2026-07-20._
 
 - [Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619) (2026-07-20) · _latest_
 - [Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986) (2026-07-20) · _latest_
 - [MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)](https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/) (2026-05-14)
+
+### 🔺 backdoor  ·  3 findings (2 recent) · 3 sources · momentum 5.0
+_First seen 2026-06-25 · latest 2026-07-21._
+
+- [(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550) (2026-07-21) · _latest_
+- [QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239) (2026-06-28) · _latest_
+- [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
 
 ### 🔺 ssrf  ·  2 findings (2 recent) · 2 sources · momentum 4.0
 _First seen 2026-07-15 · latest 2026-07-15._
@@ -249,4 +249,4 @@ _First seen 2026-07-17 · latest 2026-07-22._
 
 ---
 
-<sub>Generated by scripts/trends.py on 2026-07-26.</sub>
+<sub>Generated by scripts/trends.py on 2026-07-27.</sub>

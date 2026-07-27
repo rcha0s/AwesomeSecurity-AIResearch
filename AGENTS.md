@@ -39,9 +39,12 @@ scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
 scripts/generate_skills.py# skills/<slug>/SKILL.md + LEARNINGS.md (vetted only)
-.claude/skills/           # /research-scan /add-resource /add-source — the LLM stages
+scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
+scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
+.claude/skills/           # /research-scan /add-resource /add-source /editorial-review — the LLM stages
 README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · LEARNINGS.md · ai-security/ product-security/ ai-research/ skills/  # GENERATED
-# Curated view (topic pages + newsletter) shows only VETTED findings; the rest wait in REVIEW.md.
+# Curated view = VETTED findings (novelty gate) PLUS a separate "Trending & In the News"
+# section from the editorial track; everything else waits in REVIEW.md.
 ```
 
 ## How to run
@@ -108,6 +111,12 @@ Start-ScheduledTask -TaskName 'AwesomeSecurityResearch-DailyScan'   # run now
   and stalls the unattended run, widen `permissions.allow` in Claude settings.
 - The curation gate still holds weak/ungrounded findings in `REVIEW.md`; only
   genuinely novel, grounded, verified items land in the curated view.
+- After the novelty gate, a **separate editorial pass** (the `editorial-review`
+  skill + `promote_editorial.py`) reads the held `REVIEW.md` queue and promotes
+  the trending/newsworthy/teachable ones into a "Trending & In the News" section.
+  It never overrides the novelty reviewer and never surfaces an ungrounded or
+  verifier-refuted item — `promote_editorial.py` re-checks eligibility. Its
+  staging file `data/editorial_out.json` is gitignored like `analysis_out.json`.
 
 ## How to validate a change end-to-end
 

@@ -2,14 +2,12 @@
 
 > Findings in the last 31 days that are **not yet vetted** — held out of the topic pages and newsletter. Flagged for low confidence/novelty/relevance, or below the composite floor (20). Nothing here is deleted; promote an item by raising its scores or clearing `needs_review`, then regenerate.
 
-_Updated 2026-07-26._
+_Updated 2026-07-27._
 
-## AI Security (12)
+## AI Security (9)
 
 - **[AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)](https://github.com/advisories/GHSA-29w2-fq35-v728)** · composite 57.9 · _ungrounded excerpt — only 50% of quotes verified against the source_
   An MCP server's in-app allow/deny policy is worthless as a security boundary if a startup load failure makes it silently fail open — enforce fail-closed and always back it with…
-- **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)** · composite 57.75 · _flagged needs_review (low confidence / novelty / relevance)_
-  Assume your commercial AI provider may refuse to help you during a breach - pre-stage a local open-weight forensic model the same way you pre-stage backups.
 - **[Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors](https://arxiv.org/abs/2606.30373)** · composite 55.6 · _flagged needs_review (low confidence / novelty / relevance)_
   The app layer on model hubs is third-party code with your credentials in it - scope tokens per app and read the source before you fork.
 - **[Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619)** · composite 55.42 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -22,19 +20,13 @@ _Updated 2026-07-26._
   If you attest models but not the runtime that executes them, your provenance chain has a hole the size of ONNX Runtime.
 - **[Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection](https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/)** · composite 52.65 · _flagged needs_review (low confidence / novelty / relevance)_
   Sanitize model output at the rendering boundary - both the terminal emulator and your CLI's own output path are execution surfaces, and only the former got patched.
-- **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)** · composite 52.45 · _flagged needs_review (low confidence / novelty / relevance)_
-  Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.
-- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986)** · composite 52.12 · _flagged needs_review (low confidence / novelty / relevance)_
-  Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks…
 - **[TOCTOU race condition in computer-use agents: the screen changes between screenshot and click](https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/)** · composite 51.85 · _ungrounded excerpt — only 80% of quotes verified against the source_
   A computer-use agent that clicks coordinates it decided on seconds ago is exploitable by TOCTOU: re-check the UI at action time, because what the model saw is not necessarily what…
 - **[TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF](https://github.com/advisories/GHSA-824w-x939-6cmc)** · composite 42.0 · _failed independent verification — Verifier scored novelty 12/100 - 'the conceptual delta over prior art is approximately zero', same primitive, sinks, fix and workaround as a decade of prior bugs, and it does not even carry the LLM-specific wrinkle (no prompt-injection-reachable path). Also corrected: the advisory says files that MAY contain credentials, does not demonstrate metadata retrieval, states exposure as a precondition rather than an observed fact, and gives no CVE/CVSS/affected range. Held for review as derivative._
   LLM gateways are ordinary web services with an unusual amount of credentials on disk - audit them for caller-selectable backends before anything AI-specific.
 
-## Product Security (7)
+## Product Security (6)
 
-- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)** · composite 58.12 · _flagged needs_review (low confidence / novelty / relevance)_
-  Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.
 - **[Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt)** · composite 57.75 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Modern phishing defeats URL reputation, static content scanning, and signature matching simultaneously - detection has to execute JS, render the DOM, and normalize Unicode…
 - **[Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/)** · composite 56.55 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -63,4 +55,4 @@ _Updated 2026-07-26._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-07-26. 24 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-07-27. 20 item(s) awaiting review.</sub>
