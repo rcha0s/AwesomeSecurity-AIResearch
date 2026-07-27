@@ -483,6 +483,12 @@ def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
         f"![Window](https://img.shields.io/badge/window-last_{conf.max_age_days}_days-orange) "
         "![License](https://img.shields.io/badge/license-CC--BY--4.0-lightgrey)",
         "",
+        "### ▶ [Browse the live site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)",
+        "",
+        "Filter the claim ledger by topic and status, follow supersession chains between "
+        "claims, and search the findings feed. The markdown below is the same data, readable "
+        "on GitHub.",
+        "",
     ]
     out += _week_snapshot(curated_entries, conf)
     out += _claims_index()

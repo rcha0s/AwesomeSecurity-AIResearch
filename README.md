@@ -4,6 +4,10 @@
 
 ![Updated](https://img.shields.io/badge/updated-2026--07--27-blue) ![Vetted findings](https://img.shields.io/badge/vetted-18-success) ![Window](https://img.shields.io/badge/window-last_31_days-orange) ![License](https://img.shields.io/badge/license-CC--BY--4.0-lightgrey)
 
+### ▶ [Browse the live site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)
+
+Filter the claim ledger by topic and status, follow supersession chains between claims, and search the findings feed. The markdown below is the same data, readable on GitHub.
+
 ## 📸 This week's snapshot
 
 > The top curated findings published in the last 7 days. Every entry is a **TL;DR** — we track the gist (what's new + why it matters + what to do), and each links to its writeup here **and** the original source for the full detail. For the full digest see the [📰 newsletter](NEWSLETTER.md).

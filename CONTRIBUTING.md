@@ -62,6 +62,7 @@ pip install -r requirements.txt
 python scripts/rerank.py
 python scripts/generate_site.py
 python scripts/generate_claims.py
+python scripts/generate_html.py
 python scripts/generate_skills.py
 ```
 

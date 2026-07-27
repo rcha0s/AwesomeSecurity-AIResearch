@@ -39,6 +39,8 @@ scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
 scripts/claims.py         # claim model: validation, supersession edges, ordering, lineage
 scripts/add_claim.py      # the ONLY sanctioned writer for data/claims.json (CLI)
 scripts/generate_claims.py# claims/ — standing answers on top, retired ones underneath
+scripts/generate_html.py  # docs/index.html — THE SITE (filterable, self-contained, no Jekyll)
+scripts/templates/site.html # the site template (__DATA__ placeholder; a code asset, not data)
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
@@ -46,7 +48,7 @@ scripts/generate_skills.py# skills/<slug>/SKILL.md + LEARNINGS.md (vetted only)
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
 scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
 .claude/skills/           # /research-scan /add-resource /add-source /editorial-review — the LLM stages
-_config.yml               # GitHub Pages (Jekyll) — publishes the markdown as a browsable site
+docs/                     # GENERATED site served by GitHub Pages (branch main, folder /docs)
 README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · LEARNINGS.md · ai-security/ product-security/ ai-research/ claims/ skills/  # GENERATED
 # Curated view = VETTED findings (novelty gate) PLUS a separate "Trending & In the News"
 # section from the editorial track; everything else waits in REVIEW.md.
@@ -88,6 +90,7 @@ python scripts/merge_analysis.py
 python scripts/add_claim.py validate    # ledger integrity (edges resolve, no cycles)
 python scripts/generate_site.py
 python scripts/generate_claims.py
+python scripts/generate_html.py
 python scripts/generate_skills.py
 
 # New source ingestors (Windows Python, no cookies):
