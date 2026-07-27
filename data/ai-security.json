@@ -66,10 +66,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 85,
-        "newness": 25,
+        "newness": 24,
         "credibility": 70.0,
-        "composite": 65.65,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 65.4,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Classic cloud-metadata SSRF (169.254.169.254) is well known; the novel delta is the MCP-specific vector — a control running host-side, outside the very container sandbox the tool advertises, reached purely through a server's auth-discovery response.",
       "verified": true,
@@ -131,10 +131,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 84,
-        "newness": 25,
+        "newness": 24,
         "credibility": 57.5,
-        "composite": 60.47,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 60.22,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Malicious pickles in ML model hubs are a well-established attack class (pickle RCE documented since at least 2022, incl. Rehberger's ML Attack Series). The delta is the specific external-module-import evasion primitive plus a measured evasion rate across ten scanners and an injectable benchmark, rather than a new concept.",
       "verified": true,
@@ -197,10 +197,10 @@
       "scores": {
         "novelty": 72,
         "relevance": 80,
-        "newness": 25,
+        "newness": 24,
         "credibility": 55.0,
-        "composite": 60.1,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 59.85,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "OpenClaw/ClawHub agentic supply-chain and MCP tool-poisoning work cover parts of this; the novel delta is the explicit lifecycle taxonomy (five stages) plus an empirical study over 327 real skills rather than a single attack demo.",
       "verified": true,
@@ -260,10 +260,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 80,
-        "newness": 25,
+        "newness": 24,
         "credibility": 70.0,
-        "composite": 58.15,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 57.9,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "CWE-455 (Non-exit on Failed Initialization) fail-open patterns generally, and MCP enforcement-layer bypass cases like the ToolHive SSRF; no known prior case of an MCP agent security policy silently failing open for the process lifetime on failed startup init.",
       "threat": "An AI agent using the AWS API MCP server can execute AWS CLI operations that the configured deny/gate policy was meant to block, because a failed startup init silently disables enforcement for the whole process — enabling privilege escalation and unauthorized infrastructure changes within the credentials' scope.",
@@ -337,10 +337,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 90,
-        "newness": 25,
+        "newness": 24,
         "credibility": 75.0,
-        "composite": 58.0,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 57.75,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.",
       "verified": true,
@@ -413,10 +413,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 88,
-        "newness": 5,
+        "newness": 4,
         "credibility": 72.0,
-        "composite": 55.85,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 55.6,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Malicious models on hubs are well studied (pickle RCE, scanner evasion); this examines the *application* layer around them, which the authors describe as unexplored - a self-reported priority claim. The real contribution is scale (970k+ apps, three platforms) plus three newly-named architectural vulnerability classes; the bulk of the named categories are established appsec territory, so this is a strong measurement study rather than a new attack technique. Accepted at ACM CCS 2026.",
       "verified": true,
@@ -479,10 +479,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 86,
-        "newness": 25,
+        "newness": 24,
         "credibility": 57.5,
-        "composite": 55.67,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 55.42,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Memory and context poisoning is an active area and RAG poisoning is well studied; this extends known memory-poisoning concepts rather than introducing a new primitive. The delta is a quantified measurement specific to stored *coding preferences* plus the risk-warning gap and the memory-vs-prompt mitigation comparison. The authors describe it as the first systematic study of this - their own characterization, not independently verified. Accepted to ISSTA 2026.",
       "verified": true,
@@ -544,10 +544,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 5,
+        "newness": 4,
         "credibility": 72.0,
-        "composite": 54.05,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 53.8,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Gradient inversion and federated backdoors are each established literatures. The delta is a genuinely novel threat model - the *aggregator* mounting a data-free backdoor by reconstructing samples specifically to build the poisoning set - validated across datasets, LLM families, and both full fine-tuning and LoRA. Held below 70 because the demonstrated payload is narrowly advertisement injection. Accepted at the 35th USENIX Security Symposium (2026).",
       "verified": true,
@@ -609,10 +609,10 @@
       "scores": {
         "novelty": 47,
         "relevance": 76,
-        "newness": 25,
+        "newness": 24,
         "credibility": 70.0,
-        "composite": 53.65,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 53.4,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Generic CWE-88 argument-delimiter injection (historic pip/git argument-injection bugs) plus the well-known 'LLM output reaching a shell-out sink = RCE' class; this is a concrete named instance in the AWS Bedrock AgentCore SDK.",
       "threat": "A remote authenticated caller — or the agent's own LLM output routed into install_packages() — smuggles pip options via a crafted package specifier to run arbitrary commands inside the managed Code Interpreter sandbox, breaking the sandbox's confidentiality/integrity boundary.",
@@ -685,10 +685,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 78,
-        "newness": 5,
+        "newness": 4,
         "credibility": 72.0,
-        "composite": 53.45,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 53.2,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "The paper attributes quantization-conditioned backdoor attacks to prior work ('recent studies'), so the attack class is not new here; the contribution is the defense, and it is technically incremental (control variables plus regularization) rather than a new attack surface. Empirical breadth is solid: six LLMs, three precisions, three scenarios. Defenses remain systematically under-covered relative to attacks. Accepted at ACM CCS 2026.",
       "verified": true,
@@ -696,6 +696,151 @@
       "id": "quantguard-a-pre-quantization-defense-against-ba-29adf96f8b",
       "retrieved_at": "2026-07-21T14:42:54+00:00",
       "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "article_url": "https://arxiv.org/abs/2607.17535",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-07",
+      "published": "2026-07-21",
+      "discovered_via": "rss",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 57.5,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "arXiv cs.CR (Cryptography and Security)",
+      "id": "salience-induction-against-multi-hop-rag-agents-ceb90f3168",
+      "topic": "ai-security",
+      "domain": "RAG & Retrieval Poisoning",
+      "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
+      "source_url": "https://arxiv.org/abs/2607.17535",
+      "raw_path": "data/_raw/salience-induction-against-multi-hop-rag-agents-ceb90f3168.txt",
+      "summary": "A preprint attacks agentic RAG through what the authors call the salience channel - position, emphasis, framing and semantic proximity - with edits that keep every retrieved claim true and inject no directives. Self-reported results on the authors' own benchmark: 83.3% attack success under a 30% edit budget, with the strongest baseline defense still leaving 75.7%. The teachable part is the stealth axis, not the efficiency axis: a 30% edit budget is generous, but factuality auditing and instruction filtering have nothing to catch.",
+      "lessons": [
+        {
+          "point": "Two controls many RAG deployments lean on - verify retrieved claims are factual, strip instruction-like text from context - are aimed at the wrong channel. An attack that only reorders and reframes true facts passes both by construction.",
+          "excerpt": "We identify a third attack surface: the salience channel, through which fact position, emphasis, framing, and semantic proximity can redirect reasoning even when all retrieved claims are true and no instructions are present.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Read the numbers as an upper bound in a favorable setting: self-reported, on a benchmark the same team built, with an optimizer in the loop, at a 30% edit budget whose unit is unspecified. The honest claim is that the strongest evaluated defense barely moved the needle, not that the attack is cheap.",
+          "excerpt": "Under a 30% edit budget, Salience Induction achieves an 83.3% attack success rate; the strongest evaluated baseline defense leaves 75.7% post-defense ASR.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The defense direction is input-side normalization rather than content filtering - canonicalize order, emphasis and formatting of retrieved evidence before it reaches the model. A cheap version you can run today without this paper: permutation-stability testing, i.e. re-ask with the evidence shuffled and flag answers that change.",
+          "excerpt": "Our lightweight input-side defense, Salience Normalization, reduces attack success to 15.3% under standard attacks and 23.6% under an adaptive attack.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If an attacker can edit your corpus without lying, factuality checks and injection filters both return clean - order and emphasis are attacker-controlled state.",
+      "tags": [
+        "rag",
+        "prompt-injection",
+        "agents",
+        "retrieval-poisoning",
+        "evals"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add permutation-stability checks to agentic RAG",
+        "detail": "Before trusting a multi-hop answer, re-run the same query with retrieved passages shuffled and formatting canonicalized (strip emphasis, normalize position). An answer that flips under permutation is either salience-sensitive or being steered; both are reasons to escalate rather than answer. This needs no new model and is the one control that survives a truth-preserving attacker."
+      },
+      "threat": "An adversary with write access to a retrieval corpus redirects multi-hop attribute binding using only truth-preserving edits, defeating factuality and instruction-filter defenses.",
+      "conditions": "Attacker can edit a meaningful fraction of retrieved evidence (the paper reports results at a 30% edit budget; no lower-budget sweep is given).",
+      "mitigations": "Input-side salience normalization; permutation-stability testing; provenance weighting of evidence rather than treating retrieved passages as interchangeable.",
+      "scores": {
+        "novelty": 58,
+        "relevance": 70,
+        "newness": 24,
+        "credibility": 57.5,
+        "composite": 53.02,
+        "scored_at": "2026-07-26T19:54:38+00:00"
+      },
+      "prior_art": "PoisonedRAG and corpus-content poisoning (inject false facts) and indirect prompt injection (inject directives) - this paper's delta is dropping both. Against 'Lost in the Middle' and distractor-robustness work the delta is thinner: position and distractor sensitivity are well-replicated properties, and this weaponizes them. Nearest pool entry: the archived 'RAG poisoning via injected malicious documents in the retrieval corpus'.",
+      "verified": false,
+      "verify_note": "Verifier scored novelty 45, arguing the salience channel largely reduces to known context-position/distractor effects and that 'a third attack surface' oversells; it also caught two overstatements now fixed (the strongest baseline does reduce ASR by ~7.6 points, so 'defenses do not catch them' was wrong; and the five-model/three-architecture generalization applies to the attack, not to the defense figures). Held for review on novelty disagreement.",
+      "retrieved_at": "2026-07-26T19:54:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "article_url": "https://arxiv.org/abs/2607.17550",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-07",
+      "published": "2026-07-21",
+      "discovered_via": "rss",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 57.5,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "arXiv cs.CR (Cryptography and Security)",
+      "id": "a-ispy-parasitic-trojans-for-machine-learning-in-6997eb9850",
+      "topic": "ai-security",
+      "domain": "Model Supply Chain",
+      "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+      "source_url": "https://arxiv.org/abs/2607.17550",
+      "raw_path": "data/_raw/a-ispy-parasitic-trojans-for-machine-learning-in-6997eb9850.txt",
+      "summary": "An arXiv preprint proposes (A)iSpy, a trojan that lives in the ML execution environment (a PoC in ONNX Runtime's training and inference engines) rather than in the data or the model artifact. From inside the computation graph it watches transient tensor state and acts on it: the authors report it amplifies a separately-delivered, otherwise-ineffective data poison from near-zero to 100% backdoor success, and covertly exfiltrates training hyperparameters through the model's own weights or output logits. Evidence is abstract-only and self-reported - the value here is the threat model, not the numbers.",
+      "lessons": [
+        {
+          "point": "Your ML supply-chain audit probably stops at the artifact. The authors' framing premise is that data and model files get scanned or integrity-checked while third-party graph-compilation and hardware-acceleration libraries - the layer that actually executes the model - are implicitly trusted.",
+          "excerpt": "While current practices audit data and model artifacts or rely on file integrity checks, the execution environment remains implicitly trusted.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A runtime implant is interesting as a force multiplier, not a standalone backdoor: it lets an attacker split the attack across two individually weak footholds (a poisoned-data trickle plus a runtime module), which is also the precondition that limits it - you need both.",
+          "excerpt": "by observing steganographic triggers, it transforms otherwise weak data poisoning into effective backdoor attacks, increasing success rates from near zero to 100%",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The same position yields a confidentiality channel that leaves through artifacts you intend to publish - the authors report exfiltrating training hyperparameters via model weights or output logits. Treat the paired evasion claim as unassessable: the abstract names no scanner or backdoor-detection method it defeats.",
+          "excerpt": "the Trojan identifies all critical training hyperparameters and covertly exfiltrates them via model weights or output logits",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you attest models but not the runtime that executes them, your provenance chain has a hole the size of ONNX Runtime.",
+      "tags": [
+        "model-supply-chain",
+        "backdoor",
+        "ml-runtime",
+        "onnx",
+        "data-poisoning",
+        "provenance"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Extend model provenance to the execution layer",
+        "detail": "Inventory and pin the inference/training runtime the same way you pin model artifacts: version+hash the ONNX Runtime / graph-compiler / accelerator libraries in your serving image, put them in the SBOM, and treat an unexplained runtime upgrade as a supply-chain event. Detection signal to look for: a runtime module that reads tensor state it has no functional reason to read."
+      },
+      "threat": "A malicious or compromised third-party ML runtime module observes live training/inference and manipulates it, evading data- and model-artifact-level auditing entirely.",
+      "conditions": "Attacker can ship a modified runtime/acceleration library into the victim's ML pipeline; for the backdoor-amplification result, also a low-rate data poisoning foothold.",
+      "mitigations": "Pin and attest runtime dependencies; SBOM coverage for inference engines; run training in an environment whose libraries are provenance-verified rather than pulled at build time.",
+      "scores": {
+        "novelty": 55,
+        "relevance": 72,
+        "newness": 24,
+        "credibility": 57.5,
+        "composite": 52.72,
+        "scored_at": "2026-07-26T19:54:38+00:00"
+      },
+      "prior_art": "Bagdasaryan & Shmatikov, 'Blind Backdoors in Deep Learning Models' (USENIX Security 2021) - malicious training-pipeline code that observes live training and synthesizes a backdoor without touching the dataset; ImpNet (2022) - backdoors injected at compile time, invisible in data and model artifacts; Song et al. (CCS 2017) - exfiltrating training secrets through model weights. Nearest pool entry: ShadowPickle, which covers the model-artifact scanning layer this work deliberately steps past.",
+      "verified": false,
+      "verify_note": "Verifier confirmed every claim traces to the abstract but scored novelty far lower (42), naming Blind Backdoors and ImpNet as covering the core 'untrusted execution substrate' idea years earlier; it also flagged that all figures are abstract-only, self-reported, and that the evasion claim names no defense it defeats. Held for review on novelty disagreement and evidence level.",
+      "retrieved_at": "2026-07-26T19:54:37+00:00",
+      "needs_review": true,
       "grounding_score": 1.0
     },
     {
@@ -751,10 +896,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 78,
-        "newness": 25,
+        "newness": 24,
         "credibility": 75.0,
-        "composite": 52.9,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 52.65,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Every primitive was already established: the ANSI-DNS behavior by David Leadbeater (2023), LLMs emitting ANSI escapes by Leon Derczynski, and the author's own Terminal DiLLMa research (2024). This is disclosure-closure - the marginal contribution is the full chained PoC and the resulting Apple fix, not a new technique.",
       "verified": true,
@@ -819,10 +964,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 84,
-        "newness": 5,
+        "newness": 4,
         "credibility": 75.0,
-        "composite": 52.7,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 52.45,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.",
       "verified": true,
@@ -894,10 +1039,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 80,
-        "newness": 25,
+        "newness": 24,
         "credibility": 57.5,
-        "composite": 52.38,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 52.12,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.",
       "verified": true,
@@ -971,10 +1116,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 82,
-        "newness": 5,
+        "newness": 4,
         "credibility": 75.0,
-        "composite": 52.1,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 51.85,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Jun Kokatsu's ChatGPT Operator TOCTOU race-condition disclosure (GHSA-mp56-7vrw-qxvf, Google Security Research) — the same screenshot-to-action race, which this post explicitly reproduces and ports to Claude Computer-Use.",
       "threat": "An attacker-controlled web page (reachable via indirect prompt injection or a lured navigation) mutates the DOM at fixed coordinates during the agent's multi-second reasoning window, causing the agent to click a consequential control (Send, Allow, Confirm, consent/permission dialog) it never intended, enabling actions like sending arbitrary emails or granting permissions.",
@@ -997,6 +1142,75 @@
       "needs_review": true,
       "grounding_score": 0.8,
       "corroborating_sources": []
+    },
+    {
+      "article_url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-07",
+      "published": "2026-07-15",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "ghsa-824w-x939-6cmc-a20ac667fe",
+      "topic": "ai-security",
+      "domain": "LLM gateway / AI infrastructure",
+      "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+      "source_url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+      "raw_path": "data/_raw/ghsa-824w-x939-6cmc-a20ac667fe.txt",
+      "summary": "TensorZero's /internal/object_storage endpoint accepted a caller-supplied storage_path that dynamically overrode the gateway's configured object-storage backend. Selecting the filesystem backend turns it into arbitrary file read; selecting s3_compatible turns it into SSRF toward internal and cloud-metadata endpoints. Textbook bug class, worth logging only because LLM gateways keep shipping optional auth alongside endpoints whose /internal prefix is doing the authorization.",
+      "lessons": [
+        {
+          "point": "The bug class is 'the caller picks the backend': whenever a request field selects a storage driver or endpoint, the caller has inherited a server-side trust decision, and the two sinks are always the same - local file read and outbound SSRF.",
+          "excerpt": "The `/internal/object_storage` endpoint accepts a caller-supplied JSON `storage_path` parameter that dynamically overrides the TensorZero `[object_storage]` configuration.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A path prefix is not an authorization boundary. `/internal` only means internal if something enforces it; here exposure hinges entirely on whether the operator turned authentication on.",
+          "excerpt": "If a developer's TensorZero deployment has authentication enabled, only authenticated callers can exploit this vulnerability.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Durable control for anyone running an LLM gateway: default-deny egress from the gateway to link-local and RFC1918 ranges, so a storage-backend confusion bug cannot reach cloud metadata even when it exists.",
+          "excerpt": "the caller can coerce the gateway into making outbound object storage requests to attacker-chosen internal/cloud-metadata endpoints",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "LLM gateways are ordinary web services with an unusual amount of credentials on disk - audit them for caller-selectable backends before anything AI-specific.",
+      "tags": [
+        "ssrf",
+        "llm-gateway",
+        "ai-infrastructure",
+        "path-traversal",
+        "appsec"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hunt caller-selectable storage backends in AI infra",
+        "detail": "Grep your LLM gateway/router config surface for request fields that name a storage type, bucket endpoint, or file path. Fix by resolving the backend server-side from a fixed allowlist and never from request data. Operationally: pin TensorZero >= 2026.6.0, block /internal/* at the ingress, confirm gateway auth is enabled, and default-deny gateway egress to 169.254.169.254 and RFC1918."
+      },
+      "threat": "An untrusted caller reads gateway-local credential files or pivots to internal/cloud-metadata services through the gateway.",
+      "conditions": "Gateway reachable by untrusted callers; the advisory states exploitation is limited to authenticated callers where authentication is enabled.",
+      "mitigations": "Upgrade to 2026.6.0; block external access to /internal/object_storage; enable gateway authentication; restrict egress.",
+      "scores": {
+        "novelty": 25,
+        "relevance": 60,
+        "newness": 24,
+        "credibility": 70.0,
+        "composite": 42.0,
+        "scored_at": "2026-07-26T19:54:38+00:00"
+      },
+      "prior_art": "Caller-controlled S3-compatible endpoint override -> SSRF (repeatedly patched in MinIO-integrating and self-hosted file services); CWE-73 external control of file path via selectable storage driver; Capital One-era cloud-metadata SSRF; Spring Boot Actuator /env config-override exposure. The only new facts are the product, endpoint and version.",
+      "verified": false,
+      "verify_note": "Verifier scored novelty 12/100 - 'the conceptual delta over prior art is approximately zero', same primitive, sinks, fix and workaround as a decade of prior bugs, and it does not even carry the LLM-specific wrinkle (no prompt-injection-reachable path). Also corrected: the advisory says files that MAY contain credentials, does not demonstrate metadata retrieval, states exposure as a precondition rather than an observed fact, and gives no CVE/CVSS/affected range. Held for review as derivative.",
+      "retrieved_at": "2026-07-26T19:54:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     }
   ]
 }

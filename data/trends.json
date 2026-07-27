@@ -4,9 +4,9 @@
       "topic": "ai-security",
       "tag": "agent-security",
       "count": 11,
-      "recent": 6,
+      "recent": 5,
       "sources": 11,
-      "momentum": 17.0,
+      "momentum": 16.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-24",
       "members": [
@@ -44,7 +44,7 @@
           "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
           "url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
           "date": "2026-06-25",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
@@ -81,13 +81,19 @@
     {
       "topic": "ai-security",
       "tag": "prompt-injection",
-      "count": 6,
+      "count": 7,
       "recent": 3,
-      "sources": 6,
-      "momentum": 9.0,
+      "sources": 7,
+      "momentum": 10.0,
       "first_seen": "2026-02",
-      "last_seen": "2026-07-16",
+      "last_seen": "2026-07-21",
       "members": [
+        {
+          "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
+          "url": "https://arxiv.org/abs/2607.17535",
+          "date": "2026-07-21",
+          "fresh": true
+        },
         {
           "title": "Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection",
           "url": "https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/",
@@ -104,7 +110,7 @@
           "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
           "url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
           "date": "2026-06-25",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
@@ -122,6 +128,48 @@
           "title": "Augustus: a production LLM vulnerability scanner (210+ probes)",
           "url": "https://github.com/praetorian-inc/augustus",
           "date": "2026-02",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "model-supply-chain",
+      "count": 5,
+      "recent": 4,
+      "sources": 5,
+      "momentum": 9.0,
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-07-21",
+      "members": [
+        {
+          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+          "url": "https://arxiv.org/abs/2607.17550",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+          "url": "https://arxiv.org/abs/2607.17503",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
+          "url": "https://arxiv.org/abs/2606.30373",
+          "date": "2026-06-29",
+          "fresh": true
+        },
+        {
+          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
+          "url": "https://arxiv.org/abs/2606.29239",
+          "date": "2026-06-28",
+          "fresh": true
+        },
+        {
+          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
+          "url": "https://arxiv.org/abs/2606.27511",
+          "date": "2026-06-25",
           "fresh": false
         }
       ]
@@ -165,42 +213,6 @@
           "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
           "date": "2026-06-23",
           "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "model-supply-chain",
-      "count": 4,
-      "recent": 4,
-      "sources": 4,
-      "momentum": 8.0,
-      "first_seen": "2026-06-25",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
-          "url": "https://arxiv.org/abs/2607.17503",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
-          "url": "https://arxiv.org/abs/2606.30373",
-          "date": "2026-06-29",
-          "fresh": true
-        },
-        {
-          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-          "url": "https://arxiv.org/abs/2606.29239",
-          "date": "2026-06-28",
-          "fresh": true
-        },
-        {
-          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
-          "url": "https://arxiv.org/abs/2606.27511",
-          "date": "2026-06-25",
-          "fresh": true
         }
       ]
     },
@@ -267,6 +279,60 @@
           "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
           "date": "2026-05-14",
           "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "backdoor",
+      "count": 3,
+      "recent": 2,
+      "sources": 3,
+      "momentum": 5.0,
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-07-21",
+      "members": [
+        {
+          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+          "url": "https://arxiv.org/abs/2607.17550",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
+          "url": "https://arxiv.org/abs/2606.29239",
+          "date": "2026-06-28",
+          "fresh": true
+        },
+        {
+          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
+          "url": "https://arxiv.org/abs/2606.27511",
+          "date": "2026-06-25",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "ssrf",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-15",
+      "last_seen": "2026-07-15",
+      "members": [
+        {
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "date": "2026-07-15",
+          "fresh": true
+        },
+        {
+          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+          "date": "2026-07-15",
+          "fresh": true
         }
       ]
     },
@@ -344,6 +410,30 @@
     },
     {
       "topic": "ai-security",
+      "tag": "appsec",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-06-29",
+      "last_seen": "2026-07-15",
+      "members": [
+        {
+          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+          "date": "2026-07-15",
+          "fresh": true
+        },
+        {
+          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
+          "url": "https://arxiv.org/abs/2606.30373",
+          "date": "2026-06-29",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "defenses",
       "count": 2,
       "recent": 2,
@@ -362,30 +452,6 @@
           "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
           "url": "https://arxiv.org/abs/2606.29239",
           "date": "2026-06-28",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "backdoor",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06-25",
-      "last_seen": "2026-06-28",
-      "members": [
-        {
-          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-          "url": "https://arxiv.org/abs/2606.29239",
-          "date": "2026-06-28",
-          "fresh": true
-        },
-        {
-          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
-          "url": "https://arxiv.org/abs/2606.27511",
-          "date": "2026-06-25",
           "fresh": true
         }
       ]
@@ -440,6 +506,30 @@
     },
     {
       "topic": "ai-security",
+      "tag": "agents",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2000-01-01",
+      "last_seen": "2026-07-21",
+      "members": [
+        {
+          "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
+          "url": "https://arxiv.org/abs/2607.17535",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "stale",
+          "url": "https://a/stale",
+          "date": "2000-01-01",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "tooling-2026",
       "count": 2,
       "recent": 0,
@@ -467,13 +557,19 @@
     {
       "topic": "product-security",
       "tag": "supply-chain",
-      "count": 5,
-      "recent": 5,
+      "count": 6,
+      "recent": 6,
       "sources": 5,
-      "momentum": 10.0,
+      "momentum": 12.0,
       "first_seen": "2026-06-30",
       "last_seen": "2026-07-24",
       "members": [
+        {
+          "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
+          "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+          "date": "2026-07-24",
+          "fresh": true
+        },
         {
           "title": "Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses",
           "url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
@@ -550,6 +646,54 @@
           "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
           "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
           "date": "2026-06-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "malware",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-07-17",
+      "members": [
+        {
+          "title": "TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source",
+          "url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
+          "date": "2026-07-17",
+          "fresh": true
+        },
+        {
+          "title": "GigaWiper: modular destructive malware that fakes ransomware",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
+          "date": "2026-07-09",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "rce",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-06-29",
+      "last_seen": "2026-07-24",
+      "members": [
+        {
+          "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
+          "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
+          "url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
+          "date": "2026-06-29",
           "fresh": true
         }
       ]
@@ -655,13 +799,25 @@
     {
       "topic": "ai-research",
       "tag": "agents",
-      "count": 5,
-      "recent": 4,
-      "sources": 4,
-      "momentum": 9.0,
+      "count": 7,
+      "recent": 6,
+      "sources": 6,
+      "momentum": 13.0,
       "first_seen": "2026-05",
-      "last_seen": "2026-07-09",
+      "last_seen": "2026-07-22",
       "members": [
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
+          "fresh": true
+        },
         {
           "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
           "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
@@ -697,13 +853,19 @@
     {
       "topic": "ai-research",
       "tag": "evals",
-      "count": 5,
-      "recent": 4,
-      "sources": 5,
-      "momentum": 9.0,
+      "count": 7,
+      "recent": 6,
+      "sources": 7,
+      "momentum": 13.0,
       "first_seen": "2026-05",
       "last_seen": "2026-07-22",
       "members": [
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": true
+        },
         {
           "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
           "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
@@ -723,6 +885,12 @@
           "fresh": true
         },
         {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
           "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
           "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
           "date": "2026-07-02",
@@ -739,10 +907,10 @@
     {
       "topic": "ai-research",
       "tag": "harness",
-      "count": 4,
-      "recent": 3,
-      "sources": 4,
-      "momentum": 7.0,
+      "count": 6,
+      "recent": 5,
+      "sources": 6,
+      "momentum": 11.0,
       "first_seen": "2026-05",
       "last_seen": "2026-07-22",
       "members": [
@@ -753,9 +921,21 @@
           "fresh": true
         },
         {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
           "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
           "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
           "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
           "fresh": true
         },
         {

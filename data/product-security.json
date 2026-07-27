@@ -68,10 +68,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 25,
+        "newness": 24,
         "credibility": 87.5,
-        "composite": 70.38,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 70.12,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "The 2025 Shai-Hulud / npm postinstall-worm campaigns and the related @mastra scope takeover — same 'compromise a maintainer/bot identity' root cause, but those triggered on install hooks; the novel delta here is import-time execution plus abuse of trusted-publishing provenance.",
       "corroborating_sources": [
@@ -134,9 +134,9 @@
       "scores": {
         "novelty": 90,
         "relevance": 86,
-        "newness": 25,
-        "composite": 66.55,
-        "scored_at": "2026-07-26T06:13:35+00:00",
+        "newness": 24,
+        "composite": 66.3,
+        "scored_at": "2026-07-26T19:54:38+00:00",
         "credibility": 50.0
       },
       "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
@@ -202,10 +202,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 82,
-        "newness": 25,
+        "newness": 24,
         "credibility": 55.0,
-        "composite": 60.1,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 59.85,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Classic symlink path-traversal / TOCTOU (CWE-59) and git's long-known preservation of symlinks; the new delta is the class-wide application to AI coding-assistant sandbox escapes plus the misleading approval-dialog (Wiz 'GhostApproval') trust gap across six assistants.",
       "threat": "A malicious or compromised public repo ships symlinks (mode 120000) under benign names; an AI coding assistant following repo/README instructions reads secrets or writes attacker-controlled content (SSH authorized_keys, shell rc files) outside its workspace, yielding credential theft or code execution — while the approval dialog shows only the harmless in-repo path.",
@@ -274,13 +274,157 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 25,
-        "composite": 59.5,
-        "scored_at": "2026-07-26T06:13:35+00:00",
+        "newness": 24,
+        "composite": 59.25,
+        "scored_at": "2026-07-26T19:54:38+00:00",
         "credibility": 75.0
       },
       "id": "gigawiper-modular-destructive-malware-that-fakes-2b20f20b50",
       "retrieved_at": "2026-07-13T04:19:32+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "article_url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
+      "tweet_url": "https://x.com/Unit42_Intel/status/2078227517819781257",
+      "author": "Unit42_Intel",
+      "date": "2026-07",
+      "published": "2026-07-17",
+      "discovered_via": "twitter",
+      "source_id": "x_account:unit42-intel",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "@Unit42_Intel",
+      "id": "a-developer-used-ai-to-build-tuxbot-an-iot-botne-da7b722c49",
+      "topic": "product-security",
+      "domain": "Malware & Threat Intel",
+      "title": "TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source",
+      "source_url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
+      "raw_path": "data/_raw/a-developer-used-ai-to-build-tuxbot-an-iot-botne-da7b722c49.txt",
+      "summary": "Unit 42 recovered the full source archive, git log and test rigs of TuxBot v3, a modular IoT botnet whose author used an LLM to generate C modules, port exploits and write the Go C2. The model complied but attached a safety disclaimer the developer never removed, left raw chain-of-thought in source files, and hallucinated crypto that shipped unverified. Unit 42 estimates the framework is only ~70% functional - and then repaired several broken features themselves with a few prompts, which is the actual finding.",
+      "lessons": [
+        {
+          "point": "LLM-assisted malware leaves artifact-level tells worth hunting for: an unremoved safety disclaimer, verbatim chain-of-thought in comments, and crypto that does not round-trip. Unit 42 reports these rather than exhibiting them, and names no vendor or model.",
+          "excerpt": "Raw chain-of-thought reasoning from the LLM was left verbatim in source files, and the LLM hallucinated cryptographic implementations that the developer shipped without verifying.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "AI assistance measurably degraded quality here rather than amplifying it: core infection works, but all three exploit systems are dead. Do not over-read the causation - the one bug documented in detail (an XOR string-table key desync that kills the IRC and HTTP fallback channels) is attributed to the developer changing a key byte without updating the offline encoder, not to the model.",
+          "excerpt": "Exploitation beyond brute-forcing is limited. All three exploit systems are non-functional for different reasons that we detail later in this analysis.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Treat the brokenness as a timing artifact, not a capability ceiling. The defender-relevant metric has shifted from cost-to-generate to cost-to-repair, and Unit 42 measured it at roughly a few prompts.",
+          "excerpt": "During our analysis, we could fix several of these broken features with a few targeted prompts to an LLM. This means an adversary with access to the same source code could produce a more complete version with minimal effort.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Today's AI-assisted commodity malware is sloppy and self-labelling; budget for the version where someone spends ten more minutes prompting.",
+      "tags": [
+        "malware",
+        "iot",
+        "botnet",
+        "ai-assisted-development",
+        "threat-intel",
+        "detection"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Hunt for LLM residue in malware source and samples",
+        "detail": "Add retro-hunt rules for model residue in recovered source and strings: refusal/safety-disclaimer boilerplate, 'as an AI' phrasing, chain-of-thought markers in comments, and TODO-style scaffolding left inline. Pair it with a triage habit - dev builds give themselves away (loopback C2, symbols, older toolchain) so do not score a family's capability from a debug artifact. Cheap, high-yield, and it works precisely because the operator did not read their own code."
+      },
+      "threat": "Commodity IoT botnet framework with 1,496-pair Telnet brute-forcing, 30+ device-family exploits and five C2 fallback channels, built with LLM assistance and cheaply repairable.",
+      "conditions": "Internet-exposed IoT devices with default or weak Telnet/SSH credentials.",
+      "mitigations": "Credential hygiene on IoT fleets; egress control from device VLANs; detection on the documented C2 banners and ports rather than on capability assumptions.",
+      "scores": {
+        "novelty": 60,
+        "relevance": 78,
+        "newness": 24,
+        "credibility": 75.0,
+        "composite": 58.65,
+        "scored_at": "2026-07-26T19:54:38+00:00"
+      },
+      "prior_art": "Prior vendor reports of LLM refusal boilerplate left in malicious code (HP Wolf 2024 dropper, FunkSec) established the 'LLM tells' phenomenon; Mirai/Gafgyt/Keksec lineage teardowns and MHDDoS-derived booter panels are well covered. The delta here is the recovered development telemetry (git log, QEMU/Docker rigs, 254 automated DDoS benchmark reports) and a quantified per-subsystem capability finding, plus measuring uplift as cost-to-repair.",
+      "verified": true,
+      "verify_note": "Verifier refuted the original framing on two points, both corrected here: 'LLM-built' overstated a borrowed-code assembly (AISURU/Wuhan lineage, ported MHDDoS) that was LLM-assisted, and the IRC/HTTP failures were wrongly attributed to the model when Unit 42 pins that XOR key desync on the developer. It also confirmed no vendor or model is named anywhere, that the ~70% is an analyst estimate, and that the cached source text is truncated at the ingest limit. Remaining claims verified as supported.",
+      "retrieved_at": "2026-07-26T19:54:37+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "article_url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-07",
+      "published": "2026-07-24",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "ghsa-6xj8-qv9j-xcjq-aae4e4a05d",
+      "topic": "product-security",
+      "domain": "Developer Tooling & Template Injection",
+      "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
+      "source_url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+      "raw_path": "data/_raw/ghsa-6xj8-qv9j-xcjq-aae4e4a05d.txt",
+      "summary": "Oh My Posh composes the displayed path from raw folder names and then passes the whole composed string back through Go text/template, whose function map exposes cmd. A directory named with a template expression therefore executes commands as you the moment the prompt renders - under the built-in default configuration and every path style. Clone a repo, extract an archive, mount a share; the next command after cd is the trigger.",
+      "lessons": [
+        {
+          "point": "The root cause is double evaluation, and it is a general antipattern: never re-parse a string as a template after untrusted data has been interpolated into it. Render each config template against its own inputs and concatenate the already-rendered pieces with the literal untrusted values.",
+          "excerpt": "Oh My Posh re-renders the resolved path string, which contains the raw folder names taken from the filesystem, through the Go `text/template` engine. That engine's function map exposes a `cmd` function that runs arbitrary OS commands.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A template function map is an authorization decision. Any renderer that touches untrusted data should get a data-only funcmap; exposing cmd/readFile/stat/glob to a display path converts a formatting bug into RCE.",
+          "excerpt": "use a data-only function map (no `cmd`/`readFile`/`stat`/`glob`) for path resolution",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Note the delivery model - this is a developer-machine attack triggered by filesystem contents you merely navigated into, firing on the next prompt render rather than on executing anything. Payloads cannot contain a path separator, which the reporter argues is not a real barrier; only the Windows slash-free proof is shown with output.",
+          "excerpt": "Arbitrary command execution as the victim user, triggered by navigating into attacker-supplied directory content: a subdirectory in a cloned repository, an extracted archive, a network share, or a removable drive.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Anything that renders your prompt, status bar or editor title is executing attacker-controlled repository metadata - treat it as a parser, not decoration.",
+      "tags": [
+        "template-injection",
+        "rce",
+        "developer-tooling",
+        "supply-chain",
+        "go"
+      ],
+      "actionable": {
+        "type": "skill",
+        "skill_slug": "audit-template-double-evaluation",
+        "title": "Audit renderers for double evaluation of untrusted data",
+        "detail": "Sweep your codebase for the shape 'build a string from untrusted parts, then Render/eval the whole string': template.Render on a composed value, format-then-interpolate, or a second pass over already-substituted output. For each hit, either restructure to render-then-concatenate or swap in a data-only function map. Applies well beyond shells - status bars, notification templates, log formatters and report generators all re-render composed strings, and all of them ingest repo metadata."
+      },
+      "threat": "Arbitrary command execution as the developer, from cloning a repository or extracting an archive that contains a maliciously named directory.",
+      "conditions": "Victim runs Oh My Posh (the built-in default configuration is affected, and every path style) and the shell enters the directory or any descendant.",
+      "mitigations": "Upgrade Oh My Posh; do not re-parse composed paths as templates; restrict the template function map used for path resolution.",
+      "scores": {
+        "novelty": 62,
+        "relevance": 78,
+        "newness": 24,
+        "credibility": 70.0,
+        "composite": 58.5,
+        "scored_at": "2026-07-26T19:54:38+00:00"
+      },
+      "prior_art": "Go text/template SSTI and template injection generally; shell prompt injection via malicious git branch names and PS1; ANSI-escape injection via filenames; repo contents attacking dev tooling (.vscode/, .gitattributes, hooks). The delta is the sink: the attacker-controlled data is a filesystem directory name re-fed to the engine, it fires under the shipped default configuration, and the trigger is passive navigation. Nearest pool entry: the Shescape shell-escaping advisories (different mechanism - escaping, not double evaluation).",
+      "verified": true,
+      "verify_note": "Verifier found all five claims supported by the advisory's code walk-through and two PoCs, and confirmed the fix guidance. Corrections applied: the trigger needs a prompt render after cd rather than being wholly passive, the file-write PoC is stated verified on Windows while Linux/macOS exploitation is argued rather than shown, and the slash-free ${IFS} bypass is asserted without output. It scored novelty lower (30) on the grounds that double-eval SSTI and malicious-repo-metadata attacks are established classes; we hold 62 against this pool's prior art and record the disagreement here.",
+      "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": false,
       "grounding_score": 1.0
     },
@@ -336,10 +480,10 @@
       "scores": {
         "novelty": 57,
         "relevance": 88,
-        "newness": 25,
+        "newness": 24,
         "credibility": 57.5,
-        "composite": 58.38,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 58.12,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -414,10 +558,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 82,
-        "newness": 5,
+        "newness": 4,
         "credibility": 75.0,
-        "composite": 58.1,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 57.85,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Uninitialized-memory and heap-spray techniques are classic; the novel delta is the specific n-day chain (patch-diff -> non-null-terminated escape buffer -> OOB read into sprayed JSON chunk) on a widely deployed edge load balancer.",
       "verified": true,
@@ -484,10 +628,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 25,
+        "newness": 24,
         "credibility": 75.0,
-        "composite": 58.0,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 57.75,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Unit42's own blob-URL phishing note (2025-10-02 'phishing pages using blob URLs') and classic IDN/Cyrillic homoglyph + zero-width-character phishing obfuscation; client-side CAPTCHA gates (KongTuke/White Lynx CAPTCHA pages) and SaaS-redirect chaining are each individually documented.",
       "threat": "Attacker harvests Microsoft OAuth device codes / authentication tokens via a phishing page engineered to be invisible to network analyzers, URL/domain reputation, safe-browsing blocklists, and signature-based content scanners, yielding account takeover.",
@@ -577,10 +721,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 74,
-        "newness": 25,
+        "newness": 24,
         "credibility": 50.0,
-        "composite": 56.95,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 56.7,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "HTML smuggling (client-side reconstruction of a payload in the browser from embedded/encoded data to evade network inspection) combined with server-side polymorphism / hash rotation; SourTrade is a documented evolution of these adding split-source assembly over a legitimate Bun runtime with per-session AES-CTR filler.",
       "threat": "A malvertising operator delivers per-session, unique-hash Windows malware by reassembling a Bun-based executable in the victim's browser from a legitimate runtime plus attacker-supplied PE headers and JavaScriptCore bytecode, evading hash/IOC-based detection and misattributing the Mark-of-the-Web download source to a benign landing page. Impersonates TradingView, Solana, and Luno to target retail/crypto traders across 12 countries in 25 languages; linked (unconfirmed for the current samples) to the JSCEAL/WeevilProxy stealer.",
@@ -660,10 +804,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 76,
-        "newness": 25,
+        "newness": 24,
         "credibility": 75.0,
-        "composite": 56.8,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 56.55,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Generic CWE-78 OS command injection in embedded/OT web management (unsanitized input into system()); the 'xz -f -c -d as cat' file-read trick is a known GTFOBins-style LOLBin. Novelty here is finding-level: the specific Siemens ROX II zero-day trilogy (CVE-2025-40948/40947/40949), not a new vulnerability class.",
       "threat": "An attacker with access to the ROX II management interface can read credentials/keys (CVE-2025-40948), inject a root reverse shell through the feature-key uploader (CVE-2025-40947), and plant a root cron job for reboot-persistent control (CVE-2025-40949), turning a network-segmentation security device into a foothold for OT disruption, data exfiltration, or DoS.",
@@ -691,6 +835,76 @@
       "needs_review": true,
       "grounding_score": 1.0,
       "corroborating_sources": []
+    },
+    {
+      "article_url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-07",
+      "published": "2026-07-24",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "ghsa-xg4h-6gfc-h4m8-52cdd221cc",
+      "topic": "product-security",
+      "domain": "Authorization & Access Control",
+      "title": "etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies",
+      "source_url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+      "raw_path": "data/_raw/ghsa-xg4h-6gfc-h4m8-52cdd221cc.txt",
+      "summary": "A user with READ on a single exact etcd key could call Watch with an open-ended range (clientv3.WithFromKey()) and receive events for every key at or after it. Range/Get and DeleteRange are explicitly unaffected, so this is authorization enforced per API surface rather than centrally - with the streaming endpoint as the one that drifted. Patched in etcd 3.7.1 / 3.6.14 / 3.5.33; reported in part by Anthropic.",
+      "lessons": [
+        {
+          "point": "The exploitation primitive is IDOR with a range operator: instead of guessing identifiers you widen the bound. Any API that accepts a range, prefix or wildcard needs the authorization check applied to the requested range, not to the caller's grant in isolation.",
+          "excerpt": "can use the Watch gRPC API with `clientv3.WithFromKey()` (an open-ended, \"from this key to the end of the keyspace\" watch) to receive watch events for every key",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Subscription endpoints are where per-endpoint authorization drifts - the same pattern as GraphQL subscriptions missing query-level field authz, or Kubernetes treating watch as a verb distinct from get/list. The advisory gives no root cause, so that reading is our inference; what it does state is which surfaces are unaffected.",
+          "excerpt": "This is an authorization bypass in etcd's RBAC enforcement for the Watch API; Range/Get and DeleteRange requests are not affected.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Until patched, the correct mental model for a grant audit is that partial READ is not partial: hold every READ grant to the standard of full read access from that key onward.",
+          "excerpt": "Any READ grant - even on one key - can be leveraged via Watch to read everything after it.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your read endpoint and your stream endpoint enforce authorization in different code, you have two policies and only test one.",
+      "tags": [
+        "authorization",
+        "rbac",
+        "etcd",
+        "kubernetes",
+        "idor",
+        "api-security"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Test authorization on streaming endpoints with an unbounded range",
+        "detail": "For every subscribe/watch/stream API you own, write the test where a caller with the narrowest possible grant requests the widest possible range (from-key, empty prefix, wildcard topic) and assert the stream is refused or clipped to the grant. Then fix the class properly by resolving authorization in one shared enforcement point that both the read and stream handlers call. Operationally: patch etcd to 3.7.1/3.6.14/3.5.33 and re-audit READ grants as if each were full read."
+      },
+      "threat": "A low-privilege authenticated etcd client reads the bulk of the keyspace via Watch.",
+      "conditions": "Clusters with authentication enabled and meaningfully partitioned READ grants; the advisory gives fixed versions only and no affected-version range.",
+      "mitigations": "Upgrade to the patched releases; audit and tighten READ grants; restrict network reach to the client gRPC port.",
+      "scores": {
+        "novelty": 58,
+        "relevance": 68,
+        "newness": 24,
+        "credibility": 70.0,
+        "composite": 54.3,
+        "scored_at": "2026-07-26T19:54:38+00:00"
+      },
+      "prior_art": "Known bug class rather than a new one: GraphQL subscription resolvers missing query-level authz, WebSocket/SSE channel joins not re-checking per-topic ACLs, Kafka topic-pattern subscribe vs per-topic ACLs, and Kubernetes RBAC treating watch separately from get/list. Range-widening as an authz bypass is IDOR/BOLA with a range operator.",
+      "verified": false,
+      "verify_note": "Verifier scored novelty 20/100 - the 'stream endpoint skips the read endpoint's authz check' pattern has many documented prior instances, so only the instance is new. It also flagged that the advisory gives no root cause (the per-endpoint-drift explanation is our inference and is labelled as such), that 'only Watch' overstates a list of three unaffected request types, and that Watch delivers events rather than a keyspace snapshot. Held for review as a known class.",
+      "retrieved_at": "2026-07-26T19:54:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -741,10 +955,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 74,
-        "newness": 25,
+        "newness": 24,
         "credibility": 70.0,
-        "composite": 50.95,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 50.7,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "The broader 'incomplete neutralization yields command injection' class (CWE-78/CWE-150) and Shescape's own prior per-shell escaping advisories; the analyst's cited Kemp LoadMaster null-byte-gap-to-RCE is the nearest thematic match.",
       "threat": "An attacker who controls a command argument passed through Shescape's escape/escapeAll on Windows CMD can break out of the intended command context (e.g. a conditional block) and execute arbitrary commands (CVSS 9.2).",
@@ -813,10 +1027,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 25,
+        "newness": 24,
         "credibility": 55.0,
-        "composite": 47.5,
-        "scored_at": "2026-07-26T06:13:35+00:00"
+        "composite": 47.25,
+        "scored_at": "2026-07-26T19:54:38+00:00"
       },
       "prior_art": "Tool round-ups are a common genre and every tool listed is publicly known; there is no new technique or tool. The contribution is the three-category taxonomy and constraint-based selection guidance. Vendor content rather than research: Semgrep competes in the category it ranks and has an unannounced product in it.",
       "verified": true,
@@ -843,11 +1057,11 @@
       "discovered_via": "manual",
       "article_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
       "scores": {
-        "newness": 5,
+        "newness": 4,
         "novelty": 0,
         "relevance": 0,
-        "composite": 8.75,
-        "scored_at": "2026-07-26T06:13:35+00:00",
+        "composite": 8.5,
+        "scored_at": "2026-07-26T19:54:38+00:00",
         "credibility": 50.0
       },
       "published": "2026-06",
