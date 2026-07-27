@@ -23,6 +23,7 @@ config.yaml               # scoring weights, decay half-life, thresholds, freshn
 data/ai-security.json     # AI Security pool (source of truth)
 data/product-security.json# Product Security pool (source of truth)
 data/ai-research.json     # AI Research (practitioner) pool (source of truth)
+data/claims.json          # CLAIM LEDGER — durable standing answers + supersession edges
 data/archive.json         # aged-out findings (preserved, not shown)
 data/sources.json         # ranked source registry (add via add_source.py)
 data/candidates.json      # transient ingest staging (gitignored)
@@ -35,6 +36,9 @@ scripts/merge_analysis.py # validate + dedup + route by topic + ground excerpts 
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
+scripts/claims.py         # claim model: validation, supersession edges, ordering, lineage
+scripts/add_claim.py      # the ONLY sanctioned writer for data/claims.json (CLI)
+scripts/generate_claims.py# claims/ — standing answers on top, retired ones underneath
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
@@ -42,10 +46,31 @@ scripts/generate_skills.py# skills/<slug>/SKILL.md + LEARNINGS.md (vetted only)
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
 scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
 .claude/skills/           # /research-scan /add-resource /add-source /editorial-review — the LLM stages
-README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · LEARNINGS.md · ai-security/ product-security/ ai-research/ skills/  # GENERATED
+_config.yml               # GitHub Pages (Jekyll) — publishes the markdown as a browsable site
+README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · LEARNINGS.md · ai-security/ product-security/ ai-research/ claims/ skills/  # GENERATED
 # Curated view = VETTED findings (novelty gate) PLUS a separate "Trending & In the News"
 # section from the editorial track; everything else waits in REVIEW.md.
 ```
+
+## Findings vs claims (two different questions)
+
+The pools answer **"what was published lately"** — a rolling feed that ages out after
+`max_age_days`. The **claim ledger** (`data/claims.json`) answers **"what should I do
+right now, and what did that replace"**. It is durable: claims never age out.
+
+- A claim has a `status`: `current` · `contested` · `superseded` · `refuted`.
+- Supersession is an **edge written on both ends** — the retired claim gets
+  `superseded_by` + `superseded_on` + `supersession_reason`; the winner gets `supersedes`.
+  `scripts/add_claim.py supersede` writes both, so they can never drift apart.
+- `claims.py` enforces the invariants: unique kebab ids, edges resolve, edges are
+  reciprocal, the graph is acyclic, retired claims must name a successor AND a reason,
+  live claims cannot already be superseded, every claim needs at least one evidence URL.
+- **Never hand-edit `data/claims.json`** — use `scripts/add_claim.py` (it re-validates the
+  whole ledger before saving). Never delete or rewrite a retired claim's history; the
+  record of what we used to believe is the product, not clutter.
+- Renderer contract: live claims on top ordered `current` → `contested` by confidence;
+  retired ones pushed to the bottom, most recently retired first, each struck through
+  with its reason and a link to the claim that replaced it.
 
 ## How to run
 
@@ -60,7 +85,9 @@ python scripts/add.py "<url>"          # ad-hoc; --text/--file fallback for Link
 # Analysis is done by the /research-scan or /add-resource skill, which writes
 # data/analysis_out.json, then:
 python scripts/merge_analysis.py
+python scripts/add_claim.py validate    # ledger integrity (edges resolve, no cycles)
 python scripts/generate_site.py
+python scripts/generate_claims.py
 python scripts/generate_skills.py
 
 # New source ingestors (Windows Python, no cookies):
@@ -129,6 +156,10 @@ A change is only "done" when the pipeline runs clean on real data — not just u
 3. `python scripts/rerank.py && python scripts/generate_site.py && python scripts/generate_skills.py`
    — confirm the 3 topic trees regenerate, per-entry pages + `TRENDS.md`/`NEWSLETTER.md` exist,
    and the pools ↔ rendered site stay in sync (a second run is a no-op diff).
+4. `python scripts/add_claim.py validate && python scripts/generate_claims.py` — the ledger's
+   edges resolve both ways and `claims/` regenerates. Then spot-check one retired claim on its
+   topic page: it must be struck through, below the live ones, and carry both a reason and a
+   working link to the claim that replaced it.
 
 ## Standard test suite (must be green before a PR)
 

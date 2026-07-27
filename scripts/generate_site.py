@@ -23,6 +23,8 @@ from datetime import UTC, datetime
 
 import common as c
 
+import claims as cl
+
 TOP_N_LANDING = 10
 
 
@@ -72,7 +74,7 @@ def rank(entries: list[dict], conf: c.Config) -> list[dict]:
 
 
 def entry_filename(entry: dict) -> str:
-    return f"{(entry.get('date') or 'undated')}-{c.slugify(entry.get('title',''), 60)}.md"
+    return f"{(entry.get('date') or 'undated')}-{c.slugify(entry.get('title', ''), 60)}.md"
 
 
 def entry_relpath(entry: dict) -> str:
@@ -92,7 +94,7 @@ def render_actionable(entry: dict) -> list[str]:
     if not isinstance(act, dict):
         return []
     kind = act.get("type", "takeaway")
-    line = f"**[{kind}]** {act.get('title','')} — {act.get('detail','')}".rstrip(" —")
+    line = f"**[{kind}]** {act.get('title', '')} — {act.get('detail', '')}".rstrip(" —")
     out = ["## Actionable leverage", "", line]
     if kind == "skill" and act.get("skill_slug"):
         out.append("")
@@ -107,8 +109,8 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
     src = entry.get("source_url", "")
     topic_name = c.TOPICS.get(entry.get("topic", ""), {}).get("name", entry.get("topic", ""))
     meta = [
-        f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain','—')}",
-        f"**Source:** [{entry.get('source_name','source')}]({src})"
+        f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain', '—')}",
+        f"**Source:** [{entry.get('source_name', 'source')}]({src})"
         + (f"  ·  **Author:** {entry['author']}" if entry.get("author") else "")
         + f"  ·  **Published:** {fmt_published(entry)}"
         + (
@@ -120,7 +122,7 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
         meta.append("**Tags:** " + ", ".join(f"`{t}`" for t in entry["tags"]))
     corr = entry.get("corroborating_sources") or []
     if corr:
-        links = ", ".join(f"[{s.get('name') or 'source'}]({s.get('url','')})" for s in corr)
+        links = ", ".join(f"[{s.get('name') or 'source'}]({s.get('url', '')})" for s in corr)
         meta.append(f"**Also reported by:** {links} _(+{len(corr)} corroborating)_")
     verified = entry.get("verified")
     if verified is True:
@@ -151,7 +153,7 @@ def _entry_lessons_md(entry: dict) -> list[str]:
     out = ["## What to learn", ""]
     for les in lessons:
         if isinstance(les, dict):
-            line = f"- {les.get('point','')}"
+            line = f"- {les.get('point', '')}"
             if les.get("excerpt"):
                 line += f' — _"{les["excerpt"]}"_{_grounding_mark(les)}'
             out.append(line)
@@ -173,7 +175,7 @@ def _entry_tcm_md(entry: dict) -> list[str]:
 def render_entry_page(entry: dict, conf: c.Config) -> str:
     src = entry.get("source_url", "")
     out = [
-        f"# {entry.get('title','Untitled')}",
+        f"# {entry.get('title', 'Untitled')}",
         "",
         "  \n".join(_entry_meta(entry, entry_scores(entry, conf))),
         "",
@@ -205,10 +207,10 @@ def render_index_block(entry: dict, conf: c.Config) -> str:
     n_corr = len(entry.get("corroborating_sources") or [])
     corr = f" · 🔗 +{n_corr} sources" if n_corr else ""
     return (
-        f"- **[{entry.get('title','Untitled')}]({entry_relpath(entry)})** "
+        f"- **[{entry.get('title', 'Untitled')}]({entry_relpath(entry)})** "
         f"· composite **{scores['composite']}** · {fmt_published(entry)}{corr}{flag}  \n"
         f"  {c.clean_summary(takeaway, 200)}  \n"
-        f"  _[{entry.get('source_name','source')}]({entry.get('source_url','')})_"
+        f"  _[{entry.get('source_name', 'source')}]({entry.get('source_url', '')})_"
     )
 
 
@@ -272,7 +274,8 @@ def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) ->
     out += [
         "---",
         "",
-        "[← Home](../README.md) · [Newsletter](../NEWSLETTER.md) · [Trends](../TRENDS.md) · "
+        f"[← Home](../README.md) · [Standing claims](../claims/{topic}.md) · "
+        "[Newsletter](../NEWSLETTER.md) · [Trends](../TRENDS.md) · "
         "[Review queue](../REVIEW.md) · [Learnings](../LEARNINGS.md)",
         "",
     ]
@@ -324,11 +327,46 @@ def _week_snapshot(curated_entries: list[dict], conf: c.Config) -> list[str]:
         take = e.get("takeaway") or e.get("summary") or e.get("threat") or ""
         tname = c.TOPICS.get(e.get("topic", ""), {}).get("name", e.get("topic", ""))
         out.append(
-            f"- **[{e.get('title','')}]({e['topic']}/{entry_relpath(e)})** · {tname} · "
+            f"- **[{e.get('title', '')}]({e['topic']}/{entry_relpath(e)})** · {tname} · "
             f"{fmt_published(e)} · composite **{s['composite']}** · "
-            f"[source ↗]({e.get('source_url','')})  \n  {c.clean_summary(take, 180)}"
+            f"[source ↗]({e.get('source_url', '')})  \n  {c.clean_summary(take, 180)}"
         )
     return out + [""]
+
+
+def _claims_index() -> list[str]:
+    """Surface the claim ledger on the landing page: how many answers stand per
+    topic, how many were retired, and the most recent thing the field changed."""
+    ledger = cl.load_ledger()
+    every = cl.all_claims(ledger)
+    if not every:
+        return []
+    retired = [claim for claim in every if cl.is_retired(claim)]
+    lines = [
+        "## 📒 Standing claims",
+        "",
+        "> The databases below track **what was published**. The ledger tracks **what we "
+        f"currently believe**: {len(every) - len(retired)} standing answers, each with the "
+        f"evidence behind it — and {len(retired)} retired ones kept underneath with the date "
+        "and reason they stopped being true. See the [full ledger](claims/README.md).",
+        "",
+    ]
+    for topic, meta in c.TOPICS.items():
+        topic_claims = cl.claims_for_topic(ledger, topic)
+        live = sum(1 for claim in topic_claims if cl.is_live(claim))
+        lines.append(
+            f"- {TOPIC_EMOJI.get(topic, '•')} **[{meta['name']}](claims/{topic}.md)** — "
+            f"{live} standing · {len(topic_claims) - live} retired"
+        )
+    latest = sorted(retired, key=lambda claim: claim.get("superseded_on") or "", reverse=True)
+    if latest:
+        top = latest[0]
+        lines += [
+            "",
+            f"**Most recent reversal** ({top.get('superseded_on')}) — ~~{top['statement']}~~  ",
+            f"↳ {top.get('supersession_reason', '')}",
+        ]
+    return lines + [""]
 
 
 def _databases_index(counts: dict[str, int]) -> list[str]:
@@ -358,9 +396,15 @@ def _how_it_works(conf: c.Config) -> list[str]:
         "     └─ analyze  (extract teachable lessons · score newness/novelty/relevance",
         "                  · derive an actionable takeaway/skill/harness idea)",
         "        └─ curate (vetted-only gate) → merge into the 3 topic pools → re-rank",
-        "           └─ render  README · topic pages · newsletter · trends · review · skills",
+        "           ├─ reconcile against data/claims.json  (new claim? supersedes an old one?)",
+        "           └─ render  README · topic pages · claims · newsletter · trends · review · skills",
         "```",
         "",
+        "- **Findings age out; claims don't.** A *finding* is one article. A **claim** is a "
+        'durable answer to a question ("which serialization should agents use?"). The '
+        "[claim ledger](claims/README.md) keeps the current answer on top and every answer it "
+        "replaced underneath, with the date and reason it was retired — so you can see not just "
+        "what's true now, but what the field stopped believing and why.",
         f"- **Latest only.** Findings older than ~{conf.max_age_days} days age out to "
         "[`data/archive.json`](data/archive.json); the *snapshot* above is the last "
         f"{conf.snapshot_days} days.",
@@ -382,6 +426,12 @@ def _how_to_use() -> list[str]:
         "| --- | --- |",
         "| Read the latest, curated | Skim the snapshot above → open a topic database or "
         "[the newsletter](NEWSLETTER.md) |",
+        "| Know what to actually DO right now | Open the [claim ledger](claims/README.md) — "
+        "current answers on top, retired ones underneath with why they fell |",
+        "| Record a new standing answer | `python scripts/add_claim.py new <id> --topic … "
+        '--statement … --evidence "supports|<url>|<title>|<date>"` |',
+        "| Retire an answer the field moved past | `python scripts/add_claim.py supersede "
+        '<old-id> <new-id> --reason "…"` (add `--refuted` if it was simply wrong) |',
         "| Track a new source | `python scripts/add_source.py <type> <handle> --topics …` "
         "(or the `/add-source` skill) — X user, blog, newsletter, GitHub user/query, YouTube |",
         "| Capture one article now | `python scripts/add.py <url>` then the `/add-resource` skill "
@@ -390,8 +440,8 @@ def _how_to_use() -> list[str]:
         "| Run it daily on autopilot | `powershell -File scripts/install_daily_scan.ps1` — a Scheduled "
         "Task ingests, runs Claude headless to analyze+verify, and opens a PR each day (never "
         "auto-merges). Remove with `-Uninstall`. |",
-        "| Regenerate the site | `rerank.py` → `generate_site.py` → `trends.py` → "
-        "`generate_newsletter.py` → `generate_review.py` → `generate_skills.py` |",
+        "| Regenerate the site | `rerank.py` → `generate_site.py` → `generate_claims.py` → "
+        "`trends.py` → `generate_newsletter.py` → `generate_review.py` → `generate_skills.py` |",
         "",
         "**Setup** (Agent Reach + burner X account in WSL2, one-time): see "
         "[PUBLISH.md](PUBLISH.md). **Contributing / how findings are structured:** "
@@ -401,10 +451,12 @@ def _how_to_use() -> list[str]:
         "",
         "```",
         "data/{ai-security,product-security,ai-research}.json  the 3 rolling pools (source of truth)",
+        "data/claims.json                                      the claim ledger (durable, never ages out)",
         "data/archive.json · data/sources.json                 aged-out findings · ranked sources",
         "scripts/                                               ingest · analyze-merge · rank · render",
         ".claude/skills/                                        /research-scan /add-resource /add-source",
         "ai-security/ product-security/ ai-research/            rendered per-topic pages (generated)",
+        "claims/                                                rendered claim ledger (generated)",
         "README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated — do not hand-edit",
         "```",
         "",
@@ -433,6 +485,7 @@ def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
         "",
     ]
     out += _week_snapshot(curated_entries, conf)
+    out += _claims_index()
     out += _databases_index(counts)
     out += _how_it_works(conf)
     out += _how_to_use()

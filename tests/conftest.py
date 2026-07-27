@@ -6,6 +6,8 @@ import common
 import pytest
 import sources_registry
 
+import claims
+
 
 @pytest.fixture
 def sandbox(tmp_path, monkeypatch):
@@ -21,6 +23,7 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(common, "ARCHIVE_FILE", data / "archive.json")
     monkeypatch.setattr(common, "RAW_DIR", data / "_raw")
     monkeypatch.setattr(sources_registry, "REGISTRY_FILE", data / "sources.json")
+    monkeypatch.setattr(claims, "CLAIMS_FILE", data / "claims.json")
     # Keep grounding offline: kill the network re-fetch (raw_path reading still works).
     # Tests that need a fetched source override source_text_for themselves.
     monkeypatch.setattr(common, "fetch_readable", lambda *a, **k: None)

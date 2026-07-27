@@ -61,10 +61,52 @@ Security entries may also carry `threat` / `conditions` / `mitigations`. Then:
 pip install -r requirements.txt
 python scripts/rerank.py
 python scripts/generate_site.py
+python scripts/generate_claims.py
 python scripts/generate_skills.py
 ```
 
 Open a PR (direct-PR mode — see [AGENTS.md](AGENTS.md)). Keep lint + tests green.
+
+## Updating the claim ledger
+
+An **entry** is one article. A **claim** is the durable answer to a question — "which
+serialization should agents use?", "is prompt injection a filtering problem?" — and it
+never ages out. Claims live in [`data/claims.json`](data/claims.json) and render to
+[`claims/`](claims/README.md).
+
+**Never hand-edit the JSON.** Use the CLI; it re-validates the whole ledger before saving:
+
+```bash
+# a new standing answer (guidance = what to DO, scope = where it does NOT apply)
+python scripts/add_claim.py new code-graph-beats-lexical-search \
+  --topic ai-research --domain "Architecture & Optimization" \
+  --statement "Graph-based code retrieval beats lexical search on multi-hop tasks." \
+  --guidance "Build a call/import graph for repo-wide reasoning; keep grep for literals." \
+  --scope "Multi-hop navigation only; single-symbol lookup is still faster with grep." \
+  --confidence 0.7 --evidence "supports|https://arxiv.org/abs/…|Paper title|2026-07-01"
+
+# retire the answer it replaces — both ends of the edge are written for you
+python scripts/add_claim.py supersede grep-is-enough code-graph-beats-lexical-search \
+  --reason "Lexical search misses cross-file call relationships."
+
+python scripts/add_claim.py supersede old new --reason "…" --refuted  # wrong, not just replaced
+python scripts/add_claim.py evidence <id> --evidence "contests|<url>|<title>|<date>"
+python scripts/add_claim.py status <id> --set contested   # credible evidence both ways
+python scripts/add_claim.py validate
+```
+
+House rules:
+
+- **The reason is the product.** "Graph retrieval beat lexical search on multi-hop recall"
+  is a reason; "newer research" is not. Someone should be able to read only the retired
+  claims and understand how the field moved.
+- **Nothing is deleted.** A superseded claim keeps its statement, its evidence, and its
+  history. Demote, never remove.
+- **One claim per question.** If two claims say the same thing, supersede one into the other.
+- **`contested` is a valid answer.** When credible evidence cuts both ways, say so rather
+  than forcing a winner — and record the contesting source with a `contests`/`refutes` stance.
+- **Be conservative.** A single blog post rarely overturns a standing claim. `confidence`
+  should track the strength and independence of the evidence.
 
 ## Adding a source (X user, blog, newsletter, GitHub user/query, YouTube channel)
 
