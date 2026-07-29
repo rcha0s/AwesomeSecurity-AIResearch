@@ -2,11 +2,11 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_8 vetted findings · updated 2026-07-27 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-07-29 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
-_Not new ideas — what the field is watching now, surfaced by the editorial pass._
+_Not new ideas - what the field is watching now, surfaced by the editorial pass._
 
 - **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
   _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
@@ -37,13 +37,13 @@ _Not new ideas — what the field is watching now, surfaced by the editorial pas
 ## AI coding assistant sandbox escape / path traversal
 
 - **[Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')](ai-coding-assistant-sandbox-escape-path-traversal/2026-07-committed-git-symlinks-misleading-approval-dialogs-let-ai-co.md)** · composite **59.85** · Jul 9, 2026  
-  A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys — resolve paths to canonical form and confirm they stay inside the workspace before any…  
+  A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys - resolve paths to canonical form and confirm they stay inside the workspace before any…  
   _[Snyk Blog](https://snyk.io/blog/symlinks-are-still-scary/)_
 
 ## Malware & Wipers
 
 - **[GigaWiper: modular destructive malware that fakes ransomware](malware-wipers/2026-07-gigawiper-modular-destructive-malware-that-fakes-ransomware.md)** · composite **59.25** · Jul 9, 2026  
-  Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise — plan recovery accordingly.  
+  Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise - plan recovery accordingly.  
   _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/)_
 
 ## Malware & Threat Intel
@@ -61,7 +61,7 @@ _Not new ideas — what the field is watching now, surfaced by the editorial pas
 ## Application Security
 
 - **[Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](application-security/2026-06-kemp-loadmaster-pre-auth-rce-uninitialized-heap-missing-null.md)** · composite **57.85** · Jun 29, 2026  
-  A minimal 'just null-terminate the buffer' patch can hide a pre-auth RCE — diff patches carefully, and treat missing null-termination next to attacker-controlled heap data as exploitable, not…  
+  A minimal 'just null-terminate the buffer' patch can hide a pre-auth RCE - diff patches carefully, and treat missing null-termination next to attacker-controlled heap data as exploitable, not…  
   _[source](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/)_
 
 ## browser-delivered malware / malvertising

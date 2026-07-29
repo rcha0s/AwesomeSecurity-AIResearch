@@ -5,22 +5,22 @@
 **Scores:** 🆕 Newness 4 · ✨ Novelty 78 · 🎯 Relevance 84 · 🏛️ Credibility 50 · **Composite 57.1**  
 **Tags:** `meta-harness`, `orchestration`, `agents`, `claude-code`, `tooling-2026`
 
-> **Takeaway —** The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.
+> **Takeaway:** The 'meta-harness' is emerging as an abstraction layer above individual coding agents - orchestrate many, swap freely, enforce policy centrally.
 
 ## TL;DR
 
-_The gist, not every detail — read the [full source](https://github.com/omnigent-ai/omnigent) for the complete write-up._
+_The gist, not every detail - read the [full source](https://github.com/omnigent-ai/omnigent) for the complete write-up._
 
 Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.
 
 ## What to learn
 
-- A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in — _"swap or combine harnesses without rewriting"_ ✅
-- Central policy + sandboxing at the meta-harness is a natural place to enforce agent security — _"enforce policies and sandboxing"_ ✅
+- A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in - _"swap or combine harnesses without rewriting"_ ✅
+- Central policy + sandboxing at the meta-harness is a natural place to enforce agent security - _"enforce policies and sandboxing"_ ✅
 
 ## Actionable leverage
 
-**[harness]** Consider a meta-harness for multi-agent work — Evaluate an orchestration layer (like Omnigent) when running multiple coding agents, so policy/sandboxing/routing live in one place instead of per-agent.
+**[harness]** Consider a meta-harness for multi-agent work - Evaluate an orchestration layer (like Omnigent) when running multiple coding agents, so policy/sandboxing/routing live in one place instead of per-agent.
 
 ---
 

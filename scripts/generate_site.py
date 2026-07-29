@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-generate_site.py — Render the two knowledge directories from the pools.
+generate_site.py - Render the two knowledge directories from the pools.
 
 Reads data/security.json + data/ai.json and writes:
   - README.md               landing page (what this is + global Top-10 learnings)
@@ -10,7 +10,7 @@ Reads data/security.json + data/ai.json and writes:
 
 Ranking uses each entry's composite score (rerank.py fills these); entries with
 no scores yet are ranked by a live-computed newness so legacy items still sort.
-Do not hand-edit generated files — edit the pools and regenerate.
+Do not hand-edit generated files - edit the pools and regenerate.
 
 Usage:
     python scripts/generate_site.py
@@ -18,6 +18,7 @@ Usage:
 
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 from datetime import UTC, datetime
 
@@ -28,13 +29,24 @@ import claims as cl
 TOP_N_LANDING = 10
 
 
+_DASH = re.compile(r"\s*[—–]\s*")
+
+
+def _dedash(text: str) -> str:
+    """Normalize em/en dashes to a SPACED hyphen in rendered markdown.
+
+    A dash acting as a clause break becomes " - " rather than a compound-looking
+    "word-word", keeping a consistent house style across every rendered file."""
+    return _DASH.sub(" - ", text)
+
+
 def fmt_month(date: str) -> str:
     for fmt in ("%Y-%m-%d", "%Y-%m"):
         try:
             return datetime.strptime(date, fmt).strftime("%b %Y")
         except (ValueError, TypeError):
             continue
-    return date or "—"
+    return date or "-"
 
 
 def fmt_published(entry: dict) -> str:
@@ -94,7 +106,7 @@ def render_actionable(entry: dict) -> list[str]:
     if not isinstance(act, dict):
         return []
     kind = act.get("type", "takeaway")
-    line = f"**[{kind}]** {act.get('title', '')} — {act.get('detail', '')}".rstrip(" —")
+    line = f"**[{kind}]** {act.get('title', '')} - {act.get('detail', '')}".rstrip(" -")
     out = ["## Actionable leverage", "", line]
     if kind == "skill" and act.get("skill_slug"):
         out.append("")
@@ -109,7 +121,7 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
     src = entry.get("source_url", "")
     topic_name = c.TOPICS.get(entry.get("topic", ""), {}).get("name", entry.get("topic", ""))
     meta = [
-        f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain', '—')}",
+        f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain', '-')}",
         f"**Source:** [{entry.get('source_name', 'source')}]({src})"
         + (f"  ·  **Author:** {entry['author']}" if entry.get("author") else "")
         + f"  ·  **Published:** {fmt_published(entry)}"
@@ -133,7 +145,7 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
     elif verified is False:
         meta.append("> ⚠️ _Failed independent verification._")
     if entry.get("needs_review"):
-        meta.append("> ⚠️ _Pending review — auto-analyzed, not yet human-verified._")
+        meta.append("> ⚠️ _Pending review - auto-analyzed, not yet human-verified._")
     return meta
 
 
@@ -155,7 +167,7 @@ def _entry_lessons_md(entry: dict) -> list[str]:
         if isinstance(les, dict):
             line = f"- {les.get('point', '')}"
             if les.get("excerpt"):
-                line += f' — _"{les["excerpt"]}"_{_grounding_mark(les)}'
+                line += f' - _"{les["excerpt"]}"_{_grounding_mark(les)}'
             out.append(line)
         else:
             out.append(f"- {les}")
@@ -168,7 +180,7 @@ def _entry_tcm_md(entry: dict) -> list[str]:
     out = ["## Threat · Conditions · Mitigations", ""]
     for label in ("threat", "conditions", "mitigations"):
         if entry.get(label):
-            out.append(f"- **{label.title()} —** {entry[label].strip()}")
+            out.append(f"- **{label.title()}:** {entry[label].strip()}")
     return out + [""]
 
 
@@ -181,12 +193,12 @@ def render_entry_page(entry: dict, conf: c.Config) -> str:
         "",
     ]
     if entry.get("takeaway"):
-        out += [f"> **Takeaway —** {entry['takeaway']}", ""]
+        out += [f"> **Takeaway:** {entry['takeaway']}", ""]
     if entry.get("summary"):
         out += [
             "## TL;DR",
             "",
-            "_The gist, not every detail — read the [full source](#) for the complete write-up._".replace(
+            "_The gist, not every detail - read the [full source](#) for the complete write-up._".replace(
                 "(#)", f"({entry.get('source_url', '')})"
             ),
             "",
@@ -222,7 +234,9 @@ def _write_entry_pages(base: c.Path, by_domain: dict[str, list[dict]], conf: c.C
         dpath = base / c.domain_slug(domain)
         dpath.mkdir(parents=True, exist_ok=True)
         for e in items:
-            (dpath / entry_filename(e)).write_text(render_entry_page(e, conf), encoding="utf-8")
+            (dpath / entry_filename(e)).write_text(
+                _dedash(render_entry_page(e, conf)), encoding="utf-8"
+            )
 
 
 def _editorial_section(editorial: list[dict]) -> list[str]:
@@ -235,7 +249,7 @@ def _editorial_section(editorial: list[dict]) -> list[str]:
     out = [
         "## 📈 Trending & In the News",
         "",
-        "_Not new ideas — what the field is watching now, surfaced by the editorial pass._",
+        "_Not new ideas - what the field is watching now, surfaced by the editorial pass._",
         "",
     ]
     for e in editorial:
@@ -295,7 +309,7 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
     editorial = [e for e in all_entries if c.is_editorial(e)]
     held = len(all_entries) - len(curated) - len(editorial)
     md = _topic_index_md(topic, by_domain, curated, held, conf, now, editorial)
-    (base / "README.md").write_text(md, encoding="utf-8")
+    (base / "README.md").write_text(_dedash(md), encoding="utf-8")
     return curated
 
 
@@ -308,12 +322,11 @@ def _week_snapshot(curated_entries: list[dict], conf: c.Config) -> list[str]:
     fresh = [e for e in curated_entries if c.is_fresh(e, conf.snapshot_days)]
     ranked = rank(fresh, conf)[:TOP_N_LANDING]
     out = [
-        "## 📸 This week's snapshot",
+        "## This week's snapshot",
         "",
-        f"> The top curated findings published in the last {conf.snapshot_days} days. Every entry is "
-        "a **TL;DR** — we track the gist (what's new + why it matters + what to do), and each links "
-        "to its writeup here **and** the original source for the full detail. For the full digest see "
-        "the [📰 newsletter](NEWSLETTER.md).",
+        f"> The top curated findings published in the last {conf.snapshot_days} days. Each entry is "
+        "the gist (what's new, why it matters, what to do), and links to both its writeup here "
+        "**and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).",
         "",
     ]
     if not ranked:
@@ -343,11 +356,11 @@ def _claims_index() -> list[str]:
         return []
     retired = [claim for claim in every if cl.is_retired(claim)]
     lines = [
-        "## 📒 Standing claims",
+        "## Standing claims",
         "",
         "> The databases below track **what was published**. The ledger tracks **what we "
         f"currently believe**: {len(every) - len(retired)} standing answers, each with the "
-        f"evidence behind it — and {len(retired)} retired ones kept underneath with the date "
+        f"evidence behind it, plus {len(retired)} retired ones kept underneath with the date "
         "and reason they stopped being true. See the [full ledger](claims/README.md).",
         "",
     ]
@@ -355,7 +368,7 @@ def _claims_index() -> list[str]:
         topic_claims = cl.claims_for_topic(ledger, topic)
         live = sum(1 for claim in topic_claims if cl.is_live(claim))
         lines.append(
-            f"- {TOPIC_EMOJI.get(topic, '•')} **[{meta['name']}](claims/{topic}.md)** — "
+            f"- **[{meta['name']}](claims/{topic}.md)** - "
             f"{live} standing · {len(topic_claims) - live} retired"
         )
     latest = sorted(retired, key=lambda claim: claim.get("superseded_on") or "", reverse=True)
@@ -363,24 +376,24 @@ def _claims_index() -> list[str]:
         top = latest[0]
         lines += [
             "",
-            f"**Most recent reversal** ({top.get('superseded_on')}) — ~~{top['statement']}~~  ",
+            f"**Most recent reversal** ({top.get('superseded_on')}): ~~{top['statement']}~~  ",
             f"↳ {top.get('supersession_reason', '')}",
         ]
     return lines + [""]
 
 
 def _databases_index(counts: dict[str, int]) -> list[str]:
-    lines = ["## 📚 The three databases", ""]
+    lines = ["## The three databases", ""]
     for t, meta in c.TOPICS.items():
         lines.append(
-            f"- {TOPIC_EMOJI.get(t, '•')} **[{meta['name']}]({t}/README.md)** "
-            f"— {counts[t]} vetted findings. {meta['blurb']}"
+            f"- **[{meta['name']}]({t}/README.md)** "
+            f"({counts[t]} vetted findings). {meta['blurb']}"
         )
     lines += [
         "",
-        "Also generated every run: [📰 Newsletter](NEWSLETTER.md) (daily snapshot) · "
-        "[📈 Trends](TRENDS.md) (emerging themes) · [🔍 Review queue](REVIEW.md) "
-        "(not-yet-vetted) · [📓 Learnings](LEARNINGS.md) (takeaways + generated skills).",
+        "Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · "
+        "[Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) "
+        "(not-yet-vetted) · [Learnings](LEARNINGS.md) (takeaways and generated skills).",
         "",
     ]
     return lines
@@ -400,20 +413,41 @@ def _how_it_works(conf: c.Config) -> list[str]:
         "           └─ render  README · topic pages · claims · newsletter · trends · review · skills",
         "```",
         "",
-        "- **Findings age out; claims don't.** A *finding* is one article. A **claim** is a "
-        'durable answer to a question ("which serialization should agents use?"). The '
-        "[claim ledger](claims/README.md) keeps the current answer on top and every answer it "
-        "replaced underneath, with the date and reason it was retired — so you can see not just "
-        "what's true now, but what the field stopped believing and why.",
-        f"- **Latest only.** Findings older than ~{conf.max_age_days} days age out to "
-        "[`data/archive.json`](data/archive.json); the *snapshot* above is the last "
-        f"{conf.snapshot_days} days.",
-        "- **Vetted-only.** A finding is shown only if it isn't flagged for review and clears the "
-        "composite floor; the rest wait in [REVIEW.md](REVIEW.md). Nothing is deleted.",
+        "- **Latest only.** Findings older than about "
+        f"{conf.max_age_days} days age out to [`data/archive.json`](data/archive.json); the "
+        f"snapshot at the top is the last {conf.snapshot_days} days.",
+        "- **Vetted only.** A finding is shown only if it clears the novelty and relevance floor "
+        "and passes verification; the rest wait in [REVIEW.md](REVIEW.md). Nothing is deleted.",
         "- **Ranked sources.** Approved sources live in a registry and self-rank by how often they "
-        "yield *curated* findings (tier + reach + hit-rate).",
+        "yield curated findings (tier, reach, and hit-rate).",
         "- **Emerging trends.** Tagged findings are clustered over time to surface waves early "
         "([TRENDS.md](TRENDS.md)).",
+        "",
+    ]
+
+
+def _honesty(conf: c.Config) -> list[str]:
+    return [
+        "## How the data is produced, and its limits",
+        "",
+        "Being upfront, because a research tracker lives or dies on trust:",
+        "",
+        "- **What runs where.** Ingestion and the LLM analysis run locally (the `/research-scan` "
+        "and `/add-resource` skills, plus an X account for social sources). The GitHub Actions job "
+        "only re-ranks the committed pools and regenerates the rendered files. In practice the "
+        "repo is refreshed weekly by the maintainer; it is not reproducible from a clean clone "
+        "without the local pipeline and credentials.",
+        f"- **Windows.** All three finding tracks share one rolling window of about "
+        f"{conf.max_age_days} days (the this-week snapshot is the last {conf.snapshot_days}); older "
+        "findings move to [`data/archive.json`](data/archive.json). The claim ledger is durable and "
+        "never ages out, so it reaches back years. Findings tell you what was published lately; "
+        "claims tell you what to believe now.",
+        "- **What \"vetted\" and \"checked\" mean.** A finding is curated only if it clears the "
+        "novelty and relevance bars, its lesson excerpt is found in the source text (grounding), "
+        "and a separate model pass does not refute it. That is automated review with a mechanical "
+        "grounding check, not human verification. Treat it as a strong filter, not a guarantee.",
+        "- **Source caveat.** Social ingestion leans on an X account and is inherently fragile; "
+        "when it stalls, the RSS, GitHub, arXiv, and advisory feeds keep the pipeline running.",
         "",
     ]
 
@@ -426,18 +460,18 @@ def _how_to_use() -> list[str]:
         "| --- | --- |",
         "| Read the latest, curated | Skim the snapshot above → open a topic database or "
         "[the newsletter](NEWSLETTER.md) |",
-        "| Know what to actually DO right now | Open the [claim ledger](claims/README.md) — "
+        "| Know what to actually DO right now | Open the [claim ledger](claims/README.md) - "
         "current answers on top, retired ones underneath with why they fell |",
         "| Record a new standing answer | `python scripts/add_claim.py new <id> --topic … "
         '--statement … --evidence "supports|<url>|<title>|<date>"` |',
         "| Retire an answer the field moved past | `python scripts/add_claim.py supersede "
         '<old-id> <new-id> --reason "…"` (add `--refuted` if it was simply wrong) |',
         "| Track a new source | `python scripts/add_source.py <type> <handle> --topics …` "
-        "(or the `/add-source` skill) — X user, blog, newsletter, GitHub user/query, YouTube |",
+        "(or the `/add-source` skill) - X user, blog, newsletter, GitHub user/query, YouTube |",
         "| Capture one article now | `python scripts/add.py <url>` then the `/add-resource` skill "
-        "— returns summary + takeaway + action and files it |",
+        "- returns summary + takeaway + action and files it |",
         "| Run a full scan | the `/research-scan` skill (self-pace with `/loop 12h /research-scan`) |",
-        "| Run it daily on autopilot | `powershell -File scripts/install_daily_scan.ps1` — a Scheduled "
+        "| Run it daily on autopilot | `powershell -File scripts/install_daily_scan.ps1` - a Scheduled "
         "Task ingests, runs Claude headless to analyze+verify, and opens a PR each day (never "
         "auto-merges). Remove with `-Uninstall`. |",
         "| Regenerate the site | `rerank.py` → `generate_site.py` → `generate_claims.py` → "
@@ -457,7 +491,7 @@ def _how_to_use() -> list[str]:
         ".claude/skills/                                        /research-scan /add-resource /add-source",
         "ai-security/ product-security/ ai-research/            rendered per-topic pages (generated)",
         "claims/                                                rendered claim ledger (generated)",
-        "README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated — do not hand-edit",
+        "README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated - do not hand-edit",
         "```",
         "",
     ]
@@ -469,40 +503,64 @@ def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
     }
     total = sum(counts.values())
     out = [
-        "# Awesome Security & AI Research "
-        "[![Awesome](https://cdn.jsdelivr.net/gh/sindresorhus/awesome@d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)",
+        "# Awesome Security & AI Research",
         "",
-        "> An auto-updating, source-cited tracker of the most **teachable** security and AI "
-        "research. It scans a ranked set of sources (X, GitHub, YouTube, blogs, newsletters, RSS), "
-        "extracts the transferable lesson + a concrete action from each, curates hard, and files "
-        "it into three rolling databases — **AI Security**, **Product Security**, and "
-        "**AI Research** (practitioner).",
+        '<p align="center">'
+        '<a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">'
+        '<img src="docs/og.png" alt="Awesome Security & AI Research - a weekly, source-cited '
+        'briefing" width="820"></a></p>',
         "",
-        f"![Updated](https://img.shields.io/badge/updated-{now.replace('-', '--')}-blue) "
-        f"![Vetted findings](https://img.shields.io/badge/vetted-{total}-success) "
-        f"![Window](https://img.shields.io/badge/window-last_{conf.max_age_days}_days-orange) "
-        "![License](https://img.shields.io/badge/license-CC--BY--4.0-lightgrey)",
+        "> **A weekly, source-cited briefing on AI security, product security, and applied AI "
+        "research.** Every week it scans a ranked set of sources (X, GitHub, YouTube, blogs, "
+        "newsletters, RSS), keeps only the findings that teach something you can act on, and files "
+        "each one under **AI Security**, **Product Security**, or **AI Research** with a one-line "
+        "lesson and a concrete next step.",
         "",
-        "### ▶ [Browse the live site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)",
+        f"![Updated](https://img.shields.io/badge/updated-{now.replace('-', '--')}-1f6feb) "
+        f"![Vetted findings](https://img.shields.io/badge/vetted-{total}-2da44e) "
+        f"![Window](https://img.shields.io/badge/findings_window-last_{conf.max_age_days}_days-bf8700) "
+        "![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) "
+        "![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)",
         "",
-        "Filter the claim ledger by topic and status, follow supersession chains between "
-        "claims, and search the findings feed. The markdown below is the same data, readable "
-        "on GitHub.",
+        "<h3 align=\"center\">"
+        "<a href=\"https://rcha0s.github.io/AwesomeSecurity-AIResearch/\">Read this week's briefing "
+        "&#8594;</a></h3>",
+        "",
+        "The live site opens on this week's briefing (the lead finding, what's trending, what's "
+        "most novel, and the strongest research in each field), then lets you browse every "
+        "subfield, filter the claim ledger, and search the full feed. The markdown below is the "
+        "same data, readable on GitHub.",
+        "",
+        "### What makes it different",
+        "",
+        "- **Findings age out; claims don't.** A finding is one article, good for about a month. A "
+        "**claim** is a durable answer to a recurring question (\"which serialization should agents "
+        "use?\"). The [claim ledger](claims/README.md) keeps the current answer on top and every "
+        "answer it replaced underneath, with the date and reason it was retired, so you can see "
+        "what the field stopped believing and why.",
+        "- **One lesson, one action.** Nothing here is a link dump. Each finding is distilled to "
+        "the transferable lesson and the concrete thing to do about it.",
+        "- **Vetted, not scraped.** A finding is shown only after it clears a novelty and relevance "
+        "bar, its lesson excerpt is grounded against the source text, and a separate model pass "
+        "cross-checks the claim. This is automated review, not human review; everything that fails "
+        "waits in the [review queue](REVIEW.md), and nothing is deleted.",
+        "- **Every claim cites its sources.** No anonymous assertions; follow the evidence yourself.",
         "",
     ]
     out += _week_snapshot(curated_entries, conf)
     out += _claims_index()
     out += _databases_index(counts)
     out += _how_it_works(conf)
+    out += _honesty(conf)
     out += _how_to_use()
     out += [
         "## License",
         "",
         "Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains "
-        "the property of its original authors — every finding cites its original source.",
+        "the property of its original authors - every finding cites its original source.",
         "",
         f"<sub>Generated by <code>scripts/generate_site.py</code> on {now}. "
-        "Edit the pools in <code>data/</code> and regenerate — do not hand-edit rendered files.</sub>",
+        "Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>",
         "",
     ]
     return "\n".join(out)
@@ -514,7 +572,9 @@ def main() -> int:
     all_entries: list[dict] = []
     for topic in c.TOPICS:
         all_entries += write_topic(topic, conf, now)
-    (c.ROOT / "README.md").write_text(render_readme(all_entries, conf, now), encoding="utf-8")
+    (c.ROOT / "README.md").write_text(
+        _dedash(render_readme(all_entries, conf, now)), encoding="utf-8"
+    )
     print(f"Rendered README.md + {'/ '.join(c.TOPICS)}/ ({len(all_entries)} vetted findings).")
     return 0
 

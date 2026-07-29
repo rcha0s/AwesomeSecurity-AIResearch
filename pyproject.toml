@@ -1,6 +1,13 @@
+[project]
+name = "awesome-security-ai-research"
+version = "0.1.0"
+description = "A weekly, source-cited briefing on AI security, product security, and applied AI research."
+# The scripts use datetime.UTC (3.11+); 3.11 and 3.12 are both supported and tested.
+requires-python = ">=3.11"
+
 [tool.black]
 line-length = 100
-target-version = ["py311"]
+target-version = ["py311", "py312"]
 
 [tool.ruff]
 line-length = 100

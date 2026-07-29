@@ -34,7 +34,11 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt pytest
+
+      # Never publish from a broken generator: the suite gates the render.
+      - name: Run tests
+        run: pytest -q
 
       - name: Re-rank pools
         run: python scripts/rerank.py
@@ -44,11 +48,12 @@ jobs:
       - name: Validate the claim ledger
         run: python scripts/add_claim.py validate
 
-      - name: Regenerate site + claims + trends + newsletter + review + skills
+      - name: Regenerate site + claims + trends + newsletter + review + skills + card
         run: |
           python scripts/generate_site.py
           python scripts/generate_claims.py
           python scripts/generate_html.py
+          python scripts/generate_og.py
           python scripts/trends.py
           python scripts/generate_newsletter.py
           python scripts/generate_review.py

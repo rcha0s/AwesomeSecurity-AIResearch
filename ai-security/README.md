@@ -2,11 +2,11 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_5 vetted findings · updated 2026-07-27 · ranked by composite · latest 31 days only · [9 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-07-29 · ranked by composite · latest 31 days only · [9 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
-_Not new ideas — what the field is watching now, surfaced by the editorial pass._
+_Not new ideas - what the field is watching now, surfaced by the editorial pass._
 
 - **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)**
   _Why now: A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach. · newsworthy · trending · high-relevance · timely_
@@ -42,7 +42,7 @@ _Not new ideas — what the field is watching now, surfaced by the editorial pas
 ## Skill Supply Chain
 
 - **[Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)](skill-supply-chain/2026-07-agent-skill-security-is-a-lifecycle-problem-not-just-a-runti.md)** · composite **59.85** · Jul 16, 2026  
-  When you scan or admit agent skills, cover the whole lifecycle (admission, retrieval, planner selection, evolution) — a runtime-only check misses where most of the risk actually lives.  
+  When you scan or admit agent skills, cover the whole lifecycle (admission, retrieval, planner selection, evolution) - a runtime-only check misses where most of the risk actually lives.  
   _[source](https://arxiv.org/abs/2607.13987)_
 
 ---
