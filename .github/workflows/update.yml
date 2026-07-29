@@ -39,9 +39,16 @@ jobs:
       - name: Re-rank pools
         run: python scripts/rerank.py
 
-      - name: Regenerate site + trends + newsletter + review + skills
+      # Fails the run on a broken supersession edge rather than publishing a
+      # ledger where a retired claim points at nothing.
+      - name: Validate the claim ledger
+        run: python scripts/add_claim.py validate
+
+      - name: Regenerate site + claims + trends + newsletter + review + skills
         run: |
           python scripts/generate_site.py
+          python scripts/generate_claims.py
+          python scripts/generate_html.py
           python scripts/trends.py
           python scripts/generate_newsletter.py
           python scripts/generate_review.py
@@ -53,7 +60,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [[ -n "$(git status --porcelain)" ]]; then
             git add data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md \
-              ai-security product-security ai-research skills
+              ai-security product-security ai-research claims docs skills
             git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
             git push
           else
