@@ -14,26 +14,26 @@ This repo was built locally. Follow either path below to get it onto your GitHub
 Requires the [GitHub CLI](https://cli.github.com/) (`gh auth login` once).
 
 ```bash
-cd AwesomeSecurityResearch
+cd AwesomeSecurity-AIResearch
 git init -b main
 git add -A
-git commit -m "Initial commit: AwesomeSecurityResearch — security research tracker"
-gh repo create AwesomeSecurityResearch --public --source=. --remote=origin --push
+git commit -m "Initial commit: AwesomeSecurity-AIResearch — security research tracker"
+gh repo create AwesomeSecurity-AIResearch --public --source=. --remote=origin --push
 ```
 
 That creates the repo under your account and pushes in one step.
 
 ## Option B — Plain git
 
-1. Create an empty repo on GitHub named **AwesomeSecurityResearch** (no README/license — this repo already has them).
+1. Create an empty repo on GitHub named **AwesomeSecurity-AIResearch** (no README/license — this repo already has them).
 2. Then:
 
 ```bash
-cd AwesomeSecurityResearch
+cd AwesomeSecurity-AIResearch
 git init -b main
 git add -A
-git commit -m "Initial commit: AwesomeSecurityResearch — security research tracker"
-git remote add origin https://github.com/<your-username>/AwesomeSecurityResearch.git
+git commit -m "Initial commit: AwesomeSecurity-AIResearch — security research tracker"
+git remote add origin https://github.com/<your-username>/AwesomeSecurity-AIResearch.git
 git push -u origin main
 ```
 

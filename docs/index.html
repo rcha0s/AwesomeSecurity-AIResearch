@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Standing Claims — AI Agent &amp; Security Research</title>
+<meta name="description" content="What currently holds for building agentic systems and securing AI — each claim with its evidence, and every superseded answer kept with the reason it fell." />
+<style>
+  :root {
+    --ground: #f2f3f6; --ground-sunk: #e8eaef; --surface: #fbfbfd;
+    --hair: #d3d7e0; --hair-soft: #e2e5ec;
+    --ink: #191a1f; --ink-mid: #4b505d; --ink-soft: #6f7583;
+    --accent: #2f4858; --accent-ink: #ffffff;
+    --st-current: #1a6b53; --st-current-bg: #e2efe9;
+    --st-contested: #97620f; --st-contested-bg: #f6ecd9;
+    --st-superseded: #656a77; --st-superseded-bg: #e5e7ec;
+    --st-refuted: #93292b; --st-refuted-bg: #f5e3e2;
+    --flash: #fff3c4;
+    --serif: Georgia, "Iowan Old Style", "Source Serif Pro", "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --measure: 68ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #14151a; --ground-sunk: #101116; --surface: #1a1c22;
+      --hair: #2f333d; --hair-soft: #24272f;
+      --ink: #e8eaef; --ink-mid: #a9b0bd; --ink-soft: #7d8593;
+      --accent: #8fb4c9; --accent-ink: #10161b;
+      --st-current: #5fc4a2; --st-current-bg: #16302a;
+      --st-contested: #dda63f; --st-contested-bg: #322817;
+      --st-superseded: #8a919f; --st-superseded-bg: #22252c;
+      --st-refuted: #e0777a; --st-refuted-bg: #331e20;
+      --flash: #3d3617;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #14151a; --ground-sunk: #101116; --surface: #1a1c22;
+    --hair: #2f333d; --hair-soft: #24272f;
+    --ink: #e8eaef; --ink-mid: #a9b0bd; --ink-soft: #7d8593;
+    --accent: #8fb4c9; --accent-ink: #10161b;
+    --st-current: #5fc4a2; --st-current-bg: #16302a;
+    --st-contested: #dda63f; --st-contested-bg: #322817;
+    --st-superseded: #8a919f; --st-superseded-bg: #22252c;
+    --st-refuted: #e0777a; --st-refuted-bg: #331e20;
+    --flash: #3d3617;
+  }
+  :root[data-theme="light"] {
+    --ground: #f2f3f6; --ground-sunk: #e8eaef; --surface: #fbfbfd;
+    --hair: #d3d7e0; --hair-soft: #e2e5ec;
+    --ink: #191a1f; --ink-mid: #4b505d; --ink-soft: #6f7583;
+    --accent: #2f4858; --accent-ink: #ffffff;
+    --st-current: #1a6b53; --st-current-bg: #e2efe9;
+    --st-contested: #97620f; --st-contested-bg: #f6ecd9;
+    --st-superseded: #656a77; --st-superseded-bg: #e5e7ec;
+    --st-refuted: #93292b; --st-refuted-bg: #f5e3e2;
+    --flash: #fff3c4;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* Masthead */
+  .masthead { border-bottom: 1px solid var(--hair); padding: clamp(26px, 5vw, 52px) 0 20px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-soft); margin: 0 0 14px;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .eyebrow a { color: var(--ink-soft); }
+  .eyebrow a:hover { color: var(--ink); }
+  .masthead h1 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(29px, 4.6vw, 45px); line-height: 1.12;
+    letter-spacing: -.015em; margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { margin: 0; max-width: var(--measure); color: var(--ink-mid); font-size: 16.5px; }
+  .lede b { color: var(--ink); font-weight: 600; }
+  .tally { display: flex; flex-wrap: wrap; margin-top: 24px; border: 1px solid var(--hair); background: var(--surface); }
+  .tally__cell { flex: 1 1 118px; padding: 12px 16px; border-right: 1px solid var(--hair-soft); }
+  .tally__cell:last-child { border-right: 0; }
+  .tally__n { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 23px; font-weight: 600; display: block; line-height: 1.1; }
+  .tally__k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .tally__cell[data-k="current"] .tally__n { color: var(--st-current); }
+  .tally__cell[data-k="contested"] .tally__n { color: var(--st-contested); }
+  .tally__cell[data-k="superseded"] .tally__n { color: var(--st-superseded); }
+  .tally__cell[data-k="refuted"] .tally__n { color: var(--st-refuted); }
+
+  /* View switch */
+  .views { display: flex; gap: 0; border-bottom: 1px solid var(--hair); margin-top: 26px; }
+  .view-tab {
+    appearance: none; background: none; border: 0; border-bottom: 2px solid transparent;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-soft); padding: 10px 16px 9px; cursor: pointer; margin-bottom: -1px;
+  }
+  .view-tab:hover { color: var(--ink); }
+  .view-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+
+  .shell { display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 940px) { .shell { grid-template-columns: 228px 1fr; gap: 44px; align-items: start; } }
+  .rail { position: sticky; top: 0; z-index: 5; background: var(--ground); border-bottom: 1px solid var(--hair); padding: 14px 0; }
+  @media (min-width: 940px) { .rail { top: 18px; border-bottom: 0; padding: 28px 0 0; } }
+  .filter + .filter { margin-top: 20px; }
+  .filter__label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 9px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  @media (min-width: 940px) { .opts { flex-direction: column; gap: 2px; } }
+  .opt {
+    appearance: none; background: transparent; border: 1px solid var(--hair); color: var(--ink-mid);
+    font-family: var(--mono); font-size: 12px; padding: 5px 10px; cursor: pointer;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 10px; text-align: left;
+  }
+  @media (min-width: 940px) { .opt { border: 0; border-left: 2px solid transparent; padding: 5px 8px; width: 100%; } }
+  .opt:hover { color: var(--ink); background: var(--hair-soft); }
+  .opt[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  @media (min-width: 940px) { .opt[aria-pressed="true"] { background: transparent; color: var(--ink); border-left-color: var(--accent); font-weight: 600; } }
+  .opt__n { font-variant-numeric: tabular-nums; font-size: 11px; opacity: .65; }
+  .search { width: 100%; background: var(--surface); border: 1px solid var(--hair); color: var(--ink); font-family: var(--mono); font-size: 12.5px; padding: 7px 9px; }
+  .search::placeholder { color: var(--ink-soft); }
+
+  .register { padding: 28px 0 70px; min-width: 0; }
+  .band--retired { background: var(--ground-sunk); margin-top: 42px; padding: 0 clamp(12px, 3vw, 26px); border-top: 2px solid var(--hair); }
+  .band__head { padding: 20px 0 4px; }
+  .band__title { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 6px; }
+  .band__note { margin: 0; max-width: var(--measure); font-size: 14px; color: var(--ink-soft); }
+
+  .claim { border-top: 1px solid var(--hair-soft); padding: 21px 0; scroll-margin-top: 88px; }
+  .claim:first-of-type { border-top: 1px solid var(--hair); }
+  .claim__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .chip { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 3px 7px; font-weight: 600; }
+  .chip[data-s="current"] { color: var(--st-current); background: var(--st-current-bg); }
+  .chip[data-s="contested"] { color: var(--st-contested); background: var(--st-contested-bg); }
+  .chip[data-s="superseded"] { color: var(--st-superseded); background: var(--st-superseded-bg); }
+  .chip[data-s="refuted"] { color: var(--st-refuted); background: var(--st-refuted-bg); }
+  .claim__id { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); word-break: break-all; }
+  .claim__topic { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-left: auto; }
+  .claim__statement { font-family: var(--serif); font-size: clamp(19px, 2.3vw, 23px); line-height: 1.34; font-weight: 500; margin: 0 0 13px; max-width: var(--measure); text-wrap: balance; }
+  .claim--retired .claim__statement { text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: var(--ink-soft); color: var(--ink-mid); font-size: clamp(17px, 2vw, 19.5px); }
+  .meter { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 0 0 13px; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+  .meter__track { width: 90px; height: 4px; background: var(--hair); position: relative; }
+  .meter__fill { position: absolute; inset: 0 auto 0 0; background: var(--st-current); }
+  .claim[data-status="contested"] .meter__fill { background: var(--st-contested); }
+  .meter__n { font-variant-numeric: tabular-nums; color: var(--ink-mid); }
+  .note { margin: 0 0 11px; max-width: var(--measure); font-size: 15px; }
+  .note--why { border-left: 2px solid var(--st-superseded); padding-left: 13px; color: var(--ink-mid); }
+  .claim[data-status="refuted"] .note--why { border-left-color: var(--st-refuted); }
+  .lab { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
+  .edge { font-family: var(--mono); font-size: 12.5px; margin: 0 0 10px; max-width: var(--measure); color: var(--ink-mid); }
+  .edge a { color: var(--accent); text-underline-offset: 3px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 12px 0 0; padding: 0; list-style: none; }
+  .tags li { font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); border: 1px solid var(--hair-soft); padding: 1px 6px; }
+  details.ev { margin-top: 12px; }
+  details.ev > summary { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); cursor: pointer; padding: 3px 0; list-style: none; }
+  details.ev > summary::-webkit-details-marker { display: none; }
+  details.ev > summary::before { content: "▸ "; }
+  details.ev[open] > summary::before { content: "▾ "; }
+  details.ev > summary:hover { color: var(--ink); }
+  .ev__scroll { overflow-x: auto; margin-top: 9px; }
+  table.ev__t { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 460px; }
+  table.ev__t th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); text-align: left; font-weight: 500; padding: 5px 12px 5px 0; border-bottom: 1px solid var(--hair); }
+  table.ev__t td { padding: 7px 12px 7px 0; border-bottom: 1px solid var(--hair-soft); vertical-align: top; }
+  table.ev__t td:last-child { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; }
+  .stance { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+  .stance[data-v="supports"] { color: var(--st-current); }
+  .stance[data-v="contests"] { color: var(--st-contested); }
+  .stance[data-v="refutes"] { color: var(--st-refuted); }
+  .ev__note { display: block; color: var(--ink-soft); font-size: 12.5px; margin-top: 3px; }
+  .flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { 0%, 22% { background: var(--flash); } 100% { background: transparent; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .flash { animation: none; box-shadow: inset 3px 0 0 var(--accent); } }
+  .empty { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding: 40px 0; }
+
+  /* Findings */
+  .finding { border-top: 1px solid var(--hair-soft); padding: 19px 0; }
+  .finding:first-of-type { border-top: 1px solid var(--hair); }
+  .finding__t { font-family: var(--serif); font-size: 19px; line-height: 1.35; margin: 0 0 7px; max-width: var(--measure); font-weight: 500; }
+  .finding__t a { text-decoration-color: var(--hair); text-underline-offset: 3px; }
+  .finding__t a:hover { text-decoration-color: var(--accent); }
+  .finding__take { margin: 0 0 8px; font-size: 15px; color: var(--ink-mid); max-width: var(--measure); }
+  .finding__meta { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 10px; }
+  .score { font-variant-numeric: tabular-nums; }
+
+  /* Reversals */
+  .rev { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 15px 0; border-top: 1px solid var(--hair-soft); }
+  @media (min-width: 700px) { .rev { grid-template-columns: 108px 1fr; gap: 20px; } }
+  .rev__d { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .rev__fell { font-family: var(--serif); font-size: 16px; color: var(--ink-mid); text-decoration: line-through; text-decoration-color: var(--ink-soft); margin: 0 0 5px; max-width: var(--measure); }
+  .rev__now { margin: 5px 0 0; font-size: 14px; max-width: var(--measure); }
+  .rev__now a { color: var(--accent); text-underline-offset: 3px; }
+
+  footer.foot { border-top: 1px solid var(--hair); padding: 22px 0 56px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); line-height: 1.7; }
+  footer.foot a { color: var(--ink-mid); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">
+      <span>AwesomeSecurity-AIResearch</span>
+      <a href="https://github.com/rcha0s/AwesomeSecurity-AIResearch">source ↗</a>
+      <a href="https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/NEWSLETTER.md">newsletter ↗</a>
+      <a href="https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/TRENDS.md">trends ↗</a>
+    </p>
+    <h1>What we believe about building agents — and what that replaced.</h1>
+    <p class="lede">
+      A research feed tracks <b>what was published</b>. This tracks <b>what currently holds</b>:
+      one durable claim per question, the evidence behind it, and — kept deliberately below —
+      every answer it superseded, with the date and the reason it stopped being true.
+    </p>
+    <div class="tally" id="tally"></div>
+    <div class="views" role="tablist">
+      <button class="view-tab" role="tab" data-view="claims" aria-selected="true">Standing claims</button>
+      <button class="view-tab" role="tab" data-view="findings" aria-selected="false">Findings feed</button>
+      <button class="view-tab" role="tab" data-view="reversals" aria-selected="false">Reversals</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="shell">
+    <aside class="rail">
+      <div class="filter">
+        <span class="filter__label" id="lab-topic">Topic</span>
+        <div class="opts" id="f-topic" role="group" aria-labelledby="lab-topic"></div>
+      </div>
+      <div class="filter" id="status-filter">
+        <span class="filter__label" id="lab-status">Status</span>
+        <div class="opts" id="f-status" role="group" aria-labelledby="lab-status"></div>
+      </div>
+      <div class="filter">
+        <label class="filter__label" for="q">Search</label>
+        <input class="search" id="q" type="search" placeholder="tokens, injection, npm…" autocomplete="off" />
+      </div>
+    </aside>
+    <main class="register" id="register"></main>
+  </div>
+
+  <footer class="foot">
+    <div>Generated from <code>data/claims.json</code> + the topic pools by <code>scripts/generate_html.py</code> · 2026-07-27</div>
+    <div>Curated content <a href="https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/LICENSE">CC BY 4.0</a>; scripts MIT. Every claim and finding cites its original source; linked research remains its authors'.</div>
+  </footer>
+</div>
+
+<script id="site-data" type="application/json">{"generated":"2026-07-27","max_age_days":31,"topics":{"ai-security":{"name":"AI Security","blurb":"Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming."},"product-security":{"name":"Product Security","blurb":"Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not)."},"ai-research":{"name":"AI Research","blurb":"Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research."}},"claims":[{"id":"toon-cuts-input-tokens-vs-json","topic":"ai-research","domain":"Architecture & Optimization","statement":"For large uniform arrays, TOON serializes to 30-60% fewer input tokens than JSON at comparable retrieval accuracy.","status":"current","confidence":0.75,"guidance":"Use TOON for the big uniform/tabular payloads you feed INTO the model (tool results, row sets, retrieved records). Keep JSON where data is deeply nested or irregular.","scope":"Input side only, and only for uniform arrays. Nested or irregular objects show much smaller or negative gains, and on short payloads the 'prompt tax' of explaining the format to the model can erase the saving entirely. Says nothing about generation — see constrained-decoding-for-structured-output.","evidence":[{"stance":"supports","url":"https://github.com/toon-format/toon","title":"toon-format/toon — reference implementation, spec and benchmarks","source_name":"GitHub"},{"stance":"supports","url":"https://arxiv.org/abs/2605.29676","title":"Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems","source_name":"arXiv","published":"2026-05"},{"stance":"supports","url":"https://www.infoq.com/news/2025/11/toon-reduce-llm-cost-tokens/","title":"New Token-Oriented Object Notation (TOON) Hopes to Cut LLM Costs by Reducing Token Consumption","source_name":"InfoQ","published":"2025-11"},{"stance":"contests","url":"https://arxiv.org/abs/2603.03306","title":"Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation","source_name":"arXiv","published":"2026-03","note":"Finds the advantage is often reduced by instructional overhead in shorter contexts."}],"supersedes":["json-default-for-all-agent-io"],"tags":["tokens","serialization","context","cost"],"first_seen":"2025-11","last_reviewed":"2026-07-27"},{"id":"json-default-for-all-agent-io","topic":"ai-research","domain":"Architecture & Optimization","statement":"JSON is the natural default for all agent I/O; serialization format is not a meaningful optimization lever.","status":"superseded","confidence":0.3,"evidence":[{"stance":"refutes","url":"https://arxiv.org/abs/2605.29676","title":"Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems","source_name":"arXiv","published":"2026-05"}],"superseded_by":["toon-cuts-input-tokens-vs-json"],"superseded_on":"2026-05","supersession_reason":"Format choice measurably moves cost: uniform arrays serialize 30-60% smaller in TOON at comparable retrieval accuracy, which makes serialization a real optimization lever on the input side rather than an aesthetic preference.","tags":["tokens","serialization"],"first_seen":"2023-01"},{"id":"constrained-decoding-for-structured-output","topic":"ai-research","domain":"Architecture & Optimization","statement":"For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy — token-optimized notations do not win here.","status":"current","confidence":0.7,"guidance":"Split the decision by direction. Use a token-optimized notation for what you feed in; use constrained decoding (or plain JSON) for what you ask the model to emit.","scope":"Benchmarked on one-shot in-context generation. Constrained decoding requires a serving stack that supports it — without one, plain JSON generation is the accuracy-preserving fallback.","evidence":[{"stance":"supports","url":"https://arxiv.org/abs/2603.03306","title":"Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation","source_name":"arXiv","published":"2026-03"}],"supersedes":["toon-best-for-structured-output-generation"],"tags":["tokens","serialization","structured-output","decoding"],"first_seen":"2026-03","last_reviewed":"2026-07-27"},{"id":"toon-best-for-structured-output-generation","topic":"ai-research","domain":"Architecture & Optimization","statement":"Because TOON is more token-efficient than JSON, asking the model to GENERATE TOON is also better than asking it to generate JSON.","status":"refuted","confidence":0.15,"evidence":[{"stance":"refutes","url":"https://arxiv.org/abs/2603.03306","title":"Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation","source_name":"arXiv","published":"2026-03"}],"superseded_by":["constrained-decoding-for-structured-output"],"superseded_on":"2026-03","supersession_reason":"Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on simple structures. The input-side token saving does not transfer to the output side.","tags":["tokens","serialization","structured-output"],"first_seen":"2025-11"},{"id":"match-tool-schemas-to-the-target-model","topic":"ai-research","domain":"Tooling & Infrastructure","statement":"A newer SOTA model can be WORSE at your harness's custom tool schema than its older siblings, because it was RL-trained on a different harness's tools.","status":"current","confidence":0.8,"guidance":"Match your harness's tool schemas to what the target model was trained on — Claude on str-replace-style edits, OpenAI on apply_patch — and offer a model-matched edit tool in multi-model harnesses. Re-run tool-calling evals on every model upgrade.","scope":"Observed on custom edit-tool schemas in third-party harnesses. First-party harnesses whose tools the model was trained on do not show the regression.","evidence":[{"stance":"supports","url":"https://simonwillison.net/2026/Jul/4/better-models-worse-tools/","title":"Better Models, Worse Tools: SOTA models regress on non-native tool schemas","source_name":"Simon Willison's Weblog","published":"2026-07-04"}],"supersedes":["newer-model-is-always-an-upgrade"],"tags":["harness","tool-use","agents","evals"],"first_seen":"2026-07-04","last_reviewed":"2026-07-27"},{"id":"newer-model-is-always-an-upgrade","topic":"ai-research","domain":"Tooling & Infrastructure","statement":"Swapping in the newest frontier model is a strict improvement for an existing harness.","status":"superseded","confidence":0.2,"evidence":[{"stance":"refutes","url":"https://simonwillison.net/2026/Jul/4/better-models-worse-tools/","title":"Better Models, Worse Tools: SOTA models regress on non-native tool schemas","source_name":"Simon Willison's Weblog","published":"2026-07-04"}],"superseded_by":["match-tool-schemas-to-the-target-model"],"superseded_on":"2026-07-04","supersession_reason":"Measured on a third-party harness's custom edit tool, newer Claude models invented made-up fields that their older siblings got right. Model upgrades can regress harness-specific tool calling, so an upgrade is a change to re-evaluate, not a free win.","tags":["harness","tool-use"],"first_seen":"2024-01"},{"id":"few-distinct-tools-beat-many","topic":"ai-research","domain":"Agents & Harnesses","statement":"Coding-agent harnesses work better with few distinct tools and a lean system prompt of reasoning rather than rules.","status":"current","confidence":0.7,"guidance":"Keep the tool count small and the tools clearly distinct; write the system prompt as reasoning rather than rule lists; grow your eval suite out of real incidents; gate dangerous actions with a context-aware permission classifier rather than a static allowlist.","scope":"Described from first-party practice on one coding agent, not a controlled comparison — treat as a strong prior, not a measured result.","evidence":[{"stance":"supports","url":"https://simonwillison.net/2026/Jul/21/cat-and-thariq/","title":"How the Claude Code team designs its harness","source_name":"Simon Willison's Weblog","published":"2026-07-21"}],"tags":["harness","agents","prompting","evals"],"first_seen":"2026-07-21","last_reviewed":"2026-07-27"},{"id":"score-evals-on-groundedness-not-headline-f1","topic":"ai-research","domain":"Evaluation","statement":"Headline benchmark F1 hides what actually matters for security scanning: groundedness, precision, and run-to-run stability.","status":"current","confidence":0.75,"guidance":"Score scanners on groundedness and run-to-run stability as first-class metrics, and evaluate precision on repos like yours — a matching F1 can still hide a precision gap that shifts cost onto human triage. Do not expect stacking models to fix a groundedness problem.","evidence":[{"stance":"supports","url":"https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark","title":"Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed","source_name":"Semgrep","published":"2026-07-17"},{"stance":"supports","url":"https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision","title":"Kimi K3 code-security eval: matching F1 hides a precision gap","source_name":"Semgrep","published":"2026-07-22"}],"tags":["evals","benchmarks","security-scanning"],"first_seen":"2026-07-17","last_reviewed":"2026-07-27"},{"id":"prompt-injection-is-containment-not-prevention","topic":"ai-security","domain":"Prompt Injection","statement":"Prompt injection cannot be fully solved by context-based filtering: for any blocked flow an adversary can construct a context in which it appears legitimate.","status":"current","confidence":0.85,"guidance":"Design for containment rather than prevention: least-privilege tool scopes, human approval on irreversible actions, provenance tracking of untrusted context, and blast-radius limits that hold even when the model is fooled.","scope":"An impossibility argument about context-inferred legitimacy, not a claim that defenses are worthless — layered defenses still raise cost and catch known patterns.","evidence":[{"stance":"supports","url":"https://arxiv.org/abs/2605.17634","title":"AI Agents May Always Fall for Prompt Injections","source_name":"arXiv","published":"2026-05"},{"stance":"supports","url":"https://arxiv.org/abs/2606.10525","title":"Assessing Automated Prompt Injection Attacks in Agentic Environments","source_name":"arXiv","published":"2026-06","note":"Large-scale red teaming: vulnerability to indirect injection persists across model families."},{"stance":"supports","url":"https://arxiv.org/abs/2601.17548","title":"Prompt Injection Attacks on Agentic Coding Assistants: A Systematic Analysis","source_name":"arXiv","published":"2026-01","note":"Meta-analysis of 78 studies; taxonomy includes context-window manipulation as a delivery vector."}],"supersedes":["prompt-injection-solvable-by-filtering"],"tags":["prompt-injection","agents","threat-model"],"first_seen":"2026-05","last_reviewed":"2026-07-27"},{"id":"prompt-injection-solvable-by-filtering","topic":"ai-security","domain":"Prompt Injection","statement":"Prompt injection is fundamentally a filtering problem — a good input classifier plus an instruction-hierarchy system prompt solves it.","status":"refuted","confidence":0.1,"evidence":[{"stance":"refutes","url":"https://arxiv.org/abs/2605.17634","title":"AI Agents May Always Fall for Prompt Injections","source_name":"arXiv","published":"2026-05"},{"stance":"refutes","url":"https://arxiv.org/abs/2606.10525","title":"Assessing Automated Prompt Injection Attacks in Agentic Environments","source_name":"arXiv","published":"2026-06"}],"superseded_by":["prompt-injection-is-containment-not-prevention"],"superseded_on":"2026-05","supersession_reason":"Impossibility result: an adversary can always construct a context under which a blocked flow looks legitimate, and a defender who tightens norms to stop it starts blocking genuinely legitimate flows. Large-scale red teaming confirmed the vulnerability persists across model families, so filtering is a cost-raiser, not a solution.","tags":["prompt-injection","guardrails"],"first_seen":"2023-05"},{"id":"provenance-auditing-defends-context-aware-injection","topic":"ai-security","domain":"Prompt Injection","statement":"Provenance-aware decision auditing — tracking how untrusted context propagates into an agent's decisions — is an effective defense against context-aware prompt injection.","status":"contested","confidence":0.5,"guidance":"Worth piloting as a layer, but do not treat it as a boundary: keep least-privilege scopes and approval gates behind it.","scope":"Open question. The defense is demonstrated on specific benchmarks; the impossibility argument says no context-based defense can be complete. Both can be true — the unresolved part is how much residual risk remains in practice.","evidence":[{"stance":"supports","url":"https://arxiv.org/abs/2605.03378","title":"ARGUS: Defending LLM Agents Against Context-Aware Prompt Injection","source_name":"arXiv","published":"2026-05","note":"Builds an influence provenance graph to track untrusted context into agent decisions."},{"stance":"contests","url":"https://arxiv.org/abs/2605.17634","title":"AI Agents May Always Fall for Prompt Injections","source_name":"arXiv","published":"2026-05","note":"Argues no context-based defense can be complete."}],"tags":["prompt-injection","defenses","provenance"],"first_seen":"2026-05","last_reviewed":"2026-07-27"},{"id":"agent-memory-is-a-persistent-attack-surface","topic":"ai-security","domain":"Memory & Context Poisoning","statement":"Poisoned preferences and instructions persist in agent long-term memory across sessions and resist normal in-conversation correction.","status":"current","confidence":0.8,"guidance":"Validate what is allowed to ENTER memory rather than trying to argue it out later. Treat an agent's memory and config files as protected assets with their own access control, change review, and backups.","evidence":[{"stance":"supports","url":"https://arxiv.org/abs/2607.17619","title":"Insecure coding preferences persist in LLM long-term memory and resist normal correction","source_name":"arXiv","published":"2026-07-20"},{"stance":"supports","url":"https://arxiv.org/abs/2607.17986","title":"Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls","source_name":"arXiv","published":"2026-07-20"},{"stance":"supports","url":"https://arxiv.org/abs/2606.04425","title":"What If Prompt Injection Never Left? Cross-Session Stored Prompt Injection in Agentic Systems","source_name":"arXiv","published":"2026-06"}],"tags":["memory-poisoning","agents","persistence"],"first_seen":"2026-06","last_reviewed":"2026-07-27"},{"id":"provider-guardrails-can-block-incident-response","topic":"ai-security","domain":"Harness & Agent Security","statement":"Commercial provider safety guardrails can refuse to assist during a real security incident, at exactly the moment you need the model most.","status":"current","confidence":0.7,"guidance":"Pre-stage a local open-weight forensic model so breach response does not depend on a provider's refusal behavior, and test that path before you need it.","scope":"Observed during a live agentic intrusion response. This is about availability of assistance under refusal, not about whether guardrails reduce harm overall.","evidence":[{"stance":"supports","url":"https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/","title":"Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion","source_name":"Embrace The Red","published":"2026-07-19"}],"tags":["guardrails","incident-response","availability"],"first_seen":"2026-07-19","last_reviewed":"2026-07-27"},{"id":"sandbox-model-deserialization","topic":"ai-security","domain":"Model Supply Chain","statement":"Prefer non-executable model formats and sandbox deserialization of any third-party model — a clean scanner result is weak evidence of safety.","status":"current","confidence":0.85,"guidance":"Load third-party weights only in a sandbox, prefer safetensors-style non-executable formats, and treat scanner output as one signal rather than an admission gate.","evidence":[{"stance":"supports","url":"https://arxiv.org/abs/2607.17503","title":"ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs","source_name":"arXiv","published":"2026-07-20"}],"supersedes":["model-scanners-are-sufficient-for-supply-chain"],"tags":["model-supply-chain","deserialization","scanning"],"first_seen":"2026-07-20","last_reviewed":"2026-07-27"},{"id":"model-scanners-are-sufficient-for-supply-chain","topic":"ai-security","domain":"Model Supply Chain","statement":"A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.","status":"refuted","confidence":0.1,"evidence":[{"stance":"refutes","url":"https://arxiv.org/abs/2607.17503","title":"ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs","source_name":"arXiv","published":"2026-07-20"}],"superseded_by":["sandbox-model-deserialization"],"superseded_on":"2026-07-20","supersession_reason":"Pickle-VM import tricks evaded ten separate model scanners and four model hubs. A clean scan result no longer distinguishes a safe artifact from an evasive one, so scanning cannot be the admission gate.","tags":["model-supply-chain","scanning"],"first_seen":"2024-06"},{"id":"gate-agent-prs-with-automated-checks","topic":"product-security","domain":"AI-Generated Code Risk","statement":"Agent-generated PRs need automated secret and dependency-integrity gates — human review demonstrably does not catch that class of issue.","status":"current","confidence":0.75,"guidance":"Put automated secret scanning and dependency-integrity checks in the required-checks set for agent PRs, and keep human review for design and logic where it actually performs.","scope":"Measured on agent-generated PRs; 38.9% carried a security smell, though humans still introduce most of the severe defects overall.","evidence":[{"stance":"supports","url":"https://arxiv.org/abs/2607.12428","title":"38.9% of agent-generated PRs carry a security smell — but humans introduce most of the real ones","source_name":"arXiv","published":"2026-07-19"}],"supersedes":["human-review-catches-agent-pr-risk"],"tags":["ai-generated-code","code-review","ci"],"first_seen":"2026-07-19","last_reviewed":"2026-07-27"},{"id":"human-review-catches-agent-pr-risk","topic":"product-security","domain":"AI-Generated Code Risk","statement":"Normal human code review is sufficient to catch the security problems in agent-generated pull requests.","status":"superseded","confidence":0.2,"evidence":[{"stance":"refutes","url":"https://arxiv.org/abs/2607.12428","title":"38.9% of agent-generated PRs carry a security smell","source_name":"arXiv","published":"2026-07-19"}],"superseded_by":["gate-agent-prs-with-automated-checks"],"superseded_on":"2026-07-19","supersession_reason":"Measured across agent-generated PRs, 38.9% carried a security smell and human review demonstrably did not catch the secret and dependency-integrity class. Review remains valuable for logic and design, but it is not the control for this risk.","tags":["ai-generated-code","code-review"],"first_seen":"2025-06"},{"id":"import-time-payloads-defeat-install-time-controls","topic":"product-security","domain":"Supply Chain & Dependencies","statement":"npm supply-chain payloads delivered at IMPORT time defeat --ignore-scripts, and a valid provenance attestation does not indicate the package is trustworthy.","status":"current","confidence":0.85,"guidance":"Do not treat --ignore-scripts or provenance attestation as the control. Pin and review dependency updates, run untrusted first-import in a sandbox, and monitor runtime egress from build and test jobs.","evidence":[{"stance":"supports","url":"https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/","title":"Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery","source_name":"Microsoft Security Blog","published":"2026-07-15"}],"supersedes":["ignore-scripts-blocks-npm-supply-chain"],"tags":["supply-chain","npm","provenance"],"first_seen":"2026-07-15","last_reviewed":"2026-07-27"},{"id":"ignore-scripts-blocks-npm-supply-chain","topic":"product-security","domain":"Supply Chain & Dependencies","statement":"Installing with --ignore-scripts, plus checking for a provenance attestation, is adequate protection against npm supply-chain compromise.","status":"refuted","confidence":0.1,"evidence":[{"stance":"refutes","url":"https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/","title":"Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery","source_name":"Microsoft Security Blog","published":"2026-07-15"}],"superseded_by":["import-time-payloads-defeat-install-time-controls"],"superseded_on":"2026-07-15","supersession_reason":"The AsyncAPI compromise delivered its payload at import time, which --ignore-scripts does not prevent, and it shipped with a valid provenance attestation. Both controls target the wrong stage of the lifecycle.","tags":["supply-chain","npm"],"first_seen":"2022-01"}],"findings":[{"topic":"product-security","domain":"Supply Chain & Dependencies","title":"AsyncAPI npm compromise: import-time payload defeats --ignore-scripts","url":"https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/","takeaway":"Import-time malware makes --ignore-scripts useless and a valid provenance attestation is not a trust signal when the pipeline itself is hijacked.","summary":"Attackers backdoored five @asyncapi npm versions that execute at module-load (import/require) time rather than via a postinstall hook, so `npm install --ignore-scripts` doesn't stop them. They didn't compromise npm directly: a `pull_request_target` pwn request exposed the project's bot token (PAT), after which the project's own trusted-publishing (GitHub OIDC) pipeline shipped the poisoned packages with valid provenance attestations.","published":"2026-07-16","composite":70.12,"source_name":"","tags":["supply-chain","npm","provenance","ci-cd","github-actions"]},{"topic":"product-security","domain":"Supply Chain","title":"Phantom Squatting: attackers register the domains LLMs hallucinate","url":"https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/","takeaway":"LLM hallucinations are a predictable supply-chain attack surface: attackers pre-register the domains/packages models invent.","summary":"Unit 42 documented 'phantom squatting': LLMs consistently hallucinate web domains for legitimate brands, and adversaries register those nonexistent domains to intercept AI-generated traffic. Across 913 brands and 685,339 queries they found 13,229 malicious URLs and ~250,000 still-unregistered hallucinated domains — and predicted adversary registrations 18–51 days ahead.","published":"2026-06-30","composite":66.3,"source_name":"Palo Alto Networks Unit 42","tags":["supply-chain","slopsquatting","hallucination","phishing","unit42"]},{"topic":"ai-security","domain":"MCP & Tools","title":"ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces","url":"https://github.com/advisories/GHSA-pr64-jmmf-jp54","takeaway":"Put SSRF guards on every outbound client that touches untrusted input, re-validate redirect targets, and never suppress a taint warning on a 'trusted config' premise your threat model calls untrusted.","summary":"ToolHive isolates every MCP server in a container, but its remote-auth discovery code runs host-side, outside that sandbox, and follows a server-controlled `WWW-Authenticate: resource_metadata` URL (and its redirects) with no private-IP guard. A malicious remote MCP server can 302 the host to 169.254.169.254; where AWS IMDSv1 is enabled that returns IAM credentials directly, and on IMDSv2/GCP the reachable impact is the broader internal-GET surface — either way the exact reach the container sandbox exists to deny.","published":"2026-07-15","composite":65.4,"source_name":"","tags":["mcp","ssrf","agent-security","cloud-metadata","sandbox-escape"]},{"topic":"ai-research","domain":"Tooling & Infrastructure","title":"Better Models, Worse Tools: SOTA models regress on non-native tool schemas","url":"https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything","takeaway":"Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.","summary":"Armin (building the Pi harness) found newer Claude models (Opus 4.8, Sonnet 5) invent made-up fields when calling Pi's custom edit tool — worse than older models — likely because they're RL-trained on Claude Code's built-in edit tool. Third-party harnesses with their own tool schemas get degraded tool-calling from the very newest models.","published":"2026-07-04","composite":65.25,"source_name":"Simon Willison's Weblog","tags":["harness","tool-use","agents","claude-code","architecture"]},{"topic":"ai-research","domain":"coding-agent harness design (first-party Anthropic practices)","title":"How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier","url":"https://simonwillison.net/2026/Jul/21/cat-and-thariq/","takeaway":"Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier that gates dangerous actions.","summary":"An annotated transcript of Simon Willison's interview with Cat Wu and Thariq from Anthropic's Claude Code team, giving a first-party account of how they actually build and dogfood a coding agent. Key transferable practices: keep the tool set small and each tool functionally distinct (they removed grep/glob in favor of bash), grow eval sets from real production incidents rather than speculation, and shrink the system prompt by removing examples and replacing hard rules with nuanced context. Security is enforced by a Sonnet 'auto mode' classifier that reads the tool call plus conversation context to grant dynamic permissions, plus credential injection and red-teamed sandbox evals.","published":"2026-07-21","composite":62.25,"source_name":"@simonw","tags":["coding-agents","harness-design","tool-design","evals","system-prompt","prompt-injection","permissions","subagents","dogfooding","context-management"]},{"topic":"ai-research","domain":"Harness / context management","title":"Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)","url":"https://github.com/algal/pi-openai-server-compaction","takeaway":"If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.","summary":"OpenAI's Codex compacts long-running sessions by calling the Responses API's server-side compaction protocol — sending a `compaction_trigger` through `POST /v1/responses` and getting back an opaque, encrypted `compaction` artifact instead of a text summary — which reportedly lets it 'keep hammering' on long tasks as if context were infinite. Because the endpoint is public and Codex is open source, a third party reconstructed exactly how Codex uses it and packaged it as a Pi extension, running it alongside a portable Pi text summary so non-OpenAI models and session forking still work. The author's own held-out benchmark shows this native/remote policy recalling more old state (78% vs 48% exact recall) but at 4.58x more compaction output tokens and a 29% larger billed context, with high run-to-run variance — so it is not shown to be better at an equal token budget.","published":"2026-07-22","composite":62.25,"source_name":"@kunchenguid","tags":["harness","context-management","compaction","responses-api","openai","codex","long-running-agents"]},{"topic":"ai-research","domain":"Agents & Harnesses","title":"Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day","url":"https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/","takeaway":"When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.","summary":"Pointed at a specific bug class in well-audited zlib via a persistent `/goal` — but not told how — a frontier model decided static review was low value, built fuzz harnesses across a dozen entrypoints with ASan/UBSan and variant builds, and surfaced findings now in coordinated disclosure. The load-bearing harness detail was a strict definition of a reportable finding — it self-rejected an unreachable crash as noise and kept going. (Single-source vendor field report on a not-yet-public model.)","published":"2026-07-02","composite":61.65,"source_name":"","tags":["agents","goal-persistence","fuzzing","evals","ai-for-security"]},{"topic":"ai-security","domain":"Model Supply Chain","title":"ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs","url":"https://arxiv.org/abs/2607.17503","takeaway":"A clean model-scanner result is weak evidence - prefer non-executable formats and sandbox deserialization of any third-party model.","summary":"ShadowPickle presents three stealthy pickle-deserialization attacks that abuse the Pickle VM's external module import mechanism to execute payloads at load time while evading scanners. The reported evaluation evades ten state-of-the-art scanners and four model hubs, with the 'Overwritten' variant reaching a 63% evasion rate.","published":"2026-07-20","composite":60.22,"source_name":"","tags":["model-supply-chain","pickle","deserialization","scanner-evasion","huggingface"]},{"topic":"ai-security","domain":"Skill Supply Chain","title":"Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)","url":"https://arxiv.org/abs/2607.13987","takeaway":"When you scan or admit agent skills, cover the whole lifecycle (admission, retrieval, planner selection, evolution) — a runtime-only check misses where most of the risk actually lives.","summary":"Reusable agent 'skills' are a new supply-chain unit, but security work has mostly looked at prompt injection and runtime execution. SkillSec-Eval maps threats across the whole skill lifecycle — repository admission, semantic retrieval, planner selection, execution, and skill evolution — and, over 327 real skills, shows vulnerabilities appear at stages well before execution.","published":"2026-07-16","composite":59.85,"source_name":"","tags":["agent-skills","skill-scanning","supply-chain","threat-modeling","evals"]},{"topic":"product-security","domain":"AI coding assistant sandbox escape / path traversal","title":"Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')","url":"https://snyk.io/blog/symlinks-are-still-scary/","takeaway":"A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys — resolve paths to canonical form and confirm they stay inside the workspace before any read/write.","summary":"Git faithfully recreates symlinks stored in a repo (file mode 120000, blob is just the target path as text), so a file with an innocent name like project_settings.json can secretly point at ~/.ssh/authorized_keys or ~/.zshrc. When an AI coding assistant is asked to 'set up the workspace' and follows repo instructions, it follows the symlink transparently out of the sandbox, and the human approval dialog shows the benign in-repo name rather than the true resolved target. Wiz Research's GhostApproval tested six major assistants — Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf — and found all vulnerable.","published":"2026-07-09","composite":59.85,"source_name":"Snyk Blog","tags":["prompt-injection","supply-chain","path-traversal","symlink","ai-coding-assistant","sandbox-escape","agent-security"]},{"topic":"product-security","domain":"Malware & Wipers","title":"GigaWiper: modular destructive malware that fakes ransomware","url":"https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/","takeaway":"Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise — plan recovery accordingly.","summary":"Microsoft analyzed GigaWiper, a Golang backdoor that folds several separate malware families into on-demand destructive commands: a raw-disk wiper, a Crucio-derived routine that encrypts with keys that are never saved (irrecoverable), and a FlockWiper reimplementation. It marks a shift toward consolidated, modular destruction platforms.","published":"2026-07-09","composite":59.25,"source_name":"Microsoft Security Blog","tags":["malware","wiper","ransomware","destructive","microsoft"]},{"topic":"product-security","domain":"Malware & Threat Intel","title":"TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source","url":"https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/","takeaway":"Today's AI-assisted commodity malware is sloppy and self-labelling; budget for the version where someone spends ten more minutes prompting.","summary":"Unit 42 recovered the full source archive, git log and test rigs of TuxBot v3, a modular IoT botnet whose author used an LLM to generate C modules, port exploits and write the Go C2. The model complied but attached a safety disclaimer the developer never removed, left raw chain-of-thought in source files, and hallucinated crypto that shipped unverified. Unit 42 estimates the framework is only ~70% functional - and then repaired several broken features themselves with a few prompts, which is the actual finding.","published":"2026-07-17","composite":58.65,"source_name":"@Unit42_Intel","tags":["malware","iot","botnet","ai-assisted-development","threat-intel","detection"]},{"topic":"product-security","domain":"Developer Tooling & Template Injection","title":"Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd","url":"https://github.com/advisories/GHSA-6xj8-qv9j-xcjq","takeaway":"Anything that renders your prompt, status bar or editor title is executing attacker-controlled repository metadata - treat it as a parser, not decoration.","summary":"Oh My Posh composes the displayed path from raw folder names and then passes the whole composed string back through Go text/template, whose function map exposes cmd. A directory named with a template expression therefore executes commands as you the moment the prompt renders - under the built-in default configuration and every path style. Clone a repo, extract an archive, mount a share; the next command after cd is the trigger.","published":"2026-07-24","composite":58.5,"source_name":"GitHub Advisory Database","tags":["template-injection","rce","developer-tooling","supply-chain","go"]},{"topic":"product-security","domain":"Application Security","title":"Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)","url":"https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/","takeaway":"A minimal 'just null-terminate the buffer' patch can hide a pre-auth RCE — diff patches carefully, and treat missing null-termination next to attacker-controlled heap data as exploitable, not cosmetic.","summary":"A one-function patch to `escape_quotes()` in Kemp LoadMaster revealed a pre-auth RCE. The escaped buffer wasn't null-terminated, so `__sprintf_chk()` reads out of bounds into an adjacent heap chunk; by heap-spraying an un-escaped command-injection payload (via JSON key/value pairs) into that neighboring chunk, an unauthenticated attacker turns an 'uninitialized memory' bug into command execution.","published":"2026-06-29","composite":57.85,"source_name":"","tags":["memory-safety","heap","rce","edge-appliance","n-day"]},{"topic":"ai-research","domain":"Meta-Harness","title":"Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor","url":"https://github.com/omnigent-ai/omnigent","takeaway":"The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.","summary":"Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.","published":"2026-06","composite":57.1,"source_name":"omnigent-ai/omnigent","tags":["meta-harness","orchestration","agents","claude-code","tooling-2026"]},{"topic":"product-security","domain":"browser-delivered malware / malvertising","title":"SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds","url":"https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html","takeaway":"Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.","summary":"The SourTrade malvertising campaign never serves a complete malicious binary. A cloaked landing page uses a ServiceWorker + SharedWorker to fetch a legitimate Bun runtime from one domain and the malicious PE headers plus JavaScriptCore bytecode (as Base64 in a /config response) from another, then byte-copies them together in the browser per a template recipe. An AES-CTR pseudorandom stream seeded per session changes the file hash on every build while keeping the payload code intact, so no finished malware ever traverses the wire as one artifact.","published":"2026-07-25","composite":56.7,"source_name":"@TheHackersNews","tags":["malvertising","browser-security","service-worker","living-off-trusted-runtimes","hash-evasion","mark-of-the-web"]},{"topic":"ai-security","domain":"Model Supply Chain","title":"A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data","url":"https://arxiv.org/abs/2606.27511","takeaway":"In federated training the aggregator is a trust boundary, not a neutral party - protect gradients and test the global model for triggers.","summary":"Federated learning is adopted precisely so the server never sees raw client data - but this USENIX Security 2026 paper shows the aggregator itself can be the attacker. It inverts the gradients clients upload into representative training samples, builds a poisoning set from them, and implants advertisement-type backdoors into the global model. It reports near-100% attack success with negligible clean-task degradation as its headline result, and separately that reconstructing only 5-20% of gradients suffices for a reliable attack; whether the reduced setting reaches the same rate is not stated. Experiments are on representative QA datasets and LLM families, not live deployments.","published":"2026-06-25","composite":53.8,"source_name":"","tags":["federated-learning","backdoor","gradient-inversion","model-supply-chain","llm-training"]},{"topic":"ai-security","domain":"Model Supply Chain","title":"QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize","url":"https://arxiv.org/abs/2606.29239","takeaway":"Audit models at deployment precision, not the precision you were handed - some backdoors only exist after you quantize.","summary":"Quantization-conditioned backdoors stay dormant in the full-precision model and activate only once you quantize for deployment - so they pass the audit you run on the weights you were given. QuantGuard is a proactive pre-quantization defense using differentiable rounding-control variables, optimized against rounding-reversal, output-consistency and weight-distance constraints, to break the attacker's alignment with quantization boundaries. It needs only a small calibration set and no change to your quantization algorithm.","published":"2026-06-28","composite":53.2,"source_name":"","tags":["model-supply-chain","backdoor","quantization","defenses","llm-deployment"]}]}</script>
+<script>
+(function () {
+  const DATA = JSON.parse(document.getElementById("site-data").textContent);
+  const TOPICS = DATA.topics;
+  const STATUSES = ["current", "contested", "superseded", "refuted"];
+  const RETIRED = new Set(["superseded", "refuted"]);
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  const claims = DATA.claims;
+  const byId = new Map(claims.map(c => [c.id, c]));
+  const isRetired = c => RETIRED.has(c.status);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[m]));
+
+  function fmtDate(d) {
+    if (!d) return "undated";
+    const p = String(d).split("-");
+    const mo = MONTHS[parseInt(p[1], 10) - 1] || "";
+    if (p.length >= 3) return `${mo} ${parseInt(p[2], 10)}, ${p[0]}`;
+    if (p.length === 2) return `${mo} ${p[0]}`;
+    return p[0];
+  }
+
+  function order(list) {
+    const live = list.filter(c => !isRetired(c)).sort((a, b) =>
+      (a.status === "current" ? 0 : 1) - (b.status === "current" ? 0 : 1) ||
+      (b.confidence ?? .5) - (a.confidence ?? .5) ||
+      String(b.first_seen || "").localeCompare(String(a.first_seen || "")));
+    const dead = list.filter(isRetired).sort((a, b) =>
+      String(b.superseded_on || "").localeCompare(String(a.superseded_on || "")));
+    return { live, dead };
+  }
+
+  const state = { view: "claims", topic: "all", status: "all", q: "" };
+
+  function textOf(c) {
+    return [c.statement, c.id, c.guidance, c.scope, c.supersession_reason, c.domain,
+      (c.tags || []).join(" ")].join(" ").toLowerCase();
+  }
+  function matchesClaim(c) {
+    if (state.topic !== "all" && c.topic !== state.topic) return false;
+    if (state.status !== "all" && c.status !== state.status) return false;
+    return !state.q || textOf(c).includes(state.q);
+  }
+  function matchesFinding(f) {
+    if (state.topic !== "all" && f.topic !== state.topic) return false;
+    if (!state.q) return true;
+    return [f.title, f.takeaway, f.summary, f.domain, (f.tags || []).join(" ")]
+      .join(" ").toLowerCase().includes(state.q);
+  }
+
+  function link(id) {
+    const t = byId.get(id);
+    return `<a href="#claim-${esc(id)}" data-jump="${esc(id)}">${t ? esc(t.statement) : esc(id)}</a>`;
+  }
+
+  function evidenceBlock(c) {
+    const ev = c.evidence || [];
+    if (!ev.length) return "";
+    const rows = ev.map(e => `<tr>
+      <td><span class="stance" data-v="${esc(e.stance)}">${esc(e.stance)}</span></td>
+      <td><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title || e.url)}</a>
+        ${e.source_name ? `<span class="ev__note">${esc(e.source_name)}</span>` : ""}
+        ${e.note ? `<span class="ev__note">${esc(e.note)}</span>` : ""}</td>
+      <td>${esc(fmtDate(e.published))}</td></tr>`).join("");
+    return `<details class="ev"><summary>Evidence (${ev.length})</summary>
+      <div class="ev__scroll"><table class="ev__t">
+      <thead><tr><th>Stance</th><th>Source</th><th>Published</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></details>`;
+  }
+
+  function renderClaim(c) {
+    const dead = isRetired(c), conf = c.confidence ?? .5, out = [];
+    out.push(`<div class="claim__head">
+      <span class="chip" data-s="${esc(c.status)}">${esc(c.status)}</span>
+      <span class="claim__id">${esc(c.id)}</span>
+      <span class="claim__topic">${esc((TOPICS[c.topic] || {}).name || c.topic)}${c.domain ? " · " + esc(c.domain) : ""}</span>
+    </div>`);
+    out.push(`<h3 class="claim__statement">${esc(c.statement)}</h3>`);
+    if (!dead) {
+      out.push(`<p class="meter">
+        <span class="meter__track"><span class="meter__fill" style="width:${Math.round(conf * 100)}%"></span></span>
+        <span class="meter__n">${conf.toFixed(2)} confidence</span>
+        ${c.first_seen ? `<span>· standing since ${esc(fmtDate(c.first_seen))}</span>` : ""}</p>`);
+      if (c.guidance) out.push(`<p class="note"><span class="lab">Do this</span>${esc(c.guidance)}</p>`);
+      if (c.scope) out.push(`<p class="note"><span class="lab">Limits</span>${esc(c.scope)}</p>`);
+      (c.supersedes || []).forEach(id => out.push(`<p class="edge">↑ Replaces ${link(id)}</p>`));
+    } else {
+      out.push(`<p class="meter"><span>retired ${esc(fmtDate(c.superseded_on))}</span>
+        ${c.first_seen ? `<span>· had stood since ${esc(fmtDate(c.first_seen))}</span>` : ""}</p>`);
+      if (c.supersession_reason)
+        out.push(`<p class="note note--why"><span class="lab">Why it fell</span>${esc(c.supersession_reason)}</p>`);
+      (c.superseded_by || []).forEach(id => out.push(`<p class="edge">↓ Replaced by ${link(id)}</p>`));
+    }
+    if (c.tags && c.tags.length)
+      out.push(`<ul class="tags">${c.tags.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`);
+    out.push(evidenceBlock(c));
+    return `<article class="claim${dead ? " claim--retired" : ""}" id="claim-${esc(c.id)}" data-status="${esc(c.status)}">${out.join("")}</article>`;
+  }
+
+  function renderFinding(f) {
+    return `<article class="finding">
+      <h3 class="finding__t"><a href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">${esc(f.title)}</a></h3>
+      ${f.takeaway ? `<p class="finding__take">${esc(f.takeaway)}</p>` : ""}
+      <p class="finding__meta">
+        <span>${esc((TOPICS[f.topic] || {}).name || f.topic)}</span>
+        ${f.domain ? `<span>· ${esc(f.domain)}</span>` : ""}
+        <span>· ${esc(fmtDate(f.published))}</span>
+        ${f.composite != null ? `<span>· composite <span class="score">${f.composite}</span></span>` : ""}
+        ${f.source_name ? `<span>· ${esc(f.source_name)}</span>` : ""}
+      </p></article>`;
+  }
+
+  function viewClaims() {
+    const { live, dead } = order(claims.filter(matchesClaim));
+    if (!live.length && !dead.length) return `<p class="empty">No claims match that filter.</p>`;
+    const out = [];
+    if (live.length) out.push(`<section class="band"><div class="band__head">
+      <h2 class="band__title">Standing — ${live.length}</h2>
+      <p class="band__note">The current answer for each question. Contested ones sit below the settled: credible evidence both ways, so treat them as open questions rather than guidance.</p>
+      </div>${live.map(renderClaim).join("")}</section>`);
+    if (dead.length) out.push(`<section class="band band--retired"><div class="band__head">
+      <h2 class="band__title">Retired — ${dead.length}</h2>
+      <p class="band__note">Kept on purpose. Knowing what the field stopped believing — and why — is how you avoid re-adopting an answer it already moved past. Nothing here is ever deleted.</p>
+      </div>${dead.map(renderClaim).join("")}</section>`);
+    return out.join("");
+  }
+
+  function viewFindings() {
+    const rows = DATA.findings.filter(matchesFinding);
+    if (!rows.length) return `<p class="empty">No findings match that filter.</p>`;
+    return `<section class="band"><div class="band__head">
+      <h2 class="band__title">Curated findings — ${rows.length}</h2>
+      <p class="band__note">The rolling feed: vetted findings from the last ${DATA.max_age_days} days, ranked by composite. Each links to its original source.</p>
+      </div>${rows.map(renderFinding).join("")}</section>`;
+  }
+
+  function viewReversals() {
+    const dead = claims.filter(isRetired)
+      .sort((a, b) => String(b.superseded_on || "").localeCompare(String(a.superseded_on || "")));
+    if (!dead.length) return `<p class="empty">Nothing has been superseded yet.</p>`;
+    return `<section class="band"><div class="band__head">
+      <h2 class="band__title">Reversals — ${dead.length}, newest first</h2>
+      <p class="band__note">Every time the field moved and an answer was retired. This is the part a feed throws away.</p>
+      </div>` + dead.map(c => `<div class="rev">
+        <div class="rev__d">${esc(fmtDate(c.superseded_on))}<br /><span class="stance" data-v="${c.status === "refuted" ? "refutes" : "contests"}">${esc(c.status)}</span></div>
+        <div><p class="rev__fell">${esc(c.statement)}</p>
+          <p class="note" style="font-size:14px;color:var(--ink-soft);margin:0">${esc(c.supersession_reason || "")}</p>
+          ${(c.superseded_by || []).map(id => `<p class="rev__now"><span class="lab">Now</span>${link(id)}</p>`).join("")}
+        </div></div>`).join("") + `</section>`;
+  }
+
+  function render() {
+    document.getElementById("status-filter").style.display = state.view === "claims" ? "" : "none";
+    const body = state.view === "claims" ? viewClaims()
+      : state.view === "findings" ? viewFindings() : viewReversals();
+    document.getElementById("register").innerHTML = body;
+  }
+
+  function renderTally() {
+    const n = Object.fromEntries(STATUSES.map(s => [s, claims.filter(c => c.status === s).length]));
+    document.getElementById("tally").innerHTML =
+      `<div class="tally__cell"><span class="tally__n">${claims.length}</span><span class="tally__k">Claims</span></div>` +
+      STATUSES.map(s => `<div class="tally__cell" data-k="${s}"><span class="tally__n">${n[s]}</span><span class="tally__k">${s}</span></div>`).join("") +
+      `<div class="tally__cell"><span class="tally__n">${DATA.findings.length}</span><span class="tally__k">Findings</span></div>`;
+  }
+
+  function renderFilters() {
+    const t = [["all", "All topics", claims.length]].concat(
+      Object.entries(TOPICS).map(([k, v]) => [k, v.name, claims.filter(c => c.topic === k).length]));
+    document.getElementById("f-topic").innerHTML = t.map(([k, label, count]) =>
+      `<button class="opt" data-f="topic" data-v="${k}" aria-pressed="${k === "all"}"><span>${esc(label)}</span><span class="opt__n">${count}</span></button>`).join("");
+    const s = [["all", "any", claims.length]].concat(
+      STATUSES.map(x => [x, x, claims.filter(c => c.status === x).length]));
+    document.getElementById("f-status").innerHTML = s.map(([k, label, count]) =>
+      `<button class="opt" data-f="status" data-v="${k}" aria-pressed="${k === "all"}"><span>${esc(label)}</span><span class="opt__n">${count}</span></button>`).join("");
+  }
+
+  document.addEventListener("click", ev => {
+    const tab = ev.target.closest(".view-tab");
+    if (tab) {
+      state.view = tab.dataset.view;
+      document.querySelectorAll(".view-tab").forEach(b => b.setAttribute("aria-selected", String(b === tab)));
+      render();
+      return;
+    }
+    const opt = ev.target.closest(".opt");
+    if (opt) {
+      state[opt.dataset.f] = opt.dataset.v;
+      document.querySelectorAll(`.opt[data-f="${opt.dataset.f}"]`).forEach(b =>
+        b.setAttribute("aria-pressed", String(b === opt)));
+      render();
+      return;
+    }
+    const jump = ev.target.closest("[data-jump]");
+    if (jump) {
+      ev.preventDefault();
+      const id = jump.dataset.jump, target = byId.get(id);
+      // A target hidden by the active filter or view can't be scrolled to — clear them.
+      if (state.view !== "claims" || (target && !matchesClaim(target))) {
+        state.view = "claims"; state.topic = "all"; state.status = "all"; state.q = "";
+        document.getElementById("q").value = "";
+        document.querySelectorAll(".view-tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === "claims")));
+        document.querySelectorAll(".opt").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === "all")));
+        render();
+      }
+      const el = document.getElementById("claim-" + id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+      }
+    }
+  });
+
+  document.getElementById("q").addEventListener("input", e => {
+    state.q = e.target.value.trim().toLowerCase();
+    render();
+  });
+
+  renderTally(); renderFilters(); render();
+})();
+</script>
+</body>
+</html>

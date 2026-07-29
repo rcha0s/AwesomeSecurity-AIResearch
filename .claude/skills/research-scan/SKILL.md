@@ -89,11 +89,41 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    source_id, source_rank, source_topics` from the candidate). `source_id` lets
    `merge_analysis.py` credit the source's hit-rate; `raw_path` lets it ground the excerpts.
 
-6. **Merge + rerank + render:**
+6. **Reconcile the claim ledger** (`data/claims.json`) — the step that makes this a tracker
+   of *what we believe* and not just *what was published*. A finding is one article; a **claim**
+   is the durable answer to a question, and it never ages out.
+
+   Read the ledger (`python scripts/add_claim.py list`) and, for each curated finding from
+   this scan, decide which one of four things it is:
+
+   - **Additive** — it supports an existing claim. Attach it as evidence:
+     `python scripts/add_claim.py evidence <claim-id> --evidence "supports|<url>|<title>|<date>"`
+   - **New** — it answers a question the ledger has no claim for. Add one, with the
+     `guidance` (what to DO) and `scope` (where it does *not* apply):
+     `python scripts/add_claim.py new <kebab-id> --topic … --domain … --statement … --guidance … --scope … --confidence 0.N --evidence "supports|<url>|<title>|<date>"`
+   - **Superseding** — it gives a *better answer* than a claim we already hold. Write the new
+     claim first, then retire the old one; both ends of the edge are written for you:
+     `python scripts/add_claim.py supersede <old-id> <new-id> --reason "<why the old answer no longer holds>"`
+     Add `--refuted` when the old claim was shown to be **wrong**, not merely improved on.
+   - **Contesting** — it cuts against a standing claim but doesn't settle the question.
+     Attach it with a `contests`/`refutes` stance and move the claim to
+     `status: contested` (`python scripts/add_claim.py status <id> --set contested`).
+     Contested is an honest answer — do NOT force a winner.
+
+   Rules: the `reason` on a supersession is the whole point, so make it specific and
+   evidence-backed ("graph retrieval beat lexical search on multi-hop recall"), never
+   vague ("newer research"). Never delete or edit a retired claim's history. One claim per
+   question — if two claims say the same thing, supersede one into the other. Be
+   conservative: a single blog post rarely overturns a standing claim, and `confidence`
+   should reflect the strength and independence of the evidence, not your enthusiasm.
+
+7. **Merge + rerank + render:**
    ```bash
    python scripts/merge_analysis.py       # validate, dedup, route by topic, GROUND excerpts, flag, rerank
    python scripts/verify_citations.py     # re-verify every lesson excerpt vs its source (persist grounding)
+   python scripts/add_claim.py validate   # claim ledger integrity (edges resolve, no cycles)
    python scripts/generate_site.py        # README.md + ai-security/ product-security/ ai-research/
+   python scripts/generate_claims.py      # claims/ — standing answers + what they replaced
    python scripts/trends.py               # data/trends.json + TRENDS.md (emerging themes)
    python scripts/generate_newsletter.py  # NEWSLETTER.md (rolling, 3 topic sections)
    python scripts/generate_review.py      # REVIEW.md (non-vetted queue)
@@ -102,10 +132,12 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    Only **vetted** findings (not `needs_review`, composite ≥ `curation.min_composite`) appear on
    the topic pages/newsletter; borderline ones land in `REVIEW.md` for a human to promote.
 
-7. **Commit (direct-PR mode).** Create a branch, commit the regenerated pools + site
+8. **Commit (direct-PR mode).** Create a branch, commit the regenerated pools + site
    (never commit `data/candidates.json`, `data/_raw/`, `data/analysis_out.json`, or
    cookies), and open a PR. Then print a **run summary**: candidates ingested, entries
-   merged per topic, how many flagged needs_review, and the top movers by composite.
+   merged per topic, how many flagged needs_review, the top movers by composite, and
+   **every claim change** — added, evidence-attached, contested, superseded/refuted (with
+   the reason). Claim reversals are the headline of a scan; lead the summary with them.
 
 ## Backfill mode
 

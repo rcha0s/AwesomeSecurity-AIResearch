@@ -1,0 +1,500 @@
+{
+  "schema_version": "1.0",
+  "claims": [
+    {
+      "id": "toon-cuts-input-tokens-vs-json",
+      "topic": "ai-research",
+      "domain": "Architecture & Optimization",
+      "statement": "For large uniform arrays, TOON serializes to 30-60% fewer input tokens than JSON at comparable retrieval accuracy.",
+      "status": "current",
+      "confidence": 0.75,
+      "guidance": "Use TOON for the big uniform/tabular payloads you feed INTO the model (tool results, row sets, retrieved records). Keep JSON where data is deeply nested or irregular.",
+      "scope": "Input side only, and only for uniform arrays. Nested or irregular objects show much smaller or negative gains, and on short payloads the 'prompt tax' of explaining the format to the model can erase the saving entirely. Says nothing about generation — see constrained-decoding-for-structured-output.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://github.com/toon-format/toon",
+          "title": "toon-format/toon — reference implementation, spec and benchmarks",
+          "source_name": "GitHub"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2605.29676",
+          "title": "Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems",
+          "source_name": "arXiv",
+          "published": "2026-05"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.infoq.com/news/2025/11/toon-reduce-llm-cost-tokens/",
+          "title": "New Token-Oriented Object Notation (TOON) Hopes to Cut LLM Costs by Reducing Token Consumption",
+          "source_name": "InfoQ",
+          "published": "2025-11"
+        },
+        {
+          "stance": "contests",
+          "url": "https://arxiv.org/abs/2603.03306",
+          "title": "Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation",
+          "source_name": "arXiv",
+          "published": "2026-03",
+          "note": "Finds the advantage is often reduced by instructional overhead in shorter contexts."
+        }
+      ],
+      "supersedes": ["json-default-for-all-agent-io"],
+      "tags": ["tokens", "serialization", "context", "cost"],
+      "first_seen": "2025-11",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "json-default-for-all-agent-io",
+      "topic": "ai-research",
+      "domain": "Architecture & Optimization",
+      "statement": "JSON is the natural default for all agent I/O; serialization format is not a meaningful optimization lever.",
+      "status": "superseded",
+      "confidence": 0.3,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://arxiv.org/abs/2605.29676",
+          "title": "Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems",
+          "source_name": "arXiv",
+          "published": "2026-05"
+        }
+      ],
+      "superseded_by": ["toon-cuts-input-tokens-vs-json"],
+      "superseded_on": "2026-05",
+      "supersession_reason": "Format choice measurably moves cost: uniform arrays serialize 30-60% smaller in TOON at comparable retrieval accuracy, which makes serialization a real optimization lever on the input side rather than an aesthetic preference.",
+      "tags": ["tokens", "serialization"],
+      "first_seen": "2023-01"
+    },
+    {
+      "id": "constrained-decoding-for-structured-output",
+      "topic": "ai-research",
+      "domain": "Architecture & Optimization",
+      "statement": "For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy — token-optimized notations do not win here.",
+      "status": "current",
+      "confidence": 0.7,
+      "guidance": "Split the decision by direction. Use a token-optimized notation for what you feed in; use constrained decoding (or plain JSON) for what you ask the model to emit.",
+      "scope": "Benchmarked on one-shot in-context generation. Constrained decoding requires a serving stack that supports it — without one, plain JSON generation is the accuracy-preserving fallback.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2603.03306",
+          "title": "Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation",
+          "source_name": "arXiv",
+          "published": "2026-03"
+        }
+      ],
+      "supersedes": ["toon-best-for-structured-output-generation"],
+      "tags": ["tokens", "serialization", "structured-output", "decoding"],
+      "first_seen": "2026-03",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "toon-best-for-structured-output-generation",
+      "topic": "ai-research",
+      "domain": "Architecture & Optimization",
+      "statement": "Because TOON is more token-efficient than JSON, asking the model to GENERATE TOON is also better than asking it to generate JSON.",
+      "status": "refuted",
+      "confidence": 0.15,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://arxiv.org/abs/2603.03306",
+          "title": "Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation",
+          "source_name": "arXiv",
+          "published": "2026-03"
+        }
+      ],
+      "superseded_by": ["constrained-decoding-for-structured-output"],
+      "superseded_on": "2026-03",
+      "supersession_reason": "Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on simple structures. The input-side token saving does not transfer to the output side.",
+      "tags": ["tokens", "serialization", "structured-output"],
+      "first_seen": "2025-11"
+    },
+    {
+      "id": "match-tool-schemas-to-the-target-model",
+      "topic": "ai-research",
+      "domain": "Tooling & Infrastructure",
+      "statement": "A newer SOTA model can be WORSE at your harness's custom tool schema than its older siblings, because it was RL-trained on a different harness's tools.",
+      "status": "current",
+      "confidence": 0.8,
+      "guidance": "Match your harness's tool schemas to what the target model was trained on — Claude on str-replace-style edits, OpenAI on apply_patch — and offer a model-matched edit tool in multi-model harnesses. Re-run tool-calling evals on every model upgrade.",
+      "scope": "Observed on custom edit-tool schemas in third-party harnesses. First-party harnesses whose tools the model was trained on do not show the regression.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/",
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "source_name": "Simon Willison's Weblog",
+          "published": "2026-07-04"
+        }
+      ],
+      "supersedes": ["newer-model-is-always-an-upgrade"],
+      "tags": ["harness", "tool-use", "agents", "evals"],
+      "first_seen": "2026-07-04",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "newer-model-is-always-an-upgrade",
+      "topic": "ai-research",
+      "domain": "Tooling & Infrastructure",
+      "statement": "Swapping in the newest frontier model is a strict improvement for an existing harness.",
+      "status": "superseded",
+      "confidence": 0.2,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/",
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "source_name": "Simon Willison's Weblog",
+          "published": "2026-07-04"
+        }
+      ],
+      "superseded_by": ["match-tool-schemas-to-the-target-model"],
+      "superseded_on": "2026-07-04",
+      "supersession_reason": "Measured on a third-party harness's custom edit tool, newer Claude models invented made-up fields that their older siblings got right. Model upgrades can regress harness-specific tool calling, so an upgrade is a change to re-evaluate, not a free win.",
+      "tags": ["harness", "tool-use"],
+      "first_seen": "2024-01"
+    },
+    {
+      "id": "few-distinct-tools-beat-many",
+      "topic": "ai-research",
+      "domain": "Agents & Harnesses",
+      "statement": "Coding-agent harnesses work better with few distinct tools and a lean system prompt of reasoning rather than rules.",
+      "status": "current",
+      "confidence": 0.7,
+      "guidance": "Keep the tool count small and the tools clearly distinct; write the system prompt as reasoning rather than rule lists; grow your eval suite out of real incidents; gate dangerous actions with a context-aware permission classifier rather than a static allowlist.",
+      "scope": "Described from first-party practice on one coding agent, not a controlled comparison — treat as a strong prior, not a measured result.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "title": "How the Claude Code team designs its harness",
+          "source_name": "Simon Willison's Weblog",
+          "published": "2026-07-21"
+        }
+      ],
+      "tags": ["harness", "agents", "prompting", "evals"],
+      "first_seen": "2026-07-21",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "score-evals-on-groundedness-not-headline-f1",
+      "topic": "ai-research",
+      "domain": "Evaluation",
+      "statement": "Headline benchmark F1 hides what actually matters for security scanning: groundedness, precision, and run-to-run stability.",
+      "status": "current",
+      "confidence": 0.75,
+      "guidance": "Score scanners on groundedness and run-to-run stability as first-class metrics, and evaluate precision on repos like yours — a matching F1 can still hide a precision gap that shifts cost onto human triage. Do not expect stacking models to fix a groundedness problem.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed",
+          "source_name": "Semgrep",
+          "published": "2026-07-17"
+        },
+        {
+          "stance": "supports",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap",
+          "source_name": "Semgrep",
+          "published": "2026-07-22"
+        }
+      ],
+      "tags": ["evals", "benchmarks", "security-scanning"],
+      "first_seen": "2026-07-17",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "prompt-injection-is-containment-not-prevention",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "Prompt injection cannot be fully solved by context-based filtering: for any blocked flow an adversary can construct a context in which it appears legitimate.",
+      "status": "current",
+      "confidence": 0.85,
+      "guidance": "Design for containment rather than prevention: least-privilege tool scopes, human approval on irreversible actions, provenance tracking of untrusted context, and blast-radius limits that hold even when the model is fooled.",
+      "scope": "An impossibility argument about context-inferred legitimacy, not a claim that defenses are worthless — layered defenses still raise cost and catch known patterns.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2605.17634",
+          "title": "AI Agents May Always Fall for Prompt Injections",
+          "source_name": "arXiv",
+          "published": "2026-05"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2606.10525",
+          "title": "Assessing Automated Prompt Injection Attacks in Agentic Environments",
+          "source_name": "arXiv",
+          "published": "2026-06",
+          "note": "Large-scale red teaming: vulnerability to indirect injection persists across model families."
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2601.17548",
+          "title": "Prompt Injection Attacks on Agentic Coding Assistants: A Systematic Analysis",
+          "source_name": "arXiv",
+          "published": "2026-01",
+          "note": "Meta-analysis of 78 studies; taxonomy includes context-window manipulation as a delivery vector."
+        }
+      ],
+      "supersedes": ["prompt-injection-solvable-by-filtering"],
+      "tags": ["prompt-injection", "agents", "threat-model"],
+      "first_seen": "2026-05",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "prompt-injection-solvable-by-filtering",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "Prompt injection is fundamentally a filtering problem — a good input classifier plus an instruction-hierarchy system prompt solves it.",
+      "status": "refuted",
+      "confidence": 0.1,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://arxiv.org/abs/2605.17634",
+          "title": "AI Agents May Always Fall for Prompt Injections",
+          "source_name": "arXiv",
+          "published": "2026-05"
+        },
+        {
+          "stance": "refutes",
+          "url": "https://arxiv.org/abs/2606.10525",
+          "title": "Assessing Automated Prompt Injection Attacks in Agentic Environments",
+          "source_name": "arXiv",
+          "published": "2026-06"
+        }
+      ],
+      "superseded_by": ["prompt-injection-is-containment-not-prevention"],
+      "superseded_on": "2026-05",
+      "supersession_reason": "Impossibility result: an adversary can always construct a context under which a blocked flow looks legitimate, and a defender who tightens norms to stop it starts blocking genuinely legitimate flows. Large-scale red teaming confirmed the vulnerability persists across model families, so filtering is a cost-raiser, not a solution.",
+      "tags": ["prompt-injection", "guardrails"],
+      "first_seen": "2023-05"
+    },
+    {
+      "id": "provenance-auditing-defends-context-aware-injection",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "Provenance-aware decision auditing — tracking how untrusted context propagates into an agent's decisions — is an effective defense against context-aware prompt injection.",
+      "status": "contested",
+      "confidence": 0.5,
+      "guidance": "Worth piloting as a layer, but do not treat it as a boundary: keep least-privilege scopes and approval gates behind it.",
+      "scope": "Open question. The defense is demonstrated on specific benchmarks; the impossibility argument says no context-based defense can be complete. Both can be true — the unresolved part is how much residual risk remains in practice.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2605.03378",
+          "title": "ARGUS: Defending LLM Agents Against Context-Aware Prompt Injection",
+          "source_name": "arXiv",
+          "published": "2026-05",
+          "note": "Builds an influence provenance graph to track untrusted context into agent decisions."
+        },
+        {
+          "stance": "contests",
+          "url": "https://arxiv.org/abs/2605.17634",
+          "title": "AI Agents May Always Fall for Prompt Injections",
+          "source_name": "arXiv",
+          "published": "2026-05",
+          "note": "Argues no context-based defense can be complete."
+        }
+      ],
+      "tags": ["prompt-injection", "defenses", "provenance"],
+      "first_seen": "2026-05",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "agent-memory-is-a-persistent-attack-surface",
+      "topic": "ai-security",
+      "domain": "Memory & Context Poisoning",
+      "statement": "Poisoned preferences and instructions persist in agent long-term memory across sessions and resist normal in-conversation correction.",
+      "status": "current",
+      "confidence": 0.8,
+      "guidance": "Validate what is allowed to ENTER memory rather than trying to argue it out later. Treat an agent's memory and config files as protected assets with their own access control, change review, and backups.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2607.17619",
+          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
+          "source_name": "arXiv",
+          "published": "2026-07-20"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2607.17986",
+          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+          "source_name": "arXiv",
+          "published": "2026-07-20"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2606.04425",
+          "title": "What If Prompt Injection Never Left? Cross-Session Stored Prompt Injection in Agentic Systems",
+          "source_name": "arXiv",
+          "published": "2026-06"
+        }
+      ],
+      "tags": ["memory-poisoning", "agents", "persistence"],
+      "first_seen": "2026-06",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "provider-guardrails-can-block-incident-response",
+      "topic": "ai-security",
+      "domain": "Harness & Agent Security",
+      "statement": "Commercial provider safety guardrails can refuse to assist during a real security incident, at exactly the moment you need the model most.",
+      "status": "current",
+      "confidence": 0.7,
+      "guidance": "Pre-stage a local open-weight forensic model so breach response does not depend on a provider's refusal behavior, and test that path before you need it.",
+      "scope": "Observed during a live agentic intrusion response. This is about availability of assistance under refusal, not about whether guardrails reduce harm overall.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "source_name": "Embrace The Red",
+          "published": "2026-07-19"
+        }
+      ],
+      "tags": ["guardrails", "incident-response", "availability"],
+      "first_seen": "2026-07-19",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "sandbox-model-deserialization",
+      "topic": "ai-security",
+      "domain": "Model Supply Chain",
+      "statement": "Prefer non-executable model formats and sandbox deserialization of any third-party model — a clean scanner result is weak evidence of safety.",
+      "status": "current",
+      "confidence": 0.85,
+      "guidance": "Load third-party weights only in a sandbox, prefer safetensors-style non-executable formats, and treat scanner output as one signal rather than an admission gate.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2607.17503",
+          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+          "source_name": "arXiv",
+          "published": "2026-07-20"
+        }
+      ],
+      "supersedes": ["model-scanners-are-sufficient-for-supply-chain"],
+      "tags": ["model-supply-chain", "deserialization", "scanning"],
+      "first_seen": "2026-07-20",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "model-scanners-are-sufficient-for-supply-chain",
+      "topic": "ai-security",
+      "domain": "Model Supply Chain",
+      "statement": "A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.",
+      "status": "refuted",
+      "confidence": 0.1,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://arxiv.org/abs/2607.17503",
+          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+          "source_name": "arXiv",
+          "published": "2026-07-20"
+        }
+      ],
+      "superseded_by": ["sandbox-model-deserialization"],
+      "superseded_on": "2026-07-20",
+      "supersession_reason": "Pickle-VM import tricks evaded ten separate model scanners and four model hubs. A clean scan result no longer distinguishes a safe artifact from an evasive one, so scanning cannot be the admission gate.",
+      "tags": ["model-supply-chain", "scanning"],
+      "first_seen": "2024-06"
+    },
+    {
+      "id": "gate-agent-prs-with-automated-checks",
+      "topic": "product-security",
+      "domain": "AI-Generated Code Risk",
+      "statement": "Agent-generated PRs need automated secret and dependency-integrity gates — human review demonstrably does not catch that class of issue.",
+      "status": "current",
+      "confidence": 0.75,
+      "guidance": "Put automated secret scanning and dependency-integrity checks in the required-checks set for agent PRs, and keep human review for design and logic where it actually performs.",
+      "scope": "Measured on agent-generated PRs; 38.9% carried a security smell, though humans still introduce most of the severe defects overall.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "title": "38.9% of agent-generated PRs carry a security smell — but humans introduce most of the real ones",
+          "source_name": "arXiv",
+          "published": "2026-07-19"
+        }
+      ],
+      "supersedes": ["human-review-catches-agent-pr-risk"],
+      "tags": ["ai-generated-code", "code-review", "ci"],
+      "first_seen": "2026-07-19",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "human-review-catches-agent-pr-risk",
+      "topic": "product-security",
+      "domain": "AI-Generated Code Risk",
+      "statement": "Normal human code review is sufficient to catch the security problems in agent-generated pull requests.",
+      "status": "superseded",
+      "confidence": 0.2,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "title": "38.9% of agent-generated PRs carry a security smell",
+          "source_name": "arXiv",
+          "published": "2026-07-19"
+        }
+      ],
+      "superseded_by": ["gate-agent-prs-with-automated-checks"],
+      "superseded_on": "2026-07-19",
+      "supersession_reason": "Measured across agent-generated PRs, 38.9% carried a security smell and human review demonstrably did not catch the secret and dependency-integrity class. Review remains valuable for logic and design, but it is not the control for this risk.",
+      "tags": ["ai-generated-code", "code-review"],
+      "first_seen": "2025-06"
+    },
+    {
+      "id": "import-time-payloads-defeat-install-time-controls",
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "statement": "npm supply-chain payloads delivered at IMPORT time defeat --ignore-scripts, and a valid provenance attestation does not indicate the package is trustworthy.",
+      "status": "current",
+      "confidence": 0.85,
+      "guidance": "Do not treat --ignore-scripts or provenance attestation as the control. Pin and review dependency updates, run untrusted first-import in a sandbox, and monitor runtime egress from build and test jobs.",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
+          "title": "Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery",
+          "source_name": "Microsoft Security Blog",
+          "published": "2026-07-15"
+        }
+      ],
+      "supersedes": ["ignore-scripts-blocks-npm-supply-chain"],
+      "tags": ["supply-chain", "npm", "provenance"],
+      "first_seen": "2026-07-15",
+      "last_reviewed": "2026-07-27"
+    },
+    {
+      "id": "ignore-scripts-blocks-npm-supply-chain",
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "statement": "Installing with --ignore-scripts, plus checking for a provenance attestation, is adequate protection against npm supply-chain compromise.",
+      "status": "refuted",
+      "confidence": 0.1,
+      "evidence": [
+        {
+          "stance": "refutes",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
+          "title": "Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery",
+          "source_name": "Microsoft Security Blog",
+          "published": "2026-07-15"
+        }
+      ],
+      "superseded_by": ["import-time-payloads-defeat-install-time-controls"],
+      "superseded_on": "2026-07-15",
+      "supersession_reason": "The AsyncAPI compromise delivered its payload at import time, which --ignore-scripts does not prevent, and it shipped with a valid provenance attestation. Both controls target the wrong stage of the lifecycle.",
+      "tags": ["supply-chain", "npm"],
+      "first_seen": "2022-01"
+    }
+  ]
+}

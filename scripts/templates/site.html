@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>__TITLE__</title>
+<meta name="description" content="__DESC__" />
+<style>
+  :root {
+    --ground: #f2f3f6; --ground-sunk: #e8eaef; --surface: #fbfbfd;
+    --hair: #d3d7e0; --hair-soft: #e2e5ec;
+    --ink: #191a1f; --ink-mid: #4b505d; --ink-soft: #6f7583;
+    --accent: #2f4858; --accent-ink: #ffffff;
+    --st-current: #1a6b53; --st-current-bg: #e2efe9;
+    --st-contested: #97620f; --st-contested-bg: #f6ecd9;
+    --st-superseded: #656a77; --st-superseded-bg: #e5e7ec;
+    --st-refuted: #93292b; --st-refuted-bg: #f5e3e2;
+    --flash: #fff3c4;
+    --serif: Georgia, "Iowan Old Style", "Source Serif Pro", "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --measure: 68ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #14151a; --ground-sunk: #101116; --surface: #1a1c22;
+      --hair: #2f333d; --hair-soft: #24272f;
+      --ink: #e8eaef; --ink-mid: #a9b0bd; --ink-soft: #7d8593;
+      --accent: #8fb4c9; --accent-ink: #10161b;
+      --st-current: #5fc4a2; --st-current-bg: #16302a;
+      --st-contested: #dda63f; --st-contested-bg: #322817;
+      --st-superseded: #8a919f; --st-superseded-bg: #22252c;
+      --st-refuted: #e0777a; --st-refuted-bg: #331e20;
+      --flash: #3d3617;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #14151a; --ground-sunk: #101116; --surface: #1a1c22;
+    --hair: #2f333d; --hair-soft: #24272f;
+    --ink: #e8eaef; --ink-mid: #a9b0bd; --ink-soft: #7d8593;
+    --accent: #8fb4c9; --accent-ink: #10161b;
+    --st-current: #5fc4a2; --st-current-bg: #16302a;
+    --st-contested: #dda63f; --st-contested-bg: #322817;
+    --st-superseded: #8a919f; --st-superseded-bg: #22252c;
+    --st-refuted: #e0777a; --st-refuted-bg: #331e20;
+    --flash: #3d3617;
+  }
+  :root[data-theme="light"] {
+    --ground: #f2f3f6; --ground-sunk: #e8eaef; --surface: #fbfbfd;
+    --hair: #d3d7e0; --hair-soft: #e2e5ec;
+    --ink: #191a1f; --ink-mid: #4b505d; --ink-soft: #6f7583;
+    --accent: #2f4858; --accent-ink: #ffffff;
+    --st-current: #1a6b53; --st-current-bg: #e2efe9;
+    --st-contested: #97620f; --st-contested-bg: #f6ecd9;
+    --st-superseded: #656a77; --st-superseded-bg: #e5e7ec;
+    --st-refuted: #93292b; --st-refuted-bg: #f5e3e2;
+    --flash: #fff3c4;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* Masthead */
+  .masthead { border-bottom: 1px solid var(--hair); padding: clamp(26px, 5vw, 52px) 0 20px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-soft); margin: 0 0 14px;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .eyebrow a { color: var(--ink-soft); }
+  .eyebrow a:hover { color: var(--ink); }
+  .masthead h1 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(29px, 4.6vw, 45px); line-height: 1.12;
+    letter-spacing: -.015em; margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { margin: 0; max-width: var(--measure); color: var(--ink-mid); font-size: 16.5px; }
+  .lede b { color: var(--ink); font-weight: 600; }
+  .tally { display: flex; flex-wrap: wrap; margin-top: 24px; border: 1px solid var(--hair); background: var(--surface); }
+  .tally__cell { flex: 1 1 118px; padding: 12px 16px; border-right: 1px solid var(--hair-soft); }
+  .tally__cell:last-child { border-right: 0; }
+  .tally__n { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 23px; font-weight: 600; display: block; line-height: 1.1; }
+  .tally__k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .tally__cell[data-k="current"] .tally__n { color: var(--st-current); }
+  .tally__cell[data-k="contested"] .tally__n { color: var(--st-contested); }
+  .tally__cell[data-k="superseded"] .tally__n { color: var(--st-superseded); }
+  .tally__cell[data-k="refuted"] .tally__n { color: var(--st-refuted); }
+
+  /* View switch */
+  .views { display: flex; gap: 0; border-bottom: 1px solid var(--hair); margin-top: 26px; }
+  .view-tab {
+    appearance: none; background: none; border: 0; border-bottom: 2px solid transparent;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-soft); padding: 10px 16px 9px; cursor: pointer; margin-bottom: -1px;
+  }
+  .view-tab:hover { color: var(--ink); }
+  .view-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+
+  .shell { display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 940px) { .shell { grid-template-columns: 228px 1fr; gap: 44px; align-items: start; } }
+  .rail { position: sticky; top: 0; z-index: 5; background: var(--ground); border-bottom: 1px solid var(--hair); padding: 14px 0; }
+  @media (min-width: 940px) { .rail { top: 18px; border-bottom: 0; padding: 28px 0 0; } }
+  .filter + .filter { margin-top: 20px; }
+  .filter__label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 9px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  @media (min-width: 940px) { .opts { flex-direction: column; gap: 2px; } }
+  .opt {
+    appearance: none; background: transparent; border: 1px solid var(--hair); color: var(--ink-mid);
+    font-family: var(--mono); font-size: 12px; padding: 5px 10px; cursor: pointer;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 10px; text-align: left;
+  }
+  @media (min-width: 940px) { .opt { border: 0; border-left: 2px solid transparent; padding: 5px 8px; width: 100%; } }
+  .opt:hover { color: var(--ink); background: var(--hair-soft); }
+  .opt[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  @media (min-width: 940px) { .opt[aria-pressed="true"] { background: transparent; color: var(--ink); border-left-color: var(--accent); font-weight: 600; } }
+  .opt__n { font-variant-numeric: tabular-nums; font-size: 11px; opacity: .65; }
+  .search { width: 100%; background: var(--surface); border: 1px solid var(--hair); color: var(--ink); font-family: var(--mono); font-size: 12.5px; padding: 7px 9px; }
+  .search::placeholder { color: var(--ink-soft); }
+
+  .register { padding: 28px 0 70px; min-width: 0; }
+  .band--retired { background: var(--ground-sunk); margin-top: 42px; padding: 0 clamp(12px, 3vw, 26px); border-top: 2px solid var(--hair); }
+  .band__head { padding: 20px 0 4px; }
+  .band__title { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 6px; }
+  .band__note { margin: 0; max-width: var(--measure); font-size: 14px; color: var(--ink-soft); }
+
+  .claim { border-top: 1px solid var(--hair-soft); padding: 21px 0; scroll-margin-top: 88px; }
+  .claim:first-of-type { border-top: 1px solid var(--hair); }
+  .claim__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .chip { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 3px 7px; font-weight: 600; }
+  .chip[data-s="current"] { color: var(--st-current); background: var(--st-current-bg); }
+  .chip[data-s="contested"] { color: var(--st-contested); background: var(--st-contested-bg); }
+  .chip[data-s="superseded"] { color: var(--st-superseded); background: var(--st-superseded-bg); }
+  .chip[data-s="refuted"] { color: var(--st-refuted); background: var(--st-refuted-bg); }
+  .claim__id { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); word-break: break-all; }
+  .claim__topic { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-left: auto; }
+  .claim__statement { font-family: var(--serif); font-size: clamp(19px, 2.3vw, 23px); line-height: 1.34; font-weight: 500; margin: 0 0 13px; max-width: var(--measure); text-wrap: balance; }
+  .claim--retired .claim__statement { text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: var(--ink-soft); color: var(--ink-mid); font-size: clamp(17px, 2vw, 19.5px); }
+  .meter { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 0 0 13px; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+  .meter__track { width: 90px; height: 4px; background: var(--hair); position: relative; }
+  .meter__fill { position: absolute; inset: 0 auto 0 0; background: var(--st-current); }
+  .claim[data-status="contested"] .meter__fill { background: var(--st-contested); }
+  .meter__n { font-variant-numeric: tabular-nums; color: var(--ink-mid); }
+  .note { margin: 0 0 11px; max-width: var(--measure); font-size: 15px; }
+  .note--why { border-left: 2px solid var(--st-superseded); padding-left: 13px; color: var(--ink-mid); }
+  .claim[data-status="refuted"] .note--why { border-left-color: var(--st-refuted); }
+  .lab { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
+  .edge { font-family: var(--mono); font-size: 12.5px; margin: 0 0 10px; max-width: var(--measure); color: var(--ink-mid); }
+  .edge a { color: var(--accent); text-underline-offset: 3px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 12px 0 0; padding: 0; list-style: none; }
+  .tags li { font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); border: 1px solid var(--hair-soft); padding: 1px 6px; }
+  details.ev { margin-top: 12px; }
+  details.ev > summary { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); cursor: pointer; padding: 3px 0; list-style: none; }
+  details.ev > summary::-webkit-details-marker { display: none; }
+  details.ev > summary::before { content: "▸ "; }
+  details.ev[open] > summary::before { content: "▾ "; }
+  details.ev > summary:hover { color: var(--ink); }
+  .ev__scroll { overflow-x: auto; margin-top: 9px; }
+  table.ev__t { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 460px; }
+  table.ev__t th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); text-align: left; font-weight: 500; padding: 5px 12px 5px 0; border-bottom: 1px solid var(--hair); }
+  table.ev__t td { padding: 7px 12px 7px 0; border-bottom: 1px solid var(--hair-soft); vertical-align: top; }
+  table.ev__t td:last-child { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; }
+  .stance { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+  .stance[data-v="supports"] { color: var(--st-current); }
+  .stance[data-v="contests"] { color: var(--st-contested); }
+  .stance[data-v="refutes"] { color: var(--st-refuted); }
+  .ev__note { display: block; color: var(--ink-soft); font-size: 12.5px; margin-top: 3px; }
+  .flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { 0%, 22% { background: var(--flash); } 100% { background: transparent; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .flash { animation: none; box-shadow: inset 3px 0 0 var(--accent); } }
+  .empty { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding: 40px 0; }
+
+  /* Findings */
+  .finding { border-top: 1px solid var(--hair-soft); padding: 19px 0; }
+  .finding:first-of-type { border-top: 1px solid var(--hair); }
+  .finding__t { font-family: var(--serif); font-size: 19px; line-height: 1.35; margin: 0 0 7px; max-width: var(--measure); font-weight: 500; }
+  .finding__t a { text-decoration-color: var(--hair); text-underline-offset: 3px; }
+  .finding__t a:hover { text-decoration-color: var(--accent); }
+  .finding__take { margin: 0 0 8px; font-size: 15px; color: var(--ink-mid); max-width: var(--measure); }
+  .finding__meta { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 10px; }
+  .score { font-variant-numeric: tabular-nums; }
+
+  /* Reversals */
+  .rev { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 15px 0; border-top: 1px solid var(--hair-soft); }
+  @media (min-width: 700px) { .rev { grid-template-columns: 108px 1fr; gap: 20px; } }
+  .rev__d { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .rev__fell { font-family: var(--serif); font-size: 16px; color: var(--ink-mid); text-decoration: line-through; text-decoration-color: var(--ink-soft); margin: 0 0 5px; max-width: var(--measure); }
+  .rev__now { margin: 5px 0 0; font-size: 14px; max-width: var(--measure); }
+  .rev__now a { color: var(--accent); text-underline-offset: 3px; }
+
+  footer.foot { border-top: 1px solid var(--hair); padding: 22px 0 56px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); line-height: 1.7; }
+  footer.foot a { color: var(--ink-mid); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">
+      <span>__REPO_NAME__</span>
+      <a href="__REPO_URL__">source ↗</a>
+      <a href="__REPO_URL__/blob/main/NEWSLETTER.md">newsletter ↗</a>
+      <a href="__REPO_URL__/blob/main/TRENDS.md">trends ↗</a>
+    </p>
+    <h1>What we believe about building agents — and what that replaced.</h1>
+    <p class="lede">
+      A research feed tracks <b>what was published</b>. This tracks <b>what currently holds</b>:
+      one durable claim per question, the evidence behind it, and — kept deliberately below —
+      every answer it superseded, with the date and the reason it stopped being true.
+    </p>
+    <div class="tally" id="tally"></div>
+    <div class="views" role="tablist">
+      <button class="view-tab" role="tab" data-view="claims" aria-selected="true">Standing claims</button>
+      <button class="view-tab" role="tab" data-view="findings" aria-selected="false">Findings feed</button>
+      <button class="view-tab" role="tab" data-view="reversals" aria-selected="false">Reversals</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="shell">
+    <aside class="rail">
+      <div class="filter">
+        <span class="filter__label" id="lab-topic">Topic</span>
+        <div class="opts" id="f-topic" role="group" aria-labelledby="lab-topic"></div>
+      </div>
+      <div class="filter" id="status-filter">
+        <span class="filter__label" id="lab-status">Status</span>
+        <div class="opts" id="f-status" role="group" aria-labelledby="lab-status"></div>
+      </div>
+      <div class="filter">
+        <label class="filter__label" for="q">Search</label>
+        <input class="search" id="q" type="search" placeholder="tokens, injection, npm…" autocomplete="off" />
+      </div>
+    </aside>
+    <main class="register" id="register"></main>
+  </div>
+
+  <footer class="foot">
+    <div>Generated from <code>data/claims.json</code> + the topic pools by <code>scripts/generate_html.py</code> · __GENERATED__</div>
+    <div>Curated content <a href="__REPO_URL__/blob/main/LICENSE">CC BY 4.0</a>; scripts MIT. Every claim and finding cites its original source; linked research remains its authors'.</div>
+  </footer>
+</div>
+
+<script id="site-data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  const DATA = JSON.parse(document.getElementById("site-data").textContent);
+  const TOPICS = DATA.topics;
+  const STATUSES = ["current", "contested", "superseded", "refuted"];
+  const RETIRED = new Set(["superseded", "refuted"]);
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  const claims = DATA.claims;
+  const byId = new Map(claims.map(c => [c.id, c]));
+  const isRetired = c => RETIRED.has(c.status);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[m]));
+
+  function fmtDate(d) {
+    if (!d) return "undated";
+    const p = String(d).split("-");
+    const mo = MONTHS[parseInt(p[1], 10) - 1] || "";
+    if (p.length >= 3) return `${mo} ${parseInt(p[2], 10)}, ${p[0]}`;
+    if (p.length === 2) return `${mo} ${p[0]}`;
+    return p[0];
+  }
+
+  function order(list) {
+    const live = list.filter(c => !isRetired(c)).sort((a, b) =>
+      (a.status === "current" ? 0 : 1) - (b.status === "current" ? 0 : 1) ||
+      (b.confidence ?? .5) - (a.confidence ?? .5) ||
+      String(b.first_seen || "").localeCompare(String(a.first_seen || "")));
+    const dead = list.filter(isRetired).sort((a, b) =>
+      String(b.superseded_on || "").localeCompare(String(a.superseded_on || "")));
+    return { live, dead };
+  }
+
+  const state = { view: "claims", topic: "all", status: "all", q: "" };
+
+  function textOf(c) {
+    return [c.statement, c.id, c.guidance, c.scope, c.supersession_reason, c.domain,
+      (c.tags || []).join(" ")].join(" ").toLowerCase();
+  }
+  function matchesClaim(c) {
+    if (state.topic !== "all" && c.topic !== state.topic) return false;
+    if (state.status !== "all" && c.status !== state.status) return false;
+    return !state.q || textOf(c).includes(state.q);
+  }
+  function matchesFinding(f) {
+    if (state.topic !== "all" && f.topic !== state.topic) return false;
+    if (!state.q) return true;
+    return [f.title, f.takeaway, f.summary, f.domain, (f.tags || []).join(" ")]
+      .join(" ").toLowerCase().includes(state.q);
+  }
+
+  function link(id) {
+    const t = byId.get(id);
+    return `<a href="#claim-${esc(id)}" data-jump="${esc(id)}">${t ? esc(t.statement) : esc(id)}</a>`;
+  }
+
+  function evidenceBlock(c) {
+    const ev = c.evidence || [];
+    if (!ev.length) return "";
+    const rows = ev.map(e => `<tr>
+      <td><span class="stance" data-v="${esc(e.stance)}">${esc(e.stance)}</span></td>
+      <td><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title || e.url)}</a>
+        ${e.source_name ? `<span class="ev__note">${esc(e.source_name)}</span>` : ""}
+        ${e.note ? `<span class="ev__note">${esc(e.note)}</span>` : ""}</td>
+      <td>${esc(fmtDate(e.published))}</td></tr>`).join("");
+    return `<details class="ev"><summary>Evidence (${ev.length})</summary>
+      <div class="ev__scroll"><table class="ev__t">
+      <thead><tr><th>Stance</th><th>Source</th><th>Published</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></details>`;
+  }
+
+  function renderClaim(c) {
+    const dead = isRetired(c), conf = c.confidence ?? .5, out = [];
+    out.push(`<div class="claim__head">
+      <span class="chip" data-s="${esc(c.status)}">${esc(c.status)}</span>
+      <span class="claim__id">${esc(c.id)}</span>
+      <span class="claim__topic">${esc((TOPICS[c.topic] || {}).name || c.topic)}${c.domain ? " · " + esc(c.domain) : ""}</span>
+    </div>`);
+    out.push(`<h3 class="claim__statement">${esc(c.statement)}</h3>`);
+    if (!dead) {
+      out.push(`<p class="meter">
+        <span class="meter__track"><span class="meter__fill" style="width:${Math.round(conf * 100)}%"></span></span>
+        <span class="meter__n">${conf.toFixed(2)} confidence</span>
+        ${c.first_seen ? `<span>· standing since ${esc(fmtDate(c.first_seen))}</span>` : ""}</p>`);
+      if (c.guidance) out.push(`<p class="note"><span class="lab">Do this</span>${esc(c.guidance)}</p>`);
+      if (c.scope) out.push(`<p class="note"><span class="lab">Limits</span>${esc(c.scope)}</p>`);
+      (c.supersedes || []).forEach(id => out.push(`<p class="edge">↑ Replaces ${link(id)}</p>`));
+    } else {
+      out.push(`<p class="meter"><span>retired ${esc(fmtDate(c.superseded_on))}</span>
+        ${c.first_seen ? `<span>· had stood since ${esc(fmtDate(c.first_seen))}</span>` : ""}</p>`);
+      if (c.supersession_reason)
+        out.push(`<p class="note note--why"><span class="lab">Why it fell</span>${esc(c.supersession_reason)}</p>`);
+      (c.superseded_by || []).forEach(id => out.push(`<p class="edge">↓ Replaced by ${link(id)}</p>`));
+    }
+    if (c.tags && c.tags.length)
+      out.push(`<ul class="tags">${c.tags.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`);
+    out.push(evidenceBlock(c));
+    return `<article class="claim${dead ? " claim--retired" : ""}" id="claim-${esc(c.id)}" data-status="${esc(c.status)}">${out.join("")}</article>`;
+  }
+
+  function renderFinding(f) {
+    return `<article class="finding">
+      <h3 class="finding__t"><a href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">${esc(f.title)}</a></h3>
+      ${f.takeaway ? `<p class="finding__take">${esc(f.takeaway)}</p>` : ""}
+      <p class="finding__meta">
+        <span>${esc((TOPICS[f.topic] || {}).name || f.topic)}</span>
+        ${f.domain ? `<span>· ${esc(f.domain)}</span>` : ""}
+        <span>· ${esc(fmtDate(f.published))}</span>
+        ${f.composite != null ? `<span>· composite <span class="score">${f.composite}</span></span>` : ""}
+        ${f.source_name ? `<span>· ${esc(f.source_name)}</span>` : ""}
+      </p></article>`;
+  }
+
+  function viewClaims() {
+    const { live, dead } = order(claims.filter(matchesClaim));
+    if (!live.length && !dead.length) return `<p class="empty">No claims match that filter.</p>`;
+    const out = [];
+    if (live.length) out.push(`<section class="band"><div class="band__head">
+      <h2 class="band__title">Standing — ${live.length}</h2>
+      <p class="band__note">The current answer for each question. Contested ones sit below the settled: credible evidence both ways, so treat them as open questions rather than guidance.</p>
+      </div>${live.map(renderClaim).join("")}</section>`);
+    if (dead.length) out.push(`<section class="band band--retired"><div class="band__head">
+      <h2 class="band__title">Retired — ${dead.length}</h2>
+      <p class="band__note">Kept on purpose. Knowing what the field stopped believing — and why — is how you avoid re-adopting an answer it already moved past. Nothing here is ever deleted.</p>
+      </div>${dead.map(renderClaim).join("")}</section>`);
+    return out.join("");
+  }
+
+  function viewFindings() {
+    const rows = DATA.findings.filter(matchesFinding);
+    if (!rows.length) return `<p class="empty">No findings match that filter.</p>`;
+    return `<section class="band"><div class="band__head">
+      <h2 class="band__title">Curated findings — ${rows.length}</h2>
+      <p class="band__note">The rolling feed: vetted findings from the last ${DATA.max_age_days} days, ranked by composite. Each links to its original source.</p>
+      </div>${rows.map(renderFinding).join("")}</section>`;
+  }
+
+  function viewReversals() {
+    const dead = claims.filter(isRetired)
+      .sort((a, b) => String(b.superseded_on || "").localeCompare(String(a.superseded_on || "")));
+    if (!dead.length) return `<p class="empty">Nothing has been superseded yet.</p>`;
+    return `<section class="band"><div class="band__head">
+      <h2 class="band__title">Reversals — ${dead.length}, newest first</h2>
+      <p class="band__note">Every time the field moved and an answer was retired. This is the part a feed throws away.</p>
+      </div>` + dead.map(c => `<div class="rev">
+        <div class="rev__d">${esc(fmtDate(c.superseded_on))}<br /><span class="stance" data-v="${c.status === "refuted" ? "refutes" : "contests"}">${esc(c.status)}</span></div>
+        <div><p class="rev__fell">${esc(c.statement)}</p>
+          <p class="note" style="font-size:14px;color:var(--ink-soft);margin:0">${esc(c.supersession_reason || "")}</p>
+          ${(c.superseded_by || []).map(id => `<p class="rev__now"><span class="lab">Now</span>${link(id)}</p>`).join("")}
+        </div></div>`).join("") + `</section>`;
+  }
+
+  function render() {
+    document.getElementById("status-filter").style.display = state.view === "claims" ? "" : "none";
+    const body = state.view === "claims" ? viewClaims()
+      : state.view === "findings" ? viewFindings() : viewReversals();
+    document.getElementById("register").innerHTML = body;
+  }
+
+  function renderTally() {
+    const n = Object.fromEntries(STATUSES.map(s => [s, claims.filter(c => c.status === s).length]));
+    document.getElementById("tally").innerHTML =
+      `<div class="tally__cell"><span class="tally__n">${claims.length}</span><span class="tally__k">Claims</span></div>` +
+      STATUSES.map(s => `<div class="tally__cell" data-k="${s}"><span class="tally__n">${n[s]}</span><span class="tally__k">${s}</span></div>`).join("") +
+      `<div class="tally__cell"><span class="tally__n">${DATA.findings.length}</span><span class="tally__k">Findings</span></div>`;
+  }
+
+  function renderFilters() {
+    const t = [["all", "All topics", claims.length]].concat(
+      Object.entries(TOPICS).map(([k, v]) => [k, v.name, claims.filter(c => c.topic === k).length]));
+    document.getElementById("f-topic").innerHTML = t.map(([k, label, count]) =>
+      `<button class="opt" data-f="topic" data-v="${k}" aria-pressed="${k === "all"}"><span>${esc(label)}</span><span class="opt__n">${count}</span></button>`).join("");
+    const s = [["all", "any", claims.length]].concat(
+      STATUSES.map(x => [x, x, claims.filter(c => c.status === x).length]));
+    document.getElementById("f-status").innerHTML = s.map(([k, label, count]) =>
+      `<button class="opt" data-f="status" data-v="${k}" aria-pressed="${k === "all"}"><span>${esc(label)}</span><span class="opt__n">${count}</span></button>`).join("");
+  }
+
+  document.addEventListener("click", ev => {
+    const tab = ev.target.closest(".view-tab");
+    if (tab) {
+      state.view = tab.dataset.view;
+      document.querySelectorAll(".view-tab").forEach(b => b.setAttribute("aria-selected", String(b === tab)));
+      render();
+      return;
+    }
+    const opt = ev.target.closest(".opt");
+    if (opt) {
+      state[opt.dataset.f] = opt.dataset.v;
+      document.querySelectorAll(`.opt[data-f="${opt.dataset.f}"]`).forEach(b =>
+        b.setAttribute("aria-pressed", String(b === opt)));
+      render();
+      return;
+    }
+    const jump = ev.target.closest("[data-jump]");
+    if (jump) {
+      ev.preventDefault();
+      const id = jump.dataset.jump, target = byId.get(id);
+      // A target hidden by the active filter or view can't be scrolled to — clear them.
+      if (state.view !== "claims" || (target && !matchesClaim(target))) {
+        state.view = "claims"; state.topic = "all"; state.status = "all"; state.q = "";
+        document.getElementById("q").value = "";
+        document.querySelectorAll(".view-tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === "claims")));
+        document.querySelectorAll(".opt").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === "all")));
+        render();
+      }
+      const el = document.getElementById("claim-" + id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+      }
+    }
+  });
+
+  document.getElementById("q").addEventListener("input", e => {
+    state.q = e.target.value.trim().toLowerCase();
+    render();
+  });
+
+  renderTally(); renderFilters(); render();
+})();
+</script>
+</body>
+</html>
