@@ -16,265 +16,388 @@
 <meta name="twitter:image" content="https://rcha0s.github.io/AwesomeSecurity-AIResearch/og.png" />
 <style>
   :root {
-    --paper: #f4f2ec; --paper-2: #efece4; --card: #fbfaf6;
-    --rule: #d8d3c6; --rule-soft: #e6e2d7;
-    --ink: #1b1a17; --ink-2: #4a4740; --ink-3: #726d62;
-    --accent: #7a2016; --accent-2: #9a3b2e;
-    --t-aisec: #9a3b2e; --t-prodsec: #2f5d62; --t-research: #4b3f7a;
-    --st-current: #1a6b53; --st-current-bg: #e2efe6;
-    --st-contested: #97620f; --st-contested-bg: #f4ead4;
-    --st-superseded: #6b6659; --st-superseded-bg: #e7e3d8;
-    --st-refuted: #93292b; --st-refuted-bg: #f3e2df;
-    --mark: #f6e8bd;
-    --serif: "Iowan Old Style", "Palatino Linotype", "Charter", Georgia, "Times New Roman", serif;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --paper: #ffffff; --paper-2: #f6f7f9; --card: #ffffff;
+    --rule: #e2e5ea; --rule-soft: #eef0f3;
+    --ink: #0b0d10; --ink-2: #3d434b; --ink-3: #6b727c;
+    --accent: #1848c2; --accent-2: #143aa0;
+    --t-aisec: #b1332a; --t-aisec-bg: #fdecea;
+    --t-prodsec: #0f6b70; --t-prodsec-bg: #e2f2f2;
+    --t-research: #5433a8; --t-research-bg: #eee9f9;
+    --st-current: #16744b; --st-current-bg: #e0f2e7;
+    --st-contested: #8a5a06; --st-contested-bg: #fbeecd;
+    --st-superseded: #5b6270; --st-superseded-bg: #eceef2;
+    --st-refuted: #a92026; --st-refuted-bg: #fbe2e2;
+    --mark: #fff2b3;
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-    --measure: 66ch;
+    --measure: 68ch;
+    --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 1px 3px rgba(15, 23, 42, .06);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --paper: #16150f; --paper-2: #121109; --card: #1c1b14;
-      --rule: #35332a; --rule-soft: #26251e;
-      --ink: #ece8dd; --ink-2: #b3ae9f; --ink-3: #837e70;
-      --accent: #e0897c; --accent-2: #d98b7d;
-      --t-aisec: #d98b7d; --t-prodsec: #7fb0b4; --t-research: #aaa0d8;
-      --st-current: #64c49f; --st-current-bg: #16302a;
-      --st-contested: #dda63f; --st-contested-bg: #322916;
-      --st-superseded: #928c7c; --st-superseded-bg: #232219;
-      --st-refuted: #e0777a; --st-refuted-bg: #331d1e;
-      --mark: #3f371a;
+      --paper: #0b0f16; --paper-2: #0f1420; --card: #131a26;
+      --rule: #263042; --rule-soft: #1a2231;
+      --ink: #eef2f7; --ink-2: #b7c0cd; --ink-3: #7e879a;
+      --accent: #7ea6ff; --accent-2: #a7c2ff;
+      --t-aisec: #ff8b7f; --t-aisec-bg: #351817;
+      --t-prodsec: #6bd2d6; --t-prodsec-bg: #0f2b2c;
+      --t-research: #b8a6ff; --t-research-bg: #251c40;
+      --st-current: #66d4a2; --st-current-bg: #123526;
+      --st-contested: #f0b64d; --st-contested-bg: #3a2c11;
+      --st-superseded: #96a0b3; --st-superseded-bg: #1e2431;
+      --st-refuted: #ff8a90; --st-refuted-bg: #3a1a1d;
+      --mark: #443a10;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 1px 3px rgba(0, 0, 0, .35);
     }
   }
   :root[data-theme="dark"] {
-    --paper: #16150f; --paper-2: #121109; --card: #1c1b14;
-    --rule: #35332a; --rule-soft: #26251e;
-    --ink: #ece8dd; --ink-2: #b3ae9f; --ink-3: #837e70;
-    --accent: #e0897c; --accent-2: #d98b7d;
-    --t-aisec: #d98b7d; --t-prodsec: #7fb0b4; --t-research: #aaa0d8;
-    --st-current: #64c49f; --st-current-bg: #16302a;
-    --st-contested: #dda63f; --st-contested-bg: #322916;
-    --st-superseded: #928c7c; --st-superseded-bg: #232219;
-    --st-refuted: #e0777a; --st-refuted-bg: #331d1e;
-    --mark: #3f371a;
+    --paper: #0b0f16; --paper-2: #0f1420; --card: #131a26;
+    --rule: #263042; --rule-soft: #1a2231;
+    --ink: #eef2f7; --ink-2: #b7c0cd; --ink-3: #7e879a;
+    --accent: #7ea6ff; --accent-2: #a7c2ff;
+    --t-aisec: #ff8b7f; --t-aisec-bg: #351817;
+    --t-prodsec: #6bd2d6; --t-prodsec-bg: #0f2b2c;
+    --t-research: #b8a6ff; --t-research-bg: #251c40;
+    --st-current: #66d4a2; --st-current-bg: #123526;
+    --st-contested: #f0b64d; --st-contested-bg: #3a2c11;
+    --st-superseded: #96a0b3; --st-superseded-bg: #1e2431;
+    --st-refuted: #ff8a90; --st-refuted-bg: #3a1a1d;
+    --mark: #443a10;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 1px 3px rgba(0, 0, 0, .35);
   }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; background: var(--paper); color: var(--ink);
-    font-family: var(--sans); font-size: 16px; line-height: 1.58;
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
   a { color: inherit; text-decoration: none; }
-  a.link { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
-  a.link:hover { border-bottom-color: var(--accent); }
+  a.link { color: var(--accent); text-decoration: none; }
+  a.link:hover { text-decoration: underline; text-underline-offset: 3px; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 44px); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  mark { background: var(--mark); color: inherit; padding: 0 1px; }
+  mark { background: var(--mark); color: inherit; padding: 0 2px; border-radius: 2px; }
   .kick {
-    font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--ink-3);
+    font-family: var(--sans); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 600;
   }
 
   /* ---- Masthead ---- */
-  .masthead { padding: clamp(20px, 4vw, 40px) 0 0; }
+  .masthead { padding: 16px 0 0; border-bottom: 1px solid var(--rule); }
   .flag {
     display: flex; justify-content: space-between; align-items: center; gap: 12px;
-    border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink);
-    padding: 7px 0; font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--ink-2); flex-wrap: wrap;
+    padding: 4px 0 12px; font-family: var(--sans); font-size: 12px;
+    color: var(--ink-2); flex-wrap: wrap;
   }
-  .flag b { color: var(--ink); font-weight: 600; }
-  .flag .tbtn { background: none; border: 1px solid var(--rule); color: var(--ink-2);
-    font: inherit; letter-spacing: .12em; padding: 3px 9px; cursor: pointer; }
-  .flag .tbtn:hover { border-color: var(--ink-2); color: var(--ink); }
-  .title-row { text-align: center; padding: clamp(18px, 4vw, 34px) 0 14px; }
+  .flag .brand { font-weight: 700; color: var(--ink); letter-spacing: -.01em; font-size: 14px; }
+  .flag .brand .mark { color: var(--accent); }
+  .flag .meta { display: flex; align-items: center; gap: 10px; color: var(--ink-3);
+    font-variant-numeric: tabular-nums; }
+  .flag .meta b { color: var(--ink); font-weight: 600; }
+  .flag .tbtn { background: var(--card); border: 1px solid var(--rule); color: var(--ink-2);
+    font: inherit; padding: 5px 10px; cursor: pointer; border-radius: 6px; }
+  .flag .tbtn:hover { border-color: var(--ink-3); color: var(--ink); }
+  .title-row { padding: 14px 0 18px; }
   .title-row h1 {
-    font-family: var(--serif); font-weight: 700; letter-spacing: -.01em;
-    font-size: clamp(34px, 7.2vw, 74px); line-height: .98; margin: 0;
-    text-wrap: balance;
+    font-family: var(--serif); font-weight: 700; letter-spacing: -.02em;
+    font-size: clamp(28px, 5.6vw, 48px); line-height: 1.05; margin: 0;
+    text-wrap: balance; color: var(--ink);
   }
   .title-row .sub {
-    font-family: var(--serif); font-style: italic; color: var(--ink-2);
-    font-size: clamp(15px, 2.3vw, 20px); max-width: 60ch; margin: 12px auto 0;
-    line-height: 1.4; text-wrap: balance;
+    color: var(--ink-2); font-size: clamp(15px, 1.8vw, 17px);
+    max-width: 68ch; margin: 10px 0 0; line-height: 1.5;
   }
   .dateline {
-    display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
-    border-top: 1px solid var(--ink); border-bottom: 3px double var(--ink);
-    margin-top: 18px;
+    display: flex; flex-wrap: wrap; gap: 8px 12px;
+    margin: 16px 0 12px; padding: 0;
   }
   .dateline .cell {
-    padding: 9px 20px; text-align: center; border-right: 1px solid var(--rule-soft);
+    padding: 6px 10px; background: var(--paper-2); border: 1px solid var(--rule);
+    border-radius: 999px; display: inline-flex; align-items: baseline; gap: 6px;
   }
-  .dateline .cell:last-child { border-right: 0; }
   .dateline .n {
-    font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
-    font-size: 19px; display: block; line-height: 1.1; color: var(--ink);
+    font-variant-numeric: tabular-nums; font-weight: 700;
+    font-size: 14px; color: var(--ink);
   }
   .dateline .k {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .13em;
-    text-transform: uppercase; color: var(--ink-3);
+    font-size: 12px; color: var(--ink-3);
   }
-  .methods { font-family: var(--mono); font-size: 11px; line-height: 1.6; color: var(--ink-3);
-    text-align: center; max-width: 74ch; margin: 14px auto 0; }
-  .methods b { color: var(--ink-2); font-weight: 600; }
+  .methods { font-size: 13px; line-height: 1.6; color: var(--ink-2);
+    max-width: 80ch; margin: 0 0 16px; }
+  .methods b { color: var(--ink); font-weight: 600; }
 
-  /* ---- Nav ---- */
-  nav.views { display: flex; justify-content: center; flex-wrap: wrap; gap: 2px;
-    position: sticky; top: 0; z-index: 20; background: var(--paper);
-    border-bottom: 1px solid var(--rule); margin-top: 4px; }
+  /* ---- Sticky top nav (view tabs) ---- */
+  nav.views {
+    display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 4px;
+    position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: saturate(140%) blur(6px);
+    -webkit-backdrop-filter: saturate(140%) blur(6px);
+    border-bottom: 1px solid var(--rule); padding: 8px 0;
+  }
   .vtab {
-    appearance: none; background: none; border: 0; border-bottom: 2px solid transparent;
-    font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--ink-3); padding: 13px 16px 11px; cursor: pointer; margin-bottom: -1px;
+    appearance: none; background: transparent; border: 1px solid transparent;
+    font-family: var(--sans); font-size: 14px; font-weight: 500;
+    color: var(--ink-2); padding: 7px 12px; cursor: pointer; border-radius: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
   }
-  .vtab:hover { color: var(--ink); }
-  .vtab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+  .vtab:hover { color: var(--ink); background: var(--paper-2); }
+  .vtab[aria-selected="true"] {
+    color: var(--ink); background: var(--paper-2); border-color: var(--rule); font-weight: 600;
+  }
+  .vtab .ct { font-variant-numeric: tabular-nums; color: var(--ink-3);
+    background: var(--card); border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0 6px; font-size: 11px; }
+  .vtab[aria-selected="true"] .ct { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--rule)); }
 
-  main { padding: clamp(20px, 4vw, 40px) 0 60px; }
+  /* ---- Mode toggle (Reader / Index) ---- */
+  .modebar {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; flex-wrap: wrap; padding: 12px 0 4px;
+    border-bottom: 1px solid var(--rule-soft); margin-bottom: 12px;
+  }
+  .modebar .modeswitch { display: inline-flex; background: var(--paper-2);
+    border: 1px solid var(--rule); border-radius: 8px; padding: 3px; }
+  .modebar .modeswitch button {
+    appearance: none; background: transparent; border: 0;
+    font: inherit; font-weight: 500; color: var(--ink-2);
+    padding: 5px 12px; cursor: pointer; border-radius: 6px;
+  }
+  .modebar .modeswitch button[aria-pressed="true"] {
+    background: var(--card); color: var(--ink); box-shadow: var(--shadow); font-weight: 600;
+  }
+  .modebar .modehint { color: var(--ink-3); font-size: 13px; }
+
+  main { padding: 8px 0 60px; }
   .view[hidden] { display: none; }
 
   /* ---- Section headers ---- */
-  .sec-hd { display: flex; align-items: baseline; gap: 12px; margin: 44px 0 4px;
-    border-bottom: 1px solid var(--ink); padding-bottom: 7px; }
-  .sec-hd:first-of-type { margin-top: 6px; }
-  .sec-hd h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(20px, 3vw, 27px);
-    margin: 0; letter-spacing: -.01em; }
-  .sec-hd .note { font-family: var(--mono); font-size: 11px; color: var(--ink-3);
-    letter-spacing: .04em; margin-left: auto; }
-  .sec-lede { color: var(--ink-2); max-width: var(--measure); margin: 8px 0 20px;
+  .sec-hd { display: flex; align-items: baseline; gap: 12px; margin: 32px 0 6px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+  .sec-hd:first-of-type { margin-top: 12px; }
+  .sec-hd h2 { font-family: var(--sans); font-weight: 700; font-size: clamp(18px, 2.4vw, 22px);
+    margin: 0; letter-spacing: -.01em; color: var(--ink); }
+  .sec-hd .note { font-size: 12px; color: var(--ink-3); margin-left: auto;
+    font-variant-numeric: tabular-nums; }
+  .sec-lede { color: var(--ink-2); max-width: var(--measure); margin: 8px 0 16px;
     font-size: 15px; }
 
-  /* ---- Lead story ---- */
-  .lead { border-bottom: 1px solid var(--rule); padding-bottom: 26px; margin-bottom: 8px; }
-  .lead .track { font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
-    text-transform: uppercase; font-weight: 600; display: flex; align-items: center; gap: 7px; }
-  .lead h3 { font-family: var(--serif); font-weight: 700; letter-spacing: -.015em;
-    font-size: clamp(25px, 3.6vw, 35px); line-height: 1.1; margin: 8px 0 0; text-wrap: balance; }
+  /* ---- Lead card ---- */
+  .lead {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 12px;
+    padding: 20px 22px; margin: 6px 0 22px; box-shadow: var(--shadow);
+    border-left: 4px solid var(--accent);
+  }
+  .lead .track { font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+  .lead h3 { font-family: var(--sans); font-weight: 700; letter-spacing: -.015em;
+    font-size: clamp(22px, 3vw, 28px); line-height: 1.2; margin: 10px 0 0;
+    text-wrap: balance; color: var(--ink); }
   .lead h3 a:hover { color: var(--accent); }
-  .chip.fresh { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
-    font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
-  .lead .stand { font-size: 18px; color: var(--ink-2); max-width: var(--measure); margin: 14px 0 0; }
+  .lead .stand { font-size: 16px; color: var(--ink-2); max-width: var(--measure);
+    margin: 10px 0 0; line-height: 1.55; }
   .lead .stand b { color: var(--ink); font-weight: 600; }
 
   /* ---- Columns / grids ---- */
-  .cols3 { display: grid; grid-template-columns: 1fr; gap: 30px 40px; }
-  @media (min-width: 720px) { .cols3 { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1000px) { .cols3 { grid-template-columns: 1fr 1fr 1fr; } }
-  .cols2 { display: grid; grid-template-columns: 1fr; gap: 26px 44px; }
-  @media (min-width: 820px) { .cols2 { grid-template-columns: 3fr 2fr; } }
-  .colhd { font-family: var(--mono); font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
-    font-weight: 600; padding-bottom: 8px; border-bottom: 2px solid currentColor; margin-bottom: 4px; }
+  .cols3 { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  @media (min-width: 760px) { .cols3 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1040px) { .cols3 { grid-template-columns: 1fr 1fr 1fr; } }
+  .cols2 { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  @media (min-width: 900px) { .cols2 { grid-template-columns: 3fr 2fr; } }
+  .col { min-width: 0; }
+  .colhd {
+    font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    padding: 0 0 8px; margin-bottom: 6px; color: currentColor;
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .colhd::before {
+    content: ""; width: 8px; height: 8px; border-radius: 2px; background: currentColor;
+  }
 
-  /* ---- Article item ---- */
-  .art { padding: 15px 0; border-bottom: 1px solid var(--rule-soft); }
-  .art:last-child { border-bottom: 0; }
-  .art h4 { font-family: var(--serif); font-weight: 600; font-size: 17.5px; line-height: 1.22;
-    margin: 0; letter-spacing: -.005em; }
-  .art h4 a:hover { color: var(--accent); }
-  .art .take { color: var(--ink-2); font-size: 14.5px; margin: 6px 0 0; }
-  .art .meta { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 8px;
-    display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+  /* ---- Article card ---- */
+  .artlist { display: flex; flex-direction: column; gap: 10px; }
+  .art {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 14px 16px; transition: transform .12s ease, box-shadow .12s ease, border-color .12s;
+  }
+  .art:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--rule));
+    box-shadow: var(--shadow); }
+  .art h4 { font-family: var(--sans); font-weight: 600; font-size: 16px; line-height: 1.35;
+    margin: 0; letter-spacing: -.005em; color: var(--ink); }
+  .art h4 a { color: var(--ink); }
+  .art h4 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .art .take { color: var(--ink-2); font-size: 14.5px; margin: 6px 0 0; line-height: 1.5; }
+  .art .meta { font-size: 12px; color: var(--ink-3); margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: center; }
   .art .meta .num { color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .do { display: inline-flex; gap: 8px; align-items: baseline; margin-top: 9px; font-size: 13.5px;
-    color: var(--ink); background: var(--paper-2); border-left: 2px solid var(--accent);
-    padding: 6px 11px; }
-  .do .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--accent-2); font-weight: 600; white-space: nowrap; }
+  .art .meta a.link { color: var(--accent); font-weight: 500; }
+
+  .do {
+    display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; font-size: 14px;
+    color: var(--ink); background: var(--paper-2);
+    border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: 8px 12px; line-height: 1.45;
+  }
+  .do .lbl { font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent-2); font-weight: 700; white-space: nowrap; padding-top: 2px; }
+
+  /* Topic pill: replaces the dim newspaper "dot + track" */
+  .tpill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    padding: 2px 8px; border-radius: 999px;
+    background: var(--paper-2); border: 1px solid var(--rule); color: var(--ink-2);
+  }
+  .tpill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .tpill.aisec    { color: var(--t-aisec);    background: var(--t-aisec-bg);    border-color: color-mix(in srgb, var(--t-aisec) 30%, var(--rule)); }
+  .tpill.prodsec  { color: var(--t-prodsec);  background: var(--t-prodsec-bg);  border-color: color-mix(in srgb, var(--t-prodsec) 30%, var(--rule)); }
+  .tpill.research { color: var(--t-research); background: var(--t-research-bg); border-color: color-mix(in srgb, var(--t-research) 30%, var(--rule)); }
 
   .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: currentColor; }
-  .chip { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; padding: 2px 7px;
-    border: 1px solid var(--rule); color: var(--ink-3); border-radius: 2px; white-space: nowrap; }
-  .chip.sig { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent) 40%, var(--rule)); }
+  .chip { font-size: 11px; padding: 2px 8px; border: 1px solid var(--rule);
+    color: var(--ink-3); border-radius: 999px; white-space: nowrap; background: var(--card); }
+  .chip.sig { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent) 30%, var(--rule));
+    background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+  .chip.fresh { color: #fff; background: var(--accent); border-color: var(--accent);
+    font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: .06em; }
   .chips { display: inline-flex; flex-wrap: wrap; gap: 5px; }
 
-  .why { font-size: 14px; color: var(--ink-2); margin: 5px 0 0; }
+  .why { font-size: 14px; color: var(--ink-2); margin: 6px 0 0; line-height: 1.5; }
   .why b { color: var(--ink); }
 
+  /* ---- Index (table) mode ---- */
+  .idx-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--rule); border-radius: 10px; background: var(--card); }
+  table.idx { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+  table.idx th, table.idx td {
+    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  table.idx thead th {
+    position: sticky; top: 0; background: var(--paper-2); color: var(--ink-2);
+    font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
+    border-bottom: 1px solid var(--rule); z-index: 1;
+  }
+  table.idx tbody tr:hover { background: var(--paper-2); }
+  table.idx tbody tr:last-child td { border-bottom: 0; }
+  table.idx .c-date { color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; width: 100px; }
+  table.idx .c-topic { width: 130px; }
+  table.idx .c-title a { color: var(--ink); font-weight: 500; }
+  table.idx .c-title a:hover { color: var(--accent); text-decoration: underline; }
+  table.idx .c-title .sub { display: block; color: var(--ink-3); font-size: 12.5px; margin-top: 3px; }
+  table.idx .c-signal { width: 78px; font-variant-numeric: tabular-nums; color: var(--ink-2); text-align: right; }
+  table.idx .c-src { width: 150px; }
+  table.idx .c-src a { color: var(--accent); }
+
   /* ---- Trends ---- */
+  .trendcard { background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 12px 14px; }
   .tagrow { display: flex; align-items: baseline; gap: 8px; padding: 6px 0;
     border-bottom: 1px solid var(--rule-soft); font-size: 14px; }
-  .tagrow .tg { font-family: var(--mono); font-size: 13px; }
-  .tagrow .ct { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-left: auto;
+  .tagrow:last-child { border-bottom: 0; }
+  .tagrow .tg { font-weight: 500; color: var(--ink); }
+  .tagrow .ct { font-size: 12px; color: var(--ink-3); margin-left: auto;
     font-variant-numeric: tabular-nums; }
-  .rise { color: var(--st-current); font-size: 11px; font-family: var(--mono); }
+  .rise { color: var(--st-current); font-size: 11px; font-weight: 600; }
 
   /* ---- Fields ---- */
-  .fieldwrap + .fieldwrap { margin-top: 8px; }
-  .domain { padding: 16px 0; border-bottom: 1px solid var(--rule-soft); }
-  .domain-hd { display: flex; align-items: baseline; gap: 10px; }
-  .domain-hd h4 { font-family: var(--serif); font-size: 19px; font-weight: 700; margin: 0; }
-  .domain-hd .ct { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
-  .domain.empty h4 { color: var(--ink-3); font-weight: 600; }
-  .domain.empty .none { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+  .fieldwrap + .fieldwrap { margin-top: 12px; }
+  .fieldwrap .sec-hd h2 { display: inline-flex; align-items: center; gap: 8px; }
+  .domain { padding: 14px 0; border-bottom: 1px solid var(--rule-soft); }
+  .domain:last-child { border-bottom: 0; }
+  .domain-hd { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .domain-hd h4 { font-family: var(--sans); font-size: 15px; font-weight: 600; margin: 0; color: var(--ink); }
+  .domain-hd .ct { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .domain.empty { padding: 10px 0; }
+  .domain.empty h4 { color: var(--ink-3); font-weight: 500; }
+  .domain.empty .none { font-size: 12px; color: var(--ink-3); font-style: italic; }
 
-  /* ---- Toolbars / claims / feed ---- */
-  .toolbar { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; margin: 12px 0 22px; }
-  .fgroup { display: flex; flex-direction: column; gap: 7px; }
-  .fgroup > span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3); }
-  .opts { display: flex; flex-wrap: wrap; gap: 5px; }
+  /* ---- Toolbars ---- */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: flex-end; margin: 6px 0 18px; }
+  .fgroup { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .fgroup > span { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
   .opt { appearance: none; background: var(--card); border: 1px solid var(--rule); color: var(--ink-2);
-    font-family: var(--mono); font-size: 12px; padding: 5px 11px; cursor: pointer; border-radius: 2px; }
+    font: inherit; font-size: 13px; padding: 6px 12px; cursor: pointer; border-radius: 999px; }
+  .opt:hover { border-color: var(--ink-3); color: var(--ink); }
   .opt[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .search { flex: 1 1 260px; min-width: 200px; }
-  .search input { width: 100%; font-family: var(--sans); font-size: 15px; padding: 9px 12px;
-    background: var(--card); border: 1px solid var(--rule); color: var(--ink); border-radius: 2px; }
+  .search input { width: 100%; font: inherit; font-size: 15px; padding: 9px 12px;
+    background: var(--card); border: 1px solid var(--rule); color: var(--ink); border-radius: 8px; }
   .search input::placeholder { color: var(--ink-3); }
+  .search input:focus { border-color: var(--accent); outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: 0; }
 
-  .claim { border-bottom: 1px solid var(--rule); padding: 20px 0; }
-  .claim.retired { opacity: .82; }
-  .claim-top { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
-  .status { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
-    padding: 2px 8px; border-radius: 2px; font-weight: 600; }
+  /* ---- Claims ---- */
+  .claim { background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 10px; border-left: 4px solid var(--rule); }
+  .claim.st-current { border-left-color: var(--st-current); }
+  .claim.st-contested { border-left-color: var(--st-contested); }
+  .claim.st-superseded { border-left-color: var(--st-superseded); }
+  .claim.st-refuted { border-left-color: var(--st-refuted); }
+  .claim.retired { opacity: .88; background: var(--paper-2); }
+  .claim-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .status { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 999px; font-weight: 700; }
   .status.current { color: var(--st-current); background: var(--st-current-bg); }
   .status.contested { color: var(--st-contested); background: var(--st-contested-bg); }
   .status.superseded { color: var(--st-superseded); background: var(--st-superseded-bg); }
   .status.refuted { color: var(--st-refuted); background: var(--st-refuted-bg); }
-  .claim h4 { font-family: var(--serif); font-size: 20px; font-weight: 700; line-height: 1.25;
-    margin: 10px 0 0; letter-spacing: -.005em; }
-  .claim.retired h4 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 600; }
-  .claim .guide { color: var(--ink-2); margin: 9px 0 0; max-width: var(--measure); }
+  .claim h4 { font-family: var(--sans); font-size: 17px; font-weight: 600; line-height: 1.35;
+    margin: 8px 0 0; letter-spacing: -.005em; color: var(--ink); }
+  .claim.retired h4 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 500; }
+  .claim .guide { color: var(--ink-2); margin: 8px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide b { color: var(--ink); }
-  .claim .cmeta { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 10px;
-    display: flex; flex-wrap: wrap; gap: 5px 14px; }
-  .ev { margin-top: 8px; font-size: 13px; }
-  .ev summary { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--ink-3); cursor: pointer; }
+  .claim .cmeta { font-size: 12px; color: var(--ink-3); margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 4px 12px; }
+  .ev { margin-top: 8px; font-size: 13.5px; }
+  .ev summary { font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 600; }
+  .ev summary::marker { color: var(--ink-3); }
   .ev ul { margin: 8px 0 0; padding-left: 18px; }
-  .ev li { margin: 3px 0; }
-  .ev .stance { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
-  .ev .supports { color: var(--st-current); }
-  .ev .contests, .ev .refutes { color: var(--st-refuted); }
-  .reversal { border-left: 3px solid var(--accent); background: var(--paper-2); padding: 12px 16px;
-    margin: 8px 0 22px; }
+  .ev li { margin: 4px 0; }
+  .ev .stance { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700;
+    padding: 1px 6px; border-radius: 4px; margin-right: 4px; }
+  .ev .supports { color: var(--st-current); background: var(--st-current-bg); }
+  .ev .contests, .ev .refutes { color: var(--st-refuted); background: var(--st-refuted-bg); }
+  .reversal {
+    background: var(--card); border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 12px 14px; margin: 8px 0 16px;
+  }
   .reversal .old { text-decoration: line-through; color: var(--ink-3); }
 
-  .count { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin: 0 0 14px; }
-  .empty-note { font-family: var(--mono); font-size: 13px; color: var(--ink-3); padding: 24px 0; }
+  .count { font-size: 12px; color: var(--ink-3); margin: 0 0 14px; font-variant-numeric: tabular-nums; }
+  .empty-note { font-size: 14px; color: var(--ink-3); padding: 24px 0; }
 
-  footer { border-top: 3px double var(--ink); margin-top: 50px; padding: 22px 0 60px;
-    font-family: var(--mono); font-size: 12px; color: var(--ink-3); display: flex;
-    flex-wrap: wrap; gap: 8px 20px; align-items: center; }
-  footer a { color: var(--ink-2); border-bottom: 1px solid var(--rule); }
-  footer a:hover { color: var(--ink); }
+  footer { border-top: 1px solid var(--rule); margin-top: 40px; padding: 20px 0 50px;
+    font-size: 13px; color: var(--ink-3); display: flex;
+    flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+  footer a { color: var(--accent); }
+  footer a:hover { text-decoration: underline; }
+
+  /* Small niceties */
+  @media (max-width: 640px) {
+    .flag .brand { font-size: 13px; }
+    .flag .meta { font-size: 11px; }
+    .sec-hd { flex-wrap: wrap; }
+    .sec-hd .note { margin-left: 0; width: 100%; }
+    .modebar { padding: 8px 0 4px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="masthead">
     <div class="flag">
-      <span>Weekly briefing &nbsp;/&nbsp; <b>AI &amp; security research</b></span>
-      <span>
-        Issue <b id="fl-date"></b> &nbsp;·&nbsp; <span id="fl-count"></span> vetted
-        &nbsp;<button class="tbtn" id="theme" type="button">Theme</button>
+      <span class="brand">Awesome<span class="mark">/</span>Security &amp; AI Research</span>
+      <span class="meta">
+        Issue <b id="fl-date"></b> · <b id="fl-count"></b> vetted
+        <button class="tbtn" id="theme" type="button" aria-label="Toggle theme">Theme</button>
       </span>
     </div>
     <div class="title-row">
-      <h1>Awesome Security<br>&amp; AI Research</h1>
-      <p class="sub">A weekly, source-cited briefing. Every finding is vetted, distilled to one
-        lesson and one action, and filed by field. The ledger tracks what the field
-        believes now, and what it stopped believing.</p>
+      <h1>A weekly, vetted briefing on AI security, product security &amp; applied AI research.</h1>
+      <p class="sub">Every finding is source-cited, distilled to one lesson and one action, and filed by field. A standing-claims ledger tracks what the field currently believes &mdash; and what it stopped believing.</p>
     </div>
     <div class="dateline" id="dateline"></div>
     <p class="methods" id="methods"></p>
@@ -282,9 +405,9 @@
 
   <nav class="views" role="tablist" aria-label="Views">
     <button class="vtab" role="tab" data-view="week" aria-selected="true">Briefing</button>
-    <button class="vtab" role="tab" data-view="fields">Fields</button>
-    <button class="vtab" role="tab" data-view="claims">Standing claims</button>
-    <button class="vtab" role="tab" data-view="feed">All findings</button>
+    <button class="vtab" role="tab" data-view="fields">Fields <span class="ct" id="ct-fields"></span></button>
+    <button class="vtab" role="tab" data-view="claims">Claims ledger <span class="ct" id="ct-claims"></span></button>
+    <button class="vtab" role="tab" data-view="feed">All findings <span class="ct" id="ct-feed"></span></button>
   </nav>
 
   <main>
@@ -312,10 +435,14 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var TOPIC_ORDER = DATA.topic_order || Object.keys(DATA.topics || {});
   var TMETA = {
-    "ai-security":      { v: "--t-aisec" },
-    "product-security": { v: "--t-prodsec" },
-    "ai-research":      { v: "--t-research" }
+    "ai-security":      { v: "--t-aisec",    cls: "aisec"    },
+    "product-security": { v: "--t-prodsec",  cls: "prodsec"  },
+    "ai-research":      { v: "--t-research", cls: "research" }
   };
+  function tcls(t) { return (TMETA[t] && TMETA[t].cls) || ""; }
+  function topicPill(t) {
+    return '<span class="tpill ' + tcls(t) + '">' + esc(tname(t)) + '</span>';
+  }
 
   function esc(s) {
     return String(s == null ? "" : s)
@@ -340,9 +467,8 @@
   function articleHTML(f, opts) {
     opts = opts || {};
     var meta = [];
-    meta.push('<span class="dot" style="color:' + tvar(f.topic) + '"></span>');
+    if (opts.showTrack !== false) meta.push(topicPill(f.topic));
     if (f.fresh) meta.push('<span class="chip fresh">new</span>');
-    if (opts.showTrack !== false) meta.push('<span>' + esc(tname(f.topic)) + '</span>');
     if (f.domain) meta.push('<span>' + txt(f.domain) + '</span>');
     if (f.published) meta.push('<span>' + esc(fmtDate(f.published)) + '</span>');
     if (opts.showScore) meta.push('<span class="num">signal ' + Math.round(f.composite) + '</span>');
@@ -350,7 +476,7 @@
     meta.push('<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>');
     var doHTML = "";
     if (f.action && f.action.title) {
-      doHTML = '<div class="do"><span class="lbl">do' +
+      doHTML = '<div class="do"><span class="lbl">Do' +
         (f.action.type ? " / " + esc(f.action.type) : "") + '</span><span>' + txt(f.action.title) + '</span></div>';
     }
     return '<article class="art">' +
@@ -361,46 +487,113 @@
       '</article>';
   }
 
+  function indexTable(rows, opts) {
+    opts = opts || {};
+    if (!rows.length) return '<p class="empty-note">Nothing matches.</p>';
+    var head = '<tr>' +
+      '<th class="c-date">Date</th>' +
+      '<th class="c-topic">Field</th>' +
+      '<th class="c-title">Title &amp; lesson</th>' +
+      (opts.showScore ? '<th class="c-signal">Signal</th>' : '') +
+      '<th class="c-src">Source</th>' +
+      '</tr>';
+    var body = rows.map(function (f) {
+      var date = f.published ? fmtDate(f.published) : '';
+      var lesson = f.takeaway ? '<span class="sub">' + txt(f.takeaway) + '</span>' : '';
+      return '<tr>' +
+        '<td class="c-date">' + esc(date) + (f.fresh ? ' <span class="chip fresh" style="margin-left:4px">new</span>' : '') + '</td>' +
+        '<td class="c-topic">' + topicPill(f.topic) + (f.domain ? '<div class="sub" style="color:var(--ink-3);font-size:12px;margin-top:3px">' + txt(f.domain) + '</div>' : '') + '</td>' +
+        '<td class="c-title"><a href="' + esc(f.url) + '">' + txt(f.title) + '</a>' + lesson + '</td>' +
+        (opts.showScore ? '<td class="c-signal">' + Math.round(f.composite || 0) + '</td>' : '') +
+        '<td class="c-src"><a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a></td>' +
+        '</tr>';
+    }).join("");
+    return '<div class="idx-wrap"><table class="idx"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
+  }
+
+  // Per-view display mode ("reader" vs "index"), persisted per view in URL search.
+  var MODE = { week: "reader", fields: "reader", feed: "reader" };
+  (function loadModes() {
+    try {
+      var p = new URLSearchParams(location.search);
+      Object.keys(MODE).forEach(function (v) {
+        var m = p.get("mode_" + v);
+        if (m === "reader" || m === "index") MODE[v] = m;
+      });
+    } catch (e) {}
+  })();
+  function saveMode(view, mode) {
+    MODE[view] = mode;
+    try {
+      var p = new URLSearchParams(location.search);
+      p.set("mode_" + view, mode);
+      history.replaceState(null, "", location.pathname + "?" + p.toString() + location.hash);
+    } catch (e) {}
+  }
+  function modeBar(view, hint) {
+    var m = MODE[view];
+    return '<div class="modebar"><div class="modeswitch" role="tablist" aria-label="Display mode">' +
+      '<button type="button" data-mode="reader" aria-pressed="' + (m === "reader" ? "true" : "false") + '">Reader</button>' +
+      '<button type="button" data-mode="index"  aria-pressed="' + (m === "index" ? "true" : "false") + '">Index</button>' +
+      '</div><span class="modehint">' + esc(hint || "") + '</span></div>';
+  }
+  function wireModeBar(root, view, redraw) {
+    root.querySelectorAll(".modeswitch button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var next = b.dataset.mode;
+        if (MODE[view] === next) return;
+        saveMode(view, next);
+        redraw();
+      });
+    });
+  }
+
   function secHead(title, note) {
     return '<div class="sec-hd"><h2>' + title + '</h2>' +
       (note ? '<span class="note">' + esc(note) + '</span>' : '') + '</div>';
   }
 
   // ================= BRIEFING =================
-  // Each band states its own window. Findings span the last max_age_days; the
-  // items published within snapshot_days are the only ones called "new this
-  // week" and carry the "new" tag. No band mixes the two windows silently.
   function renderWeek() {
     var root = $("#view-week");
     var pool = (DATA.findings || []).slice();   // composite-sorted, last max_age_days
     var editorial = DATA.editorial || [];
     var fresh = pool.filter(function (f) { return f.fresh; });
+    var mode = MODE.week;
+
+    if (mode === "index") {
+      var html =
+        modeBar("week", "Sortable table of all vetted findings — switch to Reader for the briefing prose.");
+      html += secHead("This week's index", "signal-sorted, last " + DATA.max_age_days + " days");
+      html += indexTable(pool.slice(), { showScore: true });
+      root.innerHTML = html;
+      wireModeBar(root, "week", renderWeek);
+      return;
+    }
+
     var shown = {};
     var claimsShown = false;
-    var html = "";
+    var html = modeBar("week", "Reader view — briefing prose. Switch to Index for a dense table.");
 
-    // --- Lead: strongest in the window ---
     var lead = pool[0];
     if (lead) {
       shown[lead.id] = 1;
       html += '<div class="lead">' +
-        '<div class="track" style="color:' + tvar(lead.topic) + '">' +
-          '<span class="dot"></span>' + esc(tname(lead.topic)) +
-          (lead.domain ? ' &nbsp;/&nbsp; ' + txt(lead.domain) : '') +
-          (lead.fresh ? ' &nbsp;<span class="chip fresh">new</span>' : '') + '</div>' +
+        '<div class="track">' + topicPill(lead.topic) +
+          (lead.fresh ? ' <span class="chip fresh">new</span>' : '') +
+          (lead.domain ? ' <span style="color:var(--ink-3);font-weight:500">/ ' + txt(lead.domain) + '</span>' : '') +
+        '</div>' +
         '<h3><a href="' + esc(lead.url) + '">' + txt(lead.title) + '</a></h3>' +
         (lead.takeaway ? '<p class="stand"><b>The lesson.</b> ' + txt(lead.takeaway) + '</p>' : '') +
-        (lead.action && lead.action.title ? '<div class="do"><span class="lbl">do' +
+        (lead.action && lead.action.title ? '<div class="do"><span class="lbl">Do' +
           (lead.action.type ? " / " + esc(lead.action.type) : "") + '</span><span>' + txt(lead.action.title) + '</span></div>' : '') +
-        '<div class="art" style="border:0;padding:12px 0 0"><div class="meta">' +
-          '<span class="dot" style="color:' + tvar(lead.topic) + '"></span>' +
+        '<div class="meta" style="margin-top:12px;font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center">' +
           '<span>' + esc(fmtDate(lead.published)) + '</span>' +
-          (lead.verified ? '<span title="lesson excerpt grounded against the source and cross-checked by a separate model pass">checked</span>' : '') +
+          (lead.verified ? '<span title="grounded against source, cross-checked by a separate model pass">checked</span>' : '') +
           '<a class="link" href="' + esc(lead.url) + '">' + esc(src(lead)) + ' &#8599;</a>' +
-        '</div></div></div>';
+        '</div></div>';
     }
 
-    // --- New this week: strictly the last snapshot_days ---
     var freshList = fresh.filter(function (f) { return !shown[f.id]; });
     html += secHead("New this week", "last " + DATA.snapshot_days + " days");
     if (!fresh.length) {
@@ -411,65 +604,64 @@
         'briefing covers the last ' + DATA.max_age_days + ' days.</p>';
     } else {
       html += '<p class="sec-lede">Published in the last ' + DATA.snapshot_days + ' days.</p>';
-      html += '<div class="cols2"><div>';
+      html += '<div class="cols2"><div class="col"><div class="artlist">';
       freshList.forEach(function (f) { shown[f.id] = 1; html += articleHTML(f); });
-      html += '</div><div>' + claimsTeaser() + '</div></div>';
+      html += '</div></div><div class="col">' + claimsTeaser() + '</div></div>';
       claimsShown = true;
     }
 
-    // --- Trending & in the news (editorial pass; separate held pool) ---
     if (editorial.length) {
       html += secHead("Trending &amp; in the news", editorial.length + " promoted");
       html += '<p class="sec-lede">Not new ideas. What the field is watching right now, held back by ' +
         'the novelty gate but surfaced by the editorial pass for being timely and teachable.</p>';
-      html += '<div class="cols2"><div>';
+      html += '<div class="cols2"><div class="col"><div class="artlist">';
       editorial.slice(0, 6).forEach(function (f) {
         html += '<article class="art">' +
           '<h4><a href="' + esc(f.url) + '">' + txt(f.title) + '</a></h4>' +
           (f.reason ? '<p class="why"><b>Why now.</b> ' + txt(f.reason) + '</p>' : '') +
-          '<div class="meta"><span class="dot" style="color:' + tvar(f.topic) + '"></span>' +
-            '<span>' + esc(tname(f.topic)) + '</span>' +
+          '<div class="meta">' + topicPill(f.topic) +
             (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
               return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
             '<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
           '</div></article>';
       });
-      html += '</div><div>' + (claimsShown ? emergingRail() : claimsTeaser()) + '</div></div>';
+      html += '</div></div><div class="col">' + (claimsShown ? emergingRail() : claimsTeaser()) + '</div></div>';
       if (!claimsShown) claimsShown = true;
     }
 
-    // --- Strongest in each field (full window, explicitly labelled) ---
     html += secHead("The strongest in each field", "last " + DATA.max_age_days + " days");
     html += '<p class="sec-lede">The highest-signal vetted findings in each track. Each is one lesson ' +
       'and one thing to do. Items from the last ' + DATA.snapshot_days + ' days are tagged new.</p>';
     html += '<div class="cols3">';
     TOPIC_ORDER.forEach(function (t) {
       var items = pool.filter(function (f) { return f.topic === t && !shown[f.id]; }).slice(0, 4);
-      html += '<div><div class="colhd" style="color:' + tvar(t) + '">' + esc(tname(t)) + '</div>';
+      html += '<div class="col"><div class="colhd" style="color:' + tvar(t) + '">' + esc(tname(t)) + '</div>';
       if (!items.length) html += '<p class="empty-note">Nothing else vetted in this window.</p>';
+      html += '<div class="artlist">';
       items.forEach(function (f) { shown[f.id] = 1; html += articleHTML(f, { showTrack: false }); });
+      html += '</div>';
       html += '<div style="margin-top:12px"><a class="link" href="#fields" data-goto="fields">All ' +
         esc(tname(t)) + ' fields &#8594;</a></div></div>';
     });
     html += '</div>';
 
-    // --- Emerging trends, and the ledger if not already shown ---
     html += secHead("Emerging trends", "last " + DATA.max_age_days + " days");
     if (claimsShown) {
       html += '<div class="cols3">' + TOPIC_ORDER.map(function (t) {
-        return '<div>' + emergingBlock(t, false) + '</div>'; }).join("") + '</div>';
+        return '<div class="col trendcard">' + emergingBlock(t, false) + '</div>'; }).join("") + '</div>';
     } else {
-      html += '<div class="cols2"><div>' +
+      html += '<div class="cols2"><div class="col trendcard">' +
         TOPIC_ORDER.map(function (t) { return emergingBlock(t, true); }).join("") +
-        '</div><div>' + claimsTeaser() + '</div></div>';
+        '</div><div class="col">' + claimsTeaser() + '</div></div>';
     }
 
     root.innerHTML = html;
+    wireModeBar(root, "week", renderWeek);
   }
 
   function emergingRail() {
-    return '<div class="colhd" style="color:var(--ink-3)">Emerging trends</div>' +
-      TOPIC_ORDER.map(function (t) { return emergingBlock(t, true); }).join("");
+    return '<div class="trendcard"><div class="colhd" style="color:var(--ink-3)">Emerging trends</div>' +
+      TOPIC_ORDER.map(function (t) { return emergingBlock(t, true); }).join("") + '</div>';
   }
   function emergingBlock(t, compact) {
     var rows = (DATA.trends[t] || []).slice(0, compact ? 3 : 5);
@@ -490,7 +682,8 @@
     var retired = claims.filter(isRetired).sort(function (a, b) {
       return (b.superseded_on || "").localeCompare(a.superseded_on || ""); });
     var top = retired[0];
-    var out = '<div class="colhd" style="color:var(--ink-3)">The ledger</div>' +
+    var out = '<div class="trendcard">' +
+      '<div class="colhd" style="color:var(--ink-3)">The ledger</div>' +
       '<p class="why"><b>' + live.length + ' answers stand</b> right now; ' + retired.length +
       ' were retired and kept underneath with the reason they fell.</p>';
     if (top) {
@@ -499,7 +692,8 @@
         '<p class="old" style="margin:6px 0">' + txt(top.statement) + '</p>' +
         '<p style="margin:0;font-size:14px">' + txt(top.supersession_reason || "") + '</p></div>';
     }
-    out += '<a class="link" href="#claims" data-goto="claims">Open the full ledger &#8594;</a>';
+    out += '<p style="margin:10px 0 0"><a class="link" href="#claims" data-goto="claims">Open the full ledger &#8594;</a></p>';
+    out += '</div>';
     return out;
   }
 
@@ -507,11 +701,33 @@
   function renderFields() {
     var root = $("#view-fields");
     var findings = DATA.findings || [];
-    var html = '<div class="sec-hd"><h2>The field, by subtopic</h2>' +
+    var mode = MODE.fields;
+
+    var html = modeBar("fields",
+      mode === "reader"
+        ? "Reader — each field grouped by subtopic."
+        : "Index — flat table of all vetted findings, grouped by field."
+    );
+
+    html += '<div class="sec-hd"><h2>The field, by subtopic</h2>' +
       '<span class="note">' + findings.length + ' vetted findings</span></div>' +
-      '<p class="sec-lede">Every track broken into its subfields, each showing what the current ' +
-      'research says. Subfields with nothing vetted this window are still listed so you can see ' +
-      'the whole map.</p>';
+      '<p class="sec-lede">Every track broken into its subfields. Subfields with nothing vetted ' +
+      'this window are still listed so you can see the whole map.</p>';
+
+    if (mode === "index") {
+      TOPIC_ORDER.forEach(function (t) {
+        var rows = findings.filter(function (f) { return f.topic === t; }).slice()
+          .sort(function (a, b) { return (b.composite || 0) - (a.composite || 0); });
+        html += '<div class="fieldwrap"><div class="sec-hd" style="margin-top:22px">' +
+          '<h2>' + topicPill(t) + '</h2>' +
+          '<span class="note">' + rows.length + ' finding' + (rows.length === 1 ? '' : 's') + '</span></div>';
+        html += indexTable(rows, { showScore: true });
+        html += '</div>';
+      });
+      root.innerHTML = html;
+      wireModeBar(root, "fields", renderFields);
+      return;
+    }
 
     TOPIC_ORDER.forEach(function (t) {
       var meta = DATA.topics[t] || {};
@@ -524,8 +740,8 @@
       Object.keys(byDomain).forEach(function (d) { if (domains.indexOf(d) < 0) domains.push(d); });
       domains.sort(function (a, b) { return (byDomain[b] || []).length - (byDomain[a] || []).length; });
 
-      html += '<div class="fieldwrap"><div class="sec-hd" style="margin-top:34px">' +
-        '<h2 style="color:' + tvar(t) + '">' + esc(tname(t)) + '</h2>' +
+      html += '<div class="fieldwrap"><div class="sec-hd" style="margin-top:24px">' +
+        '<h2>' + topicPill(t) + '</h2>' +
         '<span class="note">' + txt(meta.blurb || "") + '</span></div>';
 
       domains.forEach(function (d) {
@@ -536,13 +752,15 @@
           return;
         }
         html += '<div class="domain"><div class="domain-hd"><h4>' + txt(d) + '</h4>' +
-          '<span class="ct">' + items.length + ' finding' + (items.length > 1 ? 's' : '') + '</span></div>';
+          '<span class="ct">' + items.length + ' finding' + (items.length > 1 ? 's' : '') + '</span></div>' +
+          '<div class="artlist">';
         items.slice(0, 3).forEach(function (f) { html += articleHTML(f, { showTrack: false }); });
-        html += '</div>';
+        html += '</div></div>';
       });
       html += '</div>';
     });
     root.innerHTML = html;
+    wireModeBar(root, "fields", renderFields);
   }
 
   // ================= CLAIMS =================
@@ -611,8 +829,6 @@
         (e.source_name ? ' <span style="color:var(--ink-3)">(' + esc(e.source_name) + ')</span>' : '') + '</li>';
     }).join("");
     var meta = [];
-    meta.push('<span class="dot" style="color:' + tvar(c.topic) + '"></span> ' + esc(tname(c.topic)));
-    if (c.domain) meta.push(txt(c.domain));
     if (c.confidence != null) meta.push('confidence ' + Math.round(c.confidence * 100) + '%');
     if (c.first_seen) meta.push('since ' + esc(c.first_seen));
     if (c.last_reviewed) meta.push('reviewed ' + esc(c.last_reviewed));
@@ -620,8 +836,11 @@
       ? '<p class="guide"><b>Why it fell.</b> ' + txt(c.supersession_reason) +
         (c.superseded_on ? ' <span style="color:var(--ink-3)">(' + esc(c.superseded_on) + ')</span>' : '') + '</p>'
       : "";
-    return '<div class="claim ' + (isRetired(c) ? 'retired' : '') + '">' +
-      '<div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span></div>' +
+    return '<div class="claim st-' + esc(c.status) + ' ' + (isRetired(c) ? 'retired' : '') + '">' +
+      '<div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
+        topicPill(c.topic) +
+        (c.domain ? '<span style="color:var(--ink-3);font-size:12px">' + txt(c.domain) + '</span>' : '') +
+      '</div>' +
       '<h4>' + txt(c.statement) + '</h4>' +
       (c.guidance && !isRetired(c) ? '<p class="guide"><b>Do.</b> ' + txt(c.guidance) + '</p>' : "") +
       reason +
@@ -642,7 +861,12 @@
   var feedState = { topic: "all", q: "", sort: "composite" };
   function renderFeed() {
     var root = $("#view-feed");
-    var html = '<div class="sec-hd"><h2>All findings</h2>' +
+    var html = modeBar("feed",
+      MODE.feed === "reader"
+        ? "Reader view — cards with lesson + action. Switch to Index for a table."
+        : "Index view — scan by date, field, signal. Switch to Reader for cards."
+    );
+    html += '<div class="sec-hd"><h2>All findings</h2>' +
       '<span class="note">' + (DATA.findings || []).length + ' vetted, last ' + DATA.max_age_days + ' days</span></div>';
     html += '<div class="toolbar">' +
       '<div class="fgroup search"><span>Search</span><input id="feed-q" type="search" ' +
@@ -654,8 +878,9 @@
     html += '</div><div id="feed-list"></div>';
     root.innerHTML = html;
 
+    wireModeBar(root, "feed", renderFeed);
     $("#feed-q").addEventListener("input", function () { feedState.q = this.value; drawFeed(); });
-    root.querySelectorAll(".opt").forEach(function (b) {
+    root.querySelectorAll(".toolbar .opt").forEach(function (b) {
       b.addEventListener("click", function () {
         var key = b.dataset.k === "ftopic" ? "topic" : "sort";
         feedState[key] = b.dataset.v;
@@ -684,7 +909,13 @@
     });
     if (!rows.length) { wrap.innerHTML = '<p class="empty-note">Nothing matches. Try a broader search.</p>'; return; }
     var html = '<p class="count">' + rows.length + ' finding' + (rows.length > 1 ? 's' : '') + '</p>';
-    rows.forEach(function (f) { html += articleHTML(f, { showScore: true }); });
+    if (MODE.feed === "index") {
+      html += indexTable(rows, { showScore: true });
+    } else {
+      html += '<div class="artlist">';
+      rows.forEach(function (f) { html += articleHTML(f, { showScore: true }); });
+      html += '</div>';
+    }
     wrap.innerHTML = html;
   }
 
@@ -713,9 +944,16 @@
     var live = claims.filter(function (c) { return !isRetired(c); }).length;
     var reversals = claims.filter(function (c) { return c.status === "superseded" || c.status === "refuted"; }).length;
     var fresh = (DATA.findings || []).filter(function (f) { return f.fresh; }).length;
+    var findingsN = (DATA.findings || []).length;
+    var domainSet = {};
+    (DATA.findings || []).forEach(function (f) { if (f.domain) domainSet[f.domain] = 1; });
+    var domainsN = Object.keys(domainSet).length;
     $("#fl-date").textContent = fmtDate(DATA.generated);
-    $("#fl-count").textContent = (DATA.findings || []).length;
-    var cells = [[fresh, "this week"], [(DATA.findings || []).length, "vetted findings"],
+    $("#fl-count").textContent = findingsN;
+    var ctFields = $("#ct-fields"); if (ctFields) ctFields.textContent = domainsN;
+    var ctClaims = $("#ct-claims"); if (ctClaims) ctClaims.textContent = live;
+    var ctFeed = $("#ct-feed"); if (ctFeed) ctFeed.textContent = findingsN;
+    var cells = [[fresh, "this week"], [findingsN, "vetted findings"],
       [live, "standing claims"], [reversals, "reversals"]];
     $("#dateline").innerHTML = cells.map(function (c) {
       return '<div class="cell"><span class="n">' + c[0] + '</span><span class="k">' + c[1] + '</span></div>';
