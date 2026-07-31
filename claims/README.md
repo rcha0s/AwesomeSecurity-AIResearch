@@ -2,7 +2,7 @@
 
 > The findings feed tracks **what was published**. This ledger tracks **what we currently believe** — one durable claim per question, each with the evidence behind it, and each superseded answer kept underneath with the reason it fell.
 
-_19 claims tracked · updated 2026-07-27_
+_19 claims tracked · updated 2026-07-31_
 
 **Status meanings**
 

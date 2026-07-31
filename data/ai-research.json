@@ -55,9 +55,9 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 24,
-        "composite": 65.25,
-        "scored_at": "2026-07-26T19:54:38+00:00",
+        "newness": 18,
+        "composite": 63.75,
+        "scored_at": "2026-07-31T18:40:35+00:00",
         "credibility": 55.0
       },
       "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
@@ -124,10 +124,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 90,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 62.25,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 60.75,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.",
       "threat": "Prompt injection and sandbox escape against coding agents that are 'influenced by anyone who can talk to it' (public Slack/feedback channels), and secret exposure when credentials are stored in agent-readable memory.",
@@ -212,10 +212,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 80,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 62.25,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 60.75,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.",
       "conditions": "Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol — a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.",
@@ -296,10 +296,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 88,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 61.65,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 60.15,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
@@ -307,6 +307,60 @@
       "id": "goal-persistent-agents-a-frontier-model-built-a-759122f879",
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "source_url": "https://github.com/omnigent-ai/omnigent",
+      "article_url": "https://github.com/omnigent-ai/omnigent",
+      "source_name": "omnigent-ai/omnigent",
+      "source_type": "GitHub repository",
+      "author": "omnigent-ai",
+      "date": "2026-06",
+      "discovered_via": "github",
+      "id": "omnigent-ai-omnigent-b26281bf0e",
+      "domain": "Meta-Harness",
+      "subtype": "Meta-Harness",
+      "summary": "Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.",
+      "takeaway": "The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.",
+      "lessons": [
+        {
+          "point": "A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in",
+          "excerpt": "swap or combine harnesses without rewriting",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Central policy + sandboxing at the meta-harness is a natural place to enforce agent security",
+          "excerpt": "enforce policies and sandboxing",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "meta-harness",
+        "orchestration",
+        "agents",
+        "claude-code",
+        "tooling-2026"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Consider a meta-harness for multi-agent work",
+        "detail": "Evaluate an orchestration layer (like Omnigent) when running multiple coding agents, so policy/sandboxing/routing live in one place instead of per-agent."
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 84,
+        "newness": 3,
+        "composite": 56.85,
+        "scored_at": "2026-07-31T18:40:35+00:00",
+        "credibility": 50.0
+      },
+      "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+      "retrieved_at": "2026-07-13T00:46:09+00:00",
+      "needs_review": false,
+      "published": "2026-06",
+      "topic": "ai-research",
       "grounding_score": 1.0
     },
     {
@@ -358,10 +412,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 88,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 57.15,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 55.65,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Counterfactual and metamorphic testing are established ML-evaluation techniques and benchmark-gaming concerns are widespread. The contribution is applying them to a security-detection benchmark and publishing a negative result - notably that five-model union recall (29.6%) barely exceeds the best single model (26%). Single-vendor, single-repo, self-evaluated: the source itself says to treat these as the hardest case, not a general result.",
       "verified": true,
@@ -369,60 +423,6 @@
       "id": "auditing-a-cyber-benchmark-for-groundedness-mode-bfc4099549",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
-    },
-    {
-      "source_url": "https://github.com/omnigent-ai/omnigent",
-      "article_url": "https://github.com/omnigent-ai/omnigent",
-      "source_name": "omnigent-ai/omnigent",
-      "source_type": "GitHub repository",
-      "author": "omnigent-ai",
-      "date": "2026-06",
-      "discovered_via": "github",
-      "id": "omnigent-ai-omnigent-b26281bf0e",
-      "domain": "Meta-Harness",
-      "subtype": "Meta-Harness",
-      "summary": "Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.",
-      "takeaway": "The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.",
-      "lessons": [
-        {
-          "point": "A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in",
-          "excerpt": "swap or combine harnesses without rewriting",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Central policy + sandboxing at the meta-harness is a natural place to enforce agent security",
-          "excerpt": "enforce policies and sandboxing",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "meta-harness",
-        "orchestration",
-        "agents",
-        "claude-code",
-        "tooling-2026"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Consider a meta-harness for multi-agent work",
-        "detail": "Evaluate an orchestration layer (like Omnigent) when running multiple coding agents, so policy/sandboxing/routing live in one place instead of per-agent."
-      },
-      "scores": {
-        "novelty": 78,
-        "relevance": 84,
-        "newness": 4,
-        "composite": 57.1,
-        "scored_at": "2026-07-26T19:54:38+00:00",
-        "credibility": 50.0
-      },
-      "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-      "retrieved_at": "2026-07-13T00:46:09+00:00",
-      "needs_review": false,
-      "published": "2026-06",
-      "topic": "ai-research",
       "grounding_score": 1.0
     },
     {
@@ -482,10 +482,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 85,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 56.25,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 54.75,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Specification gaming / reward hacking is a long-standing literature, and network isolation, turn caps and budget caps are standard eval hygiene. The genuinely new material is the published rate (~20%), the env/filesystem/local-network pivot taxonomy, and the self-implicating detail that the harness's own tracing service was the leak. Nearest pool entry: the Hugging Face agentic intrusion entry on provider guardrails blocking incident response - same incident, opposite end (containment design rather than IR).",
       "verified": true,
@@ -531,9 +531,9 @@
       "scores": {
         "novelty": 55,
         "relevance": 75,
-        "newness": 24,
-        "composite": 53.25,
-        "scored_at": "2026-07-26T19:54:38+00:00",
+        "newness": 18,
+        "composite": 51.75,
+        "scored_at": "2026-07-31T18:40:35+00:00",
         "credibility": 55.0
       },
       "id": "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0",
@@ -597,10 +597,10 @@
       "scores": {
         "novelty": 42,
         "relevance": 72,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 48.45,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 46.95,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Standard ML eval practice (precision/recall trade-off, per-slice vs aggregate scoring) plus the sibling Semgrep 'groundedness' benchmark critique cited by the analyst; both argue against ranking security scanners on a single aggregate metric.",
       "threat": "Choosing an LLM code-security scanner on a competitive-looking aggregate F1/recall, then absorbing a hidden operational cost: a flood of low-precision findings that overwhelm analyst triage and erode trust in the tool, plus severe recall collapse on large real-world repositories.",
@@ -682,10 +682,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 42.75,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 41.25,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Capability self-knowledge / calibration research, sycophancy and persona-induced misbehavior, models claiming work they did not do, and refusal-boundary work showing alignment is domain-selective. The defensible delta is the dissociation design - a high-severity domain at floor while low-severity domains hit ceiling - plus interactional format as a first-class driver.",
       "verified": false,

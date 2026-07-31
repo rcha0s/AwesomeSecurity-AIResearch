@@ -66,10 +66,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 85,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 65.4,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 63.9,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Classic cloud-metadata SSRF (169.254.169.254) is well known; the novel delta is the MCP-specific vector — a control running host-side, outside the very container sandbox the tool advertises, reached purely through a server's auth-discovery response.",
       "verified": true,
@@ -131,10 +131,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 84,
-        "newness": 24,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 60.22,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 58.72,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Malicious pickles in ML model hubs are a well-established attack class (pickle RCE documented since at least 2022, incl. Rehberger's ML Attack Series). The delta is the specific external-module-import evasion primitive plus a measured evasion rate across ten scanners and an injectable benchmark, rather than a new concept.",
       "verified": true,
@@ -197,10 +197,10 @@
       "scores": {
         "novelty": 72,
         "relevance": 80,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 59.85,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 58.35,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "OpenClaw/ClawHub agentic supply-chain and MCP tool-poisoning work cover parts of this; the novel delta is the explicit lifecycle taxonomy (five stages) plus an empirical study over 327 real skills rather than a single attack demo.",
       "verified": true,
@@ -260,10 +260,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 80,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 57.9,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 56.4,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "CWE-455 (Non-exit on Failed Initialization) fail-open patterns generally, and MCP enforcement-layer bypass cases like the ToolHive SSRF; no known prior case of an MCP agent security policy silently failing open for the process lifetime on failed startup init.",
       "threat": "An AI agent using the AWS API MCP server can execute AWS CLI operations that the configured deny/gate policy was meant to block, because a failed startup init silently disables enforcement for the whole process — enabling privilege escalation and unauthorized infrastructure changes within the credentials' scope.",
@@ -337,10 +337,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 90,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 57.75,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 56.25,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.",
       "verified": true,
@@ -360,71 +360,6 @@
         ],
         "at": "2026-07-26T21:08:26+00:00"
       }
-    },
-    {
-      "topic": "ai-security",
-      "domain": "Model Supply Chain",
-      "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
-      "source_url": "https://arxiv.org/abs/2606.30373",
-      "article_url": "https://arxiv.org/abs/2606.30373",
-      "published": "2026-06-29",
-      "date": "2026-06",
-      "author": "Yacong Gu et al.",
-      "discovered_via": "rss",
-      "source_rank": 72.0,
-      "raw_path": "data/_raw/your-space-is-my-zone-demystifying-the-security-52934588df.txt",
-      "summary": "AI-Apps - the hosted inference and fine-tuning apps on model hubs like Hugging Face - are often built by untrusted parties with weak isolation, and the authors describe this CCS 2026 paper as the first systematic security analysis of them across three platforms. Applying their Insightor framework to over 970,000 public AI-Apps, they report thousands leaking credentials, hundreds with input-injection flaws allowing arbitrary code execution, and tens carrying embedded backdoors, which the paper says indicates active exploitation. It also claims three novel architectural vulnerabilities inherent to platform design, alongside the familiar appsec failures.",
-      "lessons": [
-        {
-          "point": "The hosted-app layer on a model hub is a distinct attack surface from the model artifacts themselves - built by untrusted third parties with weak isolation and misconfigured security settings.",
-          "excerpt": "these platforms introduce an unexplored attack surface, as AI-Apps are often developed by untrusted parties with weak isolation and misconfigured security settings",
-          "confidence": 0.96,
-          "grounded": true
-        },
-        {
-          "point": "The paper reports both common appsec failures at scale (broken access control, insufficient input validation, sensitive data exposure) AND three novel architectural vulnerabilities specific to the hosting model - while platform design amplifies mundane issues like world-readable logs into ecosystem-wide exposure.",
-          "excerpt": "demonstrate how traditional issues (e.g., world-readable logs) are uniquely amplified in this ecosystem",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "At this scale the tail is not hypothetical: thousands leak credentials and tens carry embedded backdoors, which the paper says indicates active exploitation - though the abstract does not define what evidence 'active' rests on.",
-          "excerpt": "we find thousands of apps leaking credentials, hundreds containing input injection vulnerabilities that allow arbitrary code execution, and tens harboring embedded backdoors",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "threat": "A malicious or compromised AI-App on a public model hub leaks its owner's credentials, executes attacker-supplied input, or ships a backdoor to everyone who runs it.",
-      "conditions": "Using or forking third-party hosted AI-Apps (inference/fine-tuning spaces) on public model hubs.",
-      "mitigations": "The paper is a measurement and disclosure study and proposes no mitigations - the authors state only that they responsibly disclosed to affected platforms. The following is our own recommendation, not the paper's: treat a hub-hosted AI-App as untrusted third-party code, scope and rotate any token it touches, and review app source before forking.",
-      "takeaway": "The app layer on model hubs is third-party code with your credentials in it - scope tokens per app and read the source before you fork.",
-      "tags": [
-        "model-supply-chain",
-        "huggingface",
-        "credential-leak",
-        "access-control",
-        "appsec"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Scope and rotate credentials given to hub-hosted AI-Apps",
-        "detail": "Our recommendation, not the paper's (it proposes no defenses): inventory every hub AI-App your team runs or forked, issue per-app least-privilege tokens rather than account-wide ones, rotate anything previously pasted into a Space, and check for world-readable logs in apps you publish."
-      },
-      "scores": {
-        "novelty": 58,
-        "relevance": 88,
-        "newness": 4,
-        "credibility": 72.0,
-        "composite": 55.6,
-        "scored_at": "2026-07-26T19:54:38+00:00"
-      },
-      "prior_art": "Malicious models on hubs are well studied (pickle RCE, scanner evasion); this examines the *application* layer around them, which the authors describe as unexplored - a self-reported priority claim. The real contribution is scale (970k+ apps, three platforms) plus three newly-named architectural vulnerability classes; the bulk of the named categories are established appsec territory, so this is a strong measurement study rather than a new attack technique. Accepted at ACM CCS 2026.",
-      "verified": true,
-      "verify_note": "Independent verifier: restored 'over' 970,000; attributed the authors' 'first systematic analysis' claim rather than asserting it; removed an unsupported 'most findings are ordinary appsec' claim that buried the paper's three novel architectural vulnerabilities; relabelled mitigations as ours since the paper proposes none. Novelty 72->58.",
-      "id": "over-970-000-ai-apps-on-model-hubs-measured-thou-6bac2eb552",
-      "retrieved_at": "2026-07-21T14:42:54+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -479,10 +414,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 86,
-        "newness": 24,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 55.42,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 53.92,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Memory and context poisoning is an active area and RAG poisoning is well studied; this extends known memory-poisoning concepts rather than introducing a new primitive. The delta is a quantified measurement specific to stored *coding preferences* plus the risk-warning gap and the memory-vs-prompt mitigation comparison. The authors describe it as the first systematic study of this - their own characterization, not independently verified. Accepted to ISSTA 2026.",
       "verified": true,
@@ -494,68 +429,81 @@
     },
     {
       "topic": "ai-security",
-      "domain": "Model Supply Chain",
-      "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
-      "source_url": "https://arxiv.org/abs/2606.27511",
-      "article_url": "https://arxiv.org/abs/2606.27511",
-      "published": "2026-06-25",
+      "domain": "MCP & Tools",
+      "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+      "published": "2026-06-30",
       "date": "2026-06",
-      "author": "Chenqing Zhu et al.",
       "discovered_via": "rss",
-      "source_rank": 72.0,
-      "raw_path": "data/_raw/when-the-aggregator-cheats-data-free-backdoors-i-175cf3b218.txt",
-      "summary": "Federated learning is adopted precisely so the server never sees raw client data - but this USENIX Security 2026 paper shows the aggregator itself can be the attacker. It inverts the gradients clients upload into representative training samples, builds a poisoning set from them, and implants advertisement-type backdoors into the global model. It reports near-100% attack success with negligible clean-task degradation as its headline result, and separately that reconstructing only 5-20% of gradients suffices for a reliable attack; whether the reduced setting reaches the same rate is not stated. Experiments are on representative QA datasets and LLM families, not live deployments.",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "raw_path": "data/_raw/securing-ai-agents-when-ai-tools-move-from-readi-3a2d3197b2.txt",
+      "summary": "Once agents move from reading to acting, a poisoned MCP tool description turns prompt injection into an action. An approved third-party tool's description is silently modified to tell the agent to collect and exfiltrate data; because metadata updates don't re-trigger approval, the poisoned instructions go live with no review, and every individual agent action looks legitimate.",
       "lessons": [
         {
-          "point": "The federated threat model usually watches malicious clients; here the trusted aggregator is the adversary, and 'never sharing raw data' does not make it a trust boundary.",
-          "excerpt": "we explore the potential vulnerability where a malicious aggregator, who may collude with a third-party vendor, stealthily implants advertisement-type backdoors into federated QA models, without ever accessing client data",
+          "point": "MCP mixes instructions and data in the same channel, so editing a tool's description reprograms the agent as effectively as editing its system prompt.",
+          "excerpt": "The MCP blends instructions (tool descriptions) with data, so a change to a tool's metadata can redirect the agent's behavior as effectively as a change to its system prompt.",
           "confidence": 0.96,
           "grounded": true
         },
         {
-          "point": "Uploaded gradients are the leak: they can be inverted into representative training samples, which is what makes data-free poisoning possible.",
-          "excerpt": "recover representative training samples from client gradients, and (2) construct poisoning datasets utilizing recovered samples and trigger phrases to inject backdoors into the global model",
+          "point": "The dangerous gap is 'silent re-trust' (Microsoft's term): in configurations where a tool's description change doesn't re-trigger the approval workflow, poisoned instructions become active without review.",
+          "excerpt": "In configurations where description changes do not trigger a re-approval workflow, the updated instructions become active without additional review.",
           "confidence": 0.95,
           "grounded": true
         },
         {
-          "point": "The attack is cheap enough to be practical - the paper reports 5-20% of gradients suffices for a reliable attack - and clean-task behavior is preserved, so the model passes normal quality checks.",
-          "excerpt": "reconstructing only 5-20% of gradients suffices to mount a reliable attack, exposing a practical blind spot in the pipeline of federated training of QA LLMs",
+          "point": "The vulnerability is the trust boundary between systems, not any one system — each action (approved tool, inherited permissions, allowlisted endpoint) is individually legitimate.",
+          "excerpt": "The vulnerability is not in any single system; it is in the trust boundary between them",
           "confidence": 0.95,
           "grounded": true
         }
       ],
-      "threat": "The central aggregator in a federated LLM training run implants a triggered backdoor emitting target advertising content while behaving normally on non-triggered queries. Only advertisement injection is demonstrated; generalization to more harmful payloads is not tested.",
-      "conditions": "Federated fine-tuning of a QA LLM (full fine-tune or LoRA) where a third party operates the aggregation server and clients upload gradients. Evaluated in a controlled experimental setting, not a production deployment.",
-      "mitigations": "The paper proposes no defenses. Our own recommendation: treat the aggregator as untrusted - apply secure aggregation or differential privacy to uploaded gradients and evaluate the global model for triggered behavior rather than clean-task accuracy alone. Neither defense is evaluated against this attack in the paper.",
-      "takeaway": "In federated training the aggregator is a trust boundary, not a neutral party - protect gradients and test the global model for triggers.",
+      "threat": "An upstream tool maintainer modifies a tool description to redirect an agent into collecting and exfiltrating data, with no prompt, credential, or user action involved.",
+      "mitigations": "Change-review tool descriptions like system prompts; require re-approval on metadata changes; disable 'Allow all' tools; human-in-the-loop for high-impact actions; apply least agency, not just least privilege.",
+      "takeaway": "Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.",
       "tags": [
-        "federated-learning",
-        "backdoor",
-        "gradient-inversion",
-        "model-supply-chain",
-        "llm-training"
+        "mcp",
+        "tool-poisoning",
+        "prompt-injection",
+        "agent-security",
+        "supply-chain"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Treat the FL aggregator as untrusted",
-        "detail": "If you participate in federated fine-tuning you do not operate, assume uploaded gradients are recoverable into training samples. Our recommendation, not the paper's: require secure aggregation or DP noise as a condition of participation, and test the returned global model for triggered behavior, since clean-task accuracy is explicitly preserved by this attack."
+        "title": "Gate MCP tool-metadata changes behind re-approval",
+        "detail": "Pin tool-description hashes for production agents and require an explicit re-approval (and imperative-language scan) whenever a server's tool description changes — do not let dynamic metadata updates silently re-trust."
       },
       "scores": {
-        "novelty": 68,
-        "relevance": 72,
-        "newness": 4,
-        "credibility": 72.0,
-        "composite": 53.8,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "novelty": 50,
+        "relevance": 84,
+        "newness": 3,
+        "credibility": 75.0,
+        "composite": 52.2,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "Gradient inversion and federated backdoors are each established literatures. The delta is a genuinely novel threat model - the *aggregator* mounting a data-free backdoor by reconstructing samples specifically to build the poisoning set - validated across datasets, LLM families, and both full fine-tuning and LoRA. Held below 70 because the demonstrated payload is narrowly advertisement injection. Accepted at the 35th USENIX Security Symposium (2026).",
+      "prior_art": "Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.",
       "verified": true,
-      "verify_note": "Independent verifier: un-fused two separate results (near-100% ASR and the 5-20% gradient figure are not stated to be the same condition); flagged experiments as controlled rather than live deployments; scoped the payload to advertisement injection only; relabelled mitigations as ours. Novelty raised 60->68 - the verifier judged the aggregator-as-adversary threat model more novel than I did.",
-      "id": "a-malicious-federated-learning-aggregator-can-ba-926ac18741",
-      "retrieved_at": "2026-07-21T14:42:54+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
+      "verify_note": "Independent verifier: derivative Microsoft playbook on the known Invariant-Labs/OWASP tool-poisoning class; novelty lowered — held for review.",
+      "id": "treat-mcp-tool-descriptions-as-system-prompts-si-bef4e855af",
+      "retrieved_at": "2026-07-16T07:43:12+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster.",
+        "signals": [
+          "trending",
+          "newsworthy",
+          "timely"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
     },
     {
       "topic": "ai-security",
@@ -609,10 +557,10 @@
       "scores": {
         "novelty": 47,
         "relevance": 76,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 53.4,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 51.9,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Generic CWE-88 argument-delimiter injection (historic pip/git argument-injection bugs) plus the well-known 'LLM output reaching a shell-out sink = RCE' class; this is a concrete named instance in the AWS Bedrock AgentCore SDK.",
       "threat": "A remote authenticated caller — or the agent's own LLM output routed into install_packages() — smuggles pip options via a crafted package specifier to run arbitrary commands inside the managed Code Interpreter sandbox, breaking the sandbox's confidentiality/integrity boundary.",
@@ -632,71 +580,6 @@
       "needs_review": true,
       "grounding_score": 0.75,
       "corroborating_sources": []
-    },
-    {
-      "topic": "ai-security",
-      "domain": "Model Supply Chain",
-      "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-      "source_url": "https://arxiv.org/abs/2606.29239",
-      "article_url": "https://arxiv.org/abs/2606.29239",
-      "published": "2026-06-28",
-      "date": "2026-06",
-      "author": "Aoying Zheng et al.",
-      "discovered_via": "rss",
-      "source_rank": 72.0,
-      "raw_path": "data/_raw/breaking-the-rounding-trap-securing-llms-against-fa9164bb9d.txt",
-      "summary": "Quantization-conditioned backdoors stay dormant in the full-precision model and activate only once you quantize for deployment - so they pass the audit you run on the weights you were given. QuantGuard is a proactive pre-quantization defense using differentiable rounding-control variables, optimized against rounding-reversal, output-consistency and weight-distance constraints, to break the attacker's alignment with quantization boundaries. It needs only a small calibration set and no change to your quantization algorithm.",
-      "lessons": [
-        {
-          "point": "Auditing the full-precision model is not sufficient: a quantization-conditioned backdoor is dormant exactly when you inspect it and activates only after deployment quantization.",
-          "excerpt": "malicious behaviors remain dormant in the full-precision stage and are activated only after quantized deployment, thereby bypassing conventional security auditing and detection mechanisms",
-          "confidence": 0.96,
-          "grounded": true
-        },
-        {
-          "point": "The attack depends on precise alignment between crafted weights and quantization boundaries, so the defense is a targeted optimization over rounding-control variables - not noise injection - and needs no retraining.",
-          "excerpt": "This design breaks the precise alignment between attacker-crafted weight patterns and quantization boundaries, effectively suppressing the post-quantization backdoor activation pathway",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "Deployability is the point: it needs only a small calibration dataset and leaves the existing quantization pipeline untouched.",
-          "excerpt": "QuantGuard utilizes only a small calibration dataset and does not modify existing quantization algorithms",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "threat": "An attacker ships a model that is clean under inspection but exhibits vulnerable code generation, content injection, or over-refusal once the victim quantizes it to INT8/FP4/NF4.",
-      "conditions": "Deploying a third-party or fine-tuned LLM through a quantization step, where auditing happens on the full-precision weights.",
-      "mitigations": "Apply a proactive pre-quantization defense such as QuantGuard. Note the paper's premise is that conventional auditing and detection are bypassed by this attack class, so post-hoc evaluation of the quantized model is not established as a sufficient substitute.",
-      "takeaway": "Audit models at deployment precision, not the precision you were handed - some backdoors only exist after you quantize.",
-      "tags": [
-        "model-supply-chain",
-        "backdoor",
-        "quantization",
-        "defenses",
-        "llm-deployment"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Treat quantization as part of the model supply chain",
-        "detail": "Where a third-party model passes through quantization on the way to production, recognise that auditing the full-precision artifact does not cover this attack class. The paper's position is that reactive detection is unreliable and a proactive pre-quantization defense is required - post-hoc behavioural evals would also need the attacker's trigger to surface anything, so do not treat them as the control. Whether post-quantization evaluation detects QCB at all would need the full paper's detection baselines."
-      },
-      "scores": {
-        "novelty": 60,
-        "relevance": 78,
-        "newness": 4,
-        "credibility": 72.0,
-        "composite": 53.2,
-        "scored_at": "2026-07-26T19:54:38+00:00"
-      },
-      "prior_art": "The paper attributes quantization-conditioned backdoor attacks to prior work ('recent studies'), so the attack class is not new here; the contribution is the defense, and it is technically incremental (control variables plus regularization) rather than a new attack surface. Empirical breadth is solid: six LLMs, three precisions, three scenarios. Defenses remain systematically under-covered relative to attacks. Accepted at ACM CCS 2026.",
-      "verified": true,
-      "verify_note": "Independent verifier: struck an actionable that contradicted the paper's own premise - it recommended post-quantization evaluation, but the paper's position is that conventional auditing is bypassed and a proactive pre-quantization defense is required. Mechanism corrected from 'perturbs' to a targeted optimization over rounding-control variables. Novelty 62->60.",
-      "id": "quantguard-a-pre-quantization-defense-against-ba-29adf96f8b",
-      "retrieved_at": "2026-07-21T14:42:54+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
     },
     {
       "article_url": "https://arxiv.org/abs/2607.17535",
@@ -758,10 +641,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 70,
-        "newness": 24,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 53.02,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 51.52,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "PoisonedRAG and corpus-content poisoning (inject false facts) and indirect prompt injection (inject directives) - this paper's delta is dropping both. Against 'Lost in the Middle' and distractor-robustness work the delta is thinner: position and distractor sensitivity are well-replicated properties, and this weaponizes them. Nearest pool entry: the archived 'RAG poisoning via injected malicious documents in the retrieval corpus'.",
       "verified": false,
@@ -831,10 +714,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 72,
-        "newness": 24,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 52.72,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 51.22,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Bagdasaryan & Shmatikov, 'Blind Backdoors in Deep Learning Models' (USENIX Security 2021) - malicious training-pipeline code that observes live training and synthesizes a backdoor without touching the dataset; ImpNet (2022) - backdoors injected at compile time, invisible in data and model artifacts; Song et al. (CCS 2017) - exfiltrating training secrets through model weights. Nearest pool entry: ShadowPickle, which covers the model-artifact scanning layer this work deliberately steps past.",
       "verified": false,
@@ -896,10 +779,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 78,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 52.65,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 51.15,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Every primitive was already established: the ANSI-DNS behavior by David Leadbeater (2023), LLMs emitting ANSI escapes by Leon Derczynski, and the author's own Terminal DiLLMa research (2024). This is disclosure-closure - the marginal contribution is the full chained PoC and the resulting Apple fix, not a new technique.",
       "verified": true,
@@ -908,84 +791,6 @@
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
       "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-security",
-      "domain": "MCP & Tools",
-      "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-      "published": "2026-06-30",
-      "date": "2026-06",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "raw_path": "data/_raw/securing-ai-agents-when-ai-tools-move-from-readi-3a2d3197b2.txt",
-      "summary": "Once agents move from reading to acting, a poisoned MCP tool description turns prompt injection into an action. An approved third-party tool's description is silently modified to tell the agent to collect and exfiltrate data; because metadata updates don't re-trigger approval, the poisoned instructions go live with no review, and every individual agent action looks legitimate.",
-      "lessons": [
-        {
-          "point": "MCP mixes instructions and data in the same channel, so editing a tool's description reprograms the agent as effectively as editing its system prompt.",
-          "excerpt": "The MCP blends instructions (tool descriptions) with data, so a change to a tool's metadata can redirect the agent's behavior as effectively as a change to its system prompt.",
-          "confidence": 0.96,
-          "grounded": true
-        },
-        {
-          "point": "The dangerous gap is 'silent re-trust' (Microsoft's term): in configurations where a tool's description change doesn't re-trigger the approval workflow, poisoned instructions become active without review.",
-          "excerpt": "In configurations where description changes do not trigger a re-approval workflow, the updated instructions become active without additional review.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The vulnerability is the trust boundary between systems, not any one system — each action (approved tool, inherited permissions, allowlisted endpoint) is individually legitimate.",
-          "excerpt": "The vulnerability is not in any single system; it is in the trust boundary between them",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "threat": "An upstream tool maintainer modifies a tool description to redirect an agent into collecting and exfiltrating data, with no prompt, credential, or user action involved.",
-      "mitigations": "Change-review tool descriptions like system prompts; require re-approval on metadata changes; disable 'Allow all' tools; human-in-the-loop for high-impact actions; apply least agency, not just least privilege.",
-      "takeaway": "Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.",
-      "tags": [
-        "mcp",
-        "tool-poisoning",
-        "prompt-injection",
-        "agent-security",
-        "supply-chain"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Gate MCP tool-metadata changes behind re-approval",
-        "detail": "Pin tool-description hashes for production agents and require an explicit re-approval (and imperative-language scan) whenever a server's tool description changes — do not let dynamic metadata updates silently re-trust."
-      },
-      "scores": {
-        "novelty": 50,
-        "relevance": 84,
-        "newness": 4,
-        "credibility": 75.0,
-        "composite": 52.45,
-        "scored_at": "2026-07-26T19:54:38+00:00"
-      },
-      "prior_art": "Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.",
-      "verified": true,
-      "verify_note": "Independent verifier: derivative Microsoft playbook on the known Invariant-Labs/OWASP tool-poisoning class; novelty lowered — held for review.",
-      "id": "treat-mcp-tool-descriptions-as-system-prompts-si-bef4e855af",
-      "retrieved_at": "2026-07-16T07:43:12+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster.",
-        "signals": [
-          "trending",
-          "newsworthy",
-          "timely"
-        ],
-        "at": "2026-07-26T21:08:26+00:00"
-      }
     },
     {
       "topic": "ai-security",
@@ -1039,10 +844,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 80,
-        "newness": 24,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 52.12,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 50.62,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.",
       "verified": true,
@@ -1060,88 +865,6 @@
         ],
         "at": "2026-07-26T21:08:26+00:00"
       }
-    },
-    {
-      "topic": "ai-security",
-      "domain": "computer-use agent security",
-      "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
-      "source_url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
-      "summary": "Computer-use agents capture a screenshot, reason about it for several seconds, then act on pixel coordinates — but an attacker-controlled page can change what sits at those coordinates during the reasoning window, so the agent clicks something other than what it saw. Johann Rehberger reproduces Jun Kokatsu's original ChatGPT Operator race condition against Claude Computer-Use, showing a reliable time-of-check-to-time-of-use (TOCTOU) attack where a 'Continue' button is swapped for a Send/consent button at identical coordinates. It is a classic race-condition bug surfacing in a novel agentic context, with the practical fix being a re-check of the UI at action time.",
-      "lessons": [
-        {
-          "point": "The gap between screenshot capture and action execution is a genuine race window because LLM inference takes seconds, giving an attacker ample time to mutate the page.",
-          "excerpt": "the computer screen could have changed while the LLM inference was happening",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "Because the agent acts on pixel coordinates, swapping an element at the same location makes the agent click a different object than the one it reasoned about.",
-          "excerpt": "the action the AI Agent takes can happen on a different object than intended!",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The attack was reliably reproducible against a shipping agent, not just theoretical.",
-          "excerpt": "both Claude Computer-Use fell for this at the first time, and it repro'd regularly",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A concrete exploit tricks the agent into sending an attacker's drafted email by aligning a phishing 'Continue' button with Outlook's 'Send' button and padding reasoning time so the page finishes loading before the click.",
-          "excerpt": "The 'Continue' button is at the exact same location as the 'Send' button",
-          "confidence": 0.85,
-          "grounded": false
-        },
-        {
-          "point": "The recommended defense is to re-verify UI state at action time, not just at perception time.",
-          "excerpt": "take a snapshot when reasoning starts and when reasoning concludes check again that nothing significant changed",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A computer-use agent that clicks coordinates it decided on seconds ago is exploitable by TOCTOU: re-check the UI at action time, because what the model saw is not necessarily what it clicks.",
-      "tags": [
-        "computer-use",
-        "toctou",
-        "race-condition",
-        "agent-security",
-        "gui-agents",
-        "prompt-injection"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add an action-time UI re-check to computer-use agent loops",
-        "detail": "In any screenshot-reason-act loop (Claude Computer-Use, Operator-style agents), capture a screenshot/DOM snapshot both when reasoning starts and immediately before dispatching the click. If the region around the target coordinates changed materially between the two snapshots, abort and re-perceive instead of clicking. Additionally, treat time-sensitive/consequential actions (Send, Confirm, Allow, payment) as requiring a fresh perception step, and be suspicious of injected instructions that pad reasoning time (e.g. 'compute 1+1 in bash') which widen the race window."
-      },
-      "scores": {
-        "novelty": 50,
-        "relevance": 82,
-        "newness": 4,
-        "credibility": 75.0,
-        "composite": 51.85,
-        "scored_at": "2026-07-26T19:54:38+00:00"
-      },
-      "prior_art": "Jun Kokatsu's ChatGPT Operator TOCTOU race-condition disclosure (GHSA-mp56-7vrw-qxvf, Google Security Research) — the same screenshot-to-action race, which this post explicitly reproduces and ports to Claude Computer-Use.",
-      "threat": "An attacker-controlled web page (reachable via indirect prompt injection or a lured navigation) mutates the DOM at fixed coordinates during the agent's multi-second reasoning window, causing the agent to click a consequential control (Send, Allow, Confirm, consent/permission dialog) it never intended, enabling actions like sending arbitrary emails or granting permissions.",
-      "conditions": "Agent acts on absolute pixel/screen coordinates chosen from an earlier screenshot; Reasoning latency of several seconds creates a wide, reliable race window; Attacker can control page content and time page changes (e.g. via a deep-link that loads a real app), optionally padding reasoning time via injected filler tasks; No re-verification of UI state between perception and action",
-      "mitigations": "Snapshot the UI at reasoning start and re-check at action time; abort the click if the target region changed significantly (Anthropic's documented fix); Force a fresh perception step for high-consequence actions (Send/Allow/Confirm/pay); Add human-in-the-loop confirmation for irreversible or sensitive actions; Detect and distrust injected instructions designed to stall reasoning and widen the race window",
-      "verified": true,
-      "verify_note": "All five excerpts appear verbatim in the source and the points are faithfully supported; the technique is a known TOCTOU class re-demonstrated on a new agent (Claude), so novelty is mid but defender relevance is high.",
-      "article_url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
-      "date": "2026-06",
-      "published": "2026-06-25",
-      "discovered_via": "rss",
-      "source_id": "rss:https-embracethered-com-blog-index-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "Embrace The Red",
-      "id": "toctou-race-condition-in-computer-use-agents-the-d27b5c8ca2",
-      "retrieved_at": "2026-07-26T05:30:54+00:00",
-      "needs_review": true,
-      "grounding_score": 0.8,
-      "corroborating_sources": []
     },
     {
       "article_url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
@@ -1200,10 +923,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 60,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 42.0,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 40.5,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Caller-controlled S3-compatible endpoint override -> SSRF (repeatedly patched in MinIO-integrating and self-hosted file services); CWE-73 external control of file path via selectable storage driver; Capital One-era cloud-metadata SSRF; Spring Boot Actuator /env config-override exposure. The only new facts are the product, endpoint and version.",
       "verified": false,

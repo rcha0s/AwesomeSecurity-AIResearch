@@ -68,10 +68,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 24,
+        "newness": 18,
         "credibility": 87.5,
-        "composite": 70.12,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 68.62,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "The 2025 Shai-Hulud / npm postinstall-worm campaigns and the related @mastra scope takeover — same 'compromise a maintainer/bot identity' root cause, but those triggered on install hooks; the novel delta here is import-time execution plus abuse of trusted-publishing provenance.",
       "corroborating_sources": [
@@ -134,9 +134,9 @@
       "scores": {
         "novelty": 90,
         "relevance": 86,
-        "newness": 24,
-        "composite": 66.3,
-        "scored_at": "2026-07-26T19:54:38+00:00",
+        "newness": 18,
+        "composite": 64.8,
+        "scored_at": "2026-07-31T18:40:35+00:00",
         "credibility": 50.0
       },
       "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
@@ -202,10 +202,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 82,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 59.85,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 58.35,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Classic symlink path-traversal / TOCTOU (CWE-59) and git's long-known preservation of symlinks; the new delta is the class-wide application to AI coding-assistant sandbox escapes plus the misleading approval-dialog (Wiz 'GhostApproval') trust gap across six assistants.",
       "threat": "A malicious or compromised public repo ships symlinks (mode 120000) under benign names; an AI coding assistant following repo/README instructions reads secrets or writes attacker-controlled content (SSH authorized_keys, shell rc files) outside its workspace, yielding credential theft or code execution — while the approval dialog shows only the harmless in-repo path.",
@@ -274,9 +274,9 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 24,
-        "composite": 59.25,
-        "scored_at": "2026-07-26T19:54:38+00:00",
+        "newness": 18,
+        "composite": 57.75,
+        "scored_at": "2026-07-31T18:40:35+00:00",
         "credibility": 75.0
       },
       "id": "gigawiper-modular-destructive-malware-that-fakes-2b20f20b50",
@@ -346,10 +346,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 78,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 58.65,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 57.15,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Prior vendor reports of LLM refusal boilerplate left in malicious code (HP Wolf 2024 dropper, FunkSec) established the 'LLM tells' phenomenon; Mirai/Gafgyt/Keksec lineage teardowns and MHDDoS-derived booter panels are well covered. The delta here is the recovered development telemetry (git log, QEMU/Docker rigs, 254 automated DDoS benchmark reports) and a quantified per-subsystem capability finding, plus measuring uplift as cost-to-repair.",
       "verified": true,
@@ -416,10 +416,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 78,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 58.5,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 57.0,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Go text/template SSTI and template injection generally; shell prompt injection via malicious git branch names and PS1; ANSI-escape injection via filenames; repo contents attacking dev tooling (.vscode/, .gitattributes, hooks). The delta is the sink: the attacker-controlled data is a filesystem directory name re-fed to the engine, it fires under the shipped default configuration, and the trigger is passive navigation. Nearest pool entry: the Shescape shell-escaping advisories (different mechanism - escaping, not double evaluation).",
       "verified": true,
@@ -480,10 +480,10 @@
       "scores": {
         "novelty": 57,
         "relevance": 88,
-        "newness": 24,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 58.12,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 56.62,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -502,74 +502,6 @@
         ],
         "at": "2026-07-26T21:08:26+00:00"
       }
-    },
-    {
-      "topic": "product-security",
-      "domain": "Application Security",
-      "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
-      "source_url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
-      "article_url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
-      "published": "2026-06-29",
-      "date": "2026-06",
-      "discovered_via": "rss",
-      "source_id": "rss:https-labs-watchtowr-com-rss",
-      "source_rank": 75.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "raw_path": "data/_raw/enterprise-tech-in-shell-out-progress-kemp-loadm-88573c8c74.txt",
-      "summary": "A one-function patch to `escape_quotes()` in Kemp LoadMaster revealed a pre-auth RCE. The escaped buffer wasn't null-terminated, so `__sprintf_chk()` reads out of bounds into an adjacent heap chunk; by heap-spraying an un-escaped command-injection payload (via JSON key/value pairs) into that neighboring chunk, an unauthenticated attacker turns an 'uninitialized memory' bug into command execution.",
-      "lessons": [
-        {
-          "point": "The whole bug is a missing null terminator: the escaped buffer wasn't null-terminated, so a formatting call runs off the end into adjacent heap memory.",
-          "excerpt": "the escaped buffer was not null-terminated",
-          "confidence": 0.97,
-          "grounded": true
-        },
-        {
-          "point": "Out-of-bounds read becomes injection when the neighboring freed chunk holds an un-escaped payload with no null byte — the sanitizer is bypassed by reading past where it stopped.",
-          "excerpt": "That means if an adjacent freed heap chunk contains an unescaped command injection payload",
-          "confidence": 0.96,
-          "grounded": true
-        },
-        {
-          "point": "Attacker-controlled heap layout is the exploit primitive: spraying many JSON key/value pairs places the payload chunk exactly where the OOB read lands.",
-          "excerpt": "This gives us a useful heap-spraying primitive by adding lots of JSON key/value pairs.",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "threat": "Unauthenticated remote code execution on an edge load balancer reachable by anyone who can reach the API.",
-      "conditions": "Network access to the LoadMaster API; no credentials required.",
-      "mitigations": "Apply Progress' June 2026 patch; a tiny-looking diff (adding null-termination) can be the fix for a critical bug, so patch edge appliances promptly.",
-      "takeaway": "A minimal 'just null-terminate the buffer' patch can hide a pre-auth RCE — diff patches carefully, and treat missing null-termination next to attacker-controlled heap data as exploitable, not cosmetic.",
-      "tags": [
-        "memory-safety",
-        "heap",
-        "rce",
-        "edge-appliance",
-        "n-day"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Prioritize edge-appliance patches and read the diff, not the CVE title",
-        "detail": "When a vendor ships a one-line string-handling fix on an internet-facing appliance, assume memory-corruption impact until proven otherwise and patch on the critical track; missing null-termination adjacent to attacker-sprayable heap data is an RCE primitive, not a hardening nit."
-      },
-      "scores": {
-        "novelty": 70,
-        "relevance": 82,
-        "newness": 4,
-        "credibility": 75.0,
-        "composite": 57.85,
-        "scored_at": "2026-07-26T19:54:38+00:00"
-      },
-      "prior_art": "Uninitialized-memory and heap-spray techniques are classic; the novel delta is the specific n-day chain (patch-diff -> non-null-terminated escape buffer -> OOB read into sprayed JSON chunk) on a widely deployed edge load balancer.",
-      "verified": true,
-      "verify_note": "Self-verified against source (automated verifier blocked by a cyber-content safeguard); mechanism grounded and accurate.",
-      "id": "kemp-loadmaster-pre-auth-rce-uninitialized-heap-d5e3554441",
-      "retrieved_at": "2026-07-16T07:43:12+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -628,10 +560,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 57.75,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 56.25,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Unit42's own blob-URL phishing note (2025-10-02 'phishing pages using blob URLs') and classic IDN/Cyrillic homoglyph + zero-width-character phishing obfuscation; client-side CAPTCHA gates (KongTuke/White Lynx CAPTCHA pages) and SaaS-redirect chaining are each individually documented.",
       "threat": "Attacker harvests Microsoft OAuth device codes / authentication tokens via a phishing page engineered to be invisible to network analyzers, URL/domain reputation, safe-browsing blocklists, and signature-based content scanners, yielding account takeover.",
@@ -721,10 +653,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 74,
-        "newness": 24,
+        "newness": 18,
         "credibility": 50.0,
-        "composite": 56.7,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 55.2,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "HTML smuggling (client-side reconstruction of a payload in the browser from embedded/encoded data to evade network inspection) combined with server-side polymorphism / hash rotation; SourTrade is a documented evolution of these adding split-source assembly over a legitimate Bun runtime with per-session AES-CTR filler.",
       "threat": "A malvertising operator delivers per-session, unique-hash Windows malware by reassembling a Bun-based executable in the victim's browser from a legitimate runtime plus attacker-supplied PE headers and JavaScriptCore bytecode, evading hash/IOC-based detection and misattributing the Mark-of-the-Web download source to a benign landing page. Impersonates TradingView, Solana, and Luno to target retail/crypto traders across 12 countries in 25 languages; linked (unconfirmed for the current samples) to the JSCEAL/WeevilProxy stealer.",
@@ -804,10 +736,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 76,
-        "newness": 24,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 56.55,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 55.05,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Generic CWE-78 OS command injection in embedded/OT web management (unsanitized input into system()); the 'xz -f -c -d as cat' file-read trick is a known GTFOBins-style LOLBin. Novelty here is finding-level: the specific Siemens ROX II zero-day trilogy (CVE-2025-40948/40947/40949), not a new vulnerability class.",
       "threat": "An attacker with access to the ROX II management interface can read credentials/keys (CVE-2025-40948), inject a root reverse shell through the feature-key uploader (CVE-2025-40947), and plant a root cron job for reboot-persistent control (CVE-2025-40949), turning a network-segmentation security device into a foothold for OT disruption, data exfiltration, or DoS.",
@@ -894,10 +826,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 68,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 54.3,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 52.8,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Known bug class rather than a new one: GraphQL subscription resolvers missing query-level authz, WebSocket/SSE channel joins not re-checking per-topic ACLs, Kafka topic-pattern subscribe vs per-topic ACLs, and Kubernetes RBAC treating watch separately from get/list. Range-widening as an authz bypass is IDOR/BOLA with a range operator.",
       "verified": false,
@@ -955,10 +887,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 74,
-        "newness": 24,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 50.7,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 49.2,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "The broader 'incomplete neutralization yields command injection' class (CWE-78/CWE-150) and Shescape's own prior per-shell escaping advisories; the analyst's cited Kemp LoadMaster null-byte-gap-to-RCE is the nearest thematic match.",
       "threat": "An attacker who controls a command argument passed through Shescape's escape/escapeAll on Windows CMD can break out of the intended command context (e.g. a conditional block) and execute arbitrary commands (CVSS 9.2).",
@@ -1027,10 +959,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 24,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 47.25,
-        "scored_at": "2026-07-26T19:54:38+00:00"
+        "composite": 45.75,
+        "scored_at": "2026-07-31T18:40:35+00:00"
       },
       "prior_art": "Tool round-ups are a common genre and every tool listed is publicly known; there is no new technique or tool. The contribution is the three-category taxonomy and constraint-based selection guidance. Vendor content rather than research: Semgrep competes in the category it ranks and has an unannounced product in it.",
       "verified": true,
@@ -1057,11 +989,11 @@
       "discovered_via": "manual",
       "article_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
       "scores": {
-        "newness": 4,
+        "newness": 3,
         "novelty": 0,
         "relevance": 0,
-        "composite": 8.5,
-        "scored_at": "2026-07-26T19:54:38+00:00",
+        "composite": 8.25,
+        "scored_at": "2026-07-31T18:40:35+00:00",
         "credibility": 50.0
       },
       "published": "2026-06",

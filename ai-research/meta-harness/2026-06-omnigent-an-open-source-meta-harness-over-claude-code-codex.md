@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Meta-Harness  
 **Source:** [omnigent-ai/omnigent](https://github.com/omnigent-ai/omnigent)  ·  **Author:** omnigent-ai  ·  **Published:** Jun 2026  ·  **Retrieved:** 2026-07-13  
-**Scores:** 🆕 Newness 4 · ✨ Novelty 78 · 🎯 Relevance 84 · 🏛️ Credibility 50 · **Composite 57.1**  
+**Scores:** 🆕 Newness 3 · ✨ Novelty 78 · 🎯 Relevance 84 · 🏛️ Credibility 50 · **Composite 56.85**  
 **Tags:** `meta-harness`, `orchestration`, `agents`, `claude-code`, `tooling-2026`
 
 > **Takeaway:** The 'meta-harness' is emerging as an abstraction layer above individual coding agents - orchestrate many, swap freely, enforce policy centrally.
