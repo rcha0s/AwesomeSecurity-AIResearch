@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research.** Every week it scans a ranked set of sources (X, GitHub, YouTube, blogs, newsletters, RSS), keeps only the findings that teach something you can act on, and files each one under **AI Security**, **Product Security**, or **AI Research** with a one-line lesson and a concrete next step.
 
-![Updated](https://img.shields.io/badge/updated-2026--07--29-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-18-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--07--31-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-15-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read this week's briefing &#8594;</a></h3>
 
@@ -21,11 +21,9 @@ The live site opens on this week's briefing (the lead finding, what's trending, 
 
 > The top curated findings published in the last 7 days. Each entry is the gist (what's new, why it matters, what to do), and links to both its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
 
-- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](ai-research/harness-context-management/2026-07-server-side-encrypted-compaction-porting-codex-s-responses-a.md)** · AI Research · Jul 22, 2026 · composite **62.25** · [source ↗](https://github.com/algal/pi-openai-server-compaction)  
-  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity - …
-- **[Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](product-security/developer-tooling-template-injection/2026-07-oh-my-posh-a-directory-name-runs-commands-because-the-prompt.md)** · Product Security · Jul 24, 2026 · composite **58.5** · [source ↗](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq)  
+- **[Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](product-security/developer-tooling-template-injection/2026-07-oh-my-posh-a-directory-name-runs-commands-because-the-prompt.md)** · Product Security · Jul 24, 2026 · composite **57.0** · [source ↗](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq)  
   Anything that renders your prompt, status bar or editor title is executing attacker-controlled repository metadata - treat it as a parser, not decoration.
-- **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](product-security/browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · Product Security · Jul 25, 2026 · composite **56.7** · [source ↗](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)  
+- **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](product-security/browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · Product Security · Jul 25, 2026 · composite **55.2** · [source ↗](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)  
   Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.
 
 ## Standing claims
@@ -41,8 +39,8 @@ The live site opens on this week's briefing (the lead finding, what's trending, 
 
 ## The three databases
 
-- **[AI Security](ai-security/README.md)** (5 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
-- **[Product Security](product-security/README.md)** (8 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
+- **[AI Security](ai-security/README.md)** (3 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
+- **[Product Security](product-security/README.md)** (7 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 - **[AI Research](ai-research/README.md)** (5 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted) · [Learnings](LEARNINGS.md) (takeaways and generated skills).
@@ -106,4 +104,4 @@ README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated - do not ha
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors - every finding cites its original source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-07-29. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-07-31. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>

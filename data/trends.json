@@ -134,48 +134,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "model-supply-chain",
-      "count": 5,
-      "recent": 4,
-      "sources": 5,
-      "momentum": 9.0,
-      "first_seen": "2026-06-25",
-      "last_seen": "2026-07-21",
-      "members": [
-        {
-          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
-          "url": "https://arxiv.org/abs/2607.17550",
-          "date": "2026-07-21",
-          "fresh": true
-        },
-        {
-          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
-          "url": "https://arxiv.org/abs/2607.17503",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
-          "url": "https://arxiv.org/abs/2606.30373",
-          "date": "2026-06-29",
-          "fresh": true
-        },
-        {
-          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-          "url": "https://arxiv.org/abs/2606.29239",
-          "date": "2026-06-28",
-          "fresh": true
-        },
-        {
-          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
-          "url": "https://arxiv.org/abs/2606.27511",
-          "date": "2026-06-25",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "supply-chain",
       "count": 5,
       "recent": 4,
@@ -212,6 +170,48 @@
           "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
           "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
           "date": "2026-06-23",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "model-supply-chain",
+      "count": 5,
+      "recent": 2,
+      "sources": 5,
+      "momentum": 7.0,
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-07-21",
+      "members": [
+        {
+          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+          "url": "https://arxiv.org/abs/2607.17550",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+          "url": "https://arxiv.org/abs/2607.17503",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
+          "url": "https://arxiv.org/abs/2606.30373",
+          "date": "2026-06-29",
+          "fresh": false
+        },
+        {
+          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
+          "url": "https://arxiv.org/abs/2606.29239",
+          "date": "2026-06-28",
+          "fresh": false
+        },
+        {
+          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
+          "url": "https://arxiv.org/abs/2606.27511",
+          "date": "2026-06-25",
           "fresh": false
         }
       ]
@@ -286,9 +286,9 @@
       "topic": "ai-security",
       "tag": "backdoor",
       "count": 3,
-      "recent": 2,
+      "recent": 1,
       "sources": 3,
-      "momentum": 5.0,
+      "momentum": 4.0,
       "first_seen": "2026-06-25",
       "last_seen": "2026-07-21",
       "members": [
@@ -302,7 +302,7 @@
           "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
           "url": "https://arxiv.org/abs/2606.29239",
           "date": "2026-06-28",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
@@ -362,30 +362,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "huggingface",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06-29",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
-          "url": "https://arxiv.org/abs/2607.17503",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
-          "url": "https://arxiv.org/abs/2606.30373",
-          "date": "2026-06-29",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "threat-modeling",
       "count": 2,
       "recent": 2,
@@ -410,49 +386,25 @@
     },
     {
       "topic": "ai-security",
-      "tag": "appsec",
+      "tag": "huggingface",
       "count": 2,
-      "recent": 2,
+      "recent": 1,
       "sources": 2,
-      "momentum": 4.0,
+      "momentum": 3.0,
       "first_seen": "2026-06-29",
-      "last_seen": "2026-07-15",
+      "last_seen": "2026-07-20",
       "members": [
         {
-          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
-          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
-          "date": "2026-07-15",
+          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+          "url": "https://arxiv.org/abs/2607.17503",
+          "date": "2026-07-20",
           "fresh": true
         },
         {
           "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
           "url": "https://arxiv.org/abs/2606.30373",
           "date": "2026-06-29",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "defenses",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06-28",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
-          "url": "https://arxiv.org/abs/2607.17619",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-          "url": "https://arxiv.org/abs/2606.29239",
-          "date": "2026-06-28",
-          "fresh": true
+          "fresh": false
         }
       ]
     },
@@ -506,6 +458,30 @@
     },
     {
       "topic": "ai-security",
+      "tag": "defenses",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-28",
+      "last_seen": "2026-07-20",
+      "members": [
+        {
+          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
+          "url": "https://arxiv.org/abs/2607.17619",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
+          "url": "https://arxiv.org/abs/2606.29239",
+          "date": "2026-06-28",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "agents",
       "count": 2,
       "recent": 1,
@@ -524,6 +500,30 @@
           "title": "stale",
           "url": "https://a/stale",
           "date": "2000-01-01",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "appsec",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-29",
+      "last_seen": "2026-07-15",
+      "members": [
+        {
+          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+          "date": "2026-07-15",
+          "fresh": true
+        },
+        {
+          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
+          "url": "https://arxiv.org/abs/2606.30373",
+          "date": "2026-06-29",
           "fresh": false
         }
       ]
@@ -676,30 +676,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "rce",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06-29",
-      "last_seen": "2026-07-24",
-      "members": [
-        {
-          "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
-          "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
-          "date": "2026-07-24",
-          "fresh": true
-        },
-        {
-          "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
-          "url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
-          "date": "2026-06-29",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "command-injection",
       "count": 2,
       "recent": 2,
@@ -724,24 +700,24 @@
     },
     {
       "topic": "product-security",
-      "tag": "memory-safety",
+      "tag": "rce",
       "count": 2,
       "recent": 1,
       "sources": 2,
       "momentum": 3.0,
-      "first_seen": "2026-04",
-      "last_seen": "2026-06-29",
+      "first_seen": "2026-06-29",
+      "last_seen": "2026-07-24",
       "members": [
+        {
+          "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
+          "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+          "date": "2026-07-24",
+          "fresh": true
+        },
         {
           "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
           "url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
           "date": "2026-06-29",
-          "fresh": true
-        },
-        {
-          "title": "Google brings Rust (memory safety) to the Pixel baseband",
-          "url": "http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html",
-          "date": "2026-04",
           "fresh": false
         }
       ]
@@ -784,6 +760,30 @@
           "title": "Project Zero: a 0-click exploit chain for the Pixel 10",
           "url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
           "date": "2026-05",
+          "fresh": false
+        },
+        {
+          "title": "Google brings Rust (memory safety) to the Pixel baseband",
+          "url": "http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html",
+          "date": "2026-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "memory-safety",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-04",
+      "last_seen": "2026-06-29",
+      "members": [
+        {
+          "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
+          "url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
+          "date": "2026-06-29",
           "fresh": false
         },
         {
