@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   render:
@@ -59,20 +60,41 @@ jobs:
           python scripts/generate_review.py
           python scripts/generate_skills.py
 
-      - name: Commit changes
+      # main is branch-protected (PRs required), so the bot cannot push
+      # directly. Stage the render drift onto a dedicated branch and open /
+      # refresh a PR — humans merge once CI is green.
+      - name: Open or refresh render-refresh PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
           # generate_skills.py only writes skills/ when at least one finding
           # clears the composite threshold; otherwise the directory is absent
           # and `git add skills` would abort the whole step.
           paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md \
             ai-security product-security ai-research claims docs)
           [ -d skills ] && paths+=(skills)
-          if [[ -n "$(git status --porcelain)" ]]; then
-            git add "${paths[@]}"
-            git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
-            git push
-          else
-            echo "No changes to commit."
+
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No render drift; nothing to PR."
+            exit 0
+          fi
+
+          branch="chore/render-refresh"
+          git checkout -B "$branch"
+          git add "${paths[@]}"
+          git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
+          git push --force-with-lease origin "HEAD:$branch"
+
+          # Idempotent PR: open one if none exists, otherwise leave the
+          # existing PR to pick up the new head automatically.
+          if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "chore: render refresh ($(date -u +%Y-%m-%d))" \
+              --body "Automated regeneration of the site, claims, trends, newsletter, review, and skill artifacts. Green CI = safe to merge."
           fi
