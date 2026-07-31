@@ -63,9 +63,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # generate_skills.py only writes skills/ when at least one finding
+          # clears the composite threshold; otherwise the directory is absent
+          # and `git add skills` would abort the whole step.
+          paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md \
+            ai-security product-security ai-research claims docs)
+          [ -d skills ] && paths+=(skills)
           if [[ -n "$(git status --porcelain)" ]]; then
-            git add data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md \
-              ai-security product-security ai-research claims docs skills
+            git add "${paths[@]}"
             git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
             git push
           else
