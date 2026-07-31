@@ -87,7 +87,10 @@ jobs:
           git checkout -B "$branch"
           git add "${paths[@]}"
           git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
-          git push --force-with-lease origin "HEAD:$branch"
+          # Bot-owned branch, disposable: plain --force is safe.
+          # --force-with-lease can't reason about branches the runner never
+          # fetched, so it rejects with "stale info" on repeat runs.
+          git push --force origin "HEAD:$branch"
 
           # Idempotent PR: open one if none exists, otherwise leave the
           # existing PR to pick up the new head automatically.
