@@ -110,3 +110,42 @@ def test_main_refuses_to_render_an_invalid_ledger(sandbox):
 def test_main_succeeds_with_an_empty_ledger(sandbox):
     assert gh.main() == 0
     assert (sandbox / "docs" / "index.html").exists()
+
+
+# --- Detail modal wiring ----------------------------------------------------
+def test_finding_row_carries_detail_path(sandbox):
+    """The modal fetches by detail_path; if it's missing, clicks fall back to
+    the raw source. Lock the exact path the modal expects."""
+    data = payload_of(sandbox, entries=[make_entry(title="AsyncAPI npm compromise")])
+    row = data["findings"][0]
+    assert row["detail_path"] == (
+        "findings/ai-research/agents-harnesses/"
+        "2026-07-asyncapi-npm-compromise.md"
+    )
+
+
+def test_main_mirrors_finding_markdown_into_docs_findings(sandbox):
+    """generate_site.py writes track/domain/<file>.md; generate_html.py must
+    copy that same file into docs/findings/... so the site's modal can fetch
+    it same-origin."""
+    import generate_site
+
+    claims.save_ledger(ledger_of(make_claim()))
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(make_entry(title="Compaction saves tokens"))
+    common.save_pool("ai-research", pool)
+
+    # generate_site writes the source .md; generate_html copies it into docs/
+    generate_site.main()
+    assert gh.main() == 0
+
+    detail = (
+        sandbox
+        / "docs"
+        / "findings"
+        / "ai-research"
+        / "agents-harnesses"
+        / "2026-07-compaction-saves-tokens.md"
+    )
+    assert detail.is_file()
+    assert "Compaction saves tokens" in detail.read_text(encoding="utf-8")
