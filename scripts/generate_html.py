@@ -20,6 +20,7 @@ Usage:
 from __future__ import annotations
 
 import re
+import shutil
 from datetime import UTC, datetime
 from html import escape
 from json import dumps
@@ -28,6 +29,24 @@ from pathlib import Path
 import common as c
 
 import claims as cl
+
+
+def _entry_filename(entry: dict) -> str:
+    """Filename generate_site.py writes for this entry.
+
+    Kept in lockstep with scripts/generate_site.py:entry_filename — if you
+    change one, change both. Duplicated here (rather than imported) because
+    generate_site.py has side-effects at import time we don't want here.
+    """
+    return f"{(entry.get('date') or 'undated')}-{c.slugify(entry.get('title', ''), 60)}.md"
+
+
+def _detail_relpath(entry: dict) -> str:
+    """Where the finding's rendered .md lives, relative to the docs/ site
+    root. This is what the modal fetches — see docs/index.html."""
+    topic = entry.get("topic") or ""
+    domain = c.domain_slug(entry.get("domain") or "General")
+    return f"findings/{topic}/{domain}/{_entry_filename(entry)}"
 
 # Normalize em/en dashes to a SPACED hyphen so they never read as a compound
 # ("word-word"); an em dash acting as a clause break becomes " - ".
@@ -87,6 +106,7 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
         ),
         "verified": entry.get("verified") is True,
         "fresh": c.is_fresh(entry, snapshot_days),
+        "detail_path": _detail_relpath(entry),
     }
 
 
@@ -126,6 +146,35 @@ def _claims_since(ledger: dict) -> str:
     durable claims reach (they never age out, unlike findings)."""
     seen = [c_.get("first_seen", "") for c_ in cl.all_claims(ledger) if c_.get("first_seen")]
     return min(seen) if seen else ""
+
+
+def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
+    """Mirror every vetted finding's rendered .md into docs/findings/ so the
+    site's modal can fetch it same-origin. Stale files are pruned so a
+    finding that leaves the pool doesn't linger in the served tree.
+    """
+    target_root = docs / "findings"
+    if target_root.exists():
+        shutil.rmtree(target_root)
+    target_root.mkdir(parents=True, exist_ok=True)
+
+    written = 0
+    for topic in c.TOPICS:
+        pool = c.load_pool(topic)
+        src_root = c.ROOT / topic
+        for entry in pool["entries"]:
+            if not c.is_curated(entry, conf):
+                continue
+            src = src_root / c.domain_slug(entry.get("domain") or "General") / _entry_filename(entry)
+            if not src.is_file():
+                # generate_site.py hasn't run in this workflow step yet, or
+                # slug drifted — skip silently rather than fail the render.
+                continue
+            dst = target_root / topic / c.domain_slug(entry.get("domain") or "General") / _entry_filename(entry)
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dst)
+            written += 1
+    return written
 
 
 def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
@@ -193,10 +242,11 @@ def main() -> int:
     (docs / "index.html").write_text(render(payload, now), encoding="utf-8")
     # Without this, Pages runs the output through Jekyll and mangles it.
     (docs / ".nojekyll").write_text("", encoding="utf-8")
+    detail_pages = _copy_detail_pages(docs, conf)
 
     print(
         f"site: docs/index.html - {len(payload['claims'])} claims, "
-        f"{len(payload['findings'])} findings"
+        f"{len(payload['findings'])} findings, {detail_pages} detail pages"
     )
     return 0
 

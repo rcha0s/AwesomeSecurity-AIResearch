@@ -383,6 +383,86 @@
     .sec-hd .note { margin-left: 0; width: 100%; }
     .modebar { padding: 8px 0 4px; }
   }
+
+  /* ---- Detail modal ---- */
+  .modal { position: fixed; inset: 0; z-index: 100; display: flex;
+    align-items: center; justify-content: center; padding: 24px; }
+  .modal[hidden] { display: none; }
+  .modal-backdrop { position: absolute; inset: 0;
+    background: color-mix(in srgb, var(--ink) 55%, transparent);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+  .modal-panel {
+    position: relative; z-index: 1; width: min(820px, 100%); max-height: calc(100vh - 48px);
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .18), 0 4px 12px rgba(0, 0, 0, .10);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .modal-close {
+    position: absolute; top: 10px; right: 10px; width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--card); border: 1px solid var(--rule); color: var(--ink-2);
+    border-radius: 8px; cursor: pointer; font-size: 22px; line-height: 1; padding: 0;
+  }
+  .modal-close:hover { color: var(--ink); border-color: var(--ink-3); }
+  .modal-body {
+    padding: 32px 36px 28px; overflow-y: auto; overscroll-behavior: contain;
+    line-height: 1.6;
+  }
+  .modal-loading { color: var(--ink-3); font-size: 14px; }
+  body.modal-open { overflow: hidden; }
+
+  /* Rendered-markdown prose */
+  .prose h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.2; margin: 0 0 12px; color: var(--ink); letter-spacing: -.01em; }
+  .prose h2 { font-family: var(--sans); font-weight: 700; font-size: 18px;
+    margin: 24px 0 8px; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+  .prose h3 { font-family: var(--sans); font-weight: 600; font-size: 16px;
+    margin: 20px 0 6px; color: var(--ink); }
+  .prose p { margin: 8px 0; color: var(--ink-2); }
+  .prose strong { color: var(--ink); font-weight: 600; }
+  .prose em { color: var(--ink-2); }
+  .prose ul, .prose ol { margin: 8px 0 8px 20px; color: var(--ink-2); }
+  .prose li { margin: 4px 0; }
+  .prose blockquote {
+    margin: 12px 0; padding: 8px 14px; color: var(--ink-2);
+    background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 6px;
+  }
+  .prose blockquote p { margin: 4px 0; }
+  .prose code {
+    font-family: var(--mono); font-size: 13px; padding: 1px 6px;
+    background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
+    color: var(--ink);
+  }
+  .prose pre {
+    font-family: var(--mono); font-size: 13px; padding: 12px 14px;
+    background: var(--paper-2); border: 1px solid var(--rule); border-radius: 8px;
+    overflow-x: auto; margin: 12px 0;
+  }
+  .prose pre code { background: transparent; border: 0; padding: 0; }
+  .prose a { color: var(--accent); }
+  .prose a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .prose hr { border: 0; border-top: 1px solid var(--rule); margin: 22px 0; }
+
+  .modal-source {
+    display: flex; gap: 10px; align-items: center; padding: 14px 36px;
+    border-top: 1px solid var(--rule); background: var(--paper-2);
+    font-size: 14px;
+  }
+  .modal-source a {
+    color: var(--accent); font-weight: 600; padding: 6px 14px;
+    background: var(--card); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--rule));
+    border-radius: 8px;
+  }
+  .modal-source a:hover { background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+  .modal-error { color: var(--st-refuted); background: var(--st-refuted-bg);
+    border: 1px solid color-mix(in srgb, var(--st-refuted) 30%, var(--rule));
+    padding: 10px 14px; border-radius: 8px; font-size: 14px; }
+
+  @media (max-width: 640px) {
+    .modal { padding: 8px; }
+    .modal-body { padding: 24px 20px 18px; }
+    .modal-source { padding: 12px 20px; }
+  }
 </style>
 </head>
 <body>
@@ -427,6 +507,16 @@
   </footer>
 </div>
 
+<div id="modal" class="modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-backdrop" data-close="1"></div>
+  <div class="modal-panel" role="document">
+    <button class="modal-close" type="button" aria-label="Close" data-close="1">&times;</button>
+    <div class="modal-body" id="modal-body">
+      <p class="modal-loading">Loading…</p>
+    </div>
+  </div>
+</div>
+
 <script id="site-data" type="application/json">__DATA__</script>
 <script>
 (function () {
@@ -442,6 +532,16 @@
   function tcls(t) { return (TMETA[t] && TMETA[t].cls) || ""; }
   function topicPill(t) {
     return '<span class="tpill ' + tcls(t) + '">' + esc(tname(t)) + '</span>';
+  }
+
+  // A finding's title should open the detail modal, not jump to the raw
+  // source. Fallback href keeps the link meaningful with JS disabled and
+  // when opened in a new tab (right-click → open) — GitHub Pages serves
+  // the .md, so a middle-click still lands somewhere sensible.
+  function detailAnchor(f, inner) {
+    var href = f.detail_path ? esc(f.detail_path) : esc(f.url);
+    var id = esc(f.id || "");
+    return '<a class="detail-open" href="' + href + '" data-fid="' + id + '">' + inner + '</a>';
   }
 
   function esc(s) {
@@ -480,7 +580,7 @@
         (f.action.type ? " / " + esc(f.action.type) : "") + '</span><span>' + txt(f.action.title) + '</span></div>';
     }
     return '<article class="art">' +
-      '<h4><a href="' + esc(f.url) + '">' + txt(f.title) + '</a></h4>' +
+      '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
       doHTML +
       '<div class="meta">' + meta.join("") + '</div>' +
@@ -503,7 +603,7 @@
       return '<tr>' +
         '<td class="c-date">' + esc(date) + (f.fresh ? ' <span class="chip fresh" style="margin-left:4px">new</span>' : '') + '</td>' +
         '<td class="c-topic">' + topicPill(f.topic) + (f.domain ? '<div class="sub" style="color:var(--ink-3);font-size:12px;margin-top:3px">' + txt(f.domain) + '</div>' : '') + '</td>' +
-        '<td class="c-title"><a href="' + esc(f.url) + '">' + txt(f.title) + '</a>' + lesson + '</td>' +
+        '<td class="c-title">' + detailAnchor(f, txt(f.title)) + lesson + '</td>' +
         (opts.showScore ? '<td class="c-signal">' + Math.round(f.composite || 0) + '</td>' : '') +
         '<td class="c-src"><a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a></td>' +
         '</tr>';
@@ -583,7 +683,7 @@
           (lead.fresh ? ' <span class="chip fresh">new</span>' : '') +
           (lead.domain ? ' <span style="color:var(--ink-3);font-weight:500">/ ' + txt(lead.domain) + '</span>' : '') +
         '</div>' +
-        '<h3><a href="' + esc(lead.url) + '">' + txt(lead.title) + '</a></h3>' +
+        '<h3>' + detailAnchor(lead, txt(lead.title)) + '</h3>' +
         (lead.takeaway ? '<p class="stand"><b>The lesson.</b> ' + txt(lead.takeaway) + '</p>' : '') +
         (lead.action && lead.action.title ? '<div class="do"><span class="lbl">Do' +
           (lead.action.type ? " / " + esc(lead.action.type) : "") + '</span><span>' + txt(lead.action.title) + '</span></div>' : '') +
@@ -617,7 +717,7 @@
       html += '<div class="cols2"><div class="col"><div class="artlist">';
       editorial.slice(0, 6).forEach(function (f) {
         html += '<article class="art">' +
-          '<h4><a href="' + esc(f.url) + '">' + txt(f.title) + '</a></h4>' +
+          '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
           (f.reason ? '<p class="why"><b>Why now.</b> ' + txt(f.reason) + '</p>' : '') +
           '<div class="meta">' + topicPill(f.topic) +
             (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
@@ -980,6 +1080,221 @@
 
   show((location.hash || "").slice(1) || "week");
   window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
+
+  // ================= Detail modal =================
+  // A tiny, purpose-built markdown renderer. NOT a full CommonMark impl —
+  // just enough for the shapes we generate: h1/h2/h3, paragraphs, ul/ol,
+  // blockquote, hr, fenced code, inline code, bold/italic, and links.
+  // Everything else falls through as plain text. Inputs are trusted (we
+  // wrote them ourselves) but we still escape HTML entities defensively.
+  function renderMarkdown(md) {
+    var text = String(md || "");
+    // Strip an accidental BOM.
+    if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+
+    // Extract fenced code blocks first so their content survives escaping.
+    var codes = [];
+    text = text.replace(/```([^\n]*)\n([\s\S]*?)```/g, function (_, lang, body) {
+      codes.push({ lang: lang.trim(), body: body });
+      return "CODE" + (codes.length - 1) + "";
+    });
+
+    // Escape HTML.
+    text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    // Inline: `code`, **bold**, _italic_ / *italic*, [text](url).
+    function inline(s) {
+      s = s.replace(/`([^`]+)`/g, function (_, c) { return '<code>' + c + '</code>'; });
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>');
+      s = s.replace(/(^|[^_])_([^_]+)_/g, '$1<em>$2</em>');
+      s = s.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+&quot;[^&]*&quot;)?\)/g,
+        function (_, t, u) { return '<a href="' + u + '" rel="noopener noreferrer">' + t + '</a>'; });
+      return s;
+    }
+
+    // Block pass. We walk lines and coalesce paragraphs, lists, blockquotes.
+    var lines = text.split(/\r?\n/);
+    var out = [], i = 0;
+    function flushPara(buf) {
+      if (!buf.length) return;
+      out.push('<p>' + inline(buf.join(' ')) + '</p>');
+    }
+    while (i < lines.length) {
+      var line = lines[i];
+      // Code-block placeholder — restore.
+      var codeM = line.match(/^CODE(\d+)$/);
+      if (codeM) {
+        var b = codes[+codeM[1]];
+        out.push('<pre><code>' +
+          b.body.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") +
+          '</code></pre>');
+        i++; continue;
+      }
+      // hr
+      if (/^\s*---+\s*$/.test(line)) { out.push('<hr>'); i++; continue; }
+      // Blank line — skip.
+      if (/^\s*$/.test(line)) { i++; continue; }
+      // Headings
+      var h = line.match(/^(#{1,6})\s+(.*)$/);
+      if (h) { var lvl = h[1].length; out.push('<h' + lvl + '>' + inline(h[2]) + '</h' + lvl + '>'); i++; continue; }
+      // Blockquote (may span multiple lines)
+      if (/^\s*&gt;/.test(line)) {
+        var qbuf = [];
+        while (i < lines.length && /^\s*&gt;/.test(lines[i])) {
+          qbuf.push(lines[i].replace(/^\s*&gt;\s?/, ''));
+          i++;
+        }
+        out.push('<blockquote><p>' + inline(qbuf.join(' ')) + '</p></blockquote>');
+        continue;
+      }
+      // Unordered list
+      if (/^\s*[-*+]\s+/.test(line)) {
+        var items = [];
+        while (i < lines.length && /^\s*[-*+]\s+/.test(lines[i])) {
+          items.push('<li>' + inline(lines[i].replace(/^\s*[-*+]\s+/, '')) + '</li>');
+          i++;
+        }
+        out.push('<ul>' + items.join('') + '</ul>');
+        continue;
+      }
+      // Ordered list
+      if (/^\s*\d+\.\s+/.test(line)) {
+        var oitems = [];
+        while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
+          oitems.push('<li>' + inline(lines[i].replace(/^\s*\d+\.\s+/, '')) + '</li>');
+          i++;
+        }
+        out.push('<ol>' + oitems.join('') + '</ol>');
+        continue;
+      }
+      // Paragraph (coalesce non-blank, non-block lines)
+      var pbuf = [];
+      while (i < lines.length && !/^\s*$/.test(lines[i]) &&
+             !/^(#{1,6})\s+/.test(lines[i]) &&
+             !/^\s*[-*+]\s+/.test(lines[i]) &&
+             !/^\s*\d+\.\s+/.test(lines[i]) &&
+             !/^\s*&gt;/.test(lines[i]) &&
+             !/^\s*---+\s*$/.test(lines[i]) &&
+             !/^CODE\d+$/.test(lines[i])) {
+        pbuf.push(lines[i]);
+        i++;
+      }
+      flushPara(pbuf);
+    }
+    return out.join('\n');
+  }
+
+  var modal = document.getElementById('modal');
+  var modalBody = document.getElementById('modal-body');
+  var mdCache = {};      // detail_path -> HTML
+  var openerEl = null;   // for focus restore
+
+  function findingById(id) {
+    var all = (DATA.findings || []).concat(DATA.editorial || []);
+    for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
+    return null;
+  }
+
+  function setModalParam(id) {
+    try {
+      var url = new URL(location.href);
+      if (id) url.searchParams.set('finding', id);
+      else url.searchParams.delete('finding');
+      history.replaceState(null, '', url.toString());
+    } catch (e) {}
+  }
+
+  function closeModal() {
+    if (modal.hasAttribute('hidden')) return;
+    modal.setAttribute('hidden', '');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    setModalParam(null);
+    if (openerEl && openerEl.focus) { try { openerEl.focus(); } catch (e) {} }
+    openerEl = null;
+  }
+
+  function openModal(finding, triggerEl) {
+    if (!finding) return;
+    openerEl = triggerEl || document.activeElement;
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    setModalParam(finding.id);
+    modalBody.innerHTML = '<p class="modal-loading">Loading…</p>';
+    // Focus the close button so ESC / Enter behaves.
+    var closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn && closeBtn.focus) { try { closeBtn.focus({ preventScroll: true }); } catch (e) { closeBtn.focus(); } }
+
+    var path = finding.detail_path;
+    function renderInto(rawMd) {
+      var html = '<article class="prose">' + renderMarkdown(rawMd) + '</article>';
+      if (finding.url) {
+        html += '<div class="modal-source">' +
+          '<span style="color:var(--ink-3)">Source:</span> ' +
+          '<a href="' + esc(finding.url) + '" target="_blank" rel="noopener noreferrer">' +
+          esc(src(finding)) + ' &#8599;</a></div>';
+      }
+      modalBody.innerHTML = html;
+      modalBody.scrollTop = 0;
+    }
+
+    if (!path) {
+      modalBody.innerHTML = '<p class="modal-error">No detail page for this finding — opening the source instead.</p>';
+      if (finding.url) window.open(finding.url, '_blank', 'noopener');
+      return;
+    }
+
+    if (mdCache[path]) { renderInto(mdCache[path]); return; }
+
+    fetch(path, { credentials: 'omit' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    }).then(function (t) {
+      mdCache[path] = t;
+      renderInto(t);
+    }).catch(function () {
+      modalBody.innerHTML = '<p class="modal-error">Couldn’t load the detail page. Falling back to the source.</p>';
+      if (finding.url) {
+        modalBody.innerHTML += '<p><a class="link" href="' + esc(finding.url) +
+          '" target="_blank" rel="noopener noreferrer">Open source ↗</a></p>';
+      }
+    });
+  }
+
+  // Intercept detail-anchor clicks. Modifier keys / middle-click fall
+  // through so users can still open the .md in a new tab.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a.detail-open');
+    if (!a) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+    var fid = a.getAttribute('data-fid');
+    var finding = findingById(fid);
+    if (!finding) return;
+    e.preventDefault();
+    openModal(finding, a);
+  });
+
+  // Close on ESC, backdrop, close button.
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+  });
+  modal.addEventListener('click', function (e) {
+    if (e.target.dataset && e.target.dataset.close === '1') closeModal();
+  });
+
+  // Deep link: if page loads with ?finding=<id>, open that finding once
+  // the view has rendered.
+  (function initFromParam() {
+    try {
+      var p = new URLSearchParams(location.search);
+      var fid = p.get('finding');
+      if (!fid) return;
+      var f = findingById(fid);
+      if (f) openModal(f, null);
+    } catch (e) {}
+  })();
 })();
 </script>
 </body>
