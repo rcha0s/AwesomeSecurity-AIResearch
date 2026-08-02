@@ -26,12 +26,6 @@ Oh My Posh composes the displayed path from raw folder names and then passes the
 - **Conditions:** Victim runs Oh My Posh (the built-in default configuration is affected, and every path style) and the shell enters the directory or any descendant.
 - **Mitigations:** Upgrade Oh My Posh; do not re-parse composed paths as templates; restrict the template function map used for path resolution.
 
-## Actionable leverage
-
-**[skill]** Audit renderers for double evaluation of untrusted data - Sweep your codebase for the shape 'build a string from untrusted parts, then Render/eval the whole string': template.Render on a composed value, format-then-interpolate, or a second pass over already-substituted output. For each hit, either restructure to render-then-concatenate or swap in a data-only function map. Applies well beyond shells - status bars, notification templates, log formatters and report generators all re-render composed strings, and all of them ingest repo metadata.
-
-→ Generated skill: [`skills/audit-template-double-evaluation`](../../skills/audit-template-double-evaluation/SKILL.md)
-
 ---
 
 _Source: [https://github.com/advisories/GHSA-6xj8-qv9j-xcjq](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq)_  ·  [← back to index](../README.md)

@@ -60,11 +60,6 @@
         "ci-cd",
         "github-actions"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Don't treat provenance/--ignore-scripts as sufficient supply-chain defenses",
-        "detail": "Add a CI check that diffs a dependency's published tarball against its tagged source before promotion, and audit any pull_request_target workflow that checks out and runs untrusted PR code with access to secrets."
-      },
       "scores": {
         "novelty": 80,
         "relevance": 90,
@@ -126,11 +121,6 @@
         "phishing",
         "unit42"
       ],
-      "actionable": {
-        "type": "tool",
-        "title": "Enumerate & monitor your brand's hallucinated domains",
-        "detail": "Query LLMs for your brand's URLs/packages at scale, then pre-register or block-list the hallucinated ones and monitor for adversary registration."
-      },
       "scores": {
         "novelty": 90,
         "relevance": 86,
@@ -194,11 +184,6 @@
         "sandbox-escape",
         "agent-security"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Enforce workspace containment on every agent file operation",
-        "detail": "In the agent harness, before any Read/Write/Edit, resolve the path to its canonical location (realpath / openat2 with RESOLVE_BENEATH or RESOLVE_NO_SYMLINKS on Linux) and reject anything outside the workspace root. Surface the RESOLVED absolute target in approval prompts, not the in-repo filename, so a write to ~/.ssh/authorized_keys looks alarming. After cloning untrusted repos, scan with `find . -type l` or `git ls-files -s | grep ^120000` and quarantine symlinks pointing outside the tree."
-      },
       "scores": {
         "novelty": 70,
         "relevance": 82,
@@ -266,11 +251,6 @@
         "destructive",
         "microsoft"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Assume fake-ransomware; harden recovery",
-        "detail": "Treat ransomware incidents as potentially unrecoverable: prioritize offline/immutable backups and rapid detection of raw disk writes / partition-metadata tampering."
-      },
       "scores": {
         "novelty": 68,
         "relevance": 72,
@@ -335,11 +315,6 @@
         "threat-intel",
         "detection"
       ],
-      "actionable": {
-        "type": "tool",
-        "title": "Hunt for LLM residue in malware source and samples",
-        "detail": "Add retro-hunt rules for model residue in recovered source and strings: refusal/safety-disclaimer boilerplate, 'as an AI' phrasing, chain-of-thought markers in comments, and TODO-style scaffolding left inline. Pair it with a triage habit - dev builds give themselves away (loopback C2, symbols, older toolchain) so do not score a family's capability from a debug artifact. Cheap, high-yield, and it works precisely because the operator did not read their own code."
-      },
       "threat": "Commodity IoT botnet framework with 1,496-pair Telnet brute-forcing, 30+ device-family exploits and five C2 fallback channels, built with LLM assistance and cheaply repairable.",
       "conditions": "Internet-exposed IoT devices with default or weak Telnet/SSH credentials.",
       "mitigations": "Credential hygiene on IoT fleets; egress control from device VLANs; detection on the documented C2 banners and ports rather than on capability assumptions.",
@@ -404,12 +379,6 @@
         "supply-chain",
         "go"
       ],
-      "actionable": {
-        "type": "skill",
-        "skill_slug": "audit-template-double-evaluation",
-        "title": "Audit renderers for double evaluation of untrusted data",
-        "detail": "Sweep your codebase for the shape 'build a string from untrusted parts, then Render/eval the whole string': template.Render on a composed value, format-then-interpolate, or a second pass over already-substituted output. For each hit, either restructure to render-then-concatenate or swap in a data-only function map. Applies well beyond shells - status bars, notification templates, log formatters and report generators all re-render composed strings, and all of them ingest repo metadata."
-      },
       "threat": "Arbitrary command execution as the developer, from cloning a repository or extracting an archive that contains a maliciously named directory.",
       "conditions": "Victim runs Oh My Posh (the built-in default configuration is affected, and every path style) and the shell enters the directory or any descendant.",
       "mitigations": "Upgrade Oh My Posh; do not re-parse composed paths as templates; restrict the template function map used for path resolution.",
@@ -472,11 +441,6 @@
         "supply-chain",
         "code-review"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Make secret + dependency-integrity scanning a blocking gate on agent PRs",
-        "detail": "Treat any PR authored or co-authored by a coding agent as untrusted input: require blocking secret detection (not advisory annotations), pin and verify dependency changes, and flag edits to high-impact paths for mandatory second review. Do not rely on reviewer attention - the measured miss rate is 81.1%."
-      },
       "scores": {
         "novelty": 57,
         "relevance": 88,
@@ -552,11 +516,6 @@
         "saas-abuse",
         "identity"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Render-and-normalize phishing detection instead of fetch-and-hash",
-        "detail": "For URL/content scanners: (1) execute page JavaScript in a headless browser and hook URL.createObjectURL / capture blob content so decrypted phishing HTML is analyzed, not the ciphertext; (2) drive/skip client-side CAPTCHA gates rather than bailing when JS validation appears; (3) follow multi-hop SaaS redirect chains and score the terminal page, not just the first-seen legitimate domain; (4) before substring/hash comparison, normalize the DOM's rendered text through a Unicode confusables map (Cyrillic->Latin) and strip zero-width/invisible characters and injected <bdi> noise. Ingest the 20 URL and 4 email-hash IOCs into blocklists as a stopgap."
-      },
       "scores": {
         "novelty": 55,
         "relevance": 80,
@@ -645,11 +604,6 @@
         "hash-evasion",
         "mark-of-the-web"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Detect browser-assembled malware by chain, not by final-file hash",
-        "detail": "Do not rely on hashing the downloaded executable: SourTrade rotates a per-session AES-CTR seed so every build differs. Instead correlate the delivery chain: ad/malvertising referral -> cloaked landing page -> ServiceWorker registration at /sw.js -> a /config request returning Base64 PE headers and a .bun bytecode section -> a secondary-domain fetch of a legitimate Bun runtime -> a same-origin worker download with Content-Disposition attachment. Flag pages that register ServiceWorkers and then trigger attachment downloads via a hidden iframe, and alert on standalone Bun executables assembled from downloaded parts. Block the published domains/hashes as IOCs but treat them as low-shelf-life. User-facing control: install trading/wallet software only from the vendor's own site, never from an ad."
-      },
       "scores": {
         "novelty": 70,
         "relevance": 74,
@@ -728,11 +682,6 @@
         "persistence",
         "unit42"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Audit privileged processes for user-input-to-shell sinks",
-        "detail": "For any daemon or handler running as root, enumerate every place external input (upload fields, license/feature keys, scheduler config, tool parameters) reaches system()/exec or is passed to a CLI utility. Replace shell string construction with argument-array exec and strict allowlist validation; never run compression/archive tools (xz, tar) with attacker-controlled flags/paths as root. For ROX II specifically, update to firmware V2.17.1 (Siemens SSA-973901, SSA-078743, SSA-081142) and virtual-patch until deployed."
-      },
       "scores": {
         "novelty": 55,
         "relevance": 76,
@@ -815,11 +764,6 @@
         "idor",
         "api-security"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Test authorization on streaming endpoints with an unbounded range",
-        "detail": "For every subscribe/watch/stream API you own, write the test where a caller with the narrowest possible grant requests the widest possible range (from-key, empty prefix, wildcard topic) and assert the stream is refused or clipped to the grant. Then fix the class properly by resolving authorization in one shared enforcement point that both the read and stream handlers call. Operationally: patch etcd to 3.7.1/3.6.14/3.5.33 and re-audit READ grants as if each were full read."
-      },
       "threat": "A low-privilege authenticated etcd client reads the bulk of the keyspace via Watch.",
       "conditions": "Clusters with authentication enabled and meaningfully partitioned READ grants; the advisory gives fixed versions only and no affected-version range.",
       "mitigations": "Upgrade to the patched releases; audit and tighten READ grants; restrict network reach to the client gRPC port.",
@@ -879,11 +823,6 @@
         "supply-chain",
         "input-neutralization"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Avoid shell interpolation entirely; if unavoidable, pin and monitor escaping libs",
-        "detail": "In Node.js, replace shell:true command construction with execFile/spawn using an argv array (no shell), which sidesteps metacharacter escaping altogether. Where a shell is truly required, upgrade Shescape to >=2.1.14 / >=3.0.1, pin the version, and treat every new per-shell advisory as a required bump. As a defense-in-depth check, add a lint/grep rule flagging child_process calls that combine untrusted input with shell:true or string-built commands."
-      },
       "scores": {
         "novelty": 40,
         "relevance": 74,
@@ -951,11 +890,6 @@
         "tooling",
         "open-source"
       ],
-      "actionable": {
-        "type": "tool",
-        "title": "Pick a harness category before picking a tool",
-        "detail": "Map your constraint to a category first: fully local/offline -> ai-deep-sast; vulnerability hunting -> raptor or google/mantis; C/C++ with verified patches -> defending-code-harness; appsec program optimizing time-to-reviewed-fix -> VVAH. Verify recent commit activity before adopting any of them."
-      },
       "scores": {
         "novelty": 30,
         "relevance": 80,

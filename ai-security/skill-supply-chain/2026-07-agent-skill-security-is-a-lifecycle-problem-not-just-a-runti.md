@@ -20,10 +20,6 @@ Reusable agent 'skills' are a new supply-chain unit, but security work has mostl
 - A useful threat model spans five lifecycle stages, so a skill scanner should check admission, retrieval, and planner-selection risks, not only execution. - _"a threat taxonomy spanning repository admission, semantic retrieval, planner selection, execution, and skill evolution"_ ✅
 - Empirically, across 327 real-world skills, vulnerabilities show up at multiple stages beyond execution - so lifecycle-aware analysis is needed, not just a runtime guard. - _"vulnerabilities arise at multiple lifecycle stages beyond execution"_ ✅
 
-## Actionable leverage
-
-**[tool]** Lifecycle-aware skill scanning - Extend a skill/marketplace scanner beyond runtime: check repository-admission provenance, semantic-retrieval poisoning (does a crafted description win retrieval?), planner-selection hijacking, and skill-evolution drift between approved and current versions.
-
 ---
 
 _Source: [https://arxiv.org/abs/2607.13987](https://arxiv.org/abs/2607.13987)_  ·  [← back to index](../README.md)

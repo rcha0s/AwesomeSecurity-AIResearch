@@ -79,7 +79,6 @@ def _round(value) -> int:
 def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
     """The subset of a pool entry the site actually renders."""
     scores = entry.get("scores") or {}
-    act = entry.get("actionable") if isinstance(entry.get("actionable"), dict) else {}
     cred = scores.get("credibility")
     return {
         "id": entry.get("id", ""),
@@ -99,11 +98,6 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
             "relevance": _round(scores.get("relevance")),
             "credibility": _round(cred if cred is not None else c.credibility_of(entry)),
         },
-        "action": (
-            {"type": act.get("type", ""), "title": act.get("title", "")}
-            if act.get("title")
-            else None
-        ),
         "verified": entry.get("verified") is True,
         "fresh": c.is_fresh(entry, snapshot_days),
         "detail_path": _detail_relpath(entry),

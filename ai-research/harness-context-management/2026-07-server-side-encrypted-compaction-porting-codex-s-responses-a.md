@@ -26,10 +26,6 @@ OpenAI's Codex compacts long-running sessions by calling the Responses API's ser
 
 - **Conditions:** Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol - a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.
 
-## Actionable leverage
-
-**[harness]** Wire OpenAI server-side compaction into your agent harness - For openai/* models, on your compaction event call POST /v1/responses with the full history plus a trailing compaction_trigger, mirroring your normal request's reasoning/tool/text config; store the returned opaque `compaction` item and replay it only for compatible OpenAI turns. Set store:true and use previous_response_id for between-compaction continuity, and generate a portable text summary in parallel so forks/exports/other models keep working. Budget for the cost: this policy emitted ~4.58x compaction output tokens and a ~29% larger billed context, so gate it behind a config/threshold and measure recall-per-token on your own tasks before trusting it.
-
 ---
 
 _Source: [https://github.com/algal/pi-openai-server-compaction](https://github.com/algal/pi-openai-server-compaction)_  ·  [← back to index](../README.md)

@@ -26,10 +26,6 @@ Attackers backdoored five @asyncapi npm versions that execute at module-load (im
 - **Threat:** A poisoned transitive dependency runs attacker code on any workstation, CI runner, or container build that imports it, with no install script required.
 - **Mitigations:** Pin/lock and vet dependency updates by content (not just provenance); treat import-time behavior as executable; segment CI credentials; audit pull_request_target workflows that check out untrusted PR code.
 
-## Actionable leverage
-
-**[takeaway]** Don't treat provenance/--ignore-scripts as sufficient supply-chain defenses - Add a CI check that diffs a dependency's published tarball against its tagged source before promotion, and audit any pull_request_target workflow that checks out and runs untrusted PR code with access to secrets.
-
 ---
 
 _Source: [https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/)_  ·  [← back to index](../README.md)

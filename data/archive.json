@@ -30,11 +30,6 @@
       "owasp-asi",
       "claude-code"
     ],
-    "actionable": {
-      "type": "harness",
-      "title": "Isolate and review agent memory writes",
-      "detail": "Treat writes to persistent memory, hooks, and system-prompt layers as privileged: require explicit review, provenance tracking, and don't let tool output mutate them implicitly."
-    },
     "scores": {
       "novelty": 88,
       "relevance": 90,
@@ -74,11 +69,6 @@
       "exploit-chain",
       "project-zero"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Prioritize 0-click attack-surface reduction",
-      "detail": "Audit message/media parsers reachable without user interaction; keep devices on the latest patch level."
-    },
     "scores": {
       "novelty": 80,
       "relevance": 78,
@@ -124,11 +114,6 @@
       "tool-use",
       "tooling-2026"
     ],
-    "actionable": {
-      "type": "harness",
-      "title": "Add a tool-call firewall to your agent harness",
-      "detail": "Interpose an allow/deny policy layer on every tool call (esp. shell, network, secret access) with human-in-the-loop for high-impact actions."
-    },
     "scores": {
       "novelty": 74,
       "relevance": 85,
@@ -174,11 +159,6 @@
       "agent-security",
       "tooling-2026"
     ],
-    "actionable": {
-      "type": "tool",
-      "title": "Adopt an LLM probe suite in CI",
-      "detail": "Wire Augustus (or garak/promptfoo) into CI to run prompt-injection/jailbreak probes on each model or system-prompt change; gate releases on the report."
-    },
     "scores": {
       "novelty": 68,
       "relevance": 88,
@@ -217,11 +197,6 @@
       "web",
       "google"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Assume hostile web content in agent design",
-      "detail": "For browsing/RAG agents, isolate retrieved content from the instruction channel and constrain downstream tool permissions."
-    },
     "scores": {
       "novelty": 64,
       "relevance": 82,
@@ -265,11 +240,6 @@
       "request-smuggling",
       "portswigger"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Work through the Top-10 list",
-      "detail": "Use the annual PortSwigger Top 10 as a study syllabus; reproduce each technique against a lab target to internalize it."
-    },
     "scores": {
       "novelty": 62,
       "relevance": 84,
@@ -309,11 +279,6 @@
       "android",
       "platform-security"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Favor memory-safe rewrites for remote parsers",
-      "detail": "Target memory-unsafe code on remotely-reachable attack surfaces first when planning Rust migrations."
-    },
     "scores": {
       "novelty": 66,
       "relevance": 74,
@@ -847,11 +812,6 @@
       "benchmark",
       "agents"
     ],
-    "actionable": {
-      "type": "tool",
-      "title": "Add harness-aware evals",
-      "detail": "When comparing agents, hold the task set fixed and vary the harness; measure end-to-end task success, not raw model scores."
-    },
     "scores": {
       "novelty": 72,
       "relevance": 80,
@@ -884,11 +844,6 @@
     "scores": {
       "novelty": 80,
       "relevance": 85
-    },
-    "actionable": {
-      "type": "harness",
-      "title": "Add compaction",
-      "detail": "Summarize big results."
     },
     "tags": [
       "agents",
@@ -939,11 +894,6 @@
       "agentic-threats",
       "unit42"
     ],
-    "actionable": {
-      "type": "harness",
-      "title": "Vet and sandbox agent skills",
-      "detail": "Pin and review third-party agent skills from trusted publishers, sandbox their execution with least-privilege, and don't rely on marketplace scanning — add your own allow-list + runtime policy."
-    },
     "scores": {
       "novelty": 82,
       "relevance": 88,
@@ -1001,11 +951,6 @@
       "access-control",
       "appsec"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Scope and rotate credentials given to hub-hosted AI-Apps",
-      "detail": "Our recommendation, not the paper's (it proposes no defenses): inventory every hub AI-App your team runs or forked, issue per-app least-privilege tokens rather than account-wide ones, rotate anything previously pasted into a Space, and check for world-readable logs in apps you publish."
-    },
     "scores": {
       "novelty": 58,
       "relevance": 88,
@@ -1066,11 +1011,6 @@
       "model-supply-chain",
       "llm-training"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Treat the FL aggregator as untrusted",
-      "detail": "If you participate in federated fine-tuning you do not operate, assume uploaded gradients are recoverable into training samples. Our recommendation, not the paper's: require secure aggregation or DP noise as a condition of participation, and test the returned global model for triggered behavior, since clean-task accuracy is explicitly preserved by this attack."
-    },
     "scores": {
       "novelty": 68,
       "relevance": 72,
@@ -1131,11 +1071,6 @@
       "defenses",
       "llm-deployment"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Treat quantization as part of the model supply chain",
-      "detail": "Where a third-party model passes through quantization on the way to production, recognise that auditing the full-precision artifact does not cover this attack class. The paper's position is that reactive detection is unreliable and a proactive pre-quantization defense is required - post-hoc behavioural evals would also need the attacker's trigger to surface anything, so do not treat them as the control. Whether post-quantization evaluation detects QCB at all would need the full paper's detection baselines."
-    },
     "scores": {
       "novelty": 60,
       "relevance": 78,
@@ -1199,11 +1134,6 @@
       "gui-agents",
       "prompt-injection"
     ],
-    "actionable": {
-      "type": "harness",
-      "title": "Add an action-time UI re-check to computer-use agent loops",
-      "detail": "In any screenshot-reason-act loop (Claude Computer-Use, Operator-style agents), capture a screenshot/DOM snapshot both when reasoning starts and immediately before dispatching the click. If the region around the target coordinates changed materially between the two snapshots, abort and re-perceive instead of clicking. Additionally, treat time-sensitive/consequential actions (Send, Confirm, Allow, payment) as requiring a fresh perception step, and be suspicious of injected instructions that pad reasoning time (e.g. 'compute 1+1 in bash') which widen the race window."
-    },
     "scores": {
       "novelty": 50,
       "relevance": 82,
@@ -1281,11 +1211,6 @@
       "edge-appliance",
       "n-day"
     ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Prioritize edge-appliance patches and read the diff, not the CVE title",
-      "detail": "When a vendor ships a one-line string-handling fix on an internet-facing appliance, assume memory-corruption impact until proven otherwise and patch on the critical track; missing null-termination adjacent to attacker-sprayable heap data is an RCE primitive, not a hardening nit."
-    },
     "scores": {
       "novelty": 70,
       "relevance": 82,

@@ -101,22 +101,6 @@ def score_line(scores: dict) -> str:
     )
 
 
-def render_actionable(entry: dict) -> list[str]:
-    act = entry.get("actionable")
-    if not isinstance(act, dict):
-        return []
-    kind = act.get("type", "takeaway")
-    line = f"**[{kind}]** {act.get('title', '')} - {act.get('detail', '')}".rstrip(" -")
-    out = ["## Actionable leverage", "", line]
-    if kind == "skill" and act.get("skill_slug"):
-        out.append("")
-        out.append(
-            f"→ Generated skill: [`skills/{act['skill_slug']}`](../../skills/{act['skill_slug']}/SKILL.md)"
-        )
-    out.append("")
-    return out
-
-
 def _entry_meta(entry: dict, scores: dict) -> list[str]:
     src = entry.get("source_url", "")
     topic_name = c.TOPICS.get(entry.get("topic", ""), {}).get("name", entry.get("topic", ""))
@@ -207,7 +191,6 @@ def render_entry_page(entry: dict, conf: c.Config) -> str:
         ]
     out += _entry_lessons_md(entry)
     out += _entry_tcm_md(entry)
-    out += render_actionable(entry)
     out += ["---", "", f"_Source: [{src}]({src})_  ·  [← back to index](../README.md)", ""]
     return "\n".join(out)
 
@@ -290,7 +273,7 @@ def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) ->
         "",
         f"[← Home](../README.md) · [Standing claims](../claims/{topic}.md) · "
         "[Newsletter](../NEWSLETTER.md) · [Trends](../TRENDS.md) · "
-        "[Review queue](../REVIEW.md) · [Learnings](../LEARNINGS.md)",
+        "[Review queue](../REVIEW.md)",
         "",
     ]
     return "\n".join(out)
@@ -393,7 +376,7 @@ def _databases_index(counts: dict[str, int]) -> list[str]:
         "",
         "Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · "
         "[Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) "
-        "(not-yet-vetted) · [Learnings](LEARNINGS.md) (takeaways and generated skills).",
+        "(not-yet-vetted).",
         "",
     ]
     return lines
@@ -406,8 +389,7 @@ def _how_it_works(conf: c.Config) -> list[str]:
         "```",
         "X / GitHub / YouTube / LinkedIn / articles / RSS   (ranked source registry)",
         "  └─ ingest + Jina Reader (clean text)      → data/candidates.json",
-        "     └─ analyze  (extract teachable lessons · score newness/novelty/relevance",
-        "                  · derive an actionable takeaway/skill/harness idea)",
+        "     └─ analyze  (extract teachable lessons · score newness/novelty/relevance)",
         "        └─ curate (vetted-only gate) → merge into the 3 topic pools → re-rank",
         "           ├─ reconcile against data/claims.json  (new claim? supersedes an old one?)",
         "           └─ render  README · topic pages · claims · newsletter · trends · review · skills",
@@ -475,7 +457,7 @@ def _how_to_use() -> list[str]:
         "Task ingests, runs Claude headless to analyze+verify, and opens a PR each day (never "
         "auto-merges). Remove with `-Uninstall`. |",
         "| Regenerate the site | `rerank.py` → `generate_site.py` → `generate_claims.py` → "
-        "`trends.py` → `generate_newsletter.py` → `generate_review.py` → `generate_skills.py` |",
+        "`trends.py` → `generate_newsletter.py` → `generate_review.py` |",
         "",
         "**Setup** (Agent Reach + burner X account in WSL2, one-time): see "
         "[PUBLISH.md](PUBLISH.md). **Contributing / how findings are structured:** "
@@ -491,7 +473,7 @@ def _how_to_use() -> list[str]:
         ".claude/skills/                                        /research-scan /add-resource /add-source",
         "ai-security/ product-security/ ai-research/            rendered per-topic pages (generated)",
         "claims/                                                rendered claim ledger (generated)",
-        "README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated - do not hand-edit",
+        "README.md NEWSLETTER.md TRENDS.md REVIEW.md              generated - do not hand-edit",
         "```",
         "",
     ]

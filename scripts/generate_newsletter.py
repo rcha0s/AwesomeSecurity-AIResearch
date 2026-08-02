@@ -35,9 +35,6 @@ def research_block(entry: dict, conf: c.Config) -> list[str]:
     ]
     if take:
         line.append(f"  {c.clean_summary(take, 220)}")
-    act = entry.get("actionable")
-    if isinstance(act, dict) and act.get("title"):
-        line.append(f"  → **Do:** ({act.get('type','')}) {act.get('title')}")
     return line
 
 
@@ -110,7 +107,7 @@ def build(conf: c.Config, now: str) -> str:
         "AI Security, Product Security, AI Research.",
         "",
         f"{total} vetted findings in window · [← home](README.md) · "
-        "[full trends](TRENDS.md) · [all learnings](LEARNINGS.md)",
+        "[full trends](TRENDS.md)",
         "",
         "---",
         "",

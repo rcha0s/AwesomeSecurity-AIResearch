@@ -118,7 +118,6 @@ LEGACY_DOMAIN_TO_TOPIC: dict[str, str] = {
     "Evaluation & Safety": "ai-research",
 }
 
-ACTIONABLE_TYPES = ("takeaway", "skill", "harness", "tool", "other")
 DISCOVERED_VIA = ("twitter", "linkedin", "rss", "github", "youtube", "manual")
 
 
@@ -142,7 +141,6 @@ def topic_for_domain(domain: str) -> str | None:
 class Config:
     weights: dict[str, float]
     half_life_days: float
-    skill_composite_threshold: float
     confidence_min: float
     limits: dict[str, int]
     curation: dict[str, float]
@@ -159,7 +157,6 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
     return Config(
         weights=weights,
         half_life_days=float(raw["half_life_days"]),
-        skill_composite_threshold=float(raw["skill_composite_threshold"]),
         confidence_min=float(raw["confidence_min"]),
         limits=raw.get("limits", {}),
         curation=raw.get("curation", {}),
@@ -547,12 +544,6 @@ def validate_entry(entry: dict) -> list[str]:
     topic = entry.get("topic")
     if topic and topic not in TOPICS:
         errors.append(f"unknown topic: {topic} (want one of {tuple(TOPICS)})")
-    actionable = entry.get("actionable")
-    if actionable is not None:
-        if not isinstance(actionable, dict):
-            errors.append("actionable must be an object")
-        elif actionable.get("type") not in ACTIONABLE_TYPES:
-            errors.append(f"actionable.type must be one of {ACTIONABLE_TYPES}")
     lessons = entry.get("lessons")
     if lessons is not None and not isinstance(lessons, list):
         errors.append("lessons must be a list")

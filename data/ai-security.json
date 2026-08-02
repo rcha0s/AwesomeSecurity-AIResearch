@@ -58,11 +58,6 @@
         "cloud-metadata",
         "sandbox-escape"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "SSRF-guard every host-side fetch in an agent/MCP runtime",
-        "detail": "For any outbound request whose URL derives from a tool/server response, enforce a private-IP dialer deny-list AND a CheckRedirect that re-applies it to each hop; treat `#nosec`/lint suppressions on such sinks as findings to review against the threat model, not settled decisions."
-      },
       "scores": {
         "novelty": 78,
         "relevance": 85,
@@ -123,11 +118,6 @@
         "scanner-evasion",
         "huggingface"
       ],
-      "actionable": {
-        "type": "tool",
-        "title": "Regression-test your model scanner with PickleBench",
-        "detail": "If PickleBench is released, run your model-scanning gate against injected variants of your own known-good models to measure real evasion rate before relying on it in CI. Independent of the paper: where the format allows, migrate ingestion to safetensors and make pickle loading an explicitly sandboxed, opt-in path."
-      },
       "scores": {
         "novelty": 68,
         "relevance": 84,
@@ -189,11 +179,6 @@
         "threat-modeling",
         "evals"
       ],
-      "actionable": {
-        "type": "tool",
-        "title": "Lifecycle-aware skill scanning",
-        "detail": "Extend a skill/marketplace scanner beyond runtime: check repository-admission provenance, semantic-retrieval poisoning (does a crafted description win retrieval?), planner-selection hijacking, and skill-evolution drift between approved and current versions."
-      },
       "scores": {
         "novelty": 72,
         "relevance": 80,
@@ -252,11 +237,6 @@
         "authorization-bypass",
         "least-privilege"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Audit agent/MCP tool gateways for fail-open on init",
-        "detail": "For any MCP server or tool broker whose access control depends on config/policy data loaded at startup (allow/deny lists, gate rules, permission maps), verify the load path fails closed: on load error, refuse requests or exit non-zero rather than serving with enforcement disabled. Add a startup assertion that the policy is present and a per-request guard that denies when the policy object is unset. Never treat the in-process policy as the sole boundary — always scope the underlying cloud credentials (least-privilege IAM) so a policy-layer failure can't grant unrestricted infrastructure access. Upgrade awslabs.aws-api-mcp-server to >= 1.3.47."
-      },
       "scores": {
         "novelty": 58,
         "relevance": 80,
@@ -328,12 +308,6 @@
         "guardrails",
         "autonomous-attack"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Pre-stage a local open-weight model as forensic fallback",
-        "detail": "Add to the IR runbook: identify, license-check and stage a self-hosted open-weight model capable of analyzing raw attacker payloads/logs, and test it on a red-team sample before an incident. Treat commercial-API refusal as an expected failure mode, not an edge case, and raise it with your enterprise account team.",
-        "skill_slug": "local-forensic-model-fallback"
-      },
       "scores": {
         "novelty": 45,
         "relevance": 90,
@@ -405,12 +379,6 @@
         "llm-security",
         "defenses"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Screen memory writes, not just prompts",
-        "detail": "Add a write-time classifier on any persisted user preference touching security-relevant behavior (crypto choices, auth handling, input validation, deserialization) and re-validate on read. Prefer this to appending security boilerplate to every prompt, which the paper measures as costing up to 15.9 pp functional correctness.",
-        "skill_slug": "screen-agent-memory-writes"
-      },
       "scores": {
         "novelty": 50,
         "relevance": 86,
@@ -474,11 +442,6 @@
         "agent-security",
         "supply-chain"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Gate MCP tool-metadata changes behind re-approval",
-        "detail": "Pin tool-description hashes for production agents and require an explicit re-approval (and imperative-language scan) whenever a server's tool description changes — do not let dynamic metadata updates silently re-trust."
-      },
       "scores": {
         "novelty": 50,
         "relevance": 84,
@@ -549,11 +512,6 @@
         "ai-security",
         "rce"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Guard package/tool installer sinks against argument-delimiter injection",
-        "detail": "Audit any agent-runtime helper that builds a subprocess command line from model- or user-supplied tokens (install_packages, pip/uv installs, git clone, shell tools). Never string-concatenate into a command; pass args as an argv list, insert a '--' end-of-options separator before untrusted tokens, and validate package names against the strict PyPI regex (^[A-Za-z0-9][A-Za-z0-9._-]*$, reject '-'/'--' prefixes and whitespace). For bedrock-agentcore, pin >=1.18.1."
-      },
       "scores": {
         "novelty": 47,
         "relevance": 76,
@@ -630,11 +588,6 @@
         "retrieval-poisoning",
         "evals"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add permutation-stability checks to agentic RAG",
-        "detail": "Before trusting a multi-hop answer, re-run the same query with retrieved passages shuffled and formatting canonicalized (strip emphasis, normalize position). An answer that flips under permutation is either salience-sensitive or being steered; both are reasons to escalate rather than answer. This needs no new model and is the one control that survives a truth-preserving attacker."
-      },
       "threat": "An adversary with write access to a retrieval corpus redirects multi-hop attribute binding using only truth-preserving edits, defeating factuality and instruction-filter defenses.",
       "conditions": "Attacker can edit a meaningful fraction of retrieved evidence (the paper reports results at a 30% edit budget; no lower-budget sweep is given).",
       "mitigations": "Input-side salience normalization; permutation-stability testing; provenance weighting of evidence rather than treating retrieved passages as interchangeable.",
@@ -703,11 +656,6 @@
         "data-poisoning",
         "provenance"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Extend model provenance to the execution layer",
-        "detail": "Inventory and pin the inference/training runtime the same way you pin model artifacts: version+hash the ONNX Runtime / graph-compiler / accelerator libraries in your serving image, put them in the SBOM, and treat an unexplained runtime upgrade as a supply-chain event. Detection signal to look for: a runtime module that reads tensor state it has no functional reason to read."
-      },
       "threat": "A malicious or compromised third-party ML runtime module observes live training/inference and manipulates it, evading data- and model-artifact-level auditing entirely.",
       "conditions": "Attacker can ship a modified runtime/acceleration library into the victim's ML pipeline; for the backdoor-amplification result, also a low-rate data poisoning foothold.",
       "mitigations": "Pin and attest runtime dependencies; SBOM coverage for inference engines; run training in an environment whose libraries are provenance-verified rather than pulled at build time.",
@@ -770,12 +718,6 @@
         "cli-security",
         "output-encoding"
       ],
-      "actionable": {
-        "type": "skill",
-        "title": "Encode control characters in LLM CLI output by default",
-        "detail": "Wrap terminal writes in a caret-notation encoder so ESC/BEL and other control bytes cannot reach the emulator; expose raw output only behind an explicit flag. Reference implementations are linked from the post (Python dillma.py, Go terminalfriendly).",
-        "skill_slug": "encode-llm-cli-output"
-      },
       "scores": {
         "novelty": 40,
         "relevance": 78,
@@ -836,11 +778,6 @@
         "memory-poisoning",
         "threat-modeling"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Put MAC + backup on agent instruction/config/memory files",
-        "detail": "For self-hosted agents, separate the agent's write path from its instruction and configuration files (read-only mounts or MAC policy), apply anomaly detection conditioned on the agent's workload profile to the memory layer, and schedule periodic state backups so the structurally-undetectable cells remain recoverable."
-      },
       "scores": {
         "novelty": 45,
         "relevance": 80,
@@ -912,11 +849,6 @@
         "path-traversal",
         "appsec"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Hunt caller-selectable storage backends in AI infra",
-        "detail": "Grep your LLM gateway/router config surface for request fields that name a storage type, bucket endpoint, or file path. Fix by resolving the backend server-side from a fixed allowlist and never from request data. Operationally: pin TensorZero >= 2026.6.0, block /internal/* at the ingress, confirm gateway auth is enabled, and default-deny gateway egress to 169.254.169.254 and RFC1918."
-      },
       "threat": "An untrusted caller reads gateway-local credential files or pivots to internal/cloud-metadata services through the gateway.",
       "conditions": "Gateway reachable by untrusted callers; the advisory states exploitation is limited to authenticated callers where authentication is enabled.",
       "mitigations": "Upgrade to 2026.6.0; block external access to /internal/object_storage; enable gateway authentication; restrict egress.",
