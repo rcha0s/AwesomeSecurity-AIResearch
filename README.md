@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research.** Every week it scans a ranked set of sources (X, GitHub, YouTube, blogs, newsletters, RSS), keeps only the findings that teach something you can act on, and files each one under **AI Security**, **Product Security**, or **AI Research** with a one-line lesson and a concrete next step.
 
-![Updated](https://img.shields.io/badge/updated-2026--07--31-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-15-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--08--01-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-15-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read this week's briefing &#8594;</a></h3>
 
@@ -21,8 +21,6 @@ The live site opens on this week's briefing (the lead finding, what's trending, 
 
 > The top curated findings published in the last 7 days. Each entry is the gist (what's new, why it matters, what to do), and links to both its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
 
-- **[Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](product-security/developer-tooling-template-injection/2026-07-oh-my-posh-a-directory-name-runs-commands-because-the-prompt.md)** · Product Security · Jul 24, 2026 · composite **57.0** · [source ↗](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq)  
-  Anything that renders your prompt, status bar or editor title is executing attacker-controlled repository metadata - treat it as a parser, not decoration.
 - **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](product-security/browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · Product Security · Jul 25, 2026 · composite **55.2** · [source ↗](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)  
   Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.
 
@@ -43,15 +41,14 @@ The live site opens on this week's briefing (the lead finding, what's trending, 
 - **[Product Security](product-security/README.md)** (7 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 - **[AI Research](ai-research/README.md)** (5 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted) · [Learnings](LEARNINGS.md) (takeaways and generated skills).
+Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted).
 
 ## How it works
 
 ```
 X / GitHub / YouTube / LinkedIn / articles / RSS   (ranked source registry)
   └─ ingest + Jina Reader (clean text)      → data/candidates.json
-     └─ analyze  (extract teachable lessons · score newness/novelty/relevance
-                  · derive an actionable takeaway/skill/harness idea)
+     └─ analyze  (extract teachable lessons · score newness/novelty/relevance)
         └─ curate (vetted-only gate) → merge into the 3 topic pools → re-rank
            ├─ reconcile against data/claims.json  (new claim? supersedes an old one?)
            └─ render  README · topic pages · claims · newsletter · trends · review · skills
@@ -83,7 +80,7 @@ Being upfront, because a research tracker lives or dies on trust:
 | Capture one article now | `python scripts/add.py <url>` then the `/add-resource` skill - returns summary + takeaway + action and files it |
 | Run a full scan | the `/research-scan` skill (self-pace with `/loop 12h /research-scan`) |
 | Run it daily on autopilot | `powershell -File scripts/install_daily_scan.ps1` - a Scheduled Task ingests, runs Claude headless to analyze+verify, and opens a PR each day (never auto-merges). Remove with `-Uninstall`. |
-| Regenerate the site | `rerank.py` → `generate_site.py` → `generate_claims.py` → `trends.py` → `generate_newsletter.py` → `generate_review.py` → `generate_skills.py` |
+| Regenerate the site | `rerank.py` → `generate_site.py` → `generate_claims.py` → `trends.py` → `generate_newsletter.py` → `generate_review.py` |
 
 **Setup** (Agent Reach + burner X account in WSL2, one-time): see [PUBLISH.md](PUBLISH.md). **Contributing / how findings are structured:** [CONTRIBUTING.md](CONTRIBUTING.md). **Automation & dev workflow:** [AGENTS.md](AGENTS.md).
 
@@ -97,11 +94,11 @@ scripts/                                               ingest · analyze-merge �
 .claude/skills/                                        /research-scan /add-resource /add-source
 ai-security/ product-security/ ai-research/            rendered per-topic pages (generated)
 claims/                                                rendered claim ledger (generated)
-README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md   generated - do not hand-edit
+README.md NEWSLETTER.md TRENDS.md REVIEW.md              generated - do not hand-edit
 ```
 
 ## License
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors - every finding cites its original source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-07-31. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-01. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>

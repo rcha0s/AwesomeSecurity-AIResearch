@@ -18,10 +18,6 @@ Omnigent is an open-source meta-harness: a common orchestration layer over Claud
 - A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in - _"swap or combine harnesses without rewriting"_ ✅
 - Central policy + sandboxing at the meta-harness is a natural place to enforce agent security - _"enforce policies and sandboxing"_ ✅
 
-## Actionable leverage
-
-**[harness]** Consider a meta-harness for multi-agent work - Evaluate an orchestration layer (like Omnigent) when running multiple coding agents, so policy/sandboxing/routing live in one place instead of per-agent.
-
 ---
 
 _Source: [https://github.com/omnigent-ai/omnigent](https://github.com/omnigent-ai/omnigent)_  ·  [← back to index](../README.md)

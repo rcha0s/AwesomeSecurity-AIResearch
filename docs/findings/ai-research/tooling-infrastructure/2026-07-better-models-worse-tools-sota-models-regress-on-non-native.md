@@ -18,10 +18,6 @@ Armin (building the Pi harness) found newer Claude models (Opus 4.8, Sonnet 5) i
 - A SOTA model can be WORSE at a custom tool schema than its older siblings if it was RL-trained on a different harness's tools - _"the SOTA models of the family are worse at this specific tool schema than their older siblings"_ ✅
 - Align tool formats to the model - Claude is trained on str-replace edits, OpenAI on apply_patch - _"trained (presumably via Reinforcement Learning) to better use the edit tools that are baked into Claude Code"_ ✅
 
-## Actionable leverage
-
-**[harness]** Offer model-matched edit tools - In a multi-model harness, provide the edit-tool format each model was trained on (Claude str-replace, OpenAI apply_patch) instead of one custom schema, and validate/repair malformed tool calls.
-
 ---
 
 _Source: [https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything](https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything)_  ·  [← back to index](../README.md)

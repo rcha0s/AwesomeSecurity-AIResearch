@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_7 vetted findings · updated 2026-07-31 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-08-01 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -65,4 +65,4 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 ---
 
-[← Home](../README.md) · [Standing claims](../claims/product-security.md) · [Newsletter](../NEWSLETTER.md) · [Trends](../TRENDS.md) · [Review queue](../REVIEW.md) · [Learnings](../LEARNINGS.md)
+[← Home](../README.md) · [Standing claims](../claims/product-security.md) · [Newsletter](../NEWSLETTER.md) · [Trends](../TRENDS.md) · [Review queue](../REVIEW.md)

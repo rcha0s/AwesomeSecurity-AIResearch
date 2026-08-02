@@ -4,8 +4,8 @@ name: Render research site
 # NOT do LLM analysis or Twitter ingestion (those run locally via the
 # /research-scan + /add-resource skills — datacenter IPs risk the X account).
 # It re-ranks the committed pools (time-decayed newness re-sorts them as findings
-# age) and regenerates README.md, the security/ and ai/ trees, skills, and
-# LEARNINGS.md, committing any drift.
+# age) and regenerates README.md, the security/ and ai/ trees, and the ledger,
+# committing any drift as a PR against protected main.
 
 on:
   schedule:
@@ -49,7 +49,7 @@ jobs:
       - name: Validate the claim ledger
         run: python scripts/add_claim.py validate
 
-      - name: Regenerate site + claims + trends + newsletter + review + skills + card
+      - name: Regenerate site + claims + trends + newsletter + review + card
         run: |
           python scripts/generate_site.py
           python scripts/generate_claims.py
@@ -58,7 +58,6 @@ jobs:
           python scripts/trends.py
           python scripts/generate_newsletter.py
           python scripts/generate_review.py
-          python scripts/generate_skills.py
 
       # main is branch-protected (PRs required), so the bot cannot push
       # directly. Stage the render drift onto a dedicated branch and open /
@@ -71,12 +70,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # generate_skills.py only writes skills/ when at least one finding
-          # clears the composite threshold; otherwise the directory is absent
-          # and `git add skills` would abort the whole step.
-          paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md LEARNINGS.md \
+          paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md \
             ai-security product-security ai-research claims docs)
-          [ -d skills ] && paths+=(skills)
 
           if [[ -z "$(git status --porcelain)" ]]; then
             echo "No render drift; nothing to PR."

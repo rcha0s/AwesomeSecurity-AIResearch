@@ -26,10 +26,6 @@ ToolHive isolates every MCP server in a container, but its remote-auth discovery
 - **Conditions:** User adds/runs a malicious or compromised remote MCP server via the normal `thv run --remote-auth` workflow; no user targeting of an internal address needed.
 - **Mitigations:** Wrap discovery clients with the existing IsPrivateIP dialer guard, set CheckRedirect to reject cross-host/scheme-downgrade redirects, and re-validate every redirect hop - not just the first URL.
 
-## Actionable leverage
-
-**[harness]** SSRF-guard every host-side fetch in an agent/MCP runtime - For any outbound request whose URL derives from a tool/server response, enforce a private-IP dialer deny-list AND a CheckRedirect that re-applies it to each hop; treat `#nosec`/lint suppressions on such sinks as findings to review against the threat model, not settled decisions.
-
 ---
 
 _Source: [https://github.com/advisories/GHSA-pr64-jmmf-jp54](https://github.com/advisories/GHSA-pr64-jmmf-jp54)_  ·  [← back to index](../README.md)

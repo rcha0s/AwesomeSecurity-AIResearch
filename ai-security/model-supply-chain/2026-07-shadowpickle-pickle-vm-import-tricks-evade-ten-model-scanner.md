@@ -26,10 +26,6 @@ ShadowPickle presents three stealthy pickle-deserialization attacks that abuse t
 - **Conditions:** Any pipeline that loads pickle-format pre-trained models from a hub and treats a scanner verdict as sufficient assurance.
 - **Mitigations:** The abstract says the authors give security recommendations but does not enumerate them. Independent of the paper, standard practice applies: prefer non-executable formats such as safetensors and deserialize untrusted models only in a sandbox.
 
-## Actionable leverage
-
-**[tool]** Regression-test your model scanner with PickleBench - If PickleBench is released, run your model-scanning gate against injected variants of your own known-good models to measure real evasion rate before relying on it in CI. Independent of the paper: where the format allows, migrate ingestion to safetensors and make pickle loading an explicitly sandboxed, opt-in path.
-
 ---
 
 _Source: [https://arxiv.org/abs/2607.17503](https://arxiv.org/abs/2607.17503)_  ·  [← back to index](../README.md)

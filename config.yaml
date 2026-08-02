@@ -26,10 +26,6 @@ snapshot_days: 7
 # so ranking still differentiates within the ~1-month window.
 half_life_days: 18
 
-# Entries whose skill-shaped actionable scores at least this composite get a
-# generated skills/<slug>/SKILL.md stub.
-skill_composite_threshold: 70
-
 # Lessons/entries below this confidence (0-1) are flagged needs_review instead
 # of being published to the public pool.
 confidence_min: 0.55

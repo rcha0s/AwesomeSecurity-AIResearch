@@ -28,10 +28,6 @@ Git faithfully recreates symlinks stored in a repo (file mode 120000, blob is ju
 - **Conditions:** Developer clones an untrusted repo and asks the assistant to 'set up the workspace' or follow README instructions; The assistant follows filesystem symlinks without resolving/validating the canonical path against the workspace boundary; Filesystem supports symlinks and core.symlinks is enabled (default on Unix)
 - **Mitigations:** Canonicalize paths and enforce workspace-containment before every file open (openat2 RESOLVE_BENEATH / RESOLVE_NO_SYMLINKS on Linux); Show the resolved absolute target (not the repo-relative alias) in approval dialogs; Scan freshly cloned untrusted repos for symlinks: `find . -type l`, `git ls-files -s | grep ^120000`; Disable or gate symlink following for agent file tools; treat out-of-tree targets as high-risk requiring explicit confirmation; Reference precedent: CVE-2024-32002 (git submodule symlink RCE), CVE-2021-32803 (tar symlink extraction)
 
-## Actionable leverage
-
-**[harness]** Enforce workspace containment on every agent file operation - In the agent harness, before any Read/Write/Edit, resolve the path to its canonical location (realpath / openat2 with RESOLVE_BENEATH or RESOLVE_NO_SYMLINKS on Linux) and reject anything outside the workspace root. Surface the RESOLVED absolute target in approval prompts, not the in-repo filename, so a write to ~/.ssh/authorized_keys looks alarming. After cloning untrusted repos, scan with `find . -type l` or `git ls-files -s | grep ^120000` and quarantine symlinks pointing outside the tree.
-
 ---
 
 _Source: [https://snyk.io/blog/symlinks-are-still-scary/](https://snyk.io/blog/symlinks-are-still-scary/)_  ·  [← back to index](../README.md)

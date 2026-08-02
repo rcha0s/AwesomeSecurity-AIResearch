@@ -48,11 +48,6 @@ def make_entry(**over) -> dict:
             {"point": "Summarize before re-injecting", "excerpt": "40% less", "confidence": 0.9}
         ],
         "scores": {"novelty": 80, "relevance": 85},
-        "actionable": {
-            "type": "harness",
-            "title": "Add compaction",
-            "detail": "Summarize big results.",
-        },
         "tags": ["agents", "context"],
     }
     entry.update(over)

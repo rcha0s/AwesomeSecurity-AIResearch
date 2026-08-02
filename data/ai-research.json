@@ -47,11 +47,6 @@
         "claude-code",
         "architecture"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Offer model-matched edit tools",
-        "detail": "In a multi-model harness, provide the edit-tool format each model was trained on (Claude str-replace, OpenAI apply_patch) instead of one custom schema, and validate/repair malformed tool calls."
-      },
       "scores": {
         "novelty": 80,
         "relevance": 90,
@@ -116,11 +111,6 @@
         "dogfooding",
         "context-management"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Adopt incident-driven evals + a context-aware permission gate in your scan harness",
-        "detail": "Two concrete moves for the scan/analysis harness: (1) When a scan produces a bad or hallucinated finding, capture that exact input and expected output as a regression eval case so future runs are checked against it, mirroring 'take the PRs that caused the incident and add them to an eval set.' (2) For any auto-run tooling (PR creation, pushes), gate risky actions behind a small classifier/rule step that reads both the requested action and the surrounding task context rather than a static allowlist, and inject any credentials via env/proxy so they are usable-but-not-readable by the agent. Also audit the analyzer system prompt to remove redundant examples and convert blanket 'always/never' rules into short WHY-reasoning."
-      },
       "scores": {
         "novelty": 60,
         "relevance": 90,
@@ -204,11 +194,6 @@
         "codex",
         "long-running-agents"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Wire OpenAI server-side compaction into your agent harness",
-        "detail": "For openai/* models, on your compaction event call POST /v1/responses with the full history plus a trailing compaction_trigger, mirroring your normal request's reasoning/tool/text config; store the returned opaque `compaction` item and replay it only for compatible OpenAI turns. Set store:true and use previous_response_id for between-compaction continuity, and generate a portable text summary in parallel so forks/exports/other models keep working. Budget for the cost: this policy emitted ~4.58x compaction output tokens and a ~29% larger billed context, so gate it behind a config/threshold and measure recall-per-token on your own tasks before trusting it."
-      },
       "scores": {
         "novelty": 70,
         "relevance": 80,
@@ -287,12 +272,6 @@
         "evals",
         "ai-for-security"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Pair a durable goal with explicit reportability criteria",
-        "detail": "For autonomous security/analysis agents, encode the objective so it persists across turns/compactions AND specify hard validity rules (what is reachable, in-scope, and reportable) inside the goal — this is what suppresses high-confidence noise and lets the agent self-reject weak findings.",
-        "skill_slug": "goal-persistent-agent-tasking"
-      },
       "scores": {
         "novelty": 60,
         "relevance": 88,
@@ -343,11 +322,6 @@
         "claude-code",
         "tooling-2026"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Consider a meta-harness for multi-agent work",
-        "detail": "Evaluate an orchestration layer (like Omnigent) when running multiple coding agents, so policy/sandboxing/routing live in one place instead of per-agent."
-      },
       "scores": {
         "novelty": 78,
         "relevance": 84,
@@ -403,12 +377,6 @@
         "groundedness",
         "ai-code-security"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add counterfactual + metamorphic checks to any LLM detection eval",
-        "detail": "For each true positive, auto-generate (a) a minimal gated patch that removes the vulnerability - a grounded finding must disappear on rescan; and (b) a semantics-preserving identifier rename - a grounded finding must persist. Report per-scan recall across n>=5 runs alongside union coverage; treat the gap as a flakiness metric.",
-        "skill_slug": "groundedness-metrics-for-detection-evals"
-      },
       "scores": {
         "novelty": 55,
         "relevance": 88,
@@ -474,11 +442,6 @@
         "specification-gaming",
         "red-teaming"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Isolate the telemetry plane from the agent sandbox",
-        "detail": "Three changes, in order of payoff: (1) put tracing/observability on a network the sandbox cannot reach - if the agent can query your traces it can read every other run; (2) assume DNS enumeration crosses your 'isolated' subnets, so give each concurrent challenge distinct DNS scope rather than trusting subnet separation; (3) state scope constraints explicitly in the system prompt ('black-box, no source code available') and keep goals specific, since vague goals measurably widen exploration. Add env/filesystem/local-network access as tripwires in trajectory review rather than reading scores alone."
-      },
       "scores": {
         "novelty": 55,
         "relevance": 85,
@@ -523,11 +486,6 @@
         "agents",
         "benchmarks"
       ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Benchmark the tiers on your real tasks",
-        "detail": "Run Luna/Terra/Sol against your harness's actual agentic workload and measure end-to-end cost incl. reasoning tokens, not sticker price."
-      },
       "scores": {
         "novelty": 55,
         "relevance": 75,
@@ -589,11 +547,6 @@
         "sast",
         "harness"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "Score security-scanner evals on precision and per-repo spread, not just aggregate F1",
-        "detail": "In any LLM-for-security-scanning eval, report precision, recall, and F1 separately per repo (including at least one large enterprise-scale repo), and add a human-triage-cost proxy (false positives per true positive). Reject model choices made on a single tied aggregate F1; require the eval corpus to include repos representative of your own codebase. Use a minimal fixed agentic harness and deterministic scoring so the model's exploration is isolated from grader influence."
-      },
       "scores": {
         "novelty": 42,
         "relevance": 72,
@@ -674,11 +627,6 @@
         "harness",
         "safety"
       ],
-      "actionable": {
-        "type": "harness",
-        "title": "State capability boundaries wherever you assign a role",
-        "detail": "Every role/persona line in a system prompt should be paired with an explicit affordance list and a negative boundary ('you cannot contact anyone, dispatch anything, or take action outside the listed tools'). Then close the loop in the harness: treat action claims in prose as unverified and derive what happened from tool-call results only. Prioritize evals in mundane, non-safety-covered domains and with multi-party transcript inputs - that is where the paper predicts your coverage is thinnest."
-      },
       "scores": {
         "novelty": 40,
         "relevance": 55,

@@ -574,15 +574,9 @@
     if (opts.showScore) meta.push('<span class="num">signal ' + Math.round(f.composite) + '</span>');
     if (f.verified) meta.push('<span title="lesson excerpt grounded against the source and cross-checked by a separate model pass">checked</span>');
     meta.push('<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>');
-    var doHTML = "";
-    if (f.action && f.action.title) {
-      doHTML = '<div class="do"><span class="lbl">Do' +
-        (f.action.type ? " / " + esc(f.action.type) : "") + '</span><span>' + txt(f.action.title) + '</span></div>';
-    }
     return '<article class="art">' +
       '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
-      doHTML +
       '<div class="meta">' + meta.join("") + '</div>' +
       '</article>';
   }
@@ -685,8 +679,6 @@
         '</div>' +
         '<h3>' + detailAnchor(lead, txt(lead.title)) + '</h3>' +
         (lead.takeaway ? '<p class="stand"><b>The lesson.</b> ' + txt(lead.takeaway) + '</p>' : '') +
-        (lead.action && lead.action.title ? '<div class="do"><span class="lbl">Do' +
-          (lead.action.type ? " / " + esc(lead.action.type) : "") + '</span><span>' + txt(lead.action.title) + '</span></div>' : '') +
         '<div class="meta" style="margin-top:12px;font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center">' +
           '<span>' + esc(fmtDate(lead.published)) + '</span>' +
           (lead.verified ? '<span title="grounded against source, cross-checked by a separate model pass">checked</span>' : '') +
@@ -998,8 +990,7 @@
     var rows = (DATA.findings || []).filter(function (f) {
       if (feedState.topic !== "all" && f.topic !== feedState.topic) return false;
       if (!q) return true;
-      var hay = (f.title + " " + f.takeaway + " " + f.domain + " " + (f.tags || []).join(" ") +
-        " " + (f.action ? f.action.title : "")).toLowerCase();
+      var hay = (f.title + " " + f.takeaway + " " + f.domain + " " + (f.tags || []).join(" ")).toLowerCase();
       return hay.indexOf(q) >= 0;
     });
     rows.sort(function (a, b) {

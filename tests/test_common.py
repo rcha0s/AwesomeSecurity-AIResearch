@@ -115,8 +115,9 @@ def test_validate_entry_ok_and_errors():
     # domain is free-text now — any string is valid
     assert c.validate_entry(make_entry(domain="Any Free Domain")) == []
     assert any("unknown topic" in e for e in c.validate_entry(make_entry(topic="nope")))
-    bad = make_entry(actionable={"type": "nope"})
-    assert any("actionable.type" in e for e in c.validate_entry(bad))
+    # lessons, if provided, must be a list
+    bad = make_entry(lessons="not-a-list")
+    assert any("lessons must be a list" in e for e in c.validate_entry(bad))
 
 
 def test_parse_month():

@@ -28,10 +28,6 @@ An annotated transcript of Simon Willison's interview with Cat Wu and Thariq fro
 - **Conditions:** Agent runs with auto-approval / auto mode; Agent is reachable by untrusted parties (public channels, custom bots); Credentials stored in agent-accessible context rather than injected at request time
 - **Mitigations:** Sonnet auto-mode classifier that reads tool call + conversation context for dynamic permissioning; Credential injection via proxy so secrets are usable-but-not-readable by the agent; Red-team-generated adversarial environments converted into regression evals; Avoid hand-rolling custom bots with many attack vectors; rely on hardened auto mode
 
-## Actionable leverage
-
-**[harness]** Adopt incident-driven evals + a context-aware permission gate in your scan harness - Two concrete moves for the scan/analysis harness: (1) When a scan produces a bad or hallucinated finding, capture that exact input and expected output as a regression eval case so future runs are checked against it, mirroring 'take the PRs that caused the incident and add them to an eval set.' (2) For any auto-run tooling (PR creation, pushes), gate risky actions behind a small classifier/rule step that reads both the requested action and the surrounding task context rather than a static allowlist, and inject any credentials via env/proxy so they are usable-but-not-readable by the agent. Also audit the analyzer system prompt to remove redundant examples and convert blanket 'always/never' rules into short WHY-reasoning.
-
 ---
 
 _Source: [https://simonwillison.net/2026/Jul/21/cat-and-thariq/](https://simonwillison.net/2026/Jul/21/cat-and-thariq/)_  ·  [← back to index](../README.md)

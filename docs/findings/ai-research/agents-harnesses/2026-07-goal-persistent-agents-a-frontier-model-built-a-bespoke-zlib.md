@@ -20,10 +20,6 @@ Pointed at a specific bug class in well-audited zlib via a persistent `/goal` - 
 - Reportability discipline is what turns agent output into signal: without strict validity rules baked into the goal, the agent produces confident noise. - _"the agent will generate mountains of noise with high confidence"_ ✅
 - The model triaged its own findings - it logged a real-but-unreachable crash as noise and moved on rather than escalating it. - _"the model logged it as unreachable and moved on"_ ✅
 
-## Actionable leverage
-
-**[harness]** Pair a durable goal with explicit reportability criteria - For autonomous security/analysis agents, encode the objective so it persists across turns/compactions AND specify hard validity rules (what is reachable, in-scope, and reportable) inside the goal - this is what suppresses high-confidence noise and lets the agent self-reject weak findings.
-
 ---
 
 _Source: [https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)_  ·  [← back to index](../README.md)
