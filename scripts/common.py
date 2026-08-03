@@ -513,6 +513,132 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
     return True
 
 
+# --- Track-B (news lane) gate ----------------------------------------------
+# The research gate above (is_curated) tests novelty + grounding — the wrong
+# rubric for a "Kimi K3 open weights" release note or an incident disclosure.
+# The news gate below tests trust + scope + freshness instead. It intentionally
+# never runs the grounding/verification step; news items describe events, not
+# claims we're ranking against a body of evidence.
+NEWS_MAX_AGE_DAYS = 14
+NEWS_HN_STANDALONE_MIN_POINTS = 100
+
+# Deny terms split into two lists: "hard" fires unconditionally, "puff" fires
+# only when NO technical term co-occurs (so "Anthropic hires former NSA
+# cryptographer to lead red team" survives even though `hires former` is puff).
+# All terms are matched as substrings on a lowercased title+summary+takeaway
+# haystack; keep them long enough to avoid false positives (`stockpile` won't
+# match `stock jumps`).
+NEWS_DENY_HARD = (
+    # Stock / market
+    "stock jumps", "stock drops", "stock price", "stock soars", "stock rally",
+    "stock plummets", "share price", "market cap", "price target",
+    "quarterly earnings", "beats earnings", "misses earnings", " ipo ",
+    "ipo filing", "valuation of $", "$nvda", "$meta", "$msft", "$googl", "$amzn",
+    "ticker symbol", "analyst rating", "upgraded to buy", "downgraded to sell",
+    "wall street", "shareholders", "hedge fund", "trading day",
+    # Consumer / social feed noise
+    "chatgpt tips", "prompts to try", "best ai apps", "chatgpt for beginners",
+    "chatgpt hacks", "genius chatgpt", "ai girlfriend", "ai boyfriend",
+    "ai for coffee", "ways to use chatgpt", "ai productivity hacks",
+    # Pure hype
+    "agi is here", "will ai replace", "ai is coming for", "ai apocalypse",
+    "ai-driven revolution",
+)
+NEWS_DENY_PUFF = (
+    "signs deal", "signs partnership", "signs cloud partnership",
+    "signs strategic", "partnership announced", "strategic partnership",
+    "joins the board", "appointed ceo", "hires former",
+    "raised $", "closes series", "funding round", "seed round",
+)
+# Terms that RESCUE a puff hit — the co-occurrence carve-out.
+NEWS_TECHNICAL_TERMS = (
+    "security research", "sandbox", "sandbox escape", "red team", "red-team",
+    "red-team methodology", "evaluation", "alignment", "guardrail",
+    "prompt injection", "memory poisoning", "supply chain", "provenance",
+    "attestation", "eval", "benchmark", "vulnerability", "exploit",
+    "cve", "advisory", "harness", "agent framework", "mcp",
+    "model context protocol", "open weights", "capability", "spec",
+    "release notes", "regulation", "disclosure",
+)
+
+
+def _has_any(text: str, needles: tuple[str, ...]) -> bool:
+    return any(n in text for n in needles)
+
+
+def news_denylist_hit(entry: dict) -> bool:
+    """True if the entry looks like stock/consumer/puff/hype content.
+
+    A hard hit fires no matter what. A puff hit fires only when no technical
+    term co-occurs — that's the "Anthropic + red team + hires former"
+    rescue case."""
+    hay = " ".join([
+        (entry.get("title") or ""),
+        (entry.get("summary") or ""),
+        (entry.get("takeaway") or ""),
+    ]).lower()
+    if _has_any(hay, NEWS_DENY_HARD):
+        return True
+    if _has_any(hay, NEWS_DENY_PUFF) and not _has_any(hay, NEWS_TECHNICAL_TERMS):
+        return True
+    return False
+
+
+def topic_scope_ok(entry: dict) -> bool:
+    """True if the entry's topic classifies to one of the three tracks. The
+    ingest-side classifier already assigns `topic`; if it landed there, it's
+    in scope. Untopiced entries are out."""
+    return entry.get("topic") in TOPICS
+
+
+def _source_track_and_tier(entry: dict, sources_by_id: dict[str, dict]) -> tuple[str, str]:
+    """(track, tier) for the entry's originating source, or ('research','low')
+    if the source isn't in the registry (defensive default — treats orphaned
+    entries as research-track low-tier, which fails the news floor)."""
+    sid = entry.get("source_id") or ""
+    src = sources_by_id.get(sid) or {}
+    return src.get("track", "research"), src.get("tier", "low")
+
+
+def is_news_curated(entry: dict, conf: Config,
+                    sources_by_id: dict[str, dict] | None = None,
+                    now: datetime | None = None) -> bool:
+    """True if the entry belongs in the news lane (Trending & in the news).
+
+    Distinct from is_curated: novelty and grounding aren't tested here; instead
+    we check freshness, source track/tier, topic scope, and the deny list. A
+    news source can pass this gate on the same day it publishes, without ever
+    clearing the research floor."""
+    if not topic_scope_ok(entry):
+        return False
+    if not is_fresh(entry, NEWS_MAX_AGE_DAYS, now=now):
+        return False
+    if news_denylist_hit(entry):
+        return False
+    sources_by_id = sources_by_id or {}
+    track, tier = _source_track_and_tier(entry, sources_by_id)
+    if track not in ("news", "both"):
+        return False
+    if tier not in ("high", "medium"):
+        return False
+    # HN-standalone rule: an HN-only story needs a higher points floor to
+    # stand alone as news (the keyword ingest already applies ≥40 for velocity;
+    # 100 is the standalone bar).
+    if entry.get("discovered_via") == "hackernews" and not entry.get("corroborating_sources"):
+        points = int((entry.get("signals") or {}).get("hn_points") or 0)
+        if points < NEWS_HN_STANDALONE_MIN_POINTS:
+            return False
+    return True
+
+
+def load_sources_by_id() -> dict[str, dict]:
+    """Cache-friendly lookup for the news gate. Reloads on every call — the
+    registry is small (≤ hundreds of entries) and only the render pipeline
+    calls this once per run."""
+    from sources_registry import load_sources
+    return {s["id"]: s for s in load_sources() if "id" in s}
+
+
 def review_reason(entry: dict, conf: Config) -> str:
     """Why an entry is in the review queue (for REVIEW.md)."""
     if entry.get("verified") is False:

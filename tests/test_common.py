@@ -145,3 +145,133 @@ def test_add_candidates_skips_pooled(sandbox):
     assert (
         c.add_candidates([{"id": "n", "title": "New", "source_url": "https://a.com/known"}]) == []
     )
+
+
+# --- News-lane gate --------------------------------------------------------
+def _news_entry(**over):
+    """Fresh news-shaped entry for gate testing. Track A (research) items
+    have novelty/relevance scores; news items don't, so we deliberately keep
+    them off unless a test wants to prove the gate ignores them."""
+    from datetime import UTC, datetime, timedelta
+
+    base = {
+        "topic": "ai-security",
+        "domain": "MCP & Tools",
+        "title": "MCP 2026-07-28 spec drops stateful core for stateless HTTP",
+        "summary": "The new spec targets serverless deployments.",
+        "takeaway": "MCP is now HTTP-first — check your existing servers.",
+        "source_url": "https://modelcontextprotocol.io/spec",
+        "source_id": "rss:mcp-spec",
+        "published": (datetime.now(UTC) - timedelta(days=3)).strftime("%Y-%m-%d"),
+    }
+    base.update(over)
+    return base
+
+
+def test_news_denylist_hard_hits():
+    """Stock, consumer noise, and hype fire the deny list unconditionally."""
+    for title in [
+        "Nvidia stock jumps 4% on AI hype",
+        "OpenAI $10B valuation of $X — Wall Street analysts weigh in",
+        "ChatGPT tips: 5 prompts to try for productivity",
+        "AGI is here — why LLMs are coming for your job",
+    ]:
+        # Neutralize the fixture summary/takeaway so the assertion is on the
+        # title alone; hard hits fire regardless, but keep the intent obvious.
+        entry = _news_entry(title=title, summary="", takeaway="")
+        assert c.news_denylist_hit(entry), title
+
+
+def test_news_denylist_puff_with_technical_rescue():
+    """Business-media puff terms only fire when no technical term co-occurs."""
+    # Puff, no technical term anywhere → drop.
+    puff_only = _news_entry(
+        title="Microsoft signs cloud partnership with Palantir",
+        summary="A commercial cloud agreement across sectors.",
+        takeaway="",
+    )
+    assert c.news_denylist_hit(puff_only)
+    # Puff + technical rescue → pass.
+    rescued = _news_entry(
+        title="Anthropic signs deal with former NSA cryptographer to lead red team",
+        summary="", takeaway="",
+    )
+    assert not c.news_denylist_hit(rescued)
+
+
+def test_news_denylist_lets_real_news_through():
+    """None of the sample newsletter stories fire the deny list."""
+    for title in [
+        "Kimi K3 ships full weights",
+        "MCP 2026-07-28 spec drops stateful core for stateless HTTP",
+        "Gemini Robotics launches with whole-body humanoid control models",
+        "Anthropic caught its own models breaching containment",
+    ]:
+        assert not c.news_denylist_hit(_news_entry(title=title)), title
+
+
+def test_is_news_curated_requires_news_track_source():
+    """A perfectly on-topic, fresh entry from a research-only source doesn't
+    reach the news lane. It has to be sourced from a news-tagged feed."""
+    conf = c.load_config()
+    entry = _news_entry(source_id="rss:research-only")
+    research_source = {"rss:research-only": {"track": "research", "tier": "high"}}
+    both_source = {"rss:research-only": {"track": "both", "tier": "high"}}
+    news_source = {"rss:research-only": {"track": "news", "tier": "high"}}
+    assert not c.is_news_curated(entry, conf, research_source)
+    assert c.is_news_curated(entry, conf, both_source)
+    assert c.is_news_curated(entry, conf, news_source)
+
+
+def test_is_news_curated_rejects_low_tier():
+    conf = c.load_config()
+    entry = _news_entry(source_id="rss:noname")
+    sources = {"rss:noname": {"track": "news", "tier": "low"}}
+    assert not c.is_news_curated(entry, conf, sources)
+
+
+def test_is_news_curated_rejects_stale():
+    conf = c.load_config()
+    entry = _news_entry(published="2020-01-01", source_id="rss:news")
+    sources = {"rss:news": {"track": "news", "tier": "high"}}
+    assert not c.is_news_curated(entry, conf, sources)
+
+
+def test_is_news_curated_hn_standalone_needs_100_points():
+    """A story discovered only via HN needs a higher points bar to stand
+    alone as news. Corroboration from another source removes the bar."""
+    conf = c.load_config()
+    sources = {"rss:hn": {"track": "news", "tier": "high"}}
+
+    weak = _news_entry(source_id="rss:hn", discovered_via="hackernews",
+                       signals={"hn_points": 50})
+    assert not c.is_news_curated(weak, conf, sources)
+
+    strong = _news_entry(source_id="rss:hn", discovered_via="hackernews",
+                         signals={"hn_points": 150})
+    assert c.is_news_curated(strong, conf, sources)
+
+    # Below floor but corroborated by another source → passes.
+    corroborated = _news_entry(source_id="rss:hn", discovered_via="hackernews",
+                               signals={"hn_points": 50},
+                               corroborating_sources=[{"source_name": "OpenAI Blog"}])
+    assert c.is_news_curated(corroborated, conf, sources)
+
+
+def test_is_news_curated_rejects_denylist_stock_story():
+    """Even from a valid news source, a stock story never reaches the lane."""
+    conf = c.load_config()
+    entry = _news_entry(
+        title="Nvidia stock jumps 4% after AI benchmark leak",
+        source_id="rss:news",
+    )
+    sources = {"rss:news": {"track": "news", "tier": "high"}}
+    assert not c.is_news_curated(entry, conf, sources)
+
+
+def test_is_news_curated_rejects_untopiced():
+    """The classifier assigns `topic` at ingest; without it, the item is out."""
+    conf = c.load_config()
+    entry = _news_entry(topic=None, source_id="rss:news")
+    sources = {"rss:news": {"track": "news", "tier": "high"}}
+    assert not c.is_news_curated(entry, conf, sources)
