@@ -519,7 +519,7 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
 # The news gate below tests trust + scope + freshness instead. It intentionally
 # never runs the grounding/verification step; news items describe events, not
 # claims we're ranking against a body of evidence.
-NEWS_MAX_AGE_DAYS = 14
+NEWS_MAX_AGE_DAYS = 7  # display window; dedup lookback lives in dedupe_stories.py
 NEWS_HN_STANDALONE_MIN_POINTS = 100
 
 # Deny terms split into two lists: "hard" fires unconditionally, "puff" fires

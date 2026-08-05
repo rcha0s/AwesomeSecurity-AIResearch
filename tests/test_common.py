@@ -237,6 +237,20 @@ def test_is_news_curated_rejects_stale():
     assert not c.is_news_curated(entry, conf, sources)
 
 
+def test_is_news_curated_enforces_7_day_display_window():
+    """The news lane shows only the last 7 days — anything older is not news."""
+    from datetime import UTC, datetime, timedelta
+
+    conf = c.load_config()
+    sources = {"rss:news": {"track": "news", "tier": "high"}}
+    day_6 = (datetime.now(UTC) - timedelta(days=6)).strftime("%Y-%m-%d")
+    day_8 = (datetime.now(UTC) - timedelta(days=8)).strftime("%Y-%m-%d")
+    assert c.is_news_curated(_news_entry(published=day_6, source_id="rss:news"),
+                             conf, sources)
+    assert not c.is_news_curated(_news_entry(published=day_8, source_id="rss:news"),
+                                 conf, sources)
+
+
 def test_is_news_curated_hn_standalone_needs_100_points():
     """A story discovered only via HN needs a higher points bar to stand
     alone as news. Corroboration from another source removes the bar."""
