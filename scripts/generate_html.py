@@ -143,9 +143,14 @@ def _claims_since(ledger: dict) -> str:
 
 
 def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
-    """Mirror every vetted finding's rendered .md into docs/findings/ so the
-    site's modal can fetch it same-origin. Stale files are pruned so a
-    finding that leaves the pool doesn't linger in the served tree.
+    """Mirror every vetted and editorial-promoted finding's rendered .md
+    into docs/findings/ so the site's modal can fetch it same-origin.
+
+    Both curated and editorial-promoted entries carry a detail_path in the
+    payload (the modal advertises one for every card). Without copying the
+    editorial ones, those cards fall back to \"Couldn't load the detail
+    page\". Stale files are pruned so a finding that leaves the pool
+    doesn't linger in the served tree.
     """
     target_root = docs / "findings"
     if target_root.exists():
@@ -157,7 +162,7 @@ def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
         pool = c.load_pool(topic)
         src_root = c.ROOT / topic
         for entry in pool["entries"]:
-            if not c.is_curated(entry, conf):
+            if not (c.is_curated(entry, conf) or c.is_editorial(entry)):
                 continue
             src = src_root / c.domain_slug(entry.get("domain") or "General") / _entry_filename(entry)
             if not src.is_file():

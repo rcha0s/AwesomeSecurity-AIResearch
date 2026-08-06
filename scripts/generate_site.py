@@ -284,12 +284,20 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
     all_entries = c.load_pool(topic)["entries"]
     # Only VETTED findings are shown; the rest live in the REVIEW.md queue.
     curated = [e for e in all_entries if c.is_curated(e, conf)]
+    editorial = [e for e in all_entries if c.is_editorial(e)]
+
+    # Editorial-promoted findings need their own detail pages too — the site
+    # modal advertises a detail_path for them, and without a written .md the
+    # modal falls back to the raw source. Merge them into the domain map so
+    # they share the exact same page-rendering path as curated entries.
     by_domain: dict[str, list[dict]] = defaultdict(list)
     for e in curated:
         by_domain[e.get("domain") or "General"].append(e)
+    for e in editorial:
+        by_domain[e.get("domain") or "General"].append(e)
+
     _write_entry_pages(base, by_domain, conf)
     base.mkdir(parents=True, exist_ok=True)
-    editorial = [e for e in all_entries if c.is_editorial(e)]
     held = len(all_entries) - len(curated) - len(editorial)
     md = _topic_index_md(topic, by_domain, curated, held, conf, now, editorial)
     (base / "README.md").write_text(_dedash(md), encoding="utf-8")
