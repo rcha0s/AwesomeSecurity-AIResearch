@@ -4,11 +4,119 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_2 current · 0 contested · 1 superseded · 1 refuted · updated 2026-07-31_
+_11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-06_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
 ## ✅ Current
+
+<a id="claim-package-installers-run-arbitrary-code-by-default"></a>
+
+### Installing a package with pip, npm, or gem executes arbitrary code at install time by default (setup.py, postinstall scripts). Treat 'installed a dep' as 'ran their code'.
+
+`package-installers-run-arbitrary-code-by-default` · confidence **0.98** · Supply Chain & Dependencies · standing since Jan 2020
+
+**Do this —** Do first-touch installs in a sandbox. Where possible, prefer `--ignore-scripts` + explicit build orchestration.
+
+_Tags: `npm`, `pip`, `supply-chain`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Best practices for defending against supply chain attacks](https://blog.trailofbits.com/2020/12/22/how-are-teams-currently-handling-web-attacks-at-scale/) | undated |
+
+</details>
+
+<a id="claim-imdsv1-must-be-disabled-on-agent-workloads"></a>
+
+### AWS IMDSv1 is trivially exploitable from any code that can cause an HTTP GET to 169.254.169.254; agent workloads that may fetch user-provided URLs must disable v1 in favor of v2.
+
+`imdsv1-must-be-disabled-on-agent-workloads` · confidence **0.95** · Cloud & IAM · standing since Nov 2019
+
+**Do this —** Set HttpTokens=required on all EC2 instances hosting agent runtimes. Auto-audit via Security Hub.
+
+_Tags: `aws`, `imds`, `ssrf`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Get the full benefits of IMDSv2](https://aws.amazon.com/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/) | undated |
+
+</details>
+
+<a id="claim-path-traversal-defenses-must-cover-symlink-resolution"></a>
+
+### Any code that opens a file whose path derives from user input must canonicalize the resolved target and verify it stays within the intended sandbox; validating the raw path string is insufficient.
+
+`path-traversal-defenses-must-cover-symlink-resolution` · confidence **0.95** · Application Security · standing since Jan 2010
+
+**Do this —** Use realpath() then verify prefix. Never trust the input string alone.
+
+_Tags: `path-traversal`, `symlinks`, `defense`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [CWE-22: Improper Limitation of a Pathname to a Restricted Directory](https://cwe.mitre.org/data/definitions/22.html) | undated |
+
+</details>
+
+<a id="claim-long-lived-cloud-credentials-are-obsolete"></a>
+
+### Long-lived static cloud credentials in CI or on developer machines are the highest-frequency root cause of breach in cloud environments; short-lived OIDC / role-assumption flows should be used for every automated workload.
+
+`long-lived-cloud-credentials-are-obsolete` · confidence **0.90** · Cloud & IAM · standing since Jan 2021
+
+**Do this —** Migrate CI to OIDC federation. Enforce a max credential age on IAM users. Prefer role-assumption for developer access.
+
+_Tags: `aws`, `credentials`, `oidc`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Workload identity federation](https://cloud.google.com/blog/products/identity-security/rip-secret-storage) | undated |
+
+</details>
+
+<a id="claim-typosquatting-in-package-registries-is-an-active-threat"></a>
+
+### Typosquatted packages (e.g. `python-requests` vs `requests`) are regularly uploaded to public registries with malicious install-time payloads; the technique remains effective because dependency selection is often typed manually.
+
+`typosquatting-in-package-registries-is-an-active-threat` · confidence **0.90** · Supply Chain & Dependencies · standing since Jan 2016
+
+**Do this —** Prefer install from lockfile only; audit any hand-added dependency's provenance.
+
+_Tags: `typosquatting`, `npm`, `pypi`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Typosquatting on npm](https://checkmarx.com/blog/typosquatting-attack-on-npm-cryptocurrency-package/) | undated |
+
+</details>
+
+<a id="claim-mobile-webviews-are-a-persistent-cross-context-attack-surface"></a>
+
+### Mobile applications that render web content in a WebView with JS bridges exposed to native code create a persistent cross-context attack surface — any XSS in the rendered content becomes device-level RCE.
+
+`mobile-webviews-are-a-persistent-cross-context-attack-surface` · confidence **0.90** · Mobile Security · standing since Jan 2014
+
+**Do this —** Never expose native bridges to WebViews that render third-party content. Constrain the bridge to a small, auditable API surface.
+
+_Tags: `mobile`, `webview`, `android`, `ios`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Insecure WebView native bridge](https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridge) | undated |
+
+</details>
 
 <a id="claim-import-time-payloads-defeat-install-time-controls"></a>
 
@@ -27,6 +135,42 @@ _Tags: `supply-chain`, `npm`, `provenance`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/) | Jul 15, 2026 |
+
+</details>
+
+<a id="claim-llm-generated-code-hallucinates-package-names"></a>
+
+### LLMs generate import statements for packages that do not exist ('slopsquatting'); attackers observe these hallucinated names and register malicious packages to catch the next developer who copies the generated code.
+
+`llm-generated-code-hallucinates-package-names` · confidence **0.85** · AI-Generated Code Risk · standing since Jun 2024
+
+**Do this —** Every LLM-suggested dependency must be verified against the actual registry before pinning. Automate the check in your CI code-review pass.
+
+_Tags: `ai-code-risk`, `slopsquatting`, `npm`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [We Have a Package for You! A Comprehensive Analysis of Package Hallucinations](https://arxiv.org/abs/2406.10279) | Jun 2024 |
+
+</details>
+
+<a id="claim-ssrf-guards-must-cover-agent-outbound-calls"></a>
+
+### Server-side request forgery guards on user-input URLs are not sufficient for agent applications: the agent can be steered into making outbound calls from tool responses, retrieval results, or MCP metadata.
+
+`ssrf-guards-must-cover-agent-outbound-calls` · confidence **0.85** · Application Security · standing since Jan 2020
+
+**Do this —** Apply the private-IP dialer guard to every outbound HTTP client in an agent runtime — not just the user-facing one. Re-validate on redirect.
+
+_Tags: `ssrf`, `agents`, `defense`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [SSRF (OWASP)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) | undated |
 
 </details>
 
@@ -49,6 +193,24 @@ _Tags: `ai-generated-code`, `code-review`, `ci`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [38.9% of agent-generated PRs carry a security smell — but humans introduce most of the real ones](https://arxiv.org/abs/2607.12428) | Jul 19, 2026 |
+
+</details>
+
+<a id="claim-signature-based-detection-fails-on-llm-authored-malware"></a>
+
+### Signature-based detection under-performs against LLM-authored malware because trivial regeneration produces novel binaries at zero cost, while behavior and delivery-chain signals remain stable.
+
+`signature-based-detection-fails-on-llm-authored-malware` · confidence **0.70** · Detection & Response · standing since Jan 2024
+
+**Do this —** Weight EDR and behavioral analytics over hash-based feeds for AI-authored threat classes.
+
+_Tags: `malware`, `detection`, `ai-authored`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Using LLMs to obfuscate malicious JavaScript](https://unit42.paloaltonetworks.com/using-llms-obfuscate-malicious-javascript/) | undated |
 
 </details>
 

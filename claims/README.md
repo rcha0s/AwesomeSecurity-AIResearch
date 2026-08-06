@@ -2,7 +2,7 @@
 
 > The findings feed tracks **what was published**. This ledger tracks **what we currently believe** — one durable claim per question, each with the evidence behind it, and each superseded answer kept underneath with the reason it fell.
 
-_19 claims tracked · updated 2026-07-31_
+_52 claims tracked · updated 2026-08-06_
 
 **Status meanings**
 
@@ -15,9 +15,9 @@ _19 claims tracked · updated 2026-07-31_
 
 | Topic | Current | Contested | Retired |
 | --- | --- | --- | --- |
-| [AI Security](ai-security.md) | 4 | 1 | 2 |
-| [Product Security](product-security.md) | 2 | 0 | 2 |
-| [AI Research](ai-research.md) | 5 | 0 | 3 |
+| [AI Security](ai-security.md) | 15 | 1 | 2 |
+| [Product Security](product-security.md) | 11 | 0 | 2 |
+| [AI Research](ai-research.md) | 18 | 0 | 3 |
 
 ## 🔁 What changed recently
 
