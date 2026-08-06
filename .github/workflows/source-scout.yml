@@ -1,0 +1,63 @@
+name: Source scout
+
+# Daily discovery of trending publishers we don't already ingest from.
+# Writes proposals to data/source_proposals.json and opens a PR against
+# main. A human merges (or ignores + optionally blocklists the domain).
+#
+# HN top-of-window trending only for the first cut — Reddit / Google News /
+# X are drop-in extensions to scripts/source_scout.py:_hn_trending style.
+
+on:
+  schedule:
+    - cron: "0 5 * * *"  # 05:00 UTC daily — before the Monday render at 06:00
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run source_scout
+        run: python scripts/source_scout.py
+
+      # Bot-owned disposable branch. Force-with-lease can't reason about
+      # a branch the runner never fetched; --force is safe here.
+      - name: Open or refresh proposals PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # No drift → nothing to PR.
+          if [[ -z "$(git status --porcelain data/source_proposals.json)" ]]; then
+            echo "No new proposals; nothing to PR."
+            exit 0
+          fi
+
+          branch="chore/source-proposals"
+          git checkout -B "$branch"
+          git add data/source_proposals.json
+          git commit -m "chore: source proposals ($(date -u +%Y-%m-%d))"
+          git push --force origin "HEAD:$branch"
+
+          if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "chore: source proposals ($(date -u +%Y-%m-%d))" \
+              --body "Automated source-scout run. Review data/source_proposals.json; merge to accept, close + \`scripts/remove_source.py <id> --blocklist\` if a proposal is wrong."
+          fi
