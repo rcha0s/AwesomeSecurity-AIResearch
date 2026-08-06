@@ -149,3 +149,42 @@ def test_main_mirrors_finding_markdown_into_docs_findings(sandbox):
     )
     assert detail.is_file()
     assert "Compaction saves tokens" in detail.read_text(encoding="utf-8")
+
+
+def test_main_mirrors_editorial_finding_markdown(sandbox):
+    """Editorial-promoted findings advertise a detail_path just like curated
+    ones do; the copy step must include them too, or the modal falls back
+    to \"Couldn't load the detail page\" for every promoted item."""
+    import generate_site
+
+    claims.save_ledger(ledger_of(make_claim()))
+    # A held finding (needs_review) that the editorial pass promoted.
+    entry = make_entry(
+        title="Provider guardrails blocked incident response",
+        needs_review=True,
+        editorial={
+            "promoted": True,
+            "reason": "Real-world incident with an actionable IR lesson.",
+            "signals": ["timely"],
+            "at": "2026-07-26T21:08:26+00:00",
+        },
+    )
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(entry)
+    common.save_pool("ai-research", pool)
+
+    generate_site.main()
+    assert gh.main() == 0
+
+    detail = (
+        sandbox
+        / "docs"
+        / "findings"
+        / "ai-research"
+        / "agents-harnesses"
+        / "2026-07-provider-guardrails-blocked-incident-response.md"
+    )
+    assert detail.is_file(), (
+        f"Editorial detail page not copied to {detail} — modal will 404 "
+        f"on this card and fall back to the raw source."
+    )

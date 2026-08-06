@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_7 vetted findings · updated 2026-08-01 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-08-06 · ranked by composite · latest 31 days only · [6 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -20,6 +20,7 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 | Malware & Threat Intel | 1 |
 | Developer Tooling & Template Injection | 1 |
 | browser-delivered malware / malvertising | 1 |
+| AI-Generated Code Risk | 1 |
 
 ## Supply Chain & Dependencies
 
@@ -62,6 +63,12 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 - **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · composite **55.2** · Jul 25, 2026  
   Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.  
   _[@TheHackersNews](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)_
+
+## AI-Generated Code Risk
+
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-generated-code-risk/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **56.62** · Jul 19, 2026 · ⚠️ _review_  
+  Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.  
+  _[source](https://arxiv.org/abs/2607.12428)_
 
 ---
 
