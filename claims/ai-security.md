@@ -4,11 +4,68 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_4 current · 1 contested · 0 superseded · 2 refuted · updated 2026-07-31_
+_15 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-06_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
 ## ✅ Current
+
+<a id="claim-pickle-based-model-formats-are-code-execution"></a>
+
+### Loading a pickle-based model file (PyTorch .pt/.bin) is equivalent to running arbitrary code; the format has no sandbox and no way to introspect what will execute at load time short of manual reversing.
+
+`pickle-based-model-formats-are-code-execution` · confidence **0.95** · Model Supply Chain · standing since Mar 2021
+
+**Do this —** Prefer safetensors for any model you didn't personally train. If you must load pickles, do it in a container with no outbound network.
+
+_Tags: `pickle`, `supply-chain`, `safetensors`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Never a dill moment: Exploiting machine learning pickle files](https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/) | Mar 2021 |
+| supports | [Pickle scanning](https://huggingface.co/docs/hub/en/security-pickle) | undated |
+
+</details>
+
+<a id="claim-prompt-injection-is-a-permanent-attack-surface"></a>
+
+### LLM applications that mix trusted instructions with untrusted input are permanently vulnerable to instruction hijacking; the surface cannot be closed by prompt engineering alone.
+
+`prompt-injection-is-a-permanent-attack-surface` · confidence **0.90** · Prompt Injection · standing since Feb 2023
+
+**Do this —** Design agentic systems assuming injection succeeds sometimes: least-privilege tool scopes, human approval on irreversible actions, and blast-radius caps that hold even when the model is fooled.
+
+_Tags: `prompt-injection`, `threat-model`, `agents`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [The Dual LLM pattern for building AI assistants that can resist prompt injection](https://simonwillison.net/2023/Apr/14/worst-that-can-happen/) | Apr 14, 2023 |
+| supports | [Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection](https://arxiv.org/abs/2302.12173) | Feb 23, 2023 |
+
+</details>
+
+<a id="claim-indirect-injection-via-retrieved-content-is-viable"></a>
+
+### Indirect prompt injection — hostile instructions embedded in documents, web pages, or tool outputs that the LLM reads at run time — is a demonstrated attack vector against real production LLM assistants.
+
+`indirect-injection-via-retrieved-content-is-viable` · confidence **0.90** · Prompt Injection · standing since Feb 2023
+
+**Do this —** Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.
+
+_Tags: `prompt-injection`, `rag`, `indirect`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Not what you've signed up for](https://arxiv.org/abs/2302.12173) | Feb 2023 |
+| supports | [Hacking GitHub Copilot Chat via indirect prompt injection](https://embracethered.com/blog/posts/2024/hacking-github-copilot-chat-prompt-injection/) | undated |
+
+</details>
 
 <a id="claim-sandbox-model-deserialization"></a>
 
@@ -54,6 +111,42 @@ _Tags: `prompt-injection`, `agents`, `threat-model`_
 
 </details>
 
+<a id="claim-mcp-tool-descriptions-are-a-prompt-injection-surface"></a>
+
+### MCP tool descriptions are consumed by the model as part of the system prompt; a hostile MCP server can inject instructions via tool metadata alone, without needing the tool to be called.
+
+`mcp-tool-descriptions-are-a-prompt-injection-surface` · confidence **0.85** · MCP & Tools · standing since Mar 2025
+
+**Do this —** Version-pin and change-review every MCP tool description. Treat metadata updates as system-prompt changes requiring re-approval.
+
+_Tags: `mcp`, `prompt-injection`, `tool-poisoning`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [MCP Security Notification: Tool Poisoning Attacks](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) | Mar 2025 |
+
+</details>
+
+<a id="claim-long-term-memory-is-a-cross-session-poisoning-vector"></a>
+
+### Once an LLM assistant persists user-provided information to a long-term memory store, adversarial content can be planted in one session and reliably retrieved into a future session, producing effects that outlast the poisoning conversation.
+
+`long-term-memory-is-a-cross-session-poisoning-vector` · confidence **0.85** · Memory & Context Poisoning · standing since Sep 2024
+
+**Do this —** Gate what enters long-term memory with a policy check, not a post-hoc filter. Treat memory writes as security-relevant.
+
+_Tags: `memory`, `persistence`, `prompt-injection`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [ChatGPT: Hacking Memories with Prompt Injection](https://embracethered.com/blog/posts/2024/chatgpt-hacking-memories/) | Sep 2024 |
+
+</details>
+
 <a id="claim-agent-memory-is-a-persistent-attack-surface"></a>
 
 ### Poisoned preferences and instructions persist in agent long-term memory across sessions and resist normal in-conversation correction.
@@ -74,6 +167,42 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 </details>
 
+<a id="claim-typosquatting-on-model-hubs-is-active"></a>
+
+### Adversaries publish typosquatted model repositories on public hubs (name variants of popular models) that ship with malicious pickle payloads or exfiltration hooks; several have been observed in the wild on Hugging Face.
+
+`typosquatting-on-model-hubs-is-active` · confidence **0.75** · Model Supply Chain · standing since Feb 2024
+
+**Do this —** Pin model artifacts by revision hash, not by name. Verify the model card against the vendor's known channels.
+
+_Tags: `typosquatting`, `supply-chain`, `huggingface`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Malicious ML models with silent backdoor found on Hugging Face](https://jfrog.com/blog/data-scientists-targeted-by-malicious-hugging-face-ml-models-with-silent-backdoor/) | Feb 2024 |
+
+</details>
+
+<a id="claim-llm-eval-datasets-leak-into-training-sets"></a>
+
+### Public benchmark datasets used to evaluate LLM security (jailbreak sets, red-team prompts) leak into the training corpora of later models, inflating scores without corresponding capability change.
+
+`llm-eval-datasets-leak-into-training-sets` · confidence **0.75** · Evaluation · standing since Nov 2023
+
+**Do this —** Rotate held-out red-team prompts; treat any published adversarial dataset as compromised for future models.
+
+_Tags: `evaluation`, `contamination`, `benchmarks`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Data Contamination Quiz: A Tool to Detect and Estimate Contamination in Large Language Models](https://arxiv.org/abs/2311.09783) | Nov 2023 |
+
+</details>
+
 <a id="claim-provider-guardrails-can-block-incident-response"></a>
 
 ### Commercial provider safety guardrails can refuse to assist during a real security incident, at exactly the moment you need the model most.
@@ -91,6 +220,78 @@ _Tags: `guardrails`, `incident-response`, `availability`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/) | Jul 19, 2026 |
+
+</details>
+
+<a id="claim-agent-tool-selection-can-be-steered-by-untrusted-context"></a>
+
+### An agent's tool selection can be influenced by content in its context window; adversarial content in retrieved documents can cause the agent to prefer a hostile tool over the intended one.
+
+`agent-tool-selection-can-be-steered-by-untrusted-context` · confidence **0.70** · MCP & Tools · standing since Jul 2024
+
+**Do this —** Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.
+
+_Tags: `tool-selection`, `prompt-injection`, `agents`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Prompt Injection Attacks on Agentic Systems](https://arxiv.org/abs/2407.09164) | Jul 2024 |
+
+</details>
+
+<a id="claim-jailbreak-transfers-across-models"></a>
+
+### Adversarial suffixes crafted against one aligned model transfer with non-trivial success to other models of similar family, including closed-source ones — so a jailbreak found against Llama can succeed against ChatGPT.
+
+`jailbreak-transfers-across-models` · confidence **0.70** · Prompt Injection · standing since Jul 2023
+
+**Do this —** Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.
+
+_Tags: `jailbreak`, `adversarial`, `transfer`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043) | Jul 2023 |
+
+</details>
+
+<a id="claim-dual-llm-pattern-mitigates-injection-blast-radius"></a>
+
+### Splitting agent architecture into a privileged planner LLM that never sees untrusted input, and a quarantined LLM that processes untrusted input but has no tool access, contains prompt injection to non-privileged operations.
+
+`dual-llm-pattern-mitigates-injection-blast-radius` · confidence **0.70** · Prompt Injection · standing since Apr 2023
+
+**Do this —** For high-authority agents, use a two-tier architecture: the planner sees only tool schemas + user intent; the reader/quarantined LLM sees untrusted content and returns structured summaries the planner cannot execute as commands.
+
+_Tags: `defense`, `architecture`, `dual-llm`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [The Dual LLM pattern for building AI assistants that can resist prompt injection](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/) | Apr 2023 |
+
+</details>
+
+<a id="claim-constitutional-ai-reduces-refusal-brittleness"></a>
+
+### Constitutional AI-style training (self-critique + revision against a written set of principles) reduces the fragility of hand-tuned refusal training and gives the training process an inspectable specification.
+
+`constitutional-ai-reduces-refusal-brittleness` · confidence **0.65** · Alignment · standing since Dec 2022
+
+**Do this —** Prefer alignment techniques with a written, auditable spec over hand-tuned refusal datasets you can't inspect.
+
+_Tags: `alignment`, `constitutional-ai`, `rlaif`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
 
 </details>
 

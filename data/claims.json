@@ -40,10 +40,18 @@
           "note": "Finds the advantage is often reduced by instructional overhead in shorter contexts."
         }
       ],
-      "supersedes": ["json-default-for-all-agent-io"],
-      "tags": ["tokens", "serialization", "context", "cost"],
+      "supersedes": [
+        "json-default-for-all-agent-io"
+      ],
+      "tags": [
+        "tokens",
+        "serialization",
+        "context",
+        "cost"
+      ],
       "first_seen": "2025-11",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "deployment"
     },
     {
       "id": "json-default-for-all-agent-io",
@@ -61,11 +69,17 @@
           "published": "2026-05"
         }
       ],
-      "superseded_by": ["toon-cuts-input-tokens-vs-json"],
+      "superseded_by": [
+        "toon-cuts-input-tokens-vs-json"
+      ],
       "superseded_on": "2026-05",
       "supersession_reason": "Format choice measurably moves cost: uniform arrays serialize 30-60% smaller in TOON at comparable retrieval accuracy, which makes serialization a real optimization lever on the input side rather than an aesthetic preference.",
-      "tags": ["tokens", "serialization"],
-      "first_seen": "2023-01"
+      "tags": [
+        "tokens",
+        "serialization"
+      ],
+      "first_seen": "2023-01",
+      "phase": "deployment"
     },
     {
       "id": "constrained-decoding-for-structured-output",
@@ -85,10 +99,18 @@
           "published": "2026-03"
         }
       ],
-      "supersedes": ["toon-best-for-structured-output-generation"],
-      "tags": ["tokens", "serialization", "structured-output", "decoding"],
+      "supersedes": [
+        "toon-best-for-structured-output-generation"
+      ],
+      "tags": [
+        "tokens",
+        "serialization",
+        "structured-output",
+        "decoding"
+      ],
       "first_seen": "2026-03",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "deployment"
     },
     {
       "id": "toon-best-for-structured-output-generation",
@@ -106,11 +128,18 @@
           "published": "2026-03"
         }
       ],
-      "superseded_by": ["constrained-decoding-for-structured-output"],
+      "superseded_by": [
+        "constrained-decoding-for-structured-output"
+      ],
       "superseded_on": "2026-03",
       "supersession_reason": "Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on simple structures. The input-side token saving does not transfer to the output side.",
-      "tags": ["tokens", "serialization", "structured-output"],
-      "first_seen": "2025-11"
+      "tags": [
+        "tokens",
+        "serialization",
+        "structured-output"
+      ],
+      "first_seen": "2025-11",
+      "phase": "deployment"
     },
     {
       "id": "match-tool-schemas-to-the-target-model",
@@ -130,10 +159,18 @@
           "published": "2026-07-04"
         }
       ],
-      "supersedes": ["newer-model-is-always-an-upgrade"],
-      "tags": ["harness", "tool-use", "agents", "evals"],
+      "supersedes": [
+        "newer-model-is-always-an-upgrade"
+      ],
+      "tags": [
+        "harness",
+        "tool-use",
+        "agents",
+        "evals"
+      ],
       "first_seen": "2026-07-04",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "deployment"
     },
     {
       "id": "newer-model-is-always-an-upgrade",
@@ -151,11 +188,17 @@
           "published": "2026-07-04"
         }
       ],
-      "superseded_by": ["match-tool-schemas-to-the-target-model"],
+      "superseded_by": [
+        "match-tool-schemas-to-the-target-model"
+      ],
       "superseded_on": "2026-07-04",
       "supersession_reason": "Measured on a third-party harness's custom edit tool, newer Claude models invented made-up fields that their older siblings got right. Model upgrades can regress harness-specific tool calling, so an upgrade is a change to re-evaluate, not a free win.",
-      "tags": ["harness", "tool-use"],
-      "first_seen": "2024-01"
+      "tags": [
+        "harness",
+        "tool-use"
+      ],
+      "first_seen": "2024-01",
+      "phase": "deployment"
     },
     {
       "id": "few-distinct-tools-beat-many",
@@ -175,9 +218,15 @@
           "published": "2026-07-21"
         }
       ],
-      "tags": ["harness", "agents", "prompting", "evals"],
+      "tags": [
+        "harness",
+        "agents",
+        "prompting",
+        "evals"
+      ],
       "first_seen": "2026-07-21",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "deployment"
     },
     {
       "id": "score-evals-on-groundedness-not-headline-f1",
@@ -203,9 +252,14 @@
           "published": "2026-07-22"
         }
       ],
-      "tags": ["evals", "benchmarks", "security-scanning"],
+      "tags": [
+        "evals",
+        "benchmarks",
+        "security-scanning"
+      ],
       "first_seen": "2026-07-17",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "evaluation"
     },
     {
       "id": "prompt-injection-is-containment-not-prevention",
@@ -241,10 +295,17 @@
           "note": "Meta-analysis of 78 studies; taxonomy includes context-window manipulation as a delivery vector."
         }
       ],
-      "supersedes": ["prompt-injection-solvable-by-filtering"],
-      "tags": ["prompt-injection", "agents", "threat-model"],
+      "supersedes": [
+        "prompt-injection-solvable-by-filtering"
+      ],
+      "tags": [
+        "prompt-injection",
+        "agents",
+        "threat-model"
+      ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "threat-model"
     },
     {
       "id": "prompt-injection-solvable-by-filtering",
@@ -269,11 +330,17 @@
           "published": "2026-06"
         }
       ],
-      "superseded_by": ["prompt-injection-is-containment-not-prevention"],
+      "superseded_by": [
+        "prompt-injection-is-containment-not-prevention"
+      ],
       "superseded_on": "2026-05",
       "supersession_reason": "Impossibility result: an adversary can always construct a context under which a blocked flow looks legitimate, and a defender who tightens norms to stop it starts blocking genuinely legitimate flows. Large-scale red teaming confirmed the vulnerability persists across model families, so filtering is a cost-raiser, not a solution.",
-      "tags": ["prompt-injection", "guardrails"],
-      "first_seen": "2023-05"
+      "tags": [
+        "prompt-injection",
+        "guardrails"
+      ],
+      "first_seen": "2023-05",
+      "phase": "defense"
     },
     {
       "id": "provenance-auditing-defends-context-aware-injection",
@@ -302,9 +369,14 @@
           "note": "Argues no context-based defense can be complete."
         }
       ],
-      "tags": ["prompt-injection", "defenses", "provenance"],
+      "tags": [
+        "prompt-injection",
+        "defenses",
+        "provenance"
+      ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "defense"
     },
     {
       "id": "agent-memory-is-a-persistent-attack-surface",
@@ -337,9 +409,14 @@
           "published": "2026-06"
         }
       ],
-      "tags": ["memory-poisoning", "agents", "persistence"],
+      "tags": [
+        "memory-poisoning",
+        "agents",
+        "persistence"
+      ],
       "first_seen": "2026-06",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "threat-model"
     },
     {
       "id": "provider-guardrails-can-block-incident-response",
@@ -359,9 +436,14 @@
           "published": "2026-07-19"
         }
       ],
-      "tags": ["guardrails", "incident-response", "availability"],
+      "tags": [
+        "guardrails",
+        "incident-response",
+        "availability"
+      ],
       "first_seen": "2026-07-19",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "incident"
     },
     {
       "id": "sandbox-model-deserialization",
@@ -380,10 +462,17 @@
           "published": "2026-07-20"
         }
       ],
-      "supersedes": ["model-scanners-are-sufficient-for-supply-chain"],
-      "tags": ["model-supply-chain", "deserialization", "scanning"],
+      "supersedes": [
+        "model-scanners-are-sufficient-for-supply-chain"
+      ],
+      "tags": [
+        "model-supply-chain",
+        "deserialization",
+        "scanning"
+      ],
       "first_seen": "2026-07-20",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "defense"
     },
     {
       "id": "model-scanners-are-sufficient-for-supply-chain",
@@ -401,11 +490,17 @@
           "published": "2026-07-20"
         }
       ],
-      "superseded_by": ["sandbox-model-deserialization"],
+      "superseded_by": [
+        "sandbox-model-deserialization"
+      ],
       "superseded_on": "2026-07-20",
       "supersession_reason": "Pickle-VM import tricks evaded ten separate model scanners and four model hubs. A clean scan result no longer distinguishes a safe artifact from an evasive one, so scanning cannot be the admission gate.",
-      "tags": ["model-supply-chain", "scanning"],
-      "first_seen": "2024-06"
+      "tags": [
+        "model-supply-chain",
+        "scanning"
+      ],
+      "first_seen": "2024-06",
+      "phase": "defense"
     },
     {
       "id": "gate-agent-prs-with-automated-checks",
@@ -425,10 +520,17 @@
           "published": "2026-07-19"
         }
       ],
-      "supersedes": ["human-review-catches-agent-pr-risk"],
-      "tags": ["ai-generated-code", "code-review", "ci"],
+      "supersedes": [
+        "human-review-catches-agent-pr-risk"
+      ],
+      "tags": [
+        "ai-generated-code",
+        "code-review",
+        "ci"
+      ],
       "first_seen": "2026-07-19",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "defense"
     },
     {
       "id": "human-review-catches-agent-pr-risk",
@@ -446,11 +548,17 @@
           "published": "2026-07-19"
         }
       ],
-      "superseded_by": ["gate-agent-prs-with-automated-checks"],
+      "superseded_by": [
+        "gate-agent-prs-with-automated-checks"
+      ],
       "superseded_on": "2026-07-19",
       "supersession_reason": "Measured across agent-generated PRs, 38.9% carried a security smell and human review demonstrably did not catch the secret and dependency-integrity class. Review remains valuable for logic and design, but it is not the control for this risk.",
-      "tags": ["ai-generated-code", "code-review"],
-      "first_seen": "2025-06"
+      "tags": [
+        "ai-generated-code",
+        "code-review"
+      ],
+      "first_seen": "2025-06",
+      "phase": "defense"
     },
     {
       "id": "import-time-payloads-defeat-install-time-controls",
@@ -469,10 +577,17 @@
           "published": "2026-07-15"
         }
       ],
-      "supersedes": ["ignore-scripts-blocks-npm-supply-chain"],
-      "tags": ["supply-chain", "npm", "provenance"],
+      "supersedes": [
+        "ignore-scripts-blocks-npm-supply-chain"
+      ],
+      "tags": [
+        "supply-chain",
+        "npm",
+        "provenance"
+      ],
       "first_seen": "2026-07-15",
-      "last_reviewed": "2026-07-27"
+      "last_reviewed": "2026-07-27",
+      "phase": "attack"
     },
     {
       "id": "ignore-scripts-blocks-npm-supply-chain",
@@ -490,11 +605,894 @@
           "published": "2026-07-15"
         }
       ],
-      "superseded_by": ["import-time-payloads-defeat-install-time-controls"],
+      "superseded_by": [
+        "import-time-payloads-defeat-install-time-controls"
+      ],
       "superseded_on": "2026-07-15",
       "supersession_reason": "The AsyncAPI compromise delivered its payload at import time, which --ignore-scripts does not prevent, and it shipped with a valid provenance attestation. Both controls target the wrong stage of the lifecycle.",
-      "tags": ["supply-chain", "npm"],
-      "first_seen": "2022-01"
+      "tags": [
+        "supply-chain",
+        "npm"
+      ],
+      "first_seen": "2022-01",
+      "phase": "defense"
+    },
+    {
+      "id": "prompt-injection-is-a-permanent-attack-surface",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "LLM applications that mix trusted instructions with untrusted input are permanently vulnerable to instruction hijacking; the surface cannot be closed by prompt engineering alone.",
+      "status": "current",
+      "confidence": 0.9,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://simonwillison.net/2023/Apr/14/worst-that-can-happen/",
+          "title": "The Dual LLM pattern for building AI assistants that can resist prompt injection",
+          "source_name": "Simon Willison",
+          "published": "2023-04-14"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2302.12173",
+          "title": "Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection",
+          "source_name": "arXiv",
+          "published": "2023-02-23"
+        }
+      ],
+      "first_seen": "2023-02",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Design agentic systems assuming injection succeeds sometimes: least-privilege tool scopes, human approval on irreversible actions, and blast-radius caps that hold even when the model is fooled.",
+      "tags": [
+        "prompt-injection",
+        "threat-model",
+        "agents"
+      ]
+    },
+    {
+      "id": "indirect-injection-via-retrieved-content-is-viable",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "Indirect prompt injection — hostile instructions embedded in documents, web pages, or tool outputs that the LLM reads at run time — is a demonstrated attack vector against real production LLM assistants.",
+      "status": "current",
+      "confidence": 0.9,
+      "phase": "attack",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2302.12173",
+          "title": "Not what you've signed up for",
+          "source_name": "arXiv",
+          "published": "2023-02"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2024/hacking-github-copilot-chat-prompt-injection/",
+          "title": "Hacking GitHub Copilot Chat via indirect prompt injection",
+          "source_name": "Embrace The Red",
+          "published": "2024"
+        }
+      ],
+      "first_seen": "2023-02",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
+      "tags": [
+        "prompt-injection",
+        "rag",
+        "indirect"
+      ]
+    },
+    {
+      "id": "jailbreak-transfers-across-models",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "Adversarial suffixes crafted against one aligned model transfer with non-trivial success to other models of similar family, including closed-source ones — so a jailbreak found against Llama can succeed against ChatGPT.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "attack",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2307.15043",
+          "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+          "source_name": "arXiv",
+          "published": "2023-07"
+        }
+      ],
+      "first_seen": "2023-07",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.",
+      "tags": [
+        "jailbreak",
+        "adversarial",
+        "transfer"
+      ]
+    },
+    {
+      "id": "dual-llm-pattern-mitigates-injection-blast-radius",
+      "topic": "ai-security",
+      "domain": "Prompt Injection",
+      "statement": "Splitting agent architecture into a privileged planner LLM that never sees untrusted input, and a quarantined LLM that processes untrusted input but has no tool access, contains prompt injection to non-privileged operations.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "defense",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://simonwillison.net/2023/Apr/25/dual-llm-pattern/",
+          "title": "The Dual LLM pattern for building AI assistants that can resist prompt injection",
+          "source_name": "Simon Willison",
+          "published": "2023-04"
+        }
+      ],
+      "first_seen": "2023-04",
+      "last_reviewed": "2026-08-06",
+      "guidance": "For high-authority agents, use a two-tier architecture: the planner sees only tool schemas + user intent; the reader/quarantined LLM sees untrusted content and returns structured summaries the planner cannot execute as commands.",
+      "tags": [
+        "defense",
+        "architecture",
+        "dual-llm"
+      ]
+    },
+    {
+      "id": "constitutional-ai-reduces-refusal-brittleness",
+      "topic": "ai-security",
+      "domain": "Alignment",
+      "statement": "Constitutional AI-style training (self-critique + revision against a written set of principles) reduces the fragility of hand-tuned refusal training and gives the training process an inspectable specification.",
+      "status": "current",
+      "confidence": 0.65,
+      "phase": "defense",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2212.08073",
+          "title": "Constitutional AI: Harmlessness from AI Feedback",
+          "source_name": "arXiv (Anthropic)",
+          "published": "2022-12"
+        }
+      ],
+      "first_seen": "2022-12",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Prefer alignment techniques with a written, auditable spec over hand-tuned refusal datasets you can't inspect.",
+      "tags": [
+        "alignment",
+        "constitutional-ai",
+        "rlaif"
+      ]
+    },
+    {
+      "id": "pickle-based-model-formats-are-code-execution",
+      "topic": "ai-security",
+      "domain": "Model Supply Chain",
+      "statement": "Loading a pickle-based model file (PyTorch .pt/.bin) is equivalent to running arbitrary code; the format has no sandbox and no way to introspect what will execute at load time short of manual reversing.",
+      "status": "current",
+      "confidence": 0.95,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://blog.trailofbits.com/2021/03/15/never-a-dill-moment-exploiting-machine-learning-pickle-files/",
+          "title": "Never a dill moment: Exploiting machine learning pickle files",
+          "source_name": "Trail of Bits",
+          "published": "2021-03"
+        },
+        {
+          "stance": "supports",
+          "url": "https://huggingface.co/docs/hub/en/security-pickle",
+          "title": "Pickle scanning",
+          "source_name": "Hugging Face",
+          "published": "2023"
+        }
+      ],
+      "first_seen": "2021-03",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Prefer safetensors for any model you didn't personally train. If you must load pickles, do it in a container with no outbound network.",
+      "tags": [
+        "pickle",
+        "supply-chain",
+        "safetensors"
+      ]
+    },
+    {
+      "id": "typosquatting-on-model-hubs-is-active",
+      "topic": "ai-security",
+      "domain": "Model Supply Chain",
+      "statement": "Adversaries publish typosquatted model repositories on public hubs (name variants of popular models) that ship with malicious pickle payloads or exfiltration hooks; several have been observed in the wild on Hugging Face.",
+      "status": "current",
+      "confidence": 0.75,
+      "phase": "attack",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://jfrog.com/blog/data-scientists-targeted-by-malicious-hugging-face-ml-models-with-silent-backdoor/",
+          "title": "Malicious ML models with silent backdoor found on Hugging Face",
+          "source_name": "JFrog",
+          "published": "2024-02"
+        }
+      ],
+      "first_seen": "2024-02",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Pin model artifacts by revision hash, not by name. Verify the model card against the vendor's known channels.",
+      "tags": [
+        "typosquatting",
+        "supply-chain",
+        "huggingface"
+      ]
+    },
+    {
+      "id": "mcp-tool-descriptions-are-a-prompt-injection-surface",
+      "topic": "ai-security",
+      "domain": "MCP & Tools",
+      "statement": "MCP tool descriptions are consumed by the model as part of the system prompt; a hostile MCP server can inject instructions via tool metadata alone, without needing the tool to be called.",
+      "status": "current",
+      "confidence": 0.85,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks",
+          "title": "MCP Security Notification: Tool Poisoning Attacks",
+          "source_name": "Invariant Labs",
+          "published": "2025-03"
+        }
+      ],
+      "first_seen": "2025-03",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Version-pin and change-review every MCP tool description. Treat metadata updates as system-prompt changes requiring re-approval.",
+      "tags": [
+        "mcp",
+        "prompt-injection",
+        "tool-poisoning"
+      ]
+    },
+    {
+      "id": "agent-tool-selection-can-be-steered-by-untrusted-context",
+      "topic": "ai-security",
+      "domain": "MCP & Tools",
+      "statement": "An agent's tool selection can be influenced by content in its context window; adversarial content in retrieved documents can cause the agent to prefer a hostile tool over the intended one.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "attack",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2407.09164",
+          "title": "Prompt Injection Attacks on Agentic Systems",
+          "source_name": "arXiv",
+          "published": "2024-07"
+        }
+      ],
+      "first_seen": "2024-07",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.",
+      "tags": [
+        "tool-selection",
+        "prompt-injection",
+        "agents"
+      ]
+    },
+    {
+      "id": "long-term-memory-is-a-cross-session-poisoning-vector",
+      "topic": "ai-security",
+      "domain": "Memory & Context Poisoning",
+      "statement": "Once an LLM assistant persists user-provided information to a long-term memory store, adversarial content can be planted in one session and reliably retrieved into a future session, producing effects that outlast the poisoning conversation.",
+      "status": "current",
+      "confidence": 0.85,
+      "phase": "attack",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2024/chatgpt-hacking-memories/",
+          "title": "ChatGPT: Hacking Memories with Prompt Injection",
+          "source_name": "Embrace The Red",
+          "published": "2024-09"
+        }
+      ],
+      "first_seen": "2024-09",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Gate what enters long-term memory with a policy check, not a post-hoc filter. Treat memory writes as security-relevant.",
+      "tags": [
+        "memory",
+        "persistence",
+        "prompt-injection"
+      ]
+    },
+    {
+      "id": "llm-eval-datasets-leak-into-training-sets",
+      "topic": "ai-security",
+      "domain": "Evaluation",
+      "statement": "Public benchmark datasets used to evaluate LLM security (jailbreak sets, red-team prompts) leak into the training corpora of later models, inflating scores without corresponding capability change.",
+      "status": "current",
+      "confidence": 0.75,
+      "phase": "evaluation",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2311.09783",
+          "title": "Data Contamination Quiz: A Tool to Detect and Estimate Contamination in Large Language Models",
+          "source_name": "arXiv",
+          "published": "2023-11"
+        }
+      ],
+      "first_seen": "2023-11",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Rotate held-out red-team prompts; treat any published adversarial dataset as compromised for future models.",
+      "tags": [
+        "evaluation",
+        "contamination",
+        "benchmarks"
+      ]
+    },
+    {
+      "id": "ssrf-guards-must-cover-agent-outbound-calls",
+      "topic": "product-security",
+      "domain": "Application Security",
+      "statement": "Server-side request forgery guards on user-input URLs are not sufficient for agent applications: the agent can be steered into making outbound calls from tool responses, retrieval results, or MCP metadata.",
+      "status": "current",
+      "confidence": 0.85,
+      "phase": "defense",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://owasp.org/www-community/attacks/Server_Side_Request_Forgery",
+          "title": "SSRF (OWASP)",
+          "source_name": "OWASP"
+        }
+      ],
+      "first_seen": "2020-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Apply the private-IP dialer guard to every outbound HTTP client in an agent runtime — not just the user-facing one. Re-validate on redirect.",
+      "tags": [
+        "ssrf",
+        "agents",
+        "defense"
+      ]
+    },
+    {
+      "id": "path-traversal-defenses-must-cover-symlink-resolution",
+      "topic": "product-security",
+      "domain": "Application Security",
+      "statement": "Any code that opens a file whose path derives from user input must canonicalize the resolved target and verify it stays within the intended sandbox; validating the raw path string is insufficient.",
+      "status": "current",
+      "confidence": 0.95,
+      "phase": "defense",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://cwe.mitre.org/data/definitions/22.html",
+          "title": "CWE-22: Improper Limitation of a Pathname to a Restricted Directory",
+          "source_name": "MITRE"
+        }
+      ],
+      "first_seen": "2010-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Use realpath() then verify prefix. Never trust the input string alone.",
+      "tags": [
+        "path-traversal",
+        "symlinks",
+        "defense"
+      ]
+    },
+    {
+      "id": "package-installers-run-arbitrary-code-by-default",
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "statement": "Installing a package with pip, npm, or gem executes arbitrary code at install time by default (setup.py, postinstall scripts). Treat 'installed a dep' as 'ran their code'.",
+      "status": "current",
+      "confidence": 0.98,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://blog.trailofbits.com/2020/12/22/how-are-teams-currently-handling-web-attacks-at-scale/",
+          "title": "Best practices for defending against supply chain attacks",
+          "source_name": "Trail of Bits",
+          "published": "2020"
+        }
+      ],
+      "first_seen": "2020-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Do first-touch installs in a sandbox. Where possible, prefer `--ignore-scripts` + explicit build orchestration.",
+      "tags": [
+        "npm",
+        "pip",
+        "supply-chain"
+      ]
+    },
+    {
+      "id": "typosquatting-in-package-registries-is-an-active-threat",
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "statement": "Typosquatted packages (e.g. `python-requests` vs `requests`) are regularly uploaded to public registries with malicious install-time payloads; the technique remains effective because dependency selection is often typed manually.",
+      "status": "current",
+      "confidence": 0.9,
+      "phase": "attack",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://checkmarx.com/blog/typosquatting-attack-on-npm-cryptocurrency-package/",
+          "title": "Typosquatting on npm",
+          "source_name": "Checkmarx",
+          "published": "2023"
+        }
+      ],
+      "first_seen": "2016-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Prefer install from lockfile only; audit any hand-added dependency's provenance.",
+      "tags": [
+        "typosquatting",
+        "npm",
+        "pypi"
+      ]
+    },
+    {
+      "id": "imdsv1-must-be-disabled-on-agent-workloads",
+      "topic": "product-security",
+      "domain": "Cloud & IAM",
+      "statement": "AWS IMDSv1 is trivially exploitable from any code that can cause an HTTP GET to 169.254.169.254; agent workloads that may fetch user-provided URLs must disable v1 in favor of v2.",
+      "status": "current",
+      "confidence": 0.95,
+      "phase": "defense",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://aws.amazon.com/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/",
+          "title": "Get the full benefits of IMDSv2",
+          "source_name": "AWS Security Blog",
+          "published": "2023"
+        }
+      ],
+      "first_seen": "2019-11",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Set HttpTokens=required on all EC2 instances hosting agent runtimes. Auto-audit via Security Hub.",
+      "tags": [
+        "aws",
+        "imds",
+        "ssrf"
+      ]
+    },
+    {
+      "id": "long-lived-cloud-credentials-are-obsolete",
+      "topic": "product-security",
+      "domain": "Cloud & IAM",
+      "statement": "Long-lived static cloud credentials in CI or on developer machines are the highest-frequency root cause of breach in cloud environments; short-lived OIDC / role-assumption flows should be used for every automated workload.",
+      "status": "current",
+      "confidence": 0.9,
+      "phase": "defense",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://cloud.google.com/blog/products/identity-security/rip-secret-storage",
+          "title": "Workload identity federation",
+          "source_name": "Google Cloud",
+          "published": "2022"
+        }
+      ],
+      "first_seen": "2021-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users. Prefer role-assumption for developer access.",
+      "tags": [
+        "aws",
+        "credentials",
+        "oidc"
+      ]
+    },
+    {
+      "id": "llm-generated-code-hallucinates-package-names",
+      "topic": "product-security",
+      "domain": "AI-Generated Code Risk",
+      "statement": "LLMs generate import statements for packages that do not exist ('slopsquatting'); attackers observe these hallucinated names and register malicious packages to catch the next developer who copies the generated code.",
+      "status": "current",
+      "confidence": 0.85,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2406.10279",
+          "title": "We Have a Package for You! A Comprehensive Analysis of Package Hallucinations",
+          "source_name": "arXiv",
+          "published": "2024-06"
+        }
+      ],
+      "first_seen": "2024-06",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Every LLM-suggested dependency must be verified against the actual registry before pinning. Automate the check in your CI code-review pass.",
+      "tags": [
+        "ai-code-risk",
+        "slopsquatting",
+        "npm"
+      ]
+    },
+    {
+      "id": "signature-based-detection-fails-on-llm-authored-malware",
+      "topic": "product-security",
+      "domain": "Detection & Response",
+      "statement": "Signature-based detection under-performs against LLM-authored malware because trivial regeneration produces novel binaries at zero cost, while behavior and delivery-chain signals remain stable.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/using-llms-obfuscate-malicious-javascript/",
+          "title": "Using LLMs to obfuscate malicious JavaScript",
+          "source_name": "Unit 42",
+          "published": "2024"
+        }
+      ],
+      "first_seen": "2024-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Weight EDR and behavioral analytics over hash-based feeds for AI-authored threat classes.",
+      "tags": [
+        "malware",
+        "detection",
+        "ai-authored"
+      ]
+    },
+    {
+      "id": "mobile-webviews-are-a-persistent-cross-context-attack-surface",
+      "topic": "product-security",
+      "domain": "Mobile Security",
+      "statement": "Mobile applications that render web content in a WebView with JS bridges exposed to native code create a persistent cross-context attack surface — any XSS in the rendered content becomes device-level RCE.",
+      "status": "current",
+      "confidence": 0.9,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridge",
+          "title": "Insecure WebView native bridge",
+          "source_name": "Android Developers"
+        }
+      ],
+      "first_seen": "2014-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Never expose native bridges to WebViews that render third-party content. Constrain the bridge to a small, auditable API surface.",
+      "tags": [
+        "mobile",
+        "webview",
+        "android",
+        "ios"
+      ]
+    },
+    {
+      "id": "tool-count-degrades-agent-performance",
+      "topic": "ai-research",
+      "domain": "Agents & Harnesses",
+      "statement": "Adding more tools to an agent's available set beyond a modest number (roughly 10–20) degrades tool-selection accuracy and task success, even when the added tools are individually well-scoped.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "deployment",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2307.16789",
+          "title": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+          "source_name": "arXiv",
+          "published": "2023-07"
+        }
+      ],
+      "first_seen": "2023-07",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Curate the tool set. Retire tools whose calls the eval suite shows agents get wrong more than they get right.",
+      "tags": [
+        "agents",
+        "harness",
+        "tools"
+      ]
+    },
+    {
+      "id": "chain-of-thought-does-not-transfer-to-multi-turn",
+      "topic": "ai-research",
+      "domain": "Agents & Harnesses",
+      "statement": "Chain-of-thought accuracy gains measured on single-turn benchmarks do not reliably transfer to multi-turn agent tasks where the model must revise its plan across steps.",
+      "status": "current",
+      "confidence": 0.6,
+      "phase": "evaluation",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2402.10171",
+          "title": "Chain-of-thought reasoning without prompting",
+          "source_name": "arXiv",
+          "published": "2024-02"
+        }
+      ],
+      "first_seen": "2024-02",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Evaluate agents on the multi-turn task, not a single-turn proxy. Score plan revisions as a first-class metric.",
+      "tags": [
+        "chain-of-thought",
+        "agents",
+        "evals"
+      ]
+    },
+    {
+      "id": "retrieval-quality-dominates-generation-quality-in-rag",
+      "topic": "ai-research",
+      "domain": "Retrieval & RAG",
+      "statement": "In production RAG systems, retrieval quality — recall of the right documents at the right rank — dominates generation quality as a determinant of end-task accuracy; larger models cannot compensate for a bad retriever.",
+      "status": "current",
+      "confidence": 0.75,
+      "phase": "deployment",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2312.10997",
+          "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+          "source_name": "arXiv",
+          "published": "2023-12"
+        }
+      ],
+      "first_seen": "2023-12",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Invest in retrieval evals (recall@k, reranker quality) before spending on bigger generator models.",
+      "tags": [
+        "rag",
+        "retrieval",
+        "evals"
+      ]
+    },
+    {
+      "id": "hybrid-search-beats-pure-vector-for-most-domains",
+      "topic": "ai-research",
+      "domain": "Retrieval & RAG",
+      "statement": "Hybrid search (BM25 + dense vectors) outperforms pure vector retrieval on most enterprise/technical corpora, because vector embeddings underweight exact term matches (names, identifiers, error codes) that carry high signal.",
+      "status": "current",
+      "confidence": 0.8,
+      "phase": "deployment",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://weaviate.io/blog/hybrid-search-explained",
+          "title": "Hybrid Search Explained",
+          "source_name": "Weaviate",
+          "published": "2024"
+        }
+      ],
+      "first_seen": "2023-06",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Default to hybrid retrieval unless you've measured that pure-vector wins on your specific corpus.",
+      "tags": [
+        "rag",
+        "hybrid-search",
+        "bm25"
+      ]
+    },
+    {
+      "id": "long-context-does-not-eliminate-retrieval-need",
+      "topic": "ai-research",
+      "domain": "Retrieval & RAG",
+      "statement": "Long-context models (1M+ tokens) do not eliminate the need for retrieval: they exhibit lost-in-the-middle effects, cost grows linearly with context size, and per-token attention drops on distant tokens.",
+      "status": "current",
+      "confidence": 0.8,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2307.03172",
+          "title": "Lost in the Middle: How Language Models Use Long Contexts",
+          "source_name": "arXiv",
+          "published": "2023-07"
+        }
+      ],
+      "first_seen": "2023-07",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.",
+      "tags": [
+        "long-context",
+        "rag",
+        "lost-in-the-middle"
+      ]
+    },
+    {
+      "id": "llm-as-judge-is-biased-toward-longer-answers",
+      "topic": "ai-research",
+      "domain": "Evaluation",
+      "statement": "LLM-as-judge evaluators exhibit systematic bias toward longer, more elaborate answers, independent of quality; the bias survives common mitigations (position swap, chain-of-thought grading).",
+      "status": "current",
+      "confidence": 0.75,
+      "phase": "evaluation",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2306.05685",
+          "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+          "source_name": "arXiv",
+          "published": "2023-06"
+        }
+      ],
+      "first_seen": "2023-06",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Cross-check LLM-judge scores with pairwise human eval on a small sample. Score length as a separate axis so the bias is visible.",
+      "tags": [
+        "llm-as-judge",
+        "eval-bias",
+        "evals"
+      ]
+    },
+    {
+      "id": "swe-bench-doesnt-generalize-to-production-tasks",
+      "topic": "ai-research",
+      "domain": "Evaluation",
+      "statement": "SWE-bench scores do not linearly predict agent performance on production engineering tasks; the benchmark rewards a specific style of small-diff bug-fix that under-represents the actual work distribution.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "evaluation",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2310.06770",
+          "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+          "source_name": "arXiv",
+          "published": "2023-10"
+        }
+      ],
+      "first_seen": "2023-10",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Treat SWE-bench as one data point in a portfolio, not a complete picture. Build in-house evals on your task mix.",
+      "tags": [
+        "evals",
+        "swe-bench",
+        "benchmarks"
+      ]
+    },
+    {
+      "id": "system-prompts-should-be-versioned-like-code",
+      "topic": "ai-research",
+      "domain": "Prompting & Context",
+      "statement": "Production system prompts are load-bearing configuration and should be version-controlled, code-reviewed, and evaluated on regression suites — treating them as freeform strings is the source of most silent behavior drift after model swaps.",
+      "status": "current",
+      "confidence": 0.85,
+      "phase": "deployment",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://simonwillison.net/2024/Jul/26/prompt-injection/",
+          "title": "Prompt injection and the security of AI applications",
+          "source_name": "Simon Willison",
+          "published": "2024-07"
+        }
+      ],
+      "first_seen": "2023-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Store prompts in the same repo as the code that calls them. Run eval on every prompt change and every model change.",
+      "tags": [
+        "prompting",
+        "deployment",
+        "regression"
+      ]
+    },
+    {
+      "id": "few-shot-prompting-brittle-on-format-changes",
+      "topic": "ai-research",
+      "domain": "Prompting & Context",
+      "statement": "Few-shot prompting accuracy is highly sensitive to example ordering, whitespace, and demarcation choices, in ways that look like model regressions if not controlled for.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "evaluation",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2102.09690",
+          "title": "Calibrate Before Use: Improving Few-Shot Performance of Language Models",
+          "source_name": "arXiv",
+          "published": "2021-02"
+        }
+      ],
+      "first_seen": "2021-02",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Freeze prompt formatting when evaluating model changes. Prefer structured formats (JSON, YAML) over ad-hoc demarcation.",
+      "tags": [
+        "prompting",
+        "few-shot",
+        "brittleness"
+      ]
+    },
+    {
+      "id": "capability-elicitation-lags-training",
+      "topic": "ai-research",
+      "domain": "Models & Capabilities",
+      "statement": "A model's actual capability ceiling is typically higher than what standard prompting elicits; targeted prompting, fine-tuning, or scaffolding can unlock capabilities the base eval missed. This matters for capability-based safety cases.",
+      "status": "current",
+      "confidence": 0.8,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://www.anthropic.com/research/rsp-updates",
+          "title": "Responsible Scaling Policy",
+          "source_name": "Anthropic",
+          "published": "2024"
+        }
+      ],
+      "first_seen": "2023-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Do not build a safety case on 'the model can't do X' from a base-eval measurement alone. Elicitation is a research capability, not a static property.",
+      "tags": [
+        "capabilities",
+        "elicitation",
+        "safety"
+      ]
+    },
+    {
+      "id": "quantization-preserves-most-benchmark-scores",
+      "topic": "ai-research",
+      "domain": "Deployment",
+      "statement": "8-bit and 4-bit quantization of open-weights models preserves most benchmark accuracy (within 1–3 points) while cutting memory footprint roughly proportionally to bit width.",
+      "status": "current",
+      "confidence": 0.8,
+      "phase": "deployment",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2306.03078",
+          "title": "SpQR: A Sparse-Quantized Representation for Near-Lossless LLM Weight Compression",
+          "source_name": "arXiv",
+          "published": "2023-06"
+        }
+      ],
+      "first_seen": "2023-06",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Default to quantized weights for local inference of models ≥7B on consumer hardware. Verify on your task, not just on MMLU.",
+      "tags": [
+        "quantization",
+        "deployment",
+        "inference"
+      ]
+    },
+    {
+      "id": "coding-agents-produce-plausible-but-hallucinated-apis",
+      "topic": "ai-research",
+      "domain": "Coding Agents",
+      "statement": "Coding assistants generate calls to functions and APIs that do not exist in the target library or version — plausible spelling, correct-looking signature, no runtime existence — and this pattern persists across model families.",
+      "status": "current",
+      "confidence": 0.9,
+      "phase": "threat-model",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2308.07922",
+          "title": "Hallucinations in Code Generation",
+          "source_name": "arXiv",
+          "published": "2023-08"
+        }
+      ],
+      "first_seen": "2023-08",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Any LLM-suggested import or API call must be validated against the actual library documentation for the pinned version, not the model's memory.",
+      "tags": [
+        "coding-agents",
+        "hallucination",
+        "apis"
+      ]
+    },
+    {
+      "id": "diff-review-catches-more-than-full-file-review",
+      "topic": "ai-research",
+      "domain": "Coding Agents",
+      "statement": "Reviewing an LLM's proposed change as a diff catches more defects than reviewing the resulting full file, because the diff frames attention on the semantic delta rather than letting eyes skim familiar surrounding lines.",
+      "status": "current",
+      "confidence": 0.7,
+      "phase": "deployment",
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2312.02003",
+          "title": "The Impact of AI on Developer Productivity",
+          "source_name": "arXiv (GitClear)",
+          "published": "2024-01"
+        }
+      ],
+      "first_seen": "2024-01",
+      "last_reviewed": "2026-08-06",
+      "guidance": "Prefer tools that present LLM changes as diffs. Reviewer must sign off on the specific lines that changed.",
+      "tags": [
+        "code-review",
+        "diffs",
+        "coding-agents"
+      ]
     }
   ]
 }
