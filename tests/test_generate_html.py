@@ -188,3 +188,88 @@ def test_main_mirrors_editorial_finding_markdown(sandbox):
         f"Editorial detail page not copied to {detail} — modal will 404 "
         f"on this card and fall back to the raw source."
     )
+
+
+# --- News-lane wiring in editorial_rows -------------------------------------
+def _news_source(sid: str, name: str, tier: str = "high",
+                 track: str = "news", scope: str = "ai") -> dict:
+    return {"id": sid, "name": name, "tier": tier,
+            "track": track, "scope": scope}
+
+
+def _write_sources(sandbox, sources):
+    (sandbox / "data" / "sources.json").write_text(
+        json.dumps(sources), encoding="utf-8"
+    )
+
+
+def _pool_news_entry(**over):
+    from datetime import UTC, datetime, timedelta
+    base = make_entry(
+        id="news-openai-fast-mode",
+        topic="ai-research",
+        title="OpenAI ships Fast mode: Sol 2.5x quicker at same price",
+        source_url="https://openai.com/blog/fast-mode",
+        source_id="rss:openai-blog",
+        published=(datetime.now(UTC) - timedelta(days=2)).strftime("%Y-%m-%d"),
+        needs_review=True,
+    )
+    base.update(over)
+    return base
+
+
+def test_editorial_rows_includes_news_curated_entries(sandbox):
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(_pool_news_entry())
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert len(rows) == 1
+    assert rows[0]["lane"] == "news"
+    assert "OpenAI Blog" in rows[0]["reason"]
+
+
+def test_editorial_rows_dedupes_same_story_across_sources(sandbox):
+    _write_sources(sandbox, [
+        _news_source("rss:openai-blog", "OpenAI Blog", tier="high"),
+        _news_source("rss:hn", "Hacker News", tier="medium"),
+    ])
+    from datetime import UTC, datetime, timedelta
+    same_day = (datetime.now(UTC) - timedelta(days=2)).strftime("%Y-%m-%d")
+
+    a = _pool_news_entry(
+        id="a-1", source_id="rss:openai-blog",
+        title="OpenAI ships Fast mode: Sol 2.5x quicker at same price",
+        source_url="https://openai.com/blog/fast-mode",
+        published=same_day,
+    )
+    b = _pool_news_entry(
+        id="b-2", source_id="rss:hn",
+        title="Sol Fast mode: OpenAI ships 2.5x quicker at the same price",
+        source_url="https://news.ycombinator.com/item?id=999",
+        discovered_via="hackernews",
+        signals={"hn_points": 250},
+        published=same_day,
+    )
+    pool = common.load_pool("ai-research")
+    pool["entries"].extend([a, b])
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["title"].startswith("OpenAI ships")
+    assert row.get("corroborators")
+    assert row["corroborators"][0]["source_name"] == "Hacker News"
+
+
+def test_editorial_rows_drops_stale_news(sandbox):
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    stale = _pool_news_entry(published="2020-01-01")
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(stale)
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert rows == []

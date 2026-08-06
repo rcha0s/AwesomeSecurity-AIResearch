@@ -50,8 +50,17 @@ github:
 # novelty/curation is judged at analysis time. Runs on Windows or WSL (network).
 # ---------------------------------------------------------------------------
 hackernews:
-  min_points: 40        # story score floor (noise gate)
-  per_query: 6          # top-N per query
+  min_points: 40        # keyword-search story score floor (noise gate)
+  per_query: 6          # top-N per keyword query
+
+  # Top-stories tap — pull every high-scoring HN story regardless of keyword,
+  # then let the shared topic classifier drop off-topic ones. Catches the
+  # story that trends before anyone's written a keyword-matching post about
+  # it. Standalone news floor: NEWS_HN_STANDALONE_MIN_POINTS in common.py.
+  top_stories: true
+  top_stories_min_points: 100
+  top_stories_per_run: 30
+
   queries:
     - "prompt injection"
     - "LLM security"
