@@ -648,30 +648,69 @@
   }
 
   // ================= BRIEFING =================
+  // Briefing shows only items published within this many days. Older
+  // findings stay reachable via All findings but shouldn't clutter the
+  // landing view — a briefing from 5 weeks ago isn't a briefing.
+  var BRIEFING_MAX_AGE_DAYS = 21;
+
+  function _daysAgo(dateStr) {
+    if (!dateStr) return Infinity;
+    var parts = String(dateStr).split("-");
+    if (parts.length < 2) return Infinity;
+    var year = +parts[0], month = (+parts[1] || 1) - 1;
+    var day = parts.length >= 3 ? +parts[2] : 15; // month-only → mid-month
+    var t = Date.UTC(year, month, day);
+    if (isNaN(t)) return Infinity;
+    return (Date.now() - t) / (1000 * 60 * 60 * 24);
+  }
+  function _withinBriefing(f) {
+    return _daysAgo(f.published) <= BRIEFING_MAX_AGE_DAYS;
+  }
+
   function renderWeek() {
     var root = $("#view-week");
-    var pool = (DATA.findings || []).slice();   // composite-sorted, last max_age_days
-    var editorial = DATA.editorial || [];
+    // Only findings inside the briefing window count — anything older stays
+    // in All findings but doesn't drag the front page down.
+    var pool = (DATA.findings || []).filter(_withinBriefing);
+    var editorial = (DATA.editorial || []).filter(_withinBriefing);
     var fresh = pool.filter(function (f) { return f.fresh; });
-    var mode = MODE.week;
-
-    if (mode === "index") {
-      var html =
-        modeBar("week", "Sortable table of all vetted findings — switch to Reader for the briefing prose.");
-      html += secHead("This week's index", "signal-sorted, last " + DATA.max_age_days + " days");
-      html += indexTable(pool.slice(), { showScore: true });
-      root.innerHTML = html;
-      wireModeBar(root, "week", renderWeek);
-      return;
-    }
 
     var shown = {};
-    var claimsShown = false;
-    var html = modeBar("week", "Reader view — briefing prose. Switch to Index for a dense table.");
+    var html = "";
 
+    // --- NEWS BAND — top of the briefing ---
+    // Trending & in the news is the freshest signal we have. Bubble it above
+    // the research lead so the site's front page reflects what's happening
+    // in the field this week, not last month's paper of note.
+    if (editorial.length) {
+      html += secHead("Trending &amp; in the news",
+        editorial.length + " item" + (editorial.length === 1 ? "" : "s"));
+      html += '<p class="sec-lede">What the field is watching right now — capability releases, ' +
+        'incident disclosures, spec changes. Deduped across sources; the source you\'d cite is on each card.</p>';
+      html += '<div class="artlist">';
+      editorial.slice(0, 8).forEach(function (f) {
+        html += '<article class="art">' +
+          '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
+          (f.reason ? '<p class="why"><b>Why now.</b> ' + txt(f.reason) + '</p>' : '') +
+          '<div class="meta">' + topicPill(f.topic) +
+            (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
+            (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
+              return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
+            '<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
+          '</div></article>';
+      });
+      html += '</div>';
+    } else {
+      html += secHead("Trending &amp; in the news", "no items in the last " + BRIEFING_MAX_AGE_DAYS + " days");
+      html += '<p class="sec-lede">Nothing has cleared the news gate yet. Once the news lane is ingesting, ' +
+        'this is where capability releases and incident disclosures land.</p>';
+    }
+
+    // --- LEAD RESEARCH FINDING — only if fresh enough to lead ---
     var lead = pool[0];
     if (lead) {
       shown[lead.id] = 1;
+      html += secHead("Lead research finding", "highest signal in the last " + BRIEFING_MAX_AGE_DAYS + " days");
       html += '<div class="lead">' +
         '<div class="track">' + topicPill(lead.topic) +
           (lead.fresh ? ' <span class="chip fresh">new</span>' : '') +
@@ -686,44 +725,26 @@
         '</div></div>';
     }
 
+    // --- NEW THIS WEEK — snapshot_days window ---
     var freshList = fresh.filter(function (f) { return !shown[f.id]; });
     html += secHead("New this week", "last " + DATA.snapshot_days + " days");
     if (!fresh.length) {
       html += '<p class="sec-lede">Nothing new cleared the bar in the last ' + DATA.snapshot_days +
-        ' days. The rest of this briefing covers the last ' + DATA.max_age_days + ' days.</p>';
+        ' days. See the strongest research below.</p>';
     } else if (!freshList.length) {
-      html += '<p class="sec-lede">The lead above is the only new finding this week. The rest of this ' +
-        'briefing covers the last ' + DATA.max_age_days + ' days.</p>';
+      html += '<p class="sec-lede">The lead above is the only new finding this week.</p>';
     } else {
       html += '<p class="sec-lede">Published in the last ' + DATA.snapshot_days + ' days.</p>';
       html += '<div class="cols2"><div class="col"><div class="artlist">';
       freshList.forEach(function (f) { shown[f.id] = 1; html += articleHTML(f); });
       html += '</div></div><div class="col">' + claimsTeaser() + '</div></div>';
-      claimsShown = true;
     }
 
-    if (editorial.length) {
-      html += secHead("Trending &amp; in the news", editorial.length + " promoted");
-      html += '<p class="sec-lede">Not new ideas. What the field is watching right now, held back by ' +
-        'the novelty gate but surfaced by the editorial pass for being timely and teachable.</p>';
-      html += '<div class="cols2"><div class="col"><div class="artlist">';
-      editorial.slice(0, 6).forEach(function (f) {
-        html += '<article class="art">' +
-          '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
-          (f.reason ? '<p class="why"><b>Why now.</b> ' + txt(f.reason) + '</p>' : '') +
-          '<div class="meta">' + topicPill(f.topic) +
-            (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
-              return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
-            '<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
-          '</div></article>';
-      });
-      html += '</div></div><div class="col">' + (claimsShown ? emergingRail() : claimsTeaser()) + '</div></div>';
-      if (!claimsShown) claimsShown = true;
-    }
-
-    html += secHead("The strongest in each field", "last " + DATA.max_age_days + " days");
-    html += '<p class="sec-lede">The highest-signal vetted findings in each track. Each is one lesson ' +
-      'and one thing to do. Items from the last ' + DATA.snapshot_days + ' days are tagged new.</p>';
+    // --- STRONGEST IN EACH FIELD — briefing window ---
+    html += secHead("The strongest in each field",
+      "last " + BRIEFING_MAX_AGE_DAYS + " days");
+    html += '<p class="sec-lede">The highest-signal vetted findings in each track. Items from the last ' +
+      DATA.snapshot_days + ' days are tagged new.</p>';
     html += '<div class="cols3">';
     TOPIC_ORDER.forEach(function (t) {
       var items = pool.filter(function (f) { return f.topic === t && !shown[f.id]; }).slice(0, 4);
@@ -737,18 +758,14 @@
     });
     html += '</div>';
 
+    // --- EMERGING TRENDS ---
     html += secHead("Emerging trends", "last " + DATA.max_age_days + " days");
-    if (claimsShown) {
-      html += '<div class="cols3">' + TOPIC_ORDER.map(function (t) {
-        return '<div class="col trendcard">' + emergingBlock(t, false) + '</div>'; }).join("") + '</div>';
-    } else {
-      html += '<div class="cols2"><div class="col trendcard">' +
-        TOPIC_ORDER.map(function (t) { return emergingBlock(t, true); }).join("") +
-        '</div><div class="col">' + claimsTeaser() + '</div></div>';
-    }
+    html += '<div class="cols3">' + TOPIC_ORDER.map(function (t) {
+      return '<div class="col trendcard">' + emergingBlock(t, false) + '</div>'; }).join("") + '</div>';
 
     root.innerHTML = html;
-    wireModeBar(root, "week", renderWeek);
+    // Briefing no longer offers a Reader/Index toggle — always cards. The
+    // dense table view lives on All findings, which is what it's for.
   }
 
   function emergingRail() {
