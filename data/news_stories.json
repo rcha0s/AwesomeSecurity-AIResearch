@@ -1,0 +1,1467 @@
+{
+  "4ee14dd1e16ef95d": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+      "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+      "tokens": [
+        "discovery",
+        "enforces",
+        "host",
+        "mcp",
+        "outside",
+        "runs",
+        "sandbox",
+        "side",
+        "ssrf",
+        "toolhive"
+      ],
+      "shingles": [
+        "discovery runs outside",
+        "host side discovery",
+        "mcp ssrf host",
+        "outside sandbox enforces",
+        "runs outside sandbox",
+        "side discovery runs",
+        "ssrf host side",
+        "toolhive mcp ssrf"
+      ],
+      "entities": [
+        "MCP",
+        "OpenAI",
+        "ToolHive MCP SSRF"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-15"
+  },
+  "9157e54f099928f3": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.17503",
+      "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+      "tokens": [
+        "evade",
+        "four",
+        "hubs",
+        "import",
+        "model",
+        "pickle",
+        "scanners",
+        "shadowpickle",
+        "ten",
+        "tricks",
+        "vm"
+      ],
+      "shingles": [
+        "evade ten model",
+        "four model hubs",
+        "import tricks evade",
+        "model scanners four",
+        "pickle vm import",
+        "scanners four model",
+        "shadowpickle pickle vm",
+        "ten model scanners",
+        "tricks evade ten",
+        "vm import tricks"
+      ],
+      "entities": [
+        "Pickle VM"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-20"
+  },
+  "b290db403346b2c6": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.13987",
+      "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+      "tokens": [
+        "agent",
+        "eval",
+        "just",
+        "lifecycle",
+        "not",
+        "one",
+        "problem",
+        "runtime",
+        "security",
+        "skill",
+        "skillsec"
+      ],
+      "shingles": [
+        "agent skill security",
+        "just runtime one",
+        "lifecycle problem not",
+        "not just runtime",
+        "one skillsec eval",
+        "problem not just",
+        "runtime one skillsec",
+        "security lifecycle problem",
+        "skill security lifecycle"
+      ],
+      "entities": [],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-16"
+  },
+  "01806a8c1f842d02": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+      "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
+      "tokens": [
+        "16584",
+        "2026",
+        "api",
+        "aws",
+        "bypassed",
+        "cve",
+        "fails",
+        "init",
+        "lifetime",
+        "mcp",
+        "open",
+        "policy",
+        "process",
+        "security",
+        "server",
+        "silently",
+        "startup",
+        "when"
+      ],
+      "shingles": [
+        "api mcp server",
+        "aws api mcp",
+        "bypassed process lifetime",
+        "cve 2026 16584",
+        "fails cve 2026",
+        "fails open security",
+        "init fails cve",
+        "lifetime when startup",
+        "mcp server fails",
+        "open security policy",
+        "policy silently bypassed",
+        "process lifetime when",
+        "security policy silently",
+        "server fails open",
+        "silently bypassed process",
+        "startup init fails",
+        "when startup init"
+      ],
+      "entities": [
+        "AWS",
+        "AWS API MCP Server",
+        "MCP",
+        "The AWS API MCP Server"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-24"
+  },
+  "6d31bef32a714ac3": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real",
+      "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+      "tokens": [
+        "agentic",
+        "blocked",
+        "during",
+        "face",
+        "guardrails",
+        "hugging",
+        "incident",
+        "intrusion",
+        "provider",
+        "response",
+        "safety"
+      ],
+      "shingles": [
+        "blocked incident response",
+        "during hugging face",
+        "face agentic intrusion",
+        "guardrails blocked incident",
+        "hugging face agentic",
+        "incident response during",
+        "provider safety guardrails",
+        "response during hugging",
+        "safety guardrails blocked"
+      ],
+      "entities": [
+        "Hugging Face"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-19"
+  },
+  "4f6c58161643d680": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.17619",
+      "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
+      "tokens": [
+        "coding",
+        "correction",
+        "insecure",
+        "llm",
+        "long",
+        "memory",
+        "normal",
+        "persist",
+        "preferences",
+        "resist",
+        "term"
+      ],
+      "shingles": [
+        "coding preferences persist",
+        "insecure coding preferences",
+        "llm long term",
+        "long term memory",
+        "memory resist normal",
+        "persist llm long",
+        "preferences persist llm",
+        "resist normal correction",
+        "term memory resist"
+      ],
+      "entities": [
+        "Google DeepMind"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-20"
+  },
+  "c647a326a7de2c1b": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+      "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
+      "tokens": [
+        "16796",
+        "2026",
+        "agentcore",
+        "argument",
+        "aws",
+        "bedrock",
+        "code",
+        "cve",
+        "delimiter",
+        "gives",
+        "injection",
+        "install",
+        "interpreter",
+        "packages",
+        "python",
+        "rce",
+        "sandbox",
+        "sdk"
+      ],
+      "shingles": [
+        "agentcore python sdk",
+        "argument delimiter injection",
+        "aws bedrock agentcore",
+        "bedrock agentcore python",
+        "code interpreter sandbox",
+        "cve 2026 16796",
+        "delimiter injection install",
+        "gives rce code",
+        "injection install packages",
+        "install packages gives",
+        "interpreter sandbox cve",
+        "packages gives rce",
+        "python sdk argument",
+        "rce code interpreter",
+        "sandbox cve 2026",
+        "sdk argument delimiter"
+      ],
+      "entities": [
+        "AWS",
+        "AWS Bedrock AgentCore Python SDK",
+        "Code Interpreter",
+        "The AWS Bedrock AgentCore Python SDK"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-24"
+  },
+  "3a73c5170bbd77dd": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.17535",
+      "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
+      "tokens": [
+        "agent",
+        "answer",
+        "hop",
+        "induction",
+        "instructions",
+        "multi",
+        "no",
+        "only",
+        "rag",
+        "salience",
+        "statements",
+        "steering",
+        "true",
+        "using",
+        "wrong"
+      ],
+      "shingles": [
+        "agent wrong answer",
+        "answer using only",
+        "hop rag agent",
+        "induction steering multi",
+        "multi hop rag",
+        "only true statements",
+        "rag agent wrong",
+        "salience induction steering",
+        "statements no instructions",
+        "steering multi hop",
+        "true statements no",
+        "using only true",
+        "wrong answer using"
+      ],
+      "entities": [
+        "Salience Induction"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-21"
+  },
+  "241b96a615d8911e": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.17550",
+      "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+      "tokens": [
+        "100",
+        "amplifies",
+        "authors",
+        "backdoor",
+        "file",
+        "ispy",
+        "ml",
+        "model",
+        "moves",
+        "poisoning",
+        "report",
+        "runtime",
+        "success",
+        "trojan",
+        "weak"
+      ],
+      "shingles": [
+        "100 backdoor success",
+        "amplifies weak poisoning",
+        "authors report amplifies",
+        "file ml runtime",
+        "ispy trojan moves",
+        "ml runtime authors",
+        "model file ml",
+        "moves model file",
+        "poisoning 100 backdoor",
+        "report amplifies weak",
+        "runtime authors report",
+        "trojan moves model",
+        "weak poisoning 100"
+      ],
+      "entities": [
+        "ONNX Runtime"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-21"
+  },
+  "bcc0e1d40a720bac": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix",
+      "title": "Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection",
+      "tokens": [
+        "ansi",
+        "apple",
+        "chain",
+        "dns",
+        "exfiltration",
+        "fixed",
+        "injection",
+        "macos",
+        "prompt",
+        "sink",
+        "terminal",
+        "used"
+      ],
+      "shingles": [
+        "ansi dns exfiltration",
+        "apple fixed macos",
+        "chain prompt injection",
+        "dns exfiltration sink",
+        "exfiltration sink used",
+        "fixed macos terminal",
+        "macos terminal ansi",
+        "sink used chain",
+        "terminal ansi dns",
+        "used chain prompt"
+      ],
+      "entities": [
+        "LLM CLI",
+        "Terminal ANSI DNS-exfiltration"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-16"
+  },
+  "a5063c65696abb64": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.17986",
+      "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+      "tokens": [
+        "agent",
+        "attacks",
+        "config",
+        "corrupting",
+        "legitimate",
+        "memory",
+        "s",
+        "self",
+        "state",
+        "syscalls",
+        "uses"
+      ],
+      "shingles": [
+        "agent s memory",
+        "attacks corrupting agent",
+        "config uses legitimate",
+        "corrupting agent s",
+        "memory config uses",
+        "s memory config",
+        "self state attacks",
+        "state attacks corrupting",
+        "uses legitimate syscalls"
+      ],
+      "entities": [],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-20"
+  },
+  "55dbdfda9e5ea88c": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+      "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+      "tokens": [
+        "arbitrary",
+        "config",
+        "file",
+        "gateway",
+        "gives",
+        "object",
+        "overrides",
+        "parameter",
+        "read",
+        "request",
+        "s",
+        "server",
+        "ssrf",
+        "storage",
+        "tensorzero"
+      ],
+      "shingles": [
+        "arbitrary file read",
+        "config gives arbitrary",
+        "file read ssrf",
+        "gateway request parameter",
+        "gives arbitrary file",
+        "object storage config",
+        "overrides server s",
+        "parameter overrides server",
+        "request parameter overrides",
+        "s object storage",
+        "server s object",
+        "storage config gives",
+        "tensorzero gateway request"
+      ],
+      "entities": [
+        "SSRF TensorZero",
+        "TensorZero Gateway"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-15"
+  },
+  "c34461493770cb94": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery",
+      "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
+      "tokens": [
+        "asyncapi",
+        "compromise",
+        "defeats",
+        "ignore",
+        "import",
+        "npm",
+        "payload",
+        "scripts",
+        "time"
+      ],
+      "shingles": [
+        "asyncapi npm compromise",
+        "compromise import time",
+        "defeats ignore scripts",
+        "import time payload",
+        "npm compromise import",
+        "payload defeats ignore",
+        "time payload defeats"
+      ],
+      "entities": [],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-16"
+  },
+  "ad510e4d562795dc": {
+    "fp": {
+      "url": "https://snyk.io/blog/symlinks-are-still-scary",
+      "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
+      "tokens": [
+        "ai",
+        "approval",
+        "assistants",
+        "coding",
+        "committed",
+        "dialogs",
+        "files",
+        "ghostapproval",
+        "git",
+        "let",
+        "misleading",
+        "outside",
+        "read",
+        "symlinks",
+        "wiz",
+        "workspace",
+        "write"
+      ],
+      "shingles": [
+        "ai coding assistants",
+        "approval dialogs let",
+        "assistants read write",
+        "coding assistants read",
+        "committed git symlinks",
+        "dialogs let ai",
+        "files outside workspace",
+        "git symlinks misleading",
+        "let ai coding",
+        "misleading approval dialogs",
+        "outside workspace wiz",
+        "read write files",
+        "symlinks misleading approval",
+        "workspace wiz ghostapproval",
+        "write files outside"
+      ],
+      "entities": [],
+      "bucket": "2026-07-06"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-09"
+  },
+  "1c69e61c253954cd": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware",
+      "title": "GigaWiper: modular destructive malware that fakes ransomware",
+      "tokens": [
+        "destructive",
+        "fakes",
+        "gigawiper",
+        "malware",
+        "modular",
+        "ransomware"
+      ],
+      "shingles": [
+        "destructive malware fakes",
+        "gigawiper modular destructive",
+        "malware fakes ransomware",
+        "modular destructive malware"
+      ],
+      "entities": [
+        "Microsoft"
+      ],
+      "bucket": "2026-07-06"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-09"
+  },
+  "8c49b078dd1c24c5": {
+    "fp": {
+      "url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet",
+      "title": "TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source",
+      "tokens": [
+        "assisted",
+        "botnet",
+        "chain",
+        "disclaimer",
+        "iot",
+        "llm",
+        "model",
+        "raw",
+        "s",
+        "safety",
+        "shipped",
+        "source",
+        "still",
+        "thought",
+        "tuxbot",
+        "v3"
+      ],
+      "shingles": [
+        "assisted iot botnet",
+        "botnet shipped model",
+        "chain thought still",
+        "disclaimer raw chain",
+        "iot botnet shipped",
+        "llm assisted iot",
+        "model s safety",
+        "raw chain thought",
+        "s safety disclaimer",
+        "safety disclaimer raw",
+        "shipped model s",
+        "thought still source",
+        "tuxbot v3 llm",
+        "v3 llm assisted"
+      ],
+      "entities": [
+        "Go C2",
+        "LLM-assisted IoT"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-17"
+  },
+  "9e08b38fc7d31c6b": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+      "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
+      "tokens": [
+        "because",
+        "cmd",
+        "commands",
+        "directory",
+        "engine",
+        "funcmap",
+        "my",
+        "name",
+        "oh",
+        "path",
+        "posh",
+        "prompt",
+        "re",
+        "renders",
+        "resolved",
+        "runs",
+        "template",
+        "through",
+        "whose"
+      ],
+      "shingles": [
+        "because prompt re",
+        "commands because prompt",
+        "directory name runs",
+        "engine whose funcmap",
+        "my posh directory",
+        "name runs commands",
+        "oh my posh",
+        "path through template",
+        "posh directory name",
+        "prompt re renders",
+        "re renders resolved",
+        "renders resolved path",
+        "resolved path through",
+        "runs commands because",
+        "template engine whose",
+        "through template engine",
+        "whose funcmap cmd"
+      ],
+      "entities": [
+        "Oh My Posh",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-24"
+  },
+  "d1108ab442bd50c0": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.12428",
+      "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+      "tokens": [
+        "38",
+        "9",
+        "agent",
+        "carry",
+        "generated",
+        "humans",
+        "introduce",
+        "leaked",
+        "most",
+        "prs",
+        "real",
+        "secrets",
+        "security",
+        "smell"
+      ],
+      "shingles": [
+        "38 9 agent",
+        "9 agent generated",
+        "agent generated prs",
+        "carry security smell",
+        "generated prs carry",
+        "humans introduce most",
+        "introduce most real",
+        "most real leaked",
+        "prs carry security",
+        "real leaked secrets",
+        "security smell humans",
+        "smell humans introduce"
+      ],
+      "entities": [],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-19"
+  },
+  "baa7acbc230e1d02": {
+    "fp": {
+      "url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
+      "title": "Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables",
+      "tokens": [
+        "blob",
+        "captcha",
+        "client",
+        "code",
+        "confusables",
+        "device",
+        "evasion",
+        "flows",
+        "four",
+        "gates",
+        "hide",
+        "hop",
+        "multi",
+        "phishing",
+        "saas",
+        "scanners",
+        "side",
+        "source",
+        "stacked",
+        "techniques",
+        "urls"
+      ],
+      "shingles": [
+        "blob urls client",
+        "captcha gates multi",
+        "client side captcha",
+        "code phishing scanners",
+        "device code phishing",
+        "evasion techniques hide",
+        "flows source code",
+        "four stacked evasion",
+        "gates multi hop",
+        "hide device code",
+        "hop saas flows",
+        "multi hop saas",
+        "phishing scanners blob",
+        "saas flows source",
+        "scanners blob urls",
+        "side captcha gates",
+        "source code confusables",
+        "stacked evasion techniques",
+        "techniques hide device",
+        "urls client side"
+      ],
+      "entities": [
+        "Microsoft",
+        "Microsoft-impersonating OAuth"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-24"
+  },
+  "6c6f81c3ea5f9ddb": {
+    "fp": {
+      "url": "https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html",
+      "title": "SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds",
+      "tokens": [
+        "based",
+        "browser",
+        "builds",
+        "bun",
+        "defeating",
+        "detection",
+        "executable",
+        "hash",
+        "parts",
+        "per",
+        "reassembles",
+        "session",
+        "sourtrade",
+        "split"
+      ],
+      "shingles": [
+        "based detection per",
+        "based executable split",
+        "browser reassembles bun",
+        "bun based executable",
+        "defeating hash based",
+        "detection per session",
+        "executable split parts",
+        "hash based detection",
+        "parts defeating hash",
+        "per session builds",
+        "reassembles bun based",
+        "sourtrade browser reassembles",
+        "split parts defeating"
+      ],
+      "entities": [
+        "The SourTrade"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-25"
+  },
+  "2d8c05c452c995e2": {
+    "fp": {
+      "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities",
+      "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
+      "tokens": [
+        "chain",
+        "command",
+        "cron",
+        "cve",
+        "disclosure",
+        "feature",
+        "file",
+        "ii",
+        "injection",
+        "key",
+        "ot",
+        "persistent",
+        "root",
+        "rox",
+        "ruggedcom",
+        "siemens",
+        "switches",
+        "three",
+        "yields"
+      ],
+      "shingles": [
+        "chain file disclosure",
+        "command injection cron",
+        "cron injection yields",
+        "cve chain file",
+        "disclosure feature key",
+        "feature key command",
+        "file disclosure feature",
+        "ii three cve",
+        "injection cron injection",
+        "injection yields persistent",
+        "key command injection",
+        "persistent root ot",
+        "root ot switches",
+        "rox ii three",
+        "ruggedcom rox ii",
+        "siemens ruggedcom rox",
+        "three cve chain",
+        "yields persistent root"
+      ],
+      "entities": [
+        "Ruggedcom ROX II OT",
+        "Siemens Ruggedcom ROX II"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-20"
+  },
+  "9f1bdadc2e59a2c1": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+      "title": "etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies",
+      "tokens": [
+        "after",
+        "api",
+        "applies",
+        "authorization",
+        "because",
+        "etcd",
+        "everything",
+        "get",
+        "grant",
+        "key",
+        "one",
+        "range",
+        "read",
+        "reads",
+        "skipped",
+        "watch"
+      ],
+      "shingles": [
+        "after because watch",
+        "api skipped range",
+        "authorization range get",
+        "because watch api",
+        "etcd read grant",
+        "everything after because",
+        "grant one key",
+        "key reads everything",
+        "one key reads",
+        "range authorization range",
+        "range get applies",
+        "read grant one",
+        "reads everything after",
+        "skipped range authorization",
+        "watch api skipped"
+      ],
+      "entities": [
+        "Watch API"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-24"
+  },
+  "81dd673b722d4418": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
+      "title": "Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses",
+      "tokens": [
+        "56pr",
+        "bypasses",
+        "cmd",
+        "four",
+        "ghsa",
+        "injection",
+        "one",
+        "parentheses",
+        "per",
+        "qcx7",
+        "shell",
+        "shescape",
+        "unescaped",
+        "via",
+        "w4hw"
+      ],
+      "shingles": [
+        "56pr one four",
+        "cmd parentheses ghsa",
+        "four per shell",
+        "ghsa w4hw qcx7",
+        "injection via unescaped",
+        "one four per",
+        "parentheses ghsa w4hw",
+        "per shell bypasses",
+        "qcx7 56pr one",
+        "shell injection via",
+        "shescape shell injection",
+        "unescaped cmd parentheses",
+        "via unescaped cmd",
+        "w4hw qcx7 56pr"
+      ],
+      "entities": [
+        "GitHub",
+        "Windows CMD"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-24"
+  },
+  "1e8ddc1ddd2f4ce7": {
+    "fp": {
+      "url": "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses",
+      "title": "A working taxonomy of open-source AI code-security harnesses: exploitgen, skill-boosting, SAST+LLM",
+      "tokens": [
+        "ai",
+        "boosting",
+        "code",
+        "exploitgen",
+        "harnesses",
+        "llm",
+        "open",
+        "sast",
+        "security",
+        "skill",
+        "source",
+        "taxonomy",
+        "working"
+      ],
+      "shingles": [
+        "ai code security",
+        "boosting sast llm",
+        "code security harnesses",
+        "exploitgen skill boosting",
+        "harnesses exploitgen skill",
+        "open source ai",
+        "security harnesses exploitgen",
+        "skill boosting sast",
+        "source ai code",
+        "taxonomy open source",
+        "working taxonomy open"
+      ],
+      "entities": [],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-20"
+  },
+  "c45066471206beb4": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq",
+      "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+      "tokens": [
+        "auto",
+        "classifier",
+        "claude",
+        "code",
+        "compaction",
+        "designs",
+        "driven",
+        "evals",
+        "harness",
+        "how",
+        "incident",
+        "minimalism",
+        "mode",
+        "permission",
+        "prompt",
+        "system",
+        "team",
+        "tool"
+      ],
+      "shingles": [
+        "auto mode permission",
+        "claude code team",
+        "code team designs",
+        "compaction auto mode",
+        "designs harness tool",
+        "driven evals system",
+        "evals system prompt",
+        "harness tool minimalism",
+        "how claude code",
+        "incident driven evals",
+        "minimalism incident driven",
+        "mode permission classifier",
+        "prompt compaction auto",
+        "system prompt compaction",
+        "team designs harness",
+        "tool minimalism incident"
+      ],
+      "entities": [
+        "Anthropic",
+        "Cat Wu",
+        "Claude Code",
+        "Simon Willison"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-21"
+  },
+  "d991348c041163d6": {
+    "fp": {
+      "url": "https://github.com/algal/pi-openai-server-compaction",
+      "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+      "tokens": [
+        "api",
+        "codex",
+        "compaction",
+        "encrypted",
+        "harnesses",
+        "other",
+        "pi",
+        "porting",
+        "protocol",
+        "responses",
+        "s",
+        "server",
+        "side"
+      ],
+      "shingles": [
+        "api compaction protocol",
+        "codex s responses",
+        "compaction porting codex",
+        "compaction protocol other",
+        "encrypted compaction porting",
+        "other harnesses pi",
+        "porting codex s",
+        "protocol other harnesses",
+        "responses api compaction",
+        "s responses api",
+        "server side encrypted",
+        "side encrypted compaction"
+      ],
+      "entities": [
+        "OpenAI",
+        "Responses API"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-22"
+  },
+  "9b3ae403da864b78": {
+    "fp": {
+      "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+      "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
+      "tokens": [
+        "70",
+        "auditing",
+        "benchmark",
+        "cyber",
+        "everyone",
+        "groundedness",
+        "idors",
+        "missed",
+        "models",
+        "real",
+        "reason"
+      ],
+      "shingles": [
+        "70 real idors",
+        "auditing cyber benchmark",
+        "benchmark groundedness models",
+        "cyber benchmark groundedness",
+        "groundedness models reason",
+        "idors missed everyone",
+        "models reason 70",
+        "real idors missed",
+        "reason 70 real"
+      ],
+      "entities": [],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-17"
+  },
+  "754786871f75f77e": {
+    "fp": {
+      "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+      "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+      "tokens": [
+        "20",
+        "agents",
+        "ctf",
+        "evals",
+        "not",
+        "path",
+        "projectdiscovery",
+        "rogue",
+        "s",
+        "security",
+        "solves",
+        "took",
+        "unintended",
+        "unprecedented"
+      ],
+      "shingles": [
+        "20 projectdiscovery s",
+        "agents security evals",
+        "ctf solves took",
+        "evals not unprecedented",
+        "not unprecedented 20",
+        "projectdiscovery s ctf",
+        "rogue agents security",
+        "s ctf solves",
+        "security evals not",
+        "solves took unintended",
+        "took unintended path",
+        "unprecedented 20 projectdiscovery"
+      ],
+      "entities": [
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-22"
+  },
+  "ac3cd3e9a0f4cac2": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6",
+      "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+      "tokens": [
+        "1m",
+        "5",
+        "6",
+        "agentic",
+        "benchmark",
+        "claims",
+        "context",
+        "gpt",
+        "luna",
+        "sol",
+        "terra",
+        "three",
+        "tiers"
+      ],
+      "shingles": [
+        "1m context agentic",
+        "5 6 luna",
+        "6 luna terra",
+        "agentic benchmark claims",
+        "context agentic benchmark",
+        "gpt 5 6",
+        "luna terra sol",
+        "sol three tiers",
+        "terra sol three",
+        "three tiers 1m",
+        "tiers 1m context"
+      ],
+      "entities": [
+        "OpenAI"
+      ],
+      "bucket": "2026-07-06"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-09"
+  },
+  "26b13f5529269d0a": {
+    "fp": {
+      "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+      "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+      "tokens": [
+        "code",
+        "cost",
+        "eval",
+        "f1",
+        "gap",
+        "hides",
+        "human",
+        "k3",
+        "kimi",
+        "matching",
+        "precision",
+        "security",
+        "shifts",
+        "triage"
+      ],
+      "shingles": [
+        "code security eval",
+        "cost human triage",
+        "eval matching f1",
+        "f1 hides precision",
+        "gap shifts cost",
+        "hides precision gap",
+        "k3 code security",
+        "kimi k3 code",
+        "matching f1 hides",
+        "precision gap shifts",
+        "security eval matching",
+        "shifts cost human"
+      ],
+      "entities": [
+        "Anthropic",
+        "Moonshot"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-22"
+  },
+  "26898ed7a1d1dec8": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2607.13596",
+      "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+      "tokens": [
+        "actions",
+        "boundary",
+        "cannot",
+        "capability",
+        "capacity",
+        "claim",
+        "given",
+        "hallucination",
+        "may",
+        "models",
+        "no",
+        "perform",
+        "protective",
+        "role",
+        "taken"
+      ],
+      "shingles": [
+        "actions cannot perform",
+        "boundary models may",
+        "capability boundary models",
+        "capacity hallucination given",
+        "claim taken actions",
+        "given protective role",
+        "hallucination given protective",
+        "may claim taken",
+        "models may claim",
+        "no capability boundary",
+        "protective capacity hallucination",
+        "protective role no",
+        "role no capability",
+        "taken actions cannot"
+      ],
+      "entities": [
+        "Protective Capacity Hallucination"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-16"
+  },
+  "2ee3ffdab73846e4": {
+    "fp": {
+      "url": "https://openai.com/blog/fast-mode",
+      "title": "OpenAI ships Fast mode: Sol 2.5x quicker at same price",
+      "tokens": [
+        "2",
+        "5x",
+        "fast",
+        "mode",
+        "openai",
+        "price",
+        "quicker",
+        "same",
+        "ships",
+        "sol"
+      ],
+      "shingles": [
+        "2 5x quicker",
+        "5x quicker same",
+        "fast mode sol",
+        "mode sol 2",
+        "openai ships fast",
+        "quicker same price",
+        "ships fast mode",
+        "sol 2 5x"
+      ],
+      "entities": [
+        "OpenAI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://news.ycombinator.com/item?id=999",
+        "source_name": "Hacker News",
+        "tier": "medium"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://news.ycombinator.com/item?id=999",
+        "source_name": "Hacker News",
+        "tier": "medium"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://openai.com/blog/fast-mode",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      },
+      {
+        "url": "https://news.ycombinator.com/item?id=999",
+        "source_name": "Hacker News",
+        "tier": "medium"
+      }
+    ],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "59a396fc9543abf4": {
+    "fp": {
+      "url": "https://openai.com/blog/fast",
+      "title": "OpenAI ships Fast mode",
+      "tokens": [
+        "fast",
+        "mode",
+        "openai",
+        "ships"
+      ],
+      "shingles": [
+        "openai ships fast",
+        "ships fast mode"
+      ],
+      "entities": [
+        "OpenAI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  }
+}

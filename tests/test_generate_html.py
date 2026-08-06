@@ -149,3 +149,104 @@ def test_main_mirrors_finding_markdown_into_docs_findings(sandbox):
     )
     assert detail.is_file()
     assert "Compaction saves tokens" in detail.read_text(encoding="utf-8")
+
+
+# --- News-lane wiring in editorial_rows -------------------------------------
+def _news_source(sid: str, name: str, tier: str = "high",
+                 track: str = "news", scope: str = "ai") -> dict:
+    """Registry-shaped source stub the news gate expects."""
+    return {"id": sid, "name": name, "tier": tier,
+            "track": track, "scope": scope}
+
+
+def _write_sources(sandbox, sources):
+    (sandbox / "data" / "sources.json").write_text(
+        json.dumps(sources), encoding="utf-8"
+    )
+
+
+def _pool_news_entry(**over):
+    """A news-shaped pool entry (already scored + fresh) that would pass
+    is_news_curated when its source has track: news."""
+    from datetime import UTC, datetime, timedelta
+    base = make_entry(
+        # Real ID is required for the skip_ids dedup pass to know which
+        # entries are currently-under-consideration vs. prior art.
+        id="news-openai-fast-mode",
+        topic="ai-research",
+        title="OpenAI ships Fast mode: Sol 2.5x quicker at same price",
+        source_url="https://openai.com/blog/fast-mode",
+        source_id="rss:openai-blog",
+        published=(datetime.now(UTC) - timedelta(days=2)).strftime("%Y-%m-%d"),
+        # News items may have no scored novelty; we bypass the research gate
+        # deliberately by setting needs_review so is_curated says no.
+        needs_review=True,
+    )
+    base.update(over)
+    return base
+
+
+def test_editorial_rows_includes_news_curated_entries(sandbox):
+    """A fresh, on-topic entry from a news-track source should appear in
+    the editorial band with lane=news."""
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(_pool_news_entry())
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert len(rows) == 1
+    assert rows[0]["lane"] == "news"
+    assert "OpenAI Blog" in rows[0]["reason"]
+
+
+def test_editorial_rows_dedupes_same_story_across_sources(sandbox):
+    """Two entries about the same story from different news sources should
+    collapse to one row with a corroborator."""
+    _write_sources(sandbox, [
+        _news_source("rss:openai-blog", "OpenAI Blog", tier="high"),
+        _news_source("rss:hn", "Hacker News", tier="medium"),
+    ])
+    from datetime import UTC, datetime, timedelta
+    same_day = (datetime.now(UTC) - timedelta(days=2)).strftime("%Y-%m-%d")
+
+    a = _pool_news_entry(
+        id="a-1", source_id="rss:openai-blog",
+        title="OpenAI ships Fast mode: Sol 2.5x quicker at same price",
+        source_url="https://openai.com/blog/fast-mode",
+        published=same_day,
+    )
+    b = _pool_news_entry(
+        id="b-2", source_id="rss:hn",
+        title="Sol Fast mode: OpenAI ships 2.5x quicker at the same price",
+        source_url="https://news.ycombinator.com/item?id=999",
+        discovered_via="hackernews",
+        signals={"hn_points": 250},
+        published=same_day,
+    )
+    pool = common.load_pool("ai-research")
+    pool["entries"].extend([a, b])
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert len(rows) == 1
+    row = rows[0]
+    # The high-tier source (OpenAI) wins; HN is a corroborator.
+    assert row["title"].startswith("OpenAI ships")
+    assert row.get("corroborators")
+    assert row["corroborators"][0]["source_name"] == "Hacker News"
+
+
+def test_editorial_rows_drops_stale_news(sandbox):
+    """News items older than NEWS_MAX_AGE_DAYS should not surface."""
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    stale = _pool_news_entry(published="2020-01-01")
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(stale)
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert rows == []

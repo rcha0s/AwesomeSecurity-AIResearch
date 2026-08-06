@@ -689,9 +689,19 @@
         'incident disclosures, spec changes. Deduped across sources; the source you\'d cite is on each card.</p>';
       html += '<div class="artlist">';
       editorial.slice(0, 8).forEach(function (f) {
+        var corr = "";
+        if (f.corroborators && f.corroborators.length) {
+          corr = '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
+            'Also reported by: ' +
+            f.corroborators.slice(0, 4).map(function (c) {
+              return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
+            }).join(", ") +
+            '</p>';
+        }
         html += '<article class="art">' +
           '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
           (f.reason ? '<p class="why"><b>Why now.</b> ' + txt(f.reason) + '</p>' : '') +
+          corr +
           '<div class="meta">' + topicPill(f.topic) +
             (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
             (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
