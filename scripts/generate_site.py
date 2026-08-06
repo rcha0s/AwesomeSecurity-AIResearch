@@ -159,6 +159,16 @@ def _entry_lessons_md(entry: dict) -> list[str]:
 
 
 def _entry_tcm_md(entry: dict) -> list[str]:
+    # Threat / Conditions / Mitigations is a security-disclosure shape.
+    # The analyzer sometimes fills these fields on AI-research findings
+    # (design writeups, capability posts) — that's a mis-fit: the reader
+    # of a harness-design article shouldn't see a "Threats" block manufactured
+    # from the article's incidental mentions of prompt injection. Restrict
+    # rendering to the two security tracks; the analyzer prompt is the
+    # right place to stop generating them altogether for research topics,
+    # but the render-side guard is durable.
+    if entry.get("topic") not in ("ai-security", "product-security"):
+        return []
     if not any(entry.get(k) for k in ("threat", "conditions", "mitigations")):
         return []
     out = ["## Threat · Conditions · Mitigations", ""]

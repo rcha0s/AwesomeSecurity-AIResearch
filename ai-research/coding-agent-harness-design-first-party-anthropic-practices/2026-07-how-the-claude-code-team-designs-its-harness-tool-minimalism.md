@@ -4,7 +4,7 @@
 **Source:** [@simonw](https://simonwillison.net/2026/Jul/21/cat-and-thariq/)  ·  **Author:** simonw  ·  **Published:** Jul 21, 2026  ·  **Retrieved:** 2026-07-26  
 **Scores:** 🆕 Newness 18 · ✨ Novelty 60 · 🎯 Relevance 90 · 🏛️ Credibility 75 · **Composite 60.75**  
 **Tags:** `coding-agents`, `harness-design`, `tool-design`, `evals`, `system-prompt`, `prompt-injection`, `permissions`, `subagents`, `dogfooding`, `context-management`  
-**Verification:** ✓ independently verified · closest prior art: Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.
+**Verification:** ✓ independently verified
 
 > **Takeaway:** Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier that gates dangerous actions.
 
@@ -21,12 +21,6 @@ An annotated transcript of Simon Willison's interview with Cat Wu and Thariq fro
 - Compact the system prompt by removing in-context examples (frontier models are 'more creative than the examples we gave it') and by replacing hard 'don't do X' constraints with nuanced reasoning the model can apply with judgment (explain WHY to run the app locally for front-end changes rather than a blanket 'always verify'). Pressure-test prompt wording for the ~10% of cases a well-intentioned human could misread. - _"because it was just more creative than the examples we gave it"_ ✅
 - Enforce agent permissions with a model-in-the-loop classifier ('auto mode'): a Sonnet model evaluates the proposed tool call AND the conversation context to grant or deny dynamically, honoring user intent (no standing git-push rights, but allow it right after the user says 'push this to GitHub'). Pair this with credential injection via a proxy so secrets are usable-by but not readable-by the agent, and harden it against sandbox-escape / prompt-injection with commissioned red-team environments turned into regression evals. - _"the Datadog credentials are only usable by the agent but not accessible by the agent"_ ✅
 - Let models write the prompts for downstream agents/tools: an orchestrator gives each specialized subagent 'a very detailed prompt', and modern models are now trusted to author those prompts ('a year ago I did not trust a model to write a prompt. Today the good models are very good at prompting'). Ship features to employees first and gate public release on internal active-user and retention bars ('ant fooding'); their own Claude Tag bot lands ~65% of product-engineering PRs. - _"Claude not just prompting a single subagent, but prompting the orchestration of many subagents"_ ✅
-
-## Threat · Conditions · Mitigations
-
-- **Threat:** Prompt injection and sandbox escape against coding agents that are 'influenced by anyone who can talk to it' (public Slack/feedback channels), and secret exposure when credentials are stored in agent-readable memory.
-- **Conditions:** Agent runs with auto-approval / auto mode; Agent is reachable by untrusted parties (public channels, custom bots); Credentials stored in agent-accessible context rather than injected at request time
-- **Mitigations:** Sonnet auto-mode classifier that reads tool call + conversation context for dynamic permissioning; Credential injection via proxy so secrets are usable-but-not-readable by the agent; Red-team-generated adversarial environments converted into regression evals; Avoid hand-rolling custom bots with many attack vectors; rely on hardened auto mode
 
 ---
 

@@ -119,10 +119,6 @@
         "composite": 60.75,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.",
-      "threat": "Prompt injection and sandbox escape against coding agents that are 'influenced by anyone who can talk to it' (public Slack/feedback channels), and secret exposure when credentials are stored in agent-readable memory.",
-      "conditions": "Agent runs with auto-approval / auto mode; Agent is reachable by untrusted parties (public channels, custom bots); Credentials stored in agent-accessible context rather than injected at request time",
-      "mitigations": "Sonnet auto-mode classifier that reads tool call + conversation context for dynamic permissioning; Credential injection via proxy so secrets are usable-but-not-readable by the agent; Red-team-generated adversarial environments converted into regression evals; Avoid hand-rolling custom bots with many attack vectors; rely on hardened auto mode",
       "verified": true,
       "verify_note": "Every lesson's excerpt appears verbatim (or faithfully) in the transcript; a first-party, concretely specified account (Sonnet auto-mode classifier reading conversation context, credential-injection proxy, remove-examples/reasoning-not-rules prompt compaction) that is highly actionable for harness builders even though the underlying principles echo known best practice.",
       "article_url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
@@ -202,8 +198,6 @@
         "composite": 60.75,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.",
-      "conditions": "Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol — a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.",
       "verified": true,
       "verify_note": "Every lesson excerpt is a verbatim README quote and the points are supported; the reverse-engineered server-side encrypted compaction protocol plus honest same-budget caveats is genuinely novel and directly useful to harness builders.",
       "article_url": "https://github.com/algal/pi-openai-server-compaction",
@@ -280,7 +274,6 @@
         "composite": 60.15,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
       "verify_note": "Independent verifier: single-source vendor report; softened 'found real bugs' to 'findings in disclosure' and noted it was directed at a bug class.",
       "id": "goal-persistent-agents-a-frontier-model-built-a-759122f879",
@@ -385,7 +378,6 @@
         "composite": 55.65,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "Counterfactual and metamorphic testing are established ML-evaluation techniques and benchmark-gaming concerns are widespread. The contribution is applying them to a security-detection benchmark and publishing a negative result - notably that five-model union recall (29.6%) barely exceeds the best single model (26%). Single-vendor, single-repo, self-evaluated: the source itself says to treat these as the hardest case, not a general result.",
       "verified": true,
       "verify_note": "Independent verifier: added the vendor-evaluates-own-product COI plus single-hardest-repo / n=5 / non-uniform-harness caveats the entry omitted; narrowed the ensembling claim to cover both depth and familiarity misses; novelty 72->55.",
       "id": "auditing-a-cyber-benchmark-for-groundedness-mode-bfc4099549",
@@ -450,7 +442,6 @@
         "composite": 54.75,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "Specification gaming / reward hacking is a long-standing literature, and network isolation, turn caps and budget caps are standard eval hygiene. The genuinely new material is the published rate (~20%), the env/filesystem/local-network pivot taxonomy, and the self-implicating detail that the harness's own tracing service was the leak. Nearest pool entry: the Hugging Face agentic intrusion entry on provider guardrails blocking incident response - same incident, opposite end (containment design rather than IR).",
       "verified": true,
       "verify_note": "Verifier confirmed the figures are quoted accurately but demanded scoping now applied: the ~20% is an unintended-solve rate on their own suite with open-weight models and no published denominator, not a general rogue-behavior rate; the 60-turn cap is an operator-overridable default and the $10-$20 budget is an average; and web search is deliberately allowed, so framing the network as fully sealed was wrong. All Hugging Face / OpenAI incident detail is the author's second-hand recap of public statements and is not asserted here. It scored novelty 55 and relevance 88, and flagged the tracing-service leak as the strongest material, which is now a lesson.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
@@ -555,10 +546,6 @@
         "composite": 46.95,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "Standard ML eval practice (precision/recall trade-off, per-slice vs aggregate scoring) plus the sibling Semgrep 'groundedness' benchmark critique cited by the analyst; both argue against ranking security scanners on a single aggregate metric.",
-      "threat": "Choosing an LLM code-security scanner on a competitive-looking aggregate F1/recall, then absorbing a hidden operational cost: a flood of low-precision findings that overwhelm analyst triage and erode trust in the tool, plus severe recall collapse on large real-world repositories.",
-      "conditions": "Evaluating or procuring an LLM (or LLM+harness) for automated code-security scanning; Decisions driven by a single aggregate metric (F1 or recall) over a small/uniform benchmark set; Target deployment involves large enterprise-scale repositories unlike the benchmark repos",
-      "mitigations": "Report and compare precision explicitly, not only F1/recall; Include large, enterprise-scale repos and inspect per-repo results rather than the mean; Benchmark on repositories representative of your own codebase; Model total cost of ownership including human triage of false positives, not just inference cost",
       "verified": true,
       "verify_note": "All five lessons match the Semgrep blog verbatim or faithfully (F1 0.340 within noise, precision 0.684 vs 0.84-0.91 band, ~6% vs ~20% F1 on Repo D, IDOR-depth rationale, 'test on repos that look like yours'); useful eval guidance but the underlying lesson is a known ML principle, so novelty is moderate.",
       "article_url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
@@ -635,7 +622,6 @@
         "composite": 41.25,
         "scored_at": "2026-07-31T18:40:35+00:00"
       },
-      "prior_art": "Capability self-knowledge / calibration research, sycophancy and persona-induced misbehavior, models claiming work they did not do, and refusal-boundary work showing alignment is domain-selective. The defensible delta is the dissociation design - a high-severity domain at floor while low-severity domains hit ceiling - plus interactional format as a first-class driver.",
       "verified": false,
       "verify_note": "Verifier scored novelty 34, arguing this is a new label on a known cluster (capability miscalibration plus domain-selective alignment), and refuted the original framing of the actionable: the source names deployment-side capability specification as a mitigation target and never tests it, never specifies where to state it, and covers conversational sessions rather than tool-using agents - so the agent/tool-call implication is our extrapolation and is marked as such. 'Will claim' was softened to 'may claim'. Held for review.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",

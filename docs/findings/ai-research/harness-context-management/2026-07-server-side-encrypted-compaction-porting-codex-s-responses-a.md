@@ -4,7 +4,7 @@
 **Source:** [@kunchenguid](https://github.com/algal/pi-openai-server-compaction)  ·  **Author:** kunchenguid  ·  **Published:** Jul 22, 2026  ·  **Retrieved:** 2026-07-26  
 **Scores:** 🆕 Newness 18 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 75 · **Composite 60.75**  
 **Tags:** `harness`, `context-management`, `compaction`, `responses-api`, `openai`, `codex`, `long-running-agents`  
-**Verification:** ✓ independently verified · closest prior art: OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.
+**Verification:** ✓ independently verified
 
 > **Takeaway:** If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity - but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.
 
@@ -21,10 +21,6 @@ OpenAI's Codex compacts long-running sessions by calling the Responses API's ser
 - A provider's opaque compaction can be reproduced in a different harness by mimicking the open-source client's exact endpoint usage, but you should keep a portable text summary in parallel so forking, exports, and non-provider models still function. - _"since codex is an open source, we can mimic exactly how codex itself uses the endpoint"_ ✅
 - The claim that this compaction 'works better than anything else' is weakly supported: the measured recall advantage came with 4.58x more output tokens and a 29% larger downstream context, was highly variable (small artifacts failed), and an earlier same-budget win was retracted as methodologically asymmetric. - _"Native did this while emitting 4.58x as many compaction output tokens and leaving a 29% larger billed downstream context."_ ✅
 - The compaction request must mirror the surrounding normal requests (reasoning effort, tools, text config) rather than using endpoint defaults, and the encrypted blobs may just be encrypted text/structured state rather than a clever latent representation. - _"The compaction request mirrors the shape of surrounding normal requests (reasoning effort, text settings, tool definitions) rather than using endpoint defaults."_ ✅
-
-## Threat · Conditions · Mitigations
-
-- **Conditions:** Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol - a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.
 
 ---
 

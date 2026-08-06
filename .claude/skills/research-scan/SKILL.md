@@ -71,7 +71,18 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
        → mid; a restatement/duplicate → low. Put the closest prior work in a `prior_art` field.
      - **relevance**: usefulness to the topic's audience (AI Security = a defender; Product
        Security = an appsec/red-team engineer; AI Research = a harness/agent builder).
-   - Security findings may also include `threat`/`conditions`/`mitigations`.
+   - **Topic-gated fields** (do NOT populate these on an off-topic entry):
+     - `threat`, `conditions`, `mitigations`, `prior_art` — **ONLY for
+       `topic: ai-security` OR `topic: product-security`**. These fields
+       describe a security disclosure's attacker/preconditions/countermeasures
+       shape. On a `topic: ai-research` entry (harness design, capability
+       posts, practitioner writeups) they mis-fit: the reader gets a
+       "Threats" block manufactured from incidental mentions of prompt
+       injection in a design article. If a research writeup mentions
+       security considerations, capture them as items in `lessons` instead,
+       not as a T·C·M block. The render step guards against this too
+       (see `scripts/generate_site.py:_entry_tcm_md`) but the analyzer
+       should not emit them for research entries in the first place.
 
 4. **Independent verification (adversarial second pass).** For each shortlisted finding, spawn a
    FRESH subagent (the Task tool) given ONLY the raw source text + the extracted claims — do NOT

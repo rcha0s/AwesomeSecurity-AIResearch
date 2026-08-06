@@ -660,6 +660,14 @@ def review_reason(entry: dict, conf: Config) -> str:
 # (the analyzer picks a sensible one, so we don't enforce membership).
 REQUIRED_FIELDS = ("topic", "domain", "title", "source_url")
 
+# Fields that belong to the security-disclosure shape. Populating any of these
+# on an ai-research entry is a schema mis-fit: the site was manufacturing a
+# "Threats" block on harness-design articles from incidental mentions of
+# prompt injection. Enumerated here so validate_entry can flag them and the
+# analyzer prompt has a single source of truth to reference.
+SECURITY_ONLY_FIELDS = ("threat", "conditions", "mitigations", "prior_art")
+SECURITY_TOPICS = ("ai-security", "product-security")
+
 
 def validate_entry(entry: dict) -> list[str]:
     """Return a list of human-readable validation errors (empty == valid)."""
@@ -673,6 +681,14 @@ def validate_entry(entry: dict) -> list[str]:
     lessons = entry.get("lessons")
     if lessons is not None and not isinstance(lessons, list):
         errors.append("lessons must be a list")
+    if topic and topic not in SECURITY_TOPICS:
+        for field in SECURITY_ONLY_FIELDS:
+            if entry.get(field):
+                errors.append(
+                    f"field '{field}' is only valid on {SECURITY_TOPICS} "
+                    f"(got topic '{topic}'). Move the content into 'lessons' "
+                    f"or leave the field unset."
+                )
     return errors
 
 

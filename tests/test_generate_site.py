@@ -59,6 +59,26 @@ def test_ai_entry_with_summary_no_threat(sandbox):
     assert "Threat · Conditions" not in page  # no threat on AI-research entry
 
 
+def test_ai_research_entry_never_renders_tcm_even_if_populated(sandbox):
+    """The analyzer occasionally mis-populates threat/conditions/mitigations
+    on an AI-research entry (design writeups, harness posts). The render
+    step must not print a Threats block regardless — it's a security-only
+    shape, and rendering it here manufactures a threat model from
+    incidental mentions."""
+    conf = c.load_config()
+    bad_entry = make_entry(
+        topic="ai-research",
+        threat="Prompt injection against coding agents.",
+        conditions="Agent runs with auto-approval.",
+        mitigations="Sonnet auto-mode classifier.",
+    )
+    page = g.render_entry_page(bad_entry, conf)
+    assert "Threat · Conditions · Mitigations" not in page, (
+        "Threats block leaked into an AI-research entry despite the "
+        "render-side topic guard. Check generate_site.py:_entry_tcm_md."
+    )
+
+
 def test_entry_scores_tolerant_of_missing():
     conf = c.load_config()
     s = g.entry_scores({"date": "2026-07"}, conf)

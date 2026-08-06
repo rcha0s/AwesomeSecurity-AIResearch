@@ -4,7 +4,7 @@
 **Source:** [source](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)  ·  **Published:** Jul 2, 2026  ·  **Retrieved:** 2026-07-16  
 **Scores:** 🆕 Newness 18 · ✨ Novelty 60 · 🎯 Relevance 88 · 🏛️ Credibility 75 · **Composite 60.15**  
 **Tags:** `agents`, `goal-persistence`, `fuzzing`, `evals`, `ai-for-security`  
-**Verification:** ✓ independently verified · closest prior art: LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.
+**Verification:** ✓ independently verified
 
 > **Takeaway:** When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise - the rules, not the model alone, are what make the output actionable.
 

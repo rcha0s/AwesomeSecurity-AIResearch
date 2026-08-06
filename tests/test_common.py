@@ -120,6 +120,32 @@ def test_validate_entry_ok_and_errors():
     assert any("lessons must be a list" in e for e in c.validate_entry(bad))
 
 
+def test_validate_entry_rejects_security_fields_on_research_topics():
+    """Threat/Conditions/Mitigations/prior_art are security-disclosure fields.
+    An ai-research entry that populates them mis-shapes the site render —
+    reject at merge time so the analyzer prompt is corrected, not silently
+    tolerated."""
+    for field in ("threat", "conditions", "mitigations", "prior_art"):
+        bad = make_entry(topic="ai-research", **{field: "some value"})
+        errs = c.validate_entry(bad)
+        assert any(f"'{field}'" in e for e in errs), \
+            f"validate_entry did not flag {field} on ai-research: {errs}"
+
+
+def test_validate_entry_allows_security_fields_on_security_topics():
+    for topic in ("ai-security", "product-security"):
+        good = make_entry(
+            topic=topic,
+            domain="Prompt Injection" if topic == "ai-security" else "Application Security",
+            threat="Attacker can steer tool selection via injected content.",
+            conditions="Agent has tools with side effects; retrieval includes untrusted docs.",
+            mitigations="Human approval on irreversible actions; least-privilege tool scopes.",
+        )
+        assert c.validate_entry(good) == [], (
+            f"security fields should be valid on {topic}: got {c.validate_entry(good)}"
+        )
+
+
 def test_parse_month():
     assert c.parse_month("2026-07").year == 2026
     assert c.parse_month("2026-07-15").day == 15
