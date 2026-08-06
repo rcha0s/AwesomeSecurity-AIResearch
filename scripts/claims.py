@@ -40,6 +40,19 @@ STATUSES = LIVE_STATUSES + RETIRED_STATUSES
 # How a cited source relates to the claim it is attached to.
 STANCES = ("supports", "contests", "refutes")
 
+# Research-phase axis, layered on top of the topic axis so the Fields view
+# can render a taxonomy: what part of the research lifecycle does this claim
+# speak to? Optional — a claim without a phase is fine, just harder to
+# discover under the taxonomy view.
+PHASES = (
+    "threat-model",    # what the adversary can do; assumptions about power
+    "attack",          # concrete attack techniques and demonstrations
+    "defense",         # mitigations, detections, controls
+    "evaluation",      # how to measure any of the above
+    "deployment",      # what to do at operate/build time (harnesses, gates)
+    "incident",        # observed real-world compromises + response
+)
+
 REQUIRED_FIELDS = ("id", "topic", "statement", "status")
 EDGE_FIELDS = ("supersedes", "superseded_by")
 
@@ -149,6 +162,9 @@ def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
                 raise ValueError
         except (TypeError, ValueError):
             errors.append(f"confidence must be a number in [0, 1] (got {confidence!r})")
+    phase = claim.get("phase")
+    if phase is not None and phase not in PHASES:
+        errors.append(f"unknown phase: {phase} (want one of {PHASES})")
     return (
         errors
         + _validate_evidence(claim)
