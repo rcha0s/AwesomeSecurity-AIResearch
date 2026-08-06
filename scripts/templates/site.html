@@ -690,15 +690,21 @@
       html += '<div class="artlist">';
       editorial.slice(0, 8).forEach(function (f) {
         // Use the finding's takeaway (the sharp one-line lesson) rather
-        // than editorial.reason. The reason field was written to justify
-        // promotion; it usually just restates the takeaway with an editorial
-        // prelude ("A real-world incident with an actionable IR lesson: X"),
-        // which reads as redundant on the card. Signals ("trending",
-        // "timely", "newsworthy") already answer the "why now" question in
-        // the meta row.
+        // than editorial.reason. Signals ("trending", "timely", "newsworthy")
+        // in the meta row already answer the "why now" question.
+        var corr = "";
+        if (f.corroborators && f.corroborators.length) {
+          corr = '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
+            'Also reported by: ' +
+            f.corroborators.slice(0, 4).map(function (c) {
+              return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
+            }).join(", ") +
+            '</p>';
+        }
         html += '<article class="art">' +
           '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
           (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+          corr +
           '<div class="meta">' + topicPill(f.topic) +
             (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
             (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {

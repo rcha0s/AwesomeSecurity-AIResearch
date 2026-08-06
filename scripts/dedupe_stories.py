@@ -282,14 +282,17 @@ def _story_id(fp: dict) -> str:
 
 
 def seed_index_from_pools(index: dict, *, lookback_days: int = STORY_KEY_TTL_DAYS,
+                          skip_ids: set | None = None,
                           now: datetime | None = None) -> int:
-    """Populate the index with fingerprints from every recent pool entry
-    (Track A findings AND anything already in the news lane). This is the
-    'dedup wide, across the last month' rule.
+    """Populate the index with fingerprints from every recent pool entry.
+    This is the 'dedup wide, across the last month' rule — a Track B
+    candidate that matches an already-pooled finding gets treated as a
+    repeat.
 
-    Called by news-track ingest BEFORE assigning new story IDs so a
-    candidate that matches an existing research finding is silently dropped
-    as a corroborator rather than staged as a fresh news item.
+    `skip_ids`: entry IDs to NOT seed. Use this to exclude the very entries
+    the caller is about to run through assign_story_id in the same pass
+    (otherwise those entries fingerprint-match themselves and the caller
+    thinks every candidate is a duplicate).
 
     Returns the number of new fingerprints added. Idempotent — a second
     run with the same pools adds zero."""
@@ -297,10 +300,16 @@ def seed_index_from_pools(index: dict, *, lookback_days: int = STORY_KEY_TTL_DAY
 
     now = now or datetime.now(UTC)
     cutoff = (now - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
+    skip_ids = skip_ids or set()
     added = 0
 
     def _consider(entry: dict) -> None:
         nonlocal added
+        # Normalize id lookup — an entry may have id=None (unanalyzed), and
+        # callers who build skip_ids from `entry.get("id") or ""` need this
+        # to see the same string.
+        if (entry.get("id") or "") in skip_ids:
+            return
         published = (entry.get("published") or entry.get("date") or "")[:10]
         if published and published < cutoff:
             return
