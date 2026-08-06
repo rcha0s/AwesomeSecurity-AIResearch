@@ -25,11 +25,11 @@ _No new curated findings this week. Browse the databases below or the [latest ne
 
 ## Standing claims
 
-> The databases below track **what was published**. The ledger tracks **what we currently believe**: 12 standing answers, each with the evidence behind it, plus 7 retired ones kept underneath with the date and reason they stopped being true. See the [full ledger](claims/README.md).
+> The databases below track **what was published**. The ledger tracks **what we currently believe**: 45 standing answers, each with the evidence behind it, plus 7 retired ones kept underneath with the date and reason they stopped being true. See the [full ledger](claims/README.md).
 
-- **[AI Security](claims/ai-security.md)** - 5 standing · 2 retired
-- **[Product Security](claims/product-security.md)** - 2 standing · 2 retired
-- **[AI Research](claims/ai-research.md)** - 5 standing · 3 retired
+- **[AI Security](claims/ai-security.md)** - 16 standing · 2 retired
+- **[Product Security](claims/product-security.md)** - 11 standing · 2 retired
+- **[AI Research](claims/ai-research.md)** - 18 standing · 3 retired
 
 **Most recent reversal** (2026-07-20): ~~A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.~~  
 ↳ Pickle-VM import tricks evaded ten separate model scanners and four model hubs. A clean scan result no longer distinguishes a safe artifact from an evasive one, so scanning cannot be the admission gate.
