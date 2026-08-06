@@ -116,22 +116,100 @@ def curated_findings(conf: c.Config, snapshot_days: int) -> list[dict]:
 
 
 def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
-    """Findings the editorial track promoted for being timely / in the news.
+    """Findings for the 'Trending & in the news' lane.
 
-    These are held by the novelty gate (so they are NOT in curated_findings), but
-    the editorial pass surfaced them as trending. They power the briefing's
-    'Trending & in the news' lane."""
-    rows = []
+    Two sources of truth feed this band, unioned and deduped:
+
+    - Editorial pass: entries flagged with editorial.promoted = true (the
+      original mechanism — humans surface a timely/teachable held finding).
+    - News gate: entries that pass is_news_curated, i.e. a news-track source
+      dropped a fresh (≤7d) on-topic item that clears the deny list.
+
+    News-gated rows are further deduped through the story-key index
+    (dedupe_stories.py), so a story that already lives as a research finding
+    or that already appeared under a different source doesn't repeat. Any
+    duplicate becomes a corroborator on the winning row."""
+    import dedupe_stories as ds
+
+    sources_by_id = c.load_sources_by_id()
+
+    # First pass — figure out which entries are news candidates in this
+    # render, so we can exclude them from the seed pass (otherwise every
+    # candidate fingerprint-matches itself and gets marked as a duplicate).
+    news_candidate_ids: set[str] = set()
     for topic in c.TOPICS:
         for entry in c.load_pool(topic)["entries"]:
-            if not c.is_editorial(entry):
+            if c.is_news_curated(entry, conf, sources_by_id):
+                news_candidate_ids.add(entry.get("id", ""))
+
+    # Seed the story-key index from every recent finding EXCEPT the current
+    # news candidates. What remains in the index is prior art: research
+    # findings and stale news that we don't want to re-surface.
+    dedup_idx = ds.load_index()
+    dedup_idx = ds.prune_index(dedup_idx)
+    ds.seed_index_from_pools(dedup_idx, skip_ids=news_candidate_ids)
+
+    rows: list[dict] = []
+    seen_ids: set[str] = set()
+    row_by_story: dict[str, int] = {}  # story_id → index in rows
+
+    def _emit(entry: dict, *, lane: str, reason: str = "", signals=None,
+              at: str = "", corroborators: list | None = None) -> None:
+        row = finding_row(entry, conf, snapshot_days)
+        row["signals"] = signals or []
+        row["reason"] = reason
+        row["at"] = at
+        row["lane"] = lane
+        if corroborators:
+            row["corroborators"] = corroborators
+        rows.append(row)
+        seen_ids.add(entry.get("id", ""))
+
+    for topic in c.TOPICS:
+        for entry in c.load_pool(topic)["entries"]:
+            eid = entry.get("id", "")
+            if eid in seen_ids:
                 continue
-            ed = entry.get("editorial") or {}
-            row = finding_row(entry, conf, snapshot_days)
-            row["signals"] = ed.get("signals") or []
-            row["reason"] = ed.get("reason", "")
-            row["at"] = ed.get("at", "")
-            rows.append(row)
+            if c.is_editorial(entry):
+                ed = entry.get("editorial") or {}
+                _emit(entry, lane="editorial",
+                      reason=ed.get("reason", ""),
+                      signals=ed.get("signals") or [],
+                      at=ed.get("at", ""))
+                continue
+            if c.is_news_curated(entry, conf, sources_by_id):
+                src = sources_by_id.get(entry.get("source_id") or "", {})
+                src_name = src.get("name", "")
+                tier = src.get("tier", "medium")
+                story_id, is_new = ds.assign_story_id(
+                    entry, dedup_idx,
+                    source_tier=tier,
+                    source_name=src_name,
+                )
+                if not is_new:
+                    # Attach as a corroborator to whatever row already
+                    # represents this story. If the collision is against a
+                    # research finding (not in `rows`), still skip — we
+                    # don't repeat it in the news band.
+                    if story_id in row_by_story:
+                        rows[row_by_story[story_id]].setdefault(
+                            "corroborators", []
+                        ).append({
+                            "url": entry.get("source_url", ""),
+                            "source_name": src_name,
+                            "tier": tier,
+                        })
+                    continue
+                reason = (
+                    f"{src_name} announcement" if src_name
+                    else "Passed the news gate — fresh + on-topic + trusted source"
+                )
+                _emit(entry, lane="news",
+                      reason=reason,
+                      at=entry.get("published", ""))
+                row_by_story[story_id] = len(rows) - 1
+
+    ds.save_index(dedup_idx)
     return sorted(rows, key=lambda row: row.get("at", ""), reverse=True)
 
 
