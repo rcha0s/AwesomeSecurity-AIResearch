@@ -4,9 +4,9 @@
       "topic": "ai-security",
       "tag": "agent-security",
       "count": 11,
-      "recent": 5,
+      "recent": 4,
       "sources": 11,
-      "momentum": 16.0,
+      "momentum": 15.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-24",
       "members": [
@@ -38,7 +38,7 @@
           "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
           "date": "2026-06-30",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
@@ -82,9 +82,9 @@
       "topic": "ai-security",
       "tag": "prompt-injection",
       "count": 7,
-      "recent": 3,
+      "recent": 2,
       "sources": 7,
-      "momentum": 10.0,
+      "momentum": 9.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-21",
       "members": [
@@ -104,7 +104,7 @@
           "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
           "date": "2026-06-30",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
@@ -136,9 +136,9 @@
       "topic": "ai-security",
       "tag": "supply-chain",
       "count": 5,
-      "recent": 4,
+      "recent": 3,
       "sources": 5,
-      "momentum": 9.0,
+      "momentum": 8.0,
       "first_seen": "2026-06-23",
       "last_seen": "2026-07-24",
       "members": [
@@ -164,7 +164,7 @@
           "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
           "date": "2026-06-30",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
@@ -220,9 +220,9 @@
       "topic": "ai-security",
       "tag": "mcp",
       "count": 4,
-      "recent": 3,
+      "recent": 2,
       "sources": 4,
-      "momentum": 7.0,
+      "momentum": 6.0,
       "first_seen": "2026-02",
       "last_seen": "2026-07-24",
       "members": [
@@ -242,7 +242,7 @@
           "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
           "date": "2026-06-30",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Prismor: a runtime firewall that blocks rogue AI-agent tool calls",
@@ -558,9 +558,9 @@
       "topic": "product-security",
       "tag": "supply-chain",
       "count": 6,
-      "recent": 6,
+      "recent": 5,
       "sources": 5,
-      "momentum": 12.0,
+      "momentum": 11.0,
       "first_seen": "2026-06-30",
       "last_seen": "2026-07-24",
       "members": [
@@ -598,55 +598,7 @@
           "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
           "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
           "date": "2026-06-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "phishing",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06-30",
-      "last_seen": "2026-07-24",
-      "members": [
-        {
-          "title": "Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables",
-          "url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
-          "date": "2026-07-24",
-          "fresh": true
-        },
-        {
-          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
-          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
-          "date": "2026-06-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "unit42",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06-30",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
-          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
-          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
-          "date": "2026-06-30",
-          "fresh": true
+          "fresh": false
         }
       ]
     },
@@ -724,6 +676,30 @@
     },
     {
       "topic": "product-security",
+      "tag": "phishing",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-07-24",
+      "members": [
+        {
+          "title": "Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables",
+          "url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+          "date": "2026-06-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "exploit-chain",
       "count": 2,
       "recent": 1,
@@ -742,6 +718,30 @@
           "title": "Project Zero: a 0-click exploit chain for the Pixel 10",
           "url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
           "date": "2026-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "unit42",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-07-20",
+      "members": [
+        {
+          "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
+          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+          "date": "2026-06-30",
           "fresh": false
         }
       ]
@@ -798,65 +798,11 @@
   "ai-research": [
     {
       "topic": "ai-research",
-      "tag": "agents",
-      "count": 7,
-      "recent": 6,
-      "sources": 6,
-      "momentum": 13.0,
-      "first_seen": "2026-05",
-      "last_seen": "2026-07-22",
-      "members": [
-        {
-          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
-          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
-          "date": "2026-07-22",
-          "fresh": true
-        },
-        {
-          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
-          "url": "https://arxiv.org/abs/2607.13596",
-          "date": "2026-07-16",
-          "fresh": true
-        },
-        {
-          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
-          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
-          "date": "2026-07-09",
-          "fresh": true
-        },
-        {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
-          "fresh": true
-        },
-        {
-          "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
-          "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
-          "date": "2026-07-02",
-          "fresh": true
-        },
-        {
-          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-          "url": "https://github.com/omnigent-ai/omnigent",
-          "date": "2026-06",
-          "fresh": true
-        },
-        {
-          "title": "PawBench: benchmarking LLM x harness performance",
-          "url": "https://github.com/agentscope-ai/PawBench",
-          "date": "2026-05",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "evals",
       "count": 7,
-      "recent": 6,
+      "recent": 5,
       "sources": 7,
-      "momentum": 13.0,
+      "momentum": 12.0,
       "first_seen": "2026-05",
       "last_seen": "2026-07-22",
       "members": [
@@ -894,7 +840,61 @@
           "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
           "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
           "date": "2026-07-02",
+          "fresh": false
+        },
+        {
+          "title": "PawBench: benchmarking LLM x harness performance",
+          "url": "https://github.com/agentscope-ai/PawBench",
+          "date": "2026-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "agents",
+      "count": 7,
+      "recent": 3,
+      "sources": 6,
+      "momentum": 10.0,
+      "first_seen": "2026-05",
+      "last_seen": "2026-07-22",
+      "members": [
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
           "fresh": true
+        },
+        {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
+          "date": "2026-07-09",
+          "fresh": true
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        },
+        {
+          "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
+          "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
+          "date": "2026-07-02",
+          "fresh": false
+        },
+        {
+          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
+          "fresh": false
         },
         {
           "title": "PawBench: benchmarking LLM x harness performance",
@@ -908,9 +908,9 @@
       "topic": "ai-research",
       "tag": "harness",
       "count": 6,
-      "recent": 5,
+      "recent": 4,
       "sources": 6,
-      "momentum": 11.0,
+      "momentum": 10.0,
       "first_seen": "2026-05",
       "last_seen": "2026-07-22",
       "members": [
@@ -942,7 +942,7 @@
           "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
           "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
           "date": "2026-07-04",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "PawBench: benchmarking LLM x harness performance",
@@ -978,30 +978,6 @@
           "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
           "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
           "date": "2026-07-09",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "claude-code",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-06",
-      "last_seen": "2026-07-04",
-      "members": [
-        {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
-          "fresh": true
-        },
-        {
-          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-          "url": "https://github.com/omnigent-ai/omnigent",
-          "date": "2026-06",
           "fresh": true
         }
       ]
@@ -1075,6 +1051,30 @@
           "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
           "date": "2026-07-17",
           "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "claude-code",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-06",
+      "last_seen": "2026-07-04",
+      "members": [
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        },
+        {
+          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
+          "fresh": false
         }
       ]
     }

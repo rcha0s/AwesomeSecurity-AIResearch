@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** coding-agent harness design (first-party Anthropic practices)  
 **Source:** [@simonw](https://simonwillison.net/2026/Jul/21/cat-and-thariq/)  ·  **Author:** simonw  ·  **Published:** Jul 21, 2026  ·  **Retrieved:** 2026-07-26  
-**Scores:** 🆕 Newness 18 · ✨ Novelty 60 · 🎯 Relevance 90 · 🏛️ Credibility 75 · **Composite 60.75**  
+**Scores:** 🆕 Newness 12 · ✨ Novelty 60 · 🎯 Relevance 90 · 🏛️ Credibility 75 · **Composite 59.25**  
 **Tags:** `coding-agents`, `harness-design`, `tool-design`, `evals`, `system-prompt`, `prompt-injection`, `permissions`, `subagents`, `dogfooding`, `context-management`  
 **Verification:** ✓ independently verified · closest prior art: Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.
 

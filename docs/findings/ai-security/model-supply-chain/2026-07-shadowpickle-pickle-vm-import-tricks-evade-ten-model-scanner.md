@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Model Supply Chain  
 **Source:** [source](https://arxiv.org/abs/2607.17503)  ·  **Author:** Pradhan, Nambiar, Soremekun  ·  **Published:** Jul 20, 2026  ·  **Retrieved:** 2026-07-21  
-**Scores:** 🆕 Newness 18 · ✨ Novelty 68 · 🎯 Relevance 84 · 🏛️ Credibility 58 · **Composite 58.72**  
+**Scores:** 🆕 Newness 12 · ✨ Novelty 68 · 🎯 Relevance 84 · 🏛️ Credibility 58 · **Composite 57.22**  
 **Tags:** `model-supply-chain`, `pickle`, `deserialization`, `scanner-evasion`, `huggingface`  
 **Verification:** ✓ independently verified · closest prior art: Malicious pickles in ML model hubs are a well-established attack class (pickle RCE documented since at least 2022, incl. Rehberger's ML Attack Series). The delta is the specific external-module-import evasion primitive plus a measured evasion rate across ten scanners and an injectable benchmark, rather than a new concept.
 
