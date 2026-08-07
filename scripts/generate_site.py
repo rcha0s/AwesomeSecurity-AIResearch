@@ -308,32 +308,50 @@ TOPIC_EMOJI = {"ai-security": "🤖🛡️", "product-security": "🛡️", "ai-
 
 
 def _week_snapshot(curated_entries: list[dict], conf: c.Config) -> list[str]:
-    """This week's snapshot: curated findings published in the last snapshot_days,
-    each linking to both its writeup page and the original source article."""
+    """Landing-view snapshot: prefers the last snapshot_days, but if no
+    finding is that fresh (e.g. the ingest pipeline hasn't run recently),
+    falls back to the newest N regardless of window. An empty landing page
+    kills trust; showing 'the most recent things I have' is more honest
+    than 'nothing here.'"""
     fresh = [e for e in curated_entries if c.is_fresh(e, conf.snapshot_days)]
     ranked = rank(fresh, conf)[:TOP_N_LANDING]
+    fallback = False
+    if not ranked:
+        ranked = rank(list(curated_entries), conf)[:TOP_N_LANDING]
+        fallback = True
+
+    if fallback:
+        header = (
+            f"> The most recent curated findings we have (nothing new this "
+            f"{conf.snapshot_days}-day window). Each links to its writeup here **and** "
+            "the original source. For the full digest see the [newsletter](NEWSLETTER.md)."
+        )
+    else:
+        header = (
+            f"> The top curated findings published in the last {conf.snapshot_days} days. "
+            "Each links to its writeup here **and** the original source. For the full "
+            "digest see the [newsletter](NEWSLETTER.md)."
+        )
+
     out = [
-        "## This week's snapshot",
+        "## Latest findings",
         "",
-        f"> The top curated findings published in the last {conf.snapshot_days} days. Each entry is "
-        "the gist (what's new, why it matters, what to do), and links to both its writeup here "
-        "**and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).",
+        header,
         "",
     ]
     if not ranked:
         return out + [
-            "_No new curated findings this week. Browse the databases below or the "
-            "[latest newsletter](NEWSLETTER.md)._",
+            "_The pool is currently empty. Browse the [latest newsletter](NEWSLETTER.md) "
+            "or the [review queue](REVIEW.md)._",
             "",
         ]
-    for e in ranked:
-        s = entry_scores(e, conf)
+    for e in ranked[:5]:  # 5 keeps the landing view scannable — full list on the live site
         take = e.get("takeaway") or e.get("summary") or e.get("threat") or ""
         tname = c.TOPICS.get(e.get("topic", ""), {}).get("name", e.get("topic", ""))
         out.append(
-            f"- **[{e.get('title', '')}]({e['topic']}/{entry_relpath(e)})** · {tname} · "
-            f"{fmt_published(e)} · composite **{s['composite']}** · "
-            f"[source ↗]({e.get('source_url', '')})  \n  {c.clean_summary(take, 180)}"
+            f"- **[{e.get('title', '')}]({e['topic']}/{entry_relpath(e)})** · "
+            f"_{tname} · {fmt_published(e)}_  \n"
+            f"  {c.clean_summary(take, 180)}"
         )
     return out + [""]
 
@@ -390,88 +408,245 @@ def _databases_index(counts: dict[str, int]) -> list[str]:
     return lines
 
 
-def _how_it_works(conf: c.Config) -> list[str]:
+def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
+    """Reader-first README.
+
+    Old layout led with three sections of methodology prose before any
+    reader saw a single finding — good for credibility, terrible for
+    first-impression usability. This shape reverses it: a reader lands
+    on the pitch, immediately sees what's in the repo (findings, claims,
+    databases), and can drill into methodology if they care.
+
+    The methodology / honesty content is preserved verbatim, just moved
+    inside a collapsible <details> block so it doesn't push the actual
+    content below the fold."""
+    counts = {
+        t: sum(1 for e in c.load_pool(t)["entries"] if c.is_curated(e, conf)) for t in c.TOPICS
+    }
+    total = sum(counts.values())
+
+    # --- Header + pitch --------------------------------------------------
+    out = [
+        "# Awesome Security & AI Research",
+        "",
+        '<p align="center">'
+        '<a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">'
+        '<img src="docs/og.png" alt="Awesome Security & AI Research - a weekly, source-cited '
+        'briefing" width="820"></a></p>',
+        "",
+        "> **A weekly, source-cited briefing on AI security, product security, and applied "
+        "AI research** — every finding vetted, distilled to one lesson, and filed by field. "
+        "A [standing-claims ledger](claims/README.md) tracks what the field currently believes "
+        "and what it stopped believing, with the date and reason each answer fell.",
+        "",
+        f"![Updated](https://img.shields.io/badge/updated-{now.replace('-', '--')}-1f6feb) "
+        f"![Vetted findings](https://img.shields.io/badge/vetted-{total}-2da44e) "
+        f"![Window](https://img.shields.io/badge/findings_window-last_{conf.max_age_days}_days-bf8700) "
+        "![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) "
+        "![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)",
+        "",
+        "<h3 align=\"center\">"
+        "<a href=\"https://rcha0s.github.io/AwesomeSecurity-AIResearch/\">"
+        "Read the live briefing &#8594;</a></h3>",
+        "",
+        "The live site is the best read — one page for the week's news, another for "
+        "standing claims, a searchable index for every finding. This README mirrors the "
+        "same data for readers who prefer GitHub.",
+        "",
+        "---",
+        "",
+    ]
+
+    # --- What's in the repo, right now ----------------------------------
+    # The reader sees content before they see methodology. If the pool is
+    # empty, _week_snapshot falls back to the newest N and says so
+    # honestly — a landing view with actual findings, not a hollow
+    # "nothing this week" placeholder that erodes trust in the pitch.
+    out += _week_snapshot(curated_entries, conf)
+    out += _databases_index(counts)
+    out += _claims_index()
+
+    # --- Contributing signpost ------------------------------------------
+    out += [
+        "---",
+        "",
+        "## Contribute",
+        "",
+        "The repo grows two ways:",
+        "",
+        "- **Suggest a source.** The [source-scout agent](.github/workflows/source-scout.yml) "
+        "runs daily and proposes new publishers via PR. See a source we're missing? Open an "
+        "issue with the feed URL and we'll consider it — or run `python scripts/add_source.py` "
+        "if you're set up locally.",
+        "- **Flag a bad claim.** The claim ledger is a living record; if you have evidence that "
+        "refines or refutes a current claim, open an issue with the source. See "
+        "[CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow and the maintainer command "
+        "reference.",
+        "",
+        "Automation and dev workflow: [AGENTS.md](AGENTS.md). Local setup for the scan "
+        "pipeline: [PUBLISH.md](PUBLISH.md).",
+        "",
+    ]
+
+    # --- Methodology (collapsed by default) -----------------------------
+    # Everything that follows is credibility content — argued once for
+    # readers who care, folded behind a <details> so it doesn't push the
+    # actual findings below the fold.
+    out += _methodology_details(conf)
+
+    # --- License --------------------------------------------------------
+    out += [
+        "## License",
+        "",
+        "Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research "
+        "remains the property of its original authors — every finding cites its source.",
+        "",
+        f"<sub>Generated by <code>scripts/generate_site.py</code> on {now}. "
+        "Edit the pools in <code>data/</code> and regenerate — do not hand-edit rendered "
+        "files.</sub>",
+        "",
+    ]
+    return "\n".join(out)
+
+
+def _methodology_details(conf: c.Config) -> list[str]:
+    """The full pitch, methodology, and honesty content wrapped in a
+    <details> block so GitHub renders it as a click-to-expand section.
+    Not hidden — one click reveals the whole argument for anyone who
+    wants to know how the data is produced."""
     return [
-        "## How it works",
+        "<details>",
+        "<summary><strong>How this is built</strong> "
+        "(methodology, source pipeline, and the limits of automated review — click to expand)"
+        "</summary>",
+        "",
+        "### Why this exists",
+        "",
+        "Security + AI is producing more research than any practitioner can read. "
+        "Aggregator sites solve the *coverage* problem — they list every paper — and leave "
+        "you the *judgment* problem: which claims are load-bearing, which have been quietly "
+        "refuted, which are new work vs. a restatement of prior art. A newsletter, an "
+        "awesome-list, or a Twitter feed can tell you what was published this week. None of "
+        "them can tell you **what the field currently believes and what it stopped believing**.",
+        "",
+        "This repo tries. Every finding is one article distilled to a transferable lesson; "
+        "every lesson maps to a durable **claim** in the ledger; claims retire when better "
+        "evidence arrives, and the old claim stays visible with the date and reason it fell. "
+        "You get both surfaces: the week's news, and a living record of what to actually "
+        "believe.",
+        "",
+        "### Methodology",
+        "",
+        "Each choice is a response to a specific failure mode we've seen in the "
+        "security-research firehose:",
+        "",
+        "- **Two tracks, one gate each.** *Research* (papers, harness design, capability "
+        "shifts) passes a novelty + grounding gate: the lesson excerpt must be found "
+        "verbatim in the source, and a separate model pass must not refute the claim. *News* "
+        "(capability announcements, spec changes, incident disclosures) passes a trust + "
+        "scope gate: fresh, from a first-party or high-trust source, and on-topic per a "
+        "shared classifier with a hard deny list for stock/consumer/business puff. Novelty "
+        "is the wrong rubric for a Kimi K3 release note — trust is.",
+        "- **Grounded excerpts, not paraphrased summaries.** Every claim in a research "
+        "finding cites a literal quote from the source; the pipeline re-verifies the quote "
+        "against the fetched article at build time. An excerpt that doesn't match kicks the "
+        "finding into [REVIEW.md](REVIEW.md) instead of publishing it as fact. Follows the "
+        "same discipline as evidence-based systematic reviews (Cochrane, PRISMA): the quote "
+        "is the audit trail.",
+        "- **Adversarial verification pass.** After the first analysis, a fresh subagent "
+        "gets only the raw source and the extracted claims — no scores, no prior context — "
+        "and tries to refute. Novelty is re-scored as *claim-level delta vs. named prior "
+        "art*, not text similarity. The **lower** of the two novelty scores wins. This "
+        "mirrors the \"adversarial collaboration\" pattern from meta-science (Mellers, "
+        "Tetlock 2019) — a single scorer overrates their own work; two independent scorers, "
+        "one incentivized to refute, produce calibrated estimates.",
+        "- **Story-key dedup across the news lane.** Same story on three sites (vendor blog, "
+        "HN thread, HuggingFace mirror) collapses to one row with the others as "
+        "corroborators. Story key is *canonical URL + title trigrams + entity set*, "
+        "two-of-three collision rule, 30-day lookback across every pool. Prevents the "
+        "newsletter effect where the same claim shows up three times because three outlets "
+        "covered it.",
+        "- **Claim supersession is a first-class relation, not a delete.** When new evidence "
+        "retires an old answer, both the old and new claim persist. The retired one carries "
+        "`superseded_by`, `superseded_on`, and `supersession_reason`; the new one carries "
+        "`supersedes`. The renderer pushes retired claims to the bottom of the page with "
+        "their reason visible. This is the shape a "
+        "[Popper-style falsificationist record](https://plato.stanford.edu/entries/popper/#Fal) "
+        "has always wanted; git history is not enough because it doesn't render.",
+        "- **Ranked, self-adjusting source registry.** Every source has a manual authority "
+        "tier, a log-scaled reach signal (followers/stars), and a Bayesian-smoothed "
+        "hit-rate (curated/ingested over the source's lifetime). A source that trended once "
+        "but never yields curated findings *drops* in ranking; a quiet source with "
+        "consistently-vetted work rises. Prevents the awesome-list rot problem where every "
+        "source is equal forever.",
+        "- **A source-scout agent proposes new sources; a human approves.** A daily job "
+        "discovers publishers via HN top-of-window trending, qualifies them by back-catalog "
+        "classifier hit-rate (≥40% on-topic over the last 25 items), and opens a PR against "
+        "main. The human merges or closes; closing can add the domain to a durable "
+        "blocklist that prevents re-proposal. No auto-apply. See "
+        "[.github/workflows/source-scout.yml](.github/workflows/source-scout.yml).",
+        "",
+        "### What we deliberately don't do",
+        "",
+        "- **We don't score \"quality\" holistically.** Every axis (newness, novelty, "
+        "relevance, credibility) is scored separately with a written rubric. An LLM asked "
+        "\"how good is this paper\" is systematically biased toward long, elaborate output "
+        "([Zheng et al., 2023](https://arxiv.org/abs/2306.05685) — LLM-as-judge prefers "
+        "longer answers independent of quality); we don't ask.",
+        "- **We don't dedupe by URL alone.** URL dedup misses same-story-different-URL, "
+        "which is where a news feed spams you. Title-trigram + entity-set matching catches "
+        "those; the trade-off is a slightly more complex collision test.",
+        "- **We don't do sentiment or engagement scoring.** A story with 1000 HN upvotes "
+        "isn't automatically more relevant to defenders than one with 40. Engagement gates "
+        "ingestion (velocity signal), never curation.",
+        "- **We don't paraphrase what wasn't said.** If a source doesn't state a lesson "
+        "directly, the finding gets `lessons: []` and lives on its takeaway alone. News "
+        "items normally ship this way — the event is the point.",
+        "",
+        "### How the data flows",
         "",
         "```",
-        "X / GitHub / YouTube / LinkedIn / articles / RSS   (ranked source registry)",
+        "X / GitHub / YouTube / articles / RSS   (ranked source registry)",
         "  └─ ingest + Jina Reader (clean text)      → data/candidates.json",
         "     └─ analyze  (extract teachable lessons · score newness/novelty/relevance)",
         "        └─ curate (vetted-only gate) → merge into the 3 topic pools → re-rank",
         "           ├─ reconcile against data/claims.json  (new claim? supersedes an old one?)",
-        "           └─ render  README · topic pages · claims · newsletter · trends · review · skills",
+        "           └─ render  README · topic pages · claims · newsletter · trends · review",
         "```",
         "",
-        "- **Latest only.** Findings older than about "
-        f"{conf.max_age_days} days age out to [`data/archive.json`](data/archive.json); the "
-        f"snapshot at the top is the last {conf.snapshot_days} days.",
-        "- **Vetted only.** A finding is shown only if it clears the novelty and relevance floor "
-        "and passes verification; the rest wait in [REVIEW.md](REVIEW.md). Nothing is deleted.",
-        "- **Ranked sources.** Approved sources live in a registry and self-rank by how often they "
-        "yield curated findings (tier, reach, and hit-rate).",
-        "- **Emerging trends.** Tagged findings are clustered over time to surface waves early "
-        "([TRENDS.md](TRENDS.md)).",
+        f"- **Latest only.** Findings older than {conf.max_age_days} days age out to "
+        "[`data/archive.json`](data/archive.json); the snapshot at the top is the last "
+        f"{conf.snapshot_days} days when we have fresh material, otherwise the most recent "
+        "we have.",
+        "- **Vetted only.** Everything that fails the gate waits in [REVIEW.md](REVIEW.md). "
+        "Nothing is deleted.",
+        "- **Emerging trends.** Tagged findings are clustered over time to surface waves "
+        "early ([TRENDS.md](TRENDS.md)).",
         "",
-    ]
-
-
-def _honesty(conf: c.Config) -> list[str]:
-    return [
-        "## How the data is produced, and its limits",
+        "### Honest limits",
         "",
-        "Being upfront, because a research tracker lives or dies on trust:",
+        "A research tracker lives or dies on trust, so — being upfront:",
         "",
-        "- **What runs where.** Ingestion and the LLM analysis run locally (the `/research-scan` "
-        "and `/add-resource` skills, plus an X account for social sources). The GitHub Actions job "
-        "only re-ranks the committed pools and regenerates the rendered files. In practice the "
-        "repo is refreshed weekly by the maintainer; it is not reproducible from a clean clone "
-        "without the local pipeline and credentials.",
-        f"- **Windows.** All three finding tracks share one rolling window of about "
-        f"{conf.max_age_days} days (the this-week snapshot is the last {conf.snapshot_days}); older "
-        "findings move to [`data/archive.json`](data/archive.json). The claim ledger is durable and "
-        "never ages out, so it reaches back years. Findings tell you what was published lately; "
-        "claims tell you what to believe now.",
-        "- **What \"vetted\" and \"checked\" mean.** A finding is curated only if it clears the "
-        "novelty and relevance bars, its lesson excerpt is found in the source text (grounding), "
-        "and a separate model pass does not refute it. That is automated review with a mechanical "
-        "grounding check, not human verification. Treat it as a strong filter, not a guarantee.",
-        "- **Source caveat.** Social ingestion leans on an X account and is inherently fragile; "
-        "when it stalls, the RSS, GitHub, arXiv, and advisory feeds keep the pipeline running.",
+        "- **What runs where.** Ingestion and the LLM analysis run locally (the "
+        "`/research-scan` and `/add-resource` skills, plus an X account for social "
+        "sources). The GitHub Actions job only re-ranks the committed pools and regenerates "
+        "the rendered files. In practice the repo is refreshed weekly by the maintainer; it "
+        "is not reproducible from a clean clone without the local pipeline and credentials.",
+        f"- **Windows.** All three finding tracks share one rolling window of "
+        f"{conf.max_age_days} days (the snapshot is the last {conf.snapshot_days}); older "
+        "findings move to [`data/archive.json`](data/archive.json). The claim ledger is "
+        "durable and never ages out. Findings tell you what was published lately; claims "
+        "tell you what to believe now.",
+        "- **What \"vetted\" and \"checked\" mean.** A finding is curated only if it clears "
+        "the novelty and relevance bars, its lesson excerpt is found in the source text "
+        "(grounding), and a separate model pass does not refute it. That is automated "
+        "review with a mechanical grounding check, not human verification. Treat it as a "
+        "strong filter, not a guarantee.",
+        "- **Source caveat.** Social ingestion leans on an X account and is inherently "
+        "fragile; when it stalls, the RSS, GitHub, arXiv, and advisory feeds keep the "
+        "pipeline running.",
         "",
-    ]
-
-
-def _how_to_use() -> list[str]:
-    return [
-        "## How to use this repo",
-        "",
-        "| I want to… | Do this |",
-        "| --- | --- |",
-        "| Read the latest, curated | Skim the snapshot above → open a topic database or "
-        "[the newsletter](NEWSLETTER.md) |",
-        "| Know what to actually DO right now | Open the [claim ledger](claims/README.md) - "
-        "current answers on top, retired ones underneath with why they fell |",
-        "| Record a new standing answer | `python scripts/add_claim.py new <id> --topic … "
-        '--statement … --evidence "supports|<url>|<title>|<date>"` |',
-        "| Retire an answer the field moved past | `python scripts/add_claim.py supersede "
-        '<old-id> <new-id> --reason "…"` (add `--refuted` if it was simply wrong) |',
-        "| Track a new source | `python scripts/add_source.py <type> <handle> --topics …` "
-        "(or the `/add-source` skill) - X user, blog, newsletter, GitHub user/query, YouTube |",
-        "| Capture one article now | `python scripts/add.py <url>` then the `/add-resource` skill "
-        "- returns summary + takeaway + action and files it |",
-        "| Run a full scan | the `/research-scan` skill (self-pace with `/loop 12h /research-scan`) |",
-        "| Run it daily on autopilot | `powershell -File scripts/install_daily_scan.ps1` - a Scheduled "
-        "Task ingests, runs Claude headless to analyze+verify, and opens a PR each day (never "
-        "auto-merges). Remove with `-Uninstall`. |",
-        "| Regenerate the site | `rerank.py` → `generate_site.py` → `generate_claims.py` → "
-        "`trends.py` → `generate_newsletter.py` → `generate_review.py` |",
-        "",
-        "**Setup** (Agent Reach + burner X account in WSL2, one-time): see "
-        "[PUBLISH.md](PUBLISH.md). **Contributing / how findings are structured:** "
-        "[CONTRIBUTING.md](CONTRIBUTING.md). **Automation & dev workflow:** [AGENTS.md](AGENTS.md).",
-        "",
-        "## Repo layout",
+        "### Repo layout",
         "",
         "```",
         "data/{ai-security,product-security,ai-research}.json  the 3 rolling pools (source of truth)",
@@ -481,79 +656,12 @@ def _how_to_use() -> list[str]:
         ".claude/skills/                                        /research-scan /add-resource /add-source",
         "ai-security/ product-security/ ai-research/            rendered per-topic pages (generated)",
         "claims/                                                rendered claim ledger (generated)",
-        "README.md NEWSLETTER.md TRENDS.md REVIEW.md              generated - do not hand-edit",
+        "README.md NEWSLETTER.md TRENDS.md REVIEW.md            generated — do not hand-edit",
         "```",
         "",
-    ]
-
-
-def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
-    counts = {
-        t: sum(1 for e in c.load_pool(t)["entries"] if c.is_curated(e, conf)) for t in c.TOPICS
-    }
-    total = sum(counts.values())
-    out = [
-        "# Awesome Security & AI Research",
-        "",
-        '<p align="center">'
-        '<a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">'
-        '<img src="docs/og.png" alt="Awesome Security & AI Research - a weekly, source-cited '
-        'briefing" width="820"></a></p>',
-        "",
-        "> **A weekly, source-cited briefing on AI security, product security, and applied AI "
-        "research.** Every week it scans a ranked set of sources (X, GitHub, YouTube, blogs, "
-        "newsletters, RSS), keeps only the findings that teach something you can act on, and files "
-        "each one under **AI Security**, **Product Security**, or **AI Research** with a one-line "
-        "lesson and a concrete next step.",
-        "",
-        f"![Updated](https://img.shields.io/badge/updated-{now.replace('-', '--')}-1f6feb) "
-        f"![Vetted findings](https://img.shields.io/badge/vetted-{total}-2da44e) "
-        f"![Window](https://img.shields.io/badge/findings_window-last_{conf.max_age_days}_days-bf8700) "
-        "![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) "
-        "![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)",
-        "",
-        "<h3 align=\"center\">"
-        "<a href=\"https://rcha0s.github.io/AwesomeSecurity-AIResearch/\">Read this week's briefing "
-        "&#8594;</a></h3>",
-        "",
-        "The live site opens on this week's briefing (the lead finding, what's trending, what's "
-        "most novel, and the strongest research in each field), then lets you browse every "
-        "subfield, filter the claim ledger, and search the full feed. The markdown below is the "
-        "same data, readable on GitHub.",
-        "",
-        "### What makes it different",
-        "",
-        "- **Findings age out; claims don't.** A finding is one article, good for about a month. A "
-        "**claim** is a durable answer to a recurring question (\"which serialization should agents "
-        "use?\"). The [claim ledger](claims/README.md) keeps the current answer on top and every "
-        "answer it replaced underneath, with the date and reason it was retired, so you can see "
-        "what the field stopped believing and why.",
-        "- **One lesson, one action.** Nothing here is a link dump. Each finding is distilled to "
-        "the transferable lesson and the concrete thing to do about it.",
-        "- **Vetted, not scraped.** A finding is shown only after it clears a novelty and relevance "
-        "bar, its lesson excerpt is grounded against the source text, and a separate model pass "
-        "cross-checks the claim. This is automated review, not human review; everything that fails "
-        "waits in the [review queue](REVIEW.md), and nothing is deleted.",
-        "- **Every claim cites its sources.** No anonymous assertions; follow the evidence yourself.",
+        "</details>",
         "",
     ]
-    out += _week_snapshot(curated_entries, conf)
-    out += _claims_index()
-    out += _databases_index(counts)
-    out += _how_it_works(conf)
-    out += _honesty(conf)
-    out += _how_to_use()
-    out += [
-        "## License",
-        "",
-        "Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains "
-        "the property of its original authors - every finding cites its original source.",
-        "",
-        f"<sub>Generated by <code>scripts/generate_site.py</code> on {now}. "
-        "Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>",
-        "",
-    ]
-    return "\n".join(out)
 
 
 def main() -> int:
