@@ -1394,7 +1394,7 @@
     "rank": 80.0,
     "added": "2026-08-06",
     "active": true,
-    "notes": "Model release ecosystem — includes Kimi/Qwen/Llama mirrors",
+    "notes": "Model release ecosystem \u2014 includes Kimi/Qwen/Llama mirrors",
     "strict": false
   },
   {
@@ -1419,7 +1419,7 @@
     "rank": 80.0,
     "added": "2026-08-06",
     "active": true,
-    "notes": "MCP spec release feed — every version bump lands here",
+    "notes": "MCP spec release feed \u2014 every version bump lands here",
     "strict": false
   },
   {
@@ -1474,7 +1474,7 @@
     "id": "rss:https-www-theregister-com-security-headlines-ato",
     "type": "rss",
     "handle": "https://www.theregister.com/security/headlines.atom",
-    "name": "The Register — Security",
+    "name": "The Register \u2014 Security",
     "url": "https://www.theregister.com/security/headlines.atom",
     "topics": [
       "product-security",
@@ -1542,7 +1542,7 @@
     "rank": 70.0,
     "added": "2026-08-06",
     "active": true,
-    "notes": "Security journalism — must classify on-topic per item",
+    "notes": "Security journalism \u2014 must classify on-topic per item",
     "strict": false
   },
   {
@@ -1569,5 +1569,84 @@
     "active": true,
     "notes": "Weekly security newsletter by Clint Gibler; high signal",
     "strict": false
+  },
+  {
+    "id": "rss:https---github-com-modelcontextprotocol-specific",
+    "type": "rss",
+    "handle": "https://github.com/modelcontextprotocol/specification/releases.atom",
+    "name": "MCP Specification Releases",
+    "url": "https://github.com/modelcontextprotocol/specification/releases",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [
+      "AI Security"
+    ],
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-08-09",
+    "active": true,
+    "notes": "MCP protocol releases \u2014 spec changes fire first here.",
+    "strict": false,
+    "track": "research",
+    "scope": "ai"
+  },
+  {
+    "id": "rss:https---invariantlabs-ai-blog-rss-xml",
+    "type": "rss",
+    "handle": "https://invariantlabs.ai/blog/rss.xml",
+    "name": "Invariant Labs Blog",
+    "url": "https://invariantlabs.ai/blog",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [
+      "AI Security"
+    ],
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-08-09",
+    "active": true,
+    "notes": "Tool-poisoning + MCP security research from Invariant Labs.",
+    "strict": false,
+    "track": "research",
+    "scope": "ai"
+  },
+  {
+    "id": "github_query:mcp-protocol-or-mcp-specification",
+    "type": "github_query",
+    "handle": "mcp protocol OR mcp specification",
+    "name": "MCP protocol / spec queries",
+    "url": null,
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [
+      "AI Security"
+    ],
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-08-09",
+    "active": true,
+    "notes": "MCP protocol changes \u2014 low star floor because spec repos are small.",
+    "strict": false,
+    "track": "research",
+    "scope": "ai",
+    "min_stars": 10
   }
 ]

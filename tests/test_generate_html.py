@@ -112,6 +112,46 @@ def test_main_succeeds_with_an_empty_ledger(sandbox):
     assert (sandbox / "docs" / "index.html").exists()
 
 
+# --- Refuter-panel caveats --------------------------------------------------
+def test_finding_row_omits_caveats_when_entry_has_none(sandbox):
+    """Default entries have no caveats — the field must be absent or empty so
+    the render layer doesn't render an empty chip block."""
+    data = payload_of(sandbox, entries=[make_entry(title="Uncaveated")])
+    row = data["findings"][0]
+    assert row.get("caveats", []) == []
+
+
+def test_finding_row_carries_prior_art_caveat(sandbox):
+    """When drift review has attached prior-art/scope caveats to the entry,
+    the finding row surfaces them so the render layer can chip them."""
+    entry = make_entry(
+        title="Restated result",
+        caveats=[{"lens": "prior-art", "note": "cf. Zhao 2024"}],
+    )
+    data = payload_of(sandbox, entries=[entry])
+    row = data["findings"][0]
+    assert len(row["caveats"]) == 1
+    assert row["caveats"][0]["lens"] == "prior-art"
+    assert row["caveats"][0]["note"] == "cf. Zhao 2024"
+
+
+def test_finding_row_drops_malformed_caveats(sandbox):
+    """A malformed caveat entry (not a dict, or missing lens) is dropped so a
+    stale field can't crash the render."""
+    entry = make_entry(
+        title="Bad caveat",
+        caveats=[
+            {"lens": "scope", "note": "narrow"},
+            "not a dict",
+            {"note": "missing lens"},
+        ],
+    )
+    data = payload_of(sandbox, entries=[entry])
+    row = data["findings"][0]
+    assert len(row["caveats"]) == 1
+    assert row["caveats"][0]["lens"] == "scope"
+
+
 # --- Detail modal wiring ----------------------------------------------------
 def test_finding_row_carries_detail_path(sandbox):
     """The modal fetches by detail_path; if it's missing, clicks fall back to

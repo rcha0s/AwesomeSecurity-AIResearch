@@ -76,6 +76,26 @@ def _round(value) -> int:
         return 0
 
 
+CAVEAT_LENSES = ("correctness", "prior-art", "scope")
+
+
+def _clean_caveats(raw: object) -> list[dict]:
+    """Only well-formed {lens, note} pairs survive; malformed entries dropped
+    so a stale field can't crash the render. Correctness caveats are permitted
+    on the wire but the refuter panel emits none — the veto handles them."""
+    if not isinstance(raw, list):
+        return []
+    out: list[dict] = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        lens = item.get("lens")
+        if lens not in CAVEAT_LENSES:
+            continue
+        out.append({"lens": lens, "note": str(item.get("note") or "")})
+    return out
+
+
 def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
     """The subset of a pool entry the site actually renders."""
     scores = entry.get("scores") or {}
@@ -92,6 +112,7 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
         "composite": c.entry_composite(entry, conf),
         "source_name": entry.get("source_name", ""),
         "tags": entry.get("tags") or [],
+        "caveats": _clean_caveats(entry.get("caveats")),
         "scores": {
             "novelty": _round(scores.get("novelty")),
             "newness": _round(scores.get("newness")),
