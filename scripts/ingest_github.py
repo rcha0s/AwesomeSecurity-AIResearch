@@ -135,6 +135,22 @@ def query_for_source(source: dict) -> str:
     return source["handle"]
 
 
+def min_stars_for(source: dict, *, default: int) -> int:
+    """Effective star floor for a source. Per-source `min_stars` wins over the
+    global default; a malformed override falls back rather than crashing the run.
+
+    Motivated by MCP-focused queries: protocol changes often land in low-star
+    repos (a 5-star spec repo is legitimate), so those sources declare
+    `min_stars: 10` while general queries keep the 40-star noise gate.
+    """
+    override = source.get("min_stars")
+    if override is None:
+        return default
+    if not isinstance(override, int) or isinstance(override, bool):
+        return default
+    return override
+
+
 def collect(cfg: dict, per_query: int | None, fetch: bool) -> list[dict]:
     gh_cfg = cfg.get("github", {})
     sources = sr.sources_of_type("github_query") + sr.sources_of_type("github_user")
@@ -142,7 +158,7 @@ def collect(cfg: dict, per_query: int | None, fetch: bool) -> list[dict]:
         print("   (no github_query/github_user sources registered)")
         return []
     conf = c.load_config()
-    min_stars = gh_cfg.get("min_stars", 0)
+    default_min_stars = gh_cfg.get("min_stars", 0)
     limit = per_query or gh_cfg.get("per_query", 8)
     max_chars = conf.limits.get("article_chars", 20000)
     cutoff = datetime.now(UTC) - timedelta(days=conf.max_age_days)
@@ -151,9 +167,10 @@ def collect(cfg: dict, per_query: int | None, fetch: bool) -> list[dict]:
     out: list[dict] = []
     for source in sources:
         query = query_for_source(source)
-        print(f"-> gh search: {query} (>= {min_stars} stars, pushed > {active_after})")
+        star_floor = min_stars_for(source, default=default_min_stars)
+        print(f"-> gh search: {query} (>= {star_floor} stars, pushed > {active_after})")
         for repo in search_repos(query, limit, active_after):
-            if repo.get("stargazersCount", 0) < min_stars:
+            if repo.get("stargazersCount", 0) < star_floor:
                 continue
             out.append(repo_to_candidate(repo, source, fetch, max_chars))
     return out
