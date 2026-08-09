@@ -273,6 +273,45 @@ def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
     return written
 
 
+def lessons_index(conf: c.Config, snapshot_days: int) -> list[dict]:
+    """A flat list of every lesson across the curated pool.
+
+    Each lesson carries the finding it came from (title + detail_path + url),
+    the topic, and any related_claims the analyzer surfaced, so the lessons
+    view can render standalone cards that click through to (a) the finding
+    detail modal and (b) the source article. Lessons without an excerpt are
+    dropped — they can't be defended and shouldn't reach the view."""
+    out: list[dict] = []
+    for topic in c.TOPICS:
+        for entry in c.load_pool(topic)["entries"]:
+            if not c.is_curated(entry, conf):
+                continue
+            row = finding_row(entry, conf, snapshot_days)
+            for lesson in entry.get("lessons") or []:
+                if not isinstance(lesson, dict):
+                    continue
+                excerpt = lesson.get("excerpt") or ""
+                if not excerpt:
+                    continue
+                out.append(
+                    {
+                        "point": lesson.get("point") or "",
+                        "excerpt": excerpt,
+                        "confidence": lesson.get("confidence"),
+                        "grounded": lesson.get("grounded"),
+                        "finding_id": row["id"],
+                        "finding_title": row["title"],
+                        "topic": row["topic"],
+                        "domain": row["domain"],
+                        "url": row["url"],
+                        "detail_path": row["detail_path"],
+                        "published": row["published"],
+                        "related_claims": list(entry.get("related_claims") or []),
+                    }
+                )
+    return out
+
+
 def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
     snapshot_days = conf.snapshot_days
     trends = c.load_json(c.DATA_DIR / "trends.json", {}) or {}
@@ -295,6 +334,7 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "claims": cl.all_claims(ledger),
         "findings": curated_findings(conf, snapshot_days),
         "editorial": editorial_rows(conf, snapshot_days),
+        "lessons": lessons_index(conf, snapshot_days),
         "trends": {t: trends.get(t, []) for t in c.TOPICS},
     }
 

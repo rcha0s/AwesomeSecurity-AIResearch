@@ -262,6 +262,11 @@
     background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
   .chip.fresh { color: #fff; background: var(--accent); border-color: var(--accent);
     font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: .06em; }
+  /* Caveat chips surface refuter-panel prior-art / scope concerns without
+     changing a claim's status. Warm color signals "read this before citing"
+     without shouting; users hover for the specific note. */
+  .chip.caveat { color: var(--warn, #915a00); border-color: color-mix(in srgb, var(--warn, #915a00) 30%, var(--rule));
+    background: color-mix(in srgb, var(--warn, #915a00) 8%, var(--card)); cursor: help; }
   .chips { display: inline-flex; flex-wrap: wrap; gap: 5px; }
 
   .why { font-size: 14px; color: var(--ink-2); margin: 6px 0 0; line-height: 1.5; }
@@ -487,6 +492,7 @@
     <button class="vtab" role="tab" data-view="week" aria-selected="true">Briefing</button>
     <button class="vtab" role="tab" data-view="fields">Fields <span class="ct" id="ct-fields"></span></button>
     <button class="vtab" role="tab" data-view="claims">Claims ledger <span class="ct" id="ct-claims"></span></button>
+    <button class="vtab" role="tab" data-view="lessons">Lessons <span class="ct" id="ct-lessons"></span></button>
     <button class="vtab" role="tab" data-view="feed">All findings <span class="ct" id="ct-feed"></span></button>
   </nav>
 
@@ -494,6 +500,7 @@
     <section class="view" id="view-week" role="tabpanel"></section>
     <section class="view" id="view-fields" role="tabpanel" hidden></section>
     <section class="view" id="view-claims" role="tabpanel" hidden></section>
+    <section class="view" id="view-lessons" role="tabpanel" hidden></section>
     <section class="view" id="view-feed" role="tabpanel" hidden></section>
   </main>
 
@@ -564,11 +571,26 @@
   }
   function src(f) { return f.source_name || host(f.url) || "source"; }
 
+  // Caveat chips render prior-art / scope concerns surfaced by the refuter
+  // panel. Correctness caveats do exist on the wire but the veto handles them
+  // — no chip needed, since a vetoed claim already changed status. Note goes
+  // in the title attribute so hover reveals the specific concern.
+  function caveatChips(f) {
+    if (!f || !f.caveats || !f.caveats.length) return "";
+    return f.caveats.map(function (cv) {
+      var label = cv.lens === "prior-art" ? "prior art" : cv.lens; // human-readable
+      return '<span class="chip caveat" data-lens="' + esc(cv.lens) +
+        '" title="' + esc(cv.note || "") + '">' + esc(label) + '</span>';
+    }).join("");
+  }
+
   function articleHTML(f, opts) {
     opts = opts || {};
     var meta = [];
     if (opts.showTrack !== false) meta.push(topicPill(f.topic));
     if (f.fresh) meta.push('<span class="chip fresh">new</span>');
+    var caveats = caveatChips(f);
+    if (caveats) meta.push(caveats);
     if (f.domain) meta.push('<span>' + txt(f.domain) + '</span>');
     if (f.published) meta.push('<span>' + esc(fmtDate(f.published)) + '</span>');
     if (opts.showScore) meta.push('<span class="num">signal ' + Math.round(f.composite) + '</span>');
@@ -594,10 +616,13 @@
     var body = rows.map(function (f) {
       var date = f.published ? fmtDate(f.published) : '';
       var lesson = f.takeaway ? '<span class="sub">' + txt(f.takeaway) + '</span>' : '';
+      var caveats = caveatChips(f);
       return '<tr>' +
         '<td class="c-date">' + esc(date) + (f.fresh ? ' <span class="chip fresh" style="margin-left:4px">new</span>' : '') + '</td>' +
         '<td class="c-topic">' + topicPill(f.topic) + (f.domain ? '<div class="sub" style="color:var(--ink-3);font-size:12px;margin-top:3px">' + txt(f.domain) + '</div>' : '') + '</td>' +
-        '<td class="c-title">' + detailAnchor(f, txt(f.title)) + lesson + '</td>' +
+        '<td class="c-title">' + detailAnchor(f, txt(f.title)) +
+          (caveats ? ' <span class="chips" style="margin-left:4px">' + caveats + '</span>' : '') +
+          lesson + '</td>' +
         (opts.showScore ? '<td class="c-signal">' + Math.round(f.composite || 0) + '</td>' : '') +
         '<td class="c-src"><a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a></td>' +
         '</tr>';
@@ -1040,8 +1065,86 @@
     wrap.innerHTML = html;
   }
 
+  // ================= LESSONS =================
+  // Every lesson across the curated pool as a first-class row: what it says,
+  // where the source is, which finding it came from, which claim (if any)
+  // it bears on. Click the title to open the finding-detail modal.
+  var lessonsState = { topic: "all", q: "" };
+  function renderLessons() {
+    var root = $("#view-lessons");
+    var lessons = DATA.lessons || [];
+    var html = '<div class="sec-hd"><h2>Lessons</h2>' +
+      '<span class="note">' + lessons.length + ' distilled across every vetted finding</span></div>' +
+      '<p class="sec-lede">Each row is one takeaway pinned to a verbatim excerpt from its source, ' +
+      'so you can skim the field\'s answers without opening every finding.</p>';
+    html += '<div class="toolbar">' +
+      '<div class="fgroup search"><span>Search</span><input id="lessons-q" type="search" ' +
+      'placeholder="Search lessons, excerpts, findings..." value="' + esc(lessonsState.q) + '"></div></div>';
+    html += '<div class="toolbar" style="margin-top:-6px">';
+    html += filterGroup("Track", "ltopic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
+      return [t, tname(t)]; })), lessonsState.topic);
+    html += '</div><div id="lessons-list"></div>';
+    root.innerHTML = html;
+
+    $("#lessons-q").addEventListener("input", function () {
+      lessonsState.q = this.value; drawLessons();
+    });
+    root.querySelectorAll(".toolbar .opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        lessonsState.topic = b.dataset.v;
+        root.querySelectorAll('.opt[data-k="ltopic"]').forEach(function (o) {
+          o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
+        drawLessons();
+      });
+    });
+    drawLessons();
+  }
+
+  function drawLessons() {
+    var wrap = $("#lessons-list");
+    var q = lessonsState.q.trim().toLowerCase();
+    var rows = (DATA.lessons || []).filter(function (le) {
+      if (lessonsState.topic !== "all" && le.topic !== lessonsState.topic) return false;
+      if (!q) return true;
+      var hay = (le.point + " " + le.excerpt + " " + le.finding_title + " " + (le.domain || "")).toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+    // Newest lessons first — same convention as the feed's default.
+    rows.sort(function (a, b) { return (b.published || "").localeCompare(a.published || ""); });
+    if (!rows.length) {
+      wrap.innerHTML = '<p class="empty-note">No lessons match.</p>';
+      return;
+    }
+    var html = rows.map(function (le) {
+      // A synthetic finding-like object so detailAnchor can reuse the modal
+      // wiring; no new plumbing needed to click through to the source finding.
+      var fake = { id: le.finding_id, detail_path: le.detail_path,
+        url: le.url, title: le.finding_title };
+      var claimLinks = "";
+      if (le.related_claims && le.related_claims.length) {
+        claimLinks = '<p class="why" style="margin-top:6px">Related: ' +
+          le.related_claims.slice(0, 3).map(function (cid) {
+            return '<a class="link" href="#claims" data-goto="claims">' + esc(cid) + '</a>';
+          }).join(", ") + '</p>';
+      }
+      return '<article class="art">' +
+        '<h4>' + esc(le.point) + '</h4>' +
+        '<blockquote class="take" style="border-left:3px solid var(--rule);padding-left:10px;margin:6px 0 8px;color:var(--ink-2)">' +
+          '&ldquo;' + esc(le.excerpt) + '&rdquo;</blockquote>' +
+        claimLinks +
+        '<div class="meta">' + topicPill(le.topic) +
+          (le.domain ? '<span>' + txt(le.domain) + '</span>' : '') +
+          (le.published ? '<span>' + esc(fmtDate(le.published)) + '</span>' : '') +
+          'from ' + detailAnchor(fake, txt(le.finding_title)) +
+          '<a class="link" href="' + esc(le.url) + '">source &#8599;</a>' +
+        '</div></article>';
+    }).join("");
+    wrap.innerHTML = '<div class="artlist">' + html + '</div>';
+  }
+
   // ================= chrome =================
-  var VIEWS = { week: renderWeek, fields: renderFields, claims: renderClaims, feed: renderFeed };
+  var VIEWS = { week: renderWeek, fields: renderFields, claims: renderClaims,
+    lessons: renderLessons, feed: renderFeed };
   var drawn = {};
   function show(view) {
     if (!VIEWS[view]) view = "week";
@@ -1073,6 +1176,8 @@
     $("#fl-count").textContent = findingsN;
     var ctFields = $("#ct-fields"); if (ctFields) ctFields.textContent = domainsN;
     var ctClaims = $("#ct-claims"); if (ctClaims) ctClaims.textContent = live;
+    var ctLessons = $("#ct-lessons");
+    if (ctLessons) ctLessons.textContent = (DATA.lessons || []).length;
     var ctFeed = $("#ct-feed"); if (ctFeed) ctFeed.textContent = findingsN;
     var cells = [[fresh, "this week"], [findingsN, "vetted findings"],
       [live, "standing claims"], [reversals, "reversals"]];

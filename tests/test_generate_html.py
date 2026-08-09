@@ -112,6 +112,97 @@ def test_main_succeeds_with_an_empty_ledger(sandbox):
     assert (sandbox / "docs" / "index.html").exists()
 
 
+# --- Rendered chips + lessons view (MR-D) -----------------------------------
+def test_rendered_html_wires_caveat_chip_template(sandbox):
+    """The rendered site is a JS-driven SPA — the chip class + data-lens
+    attribute only exist client-side. Lock (a) the JS template that emits the
+    chip is present and (b) the caveat data reaches the embedded JSON payload,
+    so pytest alone can regress-test the wiring end-to-end."""
+    entry = make_entry(
+        title="Restated result",
+        caveats=[{"lens": "prior-art", "note": "cf. Zhao 2024"}],
+    )
+    payload_of(sandbox, entries=[entry])
+    html = gh.render(gh.build_payload(ledger_of(make_claim()), common.load_config(), NOW), NOW)
+    # (a) The JS uses this exact class name; CSS keys on it.
+    assert 'chip caveat' in html
+    # (b) The caveat lens + note reach the client. Extract the JSON payload and
+    # look for the caveat there, so a broken payload can't slip past.
+    block = re.search(
+        r'<script id="site-data" type="application/json">(.*?)</script>', html, re.S
+    )
+    data = json.loads(block.group(1).replace("<\\/", "</"))
+    row = data["findings"][0]
+    assert row["caveats"] == [{"lens": "prior-art", "note": "cf. Zhao 2024"}]
+
+
+def test_rendered_html_renders_lessons_view_tab(sandbox):
+    """MR-D adds a fifth top-level view — every lesson across the pool."""
+    html = gh.render(gh.build_payload(ledger_of(make_claim()), common.load_config(), NOW), NOW)
+    assert 'data-view="lessons"' in html
+    assert 'id="view-lessons"' in html
+
+
+def test_build_payload_carries_flat_lessons_list(sandbox):
+    """The lessons view reads DATA.lessons — a flat list across all curated
+    findings. Each lesson knows which finding it came from + how to open the
+    detail modal."""
+    entry = make_entry(
+        title="Compaction saves tokens",
+        lessons=[
+            {"point": "Summarize before re-injecting", "excerpt": "40% less", "confidence": 0.9}
+        ],
+    )
+    data = payload_of(sandbox, entries=[entry])
+    assert "lessons" in data
+    assert len(data["lessons"]) == 1
+    lesson = data["lessons"][0]
+    assert lesson["point"] == "Summarize before re-injecting"
+    assert lesson["excerpt"] == "40% less"
+    assert lesson["finding_title"] == "Compaction saves tokens"
+    assert lesson["topic"] == "ai-research"
+    assert lesson["detail_path"]  # nav target for modal
+    assert lesson["url"]  # source article
+
+
+def test_lessons_list_excludes_findings_held_for_review(sandbox):
+    """Held-back entries never render, so their lessons must not either —
+    otherwise the lessons view leaks un-vetted content."""
+    entry = make_entry(
+        title="Held back",
+        needs_review=True,
+        lessons=[{"point": "Hidden lesson", "excerpt": "x", "confidence": 0.5}],
+    )
+    data = payload_of(sandbox, entries=[entry])
+    assert data["lessons"] == []
+
+
+def test_lessons_carry_related_claims_when_present(sandbox):
+    """The lessons view links each lesson to its related claim (from the
+    analyzer's drift-review output) so users can jump to the standing answer."""
+    entry = make_entry(
+        related_claims=["toon-over-json-for-agent-io"],
+        lessons=[{"point": "p", "excerpt": "e", "confidence": 0.9}],
+    )
+    data = payload_of(sandbox, entries=[entry])
+    assert data["lessons"][0]["related_claims"] == ["toon-over-json-for-agent-io"]
+
+
+def test_lesson_without_excerpt_is_dropped(sandbox):
+    """A lesson without an excerpt isn't groundable and can't be defended —
+    don't surface it in the lessons view even though it might live on a
+    published finding."""
+    entry = make_entry(
+        lessons=[
+            {"point": "solid", "excerpt": "quote", "confidence": 0.9},
+            {"point": "empty", "excerpt": "", "confidence": 0.9},
+            {"point": "missing"},  # no excerpt key at all
+        ],
+    )
+    data = payload_of(sandbox, entries=[entry])
+    assert [le["point"] for le in data["lessons"]] == ["solid"]
+
+
 # --- Refuter-panel caveats --------------------------------------------------
 def test_finding_row_omits_caveats_when_entry_has_none(sandbox):
     """Default entries have no caveats — the field must be absent or empty so
