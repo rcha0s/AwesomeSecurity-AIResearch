@@ -146,12 +146,56 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    Only **vetted** findings (not `needs_review`, composite ≥ `curation.min_composite`) appear on
    the topic pages/newsletter; borderline ones land in `REVIEW.md` for a human to promote.
 
-8. **Commit (direct-PR mode).** Create a branch, commit the regenerated pools + site
-   (never commit `data/candidates.json`, `data/_raw/`, `data/analysis_out.json`, or
-   cookies), and open a PR. Then print a **run summary**: candidates ingested, entries
-   merged per topic, how many flagged needs_review, the top movers by composite, and
-   **every claim change** — added, evidence-attached, contested, superseded/refuted (with
-   the reason). Claim reversals are the headline of a scan; lead the summary with them.
+8. **Commit (direct-PR mode).** Idempotent PR against a fixed branch so
+   duplicate scans on the same day converge on one PR instead of
+   proliferating. The convention is **one refresh PR in flight at a
+   time** — this skill assumes it is the only writer and dedups against
+   the persisted database (`data/*.json` pool + archive + claim ledger)
+   rather than against other open PRs.
+
+   **Fixed branch:** `chore/research-scan-refresh`. Bot-owned,
+   disposable. Do NOT invent a per-run branch name.
+
+   **Files to stage** (never commit `data/candidates.json`,
+   `data/_raw/`, `data/analysis_out.json`, or cookies):
+
+   ```bash
+   git add data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md \
+     ai-security product-security ai-research claims docs
+   ```
+
+   **Early exit** — if `git status --porcelain` is empty after the
+   render pass in step 7, print `no drift; nothing to PR` and stop.
+   Do not create an empty commit.
+
+   **Push and PR** — mirror `.github/workflows/update.yml`'s pattern
+   exactly (proven idempotent; `--force-with-lease` fails when the
+   runner has no local ref, so plain `--force` on this bot-owned
+   branch is correct):
+
+   ```bash
+   branch="chore/research-scan-refresh"
+   git config user.name "github-actions[bot]"
+   git config user.email "github-actions[bot]@users.noreply.github.com"
+   git checkout -B "$branch"
+   git commit -m "chore: research scan refresh ($(date -u +%Y-%m-%d))"
+   git push --force origin "HEAD:$branch"
+
+   # Reuse an existing PR if one is already open on this branch;
+   # otherwise open a new one. Never open a second PR.
+   if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
+     gh pr create --base main --head "$branch" \
+       --title "chore: research scan refresh ($(date -u +%Y-%m-%d))" \
+       --body "<run summary — see below>"
+   fi
+   ```
+
+   **Run summary** (printed to the user AND set as the PR body): lead
+   with **every claim change** — added, evidence-attached, contested,
+   superseded/refuted, with the reason for each retirement. Claim
+   reversals are the headline of a scan. Then: candidates ingested,
+   entries merged per topic, how many flagged needs_review, and the
+   top movers by composite.
 
 ## Backfill mode
 
