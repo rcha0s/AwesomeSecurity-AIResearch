@@ -51,6 +51,18 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
        architecture for using LLMs/agents on real tasks. NOT model internals / ML-research.
    - **domain** — a short sub-grouping label within the topic (free text; see the topic's
      suggested `domains` in `common.py`, but you may coin a precise one).
+   - **cluster** — one of A–M from the 13-cluster Tier-1 taxonomy in
+     [`data/interests.yaml`](../../../data/interests.yaml), or `null` if the finding is
+     adjacent (out of Tier-1 scope). Read the YAML file before analyzing — the cluster
+     names, descriptions, and scope bullets are the shared vocabulary. Assign by
+     reasoning about the finding, not by keyword match. `null` is the honest answer for
+     items that surface in news but don't warrant claim work (frontier-model capability
+     shifts, policy/regulation, general appsec that doesn't intersect with agents).
+   - **related_claims** — up to **3** claim IDs from the existing ledger that this
+     finding bears on (supports, contests, refutes, or would supersede). Read the
+     ledger via `python scripts/add_claim.py list` before analyzing. Leave empty if the
+     finding stands alone. Extras beyond the cap of 3 belong in step 8's PR body under
+     an audit-of-cap section.
    - **summary** — 2-3 sentence teachable summary.
    - **lessons** — the concrete, transferable takeaways. Each: `{point, excerpt,
      confidence}` where `excerpt` is a short quote/anchor from the source and
@@ -84,10 +96,12 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
      `prior_art`. This makes the score an independent judgment, not a self-grade.
 
 5. **Emit** `data/analysis_out.json` — a JSON list of analyzed entries (each: at minimum
-   `topic, domain, title, source_url`, plus the fields above incl. `verified`, `prior_art`;
-   carry over `article_url, tweet_url, author, date, published, raw_path, discovered_via,
-   source_id, source_rank, source_topics` from the candidate). `source_id` lets
-   `merge_analysis.py` credit the source's hit-rate; `raw_path` lets it ground the excerpts.
+   `topic, domain, title, source_url, cluster, related_claims`, plus the fields above incl.
+   `verified`, `prior_art`; carry over `article_url, tweet_url, author, date, published,
+   raw_path, discovered_via, source_id, source_rank, source_topics` from the candidate).
+   `source_id` lets `merge_analysis.py` credit the source's hit-rate; `raw_path` lets it
+   ground the excerpts. `cluster` must be one of A–M or `null`; `related_claims` must be
+   a list of at most 3 claim IDs (schema enforced by `common.validate_entry`).
 
 6. **Reconcile the claim ledger** (`data/claims.json`) — the step that makes this a tracker
    of *what we believe* and not just *what was published*. A finding is one article; a **claim**

@@ -660,9 +660,18 @@ def review_reason(entry: dict, conf: Config) -> str:
 # (the analyzer picks a sensible one, so we don't enforce membership).
 REQUIRED_FIELDS = ("topic", "domain", "title", "source_url")
 
+# Drift review reads `related_claims` on every analyzed entry; capping at 3
+# bounds the wall-clock cost of the refuter panel per lesson.
+MAX_RELATED_CLAIMS = 3
+
 
 def validate_entry(entry: dict) -> list[str]:
     """Return a list of human-readable validation errors (empty == valid)."""
+    # Local import so `common` stays importable when `interests.py` is
+    # absent (bootstrap / migration order); the taxonomy is only needed
+    # at validate-time.
+    from interests import VALID_CLUSTERS
+
     errors: list[str] = []
     for field in REQUIRED_FIELDS:
         if not entry.get(field):
@@ -673,6 +682,21 @@ def validate_entry(entry: dict) -> list[str]:
     lessons = entry.get("lessons")
     if lessons is not None and not isinstance(lessons, list):
         errors.append("lessons must be a list")
+    if "cluster" in entry:
+        cluster = entry["cluster"]
+        if cluster is not None and cluster not in VALID_CLUSTERS:
+            errors.append(f"cluster must be one of A-M or null (got {cluster!r})")
+    if "related_claims" in entry:
+        related = entry["related_claims"]
+        if not isinstance(related, list):
+            errors.append("related_claims must be a list of claim IDs")
+        else:
+            if len(related) > MAX_RELATED_CLAIMS:
+                errors.append(
+                    f"related_claims exceeds cap of {MAX_RELATED_CLAIMS} (got {len(related)})"
+                )
+            if any(not isinstance(x, str) for x in related):
+                errors.append("related_claims entries must all be strings")
     return errors
 
 

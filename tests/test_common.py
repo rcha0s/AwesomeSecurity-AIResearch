@@ -120,6 +120,37 @@ def test_validate_entry_ok_and_errors():
     assert any("lessons must be a list" in e for e in c.validate_entry(bad))
 
 
+def test_validate_entry_accepts_optional_cluster_and_related_claims():
+    """MR-A extension: analyzer emits `cluster` (A-M or null) and
+    `related_claims` (list, max 3). Both are optional."""
+    ok = make_entry(cluster="B", related_claims=["some-claim-id", "other-id"])
+    assert c.validate_entry(ok) == []
+    # cluster: null is the "adjacent" signal — valid.
+    assert c.validate_entry(make_entry(cluster=None)) == []
+    # Absent entirely is fine (legacy entries pre-dating the extension).
+    entry = make_entry()
+    entry.pop("cluster", None)
+    entry.pop("related_claims", None)
+    assert c.validate_entry(entry) == []
+
+
+def test_validate_entry_rejects_bad_cluster_letter():
+    """cluster must be a valid A-M letter (or null). 'Z', 'a', numbers → error."""
+    for bad in ["Z", "a", 1, ""]:
+        errs = c.validate_entry(make_entry(cluster=bad))
+        assert any("cluster" in e for e in errs), (bad, errs)
+
+
+def test_validate_entry_related_claims_must_be_list_of_strings_max_three():
+    """related_claims: list of claim IDs, capped at 3 to bound drift-review cost."""
+    assert any("related_claims must be a list" in e
+               for e in c.validate_entry(make_entry(related_claims="a-string")))
+    too_many = make_entry(related_claims=["a", "b", "c", "d"])
+    assert any("related_claims exceeds cap" in e for e in c.validate_entry(too_many))
+    non_string = make_entry(related_claims=["ok", 42])
+    assert any("related_claims" in e for e in c.validate_entry(non_string))
+
+
 def test_parse_month():
     assert c.parse_month("2026-07").year == 2026
     assert c.parse_month("2026-07-15").day == 15
