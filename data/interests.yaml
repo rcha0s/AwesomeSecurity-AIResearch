@@ -1,0 +1,174 @@
+# 13-cluster taxonomy of Tier-1 interest areas for the claim engine.
+#
+# Any finding whose subject falls inside one of these clusters is
+# eligible for full research treatment (claim work, refuter panel,
+# drift monitoring). Anything outside lands in the "adjacent" bucket:
+# news-lane only, never claim work.
+#
+# The analyzer (see .claude/skills/research-scan/SKILL.md step 3) is
+# given this file as prompt context and returns `cluster: <letter>` or
+# `cluster: null` per finding. The model does the reasoning; this file
+# is the shared vocabulary, not a keyword list.
+#
+# Add a cluster by appending a new letter key. When the taxonomy
+# changes, run /reanalyze-adjacent to re-check the last 90 days of
+# adjacent items against the current shape.
+
+version: 1
+
+clusters:
+  A:
+    name: Retrieval and context
+    description: >-
+      How you feed a model the right information at the right time.
+    scope:
+      - RAG architectures (hybrid search, reranking, chunking, freshness)
+      - Retrieval evals (recall@k, groundedness, faithfulness)
+      - Long-context behavior (lost-in-the-middle, attention drop-off, cost vs retrieval trade-off)
+      - Context engineering (system-prompt design, few-shot brittleness, prompt versioning)
+      - Context compression and summarization (rolling-window strategies, encrypted compaction)
+
+  B:
+    name: Agents and harnesses
+    description: >-
+      Harness design, tool schemas, multi-agent orchestration, and
+      agent evals for real production systems.
+    scope:
+      - Agent harness design (tool minimalism, prompt-as-reasoning vs rules, permission classifiers)
+      - Tool schema design (model-native vs custom edit tools, tool count degradation)
+      - Multi-agent orchestration (planner/reader split, dual-LLM architectures, agent-to-agent security)
+      - Agent evals (incident-driven eval sets, rogue-agent taxonomy, groundedness scoring)
+      - Long-running agents (compaction protocols, session forking, memory hierarchy)
+
+  C:
+    name: Model I/O and tokens
+    description: >-
+      Serialization, structured output, and the cost of talking to a model.
+    scope:
+      - Serialization for I/O (TOON vs JSON, structured decoding, token cost)
+      - Structured output (constrained decoding, JSON schemas, grammar-based generation)
+      - Cost optimization (batching, caching, prompt-caching, model routing)
+
+  D:
+    name: Model and weights supply chain
+    description: >-
+      Attacks against model artifacts, hub trust, and the fine-tune
+      or quantization pipeline. Also the defender playbook for
+      admitting a third-party model into a system.
+    scope:
+      - Model artifact security (pickle risks, safetensors, scanner evasion)
+      - Model hub trust (typosquatting, backdoored uploads, provenance)
+      - Fine-tune and quantization risks (backdoors that only wake up post-quantization)
+      - Defender workflows (vetting third-party models, admission-gate patterns, sandbox-load procedures)
+
+  E:
+    name: Prompt injection and adversarial
+    description: >-
+      Both sides of prompt injection: attack technique catalogues AND
+      the defender's containment/detection playbook.
+    scope:
+      - Direct and indirect prompt injection (containment vs prevention framing)
+      - Jailbreak transfer (adversarial suffixes, universal attacks)
+      - Memory poisoning (cross-session persistence, self-state attacks)
+      - Salience and meaning-shift attacks (steering via true statements)
+      - Defender taxonomies (structured input validation, allowlist-based tool gating, output filtering, containment patterns such as dual-LLM)
+
+  F:
+    name: MCP and tool ecosystem
+    description: >-
+      The MCP protocol itself, its implementations, and the tool-
+      poisoning ecosystem around it.
+    scope:
+      - MCP protocol security (tool-description injection, silent metadata updates, spec changes)
+      - MCP server implementations (SSRF in host-side clients, IAM abuse via MCP)
+      - Tool-poisoning taxonomies (Invariant Labs framework, ecosystem drift)
+
+  G:
+    name: AI-assisted code and CI risks
+    description: >-
+      Where AI-generated code meets the software supply chain.
+    scope:
+      - AI-generated code smells (hallucinated APIs, slopsquatting)
+      - Coding-agent PR review (secret leaks, dependency integrity gates)
+      - Diff-vs-file review efficacy
+
+  H:
+    name: Guardrails, alignment, and refusal
+    description: >-
+      Behaviour-shaping decisions that land in the security engineer's
+      threat model.
+    scope:
+      - Constitutional AI-style training (auditable specs vs RLHF fragility)
+      - Refusal training brittleness (over-refusal, incident-response blockage)
+      - Alignment eval limits (capability elicitation gap)
+
+  I:
+    name: Deployment infra and sandboxing
+    description: >-
+      Runtime environment for models, agents, and the code they emit.
+    scope:
+      - Sandboxing for code exec (Docker vs gVisor vs Firecracker, agent sandbox escapes)
+      - Cloud IAM for agents (IMDSv2 requirement, credential injection, short-lived tokens)
+      - Kubernetes for LLM workloads (network policy, pod-security)
+
+  J:
+    name: Observability, incident response, and forensics
+    description: >-
+      What you need in place to detect, investigate, and post-mortem
+      an AI-driven incident.
+    scope:
+      - Provider-guardrail behavior during incidents (refusal during forensics)
+      - Agent telemetry (which tool was called, why, from what context)
+      - Postmortem shapes for AI-driven incidents
+      - Log and audit-trail design for agent operations
+
+  K:
+    name: Threat modeling for AI systems
+    description: >-
+      Structured threat modeling applied to LLM apps and agentic
+      systems.
+    scope:
+      - Attacker capability enumeration for LLM apps
+      - Trust boundary patterns (which parts of an agentic system are trusted vs adversarial)
+      - Blast-radius analysis (what a fooled model can and can't reach)
+      - STRIDE, PASTA, and similar frameworks applied to AI apps
+
+  L:
+    name: Red-teaming and adversarial testing methodology
+    description: >-
+      How to run offensive testing against AI systems in a way that
+      stays honest as models retrain.
+    scope:
+      - Red-team eval sets that don't leak into training data
+      - Automated jailbreak generation and measurement
+      - Coverage frameworks (what threats are you testing, not just how many)
+      - Adversarial ML techniques applied at the app layer (not just model layer)
+
+  M:
+    name: AI-security tooling and detection
+    description: >-
+      The tooling a defender builds or buys to catch AI-specific
+      vulnerabilities in code, at runtime, or in agent operations.
+    scope:
+      - SAST and DAST for AI code (semgrep-style rules for LLM misuse patterns)
+      - Runtime guardrails and LLM firewalls
+      - Agent tool-call auditing and classifiers
+      - Prompt-injection detection heuristics (and why they don't scale)
+
+# --- Adjacent — Tier-2, news-lane only, never claim work ---
+#
+# These are still worth surfacing in the news feed. The analyzer sets
+# `cluster: null` for anything that falls here or is otherwise out of
+# scope.
+adjacent:
+  - Frontier-model capability shifts (GPT-N, Claude-N, open-weights releases)
+  - Regulation and policy (EU AI Act, NIST AI RMF)
+  - General appsec when it intersects with agents
+
+# --- Excluded on purpose (news-lane only, no claim treatment) ---
+excluded:
+  - Mobile security
+  - General enterprise IT security
+  - General malware and wipers
+  - Frontier-model pricing announcements
+  - Business and consumer AI product coverage
