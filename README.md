@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research** - every finding vetted, distilled to one lesson, and filed by field. A [standing-claims ledger](claims/README.md) tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.
 
-![Updated](https://img.shields.io/badge/updated-2026--08--07-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-15-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--08--10-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-9-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read the live briefing &#8594;</a></h3>
 
@@ -18,20 +18,20 @@ The live site is the best read - one page for the week's news, another for stand
 
 - **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](product-security/supply-chain-dependencies/2026-07-asyncapi-npm-compromise-import-time-payload-defeats-ignore-s.md)** · _Product Security · Jul 16, 2026_  
   Import-time malware makes --ignore-scripts useless and a valid provenance attestation is not a trust signal when the pipeline itself is hijacked.
-- **[Phantom Squatting: attackers register the domains LLMs hallucinate](product-security/supply-chain/2026-07-phantom-squatting-attackers-register-the-domains-llms-halluc.md)** · _Product Security · Jun 30, 2026_  
-  LLM hallucinations are a predictable supply-chain attack surface: attackers pre-register the domains/packages models invent.
 - **[ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](ai-security/mcp-tools/2026-07-toolhive-mcp-ssrf-host-side-discovery-runs-outside-the-sandb.md)** · _AI Security · Jul 15, 2026_  
   Put SSRF guards on every outbound client that touches untrusted input, re-validate redirect targets, and never suppress a taint warning on a 'trusted config' premise your threat…
-- **[Better Models, Worse Tools: SOTA models regress on non-native tool schemas](ai-research/tooling-infrastructure/2026-07-better-models-worse-tools-sota-models-regress-on-non-native.md)** · _AI Research · Jul 4, 2026_  
-  Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.
 - **[How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier](ai-research/coding-agent-harness-design-first-party-anthropic-practices/2026-07-how-the-claude-code-team-designs-its-harness-tool-minimalism.md)** · _AI Research · Jul 21, 2026_  
   Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier…
+- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](ai-research/harness-context-management/2026-07-server-side-encrypted-compaction-porting-codex-s-responses-a.md)** · _AI Research · Jul 22, 2026_  
+  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity - …
+- **[ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](ai-security/model-supply-chain/2026-07-shadowpickle-pickle-vm-import-tricks-evade-ten-model-scanner.md)** · _AI Security · Jul 20, 2026_  
+  A clean model-scanner result is weak evidence - prefer non-executable formats and sandbox deserialization of any third-party model.
 
 ## The three databases
 
 - **[AI Security](ai-security/README.md)** (3 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
-- **[Product Security](product-security/README.md)** (7 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
-- **[AI Research](ai-research/README.md)** (5 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
+- **[Product Security](product-security/README.md)** (4 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
+- **[AI Research](ai-research/README.md)** (2 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted).
 
@@ -128,4 +128,4 @@ README.md NEWSLETTER.md TRENDS.md REVIEW.md            generated - do not hand-e
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors - every finding cites its source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-07. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-10. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>

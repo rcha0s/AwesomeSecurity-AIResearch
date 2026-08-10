@@ -1226,5 +1226,483 @@
     "retrieved_at": "2026-07-16T07:43:12+00:00",
     "needs_review": false,
     "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-security",
+    "domain": "MCP & Tools",
+    "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+    "published": "2026-06-30",
+    "date": "2026-06",
+    "discovered_via": "rss",
+    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "raw_path": "data/_raw/securing-ai-agents-when-ai-tools-move-from-readi-3a2d3197b2.txt",
+    "summary": "Once agents move from reading to acting, a poisoned MCP tool description turns prompt injection into an action. An approved third-party tool's description is silently modified to tell the agent to collect and exfiltrate data; because metadata updates don't re-trigger approval, the poisoned instructions go live with no review, and every individual agent action looks legitimate.",
+    "lessons": [
+      {
+        "point": "MCP mixes instructions and data in the same channel, so editing a tool's description reprograms the agent as effectively as editing its system prompt.",
+        "excerpt": "The MCP blends instructions (tool descriptions) with data, so a change to a tool's metadata can redirect the agent's behavior as effectively as a change to its system prompt.",
+        "confidence": 0.96,
+        "grounded": true
+      },
+      {
+        "point": "The dangerous gap is 'silent re-trust' (Microsoft's term): in configurations where a tool's description change doesn't re-trigger the approval workflow, poisoned instructions become active without review.",
+        "excerpt": "In configurations where description changes do not trigger a re-approval workflow, the updated instructions become active without additional review.",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "The vulnerability is the trust boundary between systems, not any one system — each action (approved tool, inherited permissions, allowlisted endpoint) is individually legitimate.",
+        "excerpt": "The vulnerability is not in any single system; it is in the trust boundary between them",
+        "confidence": 0.95,
+        "grounded": true
+      }
+    ],
+    "threat": "An upstream tool maintainer modifies a tool description to redirect an agent into collecting and exfiltrating data, with no prompt, credential, or user action involved.",
+    "mitigations": "Change-review tool descriptions like system prompts; require re-approval on metadata changes; disable 'Allow all' tools; human-in-the-loop for high-impact actions; apply least agency, not just least privilege.",
+    "takeaway": "Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.",
+    "tags": [
+      "mcp",
+      "tool-poisoning",
+      "prompt-injection",
+      "agent-security",
+      "supply-chain"
+    ],
+    "scores": {
+      "novelty": 50,
+      "relevance": 84,
+      "newness": 3,
+      "credibility": 75.0,
+      "composite": 52.2,
+      "scored_at": "2026-07-31T18:40:35+00:00"
+    },
+    "prior_art": "Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.",
+    "verified": true,
+    "verify_note": "Independent verifier: derivative Microsoft playbook on the known Invariant-Labs/OWASP tool-poisoning class; novelty lowered — held for review.",
+    "id": "treat-mcp-tool-descriptions-as-system-prompts-si-bef4e855af",
+    "retrieved_at": "2026-07-16T07:43:12+00:00",
+    "needs_review": true,
+    "grounding_score": 1.0,
+    "editorial": {
+      "promoted": true,
+      "reason": "Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster.",
+      "signals": [
+        "trending",
+        "newsworthy",
+        "timely"
+      ],
+      "at": "2026-07-26T21:08:26+00:00"
+    }
+  },
+  {
+    "source_url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+    "article_url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+    "source_name": "Palo Alto Networks Unit 42",
+    "source_type": "Vendor research",
+    "date": "2026-07",
+    "discovered_via": "rss",
+    "id": "phantom-squatting-ai-hallucinated-domains-as-a-s-99acdb5c5d",
+    "domain": "Supply Chain",
+    "subtype": "Supply Chain",
+    "summary": "Unit 42 documented 'phantom squatting': LLMs consistently hallucinate web domains for legitimate brands, and adversaries register those nonexistent domains to intercept AI-generated traffic. Across 913 brands and 685,339 queries they found 13,229 malicious URLs and ~250,000 still-unregistered hallucinated domains — and predicted adversary registrations 18–51 days ahead.",
+    "takeaway": "LLM hallucinations are a predictable supply-chain attack surface: attackers pre-register the domains/packages models invent.",
+    "lessons": [
+      {
+        "point": "Hallucinated domains/packages are predictable — defenders can enumerate and pre-register or block them before attackers do",
+        "excerpt": "predict use of these domains from 18-51 days ahead of adversary registration",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "AI coding assistants are being used to build the phishing kits that then exploit hallucinated targets",
+        "excerpt": "an attacker who leveraged an AI coding assistant to build a full phishing kit named Montana Empire",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "supply-chain",
+      "slopsquatting",
+      "hallucination",
+      "phishing",
+      "unit42"
+    ],
+    "scores": {
+      "novelty": 90,
+      "relevance": 86,
+      "newness": 18,
+      "composite": 64.8,
+      "scored_at": "2026-07-31T18:40:35+00:00",
+      "credibility": 50.0
+    },
+    "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+    "retrieved_at": "2026-07-13T00:46:09+00:00",
+    "needs_review": false,
+    "published": "2026-06-30",
+    "topic": "product-security",
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "product-security",
+    "domain": "AI coding assistant sandbox escape / path traversal",
+    "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
+    "source_url": "https://snyk.io/blog/symlinks-are-still-scary/",
+    "summary": "Git faithfully recreates symlinks stored in a repo (file mode 120000, blob is just the target path as text), so a file with an innocent name like project_settings.json can secretly point at ~/.ssh/authorized_keys or ~/.zshrc. When an AI coding assistant is asked to 'set up the workspace' and follows repo instructions, it follows the symlink transparently out of the sandbox, and the human approval dialog shows the benign in-repo name rather than the true resolved target. Wiz Research's GhostApproval tested six major assistants — Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf — and found all vulnerable.",
+    "lessons": [
+      {
+        "point": "Git preserves symlinks: mode 120000 stores only the target path as plain text, so a cloned repo can drop a pointer into your home directory under an innocent filename.",
+        "excerpt": "git faithfully recreates the symlink on your disk. You now have a file in your working copy, with an innocent JSON name, that is secretly a pointer into your home directory.",
+        "confidence": 0.97,
+        "grounded": true
+      },
+      {
+        "point": "The exploit chains three failures: prompt injection in repo instructions, symlink-following without canonical path resolution, and an approval dialog that misrepresents the real target.",
+        "excerpt": "project_settings.json is a file whose entire contents are the string",
+        "confidence": 0.92,
+        "grounded": true
+      },
+      {
+        "point": "The agent's own reasoning identified the true target, but the human was shown only the benign in-repo filename — a UI/trust gap, not just a parsing bug.",
+        "excerpt": "the human said, simply: \"Make this edit to project_settings.json ?\" The agent knew. You didn",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "All six tested AI coding assistants were affected, making this a class-wide weakness rather than a single-vendor bug.",
+        "excerpt": "Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Mitigation is canonical path resolution plus a containment check; on Linux openat2() with RESOLVE_BENEATH/RESOLVE_NO_SYMLINKS enforces it atomically.",
+        "excerpt": "Resolve every path to its canonical location before you open it, and check that the resolved path is still inside the workspace you meant to operate in.",
+        "confidence": 0.94,
+        "grounded": true
+      }
+    ],
+    "takeaway": "A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys — resolve paths to canonical form and confirm they stay inside the workspace before any read/write.",
+    "tags": [
+      "prompt-injection",
+      "supply-chain",
+      "path-traversal",
+      "symlink",
+      "ai-coding-assistant",
+      "sandbox-escape",
+      "agent-security"
+    ],
+    "scores": {
+      "novelty": 70,
+      "relevance": 82,
+      "newness": 18,
+      "credibility": 55.0,
+      "composite": 58.35,
+      "scored_at": "2026-07-31T18:40:35+00:00"
+    },
+    "prior_art": "Classic symlink path-traversal / TOCTOU (CWE-59) and git's long-known preservation of symlinks; the new delta is the class-wide application to AI coding-assistant sandbox escapes plus the misleading approval-dialog (Wiz 'GhostApproval') trust gap across six assistants.",
+    "threat": "A malicious or compromised public repo ships symlinks (mode 120000) under benign names; an AI coding assistant following repo/README instructions reads secrets or writes attacker-controlled content (SSH authorized_keys, shell rc files) outside its workspace, yielding credential theft or code execution — while the approval dialog shows only the harmless in-repo path.",
+    "conditions": "Developer clones an untrusted repo and asks the assistant to 'set up the workspace' or follow README instructions; The assistant follows filesystem symlinks without resolving/validating the canonical path against the workspace boundary; Filesystem supports symlinks and core.symlinks is enabled (default on Unix)",
+    "mitigations": "Canonicalize paths and enforce workspace-containment before every file open (openat2 RESOLVE_BENEATH / RESOLVE_NO_SYMLINKS on Linux); Show the resolved absolute target (not the repo-relative alias) in approval dialogs; Scan freshly cloned untrusted repos for symlinks: `find . -type l`, `git ls-files -s | grep ^120000`; Disable or gate symlink following for agent file tools; treat out-of-tree targets as high-risk requiring explicit confirmation; Reference precedent: CVE-2024-32002 (git submodule symlink RCE), CVE-2021-32803 (tar symlink extraction)",
+    "verified": true,
+    "verify_note": "Every lesson and excerpt is faithfully reflected in the Snyk write-up of Wiz's GhostApproval research; the symlink primitive is old but the class-wide AI-assistant + spoofed-approval-dialog angle is genuinely new and directly actionable for appsec/red-team.",
+    "article_url": "https://snyk.io/blog/symlinks-are-still-scary/",
+    "date": "2026-07",
+    "published": "2026-07-09",
+    "discovered_via": "rss",
+    "source_id": "rss:https-snyk-io-blog-feed",
+    "source_rank": 55.0,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "Snyk Blog",
+    "id": "committed-git-symlinks-misleading-approval-dialo-d05775a628",
+    "retrieved_at": "2026-07-26T05:30:57+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0,
+    "raw_path": "data/_raw/symlinks-full-8fx.txt",
+    "corroborating_sources": []
+  },
+  {
+    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
+    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
+    "source_name": "Microsoft Security Blog",
+    "source_type": "Vendor research",
+    "published": "2026-07-09",
+    "date": "2026-07",
+    "discovered_via": "rss",
+    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+    "source_rank": 75.0,
+    "topic": "product-security",
+    "domain": "Malware & Wipers",
+    "title": "GigaWiper: modular destructive malware that fakes ransomware",
+    "summary": "Microsoft analyzed GigaWiper, a Golang backdoor that folds several separate malware families into on-demand destructive commands: a raw-disk wiper, a Crucio-derived routine that encrypts with keys that are never saved (irrecoverable), and a FlockWiper reimplementation. It marks a shift toward consolidated, modular destruction platforms.",
+    "takeaway": "Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise — plan recovery accordingly.",
+    "lessons": [
+      {
+        "point": "Destructive malware is becoming modular — multiple wiper/ransomware families as pluggable backdoor commands",
+        "excerpt": "an amalgamation of separate malware families that were folded into GigaWiper as on-demand backdoor commands",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Fake-ransomware with never-saved keys is pure destruction disguised as extortion",
+        "excerpt": "encrypts files with randomly generated keys that are never saved, making decryption impossible",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "malware",
+      "wiper",
+      "ransomware",
+      "destructive",
+      "microsoft"
+    ],
+    "scores": {
+      "novelty": 68,
+      "relevance": 72,
+      "newness": 18,
+      "composite": 57.75,
+      "scored_at": "2026-07-31T18:40:35+00:00",
+      "credibility": 75.0
+    },
+    "id": "gigawiper-modular-destructive-malware-that-fakes-2b20f20b50",
+    "retrieved_at": "2026-07-13T04:19:32+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0
+  },
+  {
+    "id": "web-redhat-npm-2026",
+    "domain": "Supply Chain",
+    "subtype": "Supply Chain",
+    "title": "@redhat-cloud-services npm namespace compromise (32+ packages)",
+    "date": "2026-06",
+    "severity": "High",
+    "threat": "Attackers compromised at least 32 packages under the @redhat-cloud-services scope, bypassing code review to push a payload dubbed Miasma.",
+    "conditions": "Affects consumers of the affected scoped packages and downstream builds that pulled compromised versions.",
+    "mitigations": "Identify affected versions from the Red Hat advisory; pin to clean releases; rotate impacted credentials; verify package signatures/provenance; harden publishing with mandatory review and 2FA.",
+    "source_name": "Red Hat Security",
+    "source_type": "Vendor advisory",
+    "source_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
+    "needs_review": false,
+    "discovered_via": "manual",
+    "article_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
+    "scores": {
+      "newness": 3,
+      "novelty": 0,
+      "relevance": 0,
+      "composite": 8.25,
+      "scored_at": "2026-07-31T18:40:35+00:00",
+      "credibility": 50.0
+    },
+    "published": "2026-06",
+    "topic": "product-security",
+    "grounding_score": null
+  },
+  {
+    "source_url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+    "article_url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+    "source_name": "Simon Willison's Weblog",
+    "source_type": "Practitioner blog",
+    "published": "2026-07-04",
+    "date": "2026-07",
+    "discovered_via": "rss",
+    "source_id": "rss:https-simonwillison-net-atom-everything",
+    "source_rank": 55.0,
+    "topic": "ai-research",
+    "domain": "Tooling & Infrastructure",
+    "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+    "summary": "Armin (building the Pi harness) found newer Claude models (Opus 4.8, Sonnet 5) invent made-up fields when calling Pi's custom edit tool — worse than older models — likely because they're RL-trained on Claude Code's built-in edit tool. Third-party harnesses with their own tool schemas get degraded tool-calling from the very newest models.",
+    "takeaway": "Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.",
+    "lessons": [
+      {
+        "point": "A SOTA model can be WORSE at a custom tool schema than its older siblings if it was RL-trained on a different harness's tools",
+        "excerpt": "the SOTA models of the family are worse at this specific tool schema than their older siblings",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Align tool formats to the model — Claude is trained on str-replace edits, OpenAI on apply_patch",
+        "excerpt": "trained (presumably via Reinforcement Learning) to better use the edit tools that are baked into Claude Code",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "harness",
+      "tool-use",
+      "agents",
+      "claude-code",
+      "architecture"
+    ],
+    "scores": {
+      "novelty": 80,
+      "relevance": 90,
+      "newness": 18,
+      "composite": 63.75,
+      "scored_at": "2026-07-31T18:40:35+00:00",
+      "credibility": 55.0
+    },
+    "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
+    "retrieved_at": "2026-07-13T04:19:32+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-research",
+    "domain": "Agents & Harnesses",
+    "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
+    "source_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
+    "article_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
+    "published": "2026-07-02",
+    "date": "2026-07",
+    "discovered_via": "rss",
+    "source_id": "rss:https-blog-trailofbits-com-feed",
+    "source_rank": 75.0,
+    "source_topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "raw_path": "data/_raw/gpt-5-5-cyber-built-a-zlib-fuzzing-lab-in-a-day-e849fb2340.txt",
+    "summary": "Pointed at a specific bug class in well-audited zlib via a persistent `/goal` — but not told how — a frontier model decided static review was low value, built fuzz harnesses across a dozen entrypoints with ASan/UBSan and variant builds, and surfaced findings now in coordinated disclosure. The load-bearing harness detail was a strict definition of a reportable finding — it self-rejected an unreachable crash as noise and kept going. (Single-source vendor field report on a not-yet-public model.)",
+    "lessons": [
+      {
+        "point": "A persistent goal that survives compaction lets the agent hold scope end-to-end and pick its own strategy — here it chose dynamic fuzzing over static review without being told to.",
+        "excerpt": "judged static review to be a poor use of tokens, and decided the higher value path was to build fuzz tooling to dynamically test the code",
+        "confidence": 0.96,
+        "grounded": true
+      },
+      {
+        "point": "Reportability discipline is what turns agent output into signal: without strict validity rules baked into the goal, the agent produces confident noise.",
+        "excerpt": "the agent will generate mountains of noise with high confidence",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "The model triaged its own findings — it logged a real-but-unreachable crash as noise and moved on rather than escalating it.",
+        "excerpt": "the model logged it as unreachable and moved on",
+        "confidence": 0.95,
+        "grounded": true
+      }
+    ],
+    "takeaway": "When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.",
+    "tags": [
+      "agents",
+      "goal-persistence",
+      "fuzzing",
+      "evals",
+      "ai-for-security"
+    ],
+    "scores": {
+      "novelty": 60,
+      "relevance": 88,
+      "newness": 18,
+      "credibility": 75.0,
+      "composite": 60.15,
+      "scored_at": "2026-07-31T18:40:35+00:00"
+    },
+    "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
+    "verified": true,
+    "verify_note": "Independent verifier: single-source vendor report; softened 'found real bugs' to 'findings in disclosure' and noted it was directed at a bug class.",
+    "id": "goal-persistent-agents-a-frontier-model-built-a-759122f879",
+    "retrieved_at": "2026-07-16T07:43:12+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0
+  },
+  {
+    "source_url": "https://github.com/omnigent-ai/omnigent",
+    "article_url": "https://github.com/omnigent-ai/omnigent",
+    "source_name": "omnigent-ai/omnigent",
+    "source_type": "GitHub repository",
+    "author": "omnigent-ai",
+    "date": "2026-06",
+    "discovered_via": "github",
+    "id": "omnigent-ai-omnigent-b26281bf0e",
+    "domain": "Meta-Harness",
+    "subtype": "Meta-Harness",
+    "summary": "Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.",
+    "takeaway": "The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.",
+    "lessons": [
+      {
+        "point": "A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in",
+        "excerpt": "swap or combine harnesses without rewriting",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Central policy + sandboxing at the meta-harness is a natural place to enforce agent security",
+        "excerpt": "enforce policies and sandboxing",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "meta-harness",
+      "orchestration",
+      "agents",
+      "claude-code",
+      "tooling-2026"
+    ],
+    "scores": {
+      "novelty": 78,
+      "relevance": 84,
+      "newness": 3,
+      "composite": 56.85,
+      "scored_at": "2026-07-31T18:40:35+00:00",
+      "credibility": 50.0
+    },
+    "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+    "retrieved_at": "2026-07-13T00:46:09+00:00",
+    "needs_review": false,
+    "published": "2026-06",
+    "topic": "ai-research",
+    "grounding_score": 1.0
+  },
+  {
+    "source_url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
+    "article_url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
+    "source_name": "Simon Willison's Weblog",
+    "source_type": "Practitioner blog",
+    "published": "2026-07-09",
+    "date": "2026-07",
+    "discovered_via": "rss",
+    "source_id": "rss:https-simonwillison-net-atom-everything",
+    "source_rank": 55.0,
+    "topic": "ai-research",
+    "domain": "Models & Capabilities",
+    "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+    "summary": "OpenAI shipped GPT-5.6 in three sizes (Luna/Terra/Sol) at $1-5 in / $6-30 out per Mtok, all with a 1M-token context, 128k max output, and a Feb 2026 cutoff. OpenAI's headline claim is long-running agentic performance beating Claude Fable 5.",
+    "takeaway": "Evaluate the tiers on your own agentic task — per-token price means less now that reasoning-token counts dominate cost.",
+    "lessons": [
+      {
+        "point": "Price-per-token is a weak comparison when reasoning-token usage varies wildly per model/task",
+        "excerpt": "price-per-million tokens doesn't tell us much now that the number of reasoning tokens can differ so much",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "models",
+      "openai",
+      "agents",
+      "benchmarks"
+    ],
+    "scores": {
+      "novelty": 55,
+      "relevance": 75,
+      "newness": 18,
+      "composite": 51.75,
+      "scored_at": "2026-07-31T18:40:35+00:00",
+      "credibility": 55.0
+    },
+    "id": "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0",
+    "retrieved_at": "2026-07-13T04:19:32+00:00",
+    "needs_review": true,
+    "grounding_score": 1.0
   }
 ]
