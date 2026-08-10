@@ -72,10 +72,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 1,
+      "ingested": 2,
       "curated": 1
     },
-    "rank": 77.5,
+    "rank": 75.0,
     "added": "2026-07-13",
     "active": true,
     "notes": "Vendor research",
@@ -100,10 +100,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 3,
+      "ingested": 4,
       "curated": 2
     },
-    "rank": 76.8,
+    "rank": 75.0,
     "added": "2026-07-13",
     "active": true,
     "notes": "Vendor research",
@@ -155,10 +155,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 0,
+      "ingested": 1,
       "curated": 0
     },
-    "rank": 75.0,
+    "rank": 72.5,
     "added": "2026-07-13",
     "active": true,
     "notes": "Vendor research",
@@ -1394,7 +1394,7 @@
     "rank": 80.0,
     "added": "2026-08-06",
     "active": true,
-    "notes": "Model release ecosystem \u2014 includes Kimi/Qwen/Llama mirrors",
+    "notes": "Model release ecosystem — includes Kimi/Qwen/Llama mirrors",
     "strict": false
   },
   {
@@ -1419,7 +1419,7 @@
     "rank": 80.0,
     "added": "2026-08-06",
     "active": true,
-    "notes": "MCP spec release feed \u2014 every version bump lands here",
+    "notes": "MCP spec release feed — every version bump lands here",
     "strict": false
   },
   {
@@ -1474,7 +1474,7 @@
     "id": "rss:https-www-theregister-com-security-headlines-ato",
     "type": "rss",
     "handle": "https://www.theregister.com/security/headlines.atom",
-    "name": "The Register \u2014 Security",
+    "name": "The Register — Security",
     "url": "https://www.theregister.com/security/headlines.atom",
     "topics": [
       "product-security",
@@ -1542,7 +1542,7 @@
     "rank": 70.0,
     "added": "2026-08-06",
     "active": true,
-    "notes": "Security journalism \u2014 must classify on-topic per item",
+    "notes": "Security journalism — must classify on-topic per item",
     "strict": false
   },
   {
@@ -1591,7 +1591,7 @@
     "rank": 75.0,
     "added": "2026-08-09",
     "active": true,
-    "notes": "MCP protocol releases \u2014 spec changes fire first here.",
+    "notes": "MCP protocol releases — spec changes fire first here.",
     "strict": false,
     "track": "research",
     "scope": "ai"
@@ -1643,7 +1643,7 @@
     "rank": 75.0,
     "added": "2026-08-09",
     "active": true,
-    "notes": "MCP protocol changes \u2014 low star floor because spec repos are small.",
+    "notes": "MCP protocol changes — low star floor because spec repos are small.",
     "strict": false,
     "track": "research",
     "scope": "ai",

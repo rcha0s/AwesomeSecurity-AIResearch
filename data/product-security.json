@@ -16,6 +16,236 @@
     {
       "topic": "product-security",
       "domain": "Supply Chain & Dependencies",
+      "cluster": "G",
+      "related_claims": [
+        "package-installers-run-arbitrary-code-by-default",
+        "import-time-payloads-defeat-install-time-controls"
+      ],
+      "title": "ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2",
+      "source_url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
+      "article_url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
+      "published": "2026-08-06",
+      "date": "2026-08-06",
+      "raw_path": "data/_raw/mrscan-https---unit42-paloaltonetworks-com-chaindrop-npm-worm-analy.txt",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 75,
+      "summary": "Unit 42 analyzed a self-propagating npm worm that infected 400+ packages (collectively hundreds of millions of weekly downloads). Once a stolen npm token or a repo-scoped OIDC exchange gives the worm publish rights, it mints a real Sigstore in-toto SLSA v1 provenance attestation for the infected tarball — so signature-checking pipelines see valid provenance for malicious code. C2 domains resolve through an Ethereum smart contract, letting the operator rotate infrastructure with one on-chain transaction and no malware update.",
+      "takeaway": "Valid npm provenance no longer distinguishes a safe artifact from an evasive one — pivot on the Rekor log identity and workflow, not on signature-checks-pass.",
+      "lessons": [
+        {
+          "point": "Valid Sigstore provenance is not evidence a package is clean — a worm can mint real attestations against its own compromised workflow.",
+          "excerpt": "Given the reality of today's npm supply chain threats, a package having valid npm provenance does not mean the package is clean. It only means the tarball came out of the workflow named in the certificate. If that workflow is running attacker code, valid provenance is what you should expect to see.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "CI runner memory is a live credential target — the worm scrapes /proc/<pid>/mem on GitHub Actions Runner.Worker to capture OIDC tokens and runner secrets that would otherwise never touch disk.",
+          "excerpt": "An embedded Python helper hidden inside an encrypted blob in the payload locates the Runner.Worker process on GitHub Actions runners, opens /proc/<pid>/maps and /proc/<pid>/mem, and searches live process memory for OpenID Connect (OIDC) tokens and runner secrets.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "AI-coding-tool configs (.claude/settings.json SessionStart hook, .vscode/tasks.json) are execution infrastructure — the worm writes cross-linked persistence into both directories.",
+          "excerpt": "It writes a .vscode/tasks.json file with a task labeled Environment Setup and sets it to run when the folder opens... It also writes a .claude/settings.json file with a SessionStart command hook, meaning it executes whenever Claude Code starts a session in the project.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "C2 domain resolution via a blockchain smart contract lets the operator silently reconfigure infrastructure with a single Ethereum transaction, without pushing any malware update.",
+          "excerpt": "This C2 rotation demonstrates the adversary's ability to silently reconfigure the worm's entire C2 infrastructure through a single Ethereum transaction, without requiring any update to the deployed malware.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "npm",
+        "sigstore",
+        "ci-cd",
+        "ai-tooling",
+        "worm",
+        "c2"
+      ],
+      "threat": "Worm-driven npm package compromise that steals cloud/CI/AI-tool credentials, chains publishing rights via OIDC trusted-publishing to mint valid provenance on infected packages, and persists inside developer environments through AI-coding-tool configuration files.",
+      "conditions": "npm-published package with preinstall hook AND developer or CI environment that runs 'npm install' or the equivalent; the worm auto-propagates once it captures an npm publishing token.",
+      "mitigations": "Grep for the 'Shai-Hulud: Here We Go Again' marker in repo descriptions; hunt for .claude/settings.json + .vscode/tasks.json cross-linked droppers; treat valid npm provenance as authenticity, not integrity; monitor the Rekor transparency log for unexpected workflow identities; block both npm-cache[.]com and awqhnjewqjkl[.]icu; consider CI runners as credential-exfil targets and pin/audit dependencies rather than relying on provenance alone.",
+      "scores": {
+        "novelty": 85,
+        "relevance": 95,
+        "newness": 79,
+        "credibility": 75.0,
+        "composite": 85.0,
+        "scored_at": "2026-08-10T05:24:14+00:00"
+      },
+      "prior_art": "Continues the Shai-Hulud npm supply-chain lineage (JFrog, May 2026). Novel elements: Sigstore provenance mint via trusted-publishing OIDC, Ethereum-based C2 resolution, .claude/settings.json persistence, CI runner memory scraping.",
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat valid npm provenance as authenticity of source, not integrity of code",
+        "detail": "Update your supply-chain gates: if you were relying on 'signature valid + provenance attests' as sufficient for trust, add a check that the workflow identity in the Rekor log matches an expected repo/workflow. Grep repos for .claude/settings.json + .vscode/tasks.json cross-linked droppers as a hunting signal."
+      },
+      "verified": false,
+      "verify_note": "adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md",
+      "discovered_via": "rss",
+      "id": "chaindrop-self-propagating-npm-worm-mints-valid-e0515b2a85",
+      "retrieved_at": "2026-08-10T05:24:14+00:00",
+      "needs_review": true,
+      "grounding_score": 0.75
+    },
+    {
+      "topic": "product-security",
+      "domain": "Request Smuggling / Desync",
+      "cluster": null,
+      "related_claims": [],
+      "title": "CRLF-Powered Desync Attacks: header injection escalates to CDN-wide response queue poisoning + browser-side XSS",
+      "source_url": "https://portswigger.net/research/crlf-powered-desync-attacks",
+      "article_url": "https://portswigger.net/research/crlf-powered-desync-attacks",
+      "published": "2026-08-05",
+      "date": "2026-08-05",
+      "raw_path": "data/_raw/mrscan-https---portswigger-net-research-crlf-powered-desync-attacks.txt",
+      "source_id": "rss:https-portswigger-net-research-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 85,
+      "summary": "Portswigger extend HTTP header injection into a full-blown desync worm and show novel browser-side techniques for connection-locked and IP-locked desyncs. In an nginx misconfiguration where $uri is included in proxy_pass, URL-encoded CRLF sequences in the request path are decoded before forwarding, giving an attacker complete control over the upstream request. Applied inside a CDN's infrastructure, this captured session cookies and auth tokens from thousands of unrelated applications.",
+      "takeaway": "HTTP header injection is severely underestimated — one nginx $uri-in-proxy_pass misconfig can escalate to CDN-wide response queue poisoning that harvests session cookies from unrelated tenants.",
+      "lessons": [
+        {
+          "point": "nginx URL-decodes the request path when $uri is used in proxy_pass, allowing encoded CRLF (%0d%0a) sequences to inject arbitrary headers into the upstream request.",
+          "excerpt": "In Nginx configurations (an extremely popular web server) if the $uri variable is included in the proxy_pass directive, Nginx will normalise the request path before use, url-decoding any encoded characters including CRLF sequences (%0d%0a). This allows us to inject new lines into the request that is forwarded upstream of Nginx, giving us full control over the structure of that request.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "Response Queue Poisoning inside a CDN's own infrastructure lets an attacker route requests to arbitrary tenant domains on that CDN — capturing session cookies and auth tokens across thousands of unrelated applications.",
+          "excerpt": "Impact wise, as a result of capturing requests, we also started to capture session cookies and auth tokens for thousands of applications hosted on the CDN.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Request splitting with exactly two smuggled requests achieves RQP without any RFC violation — two CRLFs in a row are just another request boundary, so request splitting works out-of-the-box against many stacks.",
+          "excerpt": "This technique does not breach the RFC using mutated headers in any way. Two CRLF sequences in a row, are simply another boundary between requests and as a result, this technique works exceptionally well out-of-the-box.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "web-appsec",
+        "http",
+        "desync",
+        "request-smuggling",
+        "cdn",
+        "nginx"
+      ],
+      "threat": "HTTP header injection in nginx (or any proxy) that normalises URL-decoded CRLF before upstream forwarding, escalated to Response Queue Poisoning inside CDNs to harvest cross-tenant sessions.",
+      "conditions": "Reverse proxy (typically nginx) with $uri or equivalent user-controlled path variable interpolated into proxy_pass without CRLF sanitisation.",
+      "mitigations": "Audit nginx configs for $uri-in-proxy_pass patterns; reject CRLF in decoded request paths at the proxy; deploy request-smuggling detection (Burp scan / dedicated proxy fuzzing) against CDN edges before assuming them safe.",
+      "scores": {
+        "novelty": 80,
+        "relevance": 95,
+        "newness": 75,
+        "credibility": 85.0,
+        "composite": 84.0,
+        "scored_at": "2026-08-10T05:24:14+00:00"
+      },
+      "prior_art": "Extends James Kettle's 'Making HTTP Header Injection Critical via RQP' (2023) and Sergey Bobrov's nginx misconfig research. This paper is the BHUSA/DEFCON 2026 followup that operationalizes the technique across CDN infrastructure and introduces browser-powered variants.",
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit nginx configs for $uri-in-proxy_pass",
+        "detail": "grep -rn 'proxy_pass.*\\$uri' /etc/nginx to find configs where CRLF injection is trivial. Also add request-smuggling scanning to CDN edge tests, not just app tests."
+      },
+      "verified": false,
+      "verify_note": "adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md",
+      "discovered_via": "rss",
+      "id": "crlf-powered-desync-attacks-header-injection-esc-34b6f03a12",
+      "retrieved_at": "2026-08-10T05:24:14+00:00",
+      "needs_review": true,
+      "grounding_score": 0.67
+    },
+    {
+      "topic": "product-security",
+      "domain": "Detection & Response",
+      "cluster": null,
+      "related_claims": [],
+      "title": "macOS ClickFix campaign moves from open lures to server-side browser-fingerprinting gates that cloak the payload from crawlers",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/",
+      "published": "2026-08-05",
+      "date": "2026-08-05",
+      "raw_path": "data/_raw/mrscan-https---www-microsoft-com-en-us-security-blog-2026-08-05-mac.txt",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 78,
+      "summary": "Microsoft Threat Intelligence documented the same macOS ClickFix infrastructure shifting from serving lures openly in HTML to fronting them with a JavaScript browser-fingerprinting gate. Only visitors whose environment (WebGL GPU signals, toString-counter tripwire, MP4 canPlayType prototype-tamper probe, timezone, touch support) matches a genuine macOS desktop browser see the ClickFix lure; crawlers get blank pages or unrelated decoys.",
+      "takeaway": "'Apparently benign' scan results from suspicious domains are unreliable — cloaked infrastructure now decides per-request whether to serve payload, decoy, or blank, so passive analysis systematically underreports these campaigns.",
+      "lessons": [
+        {
+          "point": "Static/passive scanners systematically miss this campaign because payload is withheld until fingerprint submission — a domain can look benign or blank from a scanner and still be actively serving ClickFix to real macOS users.",
+          "excerpt": "Because this decision is made server-side on a per-request basis, a given scan or visit may receive benign or decoy content and still be interacting with malicious infrastructure, so an apparently benign or look-alike response does not mean the domain is safe.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The fingerprinting gate uses WebGL-derived GPU signals as a hardware-authenticity check that distinguishes real Apple silicon from virtualized/emulated/sandbox environments.",
+          "excerpt": "One notable check uses WebGL, a browser graphics API normally used to render 2D and 3D content, to retrieve graphics-processing details from the visitor's device. In this campaign, those WebGL-derived GPU signals help distinguish real Apple hardware from virtualized, emulated, software-rendered, or sandboxed environments before the server decides whether to return the ClickFix lure.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Two novel anti-analysis tripwires: (a) a toString() counter that increments if DevTools or a headless log-capture serializes console output; (b) a canPlayType('video/mp4') probe repurposed via a hooked Array.prototype.includes tripwire to detect JS-faked codec support.",
+          "excerpt": "The script creates a temporary function whose toString() method increases a counter, then writes that function to the console. In a normal browser, this counter usually remains unchanged. However, if the developer console is open, or if a headless or log-capturing tool serializes console output, the function may be converted to a string, causing the counter to increase.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "ClickFix as a delivery mechanism bypasses macOS's application-trust path (quarantine, code signing, notarization) because execution starts from a user-typed Terminal command rather than a downloaded .app bundle.",
+          "excerpt": "Because execution starts from a user-run Terminal command rather than a downloaded app bundle, the flow can avoid parts of the normal macOS application trust path, including quarantine handling, code-signing evaluation, and notarization checks typically applied to downloaded applications.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "macos",
+        "social-engineering",
+        "fingerprinting",
+        "clickfix",
+        "detection-evasion"
+      ],
+      "threat": "macOS infostealer (MacSync, Atomic Stealer) delivered via ClickFix social engineering, with server-side browser fingerprinting gating who sees the lure.",
+      "conditions": "User visits a look-alike domain in the campaign's cluster (250+ dictionary-style names containing 'file' token); browser fingerprint indicates genuine macOS + expected geography/browser + no automation instrumentation; user copies Terminal command from a fake 'Verified Publisher' page.",
+      "mitigations": "Do not rely on 'benign scan' verdicts for suspicious domains — dynamic analysis with authentic-looking fingerprints is required; hunt using domain naming pivots (dictionary-style with 'file' token) plus fingerprint-response combinations; harden Terminal-command copy-paste flows with user education and copy-hook detection.",
+      "scores": {
+        "novelty": 65,
+        "relevance": 85,
+        "newness": 75,
+        "credibility": 78.0,
+        "composite": 75.45,
+        "scored_at": "2026-08-10T05:24:14+00:00"
+      },
+      "prior_art": "Follow-up to Microsoft's May 2026 ClickFix documentation. Novelty is the server-side fingerprinting gate and its detection-evasion probes — not the ClickFix technique itself.",
+      "actionable": {
+        "type": "takeaway",
+        "title": "Assume 'apparently benign' from a passive scanner is unreliable for cloaked infrastructure",
+        "detail": "When triaging a suspicious domain, require dynamic evaluation from an authentic-looking fingerprint (real UA, WebGL GPU, timezone, plausible geo). A blank/decoy response is not evidence of safety."
+      },
+      "verified": false,
+      "verify_note": "adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md",
+      "discovered_via": "rss",
+      "id": "macos-clickfix-campaign-moves-from-open-lures-to-a98782de48",
+      "retrieved_at": "2026-08-10T05:24:14+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
       "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
       "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
@@ -63,10 +293,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 18,
+        "newness": 11,
         "credibility": 87.5,
-        "composite": 68.62,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 66.88,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "The 2025 Shai-Hulud / npm postinstall-worm campaigns and the related @mastra scope takeover — same 'compromise a maintainer/bot identity' root cause, but those triggered on install hooks; the novel delta here is import-time execution plus abuse of trusted-publishing provenance.",
       "corroborating_sources": [
@@ -86,183 +316,7 @@
       "id": "asyncapi-npm-compromise-import-time-payload-defe-ebb4a53599",
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "source_url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
-      "article_url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
-      "source_name": "Palo Alto Networks Unit 42",
-      "source_type": "Vendor research",
-      "date": "2026-07",
-      "discovered_via": "rss",
-      "id": "phantom-squatting-ai-hallucinated-domains-as-a-s-99acdb5c5d",
-      "domain": "Supply Chain",
-      "subtype": "Supply Chain",
-      "summary": "Unit 42 documented 'phantom squatting': LLMs consistently hallucinate web domains for legitimate brands, and adversaries register those nonexistent domains to intercept AI-generated traffic. Across 913 brands and 685,339 queries they found 13,229 malicious URLs and ~250,000 still-unregistered hallucinated domains — and predicted adversary registrations 18–51 days ahead.",
-      "takeaway": "LLM hallucinations are a predictable supply-chain attack surface: attackers pre-register the domains/packages models invent.",
-      "lessons": [
-        {
-          "point": "Hallucinated domains/packages are predictable — defenders can enumerate and pre-register or block them before attackers do",
-          "excerpt": "predict use of these domains from 18-51 days ahead of adversary registration",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "AI coding assistants are being used to build the phishing kits that then exploit hallucinated targets",
-          "excerpt": "an attacker who leveraged an AI coding assistant to build a full phishing kit named Montana Empire",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "supply-chain",
-        "slopsquatting",
-        "hallucination",
-        "phishing",
-        "unit42"
-      ],
-      "scores": {
-        "novelty": 90,
-        "relevance": 86,
-        "newness": 18,
-        "composite": 64.8,
-        "scored_at": "2026-07-31T18:40:35+00:00",
-        "credibility": 50.0
-      },
-      "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
-      "retrieved_at": "2026-07-13T00:46:09+00:00",
-      "needs_review": false,
-      "published": "2026-06-30",
-      "topic": "product-security",
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "product-security",
-      "domain": "AI coding assistant sandbox escape / path traversal",
-      "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
-      "source_url": "https://snyk.io/blog/symlinks-are-still-scary/",
-      "summary": "Git faithfully recreates symlinks stored in a repo (file mode 120000, blob is just the target path as text), so a file with an innocent name like project_settings.json can secretly point at ~/.ssh/authorized_keys or ~/.zshrc. When an AI coding assistant is asked to 'set up the workspace' and follows repo instructions, it follows the symlink transparently out of the sandbox, and the human approval dialog shows the benign in-repo name rather than the true resolved target. Wiz Research's GhostApproval tested six major assistants — Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf — and found all vulnerable.",
-      "lessons": [
-        {
-          "point": "Git preserves symlinks: mode 120000 stores only the target path as plain text, so a cloned repo can drop a pointer into your home directory under an innocent filename.",
-          "excerpt": "git faithfully recreates the symlink on your disk. You now have a file in your working copy, with an innocent JSON name, that is secretly a pointer into your home directory.",
-          "confidence": 0.97,
-          "grounded": true
-        },
-        {
-          "point": "The exploit chains three failures: prompt injection in repo instructions, symlink-following without canonical path resolution, and an approval dialog that misrepresents the real target.",
-          "excerpt": "project_settings.json is a file whose entire contents are the string",
-          "confidence": 0.92,
-          "grounded": true
-        },
-        {
-          "point": "The agent's own reasoning identified the true target, but the human was shown only the benign in-repo filename — a UI/trust gap, not just a parsing bug.",
-          "excerpt": "the human said, simply: \"Make this edit to project_settings.json ?\" The agent knew. You didn",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "All six tested AI coding assistants were affected, making this a class-wide weakness rather than a single-vendor bug.",
-          "excerpt": "Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Mitigation is canonical path resolution plus a containment check; on Linux openat2() with RESOLVE_BENEATH/RESOLVE_NO_SYMLINKS enforces it atomically.",
-          "excerpt": "Resolve every path to its canonical location before you open it, and check that the resolved path is still inside the workspace you meant to operate in.",
-          "confidence": 0.94,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A symlink committed to a repo can turn an AI coding agent into a write primitive for ~/.ssh/authorized_keys — resolve paths to canonical form and confirm they stay inside the workspace before any read/write.",
-      "tags": [
-        "prompt-injection",
-        "supply-chain",
-        "path-traversal",
-        "symlink",
-        "ai-coding-assistant",
-        "sandbox-escape",
-        "agent-security"
-      ],
-      "scores": {
-        "novelty": 70,
-        "relevance": 82,
-        "newness": 18,
-        "credibility": 55.0,
-        "composite": 58.35,
-        "scored_at": "2026-07-31T18:40:35+00:00"
-      },
-      "prior_art": "Classic symlink path-traversal / TOCTOU (CWE-59) and git's long-known preservation of symlinks; the new delta is the class-wide application to AI coding-assistant sandbox escapes plus the misleading approval-dialog (Wiz 'GhostApproval') trust gap across six assistants.",
-      "threat": "A malicious or compromised public repo ships symlinks (mode 120000) under benign names; an AI coding assistant following repo/README instructions reads secrets or writes attacker-controlled content (SSH authorized_keys, shell rc files) outside its workspace, yielding credential theft or code execution — while the approval dialog shows only the harmless in-repo path.",
-      "conditions": "Developer clones an untrusted repo and asks the assistant to 'set up the workspace' or follow README instructions; The assistant follows filesystem symlinks without resolving/validating the canonical path against the workspace boundary; Filesystem supports symlinks and core.symlinks is enabled (default on Unix)",
-      "mitigations": "Canonicalize paths and enforce workspace-containment before every file open (openat2 RESOLVE_BENEATH / RESOLVE_NO_SYMLINKS on Linux); Show the resolved absolute target (not the repo-relative alias) in approval dialogs; Scan freshly cloned untrusted repos for symlinks: `find . -type l`, `git ls-files -s | grep ^120000`; Disable or gate symlink following for agent file tools; treat out-of-tree targets as high-risk requiring explicit confirmation; Reference precedent: CVE-2024-32002 (git submodule symlink RCE), CVE-2021-32803 (tar symlink extraction)",
-      "verified": true,
-      "verify_note": "Every lesson and excerpt is faithfully reflected in the Snyk write-up of Wiz's GhostApproval research; the symlink primitive is old but the class-wide AI-assistant + spoofed-approval-dialog angle is genuinely new and directly actionable for appsec/red-team.",
-      "article_url": "https://snyk.io/blog/symlinks-are-still-scary/",
-      "date": "2026-07",
-      "published": "2026-07-09",
-      "discovered_via": "rss",
-      "source_id": "rss:https-snyk-io-blog-feed",
-      "source_rank": 55.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "source_name": "Snyk Blog",
-      "id": "committed-git-symlinks-misleading-approval-dialo-d05775a628",
-      "retrieved_at": "2026-07-26T05:30:57+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "raw_path": "data/_raw/symlinks-full-8fx.txt",
-      "corroborating_sources": []
-    },
-    {
-      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
-      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
-      "source_name": "Microsoft Security Blog",
-      "source_type": "Vendor research",
-      "published": "2026-07-09",
-      "date": "2026-07",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-      "source_rank": 75.0,
-      "topic": "product-security",
-      "domain": "Malware & Wipers",
-      "title": "GigaWiper: modular destructive malware that fakes ransomware",
-      "summary": "Microsoft analyzed GigaWiper, a Golang backdoor that folds several separate malware families into on-demand destructive commands: a raw-disk wiper, a Crucio-derived routine that encrypts with keys that are never saved (irrecoverable), and a FlockWiper reimplementation. It marks a shift toward consolidated, modular destruction platforms.",
-      "takeaway": "Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise — plan recovery accordingly.",
-      "lessons": [
-        {
-          "point": "Destructive malware is becoming modular — multiple wiper/ransomware families as pluggable backdoor commands",
-          "excerpt": "an amalgamation of separate malware families that were folded into GigaWiper as on-demand backdoor commands",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Fake-ransomware with never-saved keys is pure destruction disguised as extortion",
-          "excerpt": "encrypts files with randomly generated keys that are never saved, making decryption impossible",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "malware",
-        "wiper",
-        "ransomware",
-        "destructive",
-        "microsoft"
-      ],
-      "scores": {
-        "novelty": 68,
-        "relevance": 72,
-        "newness": 18,
-        "composite": 57.75,
-        "scored_at": "2026-07-31T18:40:35+00:00",
-        "credibility": 75.0
-      },
-      "id": "gigawiper-modular-destructive-malware-that-fakes-2b20f20b50",
-      "retrieved_at": "2026-07-13T04:19:32+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": null
     },
     {
       "article_url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
@@ -321,17 +375,17 @@
       "scores": {
         "novelty": 60,
         "relevance": 78,
-        "newness": 18,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 57.15,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 55.4,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Prior vendor reports of LLM refusal boilerplate left in malicious code (HP Wolf 2024 dropper, FunkSec) established the 'LLM tells' phenomenon; Mirai/Gafgyt/Keksec lineage teardowns and MHDDoS-derived booter panels are well covered. The delta here is the recovered development telemetry (git log, QEMU/Docker rigs, 254 automated DDoS benchmark reports) and a quantified per-subsystem capability finding, plus measuring uplift as cost-to-repair.",
       "verified": true,
       "verify_note": "Verifier refuted the original framing on two points, both corrected here: 'LLM-built' overstated a borrowed-code assembly (AISURU/Wuhan lineage, ported MHDDoS) that was LLM-assisted, and the IRC/HTTP failures were wrongly attributed to the model when Unit 42 pins that XOR key desync on the developer. It also confirmed no vendor or model is named anywhere, that the ~70% is an analyst estimate, and that the cached source text is truncated at the ingest limit. Remaining claims verified as supported.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": null
     },
     {
       "article_url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
@@ -385,17 +439,17 @@
       "scores": {
         "novelty": 62,
         "relevance": 78,
-        "newness": 18,
+        "newness": 11,
         "credibility": 70.0,
-        "composite": 57.0,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 55.25,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Go text/template SSTI and template injection generally; shell prompt injection via malicious git branch names and PS1; ANSI-escape injection via filenames; repo contents attacking dev tooling (.vscode/, .gitattributes, hooks). The delta is the sink: the attacker-controlled data is a filesystem directory name re-fed to the engine, it fires under the shipped default configuration, and the trigger is passive navigation. Nearest pool entry: the Shescape shell-escaping advisories (different mechanism - escaping, not double evaluation).",
       "verified": true,
       "verify_note": "Verifier found all five claims supported by the advisory's code walk-through and two PoCs, and confirmed the fix guidance. Corrections applied: the trigger needs a prompt render after cd rather than being wholly passive, the file-write PoC is stated verified on Windows while Linux/macOS exploitation is argued rather than shown, and the slash-free ${IFS} bypass is asserted without output. It scored novelty lower (30) on the grounds that double-eval SSTI and malicious-repo-metadata attacks are established classes; we hold 62 against this pool's prior art and record the disagreement here.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": null
     },
     {
       "topic": "product-security",
@@ -444,10 +498,10 @@
       "scores": {
         "novelty": 57,
         "relevance": 88,
-        "newness": 18,
+        "newness": 11,
         "credibility": 57.5,
-        "composite": 56.62,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 54.88,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -455,7 +509,7 @@
       "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0,
+      "grounding_score": null,
       "editorial": {
         "promoted": true,
         "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
@@ -519,10 +573,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 18,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 56.25,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 54.5,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Unit42's own blob-URL phishing note (2025-10-02 'phishing pages using blob URLs') and classic IDN/Cyrillic homoglyph + zero-width-character phishing obfuscation; client-side CAPTCHA gates (KongTuke/White Lynx CAPTCHA pages) and SaaS-redirect chaining are each individually documented.",
       "threat": "Attacker harvests Microsoft OAuth device codes / authentication tokens via a phishing page engineered to be invisible to network analyzers, URL/domain reputation, safe-browsing blocklists, and signature-based content scanners, yielding account takeover.",
@@ -548,7 +602,7 @@
       "id": "four-stacked-evasion-techniques-hide-device-code-22419eea64",
       "retrieved_at": "2026-07-26T05:30:54+00:00",
       "needs_review": true,
-      "grounding_score": 0.0,
+      "grounding_score": null,
       "corroborating_sources": []
     },
     {
@@ -607,10 +661,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 74,
-        "newness": 18,
+        "newness": 11,
         "credibility": 50.0,
-        "composite": 55.2,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 53.45,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "HTML smuggling (client-side reconstruction of a payload in the browser from embedded/encoded data to evade network inspection) combined with server-side polymorphism / hash rotation; SourTrade is a documented evolution of these adding split-source assembly over a legitimate Bun runtime with per-session AES-CTR filler.",
       "threat": "A malvertising operator delivers per-session, unique-hash Windows malware by reassembling a Bun-based executable in the victim's browser from a legitimate runtime plus attacker-supplied PE headers and JavaScriptCore bytecode, evading hash/IOC-based detection and misattributing the Mark-of-the-Web download source to a benign landing page. Impersonates TradingView, Solana, and Luno to target retail/crypto traders across 12 countries in 25 languages; linked (unconfirmed for the current samples) to the JSCEAL/WeevilProxy stealer.",
@@ -630,7 +684,7 @@
       "id": "sourtrade-browser-reassembles-a-bun-based-execut-c0c754d8d7",
       "retrieved_at": "2026-07-26T05:30:58+00:00",
       "needs_review": false,
-      "grounding_score": 1.0,
+      "grounding_score": null,
       "corroborating_sources": []
     },
     {
@@ -685,10 +739,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 76,
-        "newness": 18,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 55.05,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 53.3,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Generic CWE-78 OS command injection in embedded/OT web management (unsanitized input into system()); the 'xz -f -c -d as cat' file-read trick is a known GTFOBins-style LOLBin. Novelty here is finding-level: the specific Siemens ROX II zero-day trilogy (CVE-2025-40948/40947/40949), not a new vulnerability class.",
       "threat": "An attacker with access to the ROX II management interface can read credentials/keys (CVE-2025-40948), inject a root reverse shell through the feature-key uploader (CVE-2025-40947), and plant a root cron job for reboot-persistent control (CVE-2025-40949), turning a network-segmentation security device into a foothold for OT disruption, data exfiltration, or DoS.",
@@ -714,7 +768,7 @@
       "id": "siemens-ruggedcom-rox-ii-three-cve-chain-file-di-a727935d7b",
       "retrieved_at": "2026-07-26T05:30:54+00:00",
       "needs_review": true,
-      "grounding_score": 1.0,
+      "grounding_score": null,
       "corroborating_sources": []
     },
     {
@@ -770,17 +824,17 @@
       "scores": {
         "novelty": 58,
         "relevance": 68,
-        "newness": 18,
+        "newness": 11,
         "credibility": 70.0,
-        "composite": 52.8,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 51.05,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Known bug class rather than a new one: GraphQL subscription resolvers missing query-level authz, WebSocket/SSE channel joins not re-checking per-topic ACLs, Kafka topic-pattern subscribe vs per-topic ACLs, and Kubernetes RBAC treating watch separately from get/list. Range-widening as an authz bypass is IDOR/BOLA with a range operator.",
       "verified": false,
       "verify_note": "Verifier scored novelty 20/100 - the 'stream endpoint skips the read endpoint's authz check' pattern has many documented prior instances, so only the instance is new. It also flagged that the advisory gives no root cause (the per-endpoint-drift explanation is our inference and is labelled as such), that 'only Watch' overstates a list of three unaffected request types, and that Watch delivers events rather than a keyspace snapshot. Held for review as a known class.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": null
     },
     {
       "topic": "product-security",
@@ -826,10 +880,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 74,
-        "newness": 18,
+        "newness": 11,
         "credibility": 70.0,
-        "composite": 49.2,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 47.45,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "The broader 'incomplete neutralization yields command injection' class (CWE-78/CWE-150) and Shescape's own prior per-shell escaping advisories; the analyst's cited Kemp LoadMaster null-byte-gap-to-RCE is the nearest thematic match.",
       "threat": "An attacker who controls a command argument passed through Shescape's escape/escapeAll on Windows CMD can break out of the intended command context (e.g. a conditional block) and execute arbitrary commands (CVSS 9.2).",
@@ -847,7 +901,7 @@
       "id": "shescape-shell-injection-via-unescaped-cmd-paren-c6fe16b0f6",
       "retrieved_at": "2026-07-26T05:30:56+00:00",
       "needs_review": true,
-      "grounding_score": 0.0,
+      "grounding_score": null,
       "corroborating_sources": []
     },
     {
@@ -893,10 +947,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 18,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 45.75,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 44.0,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Tool round-ups are a common genre and every tool listed is publicly known; there is no new technique or tool. The contribution is the three-category taxonomy and constraint-based selection guidance. Vendor content rather than research: Semgrep competes in the category it ranks and has an unannounced product in it.",
       "verified": true,
@@ -904,34 +958,6 @@
       "id": "a-working-taxonomy-of-open-source-ai-code-securi-41b13f54e0",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
-    },
-    {
-      "id": "web-redhat-npm-2026",
-      "domain": "Supply Chain",
-      "subtype": "Supply Chain",
-      "title": "@redhat-cloud-services npm namespace compromise (32+ packages)",
-      "date": "2026-06",
-      "severity": "High",
-      "threat": "Attackers compromised at least 32 packages under the @redhat-cloud-services scope, bypassing code review to push a payload dubbed Miasma.",
-      "conditions": "Affects consumers of the affected scoped packages and downstream builds that pulled compromised versions.",
-      "mitigations": "Identify affected versions from the Red Hat advisory; pin to clean releases; rotate impacted credentials; verify package signatures/provenance; harden publishing with mandatory review and 2FA.",
-      "source_name": "Red Hat Security",
-      "source_type": "Vendor advisory",
-      "source_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
-      "needs_review": false,
-      "discovered_via": "manual",
-      "article_url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-006",
-      "scores": {
-        "newness": 3,
-        "novelty": 0,
-        "relevance": 0,
-        "composite": 8.25,
-        "scored_at": "2026-07-31T18:40:35+00:00",
-        "credibility": 50.0
-      },
-      "published": "2026-06",
-      "topic": "product-security",
       "grounding_score": null
     }
   ]

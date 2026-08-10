@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Skill Supply Chain  
 **Source:** [source](https://arxiv.org/abs/2607.13987)  ·  **Published:** Jul 16, 2026  ·  **Retrieved:** 2026-07-16  
-**Scores:** 🆕 Newness 18 · ✨ Novelty 72 · 🎯 Relevance 80 · 🏛️ Credibility 55 · **Composite 58.35**  
+**Scores:** 🆕 Newness 11 · ✨ Novelty 72 · 🎯 Relevance 80 · 🏛️ Credibility 55 · **Composite 56.6**  
 **Tags:** `agent-skills`, `skill-scanning`, `supply-chain`, `threat-modeling`, `evals`  
 **Verification:** ✓ independently verified · closest prior art: OpenClaw/ClawHub agentic supply-chain and MCP tool-poisoning work cover parts of this; the novel delta is the explicit lifecycle taxonomy (five stages) plus an empirical study over 327 real skills rather than a single attack demo.
 

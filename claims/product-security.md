@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-06_
+_11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-10_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -20,11 +20,12 @@ _11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-06_
 
 _Tags: `npm`, `pip`, `supply-chain`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Supply chain best practices](https://blog.trailofbits.com/2020/12/22/how-are-teams-currently-handling-web-attacks-at-scale/) | undated |
+| supports | [ChainDrop: Inside a Self-Propagating npm Worm](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) | Aug 6, 2026 |
 
 </details>
 

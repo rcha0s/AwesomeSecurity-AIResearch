@@ -534,80 +534,6 @@
     "winner_tier": "high",
     "first_seen": "2026-07-16"
   },
-  "ad510e4d562795dc": {
-    "fp": {
-      "url": "https://snyk.io/blog/symlinks-are-still-scary",
-      "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
-      "tokens": [
-        "ai",
-        "approval",
-        "assistants",
-        "coding",
-        "committed",
-        "dialogs",
-        "files",
-        "ghostapproval",
-        "git",
-        "let",
-        "misleading",
-        "outside",
-        "read",
-        "symlinks",
-        "wiz",
-        "workspace",
-        "write"
-      ],
-      "shingles": [
-        "ai coding assistants",
-        "approval dialogs let",
-        "assistants read write",
-        "coding assistants read",
-        "committed git symlinks",
-        "dialogs let ai",
-        "files outside workspace",
-        "git symlinks misleading",
-        "let ai coding",
-        "misleading approval dialogs",
-        "outside workspace wiz",
-        "read write files",
-        "symlinks misleading approval",
-        "workspace wiz ghostapproval",
-        "write files outside"
-      ],
-      "entities": [],
-      "bucket": "2026-07-06"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-09"
-  },
-  "1c69e61c253954cd": {
-    "fp": {
-      "url": "https://microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware",
-      "title": "GigaWiper: modular destructive malware that fakes ransomware",
-      "tokens": [
-        "destructive",
-        "fakes",
-        "gigawiper",
-        "malware",
-        "modular",
-        "ransomware"
-      ],
-      "shingles": [
-        "destructive malware fakes",
-        "gigawiper modular destructive",
-        "malware fakes ransomware",
-        "modular destructive malware"
-      ],
-      "entities": [
-        "Microsoft"
-      ],
-      "bucket": "2026-07-06"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-09"
-  },
   "8c49b078dd1c24c5": {
     "fp": {
       "url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet",
@@ -1219,47 +1145,6 @@
     "winner_tier": "high",
     "first_seen": "2026-07-22"
   },
-  "ac3cd3e9a0f4cac2": {
-    "fp": {
-      "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6",
-      "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
-      "tokens": [
-        "1m",
-        "5",
-        "6",
-        "agentic",
-        "benchmark",
-        "claims",
-        "context",
-        "gpt",
-        "luna",
-        "sol",
-        "terra",
-        "three",
-        "tiers"
-      ],
-      "shingles": [
-        "1m context agentic",
-        "5 6 luna",
-        "6 luna terra",
-        "agentic benchmark claims",
-        "context agentic benchmark",
-        "gpt 5 6",
-        "luna terra sol",
-        "sol three tiers",
-        "terra sol three",
-        "three tiers 1m",
-        "tiers 1m context"
-      ],
-      "entities": [
-        "OpenAI"
-      ],
-      "bucket": "2026-07-06"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-09"
-  },
   "26b13f5529269d0a": {
     "fp": {
       "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
@@ -1349,5 +1234,185 @@
     "corroborators": [],
     "winner_tier": "high",
     "first_seen": "2026-07-16"
+  },
+  "426fb9bbf241b1ba": {
+    "fp": {
+      "url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis",
+      "title": "ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2",
+      "tokens": [
+        "c2",
+        "chaindrop",
+        "ethereum",
+        "exfiltrates",
+        "mints",
+        "npm",
+        "propagating",
+        "provenance",
+        "routed",
+        "self",
+        "sigstore",
+        "valid",
+        "via",
+        "worm"
+      ],
+      "shingles": [
+        "chaindrop self propagating",
+        "ethereum routed c2",
+        "exfiltrates via ethereum",
+        "mints valid sigstore",
+        "npm worm mints",
+        "propagating npm worm",
+        "provenance exfiltrates via",
+        "self propagating npm",
+        "sigstore provenance exfiltrates",
+        "valid sigstore provenance",
+        "via ethereum routed",
+        "worm mints valid"
+      ],
+      "entities": [
+        "Ethereum-routed C2 Unit"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-06"
+  },
+  "b61b1bf2a9e2b436": {
+    "fp": {
+      "url": "https://portswigger.net/research/crlf-powered-desync-attacks",
+      "title": "CRLF-Powered Desync Attacks: header injection escalates to CDN-wide response queue poisoning + browser-side XSS",
+      "tokens": [
+        "attacks",
+        "browser",
+        "cdn",
+        "crlf",
+        "desync",
+        "escalates",
+        "header",
+        "injection",
+        "poisoning",
+        "powered",
+        "queue",
+        "response",
+        "side",
+        "wide",
+        "xss"
+      ],
+      "shingles": [
+        "attacks header injection",
+        "browser side xss",
+        "cdn wide response",
+        "crlf powered desync",
+        "desync attacks header",
+        "escalates cdn wide",
+        "header injection escalates",
+        "injection escalates cdn",
+        "poisoning browser side",
+        "powered desync attacks",
+        "queue poisoning browser",
+        "response queue poisoning",
+        "wide response queue"
+      ],
+      "entities": [
+        "CRLF-Powered Desync Attacks",
+        "XSS Portswigger"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "37107f84f7fea186": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide",
+      "title": "macOS ClickFix campaign moves from open lures to server-side browser-fingerprinting gates that cloak the payload from crawlers",
+      "tokens": [
+        "browser",
+        "campaign",
+        "clickfix",
+        "cloak",
+        "crawlers",
+        "fingerprinting",
+        "gates",
+        "lures",
+        "macos",
+        "moves",
+        "open",
+        "payload",
+        "server",
+        "side"
+      ],
+      "shingles": [
+        "browser fingerprinting gates",
+        "campaign moves open",
+        "clickfix campaign moves",
+        "cloak payload crawlers",
+        "fingerprinting gates cloak",
+        "gates cloak payload",
+        "lures server side",
+        "macos clickfix campaign",
+        "moves open lures",
+        "open lures server",
+        "server side browser",
+        "side browser fingerprinting"
+      ],
+      "entities": [
+        "Microsoft",
+        "Microsoft Threat Intelligence"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "ab44dba326bec0d3": {
+    "fp": {
+      "url": "https://aleksagordic.com/blog/vllm",
+      "title": "vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving",
+      "tokens": [
+        "abstractions",
+        "anatomy",
+        "attention",
+        "batching",
+        "bearing",
+        "block",
+        "cache",
+        "continuous",
+        "high",
+        "kv",
+        "llm",
+        "load",
+        "paged",
+        "pool",
+        "serving",
+        "throughput",
+        "vllm"
+      ],
+      "shingles": [
+        "abstractions high throughput",
+        "anatomy paged attention",
+        "attention continuous batching",
+        "batching kv cache",
+        "bearing abstractions high",
+        "block pool load",
+        "cache block pool",
+        "continuous batching kv",
+        "high throughput llm",
+        "kv cache block",
+        "load bearing abstractions",
+        "paged attention continuous",
+        "pool load bearing",
+        "throughput llm serving",
+        "vllm anatomy paged"
+      ],
+      "entities": [],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-06"
   }
 }

@@ -2,7 +2,7 @@
 
 **Topic:** Product Security  ·  **Domain:** AI-Generated Code Risk  
 **Source:** [source](https://arxiv.org/abs/2607.12428)  ·  **Author:** A H M Nazmus Sakib et al.  ·  **Published:** Jul 19, 2026  ·  **Retrieved:** 2026-07-21  
-**Scores:** 🆕 Newness 18 · ✨ Novelty 57 · 🎯 Relevance 88 · 🏛️ Credibility 58 · **Composite 56.62**  
+**Scores:** 🆕 Newness 11 · ✨ Novelty 57 · 🎯 Relevance 88 · 🏛️ Credibility 58 · **Composite 54.88**  
 **Tags:** `ai-generated-code`, `coding-agents`, `secrets`, `supply-chain`, `code-review`  
 **Verification:** ✓ independently verified · closest prior art: That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

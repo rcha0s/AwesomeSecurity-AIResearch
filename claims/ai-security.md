@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_15 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-06_
+_15 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-10_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 

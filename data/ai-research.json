@@ -12,53 +12,70 @@
   ],
   "entries": [
     {
-      "source_url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-      "article_url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-      "source_name": "Simon Willison's Weblog",
-      "source_type": "Practitioner blog",
-      "published": "2026-07-04",
-      "date": "2026-07",
-      "discovered_via": "rss",
-      "source_id": "rss:https-simonwillison-net-atom-everything",
-      "source_rank": 55.0,
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
-      "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-      "summary": "Armin (building the Pi harness) found newer Claude models (Opus 4.8, Sonnet 5) invent made-up fields when calling Pi's custom edit tool — worse than older models — likely because they're RL-trained on Claude Code's built-in edit tool. Third-party harnesses with their own tool schemas get degraded tool-calling from the very newest models.",
-      "takeaway": "Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.",
+      "domain": "Serving & Ops",
+      "cluster": "I",
+      "related_claims": [],
+      "title": "vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving",
+      "source_url": "https://www.aleksagordic.com/blog/vllm",
+      "article_url": "https://www.aleksagordic.com/blog/vllm",
+      "published": "2026-08-06",
+      "date": "2026-08-06",
+      "raw_path": "data/_raw/mrscan-https---www-aleksagordic-com-blog-vllm.txt",
+      "source_id": null,
+      "source_topics": [],
+      "source_rank": 60,
+      "summary": "First post in a series that walks through vLLM's engine internals: the KV-cache manager's block pool (paged attention), continuous batching against a shared waiting/running queue, and the step()-loop that interleaves prefill and decode. Explains why the same engine kernels support both offline synchronous and async multi-GPU serving with minimal API surface change.",
+      "takeaway": "Understanding vLLM's block-pool + continuous-batching abstraction is the fastest way to reason about latency vs throughput trade-offs when self-hosting inference — the KV cache manager's free_block_queue is the load-bearing surface everything else negotiates against.",
       "lessons": [
         {
-          "point": "A SOTA model can be WORSE at a custom tool schema than its older siblings if it was RL-trained on a different harness's tools",
-          "excerpt": "the SOTA models of the family are worse at this specific tool schema than their older siblings",
+          "point": "The KV-cache manager maintains a free_block_queue — a pool of hundreds of thousands of KV-cache blocks that serve as the indexing structure mapping tokens to their computed KV cache, and this is what makes paged attention work.",
+          "excerpt": "The KV-cache manager maintains a free_block_queue - a pool of available KV-cache blocks (often on the order of hundreds of thousands, depending on VRAM size and block size). During paged attention, the blocks serve as the indexing structure that map tokens to their computed KV cache blocks.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "Continuous batching is a natural consequence of the forward-pass flattening batched requests into a single sequence — the async engine can inject new requests after each step, while the sync engine cannot, but both share the underlying kernel path.",
+          "excerpt": "Because the forward pass flattens the batch into a single sequence and custom kernels handle it efficiently, continuous batching is fundamentally supported even in the synchronous engine.",
           "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "Align tool formats to the model — Claude is trained on str-replace edits, OpenAI on apply_patch",
-          "excerpt": "trained (presumably via Reinforcement Learning) to better use the edit tools that are baked into Claude Code",
-          "confidence": 0.85,
-          "grounded": true
+          "point": "Each engine step is a three-stage loop — schedule, forward pass, postprocess — and the scheduler policy (FCFS vs priority) plus the block-pool state fully determine which requests advance.",
+          "excerpt": "Each step has three stages: 1. Schedule: select which requests to run in this step (decode, and/or (chunked) prefill) 2. Forward pass: run the model and sample tokens 3. Postprocess: append sampled token IDs to each Request, detokenize, and check stop conditions.",
+          "confidence": 0.95,
+          "grounded": false
         }
       ],
       "tags": [
-        "harness",
-        "tool-use",
-        "agents",
-        "claude-code",
-        "architecture"
+        "inference",
+        "vllm",
+        "paged-attention",
+        "continuous-batching",
+        "serving",
+        "kv-cache"
       ],
       "scores": {
-        "novelty": 80,
-        "relevance": 90,
-        "newness": 18,
-        "composite": 63.75,
-        "scored_at": "2026-07-31T18:40:35+00:00",
-        "credibility": 55.0
+        "novelty": 45,
+        "relevance": 80,
+        "newness": 79,
+        "credibility": 60.0,
+        "composite": 66.25,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
-      "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
-      "retrieved_at": "2026-07-13T04:19:32+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
+      "prior_art": "vLLM paper (Kwon et al. 2023, SOSP) introduced paged attention; the FlashAttention series and continuous-batching (Orca) both predate this. This post is a synthesis / walkthrough, not new research — value is pedagogical.",
+      "actionable": {
+        "type": "takeaway",
+        "title": "Read this before your next inference-cost / latency debug",
+        "detail": "When your self-hosted LLM latency spikes or throughput plateaus, the answer is almost always in the block-pool state or the scheduler policy. This post is the fastest orientation."
+      },
+      "verified": false,
+      "verify_note": "adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md",
+      "discovered_via": "rss",
+      "id": "vllm-anatomy-paged-attention-continuous-batching-9b4e45ad94",
+      "retrieved_at": "2026-08-10T05:24:14+00:00",
+      "needs_review": true,
+      "grounding_score": 0.33
     },
     {
       "topic": "ai-research",
@@ -114,10 +131,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 90,
-        "newness": 18,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 60.75,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 59.0,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Anthropic's own engineering guidance ('Building effective agents', 'Writing effective tools for agents') and Claude Code best-practices docs, which already advocate small distinct toolsets and eval-driven iteration; the analyst's cited benchmarks/taxonomies (PawBench, harness taxonomy) are third-party and not equivalent to this first-party account.",
       "threat": "Prompt injection and sandbox escape against coding agents that are 'influenced by anyone who can talk to it' (public Slack/feedback channels), and secret exposure when credentials are stored in agent-readable memory.",
@@ -143,7 +160,7 @@
       "id": "how-the-claude-code-team-designs-its-harness-too-1c1b63daf5",
       "retrieved_at": "2026-07-26T05:30:54+00:00",
       "needs_review": false,
-      "grounding_score": 1.0,
+      "grounding_score": null,
       "corroborating_sources": []
     },
     {
@@ -197,10 +214,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 80,
-        "newness": 18,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 60.75,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 59.0,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.",
       "conditions": "Requires OpenAI Responses-API models (e.g. gpt-5.6) and a harness you can extend; sets store:true (OpenAI retains conversation data server-side) and sends full context to OpenAI's compaction protocol — a data-handling consideration. Artifacts are provider-native and opaque, reusable only on compatible OpenAI turns.",
@@ -224,118 +241,8 @@
       "id": "server-side-encrypted-compaction-porting-codex-s-ee38bf09a0",
       "retrieved_at": "2026-07-26T05:30:58+00:00",
       "needs_review": false,
-      "grounding_score": 1.0,
+      "grounding_score": null,
       "corroborating_sources": []
-    },
-    {
-      "topic": "ai-research",
-      "domain": "Agents & Harnesses",
-      "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
-      "source_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
-      "article_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
-      "published": "2026-07-02",
-      "date": "2026-07",
-      "discovered_via": "rss",
-      "source_id": "rss:https-blog-trailofbits-com-feed",
-      "source_rank": 75.0,
-      "source_topics": [
-        "product-security",
-        "ai-security"
-      ],
-      "raw_path": "data/_raw/gpt-5-5-cyber-built-a-zlib-fuzzing-lab-in-a-day-e849fb2340.txt",
-      "summary": "Pointed at a specific bug class in well-audited zlib via a persistent `/goal` — but not told how — a frontier model decided static review was low value, built fuzz harnesses across a dozen entrypoints with ASan/UBSan and variant builds, and surfaced findings now in coordinated disclosure. The load-bearing harness detail was a strict definition of a reportable finding — it self-rejected an unreachable crash as noise and kept going. (Single-source vendor field report on a not-yet-public model.)",
-      "lessons": [
-        {
-          "point": "A persistent goal that survives compaction lets the agent hold scope end-to-end and pick its own strategy — here it chose dynamic fuzzing over static review without being told to.",
-          "excerpt": "judged static review to be a poor use of tokens, and decided the higher value path was to build fuzz tooling to dynamically test the code",
-          "confidence": 0.96,
-          "grounded": true
-        },
-        {
-          "point": "Reportability discipline is what turns agent output into signal: without strict validity rules baked into the goal, the agent produces confident noise.",
-          "excerpt": "the agent will generate mountains of noise with high confidence",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The model triaged its own findings — it logged a real-but-unreachable crash as noise and moved on rather than escalating it.",
-          "excerpt": "the model logged it as unreachable and moved on",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "takeaway": "When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.",
-      "tags": [
-        "agents",
-        "goal-persistence",
-        "fuzzing",
-        "evals",
-        "ai-for-security"
-      ],
-      "scores": {
-        "novelty": 60,
-        "relevance": 88,
-        "newness": 18,
-        "credibility": 75.0,
-        "composite": 60.15,
-        "scored_at": "2026-07-31T18:40:35+00:00"
-      },
-      "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
-      "verified": true,
-      "verify_note": "Independent verifier: single-source vendor report; softened 'found real bugs' to 'findings in disclosure' and noted it was directed at a bug class.",
-      "id": "goal-persistent-agents-a-frontier-model-built-a-759122f879",
-      "retrieved_at": "2026-07-16T07:43:12+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "source_url": "https://github.com/omnigent-ai/omnigent",
-      "article_url": "https://github.com/omnigent-ai/omnigent",
-      "source_name": "omnigent-ai/omnigent",
-      "source_type": "GitHub repository",
-      "author": "omnigent-ai",
-      "date": "2026-06",
-      "discovered_via": "github",
-      "id": "omnigent-ai-omnigent-b26281bf0e",
-      "domain": "Meta-Harness",
-      "subtype": "Meta-Harness",
-      "summary": "Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.",
-      "takeaway": "The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.",
-      "lessons": [
-        {
-          "point": "A harness-agnostic orchestration layer lets you route each task to the best agent and avoid lock-in",
-          "excerpt": "swap or combine harnesses without rewriting",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Central policy + sandboxing at the meta-harness is a natural place to enforce agent security",
-          "excerpt": "enforce policies and sandboxing",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "meta-harness",
-        "orchestration",
-        "agents",
-        "claude-code",
-        "tooling-2026"
-      ],
-      "scores": {
-        "novelty": 78,
-        "relevance": 84,
-        "newness": 3,
-        "composite": 56.85,
-        "scored_at": "2026-07-31T18:40:35+00:00",
-        "credibility": 50.0
-      },
-      "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-      "retrieved_at": "2026-07-13T00:46:09+00:00",
-      "needs_review": false,
-      "published": "2026-06",
-      "topic": "ai-research",
-      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -380,10 +287,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 88,
-        "newness": 18,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 55.65,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 53.9,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Counterfactual and metamorphic testing are established ML-evaluation techniques and benchmark-gaming concerns are widespread. The contribution is applying them to a security-detection benchmark and publishing a negative result - notably that five-model union recall (29.6%) barely exceeds the best single model (26%). Single-vendor, single-repo, self-evaluated: the source itself says to treat these as the hardest case, not a general result.",
       "verified": true,
@@ -391,7 +298,7 @@
       "id": "auditing-a-cyber-benchmark-for-groundedness-mode-bfc4099549",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": null
     },
     {
       "article_url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
@@ -445,59 +352,17 @@
       "scores": {
         "novelty": 55,
         "relevance": 85,
-        "newness": 18,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 54.75,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 53.0,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Specification gaming / reward hacking is a long-standing literature, and network isolation, turn caps and budget caps are standard eval hygiene. The genuinely new material is the published rate (~20%), the env/filesystem/local-network pivot taxonomy, and the self-implicating detail that the harness's own tracing service was the leak. Nearest pool entry: the Hugging Face agentic intrusion entry on provider guardrails blocking incident response - same incident, opposite end (containment design rather than IR).",
       "verified": true,
       "verify_note": "Verifier confirmed the figures are quoted accurately but demanded scoping now applied: the ~20% is an unintended-solve rate on their own suite with open-weight models and no published denominator, not a general rogue-behavior rate; the 60-turn cap is an operator-overridable default and the $10-$20 budget is an average; and web search is deliberately allowed, so framing the network as fully sealed was wrong. All Hugging Face / OpenAI incident detail is the author's second-hand recap of public statements and is not asserted here. It scored novelty 55 and relevance 88, and flagged the tracing-service leak as the strongest material, which is now a lesson.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
-    },
-    {
-      "source_url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
-      "article_url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
-      "source_name": "Simon Willison's Weblog",
-      "source_type": "Practitioner blog",
-      "published": "2026-07-09",
-      "date": "2026-07",
-      "discovered_via": "rss",
-      "source_id": "rss:https-simonwillison-net-atom-everything",
-      "source_rank": 55.0,
-      "topic": "ai-research",
-      "domain": "Models & Capabilities",
-      "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
-      "summary": "OpenAI shipped GPT-5.6 in three sizes (Luna/Terra/Sol) at $1-5 in / $6-30 out per Mtok, all with a 1M-token context, 128k max output, and a Feb 2026 cutoff. OpenAI's headline claim is long-running agentic performance beating Claude Fable 5.",
-      "takeaway": "Evaluate the tiers on your own agentic task — per-token price means less now that reasoning-token counts dominate cost.",
-      "lessons": [
-        {
-          "point": "Price-per-token is a weak comparison when reasoning-token usage varies wildly per model/task",
-          "excerpt": "price-per-million tokens doesn't tell us much now that the number of reasoning tokens can differ so much",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "models",
-        "openai",
-        "agents",
-        "benchmarks"
-      ],
-      "scores": {
-        "novelty": 55,
-        "relevance": 75,
-        "newness": 18,
-        "composite": 51.75,
-        "scored_at": "2026-07-31T18:40:35+00:00",
-        "credibility": 55.0
-      },
-      "id": "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0",
-      "retrieved_at": "2026-07-13T04:19:32+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": null
     },
     {
       "topic": "ai-research",
@@ -550,10 +415,10 @@
       "scores": {
         "novelty": 42,
         "relevance": 72,
-        "newness": 18,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 46.95,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 45.2,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Standard ML eval practice (precision/recall trade-off, per-slice vs aggregate scoring) plus the sibling Semgrep 'groundedness' benchmark critique cited by the analyst; both argue against ranking security scanners on a single aggregate metric.",
       "threat": "Choosing an LLM code-security scanner on a competitive-looking aggregate F1/recall, then absorbing a hidden operational cost: a flood of low-precision findings that overwhelm analyst triage and erode trust in the tool, plus severe recall collapse on large real-world repositories.",
@@ -574,7 +439,7 @@
       "id": "kimi-k3-code-security-eval-matching-f1-hides-a-p-05bd66768c",
       "retrieved_at": "2026-07-26T05:30:57+00:00",
       "needs_review": true,
-      "grounding_score": 0.8,
+      "grounding_score": null,
       "corroborating_sources": []
     },
     {
@@ -630,17 +495,17 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 18,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 41.25,
-        "scored_at": "2026-07-31T18:40:35+00:00"
+        "composite": 39.5,
+        "scored_at": "2026-08-10T05:24:14+00:00"
       },
       "prior_art": "Capability self-knowledge / calibration research, sycophancy and persona-induced misbehavior, models claiming work they did not do, and refusal-boundary work showing alignment is domain-selective. The defensible delta is the dissociation design - a high-severity domain at floor while low-severity domains hit ceiling - plus interactional format as a first-class driver.",
       "verified": false,
       "verify_note": "Verifier scored novelty 34, arguing this is a new label on a known cluster (capability miscalibration plus domain-selective alignment), and refuted the original framing of the actionable: the source names deployment-side capability specification as a mitigation target and never tests it, never specifies where to state it, and covers conversational sessions rather than tool-using agents - so the agent/tool-call implication is our extrapolation and is marked as such. 'Will claim' was softened to 'may claim'. Held for review.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": null
     }
   ]
 }

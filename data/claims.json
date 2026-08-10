@@ -989,10 +989,16 @@
           "title": "Supply chain best practices",
           "source_name": "Trail of Bits",
           "published": "2020"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
+          "title": "ChainDrop: Inside a Self-Propagating npm Worm",
+          "published": "2026-08-06"
         }
       ],
       "first_seen": "2020-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-10",
       "guidance": "Do first-touch installs in a sandbox. Where possible, prefer --ignore-scripts + explicit build orchestration.",
       "tags": [
         "npm",
