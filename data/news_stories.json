@@ -1414,5 +1414,1965 @@
     "corroborators": [],
     "winner_tier": "high",
     "first_seen": "2026-08-06"
+  },
+  "ba93ebfdaab94d08": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit",
+      "title": "LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection",
+      "tokens": [
+        "call",
+        "heist",
+        "hijacking",
+        "injection",
+        "interception",
+        "key",
+        "litellm",
+        "llm",
+        "theft",
+        "tool",
+        "traffic"
+      ],
+      "shingles": [
+        "heist hijacking litellm",
+        "hijacking litellm traffic",
+        "interception key theft",
+        "key theft tool",
+        "litellm traffic interception",
+        "llm heist hijacking",
+        "theft tool call",
+        "tool call injection",
+        "traffic interception key"
+      ],
+      "entities": [
+        "Hijacking LiteLLM",
+        "Key Theft",
+        "LLM Heist",
+        "Tool-Call Injection Johann Rehberger",
+        "Traffic Interception"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-03"
+  },
+  "3d1865212a5c5b37": {
+    "fp": {
+      "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
+      "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
+      "tokens": [
+        "agents",
+        "audit",
+        "behavioral",
+        "llm",
+        "offensive",
+        "runs",
+        "security",
+        "watching",
+        "work"
+      ],
+      "shingles": [
+        "agents work behavioral",
+        "audit offensive security",
+        "behavioral audit offensive",
+        "offensive security llm",
+        "security llm runs",
+        "watching agents work",
+        "work behavioral audit"
+      ],
+      "entities": [
+        "Behavioral Audit",
+        "Offensive-Security LLM Runs Tarun Koyalwar",
+        "OpenAI",
+        "Watching Agents Work"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-03"
+  },
+  "b666da1cad9ef314": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Aug/5/incident-report",
+      "title": "Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)",
+      "tokens": [
+        "agent",
+        "aisi",
+        "behaviour",
+        "cyber",
+        "during",
+        "incident",
+        "report",
+        "testing",
+        "uk",
+        "unsanctioned"
+      ],
+      "shingles": [
+        "agent behaviour during",
+        "behaviour during cyber",
+        "cyber testing uk",
+        "during cyber testing",
+        "incident report unsanctioned",
+        "report unsanctioned agent",
+        "testing uk aisi",
+        "unsanctioned agent behaviour"
+      ],
+      "entities": [
+        "Anthropic",
+        "Claude Mythos",
+        "Incident Report",
+        "OpenAI",
+        "The UK AI Security Institute",
+        "UK AISI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "fd2ac6a39fbab53c": {
+    "fp": {
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident",
+      "title": "OpenAI and Hugging Face partner to address security incident during model evaluation",
+      "tokens": [
+        "address",
+        "during",
+        "evaluation",
+        "face",
+        "hugging",
+        "incident",
+        "model",
+        "openai",
+        "partner",
+        "security"
+      ],
+      "shingles": [
+        "address security incident",
+        "during model evaluation",
+        "face partner address",
+        "hugging face partner",
+        "incident during model",
+        "openai hugging face",
+        "partner address security",
+        "security incident during"
+      ],
+      "entities": [
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-21"
+  },
+  "b2e79460eedc3b15": {
+    "fp": {
+      "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+      "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+      "tokens": [
+        "ai",
+        "api",
+        "cisco",
+        "defense",
+        "engine",
+        "inspect",
+        "instructions",
+        "judge",
+        "llm",
+        "mcp",
+        "multi",
+        "prompts",
+        "resources",
+        "scanner",
+        "server",
+        "tools",
+        "yara"
+      ],
+      "shingles": [
+        "ai defense mcp",
+        "api mcp tools",
+        "cisco ai defense",
+        "defense mcp scanner",
+        "engine scanner yara",
+        "inspect api mcp",
+        "judge inspect api",
+        "llm judge inspect",
+        "mcp scanner multi",
+        "mcp tools prompts",
+        "multi engine scanner",
+        "prompts resources server",
+        "resources server instructions",
+        "scanner multi engine",
+        "scanner yara llm",
+        "tools prompts resources",
+        "yara llm judge"
+      ],
+      "entities": [
+        "Cisco AI Defense",
+        "MCP",
+        "Python CLI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-09"
+  },
+  "388ba8cb645da532": {
+    "fp": {
+      "url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
+      "title": "BurpMCP-Ultra: 150-tool MCP server for Burp with scope-gate, host allowlist, and per-session token",
+      "tokens": [
+        "150",
+        "allowlist",
+        "burp",
+        "burpmcp",
+        "gate",
+        "host",
+        "mcp",
+        "per",
+        "scope",
+        "server",
+        "session",
+        "token",
+        "tool",
+        "ultra"
+      ],
+      "shingles": [
+        "150 tool mcp",
+        "allowlist per session",
+        "burp scope gate",
+        "burpmcp ultra 150",
+        "gate host allowlist",
+        "host allowlist per",
+        "mcp server burp",
+        "per session token",
+        "scope gate host",
+        "server burp scope",
+        "tool mcp server",
+        "ultra 150 tool"
+      ],
+      "entities": [
+        "Kotlin Burp Suite",
+        "MCP"
+      ],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-10"
+  },
+  "fc6135a7b35ec409": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta",
+      "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
+      "tokens": [
+        "anthropic",
+        "broke",
+        "cyber",
+        "during",
+        "evals",
+        "frontier",
+        "joins",
+        "list",
+        "meta",
+        "models",
+        "openai",
+        "out"
+      ],
+      "shingles": [
+        "anthropic list frontier",
+        "broke out during",
+        "during cyber evals",
+        "frontier models broke",
+        "joins openai anthropic",
+        "list frontier models",
+        "meta joins openai",
+        "models broke out",
+        "openai anthropic list",
+        "out during cyber"
+      ],
+      "entities": [
+        "Anthropic",
+        "Muse Spark",
+        "OpenAI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-06"
+  },
+  "e7e292196ec04e9d": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations",
+      "title": "Third-party cyber evaluations involving OpenAI models",
+      "tokens": [
+        "cyber",
+        "evaluations",
+        "involving",
+        "models",
+        "openai",
+        "party",
+        "third"
+      ],
+      "shingles": [
+        "cyber evaluations involving",
+        "evaluations involving openai",
+        "involving openai models",
+        "party cyber evaluations",
+        "third party cyber"
+      ],
+      "entities": [
+        "OpenAI",
+        "Simon Willison"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "5126d3d2c8d44e3b": {
+    "fp": {
+      "url": "https://chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
+      "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
+      "tokens": [
+        "agents",
+        "ai",
+        "ambient",
+        "chainguard",
+        "credentials",
+        "default",
+        "destruction",
+        "egress",
+        "enforced",
+        "hypervisor",
+        "job",
+        "microvm",
+        "no",
+        "per",
+        "posture",
+        "primitive",
+        "s"
+      ],
+      "shingles": [
+        "ambient credentials per",
+        "chainguard s microvm",
+        "credentials per job",
+        "default posture ai",
+        "destruction default posture",
+        "egress no ambient",
+        "enforced egress no",
+        "hypervisor enforced egress",
+        "job destruction default",
+        "microvm primitive hypervisor",
+        "no ambient credentials",
+        "per job destruction",
+        "posture ai agents",
+        "primitive hypervisor enforced",
+        "s microvm primitive"
+      ],
+      "entities": [
+        "Elastic Builds",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-29"
+  },
+  "a0b91b1b91ff5231": {
+    "fp": {
+      "url": "https://github.com/CyberSunil/LLMVault",
+      "title": "LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode",
+      "tokens": [
+        "10",
+        "live",
+        "llm",
+        "llmvault",
+        "mode",
+        "model",
+        "owasp",
+        "play",
+        "scripted",
+        "top",
+        "webgoat"
+      ],
+      "shingles": [
+        "10 scripted play",
+        "live model live",
+        "llm top 10",
+        "llmvault webgoat owasp",
+        "mode live model",
+        "model live mode",
+        "owasp llm top",
+        "play mode live",
+        "scripted play mode",
+        "top 10 scripted",
+        "webgoat owasp llm"
+      ],
+      "entities": [
+        "Live Mode",
+        "Live Mode LLMVault",
+        "OWASP LLM Top",
+        "Play Mode"
+      ],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-10"
+  },
+  "a1799ddd64b9361f": {
+    "fp": {
+      "url": "https://wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests",
+      "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+      "tokens": [
+        "anthropic",
+        "breach",
+        "claude",
+        "cybersecurity",
+        "evals",
+        "infrastructure",
+        "let",
+        "models",
+        "production",
+        "real",
+        "s",
+        "three"
+      ],
+      "shingles": [
+        "anthropic s cybersecurity",
+        "breach real production",
+        "claude models breach",
+        "cybersecurity evals let",
+        "evals let three",
+        "let three claude",
+        "models breach real",
+        "real production infrastructure",
+        "s cybersecurity evals",
+        "three claude models"
+      ],
+      "entities": [
+        "Anthropic",
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-31"
+  },
+  "2910eba3752268e8": {
+    "fp": {
+      "url": "https://snyk.io/blog/openai-hugging-face-incident",
+      "title": "The Generator Can't Be the Validator: What OpenAI's Hugging Face Incident Proves About AI Security",
+      "tokens": [
+        "about",
+        "ai",
+        "can",
+        "face",
+        "generator",
+        "hugging",
+        "incident",
+        "openai",
+        "proves",
+        "s",
+        "security",
+        "t",
+        "validator",
+        "what"
+      ],
+      "shingles": [
+        "about ai security",
+        "can t validator",
+        "face incident proves",
+        "generator can t",
+        "hugging face incident",
+        "incident proves about",
+        "openai s hugging",
+        "proves about ai",
+        "s hugging face",
+        "t validator what",
+        "validator what openai",
+        "what openai s"
+      ],
+      "entities": [
+        "Hugging Face",
+        "Hugging Face Incident Proves About AI Security Snyk",
+        "OpenAI",
+        "The Generator Can",
+        "What OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "3001912e51a2118d": {
+    "fp": {
+      "url": "https://brightsec.com/research/detecting-ansi-escape-sequence-injection-in-mcp-servers-with-dast",
+      "title": "ANSI escape injection in MCP servers: hidden from humans, visible to AI",
+      "tokens": [
+        "ai",
+        "ansi",
+        "escape",
+        "hidden",
+        "humans",
+        "injection",
+        "mcp",
+        "servers",
+        "visible"
+      ],
+      "shingles": [
+        "ansi escape injection",
+        "escape injection mcp",
+        "hidden humans visible",
+        "humans visible ai",
+        "injection mcp servers",
+        "mcp servers hidden",
+        "servers hidden humans"
+      ],
+      "entities": [
+        "AI Bright Security",
+        "MCP"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-20"
+  },
+  "9d3f7cb717b168f1": {
+    "fp": {
+      "url": "https://theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
+      "title": "MCP gets an enterprise makeover",
+      "tokens": [
+        "enterprise",
+        "gets",
+        "makeover",
+        "mcp"
+      ],
+      "shingles": [
+        "gets enterprise makeover",
+        "mcp gets enterprise"
+      ],
+      "entities": [
+        "MCP",
+        "The Model Context Protocol"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-29"
+  },
+  "2b96142583e246f4": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops",
+      "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
+      "tokens": [
+        "agents",
+        "ai",
+        "assessment",
+        "coverage",
+        "devsecops",
+        "microsoft",
+        "new",
+        "pillar",
+        "trust",
+        "zero"
+      ],
+      "shingles": [
+        "ai new devsecops",
+        "assessment coverage ai",
+        "coverage ai agents",
+        "devsecops pillar zero",
+        "microsoft zero trust",
+        "new devsecops pillar",
+        "pillar zero trust",
+        "trust ai new",
+        "trust assessment coverage",
+        "zero trust ai",
+        "zero trust assessment"
+      ],
+      "entities": [
+        "Microsoft",
+        "Microsoft Zero Trust",
+        "Zero Trust",
+        "Zero Trust Assessment",
+        "Zero Trust Workshop DevSecOps"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "c82f6d711c6fff00": {
+    "fp": {
+      "url": "https://wired.com/story/openais-hacking-debacle-was-a-human-mistake",
+      "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+      "tokens": [
+        "basics",
+        "defense",
+        "depth",
+        "eval",
+        "face",
+        "host",
+        "hugging",
+        "incident",
+        "openai",
+        "reduces",
+        "s",
+        "skipped",
+        "trust",
+        "zero"
+      ],
+      "shingles": [
+        "basics zero trust",
+        "defense depth eval",
+        "depth eval host",
+        "face incident reduces",
+        "hugging face incident",
+        "incident reduces skipped",
+        "openai s hugging",
+        "reduces skipped basics",
+        "s hugging face",
+        "skipped basics zero",
+        "trust defense depth",
+        "zero trust defense"
+      ],
+      "entities": [
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-30"
+  },
+  "a09435fa6a6a562c": {
+    "fp": {
+      "url": "https://armature.tech/",
+      "title": "Show HN: Product analytics (and evals) for agent sessions on your MCP",
+      "tokens": [
+        "agent",
+        "analytics",
+        "evals",
+        "hn",
+        "mcp",
+        "product",
+        "sessions",
+        "show"
+      ],
+      "shingles": [
+        "agent sessions mcp",
+        "analytics evals agent",
+        "evals agent sessions",
+        "hn product analytics",
+        "product analytics evals",
+        "show hn product"
+      ],
+      "entities": [
+        "Anthropic",
+        "ChatGPT Apps",
+        "Claude Connectors",
+        "MCP",
+        "MCP Armature",
+        "Show HN",
+        "YC P26"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-03"
+  },
+  "20f4e657a862f37b": {
+    "fp": {
+      "url": "https://openai.com/index/scientific-computing-agentic-ai",
+      "title": "Scientific computing in the age of agentic AI",
+      "tokens": [
+        "age",
+        "agentic",
+        "ai",
+        "computing",
+        "scientific"
+      ],
+      "shingles": [
+        "age agentic ai",
+        "computing age agentic",
+        "scientific computing age"
+      ],
+      "entities": [
+        "AI OpenAI",
+        "Anthropic",
+        "Claude Code",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "dfc9454846e22805": {
+    "fp": {
+      "url": "https://portswigger.net/research/can-ai-do-novel-security-research",
+      "title": "Can AI do novel security research? Meet the HTTP Terminator",
+      "tokens": [
+        "ai",
+        "can",
+        "http",
+        "meet",
+        "novel",
+        "research",
+        "security",
+        "terminator"
+      ],
+      "shingles": [
+        "ai novel security",
+        "can ai novel",
+        "meet http terminator",
+        "novel security research",
+        "research meet http",
+        "security research meet"
+      ],
+      "entities": [
+        "Can AI",
+        "HTTP Terminator",
+        "HTTP Terminator James Kettle",
+        "SMTP RFCs"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "3a7d96d85d5c22d9": {
+    "fp": {
+      "url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
+      "title": "CSS the bomb: sanitized webmail CSS steals tokens, keylogs Outlook, and turns Atlas AI browser into an exfil bot",
+      "tokens": [
+        "ai",
+        "atlas",
+        "bomb",
+        "bot",
+        "browser",
+        "css",
+        "exfil",
+        "keylogs",
+        "outlook",
+        "sanitized",
+        "steals",
+        "tokens",
+        "turns",
+        "webmail"
+      ],
+      "shingles": [
+        "ai browser exfil",
+        "atlas ai browser",
+        "bomb sanitized webmail",
+        "browser exfil bot",
+        "css bomb sanitized",
+        "css steals tokens",
+        "keylogs outlook turns",
+        "outlook turns atlas",
+        "sanitized webmail css",
+        "steals tokens keylogs",
+        "tokens keylogs outlook",
+        "turns atlas ai",
+        "webmail css steals"
+      ],
+      "entities": [
+        "Atlas AI",
+        "Gareth Heyes",
+        "OpenAI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-06"
+  },
+  "2ddf9f69f4166e60": {
+    "fp": {
+      "url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks",
+      "title": "Inside the keyv npm compromise: preinstall dropper + Claude/VS Code folder-open hooks + valid provenance on a poisoned build",
+      "tokens": [
+        "build",
+        "claude",
+        "code",
+        "compromise",
+        "dropper",
+        "folder",
+        "hooks",
+        "inside",
+        "keyv",
+        "npm",
+        "open",
+        "poisoned",
+        "preinstall",
+        "provenance",
+        "valid",
+        "vs"
+      ],
+      "shingles": [
+        "claude vs code",
+        "code folder open",
+        "compromise preinstall dropper",
+        "dropper claude vs",
+        "folder open hooks",
+        "hooks valid provenance",
+        "inside keyv npm",
+        "keyv npm compromise",
+        "npm compromise preinstall",
+        "open hooks valid",
+        "preinstall dropper claude",
+        "provenance poisoned build",
+        "valid provenance poisoned",
+        "vs code folder"
+      ],
+      "entities": [
+        "Anthropic",
+        "On August",
+        "VS Code"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "818b280a17592e63": {
+    "fp": {
+      "url": "https://chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
+      "title": "keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion",
+      "tokens": [
+        "bun",
+        "c2",
+        "cacheable",
+        "ethereum",
+        "evasion",
+        "hulud",
+        "keyv",
+        "mini",
+        "propagating",
+        "resolved",
+        "runtime",
+        "self",
+        "shai",
+        "worm"
+      ],
+      "shingles": [
+        "bun runtime evasion",
+        "c2 bun runtime",
+        "cacheable mini shai",
+        "ethereum resolved c2",
+        "hulud self propagating",
+        "keyv cacheable mini",
+        "mini shai hulud",
+        "propagating worm ethereum",
+        "resolved c2 bun",
+        "self propagating worm",
+        "shai hulud self",
+        "worm ethereum resolved"
+      ],
+      "entities": [
+        "Ethereum-resolved C2",
+        "Mini Shai-Hulud",
+        "OpenAI",
+        "PyTorch Lightning"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "1eb55f61de98c09e": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
+      "title": "go-git worktree wrapper vetoed dangerous strings but still followed symlinks that were already there (GHSA-hc8v-wwc9-vgxm)",
+      "tokens": [
+        "already",
+        "dangerous",
+        "followed",
+        "ghsa",
+        "git",
+        "go",
+        "hc8v",
+        "still",
+        "strings",
+        "symlinks",
+        "there",
+        "vetoed",
+        "vgxm",
+        "worktree",
+        "wrapper",
+        "wwc9"
+      ],
+      "shingles": [
+        "already there ghsa",
+        "dangerous strings still",
+        "followed symlinks already",
+        "ghsa hc8v wwc9",
+        "git worktree wrapper",
+        "go git worktree",
+        "hc8v wwc9 vgxm",
+        "still followed symlinks",
+        "strings still followed",
+        "symlinks already there",
+        "there ghsa hc8v",
+        "vetoed dangerous strings",
+        "worktree wrapper vetoed",
+        "wrapper vetoed dangerous"
+      ],
+      "entities": [
+        "GitHub"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-07"
+  },
+  "9ba2bf22f73a08c5": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm",
+      "title": "ChainDrop supply chain compromise: Anatomy of a self-propagating worm",
+      "tokens": [
+        "anatomy",
+        "chain",
+        "chaindrop",
+        "compromise",
+        "propagating",
+        "self",
+        "supply",
+        "worm"
+      ],
+      "shingles": [
+        "anatomy self propagating",
+        "chain compromise anatomy",
+        "chaindrop supply chain",
+        "compromise anatomy self",
+        "self propagating worm",
+        "supply chain compromise"
+      ],
+      "entities": [
+        "Microsoft",
+        "Microsoft Threat Intelligence"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "7380f27feb705c91": {
+    "fp": {
+      "url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks",
+      "title": "The npm Threat Landscape: Attack Surface and Mitigations",
+      "tokens": [
+        "attack",
+        "landscape",
+        "mitigations",
+        "npm",
+        "surface",
+        "threat"
+      ],
+      "shingles": [
+        "attack surface mitigations",
+        "landscape attack surface",
+        "npm threat landscape",
+        "threat landscape attack"
+      ],
+      "entities": [
+        "Attack Surface",
+        "Mitigations Unit",
+        "Threat Landscape"
+      ],
+      "bucket": "2026-07-13"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-15"
+  },
+  "bc7a1542436de09a": {
+    "fp": {
+      "url": "https://snyk.io/blog/remediation-agent-malicious-code-defense",
+      "title": "Snyk Evo Agentic AppSec: autonomous remediation, non-executing package scanning, and a Claude CTF that shipped malware to PyPI",
+      "tokens": [
+        "agentic",
+        "appsec",
+        "autonomous",
+        "claude",
+        "ctf",
+        "evo",
+        "executing",
+        "malware",
+        "non",
+        "package",
+        "pypi",
+        "remediation",
+        "scanning",
+        "shipped",
+        "snyk"
+      ],
+      "shingles": [
+        "agentic appsec autonomous",
+        "appsec autonomous remediation",
+        "autonomous remediation non",
+        "claude ctf shipped",
+        "ctf shipped malware",
+        "evo agentic appsec",
+        "executing package scanning",
+        "non executing package",
+        "package scanning claude",
+        "remediation non executing",
+        "scanning claude ctf",
+        "shipped malware pypi",
+        "snyk evo agentic"
+      ],
+      "entities": [
+        "Anthropic",
+        "Claude CTF",
+        "Evo Agentic AppSec",
+        "PyPI Snyk",
+        "Remediation Agent",
+        "Snyk Evo Agentic AppSec"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "2e77b565770f3e9d": {
+    "fp": {
+      "url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
+      "title": "go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)",
+      "tokens": [
+        "7hm3",
+        "config",
+        "ghsa",
+        "git",
+        "go",
+        "heads",
+        "metadata",
+        "names",
+        "overwrites",
+        "path",
+        "q39j",
+        "qgq7",
+        "reference",
+        "refs",
+        "traversal"
+      ],
+      "shingles": [
+        "config overwrites git",
+        "ghsa qgq7 7hm3",
+        "git metadata ghsa",
+        "git reference names",
+        "go git reference",
+        "heads config overwrites",
+        "metadata ghsa qgq7",
+        "names path traversal",
+        "overwrites git metadata",
+        "path traversal refs",
+        "qgq7 7hm3 q39j",
+        "reference names path",
+        "refs heads config",
+        "traversal refs heads"
+      ],
+      "entities": [
+        "GitHub"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-07"
+  },
+  "aa71673d434ece41": {
+    "fp": {
+      "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions",
+      "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
+      "tokens": [
+        "actions",
+        "attacks",
+        "chain",
+        "disrupting",
+        "github",
+        "npm",
+        "supply"
+      ],
+      "shingles": [
+        "attacks npm github",
+        "chain attacks npm",
+        "disrupting supply chain",
+        "npm github actions",
+        "supply chain attacks"
+      ],
+      "entities": [
+        "GitHub",
+        "GitHub Actions",
+        "GitHub Actions GitHub"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-29"
+  },
+  "21657668a4798cd8": {
+    "fp": {
+      "url": "https://snyk.io/blog/what-is-ai-pentesting",
+      "title": "What Is AI Pentesting and How Does It Work?",
+      "tokens": [
+        "ai",
+        "how",
+        "pentesting",
+        "what",
+        "work"
+      ],
+      "shingles": [
+        "ai pentesting how",
+        "pentesting how work",
+        "what ai pentesting"
+      ],
+      "entities": [
+        "How Does It Work",
+        "What Is AI Pentesting"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-27"
+  },
+  "d05e698aa56508d7": {
+    "fp": {
+      "url": "https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale",
+      "title": "Introducing Semgrep Agentic Workflows: Automate Deep Vulnerability Hunting at Scale",
+      "tokens": [
+        "agentic",
+        "automate",
+        "deep",
+        "hunting",
+        "introducing",
+        "scale",
+        "semgrep",
+        "vulnerability",
+        "workflows"
+      ],
+      "shingles": [
+        "agentic workflows automate",
+        "automate deep vulnerability",
+        "deep vulnerability hunting",
+        "introducing semgrep agentic",
+        "semgrep agentic workflows",
+        "vulnerability hunting scale",
+        "workflows automate deep"
+      ],
+      "entities": [
+        "Agentic Workflows",
+        "Anthropic",
+        "Automate Deep Vulnerability Hunting",
+        "Introducing Semgrep Agentic Workflows",
+        "Scale Semgrep",
+        "Semgrep Pro Engine"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "f17f1786790073bb": {
+    "fp": {
+      "url": "https://chainguard.dev/unchained/why-ai-assisted-attacks-made-software-supply-chain-security-its-own-category",
+      "title": "Why AI-assisted attacks made software supply chain security its own category",
+      "tokens": [
+        "ai",
+        "assisted",
+        "attacks",
+        "category",
+        "chain",
+        "made",
+        "security",
+        "software",
+        "supply",
+        "why"
+      ],
+      "shingles": [
+        "ai assisted attacks",
+        "assisted attacks made",
+        "attacks made software",
+        "chain security category",
+        "made software supply",
+        "software supply chain",
+        "supply chain security",
+        "why ai assisted"
+      ],
+      "entities": [
+        "Magic Quadrant",
+        "Why AI-assisted"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-03"
+  },
+  "75bd218a62ed0b15": {
+    "fp": {
+      "url": "https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would",
+      "title": "Introducing Internal Network Scanning: see your network the way an attacker inside it would",
+      "tokens": [
+        "attacker",
+        "inside",
+        "internal",
+        "introducing",
+        "network",
+        "scanning",
+        "see",
+        "way",
+        "would"
+      ],
+      "shingles": [
+        "attacker inside would",
+        "internal network scanning",
+        "introducing internal network",
+        "network scanning see",
+        "network way attacker",
+        "scanning see network",
+        "see network way",
+        "way attacker inside"
+      ],
+      "entities": [
+        "Introducing Internal Network Scanning"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-21"
+  },
+  "9825f7bb2c3658ad": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "title": "America bans imported robots due to supply chain and security risks",
+      "tokens": [
+        "america",
+        "bans",
+        "chain",
+        "due",
+        "imported",
+        "risks",
+        "robots",
+        "security",
+        "supply"
+      ],
+      "shingles": [
+        "america bans imported",
+        "bans imported robots",
+        "chain security risks",
+        "due supply chain",
+        "imported robots due",
+        "robots due supply",
+        "supply chain security"
+      ],
+      "entities": [
+        "Covered List",
+        "The FCC",
+        "The National Security Determination"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-29"
+  },
+  "a9f78ac7619b979e": {
+    "fp": {
+      "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
+      "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
+      "tokens": [
+        "8",
+        "9",
+        "advisories",
+        "broken",
+        "bypass",
+        "check",
+        "checks",
+        "code",
+        "cryptographic",
+        "dominated",
+        "ecdsa",
+        "math",
+        "not",
+        "range",
+        "skipped",
+        "stopped",
+        "would"
+      ],
+      "shingles": [
+        "8 ecdsa bypass",
+        "9 8 ecdsa",
+        "advisories dominated skipped",
+        "broken math range",
+        "check would stopped",
+        "checks not broken",
+        "code checks not",
+        "cryptographic advisories dominated",
+        "dominated skipped code",
+        "math range check",
+        "not broken math",
+        "range check would",
+        "skipped code checks",
+        "stopped 9 8",
+        "would stopped 9"
+      ],
+      "entities": [
+        "Cryptographic Failures",
+        "Diptendu Kar",
+        "GitHub",
+        "OWASP A04"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-30"
+  },
+  "c197c2f8591eb7eb": {
+    "fp": {
+      "url": "https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport",
+      "title": "Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport",
+      "tokens": [
+        "co",
+        "controversial",
+        "diplomatic",
+        "firm",
+        "founder",
+        "israeli",
+        "passport",
+        "spyware"
+      ],
+      "shingles": [
+        "co founder controversial",
+        "controversial spyware firm",
+        "firm israeli diplomatic",
+        "founder controversial spyware",
+        "israeli diplomatic passport",
+        "spyware firm israeli"
+      ],
+      "entities": [
+        "Controversial Spyware Firm Had Israeli Diplomatic Passport Citizen Lab",
+        "John Scott-Railton",
+        "NSO Group"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "d135e283115faf5a": {
+    "fp": {
+      "url": "https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst",
+      "title": "The Frontier AI Vulnerability Burst: Industrializing Autonomous Zero-Day Discovery in Open-Source Software",
+      "tokens": [
+        "ai",
+        "autonomous",
+        "burst",
+        "day",
+        "discovery",
+        "frontier",
+        "industrializing",
+        "open",
+        "software",
+        "source",
+        "vulnerability",
+        "zero"
+      ],
+      "shingles": [
+        "ai vulnerability burst",
+        "autonomous zero day",
+        "burst industrializing autonomous",
+        "day discovery open",
+        "discovery open source",
+        "frontier ai vulnerability",
+        "industrializing autonomous zero",
+        "open source software",
+        "vulnerability burst industrializing",
+        "zero day discovery"
+      ],
+      "entities": [
+        "Industrializing Autonomous Zero-Day Discovery",
+        "Open-Source Software Unit",
+        "The Frontier AI Vulnerability Burst"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "feca0df1eeeb4f8a": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm",
+      "title": "LLM 0.32: reasoning traces, server-side provider tools, human-approval pause/resume, and content-addressable message logs",
+      "tokens": [
+        "0",
+        "32",
+        "addressable",
+        "approval",
+        "content",
+        "human",
+        "llm",
+        "logs",
+        "message",
+        "pause",
+        "provider",
+        "reasoning",
+        "resume",
+        "server",
+        "side",
+        "tools",
+        "traces"
+      ],
+      "shingles": [
+        "0 32 reasoning",
+        "32 reasoning traces",
+        "addressable message logs",
+        "approval pause resume",
+        "content addressable message",
+        "human approval pause",
+        "llm 0 32",
+        "pause resume content",
+        "provider tools human",
+        "reasoning traces server",
+        "resume content addressable",
+        "server side provider",
+        "side provider tools",
+        "tools human approval",
+        "traces server side"
+      ],
+      "entities": [
+        "Anthropic",
+        "Anthropic WebF",
+        "LLM CLI",
+        "OpenAI",
+        "OpenAI CodeInterpreter",
+        "Simon Willison"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-04"
+  },
+  "9f81e3bb4e6c86a0": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h",
+      "title": "Willison: the OpenAI/Hugging Face 'accidental attack' happened during an RLVR training run, not deployment",
+      "tokens": [
+        "accidental",
+        "attack",
+        "deployment",
+        "during",
+        "face",
+        "happened",
+        "hugging",
+        "not",
+        "openai",
+        "rlvr",
+        "run",
+        "training",
+        "willison"
+      ],
+      "shingles": [
+        "accidental attack happened",
+        "attack happened during",
+        "during rlvr training",
+        "face accidental attack",
+        "happened during rlvr",
+        "hugging face accidental",
+        "openai hugging face",
+        "rlvr training run",
+        "run not deployment",
+        "training run not",
+        "willison openai hugging"
+      ],
+      "entities": [
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-08"
+  },
+  "e20f18a37a734517": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet",
+      "title": "How we use /goal to find bugs in Patch the Planet",
+      "tokens": [
+        "bugs",
+        "find",
+        "goal",
+        "how",
+        "patch",
+        "planet",
+        "use"
+      ],
+      "shingles": [
+        "bugs patch planet",
+        "find bugs patch",
+        "goal find bugs",
+        "how use goal",
+        "use goal find"
+      ],
+      "entities": [
+        "OpenAI",
+        "Planet Trail"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "971cb0a9fc66be91": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674",
+      "title": "Automated Claude Code + Opus 4.6 pipeline finds a real Linux sandbox-escape CVE (CVE-2026-5674)",
+      "tokens": [
+        "2026",
+        "4",
+        "5674",
+        "6",
+        "automated",
+        "claude",
+        "code",
+        "cve",
+        "escape",
+        "finds",
+        "linux",
+        "opus",
+        "pipeline",
+        "real",
+        "sandbox"
+      ],
+      "shingles": [
+        "4 6 pipeline",
+        "6 pipeline finds",
+        "automated claude code",
+        "claude code opus",
+        "code opus 4",
+        "cve 2026 5674",
+        "cve cve 2026",
+        "escape cve cve",
+        "finds real linux",
+        "linux sandbox escape",
+        "opus 4 6",
+        "pipeline finds real",
+        "real linux sandbox",
+        "sandbox escape cve"
+      ],
+      "entities": [
+        "Anthropic",
+        "Automated Claude Code",
+        "Johann Rehberger"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-30"
+  },
+  "9fbeb62554a288b6": {
+    "fp": {
+      "url": "https://simonwillison.net/2026/Aug/7/pdfs-are-terrible",
+      "title": "PDF-to-markdown pipelines are the hidden token chewer inside enterprise AI adoption",
+      "tokens": [
+        "adoption",
+        "ai",
+        "chewer",
+        "enterprise",
+        "hidden",
+        "inside",
+        "markdown",
+        "pdf",
+        "pipelines",
+        "token"
+      ],
+      "shingles": [
+        "chewer inside enterprise",
+        "enterprise ai adoption",
+        "hidden token chewer",
+        "inside enterprise ai",
+        "markdown pipelines hidden",
+        "pdf markdown pipelines",
+        "pipelines hidden token",
+        "token chewer inside"
+      ],
+      "entities": [
+        "Simon Willison"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-07"
+  },
+  "c615850183ca6780": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming",
+      "title": "Enhancing AI security through global AI red teaming",
+      "tokens": [
+        "ai",
+        "enhancing",
+        "global",
+        "red",
+        "security",
+        "teaming",
+        "through"
+      ],
+      "shingles": [
+        "ai red teaming",
+        "ai security through",
+        "enhancing ai security",
+        "global ai red",
+        "security through global",
+        "through global ai"
+      ],
+      "entities": [
+        "CMU CyLab",
+        "Enhancing AI",
+        "External Red Team Alliance",
+        "Georgetown SecLab",
+        "IIT Madra",
+        "KAIST WSP",
+        "Microsoft"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-27"
+  },
+  "1341f3a469b2491d": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
+      "title": "Google dev kit spurs first-ever agent-on-agent violence",
+      "tokens": [
+        "agent",
+        "dev",
+        "ever",
+        "first",
+        "google",
+        "kit",
+        "spurs",
+        "violence"
+      ],
+      "shingles": [
+        "agent agent violence",
+        "dev kit spurs",
+        "ever agent agent",
+        "first ever agent",
+        "google dev kit",
+        "kit spurs first",
+        "spurs first ever"
+      ],
+      "entities": [
+        "Dan Lisichkin",
+        "Pillar Security"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-03"
+  },
+  "d3192391f827e8e0": {
+    "fp": {
+      "url": "https://wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree",
+      "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
+      "tokens": [
+        "agents",
+        "ai",
+        "board",
+        "didn",
+        "hacking",
+        "message",
+        "notice",
+        "openai",
+        "plan",
+        "spree",
+        "t",
+        "using"
+      ],
+      "shingles": [
+        "agents using message",
+        "ai agents using",
+        "board plan hacking",
+        "didn t notice",
+        "message board plan",
+        "notice ai agents",
+        "openai didn t",
+        "plan hacking spree",
+        "t notice ai",
+        "using message board"
+      ],
+      "entities": [
+        "Eric Wallace",
+        "Message Board",
+        "Michael Dalton",
+        "Notice Its AI Agents Using",
+        "OpenAI",
+        "OpenAI Didn",
+        "Plan Their Hacking Spree At Black Hat"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree",
+        "source_name": "Wired Security",
+        "tier": "medium"
+      }
+    ],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-06"
+  },
+  "1e98d536414483a7": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
+      "title": "Prompt injection isn't the bug, AI agent frameworks are",
+      "tokens": [
+        "agent",
+        "ai",
+        "bug",
+        "frameworks",
+        "injection",
+        "isn",
+        "prompt",
+        "t"
+      ],
+      "shingles": [
+        "ai agent frameworks",
+        "bug ai agent",
+        "injection isn t",
+        "isn t bug",
+        "prompt injection isn",
+        "t bug ai"
+      ],
+      "entities": [
+        "Check Point",
+        "Google ADK",
+        "Microsoft",
+        "Microsoft Agent Framework"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
+        "source_name": "The Register — Security",
+        "tier": "medium"
+      }
+    ],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-05"
+  },
+  "6333bcbdf420120f": {
+    "fp": {
+      "url": "https://theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+      "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
+      "tokens": [
+        "agent",
+        "ai",
+        "coding",
+        "dangerous",
+        "humans",
+        "loop",
+        "miss",
+        "requests",
+        "third"
+      ],
+      "shingles": [
+        "ai coding agent",
+        "coding agent requests",
+        "dangerous ai coding",
+        "humans loop miss",
+        "loop miss third",
+        "miss third dangerous",
+        "third dangerous ai"
+      ],
+      "entities": [
+        "Anthropic",
+        "Claude Code"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+        "source_name": "The Register — Security",
+        "tier": "medium"
+      }
+    ],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-06"
+  },
+  "77fc5015f08465b0": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
+      "title": "IBM's agentic AI platform is under active attack - patch now",
+      "tokens": [
+        "active",
+        "agentic",
+        "ai",
+        "attack",
+        "ibm",
+        "now",
+        "patch",
+        "platform",
+        "s"
+      ],
+      "shingles": [
+        "active attack patch",
+        "agentic ai platform",
+        "ai platform active",
+        "attack patch now",
+        "ibm s agentic",
+        "platform active attack",
+        "s agentic ai"
+      ],
+      "entities": [
+        "DataStax Langflow",
+        "Known Exploited Vulnerabilities"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
+        "source_name": "The Register — Security",
+        "tier": "medium"
+      }
+    ],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-05"
+  },
+  "7e9f9d1e5a46d476": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration",
+      "title": "A few notes on AWS Nitro Enclaves: KMS integration",
+      "tokens": [
+        "aws",
+        "enclaves",
+        "few",
+        "integration",
+        "kms",
+        "nitro",
+        "notes"
+      ],
+      "shingles": [
+        "aws nitro enclaves",
+        "enclaves kms integration",
+        "few notes aws",
+        "nitro enclaves kms",
+        "notes aws nitro"
+      ],
+      "entities": [
+        "AWS",
+        "AWS KMS",
+        "AWS Nitro Enclaves",
+        "Nitro Enclave"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration",
+        "source_name": "Trail of Bits",
+        "tier": "high"
+      }
+    ],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "c716fb123f08c4d1": {
+    "fp": {
+      "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+      "tokens": [
+        "astra",
+        "based",
+        "can",
+        "capability",
+        "controls",
+        "cot",
+        "critical",
+        "cyber",
+        "evals",
+        "include",
+        "monitoring",
+        "new",
+        "openai",
+        "out",
+        "preliminary",
+        "rule",
+        "t",
+        "universal"
+      ],
+      "shingles": [
+        "astra preliminary evals",
+        "based universal monitoring",
+        "can t rule",
+        "capability new controls",
+        "controls include cot",
+        "cot based universal",
+        "critical cyber capability",
+        "cyber capability new",
+        "evals can t",
+        "include cot based",
+        "new controls include",
+        "openai astra preliminary",
+        "out critical cyber",
+        "preliminary evals can",
+        "rule out critical",
+        "t rule out"
+      ],
+      "entities": [
+        "OpenAI",
+        "Preparedness Framework"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [
+      {
+        "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+        "source_name": "OpenAI Blog",
+        "tier": "high"
+      }
+    ],
+    "winner_tier": "high",
+    "first_seen": "2026-08-07"
   }
 }

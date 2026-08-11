@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research** - every finding vetted, distilled to one lesson, and filed by field. A [standing-claims ledger](claims/README.md) tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.
 
-![Updated](https://img.shields.io/badge/updated-2026--08--10-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-9-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--08--11-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-26-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read the live briefing &#8594;</a></h3>
 
@@ -14,24 +14,24 @@ The live site is the best read - one page for the week's news, another for stand
 
 ## Latest findings
 
-> The most recent curated findings we have (nothing new this 7-day window). Each links to its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
+> The top curated findings published in the last 7 days. Each links to its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
 
-- **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](product-security/supply-chain-dependencies/2026-07-asyncapi-npm-compromise-import-time-payload-defeats-ignore-s.md)** · _Product Security · Jul 16, 2026_  
-  Import-time malware makes --ignore-scripts useless and a valid provenance attestation is not a trust signal when the pipeline itself is hijacked.
-- **[ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](ai-security/mcp-tools/2026-07-toolhive-mcp-ssrf-host-side-discovery-runs-outside-the-sandb.md)** · _AI Security · Jul 15, 2026_  
-  Put SSRF guards on every outbound client that touches untrusted input, re-validate redirect targets, and never suppress a taint warning on a 'trusted config' premise your threat…
-- **[How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier](ai-research/coding-agent-harness-design-first-party-anthropic-practices/2026-07-how-the-claude-code-team-designs-its-harness-tool-minimalism.md)** · _AI Research · Jul 21, 2026_  
-  Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier…
-- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](ai-research/harness-context-management/2026-07-server-side-encrypted-compaction-porting-codex-s-responses-a.md)** · _AI Research · Jul 22, 2026_  
-  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity - …
-- **[ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](ai-security/model-supply-chain/2026-07-shadowpickle-pickle-vm-import-tricks-evade-ten-model-scanner.md)** · _AI Security · Jul 20, 2026_  
-  A clean model-scanner result is weak evidence - prefer non-executable formats and sandbox deserialization of any third-party model.
+- **[The Frontier AI Vulnerability Burst: Industrializing Autonomous Zero-Day Discovery in Open-Source Software](ai-research/autonomous-vulnerability-discovery/2026-08-the-frontier-ai-vulnerability-burst-industrializing-autonomo.md)** · _AI Research · Aug 4, 2026_  
+  Autonomous AI vulnerability discovery moves the mix away from memory-corruption fuzzing (~8%) toward semantic/logic bugs (~92%), and complementarity between models is large enough…
+- **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](ai-security/multi-agent-lateral-movement-covert-coordination/2026-08-openai-didn-t-notice-its-ai-agents-using-a-message-board-to.md)** · _AI Security · Aug 6, 2026_  
+  Any shared writable surface (package manager, ticket queue, wiki, ci artifact store) is an agent-to-agent covert channel - instrument it or write it out of the trust boundary.
+- **[CSS the bomb: sanitized webmail CSS steals tokens, keylogs Outlook, and turns Atlas AI browser into an exfil bot](product-security/web-application-security/2026-08-css-the-bomb-sanitized-webmail-css-steals-tokens-keylogs-out.md)** · _Product Security · Aug 6, 2026_  
+  CSS sanitizers built as feature allow-lists are not a trust boundary; the only durable defense is strict iframe sandboxing plus killing dangerous selectors, select, and free-form…
+- **[Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)](ai-security/agent-containment-eval-sandbox-failure/2026-08-incident-report-unsanctioned-agent-behaviour-during-cyber-te.md)** · _AI Security · Aug 5, 2026_  
+  Cyber-eval agents run with safety classifiers off must be network-sandboxed; 'internet access as evaluation config' is a foreseeable operator-level containment failure, not a…
+- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](ai-research/frontier-cyber-capabilities-preparedness/2026-08-openai-astra-preliminary-evals-can-t-rule-out-critical-cyber.md)** · _AI Research · Aug 7, 2026_  
+  The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments…
 
 ## The three databases
 
-- **[AI Security](ai-security/README.md)** (3 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
-- **[Product Security](product-security/README.md)** (4 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
-- **[AI Research](ai-research/README.md)** (2 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
+- **[AI Security](ai-security/README.md)** (13 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
+- **[Product Security](product-security/README.md)** (7 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
+- **[AI Research](ai-research/README.md)** (6 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted).
 
@@ -128,4 +128,4 @@ README.md NEWSLETTER.md TRENDS.md REVIEW.md            generated - do not hand-e
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors - every finding cites its source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-10. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-11. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>

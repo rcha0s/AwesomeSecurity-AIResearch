@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Harness & Agent Security  
 **Source:** [source](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)  ·  **Author:** Johann Rehberger  ·  **Published:** Jul 19, 2026  ·  **Retrieved:** 2026-07-21  
-**Scores:** 🆕 Newness 11 · ✨ Novelty 45 · 🎯 Relevance 90 · 🏛️ Credibility 75 · **Composite 54.5**  
+**Scores:** 🆕 Newness 10 · ✨ Novelty 45 · 🎯 Relevance 90 · 🏛️ Credibility 75 · **Composite 54.25**  
 **Tags:** `agent-security`, `incident-response`, `supply-chain`, `guardrails`, `autonomous-attack`  
 **Verification:** ✓ independently verified · closest prior art: Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

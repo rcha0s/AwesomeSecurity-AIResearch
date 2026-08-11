@@ -2,7 +2,7 @@
 
 **Topic:** Product Security  ·  **Domain:** Developer Tooling & Template Injection  
 **Source:** [GitHub Advisory Database](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq)  ·  **Published:** Jul 24, 2026  ·  **Retrieved:** 2026-07-26  
-**Scores:** 🆕 Newness 11 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 70 · **Composite 55.25**  
+**Scores:** 🆕 Newness 10 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 70 · **Composite 55.0**  
 **Tags:** `template-injection`, `rce`, `developer-tooling`, `supply-chain`, `go`  
 **Verification:** ✓ independently verified · closest prior art: Go text/template SSTI and template injection generally; shell prompt injection via malicious git branch names and PS1; ANSI-escape injection via filenames; repo contents attacking dev tooling (.vscode/, .gitattributes, hooks). The delta is the sink: the attacker-controlled data is a filesystem directory name re-fed to the engine, it fires under the shipped default configuration, and the trigger is passive navigation. Nearest pool entry: the Shescape shell-escaping advisories (different mechanism - escaping, not double evaluation).
 
