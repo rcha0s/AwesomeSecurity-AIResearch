@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Harness & Agent Security  
 **Source:** [source](https://arxiv.org/abs/2607.17986)  ·  **Author:** Yimeng Chen et al.  ·  **Published:** Jul 20, 2026  ·  **Retrieved:** 2026-07-21  
-**Scores:** 🆕 Newness 11 · ✨ Novelty 45 · 🎯 Relevance 80 · 🏛️ Credibility 58 · **Composite 48.88**  
+**Scores:** 🆕 Newness 8 · ✨ Novelty 45 · 🎯 Relevance 80 · 🏛️ Credibility 58 · **Composite 48.12**  
 **Tags:** `agent-security`, `self-hosted`, `os-defenses`, `memory-poisoning`, `threat-modeling`  
 **Verification:** ✓ independently verified · closest prior art: Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

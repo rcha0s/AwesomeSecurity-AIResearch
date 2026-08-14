@@ -2,57 +2,627 @@
 
 > Findings in the last 31 days that are **not yet vetted** — held out of the topic pages and newsletter. Flagged for low confidence/novelty/relevance, or below the composite floor (20). Nothing here is deleted; promote an item by raising its scores or clearing `needs_review`, then regenerate.
 
-_Updated 2026-08-10._
+_Updated 2026-08-14._
 
-## AI Security (7)
+## AI Security (50)
 
-- **[AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)](https://github.com/advisories/GHSA-29w2-fq35-v728)** · composite 54.65 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 70.6 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
+- **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 68.0 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  A model evaluation with production classifiers off is not a red-team exercise; it is a live agent with net-access ambition and a package-manager proxy is a plausible…
+- **[Humans in the loop miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 65.2 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  Human-in-the-loop is a fatigue-limited primitive: engineer approvals as classifier + sandbox + hooks, not as a UX prompt.
+- **[BurpMCP-Ultra: 150-tool MCP server for Burp with scope-gate, host allowlist, and per-session token](https://github.com/Cy-S3c/BurpMCP-Ultra)** · composite 61.75 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  If you must expose an offensive toolkit via MCP, the operator-only scope gate and per-session token are load-bearing controls; loopback binding is not a trust boundary.
+- **[ECHO: A Locally-Deployable Agentic Health Assistant with Temporal Memory, Safety Guardrails, and Speech Assessment](https://arxiv.org/abs/2608.06110)** · composite 61.75 · _ungrounded excerpt — only 33% of quotes verified against the source_
+  A cheap deterministic rule layer plus a signed-GNN classifier outperforms zero-shot Llama 3.3 70B on unsafe-query recall for a health-agent domain — worth stealing as a template…
+- **[snyk/agent-scan](https://github.com/snyk/agent-scan)** · composite 61.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Any 'MCP scanner' that reads tool descriptions from stdio servers is executing third-party code as a side effect of scanning. Treat scan-time as install-time from a threat-model…
+- **[Third-party cyber evaluations involving OpenAI models](https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything)** · composite 59.65 · _ungrounded excerpt — only 67% of quotes verified against the source_
+  Fictional-target naming inside CTF-style evals must be treated as a security control, not a flavour choice — collisions with real domains route models straight into real…
+- **[IBM's agentic AI platform is under active attack - patch now](https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535)** · composite 58.9 · _flagged needs_review (low confidence / novelty / relevance)_
+  A drag-and-drop agent builder shipped 'auto-login + arbitrary-code-eval endpoint' as a default deployment, so any exposed instance is a one-shot RCE box; CISA KEV listing confirms…
+- **[PrismorSec/prismor](https://github.com/PrismorSec/prismor)** · composite 58.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Prismor is the fuller-featured cousin of the same 'runtime chokepoint for coding agents' pattern, with additions that matter to enterprise buyers: MCP gateway with response-side…
+- **[fu351/Doberman-Core](https://github.com/fu351/Doberman-Core)** · composite 58.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A concrete implementation of the 'containment on the execution path' pattern for AI-coding-agent guardrails, with explicitly stated invariants (fail-closed, raise-only) that most…
+- **[AI Security Leaderboard: Methodology, Results and Minimal Standard](https://arxiv.org/abs/2608.03070)** · composite 58.28 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  Cross-provider safeguard robustness diverges by more than two orders of magnitude at the same CBRNE/cyber threat model, and cheap universal jailbreaks (~$24 for Grok's cyber…
+- **[Taxonomy-Driven Analysis of Open-Source AI Risk Mitigation Tools](https://arxiv.org/abs/2608.07446)** · composite 57.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  Open-source AI risk tooling clusters heavily on technical guardrails; governance and regulatory controls are still overwhelmingly the human's job.
+- **[Robust Context-Aware Detection of Malicious Instructions in Text](https://arxiv.org/abs/2608.05430)** · composite 57.38 · _flagged needs_review (low confidence / novelty / relevance)_
+  IPI detectors that combine query context with segment-level classification and adversarial training remain useful, but the finding that optimal AT parameters depend on the…
+- **[LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode](https://github.com/CyberSunil/LLMVault)** · composite 57.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
+  Reproducible scripted labs teach the shape of an LLM attack; live-model mode with per-session secrets is what actually validates the skill.
+- **[The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products](https://arxiv.org/abs/2606.15485)** · composite 57.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  There is a structural capability-vs-risk-control tension in current agentic-AI development: the only controls developers currently reach for are constraints on autonomy and goal…
+- **[toby-bridges/api-relay-audit](https://github.com/toby-bridges/api-relay-audit)** · composite 57.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Third-party LLM proxies are an under-audited middlebox that can inject prompts, swap models, rewrite tool output, and leak errors. An operator-run 14-step audit with an explicit…
+- **[LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443)** · composite 56.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  Treat LLM-as-a-Judge outputs as an attackable surface: the same optimization-based adversarial suffixes that inflate scores in benchmarks will inflate scores in production…
+- **[ANSI escape injection in MCP servers: hidden from humans, visible to AI](https://brightsec.com/research/detecting-ansi-escape-sequence-injection-in-mcp-servers-with-dast/)** · composite 55.85 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  MCP inherits every ambiguity of the formats it consumes: a 1970s cursor code becomes a prompt-injection primitive the moment a model rather than a terminal reads the bytes.…
+- **[MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027)** · composite 55.1 · _ungrounded excerpt — only 33% of quotes verified against the source_
+  MCP's enterprise turn adds concrete auth hardening (iss validation) and a stateless architecture that removes one class of session-poisoning attack surface but relies on standard…
+- **[CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment](https://arxiv.org/abs/2604.00310)** · composite 54.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  A single internal, attention-gated safety decision over the shared multimodal representation lets text-only alignment transfer to image and audio inputs without modality-specific…
+- **[AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)](https://github.com/advisories/GHSA-29w2-fq35-v728)** · composite 53.9 · _ungrounded excerpt — only 50% of quotes verified against the source_
   An MCP server's in-app allow/deny policy is worthless as a security boundary if a startup load failure makes it silently fail open — enforce fail-closed and always back it with…
-- **[Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619)** · composite 52.17 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model](https://arxiv.org/abs/2608.05695)** · composite 53.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  Reactive per-action guardrails miss long-horizon drift toward hazardous states; a trajectory-level world-model guardrail reportedly gives a better safety-utility trade-off at 25…
+- **[OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host](https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/)** · composite 53.0 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  Rogue-agent incidents are a foundational-security failure story wearing an AI-frontier costume. The mitigations are already well-known: zero-trust boundaries, isolated eval hosts,…
+- **[Measuring and Detecting Harmful AI Sycophancy](https://arxiv.org/abs/2608.05624)** · composite 52.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Preference-induced stance reversal (a specific, measurable sycophancy mode) is common (5-56%) and detectable from response text alone, but detectors don't generalize cleanly to…
+- **[agentplugins/agent-plugins-spec](https://github.com/agentplugins/agent-plugins-spec)** · composite 52.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A packaging-layer spec sitting above MCP that bundles skills and MCP servers together — worth tracking as a new supply-chain distribution unit for agents, because a compromised…
+- **[Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents](https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/)** · composite 52.12 · _ungrounded excerpt — only 67% of quotes verified against the source_
+  The Zero Trust playbook for agents is being formalized around memory as a first-class governed asset and DevSecOps controls that gate AI-assisted code from source to deployment.
+- **[Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619)** · composite 51.42 · _flagged needs_review (low confidence / novelty / relevance)_
   Validate what goes into LLM memory - a poisoned preference outlives the conversation and can't be argued away.
-- **[AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)](https://github.com/advisories/GHSA-j6g5-3hh3-pgw8)** · composite 50.15 · _failed independent verification — novelty disagreement (analyst 68 vs verifier 47); Advisory confirms package name, CVE-2026-16796, CVSS 8.4, CWE-88, fix 1.18.1, and workaround verbatim; all four lessons faithfully reflect the source, though the underlying lesson is a known vuln class applied to a fresh SDK._
+- **[Quoting OpenClaw](https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything)** · composite 51.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Autonomous agents pointed at live third-party sites will actively exploit missing-authorization bugs, not merely describe them — treating agents as a distinct actor in…
+- **[MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration](https://arxiv.org/abs/2608.05909)** · composite 50.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  MLLM jailbreaks by modality-shift are best framed as representation misalignment, not missing safety training. Pulling unsafe representations back inside the text-learned refusal…
+- **[Show HN: Product analytics (and evals) for agent sessions on your MCP](https://armature.tech/)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  The observability primitive Armature bets on is the session, not the tool call: reconstructing user intent + agent reasoning + call sequence lets you rank failures by root cause…
+- **[AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)](https://github.com/advisories/GHSA-j6g5-3hh3-pgw8)** · composite 49.4 · _failed independent verification — novelty disagreement (analyst 68 vs verifier 47); Advisory confirms package name, CVE-2026-16796, CVSS 8.4, CWE-88, fix 1.18.1, and workaround verbatim; all four lessons faithfully reflect the source, though the underlying lesson is a known vuln class applied to a fresh SDK._
   In agent SDKs, any helper that shells out (pip install, git, curl) from model- or user-influenced arguments is an RCE sink unless argument delimiters are neutralized — treat…
-- **[Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions](https://arxiv.org/abs/2607.17535)** · composite 49.77 · _failed independent verification — Verifier scored novelty 45, arguing the salience channel largely reduces to known context-position/distractor effects and that 'a third attack surface' oversells; it also caught two overstatements now fixed (the strongest baseline does reduce ASR by ~7.6 points, so 'defenses do not catch them' was wrong; and the five-model/three-architecture generalization applies to the attack, not to the defense figures). Held for review on novelty disagreement._
+- **[Post-Hoc Trajectory-Risk Certification for Modular LLM-Based Security Agents](https://arxiv.org/abs/2608.05199)** · composite 49.28 · _flagged needs_review (low confidence / novelty / relevance)_
+  Per-stage confidence numbers do not compose for free in a multi-step LLM security pipeline; if you need a joint guarantee, treat trajectory calibration as its own audit with an…
+- **[Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions](https://arxiv.org/abs/2607.17535)** · composite 49.02 · _failed independent verification — Verifier scored novelty 45, arguing the salience channel largely reduces to known context-position/distractor effects and that 'a third attack surface' oversells; it also caught two overstatements now fixed (the strongest baseline does reduce ASR by ~7.6 points, so 'defenses do not catch them' was wrong; and the five-model/three-architecture generalization applies to the attack, not to the defense figures). Held for review on novelty disagreement._
   If an attacker can edit your corpus without lying, factuality checks and injection filters both return clean - order and emphasis are attacker-controlled state.
-- **[(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550)** · composite 49.47 · _failed independent verification — Verifier confirmed every claim traces to the abstract but scored novelty far lower (42), naming Blind Backdoors and ImpNet as covering the core 'untrusted execution substrate' idea years earlier; it also flagged that all figures are abstract-only, self-reported, and that the evasion claim names no defense it defeats. Held for review on novelty disagreement and evidence level._
+- **[(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550)** · composite 48.72 · _failed independent verification — Verifier confirmed every claim traces to the abstract but scored novelty far lower (42), naming Blind Backdoors and ImpNet as covering the core 'untrusted execution substrate' idea years earlier; it also flagged that all figures are abstract-only, self-reported, and that the evasion claim names no defense it defeats. Held for review on novelty disagreement and evidence level._
   If you attest models but not the runtime that executes them, your provenance chain has a hole the size of ONNX Runtime.
-- **[Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection](https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/)** · composite 49.4 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection](https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/)** · composite 48.65 · _flagged needs_review (low confidence / novelty / relevance)_
   Sanitize model output at the rendering boundary - both the terminal emulator and your CLI's own output path are execution surfaces, and only the former got patched.
-- **[TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF](https://github.com/advisories/GHSA-824w-x939-6cmc)** · composite 38.75 · _failed independent verification — Verifier scored novelty 12/100 - 'the conceptual delta over prior art is approximately zero', same primitive, sinks, fix and workaround as a decade of prior bugs, and it does not even carry the LLM-specific wrinkle (no prompt-injection-reachable path). Also corrected: the advisory says files that MAY contain credentials, does not demonstrate metadata retrieval, states exposure as a precondition rather than an observed fact, and gives no CVE/CVSS/affected range. Held for review as derivative._
+- **[ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents](https://arxiv.org/abs/2606.08531)** · composite 48.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Process-level, automatically-generated scenario suites reveal high behavioral safety failure rates in current LLM agents (average ASR 47.1%, some models >70%) that…
+- **[Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models](https://arxiv.org/abs/2605.00123)** · composite 48.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Jailbreak success is not one global mechanism; per-attack, per-category local causal explanations require far fewer interpretable interventions to force refusal than global…
+- **[ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents](https://arxiv.org/abs/2608.05201)** · composite 47.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  If you are picking an agent framework, force yourself to place it on the six ASTELD axes and check whether the security axis matches your deployment topology; the paper claims the…
+- **[AegisShield: Democratizing Cyber Threat Modeling with Generative AI](https://arxiv.org/abs/2509.10482)** · composite 47.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  GenAI-assisted STRIDE plus a live NVD/OTX feed can plausibly reach an 85% MITRE ATT&CK mapping rate on generated threats; this is a viable base pattern for lightweight…
+- **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai)** · composite 46.4 · _flagged needs_review (low confidence / novelty / relevance)_
+  Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.
+- **[TOFD: Target-Oriented Feature Decoupling against Poisoning Attacks in Split Federated Learning](https://arxiv.org/abs/2608.07274)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Split Federated Learning has attack surfaces (the split boundary and smashed activations) that generic FL defenses miss; TOFD exploits the split paradigm itself for detection.
+- **[Corrupting Attention: Evasion-Based Adversarial Attacks on Encoder Attention in Detection Transformers](https://arxiv.org/abs/2608.06674)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Attacking the encoder-attention structure itself in detection transformers is a stronger evasion strategy than perturbing outputs, and the weakness generalizes across corruption…
+- **[Online Security Learning in Cooperative Multi-Agent Systems under Hidden Byzantine Attacks](https://arxiv.org/abs/2608.06520)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Security regret in Byzantine cooperative MAS cannot be reduced below a cumulative response-gap term; the achievable bound depends on what the attacker can observe about the…
+- **[Algebraic Cryptanalytic Extraction on Hard-Label Neural Networks](https://arxiv.org/abs/2608.05736)** · composite 43.28 · _flagged needs_review (low confidence / novelty / relevance)_
+  Hard-label neural network extraction is getting materially cheaper: an inner-product-based Approximate Signature Vector replaces SVD in dual-point clustering, and max-pooling CNNs…
+- **[Quantigence: A Multi-Agent Framework for Post-Quantum Security Analysis on Commodity Hardware](https://arxiv.org/abs/2512.12989)** · composite 43.28 · _flagged needs_review (low confidence / novelty / relevance)_
+  Tool access dominates the accuracy jump on single-fact queries; multi-agent decomposition only pays off on multi-faceted questions where rubric coverage matters, not on lookups.
+- **[Trustworthy Agent Network: Trust in Agent Networks Must Be Baked In, Not Bolted On](https://arxiv.org/abs/2605.19035)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  A2A network trust is a coordination-layer problem: individual-agent alignment does not compose, so agent-network protocols need trust primitives designed in from the beginning.
+- **[PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents](https://arxiv.org/abs/2608.02687)** · composite 41.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  The policy-as-prompt pattern (DLP rules as an editable natural-language file, evaluated by an LLM) is worth prototyping for coding-agent input filtering, and the reported numbers…
+- **[modelcontextprotocol/modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Reference pointer for anything that touches MCP tool-description or schema-level security work — the canonical source-of-truth for what the protocol actually says.
+- **[TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF](https://github.com/advisories/GHSA-824w-x939-6cmc)** · composite 38.0 · _failed independent verification — Verifier scored novelty 12/100 - 'the conceptual delta over prior art is approximately zero', same primitive, sinks, fix and workaround as a decade of prior bugs, and it does not even carry the LLM-specific wrinkle (no prompt-injection-reachable path). Also corrected: the advisory says files that MAY contain credentials, does not demonstrate metadata retrieval, states exposure as a precondition rather than an observed fact, and gives no CVE/CVSS/affected range. Held for review as derivative._
   LLM gateways are ordinary web services with an unusual amount of credentials on disk - audit them for caller-selectable backends before anything AI-specific.
+- **[anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection](https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A popular community roadmap for AI/ML pentesting exists and now dedicates a phase to agentic-AI and MCP security — worth linking as a beginner ramp, but it's an index, not a…
 
-## Product Security (8)
+## Product Security (28)
 
-- **[ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/)** · composite 85.0 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
+- **[ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/)** · composite 80.5 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
   Valid npm provenance no longer distinguishes a safe artifact from an evasive one — pivot on the Rekor log identity and workflow, not on signature-checks-pass.
-- **[CRLF-Powered Desync Attacks: header injection escalates to CDN-wide response queue poisoning + browser-side XSS](https://portswigger.net/research/crlf-powered-desync-attacks)** · composite 84.0 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
+- **[CRLF-Powered Desync Attacks: header injection escalates to CDN-wide response queue poisoning + browser-side XSS](https://portswigger.net/research/crlf-powered-desync-attacks)** · composite 79.75 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
   HTTP header injection is severely underestimated — one nginx $uri-in-proxy_pass misconfig can escalate to CDN-wide response queue poisoning that harvests session cookies from…
-- **[macOS ClickFix campaign moves from open lures to server-side browser-fingerprinting gates that cloak the payload from crawlers](https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/)** · composite 75.45 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
+- **[Can AI do novel security research? Meet the HTTP Terminator](https://portswigger.net/research/can-ai-do-novel-security-research)** · composite 77.65 · _ungrounded excerpt — only 80% of quotes verified against the source_
+  Autonomous research works when you (a) design the evaluation primitive first, (b) migrate everything correctness-critical from LLM to code, and (c) put the human back in for the…
+- **[macOS ClickFix campaign moves from open lures to server-side browser-fingerprinting gates that cloak the payload from crawlers](https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/)** · composite 71.2 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
   'Apparently benign' scan results from suspicious domains are unreliable — cloaked infrastructure now decides per-request whether to serve payload, decoy, or blank, so passive…
-- **[Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt)** · composite 54.5 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Inside the keyv npm compromise: preinstall dropper + Claude/VS Code folder-open hooks + valid provenance on a poisoned build](https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/)** · composite 69.17 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  Provenance attests build origin, not build safety — a compromised source or workflow context produces a validly attested malicious artifact — and an IDE-triggered execution path…
+- **[keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion](https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign)** · composite 67.15 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  This is a mature reusable toolkit, not a one-off — attackers rotate C2 through a smart-contract lookup so the payload is stable while infrastructure moves, exfiltrate via a…
+- **[ChainDrop supply chain compromise: Anatomy of a self-propagating worm](https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/)** · composite 61.42 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  The Shai-Hulud/ChainDrop worm's secondary infection path targets Claude and VSCode configuration files as persistence, making AI coding tools an in-repo malware host — dependency…
+- **[Snyk Evo Agentic AppSec: autonomous remediation, non-executing package scanning, and a Claude CTF that shipped malware to PyPI](https://snyk.io/blog/remediation-agent-malicious-code-defense/)** · composite 56.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  A control that lives inside the model cannot govern the environment the model runs in — a security scanner that installs and executes packages to test them is a self-inflicted…
+- **[go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)](https://github.com/advisories/GHSA-qgq7-7hm3-q39j)** · composite 55.0 · _flagged needs_review (low confidence / novelty / relevance)_
+  Any string that becomes a file path must be validated after resolution, not before, and Git reference names are strings that become file paths.
+- **[Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt)** · composite 53.75 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Modern phishing defeats URL reputation, static content scanning, and signature matching simultaneously - detection has to execute JS, render the DOM, and normalize Unicode…
-- **[Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/)** · composite 53.3 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 53.72 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
+- **[Disrupting supply chain attacks on NPM and GitHub Actions](https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/)** · composite 53.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  The industry's ecosystem-level answer to 2025-2026's npm worms is to attack the propagation graph itself: slow releases (cooldown), decouple CI credentials from publishing (staged…
+- **[Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/)** · composite 52.55 · _flagged needs_review (low confidence / novelty / relevance)_
   Never build a shell command from user input inside a root process - the same command-injection class that plagues web apps turns critical OT switches into attacker-controlled…
-- **[etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies](https://github.com/advisories/GHSA-xg4h-6gfc-h4m8)** · composite 51.05 · _failed independent verification — Verifier scored novelty 20/100 - the 'stream endpoint skips the read endpoint's authz check' pattern has many documented prior instances, so only the instance is new. It also flagged that the advisory gives no root cause (the per-endpoint-drift explanation is our inference and is labelled as such), that 'only Watch' overstates a list of three unaffected request types, and that Watch delivers events rather than a keyspace snapshot. Held for review as a known class._
+- **[etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies](https://github.com/advisories/GHSA-xg4h-6gfc-h4m8)** · composite 50.3 · _failed independent verification — Verifier scored novelty 20/100 - the 'stream endpoint skips the read endpoint's authz check' pattern has many documented prior instances, so only the instance is new. It also flagged that the advisory gives no root cause (the per-endpoint-drift explanation is our inference and is labelled as such), that 'only Watch' overstates a list of three unaffected request types, and that Watch delivers events rather than a keyspace snapshot. Held for review as a known class._
   If your read endpoint and your stream endpoint enforce authorization in different code, you have two policies and only test one.
-- **[Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses](https://github.com/advisories/GHSA-w4hw-qcx7-56pr)** · composite 47.45 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[What Is AI Pentesting and How Does It Work?](https://snyk.io/blog/what-is-ai-pentesting/)** · composite 48.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  AI pentesting is a four-part orchestrated system — reasoning model, deterministic tools, independent validator, prior context — and the failure mode of skipping any one of those…
+- **[Introducing Semgrep Agentic Workflows: Automate Deep Vulnerability Hunting at Scale](https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale)** · composite 47.97 · _flagged needs_review (low confidence / novelty / relevance)_
+  The AI-augmented SAST win is not "replace static analysis with an LLM" — it is "feed the LLM sliced context and let deterministic taint tracing carry the correctness-critical…
+- **[Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses](https://github.com/advisories/GHSA-w4hw-qcx7-56pr)** · composite 46.7 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Escaping untrusted input for a shell is a leaky abstraction — prefer passing arguments as an argv array to a shell-less exec over trusting any escape library, because each shell…
-- **[A working taxonomy of open-source AI code-security harnesses: exploitgen, skill-boosting, SAST+LLM](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses)** · composite 44.0 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Why AI-assisted attacks made software supply chain security its own category](https://www.chainguard.dev/unchained/why-ai-assisted-attacks-made-software-supply-chain-security-its-own-category)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Agent skills are a new supply-chain artifact class alongside containers, libraries, and CI/CD workflows — treat them the same way you already treat npm packages (provenance,…
+- **[A working taxonomy of open-source AI code-security harnesses: exploitgen, skill-boosting, SAST+LLM](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses)** · composite 43.25 · _flagged needs_review (low confidence / novelty / relevance)_
   Choose an AI code-security harness by category and operating constraint, check maintenance status - and note the comparison is authored by a competing vendor.
+- **[Introducing Internal Network Scanning: see your network the way an attacker inside it would](https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would)** · composite 42.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  In the AI-bent-curve era, internal scanning that returns 'potentially vulnerable' banner matches is a queue, not a control; wire a Nuclei-style unauthenticated agent in every…
+- **[America bans imported robots due to supply chain and security risks](https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145)** · composite 42.5 · _ungrounded excerpt — only 33% of quotes verified against the source_
+  US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.
+- **[Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not)** · composite 39.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  Most 'crypto' bugs in the wild aren't crypto — they're validation checks that never run in the wrapper code around the primitive. Reviewers don't need a math background; they need…
+- **[Enhancing Anomaly Resilience in Research Networks: A Large-Scale Forecasting Benchmark for Dynamic Security Baselining](https://arxiv.org/abs/2608.05605)** · composite 33.69 · _flagged needs_review (low confidence / novelty / relevance)_
+  Not an AI-security or agent-security artifact; it is a classical netsec/anomaly-detection paper that happens to use ML forecasting. Adjacent at best. Retain only as a data point…
+- **[An End-to-End Threat Model for the Quantum-as-a-Service Pipeline](https://arxiv.org/abs/2608.05836)** · composite 32.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  STRIDE-style, pipeline-decomposed threat modeling for QaaS is now getting proposed; the interesting note for AI folks is that pipeline decomposition plus cross-stage chain…
+- **[On the Figures of Merit for Quantum Software Security: Toward a Benchmarking Rubric](https://arxiv.org/abs/2608.05831)** · composite 32.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  Quantum software security lacks agreed measurement primitives; the paper proposes organizing S-FoMs along ISO/IEC 25010 and rolling them into a single QSSP posture score, but this…
+- **[Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport](https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport/)** · composite 32.75 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  New attribution evidence tightens the claimed link between commercial spyware vendors and their home-state intelligence apparatus, relevant to threat models that treat these…
+- **[Inside the Fake Copyright Racket Silencing News Outlets](https://citizenlab.ca/inside-the-fake-copyright-racket-silencing-news-outlets/)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Platform copyright-claim review systems that accept superficial evidence enable low-cost, high-impact silencing attacks against journalists.
+- **[The Trust-Free Aggregation Layer of the Unicity Infrastructure](https://arxiv.org/abs/2608.05316)** · composite 31.29 · _flagged needs_review (low confidence / novelty / relevance)_
+  Not an AI-security artifact; a blockchain double-spend prevention construction. Only tangentially interesting to AI-sec engineers as an example of using STARK-based append-only…
 
-## AI Research (5)
+## AI Research (227)
 
-- **[vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving](https://www.aleksagordic.com/blog/vllm)** · composite 66.25 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
+- **[vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving](https://www.aleksagordic.com/blog/vllm)** · composite 61.75 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
   Understanding vLLM's block-pool + continuous-batching abstraction is the fastest way to reason about latency vs throughput trade-offs when self-hosting inference — the KV cache…
-- **[Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone](https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark)** · composite 53.9 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 61.62 · _ungrounded excerpt — only 0% of quotes verified against the source_
+  For AI-driven bug hunting, harness output quality is dominated by outcome definition and per-agent scoping; a threat-model file is the single highest-leverage input, and mixing…
+- **[LLM 0.32: reasoning traces, server-side provider tools, human-approval pause/resume, and content-addressable message logs](https://simonwillison.net/2026/Aug/4/new-release-of-llm/)** · composite 59.65 · _ungrounded excerpt — only 25% of quotes verified against the source_
+  A harness API is starting to converge on the shape agent builders actually need: separable reasoning vs output streams, structured event types (not string chunks), server-side…
+- **[ratel-ai/ratel](https://github.com/ratel-ai/ratel)** · composite 59.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Progressive disclosure of tool schemas via an in-process BM25 index is a concrete implementation of the 'few-distinct-tools-beat-many' guidance — it moves tool-selection out of…
+- **[How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier](https://simonwillison.net/2026/Jul/21/cat-and-thariq/)** · composite 58.25 · _ungrounded excerpt — only 20% of quotes verified against the source_
+  Treat your coding agent like production infrastructure: few distinct tools, a lean prompt of reasoning-not-rules, evals grown from real incidents, and a context-aware classifier…
+- **[agentscope-ai/PawBench](https://github.com/agentscope-ai/PawBench)** · composite 56.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Treat the harness as a first-class variable in agent eval design: a fixed final pass rate hides whether regressions came from model reasoning, tool wiring, skill discovery, or a…
+- **[Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?](https://arxiv.org/abs/2605.22148)** · composite 55.75 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  In self-editing agent skill libraries, the judge's false-pass rate (not its overall accuracy) determines whether eviction can ever converge; asymmetric judge errors are the…
+- **[Birfy/agentdescent](https://github.com/Birfy/agentdescent)** · composite 54.25 · _ungrounded excerpt — only 75% of quotes verified against the source_
+  The right abstraction for self-improving agent systems is not 'run and reflect' but a discrete-space optimizer over diffs with explicit conflict resolution, staleness policies,…
+- **[PDF-to-markdown pipelines are the hidden token chewer inside enterprise AI adoption](https://simonwillison.net/2026/Aug/7/pdfs-are-terrible/)** · composite 54.25 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  Cost budgets die by a thousand PDF-to-image-to-markdown conversions, not by the model call at the end.
+- **[Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding](https://arxiv.org/abs/2608.05876)** · composite 54.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Personalize a deep-research agent by refining the *specification* before it hits the agent, not by modifying the agent itself — and use a dependency graph over framing factors to…
+- **[Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone](https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark)** · composite 53.15 · _flagged needs_review (low confidence / novelty / relevance)_
   Score AI security scanners on groundedness and run-to-run stability, not just F1 - and don't expect stacking models to fix deep-authorization recall. Vendor-run, single-repo…
-- **[Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path](https://projectdiscovery.io/blog/oh-my-rogue-agent)** · composite 53.0 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[OpenForgeRL: Train Harness-native Agents in Any Environment](https://arxiv.org/abs/2607.21557)** · composite 52.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  The core architectural move is decoupling training from inference by intercepting the model call at the harness proxy layer. That lets an existing RL stack train against a…
+- **[When Self-Evolution Backfires: Pre-Commit Gating against Skill Contamination in LLM Agents](https://arxiv.org/abs/2608.05810)** · composite 52.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Skill admission in self-evolving agents must be pre-commit, not post-hoc. Once a defective skill enters the decision context, its descendants inherit the flaw and rollback does…
+- **[Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path](https://projectdiscovery.io/blog/oh-my-rogue-agent)** · composite 52.25 · _flagged needs_review (low confidence / novelty / relevance)_
   Agents drift toward whatever is reachable; the eval harness's own infrastructure is usually the most reachable thing in the room.
-- **[Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage](https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision)** · composite 45.2 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Counterfactual Simulation Training for Chain-of-Thought Faithfulness](https://arxiv.org/abs/2602.20710)** · composite 51.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  CoT faithfulness can be trained for by rewarding CoTs that enable counterfactual simulation, materially improving CoT monitors — but the effect does not transfer symmetrically…
+- **[Fzkuji/OpenProgram](https://github.com/Fzkuji/OpenProgram)** · composite 51.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  The load-bearing idea is 'a code gate can't be talked past' — when a model's answer fails validation, it is sent back to re-decide, so critical steps cannot be skipped by prompt…
+- **["LLM Agent Performance" Is Not a Single Evaluation Target](https://arxiv.org/abs/2602.03238)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Agent benchmark scores are only interpretable relative to a declared candidate boundary (model vs. full system) and condition policy (robustness scope); collapsing all three into…
+- **[CASCADE: An Agentic Regulatory Network Framework for Patient-Data-Validated Downstream Perturbation Prediction](https://arxiv.org/abs/2608.05359)** · composite 49.75 · _ungrounded excerpt — only 33% of quotes verified against the source_
+  Real-world MCP grounding on a scientific tool suite tops out around 71-86% exact match, and the residual failure is a confident wrong-perturbation-type call on ambiguous queries;…
+- **[Can AI agents conduct open-ended AI research? Early evidence from two case studies](https://arxiv.org/abs/2607.27191)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  The methodological contribution (author-graded shadow evaluations of unpublished work) is more durable than the point-in-time verdict. The findings themselves argue against strong…
+- **[FinEvo-Bench: A Longitudinal Benchmark for Self-Evolving Agents in Professional Financial Workflows](https://arxiv.org/abs/2608.06144)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For self-evolving agents on professional workflows, three concrete design signals: (1) skill-only accumulation beats memory-only and combined skill+memory in the tested scaffold;…
+- **[In-Context Examples Suppress Scientific Knowledge Recall in LLMs](https://arxiv.org/abs/2604.27540)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Few-shot examples don't just 'reinforce' knowledge; they can displace it. On tasks where the pretrained closed-form answer is better than curve-fitting to the demos, few-shot…
+- **[Innovation-Residual Auditing of Autonomous Analysis Agents: Localization, Detection Limits, Error Control, and Identifiability](https://arxiv.org/abs/2608.05490)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For agent-op forensics, the auditor's scoring window and the representation dimension are the binding constraints, not how many past 'good' analyses you collected. A hundredfold…
+- **[Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination](https://arxiv.org/abs/2608.07341)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Zero G-AP is not proof a contaminated model has been restored. Evaluate mitigation with per-question probability gaps stratified by clean-model solve probability; averaged…
+- **[Agentic self-driving microscopy benchmarks support qualification but do not necessarily generalize to unseen tasks](https://arxiv.org/abs/2608.05266)** · composite 48.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Benchmarks over agent architectures generalize poorly: even with ~2,000 runs and ~50,000 RAG retrievals across 105 configurations, surrogate models could not predict performance…
+- **[From Economic Agents to Agentic Economies: A Systems Blueprint for Economic World Models](https://arxiv.org/abs/2608.06020)** · composite 48.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For agent builders, EWMs are being pitched as high-fidelity multi-agent sandboxes for training, planning, evaluation, and safety — but the field is still parked at rule-based…
+- **[VLMs for Videogame Data Annotation](https://arxiv.org/abs/2608.05949)** · composite 48.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  VLMs used as annotators fail on synthetic (game) scenes even for basic questions; the practitioner levers that materially move quality vs cost are frame-sequence length, image…
+- **[aeonfun/aeon](https://github.com/aeonfun/aeon)** · composite 48.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  The interesting bit isn't the marketing ('most autonomous') but the health loop: rate every run 1-5 with a small model, then auto-route low-scorers to a repair skill. Independent…
+- **[universal-tool-calling-protocol/utcp-specification](https://github.com/universal-tool-calling-protocol/utcp-specification)** · composite 48.25 · _ungrounded excerpt — only 33% of quotes verified against the source_
+  UTCP treats MCP as one transport among many; for defenders, this means threat models built around 'MCP tools' need to generalize to any tool-calling transport, and…
+- **[Enhancing AI security through global AI red teaming](https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/)** · composite 47.12 · _flagged needs_review (low confidence / novelty / relevance)_
+  AI red-teaming is now interdisciplinary, multilingual, and geographically distributed by requirement, not by preference — internal-only teams cannot cover the actual attack…
+- **[Schema-Guided Hierarchical Information Extraction and Semantic Evaluation Using Generative AI](https://arxiv.org/abs/2608.06167)** · composite 46.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For hierarchical structured extraction, a single-call schema-driven prompt plus a path-based semantic matcher with a rubric (exact / semantic / useful / non-match) outperforms the…
+- **[Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning](https://arxiv.org/abs/2608.05245)** · composite 46.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Self-generated agent skill libraries are bounded by the model's prior knowledge — closing capability gaps for expert domains means pulling in external evidence and distilling it,…
+- **[EcoAgent-Bench: Evaluating Economic Decision-Making in Budget-Constrained LLM Agents](https://arxiv.org/abs/2608.05519)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Completion-under-budget and economical action selection are distinct properties; a headline pass rate can hide always-escalate or always-cheap policies. Report the worse of…
+- **[INTRYGUE: Induction-Aware Entropy Gating for Reliable RAG Uncertainty Estimation](https://arxiv.org/abs/2603.21607)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For RAG systems, naive token-entropy hallucination detectors are miscalibrated in a predictable way: the same circuit that grounds the answer inflates entropy. Gating on…
+- **[Kimi K3: Open Frontier Intelligence](https://arxiv.org/abs/2607.24653)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Adjacent-bucket frontier-model release: relevant as context for the open-weights landscape, but not a security or harness-design claim.
+- **[SearchAuditor: Auditing and Attributing Failures in Long-Horizon Search Agents](https://arxiv.org/abs/2608.05212)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Long-horizon search-agent trajectories are so noisy that even frontier-model auditors localize/repair failures under a third of the time — plan for auditor-in-the-loop, not…
+- **[SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution](https://arxiv.org/abs/2608.05573)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Trajectory-level judging beats final-answer scoring for long-horizon agents, and encoding verification procedure as a reusable JudgeSkill measurably improves both accuracy and…
+- **[wanmol/goal-flow](https://github.com/wanmol/goal-flow)** · composite 45.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  The interesting artifact here is not the framework — it's the openly documented incident: even production teams shipping agent frameworks leak credentials into git history. Any…
+- **[Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage](https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision)** · composite 44.45 · _ungrounded excerpt — only 80% of quotes verified against the source_
   When you pick an LLM for security scanning, weigh precision and per-repo behavior on repos like yours, not a headline F1/recall - false positives move the cost onto human triage.
-- **[Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform](https://arxiv.org/abs/2607.13596)** · composite 39.5 · _failed independent verification — Verifier scored novelty 34, arguing this is a new label on a known cluster (capability miscalibration plus domain-selective alignment), and refuted the original framing of the actionable: the source names deployment-side capability specification as a mitigation target and never tests it, never specifies where to state it, and covers conversational sessions rather than tool-using agents - so the agent/tool-call implication is our extrapolation and is marked as such. 'Will claim' was softened to 'may claim'. Held for review._
+- **[Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay](https://arxiv.org/abs/2608.05784)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A deterministic, byte-identical, model-free compiler over passively captured screen activity can shrink an agent's daily context ~86x while improving QA accuracy over LLM-summary…
+- **[Coupling Planning with Episodic Memory in LLM Agents for Software Issue Resolution](https://arxiv.org/abs/2608.06811)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For long-horizon coding agents, treating planning and memory as coupled substrate (with an external execution-verified done-signal) reduces repeated failed edits, empty-patch…
+- **[Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention](https://arxiv.org/abs/2607.20457)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Content-aware summaries chosen by rare-token statistics beat content-blind anchors for distributed long-context attention, at identical KV-cache footprint.
+- **[Every Cache Entry Earns Its Place: Global Allocation of Resolution and Coverage for KV Cache Compression](https://arxiv.org/abs/2608.07001)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Framing KV-cache compression as a global resource-allocation problem across layers, heads, and slots outperforms fixed-rule eviction or merging, especially at aggressive…
+- **[GAUGE: A Measurement-Grounded Benchmark for Physical Fidelity in Simulation Engines and Video World Models](https://arxiv.org/abs/2608.05948)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Generative video world models can fake the *shape* of a physical law while getting the underlying quantities wrong; perceptual-similarity evals miss this, so benchmarking has to…
+- **[SSTQ: Privacy-Preserving Vector Quantization via Subsampled Stochastic TurboQuant](https://arxiv.org/abs/2608.05127)** · composite 43.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For local-DP distributed optimization, tight-frame quantization plus subsampling beats vqSGD-style geometric constructions on communication-utility trade-off.
+- **[openai/openai-agents-python](https://github.com/openai/openai-agents-python)** · composite 43.75 · _ungrounded excerpt — only 33% of quotes verified against the source_
+  Modern agent SDKs converge on a small handful of primitives (agent, handoff, guardrail, session, tracing) plus a first-class sandbox client — sandbox-by-default is now…
+- **[CREBench: Evaluating Large Language Models in Cryptographic Binary Reverse Engineering](https://arxiv.org/abs/2604.03750)** · composite 43.28 · _flagged needs_review (low confidence / novelty / relevance)_
+  Frontier LLMs are meaningfully useful at cryptographic binary reverse engineering (~60% flag-recovery at the top) but still trail expert humans by a wide margin; treat LLM-only…
+- **[Ask-E: An Environment for Calibrated Question Generation](https://arxiv.org/abs/2608.06933)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Generating calibrated questions is itself an eval signal; hard-to-generate problems require capability beyond the target — useful framing for keeping red-team/eval sets ahead of…
+- **[Beyond Scaffold Splits: Structural-Frontier Evaluation Reveals Hidden Failures in ADMET Models](https://arxiv.org/abs/2607.10729)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  OOD splits chosen by convention can hide model failure at the true generalization frontier; the same critique likely applies to LLM benchmarks, though the paper is…
+- **[Equivariant Sparse Autoencoders: Mechanistic Interpretability of Neural Networks on Symmetric Data](https://arxiv.org/abs/2511.09432)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Reconstruction quality can be inversely correlated with feature usefulness for SAEs under symmetries, which weakens reconstruction-based interpretability benchmarks even though…
+- **[Multi-Level Modeling of Large Language Model Inference Latency and Energy via Hybrid Analytical--Machine-Learning Predictors](https://arxiv.org/abs/2608.06723)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Cost/latency estimation for LLM inference is being reframed as a hardware-free predictor problem, decoupled from actually running the model. For deployment decisions this is…
+- **[Rethinking Evaluation Paradigms in IBP-based Certified Training](https://arxiv.org/abs/2606.02134)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Single-config accuracy numbers over-state progress in certified-training research; Pareto-front comparisons after multi-objective tuning are the more honest bar. Relevant to…
+- **[SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization](https://arxiv.org/abs/2602.12187)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  SAGEO is the SEO of the LLM era. Realistic end-to-end evaluation shows most optimization tricks that look good on toy benchmarks hurt real retrieval/reranking. Adjacent to…
+- **[SkillHEX: Improving Agent Skills via Hypothesis-Driven Autonomous Exploration and Exploitation](https://arxiv.org/abs/2608.05628)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For agent skill self-evolution under tight interaction budgets, hypothesis-driven tree search over multiple candidate skills outperforms greedy single-branch refinement, because…
+- **[Topology-Aware Data Movement for Disaggregated GPU Inference](https://arxiv.org/abs/2607.28633)** · composite 42.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Uniform RDMA for KV-cache transfer wastes up to 72x bandwidth headroom; topology-aware transport selection and pipelining reclaim most of it.
+- **[Revisiting Black-Box Model Ownership Verification through Information Theory](https://arxiv.org/abs/2409.06130)** · composite 41.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  Label-only black-box watermarks lack enough channel capacity to encode robust ownership signals without hurting predictive accuracy; using top-k output opens more capacity for a…
+- **[Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry](https://arxiv.org/abs/2608.06849)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Head function (retrieval vs streaming) can be diagnosed from static QK weight geometry rather than from runtime traffic, which removes the calibration-data dependency of prior…
+- **[CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG](https://arxiv.org/abs/2608.07458)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Sub-chunk KV cache reuse targeted at query-relevant nuggets outperforms coarse chunk-level cache reuse for long-context RAG on multi-hop QA under fixed prefill latency budgets.
+- **[FinanceHarness: Autonomous Financial Deep Research Framework](https://arxiv.org/abs/2607.27853)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specialized harness plus leakage-guarded benchmarks materially outperform general-purpose deep-research pipelines on finance tasks, and the ceiling is still low.
+- **[Improving Interoperability among Defence and National Security Ontologies: Analysis and Evaluation Tasks](https://arxiv.org/abs/2608.05867)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  When multiple SOTA ontology-alignment systems agree, their consensus becomes a cheap silver-standard scaffold that only needs manual validation on the unique (single-system)…
+- **[Multi-Agent Forensic Reasoning for Generalizable Deepfake Video Detection](https://arxiv.org/abs/2608.06865)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For generalizable deepfake video detection, specialist-agent decomposition across independent forensic perspectives with a judge-agent reconciliation can let small open-source…
+- **[Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts](https://arxiv.org/abs/2608.06123)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Counterfactual paired-prompt evaluation with country-identity swaps exposes user-affiliation-driven sycophancy and framing bias in 13 current LLMs. Method is generalizable beyond…
+- **[Pre-Inference Routing for Cost-Efficient Document Field Extraction](https://arxiv.org/abs/2608.06607)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Pre-inference routing pays off only under two joint conditions: the cheap model fails often enough to matter and its failures are predictable from cheap signals; without both,…
+- **[Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration](https://arxiv.org/abs/2605.27752)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Whether verbalized confidence beats token-likelihood confidence is not a property of the model; it is a property of the (answer, context, readout) protocol, and published…
+- **[Same Attention, Different Truths: Put Logit-Lens over Visual Attention to Detect and Mitigate LVLM Object Hallucination](https://arxiv.org/abs/2608.07302)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For LVLM reliability work, attention magnitude is a weak signal because real and hallucinated targets attract comparable attention; what the attended-to features decode to under a…
+- **[Semantic Adapter Routing with Fine-Tuning Task Embeddings](https://arxiv.org/abs/2606.19079)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Routing at inference time can be done training-free by task-embedding-nearest-neighbor over adapters. The under-the-radar bit is GRACE: an adapter's fine-tuning data is…
+- **[Innocent Panels, Hateful Stories: Evaluating and Detecting Hateful Intent in Multi-Turn Visual Story Generation](https://arxiv.org/abs/2608.05210)** · composite 40.28 · _flagged needs_review (low confidence / novelty / relevance)_
+  T2I safety needs to move from per-image moderation to stateful reasoning across multi-turn image sequences; existing dedicated safety models reach at most 34.9% recall on…
+- **[Intelligence per Watt: Measuring Intelligence Efficiency of Local AI](https://arxiv.org/abs/2511.07885)** · composite 39.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  A large fraction of real-world queries can be redistributed to local inference on power-constrained hardware, and IPW is a compact way to track that shift over time.
+- **[Self-Distillation Enables Continual Learning](https://arxiv.org/abs/2601.19897)** · composite 39.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  On-policy self-distillation from ICL-conditioned teachers offers a reward-free path to continual learning from demonstrations, with the practical implication that SFT-only…
+- **[Calibrating WEAT Against Anisotropy: ZCA Whitening as a Geometric Pre-Processing Step for Embedding Association Tests](https://arxiv.org/abs/2608.06908)** · composite 39.25 · _ungrounded excerpt — only 67% of quotes verified against the source_
+  Bias measurements produced by WEAT on modern anisotropic embedding spaces are unreliable in both directions; prior fairness-audit numbers should be re-examined with a geometric…
+- **[LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference](https://arxiv.org/abs/2608.02515)** · composite 39.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Long-lived agent memory research keeps moving from retrieval-plus-summarization toward intrinsic persistent state — an architectural shift worth tracking for the agent-memory…
+- **[Provable Training Data Identification for Large Language Models](https://arxiv.org/abs/2510.09717)** · composite 39.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Treating training-data identification as set-level inference with FIR control gives statistically defensible answers rather than instance-wise scores whose error rate is opaque.
+- **[SABRE: Scalable and Automated Benchmarking of VLMs under Stress](https://arxiv.org/abs/2608.07435)** · composite 39.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  A red-team methodology for VLM stress tests: filter out anything a reference VLM solves, keep only samples that force reliance on visual evidence over language priors.
+- **[Seeing Is Not Deciding: Can Multimodal LLMs Act as Effective CEOs?](https://arxiv.org/abs/2608.05864)** · composite 39.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Multimodal augmentation is not uniformly helpful for decision agents — under constrained resource allocation, adding visual channels degrades all nine tested models even when…
+- **[TriQua: Reconciling Granularity and Context in Factuality Evaluation](https://arxiv.org/abs/2608.05228)** · composite 39.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  If you decompose LLM output for factuality checking, you probably need a variable-granularity representation — atomic triples for simple claims, qualified hyperrelational facts…
+- **[Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform](https://arxiv.org/abs/2607.13596)** · composite 38.75 · _failed independent verification — Verifier scored novelty 34, arguing this is a new label on a known cluster (capability miscalibration plus domain-selective alignment), and refuted the original framing of the actionable: the source names deployment-side capability specification as a mitigation target and never tests it, never specifies where to state it, and covers conversational sessions rather than tool-using agents - so the agent/tool-call implication is our extrapolation and is marked as such. 'Will claim' was softened to 'may claim'. Held for review._
   Assign a role without stating its limits and the model will fill in the affordances it wishes it had.
+- **[C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models](https://arxiv.org/abs/2608.05381)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  MLLMs collapse under cross-modal conflict, defaulting to text 87-95% of the time. Not a direct security finding, but the 'modality dominance' failure mode is a candidate attack…
+- **[Conditioning Protein Generation via Hopfield Pattern Multiplicity](https://arxiv.org/abs/2603.20115)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A single scalar on the logits gives closed-form control over which subfamily a Hopfield sampler emits, cleanly separating latent-space conditioning from downstream sampling /…
+- **[Debias in Text, Believe Your Eyes: Text-Anchored Cross-Modal Transfer for Visual Counter-Commonsense Reasoning](https://arxiv.org/abs/2608.06938)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  When multimodal outputs contradict the image, the fix is often at the language decoder, not the vision encoder — a text-only debiasing pass can transfer to visual reasoning.
+- **[ECG-LENS: Lead-Aware Clinical Context Enriched ECG Report Generation and Evaluation](https://arxiv.org/abs/2608.05893)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For any domain-specific generation task, lexical metrics are the wrong yardstick; build a domain-native evaluator (here: label-agreement between extracted diagnoses of generated…
+- **[Inference-Time Scaling of Diffusion Language Models via Trajectory Refinement](https://arxiv.org/abs/2507.08390)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Diffusion LMs get an inference-time steering knob (trajectory refinement iterations) that stays useful after parallel-sample gains flatten; adaptive iteration allocation saves…
+- **[Latent Fact-Checking: Detecting Misinformation through Activation Engineering](https://arxiv.org/abs/2608.06417)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Truthfulness appears to be a linearly separable direction in LM latent space, recoverable across scales and families without fine-tuning or retrieval, but the effect weakens…
+- **[Measuring Concept Content in Text from LLM Activations: ESG Evidence from Concept Vectors and Linear Probes](https://arxiv.org/abs/2608.07208)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Frozen-LLM activation probes on ESG text nearly match a fine-tuned classifier and outperform the model's own answer, suggesting activation-level readers extract judgments the…
+- **[Predictive Multi-Tier Memory Management for KV Cache in Large-Scale GPU Inference](https://arxiv.org/abs/2604.26968)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  KV-cache sizing today is architecture-agnostic and over-provisions MLA by up to 57x; unified sizing + tiered storage + a Bayesian reuse predictor is the proposed replacement, but…
+- **[Refining Over Resampling: Test-Time Self-Correction for LLM Reasoning](https://arxiv.org/abs/2608.05643)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  For reasoning-style tasks with a fixed test-time compute budget, spending part of that budget refining each sampled trajectory beats spending all of it on more independent samples…
+- **[Toward a Causal Data Management Ecosystem for Decision Making and Agentic AI](https://arxiv.org/abs/2608.07214)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  The authors argue autonomous-agent trustworthiness depends on an explicit shared causal layer over the fragmented data sources feeding an AI ecosystem, not just better integration.
+- **[Trajectory-Relative Hindsight Distillation for Agentic Reinforcement Learning](https://arxiv.org/abs/2608.07371)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Training-side agent-RL technique. Adjacent to cluster B (agents and harnesses) but strictly about RL credit assignment during training, not about production harness design, tool…
+- **[Unmasking Removal-Budget Confounding: A Matched Operating-Point Evaluation Framework for Adaptive Data Cleaning](https://arxiv.org/abs/2608.06511)** · composite 37.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  If you don't match operating points, adaptive data-cleaning benchmarks silently reward smaller removal budgets, not better discrimination.
+- **[In Situ Training of Implicit Neural Compressors for Scientific Simulations via Sketch-Based Regularization](https://arxiv.org/abs/2511.02659)** · composite 37.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Sketched replay buffers plus limited full-sample memory let an online-trained neural compressor for scientific data approximately match an offline-trained equivalent at high…
+- **[Newton-Schulz Retraction-Based Inference Enables Hidden Quantum Markov Models to Outperform Classical HMMs](https://arxiv.org/abs/2608.06554)** · composite 37.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Quantum probabilistic sequence models can now be trained scalably; not a security paper.
+- **[RenderFormer++: Scalable and Physics-Informed Feed-Forward Neural Rendering](https://arxiv.org/abs/2606.30380)** · composite 37.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Graphics/vision paper on scalable neural rendering; unrelated to LLM security or agentic AI.
+- **[Retrofitting Linear Attention into Diffusion Language Models](https://arxiv.org/abs/2608.06628)** · composite 37.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Efficiency paper for diffusion LLMs; no security relevance.
+- **[KReF: Training-Free Retrieval for Long-Term Time-Series Forecasting and Predictive Uncertainty](https://arxiv.org/abs/2608.06748)** · composite 36.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  Retrieval-as-inductive-bias is showing up outside LLM RAG contexts — in this case as a training-free predictor for time-series forecasting. Useful as a reminder that 'retrieval'…
+- **[Large Causal Models for Temporal Causal Discovery](https://arxiv.org/abs/2602.18662)** · composite 36.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  Applies the pretrain-once-run-anywhere playbook to causal discovery on time series, which is orthogonal to security but signals continued spread of foundation-model methodology…
+- **[AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation](https://arxiv.org/abs/2603.20986)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  A domain-specific harness with an explicit adversarial 'Skeptic' role that checks outputs against physics invariants stabilizes an otherwise-flaky code-generating agent. The…
+- **[CreativeInstruct: Scalably Teaching LLMs to Balance Quality, Creativity, and Diversity](https://arxiv.org/abs/2608.07460)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Post-training collapses diversity; a controllable [StartCreativity] span learned via instruction tuning restores base-model creativity without a second model at inference and…
+- **[CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights](https://arxiv.org/abs/2608.06763)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  You can keep the dense integer code stream that GPU kernels want while gaining non-uniform reconstruction flexibility by parameterizing a monotonic cubic mapping.
+- **[GPTKB 2.0: Browsing, Querying, and Auditing a Disambiguated LLM-Derived Knowledge Base](https://arxiv.org/abs/2608.06992)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  LLM-materialized KBs can carry per-fact provenance including disambiguation decisions — a shape worth borrowing when you need auditable grounding rather than opaque retrieval.
+- **[IFCLoRA: Topology-Aware Rank Allocation for Parameter-Efficient Fine-Tuning](https://arxiv.org/abs/2607.22251)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Global information-flow topology, not just local gradient stats, is a useful structural prior for allocating scarce LoRA rank capacity.
+- **[Kimi K2.5: Visual Agentic Intelligence](https://arxiv.org/abs/2602.02276)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Another open-weights multimodal frontier model release; interesting orchestration hook (parallel agent swarm) but no security angle unless you're building agent-runtime defenses.
+- **[LUNAR: Benchmarking Personalized Large Language Models on UNiversal User BehAvioR Logs](https://arxiv.org/abs/2608.05246)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For personalization from long behavior logs, evidence selection and cross-domain integration matter more than raw context length or model size — and the more you personalize, the…
+- **[Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs](https://arxiv.org/abs/2509.16462)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Bias/fairness paper, not security. Contributes evidence that intrinsic bias mitigation can meaningfully move downstream fairness metrics without tanking predictive performance — a…
+- **[Mathematical Principles and Experimental Discoveries of the Emergence of Symbolic Patterns in Artificial Neural Networks](https://arxiv.org/abs/2608.06839)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Under two implicit criteria satisfied by most inputs, ANN inference reduces to a sparse symbolic-interaction representation that transfers across samples and models.
+- **[Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions](https://arxiv.org/abs/2605.29738)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Legal-domain multilingual benchmark. The methodological finding — label-set alignment beats language proximity for cross-lingual transfer — is the only durable takeaway; the rest…
+- **[Recovering Lesion Parameters from Aphasic Picture Naming Error Profiles in Large Language Models](https://arxiv.org/abs/2608.06429)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Behavior-to-parameter inverse mapping in LLMs shows that some perturbation parameters are recoverable while layer index is not, evidence of functional redundancy across…
+- **[RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs](https://arxiv.org/abs/2608.07088)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Notable inference-efficiency result for MLLMs (Pareto-good visual-token pruning), but nothing security-relevant.
+- **[Scalable Long-Horizon Planning with Staggered Updates for Lifelong MAPF](https://arxiv.org/abs/2608.06702)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  The word 'agent' collides across communities: LMAPF papers are about robots and warehouse fleets, not LLM agent harnesses. When triaging RSS from cs.AI, filter on whether 'agent'…
+- **[Shaping Human-AI Interactions to Provide Improvement Pathways and Balance Competing Objectives](https://arxiv.org/abs/2608.05710)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  When a deployed AI evaluates people, interaction design should treat strategic self-presentation as a first-class dynamic to be shaped, not a nuisance to be filtered.
+- **[Solver-Guided Reasoning for Mixed-Equilibrium Strategies](https://arxiv.org/abs/2608.06741)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For domains with computable ground truth (game equilibria), replacing human demonstrations with solver output yields substantially better LLM reasoning traces.
+- **[Stochastic Autoregressive Learning](https://arxiv.org/abs/2608.07224)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Stochastic autoregressive learning is not a straight extension of the deterministic theory: CoT vs base vs end-to-end sample complexity cannot be universally ordered at fixed…
+- **[Sub-Quadratic Bisimulation Metrics via Approximate Nearest Neighbors: Coverage-Augmented Guarantees and Computable Two-Sided Certificates](https://arxiv.org/abs/2608.06762)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  You can trade quadratic pairwise work for ANN-guided restricted updates while retaining computable enclosure certificates, at the cost of a coverage-dependent residual error.
+- **[Theoretical Foundations of Communication-Efficient, Robust, and Practical Distributed and Federated Optimization](https://arxiv.org/abs/2608.06563)** · composite 36.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  One chapter touches Byzantine robustness in federated learning, a tangential AI-security topic, but the piece is fundamentally a theory thesis rather than a security artifact.
+- **[jdevalk/specification.website](https://github.com/jdevalk/specification.website)** · composite 36.25 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  Not an AI-security artifact; primary value here is the MCP server pattern of exposing an authoritative reference corpus to agents, and the 'agent readiness' rubric as a checklist…
+- **[MetaSICL: Globalizing Auditory LLMs for Underserved Speakers and Languages via Meta Speech In-Context Learning](https://arxiv.org/abs/2601.18904)** · composite 35.95 · _flagged needs_review (low confidence / novelty / relevance)_
+  Meta-learning-style post-training on high-resource speech data can install a durable in-context adaptation ability that transfers to unseen low-resource languages and tasks.
+- **[An AI4AI Framework for Visual Token Pruning](https://arxiv.org/abs/2608.07193)** · composite 35.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Framing algorithm design as residual edits over a strong base policy, in a task-specific DSL, is the load-bearing trick that lets an LLM's general reasoning translate into…
+- **[Capacity Confounds and Coverage Guarantees in Adaptive Sub-model Federated Learning](https://arxiv.org/abs/2608.07157)** · composite 35.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  In sub-model federated learning, parameter coverage and capacity budgeting explain the accuracy wins usually credited to adaptive per-client capacity allocation; update-based…
+- **[Cascade: Exploiting SLO-Aware latency budget for fair and high goodput LLM inference serving](https://arxiv.org/abs/2608.06557)** · composite 35.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  A single per-request latency-budget signal can jointly govern scheduler ordering and KV-cache tiering; treating budget as a shared coordination variable outperforms deadline-only…
+- **[LoCA: Forward-Only LLM Tuning after One-Shot Calibration with Local Credit Assignment](https://arxiv.org/abs/2608.03020)** · composite 35.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Amortize LLM adaptation cost by doing one backward calibration pass, then keep tuning forward-only. Interesting only if you're building on-device or backward-restricted adaptation…
+- **[Optimization as a Dynamical System: Generative Schedules from Latent ODEs](https://arxiv.org/abs/2509.23052)** · composite 35.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Framing LR schedules as trajectories of a learned latent ODE gives generative, non-parametric schedules that outperform hand-tuned baselines, but the contribution is training-side…
+- **[Probing Visual Concepts in Lightweight Vision-Language Models for Automated Driving](https://arxiv.org/abs/2603.06054)** · composite 35.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Interpretability finding on VLMs: object presence is linearly encoded but object orientation is not, and distance degrades separability. Useful mental model, not a security…
+- **[Diffusion-MF: Approximate Structured Diffusion for Sequence Labelling](https://arxiv.org/abs/2606.18856)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  NLP structured-prediction paper; not about LLM harness or agent security.
+- **[From Siloed Algorithms to Compliance-First Agentic Platforms: A Multi-Layered Architecture for Hospital AI Systems](https://arxiv.org/abs/2608.06112)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Regulation-heavy vertical (hospital) blueprint for combining multi-agent orchestration with policy-as-code and PETs. Interesting as a pattern (compliance layer centralized, PETs…
+- **[FutureBridge: Token Selection Beyond Local Preference in Collaborative Decoding](https://arxiv.org/abs/2608.06819)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  In small-model / large-model collaborative decoding, the LLM's locally preferred token is not always the token the SLM can build on; selecting tokens by downstream SLM usability…
+- **[Geo-Spatial Concept Probing of Large Language Models: Abstraction, Compositionality, and Grounding](https://arxiv.org/abs/2608.07353)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  LLM spatial-concept probing is an interpretability topic; the guess_topic label of ai-security is a mislabel. There is no adversarial framing, no defender playbook, and no cluster…
+- **[ODEWorld: A Continuous Predictive Architecture via Physical-Time Flow](https://arxiv.org/abs/2607.27924)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Video/robotics world-model paper with no security angle; noteworthy only as another data point in the continuous-time vs discrete-time world-modeling debate.
+- **[Quoting Claude Opus 5 system prompt](https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Concrete example of using the system prompt to patch a knowledge-cutoff gap on politically sensitive current events, rather than relying on training or RAG. Interesting for…
+- **[Robust inference using density-powered Stein operators](https://arxiv.org/abs/2511.03963)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Pure statistical-ML methods paper. No AI-security or agent-design content; only tangential relevance via 'robust to contamination' framing.
+- **[SNI-GNN: SmartNIC-Assisted Full-Graph GNN Training with In-Network Embedding Prediction](https://arxiv.org/abs/2608.06441)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  In-network prediction on SmartNICs is a practical complement (not replacement) for partitioning and compression in distributed GNN training.
+- **[SenWorld: A Digital-Twin Simulation for Generating Context-Rich Evaluation Data](https://arxiv.org/abs/2607.19949)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  The paper's contribution is a labels-by-construction evaluation methodology: instead of asking an LLM judge whether an answer is right, the correct answer is a pointer into a…
+- **[Unified Agent: Managing Interactions across Devices](https://arxiv.org/abs/2608.05729)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A cross-device agent needs an explicit compact carried state (engagement evidence + stated facts + standing request), not just multi-agent coordination or treating devices as…
+- **[iARCS: Iterative Agentic RL for Controllable 3D Scene Generation](https://arxiv.org/abs/2608.06161)** · composite 34.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific (3D scene synthesis for embodied AI / CV). Interesting mechanism — LLM-authored reward programs iteratively refined by training feedback — but out of scope for…
+- **[A Physics-Inspired Classical Digital Twin of Cortical Dynamics: A Band-Stratified Metriplectic Port-Hamiltonian Neural Network Learned from Brain-Computer-Interface EEG](https://arxiv.org/abs/2607.10439)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Neuroscience/BCI modelling paper. Not in the AI-security lane. Interesting mainly as an example of imposing physical invariants on a neural network by construction rather than by…
+- **[Dirac-Frenkel dynamics with inertia for nonlinearly parametrized solutions of evolution problems](https://arxiv.org/abs/2606.24769)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Numerical-analysis result about parameter dynamics with redundant parametrizations; not relevant to AI security or harness practitioners.
+- **[Evaluating Useful Surrogate Models for Configuration Tuning Beyond Accuracy: A Fitness Landscape Analysis Perspective](https://arxiv.org/abs/2509.21945)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Accuracy is not sufficient to judge whether a surrogate model will help tune a system; a landscape-aware selector picks better model-tuner pairs than random in 79-82% of cases.
+- **[H2AL: Hyperbolic Hierarchy-aware Aggregative Learning for Registration-based Few-shot Medical Image Segmentation](https://arxiv.org/abs/2608.07340)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Purely a medical imaging segmentation contribution; not adjacent to any cluster in the interests taxonomy.
+- **[How Molecular Generative Models Organize Molecular Identity](https://arxiv.org/abs/2608.06956)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Latent spaces of molecular generative models are not automatically chemically navigable; internal organization must be characterized before treating them as such.
+- **[Optimized Certainty Equivalent Risk Minimization Using Samples: Algorithms, Convergence Rates, and Applications](https://arxiv.org/abs/2608.07113)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Risk-minimization theory (finance + UQ); tangential to AI safety, not directly security-relevant.
+- **[Playing Games with My Heart: An Evaluation of AI Companion Apps](https://arxiv.org/abs/2605.08093)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Consumer-protection / dark-patterns critique of AI companion apps; policy and sociotechnical, not agent-security. Belongs in the news lane.
+- **[Symbolic Graphics Programming with Large Language Models](https://arxiv.org/abs/2509.05208)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  A concrete example of RL-with-verifiable-rewards using a format gate plus a cross-modal similarity signal to align a small open model to a proprietary-model target. Interesting…
+- **[The Sparsity Whisperer](https://arxiv.org/abs/2608.06630)** · composite 34.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  For LLM sparsification, preserving differences between neuron outputs is a composable signal that improves post-training pruning quality over activation-only criteria.
+- **[CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction](https://arxiv.org/abs/2608.06582)** · composite 33.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  Materials-science generative-model paper; no AI security angle.
+- **[Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains](https://arxiv.org/abs/2603.15506)** · composite 33.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  The 'deep-learning time-series SOTA' picture is mostly an artifact of benchmark selection. Same lesson recurs elsewhere in ML: pick harder eval sets and require simple baselines.…
+- **[Aftab: A Comprehensive Benchmark of CNN Encoders and Advanced Value Functions in Parallelized Q-Networks](https://arxiv.org/abs/2608.07335)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  This is a deep-RL architectural benchmark for value-based, buffer-free Q-learning. It does not overlap with LLM agent harness design or any AI-security surface; treat as news-lane…
+- **[Agentic Nesting: A New Methodology for Existing Enterprise Application Integration and Services](https://arxiv.org/abs/2608.05159)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Position paper reframing enterprise integration as nested agent orchestration; no security or evaluation content.
+- **[Boundary Density Likelihood for Direct Event-Time Supervision](https://arxiv.org/abs/2408.12792)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For sparse-event detection tasks, training directly on the evaluated output (event times) beats training on a proxy (samplewise segmentation) — the framing is a generic reminder…
+- **[Conformal Fusion Under Missing Modalities](https://arxiv.org/abs/2608.07183)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Coverage under arbitrary modality availability can be achieved architecturally rather than by post-hoc recalibration; absent-modality vacuity localises uncertainty to the missing…
+- **[Epistemic Trustworthiness in Generative AI: A Normative Framework for Warranted Reliance in High-Stakes Workflows](https://arxiv.org/abs/2608.05602)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Framework paper. Useful vocabulary for user-facing AI product design, but not an engineering artifact.
+- **[Hyper-ES: Effective Evolution Strategies for LLM Reasoning via Descent Direction Merging](https://arxiv.org/abs/2608.05541)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  A training-methods paper on constrained-compute fine-tuning for reasoning; no direct security angle.
+- **[IceHorizon: A Dataset for Horizon Detection in Ice-Covered Maritime Environments and Comparative Evaluation of Detection Methods](https://arxiv.org/abs/2608.07018)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific CV benchmark with a small hybrid vs. classical comparison; irrelevant to AI security.
+- **[Judge a Book by its Cover: Investigating Multi-Modal LLMs for Multi-Page Handwritten Document Transcription](https://arxiv.org/abs/2502.20295)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For multi-page HTR, sharing cross-page context in the prompt beats per-page transcription. Useful only if you actually transcribe handwriting.
+- **[Mitigating Gradient Pathology in PINNs through Aligned Constraint](https://arxiv.org/abs/2605.25001)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Optimization-landscape fix for a well-known PINN training pathology; interesting for scientific ML but has no direct bearing on AI security.
+- **[MultiView-Bench: A Diagnostic Benchmark for World-Centric Multi-View Integration in VLMs](https://arxiv.org/abs/2607.08970)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  VLM capability-benchmark paper. Adjacent to the security lane only in the sense that VLM capability gaps set the ceiling for agentic vision-based tools. Not a claim candidate.
+- **[Online Conformal Prediction Beyond Feedback](https://arxiv.org/abs/2608.07139)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Coverage-guaranteed online uncertainty quantification is achievable without ever observing feedback on deployed predictions, by casting the setting as a partial-monitoring game…
+- **[PULSE: Agentic Investigation with Passive Sensing for Proactive Affective Intervention in Cancer Survivorship](https://arxiv.org/abs/2605.17679)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain application of tool-using LLM agents to passive sensing; interesting harness pattern (fixed 8-tool set, self-directed tool choice) but the paper is HCI/clinical, not…
+- **[Understanding Differentiable Embeddings Through Differential and Integral Geometry](https://arxiv.org/abs/2608.06809)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Trust diagnostics for nonlinear embeddings need both a differential and an integral view; no amount of local derivative measurement can substitute for path-based analysis.
+- **[Vector Space of Cycles](https://arxiv.org/abs/2606.08202)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Statistical ML for neuroscience-style dynamical systems; no bearing on AI security or practitioner harness design.
+- **[aristoteleo/PantheonOS](https://github.com/aristoteleo/PantheonOS)** · composite 33.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  A biology-oriented agent framework is out of scope for security claim work, but its own June-2026 trojanized-PyPI incident is a real-world data point for the ongoing pattern of…
+- **[A Survey of Adversarial Efficiency Degradation for Vision Transformer by Exploiting Input-adaptive Optimization](https://arxiv.org/abs/2608.05217)** · composite 32.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  This is a ViT-specific adversarial-ML survey with no direct LLM-agent security implications; note it exists as evidence that input-adaptive inference creates its own attack…
+- **[Text Steganography with Dynamic Codebook and Multimodal Large Language Model](https://arxiv.org/abs/2604.20269)** · composite 32.78 · _flagged needs_review (low confidence / novelty / relevance)_
+  Not directly relevant to our defender-side scope; it is an offensive/covert-channel research result. Interesting only as evidence that MLLM-driven text steganography is getting…
+- **[ArchEGraph: A Large-Scale Graph Dataset for Geometry-Topology-Physics Aligned Building Energy Modeling](https://arxiv.org/abs/2608.06772)** · composite 32.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Building energy modeling now has a large-scale geometry-topology-physics graph benchmark for training and evaluating surrogate models.
+- **[MiCoPro: End-to-End Mixed Precision HW/SW Co-design with HW-aware Proxy Model](https://arxiv.org/abs/2608.06916)** · composite 32.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  For edge accelerators, a target-specific latency proxy plus MPQ search closes the gap between algorithm-side quantization and actual deployable C code.
+- **[Optimization-based Online Conformal Prediction for Multi-step Forecasting](https://arxiv.org/abs/2508.13362)** · composite 32.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  For multi-step time-series forecasts, jointly optimizing across horizons within admissible-set constraints keeps CP coverage guarantees while producing sharper intervals than…
+- **[Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordination](https://arxiv.org/abs/2608.05391)** · composite 32.35 · _flagged needs_review (low confidence / novelty / relevance)_
+  Multi-agent argumentative structures with deterministic recomputation on human edits are an interesting containment pattern, but this paper only evaluates on clinical care…
+- **[Harnessing the Synergy between LLM Agents and Knowledge Graphs for Urban Socioeconomic Prediction](https://arxiv.org/abs/2411.00028)** · composite 32.05 · _flagged needs_review (low confidence / novelty / relevance)_
+  LLM-agents plus KG meta-path selection can replace hand-crafted feature extraction for graph-based prediction. Pattern is transferable but the paper itself is domain-specific.
+- **[CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM](https://arxiv.org/abs/2504.17584)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Hardware-systems work on cheaper long-context inference; interesting for LLM infra cost curves but no direct security or agent-design content.
+- **[Dual-Node NVIDIA DGX Spark over Tailscale: A Remote-Access Testbed for Distributed LLM Training and Cyber-Threat-Intelligence Fine-Tuning](https://arxiv.org/abs/2608.07226)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A tiny CTI-only SFT dataset (77 advisories) narrowly shifts a judge score (2.06 to 2.29 on 0-10) while regressing general-knowledge categories, a familiar catastrophic-forgetting…
+- **[GitHub Models is now retired](https://simonwillison.net/2026/Aug/9/github-models-is-now-retired/#atom-everything)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  A subsidized-token product died because agent workloads outgrew the subsidy. Reinforces that free/cheap LLM APIs bundled into developer platforms are not a durable dependency,…
+- **[LoCA: Spatially-Aware Low-Rank Convolutional Adaptation of Vision Foundation Models](https://arxiv.org/abs/2607.06918)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  PEFT method paper for vision foundation models. No adversarial, agentic, or supply-chain angle; not relevant to the AI-security lane beyond generic ML fine-tuning literacy.
+- **[Robust Average-Reward Markov Decision Processes: Minimax-Optimal Learning via Plug-in Reductions](https://arxiv.org/abs/2608.06545)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Pure RL theory result; no direct security implication for AI systems.
+- **[SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension](https://arxiv.org/abs/2608.07254)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  LLM + embeddings + graph community detection can compress noisy author-keyword vocabularies into a stable intermediate 'Concept' taxonomy layer between Topics and documents.
+- **[SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages](https://arxiv.org/abs/2605.01720)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Sign-language dataset release; no security or agent-engineering angle. Track only if you build pose-conditioned multimodal pipelines.
+- **[Tensor Network Kernel Machines: A JAX Framework for Machine Learning and Nonlinear System Identification](https://arxiv.org/abs/2608.07043)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Open-source JAX kernel-methods library; not security-relevant.
+- **[When Agentic AI Meets Integrated Sensing and Communication](https://arxiv.org/abs/2608.05792)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Wireless-domain survey — agentic ISAC. Out of scope for AI-security research; adjacent at best. Notable observation: audited systems do not meet more than 1-2 of nine…
+- **[WorldClaw: Agentic 3D Open-World Generation at Scale](https://arxiv.org/abs/2608.05248)** · composite 31.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Coarse-to-fine agentic pipelines with a structured intermediate spec are a plausible pattern for generation tasks that need both global coherence and editable local content — but…
+- **[Beyond Post-Hoc Temperature Scaling: Bilevel Optimization for LLM Calibration](https://arxiv.org/abs/2608.07419)** · composite 31.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Preference-aligned LLMs are overconfident and post-hoc temperature scaling does not transfer across domains; training-time entropy-maximization via bilevel optimization offers…
+- **[Certified Feedforward Tracking for Unknown Nonlinear Systems via Invertible Neural Networks](https://arxiv.org/abs/2608.06419)** · composite 31.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Invertibility plus conformal prediction can reduce data-driven control certification to a surrogate-modeling problem with probabilistic tracking-error guarantees.
+- **[Posture and Sustainment Optimization Under Adversarial Uncertainty](https://arxiv.org/abs/2608.05256)** · composite 31.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Operations research paper on military asset posture optimization. Not AI-security relevant; the 'adversary' is a Bayesian threat model in a simulated MDP, not an attacker against…
+- **[Residual Algebra for Representation-Preserving Learning](https://arxiv.org/abs/2608.07349)** · composite 31.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific quantitative-finance learning method; no security relevance.
+- **[Human-Centered Explainable AI for TinyML Edge Devices: A Pareto-Based Selection Framework with LLM-Guided Design](https://arxiv.org/abs/2608.07091)** · composite 30.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  The 'LLM as preference-to-method mapper, then deterministic filter + Pareto' pattern is a reasonable design-space technique but has no security posture attached.
+- **[MAC: A Conversion Rate Prediction Benchmark Featuring Labels Under Multiple Attribution Mechanisms](https://arxiv.org/abs/2603.02184)** · composite 30.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  Recommender/ad-tech benchmark for multi-attribution CVR prediction. Off-topic for the security research feed.
+- **[PHOENIX: Fine-Tuned SLM-Powered Autonomous Satellite Lifetime Extension via Predictive Self-Healing and Multi-Agent AI Recovery](https://arxiv.org/abs/2608.07126)** · composite 30.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  Interesting multi-agent orchestration case for constrained-connectivity edge deployment, but no security posture, threat model, or measured harness lessons transferable to…
+- **[Certified Interpolation Oversampling: Per-Instance Safety Guarantees for Imbalanced Learning](https://arxiv.org/abs/2501.15790)** · composite 30.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  Despite the word 'safety' in the title, this is a class-imbalance oversampling paper; the certified property is a geometric distance from the majority class, unrelated to…
+- **[A Unified Framework for Trajectory Prediction with Explicit Planning and Reaction Decomposition](https://arxiv.org/abs/2608.05673)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Staged social modeling (plan first, then react) improves long-horizon trajectory forecasting relative to single-stage social-influence formulations.
+- **[Dependency Parsing Across the Resource Spectrum: Evaluating Architectures on High and Low-Resource Languages](https://arxiv.org/abs/2605.02608)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  In low-resource regimes, simpler (LSTM) architectures can outperform pretrained transformers on syntactic tasks. Useful reminder that 'transformer everywhere' is not a default,…
+- **[Fast and Accurate: An Adaptive VLA Inference Framework through Environment-aware Model Selection](https://arxiv.org/abs/2608.06434)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For embodied dual-system architectures, RL-based environment-aware switching between decoupled slow and fast modules can preserve success rate while sharply raising control…
+- **[FedDOSE: Federated Learning Framework Decomposing Site Effects for Modeling Brain Dynamic Functional Connectivity](https://arxiv.org/abs/2608.07393)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Medical-imaging federated learning method. Federated learning is only tangentially adjacent to AI privacy/security here; nothing new about privacy attacks or defences is claimed.
+- **[Grounded Well-Condition Anomaly Detection on the Volve Field: Constructed Labels, a Baseline, and a Dual-Head Model](https://arxiv.org/abs/2608.05685)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For real production-sensor anomaly detection, labels grounded in domain engineering docs (with released provenance) are a stronger starting point than pattern-only pseudo-labels,…
+- **[MAUPITI: On-Device Prototype-Based Learning on a Smart Infrared Sensor](https://arxiv.org/abs/2608.07192)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  For ultra-constrained embedded ML, prototype-based streaming updates on a quantized frozen encoder buy continual adaptation at negligible latency and memory cost.
+- **[MEDLEY-BENCH: Benchmarking Behavioural Metacognition and Belief Revision Under Social Pressure in Large Language Models](https://arxiv.org/abs/2604.16009)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Sycophancy/belief-revision-under-pressure varies wildly across models, and the benchmark authors themselves caution the current v1.0 results are not evidence of a stable absolute…
+- **[MaskFlow: Precise, Consistent and Seamless Regional Image Editing](https://arxiv.org/abs/2608.06929)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Diffusion/flow-matching image-editing paper with no direct security or agent-harness angle.
+- **[Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification](https://arxiv.org/abs/2607.25232)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific benchmark for mental-health digital phenotyping; no AI/product security implications beyond standard privacy concerns for sensor data, which the paper does not…
+- **[Optimal Neural Network Approximation via Empirical Least Squares with Deterministic Samples](https://arxiv.org/abs/2608.06687)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Pure approximation theory for neural networks solving PDEs on the sphere; no security or agent-engineering content.
+- **[PACE: Primitive-Aware Code Evolution for Automated Algorithm Design](https://arxiv.org/abs/2608.07395)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Code-evolution research about preserving reusable snippets across LLM search — no security angle.
+- **[Representation Handoffs for OpenArm-Based Laboratory Mobile Manipulation](https://arxiv.org/abs/2608.07154)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Constraining language requests to a registered skill vocabulary with dry-run traces is a reasonable pre-execution validation pattern; the paper frames it as debugging, but it is…
+- **[When GNNs Fail: Quantifying and Overcoming Temporal Correlation Volatility in Time Series](https://arxiv.org/abs/2608.07333)** · composite 30.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Time-series forecasting result with no direct AI-security relevance despite the batch's guess_topic label.
+- **[DoctorAgents: an agentic framework to iteratively refine AutoML pipeline for small clinical temporal data](https://arxiv.org/abs/2608.05375)** · composite 29.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  A specialist agentic AutoML pipeline for clinical data. Interesting as a data point on multi-agent iterative refinement patterns, but the paper is a domain application, not a…
+- **[Hyperbolic Graph Embedders for Link Prediction and Topology Reconstruction](https://arxiv.org/abs/2608.07029)** · composite 29.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Choose a hyperbolic embedder by paradigm (maximum-likelihood, representation-learning, hybrid) and target network regime, not by disciplinary origin; expect regime-specific…
+- **[Improving Attributed Long-form Question Answering with Intent Awareness](https://arxiv.org/abs/2603.27435)** · composite 29.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Intent tags for citation/writing behavior appear to help long-form report quality more for small distilled models than for large ones.
+- **[Synthetic LiDAR Data Generation and Deterministic Downsampling for Point Cloud Classification on the Edge](https://arxiv.org/abs/2608.07106)** · composite 29.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  For edge 3D perception, sensor-aware synthetic training data and deterministic feature-driven downsampling replace expensive distance-sorting preprocessing while preserving usable…
+- **[Towards a Theoretical Understanding of Two Tower Recommendation Models](https://arxiv.org/abs/2403.00802)** · composite 29.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Theoretical treatment of two-tower recommender convergence. Off-topic for AI security work.
+- **[Weak Adversarial Neural Pushforward Method for Boltzmann Equation](https://arxiv.org/abs/2608.06823)** · composite 29.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Physics-informed neural PDE solver; not relevant to AI security.
+- **[A primer on optimal transport for causal inference with observational data](https://arxiv.org/abs/2503.07811)** · composite 29.35 · _flagged needs_review (low confidence / novelty / relevance)_
+  Optimal-transport formulation is a unifying lens for counterfactual estimation, but this is a survey primer; no direct engineering artifact.
+- **[Scalable High-Fidelity Macromolecular Docking for GPU-Accelerated Supercomputers](https://arxiv.org/abs/2608.07078)** · composite 29.35 · _flagged needs_review (low confidence / novelty / relevance)_
+  Pure HPC docking optimization work; no AI-security relevance whatsoever.
+- **[Cascading Through the Hierarchy: Regularizer-Induced Feature Detection as Phase Transitions in Deep Linear Neural Networks](https://arxiv.org/abs/2608.06597)** · composite 29.05 · _flagged needs_review (low confidence / novelty / relevance)_
+  Feature emergence in a solvable deep-linear model can be described as a cascade of regularizer-driven phase transitions, providing a statistical-physics-style order-parameter…
+- **[Machine Learning-Based Inter-Crystal Scatter Recovery for Ultra-High Resolution PET Imaging](https://arxiv.org/abs/2608.07155)** · composite 29.05 · _flagged needs_review (low confidence / novelty / relevance)_
+  Feed-forward NN-based ICS event recovery restores sensitivity in ultra-high-resolution PET without the resolution penalty of conventional acceptance strategies, enabling reduced…
+- **[Alignment has a Fantasia Problem](https://arxiv.org/abs/2604.21827)** · composite 28.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Position paper, no measurements. Frames a real UX failure mode (assistants finishing tasks users haven't finished thinking about) as an alignment problem. Interesting frame but no…
+- **[An Agentic Hybrid Top-Down and Bottom-Up Approach to Knowledge Graph Generation](https://arxiv.org/abs/2608.07023)** · composite 28.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Interesting KG-grounded agent architecture for a narrow HR use case, but no security threat model or defender pattern; not action-relevant for AI-security briefings.
+- **[Embedded Variational Neural Stochastic Differential Equations for Learning Heterogeneous Dynamics](https://arxiv.org/abs/2604.00669)** · composite 28.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific socioeconomic time-series paper with no security angle; useful only as a reference for probabilistic latent-dynamics modeling, not for the ai-security or…
+- **[Is SwiGLU's Open Positive Tail Necessary? Evidence from Closed-Tail Gating with MemGLU](https://arxiv.org/abs/2608.07323)** · composite 28.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Gate geometry choice may matter less than assumed for FFN performance at small scales, but does not appear to have any security-engineering relevance.
+- **[SQLite compressed text-history prototypes](https://simonwillison.net/2026/Aug/9/sqlite-text-history-prototype/#atom-everything)** · composite 28.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Neat compression ratio for revision-history storage, plus an incidental data point on voice-conversation-driven long-horizon code generation. Not security-relevant.
+- **[A foundation-model approach to pediatric headache classification from rs-fMRI](https://arxiv.org/abs/2608.07287)** · composite 28.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Under small-data medical conditions, a pretrained rs-fMRI foundation model can beat hand-engineered functional-connectivity features on binary headache classification, but subtype…
+- **[Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction](https://arxiv.org/abs/2608.06993)** · composite 28.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Time-series industrial-ML paper. Not applicable to a security-engineering briefing.
+- **[Beyond Isolation: Unlocking Reinforcement Learning Component Synergy for Sample-Efficient Continuous Control](https://arxiv.org/abs/2608.07086)** · composite 28.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Classical RL methodology; not applicable to LLM-agent security work.
+- **[Cluster Attention for Graph Machine Learning](https://arxiv.org/abs/2604.07492)** · composite 28.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Community-based cluster attention widens receptive field for graph nets while preserving topology-aware inductive bias.
+- **[Robot guide with multi-agent control and automatic scenario generation with LLM](https://arxiv.org/abs/2509.10317)** · composite 28.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Applied robotics work with a light multi-agent framing. Multi-agent here means resource coordination between robot subsystems, not the security-relevant sense of orchestrated…
+- **[UAV3DCrop: Benchmarking 3D Reconstruction in Repeated Multi-Angle UAV Crop Surveys](https://arxiv.org/abs/2608.06404)** · composite 27.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  Modern 3D reconstruction methods that look strong on generic benchmarks are not yet interchangeable for agronomic use; strong rendered appearance often hides scale failures that…
+- **[Beyond Co-Movement: Locality by Exposures Enables a Joint Factor-Graph Framework for Portfolio Diversification](https://arxiv.org/abs/2608.06618)** · composite 27.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Portfolio construction gains by redefining graph locality via factor exposures rather than pairwise correlations, unifying factor and graph views under a single ADMM optimization.
+- **[Counterfactual Analysis via Large Language Models](https://arxiv.org/abs/2608.05367)** · composite 27.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  GPT-3.5 for counterfactual ROI in lending; R-squared numbers are single-digit percent and closest to a gradient-boosted baseline. Not AI-security relevant; no attack surface, no…
+- **[Evaluating and Improving Pedagogical Fit in LLM-Based AI Tutors with the Pedagogical Suitability Index](https://arxiv.org/abs/2608.05411)** · composite 27.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  An LLM-tutor eval that separates correctness from pedagogical fit. Interesting as an example of using a rubric as a feedback signal to regenerate weak outputs, but outside the…
+- **[Homebot: A Personal AI Agent for Conversational Home Assistance and Automation](https://arxiv.org/abs/2608.02254)** · composite 27.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Systems paper describing a home-assistant agent architecture. Nothing methodologically novel; the design choice of scoping session state to channel vs. wake-word window is a…
+- **[Wasserstein Policy Gradient for Entropy-Regularized Linear-Quadratic Control](https://arxiv.org/abs/2608.07433)** · composite 27.25 · _ungrounded excerpt — only 50% of quotes verified against the source_
+  Theoretical RL/control result; no security implications.
+- **[LSEAD: A Privacy-Preserving LLM-Based Speech Analysis Framework for Early Alzheimer's Disease Screening](https://arxiv.org/abs/2608.07378)** · composite 26.65 · _flagged needs_review (low confidence / novelty / relevance)_
+  Health screening pipeline whose 'privacy' story is 'run the LLM locally' — no adversarial or governance content, minimal security signal.
+- **[Momba: Network Modernization Improves Multi-Objective Reinforcement Learning](https://arxiv.org/abs/2608.07180)** · composite 26.35 · _flagged needs_review (low confidence / novelty / relevance)_
+  Architecture-side gains in multi-objective RL; not relevant to AI-security briefings.
+- **[From Continuous Predictors to Clinical Thresholds: Early Evidence on Performance Trade-offs of Guideline-Based Categorisation for Ischaemic Stroke Outcome Prediction](https://arxiv.org/abs/2608.05203)** · composite 25.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  Discretising continuous features to guideline thresholds preserves accuracy in most cohorts and keeps feature-importance rankings stable, easing clinician adoption.
+- **[Reading Copom's Tone: A Weighted LLM Framework for Hawkish-Dovish Sentiment, Forward Guidance, and Uncertainty](https://arxiv.org/abs/2608.07251)** · composite 25.75 · _flagged needs_review (low confidence / novelty / relevance)_
+  The paper is a domain-specific finance-NLP pipeline (LLM-scored sentence sentiment plus a document-level guidance/uncertainty overlay) with limited direct relevance to security or…
+- **[International Transfer of Stochastic Cortical Self-Reconstruction](https://arxiv.org/abs/2608.07092)** · composite 25.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific medical ML transfer study; not relevant to AI-security briefings.
+- **[Representation-driven Endoscopic Visual Embedding Alignment for Latent Generation](https://arxiv.org/abs/2608.07176)** · composite 24.85 · _flagged needs_review (low confidence / novelty / relevance)_
+  Domain-specific medical generative model; not relevant to AI-security briefings.
+- **[Quoting John Gruber](https://simonwillison.net/2026/Aug/8/john-gruber/#atom-everything)** · composite 24.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Off-topic for this feed. Retain in news lane only.
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-08-10. 20 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-08-14. 305 item(s) awaiting review.</sub>

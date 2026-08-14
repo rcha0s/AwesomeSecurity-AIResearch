@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_4 vetted findings · updated 2026-08-10 · ranked by composite · latest 31 days only · [8 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-08-14 · ranked by composite · latest 31 days only · [28 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -13,39 +13,60 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 | Domain | Findings |
 | --- | --- |
+| Web Application Security | 1 |
 | Supply Chain & Dependencies | 1 |
+| Application Security | 1 |
+| Supply Chain & Dependencies (npm) | 1 |
 | Malware & Threat Intel | 1 |
 | Developer Tooling & Template Injection | 1 |
 | browser-delivered malware / malvertising | 1 |
 | AI-Generated Code Risk | 1 |
 
+## Web Application Security
+
+- **[CSS the bomb: sanitized webmail CSS steals tokens, keylogs Outlook, and turns Atlas AI browser into an exfil bot](web-application-security/2026-08-css-the-bomb-sanitized-webmail-css-steals-tokens-keylogs-out.md)** · composite **72.55** · Aug 6, 2026  
+  CSS sanitizers built as feature allow-lists are not a trust boundary; the only durable defense is strict iframe sandboxing plus killing dangerous selectors, select, and free-form image URLs.  
+  _[source](https://portswigger.net/research/css-the-bomb-inside-your-inbox)_
+
 ## Supply Chain & Dependencies
 
-- **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](supply-chain-dependencies/2026-07-asyncapi-npm-compromise-import-time-payload-defeats-ignore-s.md)** · composite **66.88** · Jul 16, 2026 · 🔗 +2 sources  
+- **[AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](supply-chain-dependencies/2026-07-asyncapi-npm-compromise-import-time-payload-defeats-ignore-s.md)** · composite **66.12** · Jul 16, 2026 · 🔗 +2 sources  
   Import-time malware makes --ignore-scripts useless and a valid provenance attestation is not a trust signal when the pipeline itself is hijacked.  
   _[source](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/)_
 
+## Application Security
+
+- **[go-git worktree wrapper vetoed dangerous strings but still followed symlinks that were already there (GHSA-hc8v-wwc9-vgxm)](application-security/2026-08-go-git-worktree-wrapper-vetoed-dangerous-strings-but-still-f.md)** · composite **62.5** · Aug 7, 2026  
+  A path-string allowlist is not a symlink-safe boundary; you have to make the filesystem wrapper itself reject symlink escapes at open time.  
+  _[source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)_
+
+## Supply Chain & Dependencies (npm)
+
+- **[The npm Threat Landscape: Attack Surface and Mitigations](supply-chain-dependencies-npm/2026-07-the-npm-threat-landscape-attack-surface-and-mitigations.md)** · composite **62.3** · Jul 15, 2026  
+  npm supply-chain risk is a continuously advancing threat landscape, not a series of point incidents; SLSA provenance is necessary but not sufficient because it certifies the pipeline built the…  
+  _[source](https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/)_
+
 ## Malware & Threat Intel
 
-- **[TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source](malware-threat-intel/2026-07-tuxbot-v3-an-llm-assisted-iot-botnet-shipped-with-the-model.md)** · composite **55.4** · Jul 17, 2026  
+- **[TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source](malware-threat-intel/2026-07-tuxbot-v3-an-llm-assisted-iot-botnet-shipped-with-the-model.md)** · composite **54.65** · Jul 17, 2026  
   Today's AI-assisted commodity malware is sloppy and self-labelling; budget for the version where someone spends ten more minutes prompting.  
   _[@Unit42_Intel](https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/)_
 
 ## Developer Tooling & Template Injection
 
-- **[Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](developer-tooling-template-injection/2026-07-oh-my-posh-a-directory-name-runs-commands-because-the-prompt.md)** · composite **55.25** · Jul 24, 2026  
+- **[Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](developer-tooling-template-injection/2026-07-oh-my-posh-a-directory-name-runs-commands-because-the-prompt.md)** · composite **54.5** · Jul 24, 2026  
   Anything that renders your prompt, status bar or editor title is executing attacker-controlled repository metadata - treat it as a parser, not decoration.  
   _[GitHub Advisory Database](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq)_
 
 ## browser-delivered malware / malvertising
 
-- **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · composite **53.45** · Jul 25, 2026  
+- **[SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds](browser-delivered-malware-malvertising/2026-07-sourtrade-browser-reassembles-a-bun-based-executable-from-sp.md)** · composite **52.7** · Jul 25, 2026  
   Client-side payload assembly (split parts + per-session hashing) breaks hash-based detection, so hunt the whole delivery chain and behavioral signals, not the final-file signature.  
   _[@TheHackersNews](https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html)_
 
 ## AI-Generated Code Risk
 
-- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-generated-code-risk/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **54.88** · Jul 19, 2026 · ⚠️ _review_  
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-generated-code-risk/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **54.12** · Jul 19, 2026 · ⚠️ _review_  
   Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.  
   _[source](https://arxiv.org/abs/2607.12428)_
 

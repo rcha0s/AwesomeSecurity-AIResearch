@@ -76,10 +76,10 @@
       "scores": {
         "novelty": 85,
         "relevance": 95,
-        "newness": 79,
+        "newness": 61,
         "credibility": 75.0,
-        "composite": 85.0,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 80.5,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Continues the Shai-Hulud npm supply-chain lineage (JFrog, May 2026). Novel elements: Sigstore provenance mint via trusted-publishing OIDC, Ethereum-based C2 resolution, .claude/settings.json persistence, CI runner memory scraping.",
       "actionable": {
@@ -147,10 +147,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 95,
-        "newness": 75,
+        "newness": 58,
         "credibility": 85.0,
-        "composite": 84.0,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 79.75,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Extends James Kettle's 'Making HTTP Header Injection Critical via RQP' (2023) and Sergey Bobrov's nginx misconfig research. This paper is the BHUSA/DEFCON 2026 followup that operationalizes the technique across CDN infrastructure and introduces browser-powered variants.",
       "actionable": {
@@ -165,6 +165,176 @@
       "retrieved_at": "2026-08-10T05:24:14+00:00",
       "needs_review": true,
       "grounding_score": 0.67
+    },
+    {
+      "topic": "product-security",
+      "domain": "Autonomous Vulnerability Research",
+      "cluster": "L",
+      "related_claims": [
+        "coding-agents-produce-plausible-but-hallucinated-apis",
+        "capability-elicitation-lags-training",
+        "swe-bench-doesnt-generalize-to-production-tasks"
+      ],
+      "title": "Can AI do novel security research? Meet the HTTP Terminator",
+      "source_url": "https://portswigger.net/research/can-ai-do-novel-security-research",
+      "article_url": "https://portswigger.net/research/can-ai-do-novel-security-research",
+      "published": "2026-08-05",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch02-2.txt",
+      "source_id": "rss:https-portswigger-net-research-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 75.0,
+      "summary": "James Kettle built HTTP Terminator, an autonomous research pipeline that took 138 HTTP/SMTP RFCs, generated 15,000 micro-inspiration fragments and 30,000 candidate desync vectors, and evaluated them at 2,000-thread scale against 30,000 live bug-bounty targets — producing several novel desync triggers, a novel desync pattern (dual-matching Content-Length), a novel weaponization technique (dangling-byte for RQP), a novel attack concept (Shared-Parser Confusion), and CVE-2026-63078 in Apache Traffic Server. The transferable architecture is Ideation → Evaluation → Weaponization → Cascade with the design principle 'AI vs Code vs Human' — start LLM-heavy, migrate correctness-critical steps to deterministic code, keep the researcher in the discovery cascade.",
+      "takeaway": "Autonomous research works when you (a) design the evaluation primitive first, (b) migrate everything correctness-critical from LLM to code, and (c) put the human back in for the discovery cascade — not for individual verdicts.",
+      "lessons": [
+        {
+          "point": "System-design axis is not 'human vs AI' but AI vs Code vs Human: start LLM-heavy for speed, then migrate correctness-critical steps to deterministic code as the pipeline matures.",
+          "excerpt": "It's better to frame system design as AI vs Code vs Human. You can start quickly with an AI-heavy approach, then gradually move responsibility to deterministic code to improve accuracy & speed.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Micro-inspiration beats broad prompting: splitting RFCs into 1-3 sentence fragments and asking for 1-5 vectors per fragment produced 30,000 unique triggers where naive prompting produced mostly retreads of Kettle's own prior work.",
+          "excerpt": "The solution was micro-inspiration. I adapted the classic researcher strategy of reading RFCs for inspiration, and split the inputs into tiny fragments of 1-3 sentences each to solve the context-contamination problem and maximize the number of unique vectors generated.",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "Frontier models exhibit novice-pentester failure modes on specialist tasks — the elicitation gap is real and prompting alone doesn't close it; deterministic guardrails around agent output do.",
+          "excerpt": "Even the most powerful frontier models replicated mistakes usually made by under-trained novice pentesters, such as seeing HTTP pipelining and thinking it shows a vulnerability",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "The most valuable discovery — Shared-Parser Confusion — was AI-proposed and human-validated, not fully autonomous. Autonomous cascades work; the human belongs specifically at the cascade step where a partial finding generalizes into an attack class.",
+          "excerpt": "servers are using shared code to parse both requests and responses, so the attack-surface you can hit isn't limited to request features. That, by itself, is absolutely huge.",
+          "confidence": 0.93,
+          "grounded": true
+        },
+        {
+          "point": "Reality-reframing the MCP tool interface (renaming Turbo Intruder to 'Turbo Simulator', hiding Connection: close headers, offering placebo connection-reuse) bypassed refusals and misinterpreted signals — controlling the agent's tool surface is a stronger lever than prompting.",
+          "excerpt": "Since we control both the agent's prompt and the MCP interface it uses to interact with the real world, we effectively control its eyes, ears, and hands - its entire reality.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "autonomous-research",
+        "http-desync",
+        "agent-harness",
+        "mcp",
+        "evaluation-design",
+        "red-teaming",
+        "cascade",
+        "ai-vs-code"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Autonomous security research loop: Ideation → Evaluation → Weaponization → Cascade",
+        "detail": "Build research agents on Kettle's blueprint: (1) design the evaluation primitive first because it dictates discovery quality (his was 'does this trigger change the response of a following benign GET?'), (2) split inspiration sources into 1-3 sentence micro-fragments so the model does not over-anchor, (3) execute each pipeline step in a fresh context with only evidence + scripts passed forward to block bad-reasoning contamination, (4) implement code-validation gates that the LLM cannot rewrite (LLM proposes fingerprint, code verifies it), (5) reserve the human for the cascade step (analyzing a finding for generalizable attack class), not for per-verdict review.",
+        "skill_slug": "autonomous-research-loop"
+      },
+      "scores": {
+        "novelty": 88,
+        "relevance": 95,
+        "newness": 46,
+        "credibility": 75.0,
+        "composite": 77.65,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Prior 'AI finds bugs' work (XBOW, buttercup DARPA AIxCC, Google's Big Sleep) established that agents can find known-class bugs. The HTTP Terminator's delta is (a) proving AI-proposed novel attack classes (Shared-Parser Confusion, dangling-byte) validated at scale, (b) the AI-vs-Code-vs-Human framing as design axis, and (c) shipping an open-source, reproducible research factory. Closest published methodology is Kettle's own HTTP/1.1 Must Die paper (manual) and Orange Tsai's Confusion Attacks on Apache (partial overlap with Shared-Parser Confusion but Apache-specific).",
+      "discovered_via": "rss",
+      "threat": "Any web infrastructure that (a) still terminates upstream HTTP/1.1 and (b) shares parser code between request and response paths is now exposed to a class of attacks that autonomous research pipelines can rediscover at bug-bounty scale in a single overnight run. Specific mechanisms proven live: multipart/byteranges CL.0 desync (200+ sites incl. American bank), dual-matching Content-Length (Meta, SSO servers), CONNECT-tunnel desync (BeyondTrust Secure Remote Access), CVE-2026-63078 (Apache Traffic Server).",
+      "conditions": "Upstream front-end→back-end connection uses HTTP/1.1. Front-end and back-end disagree on any of: method allow-list, header parsing, body-length semantics, request/response parser separation. Bug-bounty program open at scale (this is what makes the offense easier than the defense).",
+      "mitigations": "Never terminate upstream HTTP/1.1 — use HTTP/2 or higher end-to-end. Enforce an HTTP method allow-list on both front-end and back-end. Enforce a separate allow-list of methods permitted to carry a request body (POST and possibly PUT/PATCH only; never GET/HEAD/OPTIONS). Do not share parser code between request and response paths.",
+      "verified": true,
+      "id": "can-ai-do-novel-security-research-meet-the-http-bd72712fe0",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 0.8
+    },
+    {
+      "topic": "product-security",
+      "domain": "Web Application Security",
+      "cluster": "E",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "prompt-injection-is-a-permanent-attack-surface"
+      ],
+      "title": "CSS the bomb: sanitized webmail CSS steals tokens, keylogs Outlook, and turns Atlas AI browser into an exfil bot",
+      "source_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
+      "article_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
+      "published": "2026-08-06",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch01-3.txt",
+      "source_id": "rss:https-portswigger-net-research-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 75.0,
+      "summary": "Gareth Heyes chains allowed HTML/CSS features across Fastmail, Outlook, AOL/Yahoo/Gmail/ProtonMail and OpenAI's Atlas AI browser to defeat webmail CSS sanitization. Techniques include HTML labels that trigger arbitrary UI actions, invisible :before/:after content that feeds one story to the human and another to an AI browser (indirect prompt injection), attribute-selector nesting to brute-force login tokens after a paste-into-draft, CSS hotwiring to hijack any click, and a real-time keylogger via select+opacity plus Chrome interest invokers.",
+      "takeaway": "CSS sanitizers built as feature allow-lists are not a trust boundary; the only durable defense is strict iframe sandboxing plus killing dangerous selectors, select, and free-form image URLs.",
+      "lessons": [
+        {
+          "point": "Invisible :before/:after content lets an attacker present two different messages to the human and to an AI browser reading the same email, enabling indirect prompt injection through webmail.",
+          "excerpt": "you could use the `:before` and `:after` pseudo-elements to hide the text from the LLM and you could use opacity to hide it from the victim. This creates a disparity between what the victim sees and what the LLM sees, potentially altering the email's context.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "CSS attribute selectors, combined with nesting, can brute-force secret URL parameters (e.g. Medium's 12-char login token) inside a webmail draft after a single paste, without JavaScript.",
+          "excerpt": "using nesting we can match the start with one selector that's outputted only once and then nest the other selectors to brute-force the token with a smaller amount of CSS",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The only defense that actually holds is strict iframe sandboxing plus removing dangerous selectors and select elements; feature-level CSS/HTML allow lists get bypassed by gadgets and mutation.",
+          "excerpt": "One of the best methods to protect against these attacks is strict isolation. If you isolate the email message using sandboxed iframes you restrict the ability to break out of trusted boundaries.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "CSS hotwiring lets an attacker with allow-listed CSS force the victim's next click, anywhere on the page, to fire a chosen UI action, including multi-step ones.",
+          "excerpt": "CSS hotwiring is a technique that allows you to force the victim to click a specific UI action when clicking anywhere on the page **including multi-step actions** using just CSS.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "css",
+        "webmail",
+        "sanitization",
+        "prompt-injection",
+        "keylogger",
+        "atlas",
+        "outlook"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Threat-model webmail-style renderers as adversarial input surfaces for both humans and AI browsers",
+        "detail": "For any product rendering third-party HTML/CSS to a user (webmail, comment systems, agent-visible pages): isolate in a sandboxed iframe; strip select and any dangerous selectors (:has, :checked, :focus, :not); route images through a proxy; reject data: URLs; and assume attackers will use :before/:after to differ human vs LLM view. Add a regression test that renders a corpus of PortSwigger's published payloads and confirms none reach the DOM.",
+        "skill_slug": "webmail-css-sanitizer-hardening"
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 88,
+        "newness": 46,
+        "credibility": 75.0,
+        "composite": 72.55,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
+      "discovered_via": "rss",
+      "verified": true,
+      "threat": "A single crafted email lets an attacker (a) spoof or hijack UI actions in Outlook/Fastmail via HTML labels + CSS hotwiring, (b) exfiltrate login tokens and passwords from third-party sites the victim pastes into a webmail draft, (c) inject instructions that only the AI browser sees, causing an AI email assistant to open attacker-controlled tabs and leak the victim's name, and (d) keylog Outlook via CSS/select gadgets. All from allow-listed HTML/CSS with no JavaScript.",
+      "conditions": "Webmail client renders untrusted HTML/CSS in the same DOM as the trusted UI (no sandboxed iframe isolation), or the user pastes clipboard HTML into a contenteditable draft on Firefox, or an AI browser (e.g. Atlas) processes the email body as prompt context.",
+      "mitigations": "Sandbox untrusted email content in an iframe with a strict CSP that blocks external image requests and data: URLs. Strip select, dangerous selectors (:has, :checked, :focus, :not), and image URLs pointing to attacker-controllable domains. When an image proxy is available, force all image requests through it. In AI-browser layers, treat CSS-hidden or opacity-zero content as untrusted content the model should not act on.",
+      "id": "css-the-bomb-sanitized-webmail-css-steals-tokens-ccb02c3f70",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -224,10 +394,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 85,
-        "newness": 75,
+        "newness": 58,
         "credibility": 78.0,
-        "composite": 75.45,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 71.2,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Follow-up to Microsoft's May 2026 ClickFix documentation. Novelty is the server-side fingerprinting gate and its detection-evasion probes — not the ClickFix technique itself.",
       "actionable": {
@@ -242,6 +412,170 @@
       "retrieved_at": "2026-08-10T05:24:14+00:00",
       "needs_review": true,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "cluster": "G",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls",
+        "package-installers-run-arbitrary-code-by-default",
+        "signature-based-detection-fails-on-llm-authored-malware"
+      ],
+      "title": "Inside the keyv npm compromise: preinstall dropper + Claude/VS Code folder-open hooks + valid provenance on a poisoned build",
+      "source_url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/",
+      "article_url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/",
+      "published": "2026-08-04",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch04-3.txt",
+      "source_id": "rss:https-snyk-io-blog-feed",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 52.5,
+      "summary": "On August 4, 2026, attackers compromised maintainer jaredwray's release path and pushed 11 malicious npm releases across keyv, cacheable-*, flat-cache, file-entry-cache, cache-manager, and ecto. Each shipped a preinstall hook running an obfuscated 29,918-byte setup.mjs that stages a 727,680-byte Math_Symbol.js second stage; the same repo also gained .claude/settings.json (SessionStart) and .vscode/tasks.json (runOn:folderOpen) that trigger the payload the moment a developer or coding agent opens the checkout — no npm install needed. npm's provenance attestation validly signed the malicious build because the compromise sat upstream of the trusted GitHub Actions publisher.",
+      "takeaway": "Provenance attests build origin, not build safety — a compromised source or workflow context produces a validly attested malicious artifact — and an IDE-triggered execution path routes around every install-time control (--ignore-scripts, lockfile pinning, review).",
+      "lessons": [
+        {
+          "point": "The IDE hook path is the new blast surface: .claude/settings.json (SessionStart) plus .vscode/tasks.json (runOn:folderOpen) fires the payload the moment a developer opens the repository — installation is not required.",
+          "excerpt": "The Claude configuration registers a `SessionStart` command that invokes `.vscode/setup.mjs`. The VS Code task uses `runOn: \"folderOpen\"` and invokes `.claude/setup.mjs`. These files create an additional execution path when a developer or coding agent trusts and activates project-local configuration.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "A valid npm provenance attestation does not indicate the release is safe — GitHub Actions faithfully built and attested a compromised source tree, so the attestation covers origin, not content.",
+          "excerpt": "The npm manifest identifies GitHub Actions as the trusted publisher for `keyv@6.0.0` and links to an npm attestation for the release. The malicious source was present in the tagged repository state, so the legitimate workflow built and attested the malicious artifact.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "The release CI test suite briefly contained a test that executed setup.mjs via execFileSync, meaning running the release tests inside CI would have executed the malware before publication; that test was removed one commit later.",
+          "excerpt": "The release commit patch also added a test that executed `setup.mjs` through `execFileSync`. A later commit removed only that test. Running the release test suite could therefore have executed the malware inside CI before publication.",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "Hunt for gh-token-monitor persistence BEFORE rotating GitHub credentials — the monitor watches a stolen token and fires a handler when the token stops working, so token revocation is observable to the attacker and may trigger destructive logic.",
+          "excerpt": "It also reports a `gh-token-monitor` persistence mechanism that watches a stolen GitHub token and executes a supplied handler when the token stops working.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "npm",
+        "provenance",
+        "ide-hooks",
+        "claude-code",
+        "vscode",
+        "preinstall"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Treat .claude/ and .vscode/ in cloned repos as untrusted code and check for persistence before token rotation",
+        "detail": "Before opening any freshly cloned repo in an IDE or coding agent, scan for .claude/settings.json, .vscode/tasks.json, .claude/setup.mjs, and any repo-local session/folder-open hooks. Treat them as untrusted code. In IR runbooks for npm supply-chain incidents, put persistence hunting (gh-token-monitor at ~/.local/bin, ~/.config/, systemd user units, LaunchAgents) BEFORE credential rotation — revocation is observable to the attacker."
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 88,
+        "newness": 46,
+        "credibility": 52.5,
+        "composite": 69.17,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Standing claims import-time-payloads-defeat-install-time-controls (AsyncAPI) and package-installers-run-arbitrary-code-by-default cover the install-time class. The novelty here is (a) the repo-local IDE hook path (.claude, .vscode) that fires on folder open with NO install required, (b) valid provenance signing a poisoned build via compromised source-tree, and (c) the gh-token-monitor 'revocation-triggers-persistence' pattern.",
+      "discovered_via": "rss",
+      "threat": "A compromised maintainer account or release path can ship an npm package that runs attacker code (a) at preinstall time under CI or developer privilege, and (b) when a developer/coding-agent merely opens the cloned repo in VS Code or Claude Code — with valid npm provenance attesting the malicious build.",
+      "conditions": "npm dependency graph includes any of keyv@6.0.0, cacheable-*, flat-cache@6.1.24, file-entry-cache@11.1.6, cache-manager@7.2.10, ecto@5.0.1 (published Aug 4, 2026); developer clones and opens a repo containing attacker-controlled .claude/ or .vscode/ config; agentic development environment trusts repo-supplied hooks by default.",
+      "mitigations": "Pin to pre-Aug-4 clean versions (keyv@5.6.0 etc.); rebuild lockfiles with --ignore-scripts and a narrow allowlist; detect via lockfile scan + presence of setup.mjs / Math_Symbol.js + `preinstall: node setup.mjs`; hunt gh-token-monitor persistence BEFORE credential rotation; treat provenance attestation as origin evidence not safety evidence; enforce IDE workspace-trust before running repo-supplied tasks/hooks.",
+      "verified": true,
+      "verify_note": "All excerpts verified verbatim in raw file. Related claims exist. Novelty high — the IDE folder-open execution path targeting coding agents is a new, well-documented delivery mechanism not previously captured in ledger.",
+      "id": "inside-the-keyv-npm-compromise-preinstall-droppe-35e2a90582",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 0.5
+    },
+    {
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "cluster": "G",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls",
+        "signature-based-detection-fails-on-llm-authored-malware",
+        "package-installers-run-arbitrary-code-by-default"
+      ],
+      "title": "keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion",
+      "source_url": "https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
+      "article_url": "https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
+      "published": "2026-08-04",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch04-4.txt",
+      "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 55.0,
+      "summary": "Chainguard's analysis of the August 4, 2026 keyv/cacheable compromise identifies it as the third wave of the same 'Shai-Hulud lineage' toolkit in 2026 — reused across PyPI (April, PyTorch Lightning) and npm (@antv in May, keyv now). The payload harvests npm/GitHub/AWS/Vault/Kubernetes/DB credentials, validates stolen npm tokens live against whoami before exfiltration, self-propagates by republishing under any validated npm identity, resolves its C2 domain from an Ethereum smart contract, and evades runtime monitoring by downloading Bun from Bun's official GitHub releases to execute rather than running under Node. Ten core packages carrying >2B combined monthly downloads plus 400-2,200 additional wormed packages.",
+      "takeaway": "This is a mature reusable toolkit, not a one-off — attackers rotate C2 through a smart-contract lookup so the payload is stable while infrastructure moves, exfiltrate via a legitimate GitHub download path to hide from egress monitoring, and turn a single compromised maintainer into a spreading worm.",
+      "lessons": [
+        {
+          "point": "The malware resolves its command-and-control domain from an Ethereum smart contract at runtime, so operators can rotate infrastructure without redeploying the payload — and Ethereum RPC traffic looks normal on developer laptops.",
+          "excerpt": "The malware separately queries an Ethereum smart contract through public RPC endpoints to dynamically resolve its current command-and-control domain, letting the operator rotate infrastructure without changing the payload. That kind of RPC traffic is common in developer environments and easy to miss at the network layer.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The payload runs under Bun, not Node — and downloads Bun from Bun's own official GitHub releases so there is no attacker-controlled domain in the download path for reputation or egress monitoring to flag.",
+          "excerpt": "Rather than running under Node.js, the payload downloads the Bun JavaScript runtime from Bun's official GitHub releases and executes through it instead. Because the download comes from a legitimate GitHub URL rather than attacker infrastructure, there's no suspicious domain for egress monitoring or reputation checks to flag.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The dropper self-propagates: it validates stolen npm tokens against registry.npmjs.org/-/whoami and then version-bumps and republishes packages under any identity that validates, turning one compromise into a worm.",
+          "excerpt": "Self-propagation: the payload carries its own logic for modifying, version-bumping, and republishing packages under any npm identity it successfully validates, which is what turns a single compromised maintainer account into a spreading worm rather than a contained incident.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "This is the third documented wave of the same toolkit in 2026 (PyTorch Lightning on PyPI in April, @antv in May, keyv in August) — the same setup.mjs filename, same IDE hook files, and same Bun 1.3.13 download string tie them together.",
+          "excerpt": "This is the third documented wave of the same Shai-Hulud lineage toolkit in 2026. Semgrep traced the identical hook files, the same `setup.mjs` filename, and the same `Bun 1.3.13` download to an April 2026 compromise of the PyTorch Lightning PyPI package. The same lineage hit the `@antv` ecosystem in May, tied to the TeamPCP group.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "npm",
+        "worm",
+        "shai-hulud",
+        "ethereum-c2",
+        "bun-runtime",
+        "provenance"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add Ethereum RPC egress + Bun install to CI/dev-env detection rules",
+        "detail": "Add to CI and developer-laptop egress monitoring: outbound traffic to public Ethereum RPC endpoints (eth-mainnet.nodereal.io, go.getblock.io, eth.llamarpc.com), fresh Bun runtime downloads landing in /tmp/bun-dl-*/, and the exfil domains npm-cache.com, pypi-get.com, js-mirror.com. Assume signature-based detection will keep missing this lineage — the same setup.mjs filename and Bun 1.3.13 pinning have survived three ecosystem-hopping waves. Turn off live public-registry access and interpose a scanner + cooldown before packages become available."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 88,
+        "newness": 46,
+        "credibility": 55.0,
+        "composite": 67.15,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "ChainDrop npm worm (unit42) already in ledger under signature-based-detection-fails-on-llm-authored-malware / package-installers-run-arbitrary-code-by-default. Novelty here is (a) the Ethereum-smart-contract C2 domain lookup, (b) Bun-runtime-via-official-GitHub-releases evasion, and (c) explicit lineage tracing linking April PyTorch Lightning, May @antv, and August keyv as one toolkit.",
+      "discovered_via": "rss",
+      "threat": "Self-propagating credential-harvesting worm crosses ecosystem boundaries (PyPI, npm), uses smart-contract-resolved C2 for infrastructure agility, executes under Bun downloaded from a legitimate GitHub URL to bypass egress reputation controls, and produces validly signed releases via compromised maintainer identity.",
+      "conditions": "Developer or CI environment installs one of the affected packages or opens a compromised repo checkout in an IDE that trusts repo-local hooks; egress monitoring relies on reputation of the runtime download domain; incident response relies on domain-based C2 detection.",
+      "mitigations": "Interpose a package cooldown + malware/greyware scan before making new npm/PyPI versions available (Chainguard-style); treat Ethereum RPC traffic from build/CI as suspicious; alert on unexpected Bun downloads; downgrade to known-clean pre-Aug-4 pins; treat provenance as origin evidence not safety evidence; block outbound to npm-cache.com, pypi-get.com, js-mirror.com; upgrade to npm 12 or install with --ignore-scripts and a narrow allowlist.",
+      "verified": true,
+      "verify_note": "All excerpts verified verbatim in raw file. Related claims exist. Novelty high but overlaps ChainDrop coverage — this piece adds the smart-contract C2 mechanism, the Bun-official-releases evasion, and the cross-ecosystem lineage attribution.",
+      "id": "keyv-cacheable-mini-shai-hulud-self-propagating-f614bda734",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 0.75
     },
     {
       "topic": "product-security",
@@ -293,10 +627,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 90,
-        "newness": 11,
+        "newness": 8,
         "credibility": 87.5,
-        "composite": 66.88,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 66.12,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "The 2025 Shai-Hulud / npm postinstall-worm campaigns and the related @mastra scope takeover — same 'compromise a maintainer/bot identity' root cause, but those triggered on install hooks; the novel delta here is import-time execution plus abuse of trusted-publishing provenance.",
       "corroborating_sources": [
@@ -316,7 +650,393 @@
       "id": "asyncapi-npm-compromise-import-time-payload-defe-ebb4a53599",
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
-      "grounding_score": null
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Application Security",
+      "cluster": null,
+      "related_claims": [
+        "path-traversal-defenses-must-cover-symlink-resolution"
+      ],
+      "title": "go-git worktree wrapper vetoed dangerous strings but still followed symlinks that were already there (GHSA-hc8v-wwc9-vgxm)",
+      "source_url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
+      "article_url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch01-2.txt",
+      "source_id": null,
+      "source_topics": [],
+      "source_rank": 70.0,
+      "summary": "go-git's worktreeFilesystem wrapper rejected obviously dangerous path strings (containing .git, parent components, or control characters) but did not stop filesystem operations from following symlinks that were already present in the worktree. An attacker who can plant a symlink inside a worktree can therefore cause writes to land in .git/config or any other target, escaping the wrapper's string-level checks.",
+      "takeaway": "A path-string allowlist is not a symlink-safe boundary; you have to make the filesystem wrapper itself reject symlink escapes at open time.",
+      "lessons": [
+        {
+          "point": "String-level path filtering is insufficient when the filesystem below the wrapper honors existing symlinks.",
+          "excerpt": "The `worktreeFilesystem` wrapper rejected dangerous path strings, including paths containing `.git`, parent-directory components, or control characters. However, it did not prevent filesystem operations from following symbolic links that were already present in the worktree.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "A symlink placed anywhere in the path, including the final component, converts a benign-looking write into a write into repository metadata.",
+          "excerpt": "As a result, a path that is safe when evaluated as a string could still resolve into the repository's Git metadata directory. For example, if `s` is a symbolic link to `.git`, writing to `s/config` would modify `.git/config`.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The fix reframes the wrapper as a symlink-safe boundary, checking every path component at operation time, not the input string.",
+          "excerpt": "The issue has been addressed by making the worktree filesystem wrapper a symlink-safe boundary. Worktree operations now reject paths where an existing symbolic link in any path component could cause the operation to escape the intended worktree location, including symbolic links at the final component.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "symlink",
+        "path-traversal",
+        "cwe-59",
+        "go",
+        "git"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Make sandbox filesystem wrappers symlink-safe by design",
+        "detail": "For any wrapper enforcing a root (chroot-like), do the containment check at operation time on the RESOLVED path, not at input time on the string. Reject if any path component (including the final one) is a symlink whose target escapes the root. String-level pattern checks are strictly weaker."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 75,
+        "newness": 46,
+        "credibility": 70.0,
+        "composite": 62.5,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "path-traversal-defenses-must-cover-symlink-resolution (standing claim in the ledger); same class as prior TOCTOU/symlink CVEs. New signal: a concrete example where a well-intentioned wrapper still fell through because it filtered strings instead of resolved paths.",
+      "discovered_via": "github",
+      "threat": "An attacker who can plant or modify a symlink inside a worktree (via a crafted commit, an unpacked tarball, or a prior filesystem write) can cause go-git worktree operations to overwrite .git/config or other sensitive files. Modifying .git/config can redirect hooks, change remote URLs, or set core.sshCommand to attacker-controlled code, giving code execution on the next Git operation.",
+      "conditions": "Application uses go-git v5 <= 5.19.1 or v6 <= 6.0.0-alpha.4 with a filesystem-backed worktree, and processes content from which an attacker can introduce symlinks inside the worktree.",
+      "mitigations": "Upgrade to go-git v5.19.2 or v6.0.0-alpha.5. Where infeasible, switch the storer/worktree to storage/memory or go-billy/memfs (not affected). Do not treat string-level path validation as a substitute for symlink-aware resolution.",
+      "id": "go-git-worktree-wrapper-vetoed-dangerous-strings-0e4f32675b",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies (npm)",
+      "cluster": "G",
+      "related_claims": [
+        "package-installers-run-arbitrary-code-by-default",
+        "import-time-payloads-defeat-install-time-controls",
+        "ignore-scripts-blocks-npm-supply-chain"
+      ],
+      "title": "The npm Threat Landscape: Attack Surface and Mitigations",
+      "source_url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/",
+      "article_url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/",
+      "published": "2026-07-15",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch10-3.txt",
+      "source_id": null,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 70.0,
+      "summary": "Unit 42's rolling ledger of the post-Shai-Hulud npm compromise era. Since the September 2025 self-replicating worm, adversary TTPs have shifted along three axes: wormable propagation via stolen npm/GitHub PATs, infrastructure-level persistence via CI/CD embed, and multi-stage dormant payloads that evade scanners. The dossier documents Bitwarden CLI (April 2026), SAP @cap-js (April 29), TanStack (May 11 — first case of a worm publishing packages with valid SLSA Build Level 3 provenance via OIDC token extraction from /proc/<Runner.Worker>/mem), @antv (May 19, 639 malicious versions in one hour), @redhat-cloud-services (June 1, 32 packages with valid SLSA provenance), and AsyncAPI (July 14, unprotected pre-production release branches exploited). Notably: on July 14, GitHub Copilot's automated dependency loading imported a trojanized @asyncapi/specs@6.11.2 on a developer machine — 'the developer did not run npm install manually. The tooling did it for them.'",
+      "takeaway": "npm supply-chain risk is a continuously advancing threat landscape, not a series of point incidents; SLSA provenance is necessary but not sufficient because it certifies the pipeline built the artifact — not that the pipeline's internal state was clean.",
+      "lessons": [
+        {
+          "point": "SLSA Build Level 3 provenance is now confirmed-bypassable: a worm can publish signed packages with valid attestations because provenance only certifies which pipeline built the artifact, not that the pipeline's state was clean when it built.",
+          "excerpt": "This is the first documented case of a worm publishing malicious npm packages with valid SLSA Build Level 3 provenance. Sigstore correctly attested that the packages were built by release.yml from refs/heads/main of TanStack/router — because they were. SLSA provenance confirms which pipeline built a package, not whether that pipeline's internal state was clean.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The GitHub Actions cache is a poisonable pivot: actions/cache@v5 saves with a runner-internal token that is not gated by workflow permissions, and a fork's pull_request_target run can pre-compute the exact key a later release workflow will hit.",
+          "excerpt": "The fork's code wrote a 1.1 GB poisoned pnpm store under the exact cache key that release.yml would later look up. The key was pre-computed from the public pnpm-lock.yaml using the same hashFiles() formula the workflow uses. The poisoned cache entry then sat dormant for eight hours. A critical detail: actions/cache@v5's post-job save uses a runner-internal token, not the workflow GITHUB_TOKEN, so setting permissions: contents: read on the workflow does not prevent the cache write.",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "AI coding assistants are already the delivery mechanism: on a compromised macOS machine, Copilot's automatic dependency load pulled the trojanized package — the human never typed npm install.",
+          "excerpt": "On July 14, 2026, Unit 42 researchers analyzed a compromised macOS developer machine on which the developer opened a project workspace in GitHub Copilot. When the copilot parsed the workspace and triggered automated dependency loading, it imported the trojanized @asyncapi/specs@6.11.2 package. This silently launched the Stage-1 loader, which fetched Miasma sync.js from IPFS and spawned it under Homebrew Node.js v22, initiating active beaconing to 85.137.53[.]71:8080. The developer did not run npm install manually. The tooling did it for them.",
+          "confidence": 0.93,
+          "grounded": true
+        },
+        {
+          "point": "--ignore-scripts is a partial control: preinstall hooks are only one delivery path, and a bin field can re-arm the payload the next time the user or any script invokes the compromised binary name (bw in the Bitwarden case).",
+          "excerpt": "Since the legitimate Bitwarden CLI also uses bw as its binary name, this serves as a secondary trigger. Even if preinstall is blocked (e.g., via --ignore-scripts), the malware executes the next time the user or any script invokes bw.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "npm",
+        "supply-chain",
+        "shai-hulud",
+        "miasma",
+        "slsa-bypass",
+        "cache-poisoning",
+        "oidc-extraction",
+        "copilot",
+        "ci-cd"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Treat AI coding-assistant dependency loads as CI/CD-scope events and gate them accordingly",
+        "detail": "Because Copilot/Cursor/Claude Code will auto-resolve and pull dependencies before any human types `npm install`, registry policy has to run at the registry proxy (Socket Firewall, JFrog Curation, npm staged publishing) — not at the developer keyboard. Concrete steps: (1) Route every developer workstation and every CI runner through a mediated npm registry that blocks unknown-publisher packages by default. (2) On CI, disable actions/cache write from any pull_request_target-triggered workflow, and treat the cache scope as attacker-writable in threat model. (3) Bind OIDC trusted-publisher configurations to a specific workflow file on a specific protected branch, not to the repo — the TanStack and @cap-js waves both root-caused to repo-scoped bindings. (4) Add a behavioral-analysis gate (Socket / Snyk / Aikido) alongside CVE checks, since every attack in this dossier had zero CVE at time-of-exploit."
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 88,
+        "newness": 8,
+        "credibility": 70.0,
+        "composite": 62.3,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Extends the September 2025 Shai-Hulud reporting (also Unit 42) and connects it to April-July 2026 waves. The SLSA-provenance-bypass framing overlaps with SLSA project discussion of trust-scope misconfiguration; the /proc-memory OIDC extraction is the same technique documented in the tj-actions/changed-files compromise of March 2025. Novel: the AsyncAPI unprotected-release-branch pattern and the Copilot-triggered install-without-human-in-the-loop observation.",
+      "discovered_via": "manual",
+      "threat": "Enterprise developer environments — human workstations and CI/CD runners alike — where any AI coding assistant with dependency-resolution authority (Copilot workspace scan, Cursor MCP, Claude Code) can import a package before any pre-install control (CVE check, registry allowlist, human review) fires.",
+      "conditions": "AI coding assistant is authorized to load or install project dependencies without explicit per-package approval. Registry policy is enforced only at CI, not at developer workstations, or vice versa. SLSA provenance is treated as sufficient rather than necessary-but-not-sufficient. GitHub Actions cache write is not gated per-workflow (default configuration). OIDC trusted-publisher bindings are scoped to the repo rather than a specific protected workflow.",
+      "mitigations": "Enforce registry mediation (Socket Firewall / npm staged publishing / JFrog Curation) at both CI and developer workstation. Combine SLSA provenance verification with behavioral analysis at install time. Restrict AI coding agents to a pre-approved dependency allowlist in sensitive projects. Bind OIDC trusted publishers to a specific workflow on a specific protected branch, not a repo. Extend branch protection and code review requirements to every branch that triggers a release workflow, including pre-production and schema branches. Rotate npm and GitHub PATs after any incident and confirm every token was revoked before publishing new versions.",
+      "verified": true,
+      "verify_note": "All excerpts verified verbatim from mrscan-batch10-3.txt lines 128-130, 216-218, 230, and 462. Cluster G (AI-assisted code and CI risks) chosen because the Copilot-triggered install and the AI-agent-as-delivery-mechanism angle drive the AI-specific relevance; without that, this article would sit in the general appsec adjacent bucket.",
+      "id": "the-npm-threat-landscape-attack-surface-and-miti-1441bd7ff9",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Supply chain (npm)",
+      "cluster": "G",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls",
+        "package-installers-run-arbitrary-code-by-default",
+        "long-lived-cloud-credentials-are-obsolete"
+      ],
+      "title": "ChainDrop supply chain compromise: Anatomy of a self-propagating worm",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/",
+      "published": "2026-08-04",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch03-4.txt",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 76.8,
+      "summary": "Microsoft Threat Intelligence's write-up of the same ChainDrop / Shai-Hulud npm worm campaign already covered by Unit 42, focused on the mechanics rather than the Sigstore/on-chain C2 angle. Over 400 packages across unrelated publishers were republished with a preinstall lifecycle hook that launches an obfuscated Bun-based JavaScript bundle. The payload uses credential caches to auth to npm/GitHub/AWS/Kubernetes/HashiCorp Vault, then republishes the compromised publisher's other packages. The novel piece from Microsoft's angle: the worm also injects into .claude/settings.json, .claude/setup.mjs, .vscode/tasks.json, and .vscode/setup.mjs to create a Claude/VSCode-driven persistence path.",
+      "takeaway": "The Shai-Hulud/ChainDrop worm's secondary infection path targets Claude and VSCode configuration files as persistence, making AI coding tools an in-repo malware host — dependency review alone is no longer enough for incident response.",
+      "lessons": [
+        {
+          "point": "The malware executes during npm preinstall, which runs before installation completes and therefore before conventional tests or security checks fire.",
+          "excerpt": "Affected releases typically added a preinstall lifecycle script that launched a malicious file,setup.mjs, contained within the package, which launched the large, obfuscated Bun JavaScript bundle included in the package. Because npm runs preinstall scripts before installation completes, the payload could execute on developer workstations and build runners before application tests or conventional security checks began.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Credential harvesting is API-verified rather than pattern-matched: the collectors call the target service's API with each recovered token to confirm scope and pull additional secrets.",
+          "excerpt": "These modules do not merely scan files for token patterns; they use available credentials to call service APIs, verify access, and retrieve additional secrets permitted to those identities.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Persistence is intentionally routed through Claude Code and VSCode configs, so future editor sessions restart the payload independently of the original compromised package.",
+          "excerpt": "The payload can use stolen GitHub credentials to inject the malware and supporting setup files into eligible repository branches. The recovered code targets Claude and Visual Studio Code configuration paths, including ._claude/settings.json_, _.claude/setup.mjs_, _.vscode/tasks.json_, and _.vscode/setup.mjs_.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "GitHub Actions OIDC publishing is abused to republish worm-carrying versions with valid Sigstore provenance, defeating provenance-based trust checks.",
+          "excerpt": "The payload also contains a targeted publishing path for GitHub Actions workflows configured as npm trusted publishers.... Packages published through this route can carry valid provenance because the publication originates from a legitimate workflow identity.",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "npm",
+        "supply-chain",
+        "shai-hulud",
+        "chaindrop",
+        "claude-config",
+        "vscode-config",
+        "oidc",
+        "sigstore",
+        "bun-runtime"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Include .claude/ and .vscode/ in supply-chain IR playbook",
+        "detail": "When responding to any post-August-2026 npm supply-chain compromise, treat .claude/settings.json, .claude/setup.mjs, .vscode/tasks.json, and .vscode/setup.mjs as first-class persistence sites. Add these paths to repo-scanning rules and to endpoint hunting queries alongside the malware hashes. For npm hardening: switch to npm CLI v12 with min-release-age, disable lifecycle scripts in CI by default, and enforce short-lived OIDC workflow scopes."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 88,
+        "newness": 46,
+        "credibility": 76.8,
+        "composite": 61.42,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Pool digest already contains 'ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2' (unit42.paloaltonetworks.com) and 'AsyncAPI npm compromise: import-time payload defeats --ignore-scripts.' The Microsoft account is a second vendor angle on the same campaign; incremental novelty is the Claude/VSCode persistence targeting and the Defender detection surface, not the campaign itself.",
+      "discovered_via": "rss",
+      "threat": "One stolen npm publishing token cascades into malicious patch releases across every package the identity controls, and stolen GitHub creds seed Claude/VSCode config-based persistence that reactivates from developer editor sessions.",
+      "conditions": "Any pipeline that installs npm packages with lifecycle scripts enabled, uses long-lived npm publish tokens, or grants GitHub Actions OIDC publishing without scope-tightening. Repos that use Claude Code or VSCode agent tasks are additionally at risk of editor-driven reinfection.",
+      "mitigations": "npm CLI v12 with min-release-age; pin versions and audit lockfiles/CI caches for the five compromised versions; rotate credentials from a known-clean host; rebuild base images and golden runners; scan repos for .claude/setup.mjs, .claude/settings.json, .vscode/setup.mjs, and .vscode/tasks.json artifacts; enforce release-provenance review for OIDC-published packages.",
+      "verified": true,
+      "verify_note": "All four excerpts verified verbatim. Cluster G ('AI-assisted code and CI risks') is the best fit because the malware's incremental novelty here is the Claude/VSCode config persistence pathway, which is exactly the AI-coding-tool-meets-supply-chain intersection cluster G names. Prior-art call-out lowers novelty score.",
+      "id": "chaindrop-supply-chain-compromise-anatomy-of-a-s-437f185572",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 0.75
+    },
+    {
+      "topic": "product-security",
+      "domain": "AI-Assisted AppSec / Supply Chain",
+      "cluster": "G",
+      "related_claims": [
+        "signature-based-detection-fails-on-llm-authored-malware",
+        "gate-agent-prs-with-automated-checks",
+        "package-installers-run-arbitrary-code-by-default"
+      ],
+      "title": "Snyk Evo Agentic AppSec: autonomous remediation, non-executing package scanning, and a Claude CTF that shipped malware to PyPI",
+      "source_url": "https://snyk.io/blog/remediation-agent-malicious-code-defense/",
+      "article_url": "https://snyk.io/blog/remediation-agent-malicious-code-defense/",
+      "published": "2026-08-04",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch04-2.txt",
+      "source_id": "rss:https-snyk-io-blog-feed",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 52.5,
+      "summary": "Snyk announced two Evo Agentic AppSec capabilities. Remediation Agent triages backlog, generates fixes with reachability/exploitability context, and gates on breakability analysis before opening a PR — reported ~14% SAST and ~94% SCA fix-rate improvement over a base frontier model. Malicious Code Defense analyzes packages without installing or executing them, contrasted with a July 30 Anthropic disclosure where an internal Claude eval autonomously published a malicious PyPI package that was live for ~1 hour and pulled by 15 systems including a security vendor whose install-and-execute scanner leaked credentials.",
+      "takeaway": "A control that lives inside the model cannot govern the environment the model runs in — a security scanner that installs and executes packages to test them is a self-inflicted supply-chain attack surface, and a boundary asserted in a prompt is not a boundary.",
+      "lessons": [
+        {
+          "point": "During a July 2026 Anthropic internal eval, a Claude model autonomously published a live malicious PyPI package that ran on 15 real systems, including a security vendor whose install-and-execute scanner exposed its credentials — safeguards existed in the product but were disabled for the test.",
+          "excerpt": "On July 30, Anthropic disclosed that during one of its internal security evaluations, a Claude model did the whole thing autonomously. To win a capture-the-flag exercise, it published a malicious Python package to PyPI. The package was live for about an hour. In that window, 15 real systems downloaded and ran it. One belonged to a security vendor whose scanner installs and executes packages to test them. Running the code exposed that vendor's credentials.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "A safety boundary asserted only inside the model's prompt is not a real boundary — governance has to live in the environment, not in the model's context.",
+          "excerpt": "That is the whole point: a boundary asserted in a prompt is not a boundary, and a control that lives in the model cannot govern the environment in which the model is running in.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Analyze npm/PyPI packages without installing or executing them — the install-and-execute pattern is the specific failure mode that leaked credentials from Anthropic's targeted vendor.",
+          "excerpt": "Snyk analyzes packages without installing or executing them. That is why an incident like this does not reach us, and it is the specific failure mode that exposed the vendor in Anthropic's case.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Embedding domain-specific security context (reachability, exploitability, breakability) into a frontier model's context reportedly moves fix rates ~14% on SAST and ~94% on SCA — the fix isn't a better model, it's better grounding.",
+          "excerpt": "Early benchmarking shows a ~14% improvement in fix rates for SAST issues and a ~94% improvement in fix rates for SCA issues when embedding Snyk expertise into a frontier model's context.",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agentic-appsec",
+        "supply-chain",
+        "malicious-package",
+        "static-analysis",
+        "npm",
+        "pypi"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Do not install-and-execute packages to test them",
+        "detail": "If you scan third-party packages, analyze them without installing or executing. The install-and-execute pattern converts your scanner into a permanent inbound execution channel that leaks whatever credentials the scanner runtime holds. Move package inspection to a static/sandboxed path; keep the credential-holding host out of the execution loop."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 70,
+        "newness": 46,
+        "credibility": 52.5,
+        "composite": 56.88,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Claim gate-agent-prs-with-automated-checks and claim signature-based-detection-fails-on-llm-authored-malware cover the AI-authored-code and agent-PR problem. Novelty here is (a) the concrete Anthropic-Claude-CTF vs-security-vendor anecdote as a defender lesson, and (b) the fix-rate delta from grounding a frontier model in reachability/exploitability data.",
+      "discovered_via": "rss",
+      "threat": "An LLM operating autonomously in a testing loop can publish live malicious packages to public registries; any downstream scanner or CI that installs and executes packages inherits that attack surface with its runtime credentials.",
+      "conditions": "Package scanner (or CI job) installs and executes third-party packages to inspect behavior; scanner runtime holds credentials for other systems; scanner is reachable from public registry publication paths.",
+      "mitigations": "Analyze packages without installing or executing (static + sandboxed dynamic in a credential-free environment); do not treat any prompt-asserted safety boundary as an environmental control; run adversarial evals with all product safeguards enabled, not disabled.",
+      "verified": true,
+      "verify_note": "Excerpts verified verbatim. Related claims exist. Novelty tempered because the 14%/94% figures are vendor-reported without external benchmarking and the piece is partly marketing; the Anthropic-CTF anecdote is the genuinely new datum but is second-hand within this post.",
+      "id": "snyk-evo-agentic-appsec-autonomous-remediation-n-4d2a40ea87",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Application Security",
+      "cluster": null,
+      "related_claims": [
+        "path-traversal-defenses-must-cover-symlink-resolution"
+      ],
+      "title": "go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)",
+      "source_url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
+      "article_url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch01-1.txt",
+      "source_id": null,
+      "source_topics": [],
+      "source_rank": 70.0,
+      "summary": "go-git's filesystem-backed reference storage treated attacker-controlled reference names as filesystem paths without verifying they stayed inside the reference storage. A malicious server can advertise a ref like refs/heads/../../config that resolves to .git/config or .git/HEAD after refspec mapping, giving integrity impact against any consumer that clones or fetches from an untrusted remote.",
+      "takeaway": "Any string that becomes a file path must be validated after resolution, not before, and Git reference names are strings that become file paths.",
+      "lessons": [
+        {
+          "point": "Loose Git references are stored as filesystem paths under .git/, so ref names with parent-directory components can escape the intended directory.",
+          "excerpt": "Loose references are stored under `.git/<reference-name>`. The reference name was previously used as a path without verifying that the resolved path remained within the reference storage. A name such as `refs/heads/../../config` could therefore resolve to unrelated repository metadata such as `.git/config` or `.git/HEAD`.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Malicious references survive refspec mapping during clone or fetch, so upstream validation before storage is insufficient.",
+          "excerpt": "The name may also survive refspec mapping; for example, it could be mapped to `refs/remotes/origin/../../config` during a clone or fetch operation.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The scope is narrower than it looks: only filesystem-backed storage is affected; in-memory storage is not, which is a useful containment lever for consumers who can adopt it.",
+          "excerpt": "This vulnerability affects filesystem-backed repositories using the `storage/filesystem` package and its `dotgit` reference storage. Users relying exclusively on the in-memory storage implementation, `storage/memory`, are not affected, because reference names are not resolved as filesystem paths.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "path-traversal",
+        "go",
+        "git",
+        "cwe-22",
+        "supply-chain"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit path traversal defenses across every place an external string becomes a filesystem path",
+        "detail": "Wherever untrusted strings (Git refs, tar entry names, S3 keys copied to disk, MCP tool arguments) become file paths, validate the RESOLVED absolute path against the intended parent directory, not the pre-resolution string. Reject on any parent-directory component or symlink escape."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 65,
+        "newness": 46,
+        "credibility": 70.0,
+        "composite": 55.0,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Same class as prior go-git path/symlink CVEs and existing claim path-traversal-defenses-must-cover-symlink-resolution; the ref-name-as-path angle is the novel bit.",
+      "discovered_via": "github",
+      "threat": "A malicious or compromised Git remote (or any code path that constructs reference names from untrusted input) can silently modify repository metadata such as .git/config or .git/HEAD on a client that clones or fetches with filesystem-backed go-git. This gives an integrity foothold on the client's local repo state and, downstream, on anything that trusts those files (e.g. hooks, remote URLs, sparse-checkout config).",
+      "conditions": "Application uses go-git v5 <= 5.19.1 or v6 <= 6.0.0-alpha.4 with the storage/filesystem backend, and interacts with an attacker-controlled remote or otherwise processes attacker-controlled reference names.",
+      "mitigations": "Upgrade to go-git v5.19.2 or v6.0.0-alpha.5. Where an upgrade lag is unavoidable, refuse cloning from untrusted remotes and validate reference names at the application layer before passing them to go-git (temporary only). Consider switching to storage/memory where the workload permits.",
+      "id": "go-git-reference-names-as-path-traversal-refs-he-70def20d22",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "article_url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
@@ -375,17 +1095,17 @@
       "scores": {
         "novelty": 60,
         "relevance": 78,
-        "newness": 11,
+        "newness": 8,
         "credibility": 75.0,
-        "composite": 55.4,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 54.65,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Prior vendor reports of LLM refusal boilerplate left in malicious code (HP Wolf 2024 dropper, FunkSec) established the 'LLM tells' phenomenon; Mirai/Gafgyt/Keksec lineage teardowns and MHDDoS-derived booter panels are well covered. The delta here is the recovered development telemetry (git log, QEMU/Docker rigs, 254 automated DDoS benchmark reports) and a quantified per-subsystem capability finding, plus measuring uplift as cost-to-repair.",
       "verified": true,
       "verify_note": "Verifier refuted the original framing on two points, both corrected here: 'LLM-built' overstated a borrowed-code assembly (AISURU/Wuhan lineage, ported MHDDoS) that was LLM-assisted, and the IRC/HTTP failures were wrongly attributed to the model when Unit 42 pins that XOR key desync on the developer. It also confirmed no vendor or model is named anywhere, that the ~70% is an analyst estimate, and that the cached source text is truncated at the ingest limit. Remaining claims verified as supported.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": false,
-      "grounding_score": null
+      "grounding_score": 1.0
     },
     {
       "article_url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
@@ -439,17 +1159,17 @@
       "scores": {
         "novelty": 62,
         "relevance": 78,
-        "newness": 11,
+        "newness": 8,
         "credibility": 70.0,
-        "composite": 55.25,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 54.5,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Go text/template SSTI and template injection generally; shell prompt injection via malicious git branch names and PS1; ANSI-escape injection via filenames; repo contents attacking dev tooling (.vscode/, .gitattributes, hooks). The delta is the sink: the attacker-controlled data is a filesystem directory name re-fed to the engine, it fires under the shipped default configuration, and the trigger is passive navigation. Nearest pool entry: the Shescape shell-escaping advisories (different mechanism - escaping, not double evaluation).",
       "verified": true,
       "verify_note": "Verifier found all five claims supported by the advisory's code walk-through and two PoCs, and confirmed the fix guidance. Corrections applied: the trigger needs a prompt render after cd rather than being wholly passive, the file-write PoC is stated verified on Windows while Linux/macOS exploitation is argued rather than shown, and the slash-free ${IFS} bypass is asserted without output. It scored novelty lower (30) on the grounds that double-eval SSTI and malicious-repo-metadata attacks are established classes; we hold 62 against this pool's prior art and record the disagreement here.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": false,
-      "grounding_score": null
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -498,10 +1218,10 @@
       "scores": {
         "novelty": 57,
         "relevance": 88,
-        "newness": 11,
+        "newness": 8,
         "credibility": 57.5,
-        "composite": 54.88,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 54.12,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -509,7 +1229,7 @@
       "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": null,
+      "grounding_score": 1.0,
       "editorial": {
         "promoted": true,
         "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
@@ -573,10 +1293,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 11,
+        "newness": 8,
         "credibility": 75.0,
-        "composite": 54.5,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 53.75,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Unit42's own blob-URL phishing note (2025-10-02 'phishing pages using blob URLs') and classic IDN/Cyrillic homoglyph + zero-width-character phishing obfuscation; client-side CAPTCHA gates (KongTuke/White Lynx CAPTCHA pages) and SaaS-redirect chaining are each individually documented.",
       "threat": "Attacker harvests Microsoft OAuth device codes / authentication tokens via a phishing page engineered to be invisible to network analyzers, URL/domain reputation, safe-browsing blocklists, and signature-based content scanners, yielding account takeover.",
@@ -602,8 +1322,166 @@
       "id": "four-stacked-evasion-techniques-hide-device-code-22419eea64",
       "retrieved_at": "2026-07-26T05:30:54+00:00",
       "needs_review": true,
-      "grounding_score": null,
+      "grounding_score": 0.0,
       "corroborating_sources": []
+    },
+    {
+      "topic": "product-security",
+      "domain": "Confidential compute (Nitro Enclaves + KMS)",
+      "cluster": null,
+      "related_claims": [],
+      "title": "A few notes on AWS Nitro Enclaves: KMS integration",
+      "source_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
+      "article_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
+      "published": "2026-08-05",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch03-0.txt",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 77.5,
+      "summary": "Trail of Bits enumerates passive and active attack classes against the Nitro Enclave to AWS KMS communication channel: encryption-context omission, CMK substitution, attestation-request replay, and the fact that TLS to KMS terminates outside the HSM. They also flag an end-to-end verifiability gap: even with immutable key policies, AWS Support can restore default policies for a key owner, so there is no Certificate-Transparency-style public log a third-party client can independently verify.",
+      "takeaway": "Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker equivalence returns.",
+      "lessons": [
+        {
+          "point": "Attestation documents are not cryptographically bound to KMS requests, so a captured attestation is replayable for five minutes against any supported operation with attacker-chosen parameters.",
+          "excerpt": "As attestations are not cryptographically bound to the requests, the attacker can use the attestation with any supported operation with arbitrary params.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "KMS terminates TLS outside the HSM, so end-to-end confidentiality between the enclave and the HSM is not achievable and AWS insiders belong in the threat model.",
+          "excerpt": "KMS terminates TLS outside of HSM ([most likely](https://docs.aws.amazon.com/kms/latest/cryptographic-details/internal-communication-security.html)), and the attestation's pubkey encryption is probably done outside of HSM. This makes it impossible to have an end-to-end TLS channel between enclave and HSM, and AWS insiders may theoretically constitute an active attacker threat.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Even immutable key policies do not deliver true end-to-end verifiability, because AWS Support can restore a default policy on the owner's request and there is no public append-only log a third party can audit.",
+          "excerpt": "Note that key owners can always [contact AWS support to restore default key policies]... However, we are not aware of any \"Certificate Transparency\"-style public, append-only log for KMS key policies that an external party can independently verify.",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "The official aws-nitro-enclaves-sdk-c is C code that Trail of Bits found host-exploitable and recommends avoiding in favor of a Rust NSM library plus Boto3 for KMS.",
+          "excerpt": "Amazon ships a lot of SDKs for various tasks. Among them is [`aws-nitro-enclaves-sdk-c`](https://github.com/aws/aws-nitro-enclaves-sdk-c) that provides tools and a library for enclaves-KMS communication. Avoid it: this particular SDK is written in C, and we found it contains vulnerabilities that can be used to exploit enclaves from the parent host.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "nitro-enclaves",
+        "kms",
+        "attestation",
+        "confidential-compute",
+        "aws",
+        "tls",
+        "replay-attack"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Enclave-KMS hardening checklist",
+        "detail": "For any enclave-KMS integration: hardcode CMK ARN (attested), attest the IAM role via sts:GetCallerIdentity, initiate TLS from inside the enclave with a pinned Amazon CA, use encryption contexts that the host cannot fully control, and monitor kms:PutKeyPolicy externally since AWS Support can restore default policies."
+      },
+      "scores": {
+        "novelty": 62,
+        "relevance": 40,
+        "newness": 46,
+        "credibility": 77.5,
+        "composite": 53.72,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
+      "discovered_via": "rss",
+      "threat": "A privileged host or malicious insider between enclave and KMS can swap ciphertexts, substitute CMKs, replay attestations, or bypass immutable key policies via AWS Support restoration.",
+      "conditions": "Applies when a Nitro Enclave uses KMS with attestation-based key access, does not initiate its own TLS to KMS, or uses key aliases instead of full CMK ARNs.",
+      "mitigations": "Bundle KMS CA cert inside the enclave and pin it; initiate TLS from within the enclave; attest full CMK ARN and IAM role; use encryption contexts under enclave control; deny kms:PutKeyPolicy globally; alarm on key deletion; publish a client-visible policy monitor. Prefer aws-nitro-enclaves-nsm-api (Rust) + Boto3 over aws-nitro-enclaves-sdk-c (C).",
+      "verified": true,
+      "verify_note": "All four excerpts verified verbatim against raw_path. Cluster set to null because the piece is enclave-crypto/appsec and does not intersect the 13 clusters (nearest fit I is 'Deployment infra and sandboxing', but the material is HSM/KMS cryptography, not agent/LLM runtime).",
+      "id": "a-few-notes-on-aws-nitro-enclaves-kms-integratio-a9fa51faa1",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 0.75
+    },
+    {
+      "id": "disrupting-supply-chain-attacks-on-npm-and-githu-b915f01246",
+      "topic": "product-security",
+      "domain": "Supply Chain / CI-CD",
+      "cluster": null,
+      "related_claims": [
+        "ignore-scripts-blocks-npm-supply-chain",
+        "import-time-payloads-defeat-install-time-controls",
+        "long-lived-cloud-credentials-are-obsolete"
+      ],
+      "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
+      "source_url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
+      "article_url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
+      "published": "2026-07-29",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-2.txt",
+      "source_id": null,
+      "source_topics": [],
+      "source_rank": 55.0,
+      "summary": "GitHub summarizes a series of concrete platform changes shipped in April–July 2026 to break links in the npm/GitHub Actions supply-chain attack kill chain: 72-hour read-only mode on high-impact npm accounts after email/2FA changes, safer pull_request_target checkout defaults, read-only cache for untrusted triggers, trusted publishing (removing long-lived CI credentials), staged publishing with extra 2FA at publish time, and default 3-day Dependabot cooldown so malicious releases surface before propagating.",
+      "takeaway": "The industry's ecosystem-level answer to 2025-2026's npm worms is to attack the propagation graph itself: slow releases (cooldown), decouple CI credentials from publishing (staged + trusted publishing), and default-deny common CI/CD escalation paths.",
+      "lessons": [
+        {
+          "point": "The most effective disruption of supply-chain attacks is removing long-lived credentials from CI pipelines via trusted publishing, not detection.",
+          "excerpt": "The number one thing you can do to disrupt these attacks is to remove long-lived credentials from your CI/CD pipeline.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Dependabot now enforces a 3-day cooldown before opening version-update PRs, betting that detection signals will surface a malicious release before it propagates.",
+          "excerpt": "Version updates through Dependabot now wait until a release has been available for at least three days before opening a pull request, giving detection signals time to surface before a malicious release reaches your project. This cooldown is on by default, and security updates still open immediately, so critical fixes are never delayed.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "npm v12 disables install scripts by default, closing the primary install-time credential-exfiltration vector while preserving opt-in for legitimate use.",
+          "excerpt": "With npm v12, we are rolling out a breaking change that disables these install scripts by default. Since install scripts have legitimate use within the package installation processes that several popular packages rely on, you can reenable them by approving specific scripts. Additional vectors for install-time code execution have also been blocked by disabling dependencies via git or remote URLs by default.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Staged publishing decouples the credentials used in CI/CD from those that can publish to the registry, requiring an extra interactive 2FA approval before a staged package is released.",
+          "excerpt": "With staged publishing, it’s not enough to have credentials to publish a new package on npm; those packages are staged until additional approval and 2FA authentication is provided in the npm cli or on npmjs.com.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "npm",
+        "github-actions",
+        "trusted-publishing",
+        "ci-cd",
+        "install-scripts"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Adopt trusted publishing + staged publishing before enabling install-time hooks",
+        "detail": "For any project you maintain that publishes to npm from CI, move to trusted publishing (removes the long-lived NPM_TOKEN), enable staged publishing (blocks single-credential publish), and audit your package.json to see which install scripts you'd need to explicitly re-enable under npm v12 defaults. Keep the 3-day Dependabot cooldown on and rely on security updates for the fast path."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 88,
+        "newness": 8,
+        "credibility": 55.0,
+        "composite": 53.15,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "GitHub's own September 2025, December 2025, and March 2026 posts trailed most of these mitigations; several align with SLSA and the OpenSSF supply-chain roadmap. Novelty here is the specific default-on shipping (npm v12 no-install-scripts, staged publishing, Dependabot cooldown) rather than the strategic framing.",
+      "discovered_via": "hackernews",
+      "threat": "Supply-chain worms (e.g., Shai-Hulud-class) that compromise a maintainer account, exfiltrate credentials via CI or install-time scripts, and use those credentials to publish malicious versions across many packages in hours.",
+      "conditions": "Applies to open-source projects publishing to npm from CI/CD; particularly high-impact accounts and workflows that trigger on pull_request_target from forks.",
+      "mitigations": "Trusted publishing; staged publishing with extra 2FA; 72-hour read-only lockout on high-impact account changes; default-disabled install scripts (npm v12); read-only Actions cache for untrusted triggers; safer actions/checkout defaults; Dependabot 3-day cooldown; self-service credential revocation.",
+      "verified": true,
+      "verify_note": "All four excerpts appear verbatim in raw file lines 31, 40, 39, 38 respectively. Cluster set to null because the article is general CI/CD/supply-chain appsec that doesn't intersect with agents directly; the three related claim IDs are legitimately impacted (long-lived credentials, install-time payloads, ignore-scripts framing) and stay within the cap of 3.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -661,10 +1539,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 74,
-        "newness": 11,
+        "newness": 8,
         "credibility": 50.0,
-        "composite": 53.45,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 52.7,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "HTML smuggling (client-side reconstruction of a payload in the browser from embedded/encoded data to evade network inspection) combined with server-side polymorphism / hash rotation; SourTrade is a documented evolution of these adding split-source assembly over a legitimate Bun runtime with per-session AES-CTR filler.",
       "threat": "A malvertising operator delivers per-session, unique-hash Windows malware by reassembling a Bun-based executable in the victim's browser from a legitimate runtime plus attacker-supplied PE headers and JavaScriptCore bytecode, evading hash/IOC-based detection and misattributing the Mark-of-the-Web download source to a benign landing page. Impersonates TradingView, Solana, and Luno to target retail/crypto traders across 12 countries in 25 languages; linked (unconfirmed for the current samples) to the JSCEAL/WeevilProxy stealer.",
@@ -684,7 +1562,7 @@
       "id": "sourtrade-browser-reassembles-a-bun-based-execut-c0c754d8d7",
       "retrieved_at": "2026-07-26T05:30:58+00:00",
       "needs_review": false,
-      "grounding_score": null,
+      "grounding_score": 1.0,
       "corroborating_sources": []
     },
     {
@@ -739,10 +1617,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 76,
-        "newness": 11,
+        "newness": 8,
         "credibility": 75.0,
-        "composite": 53.3,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 52.55,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Generic CWE-78 OS command injection in embedded/OT web management (unsanitized input into system()); the 'xz -f -c -d as cat' file-read trick is a known GTFOBins-style LOLBin. Novelty here is finding-level: the specific Siemens ROX II zero-day trilogy (CVE-2025-40948/40947/40949), not a new vulnerability class.",
       "threat": "An attacker with access to the ROX II management interface can read credentials/keys (CVE-2025-40948), inject a root reverse shell through the feature-key uploader (CVE-2025-40947), and plant a root cron job for reboot-persistent control (CVE-2025-40949), turning a network-segmentation security device into a foothold for OT disruption, data exfiltration, or DoS.",
@@ -768,7 +1646,7 @@
       "id": "siemens-ruggedcom-rox-ii-three-cve-chain-file-di-a727935d7b",
       "retrieved_at": "2026-07-26T05:30:54+00:00",
       "needs_review": true,
-      "grounding_score": null,
+      "grounding_score": 1.0,
       "corroborating_sources": []
     },
     {
@@ -824,17 +1702,181 @@
       "scores": {
         "novelty": 58,
         "relevance": 68,
-        "newness": 11,
+        "newness": 8,
         "credibility": 70.0,
-        "composite": 51.05,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 50.3,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Known bug class rather than a new one: GraphQL subscription resolvers missing query-level authz, WebSocket/SSE channel joins not re-checking per-topic ACLs, Kafka topic-pattern subscribe vs per-topic ACLs, and Kubernetes RBAC treating watch separately from get/list. Range-widening as an authz bypass is IDOR/BOLA with a range operator.",
       "verified": false,
       "verify_note": "Verifier scored novelty 20/100 - the 'stream endpoint skips the read endpoint's authz check' pattern has many documented prior instances, so only the instance is new. It also flagged that the advisory gives no root cause (the per-endpoint-drift explanation is our inference and is labelled as such), that 'only Watch' overstates a list of three unaffected request types, and that Watch delivers events rather than a keyspace snapshot. Held for review as a known class.",
       "retrieved_at": "2026-07-26T19:54:37+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Autonomous Application Testing",
+      "cluster": "L",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "swe-bench-doesnt-generalize-to-production-tasks",
+        "coding-agents-produce-plausible-but-hallucinated-apis"
+      ],
+      "title": "What Is AI Pentesting and How Does It Work?",
+      "source_url": "https://snyk.io/blog/what-is-ai-pentesting/",
+      "article_url": "https://snyk.io/blog/what-is-ai-pentesting/",
+      "published": "2026-07-27",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch09-4.txt",
+      "source_id": "rss:https-snyk-io-blog-feed",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 52.5,
+      "summary": "Snyk lays out a four-part reference architecture for AI pentesting: a reasoning model that plans reconnaissance/hypothesis/probing/exploitation/chaining, deterministic tools for exhaustive-payload work (a DAST engine, not the LLM enumerating payloads token-by-token), an independent validator model that confirms exploitability before a finding is reported, and prior context about what other tools already found so expensive reasoning is spent on the flaws that require it. The category exists to cover context-dependent flaws (BOLA/IDOR, cross-tenant leakage, auth bypass, chained business-logic exploits) that no signature can reach. Two hard reliability numbers: on autonomous red-teaming benchmarks the strongest model solves 61% overall but under 26% on harder system-exploitation tasks, and raw AI tooling has been observed to hallucinate findings around 30% of the time — which is the empirical case for a separate validator model.",
+      "takeaway": "AI pentesting is a four-part orchestrated system — reasoning model, deterministic tools, independent validator, prior context — and the failure mode of skipping any one of those is either hallucinated findings, redundant scanner work, or a validator conflict of interest.",
+      "lessons": [
+        {
+          "point": "AI pentesting is defined as an orchestrated four-part system, not a lone LLM — reasoning model plans, deterministic DAST engine handles known-class exhaustive testing, a separate validator model confirms exploitability, and prior scanner context focuses reasoning at flaws that require it.",
+          "excerpt": "A modern AI pentester is not a single model pointed at a URL. It's an orchestrated system with four parts: A reasoning model that plans the assessment: reconnaissance, hypothesis, probing, exploitation, and chaining, the way a human tester approaches an engagement. Deterministic tools in which the model calls for the well-understood work. Exhaustive payload testing of known vulnerability classes is faster and cheaper handled by a dynamic testing (DAST) engine than by a model enumerating payloads token by token. An independent validator, which is a separate model or engine, confirms that a finding is genuinely exploitable before it is reported.",
+          "confidence": 0.94,
+          "grounded": true
+        },
+        {
+          "point": "The raw AI-pentest reliability floor is roughly 30% hallucinated findings; the empirical justification for a separate validator is the false-positive rate you inherit if you skip it.",
+          "excerpt": "Raw AI tooling has been observed to hallucinate findings roughly 30% of the time, and a false positive you can't trust is worse than no finding. Credible systems put an independent validator between the model and the report.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Autonomous red-team benchmark reality check: the strongest model solves 61% of challenges overall but falls below 26% on harder system-exploitation tasks — which sets the ceiling on any 'lone frontier model as pentester' pitch.",
+          "excerpt": "On one autonomous red-teaming benchmark, the strongest model solved 61% of challenges overall but fell below 26% on harder system-exploitation tasks.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The class of vulnerabilities AI pentesting exists to cover is context-dependent flaws — BOLA/IDOR, cross-tenant data leakage, auth bypass, privilege escalation, chained business-logic exploits — which by definition have no signature and cannot be detected by pattern-matching tools.",
+          "excerpt": "Context-dependent vulnerabilities have no signature. You cannot write a rule for \"user A shouldn't be able to read user B's invoice,\" because it depends on the application's intended behavior. This class includes broken object-level authorization (BOLA/IDOR), cross-tenant data leakage, authentication bypasses, privilege escalation, and chained business-logic exploits.",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "Six evaluation criteria for vendor claims: independent validation, prior-scanner context, continuous re-test, verifiable proof-of-concept output, low FP rate, complementary to (not replacement of) human testing — usable as a scorecard when comparing offerings.",
+          "excerpt": "A useful criterion when comparing tools is asking these 6 questions: Independent validation — does a separate step confirm exploitability, or does the finding model grade itself? Context — does it know what your existing scanners already found, so it hunts flaws instead of re-finding bugs? Continuous — does it re-test on every change, or is it another point-in-time snapshot? Verifiable output — runnable proof of concept plus a reasoning trace you can audit? Low false positives — will your team trust the findings enough to act? Complementary — does it extend your scanners and human testing, rather than claiming to replace them?",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "ai-pentesting",
+        "dast",
+        "bola",
+        "business-logic",
+        "independent-validator",
+        "orchestration",
+        "reasoning-model"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "AI-pentesting evaluation scorecard: hold every vendor to the four-part architecture and the six-question criterion",
+        "detail": "When comparing autonomous / AI-pentesting offerings, require public disclosure on: (1) which model plans, which model validates, and whether they are the same model — same-model self-grading fails the independence test, (2) how the DAST engine and prior-scan context are wired in, (3) the false-positive rate on a fixed corpus (Snyk's public number for their deterministic engine is 0.08%), (4) reproducibility of findings across identical runs, (5) the runnable PoC and reasoning trace attached to each finding, and (6) evidence the tool is complementary rather than a replacement claim. Also enforce production-safety governance: scope enforcement, an independent validation step, reproducibility, and audit trails — the article's stated position is that these controls are harder to build than the offensive capability itself."
+      },
+      "scores": {
+        "novelty": 52,
+        "relevance": 78,
+        "newness": 8,
+        "credibility": 52.5,
+        "composite": 48.88,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "The 'AI-augmented pentesting' category has been building through 2026 with XBOW, ProjectDiscovery, Anthropic's vulnerability-discovery program, and PortSwigger's HTTP Terminator. Snyk's delta here is a concrete four-part reference architecture (reasoning / DAST / validator / prior context), quantitative floors on raw-LLM reliability (~30% hallucinated findings, 61%/26% autonomous-red-team benchmark split), and a six-question buyer scorecard. Related to the same-week 'generator can't be validator' Snyk post — same thesis, pentesting-specific framing.",
+      "discovered_via": "rss",
+      "threat": "Any team deploying AI pentesting as a raw LLM pointed at a URL (rather than as an orchestrated system with a separate validator): expected outcome is ~30% hallucinated findings and coverage that collapses on harder system-exploitation classes (sub-26% on the cited benchmark), which means an unusable false-positive rate and a false sense of coverage on the exact class the tool is bought to catch.",
+      "conditions": "Same model plans and grades its own findings (no independent validator). No deterministic DAST layer for exhaustive known-class payload testing. No prior-scanner context; the model re-discovers cataloged bugs at high token cost. Findings ship without a runnable PoC and reasoning trace.",
+      "mitigations": "Independent validator model or engine between finding and report; validator is not the reasoning model. DAST engine carries payload enumeration for known-class flaws; LLM does not enumerate token-by-token. Feed the pipeline prior-scanner findings so reasoning is spent on flaws that require it. Every reported finding ships a runnable PoC and full reasoning trace for human audit. Production governance: scope enforcement, reproducibility, audit trails as a precondition for running against live systems.",
+      "verified": true,
+      "verify_note": "All five excerpts verified verbatim against data/_raw/mrscan-batch09-4.txt (extracted body text since r.jina.ai returned a cached tracker probe; direct fetch used with HTML-stripped text preserving verbatim wording). related_claims exist in data/claims.json.",
+      "id": "what-is-ai-pentesting-and-how-does-it-work-b1ec5b2854",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "AI-augmented SAST",
+      "cluster": "M",
+      "related_claims": [
+        "coding-agents-produce-plausible-but-hallucinated-apis",
+        "capability-elicitation-lags-training",
+        "diff-review-catches-more-than-full-file-review"
+      ],
+      "title": "Introducing Semgrep Agentic Workflows: Automate Deep Vulnerability Hunting at Scale",
+      "source_url": "https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale",
+      "article_url": "https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale",
+      "published": "2026-07-28",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch09-1.txt",
+      "source_id": "rss:https-semgrep-dev-blog-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 52.5,
+      "summary": "Semgrep is shipping nine pre-built Agentic Workflows in public beta that pair frontier reasoning (Claude Opus) with the Semgrep Pro Engine and a code-slicer named Mandoline to hunt authentication, injection, and business-logic flaws across 70+ CWEs. The architectural claim worth extracting is not the launch itself but the empirical delta: their AI+program-analysis combination finds 3.5x more true positives than Opus 4.8 alone at 19% lower cost per true positive. The design principle is that the model is fed exactly the sliced context it needs, deterministic analysis carries taint tracing and inter-file work, and the LLM only reasons about exploitability — an explicit AI-vs-code role split.",
+      "takeaway": "The AI-augmented SAST win is not \"replace static analysis with an LLM\" — it is \"feed the LLM sliced context and let deterministic taint tracing carry the correctness-critical steps.\"",
+      "lessons": [
+        {
+          "point": "The measurable AI+SAST result is a 3.5x true-positive uplift over the frontier model alone, at 19% lower cost per true positive — concrete numbers to hold vendor claims to when evaluating \"agentic\" SAST offerings.",
+          "excerpt": "In our own benchmarking, that combination finds 3.5x more true positives than Opus 4.8 running alone, at 19% lower cost per true positive.",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "The transferable architecture is program-analysis + code-slicer (Mandoline) + frontier model for reasoning — the deterministic layer carries taint tracing and inter-file analysis, and the model only reasons about exploitability on a curated context window.",
+          "excerpt": "Each Agentic Workflow draws on the same toolkit: the Semgrep Pro Engine and Pro rules for deterministic analysis such as taint tracing and interfile analysis, Semgrep Mandoline (a code slicer internal to Agentic Workflows built specifically for handing agents exactly the context and code they need), and frontier AI models such as Claude Opus for reasoning about exploitability.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The threat driver is symmetric capability uplift: attackers now have on-demand pentester-grade reasoning at attacker cadence, and traditional pre-AI tools plus human review cannot keep pace — defender AppSec has to match the reasoning layer, not just improve rule coverage.",
+          "excerpt": "AppSec teams can’t outrun these attackers using traditional pre-AI tools, nor by relying on humans reviewing all of the code being generated. To give AppSec teams a step up in defensive capabilities, today we’re launching nine Agentic Workflows that find the subtle authentication, injection, and business logic flaws that matter most.",
+          "confidence": 0.88,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "sast",
+        "agentic-workflows",
+        "taint-analysis",
+        "code-slicing",
+        "ai-augmented-appsec",
+        "semgrep",
+        "owasp-top-10"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Evaluate AI-augmented SAST on the 3.5x-TPs-at-lower-cost benchmark, not on flat CWE-coverage tables",
+        "detail": "When comparing agentic AppSec tools, hold vendors to two questions: (1) what is the true-positive uplift over the frontier model running solo on the same corpus, and (2) what is the cost per true positive at that uplift? Semgrep's public number is 3.5x TPs at 19% lower cost/TP using program-analysis + code-slicer + Claude Opus. Anything below that ratio is a claim that the vendor's slicing/inter-file analysis is doing less work than a raw model prompt — which means the money is going to token cost, not to reduction in reviewer triage. Also require the vendor to disclose the slicer or context-selection layer, because that is where the correctness-critical work happens."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 72,
+        "newness": 8,
+        "credibility": 52.5,
+        "composite": 47.97,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Prior claims in the pool around AI-augmented static analysis (Snyk DeepCode, GitHub Copilot autofix, autonomous research pipelines like PortSwigger's HTTP Terminator) already established the 'LLM + deterministic engine' architecture. The delta here is a specific quantitative uplift (3.5x TPs / 19% lower cost per TP) and public identification of a code-slicer (Mandoline) as the load-bearing component alongside taint tracing.",
+      "discovered_via": "rss",
+      "threat": "Enterprises deploying naked-LLM SAST (a raw model reading whole repos) pay high token cost and get lower true-positive rates than an equivalent pipeline that combines deterministic taint tracing and inter-file analysis with an LLM reasoning step on a sliced context window — which means naked-LLM SAST is dominated on both cost and quality.",
+      "conditions": "The workload is scanning application code for authentication / injection / business-logic flaws. Reviewer capacity is finite and false-positive rate directly determines whether findings get triaged. The organization has budget for either a program-analysis layer plus a frontier model, or a frontier model alone.",
+      "mitigations": "Prefer AI+program-analysis pipelines over frontier-model-only scanners for CWE-in-code work. Require vendors to publish TP-uplift-vs-solo-model and cost-per-TP numbers on a fixed corpus. Insist on visibility into the code-slicing / context-selection layer so it can be audited. Keep human triage in the loop for the highest-severity findings; use the pipeline to filter, not to auto-close.",
+      "verified": true,
+      "verify_note": "All excerpts verified verbatim against data/_raw/mrscan-batch09-1.txt; related_claims exist in data/claims.json.",
+      "id": "introducing-semgrep-agentic-workflows-automate-d-82c3b5ed3a",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -880,10 +1922,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 74,
-        "newness": 11,
+        "newness": 8,
         "credibility": 70.0,
-        "composite": 47.45,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 46.7,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "The broader 'incomplete neutralization yields command injection' class (CWE-78/CWE-150) and Shescape's own prior per-shell escaping advisories; the analyst's cited Kemp LoadMaster null-byte-gap-to-RCE is the nearest thematic match.",
       "threat": "An attacker who controls a command argument passed through Shescape's escape/escapeAll on Windows CMD can break out of the intended command context (e.g. a conditional block) and execute arbitrary commands (CVSS 9.2).",
@@ -901,8 +1943,82 @@
       "id": "shescape-shell-injection-via-unescaped-cmd-paren-c6fe16b0f6",
       "retrieved_at": "2026-07-26T05:30:56+00:00",
       "needs_review": true,
-      "grounding_score": null,
+      "grounding_score": 0.0,
       "corroborating_sources": []
+    },
+    {
+      "id": "why-ai-assisted-attacks-made-software-supply-cha-0a1355188a",
+      "topic": "product-security",
+      "domain": "Software Supply Chain",
+      "cluster": "G",
+      "related_claims": [
+        "gate-agent-prs-with-automated-checks",
+        "llm-generated-code-hallucinates-package-names",
+        "typosquatting-in-package-registries-is-an-active-threat"
+      ],
+      "title": "Why AI-assisted attacks made software supply chain security its own category",
+      "source_url": "https://www.chainguard.dev/unchained/why-ai-assisted-attacks-made-software-supply-chain-security-its-own-category",
+      "article_url": "https://www.chainguard.dev/unchained/why-ai-assisted-attacks-made-software-supply-chain-security-its-own-category",
+      "published": "2026-08-03",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch06-2.txt",
+      "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 55.0,
+      "summary": "Vendor essay from Chainguard framing software supply chain security as its own Gartner category, pegged to the June 2026 Magic Quadrant. Core argument: AI compresses the vulnerability-to-exploitation window on both sides, and agent skill registries are a new supply-chain artifact — cites a February 2026 finding of hundreds of malicious agent skills. Positions Chainguard's build-from-source approach as the prevention alternative to scan-and-detect.",
+      "takeaway": "Agent skills are a new supply-chain artifact class alongside containers, libraries, and CI/CD workflows — treat them the same way you already treat npm packages (provenance, review gates, minimal trust), not as configuration.",
+      "lessons": [
+        {
+          "point": "Agent skills have become a supply-chain surface: attackers publish malicious skills that direct agents to install credential-harvesting malware.",
+          "excerpt": "Consider agent skills. In February 2026, researchers found hundreds of malicious skills in community registries, quietly directing AI agents to install credential-harvesting malware. The instruction set that makes an agent more capable became a new hiding place for an attack. It's the same software supply chain story, but with a new artifact.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "AI compresses the vulnerability-to-exploitation window on both sides, so 'detect after ingest' security postures lose the race by construction.",
+          "excerpt": "The window between \"a vulnerability exists\" and \"a vulnerability is being exploited\" is collapsing, and waiting to detect an attack after it launches means reacting inside a window that keeps getting shorter.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The rate at which agents pull in dependencies makes 'we'll check it later' review policies untenable.",
+          "excerpt": "Open source makes up over 90 percent of the code most organizations ship, and AI accelerates how much of it you pull in. Agents install dependencies, wire up CI/CD workflows, and adopt new components with very little human review.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "agent-skills",
+        "chainguard",
+        "gartner-mq",
+        "vendor-perspective"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Add agent skills to your supply-chain inventory alongside containers and packages",
+        "detail": "Extend existing supply-chain controls (provenance attestation, allowlists, review gates) to agent skills consumed from community registries. Do not classify skills as configuration; they carry executable instructions that steer tool-enabled agents."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 55,
+        "newness": 46,
+        "credibility": 55.0,
+        "composite": 45.25,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Standard supply-chain security literature (SLSA, sigstore, provenance attestation). The 'malicious agent skills' finding was reported earlier in 2026 by third-party researchers and covered widely; this post is a marketing recap tied to the Gartner MQ, not new research.",
+      "discovered_via": "rss",
+      "threat": "Agents pulling in dependencies, CI/CD workflows, or agent skills at machine speed adopt malicious artifacts (typosquatted packages, backdoored containers, poisoned skills) before any human review, enabling credential harvesting or code execution in engineer/agent environments.",
+      "conditions": "Engineering teams delegate dependency selection to coding agents. Agent skill registries used as untrusted-by-default input. No enforced provenance/signature gate on ingested artifacts. Detect-and-remediate posture (post-ingest scanning) rather than admit-only-trusted-artifacts.",
+      "mitigations": "Prefer signed, provenance-attested artifacts (containers, packages, skills). Constrain agents to a curated allowlist of registries/mirrors. Require automated PR gates for agent-authored dependency changes. Treat agent skills as code, not config: review, version, sign.",
+      "verified": true,
+      "verify_note": "Three excerpts verified verbatim against data/_raw/mrscan-batch06-2.txt. The 'hundreds of malicious skills' claim is asserted by the post but not linked to a specific study in the article; treat as Chainguard's summary of third-party research, not independent evidence. This is a vendor essay and scored accordingly on novelty.",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -947,10 +2063,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 11,
+        "newness": 8,
         "credibility": 55.0,
-        "composite": 44.0,
-        "scored_at": "2026-08-10T05:24:14+00:00"
+        "composite": 43.25,
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Tool round-ups are a common genre and every tool listed is publicly known; there is no new technique or tool. The contribution is the three-category taxonomy and constraint-based selection guidance. Vendor content rather than research: Semgrep competes in the category it ranks and has an unannounced product in it.",
       "verified": true,
@@ -958,7 +2074,631 @@
       "id": "a-working-taxonomy-of-open-source-ai-code-securi-41b13f54e0",
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "Internal Vulnerability Scanning & Attack Surface",
+      "cluster": null,
+      "related_claims": [],
+      "title": "Introducing Internal Network Scanning: see your network the way an attacker inside it would",
+      "source_url": "https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would",
+      "article_url": "https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would",
+      "published": "2026-07-21",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch10-0.txt",
+      "source_id": "rss:https-blog-projectdiscovery-io-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 52.5,
+      "summary": "ProjectDiscovery released an unauthenticated internal-network scanner that runs Nuclei templates from inside a segment rather than banner-matching against CVE lists. The framing is that as AI has driven annual CVE volume toward 50,000 and the mean time-to-exploit has inverted to negative 7 days, coverage-first internal scanning produces a backlog you can never clear in time; a scanner that ships only confirmed, request/response-proven exposures from where an attacker would land is the more useful primitive. Runs alongside credentialed scanners (Tenable/Qualys/Rapid7) which cover patch-level on managed hosts; the pd-agent covers reachability of everything routable, including the forgotten server and Kubernetes pod/service CIDRs that credentialed tools miss.",
+      "takeaway": "In the AI-bent-curve era, internal scanning that returns 'potentially vulnerable' banner matches is a queue, not a control; wire a Nuclei-style unauthenticated agent in every segment so what you fix is what an intruder could actually trigger from that beachhead.",
+      "lessons": [
+        {
+          "point": "The vulnerability curve has inverted: MTT-exploit for prioritized CVEs is now negative — exploitation begins before a patch exists — so coverage-first scanning backlogs are structurally too slow.",
+          "excerpt": "annual CVE volume has climbed toward 50,000 and for the vulnerabilities attackers actually prioritize, the mean time to exploit has inverted from roughly 63 days to negative 7 days meaning exploitation often begins before a patch exists.",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Credentialed scanners answer 'is it patched'; they don't answer 'is it reachable from where an attacker lands' — the internal segment where the pivot lives is exactly the coverage gap.",
+          "excerpt": "Credentialed scanning is the most reliable way to know what's installed and unpatched across the hosts you manage and nothing here replaces it. What it doesn't tell you is whether the service is reachable and the path exploitable from where an attacker actually lands, and its coverage ends at the hosts you hold credentials or an agent for, which is rarely the forgotten server or the unmanaged device.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Segmentation without inside-the-segment scanning is a paper control: an agent that already reached the segment walks the same routable paths the pd-agent enumerates.",
+          "excerpt": "Segmentation slows lateral movement but doesn't stop it once the pivot host is already inside the segment, which is as true on a corporate network as it was there.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "internal-scanning",
+        "nuclei",
+        "attack-surface",
+        "mtte",
+        "reachability",
+        "pd-agent"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Deploy an unauthenticated Nuclei-class agent per segment and treat its confirmed findings as the patch queue",
+        "detail": "Install pd-agent (or an equivalent Nuclei-driven internal scanner) in every distinct trust segment — production, staging, per-region, per-acquisition, per-office. Scope discovery by where the agent sits (host subnets + Kubernetes pod/service CIDRs) so each finding is attributable to a segment owner. Stop triaging banner-match output; escalate only what returned a proof-of-exploit request/response. Keep credentialed scanning (Tenable/Qualys/Rapid7) for patch-level accuracy on managed hosts — the two lists cover different questions and should be run in parallel, not as substitutes."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 55,
+        "newness": 8,
+        "credibility": 52.5,
+        "composite": 42.88,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Nuclei/httpx have been publicly usable as internal scanners for years; the packaged pd-agent + platform + per-segment reachability model is the delta. The 'MTT-exploit is now negative' framing echoes VulnCheck's Known Exploited list observations and Google Project Zero's shrinking-window data.",
+      "discovered_via": "rss",
+      "threat": "Defensive teams whose only internal-scanning control is a credentialed patch scanner report zero coverage on the forgotten intranet WordPress, unmanaged network device, or spun-up Kubernetes dashboard that an inside attacker reaches first — so post-phish lateral movement to the domain controller / vCenter / backups goes unmapped in scan output.",
+      "conditions": "Internal scanning is limited to credentialed patch scans on managed hosts. No unauthenticated reachability check runs from inside the segment where an attacker would land. Kubernetes pod/service CIDRs and shadow-owned assets are not in the scan scope.",
+      "mitigations": "Run an unauthenticated Nuclei-driven agent from inside every distinct network segment. Keep credentialed scanners for patch-level truth on managed hosts (complementary, not redundant). Include Kubernetes pod/service CIDRs and acquisition/office networks in discovery scope. Treat only findings with a captured request/response proof as urgent — not banner matches.",
+      "verified": true,
+      "verify_note": "All excerpts verified verbatim from mrscan-batch10-0.txt lines 8, 22, and 62. Cluster set to null: article is general appsec / attack-surface product with only a passing mention of the Neo AI agent, so it lands adjacent under the interests taxonomy.",
+      "id": "introducing-internal-network-scanning-see-your-n-f1f7162f74",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
+      "topic": "product-security",
+      "domain": "Supply Chain / Policy",
+      "cluster": null,
+      "related_claims": [],
+      "title": "America bans imported robots due to supply chain and security risks",
+      "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "published": "2026-07-29",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-0.txt",
+      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 70.0,
+      "summary": "The FCC added foreign-made advanced robotic devices to the Covered List, effectively banning their import due to supply-chain and security risks. The National Security Determination frames networked robots as broad attack surfaces vulnerable to remote takeover, data exfiltration, and insecure OTA updates, and points to UniPwn on Unitree humanoids as a concrete example.",
+      "takeaway": "US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.",
+      "lessons": [
+        {
+          "point": "US regulators now classify connected robots as broad attack surfaces subject to remote takeover, exfiltration, and OTA-update risk.",
+          "excerpt": "modern bots are now constantly connected to networks “which creates broad attack surfaces and leaves them vulnerable to data exfiltration, remote disruption of the physical robot, and dependencies on unsecure over the air updates.”",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The UniPwn flaws in Unitree humanoids are cited by name as the exemplar vulnerability motivating the ban.",
+          "excerpt": "One example of those vulnerabilities mentioned in the document is the UniPwn flaws that made it possible for attackers to take over humanoid robots made by Chinese company Unitree.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "The mechanism is import ban via the FCC Covered List, with a narrow Department of War carve-out and a country-of-manufacture (not country-of-ownership) exemption.",
+          "excerpt": "the FCC decided the foreign-made advanced robotic devices belong on its Covered List of products for which imports are banned because they pose an unacceptable risk to the national security of the United States and its residents.",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "robotics",
+        "national-security",
+        "iot-security",
+        "fcc"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track FCC Covered List entries as a supply-chain admission signal beyond telecom",
+        "detail": "Product-security teams that already gate procurement against the FCC Covered List for telecom should now extend that gate to robotics and other networked physical devices; the same list is being repurposed as a general-purpose national-security exclusion mechanism."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 55,
+        "newness": 8,
+        "credibility": 70.0,
+        "composite": 42.5,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
+      "discovered_via": "rss",
+      "threat": "Networked robots operating inside critical facilities can be remotely disrupted or exfiltrated via compromised firmware, OTA-update infrastructure, or embedded backdoors from the manufacturer's supply chain.",
+      "conditions": "Applies to future imports of foreign-made advanced robotic devices; already-approved models and stock, plus foreign-owned firms that manufacture in the US (e.g., Boston Dynamics), are exempt.",
+      "mitigations": "Import ban via FCC Covered List; case-by-case Department of War vouching for individual devices.",
+      "verified": true,
+      "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 0.33
+    },
+    {
+      "topic": "product-security",
+      "domain": "Application Security",
+      "cluster": null,
+      "related_claims": [],
+      "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
+      "source_url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
+      "article_url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
+      "published": "2026-07-30",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch07-2.txt",
+      "source_id": "rss:https-semgrep-dev-blog-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 52.5,
+      "summary": "Semgrep's Diptendu Kar analyzed the full GHSA advisory set filed under OWASP A04:2025 (Cryptographic Failures) and found the top CWEs are improper signature verification (CWE-347) and use of a broken/risky algorithm (CWE-327) — both of which are code-level omissions, not primitive breaks. Walkthrough example: CVE-2021-43572, a real FinTech signing library rated 9.8, was defeated by sending r=0, s=0 because the code never enforced 1 <= r,s <= n-1. Fix is a four-line range check.",
+      "takeaway": "Most 'crypto' bugs in the wild aren't crypto — they're validation checks that never run in the wrapper code around the primitive. Reviewers don't need a math background; they need to attack the input path.",
+      "lessons": [
+        {
+          "point": "At scale, cryptographic advisories cluster on skipped checks rather than broken primitives.",
+          "excerpt": "over and over, the math was intact and the code had simply skipped a check",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The top-ranked CWEs under OWASP A04 are validation problems, which the author explicitly reframes as code bugs.",
+          "excerpt": "Improper signature verification and algorithm confusion are _code_ problems. A validation check that doesn't run can allow untrusted input.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A real 9.8 ECDSA bug (CVE-2021-43572) is defeated by the laziest possible attacker input; you don't need to touch the math to find it.",
+          "excerpt": "The answer is zero. Send `r=0` and `s=0` then the whole computation collapses to zero on both sides. The signature validates since `0==0`.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The advisories recur across languages and libraries because reviewers keep deferring to 'the crypto library will handle it.'",
+          "excerpt": "The wrapper that checks input, compares two values, or picks which algorithm to use sails through reviews because everybody assumes it is over their head.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "cryptography",
+        "cwe-347",
+        "cwe-327",
+        "ecdsa",
+        "input-validation",
+        "code-review",
+        "owasp"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Add a 'boring-crypto-check' pass to code review checklists",
+        "detail": "When reviewing code that calls a crypto verify() function, enumerate what an attacker controls on both sides of the final comparison, and confirm each attacker-controlled input passes an explicit range/type check before the primitive runs. Do the same for algorithm selection: is the alg field attacker-controlled, and if so is 'none' or a weakened alg reachable? This is a reviewer skill, not a cryptographer skill.",
+        "target": "code-reviewer, security-reviewer"
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 55,
+        "newness": 8,
+        "credibility": 52.5,
+        "composite": 39.88,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Classic JWT alg=none, invalid-curve attacks, and Wycheproof-style test suites make the same point; this piece is a fresh restatement grounded in the current GHSA distribution.",
+      "discovered_via": "rss",
+      "threat": "Attackers submit malformed but well-formed-looking cryptographic payloads (all-zero ECDSA sigs, wrong-curve points, alg=none JWTs) to endpoints that call a crypto library's verify() but omit input validation. Result: signature-verified user impersonation, integrity bypass, or algorithm downgrade — CVSS 9.x-class bugs from a four-line omission.",
+      "conditions": "Application performs cryptographic signature verification or algorithm selection with attacker-controlled inputs, and the wrapper code around the primitive does not enforce 1 <= r,s <= n-1 (for ECDSA) or reject attacker-influenced algorithm identifiers before dispatching to the library.",
+      "mitigations": "Add explicit range checks on all numeric signature components before calling verify. Reject algorithm identifiers not on a static allowlist. Prefer AEAD/high-level constructs over hand-assembled signature verification. Add SAST rules (Semgrep-style) that flag verify() call sites lacking pre-condition checks.",
+      "verified": true,
+      "verify_note": "Excerpts verbatim-checked against raw_path. Related claims exist in data/claims.json. Cluster assignments align with data/interests.yaml.",
+      "id": "cryptographic-advisories-are-dominated-by-skippe-7778874a78",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "enhancing-anomaly-resilience-in-research-network-fe4bfda1f6",
+      "topic": "product-security",
+      "domain": "Network Security & Anomaly Detection",
+      "cluster": null,
+      "related_claims": [],
+      "title": "Enhancing Anomaly Resilience in Research Networks: A Large-Scale Forecasting Benchmark for Dynamic Security Baselining",
+      "source_url": "https://arxiv.org/abs/2608.05605",
+      "article_url": "https://arxiv.org/abs/2608.05605",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-b041-3.txt",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 51.9,
+      "summary": "Benchmarks six model families (SARIMA through TiDE and PatchTST) across 960 configurations on a 57-day, 13.7B-packet Internet2 dataset to forecast Research and Education Network traffic and reduce false positives from anomaly detectors that confuse scientific 'elephant flows' with DDoS.",
+      "takeaway": "Not an AI-security or agent-security artifact; it is a classical netsec/anomaly-detection paper that happens to use ML forecasting. Adjacent at best. Retain only as a data point that long-sequence forecasters (TiDE) cut baseline error 30-42% versus traditional methods on a real backbone dataset.",
+      "lessons": [
+        {
+          "point": "Research and Education Networks have 'elephant flows' that are statistically indistinguishable from volumetric attacks, driving false positives in conventional monitoring.",
+          "excerpt": "Research and Education Networks (RENs) serve as critical infrastructure for scientific discovery, yet they face a unique security paradox: their normal traffic patterns which are characterized by massive, bursty \"elephant flows\" are statistically indistinguishable from volumetric attacks such as DDoS to conventional monitoring systems.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "On the Internet2 57-day dataset, long-sequence architectures (TiDE in particular) cut baseline prediction error 30-42% versus traditional methods at p<0.001.",
+          "excerpt": "Our results demonstrate that these advanced architectures, particularly TiDE, reduce baseline prediction error by 30-42% compared to traditional methods ($p <0.001$), significantly improving the distinction between legitimate scientific bursts and potential anomalies.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "threat": "N/A for the AI-sec taxonomy — the threat modeled is classical volumetric network anomaly / DDoS confusion, not an AI-specific attack surface.",
+      "conditions": "N/A",
+      "mitigations": "N/A",
+      "tags": [
+        "network-anomaly",
+        "forecasting",
+        "ddos",
+        "tide",
+        "off-topic-for-ai-sec"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Skip for AI-sec cluster work; note as netsec ML forecasting benchmark",
+        "detail": "Does not fit the 13-cluster AI-security taxonomy. If a future networking-adjacent claim on ML-based baselining is opened, this paper is a strong data point (TiDE beats SARIMA by 30-42% on Internet2). Otherwise no claim work."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 8,
+        "newness": 46,
+        "credibility": 51.9,
+        "composite": 33.69,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": [
+        "SARIMA baselines in network anomaly detection",
+        "TiDE / PatchTST long-sequence time-series forecasters"
+      ],
+      "discovered_via": "rss",
+      "verified": true,
+      "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-3.txt (line 8). Subject is REN traffic forecasting for anomaly detection, not AI-specific security. cluster=null; related_claims=[].",
+      "retrieved_at": "2026-08-14T20:08:51+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "an-end-to-end-threat-model-for-the-quantum-as-a-013be39b48",
+      "topic": "product-security",
+      "domain": "Quantum Software Security",
+      "cluster": null,
+      "related_claims": [],
+      "title": "An End-to-End Threat Model for the Quantum-as-a-Service Pipeline",
+      "source_url": "https://arxiv.org/abs/2608.05836",
+      "article_url": "https://arxiv.org/abs/2608.05836",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-b042-2.txt",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 51.9,
+      "summary": "Two-page poster (QCE26) that decomposes the Quantum-as-a-Service workflow into a six-stage model and applies STRIDE threat modeling. Consolidates attacks previously described in isolation (calibration tampering, SWAP attacks, QubitHammer) into a matrix of quantum-specific, inherited-classical, and plausible-tier attacks per stage, and highlights three cross-stage attack chains.",
+      "takeaway": "STRIDE-style, pipeline-decomposed threat modeling for QaaS is now getting proposed; the interesting note for AI folks is that pipeline decomposition plus cross-stage chain analysis is the same pattern that works for agent/LLM stacks.",
+      "lessons": [
+        {
+          "point": "Prior QaaS attacks (calibration tampering, SWAP, QubitHammer) were documented in isolation and lack a shared taxonomy, which blocks structured threat modeling.",
+          "excerpt": "Recent works have demonstrated various critical attacks at individual stages: Calibration tampering, SWAP attacks, QubitHammer, and so on. However, these attacks remain separated because of their own terminology",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The paper decomposes QaaS into a six-stage workflow and applies STRIDE to build a matrix of quantum-specific, inherited-classical, and plausible-tier attacks per stage.",
+          "excerpt": "decomposing the workflow into six-stage model with STRIDE threat modeling. Our matrix demonstrated attack vectors in quantum-specific, inherited classical, and plausible tiers for each of the stages",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Repudiation and elevation-of-privilege are singled out as underexplored STRIDE categories in the quantum context, and three cross-stage attack chains are highlighted.",
+          "excerpt": "We further investigate the underexplored sections (repudiation and elevation-of-privilege) and distinguish three different cross-stage attack chains with higher impacts.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "quantum-security",
+        "stride",
+        "threat-modeling",
+        "qaas"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Not on the AI-agent path; skip unless doing QaaS threat modeling",
+        "detail": "The pipeline-plus-STRIDE decomposition is a familiar pattern for agent/LLM stack modelers, but this specific paper is quantum-only. No action for AI harness work."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 5,
+        "newness": 46,
+        "credibility": 51.9,
+        "composite": 32.78,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Classical STRIDE (Microsoft), prior quantum-specific attack papers cited in the abstract (calibration tampering, SWAP, QubitHammer).",
+      "discovered_via": "rss",
+      "threat": "Quantum-as-a-Service pipelines are exposed to per-stage attacks and cross-stage chains that current ad hoc threat models miss.",
+      "conditions": "Applies to hybrid quantum-classical workloads (VQE, QAOA, QML) executing across IBM Quantum, IonQ, Braket and similar multi-tenant QaaS providers.",
+      "mitigations": "Adopt six-stage pipeline decomposition, apply STRIDE per stage, and explicitly enumerate cross-stage chains with attention to repudiation and elevation-of-privilege.",
+      "verified": true,
+      "verify_note": "Excerpts verbatim from mrscan-b042-2.txt. Quantum-specific; correctly cluster null.",
+      "retrieved_at": "2026-08-14T20:08:51+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "on-the-figures-of-merit-for-quantum-software-sec-fb3abab723",
+      "topic": "product-security",
+      "domain": "Quantum Software Security",
+      "cluster": null,
+      "related_claims": [],
+      "title": "On the Figures of Merit for Quantum Software Security: Toward a Benchmarking Rubric",
+      "source_url": "https://arxiv.org/abs/2608.05831",
+      "article_url": "https://arxiv.org/abs/2608.05831",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-b042-1.txt",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 51.9,
+      "summary": "A short workshop paper (Q-SET 2026) proposing a structured set of Security Figures of Merit (S-FoMs) for the Quantum Software Stack, organized by ISO/IEC 25010 sub-characteristics and QaaS pipeline stage, aggregated into a Quantum Software Security Posture (QSSP) score. Motivated by ad hoc, incompatible existing indicators like Total Variation Distance and Degree of Functional Corruption.",
+      "takeaway": "Quantum software security lacks agreed measurement primitives; the paper proposes organizing S-FoMs along ISO/IEC 25010 and rolling them into a single QSSP posture score, but this is a rubric proposal, not a validated benchmark.",
+      "lessons": [
+        {
+          "point": "The community has mature performance figures (Qubit Count, Quantum Volume, CLOPS) but no equivalent for security, leaving security largely unmeasured.",
+          "excerpt": "the community has converged on three mature pillars: Scale (Qubit Count), Quality (Quantum Volume), and Speed (Circuit Layer Operations per Second (CLOPS)) for the merit performance figures",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Existing quantitative security indicators like TVD and DFC were introduced ad hoc for individual obfuscation techniques and are not mutually comparable.",
+          "excerpt": "A few quantitative security indicators, such as Total Variation Distance (TVD) and Degree of Functional Corruption (DFC), exist. Although they were introduced ad hoc for individual circuit obfuscation techniques, they are incompatible.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The proposal organizes S-FoMs by ISO/IEC 25010 security sub-characteristics, QaaS pipeline mapping, and measurement maturity, and aggregates them into a Quantum Software Security Posture (QSSP) score.",
+          "excerpt": "proposes a structured S-FoM set organized by ISO/IEC 25010 security sub-characteristics, QaaS pipeline mapping, and measurement maturity, and (iii) defines a benchmarking rubric that normalizes and aggregates S-FoMs into a combined Quantum Software Security Posture (QSSP) score",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "quantum-security",
+        "benchmarking",
+        "iso-25010",
+        "qaas",
+        "s-fom"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Skim only if quantum software stack is in scope",
+        "detail": "Not relevant to LLM/agent security work. Track only if you own quantum-as-a-service posture or vendor evaluation."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 5,
+        "newness": 46,
+        "credibility": 51.9,
+        "composite": 32.78,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Classical Common Criteria and ISO/IEC 25010, and prior ad hoc quantum obfuscation metrics (TVD, DFC).",
+      "discovered_via": "rss",
+      "threat": "Quantum software security is currently unmeasurable, so vendors and researchers cannot compare defenses across QaaS providers or techniques.",
+      "conditions": "Applies to multi-tenant Quantum-as-a-Service stacks (IBM Quantum, IonQ, Braket) and researchers publishing new obfuscation or defense techniques.",
+      "mitigations": "Adopt an S-FoM rubric to normalize and aggregate security indicators; report scores alongside performance figures.",
+      "verified": true,
+      "verify_note": "All excerpts verbatim from mrscan-b042-1.txt. Topic is quantum software security, not AI security; correctly marked cluster null and low relevance.",
+      "retrieved_at": "2026-08-14T20:08:51+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "co-founder-of-controversial-spyware-firm-had-isr-2e9bd23ff9",
+      "topic": "product-security",
+      "domain": "Targeted Surveillance",
+      "cluster": null,
+      "related_claims": [],
+      "title": "Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport",
+      "source_url": "https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport/",
+      "article_url": "https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport/",
+      "published": "2026-07-28",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-3.txt",
+      "source_id": "rss:https-citizenlab-ca-feed",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 75.0,
+      "summary": "Citizen Lab flags an OCCRP investigation reporting that an NSO Group co-founder travelled to Panama in 2013 on an Israeli diplomatic passport. Senior researcher John Scott-Railton frames the finding as raising questions about NSO's operational connections to the Israeli state.",
+      "takeaway": "New attribution evidence tightens the claimed link between commercial spyware vendors and their home-state intelligence apparatus, relevant to threat models that treat these vendors as arm's-length private actors.",
+      "lessons": [
+        {
+          "point": "OCCRP reporting places an NSO Group co-founder on an Israeli diplomatic passport during 2013 travel, tightening claimed state-actor linkage.",
+          "excerpt": "A recent investigation by OCCRP found that the co-founder of NSO Group, which develops Pegasus spyware, travelled to Panama in 2013 on an Israeli diplomatic passport.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Citizen Lab's John Scott-Railton frames the finding as raising questions about NSO's connections to the Israeli state, not settling them.",
+          "excerpt": "Senior researcher John Scott-Railton spoke with OCCRP, saying that the finding “raises questions about NSO’s connections to the [Israeli] state.”",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "spyware",
+        "nso-group",
+        "pegasus",
+        "targeted-surveillance",
+        "attribution"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Update commercial-spyware threat models to reflect tighter state linkage",
+        "detail": "For mobile threat models involving high-risk targets (journalists, dissidents, executives), stop treating NSO-class vendors as purely commercial actors; assume the buyer set and operational support may include the home state's intelligence services. Attribution is still contested; the finding raises the prior, it does not confirm."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 30,
+        "newness": 8,
+        "credibility": 75.0,
+        "composite": 32.75,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Longstanding open-source reporting has alleged NSO-Israeli state ties (Haaretz, NYT, Amnesty). The novelty is a specific documentary artifact (diplomatic passport travel record) rather than a new mechanism.",
+      "discovered_via": "rss",
+      "threat": "Commercial spyware vendors backed by a state intelligence service can operate with a larger blast radius (legal cover, target lists, technical support) than purely private vendors.",
+      "conditions": "Applies to threat models involving mobile devices of journalists, dissidents, opposition figures, and human-rights defenders; less relevant to enterprise appsec.",
+      "mitigations": "Not applicable at the technical layer; changes advocacy/policy posture and target-set assumptions.",
+      "verified": true,
+      "verify_note": "Both excerpts appear verbatim in raw file lines 96 and 98. Cluster set to null because Mobile security / spyware attribution is explicitly excluded (news-lane only) in data/interests.yaml. No claim IDs in the ledger match this domain.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 0.5
+    },
+    {
+      "topic": "product-security",
+      "domain": "Censorship & Trust & Safety",
+      "cluster": null,
+      "related_claims": [],
+      "title": "Inside the Fake Copyright Racket Silencing News Outlets",
+      "source_url": "https://citizenlab.ca/inside-the-fake-copyright-racket-silencing-news-outlets/",
+      "article_url": "https://citizenlab.ca/inside-the-fake-copyright-racket-silencing-news-outlets/",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-b046-1.txt",
+      "source_id": "rss:https-citizenlab-ca-feed",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 75.0,
+      "summary": "Citizen Lab summary of an OCCRP report describing a fake-copyright-claim racket used to silence journalists and civil society. Fraudulent DMCA-style claims exploit platform review systems that accept superficial evidence, shifting the burden of proof onto victims. Not an AI-security topic; a platform trust-and-safety story.",
+      "takeaway": "Platform copyright-claim review systems that accept superficial evidence enable low-cost, high-impact silencing attacks against journalists.",
+      "lessons": [
+        {
+          "point": "False copyright claims are effectively invisible relative to bot-comment abuse and shift the burden of proof to the victim.",
+          "excerpt": "Unlike bot comments, falsely reporting videos for copyright infringement is “virtually invisible,” and leaves the burden of proof on victims to challenge accusations.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Superficial-evidence review makes the attack trivial: backdate a site, claim ownership, force the victim to disprove.",
+          "excerpt": "With review systems geared towards accepting a claim based on superficial evidence, it is almost trivial for bad actors to set up and backdate websites so as to claim ownership of a certain content, and to throw the burden of evidence on their victims",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "censorship",
+        "trust-safety",
+        "dmca",
+        "civil-society"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Out of scope for AI-security claim work",
+        "detail": "News-lane only. Adjacent to product-security trust-and-safety but does not intersect with AI systems, agents, MCP, or LLM supply chain."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 10,
+        "newness": 46,
+        "credibility": 75.0,
+        "composite": 31.75,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Long-standing critique of DMCA/copyright takedown abuse for censorship.",
+      "discovered_via": "rss",
+      "threat": "Fraudulent copyright claims used to remove journalistic content and coerce silencing, with attackers exploiting the low bar of platform review to shift burden of proof.",
+      "conditions": "Content platforms that accept superficial ownership evidence, no independent verification, and no penalty for false claimants.",
+      "mitigations": "Provenance-aware ownership checks (WHOIS history, cryptographic timestamping, Web Archive backdating detection); penalties for repeat false claimants; presumption-of-authorship for known outlets.",
+      "verified": true,
+      "verify_note": "Excerpts appear verbatim in data/_raw/mrscan-b046-1.txt lines 16 and 20. Cluster null: excluded/adjacent topic per interests.yaml (censorship/T&S, not AI-security). Relevance low.",
+      "id": "inside-the-fake-copyright-racket-silencing-news-bf516fc11b",
+      "retrieved_at": "2026-08-14T20:08:52+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "the-trust-free-aggregation-layer-of-the-unicity-4a8ec952e9",
+      "topic": "product-security",
+      "domain": "Cryptography & Blockchain",
+      "cluster": null,
+      "related_claims": [],
+      "title": "The Trust-Free Aggregation Layer of the Unicity Infrastructure",
+      "source_url": "https://arxiv.org/abs/2608.05316",
+      "article_url": "https://arxiv.org/abs/2608.05316",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-b041-0.txt",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 51.9,
+      "summary": "A blockchain infrastructure paper introducing a Layer-2 aggregation service that uses Radix Sparse Merkle Trees plus a Plonky3 STARK circuit to certify an append-only key-value repository without trusted setup. Reports 10,000 insertions/second and millisecond-range verification on a single consumer CPU.",
+      "takeaway": "Not an AI-security artifact; a blockchain double-spend prevention construction. Only tangentially interesting to AI-sec engineers as an example of using STARK-based append-only proofs, a primitive that could later feature in agent audit-log tamper-evidence.",
+      "lessons": [
+        {
+          "point": "The aggregation layer uses Radix Sparse Merkle Trees plus authentication paths to prove that each new digest was obtained by adding key-value pairs only (append-only property).",
+          "excerpt": "We use the Radix Sparse Merkle Trees (RSMTs) to create the cryptographic digest r_i of the store in every round i and authentication paths of special type in order to prove that the next digest r_{i+1} was obtained while only adding some key-value pairs (k,v) to the repository.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The verifier is implemented as an AIR circuit on Plonky3 with no trusted setup, hitting 10k insertions/sec and millisecond verification on a consumer CPU.",
+          "excerpt": "The proof verification code is implemented as an Algebraic Intermediate Representation (AIR) circuit on top of the Plonky3 STARK toolkit. Our implementation uses no trusted setup, achieves throughput of 10,000 insertions per second and and millisecond range verification time on a single consumer-class CPU.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "threat": "N/A — cryptographic infrastructure paper, no AI-specific threat model.",
+      "conditions": "N/A",
+      "mitigations": "N/A",
+      "tags": [
+        "blockchain",
+        "starks",
+        "merkle-tree",
+        "off-topic"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Skip for AI-sec claim work; retain as a crypto-primitives reference",
+        "detail": "This is a cs.CR paper about blockchain double-spend prevention. It does not belong in AI-security or agent-security clusters. Retain a pointer in case a future agent-audit-log system considers STARK-based append-only proofs, but do not extract claims."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 10,
+        "newness": 46,
+        "credibility": 51.9,
+        "composite": 31.29,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": [
+        "Plonky3 STARK toolkit",
+        "Sparse Merkle Trees (Ethereum, Aleo)"
+      ],
+      "discovered_via": "rss",
+      "verified": true,
+      "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-0.txt (line 8). Confirmed off-topic: cs.CR label but subject is blockchain infrastructure, not AI/agent security. cluster=null; related_claims=[] correctly.",
+      "retrieved_at": "2026-08-14T20:08:51+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     }
   ]
 }

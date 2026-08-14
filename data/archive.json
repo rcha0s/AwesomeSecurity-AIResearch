@@ -1704,5 +1704,97 @@
     "retrieved_at": "2026-07-13T04:19:32+00:00",
     "needs_review": true,
     "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-security",
+    "domain": "AI-Generated Code Risk / Package Verification Gap",
+    "cluster": "G",
+    "related_claims": [
+      "llm-generated-code-hallucinates-package-names",
+      "coding-agents-produce-plausible-but-hallucinated-apis",
+      "typosquatting-in-package-registries-is-an-active-threat"
+    ],
+    "title": "AI Coding Agents Skip Package Verification, and Attackers Are Exploiting It",
+    "source_url": "https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm",
+    "article_url": "https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm",
+    "published": "2026-07-01",
+    "date": "2026-07",
+    "raw_path": "data/_raw/mrscan-batch10-4.txt",
+    "source_id": null,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_rank": 40.0,
+    "summary": "A synthesis of 2026 AI-agent supply-chain incidents drawn from Socket, ReversingLabs, Aikido, and Snyk research, plus the May 1 CISA/Five Eyes joint advisory. Three attack classes are described: (1) PromptMink (Famous Chollima) — packages engineered for AI-agent consumption via 'LLM Optimization (LLMO) abuse and knowledge injection' — README language designed to be authoritative to an LLM resolving dependencies, confirmed to have reached Claude Opus with a co-authored commit adding @solana-launchpad/sdk. (2) Slopsquatting (Aikido/Charlie Eriksen) — registering package names that models consistently hallucinate; USENIX Security 2025 found 19.7% of AI package recommendations reference nonexistent packages, and 43% of hallucinated names recur across ten runs of the same prompt. (3) Clinejection (February 2026) — an attacker crafted a GitHub issue title that triggered Cline's claude-code-action workflow (configured with allowed_non_write_users: '*' and --allowedTools 'Bash,Read,Write,Edit,...'), chained to Cacheract for cache poisoning, and eight days later an unauthorized cline@2.3.0 was published to five million users.",
+    "takeaway": "AI coding agents systematically bypass the years of human-friction defense (checking maintainer, download count, unfamiliar name) that supply-chain security assumed as a control layer; the response has to shift to registry-mediation, behavioral detection, and per-project allowlists — not developer training.",
+    "lessons": [
+      {
+        "point": "Attackers now ship packages engineered for LLM consumption, not human consumption: README text is written to look authoritative to a language model resolving dependencies, with confirmed traces of Claude Opus adopting the malicious package.",
+        "excerpt": "PromptMink used a technique ReversingLabs calls \"LLM Optimization (LLMO) abuse and knowledge injection\": crafting package README files with language specifically designed to appear authoritative to a large language model resolving dependencies, rather than to a human developer reading documentation.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Hallucinated package names are structurally exploitable because the same hallucination recurs — 43% of hallucinated names appear identically across ten runs, so an attacker only needs to run a few prompts and pre-register the persistent ones.",
+        "excerpt": "What makes slopsquatting structurally dangerous is the predictability of AI hallucinations. When researchers re-ran identical prompts ten times each, 43% of hallucinated package names appeared on every single run. An attacker needs only to run a few dozen prompts against a popular model, identify the names that consistently recur, and register them before anyone else does.",
+        "confidence": 0.92,
+        "grounded": true
+      },
+      {
+        "point": "npm collision detection provides zero defense against slopsquatting: a hallucinated name is a brand-new string with no collision to detect, so the registry filter cannot see the risk.",
+        "excerpt": "The traditional protection against typosquatting — npm's collision detection for names similar to existing packages — provides no defense against slopsquatting. Hallucinated names are brand-new strings with no collision to detect.",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "Natural language is now a valid CI entry point: the Clinejection incident weaponized a GitHub issue title into a supply-chain attack against five million users by composing prompt injection, cache poisoning, and credential-model weaknesses.",
+        "excerpt": "As Snyk researcher Stephen Thoemmes observed, the attack required no novel technique — only the composition of well-understood vulnerabilities (indirect prompt injection, cache poisoning, credential model weaknesses) into an exploit triggered by a single GitHub issue. The entry point was natural language rather than code.",
+        "confidence": 0.92,
+        "grounded": false
+      }
+    ],
+    "tags": [
+      "slopsquatting",
+      "llmo-abuse",
+      "promptmink",
+      "clinejection",
+      "package-hallucination",
+      "cisa-agentic-advisory",
+      "socket",
+      "behavioral-detection"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Move package trust out of developer judgment: registry mediation + agent allowlist + behavioral analysis",
+      "detail": "Treat every AI-agent-introduced dependency as untrusted-by-default. (1) Enforce registry policy at the CI/CD layer (Socket Firewall, npm staged publishing) so controls apply regardless of whether the install was typed by a human or triggered by an agent workspace scan. (2) Restrict agents in sensitive projects to a pre-approved dependency allowlist — if the LLM can only pick from a curated list, slopsquatting and LLMO-bait packages cannot land. (3) Audit AI agent configuration files (CLAUDE.md, .cursorrules, .clinerules) as security-critical: a permissive allowed_non_write_users or a broad --allowedTools list is a supply-chain vulnerability. (4) Add behavioral detection (Socket / Snyk / Aikido) alongside CVE-based scanning — every 2026 incident referenced had zero CVE at time-of-attack. (5) SBOM every agent-driven install so post-incident forensics is tractable."
+    },
+    "scores": {
+      "novelty": 68,
+      "relevance": 90
+    },
+    "prior_art": "Aggregates and cites ReversingLabs (PromptMink), Aikido (Charlie Eriksen / slopsquatting coinage), USENIX Security 2025 (19.7% hallucinated package rate), Snyk (Cline supply-chain analysis), Adnan Khan (Clinejection disclosure), Phoenix Security 2026 supply chain report, and the May 2026 CISA/Five Eyes joint advisory. The synthesis of these into one operational picture is the delta.",
+    "discovered_via": "manual",
+    "threat": "Enterprise developer environments where AI coding agents (Copilot, Cursor, Claude Code, Cline, Codex) can resolve and install dependencies without a per-package human review — the agent's LLM can be socially engineered by attacker-authored README content (PromptMink) or made to select an attacker-pre-registered hallucinated name (slopsquatting), or subverted through a natural-language CI trigger (Clinejection).",
+    "conditions": [
+      "AI coding agent is authorized to resolve or install dependencies autonomously in developer or CI environments",
+      "No registry-level allowlist restricts what the agent can pull",
+      "Package trust is delegated to the LLM's judgment or to CVE-database checks that only catch disclosed vulnerabilities",
+      "AI-agent config files (CLAUDE.md, .cursorrules, workflow YAML) grant broad tool permissions or accept input from untrusted GitHub users"
+    ],
+    "mitigations": [
+      "Enforce registry policy at CI/CD level (Socket Firewall, npm staged publishing) rather than at developer workstation only",
+      "Restrict AI agents to a pre-approved dependency allowlist in sensitive projects",
+      "Require human approval before any agent takes a high-impact action such as installing a new dependency in a production pipeline",
+      "Give agents the minimum tool access required for their task rather than broad permissions",
+      "Audit AI agent configuration files (CLAUDE.md, .cursorrules) as security-critical",
+      "Layer behavioral analysis (Socket / Snyk / Aikido) with CVE-based scanning to catch zero-CVE payloads",
+      "Maintain SBOMs so agent-introduced dependencies are auditable after the fact"
+    ],
+    "verified": true,
+    "verify_note": "All excerpts verified verbatim from mrscan-batch10-4.txt lines 26, 42, 48, and 60.",
+    "id": "ai-coding-agents-skip-package-verification-and-a-4cb9d7e9e7",
+    "retrieved_at": "2026-08-10T19:18:37+00:00",
+    "needs_review": true,
+    "grounding_score": 0.75
   }
 ]

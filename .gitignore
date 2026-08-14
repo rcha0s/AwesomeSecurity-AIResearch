@@ -22,8 +22,11 @@ htmlcov/
 
 # Pipeline staging — transient, regenerated each run
 data/candidates.json
+data/candidates.filtered.json
 data/analysis_out.json
 data/editorial_out.json
+data/_batches/
+data/_pool_digest.json
 data/_raw/
 
 # Secrets / auth — NEVER commit (Agent Reach cookies, env)
