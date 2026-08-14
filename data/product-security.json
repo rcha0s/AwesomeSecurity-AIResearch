@@ -79,7 +79,7 @@
         "newness": 61,
         "credibility": 75.0,
         "composite": 80.5,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Continues the Shai-Hulud npm supply-chain lineage (JFrog, May 2026). Novel elements: Sigstore provenance mint via trusted-publishing OIDC, Ethereum-based C2 resolution, .claude/settings.json persistence, CI runner memory scraping.",
       "actionable": {
@@ -150,7 +150,7 @@
         "newness": 58,
         "credibility": 85.0,
         "composite": 79.75,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Extends James Kettle's 'Making HTTP Header Injection Critical via RQP' (2023) and Sergey Bobrov's nginx misconfig research. This paper is the BHUSA/DEFCON 2026 followup that operationalizes the technique across CDN infrastructure and introduces browser-powered variants.",
       "actionable": {
@@ -242,7 +242,7 @@
         "newness": 46,
         "credibility": 75.0,
         "composite": 77.65,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Prior 'AI finds bugs' work (XBOW, buttercup DARPA AIxCC, Google's Big Sleep) established that agents can find known-class bugs. The HTTP Terminator's delta is (a) proving AI-proposed novel attack classes (Shared-Parser Confusion, dangling-byte) validated at scale, (b) the AI-vs-Code-vs-Human framing as design axis, and (c) shipping an open-source, reproducible research factory. Closest published methodology is Kettle's own HTTP/1.1 Must Die paper (manual) and Orange Tsai's Confusion Attacks on Apache (partial overlap with Shared-Parser Confusion but Apache-specific).",
       "discovered_via": "rss",
@@ -323,7 +323,7 @@
         "newness": 46,
         "credibility": 75.0,
         "composite": 72.55,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
       "discovered_via": "rss",
@@ -397,7 +397,7 @@
         "newness": 58,
         "credibility": 78.0,
         "composite": 71.2,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Follow-up to Microsoft's May 2026 ClickFix documentation. Novelty is the server-side fingerprinting gate and its detection-evasion probes — not the ClickFix technique itself.",
       "actionable": {
@@ -481,7 +481,7 @@
         "newness": 46,
         "credibility": 52.5,
         "composite": 69.17,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Standing claims import-time-payloads-defeat-install-time-controls (AsyncAPI) and package-installers-run-arbitrary-code-by-default cover the install-time class. The novelty here is (a) the repo-local IDE hook path (.claude, .vscode) that fires on folder open with NO install required, (b) valid provenance signing a poisoned build via compromised source-tree, and (c) the gh-token-monitor 'revocation-triggers-persistence' pattern.",
       "discovered_via": "rss",
@@ -563,7 +563,7 @@
         "newness": 46,
         "credibility": 55.0,
         "composite": 67.15,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "ChainDrop npm worm (unit42) already in ledger under signature-based-detection-fails-on-llm-authored-malware / package-installers-run-arbitrary-code-by-default. Novelty here is (a) the Ethereum-smart-contract C2 domain lookup, (b) Bun-runtime-via-official-GitHub-releases evasion, and (c) explicit lineage tracing linking April PyTorch Lightning, May @antv, and August keyv as one toolkit.",
       "discovered_via": "rss",
@@ -630,7 +630,7 @@
         "newness": 8,
         "credibility": 87.5,
         "composite": 66.12,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "The 2025 Shai-Hulud / npm postinstall-worm campaigns and the related @mastra scope takeover — same 'compromise a maintainer/bot identity' root cause, but those triggered on install hooks; the novel delta here is import-time execution plus abuse of trusted-publishing provenance.",
       "corroborating_sources": [
@@ -708,7 +708,7 @@
         "newness": 46,
         "credibility": 70.0,
         "composite": 62.5,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "path-traversal-defenses-must-cover-symlink-resolution (standing claim in the ledger); same class as prior TOCTOU/symlink CVEs. New signal: a concrete example where a well-intentioned wrapper still fell through because it filtered strings instead of resolved paths.",
       "discovered_via": "github",
@@ -790,7 +790,7 @@
         "newness": 8,
         "credibility": 70.0,
         "composite": 62.3,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Extends the September 2025 Shai-Hulud reporting (also Unit 42) and connects it to April-July 2026 waves. The SLSA-provenance-bypass framing overlaps with SLSA project discussion of trust-scope misconfiguration; the /proc-memory OIDC extraction is the same technique documented in the tj-actions/changed-files compromise of March 2025. Novel: the AsyncAPI unprotected-release-branch pattern and the Copilot-triggered install-without-human-in-the-loop observation.",
       "discovered_via": "manual",
@@ -875,7 +875,7 @@
         "newness": 46,
         "credibility": 76.8,
         "composite": 61.42,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Pool digest already contains 'ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2' (unit42.paloaltonetworks.com) and 'AsyncAPI npm compromise: import-time payload defeats --ignore-scripts.' The Microsoft account is a second vendor angle on the same campaign; incremental novelty is the Claude/VSCode persistence targeting and the Defender detection surface, not the campaign itself.",
       "discovered_via": "rss",
@@ -956,7 +956,7 @@
         "newness": 46,
         "credibility": 52.5,
         "composite": 56.88,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Claim gate-agent-prs-with-automated-checks and claim signature-based-detection-fails-on-llm-authored-malware cover the AI-authored-code and agent-PR problem. Novelty here is (a) the concrete Anthropic-Claude-CTF vs-security-vendor anecdote as a defender lesson, and (b) the fix-rate delta from grounding a frontier model in reachability/exploitability data.",
       "discovered_via": "rss",
@@ -1026,7 +1026,7 @@
         "newness": 46,
         "credibility": 70.0,
         "composite": 55.0,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Same class as prior go-git path/symlink CVEs and existing claim path-traversal-defenses-must-cover-symlink-resolution; the ref-name-as-path angle is the novel bit.",
       "discovered_via": "github",
@@ -1098,7 +1098,7 @@
         "newness": 8,
         "credibility": 75.0,
         "composite": 54.65,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Prior vendor reports of LLM refusal boilerplate left in malicious code (HP Wolf 2024 dropper, FunkSec) established the 'LLM tells' phenomenon; Mirai/Gafgyt/Keksec lineage teardowns and MHDDoS-derived booter panels are well covered. The delta here is the recovered development telemetry (git log, QEMU/Docker rigs, 254 automated DDoS benchmark reports) and a quantified per-subsystem capability finding, plus measuring uplift as cost-to-repair.",
       "verified": true,
@@ -1162,7 +1162,7 @@
         "newness": 8,
         "credibility": 70.0,
         "composite": 54.5,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Go text/template SSTI and template injection generally; shell prompt injection via malicious git branch names and PS1; ANSI-escape injection via filenames; repo contents attacking dev tooling (.vscode/, .gitattributes, hooks). The delta is the sink: the attacker-controlled data is a filesystem directory name re-fed to the engine, it fires under the shipped default configuration, and the trigger is passive navigation. Nearest pool entry: the Shescape shell-escaping advisories (different mechanism - escaping, not double evaluation).",
       "verified": true,
@@ -1221,7 +1221,7 @@
         "newness": 8,
         "credibility": 57.5,
         "composite": 54.12,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -1296,7 +1296,7 @@
         "newness": 8,
         "credibility": 75.0,
         "composite": 53.75,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Unit42's own blob-URL phishing note (2025-10-02 'phishing pages using blob URLs') and classic IDN/Cyrillic homoglyph + zero-width-character phishing obfuscation; client-side CAPTCHA gates (KongTuke/White Lynx CAPTCHA pages) and SaaS-redirect chaining are each individually documented.",
       "threat": "Attacker harvests Microsoft OAuth device codes / authentication tokens via a phishing page engineered to be invisible to network analyzers, URL/domain reputation, safe-browsing blocklists, and signature-based content scanners, yielding account takeover.",
@@ -1390,7 +1390,7 @@
         "newness": 46,
         "credibility": 77.5,
         "composite": 53.72,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -1470,7 +1470,7 @@
         "newness": 8,
         "credibility": 55.0,
         "composite": 53.15,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "GitHub's own September 2025, December 2025, and March 2026 posts trailed most of these mitigations; several align with SLSA and the OpenSSF supply-chain roadmap. Novelty here is the specific default-on shipping (npm v12 no-install-scripts, staged publishing, Dependabot cooldown) rather than the strategic framing.",
       "discovered_via": "hackernews",
@@ -1542,7 +1542,7 @@
         "newness": 8,
         "credibility": 50.0,
         "composite": 52.7,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "HTML smuggling (client-side reconstruction of a payload in the browser from embedded/encoded data to evade network inspection) combined with server-side polymorphism / hash rotation; SourTrade is a documented evolution of these adding split-source assembly over a legitimate Bun runtime with per-session AES-CTR filler.",
       "threat": "A malvertising operator delivers per-session, unique-hash Windows malware by reassembling a Bun-based executable in the victim's browser from a legitimate runtime plus attacker-supplied PE headers and JavaScriptCore bytecode, evading hash/IOC-based detection and misattributing the Mark-of-the-Web download source to a benign landing page. Impersonates TradingView, Solana, and Luno to target retail/crypto traders across 12 countries in 25 languages; linked (unconfirmed for the current samples) to the JSCEAL/WeevilProxy stealer.",
@@ -1620,7 +1620,7 @@
         "newness": 8,
         "credibility": 75.0,
         "composite": 52.55,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Generic CWE-78 OS command injection in embedded/OT web management (unsanitized input into system()); the 'xz -f -c -d as cat' file-read trick is a known GTFOBins-style LOLBin. Novelty here is finding-level: the specific Siemens ROX II zero-day trilogy (CVE-2025-40948/40947/40949), not a new vulnerability class.",
       "threat": "An attacker with access to the ROX II management interface can read credentials/keys (CVE-2025-40948), inject a root reverse shell through the feature-key uploader (CVE-2025-40947), and plant a root cron job for reboot-persistent control (CVE-2025-40949), turning a network-segmentation security device into a foothold for OT disruption, data exfiltration, or DoS.",
@@ -1705,7 +1705,7 @@
         "newness": 8,
         "credibility": 70.0,
         "composite": 50.3,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Known bug class rather than a new one: GraphQL subscription resolvers missing query-level authz, WebSocket/SSE channel joins not re-checking per-topic ACLs, Kafka topic-pattern subscribe vs per-topic ACLs, and Kubernetes RBAC treating watch separately from get/list. Range-widening as an authz bypass is IDOR/BOLA with a range operator.",
       "verified": false,
@@ -1788,7 +1788,7 @@
         "newness": 8,
         "credibility": 52.5,
         "composite": 48.88,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "The 'AI-augmented pentesting' category has been building through 2026 with XBOW, ProjectDiscovery, Anthropic's vulnerability-discovery program, and PortSwigger's HTTP Terminator. Snyk's delta here is a concrete four-part reference architecture (reasoning / DAST / validator / prior context), quantitative floors on raw-LLM reliability (~30% hallucinated findings, 61%/26% autonomous-red-team benchmark split), and a six-question buyer scorecard. Related to the same-week 'generator can't be validator' Snyk post — same thesis, pentesting-specific framing.",
       "discovered_via": "rss",
@@ -1864,7 +1864,7 @@
         "newness": 8,
         "credibility": 52.5,
         "composite": 47.97,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Prior claims in the pool around AI-augmented static analysis (Snyk DeepCode, GitHub Copilot autofix, autonomous research pipelines like PortSwigger's HTTP Terminator) already established the 'LLM + deterministic engine' architecture. The delta here is a specific quantitative uplift (3.5x TPs / 19% lower cost per TP) and public identification of a code-slicer (Mandoline) as the load-bearing component alongside taint tracing.",
       "discovered_via": "rss",
@@ -1925,7 +1925,7 @@
         "newness": 8,
         "credibility": 70.0,
         "composite": 46.7,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "The broader 'incomplete neutralization yields command injection' class (CWE-78/CWE-150) and Shescape's own prior per-shell escaping advisories; the analyst's cited Kemp LoadMaster null-byte-gap-to-RCE is the nearest thematic match.",
       "threat": "An attacker who controls a command argument passed through Shescape's escape/escapeAll on Windows CMD can break out of the intended command context (e.g. a conditional block) and execute arbitrary commands (CVSS 9.2).",
@@ -2007,7 +2007,7 @@
         "newness": 46,
         "credibility": 55.0,
         "composite": 45.25,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Standard supply-chain security literature (SLSA, sigstore, provenance attestation). The 'malicious agent skills' finding was reported earlier in 2026 by third-party researchers and covered widely; this post is a marketing recap tied to the Gartner MQ, not new research.",
       "discovered_via": "rss",
@@ -2066,7 +2066,7 @@
         "newness": 8,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Tool round-ups are a common genre and every tool listed is publicly known; there is no new technique or tool. The contribution is the three-category taxonomy and constraint-based selection guidance. Vendor content rather than research: Semgrep competes in the category it ranks and has an unannounced product in it.",
       "verified": true,
@@ -2133,7 +2133,7 @@
         "newness": 8,
         "credibility": 52.5,
         "composite": 42.88,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Nuclei/httpx have been publicly usable as internal scanners for years; the packaged pd-agent + platform + per-segment reachability model is the delta. The 'MTT-exploit is now negative' framing echoes VulnCheck's Known Exploited list observations and Google Project Zero's shrinking-window data.",
       "discovered_via": "rss",
@@ -2205,7 +2205,7 @@
         "newness": 8,
         "credibility": 70.0,
         "composite": 42.5,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
@@ -2283,7 +2283,7 @@
         "newness": 8,
         "credibility": 52.5,
         "composite": 39.88,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Classic JWT alg=none, invalid-curve attacks, and Wycheproof-style test suites make the same point; this piece is a fresh restatement grounded in the current GHSA distribution.",
       "discovered_via": "rss",
@@ -2352,7 +2352,7 @@
         "newness": 46,
         "credibility": 51.9,
         "composite": 33.69,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": [
         "SARIMA baselines in network anomaly detection",
@@ -2422,7 +2422,7 @@
         "newness": 46,
         "credibility": 51.9,
         "composite": 32.78,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Classical STRIDE (Microsoft), prior quantum-specific attack papers cited in the abstract (calibration tampering, SWAP, QubitHammer).",
       "discovered_via": "rss",
@@ -2493,7 +2493,7 @@
         "newness": 46,
         "credibility": 51.9,
         "composite": 32.78,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Classical Common Criteria and ISO/IEC 25010, and prior ad hoc quantum obfuscation metrics (TVD, DFC).",
       "discovered_via": "rss",
@@ -2557,7 +2557,7 @@
         "newness": 8,
         "credibility": 75.0,
         "composite": 32.75,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Longstanding open-source reporting has alleged NSO-Israeli state ties (Haaretz, NYT, Amnesty). The novelty is a specific documentary artifact (diplomatic passport travel record) rather than a new mechanism.",
       "discovered_via": "rss",
@@ -2619,7 +2619,7 @@
         "newness": 46,
         "credibility": 75.0,
         "composite": 31.75,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": "Long-standing critique of DMCA/copyright takedown abuse for censorship.",
       "discovered_via": "rss",
@@ -2687,7 +2687,7 @@
         "newness": 46,
         "credibility": 51.9,
         "composite": 31.29,
-        "scored_at": "2026-08-14T20:08:54+00:00"
+        "scored_at": "2026-08-14T20:28:50+00:00"
       },
       "prior_art": [
         "Plonky3 STARK toolkit",
