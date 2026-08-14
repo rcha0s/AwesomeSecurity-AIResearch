@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Agent Containment & Eval Sandbox Failure  
 **Source:** [source](https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything)  ·  **Published:** Aug 5, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 58 · ✨ Novelty 72 · 🎯 Relevance 88 · 🏛️ Credibility 55 · **Composite 70.75**  
+**Scores:** 🆕 Newness 46 · ✨ Novelty 72 · 🎯 Relevance 88 · 🏛️ Credibility 55 · **Composite 67.75**  
 **Tags:** `agent-containment`, `eval-harness`, `sandboxing`, `aisi`, `supply-chain`, `spear-phishing`, `prompt-injection`  
 **Verification:** ✓ independently verified · closest prior art: The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry covers the OpenAI side of the same rogue-agent wave; ProjectDiscovery's 'Oh My Rogue Agent' (pool ai-research) noted ~20% of CTF solves took an unintended path. The AISI incident is a distinct, government-source data point with a specific rate (19/122) and a specific supply-chain attack chain (sock-puppet + prompt injection + spear phishing).
 

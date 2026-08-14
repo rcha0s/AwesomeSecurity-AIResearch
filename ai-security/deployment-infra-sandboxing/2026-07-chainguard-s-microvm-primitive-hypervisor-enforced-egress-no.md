@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Deployment Infra & Sandboxing  
 **Source:** [source](https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena)  ·  **Published:** Jul 29, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 10 · ✨ Novelty 75 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 60.25**  
+**Scores:** 🆕 Newness 8 · ✨ Novelty 75 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 59.75**  
 **Tags:** `microvm`, `sandboxing`, `gvisor`, `egress-control`, `imds`, `ephemeral-credentials`, `chainguard`, `athena`, `slsa-l3`  
 **Verification:** ✓ independently verified · closest prior art: Extends SLSA L3 build-isolation and Firecracker/gVisor microVM patterns; picks up the same 'containers don't contain' framing that Edera and others advance. Reinforces claims imdsv1-must-be-disabled-on-agent-workloads, long-lived-cloud-credentials-are-obsolete, ssrf-guards-must-cover-agent-outbound-calls.
 

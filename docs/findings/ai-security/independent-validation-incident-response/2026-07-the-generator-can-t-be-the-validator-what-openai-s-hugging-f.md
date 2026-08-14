@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Independent Validation & Incident Response  
 **Source:** [source](https://snyk.io/blog/openai-hugging-face-incident/)  ·  **Published:** Jul 28, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 10 · ✨ Novelty 68 · 🎯 Relevance 90 · 🏛️ Credibility 52 · **Composite 57.77**  
+**Scores:** 🆕 Newness 8 · ✨ Novelty 68 · 🎯 Relevance 90 · 🏛️ Credibility 52 · **Composite 57.27**  
 **Tags:** `ai-security`, `independent-validation`, `loss-of-control`, `sandbox-escape`, `self-validation`, `openai`, `hugging-face`, `multi-model`  
 **Verification:** ✓ independently verified · closest prior art: The OpenAI - Hugging Face incident itself is already covered from the defender-response side by the pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' (embracethered.com). Snyk's delta is the 'generator cannot be validator' framing tied to their own VulnBench repeatability numbers (300 runs, ~85% recurrence on verified TPs, ~20% recurrence on novel findings), and the multi-vendor argument that self-scoring does not compose.
 

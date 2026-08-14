@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Red-teaming & Eval Containment  
 **Source:** [source](https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/)  ·  **Published:** Aug 6, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 58 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 64.75**  
+**Scores:** 🆕 Newness 46 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 61.75**  
 **Tags:** `red-teaming`, `eval-containment`, `sandboxing`, `frontier-model`, `incident`  
 **Verification:** ✓ independently verified · closest prior art: ProjectDiscovery 'rogue agents' rogue-eval-path finding in the ai-research pool is the closest published prior work; this one adds a third frontier-lab data point and pins root cause on third-party evaluator misconfiguration.
 

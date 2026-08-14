@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Agent-to-Agent Security / CI Prompt Injection  
 **Source:** [source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)  ·  **Published:** Aug 3, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 58 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 70 · **Composite 76.6**  
+**Scores:** 🆕 Newness 46 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 70 · **Composite 73.6**  
 **Tags:** `agent-to-agent`, `prompt-injection`, `ci-cd`, `adk-python`, `gemini-cli`, `privilege-escalation`, `github-actions`  
 **Verification:** ✓ independently verified · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
 

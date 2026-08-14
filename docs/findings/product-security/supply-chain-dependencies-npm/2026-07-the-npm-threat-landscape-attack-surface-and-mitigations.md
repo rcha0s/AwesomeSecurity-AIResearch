@@ -2,7 +2,7 @@
 
 **Topic:** Product Security  ·  **Domain:** Supply Chain & Dependencies (npm)  
 **Source:** [source](https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/)  ·  **Published:** Jul 15, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 10 · ✨ Novelty 78 · 🎯 Relevance 88 · 🏛️ Credibility 70 · **Composite 62.8**  
+**Scores:** 🆕 Newness 8 · ✨ Novelty 78 · 🎯 Relevance 88 · 🏛️ Credibility 70 · **Composite 62.3**  
 **Tags:** `npm`, `supply-chain`, `shai-hulud`, `miasma`, `slsa-bypass`, `cache-poisoning`, `oidc-extraction`, `copilot`, `ci-cd`  
 **Verification:** ✓ independently verified · closest prior art: Extends the September 2025 Shai-Hulud reporting (also Unit 42) and connects it to April-July 2026 waves. The SLSA-provenance-bypass framing overlaps with SLSA project discussion of trust-scope misconfiguration; the /proc-memory OIDC extraction is the same technique documented in the tj-actions/changed-files compromise of March 2025. Novel: the AsyncAPI unprotected-release-branch pattern and the Copilot-triggered install-without-human-in-the-loop observation.
 

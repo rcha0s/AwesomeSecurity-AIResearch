@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Harness / context management  
 **Source:** [@kunchenguid](https://github.com/algal/pi-openai-server-compaction)  ·  **Author:** kunchenguid  ·  **Published:** Jul 22, 2026  ·  **Retrieved:** 2026-07-26  
-**Scores:** 🆕 Newness 10 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 75 · **Composite 58.75**  
+**Scores:** 🆕 Newness 8 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 75 · **Composite 58.25**  
 **Tags:** `harness`, `context-management`, `compaction`, `responses-api`, `openai`, `codex`, `long-running-agents`  
 **Verification:** ✓ independently verified · closest prior art: OpenAI Responses API stateful continuation (store:true + previous_response_id) and generic context/tool-output compaction (the pool's 'Compact tool outputs' note); no public equivalent describes reverse-engineering Codex's encrypted server-side `compaction_trigger` protocol and porting it into another harness.
 

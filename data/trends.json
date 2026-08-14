@@ -3,17 +3,65 @@
     {
       "topic": "ai-security",
       "tag": "prompt-injection",
-      "count": 12,
-      "recent": 7,
+      "count": 19,
+      "recent": 15,
       "sources": 11,
-      "momentum": 19.0,
-      "first_seen": "2026-02",
+      "momentum": 34.0,
+      "first_seen": "2026-04",
       "last_seen": "2026-08-10",
       "members": [
         {
           "title": "LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode",
           "url": "https://github.com/CyberSunil/LLMVault",
           "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "toby-bridges/api-relay-audit",
+          "url": "https://github.com/toby-bridges/api-relay-audit",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "alexgreensh/repo-forensics",
+          "url": "https://github.com/alexgreensh/repo-forensics",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05223",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+          "url": "https://arxiv.org/abs/2608.06130",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "PromptShield Home: Ambient Multimodal Prompt Injection Defense for Smart-Home Agents",
+          "url": "https://arxiv.org/abs/2608.05495",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Robust Context-Aware Detection of Malicious Instructions in Text",
+          "url": "https://arxiv.org/abs/2608.05430",
+          "date": "2026-08-07",
           "fresh": true
         },
         {
@@ -75,11 +123,197 @@
           "url": "http://security.googleblog.com/2026/04/ai-threats-in-wild-current-state-of.html",
           "date": "2026-04",
           "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "mcp",
+      "count": 17,
+      "recent": 16,
+      "sources": 10,
+      "momentum": 33.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "BurpMCP-Ultra: 150-tool MCP server for Burp with scope-gate, host allowlist, and per-session token",
+          "url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
+          "date": "2026-08-10",
+          "fresh": true
         },
         {
-          "title": "Augustus: a production LLM vulnerability scanner (210+ probes)",
-          "url": "https://github.com/praetorian-inc/augustus",
-          "date": "2026-02",
+          "title": "agentplugins/agent-plugins-spec",
+          "url": "https://github.com/agentplugins/agent-plugins-spec",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "modelcontextprotocol/modelcontextprotocol",
+          "url": "https://github.com/modelcontextprotocol/modelcontextprotocol",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+          "url": "https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "affaan-m/agentshield",
+          "url": "https://github.com/affaan-m/agentshield",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "sinewaveai/agent-security-scanner-mcp",
+          "url": "https://github.com/sinewaveai/agent-security-scanner-mcp",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "alexgreensh/repo-forensics",
+          "url": "https://github.com/alexgreensh/repo-forensics",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "highflame-ai/ramparts",
+          "url": "https://github.com/highflame-ai/ramparts",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+          "url": "https://arxiv.org/abs/2608.06130",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Show HN: Product analytics (and evals) for agent sessions on your MCP",
+          "url": "https://armature.tech/",
+          "date": "2026-08-03",
+          "fresh": true
+        },
+        {
+          "title": "MCP gets an enterprise makeover",
+          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
+          "date": "2026-07-29",
+          "fresh": true
+        },
+        {
+          "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
+          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "ANSI escape injection in MCP servers: hidden from humans, visible to AI",
+          "url": "https://brightsec.com/research/detecting-ansi-escape-sequence-injection-in-mcp-servers-with-dast/",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "date": "2026-07-15",
+          "fresh": true
+        },
+        {
+          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+          "date": "2026-06-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "supply-chain",
+      "count": 11,
+      "recent": 9,
+      "sources": 10,
+      "momentum": 20.0,
+      "first_seen": "2026-06-23",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "agentplugins/agent-plugins-spec",
+          "url": "https://github.com/agentplugins/agent-plugins-spec",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "toby-bridges/api-relay-audit",
+          "url": "https://github.com/toby-bridges/api-relay-audit",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "alexgreensh/repo-forensics",
+          "url": "https://github.com/alexgreensh/repo-forensics",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse",
+          "url": "https://arxiv.org/abs/2608.05204",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)",
+          "url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
+          "date": "2026-08-05",
+          "fresh": true
+        },
+        {
+          "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
+          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+          "date": "2026-07-24",
+          "fresh": true
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
+          "fresh": true
+        },
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+          "date": "2026-06-30",
+          "fresh": false
+        },
+        {
+          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+          "date": "2026-06-23",
           "fresh": false
         }
       ]
@@ -88,12 +322,24 @@
       "topic": "ai-security",
       "tag": "agent-security",
       "count": 12,
-      "recent": 5,
-      "sources": 12,
-      "momentum": 17.0,
-      "first_seen": "2026-02",
-      "last_seen": "2026-08-06",
+      "recent": 7,
+      "sources": 11,
+      "momentum": 19.0,
+      "first_seen": "2026-04",
+      "last_seen": "2026-08-07",
       "members": [
+        {
+          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+          "url": "https://arxiv.org/abs/2608.06130",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05884",
+          "date": "2026-08-07",
+          "fresh": true
+        },
         {
           "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
           "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
@@ -153,151 +399,79 @@
           "url": "http://security.googleblog.com/2026/04/ai-threats-in-wild-current-state-of.html",
           "date": "2026-04",
           "fresh": false
-        },
-        {
-          "title": "Prismor: a runtime firewall that blocks rogue AI-agent tool calls",
-          "url": "https://github.com/PrismorSec/prismor",
-          "date": "2026-02",
-          "fresh": false
-        },
-        {
-          "title": "Augustus: a production LLM vulnerability scanner (210+ probes)",
-          "url": "https://github.com/praetorian-inc/augustus",
-          "date": "2026-02",
-          "fresh": false
         }
       ]
     },
     {
       "topic": "ai-security",
-      "tag": "mcp",
-      "count": 9,
+      "tag": "jailbreak",
+      "count": 7,
       "recent": 7,
-      "sources": 8,
-      "momentum": 16.0,
-      "first_seen": "2026-02",
+      "sources": 3,
+      "momentum": 14.0,
+      "first_seen": "2026-08-07",
       "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "BurpMCP-Ultra: 150-tool MCP server for Burp with scope-gate, host allowlist, and per-session token",
-          "url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
+          "title": "Diffusion LLMs as Targets and Adversaries: Mechanistic Safety Exploits",
+          "url": "https://arxiv.org/abs/2608.07430",
           "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
-          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "title": "GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking",
+          "url": "https://arxiv.org/abs/2604.09222",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models",
+          "url": "https://arxiv.org/abs/2605.00123",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "praetorian-inc/augustus",
+          "url": "https://github.com/praetorian-inc/augustus",
           "date": "2026-08-09",
           "fresh": true
         },
         {
-          "title": "Show HN: Product analytics (and evals) for agent sessions on your MCP",
-          "url": "https://armature.tech/",
-          "date": "2026-08-03",
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "date": "2026-08-07",
           "fresh": true
         },
         {
-          "title": "MCP gets an enterprise makeover",
-          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
-          "date": "2026-07-29",
+          "title": "AI Security Leaderboard: Methodology, Results and Minimal Standard",
+          "url": "https://arxiv.org/abs/2608.03070",
+          "date": "2026-08-07",
           "fresh": true
-        },
-        {
-          "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
-          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
-          "date": "2026-07-24",
-          "fresh": true
-        },
-        {
-          "title": "ANSI escape injection in MCP servers: hidden from humans, visible to AI",
-          "url": "https://brightsec.com/research/detecting-ansi-escape-sequence-injection-in-mcp-servers-with-dast/",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
-          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
-          "date": "2026-07-15",
-          "fresh": true
-        },
-        {
-          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-          "date": "2026-06-30",
-          "fresh": false
-        },
-        {
-          "title": "Prismor: a runtime firewall that blocks rogue AI-agent tool calls",
-          "url": "https://github.com/PrismorSec/prismor",
-          "date": "2026-02",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "supply-chain",
-      "count": 7,
-      "recent": 5,
-      "sources": 7,
-      "momentum": 12.0,
-      "first_seen": "2026-06-23",
-      "last_seen": "2026-08-09",
-      "members": [
-        {
-          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
-          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
-          "date": "2026-08-09",
-          "fresh": true
-        },
-        {
-          "title": "Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)",
-          "url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
-          "date": "2026-08-05",
-          "fresh": true
-        },
-        {
-          "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
-          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
-          "date": "2026-07-24",
-          "fresh": true
-        },
-        {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
-          "fresh": true
-        },
-        {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
-          "fresh": true
-        },
-        {
-          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-          "date": "2026-06-30",
-          "fresh": false
-        },
-        {
-          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-          "date": "2026-06-23",
-          "fresh": false
         }
       ]
     },
     {
       "topic": "ai-security",
       "tag": "sandboxing",
-      "count": 5,
-      "recent": 5,
-      "sources": 4,
-      "momentum": 10.0,
+      "count": 6,
+      "recent": 6,
+      "sources": 5,
+      "momentum": 12.0,
       "first_seen": "2026-07-29",
-      "last_seen": "2026-08-06",
+      "last_seen": "2026-08-09",
       "members": [
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": true
+        },
         {
           "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
           "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
@@ -326,6 +500,186 @@
           "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
           "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
           "date": "2026-07-29",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "coding-agents",
+      "count": 6,
+      "recent": 6,
+      "sources": 4,
+      "momentum": 12.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "PrismorSec/prismor",
+          "url": "https://github.com/PrismorSec/prismor",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "fu351/Doberman-Core",
+          "url": "https://github.com/fu351/Doberman-Core",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05223",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05884",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents",
+          "url": "https://arxiv.org/abs/2608.02687",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
+          "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "guardrails",
+      "count": 6,
+      "recent": 6,
+      "sources": 5,
+      "momentum": 12.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "PrismorSec/prismor",
+          "url": "https://github.com/PrismorSec/prismor",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "fu351/Doberman-Core",
+          "url": "https://github.com/fu351/Doberman-Core",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ECHO: A Locally-Deployable Agentic Health Assistant with Temporal Memory, Safety Guardrails, and Speech Assessment",
+          "url": "https://arxiv.org/abs/2608.06110",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
+          "url": "https://arxiv.org/abs/2608.05695",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "red-team",
+      "count": 5,
+      "recent": 5,
+      "sources": 4,
+      "momentum": 10.0,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode",
+          "url": "https://github.com/CyberSunil/LLMVault",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
+          "url": "https://arxiv.org/abs/2606.08531",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "praetorian-inc/augustus",
+          "url": "https://github.com/praetorian-inc/augustus",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection",
+          "url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
+          "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "threat-modeling",
+      "count": 5,
+      "recent": 5,
+      "sources": 3,
+      "momentum": 10.0,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products",
+          "url": "https://arxiv.org/abs/2606.15485",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents",
+          "url": "https://arxiv.org/abs/2608.05201",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "AegisShield: Democratizing Cyber Threat Modeling with Generative AI",
+          "url": "https://arxiv.org/abs/2509.10482",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+          "url": "https://arxiv.org/abs/2607.17986",
+          "date": "2026-07-20",
+          "fresh": true
+        },
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
           "fresh": true
         }
       ]
@@ -362,6 +716,78 @@
           "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
           "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
           "date": "2026-07-15",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "evals",
+      "count": 4,
+      "recent": 4,
+      "sources": 3,
+      "momentum": 8.0,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-08-08",
+      "members": [
+        {
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "Show HN: Product analytics (and evals) for agent sessions on your MCP",
+          "url": "https://armature.tech/",
+          "date": "2026-08-03",
+          "fresh": true
+        },
+        {
+          "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
+          "url": "https://arxiv.org/abs/2607.17535",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "evaluation",
+      "count": 4,
+      "recent": 4,
+      "sources": 4,
+      "momentum": 8.0,
+      "first_seen": "2026-07-31",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
+          "url": "https://arxiv.org/abs/2606.08531",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Sharding Prevents LLM Oversight Failures and Adversarial Exploitation",
+          "url": "https://arxiv.org/abs/2608.06422",
+          "date": "2026-08-05",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
+          "date": "2026-07-31",
           "fresh": true
         }
       ]
@@ -410,6 +836,108 @@
     },
     {
       "topic": "ai-security",
+      "tag": "claude-code",
+      "count": 4,
+      "recent": 3,
+      "sources": 4,
+      "momentum": 7.0,
+      "first_seen": "2026-05-14",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "affaan-m/agentshield",
+          "url": "https://github.com/affaan-m/agentshield",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "Scientific computing in the age of agentic AI",
+          "url": "https://openai.com/index/scientific-computing-agentic-ai",
+          "date": "2026-07-28",
+          "fresh": true
+        },
+        {
+          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
+          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
+          "date": "2026-05-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "skill-scanning",
+      "count": 4,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 7.0,
+      "first_seen": "2026-06-23",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "highflame-ai/ramparts",
+          "url": "https://github.com/highflame-ai/ramparts",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+          "date": "2026-06-23",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "multi-agent",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Quantigence: A Multi-Agent Framework for Post-Quantum Security Analysis on Commodity Hardware",
+          "url": "https://arxiv.org/abs/2512.12989",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
+          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
+          "date": "2026-08-06",
+          "fresh": true
+        },
+        {
+          "title": "Online Security Learning in Cooperative Multi-Agent Systems under Hidden Byzantine Attacks",
+          "url": "https://arxiv.org/abs/2608.06520",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "openai",
       "count": 3,
       "recent": 3,
@@ -440,60 +968,240 @@
     },
     {
       "topic": "ai-security",
-      "tag": "evals",
+      "tag": "agent-safety",
       "count": 3,
       "recent": 3,
-      "sources": 2,
+      "sources": 3,
       "momentum": 6.0,
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-08-03",
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "Show HN: Product analytics (and evals) for agent sessions on your MCP",
-          "url": "https://armature.tech/",
-          "date": "2026-08-03",
+          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
+          "url": "https://arxiv.org/abs/2606.08531",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
-          "url": "https://arxiv.org/abs/2607.17535",
-          "date": "2026-07-21",
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
           "fresh": true
         },
         {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
+          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
+          "url": "https://arxiv.org/abs/2608.05695",
+          "date": "2026-08-07",
           "fresh": true
         }
       ]
     },
     {
       "topic": "ai-security",
-      "tag": "red-team",
+      "tag": "skills",
       "count": 3,
-      "recent": 2,
+      "recent": 3,
       "sources": 3,
-      "momentum": 5.0,
-      "first_seen": "2026-02",
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
       "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode",
-          "url": "https://github.com/CyberSunil/LLMVault",
+          "title": "agentplugins/agent-plugins-spec",
+          "url": "https://github.com/agentplugins/agent-plugins-spec",
           "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection",
-          "url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
-          "date": "2026-08-03",
+          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05223",
+          "date": "2026-08-07",
           "fresh": true
         },
         {
-          "title": "Augustus: a production LLM vulnerability scanner (210+ probes)",
-          "url": "https://github.com/praetorian-inc/augustus",
-          "date": "2026-02",
+          "title": "SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse",
+          "url": "https://arxiv.org/abs/2608.05204",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "adversarial",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Sharding Prevents LLM Oversight Failures and Adversarial Exploitation",
+          "url": "https://arxiv.org/abs/2608.06422",
+          "date": "2026-08-05",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "llm-as-judge",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Sharding Prevents LLM Oversight Failures and Adversarial Exploitation",
+          "url": "https://arxiv.org/abs/2608.06422",
+          "date": "2026-08-05",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "zero-trust",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+          "url": "https://arxiv.org/abs/2608.06130",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
+          "date": "2026-08-04",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "multimodal",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "PromptShield Home: Ambient Multimodal Prompt Injection Defense for Smart-Home Agents",
+          "url": "https://arxiv.org/abs/2608.05495",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
+          "url": "https://arxiv.org/abs/2608.05909",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "provenance",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse",
+          "url": "https://arxiv.org/abs/2608.05204",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Behavioral Canaries: Auditing Private Retrieved Context Usage in RL Fine-Tuning",
+          "url": "https://arxiv.org/abs/2604.22191",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+          "url": "https://arxiv.org/abs/2607.17550",
+          "date": "2026-07-21",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "tool-poisoning",
+      "count": 3,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 5.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+          "date": "2026-06-30",
           "fresh": false
         }
       ]
@@ -560,6 +1268,30 @@
     },
     {
       "topic": "ai-security",
+      "tag": "gemini-cli",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05223",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Google dev kit spurs first-ever agent-on-agent violence",
+          "url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
+          "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "black-hat",
       "count": 2,
       "recent": 2,
@@ -602,6 +1334,198 @@
           "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
           "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
           "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agent-eval",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Post-Hoc Trajectory-Risk Certification for Modular LLM-Based Security Agents",
+          "url": "https://arxiv.org/abs/2608.05199",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
+          "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
+          "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "open-weights",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
+          "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
+          "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "transfer-attack",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Diffusion LLMs as Targets and Adversaries: Mechanistic Safety Exploits",
+          "url": "https://arxiv.org/abs/2608.07430",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "static-analysis",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
+          "url": "https://arxiv.org/abs/2607.21642",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "ssrf",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-15",
+      "last_seen": "2026-07-15",
+      "members": [
+        {
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "date": "2026-07-15",
+          "fresh": true
+        },
+        {
+          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+          "date": "2026-07-15",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "coding-agent",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-09",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Quoting OpenClaw",
+          "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "sinewaveai/agent-security-scanner-mcp",
+          "url": "https://github.com/sinewaveai/agent-security-scanner-mcp",
+          "date": "2026-08-09",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agent-sandbox",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
+          "url": "https://arxiv.org/abs/2607.21642",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "egress-control",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-07-30",
+      "members": [
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": true
+        },
+        {
+          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
+          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
+          "date": "2026-07-29",
           "fresh": true
         }
       ]
@@ -656,30 +1580,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "ssrf",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-07-15",
-      "last_seen": "2026-07-15",
-      "members": [
-        {
-          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
-          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
-          "date": "2026-07-15",
-          "fresh": true
-        },
-        {
-          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
-          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
-          "date": "2026-07-15",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "rce",
       "count": 2,
       "recent": 2,
@@ -704,24 +1604,24 @@
     },
     {
       "topic": "ai-security",
-      "tag": "egress-control",
+      "tag": "governance",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-07-30",
+      "first_seen": "2026-08-04",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
+          "title": "Taxonomy-Driven Analysis of Open-Source AI Risk Mitigation Tools",
+          "url": "https://arxiv.org/abs/2608.07446",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
-          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
-          "date": "2026-07-29",
+          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
+          "date": "2026-08-04",
           "fresh": true
         }
       ]
@@ -752,72 +1652,120 @@
     },
     {
       "topic": "ai-security",
-      "tag": "threat-modeling",
+      "tag": "agentic-ai",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-07-20",
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
-          "url": "https://arxiv.org/abs/2607.17986",
-          "date": "2026-07-20",
+          "title": "The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products",
+          "url": "https://arxiv.org/abs/2606.15485",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
+          "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+          "url": "https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+          "date": "2026-08-10",
           "fresh": true
         }
       ]
     },
     {
       "topic": "ai-security",
-      "tag": "zero-trust",
+      "tag": "attention",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-04",
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
-          "date": "2026-08-04",
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
+          "title": "Corrupting Attention: Evasion-Based Adversarial Attacks on Encoder Attention in Detection Transformers",
+          "url": "https://arxiv.org/abs/2608.06674",
+          "date": "2026-08-10",
           "fresh": true
         }
       ]
     },
     {
       "topic": "ai-security",
-      "tag": "tool-poisoning",
+      "tag": "alignment",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Measuring and Detecting Harmful AI Sycophancy",
+          "url": "https://arxiv.org/abs/2608.05624",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
+          "url": "https://arxiv.org/abs/2608.05909",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "refusal",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models",
+          "url": "https://arxiv.org/abs/2605.00123",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
+          "url": "https://arxiv.org/abs/2608.05909",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "package-hallucination",
       "count": 2,
       "recent": 1,
       "sources": 2,
       "momentum": 3.0,
-      "first_seen": "2026-06-30",
+      "first_seen": "2026-07-01",
       "last_seen": "2026-08-09",
       "members": [
         {
-          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
-          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "title": "sinewaveai/agent-security-scanner-mcp",
+          "url": "https://github.com/sinewaveai/agent-security-scanner-mcp",
           "date": "2026-08-09",
           "fresh": true
         },
         {
-          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-          "date": "2026-06-30",
+          "title": "AI Coding Agents Skip Package Verification, and Attackers Are Exploiting It",
+          "url": "https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm",
+          "date": "2026-07-01",
           "fresh": false
         }
       ]
@@ -842,54 +1790,6 @@
           "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
           "url": "https://arxiv.org/abs/2606.30373",
           "date": "2026-06-29",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "skill-scanning",
-      "count": 2,
-      "recent": 1,
-      "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-06-23",
-      "last_seen": "2026-07-16",
-      "members": [
-        {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
-          "fresh": true
-        },
-        {
-          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-          "date": "2026-06-23",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "llm-security",
-      "count": 2,
-      "recent": 1,
-      "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-02",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
-          "url": "https://arxiv.org/abs/2607.17619",
-          "date": "2026-07-20",
-          "fresh": true
-        },
-        {
-          "title": "Augustus: a production LLM vulnerability scanner (210+ probes)",
-          "url": "https://github.com/praetorian-inc/augustus",
-          "date": "2026-02",
           "fresh": false
         }
       ]
@@ -944,24 +1844,24 @@
     },
     {
       "topic": "ai-security",
-      "tag": "claude-code",
+      "tag": "federated-learning",
       "count": 2,
       "recent": 1,
       "sources": 2,
       "momentum": 3.0,
-      "first_seen": "2026-05-14",
-      "last_seen": "2026-07-28",
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "Scientific computing in the age of agentic AI",
-          "url": "https://openai.com/index/scientific-computing-agentic-ai",
-          "date": "2026-07-28",
+          "title": "TOFD: Target-Oriented Feature Decoupling against Poisoning Attacks in Split Federated Learning",
+          "url": "https://arxiv.org/abs/2608.07274",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
-          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
-          "date": "2026-05-14",
+          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
+          "url": "https://arxiv.org/abs/2606.27511",
+          "date": "2026-06-25",
           "fresh": false
         }
       ]
@@ -986,30 +1886,6 @@
           "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
           "url": "https://arxiv.org/abs/2606.30373",
           "date": "2026-06-29",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "tooling-2026",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-02",
-      "last_seen": "2026-02",
-      "members": [
-        {
-          "title": "Prismor: a runtime firewall that blocks rogue AI-agent tool calls",
-          "url": "https://github.com/PrismorSec/prismor",
-          "date": "2026-02",
-          "fresh": false
-        },
-        {
-          "title": "Augustus: a production LLM vulnerability scanner (210+ probes)",
-          "url": "https://github.com/praetorian-inc/augustus",
-          "date": "2026-02",
           "fresh": false
         }
       ]
@@ -1776,122 +2652,572 @@
   "ai-research": [
     {
       "topic": "ai-research",
-      "tag": "harness",
-      "count": 7,
-      "recent": 5,
-      "sources": 6,
-      "momentum": 12.0,
-      "first_seen": "2026-05",
-      "last_seen": "2026-08-04",
+      "tag": "arxiv",
+      "count": 76,
+      "recent": 76,
+      "sources": 2,
+      "momentum": 152.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "LLM 0.32: reasoning traces, server-side provider tools, human-approval pause/resume, and content-addressable message logs",
-          "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
-          "date": "2026-08-04",
+          "title": "Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?",
+          "url": "https://arxiv.org/abs/2605.22148",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
-          "url": "https://github.com/algal/pi-openai-server-compaction",
-          "date": "2026-07-22",
+          "title": "Counterfactual Simulation Training for Chain-of-Thought Faithfulness",
+          "url": "https://arxiv.org/abs/2602.20710",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
-          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
-          "date": "2026-07-22",
+          "title": "\"LLM Agent Performance\" Is Not a Single Evaluation Target",
+          "url": "https://arxiv.org/abs/2602.03238",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
-          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
-          "date": "2026-07-22",
+          "title": "Ask-E: An Environment for Calibrated Question Generation",
+          "url": "https://arxiv.org/abs/2608.06933",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
-          "url": "https://arxiv.org/abs/2607.13596",
-          "date": "2026-07-16",
+          "title": "Beyond Scaffold Splits: Structural-Frontier Evaluation Reveals Hidden Failures in ADMET Models",
+          "url": "https://arxiv.org/abs/2607.10729",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
-          "fresh": false
-        },
-        {
-          "title": "PawBench: benchmarking LLM x harness performance",
-          "url": "https://github.com/agentscope-ai/PawBench",
-          "date": "2026-05",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "evals",
-      "count": 7,
-      "recent": 5,
-      "sources": 7,
-      "momentum": 12.0,
-      "first_seen": "2026-05",
-      "last_seen": "2026-07-22",
-      "members": [
-        {
-          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
-          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
-          "date": "2026-07-22",
+          "title": "SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization",
+          "url": "https://arxiv.org/abs/2602.12187",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
-          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
-          "date": "2026-07-22",
+          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+          "url": "https://arxiv.org/abs/2608.07458",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
-          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
-          "date": "2026-07-21",
+          "title": "Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration",
+          "url": "https://arxiv.org/abs/2605.27752",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
-          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
-          "date": "2026-07-17",
+          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+          "url": "https://arxiv.org/abs/2608.02515",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
-          "url": "https://arxiv.org/abs/2607.13596",
-          "date": "2026-07-16",
+          "title": "Debias in Text, Believe Your Eyes: Text-Anchored Cross-Modal Transfer for Visual Counter-Commonsense Reasoning",
+          "url": "https://arxiv.org/abs/2608.06938",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
-          "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
-          "date": "2026-07-02",
-          "fresh": false
+          "title": "Inference-Time Scaling of Diffusion Language Models via Trajectory Refinement",
+          "url": "https://arxiv.org/abs/2507.08390",
+          "date": "2026-08-10",
+          "fresh": true
         },
         {
-          "title": "PawBench: benchmarking LLM x harness performance",
-          "url": "https://github.com/agentscope-ai/PawBench",
-          "date": "2026-05",
-          "fresh": false
+          "title": "Measuring Concept Content in Text from LLM Activations: ESG Evidence from Concept Vectors and Linear Probes",
+          "url": "https://arxiv.org/abs/2608.07208",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Toward a Causal Data Management Ecosystem for Decision Making and Agentic AI",
+          "url": "https://arxiv.org/abs/2608.07214",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Trajectory-Relative Hindsight Distillation for Agentic Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.07371",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CreativeInstruct: Scalably Teaching LLMs to Balance Quality, Creativity, and Diversity",
+          "url": "https://arxiv.org/abs/2608.07460",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights",
+          "url": "https://arxiv.org/abs/2608.06763",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "GPTKB 2.0: Browsing, Querying, and Auditing a Disambiguated LLM-Derived Knowledge Base",
+          "url": "https://arxiv.org/abs/2608.06992",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K2.5: Visual Agentic Intelligence",
+          "url": "https://arxiv.org/abs/2602.02276",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions",
+          "url": "https://arxiv.org/abs/2605.29738",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs",
+          "url": "https://arxiv.org/abs/2608.07088",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Solver-Guided Reasoning for Mixed-Equilibrium Strategies",
+          "url": "https://arxiv.org/abs/2608.06741",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Sub-Quadratic Bisimulation Metrics via Approximate Nearest Neighbors: Coverage-Augmented Guarantees and Computable Two-Sided Certificates",
+          "url": "https://arxiv.org/abs/2608.06762",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LoCA: Forward-Only LLM Tuning after One-Shot Calibration with Local Credit Assignment",
+          "url": "https://arxiv.org/abs/2608.03020",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Probing Visual Concepts in Lightweight Vision-Language Models for Automated Driving",
+          "url": "https://arxiv.org/abs/2603.06054",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ODEWorld: A Continuous Predictive Architecture via Physical-Time Flow",
+          "url": "https://arxiv.org/abs/2607.27924",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Optimized Certainty Equivalent Risk Minimization Using Samples: Algorithms, Convergence Rates, and Applications",
+          "url": "https://arxiv.org/abs/2608.07113",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Playing Games with My Heart: An Evaluation of AI Companion Apps",
+          "url": "https://arxiv.org/abs/2605.08093",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "The Sparsity Whisperer",
+          "url": "https://arxiv.org/abs/2608.06630",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains",
+          "url": "https://arxiv.org/abs/2603.15506",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Boundary Density Likelihood for Direct Event-Time Supervision",
+          "url": "https://arxiv.org/abs/2408.12792",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "IceHorizon: A Dataset for Horizon Detection in Ice-Covered Maritime Environments and Comparative Evaluation of Detection Methods",
+          "url": "https://arxiv.org/abs/2608.07018",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Judge a Book by its Cover: Investigating Multi-Modal LLMs for Multi-Page Handwritten Document Transcription",
+          "url": "https://arxiv.org/abs/2502.20295",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Mitigating Gradient Pathology in PINNs through Aligned Constraint",
+          "url": "https://arxiv.org/abs/2605.25001",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "PULSE: Agentic Investigation with Passive Sensing for Proactive Affective Intervention in Cancer Survivorship",
+          "url": "https://arxiv.org/abs/2605.17679",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ArchEGraph: A Large-Scale Graph Dataset for Geometry-Topology-Physics Aligned Building Energy Modeling",
+          "url": "https://arxiv.org/abs/2608.06772",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Optimization-based Online Conformal Prediction for Multi-step Forecasting",
+          "url": "https://arxiv.org/abs/2508.13362",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Harnessing the Synergy between LLM Agents and Knowledge Graphs for Urban Socioeconomic Prediction",
+          "url": "https://arxiv.org/abs/2411.00028",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Dual-Node NVIDIA DGX Spark over Tailscale: A Remote-Access Testbed for Distributed LLM Training and Cyber-Threat-Intelligence Fine-Tuning",
+          "url": "https://arxiv.org/abs/2608.07226",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension",
+          "url": "https://arxiv.org/abs/2608.07254",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages",
+          "url": "https://arxiv.org/abs/2605.01720",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Tensor Network Kernel Machines: A JAX Framework for Machine Learning and Nonlinear System Identification",
+          "url": "https://arxiv.org/abs/2608.07043",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Residual Algebra for Representation-Preserving Learning",
+          "url": "https://arxiv.org/abs/2608.07349",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Human-Centered Explainable AI for TinyML Edge Devices: A Pareto-Based Selection Framework with LLM-Guided Design",
+          "url": "https://arxiv.org/abs/2608.07091",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MAC: A Conversion Rate Prediction Benchmark Featuring Labels Under Multiple Attribution Mechanisms",
+          "url": "https://arxiv.org/abs/2603.02184",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "PHOENIX: Fine-Tuned SLM-Powered Autonomous Satellite Lifetime Extension via Predictive Self-Healing and Multi-Agent AI Recovery",
+          "url": "https://arxiv.org/abs/2608.07126",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Certified Interpolation Oversampling: Per-Instance Safety Guarantees for Imbalanced Learning",
+          "url": "https://arxiv.org/abs/2501.15790",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Dependency Parsing Across the Resource Spectrum: Evaluating Architectures on High and Low-Resource Languages",
+          "url": "https://arxiv.org/abs/2605.02608",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "FedDOSE: Federated Learning Framework Decomposing Site Effects for Modeling Brain Dynamic Functional Connectivity",
+          "url": "https://arxiv.org/abs/2608.07393",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MaskFlow: Precise, Consistent and Seamless Regional Image Editing",
+          "url": "https://arxiv.org/abs/2608.06929",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification",
+          "url": "https://arxiv.org/abs/2607.25232",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Optimal Neural Network Approximation via Empirical Least Squares with Deterministic Samples",
+          "url": "https://arxiv.org/abs/2608.06687",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Representation Handoffs for OpenArm-Based Laboratory Mobile Manipulation",
+          "url": "https://arxiv.org/abs/2608.07154",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "When GNNs Fail: Quantifying and Overcoming Temporal Correlation Volatility in Time Series",
+          "url": "https://arxiv.org/abs/2608.07333",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Towards a Theoretical Understanding of Two Tower Recommendation Models",
+          "url": "https://arxiv.org/abs/2403.00802",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Weak Adversarial Neural Pushforward Method for Boltzmann Equation",
+          "url": "https://arxiv.org/abs/2608.06823",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "A primer on optimal transport for causal inference with observational data",
+          "url": "https://arxiv.org/abs/2503.07811",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Scalable High-Fidelity Macromolecular Docking for GPU-Accelerated Supercomputers",
+          "url": "https://arxiv.org/abs/2608.07078",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "An Agentic Hybrid Top-Down and Bottom-Up Approach to Knowledge Graph Generation",
+          "url": "https://arxiv.org/abs/2608.07023",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Embedded Variational Neural Stochastic Differential Equations for Learning Heterogeneous Dynamics",
+          "url": "https://arxiv.org/abs/2604.00669",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Is SwiGLU's Open Positive Tail Necessary? Evidence from Closed-Tail Gating with MemGLU",
+          "url": "https://arxiv.org/abs/2608.07323",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction",
+          "url": "https://arxiv.org/abs/2608.06993",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Isolation: Unlocking Reinforcement Learning Component Synergy for Sample-Efficient Continuous Control",
+          "url": "https://arxiv.org/abs/2608.07086",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Wasserstein Policy Gradient for Entropy-Regularized Linear-Quadratic Control",
+          "url": "https://arxiv.org/abs/2608.07433",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Momba: Network Modernization Improves Multi-Objective Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.07180",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Reading Copom's Tone: A Weighted LLM Framework for Hawkish-Dovish Sentiment, Forward Guidance, and Uncertainty",
+          "url": "https://arxiv.org/abs/2608.07251",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "International Transfer of Stochastic Cortical Self-Reconstruction",
+          "url": "https://arxiv.org/abs/2608.07092",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Representation-driven Endoscopic Visual Embedding Alignment for Latent Generation",
+          "url": "https://arxiv.org/abs/2608.07176",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Innovation-Residual Auditing of Autonomous Analysis Agents: Localization, Detection Limits, Error Control, and Identifiability",
+          "url": "https://arxiv.org/abs/2608.05490",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "EcoAgent-Bench: Evaluating Economic Decision-Making in Budget-Constrained LLM Agents",
+          "url": "https://arxiv.org/abs/2608.05519",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution",
+          "url": "https://arxiv.org/abs/2608.05573",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
+          "url": "https://arxiv.org/abs/2608.05381",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Epistemic Trustworthiness in Generative AI: A Normative Framework for Warranted Reliance in High-Stakes Workflows",
+          "url": "https://arxiv.org/abs/2608.05602",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Hyper-ES: Effective Evolution Strategies for LLM Reasoning via Descent Direction Merging",
+          "url": "https://arxiv.org/abs/2608.05541",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordination",
+          "url": "https://arxiv.org/abs/2608.05391",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "DoctorAgents: an agentic framework to iteratively refine AutoML pipeline for small clinical temporal data",
+          "url": "https://arxiv.org/abs/2608.05375",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Evaluating and Improving Pedagogical Fit in LLM-Based AI Tutors with the Pedagogical Suitability Index",
+          "url": "https://arxiv.org/abs/2608.05411",
+          "date": "2026-08-07",
+          "fresh": true
         }
       ]
     },
     {
       "topic": "ai-research",
       "tag": "agents",
-      "count": 8,
-      "recent": 3,
-      "sources": 6,
-      "momentum": 11.0,
-      "first_seen": "2026-05",
-      "last_seen": "2026-08-04",
+      "count": 22,
+      "recent": 18,
+      "sources": 7,
+      "momentum": 40.0,
+      "first_seen": "2026-06",
+      "last_seen": "2026-08-10",
       "members": [
+        {
+          "title": "Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?",
+          "url": "https://arxiv.org/abs/2605.22148",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
+          "url": "https://arxiv.org/abs/2607.21557",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Can AI agents conduct open-ended AI research? Early evidence from two case studies",
+          "url": "https://arxiv.org/abs/2607.27191",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation",
+          "url": "https://arxiv.org/abs/2603.20986",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Homebot: A Personal AI Agent for Conversational Home Assistance and Automation",
+          "url": "https://arxiv.org/abs/2608.02254",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ratel-ai/ratel",
+          "url": "https://github.com/ratel-ai/ratel",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding",
+          "url": "https://arxiv.org/abs/2608.05876",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "When Self-Evolution Backfires: Pre-Commit Gating against Skill Contamination in LLM Agents",
+          "url": "https://arxiv.org/abs/2608.05810",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "FinEvo-Bench: A Longitudinal Benchmark for Self-Evolving Agents in Professional Financial Workflows",
+          "url": "https://arxiv.org/abs/2608.06144",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Innovation-Residual Auditing of Autonomous Analysis Agents: Localization, Detection Limits, Error Control, and Identifiability",
+          "url": "https://arxiv.org/abs/2608.05490",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.05245",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "SearchAuditor: Auditing and Attributing Failures in Long-Horizon Search Agents",
+          "url": "https://arxiv.org/abs/2608.05212",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Unified Agent: Managing Interactions across Devices",
+          "url": "https://arxiv.org/abs/2608.05729",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "WorldClaw: Agentic 3D Open-World Generation at Scale",
+          "url": "https://arxiv.org/abs/2608.05248",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "DoctorAgents: an agentic framework to iteratively refine AutoML pipeline for small clinical temporal data",
+          "url": "https://arxiv.org/abs/2608.05375",
+          "date": "2026-08-07",
+          "fresh": true
+        },
         {
           "title": "LLM 0.32: reasoning traces, server-side provider tools, human-approval pause/resume, and content-addressable message logs",
           "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
@@ -1933,12 +3259,2010 @@
           "url": "https://github.com/omnigent-ai/omnigent",
           "date": "2026-06",
           "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "benchmark",
+      "count": 14,
+      "recent": 14,
+      "sources": 4,
+      "momentum": 28.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization",
+          "url": "https://arxiv.org/abs/2602.12187",
+          "date": "2026-08-10",
+          "fresh": true
         },
         {
-          "title": "PawBench: benchmarking LLM x harness performance",
+          "title": "FinanceHarness: Autonomous Financial Deep Research Framework",
+          "url": "https://arxiv.org/abs/2607.27853",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Symbolic Graphics Programming with Large Language Models",
+          "url": "https://arxiv.org/abs/2509.05208",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MultiView-Bench: A Diagnostic Benchmark for World-Centric Multi-View Integration in VLMs",
+          "url": "https://arxiv.org/abs/2607.08970",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MAC: A Conversion Rate Prediction Benchmark Featuring Labels Under Multiple Attribution Mechanisms",
+          "url": "https://arxiv.org/abs/2603.02184",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MEDLEY-BENCH: Benchmarking Behavioural Metacognition and Belief Revision Under Social Pressure in Large Language Models",
+          "url": "https://arxiv.org/abs/2604.16009",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification",
+          "url": "https://arxiv.org/abs/2607.25232",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "UAV3DCrop: Benchmarking 3D Reconstruction in Repeated Multi-Angle UAV Crop Surveys",
+          "url": "https://arxiv.org/abs/2608.06404",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "agentscope-ai/PawBench",
           "url": "https://github.com/agentscope-ai/PawBench",
-          "date": "2026-05",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "EcoAgent-Bench: Evaluating Economic Decision-Making in Budget-Constrained LLM Agents",
+          "url": "https://arxiv.org/abs/2608.05519",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "CREBench: Evaluating Large Language Models in Cryptographic Binary Reverse Engineering",
+          "url": "https://arxiv.org/abs/2604.03750",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Improving Interoperability among Defence and National Security Ontologies: Analysis and Evaluation Tasks",
+          "url": "https://arxiv.org/abs/2608.05867",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Seeing Is Not Deciding: Can Multimodal LLMs Act as Effective CEOs?",
+          "url": "https://arxiv.org/abs/2608.05864",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
+          "url": "https://arxiv.org/abs/2608.05381",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "evals",
+      "count": 14,
+      "recent": 13,
+      "sources": 7,
+      "momentum": 27.0,
+      "first_seen": "2026-07-02",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Ask-E: An Environment for Calibrated Question Generation",
+          "url": "https://arxiv.org/abs/2608.06933",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions",
+          "url": "https://arxiv.org/abs/2605.29738",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Signal or Spurious Cue? A Randomized Audit of Survey-Country Metadata in LLM Social Inference",
+          "url": "https://arxiv.org/abs/2608.06085",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "FinEvo-Bench: A Longitudinal Benchmark for Self-Evolving Agents in Professional Financial Workflows",
+          "url": "https://arxiv.org/abs/2608.06144",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "SearchAuditor: Auditing and Attributing Failures in Long-Horizon Search Agents",
+          "url": "https://arxiv.org/abs/2608.05212",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts",
+          "url": "https://arxiv.org/abs/2608.06123",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "TriQua: Reconciling Granularity and Context in Factuality Evaluation",
+          "url": "https://arxiv.org/abs/2608.05228",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "LUNAR: Benchmarking Personalized Large Language Models on UNiversal User BehAvioR Logs",
+          "url": "https://arxiv.org/abs/2608.05246",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": true
+        },
+        {
+          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
+          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+          "date": "2026-07-17",
+          "fresh": true
+        },
+        {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
+          "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
+          "date": "2026-07-02",
           "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "multi-agent",
+      "count": 12,
+      "recent": 12,
+      "sources": 4,
+      "momentum": 24.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "openai/openai-agents-python",
+          "url": "https://github.com/openai/openai-agents-python",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Multi-Agent Forensic Reasoning for Generalizable Deepfake Video Detection",
+          "url": "https://arxiv.org/abs/2608.06865",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation",
+          "url": "https://arxiv.org/abs/2603.20986",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Scalable Long-Horizon Planning with Staggered Updates for Lifelong MAPF",
+          "url": "https://arxiv.org/abs/2608.06702",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "PHOENIX: Fine-Tuned SLM-Powered Autonomous Satellite Lifetime Extension via Predictive Self-Healing and Multi-Agent AI Recovery",
+          "url": "https://arxiv.org/abs/2608.07126",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Robot guide with multi-agent control and automatic scenario generation with LLM",
+          "url": "https://arxiv.org/abs/2509.10317",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "OrchestraBench: Evaluating Multi-Agent Orchestration Failure Modes, Recovery, and Decomposition Quality",
+          "url": "https://arxiv.org/abs/2608.05263",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Agentic self-driving microscopy benchmarks support qualification but do not necessarily generalize to unseen tasks",
+          "url": "https://arxiv.org/abs/2608.05266",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "From Economic Agents to Agentic Economies: A Systems Blueprint for Economic World Models",
+          "url": "https://arxiv.org/abs/2608.06020",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Agentic Nesting: A New Methodology for Existing Enterprise Application Integration and Services",
+          "url": "https://arxiv.org/abs/2608.05159",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordination",
+          "url": "https://arxiv.org/abs/2608.05391",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "DoctorAgents: an agentic framework to iteratively refine AutoML pipeline for small clinical temporal data",
+          "url": "https://arxiv.org/abs/2608.05375",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "llm",
+      "count": 9,
+      "recent": 9,
+      "sources": 3,
+      "momentum": 18.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights",
+          "url": "https://arxiv.org/abs/2608.06763",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs",
+          "url": "https://arxiv.org/abs/2509.16462",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Solver-Guided Reasoning for Mixed-Equilibrium Strategies",
+          "url": "https://arxiv.org/abs/2608.06741",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Symbolic Graphics Programming with Large Language Models",
+          "url": "https://arxiv.org/abs/2509.05208",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "The Sparsity Whisperer",
+          "url": "https://arxiv.org/abs/2608.06630",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension",
+          "url": "https://arxiv.org/abs/2608.07254",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Post-Hoc Temperature Scaling: Bilevel Optimization for LLM Calibration",
+          "url": "https://arxiv.org/abs/2608.07419",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Robot guide with multi-agent control and automatic scenario generation with LLM",
+          "url": "https://arxiv.org/abs/2509.10317",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Text Steganography with Dynamic Codebook and Multimodal Large Language Model",
+          "url": "https://arxiv.org/abs/2604.20269",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "kv-cache",
+      "count": 8,
+      "recent": 8,
+      "sources": 3,
+      "momentum": 16.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
+          "url": "https://arxiv.org/abs/2607.20457",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Every Cache Entry Earns Its Place: Global Allocation of Resolution and Coverage for KV Cache Compression",
+          "url": "https://arxiv.org/abs/2608.07001",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Topology-Aware Data Movement for Disaggregated GPU Inference",
+          "url": "https://arxiv.org/abs/2607.28633",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
+          "url": "https://arxiv.org/abs/2608.06849",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+          "url": "https://arxiv.org/abs/2608.07458",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Predictive Multi-Tier Memory Management for KV Cache in Large-Scale GPU Inference",
+          "url": "https://arxiv.org/abs/2604.26968",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Cascade: Exploiting SLO-Aware latency budget for fair and high goodput LLM inference serving",
+          "url": "https://arxiv.org/abs/2608.06557",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving",
+          "url": "https://www.aleksagordic.com/blog/vllm",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "evaluation",
+      "count": 8,
+      "recent": 8,
+      "sources": 2,
+      "momentum": 16.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination",
+          "url": "https://arxiv.org/abs/2608.07341",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Rethinking Evaluation Paradigms in IBP-based Certified Training",
+          "url": "https://arxiv.org/abs/2606.02134",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration",
+          "url": "https://arxiv.org/abs/2605.27752",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SenWorld: A Digital-Twin Simulation for Generating Context-Rich Evaluation Data",
+          "url": "https://arxiv.org/abs/2607.19949",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains",
+          "url": "https://arxiv.org/abs/2603.15506",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Boundary Density Likelihood for Direct Event-Time Supervision",
+          "url": "https://arxiv.org/abs/2408.12792",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Evaluating and Improving Pedagogical Fit in LLM-Based AI Tutors with the Pedagogical Suitability Index",
+          "url": "https://arxiv.org/abs/2608.05411",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Unmasking Removal-Budget Confounding: A Matched Operating-Point Evaluation Framework for Adaptive Data Cleaning",
+          "url": "https://arxiv.org/abs/2608.06511",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "reinforcement-learning",
+      "count": 8,
+      "recent": 8,
+      "sources": 2,
+      "momentum": 16.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Sub-Quadratic Bisimulation Metrics via Approximate Nearest Neighbors: Coverage-Augmented Guarantees and Computable Two-Sided Certificates",
+          "url": "https://arxiv.org/abs/2608.06762",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction",
+          "url": "https://arxiv.org/abs/2608.06582",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Aftab: A Comprehensive Benchmark of CNN Encoders and Advanced Value Functions in Parallelized Q-Networks",
+          "url": "https://arxiv.org/abs/2608.07335",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Robust Average-Reward Markov Decision Processes: Minimax-Optimal Learning via Plug-in Reductions",
+          "url": "https://arxiv.org/abs/2608.06545",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Isolation: Unlocking Reinforcement Learning Component Synergy for Sample-Efficient Continuous Control",
+          "url": "https://arxiv.org/abs/2608.07086",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Wasserstein Policy Gradient for Entropy-Regularized Linear-Quadratic Control",
+          "url": "https://arxiv.org/abs/2608.07433",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Momba: Network Modernization Improves Multi-Objective Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.07180",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.05245",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "harness",
+      "count": 8,
+      "recent": 7,
+      "sources": 7,
+      "momentum": 15.0,
+      "first_seen": "2026-07-04",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "\"LLM Agent Performance\" Is Not a Single Evaluation Target",
+          "url": "https://arxiv.org/abs/2602.03238",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "agentscope-ai/PawBench",
+          "url": "https://github.com/agentscope-ai/PawBench",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "LLM 0.32: reasoning traces, server-side provider tools, human-approval pause/resume, and content-addressable message logs",
+          "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
+          "date": "2026-08-04",
+          "fresh": true
+        },
+        {
+          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+          "url": "https://github.com/algal/pi-openai-server-compaction",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
+          "fresh": true
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "agent-harness",
+      "count": 7,
+      "recent": 7,
+      "sources": 3,
+      "momentum": 14.0,
+      "first_seen": "2026-07-28",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Fzkuji/OpenProgram",
+          "url": "https://github.com/Fzkuji/OpenProgram",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "aeonfun/aeon",
+          "url": "https://github.com/aeonfun/aeon",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "wanmol/goal-flow",
+          "url": "https://github.com/wanmol/goal-flow",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Coupling Planning with Episodic Memory in LLM Agents for Software Issue Resolution",
+          "url": "https://arxiv.org/abs/2608.06811",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "openai/openai-agents-python",
+          "url": "https://github.com/openai/openai-agents-python",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "FinanceHarness: Autonomous Financial Deep Research Framework",
+          "url": "https://arxiv.org/abs/2607.27853",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "How we use /goal to find bugs in Patch the Planet",
+          "url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
+          "date": "2026-07-28",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "long-context",
+      "count": 7,
+      "recent": 7,
+      "sources": 2,
+      "momentum": 14.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Kimi K3: Open Frontier Intelligence",
+          "url": "https://arxiv.org/abs/2607.24653",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
+          "url": "https://arxiv.org/abs/2607.20457",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Every Cache Entry Earns Its Place: Global Allocation of Resolution and Coverage for KV Cache Compression",
+          "url": "https://arxiv.org/abs/2608.07001",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
+          "url": "https://arxiv.org/abs/2608.06849",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+          "url": "https://arxiv.org/abs/2608.07458",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+          "url": "https://arxiv.org/abs/2608.02515",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
+          "url": "https://arxiv.org/abs/2504.17584",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "multimodal",
+      "count": 7,
+      "recent": 7,
+      "sources": 3,
+      "momentum": 14.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Debias in Text, Believe Your Eyes: Text-Anchored Cross-Modal Transfer for Visual Counter-Commonsense Reasoning",
+          "url": "https://arxiv.org/abs/2608.06938",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K2.5: Visual Agentic Intelligence",
+          "url": "https://arxiv.org/abs/2602.02276",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Conformal Fusion Under Missing Modalities",
+          "url": "https://arxiv.org/abs/2608.07183",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages",
+          "url": "https://arxiv.org/abs/2605.01720",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Seeing Is Not Deciding: Can Multimodal LLMs Act as Effective CEOs?",
+          "url": "https://arxiv.org/abs/2608.05864",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
+          "url": "https://arxiv.org/abs/2608.05381",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Text Steganography with Dynamic Codebook and Multimodal Large Language Model",
+          "url": "https://arxiv.org/abs/2604.20269",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "interpretability",
+      "count": 7,
+      "recent": 7,
+      "sources": 2,
+      "momentum": 14.0,
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Measuring Concept Content in Text from LLM Activations: ESG Evidence from Concept Vectors and Linear Probes",
+          "url": "https://arxiv.org/abs/2608.07208",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Mathematical Principles and Experimental Discoveries of the Emergence of Symbolic Patterns in Artificial Neural Networks",
+          "url": "https://arxiv.org/abs/2608.06839",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Recovering Lesion Parameters from Aphasic Picture Naming Error Profiles in Large Language Models",
+          "url": "https://arxiv.org/abs/2608.06429",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Probing Visual Concepts in Lightweight Vision-Language Models for Automated Driving",
+          "url": "https://arxiv.org/abs/2603.06054",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Geo-Spatial Concept Probing of Large Language Models: Abstraction, Compositionality, and Grounding",
+          "url": "https://arxiv.org/abs/2608.07353",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Understanding Differentiable Embeddings Through Differential and Integral Geometry",
+          "url": "https://arxiv.org/abs/2608.06809",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Latent Fact-Checking: Detecting Misinformation through Activation Engineering",
+          "url": "https://arxiv.org/abs/2608.06417",
+          "date": "2026-08-05",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "time-series",
+      "count": 7,
+      "recent": 7,
+      "sources": 2,
+      "momentum": 14.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "KReF: Training-Free Retrieval for Long-Term Time-Series Forecasting and Predictive Uncertainty",
+          "url": "https://arxiv.org/abs/2608.06748",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Large Causal Models for Temporal Causal Discovery",
+          "url": "https://arxiv.org/abs/2602.18662",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains",
+          "url": "https://arxiv.org/abs/2603.15506",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Optimization-based Online Conformal Prediction for Multi-step Forecasting",
+          "url": "https://arxiv.org/abs/2508.13362",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "When GNNs Fail: Quantifying and Overcoming Temporal Correlation Volatility in Time Series",
+          "url": "https://arxiv.org/abs/2608.07333",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Embedded Variational Neural Stochastic Differential Equations for Learning Heterogeneous Dynamics",
+          "url": "https://arxiv.org/abs/2604.00669",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction",
+          "url": "https://arxiv.org/abs/2608.06993",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "fine-tuning",
+      "count": 6,
+      "recent": 6,
+      "sources": 2,
+      "momentum": 12.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Self-Distillation Enables Continual Learning",
+          "url": "https://arxiv.org/abs/2601.19897",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "IFCLoRA: Topology-Aware Rank Allocation for Parameter-Efficient Fine-Tuning",
+          "url": "https://arxiv.org/abs/2607.22251",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Dual-Node NVIDIA DGX Spark over Tailscale: A Remote-Access Testbed for Distributed LLM Training and Cyber-Threat-Intelligence Fine-Tuning",
+          "url": "https://arxiv.org/abs/2608.07226",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LoCA: Spatially-Aware Low-Rank Convolutional Adaptation of Vision Foundation Models",
+          "url": "https://arxiv.org/abs/2607.06918",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Improving Attributed Long-form Question Answering with Intent Awareness",
+          "url": "https://arxiv.org/abs/2603.27435",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Hyper-ES: Effective Evolution Strategies for LLM Reasoning via Descent Direction Merging",
+          "url": "https://arxiv.org/abs/2608.05541",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "benchmarks",
+      "count": 6,
+      "recent": 5,
+      "sources": 4,
+      "momentum": 11.0,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "\"LLM Agent Performance\" Is Not a Single Evaluation Target",
+          "url": "https://arxiv.org/abs/2602.03238",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Evaluating Investment Logic in Large Language Models: A Real-World Benchmark Towards Personalized Financial Agents",
+          "url": "https://arxiv.org/abs/2608.06108",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "GAUGE: A Measurement-Grounded Benchmark for Physical Fidelity in Simulation Engines and Video World Models",
+          "url": "https://arxiv.org/abs/2608.05948",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
+          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
+          "date": "2026-07-22",
+          "fresh": true
+        },
+        {
+          "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
+          "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+          "date": "2026-07-17",
+          "fresh": true
+        },
+        {
+          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
+          "date": "2026-07-09",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "prompt-engineering",
+      "count": 5,
+      "recent": 5,
+      "sources": 3,
+      "momentum": 10.0,
+      "first_seen": "2026-07-28",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "In-Context Examples Suppress Scientific Knowledge Recall in LLMs",
+          "url": "https://arxiv.org/abs/2604.27540",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Quoting Claude Opus 5 system prompt",
+          "url": "https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Signal or Spurious Cue? A Randomized Audit of Survey-Country Metadata in LLM Social Inference",
+          "url": "https://arxiv.org/abs/2608.06085",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Counterfactual Analysis via Large Language Models",
+          "url": "https://arxiv.org/abs/2608.05367",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "How we use /goal to find bugs in Patch the Planet",
+          "url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
+          "date": "2026-07-28",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "calibration",
+      "count": 5,
+      "recent": 5,
+      "sources": 2,
+      "momentum": 10.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Ask-E: An Environment for Calibrated Question Generation",
+          "url": "https://arxiv.org/abs/2608.06933",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Pre-Inference Routing for Cost-Efficient Document Field Extraction",
+          "url": "https://arxiv.org/abs/2608.06607",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration",
+          "url": "https://arxiv.org/abs/2605.27752",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Conformal Fusion Under Missing Modalities",
+          "url": "https://arxiv.org/abs/2608.07183",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Post-Hoc Temperature Scaling: Bilevel Optimization for LLM Calibration",
+          "url": "https://arxiv.org/abs/2608.07419",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "mllm",
+      "count": 5,
+      "recent": 5,
+      "sources": 2,
+      "momentum": 10.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Multi-Agent Forensic Reasoning for Generalizable Deepfake Video Detection",
+          "url": "https://arxiv.org/abs/2608.06865",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs",
+          "url": "https://arxiv.org/abs/2608.07088",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "An AI4AI Framework for Visual Token Pruning",
+          "url": "https://arxiv.org/abs/2608.07193",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Judge a Book by its Cover: Investigating Multi-Modal LLMs for Multi-Page Handwritten Document Transcription",
+          "url": "https://arxiv.org/abs/2502.20295",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Unified Agent: Managing Interactions across Devices",
+          "url": "https://arxiv.org/abs/2608.05729",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "robotics",
+      "count": 5,
+      "recent": 5,
+      "sources": 2,
+      "momentum": 10.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Scalable Long-Horizon Planning with Staggered Updates for Lifelong MAPF",
+          "url": "https://arxiv.org/abs/2608.06702",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ODEWorld: A Continuous Predictive Architecture via Physical-Time Flow",
+          "url": "https://arxiv.org/abs/2607.27924",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Fast and Accurate: An Adaptive VLA Inference Framework through Environment-aware Model Selection",
+          "url": "https://arxiv.org/abs/2608.06434",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Representation Handoffs for OpenArm-Based Laboratory Mobile Manipulation",
+          "url": "https://arxiv.org/abs/2608.07154",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Robot guide with multi-agent control and automatic scenario generation with LLM",
+          "url": "https://arxiv.org/abs/2509.10317",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "medical-imaging",
+      "count": 5,
+      "recent": 5,
+      "sources": 2,
+      "momentum": 10.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "H2AL: Hyperbolic Hierarchy-aware Aggregative Learning for Registration-based Few-shot Medical Image Segmentation",
+          "url": "https://arxiv.org/abs/2608.07340",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "FedDOSE: Federated Learning Framework Decomposing Site Effects for Modeling Brain Dynamic Functional Connectivity",
+          "url": "https://arxiv.org/abs/2608.07393",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Machine Learning-Based Inter-Crystal Scatter Recovery for Ultra-High Resolution PET Imaging",
+          "url": "https://arxiv.org/abs/2608.07155",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "International Transfer of Stochastic Cortical Self-Reconstruction",
+          "url": "https://arxiv.org/abs/2608.07092",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Representation-driven Endoscopic Visual Embedding Alignment for Latent Generation",
+          "url": "https://arxiv.org/abs/2608.07176",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "inference",
+      "count": 4,
+      "recent": 4,
+      "sources": 3,
+      "momentum": 8.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Every Cache Entry Earns Its Place: Global Allocation of Resolution and Coverage for KV Cache Compression",
+          "url": "https://arxiv.org/abs/2608.07001",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Predictive Multi-Tier Memory Management for KV Cache in Large-Scale GPU Inference",
+          "url": "https://arxiv.org/abs/2604.26968",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights",
+          "url": "https://arxiv.org/abs/2608.06763",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving",
+          "url": "https://www.aleksagordic.com/blog/vllm",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "harness-design",
+      "count": 4,
+      "recent": 4,
+      "sources": 3,
+      "momentum": 8.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Birfy/agentdescent",
+          "url": "https://github.com/Birfy/agentdescent",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding",
+          "url": "https://arxiv.org/abs/2608.05876",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "VLMs for Videogame Data Annotation",
+          "url": "https://arxiv.org/abs/2608.05949",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "federated-learning",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "SSTQ: Privacy-Preserving Vector Quantization via Subsampled Stochastic TurboQuant",
+          "url": "https://arxiv.org/abs/2608.05127",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Theoretical Foundations of Communication-Efficient, Robust, and Practical Distributed and Federated Optimization",
+          "url": "https://arxiv.org/abs/2608.06563",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Capacity Confounds and Coverage Guarantees in Adaptive Sub-model Federated Learning",
+          "url": "https://arxiv.org/abs/2608.07157",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "FedDOSE: Federated Learning Framework Decomposing Site Effects for Modeling Brain Dynamic Functional Connectivity",
+          "url": "https://arxiv.org/abs/2608.07393",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "counterfactual",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Recovering Lesion Parameters from Aphasic Picture Naming Error Profiles in Large Language Models",
+          "url": "https://arxiv.org/abs/2608.06429",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts",
+          "url": "https://arxiv.org/abs/2608.06123",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
+          "url": "https://arxiv.org/abs/2608.05381",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Counterfactual Analysis via Large Language Models",
+          "url": "https://arxiv.org/abs/2608.05367",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "edge-ai",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Intelligence per Watt: Measuring Intelligence Efficiency of Local AI",
+          "url": "https://arxiv.org/abs/2511.07885",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MiCoPro: End-to-End Mixed Precision HW/SW Co-design with HW-aware Proxy Model",
+          "url": "https://arxiv.org/abs/2608.06916",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Human-Centered Explainable AI for TinyML Edge Devices: A Pareto-Based Selection Framework with LLM-Guided Design",
+          "url": "https://arxiv.org/abs/2608.07091",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Synthetic LiDAR Data Generation and Deterministic Downsampling for Point Cloud Classification on the Edge",
+          "url": "https://arxiv.org/abs/2608.07106",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "embeddings",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Calibrating WEAT Against Anisotropy: ZCA Whitening as a Geometric Pre-Processing Step for Embedding Association Tests",
+          "url": "https://arxiv.org/abs/2608.06908",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Understanding Differentiable Embeddings Through Differential and Integral Geometry",
+          "url": "https://arxiv.org/abs/2608.06809",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension",
+          "url": "https://arxiv.org/abs/2608.07254",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Towards a Theoretical Understanding of Two Tower Recommendation Models",
+          "url": "https://arxiv.org/abs/2403.00802",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "systems",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Predictive Multi-Tier Memory Management for KV Cache in Large-Scale GPU Inference",
+          "url": "https://arxiv.org/abs/2604.26968",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
+          "url": "https://arxiv.org/abs/2504.17584",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Homebot: A Personal AI Agent for Conversational Home Assistance and Automation",
+          "url": "https://arxiv.org/abs/2608.02254",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SNI-GNN: SmartNIC-Assisted Full-Graph GNN Training with In-Network Embedding Prediction",
+          "url": "https://arxiv.org/abs/2608.06441",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "lora",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "IFCLoRA: Topology-Aware Rank Allocation for Parameter-Efficient Fine-Tuning",
+          "url": "https://arxiv.org/abs/2607.22251",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Theoretical Foundations of Communication-Efficient, Robust, and Practical Distributed and Federated Optimization",
+          "url": "https://arxiv.org/abs/2608.06563",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LoCA: Forward-Only LLM Tuning after One-Shot Calibration with Local Credit Assignment",
+          "url": "https://arxiv.org/abs/2608.03020",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LoCA: Spatially-Aware Low-Rank Convolutional Adaptation of Vision Foundation Models",
+          "url": "https://arxiv.org/abs/2607.06918",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "healthcare",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "PULSE: Agentic Investigation with Passive Sensing for Proactive Affective Intervention in Cancer Survivorship",
+          "url": "https://arxiv.org/abs/2605.17679",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LSEAD: A Privacy-Preserving LLM-Based Speech Analysis Framework for Early Alzheimer's Disease Screening",
+          "url": "https://arxiv.org/abs/2608.07378",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "From Siloed Algorithms to Compliance-First Agentic Platforms: A Multi-Layered Architecture for Hospital AI Systems",
+          "url": "https://arxiv.org/abs/2608.06112",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "From Continuous Predictors to Clinical Thresholds: Early Evidence on Performance Trade-offs of Guideline-Based Categorisation for Ischaemic Stroke Outcome Prediction",
+          "url": "https://arxiv.org/abs/2608.05203",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "tool-use",
+      "count": 4,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 7.0,
+      "first_seen": "2026-07-04",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "PULSE: Agentic Investigation with Passive Sensing for Proactive Affective Intervention in Cancer Survivorship",
+          "url": "https://arxiv.org/abs/2605.17679",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories",
+          "url": "https://arxiv.org/abs/2608.06057",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "LLM 0.32: reasoning traces, server-side provider tools, human-approval pause/resume, and content-addressable message logs",
+          "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
+          "date": "2026-08-04",
+          "fresh": true
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "claude-code",
+      "count": 4,
+      "recent": 2,
+      "sources": 4,
+      "momentum": 6.0,
+      "first_seen": "2026-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
+          "url": "https://arxiv.org/abs/2607.21557",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Automated Claude Code + Opus 4.6 pipeline finds a real Linux sandbox-escape CVE (CVE-2026-5674)",
+          "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
+          "date": "2026-07-30",
+          "fresh": true
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        },
+        {
+          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "sandboxing",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-07-22",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "openai/openai-agents-python",
+          "url": "https://github.com/openai/openai-agents-python",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "llm-judge",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-08",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?",
+          "url": "https://arxiv.org/abs/2605.22148",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration",
+          "url": "https://arxiv.org/abs/2605.27752",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "agentscope-ai/PawBench",
+          "url": "https://github.com/agentscope-ai/PawBench",
+          "date": "2026-08-08",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "generalization",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Mathematical Principles and Experimental Discoveries of the Emergence of Symbolic Patterns in Artificial Neural Networks",
+          "url": "https://arxiv.org/abs/2608.06839",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Optimization as a Dynamical System: Generative Schedules from Latent ODEs",
+          "url": "https://arxiv.org/abs/2509.23052",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Agentic self-driving microscopy benchmarks support qualification but do not necessarily generalize to unseen tasks",
+          "url": "https://arxiv.org/abs/2608.05266",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "multilingual",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions",
+          "url": "https://arxiv.org/abs/2605.29738",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "An Agentic Hybrid Top-Down and Bottom-Up Approach to Knowledge Graph Generation",
+          "url": "https://arxiv.org/abs/2608.07023",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Enhancing AI security through global AI red teaming",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+          "date": "2026-07-27",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "agentic-rl",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Kimi K3: Open Frontier Intelligence",
+          "url": "https://arxiv.org/abs/2607.24653",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Trajectory-Relative Hindsight Distillation for Agentic Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.07371",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "iARCS: Iterative Agentic RL for Controllable 3D Scene Generation",
+          "url": "https://arxiv.org/abs/2608.06161",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "quantization",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "SSTQ: Privacy-Preserving Vector Quantization via Subsampled Stochastic TurboQuant",
+          "url": "https://arxiv.org/abs/2608.05127",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights",
+          "url": "https://arxiv.org/abs/2608.06763",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MiCoPro: End-to-End Mixed Precision HW/SW Co-design with HW-aware Proxy Model",
+          "url": "https://arxiv.org/abs/2608.06916",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "finance",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "FinanceHarness: Autonomous Financial Deep Research Framework",
+          "url": "https://arxiv.org/abs/2607.27853",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Beyond Co-Movement: Locality by Exposures Enables a Joint Factor-Graph Framework for Portfolio Diversification",
+          "url": "https://arxiv.org/abs/2608.06618",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Counterfactual Analysis via Large Language Models",
+          "url": "https://arxiv.org/abs/2608.05367",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "hallucination",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Same Attention, Different Truths: Put Logit-Lens over Visual Attention to Detect and Mitigate LVLM Object Hallucination",
+          "url": "https://arxiv.org/abs/2608.07302",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "TriQua: Reconciling Granularity and Context in Factuality Evaluation",
+          "url": "https://arxiv.org/abs/2608.05228",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+          "url": "https://arxiv.org/abs/2607.13596",
+          "date": "2026-07-16",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "efficiency",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Intelligence per Watt: Measuring Intelligence Efficiency of Local AI",
+          "url": "https://arxiv.org/abs/2511.07885",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "LoCA: Forward-Only LLM Tuning after One-Shot Calibration with Local Credit Assignment",
+          "url": "https://arxiv.org/abs/2608.03020",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "The Sparsity Whisperer",
+          "url": "https://arxiv.org/abs/2608.06630",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "reasoning",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Solver-Guided Reasoning for Mixed-Equilibrium Strategies",
+          "url": "https://arxiv.org/abs/2608.06741",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Refining Over Resampling: Test-Time Self-Correction for LLM Reasoning",
+          "url": "https://arxiv.org/abs/2608.05643",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Hyper-ES: Effective Evolution Strategies for LLM Reasoning via Descent Direction Merging",
+          "url": "https://arxiv.org/abs/2608.05541",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "position-paper",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Toward a Causal Data Management Ecosystem for Decision Making and Agentic AI",
+          "url": "https://arxiv.org/abs/2608.07214",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Alignment has a Fantasia Problem",
+          "url": "https://arxiv.org/abs/2604.21827",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Agentic Nesting: A New Methodology for Existing Enterprise Application Integration and Services",
+          "url": "https://arxiv.org/abs/2608.05159",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "mdp",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Sub-Quadratic Bisimulation Metrics via Approximate Nearest Neighbors: Coverage-Augmented Guarantees and Computable Two-Sided Certificates",
+          "url": "https://arxiv.org/abs/2608.06762",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Robust Average-Reward Markov Decision Processes: Minimax-Optimal Learning via Plug-in Reductions",
+          "url": "https://arxiv.org/abs/2608.06545",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Posture and Sustainment Optimization Under Adversarial Uncertainty",
+          "url": "https://arxiv.org/abs/2608.05256",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "gnn",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "A Physics-Inspired Classical Digital Twin of Cortical Dynamics: A Band-Stratified Metriplectic Port-Hamiltonian Neural Network Learned from Brain-Computer-Interface EEG",
+          "url": "https://arxiv.org/abs/2607.10439",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "When GNNs Fail: Quantifying and Overcoming Temporal Correlation Volatility in Time Series",
+          "url": "https://arxiv.org/abs/2608.07333",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SNI-GNN: SmartNIC-Assisted Full-Graph GNN Training with In-Network Embedding Prediction",
+          "url": "https://arxiv.org/abs/2608.06441",
+          "date": "2026-08-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "generative-models",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "How Molecular Generative Models Organize Molecular Identity",
+          "url": "https://arxiv.org/abs/2608.06956",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction",
+          "url": "https://arxiv.org/abs/2608.06582",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Representation-driven Endoscopic Visual Embedding Alignment for Latent Generation",
+          "url": "https://arxiv.org/abs/2608.07176",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "dataset",
+      "count": 3,
+      "recent": 3,
+      "sources": 2,
+      "momentum": 6.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "IceHorizon: A Dataset for Horizon Detection in Ice-Covered Maritime Environments and Comparative Evaluation of Detection Methods",
+          "url": "https://arxiv.org/abs/2608.07018",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ArchEGraph: A Large-Scale Graph Dataset for Geometry-Topology-Physics Aligned Building Energy Modeling",
+          "url": "https://arxiv.org/abs/2608.06772",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages",
+          "url": "https://arxiv.org/abs/2605.01720",
+          "date": "2026-08-10",
+          "fresh": true
         }
       ]
     },
@@ -1974,18 +5298,66 @@
     },
     {
       "topic": "ai-research",
-      "tag": "benchmarks",
-      "count": 3,
+      "tag": "multi-turn",
+      "count": 2,
       "recent": 2,
-      "sources": 3,
-      "momentum": 5.0,
-      "first_seen": "2026-07-09",
-      "last_seen": "2026-07-22",
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-07",
       "members": [
         {
-          "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
-          "url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
-          "date": "2026-07-22",
+          "title": "When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories",
+          "url": "https://arxiv.org/abs/2608.06057",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Innocent Panels, Hateful Stories: Evaluating and Detecting Hateful Intent in Multi-Turn Visual Story Generation",
+          "url": "https://arxiv.org/abs/2608.05210",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "cot-monitoring",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Counterfactual Simulation Training for Chain-of-Thought Faithfulness",
+          "url": "https://arxiv.org/abs/2602.20710",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "groundedness",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-17",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Evaluating Investment Logic in Large Language Models: A Real-World Benchmark Towards Personalized Financial Agents",
+          "url": "https://arxiv.org/abs/2608.06108",
+          "date": "2026-08-07",
           "fresh": true
         },
         {
@@ -1993,65 +5365,29 @@
           "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
           "date": "2026-07-17",
           "fresh": true
-        },
-        {
-          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
-          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
-          "date": "2026-07-09",
-          "fresh": false
         }
       ]
     },
     {
       "topic": "ai-research",
-      "tag": "claude-code",
-      "count": 3,
-      "recent": 1,
-      "sources": 3,
-      "momentum": 4.0,
-      "first_seen": "2026-06",
-      "last_seen": "2026-07-30",
-      "members": [
-        {
-          "title": "Automated Claude Code + Opus 4.6 pipeline finds a real Linux sandbox-escape CVE (CVE-2026-5674)",
-          "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
-          "date": "2026-07-30",
-          "fresh": true
-        },
-        {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
-          "fresh": false
-        },
-        {
-          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-          "url": "https://github.com/omnigent-ai/omnigent",
-          "date": "2026-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "sandboxing",
+      "tag": "vllm",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-07-22",
-      "last_seen": "2026-08-07",
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-10",
       "members": [
         {
-          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
-          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-          "date": "2026-08-07",
+          "title": "Cascade: Exploiting SLO-Aware latency budget for fair and high goodput LLM inference serving",
+          "url": "https://arxiv.org/abs/2608.06557",
+          "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
-          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
-          "date": "2026-07-22",
+          "title": "vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving",
+          "url": "https://www.aleksagordic.com/blog/vllm",
+          "date": "2026-08-06",
           "fresh": true
         }
       ]
@@ -2082,6 +5418,54 @@
     },
     {
       "topic": "ai-research",
+      "tag": "rlvr",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-08",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Symbolic Graphics Programming with Large Language Models",
+          "url": "https://arxiv.org/abs/2509.05208",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Willison: the OpenAI/Hugging Face 'accidental attack' happened during an RLVR training run, not deployment",
+          "url": "https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "system-prompt",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "Quoting Claude Opus 5 system prompt",
+          "url": "https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "context-management",
       "count": 2,
       "recent": 2,
@@ -2100,6 +5484,30 @@
           "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
           "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
           "date": "2026-07-21",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "cost-optimization",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Pre-Inference Routing for Cost-Efficient Document Field Extraction",
+          "url": "https://arxiv.org/abs/2608.06607",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "PDF-to-markdown pipelines are the hidden token chewer inside enterprise AI adoption",
+          "url": "https://simonwillison.net/2026/Aug/7/pdfs-are-terrible/",
+          "date": "2026-08-07",
           "fresh": true
         }
       ]
@@ -2149,6 +5557,654 @@
           "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
           "date": "2026-07-22",
           "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "mcp",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "universal-tool-calling-protocol/utcp-specification",
+          "url": "https://github.com/universal-tool-calling-protocol/utcp-specification",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "CASCADE: An Agentic Regulatory Network Framework for Patient-Data-Validated Downstream Perturbation Prediction",
+          "url": "https://arxiv.org/abs/2608.05359",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "skills",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "aeonfun/aeon",
+          "url": "https://github.com/aeonfun/aeon",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2608.05245",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "uncertainty",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "INTRYGUE: Induction-Aware Entropy Gating for Reliable RAG Uncertainty Estimation",
+          "url": "https://arxiv.org/abs/2603.21607",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Conformal Fusion Under Missing Modalities",
+          "url": "https://arxiv.org/abs/2608.07183",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "mechanistic-interpretability",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "INTRYGUE: Induction-Aware Entropy Gating for Reliable RAG Uncertainty Estimation",
+          "url": "https://arxiv.org/abs/2603.21607",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Equivariant Sparse Autoencoders: Mechanistic Interpretability of Neural Networks on Symmetric Data",
+          "url": "https://arxiv.org/abs/2511.09432",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "agent-memory",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+          "url": "https://arxiv.org/abs/2608.02515",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay",
+          "url": "https://arxiv.org/abs/2608.05784",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "compression",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-09",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Every Cache Entry Earns Its Place: Global Allocation of Resolution and Coverage for KV Cache Compression",
+          "url": "https://arxiv.org/abs/2608.07001",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "SQLite compressed text-history prototypes",
+          "url": "https://simonwillison.net/2026/Aug/9/sqlite-text-history-prototype/#atom-everything",
+          "date": "2026-08-09",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "guardrails",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-09",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "openai/openai-agents-python",
+          "url": "https://github.com/openai/openai-agents-python",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Quoting Claude Opus 5 system prompt",
+          "url": "https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything",
+          "date": "2026-08-09",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "llm-inference",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Multi-Level Modeling of Large Language Model Inference Latency and Energy via Hybrid Analytical--Machine-Learning Predictors",
+          "url": "https://arxiv.org/abs/2608.06723",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
+          "url": "https://arxiv.org/abs/2504.17584",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "inference-cost",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
+          "url": "https://arxiv.org/abs/2608.06849",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "An AI4AI Framework for Visual Token Pruning",
+          "url": "https://arxiv.org/abs/2608.07193",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "bias",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs",
+          "url": "https://arxiv.org/abs/2509.16462",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts",
+          "url": "https://arxiv.org/abs/2608.06123",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "continual-learning",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Self-Distillation Enables Continual Learning",
+          "url": "https://arxiv.org/abs/2601.19897",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "In Situ Training of Implicit Neural Compressors for Scientific Simulations via Sketch-Based Regularization",
+          "url": "https://arxiv.org/abs/2511.02659",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "fairness",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Calibrating WEAT Against Anisotropy: ZCA Whitening as a Geometric Pre-Processing Step for Embedding Association Tests",
+          "url": "https://arxiv.org/abs/2608.06908",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs",
+          "url": "https://arxiv.org/abs/2509.16462",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "benchmarking",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "SABRE: Scalable and Automated Benchmarking of VLMs under Stress",
+          "url": "https://arxiv.org/abs/2608.07435",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Hyperbolic Graph Embedders for Link Prediction and Topology Reconstruction",
+          "url": "https://arxiv.org/abs/2608.07029",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "transformers",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "RenderFormer++: Scalable and Physics-Informed Feed-Forward Neural Rendering",
+          "url": "https://arxiv.org/abs/2606.30380",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Dependency Parsing Across the Resource Spectrum: Evaluating Architectures on High and Low-Resource Languages",
+          "url": "https://arxiv.org/abs/2605.02608",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "graphics",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "RenderFormer++: Scalable and Physics-Informed Feed-Forward Neural Rendering",
+          "url": "https://arxiv.org/abs/2606.30380",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "WorldClaw: Agentic 3D Open-World Generation at Scale",
+          "url": "https://arxiv.org/abs/2608.05248",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "inference-efficiency",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Retrofitting Linear Attention into Diffusion Language Models",
+          "url": "https://arxiv.org/abs/2608.06628",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs",
+          "url": "https://arxiv.org/abs/2608.07088",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "forecasting",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "KReF: Training-Free Retrieval for Long-Term Time-Series Forecasting and Predictive Uncertainty",
+          "url": "https://arxiv.org/abs/2608.06748",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "When GNNs Fail: Quantifying and Overcoming Temporal Correlation Volatility in Time Series",
+          "url": "https://arxiv.org/abs/2608.07333",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "grpo",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "CreativeInstruct: Scalably Teaching LLMs to Balance Quality, Creativity, and Diversity",
+          "url": "https://arxiv.org/abs/2608.07460",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction",
+          "url": "https://arxiv.org/abs/2608.06582",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "explainability",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Mathematical Principles and Experimental Discoveries of the Emergence of Symbolic Patterns in Artificial Neural Networks",
+          "url": "https://arxiv.org/abs/2608.06839",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "From Continuous Predictors to Clinical Thresholds: Early Evidence on Performance Trade-offs of Guideline-Based Categorisation for Ischaemic Stroke Outcome Prediction",
+          "url": "https://arxiv.org/abs/2608.05203",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "pruning",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs",
+          "url": "https://arxiv.org/abs/2608.07088",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "The Sparsity Whisperer",
+          "url": "https://arxiv.org/abs/2608.06630",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "statistics",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Robust inference using density-powered Stein operators",
+          "url": "https://arxiv.org/abs/2511.03963",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "A primer on optimal transport for causal inference with observational data",
+          "url": "https://arxiv.org/abs/2503.07811",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "synthetic-data",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Synthetic LiDAR Data Generation and Deterministic Downsampling for Point Cloud Classification on the Edge",
+          "url": "https://arxiv.org/abs/2608.07106",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "iARCS: Iterative Agentic RL for Controllable 3D Scene Generation",
+          "url": "https://arxiv.org/abs/2608.06161",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "flow-matching",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction",
+          "url": "https://arxiv.org/abs/2608.06582",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MaskFlow: Precise, Consistent and Seamless Regional Image Editing",
+          "url": "https://arxiv.org/abs/2608.06929",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "computer-vision",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "IceHorizon: A Dataset for Horizon Detection in Ice-Covered Maritime Environments and Comparative Evaluation of Detection Methods",
+          "url": "https://arxiv.org/abs/2608.07018",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "MaskFlow: Precise, Consistent and Seamless Regional Image Editing",
+          "url": "https://arxiv.org/abs/2608.06929",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "survey",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "A Survey of Adversarial Efficiency Degradation for Vision Transformer by Exploiting Input-adaptive Optimization",
+          "url": "https://arxiv.org/abs/2608.05217",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "When Agentic AI Meets Integrated Sensing and Communication",
+          "url": "https://arxiv.org/abs/2608.05792",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "theory",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Robust Average-Reward Markov Decision Processes: Minimax-Optimal Learning via Plug-in Reductions",
+          "url": "https://arxiv.org/abs/2608.06545",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Towards a Theoretical Understanding of Two Tower Recommendation Models",
+          "url": "https://arxiv.org/abs/2403.00802",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "orchestration",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "OrchestraBench: Evaluating Multi-Agent Orchestration Failure Modes, Recovery, and Decomposition Quality",
+          "url": "https://arxiv.org/abs/2608.05263",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
+          "fresh": false
         }
       ]
     }

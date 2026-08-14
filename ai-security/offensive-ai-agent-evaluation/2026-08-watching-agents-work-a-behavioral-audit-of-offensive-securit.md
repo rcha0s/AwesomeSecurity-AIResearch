@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Offensive AI / Agent Evaluation  
 **Source:** [source](https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs)  ·  **Published:** Aug 3, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 58 · ✨ Novelty 82 · 🎯 Relevance 88 · 🏛️ Credibility 52 · **Composite 73.38**  
+**Scores:** 🆕 Newness 46 · ✨ Novelty 82 · 🎯 Relevance 88 · 🏛️ Credibility 52 · **Composite 70.38**  
 **Tags:** `offensive-security`, `agent-eval`, `elicitation-gap`, `sandbox-escape`, `benchmark-critique`, `open-weights`  
 **Verification:** ✓ independently verified · closest prior art: Anthropic Frontier Red Team's Mythos Preview writeup (April 2026) on emergent cyber capability; CyberGym (arXiv:2506.02548) showing solve rate collapses from headline number to 3.5% when bug descriptions are removed; broader elicitation-gap literature; ProjectDiscovery's own no-ide.dev offensive-agent tooling.
 

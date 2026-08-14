@@ -1,176 +1,5 @@
 [
   {
-    "id": "css-the-bomb-inside-your-inbox-dc0ea9d4f0",
-    "discovered_via": "rss",
-    "title": "CSS:the bomb inside your inbox",
-    "source_name": "PortSwigger Research",
-    "source_type": "Vendor research",
-    "source_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
-    "article_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "Gareth Heyes - gareth.heyes@portswigger.net - @garethheyes It's quite common for webmail clients to render untrusted CSS in a trusted UI. They attempt to make this safe using CSS sanitization. In this",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-portswigger-net-research-rss",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:43+00:00"
-  },
-  {
-    "id": "can-ai-do-novel-security-research-meet-the-http-bd72712fe0",
-    "discovered_via": "rss",
-    "title": "Can AI do novel security research? Meet the HTTP Terminator",
-    "source_name": "PortSwigger Research",
-    "source_type": "Vendor research",
-    "source_url": "https://portswigger.net/research/can-ai-do-novel-security-research",
-    "article_url": "https://portswigger.net/research/can-ai-do-novel-security-research",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Abstract We all know AI can find bugs. After a decade of research, I asked a harder question: can an autonomous system invent new attack techniques, and use them to hack live websites at scale? Buildi",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-portswigger-net-research-rss",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:43+00:00"
-  },
-  {
-    "id": "incident-report-unsanctioned-agent-behaviour-dur-6fad863542",
-    "discovered_via": "rss",
-    "title": "Incident Report: unsanctioned agent behaviour during cyber testing",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Incident Report: unsanctioned agent behaviour during cyber testing It happened again . This time it was the UK government's AI Security Institute who accidentally attacked other companies while running an evaluation with models with the safety filters turned off. From their technical paper (PDF): During a cyber…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
-  },
-  {
-    "id": "third-party-cyber-evaluations-involving-openai-m-fc7831cf1c",
-    "discovered_via": "rss",
-    "title": "Third-party cyber evaluations involving OpenAI models",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Third-party cyber evaluations involving OpenAI models And another one . I had to create a accidental-cyberattacks tag to keep track of them all! This post from OpenAI covers both the UK AI Safety Institute attack (see my previous post ) and another attack enabled by Irregular : Irregular, one of our external…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
-  },
-  {
-    "id": "responding-to-the-next-frontier-of-critical-cybe-d9f07e47f6",
-    "discovered_via": "rss",
-    "title": "Responding to the next frontier of critical cyber capabilities",
-    "source_name": "OpenAI Blog",
-    "source_type": "First-party OpenAI product/capability/pricing announcements",
-    "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-    "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-07",
-    "date": "2026-08",
-    "excerpt": "OpenAI is sharing preliminary cybersecurity evaluations for Astra and the steps we’re taking to strengthen safeguards and security controls.",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Models & Capabilities",
-    "guess_subtype": "Releases & Benchmarks",
-    "source_id": "rss:https-openai-com-blog-rss-xml",
-    "source_rank": 80.0,
-    "source_topics": [
-      "ai-research",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:54+00:00"
-  },
-  {
-    "id": "cybersunil-llmvault-e33702401b",
-    "discovered_via": "github",
-    "title": "CyberSunil/LLMVault",
-    "source_name": "CyberSunil/LLMVault",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/CyberSunil/LLMVault",
-    "article_url": "https://github.com/CyberSunil/LLMVault",
-    "tweet_url": null,
-    "author": "CyberSunil",
-    "published": "2026-08-10",
-    "date": "2026-08",
-    "excerpt": "An intentionally vulnerable OWASP LLM Top 10 training platform for AI Security, Prompt Injection, RAG Security, Agent Security, and GenAI penetration testing. (273 stars)",
-    "raw_path": "data/_raw/cybersunil-llmvault-e33702401b.txt",
-    "stars": 273,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:prompt-injection-llm",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:36+00:00"
-  },
-  {
-    "id": "cy-s3c-burpmcp-ultra-92ff8aab5a",
-    "discovered_via": "github",
-    "title": "Cy-S3c/BurpMCP-Ultra",
-    "source_name": "Cy-S3c/BurpMCP-Ultra",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
-    "article_url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
-    "tweet_url": null,
-    "author": "Cy-S3c",
-    "published": "2026-08-10",
-    "date": "2026-08",
-    "excerpt": "AI-powered MCP server for Burp Suite Professional — 149 tools across proxy, scanner, inline fuzzer, race conditions, guided injection, JWT/IDOR attacks, recon & OOB, with a real-time dashboard and hardened localhost security. Drive Burp from Claude Code or any MCP client. (184 stars)",
-    "raw_path": "data/_raw/cy-s3c-burpmcp-ultra-92ff8aab5a.txt",
-    "stars": 184,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:mcp-server-security-scanner",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:45+00:00"
-  },
-  {
     "id": "snyk-agent-scan-f565968f99",
     "discovered_via": "github",
     "title": "snyk/agent-scan",
@@ -194,31 +23,6 @@
       "ai-security"
     ],
     "retrieved_at": "2026-08-10T04:53:42+00:00"
-  },
-  {
-    "id": "cisco-ai-defense-mcp-scanner-5d219ac494",
-    "discovered_via": "github",
-    "title": "cisco-ai-defense/mcp-scanner",
-    "source_name": "cisco-ai-defense/mcp-scanner",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/cisco-ai-defense/mcp-scanner",
-    "article_url": "https://github.com/cisco-ai-defense/mcp-scanner",
-    "tweet_url": null,
-    "author": "cisco-ai-defense",
-    "published": "2026-08-09",
-    "date": "2026-08",
-    "excerpt": "Scan MCP servers for potential threats & security findings. (1014 stars)",
-    "raw_path": "data/_raw/cisco-ai-defense-mcp-scanner-5d219ac494.txt",
-    "stars": 1014,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:mcp-server-security-scanner",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:44+00:00"
   },
   {
     "id": "highflame-ai-ramparts-156bbd1ea2",
@@ -4471,31 +4275,6 @@
     "retrieved_at": "2026-08-10T04:53:35+00:00"
   },
   {
-    "id": "cybersunil-llmvault-e33702401b",
-    "discovered_via": "github",
-    "title": "CyberSunil/LLMVault",
-    "source_name": "CyberSunil/LLMVault",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/CyberSunil/LLMVault",
-    "article_url": "https://github.com/CyberSunil/LLMVault",
-    "tweet_url": null,
-    "author": "CyberSunil",
-    "published": "2026-08-10",
-    "date": "2026-08",
-    "excerpt": "An intentionally vulnerable OWASP LLM Top 10 training platform for AI Security, Prompt Injection, RAG Security, Agent Security, and GenAI penetration testing. (273 stars)",
-    "raw_path": "data/_raw/cybersunil-llmvault-e33702401b.txt",
-    "stars": 273,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:prompt-injection-llm",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:36+00:00"
-  },
-  {
     "id": "fu351-doberman-core-e4ac92e630",
     "discovered_via": "github",
     "title": "fu351/Doberman-Core",
@@ -4519,31 +4298,6 @@
       "ai-security"
     ],
     "retrieved_at": "2026-08-10T04:53:37+00:00"
-  },
-  {
-    "id": "cy-s3c-burpmcp-ultra-92ff8aab5a",
-    "discovered_via": "github",
-    "title": "Cy-S3c/BurpMCP-Ultra",
-    "source_name": "Cy-S3c/BurpMCP-Ultra",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
-    "article_url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
-    "tweet_url": null,
-    "author": "Cy-S3c",
-    "published": "2026-08-10",
-    "date": "2026-08",
-    "excerpt": "AI-powered MCP server for Burp Suite Professional — 149 tools across proxy, scanner, inline fuzzer, race conditions, guided injection, JWT/IDOR attacks, recon & OOB, with a real-time dashboard and hardened localhost security. Drive Burp from Claude Code or any MCP client. (184 stars)",
-    "raw_path": "data/_raw/cy-s3c-burpmcp-ultra-92ff8aab5a.txt",
-    "stars": 184,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:mcp-server-security-scanner",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:45+00:00"
   },
   {
     "id": "prismorsec-prismor-0bce7e4063",
@@ -4868,31 +4622,6 @@
     "retrieved_at": "2026-08-10T04:53:36+00:00"
   },
   {
-    "id": "snyk-agent-scan-f565968f99",
-    "discovered_via": "github",
-    "title": "snyk/agent-scan",
-    "source_name": "snyk/agent-scan",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/snyk/agent-scan",
-    "article_url": "https://github.com/snyk/agent-scan",
-    "tweet_url": null,
-    "author": "snyk",
-    "published": "2026-08-09",
-    "date": "2026-08",
-    "excerpt": "Security scanner for AI agents, MCP servers and agent skills. (2895 stars)",
-    "raw_path": "data/_raw/snyk-agent-scan-f565968f99.txt",
-    "stars": 2895,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:mcp-server-security-scanner",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:42+00:00"
-  },
-  {
     "id": "affaan-m-agentshield-db00f0dd96",
     "discovered_via": "github",
     "title": "affaan-m/agentshield",
@@ -4916,31 +4645,6 @@
       "ai-security"
     ],
     "retrieved_at": "2026-08-10T04:53:43+00:00"
-  },
-  {
-    "id": "cisco-ai-defense-mcp-scanner-5d219ac494",
-    "discovered_via": "github",
-    "title": "cisco-ai-defense/mcp-scanner",
-    "source_name": "cisco-ai-defense/mcp-scanner",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/cisco-ai-defense/mcp-scanner",
-    "article_url": "https://github.com/cisco-ai-defense/mcp-scanner",
-    "tweet_url": null,
-    "author": "cisco-ai-defense",
-    "published": "2026-08-09",
-    "date": "2026-08",
-    "excerpt": "Scan MCP servers for potential threats & security findings. (1014 stars)",
-    "raw_path": "data/_raw/cisco-ai-defense-mcp-scanner-5d219ac494.txt",
-    "stars": 1014,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:mcp-server-security-scanner",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:44+00:00"
   },
   {
     "id": "sinewaveai-agent-security-scanner-mcp-23ccc1b0ce",
@@ -5092,30 +4796,6 @@
     "retrieved_at": "2026-08-10T04:50:11+00:00"
   },
   {
-    "id": "now-we-have-a-timeline-of-the-openai-accidental-ba0a9f93cd",
-    "discovered_via": "rss",
-    "title": "Now we have a timeline of the OpenAI accidental attack against Hugging Face",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-08",
-    "date": "2026-08",
-    "excerpt": "My comment on Now we have a timeline of the OpenAI accidental attack against Hugging Face &mdash; Hacker News. I think one of the most interesting details here might be tucked away in that first bulletin point: May 7: OpenAI starts a new training run for an experimental, unreleased model. (Do they mean an evaluation…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-10T04:50:11+00:00"
-  },
-  {
     "id": "quoting-john-gruber-9fc18ab550",
     "discovered_via": "rss",
     "title": "Quoting John Gruber",
@@ -5163,31 +4843,6 @@
       "ai-security"
     ],
     "retrieved_at": "2026-08-10T04:53:46+00:00"
-  },
-  {
-    "id": "highflame-ai-ramparts-156bbd1ea2",
-    "discovered_via": "github",
-    "title": "highflame-ai/ramparts",
-    "source_name": "highflame-ai/ramparts",
-    "source_type": "GitHub repository",
-    "source_url": "https://github.com/highflame-ai/ramparts",
-    "article_url": "https://github.com/highflame-ai/ramparts",
-    "tweet_url": null,
-    "author": "highflame-ai",
-    "published": "2026-08-08",
-    "date": "2026-08",
-    "excerpt": "mcp & skill scanner that scans any mcp server or skills for indirect attack vectors and security or configuration vulnerabilities (96 stars)",
-    "raw_path": "data/_raw/highflame-ai-ramparts-156bbd1ea2.txt",
-    "stars": 96,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": null,
-    "source_id": "github_query:mcp-server-security-scanner",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-10T04:53:49+00:00"
   },
   {
     "id": "agentscope-ai-pawbench-2caeb55853",
@@ -12660,55 +12315,6 @@
     "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
-    "id": "the-tokenpocalypse-is-here-companies-are-scrambl-41a93133d5",
-    "discovered_via": "rss",
-    "title": "The Tokenpocalypse Is Here: Companies Are Scrambling To Stop Spending So Much on AI",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/7/pdfs-are-terrible/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/7/pdfs-are-terrible/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-07",
-    "date": "2026-08",
-    "excerpt": "The Tokenpocalypse Is Here: Companies Are Scrambling To Stop Spending So Much on AI There's a fun anecdote from Accenture (apparently via leaked meeting audio recordings) in this 404 Media piece from June 24th: “We’re seeing from some of the data internally at least that it’s actually not our engineers that are…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Tooling & Infrastructure",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
-  },
-  {
-    "id": "responding-to-the-next-frontier-of-critical-cybe-d9f07e47f6",
-    "discovered_via": "rss",
-    "title": "Responding to the next frontier of critical cyber capabilities",
-    "source_name": "OpenAI Blog",
-    "source_type": "First-party OpenAI product/capability/pricing announcements",
-    "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-    "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-07",
-    "date": "2026-08",
-    "excerpt": "OpenAI is sharing preliminary cybersecurity evaluations for Astra and the steps we’re taking to strengthen safeguards and security controls.",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Models & Capabilities",
-    "guess_subtype": "Releases & Benchmarks",
-    "source_id": "rss:https-openai-com-blog-rss-xml",
-    "source_rank": 80.0,
-    "source_topics": [
-      "ai-research",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:54+00:00"
-  },
-  {
     "id": "how-hsp-gruppe-builds-ai-capabilities-for-tax-ad-1cbeec09e8",
     "discovered_via": "rss",
     "title": "How HSP GRUPPE builds AI capabilities for tax advisory",
@@ -13177,52 +12783,6 @@
     "retrieved_at": "2026-08-07T22:23:48+00:00"
   },
   {
-    "id": "ghsa-qgq7-7hm3-q39j-0740635315",
-    "discovered_via": "github",
-    "title": "go-git: Malicious reference names may modify files outside the reference storage (GHSA-qgq7-7hm3-q39j)",
-    "source_name": "GitHub Advisory Database",
-    "source_type": "GHSA",
-    "source_url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
-    "article_url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-07",
-    "date": "2026-08",
-    "excerpt": "[MEDIUM] go-git: Malicious reference names may modify files outside the reference storage — affects go/github.com/go-git/go-git/v5, go/github.com/go-git/go-git/v6. ### Impact A path traversal issue in `go-git` could allow malicious reference names to access files outside the repository's intended reference storage. Loose references are stored under `.git/ `. The reference name was previously used…",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "RAG / Data Poisoning",
-    "severity": "MEDIUM",
-    "source_id": null,
-    "source_rank": 70.0,
-    "source_topics": [],
-    "retrieved_at": "2026-08-07T22:23:48+00:00"
-  },
-  {
-    "id": "ghsa-hc8v-wwc9-vgxm-e5467e163a",
-    "discovered_via": "github",
-    "title": "go-git: Worktree operations may follow symlinks (GHSA-hc8v-wwc9-vgxm)",
-    "source_name": "GitHub Advisory Database",
-    "source_type": "GHSA",
-    "source_url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
-    "article_url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-07",
-    "date": "2026-08",
-    "excerpt": "[HIGH] go-git: Worktree operations may follow symlinks — affects go/github.com/go-git/go-git/v5, go/github.com/go-git/go-git/v6. ## Impact A symlink traversal issue in `go-git` could allow worktree operations to modify files outside the intended worktree path. The `worktreeFilesystem` wrapper rejected dangerous path strings, including paths containing `.git`, parent-directory components, or…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "severity": "HIGH",
-    "source_id": null,
-    "source_rank": 70.0,
-    "source_topics": [],
-    "retrieved_at": "2026-08-07T22:23:48+00:00"
-  },
-  {
     "id": "ghsa-wvpp-8hx9-p66j-83c1b22f21",
     "discovered_via": "github",
     "title": "GitPython: Unsafe git option guard bypass via split_single_char_options=False short-option token smuggling enables command execution (GHSA-wvpp-8hx9-p66j)",
@@ -13346,55 +12906,6 @@
     "retrieved_at": "2026-08-10T04:54:13+00:00"
   },
   {
-    "id": "chaindrop-inside-a-self-propagating-npm-worm-b2243e9643",
-    "discovered_via": "rss",
-    "title": "ChainDrop: Inside a Self-Propagating npm Worm",
-    "source_name": "Palo Alto Networks Unit 42",
-    "source_type": "Vendor research",
-    "source_url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
-    "article_url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "Analysis of ChainDrop, an npm supply chain worm extracting GitHub Actions runner secrets and using Ethereum smart contracts for C2 routing. The post ChainDrop: Inside a Self-Propagating npm Worm appeared first on Unit 42 .",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-    "source_rank": 77.5,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:40+00:00"
-  },
-  {
-    "id": "css-the-bomb-inside-your-inbox-dc0ea9d4f0",
-    "discovered_via": "rss",
-    "title": "CSS:the bomb inside your inbox",
-    "source_name": "PortSwigger Research",
-    "source_type": "Vendor research",
-    "source_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
-    "article_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "Gareth Heyes - gareth.heyes@portswigger.net - @garethheyes It's quite common for webmail clients to render untrusted CSS in a trusted UI. They attempt to make this safe using CSS sanitization. In this",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-portswigger-net-research-rss",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:43+00:00"
-  },
-  {
     "id": "datasette-1-0a38-538ee42545",
     "discovered_via": "rss",
     "title": "datasette 1.0a38",
@@ -13467,30 +12978,6 @@
     "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
-    "id": "an-ai-model-from-meta-also-hacked-another-compan-9a24df358f",
-    "discovered_via": "rss",
-    "title": "An AI model from Meta also hacked another company during testing",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "An AI model from Meta also hacked another company during testing Stop me if you've heard this one before : An AI model from the parent company of Facebook and Instagram hacked into another company’s systems during cybersecurity testing, a spokesperson confirmed on Wednesday. Meta says the breach occurred because of an…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Tooling & Infrastructure",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
-  },
-  {
     "id": "baseten-on-hugging-face-inference-providers-9c95afa451",
     "discovered_via": "rss",
     "title": "Baseten on Hugging Face Inference Providers 🔥",
@@ -13516,31 +13003,6 @@
     "retrieved_at": "2026-08-07T22:22:58+00:00"
   },
   {
-    "id": "humans-in-the-loop-miss-a-third-of-dangerous-ai-b4f1199a6d",
-    "discovered_via": "rss",
-    "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
-    "source_name": "The Register — Security",
-    "source_type": "Incident and breach coverage; filter via classifier",
-    "source_url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
-    "article_url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "You wouldn't let Claude Code cat your AWS credentials or Kubernetes config on request, would you?",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Agents & Harnesses",
-    "guess_subtype": "Autonomy",
-    "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:01+00:00"
-  },
-  {
     "id": "hackers-stalked-me-by-hijacking-a-smartwatch-for-4aaf095493",
     "discovered_via": "rss",
     "title": "Hackers Stalked Me by Hijacking a Smartwatch for Kids",
@@ -13564,57 +13026,6 @@
       "ai-security"
     ],
     "retrieved_at": "2026-08-07T22:23:02+00:00"
-  },
-  {
-    "id": "openai-didn-t-notice-its-ai-agents-using-a-messa-6540dbd5c0",
-    "discovered_via": "rss",
-    "title": "OpenAI Didn’t Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
-    "source_name": "Wired Security",
-    "source_type": "Security journalism — must classify on-topic per item",
-    "source_url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
-    "article_url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "At the Black Hat security conference, the AI giant revealed new details about how its agents went rogue, hacked several other companies—and did it all right under the company’s nose.",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-www-wired-com-feed-category-security-lates",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:02+00:00"
-  },
-  {
-    "id": "inside-vllm-anatomy-of-a-high-throughput-llm-inf-7a0e578d2b",
-    "discovered_via": "hackernews",
-    "title": "Inside vLLM: Anatomy of a High-Throughput LLM Inference System (2025)",
-    "source_name": "@sebg via Hacker News",
-    "source_type": "Hacker News",
-    "source_url": "https://www.aleksagordic.com/blog/vllm",
-    "article_url": "https://www.aleksagordic.com/blog/vllm",
-    "tweet_url": null,
-    "author": "sebg",
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "excerpt": "HN: 139 points, 9 comments",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": null,
-    "source_rank": 55.0,
-    "source_topics": [],
-    "hn_points": 139,
-    "signals": {
-      "hn_points": 139
-    },
-    "retrieved_at": "2026-08-07T22:23:35+00:00"
   },
   {
     "id": "amd-acquires-taalas-to-boost-inference-performan-6ddaf58195",
@@ -13692,79 +13103,6 @@
     "retrieved_at": "2026-08-10T04:53:40+00:00"
   },
   {
-    "id": "from-open-lures-to-cloaked-gates-how-a-macos-cli-0d1a4c9bc0",
-    "discovered_via": "rss",
-    "title": "From open lures to cloaked gates: How a macOS ClickFix campaign learned to hide",
-    "source_name": "Microsoft Security Blog",
-    "source_type": "Vendor research",
-    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/",
-    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "A macOS ClickFix campaign shifted tactics from openly serving infostealer lures to hiding them behind a browser-fingerprinting gate. The change makes malicious infrastructure harder to detect while giving defenders new hunting opportunities. The post From open lures to cloaked gates: How a macOS ClickFix campaign…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Tooling & Infrastructure",
-    "guess_subtype": "Serving & Ops",
-    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:41+00:00"
-  },
-  {
-    "id": "crlf-powered-desync-attacks-beheading-http-strea-ca2e8f1637",
-    "discovered_via": "rss",
-    "title": "CRLF-Powered Desync Attacks: Beheading HTTP Streams",
-    "source_name": "PortSwigger Research",
-    "source_type": "Vendor research",
-    "source_url": "https://portswigger.net/research/crlf-powered-desync-attacks",
-    "article_url": "https://portswigger.net/research/crlf-powered-desync-attacks",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Abstract In this paper we’ll show that HTTP Header Injection is severely underestimated. Forget open redirects or Cross-Site Scripting and instead, embrace the catastrophic potential of the CRLF-Power",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Request Smuggling / Desync",
-    "source_id": "rss:https-portswigger-net-research-rss",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:43+00:00"
-  },
-  {
-    "id": "can-ai-do-novel-security-research-meet-the-http-bd72712fe0",
-    "discovered_via": "rss",
-    "title": "Can AI do novel security research? Meet the HTTP Terminator",
-    "source_name": "PortSwigger Research",
-    "source_type": "Vendor research",
-    "source_url": "https://portswigger.net/research/can-ai-do-novel-security-research",
-    "article_url": "https://portswigger.net/research/can-ai-do-novel-security-research",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Abstract We all know AI can find bugs. After a decade of research, I asked a harder question: can an autonomous system invent new attack techniques, and use them to hack live websites at scale? Buildi",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-portswigger-net-research-rss",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:43+00:00"
-  },
-  {
     "id": "immigration-policy-the-backdoor-to-transnational-6e4aa4fee4",
     "discovered_via": "rss",
     "title": "Immigration Policy: The Backdoor to Transnational Repression",
@@ -13813,54 +13151,6 @@
     "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
-    "id": "third-party-cyber-evaluations-involving-openai-m-fc7831cf1c",
-    "discovered_via": "rss",
-    "title": "Third-party cyber evaluations involving OpenAI models",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Third-party cyber evaluations involving OpenAI models And another one . I had to create a accidental-cyberattacks tag to keep track of them all! This post from OpenAI covers both the UK AI Safety Institute attack (see my previous post ) and another attack enabled by Irregular : Irregular, one of our external…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
-  },
-  {
-    "id": "incident-report-unsanctioned-agent-behaviour-dur-6fad863542",
-    "discovered_via": "rss",
-    "title": "Incident Report: unsanctioned agent behaviour during cyber testing",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Incident Report: unsanctioned agent behaviour during cyber testing It happened again . This time it was the UK government's AI Security Institute who accidentally attacked other companies while running an evaluation with models with the safety filters turned off. From their technical paper (PDF): During a cyber…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
-  },
-  {
     "id": "one-shotting-a-raccoon-heist-game-using-claude-f-4df0c5df16",
     "discovered_via": "rss",
     "title": "One-shotting a Raccoon Heist game using Claude Fable 5",
@@ -13885,31 +13175,6 @@
     "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
-    "id": "a-few-notes-on-aws-nitro-enclaves-kms-integratio-a9fa51faa1",
-    "discovered_via": "rss",
-    "title": "A few notes on AWS Nitro Enclaves: KMS integration",
-    "source_name": "Trail of Bits",
-    "source_type": "Vendor research",
-    "source_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
-    "article_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Nitro Enclaves and Key Management Service (KMS) feel like a natural fit: since the KMS can verify attestation documents generated by the enclaves, developers can offload key management tasks from their applications to the AWS-managed service. But integrating an external service with your trusted enclaves comes with…",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-blog-trailofbits-com-feed",
-    "source_rank": 77.5,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:48+00:00"
-  },
-  {
     "id": "continuous-offensive-security-ai-pentesting-20-f-23e23fe061",
     "discovered_via": "rss",
     "title": "Continuous Offensive Security & AI Pentesting: 20 FAQs",
@@ -13932,56 +13197,6 @@
       "product-security"
     ],
     "retrieved_at": "2026-08-07T22:22:49+00:00"
-  },
-  {
-    "id": "prompt-injection-isn-t-the-bug-ai-agent-framewor-b51514d4e2",
-    "discovered_via": "rss",
-    "title": "Prompt injection isn't the bug, AI agent frameworks are",
-    "source_name": "The Register — Security",
-    "source_type": "Incident and breach coverage; filter via classifier",
-    "source_url": "https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
-    "article_url": "https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "Check Point researchers tried to break the frameworks enterprises use to build AI apps. Now they're telling Black Hat attendees what they found",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Prompt Injection",
-    "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:01+00:00"
-  },
-  {
-    "id": "ibm-s-agentic-ai-platform-is-under-active-attack-faaee2d01b",
-    "discovered_via": "rss",
-    "title": "IBM's agentic AI platform is under active attack - patch now",
-    "source_name": "The Register — Security",
-    "source_type": "Incident and breach coverage; filter via classifier",
-    "source_url": "https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
-    "article_url": "https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-05",
-    "date": "2026-08",
-    "excerpt": "A critical Langflow flaw allowing RCE on default deployments is being exploited, says the CISA",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:01+00:00"
   },
   {
     "id": "launch-hn-hyperprobe-yc-s26-agents-that-do-read-59980da94a",
@@ -14034,81 +13249,6 @@
     "retrieved_at": "2026-08-07T22:24:18+00:00"
   },
   {
-    "id": "the-frontier-ai-vulnerability-burst-industrializ-076f328753",
-    "discovered_via": "rss",
-    "title": "The Frontier AI Vulnerability Burst: Industrializing Autonomous Zero-Day Discovery in Open-Source Software",
-    "source_name": "Palo Alto Networks Unit 42",
-    "source_type": "Vendor research",
-    "source_url": "https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst/",
-    "article_url": "https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "Frontier AI is reshaping vulnerability discovery. Learn how our NOVA system found 14,000+ unknown vulnerabilities across the open-source software supply chain. The post The Frontier AI Vulnerability Burst: Industrializing Autonomous Zero-Day Discovery in Open-Source Software appeared first on Unit 42 .",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-    "source_rank": 77.5,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:40+00:00"
-  },
-  {
-    "id": "chaindrop-supply-chain-compromise-anatomy-of-a-s-437f185572",
-    "discovered_via": "rss",
-    "title": "ChainDrop supply chain compromise: Anatomy of a self-propagating worm",
-    "source_name": "Microsoft Security Blog",
-    "source_type": "Vendor research",
-    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/",
-    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "A credential-stealing worm hidden in more than 400 compromised npm packages automatically spread across software ecosystems by republishing malicious updates. This analysis details the attack chain, affected environments, and practical guidance for detection, hunting, and remediation. The post ChainDrop supply chain…",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:41+00:00"
-  },
-  {
-    "id": "advance-zero-trust-for-ai-new-tools-and-guidance-af1a16e690",
-    "discovered_via": "rss",
-    "title": "Advance Zero Trust for AI: New tools and guidance to secure AI agents and DevSecOps",
-    "source_name": "Microsoft Security Blog",
-    "source_type": "Vendor research",
-    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
-    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "Microsoft expands its Zero Trust for AI strategy to enhance security for AI and DevSecOps environments with new tools and guidance. The post Advance Zero Trust for AI: New tools and guidance to secure AI agents and DevSecOps appeared first on Microsoft Security Blog .",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:41+00:00"
-  },
-  {
     "id": "a-roadmap-for-confronting-the-chilling-effects-o-273f763ebd",
     "discovered_via": "rss",
     "title": "A Roadmap for Confronting the Chilling Effects of Censorship, Surveillance and New Technology",
@@ -14131,30 +13271,6 @@
       "product-security"
     ],
     "retrieved_at": "2026-08-07T22:22:44+00:00"
-  },
-  {
-    "id": "new-release-of-llm-adds-support-for-reasoning-tr-e1a9c48237",
-    "discovered_via": "rss",
-    "title": "New release of LLM adds support for reasoning traces, OpenAI Responses, server-side tools, and smarter logging",
-    "source_name": "Simon Willison's Weblog",
-    "source_type": "Practitioner blog",
-    "source_url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/#atom-everything",
-    "article_url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/#atom-everything",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "I released LLM 0.32 this morning, the most significant new version of LLM since the initial launch of the project. The new version includes support for visible reasoning traces, server-side provider tools, redesigned content-addressable SQLite logs, new models, and new features enabled by the OpenAI Responses API. I…",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-simonwillison-net-atom-everything",
-    "source_rank": 55.0,
-    "source_topics": [
-      "ai-research"
-    ],
-    "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
     "id": "llm-anthropic-0-26-419a098fbb",
@@ -14323,78 +13439,6 @@
       "product-security"
     ],
     "retrieved_at": "2026-08-07T22:22:49+00:00"
-  },
-  {
-    "id": "a-first-look-at-evo-agentic-appsec-agentic-remed-b3d12e2afc",
-    "discovered_via": "rss",
-    "title": "A First Look at Evo Agentic AppSec: Agentic Remediation and Malicious Code Defense",
-    "source_name": "Snyk Blog",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://snyk.io/blog/remediation-agent-malicious-code-defense/",
-    "article_url": "https://snyk.io/blog/remediation-agent-malicious-code-defense/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "Explore Snyk’s first Agentic AppSec capabilities: an autonomous Remediation Agent that fixes vulnerabilities and Malicious Code Defense that blocks risky packages before they ship.",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-snyk-io-blog-feed",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:49+00:00"
-  },
-  {
-    "id": "inside-the-keyv-npm-compromise-preinstall-malwar-9ebd0c1fe3",
-    "discovered_via": "rss",
-    "title": "Inside the keyv npm Compromise: preinstall Malware, Trusted Provenance, and IDE Hooks",
-    "source_name": "Snyk Blog",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/",
-    "article_url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "keyv 6.0.0 and ten related npm releases shipped install-time malware. See affected versions, hashes, detection steps, and safe remediation order.",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-snyk-io-blog-feed",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:49+00:00"
-  },
-  {
-    "id": "the-keyv-and-cacheable-npm-supply-chain-attack-i-70ef63f908",
-    "discovered_via": "rss",
-    "title": "The keyv and cacheable npm Supply Chain Attack: Inside the Mini Shai-Hulud Campaign",
-    "source_name": "Chainguard Unchained",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
-    "article_url": "https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-04",
-    "date": "2026-08",
-    "excerpt": "The latest npm supply chain attack hit keyv and cacheable. See how Chainguard's malware scanning and cooldowns kept customers protected.",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
-    "source_rank": 55.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:50+00:00"
   },
   {
     "id": "chainguard-libraries-now-available-on-aws-securi-8abfd06afd",
@@ -14813,103 +13857,6 @@
     "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
-    "id": "llm-heist-hijacking-litellm-for-traffic-intercep-7dd99ae13f",
-    "discovered_via": "rss",
-    "title": "LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection",
-    "source_name": "Embrace The Red",
-    "source_type": "Practitioner AI red-teaming",
-    "source_url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
-    "article_url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-03",
-    "date": "2026-08",
-    "excerpt": "LiteLLM is a popular AI gateway. It provides a unified interface to LLMs and simplifies governance. It also has access to the backend LLM provider keys. All of that makes it a high-value target. Not only for IP and data theft, but also for response modification and tool invocation. This post walks through a set of…",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-embracethered-com-blog-index-xml",
-    "source_rank": 72.5,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:50+00:00"
-  },
-  {
-    "id": "why-ai-assisted-attacks-made-software-supply-cha-0a1355188a",
-    "discovered_via": "rss",
-    "title": "Why AI-assisted attacks made software supply chain security its own category",
-    "source_name": "Chainguard Unchained",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://www.chainguard.dev/unchained/why-ai-assisted-attacks-made-software-supply-chain-security-its-own-category",
-    "article_url": "https://www.chainguard.dev/unchained/why-ai-assisted-attacks-made-software-supply-chain-security-its-own-category",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-03",
-    "date": "2026-08",
-    "excerpt": "Software supply chain security is now its own category. Discover why AI is driving a shift toward trusted, secure-by-default open source.",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
-    "source_rank": 55.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:50+00:00"
-  },
-  {
-    "id": "watching-agents-work-a-behavioral-audit-of-offen-624415e38b",
-    "discovered_via": "rss",
-    "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
-    "source_name": "ProjectDiscovery Blog",
-    "source_type": "Offensive tooling research",
-    "source_url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
-    "article_url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-03",
-    "date": "2026-08",
-    "excerpt": "What closed and open models actually do when you tell them to hack a website Summary The cybersecurity capability of a model is currently measured by a solve rate, a percentage, and that number tells you almost nothing worth knowing. It doesn't tell you how the model behaved. It doesn't tell you what it is actually…",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-blog-projectdiscovery-io-rss",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:53+00:00"
-  },
-  {
-    "id": "google-dev-kit-spurs-first-ever-agent-on-agent-v-f48af27031",
-    "discovered_via": "rss",
-    "title": "Google dev kit spurs first-ever agent-on-agent violence",
-    "source_name": "The Register — Security",
-    "source_type": "Incident and breach coverage; filter via classifier",
-    "source_url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
-    "article_url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-08-03",
-    "date": "2026-08",
-    "excerpt": "Poisoned pull requests contain prompt injection that allows one to control another",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Prompt Injection",
-    "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:01+00:00"
-  },
-  {
     "id": "launch-hn-hoplite-yc-s26-effortlessly-deploy-clo-4625c91a92",
     "discovered_via": "hackernews",
     "title": "Launch HN: Hoplite (YC S26) – Effortlessly deploy cloud coding agents",
@@ -14932,32 +13879,6 @@
     "hn_points": 81,
     "signals": {
       "hn_points": 81
-    },
-    "retrieved_at": "2026-08-07T22:23:34+00:00"
-  },
-  {
-    "id": "show-hn-product-analytics-and-evals-for-agent-se-5cf4d5fe81",
-    "discovered_via": "hackernews",
-    "title": "Show HN: Product analytics (and evals) for agent sessions on your MCP",
-    "source_name": "@screm via Hacker News",
-    "source_type": "Hacker News",
-    "source_url": "https://armature.tech/",
-    "article_url": "https://armature.tech/",
-    "tweet_url": null,
-    "author": "screm",
-    "published": "2026-08-03",
-    "date": "2026-08",
-    "excerpt": "Hi HN! We’re Theodore and Louis, founders of Armature (YC P26). We reconstruct the entire session behind the MCP tool calls you receive, including what the user asked their agent to do and what the agent thought. You wrap your MCP in 3 lines of code (our SDK is available in Typescript, Python and Go) and start seeing…",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": null,
-    "source_rank": 55.0,
-    "source_topics": [],
-    "hn_points": 42,
-    "signals": {
-      "hn_points": 42
     },
     "retrieved_at": "2026-08-07T22:23:34+00:00"
   },
@@ -15348,31 +14269,6 @@
     "retrieved_at": "2026-08-07T22:22:47+00:00"
   },
   {
-    "id": "anthropic-says-claude-hacked-into-3-organization-8306a7da80",
-    "discovered_via": "rss",
-    "title": "Anthropic Says Claude Hacked Into 3 Organizations During Cybersecurity Tests",
-    "source_name": "Wired Security",
-    "source_type": "Security journalism — must classify on-topic per item",
-    "source_url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
-    "article_url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-31",
-    "date": "2026-07",
-    "excerpt": "In a review triggered by OpenAI’s Hugging Face incident, Anthropic discovered three of its AI models had breached real-world organizations during third-party evaluations.",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Evals",
-    "source_id": "rss:https-www-wired-com-feed-category-security-lates",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:02+00:00"
-  },
-  {
     "id": "starlingly-system-prompts-and-injections-da6a33d008",
     "discovered_via": "github",
     "title": "starlingly/system_prompts_and_injections",
@@ -15471,79 +14367,6 @@
     "retrieved_at": "2026-08-07T22:22:49+00:00"
   },
   {
-    "id": "escaping-linux-sandboxes-via-pipewire-cve-2026-5-00317f83c1",
-    "discovered_via": "rss",
-    "title": "Escaping Linux Sandboxes via PipeWire (CVE-2026-5674)",
-    "source_name": "Embrace The Red",
-    "source_type": "Practitioner AI red-teaming",
-    "source_url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
-    "article_url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-30",
-    "date": "2026-07",
-    "excerpt": "This post walks through a sandbox escape from a Flatpak application via PipeWire. The vulnerability was discovered using my automated research pipeline with Claude Code and Opus 4.6 back in April 2026. It was an exciting find, as this was the first bug I submitted to Red Hat. Claude Code was also excited finding this:…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Agents & Harnesses",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-embracethered-com-blog-index-xml",
-    "source_rank": 72.5,
-    "source_topics": [
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:50+00:00"
-  },
-  {
-    "id": "crypto-is-fine-the-code-is-not-d88d129689",
-    "discovered_via": "rss",
-    "title": "Crypto is Fine. The Code is Not.",
-    "source_name": "Semgrep Blog",
-    "source_type": "Vendor research (SAST/appsec)",
-    "source_url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-    "article_url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-30",
-    "date": "2026-07",
-    "excerpt": "An analysis of cryptographic failures like improper verification of a cryptographic signature and use of a broken or risky algorithm.",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-semgrep-dev-blog-rss",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:52+00:00"
-  },
-  {
-    "id": "openai-s-hacking-debacle-comes-down-to-human-err-1393ed6f5b",
-    "discovered_via": "rss",
-    "title": "OpenAI’s Hacking Debacle Comes Down to Human Error",
-    "source_name": "Wired Security",
-    "source_type": "Security journalism — must classify on-topic per item",
-    "source_url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-    "article_url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-30",
-    "date": "2026-07",
-    "excerpt": "If the generative AI giant had followed well-known security best practices, it’s likely that its AI agent would never have escaped to the open internet and hacked multiple companies.",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-www-wired-com-feed-category-security-lates",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:02+00:00"
-  },
-  {
     "id": "launch-hn-prized-yc-s26-let-non-engineer-staff-b-96e27a1a48",
     "discovered_via": "hackernews",
     "title": "Launch HN: Prized (YC S26) – Let non-engineer staff build secure internal tools",
@@ -15592,30 +14415,6 @@
       "product-security"
     ],
     "retrieved_at": "2026-08-07T22:22:49+00:00"
-  },
-  {
-    "id": "this-shit-is-hard-how-chainguard-is-sandboxing-a-84c1203fae",
-    "discovered_via": "rss",
-    "title": "This Shit is Hard: How Chainguard is sandboxing Athena",
-    "source_name": "Chainguard Unchained",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
-    "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-29",
-    "date": "2026-07",
-    "excerpt": "AI agents need sandboxes. Learn how Chainguard uses microVMs to safely run untrusted code, contain exploits, and protect sensitive workloads.",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
-    "source_rank": 55.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:50+00:00"
   },
   {
     "id": "how-enabling-two-settings-tripled-our-scores-on-f7afe99e63",
@@ -15668,155 +14467,6 @@
     "retrieved_at": "2026-08-07T22:22:54+00:00"
   },
   {
-    "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
-    "discovered_via": "rss",
-    "title": "America bans imported robots due to supply chain and security risks",
-    "source_name": "The Register — Security",
-    "source_type": "Incident and breach coverage; filter via classifier",
-    "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
-    "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-29",
-    "date": "2026-07",
-    "excerpt": "Docs point to China’s Unitree as prime example of the foreign clanker threat",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:01+00:00"
-  },
-  {
-    "id": "mcp-gets-an-enterprise-makeover-c33a62e2a6",
-    "discovered_via": "rss",
-    "title": "MCP gets an enterprise makeover",
-    "source_name": "The Register — Security",
-    "source_type": "Incident and breach coverage; filter via classifier",
-    "source_url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
-    "article_url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-29",
-    "date": "2026-07",
-    "excerpt": "Now happier running in a conventional K8s environment, with `an easier-to-live-with lifecycle",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-    "source_rank": 70.0,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:23:01+00:00"
-  },
-  {
-    "id": "disrupting-supply-chain-attacks-on-npm-and-githu-b915f01246",
-    "discovered_via": "hackernews",
-    "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
-    "source_name": "@nyku via Hacker News",
-    "source_type": "Hacker News",
-    "source_url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
-    "article_url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
-    "tweet_url": null,
-    "author": "nyku",
-    "published": "2026-07-29",
-    "date": "2026-07",
-    "excerpt": "HN: 89 points, 50 comments",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Supply Chain",
-    "source_id": null,
-    "source_rank": 55.0,
-    "source_topics": [],
-    "hn_points": 89,
-    "signals": {
-      "hn_points": 89
-    },
-    "retrieved_at": "2026-08-07T22:23:35+00:00"
-  },
-  {
-    "id": "co-founder-of-controversial-spyware-firm-had-isr-2e9bd23ff9",
-    "discovered_via": "rss",
-    "title": "Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport",
-    "source_name": "The Citizen Lab",
-    "source_type": "Academic / research lab",
-    "source_url": "https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport/",
-    "article_url": "https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-28",
-    "date": "2026-07",
-    "excerpt": "The OCCRP found that the co-founder of NSO Group, which develops Pegasus spyware, travelled to Panama in 2013 on an Israeli diplomatic passport. The post Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport appeared first on The Citizen Lab .",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Mobile Security",
-    "guess_subtype": "Spyware / Zero-Day",
-    "source_id": "rss:https-citizenlab-ca-feed",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:44+00:00"
-  },
-  {
-    "id": "how-we-use-goal-to-find-bugs-in-patch-the-planet-3750b30fd6",
-    "discovered_via": "rss",
-    "title": "How we use /goal to find bugs in Patch the Planet",
-    "source_name": "Trail of Bits",
-    "source_type": "Vendor research",
-    "source_url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
-    "article_url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-28",
-    "date": "2026-07",
-    "excerpt": "Codex’s /goal feature amplifies bug hunting, but getting good results requires the right prompt, the right scope, and the right number of outcomes per run. For Patch the Planet , our joint initiative with OpenAI to find and fix bugs in open-source software, we pointed Codex at some of the most widely used, heavily…",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-blog-trailofbits-com-feed",
-    "source_rank": 77.5,
-    "source_topics": [
-      "product-security",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:48+00:00"
-  },
-  {
-    "id": "the-generator-can-t-be-the-validator-what-openai-d1e4e10746",
-    "discovered_via": "rss",
-    "title": "The Generator Can't Be the Validator: What OpenAI's Hugging Face Incident Proves About AI Security",
-    "source_name": "Snyk Blog",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://snyk.io/blog/openai-hugging-face-incident/",
-    "article_url": "https://snyk.io/blog/openai-hugging-face-incident/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-28",
-    "date": "2026-07",
-    "excerpt": "OpenAI’s Hugging Face incident is a wake-up call: AI systems can escape their own test harnesses, and vendors can’t be the only ones validating safety.",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-snyk-io-blog-feed",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:49+00:00"
-  },
-  {
     "id": "why-zero-cves-matters-in-mobile-airgapped-deploy-45f3f345bf",
     "discovered_via": "rss",
     "title": "Why zero CVEs matters in mobile airgapped deployments",
@@ -15839,55 +14489,6 @@
       "product-security"
     ],
     "retrieved_at": "2026-08-07T22:22:50+00:00"
-  },
-  {
-    "id": "introducing-semgrep-agentic-workflows-automate-d-82c3b5ed3a",
-    "discovered_via": "rss",
-    "title": "Introducing Semgrep Agentic Workflows: Automate Deep Vulnerability Hunting at Scale",
-    "source_name": "Semgrep Blog",
-    "source_type": "Vendor research (SAST/appsec)",
-    "source_url": "https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale",
-    "article_url": "https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-28",
-    "date": "2026-07",
-    "excerpt": "Today we're launching nine pre-built Agentic Workflows that hunt for the subtle authentication, injection, and logic flaws that matter most, covering 70+ CWEs across the OWASP Top 10.",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-semgrep-dev-blog-rss",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:52+00:00"
-  },
-  {
-    "id": "scientific-computing-in-the-age-of-agentic-ai-c5ee21665e",
-    "discovered_via": "rss",
-    "title": "Scientific computing in the age of agentic AI",
-    "source_name": "OpenAI Blog",
-    "source_type": "First-party OpenAI product/capability/pricing announcements",
-    "source_url": "https://openai.com/index/scientific-computing-agentic-ai",
-    "article_url": "https://openai.com/index/scientific-computing-agentic-ai",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-28",
-    "date": "2026-07",
-    "excerpt": "A new field report shows how scientists use AI coding agents to modernize scientific computing, accelerating software development and discovery in genomics and beyond.",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": "rss:https-openai-com-blog-rss-xml",
-    "source_rank": 80.0,
-    "source_topics": [
-      "ai-research",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:54+00:00"
   },
   {
     "id": "2026-07-28-8d9bb76ec1",
@@ -15962,55 +14563,6 @@
     "venue": "NeurIPS",
     "venue_comment": "Accepted to NeurIPS ResponsibleFM 2025, AAAI FrontierIR 2026",
     "retrieved_at": "2026-08-07T22:24:22+00:00"
-  },
-  {
-    "id": "enhancing-ai-security-through-global-ai-red-team-58e381fc0f",
-    "discovered_via": "rss",
-    "title": "Enhancing AI security through global AI red teaming",
-    "source_name": "Microsoft Security Blog",
-    "source_type": "Vendor research",
-    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-27",
-    "date": "2026-07",
-    "excerpt": "Microsoft's External Red Team Alliance (EXTRA) is a global AI security initiative designed to advance AI safety research and red teaming. By partnering with universities, researchers, and regional experts, EXTRA helps identify emerging AI risks, improve security testing, and strengthen the resilience of frontier AI…",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Evaluation & Safety",
-    "guess_subtype": "Alignment & Guardrails",
-    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:41+00:00"
-  },
-  {
-    "id": "what-is-ai-pentesting-and-how-does-it-work-b1ec5b2854",
-    "discovered_via": "rss",
-    "title": "What Is AI Pentesting and How Does It Work?",
-    "source_name": "Snyk Blog",
-    "source_type": "Vendor research (supply chain)",
-    "source_url": "https://snyk.io/blog/what-is-ai-pentesting/",
-    "article_url": "https://snyk.io/blog/what-is-ai-pentesting/",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-27",
-    "date": "2026-07",
-    "excerpt": "AI pentesting uses reasoning-capable models to continuously find and validate the flaws scanners miss, especially broken authorization and business-logic abuse.",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Access Control",
-    "source_id": "rss:https-snyk-io-blog-feed",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:49+00:00"
   },
   {
     "id": "mitigating-wordpress-attacks-with-containers-5a580b7bf7",
@@ -16358,81 +14910,6 @@
       "product-security"
     ],
     "retrieved_at": "2026-08-07T22:22:50+00:00"
-  },
-  {
-    "id": "introducing-internal-network-scanning-see-your-n-f1f7162f74",
-    "discovered_via": "rss",
-    "title": "Introducing Internal Network Scanning: see your network the way an attacker inside it would",
-    "source_name": "ProjectDiscovery Blog",
-    "source_type": "Offensive tooling research",
-    "source_url": "https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would",
-    "article_url": "https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-21",
-    "date": "2026-07",
-    "excerpt": "Most breaches don't begin with a zero-day but with something ordinary like a forgotten server, an unmanaged network device, a service reachable across a segment that was supposed to be isolated. Internal scanning was supposed to catch exactly that but most scanners match a host's banner and version against a CVE list…",
-    "raw_path": null,
-    "guess_topic": "product-security",
-    "guess_domain": "Web Application Security",
-    "guess_subtype": "Uncategorized",
-    "source_id": "rss:https-blog-projectdiscovery-io-rss",
-    "source_rank": 52.5,
-    "source_topics": [
-      "product-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:53+00:00"
-  },
-  {
-    "id": "openai-and-hugging-face-partner-to-address-secur-08135780c4",
-    "discovered_via": "rss",
-    "title": "OpenAI and Hugging Face partner to address security incident during model evaluation",
-    "source_name": "OpenAI Blog",
-    "source_type": "First-party OpenAI product/capability/pricing announcements",
-    "source_url": "https://openai.com/index/hugging-face-model-evaluation-security-incident",
-    "article_url": "https://openai.com/index/hugging-face-model-evaluation-security-incident",
-    "tweet_url": null,
-    "author": null,
-    "published": "2026-07-21",
-    "date": "2026-07",
-    "excerpt": "OpenAI and Hugging Face share early findings from a security incident during AI model evaluation, highlighting advanced cyber capabilities and lessons for defenders.",
-    "raw_path": null,
-    "guess_topic": "ai-research",
-    "guess_domain": "Models & Capabilities",
-    "guess_subtype": "Releases & Benchmarks",
-    "source_id": "rss:https-openai-com-blog-rss-xml",
-    "source_rank": 80.0,
-    "source_topics": [
-      "ai-research",
-      "ai-security"
-    ],
-    "retrieved_at": "2026-08-07T22:22:54+00:00"
-  },
-  {
-    "id": "ansi-escape-injection-in-mcp-servers-hidden-from-1595119590",
-    "discovered_via": "hackernews",
-    "title": "ANSI escape injection in MCP servers: Hidden from humans, visible to AI",
-    "source_name": "@xgpyc2qp via Hacker News",
-    "source_type": "Hacker News",
-    "source_url": "https://brightsec.com/research/detecting-ansi-escape-sequence-injection-in-mcp-servers-with-dast/",
-    "article_url": "https://brightsec.com/research/detecting-ansi-escape-sequence-injection-in-mcp-servers-with-dast/",
-    "tweet_url": null,
-    "author": "xgpyc2qp",
-    "published": "2026-07-21",
-    "date": "2026-07",
-    "excerpt": "HN: 60 points, 36 comments",
-    "raw_path": null,
-    "guess_topic": "ai-security",
-    "guess_domain": "AI Security",
-    "guess_subtype": "Agentic AI / MCP",
-    "source_id": null,
-    "source_rank": 55.0,
-    "source_topics": [],
-    "hn_points": 60,
-    "signals": {
-      "hn_points": 60
-    },
-    "retrieved_at": "2026-08-07T22:23:34+00:00"
   },
   {
     "id": "pasquini-dario-project-mantis-1ad6ce1c61",
@@ -17235,23 +15712,6 @@
     "topic": "ai-security",
     "domain": "Prompt Injection",
     "hint_lesson": "Static tests overstate prompt-injection defenses; evaluate out-of-band defenses adaptively/adversarially or you will ship a false sense of safety.",
-    "retrieved_at": "2026-07-29T07:56:44+00:00",
-    "raw_path": null
-  },
-  {
-    "id": "the-npm-threat-landscape-attack-surface-and-miti-1441bd7ff9",
-    "title": "The npm Threat Landscape: Attack Surface and Mitigations",
-    "source_url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/",
-    "article_url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/",
-    "published": "2026-07",
-    "date": "2026-07",
-    "discovered_via": "manual",
-    "source_topics": [
-      "product-security"
-    ],
-    "topic": "product-security",
-    "domain": "Supply Chain & Dependencies",
-    "hint_lesson": "npm attacks are continuous, not episodic; monitor the registry attack surface as a living feed rather than a point-in-time scan.",
     "retrieved_at": "2026-07-29T07:56:44+00:00",
     "raw_path": null
   },
