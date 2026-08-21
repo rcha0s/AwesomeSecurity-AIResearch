@@ -1,0 +1,215 @@
+# Deterministic keyword hints for the 13-cluster taxonomy in interests.yaml.
+#
+# This file is the KEYWORD SHORTCUT. The LLM still owns the reasoning call
+# (per interests.yaml's header note). The prefilter (scripts/prefilter.py)
+# uses these lists to route the obvious cases deterministically and let the
+# LLM focus on the ambiguous middle band.
+#
+# Rules of thumb when editing:
+#   - Prefer multi-word phrases over single tokens ("prompt injection" beats
+#     "prompt"). Single tokens fire too often on unrelated arXiv text.
+#   - A candidate scores a cluster by how many of its keywords hit the
+#     lowercased title + summary + guess_domain haystack. Higher wins; ties
+#     kick the item into the "filtered" bucket for the LLM.
+#   - Add sparingly. False-positives here mean the LLM never sees an item.
+#     The tests (tests/test_prefilter.py) guard the ambiguity threshold.
+
+version: 1
+
+clusters:
+  A:  # Retrieval and context
+    - rag
+    - retrieval augmented
+    - retrieval-augmented
+    - hybrid search
+    - reranking
+    - chunking
+    - long context
+    - long-context
+    - lost in the middle
+    - context window
+    - prompt caching
+    - context compression
+    - system prompt
+    - few-shot
+    - recall@k
+    - groundedness
+
+  B:  # Agents and harnesses
+    - agent harness
+    - agentic
+    - multi-agent
+    - multi agent
+    - tool schema
+    - tool count
+    - tool use
+    - planner
+    - orchestration
+    - agent eval
+    - agent evals
+    - long-running agent
+    - agent memory
+    - session forking
+    - compaction
+    - permission classifier
+    - claude code
+    - subagent
+    - agent-to-agent
+    - trajectory
+
+  C:  # Model I/O and tokens
+    - structured output
+    - constrained decoding
+    - json schema
+    - grammar-based generation
+    - token cost
+    - toon
+    - prompt cache
+    - batching
+    - model routing
+
+  D:  # Model and weights supply chain
+    - pickle
+    - safetensors
+    - model hub
+    - hugging face
+    - model artifact
+    - typosquat
+    - typosquatting
+    - backdoor
+    - quantization backdoor
+    - model provenance
+    - model card
+    - unlearning
+
+  E:  # Prompt injection and adversarial
+    - prompt injection
+    - indirect prompt injection
+    - jailbreak
+    - jailbreaks
+    - adversarial suffix
+    - universal jailbreak
+    - memory poisoning
+    - self-state attack
+    - dual-llm
+    - dual llm
+    - containment pattern
+    - allowlist
+
+  F:  # MCP and tool ecosystem
+    - mcp
+    - model context protocol
+    - tool-description injection
+    - tool description injection
+    - tool poisoning
+    - invariant labs
+    - ssrf
+    - mcp server
+    - mcp scanner
+
+  G:  # AI-assisted code and CI risks
+    - slopsquat
+    - slopsquatting
+    - hallucinated api
+    - hallucinated dependency
+    - ai-generated code
+    - agent-generated pr
+    - coding agent
+    - copilot
+    - dependency confusion
+    - typosquatting
+
+  H:  # Guardrails, alignment, and refusal
+    - constitutional ai
+    - rlhf
+    - refusal training
+    - over-refusal
+    - alignment eval
+    - capability elicitation
+    - sycophancy
+    - stance reversal
+
+  I:  # Deployment infra and sandboxing
+    - sandbox
+    - sandboxing
+    - firecracker
+    - gvisor
+    - docker sandbox
+    - kubernetes
+    - imds
+    - imdsv2
+    - short-lived token
+    - credential injection
+    - sandbox escape
+    - network policy
+    - pod-security
+
+  J:  # Observability, IR, forensics
+    - agent telemetry
+    - audit trail
+    - audit-trail
+    - postmortem
+    - post-mortem
+    - incident response
+    - forensics
+    - provider guardrail
+    - tool-call log
+    - log design
+
+  K:  # Threat modeling for AI systems
+    - threat model
+    - threat modeling
+    - stride
+    - pasta
+    - trust boundary
+    - blast radius
+    - attacker capability
+
+  L:  # Red-teaming and adversarial testing methodology
+    - red team
+    - red-team
+    - red-teaming
+    - automated jailbreak
+    - eval leak
+    - training-data contamination
+    - coverage framework
+
+  M:  # AI-security tooling and detection
+    - llm firewall
+    - runtime guardrail
+    - semgrep
+    - sast
+    - dast
+    - prompt-injection detection
+    - prompt injection detection
+    - tool-call classifier
+    - agent scanner
+
+# Global deny terms — hard drop candidates that hit any of these.
+# Complements the news-lane deny list in common.py (which fires on stock/puff);
+# these are the "definitely not our tier-1 scope" tells.
+excluded_terms:
+  - clinical automl
+  - medical imaging
+  - protein folding
+  - drug discovery
+  - autonomous driving
+  - trajectory prediction
+  - recommender system
+  - time-series forecasting
+  - image editing
+  - image generation
+  - text-to-image
+  - text to image
+  - speech recognition
+  - speech synthesis
+  - machine translation
+  - question generation
+  - question answering benchmark
+  - reinforcement learning benchmark
+  - wireless communication
+  - integrated sensing
+  - care plan
+  - pedagogical
+  - tutor
+  - portfolio optimization
