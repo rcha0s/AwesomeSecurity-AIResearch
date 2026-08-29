@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.05223)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 72 · 🎯 Relevance 82 · 🏛️ Credibility 52 · **Composite 65.48**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 82 · 🏛️ Credibility 52 · **Composite 58.98**  
 **Tags:** `coding-agents`, `skills`, `prompt-injection`, `mitre-attck`, `gemini-cli`, `qwen-code`  
 **Verification:** ✓ independently verified · closest prior art: Builds on prompt-injection and MCP tool-poisoning literature; extends by targeting the skill-file interface specifically and quantifying exploitation across two production agents.
 

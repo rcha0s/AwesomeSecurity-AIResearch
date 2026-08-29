@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2607.21642)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 59.78**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 53.28**  
 **Tags:** `shell`, `command-verification`, `agent-sandbox`, `static-analysis`, `llm-judge`  
 **Verification:** ✓ independently verified · closest prior art: Extends generic LLM-judge guardrails and shell parsers with a shell-specific canonicalization and provenance-backed static pattern layer; accepted at ISSRE 2026.
 

@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research** - every finding vetted, distilled to one lesson, and filed by field. A [standing-claims ledger](claims/README.md) tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.
 
-![Updated](https://img.shields.io/badge/updated-2026--08--14-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-48-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--08--29-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-39-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read the live briefing &#8594;</a></h3>
 
@@ -16,22 +16,14 @@ The live site is the best read - one page for the week's news, another for stand
 
 > The top curated findings published in the last 7 days. Each links to its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
 
-- **[Auto mode is now the default in Claude Code for Pro, Max, and Team plans](ai-security/harness-agent-security/2026-08-auto-mode-is-now-the-default-in-claude-code-for-pro-max-and.md)** · _AI Security · Aug 8, 2026_  
-  The result reframes agent permissioning as an accuracy problem: humans clicking OK repeatedly perform worse than a model-based classifier. Prompt injection remains the harder…
-- **[When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories](ai-research/agents-harnesses/2026-08-when-history-lies-evaluating-and-improving-tool-use-under-mi.md)** · _AI Research · Aug 7, 2026_  
-  History reliability is a distinct tool-use bottleneck: harnesses that just accumulate turns are silently letting old, wrong state overwrite the current task.
-- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](ai-research/frontier-cyber-capabilities-preparedness/2026-08-openai-astra-preliminary-evals-can-t-rule-out-critical-cyber.md)** · _AI Research · Aug 7, 2026_  
-  The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments…
-- **[Towards a Risk Assessment of Malicious Skill Files in Coding Agents](ai-security/ai-security/2026-08-towards-a-risk-assessment-of-malicious-skill-files-in-coding.md)** · _AI Security · Aug 7, 2026_  
-  Enterprise coding agents that load skill folders dynamically are highly exploitable via natural-language skill files: Gemini CLI is exploited in 95.5-96.1% of runs and Qwen Code…
-- **[Evaluating Investment Logic in Large Language Models: A Real-World Benchmark Towards Personalized Financial Agents](ai-research/agent-evals/2026-08-evaluating-investment-logic-in-large-language-models-a-real.md)** · _AI Research · Aug 7, 2026_  
-  Terminal-P&L and static QA are the wrong ruler for consequential agents: score the P→E→R→D→O trace and you can see how weakly grounded 'logical' answers actually are.
+- **[Measuring AI-enabled malware: ~97% of samples never reach production; AI changes how malware is authored, not how it executes](product-security/malware-threat-intel/2026-08-measuring-ai-enabled-malware-97-of-samples-never-reach-produ.md)** · _Product Security · Aug 25, 2026_  
+  Don't over-index on 'AI malware' hype: your existing behavioral/sandbox detection still catches it - but expect faster variant iteration.
 
 ## The three databases
 
-- **[AI Security](ai-security/README.md)** (32 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
-- **[Product Security](product-security/README.md)** (7 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
-- **[AI Research](ai-research/README.md)** (9 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
+- **[AI Security](ai-security/README.md)** (28 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
+- **[Product Security](product-security/README.md)** (3 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
+- **[AI Research](ai-research/README.md)** (8 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted).
 
@@ -128,4 +120,4 @@ README.md NEWSLETTER.md TRENDS.md REVIEW.md            generated - do not hand-e
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors - every finding cites its source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-14. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-08-29. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>

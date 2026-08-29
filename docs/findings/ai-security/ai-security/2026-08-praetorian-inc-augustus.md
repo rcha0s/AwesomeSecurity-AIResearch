@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/praetorian-inc/augustus)  ·  **Published:** Aug 9, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 61.15**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 54.65**  
 **Tags:** `red-team`, `jailbreak`, `multi-turn`, `crescendo`, `goat`, `hydra`, `llm-scanner`  
 **Verification:** ✓ independently verified · closest prior art: Overlaps with garak (research-oriented, Python) and promptfoo (TypeScript, more providers). Cites Russinovich et al. arXiv:2404.01833 for Crescendo and Pavlova et al. arXiv:2410.01606 for GOAT. Mischievous User is inspired by Tau-bench and promptfoo's mischievous-user strategy.
 

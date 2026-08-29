@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Harness & Agent Security  
 **Source:** [source](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)  ·  **Published:** Jul 31, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 8 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 70 · **Composite 57.5**  
+**Scores:** 🆕 Newness 4 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 70 · **Composite 56.5**  
 **Tags:** `evaluation`, `sandboxing`, `containment`, `capture-the-flag`, `anthropic`, `irregular`, `eval-security`  
 **Verification:** ✓ independently verified · closest prior art: Follows the OpenAI/Hugging Face containment failure covered in the sibling Wired piece; reinforces the pattern in prompt-injection-is-containment-not-prevention that model-facing rules only hold if the surrounding system enforces them.
 

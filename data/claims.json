@@ -1073,10 +1073,16 @@
           "title": "Workload identity federation",
           "source_name": "Google Cloud",
           "published": "2022"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
+          "title": "Token jacking: stolen AI API keys resold via gray-market transfer stations, ~$1M losses",
+          "published": "2026-08-06"
         }
       ],
       "first_seen": "2021-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-29",
       "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users.",
       "tags": [
         "aws",
@@ -1125,10 +1131,16 @@
           "title": "Using LLMs to obfuscate malicious JavaScript",
           "source_name": "Unit 42",
           "published": "2024"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
+          "title": "State of AI-Enabled Malware: ~97% of samples never reach production; AI changes authoring not execution",
+          "published": "2026-08-25"
         }
       ],
       "first_seen": "2024-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-29",
       "guidance": "Weight EDR and behavioral analytics over hash-based feeds for AI-authored threat classes.",
       "tags": [
         "malware",

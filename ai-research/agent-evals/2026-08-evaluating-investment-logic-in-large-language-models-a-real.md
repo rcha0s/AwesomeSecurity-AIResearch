@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Agent Evals  
 **Source:** [source](https://arxiv.org/abs/2608.06108)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 72 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 64.75**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 58.25**  
 **Tags:** `agent-evals`, `groundedness`, `process-native`, `decision-ledger`, `benchmarks`  
 **Verification:** ✓ independently verified · closest prior art: General 'process reward' / 'reasoning-trace' evals (PRM, ORM), plus finance-specific benchmarks (FinBench, FinQA) that stop at QA or terminal P&L. The specific 5-tuple P→E→R→D→O framing plus 201k real-investor decisions is new.
 

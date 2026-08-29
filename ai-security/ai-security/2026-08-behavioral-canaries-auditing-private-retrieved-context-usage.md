@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2604.22191)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 65 · 🎯 Relevance 55 · 🏛️ Credibility 52 · **Composite 55.28**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 55 · 🏛️ Credibility 52 · **Composite 48.78**  
 **Tags:** `auditing`, `rlhf`, `provenance`, `canaries`, `training-data`, `privacy`  
 **Verification:** ✓ independently verified · closest prior art: Extends membership inference and memorization-based training-data auditing; adapts stylistic canary triggers for the RLFT setting where prior methods fail.
 

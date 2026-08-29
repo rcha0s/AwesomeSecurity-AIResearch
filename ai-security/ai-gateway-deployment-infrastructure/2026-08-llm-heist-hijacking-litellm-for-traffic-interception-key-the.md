@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Gateway / Deployment Infrastructure  
 **Source:** [source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)  ·  **Published:** Aug 3, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 78 · 🎯 Relevance 90 · 🏛️ Credibility 72 · **Composite 72.78**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 90 · 🏛️ Credibility 72 · **Composite 66.28**  
 **Tags:** `ai-gateway`, `litellm`, `tool-call-injection`, `adversary-in-the-middle`, `credential-theft`, `red-team`  
 **Verification:** ✓ independently verified · closest prior art: Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).
 

@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Skills & Supply Chain  
 **Source:** [source](https://arxiv.org/abs/2608.05204)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 62 · 🎯 Relevance 60 · 🏛️ Credibility 55 · **Composite 56.35**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 60 · 🏛️ Credibility 55 · **Composite 49.85**  
 **Tags:** `skills`, `provenance`, `supply-chain`, `clone-detection`, `agent-marketplace`  
 **Verification:** ✓ independently verified · closest prior art: Code-clone detection literature (Deckard, SourcererCC, CCFinder) and package-similarity tools; SkillTrace's contribution is the multi-modality framing plus operational-graph structure specific to LLM-agent skill packages.
 

@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Agents and Harnesses  
 **Source:** [source](https://arxiv.org/abs/2608.05263)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 60 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 57.25**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 50.75**  
 **Tags:** `multi-agent`, `orchestration`, `failure-modes`, `cascade-radius`, `routing`  
 **Verification:** ✓ independently verified · closest prior art: Extends MAST (multi-agent failure taxonomy) and prior orchestration benchmarks by adding cascade radius, per-failure-mode recovery, and a failure-injection harness rather than raw task accuracy.
 

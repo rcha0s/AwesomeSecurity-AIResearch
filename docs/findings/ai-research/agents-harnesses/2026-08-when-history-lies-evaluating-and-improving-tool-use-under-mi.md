@@ -2,7 +2,7 @@
 
 **Topic:** AI Research  ·  **Domain:** Agents & Harnesses  
 **Source:** [source](https://arxiv.org/abs/2608.06057)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 78 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 67.75**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 61.25**  
 **Tags:** `tool-use`, `multi-turn`, `agent-evals`, `history-poisoning`, `distillation`  
 **Verification:** ✓ independently verified · closest prior art: Multi-turn tool-use benchmarks (BFCL, ToolBench) test accuracy but not history reliability. Related but distinct: memory-poisoning threat models on long-term agent memory and 'lost-in-the-middle' long-context degradation. The oracle-teacher / polluted-student distillation formulation is novel to this paper.
 

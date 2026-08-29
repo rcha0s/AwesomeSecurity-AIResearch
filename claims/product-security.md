@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-14_
+_11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-29_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -75,11 +75,12 @@ _Tags: `path-traversal`, `symlinks`, `defense`_
 
 _Tags: `aws`, `credentials`, `oidc`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Workload identity federation](https://cloud.google.com/blog/products/identity-security/rip-secret-storage) | undated |
+| supports | [Token jacking: stolen AI API keys resold via gray-market transfer stations, ~$1M losses](https://unit42.paloaltonetworks.com/ai-token-jacking/) | Aug 6, 2026 |
 
 </details>
 
@@ -207,11 +208,12 @@ _Tags: `ai-generated-code`, `code-review`, `ci`_
 
 _Tags: `malware`, `detection`, `ai-authored`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Using LLMs to obfuscate malicious JavaScript](https://unit42.paloaltonetworks.com/using-llms-obfuscate-malicious-javascript/) | undated |
+| supports | [State of AI-Enabled Malware: ~97% of samples never reach production; AI changes authoring not execution](https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/) | Aug 25, 2026 |
 
 </details>
 
