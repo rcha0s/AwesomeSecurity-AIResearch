@@ -2,13 +2,16 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_8 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 days only · [220 held for review](../REVIEW.md)._
+_11 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 days only · [220 held for review](../REVIEW.md)._
 
 | Domain | Findings |
 | --- | --- |
 | Autonomous vulnerability discovery | 1 |
+| Agents / Harnesses | 1 |
 | Agents & Harnesses | 1 |
+| Offensive-Security Evaluation | 1 |
 | Frontier Cyber Capabilities & Preparedness | 1 |
+| Red-Teaming Methodology | 1 |
 | Agent Evals | 1 |
 | AI-assisted Vulnerability Research | 1 |
 | Training-time Incidents & RLVR | 1 |
@@ -21,17 +24,35 @@ _8 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 day
   Autonomous AI vulnerability discovery moves the mix away from memory-corruption fuzzing (~8%) toward semantic/logic bugs (~92%), and complementarity between models is large enough that an ensemble is…  
   _[source](https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst/)_
 
+## Agents / Harnesses
+
+- **[When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses](agents-harnesses/2026-08-when-context-gets-root-instruction-privilege-escalation-in-l.md)** · composite **65.6** · Aug 27, 2026  
+  How a harness assembles context is a privilege boundary; if it can promote untrusted data, model-side instruction hierarchy provides little protection.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.27299)_
+
 ## Agents & Harnesses
 
 - **[When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories](agents-harnesses/2026-08-when-history-lies-evaluating-and-improving-tool-use-under-mi.md)** · composite **61.25** · Aug 7, 2026  
   History reliability is a distinct tool-use bottleneck: harnesses that just accumulate turns are silently letting old, wrong state overwrite the current task.  
   _[source](https://arxiv.org/abs/2608.06057)_
 
+## Offensive-Security Evaluation
+
+- **[How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation](offensive-security-evaluation/2026-08-how-do-llm-agents-actually-get-the-flag-trace-level-provenan.md)** · composite **60.8** · Aug 26, 2026  
+  Judge security agents on evidence of exploitation in the trace, not on whether the flag string appeared.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.26237)_
+
 ## Frontier Cyber Capabilities & Preparedness
 
 - **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](frontier-cyber-capabilities-preparedness/2026-08-openai-astra-preliminary-evals-can-t-rule-out-critical-cyber.md)** · composite **60.5** · Aug 7, 2026  
   The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better…  
   _[source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)_
+
+## Red-Teaming Methodology
+
+- **[RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution](red-teaming-methodology/2026-08-redevoagent-automatic-red-teaming-agent-with-experience-driv.md)** · composite **59.6** · Aug 27, 2026  
+  Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.27439)_
 
 ## Agent Evals
 

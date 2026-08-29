@@ -3,13 +3,31 @@
     {
       "topic": "ai-security",
       "tag": "prompt-injection",
-      "count": 19,
-      "recent": 12,
+      "count": 22,
+      "recent": 15,
       "sources": 11,
-      "momentum": 31.0,
+      "momentum": 37.0,
       "first_seen": "2026-04",
-      "last_seen": "2026-08-10",
+      "last_seen": "2026-08-27",
       "members": [
+        {
+          "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
+          "url": "https://arxiv.org/abs/2608.27092",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "SPA: Securing Persistent LLM Agents Across Queries with Plan-First Information-Flow Control",
+          "url": "https://arxiv.org/abs/2608.27234",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
         {
           "title": "LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode",
           "url": "https://github.com/CyberSunil/LLMVault",
@@ -243,13 +261,19 @@
     {
       "topic": "ai-security",
       "tag": "supply-chain",
-      "count": 12,
-      "recent": 7,
+      "count": 13,
+      "recent": 8,
       "sources": 10,
-      "momentum": 19.0,
+      "momentum": 21.0,
       "first_seen": "2026-06-23",
-      "last_seen": "2026-08-10",
+      "last_seen": "2026-08-26",
       "members": [
+        {
+          "title": "When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
         {
           "title": "agentplugins/agent-plugins-spec",
           "url": "https://github.com/agentplugins/agent-plugins-spec",
@@ -320,6 +344,138 @@
           "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
           "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
           "date": "2026-06-23",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "jailbreak",
+      "count": 9,
+      "recent": 9,
+      "sources": 5,
+      "momentum": 18.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-28",
+      "members": [
+        {
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "date": "2026-08-28",
+          "fresh": true
+        },
+        {
+          "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+          "url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+          "date": "2026-08-16",
+          "fresh": true
+        },
+        {
+          "title": "Diffusion LLMs as Targets and Adversaries: Mechanistic Safety Exploits",
+          "url": "https://arxiv.org/abs/2608.07430",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking",
+          "url": "https://arxiv.org/abs/2604.09222",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models",
+          "url": "https://arxiv.org/abs/2605.00123",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "praetorian-inc/augustus",
+          "url": "https://github.com/praetorian-inc/augustus",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "AI Security Leaderboard: Methodology, Results and Minimal Standard",
+          "url": "https://arxiv.org/abs/2608.03070",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "guardrails",
+      "count": 9,
+      "recent": 8,
+      "sources": 6,
+      "momentum": 17.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-08-28",
+      "members": [
+        {
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "date": "2026-08-28",
+          "fresh": true
+        },
+        {
+          "title": "The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions",
+          "url": "https://arxiv.org/abs/2608.27009",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
+          "url": "https://arxiv.org/abs/2608.25817",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "PrismorSec/prismor",
+          "url": "https://github.com/PrismorSec/prismor",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "fu351/Doberman-Core",
+          "url": "https://github.com/fu351/Doberman-Core",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "ECHO: A Locally-Deployable Agentic Health Assistant with Temporal Memory, Safety Guardrails, and Speech Assessment",
+          "url": "https://arxiv.org/abs/2608.06110",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
+          "url": "https://arxiv.org/abs/2608.05695",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -410,68 +566,20 @@
     },
     {
       "topic": "ai-security",
-      "tag": "jailbreak",
+      "tag": "sandboxing",
       "count": 7,
       "recent": 7,
-      "sources": 3,
+      "sources": 6,
       "momentum": 14.0,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-08-10",
-      "members": [
-        {
-          "title": "Diffusion LLMs as Targets and Adversaries: Mechanistic Safety Exploits",
-          "url": "https://arxiv.org/abs/2608.07430",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking",
-          "url": "https://arxiv.org/abs/2604.09222",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
-          "url": "https://arxiv.org/abs/2604.00310",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models",
-          "url": "https://arxiv.org/abs/2605.00123",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "praetorian-inc/augustus",
-          "url": "https://github.com/praetorian-inc/augustus",
-          "date": "2026-08-09",
-          "fresh": true
-        },
-        {
-          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
-          "url": "https://arxiv.org/abs/2512.14751",
-          "date": "2026-08-07",
-          "fresh": true
-        },
-        {
-          "title": "AI Security Leaderboard: Methodology, Results and Minimal Standard",
-          "url": "https://arxiv.org/abs/2608.03070",
-          "date": "2026-08-07",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "sandboxing",
-      "count": 6,
-      "recent": 6,
-      "sources": 5,
-      "momentum": 12.0,
       "first_seen": "2026-07-29",
-      "last_seen": "2026-08-09",
+      "last_seen": "2026-08-26",
       "members": [
+        {
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
         {
           "title": "snyk/agent-scan",
           "url": "https://github.com/snyk/agent-scan",
@@ -513,13 +621,19 @@
     {
       "topic": "ai-security",
       "tag": "coding-agents",
-      "count": 6,
-      "recent": 6,
+      "count": 7,
+      "recent": 7,
       "sources": 4,
-      "momentum": 12.0,
+      "momentum": 14.0,
       "first_seen": "2026-08-06",
-      "last_seen": "2026-08-10",
+      "last_seen": "2026-08-26",
       "members": [
+        {
+          "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
+          "url": "https://arxiv.org/abs/2608.25817",
+          "date": "2026-08-26",
+          "fresh": true
+        },
         {
           "title": "PrismorSec/prismor",
           "url": "https://github.com/PrismorSec/prismor",
@@ -560,48 +674,48 @@
     },
     {
       "topic": "ai-security",
-      "tag": "guardrails",
+      "tag": "threat-modeling",
       "count": 6,
-      "recent": 5,
-      "sources": 5,
-      "momentum": 11.0,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-08-10",
+      "recent": 4,
+      "sources": 4,
+      "momentum": 10.0,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-08-13",
       "members": [
         {
-          "title": "PrismorSec/prismor",
-          "url": "https://github.com/PrismorSec/prismor",
+          "title": "The evolving role of the Red Team in the era of agentic security",
+          "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+          "date": "2026-08-13",
+          "fresh": true
+        },
+        {
+          "title": "The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products",
+          "url": "https://arxiv.org/abs/2606.15485",
           "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "fu351/Doberman-Core",
-          "url": "https://github.com/fu351/Doberman-Core",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
-          "url": "https://arxiv.org/abs/2604.00310",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "ECHO: A Locally-Deployable Agentic Health Assistant with Temporal Memory, Safety Guardrails, and Speech Assessment",
-          "url": "https://arxiv.org/abs/2608.06110",
+          "title": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents",
+          "url": "https://arxiv.org/abs/2608.05201",
           "date": "2026-08-07",
           "fresh": true
         },
         {
-          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
-          "url": "https://arxiv.org/abs/2608.05695",
+          "title": "AegisShield: Democratizing Cyber Threat Modeling with Generative AI",
+          "url": "https://arxiv.org/abs/2509.10482",
           "date": "2026-08-07",
           "fresh": true
         },
         {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
+          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+          "url": "https://arxiv.org/abs/2607.17986",
+          "date": "2026-07-20",
+          "fresh": false
+        },
+        {
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
           "fresh": false
         }
       ]
@@ -650,42 +764,84 @@
     },
     {
       "topic": "ai-security",
-      "tag": "threat-modeling",
+      "tag": "agent-safety",
       "count": 5,
-      "recent": 3,
+      "recent": 5,
       "sources": 3,
-      "momentum": 8.0,
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-08-10",
+      "momentum": 10.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-27",
       "members": [
         {
-          "title": "The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products",
-          "url": "https://arxiv.org/abs/2606.15485",
+          "title": "Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents",
+          "url": "https://arxiv.org/abs/2608.27141",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions",
+          "url": "https://arxiv.org/abs/2608.27009",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
+          "url": "https://arxiv.org/abs/2606.08531",
           "date": "2026-08-10",
           "fresh": true
         },
         {
-          "title": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents",
-          "url": "https://arxiv.org/abs/2608.05201",
-          "date": "2026-08-07",
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
           "fresh": true
         },
         {
-          "title": "AegisShield: Democratizing Cyber Threat Modeling with Generative AI",
-          "url": "https://arxiv.org/abs/2509.10482",
+          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
+          "url": "https://arxiv.org/abs/2608.05695",
           "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "claude-code",
+      "count": 5,
+      "recent": 3,
+      "sources": 5,
+      "momentum": 8.0,
+      "first_seen": "2026-05-14",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-26",
           "fresh": true
         },
         {
-          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
-          "url": "https://arxiv.org/abs/2607.17986",
-          "date": "2026-07-20",
+          "title": "affaan-m/agentshield",
+          "url": "https://github.com/affaan-m/agentshield",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": true
+        },
+        {
+          "title": "Scientific computing in the age of agentic AI",
+          "url": "https://openai.com/index/scientific-computing-agentic-ai",
+          "date": "2026-07-28",
           "fresh": false
         },
         {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
+          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
+          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
+          "date": "2026-05-14",
           "fresh": false
         }
       ]
@@ -723,42 +879,6 @@
           "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
           "date": "2026-07-31",
           "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "claude-code",
-      "count": 4,
-      "recent": 2,
-      "sources": 4,
-      "momentum": 6.0,
-      "first_seen": "2026-05-14",
-      "last_seen": "2026-08-09",
-      "members": [
-        {
-          "title": "affaan-m/agentshield",
-          "url": "https://github.com/affaan-m/agentshield",
-          "date": "2026-08-09",
-          "fresh": true
-        },
-        {
-          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
-          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
-          "date": "2026-08-08",
-          "fresh": true
-        },
-        {
-          "title": "Scientific computing in the age of agentic AI",
-          "url": "https://openai.com/index/scientific-computing-agentic-ai",
-          "date": "2026-07-28",
-          "fresh": false
-        },
-        {
-          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
-          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
-          "date": "2026-05-14",
-          "fresh": false
         }
       ]
     },
@@ -836,6 +956,36 @@
     },
     {
       "topic": "ai-security",
+      "tag": "coding-agent",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-08-09",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "Quoting OpenClaw",
+          "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "sinewaveai/agent-security-scanner-mcp",
+          "url": "https://github.com/sinewaveai/agent-security-scanner-mcp",
+          "date": "2026-08-09",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "multi-agent",
       "count": 3,
       "recent": 3,
@@ -866,29 +1016,59 @@
     },
     {
       "topic": "ai-security",
-      "tag": "agent-safety",
+      "tag": "ai-gateway",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "Token jacking: stolen AI API keys resold through gray-market 'transfer stations', costing victims up to ~$1M",
+          "url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
+          "date": "2026-08-06",
+          "fresh": true
+        },
+        {
+          "title": "LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection",
+          "url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
+          "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "alignment",
       "count": 3,
       "recent": 3,
       "sources": 3,
       "momentum": 6.0,
       "first_seen": "2026-08-07",
-      "last_seen": "2026-08-10",
+      "last_seen": "2026-08-28",
       "members": [
         {
-          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
-          "url": "https://arxiv.org/abs/2606.08531",
-          "date": "2026-08-10",
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "date": "2026-08-28",
           "fresh": true
         },
         {
-          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
-          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
-          "date": "2026-08-08",
+          "title": "Measuring and Detecting Harmful AI Sycophancy",
+          "url": "https://arxiv.org/abs/2608.05624",
+          "date": "2026-08-07",
           "fresh": true
         },
         {
-          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
-          "url": "https://arxiv.org/abs/2608.05695",
+          "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
+          "url": "https://arxiv.org/abs/2608.05909",
           "date": "2026-08-07",
           "fresh": true
         }
@@ -1040,6 +1220,36 @@
           "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
           "url": "https://arxiv.org/abs/2608.05909",
           "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agentic-ai",
+      "count": 3,
+      "recent": 3,
+      "sources": 3,
+      "momentum": 6.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-13",
+      "members": [
+        {
+          "title": "The evolving role of the Red Team in the era of agentic security",
+          "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+          "date": "2026-08-13",
+          "fresh": true
+        },
+        {
+          "title": "The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products",
+          "url": "https://arxiv.org/abs/2606.15485",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+          "url": "https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+          "date": "2026-08-10",
           "fresh": true
         }
       ]
@@ -1238,6 +1448,30 @@
     },
     {
       "topic": "ai-security",
+      "tag": "auto-mode",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-08",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "black-hat",
       "count": 2,
       "recent": 2,
@@ -1262,18 +1496,18 @@
     },
     {
       "topic": "ai-security",
-      "tag": "ai-gateway",
+      "tag": "litellm",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
       "first_seen": "2026-08-03",
-      "last_seen": "2026-08-06",
+      "last_seen": "2026-08-26",
       "members": [
         {
-          "title": "Token jacking: stolen AI API keys resold through gray-market 'transfer stations', costing victims up to ~$1M",
-          "url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
-          "date": "2026-08-06",
+          "title": "When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
+          "date": "2026-08-26",
           "fresh": true
         },
         {
@@ -1304,6 +1538,30 @@
           "title": "LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection",
           "url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
           "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "data-exfiltration",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-16",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
+          "url": "https://arxiv.org/abs/2608.27092",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+          "url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+          "date": "2026-08-16",
           "fresh": true
         }
       ]
@@ -1376,6 +1634,78 @@
           "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
           "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
           "date": "2026-08-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "defense-in-depth",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-28",
+      "members": [
+        {
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "date": "2026-08-28",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "attestation",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
+          "url": "https://arxiv.org/abs/2608.26696",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "PrismorSec/prismor",
+          "url": "https://github.com/PrismorSec/prismor",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "enterprise",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
+          "url": "https://arxiv.org/abs/2608.26696",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "MCP gets an enterprise makeover",
+          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
+          "date": "2026-07-29",
           "fresh": true
         }
       ]
@@ -1478,24 +1808,24 @@
     },
     {
       "topic": "ai-security",
-      "tag": "coding-agent",
+      "tag": "red-teaming",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-08-09",
-      "last_seen": "2026-08-10",
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-08-13",
       "members": [
         {
-          "title": "Quoting OpenClaw",
-          "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
-          "date": "2026-08-10",
+          "title": "The evolving role of the Red Team in the era of agentic security",
+          "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+          "date": "2026-08-13",
           "fresh": true
         },
         {
-          "title": "sinewaveai/agent-security-scanner-mcp",
-          "url": "https://github.com/sinewaveai/agent-security-scanner-mcp",
-          "date": "2026-08-09",
+          "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
+          "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
+          "date": "2026-08-06",
           "fresh": true
         }
       ]
@@ -1574,24 +1904,24 @@
     },
     {
       "topic": "ai-security",
-      "tag": "agentic-ai",
+      "tag": "detection",
       "count": 2,
       "recent": 2,
       "sources": 2,
       "momentum": 4.0,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-08-10",
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-13",
       "members": [
         {
-          "title": "The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products",
-          "url": "https://arxiv.org/abs/2606.15485",
-          "date": "2026-08-10",
+          "title": "The evolving role of the Red Team in the era of agentic security",
+          "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+          "date": "2026-08-13",
           "fresh": true
         },
         {
-          "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
-          "url": "https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
-          "date": "2026-08-10",
+          "title": "Measuring and Detecting Harmful AI Sycophancy",
+          "url": "https://arxiv.org/abs/2608.05624",
+          "date": "2026-08-07",
           "fresh": true
         }
       ]
@@ -1616,30 +1946,6 @@
           "title": "Corrupting Attention: Evasion-Based Adversarial Attacks on Encoder Attention in Detection Transformers",
           "url": "https://arxiv.org/abs/2608.06674",
           "date": "2026-08-10",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "alignment",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "Measuring and Detecting Harmful AI Sycophancy",
-          "url": "https://arxiv.org/abs/2608.05624",
-          "date": "2026-08-07",
-          "fresh": true
-        },
-        {
-          "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
-          "url": "https://arxiv.org/abs/2608.05909",
-          "date": "2026-08-07",
           "fresh": true
         }
       ]
@@ -1949,13 +2255,19 @@
     {
       "topic": "product-security",
       "tag": "supply-chain",
-      "count": 16,
-      "recent": 9,
-      "sources": 11,
-      "momentum": 25.0,
+      "count": 17,
+      "recent": 10,
+      "sources": 12,
+      "momentum": 27.0,
       "first_seen": "2026-06-30",
-      "last_seen": "2026-08-07",
+      "last_seen": "2026-08-17",
       "members": [
+        {
+          "title": "This Shit is Hard: Patching a vulnerability that has no fix",
+          "url": "https://www.chainguard.dev/unchained",
+          "date": "2026-08-17",
+          "fresh": true
+        },
         {
           "title": "go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)",
           "url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
@@ -2116,6 +2428,42 @@
     },
     {
       "topic": "product-security",
+      "tag": "provenance",
+      "count": 4,
+      "recent": 3,
+      "sources": 4,
+      "momentum": 7.0,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-08-17",
+      "members": [
+        {
+          "title": "This Shit is Hard: Patching a vulnerability that has no fix",
+          "url": "https://www.chainguard.dev/unchained",
+          "date": "2026-08-17",
+          "fresh": true
+        },
+        {
+          "title": "Inside the keyv npm compromise: preinstall dropper + Claude/VS Code folder-open hooks + valid provenance on a poisoned build",
+          "url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/",
+          "date": "2026-08-04",
+          "fresh": true
+        },
+        {
+          "title": "keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion",
+          "url": "https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
+          "date": "2026-08-04",
+          "fresh": true
+        },
+        {
+          "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
+          "date": "2026-07-16",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "ci-cd",
       "count": 4,
       "recent": 2,
@@ -2146,36 +2494,6 @@
           "title": "The npm Threat Landscape: Attack Surface and Mitigations",
           "url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/",
           "date": "2026-07-15",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "provenance",
-      "count": 3,
-      "recent": 2,
-      "sources": 3,
-      "momentum": 5.0,
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-08-04",
-      "members": [
-        {
-          "title": "Inside the keyv npm compromise: preinstall dropper + Claude/VS Code folder-open hooks + valid provenance on a poisoned build",
-          "url": "https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/",
-          "date": "2026-08-04",
-          "fresh": true
-        },
-        {
-          "title": "keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion",
-          "url": "https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign",
-          "date": "2026-08-04",
-          "fresh": true
-        },
-        {
-          "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
-          "date": "2026-07-16",
           "fresh": false
         }
       ]
@@ -2410,6 +2728,78 @@
           "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
           "url": "https://snyk.io/blog/symlinks-are-still-scary/",
           "date": "2026-07-09",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "authorization",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
+          "url": "https://snyk.io/blog/",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies",
+          "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+          "date": "2026-07-24",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "ai-pentesting",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
+          "url": "https://snyk.io/blog/",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "What Is AI Pentesting and How Does It Work?",
+          "url": "https://snyk.io/blog/what-is-ai-pentesting/",
+          "date": "2026-07-27",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "business-logic",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
+          "url": "https://snyk.io/blog/",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "What Is AI Pentesting and How Does It Work?",
+          "url": "https://snyk.io/blog/what-is-ai-pentesting/",
+          "date": "2026-07-27",
           "fresh": false
         }
       ]
@@ -4524,6 +4914,42 @@
     },
     {
       "topic": "ai-research",
+      "tag": "llm-agents",
+      "count": 4,
+      "recent": 4,
+      "sources": 2,
+      "momentum": 8.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+          "url": "https://arxiv.org/abs/2608.27299",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution",
+          "url": "https://arxiv.org/abs/2608.27439",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "Harnessing the Synergy between LLM Agents and Knowledge Graphs for Urban Socioeconomic Prediction",
+          "url": "https://arxiv.org/abs/2411.00028",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "From Economic Agents to Agentic Economies: A Systems Blueprint for Economic World Models",
+          "url": "https://arxiv.org/abs/2608.06020",
+          "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "inference",
       "count": 4,
       "recent": 4,
@@ -5400,6 +5826,36 @@
     },
     {
       "topic": "ai-research",
+      "tag": "red-teaming",
+      "count": 3,
+      "recent": 1,
+      "sources": 3,
+      "momentum": 4.0,
+      "first_seen": "2026-07-22",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution",
+          "url": "https://arxiv.org/abs/2608.27439",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "Enhancing AI security through global AI red teaming",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+          "date": "2026-07-27",
+          "fresh": false
+        },
+        {
+          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
+          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
+          "date": "2026-07-22",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "multi-turn",
       "count": 2,
       "recent": 2,
@@ -5418,6 +5874,54 @@
           "title": "Innocent Panels, Hateful Stories: Evaluating and Detecting Hateful Intent in Multi-Turn Visual Story Generation",
           "url": "https://arxiv.org/abs/2608.05210",
           "date": "2026-08-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "provenance",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation",
+          "url": "https://arxiv.org/abs/2608.26237",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "GPTKB 2.0: Browsing, Querying, and Auditing a Disambiguated LLM-Derived Knowledge Base",
+          "url": "https://arxiv.org/abs/2608.06992",
+          "date": "2026-08-10",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "capability-elicitation",
+      "count": 2,
+      "recent": 2,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-08-08",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation",
+          "url": "https://arxiv.org/abs/2608.26237",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "Willison: the OpenAI/Hugging Face 'accidental attack' happened during an RLVR training run, not deployment",
+          "url": "https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything",
+          "date": "2026-08-08",
           "fresh": true
         }
       ]
@@ -6144,6 +6648,54 @@
     },
     {
       "topic": "ai-research",
+      "tag": "coding-agents",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+          "url": "https://arxiv.org/abs/2608.27299",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "prompt-injection",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+          "url": "https://arxiv.org/abs/2608.27299",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "groundedness",
       "count": 2,
       "recent": 1,
@@ -6282,30 +6834,6 @@
           "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
           "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
           "date": "2026-07-17",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "red-teaming",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-22",
-      "last_seen": "2026-07-27",
-      "members": [
-        {
-          "title": "Enhancing AI security through global AI red teaming",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-          "date": "2026-07-27",
-          "fresh": false
-        },
-        {
-          "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
-          "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
-          "date": "2026-07-22",
           "fresh": false
         }
       ]

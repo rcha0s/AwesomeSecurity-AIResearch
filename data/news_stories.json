@@ -11228,5 +11228,696 @@
     "corroborators": [],
     "winner_tier": "high",
     "first_seen": "2026-08-25"
+  },
+  "dda8358a0b8d8eaf": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode",
+      "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+      "tokens": [
+        "5",
+        "auto",
+        "breaking",
+        "claude",
+        "code",
+        "execution",
+        "indirect",
+        "injection",
+        "mode",
+        "opus",
+        "prompt"
+      ],
+      "shingles": [
+        "5 auto mode",
+        "auto mode indirect",
+        "breaking claude code",
+        "claude code opus",
+        "code opus 5",
+        "indirect prompt injection",
+        "injection code execution",
+        "mode indirect prompt",
+        "opus 5 auto",
+        "prompt injection code"
+      ],
+      "entities": [
+        "Anthropic",
+        "Auto Mode",
+        "Breaking Claude Code Opus",
+        "Claude Code Opus"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-26"
+  },
+  "c7e738fe01749979": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.27092",
+      "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
+      "tokens": [
+        "defeats",
+        "defenses",
+        "exfiltration",
+        "framing",
+        "gap",
+        "indirect",
+        "injection",
+        "level",
+        "prompt",
+        "reframed",
+        "surface"
+      ],
+      "shingles": [
+        "defeats surface level",
+        "exfiltration defeats surface",
+        "framing gap reframed",
+        "gap reframed indirect",
+        "indirect prompt injection",
+        "injection exfiltration defeats",
+        "prompt injection exfiltration",
+        "reframed indirect prompt",
+        "surface level defenses"
+      ],
+      "entities": [
+        "The Framing Gap"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
+  },
+  "22dfc4c59a2cc322": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.27141",
+      "title": "Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents",
+      "tokens": [
+        "agents",
+        "autonomous",
+        "compose",
+        "decaying",
+        "llm",
+        "loop",
+        "non",
+        "not",
+        "safety",
+        "state"
+      ],
+      "shingles": [
+        "autonomous llm agents",
+        "compose non decaying",
+        "decaying loop state",
+        "loop state autonomous",
+        "non decaying loop",
+        "not compose non",
+        "safety not compose",
+        "state autonomous llm"
+      ],
+      "entities": [
+        "Autonomous LLM Agents Autonomous",
+        "Non-Decaying Loop State",
+        "Safety Does Not Compose"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
+  },
+  "4ff1ea976215c015": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.27234",
+      "title": "SPA: Securing Persistent LLM Agents Across Queries with Plan-First Information-Flow Control",
+      "tokens": [
+        "agents",
+        "control",
+        "first",
+        "flow",
+        "information",
+        "llm",
+        "persistent",
+        "plan",
+        "queries",
+        "securing",
+        "spa"
+      ],
+      "shingles": [
+        "agents queries plan",
+        "first information flow",
+        "information flow control",
+        "llm agents queries",
+        "persistent llm agents",
+        "plan first information",
+        "queries plan first",
+        "securing persistent llm",
+        "spa securing persistent"
+      ],
+      "entities": [
+        "Plan-First Information-Flow Control Persistent LLM",
+        "Securing Persistent LLM Agents Across Queries"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
+  },
+  "e0d51965b4a12fe8": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.27009",
+      "title": "The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions",
+      "tokens": [
+        "actions",
+        "agent",
+        "cried",
+        "guard",
+        "guardrails",
+        "legitimate",
+        "make",
+        "names",
+        "object",
+        "refuse",
+        "scary",
+        "wolf"
+      ],
+      "shingles": [
+        "agent guardrails refuse",
+        "cried wolf scary",
+        "guard cried wolf",
+        "guardrails refuse legitimate",
+        "make agent guardrails",
+        "names make agent",
+        "object names make",
+        "refuse legitimate actions",
+        "scary object names",
+        "wolf scary object"
+      ],
+      "entities": [
+        "Cautious Bench",
+        "The Guard That Cried Wolf"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
+  },
+  "29ece2f59a04ac80": {
+    "fp": {
+      "url": "https://microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points",
+      "title": "When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points",
+      "tokens": [
+        "ai",
+        "attacks",
+        "becomes",
+        "control",
+        "infrastructure",
+        "kestra",
+        "litellm",
+        "points",
+        "ragflow",
+        "target",
+        "when"
+      ],
+      "shingles": [
+        "ai infrastructure becomes",
+        "attacks litellm ragflow",
+        "becomes target attacks",
+        "infrastructure becomes target",
+        "kestra control points",
+        "litellm ragflow kestra",
+        "ragflow kestra control",
+        "target attacks litellm",
+        "when ai infrastructure"
+      ],
+      "entities": [
+        "Microsoft",
+        "When AI"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-26"
+  },
+  "91b9a0ab011d19cd": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.25817",
+      "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
+      "tokens": [
+        "agents",
+        "coding",
+        "llm",
+        "prompt",
+        "security",
+        "skills",
+        "skillshield",
+        "space"
+      ],
+      "shingles": [
+        "llm coding agents",
+        "prompt space security",
+        "security skills llm",
+        "skills llm coding",
+        "skillshield prompt space",
+        "space security skills"
+      ],
+      "entities": [
+        "LLM Coding Agents",
+        "Prompt-Space Security Skills"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-26"
+  },
+  "53c07a6fb7cc9e18": {
+    "fp": {
+      "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety",
+      "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+      "tokens": [
+        "diagnostic",
+        "fragility",
+        "llm",
+        "new",
+        "perturbation",
+        "probing",
+        "safety"
+      ],
+      "shingles": [
+        "diagnostic fragility llm",
+        "fragility llm safety",
+        "new diagnostic fragility",
+        "perturbation probing new",
+        "probing new diagnostic"
+      ],
+      "entities": [
+        "LLM Safety Unit",
+        "New Diagnostic",
+        "On Qwen3-4B",
+        "Perturbation Probing"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-28"
+  },
+  "bc14413d16f043d9": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.26696",
+      "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
+      "tokens": [
+        "agents",
+        "ai",
+        "autonomous",
+        "five",
+        "governing",
+        "primitives",
+        "runtime"
+      ],
+      "shingles": [
+        "ai agents runtime",
+        "autonomous ai agents",
+        "five primitives governing",
+        "governing autonomous ai",
+        "primitives governing autonomous"
+      ],
+      "entities": [
+        "Five Primitives",
+        "Governing Autonomous AI Agents",
+        "Runtime Enterprise"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
+  },
+  "6e5b5ce6be36c581": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts",
+      "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+      "tokens": [
+        "cross",
+        "encrypted",
+        "llm",
+        "model",
+        "plaintext",
+        "reasoning",
+        "recovering",
+        "replay",
+        "traces",
+        "via"
+      ],
+      "shingles": [
+        "cross model replay",
+        "encrypted llm reasoning",
+        "llm reasoning traces",
+        "plaintext encrypted llm",
+        "reasoning traces via",
+        "recovering plaintext encrypted",
+        "traces via cross",
+        "via cross model"
+      ],
+      "entities": [],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-16"
+  },
+  "d9590ab3a09174b3": {
+    "fp": {
+      "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security",
+      "title": "The evolving role of the Red Team in the era of agentic security",
+      "tokens": [
+        "agentic",
+        "era",
+        "evolving",
+        "red",
+        "role",
+        "security",
+        "team"
+      ],
+      "shingles": [
+        "era agentic security",
+        "evolving role red",
+        "red team era",
+        "role red team",
+        "team era agentic"
+      ],
+      "entities": [
+        "Red Team",
+        "Red Teams"
+      ],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-13"
+  },
+  "0ef16438865e4cf3": {
+    "fp": {
+      "url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption",
+      "title": "Making private AI practical with homomorphic encryption (HEIR)",
+      "tokens": [
+        "ai",
+        "encryption",
+        "heir",
+        "homomorphic",
+        "making",
+        "practical",
+        "private"
+      ],
+      "shingles": [
+        "ai practical homomorphic",
+        "homomorphic encryption heir",
+        "making private ai",
+        "practical homomorphic encryption",
+        "private ai practical"
+      ],
+      "entities": [],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-14"
+  },
+  "84fb56c0d4742f27": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/",
+      "title": "VMs won't contain cyber-capable agents",
+      "tokens": [
+        "agents",
+        "capable",
+        "contain",
+        "cyber",
+        "t",
+        "vms",
+        "won"
+      ],
+      "shingles": [
+        "contain cyber capable",
+        "cyber capable agents",
+        "t contain cyber",
+        "vms won t",
+        "won t contain"
+      ],
+      "entities": [],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-26"
+  },
+  "775e13b0651f75c9": {
+    "fp": {
+      "url": "https://chainguard.dev/unchained",
+      "title": "This Shit is Hard: Patching a vulnerability that has no fix",
+      "tokens": [
+        "fix",
+        "hard",
+        "no",
+        "patching",
+        "shit",
+        "vulnerability"
+      ],
+      "shingles": [
+        "hard patching vulnerability",
+        "patching vulnerability no",
+        "shit hard patching",
+        "vulnerability no fix"
+      ],
+      "entities": [
+        "This Shit"
+      ],
+      "bucket": "2026-08-17"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-17"
+  },
+  "7ace8cb3fe7d8efe": {
+    "fp": {
+      "url": "https://portswigger.net/research",
+      "title": "What's in a tag name? JavaScript, apparently",
+      "tokens": [
+        "apparently",
+        "javascript",
+        "name",
+        "s",
+        "tag",
+        "what"
+      ],
+      "shingles": [
+        "name javascript apparently",
+        "s tag name",
+        "tag name javascript",
+        "what s tag"
+      ],
+      "entities": [
+        "Gareth Heyes"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-25"
+  },
+  "a4ea6b4eefd3ae6d": {
+    "fp": {
+      "url": "https://snyk.io/blog",
+      "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
+      "tokens": [
+        "continuous",
+        "don",
+        "enterprise",
+        "evo",
+        "found",
+        "offensive",
+        "real",
+        "saas",
+        "security",
+        "show",
+        "t",
+        "tell",
+        "what"
+      ],
+      "shingles": [
+        "continuous offensive security",
+        "don t tell",
+        "evo continuous offensive",
+        "found real enterprise",
+        "offensive security found",
+        "real enterprise saas",
+        "security found real",
+        "show don t",
+        "t tell what",
+        "tell what evo",
+        "what evo continuous"
+      ],
+      "entities": [
+        "Evo COS",
+        "Real Enterprise SaaS Snyk",
+        "What Evo Continuous Offensive Security Found"
+      ],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-10"
+  },
+  "696b712886359e43": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.25877",
+      "title": "A Hybrid Security Framework for Mini-Programs: Visual UI Compliance and Network Risk Assessment",
+      "tokens": [
+        "assessment",
+        "compliance",
+        "framework",
+        "hybrid",
+        "mini",
+        "network",
+        "programs",
+        "risk",
+        "security",
+        "ui",
+        "visual"
+      ],
+      "shingles": [
+        "compliance network risk",
+        "framework mini programs",
+        "hybrid security framework",
+        "mini programs visual",
+        "network risk assessment",
+        "programs visual ui",
+        "security framework mini",
+        "ui compliance network",
+        "visual ui compliance"
+      ],
+      "entities": [
+        "Hybrid Security Framework",
+        "Network Risk Assessment WeChat Mini Programs",
+        "Visual UI Compliance"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-26"
+  },
+  "30dad85326f8f9de": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.27299",
+      "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+      "tokens": [
+        "context",
+        "escalation",
+        "gets",
+        "harnesses",
+        "instruction",
+        "llm",
+        "privilege",
+        "root",
+        "when"
+      ],
+      "shingles": [
+        "context gets root",
+        "escalation llm harnesses",
+        "gets root instruction",
+        "instruction privilege escalation",
+        "privilege escalation llm",
+        "root instruction privilege",
+        "when context gets"
+      ],
+      "entities": [
+        "Instruction Privilege Escalation",
+        "LLM Harnesses Model-side",
+        "When Context Gets Root"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
+  },
+  "18c438bd3675766d": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.26237",
+      "title": "How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation",
+      "tokens": [
+        "actually",
+        "agentic",
+        "agents",
+        "evaluation",
+        "flag",
+        "get",
+        "how",
+        "level",
+        "llm",
+        "offensive",
+        "provenance",
+        "security",
+        "trace"
+      ],
+      "shingles": [
+        "actually get flag",
+        "agentic offensive security",
+        "agents actually get",
+        "flag trace level",
+        "get flag trace",
+        "how llm agents",
+        "level provenance agentic",
+        "llm agents actually",
+        "offensive security evaluation",
+        "provenance agentic offensive",
+        "trace level provenance"
+      ],
+      "entities": [
+        "Agentic Offensive-Security Evaluation CTF",
+        "How Do LLM Agents Actually Get",
+        "Trace-Level Provenance"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-26"
+  },
+  "7d5f1db0f019091d": {
+    "fp": {
+      "url": "https://arxiv.org/abs/2608.27439",
+      "title": "RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution",
+      "tokens": [
+        "agent",
+        "automatic",
+        "driven",
+        "evolution",
+        "experience",
+        "red",
+        "redevoagent",
+        "skill",
+        "teaming"
+      ],
+      "shingles": [
+        "agent experience driven",
+        "automatic red teaming",
+        "driven skill evolution",
+        "experience driven skill",
+        "red teaming agent",
+        "redevoagent automatic red",
+        "teaming agent experience"
+      ],
+      "entities": [
+        "Automatic Red-Teaming Agent",
+        "Experience-Driven Skill Evolution Because LLM"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-27"
   }
 }

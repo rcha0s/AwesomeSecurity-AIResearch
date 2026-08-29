@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research** - every finding vetted, distilled to one lesson, and filed by field. A [standing-claims ledger](claims/README.md) tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.
 
-![Updated](https://img.shields.io/badge/updated-2026--08--29-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-39-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--08--29-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-55-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read the live briefing &#8594;</a></h3>
 
@@ -16,22 +16,30 @@ The live site is the best read - one page for the week's news, another for stand
 
 > The top curated findings published in the last 7 days. Each links to its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
 
-- **[Measuring AI-enabled malware: ~97% of samples never reach production; AI changes how malware is authored, not how it executes](product-security/malware-threat-intel/2026-08-measuring-ai-enabled-malware-97-of-samples-never-reach-produ.md)** · _Product Security · Aug 25, 2026_  
-  Don't over-index on 'AI malware' hype: your existing behavioral/sandbox detection still catches it - but expect faster variant iteration.
+- **[VMs won't contain cyber-capable agents](product-security/cloud-infrastructure/2026-08-vms-won-t-contain-cyber-capable-agents.md)** · _Product Security · Aug 26, 2026_  
+  Treat capable AI agents as an advanced persistent threat: isolate them with hardened microVMs, enforce least privilege, monitor actively, and keep host and hypervisor dependencies…
+- **[Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](ai-security/prompt-injection-agent-harness/2026-08-breaking-claude-code-opus-5-auto-mode-with-indirect-prompt-i.md)** · _AI Security · Aug 26, 2026_  
+  A benign-looking summary request drove a 60-80% code-execution rate against Claude Code Opus 5 Auto Mode, showing classifier 'zero-injection' claims and OS sandboxing are not…
+- **[The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses](ai-security/prompt-injection-adversarial/2026-08-the-framing-gap-reframed-indirect-prompt-injection-exfiltrat.md)** · _AI Security · Aug 27, 2026_  
+  Don't rely on the acting model to recognize injection; constrain where data can go and isolate the capability that can send it.
+- **[When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses](ai-research/agents-harnesses/2026-08-when-context-gets-root-instruction-privilege-escalation-in-l.md)** · _AI Research · Aug 27, 2026_  
+  How a harness assembles context is a privilege boundary; if it can promote untrusted data, model-side instruction hierarchy provides little protection.
+- **[What's in a tag name? JavaScript, apparently](product-security/web-security/2026-08-what-s-in-a-tag-name-javascript-apparently.md)** · _Product Security · Aug 25, 2026_  
+  Do not rely on WAFs or character blocklists to stop XSS; enforce context-aware output encoding, a strict Content-Security-Policy, and trusted HTML sanitization, since exotic…
 
 ## The three databases
 
-- **[AI Security](ai-security/README.md)** (28 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
-- **[Product Security](product-security/README.md)** (3 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
-- **[AI Research](ai-research/README.md)** (8 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
+- **[AI Security](ai-security/README.md)** (37 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
+- **[Product Security](product-security/README.md)** (7 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
+- **[AI Research](ai-research/README.md)** (11 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted).
 
 ## Standing claims
 
-> The databases below track **what was published**. The ledger tracks **what we currently believe**: 45 standing answers, each with the evidence behind it, plus 7 retired ones kept underneath with the date and reason they stopped being true. See the [full ledger](claims/README.md).
+> The databases below track **what was published**. The ledger tracks **what we currently believe**: 46 standing answers, each with the evidence behind it, plus 7 retired ones kept underneath with the date and reason they stopped being true. See the [full ledger](claims/README.md).
 
-- **[AI Security](claims/ai-security.md)** - 16 standing · 2 retired
+- **[AI Security](claims/ai-security.md)** - 17 standing · 2 retired
 - **[Product Security](claims/product-security.md)** - 11 standing · 2 retired
 - **[AI Research](claims/ai-research.md)** - 18 standing · 3 retired
 

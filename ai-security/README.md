@@ -2,17 +2,26 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_28 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 days only · [41 held for review](../REVIEW.md)._
+_37 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 days only · [44 held for review](../REVIEW.md)._
 
 | Domain | Findings |
 | --- | --- |
 | AI Security | 12 |
 | Harness & Agent Security | 2 |
 | Agent-to-Agent Security / CI Prompt Injection | 1 |
+| Prompt Injection & Agent Harness | 1 |
 | Multi-Agent Lateral Movement & Covert Coordination | 1 |
 | AI Gateway / Deployment Infrastructure | 1 |
+| Prompt Injection & Adversarial | 1 |
+| Agent Safety / Monitoring | 1 |
 | Offensive AI / Agent Evaluation | 1 |
+| Agents / Information-Flow Control | 1 |
 | Agent Containment & Eval Sandbox Failure | 1 |
+| Guardrails / Over-Refusal | 1 |
+| AI Gateway & Infrastructure | 1 |
+| Coding Agents / Prompt-Space Defense | 1 |
+| LLM Safety / Alignment Robustness | 1 |
+| Agent Governance / Runtime | 1 |
 | Deployment Infra & Sandboxing | 1 |
 | AI Gateway & Credential Theft | 1 |
 | MCP Server Scanning & Defender Tooling | 1 |
@@ -77,6 +86,12 @@ _28 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 da
   Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped…  
   _[source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)_
 
+## Prompt Injection & Agent Harness
+
+- **[Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](prompt-injection-agent-harness/2026-08-breaking-claude-code-opus-5-auto-mode-with-indirect-prompt-i.md)** · composite **66.92** · Aug 26, 2026  
+  A benign-looking summary request drove a 60-80% code-execution rate against Claude Code Opus 5 Auto Mode, showing classifier 'zero-injection' claims and OS sandboxing are not interchangeable.  
+  _[Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)_
+
 ## Multi-Agent Lateral Movement & Covert Coordination
 
 - **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](multi-agent-lateral-movement-covert-coordination/2026-08-openai-didn-t-notice-its-ai-agents-using-a-message-board-to.md)** · composite **66.5** · Aug 6, 2026  
@@ -89,17 +104,65 @@ _28 vetted findings · updated 2026-08-29 · ranked by composite · latest 31 da
   AI gateways sit downstream of the model, so a proxy-admin credential compromise lets an attacker inject arbitrary tool calls into agent clients without ever touching the model prompt or its provider…  
   _[source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)_
 
+## Prompt Injection & Adversarial
+
+- **[The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses](prompt-injection-adversarial/2026-08-the-framing-gap-reframed-indirect-prompt-injection-exfiltrat.md)** · composite **65.6** · Aug 27, 2026  
+  Don't rely on the acting model to recognize injection; constrain where data can go and isolate the capability that can send it.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.27092)_
+
+## Agent Safety / Monitoring
+
+- **[Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents](agent-safety-monitoring/2026-08-safety-does-not-compose-non-decaying-loop-state-for-autonomo.md)** · composite **65.0** · Aug 27, 2026  
+  Agent safety must accumulate state across the whole loop; per-trajectory monitors that reset each iteration are blind to slow, fragmented attacks.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.27141)_
+
 ## Offensive AI / Agent Evaluation
 
 - **[Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs](offensive-ai-agent-evaluation/2026-08-watching-agents-work-a-behavioral-audit-of-offensive-securit.md)** · composite **63.88** · Aug 3, 2026  
   Solve-rate benchmarks are a one-dimensional summary of a multidimensional behavior - 46 of 54 failures in this study were 'knew and didn't do' rather than 'didn't know', which means more training is…  
   _[source](https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs)_
 
+## Agents / Information-Flow Control
+
+- **[SPA: Securing Persistent LLM Agents Across Queries with Plan-First Information-Flow Control](agents-information-flow-control/2026-08-spa-securing-persistent-llm-agents-across-queries-with-plan.md)** · composite **62.9** · Aug 27, 2026  
+  Plan-first execution plus information-flow labels that persist across queries can nearly eliminate tool-knowledge injection in stateful agents, at some utility cost.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.27234)_
+
 ## Agent Containment & Eval Sandbox Failure
 
 - **[Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)](agent-containment-eval-sandbox-failure/2026-08-incident-report-unsanctioned-agent-behaviour-during-cyber-te.md)** · composite **61.25** · Aug 5, 2026  
   Cyber-eval agents run with safety classifiers off must be network-sandboxed; 'internet access as evaluation config' is a foreseeable operator-level containment failure, not a model surprise.  
   _[source](https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything)_
+
+## Guardrails / Over-Refusal
+
+- **[The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions](guardrails-over-refusal/2026-08-the-guard-that-cried-wolf-scary-object-names-make-agent-guar.md)** · composite **60.8** · Aug 27, 2026  
+  Guardrails that key on scary-sounding surface labels will over-refuse legitimate work; evaluate over-safety with policy-derived benchmarks.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.27009)_
+
+## AI Gateway & Infrastructure
+
+- **[When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points](ai-gateway-infrastructure/2026-08-when-ai-infrastructure-becomes-the-target-attacks-on-litellm.md)** · composite **60.74** · Aug 26, 2026  
+  Attackers are already treating AI gateways like LiteLLM as a credential-rich control plane, so these services need the same scrutiny as any critical enterprise infrastructure.  
+  _[Microsoft Threat Intelligence (Microsoft Security Blog)](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/)_
+
+## Coding Agents / Prompt-Space Defense
+
+- **[SkillShield: Prompt-Space Security Skills for LLM Coding Agents](coding-agents-prompt-space-defense/2026-08-skillshield-prompt-space-security-skills-for-llm-coding-agen.md)** · composite **60.2** · Aug 26, 2026  
+  API-only deployers can harden coding agents with offline-synthesized, always-on system-prompt security skills instead of extra runtime classifiers.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.25817)_
+
+## LLM Safety / Alignment Robustness
+
+- **[Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety](llm-safety-alignment-robustness/2026-08-perturbation-probing-a-new-diagnostic-for-the-fragility-of-l.md)** · composite **59.72** · Aug 28, 2026  
+  LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.  
+  _[Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)_
+
+## Agent Governance / Runtime
+
+- **[Five Primitives for Governing Autonomous AI Agents at Runtime](agent-governance-runtime/2026-08-five-primitives-for-governing-autonomous-ai-agents-at-runtim.md)** · composite **59.3** · Aug 27, 2026  
+  Govern agents at runtime with per-action policy mediation, per-tenant action vocabularies, verifiable ledgers, and explicit availability tradeoffs.  
+  _[arXiv cs.CR](https://arxiv.org/abs/2608.26696)_
 
 ## Deployment Infra & Sandboxing
 

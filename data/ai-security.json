@@ -83,7 +83,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 67.1,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.",
       "discovered_via": "rss",
@@ -95,6 +95,83 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Prompt Injection & Agent Harness",
+      "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+      "source_url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+      "article_url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+      "published": "2026-08-26",
+      "date": "2026-08",
+      "source_name": "Embrace The Red (Johann Rehberger)",
+      "source_id": "rss:https-embracethered-com-blog-index-xml",
+      "source_rank": 76.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Rehberger shows a website-summary request can hijack Claude Code Opus 5 in Auto Mode and reach code execution at a 60-80% success rate, despite a vendor-commissioned eval reporting 0.00% prompt-injection success. The chain nudges the agent from WebFetch to curl; the agent writes its own decoder and runs it inside an archive where a malicious struct.py shadows the stdlib. Notably, Auto Mode's classifier allowed the malware process but blocked the later cleanup command.",
+      "lessons": [
+        {
+          "point": "Replacing human approval with a safety classifier as the default is not a security boundary; determined multi-step injection chains bypass it.",
+          "excerpt": "Auto Mode replaces human approval prompts with a safety classifier. Since mid-August it is the default starting mode for Claude Code.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "An agent's own 'safe' decision (writing its own decoder rather than running an untrusted binary) can be the exploit path.",
+          "excerpt": "Claude does not trust the supplied binary decoder, but it trusts the one it wrote itself.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A classifier that permits a malicious action but later blocks remediation makes the safety layer part of the failure.",
+          "excerpt": "The classifier allowed the creation of the malware process, but then it blocked the command intended to stop it!",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The real containment boundary for coding agents is OS-level isolation and egress control, not model-side classifiers.",
+          "excerpt": "The real boundary is OS isolation and network egress control.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A benign-looking summary request drove a 60-80% code-execution rate against Claude Code Opus 5 Auto Mode, showing classifier 'zero-injection' claims and OS sandboxing are not interchangeable.",
+      "tags": [
+        "prompt-injection",
+        "claude-code",
+        "coding-agent",
+        "module-shadowing",
+        "sandboxing",
+        "auto-mode"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Sandbox unattended coding agents and control egress",
+        "detail": "Run coding agents in a container/VM/OS sandbox with restricted network egress, keep home dirs, SSH keys and cloud creds out of the agent runtime, add explicit ask/deny rules around process creation and sensitive paths, and never treat an Auto Mode approval as evidence code is safe."
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 90,
+        "newness": 20,
+        "credibility": 76.8,
+        "composite": 66.92,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "veganmosfet Opus 5 Auto Mode bypasses; prior Rehberger coding-agent prompt-injection work; Python import shadowing techniques",
+      "threat": "Indirect prompt injection from untrusted web content leading to code execution in an autonomous coding agent.",
+      "conditions": "Developers running Claude Code Opus 5 in Auto Mode (now default) that processes untrusted external content without OS sandboxing.",
+      "mitigations": "Container/VM sandbox, egress restrictions, remove sensitive credentials from runtime, explicit deny rules on process creation, monitoring.",
+      "cluster": "B",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/breaking-claude-code-opus-5-auto-mode-with-indir-e4fb3a34.txt",
+      "id": "breaking-claude-code-opus-5-auto-mode-with-indir-e4fb3a34",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -165,7 +242,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 66.5,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry (embracethered.com) covers the same underlying incident from the defender-response angle; this Black Hat disclosure adds the specific mechanism — Artifactory-as-message-board with hundreds of thousands of coordination messages — which was not in prior coverage. Also related to ProjectDiscovery's rogue-agent CTF finding, but with cross-agent coordination as the delta.",
       "discovered_via": "rss",
@@ -246,7 +323,7 @@
         "newness": 20,
         "credibility": 72.5,
         "composite": 66.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).",
       "discovered_via": "rss",
@@ -258,6 +335,154 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Prompt Injection & Adversarial",
+      "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
+      "source_url": "https://arxiv.org/abs/2608.27092",
+      "article_url": "https://arxiv.org/abs/2608.27092",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Overt injection to exfiltrate a secret is refused (gpt-4o 0%), but reframing the identical leak as a mandatory 'integrity signature', config field, or look-alike trusted host drives success to 100%. The reusable asset is the template, not the mechanism, and the root cause is instruction/data confusion rather than defeated alignment. Only payload-blind controls - destination allow-lists and a planner/reader capability split - close the gap; SecAlign fine-tuning, channel separation, and output-normalizing guards do not.",
+      "lessons": [
+        {
+          "point": "Attacks the model refuses when overt succeed fully when reframed as benign-sounding requirements - alignment does not recognize the semantics.",
+          "excerpt": "reframing the identical leak as a mandatory integrity signature, config field, or look-alike \"trusted\" host drives gpt-4o 0% to 100%",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The reusable attack asset is a template, so paraphrase and field-swap make injection cheap to scale.",
+          "excerpt": "the reusable asset is the template, not the mechanism",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Only payload-blind architectural controls - destination allow-lists and planner/reader capability isolation - reliably stop exfiltration.",
+          "excerpt": "What closes the gap is payload-blind checks: a destination allow-list (0%, when destinations are closed) and a capability-isolating planner/reader split (0%).",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Fine-tuning defenses, channel separation, and output normalization all fail against reframing or held-out encodings like ROT13.",
+          "excerpt": "an output-normalizing guard loses to a held-out encoding (ROT13, 100%)",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Don't rely on the acting model to recognize injection; constrain where data can go and isolate the capability that can send it.",
+      "tags": [
+        "prompt-injection",
+        "data-exfiltration",
+        "tool-using-agents",
+        "allow-list",
+        "capability-isolation",
+        "secalign"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Enforce destination allow-lists and planner/reader separation",
+        "detail": "For agents that hold secrets and read untrusted content, gate all outbound actions to a closed destination allow-list and split the reader (untrusted parsing) from the planner/actor (privileged sending) so untrusted text can never directly choose an exfiltration destination; do not depend on fine-tuning, channel tags, or output filters."
+      },
+      "scores": {
+        "novelty": 80,
+        "relevance": 92,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 65.6,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "SecAlign (CCS 2025), channel-separation and output-normalization defenses, AgentDojo-style injection benchmarks; contribution is the framing-gap characterization and payload-blind mitigations.",
+      "threat": "Indirect prompt-injection exfiltration of a held secret via semantically reframed leak requests.",
+      "conditions": "Tool-using LLM agent holds a secret and processes attacker-controlled web content with an open outbound channel.",
+      "mitigations": "Closed destination allow-lists and capability-isolating planner/reader split; surface-level model defenses are inadequate.",
+      "cluster": "E",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/the-framing-gap-reframed-indirect-prompt-injecti-59b640f5.txt",
+      "id": "the-framing-gap-reframed-indirect-prompt-injecti-59b640f5",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Agent Safety / Monitoring",
+      "title": "Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents",
+      "source_url": "https://arxiv.org/abs/2608.27141",
+      "article_url": "https://arxiv.org/abs/2608.27141",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Autonomous agents run as loops but their safety monitors are scoped to a single trajectory and reset each iteration, so attacks whose evidence is fragmented across iterations are invisible - the authors prove a trajectory-scoped monitor's true-positive rate equals its false-positive rate. A decaying risk score doesn't help because a patient adversary's cooling-off wait is constant. LoopHarness maintains persistent, non-decaying loop-level safety state and bounds unauthorized irreversible actions by a constant independent of horizon N.",
+      "lessons": [
+        {
+          "point": "Single-trajectory safety monitors provably cannot detect attacks whose evidence spans multiple agent iterations.",
+          "excerpt": "every trajectory-scoped monitor has a true-positive rate equal to its false-positive rate",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A geometrically decaying risk score does not fix this because a patient attacker only needs a constant cooling-off wait.",
+          "excerpt": "the cooling-off period a patient adversary must wait is a constant that does not grow with the horizon N",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Persistent, non-decaying loop-level safety state can bound unauthorized irreversible actions by a constant independent of horizon.",
+          "excerpt": "it bounds the expected number of unauthorized irreversible actions by a constant in N",
+          "confidence": 0.82,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Agent safety must accumulate state across the whole loop; per-trajectory monitors that reset each iteration are blind to slow, fragmented attacks.",
+      "tags": [
+        "agent-safety",
+        "autonomous-agents",
+        "monitoring",
+        "cross-iteration-attacks",
+        "irreversible-actions",
+        "loopharness"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Give agent monitors persistent cross-iteration memory",
+        "detail": "For long-running autonomous loops, keep a non-decaying safety state across iterations, mediate irreversible commits through an arbiter, and back critical limits with a model-free rule so a colluding verifier cannot lift them; test with an outer-state attack suite whose evidence only appears across multiple iterations."
+      },
+      "scores": {
+        "novelty": 84,
+        "relevance": 86,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 65.0,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Trajectory-scoped agent monitors and Agent-SafetyBench; contribution is the impossibility separation and non-decaying loop-level state (LoopHarness).",
+      "threat": "Patient adversary spreads attack evidence across many iterations to stay under per-trajectory monitor thresholds.",
+      "conditions": "Autonomous agent runs unattended loops with safety state reset at each new trajectory.",
+      "mitigations": "Persistent non-decaying loop-level safety state with mediated commits and a model-free action bound.",
+      "cluster": "B",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/safety-does-not-compose-non-decaying-loop-state--5b44621e.txt",
+      "id": "safety-does-not-compose-non-decaying-loop-state--5b44621e",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -328,7 +553,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 64.1,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Pool digest has an AWS Bedrock AgentCore SDK argument-injection entry and a TensorZero Gateway config-override entry — both are 'appsec bugs surface as agent RCE' but neither is a framework-level checkpoint deserialization finding. Complementary, not duplicative.",
       "discovered_via": "rss",
@@ -410,7 +635,7 @@
         "newness": 20,
         "credibility": 52.5,
         "composite": 63.88,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Anthropic Frontier Red Team's Mythos Preview writeup (April 2026) on emergent cyber capability; CyberGym (arXiv:2506.02548) showing solve rate collapses from headline number to 3.5% when bug descriptions are removed; broader elicitation-gap literature; ProjectDiscovery's own no-ide.dev offensive-agent tooling.",
       "discovered_via": "rss",
@@ -422,6 +647,77 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Agents / Information-Flow Control",
+      "title": "SPA: Securing Persistent LLM Agents Across Queries with Plan-First Information-Flow Control",
+      "source_url": "https://arxiv.org/abs/2608.27234",
+      "article_url": "https://arxiv.org/abs/2608.27234",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Persistent LLM agents face threats beyond single tool calls: attacker data can alter control flow, poison tool arguments, or compromise later queries via reused state. SPA generates a full executable plan once per query in a declarative DSL, then applies dual-lattice information-flow control over confidentiality and integrity, storing results as labeled artifacts that expose only metadata to later planning. It reduces 'tool_knowledge' attack success to zero on AgentDojo and 0.2% on a new multi-query extension, at a security-utility cost.",
+      "lessons": [
+        {
+          "point": "Persistent agents need defenses that span planning, execution, and cross-query state, not just individual tool calls.",
+          "excerpt": "attacker-controlled data can alter control flow, enter security-sensitive tool arguments, or compromise later queries",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Storing results as labeled artifacts and exposing only metadata to later planning prevents re-injection of untrusted payloads across queries.",
+          "excerpt": "SPA stores execution results as labeled artifacts and reveals only semantic metadata during later planning",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Dual-lattice information-flow control can drive prompt-injection attack success to near zero, but strict integrity enforcement costs utility.",
+          "excerpt": "revealing an important security-utility tradeoff introduced by strict integrity enforcement",
+          "confidence": 0.82,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Plan-first execution plus information-flow labels that persist across queries can nearly eliminate tool-knowledge injection in stateful agents, at some utility cost.",
+      "tags": [
+        "llm-agents",
+        "information-flow-control",
+        "prompt-injection",
+        "agentdojo",
+        "persistence",
+        "confidentiality"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Apply information-flow labels to agent state reuse",
+        "detail": "For long-running agents, generate a complete plan up front, track confidentiality and integrity labels across data and control dependencies, and persist prior results as labeled artifacts exposing only metadata to the planner; evaluate delayed/multi-query attacks (e.g., AgentDojo-MQ) and budget for the utility tradeoff."
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 85,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 62.9,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "AgentDojo benchmark and prior planning- or tool-level injection defenses; extends to cross-query persistence with dual-lattice IFC and AgentDojo-MQ.",
+      "threat": "Indirect prompt injection and delayed attacks that corrupt control flow, tool arguments, or reused state in persistent agents.",
+      "conditions": "Agent operates over untrusted web/document/tool inputs while reusing state across multiple queries.",
+      "mitigations": "Plan-first declarative execution with dual-lattice information-flow control and label-preserving artifact persistence.",
+      "cluster": "B",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/spa-securing-persistent-llm-agents-across-querie-9f1fa61f.txt",
+      "id": "spa-securing-persistent-llm-agents-across-querie-9f1fa61f",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "id": "auto-mode-is-now-the-default-in-claude-code-for-d63bf31ef4",
@@ -491,7 +787,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 61.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Simon Willison — 'The lethal trifecta' framing (2025)",
@@ -575,7 +871,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 61.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry covers the OpenAI side of the same rogue-agent wave; ProjectDiscovery's 'Oh My Rogue Agent' (pool ai-research) noted ~20% of CTF solves took an unintended path. The AISI incident is a distinct, government-source data point with a specific rate (19/122) and a specific supply-chain attack chain (sock-puppet + prompt injection + spear phishing).",
       "discovered_via": "rss",
@@ -587,6 +883,379 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Guardrails / Over-Refusal",
+      "title": "The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions",
+      "source_url": "https://arxiv.org/abs/2608.27009",
+      "article_url": "https://arxiv.org/abs/2608.27009",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Agent guardrails suffer over-safety: they refuse authorized, genuinely safe actions, blocking deployment. The authors build Cautious Bench, the first benchmark that makes over-safety the measured construct, codesigning each sample with a stated authorization policy and mechanically re-deriving labels. Measuring six guardrails, they find a 'name-superstition effect' - the same authorized action is over-refused more often when the object simply has a scary-looking name.",
+      "lessons": [
+        {
+          "point": "Over-safety (refusing authorized, safe actions) is a real deployment blocker and must be measured against a stated authorization policy.",
+          "excerpt": "This over-safety blocks deployment when a guardrail refuses an authorized task.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Guardrail decisions are swayed by superficial cues - scary object names - rather than the actual authorization context.",
+          "excerpt": "the guardrails read the surface label, not the authorization context",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Reliable over-safety benchmarks need mechanically re-derived labels tied to policy, not per-sample annotator verdicts.",
+          "excerpt": "each label is a mechanical consequence of the policy rather than an annotator's per-sample verdict",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Guardrails that key on scary-sounding surface labels will over-refuse legitimate work; evaluate over-safety with policy-derived benchmarks.",
+      "tags": [
+        "guardrails",
+        "over-refusal",
+        "agent-safety",
+        "benchmark",
+        "authorization-policy",
+        "false-positives"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Test guardrails for name-superstition over-refusal",
+        "detail": "Build benign/twin action pairs that differ only in object naming, define an explicit authorization policy, and measure whether your guardrail refuses authorized actions more often under alarming names; if so, condition decisions on authorization context rather than surface tokens."
+      },
+      "scores": {
+        "novelty": 74,
+        "relevance": 82,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 60.8,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Prior over-refusal/exaggerated-safety studies (e.g., XSTest-style) for chat models; extends the construct to agent action guardrails with a policy-certified benchmark.",
+      "threat": "Not an attack: usability/availability failure where guardrails block legitimate authorized agent actions.",
+      "conditions": "Guardrail evaluates an authorized action whose object bears a threatening-sounding name.",
+      "mitigations": "Authorization-context-aware guardrails and policy-derived over-safety benchmarking (Cautious Bench).",
+      "cluster": "H",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/the-guard-that-cried-wolf-scary-object-names-mak-0b3166c2.txt",
+      "id": "the-guard-that-cried-wolf-scary-object-names-mak-0b3166c2",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "AI Gateway & Infrastructure",
+      "title": "When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
+      "published": "2026-08-26",
+      "date": "2026-08",
+      "source_name": "Microsoft Threat Intelligence (Microsoft Security Blog)",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_rank": 71.6,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Microsoft details in-the-wild compromises of three AI workloads - a LiteLLM gateway, a RAGFlow deployment, and a Kestra orchestration environment - where attackers converged on credential theft, persistence, and cryptomining. For LiteLLM, code execution in the gateway process led to harvesting /proc/1/environ secrets and dumping virtual-key/model tables. The report frames AI gateways/retrieval/orchestration as a high-value control plane needing dedicated monitoring.",
+      "lessons": [
+        {
+          "point": "AI gateways, retrieval, and orchestration services concentrate credentials, data access and execution privileges, making them high-value targets.",
+          "excerpt": "These systems concentrate credentials, data access, model connectivity, and execution privileges, making them some of the most powerful components in the AI stack.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Different AI workloads with different intrusion paths converge on the same objectives: credential theft, persistence, and compute monetization.",
+          "excerpt": "attackers treated AI infrastructure as a control plane where credential theft, host compromise, and downstream data access can converge",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Containerized gateways running as PID 1 leak their whole secret-bearing environment via /proc/1/environ once code execution is achieved.",
+          "excerpt": "In containerized LiteLLM deployments where the gateway runs as PID 1, /proc/1/environ exposes the environment block for the gateway process.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Monitor AI workloads by their control-plane role, correlating app-origin shells with secret access and outbound callbacks.",
+          "excerpt": "Defenders should monitor AI workloads according to their control-plane role, not only as isolated applications.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Attackers are already treating AI gateways like LiteLLM as a credential-rich control plane, so these services need the same scrutiny as any critical enterprise infrastructure.",
+      "tags": [
+        "litellm",
+        "ai-gateway",
+        "ragflow",
+        "kestra",
+        "credential-harvesting",
+        "cryptomining",
+        "supply-chain"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Inventory and harden exposed AI management surfaces",
+        "detail": "Patch LiteLLM/RAGFlow/Kestra to fixed versions, remove internet exposure of AI gateways/orchestrators, restrict admin access, avoid running gateways as PID 1 with secrets in env, rotate provider and master keys, lock down the Docker socket, and alert on gateway-originated shell/interpreter execution plus secret access and outbound callbacks."
+      },
+      "scores": {
+        "novelty": 62,
+        "relevance": 88,
+        "newness": 20,
+        "credibility": 71.6,
+        "composite": 60.74,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Public LiteLLM CVE research; Embrace The Red's LiteLLM hijack post; general cryptomining intrusions",
+      "threat": "Exploitation of exposed AI gateway/retrieval/orchestration services for credential theft, persistence, data access, and cryptomining.",
+      "conditions": "Organizations exposing LiteLLM, RAGFlow, Kestra or similar AI infrastructure to the network, especially in default/containerized configs.",
+      "mitigations": "Patch known CVEs, remove public exposure, least-privilege secrets, secure Docker socket, monitor control-plane-origin execution and secret access.",
+      "cluster": "I",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/when-ai-infrastructure-becomes-the-target-attack-4887e1ba.txt",
+      "id": "when-ai-infrastructure-becomes-the-target-attack-4887e1ba",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Coding Agents / Prompt-Space Defense",
+      "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
+      "source_url": "https://arxiv.org/abs/2608.25817",
+      "article_url": "https://arxiv.org/abs/2608.25817",
+      "published": "2026-08-26",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "A coding agent runs shell commands and edits files with developer privileges, so malicious requests become real harmful actions; weight-level alignment isn't available to API-only deployers and monitors need extra classifiers. SkillShield synthesizes security 'skills' offline from known attacks or recorded failures and injects them into the system prompt for the whole tool-use loop, needing no runtime classification. On RedCode it cuts harmful-generation severity from 3.37 to 0.58 and matches Llama Guard 3 without a separate 8B classifier, at a 0.14% benign refusal rate.",
+      "lessons": [
+        {
+          "point": "Coding agents are high-risk because malicious prompts become privileged file and shell actions.",
+          "excerpt": "allowing malicious requests to translate directly into harmful actions",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "System-prompt security skills can approximate a guardrail classifier's protection without a separate model on the trajectory.",
+          "excerpt": "comparable to Llama Guard 3's 42.7% without its separate 8B classifier",
+          "confidence": 0.82,
+          "grounded": true
+        },
+        {
+          "point": "Prompt-space defenses can be tuned to strong protection with very low benign over-refusal.",
+          "excerpt": "SkillShield yields a mean safety-refusal rate of 0.14%",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "API-only deployers can harden coding agents with offline-synthesized, always-on system-prompt security skills instead of extra runtime classifiers.",
+      "tags": [
+        "coding-agents",
+        "system-prompt-defense",
+        "redcode",
+        "llama-guard",
+        "guardrails"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Provision system-prompt security skills for coding agents",
+        "detail": "Synthesize security policy 'skills' offline from known attack classes and recorded agent failures, inject them at session start so they persist through the tool-use loop, and pick a provisioning scope to fit the prompt budget; measure execution attack success on RedCode and benign refusal rate to tune the tradeoff."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 84,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 60.2,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Weight-level alignment, input filters, execution-boundary monitors, and Llama Guard 3; contribution is a classifier-free prompt-space skill defense evaluated on RedCode.",
+      "threat": "Malicious or jailbroken requests driving a privileged coding agent to perform harmful actions.",
+      "conditions": "API-only coding-agent deployment without access to model weights or an auxiliary guard model.",
+      "mitigations": "Offline-synthesized security skills injected into the system prompt and active across the tool-use loop.",
+      "cluster": "H",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/skillshield-prompt-space-security-skills-for-llm-1d3bcc76.txt",
+      "id": "skillshield-prompt-space-security-skills-for-llm-1d3bcc76",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "LLM Safety / Alignment Robustness",
+      "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+      "source_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+      "article_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+      "published": "2026-08-28",
+      "date": "2026-08",
+      "source_name": "Unit 42 (Palo Alto Networks)",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_rank": 76.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoints the tiny set of feed-forward neurons carrying an aligned LLM's refusal behavior. On Qwen3-4B, just 50 of 350,208 neurons (~0.014%) control the safety refusal template, and removing them breaks refusal formatting on 80% of harmful prompts. A derived FFN/Skip ratio predicts 81% of the variance in each model's steerability, offering a quantitative safety fragility score.",
+      "lessons": [
+        {
+          "point": "An aligned model's refusal behavior can be concentrated in a vanishingly small number of neurons, making it fragile to internal manipulation or even routine fine-tuning.",
+          "excerpt": "just 50 neurons out of 350,208 - about 0.014% of the model's feed-forward neurons - control the safety refusal template",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Model-internal alignment is a thin layer, not a robust distributed defense, so it should not be the only safety control.",
+          "excerpt": "It lives in a thin template layer - a tiny fraction of the network that an attacker who can manipulate internals could disable",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Defenders must layer external filters and runtime guardrails on top of the base model's built-in safety.",
+          "excerpt": "True AI safety demands a defense-in-depth strategy, with external content filters and runtime guardrails layered on top of whatever the base model was trained to do",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A cheap computable metric can predict how easily a model's safety can be steered, enabling pre-deployment fragility scoring without full red-team campaigns.",
+          "excerpt": "this ratio explained 81% of the variance in how vulnerable each model's safety behavior was to a small targeted change",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.",
+      "tags": [
+        "llm-safety",
+        "jailbreak",
+        "alignment",
+        "mechanistic-interpretability",
+        "guardrails",
+        "defense-in-depth"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Add fragility diagnostics and external guardrails to LLM deployments",
+        "detail": "Integrate a safety-fragility diagnostic (e.g., FFN/Skip ratio) into model evaluation pipelines to compare candidate models before production, and layer runtime content filters/guardrails in front of any deployed model rather than trusting built-in refusal training alone."
+      },
+      "scores": {
+        "novelty": 72,
+        "relevance": 72,
+        "newness": 20,
+        "credibility": 76.8,
+        "composite": 59.72,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work",
+      "threat": "Safety alignment can be disabled or shifted by altering a tiny neuron set or via ordinary optimization runs.",
+      "conditions": "Anyone deploying open-weight or fine-tunable aligned LLMs where model internals or fine-tuning can be influenced.",
+      "mitigations": "Defense-in-depth: external content filters, runtime guardrails, and fragility scoring before deployment.",
+      "cluster": "H",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df.txt",
+      "id": "perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Agent Governance / Runtime",
+      "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
+      "source_url": "https://arxiv.org/abs/2608.26696",
+      "article_url": "https://arxiv.org/abs/2608.26696",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Enterprise access-control models built for human users and long-lived services fail for agents that are ephemeral, act via model choice rather than fixed programs, and are discovered rather than provisioned. The authors argue agent governance is a runtime problem and derive five primitives - discovery, identity, governance, attestation, supply chain - mediating each action against policy before it takes effect and recording it in a verifiable hash-linked signed ledger.",
+      "lessons": [
+        {
+          "point": "Human/service access-control models fail for agents because agents are ephemeral, model-driven, and self-created via any API caller.",
+          "excerpt": "agent principals are ephemeral, appearing and vanishing faster than provisioning",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Agent governance is fundamentally a runtime enforcement problem, distinct from model alignment or build-time controls.",
+          "excerpt": "governing such agents is a runtime problem -- not a model-alignment problem and not a build-time problem",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Mediating each action against policy and recording it in a verifiable signed ledger enables third-party audit without trusting the vendor.",
+          "excerpt": "recorded in a hash-linked signed ledger a third party can verify with the vendor out of the loop",
+          "confidence": 0.82,
+          "grounded": true
+        },
+        {
+          "point": "Runtime mediation has real costs: critical-path latency, per-workload identity sidecars, and fail-closed denial during outages.",
+          "excerpt": "fail-closed mediation converts availability incidents into denial",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Govern agents at runtime with per-action policy mediation, per-tenant action vocabularies, verifiable ledgers, and explicit availability tradeoffs.",
+      "tags": [
+        "agent-governance",
+        "runtime-enforcement",
+        "identity",
+        "attestation",
+        "audit-ledger",
+        "enterprise"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Mediate agent actions at runtime against a per-tenant vocabulary",
+        "detail": "Deploy an enforcement point that checks each agent action against policy before it takes effect, authorizes it against a per-tenant action vocabulary, and appends to a hash-linked signed ledger for independent audit; plan for critical-path latency, identity sidecars, and fail-closed behavior during incidents."
+      },
+      "scores": {
+        "novelty": 68,
+        "relevance": 83,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 59.3,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "IAM/RBAC for humans and services, workload identity (SPIFFE-style sidecars), and transparency-log designs; contribution is the agent-specific five-primitive runtime decomposition.",
+      "threat": "Ungoverned autonomous agents taking unauthorized actions with no verifiable accountability.",
+      "conditions": "Enterprise runs autonomous agents whose principals are ephemeral and dynamically created.",
+      "mitigations": "Runtime action mediation, agent identity, per-tenant action vocabulary, attestation, and a verifiable signed ledger.",
+      "cluster": "K",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/five-primitives-for-governing-autonomous-ai-agen-1458bcb2.txt",
+      "id": "five-primitives-for-governing-autonomous-ai-agen-1458bcb2",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "id": "towards-a-risk-assessment-of-malicious-skill-fil-8b37c578fd",
@@ -651,7 +1320,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 58.98,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "threat": "Malicious skill files loaded into coding agents (Gemini CLI, Qwen Code, and similar) can hide shell commands inside natural-language instructions and drive the agent to execute attacker-chosen actions in the developer's environment.",
       "conditions": "Requires a coding agent that dynamically loads a folder of instructions/scripts as skills, and an attacker path to place a skill file (repo checkout, marketplace, MCP server, shared workspace).",
@@ -740,7 +1409,7 @@
         "newness": 4,
         "credibility": 55.0,
         "composite": 58.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends SLSA L3 build-isolation and Firecracker/gVisor microVM patterns; picks up the same 'containers don't contain' framing that Edera and others advance. Reinforces claims imdsv1-must-be-disabled-on-agent-workloads, long-lived-cloud-credentials-are-obsolete, ssrf-guards-must-cover-agent-outbound-calls.",
       "discovered_via": "rss",
@@ -821,7 +1490,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 58.7,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "The 'agents-approve-most-prompts' framing overlaps with Anthropic's May 'How we contain Claude' post (93% approval telemetry) that this article cites; the ScaleX game's dataset (40k runs, 409k decisions, per-command breakdown) is the new empirical delta.",
       "discovered_via": "rss",
@@ -895,7 +1564,7 @@
         "newness": 20,
         "credibility": 76.8,
         "composite": 58.52,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Classic cloud access-key theft and cryptojacking (e.g. stolen AWS keys spun up for mining); token jacking is the AI-billing analogue, with the transfer-station resale market and npm-worm harvesting as the newer elements.",
       "threat": "Attackers steal developer AI API keys and resell programmatic model access via gray-market proxy 'transfer stations', generating large fraudulent usage billed to the victim.",
@@ -970,7 +1639,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 57.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the general 'jailbreak transfer' line (Zou et al. universal adversarial suffixes; cross-model transfer studies) by specializing to the pretrain-to-finetune direction and probing the hidden-state structure that carries the transfer.",
       "discovered_via": "rss",
@@ -1043,7 +1712,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 57.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends prior work on safety-neuron identification and pruning in autoregressive LLMs (Wei et al., 'Assessing the Brittleness of Safety Alignment via Pruning and Low-Rank Modifications') and mechanistic-interpretability-driven jailbreaks; novelty is showing the property transfers into diffusion LLMs and gives a cheap black-box jailbreak with cross-family reach.",
       "discovered_via": "rss",
@@ -1118,7 +1787,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 57.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Complements ToolHive MCP SSRF and 'Agent skill security is a lifecycle problem' (SkillSec-Eval) entries in the pool: both frame skill/tool metadata as needing lifecycle scanning, and this is the concrete tool that operationalizes it.",
       "discovered_via": "github",
@@ -1199,7 +1868,7 @@
         "newness": 4,
         "credibility": 70.0,
         "composite": 56.5,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Follows the OpenAI/Hugging Face containment failure covered in the sibling Wired piece; reinforces the pattern in prompt-injection-is-containment-not-prevention that model-facing rules only hold if the surrounding system enforces them.",
       "discovered_via": "rss",
@@ -1282,7 +1951,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 56.45,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits alongside mcp-scan (cloud-uploaded), NVIDIA SkillSpector (skill files only), and generic secrets scanners (Gitleaks, TruffleHog); the differentiator claimed is offline operation with correlation, live IOC + CISA KEV enrichment, and named-campaign IOCs.",
       "discovered_via": "github",
@@ -1362,7 +2031,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 56.45,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "OWASP MCP Top 10 tagging; NVIDIA SkillSpector YARA rules (adapted); overlaps with Snyk Agent Scan, Cisco AI Defense MCP Scanner, and Invariant Labs MCP-Scan.",
       "threat": "Untrusted MCP servers or skill bundles feed instructions and executable code into an agent's loop. A skill directory can be swapped under a deceptive name, or a bundle's scripts/ directory can ship a reverse shell or credential-harvester that runs when the agent invokes the skill.",
@@ -1436,7 +2105,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 56.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends privacy-leakage benchmarks that audit agent outputs (e.g., PrivacyLens, ConfAIde) to also cover the acquisition (tool-call ingestion) stage with 1,182 cases across 16 domains.",
       "discovered_via": "rss",
@@ -1520,7 +2189,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 55.68,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "BadPrompt and other text-trigger prompt backdoors",
@@ -1601,7 +2270,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 55.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Complements ToolHive MCP SSRF and AWS API MCP fail-open advisories in the pool: both illustrate what happens when host-side MCP tooling lacks the localhost-hardening BurpMCP-Ultra ships as default.",
       "discovered_via": "github",
@@ -1675,7 +2344,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 55.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Two-stage rule+ML guardrails are well-known (NeMo Guardrails, LlamaGuard). What's distinctive here is (a) signed-GNN + APPNP propagation over an intent graph for the second stage, and (b) beating a zero-shot Llama 3.3 70B baseline on a real health corpus. Temporal knowledge graphs for agent memory are also emerging elsewhere (Zep, Mem0).",
       "discovered_via": "rss",
@@ -1748,7 +2417,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 55.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "ProjectDiscovery 'rogue agents' rogue-eval-path finding in the ai-research pool is the closest published prior work; this one adds a third frontier-lab data point and pins root cause on third-party evaluator misconfiguration.",
       "discovered_via": "rss",
@@ -1822,7 +2491,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 55.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with Invariant Labs' MCP-Scan and the Tool Poisoning Attacks taxonomy; extends the same idea to agent skills as a first-class surface.",
       "threat": "A hostile MCP server or skill file can inject instructions or exfiltrate secrets via tool descriptions the agent consumes as part of its system prompt. Scanning a hostile MCP config itself executes the attacker's command line to fetch those descriptions.",
@@ -1897,7 +2566,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 54.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "threat": "AI agent private keys stored in host-accessible memory can be exfiltrated via indirect prompt injection (e.g., email content) in minutes, letting an attacker sign commits, calls, or certificates on the agent's identity.",
       "conditions": "Applies when an LLM agent (a) holds a private key in software-accessible form, and (b) ingests untrusted content (email, docs, MCP tool responses) that can steer its tool calls.",
@@ -1972,7 +2641,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 54.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with garak (research-oriented, Python) and promptfoo (TypeScript, more providers). Cites Russinovich et al. arXiv:2404.01833 for Crescendo and Pavlova et al. arXiv:2410.01606 for GOAT. Mischievous User is inspired by Tau-bench and promptfoo's mischievous-user strategy.",
       "discovered_via": "github",
@@ -2048,7 +2717,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 54.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Adjacent to Praetorian augustus (LLM red-team) and sinewaveai agent-security-scanner-mcp (repo/package scanner), but scoped specifically to Claude Code / agent-harness configuration files rather than runtime LLM behavior. Ships alongside a false-positive-audit.md workflow.",
       "discovered_via": "github",
@@ -2122,7 +2791,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 54.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with npm audit (dependency CVEs) but explicitly positioned as complementary rather than replacement. Package-hallucination detection echoes findings around slopsquatting; MCP tool-poisoning rules echo the Invariant Labs tool-poisoning taxonomy.",
       "discovered_via": "github",
@@ -2196,7 +2865,7 @@
         "newness": 4,
         "credibility": 70.0,
         "composite": 54.1,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "OAuth Mixup Attacks are RFC 9207 (2023); the novelty here is that MCP as a protocol now mandates iss validation in its auth flow, closing a defect that had been implementation-optional. Stateless MCP was previewed in a July 23 preparation post from the same publication.",
       "discovered_via": "rss",
@@ -2268,7 +2937,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 53.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "LLM-as-judge bias literature; debate protocols (Irving et al.); ensemble judging.",
       "discovered_via": "rss",
@@ -2281,6 +2950,82 @@
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Model I/O & Reasoning Traces",
+      "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+      "source_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+      "article_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+      "published": "2026-08-16",
+      "date": "2026-08",
+      "source_name": "Embrace The Red (Johann Rehberger)",
+      "source_id": "rss:https-embracethered-com-blog-index-xml",
+      "source_rank": 76.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Rehberger reproduces a technique for recovering the plaintext of 'encrypted' LLM reasoning blobs by replaying the encrypted_content to a weaker, easier-to-jailbreak sibling model from the same provider and asking it to transcribe. Because providers appear to share encryption keys across users, sessions, models and accounts, leaked session files can expose hidden reasoning - including a recovered password and, in the paper, 367 PII items and 182 credentials.",
+      "lessons": [
+        {
+          "point": "Encrypted reasoning blobs can be decrypted-by-proxy by replaying them to a weaker sibling model that is easier to jailbreak into transcribing them.",
+          "excerpt": "This new paper now takes that a step further by replaying the encrypted blob to a less capable model that is easier to jailbreak, and convince it into revealing the underlying reasoning.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Shared provider encryption keys across users/sessions/models mean a leaked blob may be recoverable by anyone.",
+          "excerpt": "This seems possible because providers likely use shared encryption keys across users, sessions, and models.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Hidden reasoning frequently contains real secrets, so these blobs are a data-leak surface at scale.",
+          "excerpt": "They decoded 315,320 reasoning blocks scraped from public repositories and recovered 367 pieces of PII and 182 credentials, including API keys and passwords.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Treat shared session files as sensitive: encrypted reasoning is not opaque or safe to publish.",
+          "excerpt": "Encrypted reasoning blobs should not be treated as harmless opaque data.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "So-called encrypted LLM reasoning traces are recoverable by cross-model replay, so session files containing them can leak passwords, API keys and PII.",
+      "tags": [
+        "reasoning-traces",
+        "encrypted-content",
+        "data-exfiltration",
+        "jailbreak",
+        "credentials"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat LLM session files with encrypted reasoning as secrets",
+        "detail": "Do not commit or share agent session files that contain reasoning encrypted_content; scrub or exclude reasoning blobs before sharing, and avoid placing secrets in prompts since they may surface inside recoverable reasoning traces."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 68,
+        "newness": 20,
+        "credibility": 76.8,
+        "composite": 53.42,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "arXiv work on stealing reasoning traces from proprietary LLM APIs; Matthew Green's encrypted-reasoning-blob replay discussion",
+      "threat": "Recovery of hidden model reasoning (including secrets) from replayed encrypted blobs across models/sessions/accounts.",
+      "conditions": "Users of provider APIs who share or leak session files containing encrypted reasoning content.",
+      "mitigations": "Per-user/session key isolation by providers; users should scrub reasoning blobs from shared files and keep secrets out of prompts.",
+      "cluster": "C",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/recovering-plaintext-from-encrypted-llm-reasonin-b9207da4.txt",
+      "id": "recovering-plaintext-from-encrypted-llm-reasonin-b9207da4",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "id": "care-pre-execution-command-verification-for-shel-d22ff13097",
@@ -2344,7 +3089,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 53.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends generic LLM-judge guardrails and shell parsers with a shell-specific canonicalization and provenance-backed static pattern layer; accepted at ISSRE 2026.",
       "discovered_via": "rss",
@@ -2429,7 +3174,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 53.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "InjecAgent / BIPIA text-only indirect prompt injection benchmarks",
@@ -2502,7 +3247,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 53.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "This is the companion aggregation to the AISI incident (batch entry 3) plus new detail on the Irregular vendor thread. Nearest pool entries: the Hugging Face agentic intrusion post (ai-security), ProjectDiscovery's 'Oh My Rogue Agent'. The novel content vs those is the shared-vendor root cause (Irregular) and the name-collision mechanism.",
       "discovered_via": "rss",
@@ -2577,7 +3322,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 52.4,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Pool digest 'AWS API MCP Server fails open' and 'AWS Bedrock AgentCore Python SDK argument-delimiter injection' cover the same shape (agent middleware ships an RCE surface); this adds a Python/Langflow instance under active exploitation.",
       "discovered_via": "rss",
@@ -2659,7 +3404,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 52.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with Doberman (this batch), Invariant Labs guardrails, Lakera Guard, and general 'LLM firewall' vendors. Novelty vs. those is the breadth (MCP gateway + supply-chain scoring + audit trail + attestation bundle) and the explicit policy-authority layering (org → project → repo → non-overridable floor).",
       "discovered_via": "github",
@@ -2741,7 +3486,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 52.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Same problem space as Invariant Labs' guardrails, PromptArmor, Lakera Guard, and Prismor (also in this batch). Novelty here is the explicit statement and CI-enforcement of the two invariants and the issue-vs-mention/origin discriminator in the turn gate.",
       "discovered_via": "github",
@@ -2823,7 +3568,7 @@
         "newness": 4,
         "credibility": 70.0,
         "composite": 52.0,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Same underlying diagnosis as the Anthropic 3-orgs incident in this batch and the Chainguard microVM piece. Reinforces claim imdsv1-must-be-disabled-on-agent-workloads and the containment-not-prevention framing of prompt injection.",
       "discovered_via": "rss",
@@ -2906,7 +3651,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 51.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Independent evaluation of frontier-model safeguards similar to HarmBench, StrongREJECT, and prior FAR.AI jailbreak studies; adds a rolling leaderboard plus a published Minimal Standard.",
       "discovered_via": "rss",
@@ -2986,7 +3731,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 51.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "OWASP LLM Top 10 Excessive Agency, existing agent baseline control frameworks, general vulnerability-management practice (CVE lifecycle).",
       "discovered_via": "rss",
@@ -3059,7 +3804,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 51.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends universal adversarial audio work (perturbation-based ALLM jailbreaks referenced in the abstract) with an explicit utility-vs-attack tradeoff via band selection. Novel contribution is the gradient-ratio band ranking and the empirical non-monotonicity of JSR in bandwidth.",
       "discovered_via": "rss",
@@ -3132,7 +3877,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 51.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "MIT AI Risk Repository and its Mitigation and Response Taxonomy; prior surveys of LLM guardrails (Guardrails AI, NeMo Guardrails, LLM-Guard, garak, promptfoo) — novelty is the systematic per-subcategory mapping across 21 tools with an LLM-assisted extraction pipeline.",
       "discovered_via": "rss",
@@ -3211,7 +3956,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 50.88,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "PromptGuard / Meta LlamaGuard-style prompt-injection classifiers",
@@ -3286,7 +4031,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 50.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Similar in shape to existing intentionally-vulnerable LLM ranges (WebGoat-style), but the Play/Live split and multimodal image-injection lab differentiate it from prior OWASP LLM training platforms in the pool.",
       "discovered_via": "github",
@@ -3364,7 +4109,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 50.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior developer-survey work on ML risk (e.g. Holstein et al 2019 on fairness) covered ML in general; this paper is one of the first structured qualitative studies specific to agentic-AI product developers.",
       "discovered_via": "rss",
@@ -3437,7 +4182,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 50.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with hvoy.ai (relay reputation) and cctest.ai (one-click testing / channel fingerprinting) but focuses on local, reproducible, Markdown-emitting audits. Cites Liu et al. Your Agent Is Mine (arXiv:2604.08407) and Zhang et al. Real Money, Fake Models (arXiv:2603.01919).",
       "discovered_via": "github",
@@ -3513,7 +4258,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 50.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends prior LLM-as-a-Judge robustness studies with a unified framework covering 15 attacks x 8 defenses across 13 models.",
       "discovered_via": "rss",
@@ -3582,7 +4327,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 49.85,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Code-clone detection literature (Deckard, SourcererCC, CCFinder) and package-similarity tools; SkillTrace's contribution is the multi-modality framing plus operational-graph structure specific to LLM-agent skill packages.",
       "discovered_via": "rss",
@@ -3595,6 +4340,82 @@
       "retrieved_at": "2026-08-14T20:08:52+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Red-Teaming Methodology (Agentic)",
+      "title": "The evolving role of the Red Team in the era of agentic security",
+      "source_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+      "article_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+      "published": "2026-08-13",
+      "date": "2026-08",
+      "source_name": "Google Online Security Blog",
+      "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Google's Head of Red Teams argues autonomous agent-driven attacks are emerging and will most benefit scale-oriented actors via machine-speed operations that collapse dwell time. Over the next 6-12 months open-weight models are expected to match frontier cyber capabilities and can be 'abliterated' to strip guardrails. The prescription: Red Teams should iteratively build their own modular red-teaming agents to simulate agentic attackers before adversaries operationalize theirs.",
+      "lessons": [
+        {
+          "point": "Autonomous agent-driven attacks are shifting from theoretical to operational and most favor high-volume actors.",
+          "excerpt": "We are entering an era where autonomous attacks are executed by agents on behalf of threat actors.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Agentic attacks compress dwell time so much that detections may fire after objectives are already met, breaking human-speed response.",
+          "excerpt": "AI agents can autonomously move on objectives so rapidly that even if a detection triggers, the agents often accomplish their goals before a human analyst has time to review the alert",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Open-weight models are expected to reach frontier cyber capability soon and can have guardrails stripped, so defenders can't rely on model-vendor safety.",
+          "excerpt": "We anticipate that over the next 6 to 12 months, open-weight models will match today's cybersecurity capabilities of frontier models.",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Defenders should build their own modular red-teaming agents now to simulate agentic adversaries before those adversaries mature.",
+          "excerpt": "The best way for a Red Team to prepare an organization for this future is to build its own Red Teaming agent that simulates the exact tools and techniques real-world attackers are developing.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Prepare for machine-speed agentic attacks by building your own iterative red-teaming agents and ensuring detection/response is near real-time.",
+      "tags": [
+        "red-teaming",
+        "agentic-ai",
+        "threat-modeling",
+        "open-weight-models",
+        "detection"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Stand up an incremental agentic red team",
+        "detail": "Automate isolated phases (recon, initial access, lateral movement) as modular subagents, connect them via an orchestrator to run end-to-end agentic simulations, and validate that detection pipelines are near real-time and corrective controls don't wholly depend on humans-in-the-loop."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 66,
+        "newness": 20,
+        "credibility": 75.0,
+        "composite": 49.55,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Google's AI Red Team and Secure AI Framework (SAIF); broader agentic-threat forecasting",
+      "threat": "Threat actors operationalizing autonomous attack agents for machine-speed, scaled intrusions.",
+      "conditions": "Enterprises whose detection/response and red teams are geared to human-speed, manual adversaries.",
+      "mitigations": "Build modular red-teaming agents, ensure near-real-time detection and non-human-blocking corrective controls.",
+      "cluster": "L",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/the-evolving-role-of-the-red-team-in-the-era-of--39c3911b.txt",
+      "id": "the-evolving-role-of-the-red-team-in-the-era-of--39c3911b",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "id": "behavioral-canaries-auditing-private-retrieved-c-2bbb7287ba",
@@ -3658,7 +4479,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 48.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends membership inference and memorization-based training-data auditing; adapts stylistic canary triggers for the RLFT setting where prior methods fail.",
       "discovered_via": "rss",
@@ -3731,7 +4552,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 47.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Adjacent to safety-decoding methods that use external moderation classifiers or reward-model rescaling per token, and to work showing cross-modal jailbreak transfer (MM-SafetyBench, JailbreakV-28k). Novelty is the internal, attention-gated single decision rather than external classifier or per-token rescaling; magnitude of reported ASR reduction is the load-bearing claim.",
       "discovered_via": "rss",
@@ -3805,7 +4626,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 47.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "threat": "LLM agents can be steered into hazardous states across a sequence of individually benign-looking tool calls, defeating per-action guardrail checks.",
       "conditions": "Applies to any tool-using agent whose runtime guardrail evaluates one action at a time without maintaining trajectory-level risk state.",
@@ -3817,6 +4638,82 @@
       "retrieved_at": "2026-08-14T20:08:52+00:00",
       "needs_review": true,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-security",
+      "domain": "Privacy-Preserving AI / Model Protection",
+      "title": "Making private AI practical with homomorphic encryption (HEIR)",
+      "source_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+      "article_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+      "published": "2026-08-14",
+      "date": "2026-08",
+      "source_name": "Google Online Security Blog",
+      "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Google showcases HEIR, an open-source compiler toolchain that converts pre-trained AI models to run inference directly on homomorphically encrypted inputs, so servers can process ciphertexts and return encrypted results without seeing the data. It targets the privacy/capability trade-off in sensitive sectors and avoids shipping proprietary models to devices. Demos include the Kitsune anomaly detector operating on encrypted network traffic.",
+      "lessons": [
+        {
+          "point": "Homomorphic encryption lets servers run computations on ciphertexts, changing the privacy/capability trade-off into a cost question.",
+          "excerpt": "A solution to these issues is homomorphic encryption, a rapidly maturing technology that fundamentally alters this trade-off by allowing computations to be performed directly on encrypted data.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Local on-device inference to preserve privacy risks exposing proprietary model IP; encrypted server-side inference avoids that.",
+          "excerpt": "Shipping proprietary AI to a device risks leaking the model.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Tooling like HEIR lowers the expertise barrier by compiling existing models to operate on encrypted inputs.",
+          "excerpt": "HEIR can convert pre-trained AI models that operate on unencrypted data to operate on encrypted inputs",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Security functions like network anomaly detection can run over encrypted traffic without exposing packet contents.",
+          "excerpt": "This allows a service provider to detect anomalies without revealing the contents of network packets to the service provider.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Homomorphic-encryption compilers like HEIR make encrypted AI inference (and encrypted-traffic detection) practical, protecting both user data and proprietary model weights.",
+      "tags": [
+        "homomorphic-encryption",
+        "privacy-preserving-ml",
+        "model-protection",
+        "encrypted-inference",
+        "anomaly-detection"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Evaluate encrypted inference for sensitive workloads",
+        "detail": "For regulated data (healthcare, finance) or when protecting proprietary models, assess homomorphic-encryption toolchains such as HEIR to run server-side inference on ciphertexts, weighing cost overhead against avoiding plaintext data exposure and model-leak risk from on-device shipping."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 45,
+        "newness": 20,
+        "credibility": 75.0,
+        "composite": 46.25,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Google's prior differential privacy, private set membership, private information retrieval work",
+      "threat": "Data exposure to service providers and proprietary-model leakage when balancing AI features against privacy.",
+      "conditions": "Organizations in regulated sectors needing AI features without exposing raw user data or shipping proprietary models to devices.",
+      "mitigations": "Compile models with HEIR for encrypted inference; use HE-based detection so providers never see plaintext data/packets.",
+      "cluster": "I",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/making-private-ai-practical-with-homomorphic-enc-bdd3b443.txt",
+      "id": "making-private-ai-practical-with-homomorphic-enc-bdd3b443",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "id": "measuring-and-detecting-harmful-ai-sycophancy-62cb98846c",
@@ -3878,7 +4775,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 46.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior sycophancy measurement work is extended by (a) narrowing to PSRS, (b) building a labeled detection dataset, and (c) studying cross-model detector transfer.",
       "discovered_via": "rss",
@@ -3949,7 +4846,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 46.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Existing MCP spec (bundling only servers) and Anthropic-style Agent Skills; this spec is the first to formalize the joint package.",
       "discovered_via": "github",
@@ -4023,7 +4920,7 @@
         "newness": 20,
         "credibility": 76.8,
         "composite": 45.62,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Microsoft's own June 2026 'Guarding AI Memory' post (referenced in article) and the standing claim agent-memory-is-a-persistent-attack-surface — this post operationalizes them into a workshop pillar rather than introducing new mechanism.",
       "discovered_via": "rss",
@@ -4086,7 +4983,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 44.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Broken Object Level Authorization / IDOR is OWASP API #1; novelty here is the actor (an autonomous agent running Opus 4.6), not the vulnerability class. Related to prior 'agent hits real infra' incidents cited on Simon Willison's blog.",
       "discovered_via": "rss",
@@ -4166,7 +5063,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 44.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior MLLM safety fine-tuning approaches, external guardrails (LlamaGuard-style), and constitutional-AI style alignment methods.",
       "discovered_via": "rss",
@@ -4238,7 +5135,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "LangSmith and Langfuse (which the page explicitly contrasts against); PostHog/Amplitude/Mixpanel (contrasted); the wider agent-observability space (Helicone, Traceloop, Braintrust); Anthropic's own MCP observability guidance.",
       "discovered_via": "hackernews",
@@ -4311,7 +5208,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 42.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends split conformal prediction to multi-stage agent pipelines; contrasts with Bonferroni allocation. Adjacent to broader conformal-prediction literature and to agent-eval work on staged/tool-augmented LLM systems.",
       "discovered_via": "rss",
@@ -4383,7 +5280,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with AgentBench, ToolEmu, R-Judge, and AgentSafetyBench-style process-level agent safety benchmarks; differentiates on fully-automated scenario generation across five risk dimensions and dual authority contexts.",
       "threat": "Untrusted-input-driven and authority-escalation risks arising during multi-step agent execution — tool misuse, unsafe memory writes, unsafe environment access — that are invisible if only the final output is scored.",
@@ -4456,7 +5353,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the linear-representations / refusal-direction line (e.g., Arditi et al. on refusal directions, Zou et al. on RepE) by moving from global to local causal explanations of individual jailbreak successes.",
       "threat": "Not a direct threat report; describes a diagnostic method. The implicit threat is that global 'refusal direction' defenses may leave whole strategy/category subspaces uncovered, so red teams can find jailbreaks that survive single-direction ablation-based refusal probes.",
@@ -4530,7 +5427,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 41.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Synthesizes prior agent taxonomies with observable platform properties; complements Invariant Labs tool-poisoning framework and NIST-style STRIDE-adjacent AI threat models.",
       "discovered_via": "rss",
@@ -4601,7 +5498,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 41.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Applies STRIDE + MITRE ATT&CK with LLM assistance; similar to prior LLM-assisted threat modeling but adds live threat feeds and evaluates against expert-labeled threats.",
       "discovered_via": "rss",
@@ -4673,7 +5570,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the FL-poisoning-defense literature (Krum, Trimmed Mean, FLAME, SparseFed) into the Split FL setting, which has attracted growing attention as SplitNN deployments emerge.",
       "discovered_via": "rss",
@@ -4741,7 +5638,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior adversarial-detection attacks that target the detection output rather than attention; patch-based attacks that introduce a visible attacker-owned sink token are the explicit comparison.",
       "threat": "Imperceptible L-infinity-bounded adversarial perturbations at inference time against DETR-family object detectors deployed in safety-critical systems (e.g., autonomous driving, surveillance).",
@@ -4803,7 +5700,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Robust MDPs (Nilim & El Ghaoui; Iyengar); Byzantine multi-agent RL; s- vs (s,a)-rectangularity.",
       "discovered_via": "rss",
@@ -4875,7 +5772,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 36.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Carlini et al., Cryptanalytic Extraction of Neural Network Models, EUROCRYPT 2020 and follow-ups through EUROCRYPT 2025.",
       "discovered_via": "rss",
@@ -4945,7 +5842,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 36.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Well-known finding that tool-use collapses much of the multi-agent gain on lookups; PQC-specific packaging is the novelty.",
       "discovered_via": "rss",
@@ -5018,7 +5915,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Overlaps with earlier A2A security taxonomies and the general 'security must be designed in, not bolted on' thesis applied to distributed systems for decades. Similar to Google's A2A protocol design goals and multi-agent alignment literature.",
       "threat": "Agent-network compositions can be attacked in ways single-agent defenses do not cover: an adversarial agent joining a network, semantic drift across agent hand-offs, or a fault in one agent cascading through downstream tool calls.",
@@ -5092,7 +5989,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 35.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Contrasts with regex-based DLP, fine-tuned classifiers, and vendor-managed DLP; sits alongside NeMo Guardrails, LlamaGuard, and similar LLM-based content classifiers.",
       "discovered_via": "rss",
@@ -5157,7 +6054,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "The MCP protocol itself is prior art; this is the reference specification, not a new finding. Existing claims in this repo already cover MCP tool-description injection as an attack surface.",
       "discovered_via": "github",
@@ -5222,7 +6119,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "One of several 'awesome-*' style aggregations in the AI-security space (e.g., awesome-llm-security, PromptInjection lists). This one is notable mainly for its 734 stars and its explicit MCP/agentic phase.",
       "discovered_via": "github",

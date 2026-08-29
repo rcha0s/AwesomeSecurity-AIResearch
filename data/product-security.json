@@ -79,7 +79,7 @@
         "newness": 26,
         "credibility": 75.0,
         "composite": 71.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Continues the Shai-Hulud npm supply-chain lineage (JFrog, May 2026). Novel elements: Sigstore provenance mint via trusted-publishing OIDC, Ethereum-based C2 resolution, .claude/settings.json persistence, CI runner memory scraping.",
       "actionable": {
@@ -150,7 +150,7 @@
         "newness": 25,
         "credibility": 85.0,
         "composite": 71.5,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends James Kettle's 'Making HTTP Header Injection Critical via RQP' (2023) and Sergey Bobrov's nginx misconfig research. This paper is the BHUSA/DEFCON 2026 followup that operationalizes the technique across CDN infrastructure and introduces browser-powered variants.",
       "actionable": {
@@ -242,7 +242,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 71.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior 'AI finds bugs' work (XBOW, buttercup DARPA AIxCC, Google's Big Sleep) established that agents can find known-class bugs. The HTTP Terminator's delta is (a) proving AI-proposed novel attack classes (Shared-Parser Confusion, dangling-byte) validated at scale, (b) the AI-vs-Code-vs-Human framing as design axis, and (c) shipping an open-source, reproducible research factory. Closest published methodology is Kettle's own HTTP/1.1 Must Die paper (manual) and Orange Tsai's Confusion Attacks on Apache (partial overlap with Shared-Parser Confusion but Apache-specific).",
       "discovered_via": "rss",
@@ -254,6 +254,146 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": true,
       "grounding_score": null
+    },
+    {
+      "topic": "product-security",
+      "domain": "cloud & infrastructure",
+      "title": "VMs won't contain cyber-capable agents",
+      "source_url": "https://blog.trailofbits.com/",
+      "article_url": "https://blog.trailofbits.com/2026/08/26/vms-wont-contain-cyber-capable-agents/",
+      "published": "2026-08-26",
+      "date": "2026-08",
+      "source_name": "Trail of Bits",
+      "source_id": "rss:trailofbits",
+      "source_rank": 73,
+      "source_topics": [
+        "product-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "A Trail of Bits researcher gave an advanced AI agent (GPT 5.6-Cyber) a CTF task to escape a QEMU/KVM sandbox VM; it succeeded three separate times, chaining disclosed CVEs, an unmarked libslirp fix, and several 0-days. The takeaway is that a standard VM can no longer be trusted to contain a sufficiently capable autonomous agent. Defenders should treat such agents as an advanced persistent threat and fall back on hardened isolation plus security fundamentals.",
+      "lessons": [
+        {
+          "point": "A standard VM is no longer a reliable containment boundary for advanced autonomous AI agents.",
+          "excerpt": "you can no longer assume a mere VM will contain a sufficiently advanced AI agent",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Use minimal-attack-surface virtualization (e.g. Firecracker microVMs) purpose-built for isolation.",
+          "excerpt": "A start is using a virtualization technology that was purposely built with a minimal attack surface and a focus on security, like Firecracker",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Lean on security fundamentals: least privilege, logging, and active monitoring, and limit agent runtime.",
+          "excerpt": "we have to become much more attentive to security fundamentals: least privilege (regarding network access, credentials, available features, etc.), logging, and active monitoring",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat capable AI agents as an advanced persistent threat: isolate them with hardened microVMs, enforce least privilege, monitor actively, and keep host and hypervisor dependencies fully patched.",
+      "tags": [
+        "ai-agents",
+        "vm-escape",
+        "sandboxing",
+        "qemu",
+        "kvm",
+        "firecracker",
+        "least-privilege",
+        "apt"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Harden agent sandboxes beyond a plain VM",
+        "detail": "Run autonomous agents in minimal-attack-surface microVMs like Firecracker, apply least privilege to network/credentials/features, enable logging and active monitoring, keep host kernel/QEMU/libslirp patched, and time-box each run in a pristine environment."
+      },
+      "scores": {
+        "novelty": 88,
+        "relevance": 85,
+        "newness": 20,
+        "credibility": 73.0,
+        "composite": 67.85,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Prior VM-escape CVE research (Januscape CVE-2026-53359, libslirp CVE-2026-9539); classic sandbox-escape and APT containment literature.",
+      "cluster": "A",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/vms-won-t-contain-cyber-capable-agents-eac5fbef.txt",
+      "id": "vms-won-t-contain-cyber-capable-agents-eac5fbef",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "software supply chain",
+      "title": "This Shit is Hard: Patching a vulnerability that has no fix",
+      "source_url": "https://www.chainguard.dev/unchained",
+      "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
+      "published": "2026-08-17",
+      "date": "2026-08",
+      "source_name": "Chainguard",
+      "source_id": "rss:chainguard",
+      "source_rank": 73,
+      "source_topics": [
+        "product-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Chainguard describes how its Athena clearinghouse authors patches for AI-discovered zero-days that have no upstream fix, where the hard problem is trusting an AI-generated diff rather than producing one. Every candidate patch is gated by feasibility, regression (baseline test suite before/after), and an exploit test written before the fix that must pass on the unpatched build and fail on the patched one. Fixes are batched per package, backported with the full gate re-run per version, rebuilt from source with signed provenance/SBOM, and made fatal so a patch that fails to apply breaks the build loudly.",
+      "lessons": [
+        {
+          "point": "An AI-generated patch is only trustworthy once you independently prove it, since there is no upstream fix to compare against.",
+          "excerpt": "when there's no upstream fix to compare against, the only way to tell them apart is to prove it yourself",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Write an exploit test first and require it to fail against the patched build to prove the fix works.",
+          "excerpt": "we author an exploit test and prove it demonstrates real harm against the unpatched build",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Make patch application fatal so an unapplied security patch never ships silently as a warning.",
+          "excerpt": "a security patch that doesn't apply cleanly has to fail the build and never slip through as a warning",
+          "confidence": 0.88,
+          "grounded": true
+        }
+      ],
+      "takeaway": "When remediating (including AI-generated) fixes, gate every patch on feasibility, regression testing, and an independent exploit test, batch interdependent fixes, re-validate on each backported version, rebuild from source with signed provenance, and fail the build loudly if a patch doesn't apply.",
+      "tags": [
+        "supply-chain",
+        "vulnerability-remediation",
+        "zero-day",
+        "ai-patching",
+        "backporting",
+        "provenance",
+        "sbom",
+        "regression-testing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Prove security patches instead of trusting them",
+        "detail": "Gate each candidate fix on feasibility, a before/after regression baseline, and an exploit test authored first (must fail post-patch); batch interdependent CVEs per package; re-run the full gate on every backported version; rebuild from source with signed provenance and SBOM; and make patch application fatal to the build."
+      },
+      "scores": {
+        "novelty": 83,
+        "relevance": 86,
+        "newness": 20,
+        "credibility": 73.0,
+        "composite": 66.65,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Chainguard's earlier Athena sandboxing and CVE-remediation-at-scale posts; SLSA provenance and reproducible-build practices.",
+      "cluster": "A",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/this-shit-is-hard-patching-a-vulnerability-that--54a43a0b.txt",
+      "id": "this-shit-is-hard-patching-a-vulnerability-that--54a43a0b",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -323,7 +463,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 66.05,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
       "discovered_via": "rss",
@@ -335,6 +475,145 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "product-security",
+      "domain": "web security",
+      "title": "What's in a tag name? JavaScript, apparently",
+      "source_url": "https://portswigger.net/research",
+      "article_url": "https://portswigger.net/research/whats-in-a-tag-name-javascript-apparently",
+      "published": "2026-08-25",
+      "date": "2026-08",
+      "source_name": "PortSwigger Research",
+      "source_id": "rss:portswigger",
+      "source_rank": 73,
+      "source_topics": [
+        "product-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Gareth Heyes shows that HTML tag names can carry XSS payloads: DOM properties like localName, part, and classList expose case-preserving or array-split versions of the tag name that can be fed back into event handlers, the Function constructor, or setHTMLUnsafe to execute JavaScript across every browser. Because these vectors use unusual, uppercase, or separator-character HTML, they readily bypass blocklists and WAF signatures. The defensive lesson is that WAF/blocklist filtering is fragile and should not be relied on in place of proper output encoding and CSP.",
+      "lessons": [
+        {
+          "point": "Browsers are far more lenient with tag-name characters than filters assume, enabling novel XSS vectors.",
+          "excerpt": "browsers are far more lenient than you would expect",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Seemingly harmless DOM properties (localName, part, classList) can smuggle and transform payloads past blocklists/WAFs.",
+          "excerpt": "unusual HTML and seemingly harmless properties such as localName, part, and classList can become unexpected sources of hiding payloads and transformations that can bypass blocklists and WAF signatures",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "WAF signature filtering is an unreliable primary XSS defense.",
+          "excerpt": "It's also a pretty nice way to bypass a WAF",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Do not rely on WAFs or character blocklists to stop XSS; enforce context-aware output encoding, a strict Content-Security-Policy, and trusted HTML sanitization, since exotic tag-name and DOM-property tricks bypass signature-based filters in every browser.",
+      "tags": [
+        "xss",
+        "waf-bypass",
+        "html",
+        "javascript",
+        "blocklist-bypass",
+        "csp",
+        "dom"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Defend XSS with encoding and CSP, not WAF signatures",
+        "detail": "Treat WAF/blocklist filtering as defense-in-depth only; enforce context-aware output encoding, a strict CSP, and a vetted HTML sanitizer, and test filters against uppercase, separator-character, and DOM-property (localName/part/classList) vectors."
+      },
+      "scores": {
+        "novelty": 84,
+        "relevance": 80,
+        "newness": 20,
+        "credibility": 73.0,
+        "composite": 65.15,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "PortSwigger XSS cheat sheet and prior WAF/blocklist-bypass research (unicode overflows, phantom Version cookie).",
+      "cluster": null,
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/what-s-in-a-tag-name-javascript-apparently-f25dab65.txt",
+      "id": "what-s-in-a-tag-name-javascript-apparently-f25dab65",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "web security",
+      "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
+      "source_url": "https://snyk.io/blog/",
+      "article_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
+      "published": "2026-08-10",
+      "date": "2026-08",
+      "source_name": "Snyk",
+      "source_id": "rss:snyk",
+      "source_rank": 73,
+      "source_topics": [
+        "product-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "Snyk's autonomous offensive-security agent (Evo COS) black-box tested a multi-tenant SaaS and found 33 validated issues, including a legacy admin JSON endpoint that did an unbounded key/value upsert with no role check and no enforcement of its HMAC signature/timestamp, letting the lowest-privilege user rewrite tenant-wide security settings for full compromise. It also proved a credentialed CORS origin-reflection flaw enabling zero-interaction token theft. The lessons are classic broken-authorization and CORS defenses: enforce server-side role checks, allowlist settable keys, actually verify signatures, and lock down cross-origin credentialed responses.",
+      "lessons": [
+        {
+          "point": "Server-side authorization must be enforced on every write, especially legacy/admin endpoints, not assumed from the UI.",
+          "excerpt": "performed an unbounded key/value upsert with no server-side role or permission check",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Restrict mass-assignment by allowlisting settable keys rather than accepting arbitrary input.",
+          "excerpt": "No allowlist of settable keys; the endpoint accepts any key string",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Business-logic/authorization chains are invisible to signature-based scanners and need reasoning-driven testing.",
+          "excerpt": "This is the reasoning layer that traditional scanners cannot reach: recognizing an ungated write, understanding what each setting means for the business, and chaining a handful of them into tenant-wide compromise",
+          "confidence": 0.82,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Enforce server-side role/permission checks and key allowlists on every write endpoint (including legacy admin ones), actually validate HMAC signatures, and lock down credentialed CORS, then test for authorization and business-logic chains that signature scanners miss.",
+      "tags": [
+        "broken-access-control",
+        "mass-assignment",
+        "authorization",
+        "cors",
+        "multi-tenant",
+        "saas",
+        "ai-pentesting",
+        "business-logic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Close broken-authorization and CORS gaps on write endpoints",
+        "detail": "Add server-side role/permission checks to every write (including legacy admin JSON endpoints), allowlist settable keys to block mass assignment, verify HMAC signature/timestamp params instead of trusting their presence, and never reflect arbitrary Origin with Access-Control-Allow-Credentials: true."
+      },
+      "scores": {
+        "novelty": 74,
+        "relevance": 85,
+        "newness": 20,
+        "credibility": 73.0,
+        "composite": 63.65,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "OWASP broken object/function-level authorization (BOLA/BFLA), mass-assignment, and credentialed CORS misconfiguration research.",
+      "cluster": "A",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/show-don-t-tell-what-evo-continuous-offensive-se-e186831a.txt",
+      "id": "show-don-t-tell-what-evo-continuous-offensive-se-e186831a",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -397,7 +676,7 @@
         "newness": 25,
         "credibility": 78.0,
         "composite": 62.95,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Follow-up to Microsoft's May 2026 ClickFix documentation. Novelty is the server-side fingerprinting gate and its detection-evasion probes — not the ClickFix technique itself.",
       "actionable": {
@@ -481,7 +760,7 @@
         "newness": 20,
         "credibility": 52.5,
         "composite": 62.67,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standing claims import-time-payloads-defeat-install-time-controls (AsyncAPI) and package-installers-run-arbitrary-code-by-default cover the install-time class. The novelty here is (a) the repo-local IDE hook path (.claude, .vscode) that fires on folder open with NO install required, (b) valid provenance signing a poisoned build via compromised source-tree, and (c) the gh-token-monitor 'revocation-triggers-persistence' pattern.",
       "discovered_via": "rss",
@@ -563,7 +842,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 60.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "ChainDrop npm worm (unit42) already in ledger under signature-based-detection-fails-on-llm-authored-malware / package-installers-run-arbitrary-code-by-default. Novelty here is (a) the Ethereum-smart-contract C2 domain lookup, (b) Bun-runtime-via-official-GitHub-releases evasion, and (c) explicit lineage tracing linking April PyTorch Lightning, May @antv, and August keyv as one toolkit.",
       "discovered_via": "rss",
@@ -637,7 +916,7 @@
         "newness": 20,
         "credibility": 76.8,
         "composite": 57.02,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior 'AI in malware' commentary was largely anecdotal or vendor-hype; the contribution here is the empirical production-telemetry measurement (405 samples vs 12 in production) rather than a new technique.",
       "cluster": null,
@@ -704,7 +983,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 56.0,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "path-traversal-defenses-must-cover-symlink-resolution (standing claim in the ledger); same class as prior TOCTOU/symlink CVEs. New signal: a concrete example where a well-intentioned wrapper still fell through because it filtered strings instead of resolved paths.",
       "discovered_via": "github",
@@ -787,7 +1066,7 @@
         "newness": 20,
         "credibility": 76.8,
         "composite": 54.92,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Pool digest already contains 'ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2' (unit42.paloaltonetworks.com) and 'AsyncAPI npm compromise: import-time payload defeats --ignore-scripts.' The Microsoft account is a second vendor angle on the same campaign; incremental novelty is the Claude/VSCode persistence targeting and the Defender detection surface, not the campaign itself.",
       "discovered_via": "rss",
@@ -867,7 +1146,7 @@
         "newness": 4,
         "credibility": 55.0,
         "composite": 52.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "GitHub's own September 2025, December 2025, and March 2026 posts trailed most of these mitigations; several align with SLSA and the OpenSSF supply-chain roadmap. Novelty here is the specific default-on shipping (npm v12 no-install-scripts, staged publishing, Dependabot cooldown) rather than the strategic framing.",
       "discovered_via": "hackernews",
@@ -879,6 +1158,77 @@
       "retrieved_at": "2026-08-10T19:18:37+00:00",
       "needs_review": true,
       "grounding_score": null
+    },
+    {
+      "topic": "product-security",
+      "domain": "Mobile / App Compliance",
+      "title": "A Hybrid Security Framework for Mini-Programs: Visual UI Compliance and Network Risk Assessment",
+      "source_url": "https://arxiv.org/abs/2608.25877",
+      "article_url": "https://arxiv.org/abs/2608.25877",
+      "published": "2026-08-26",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "product-security"
+      ],
+      "discovered_via": "rss",
+      "summary": "WeChat Mini Programs embed payment and ad entrances with deceptive, mis-clickable UI (tiny/hidden cancel buttons) that trigger involuntary payments or redirects to illegal pages. The authors build a detector that uses YOLOv8 to locate and size on-screen buttons/icons and mitmproxy to intercept click-triggered network requests, flagging non-compliant layouts and unsafe redirections.",
+      "lessons": [
+        {
+          "point": "Deceptive mobile UI (dark patterns) is a concrete security risk, not just a UX nuisance, because mis-clicks lead to real financial loss.",
+          "excerpt": "This can result in involuntary payments or being redirected to illegal pages, causing unnecessary financial losses and seriously harming users' property security and legal rights.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Visual/computer-vision analysis of rendered UI can automate detection of non-standard, mis-clickable button layouts.",
+          "excerpt": "YOLOv8 is used to identify various buttons in images, displaying the corresponding icon and its data based on the mouse click position.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Pairing UI inspection with proxy-based traffic capture lets you assess where clicks actually send users and data.",
+          "excerpt": "mitmproxy is used to capture relevant data requests generated during clicks, analyzing the safety of redirections",
+          "confidence": 0.82,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Mini-program app vetting must combine visual UI-compliance checks with network-redirect analysis to catch mis-click-to-payment dark patterns.",
+      "tags": [
+        "mobile",
+        "wechat-mini-programs",
+        "dark-patterns",
+        "app-vetting",
+        "ui-compliance",
+        "mitmproxy"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Add deceptive-UI and redirect checks to mobile app vetting",
+        "detail": "For hosted mini-app/superapp platforms, screenshot each screen, use an object detector to verify button hit-target sizes and that close/cancel controls are present and reachable, and proxy click-driven traffic to confirm redirect destinations resolve inside an allowed, safe range before publishing."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 72,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 52.1,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Prior WeChat Mini Program static/dynamic analysis and dark-pattern UI studies; novelty is the combined YOLOv8 UI + mitmproxy redirect pipeline.",
+      "threat": "Involuntary payments and redirection to malicious/illegal pages via deceptively placed ad and payment controls.",
+      "conditions": "User interacts with a non-compliant WeChat Mini Program whose cancel/close controls are undersized or hidden.",
+      "mitigations": "Automated UI-size/position compliance detection plus redirect safety analysis before store approval.",
+      "cluster": null,
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/a-hybrid-security-framework-for-mini-programs-vi-9ee71794.txt",
+      "id": "a-hybrid-security-framework-for-mini-programs-vi-9ee71794",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -947,7 +1297,7 @@
         "newness": 20,
         "credibility": 52.5,
         "composite": 50.38,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Claim gate-agent-prs-with-automated-checks and claim signature-based-detection-fails-on-llm-authored-malware cover the AI-authored-code and agent-PR problem. Novelty here is (a) the concrete Anthropic-Claude-CTF vs-security-vendor anecdote as a defender lesson, and (b) the fix-rate delta from grounding a frontier model in reachability/exploitability data.",
       "discovered_via": "rss",
@@ -1017,7 +1367,7 @@
         "newness": 20,
         "credibility": 70.0,
         "composite": 48.5,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Same class as prior go-git path/symlink CVEs and existing claim path-traversal-defenses-must-cover-symlink-resolution; the ref-name-as-path angle is the novel bit.",
       "discovered_via": "github",
@@ -1094,7 +1444,7 @@
         "newness": 20,
         "credibility": 77.5,
         "composite": 47.22,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -1166,7 +1516,7 @@
         "newness": 4,
         "credibility": 70.0,
         "composite": 41.5,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
@@ -1244,7 +1594,7 @@
         "newness": 4,
         "credibility": 52.5,
         "composite": 38.88,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Classic JWT alg=none, invalid-curve attacks, and Wycheproof-style test suites make the same point; this piece is a fresh restatement grounded in the current GHSA distribution.",
       "discovered_via": "rss",
@@ -1319,7 +1669,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard supply-chain security literature (SLSA, sigstore, provenance attestation). The 'malicious agent skills' finding was reported earlier in 2026 by third-party researchers and covered widely; this post is a marketing recap tied to the Gartner MQ, not new research.",
       "discovered_via": "rss",
@@ -1387,7 +1737,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 27.18,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "SARIMA baselines in network anomaly detection",
@@ -1457,7 +1807,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 26.29,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Classical STRIDE (Microsoft), prior quantum-specific attack papers cited in the abstract (calibration tampering, SWAP, QubitHammer).",
       "discovered_via": "rss",
@@ -1528,7 +1878,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 26.29,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Classical Common Criteria and ISO/IEC 25010, and prior ad hoc quantum obfuscation metrics (TVD, DFC).",
       "discovered_via": "rss",
@@ -1590,7 +1940,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Long-standing critique of DMCA/copyright takedown abuse for censorship.",
       "discovered_via": "rss",
@@ -1658,7 +2008,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 24.79,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Plonky3 STARK toolkit",

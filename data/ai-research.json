@@ -80,7 +80,7 @@
         "newness": 20,
         "credibility": 77.5,
         "composite": 67.62,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Pool digest entry 'A working taxonomy of open-source AI code-security harnesses' covers the space at a category level. Ledger claim 'score-evals-on-groundedness-not-headline-f1' is adjacent to Unit 42's replay-in-clean-environment validation stance. No pool entry covers the 92% semantic-bug shift or the ensemble-uniqueness numbers.",
       "discovered_via": "rss",
@@ -90,6 +90,77 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-research",
+      "domain": "Agents / Harnesses",
+      "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+      "source_url": "https://arxiv.org/abs/2608.27299",
+      "article_url": "https://arxiv.org/abs/2608.27299",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-research"
+      ],
+      "discovered_via": "rss",
+      "summary": "Model-side instruction hierarchy assigns privilege by source, but the agent harness reassembles context each turn and can silently promote low-privilege attacker content into a higher instruction level. The authors call this 'instruction privilege escalation' and achieve all 13 attack objectives (confidentiality, integrity, availability, RCE) across six coding-agent harnesses, even under automatic permission review.",
+      "lessons": [
+        {
+          "point": "Instruction-hierarchy defenses can be defeated at the harness layer, before the model even sees the content, by promoting untrusted input to a higher privilege tier.",
+          "excerpt": "This construction can elevate low-level content to a higher instruction level and grant it greater model-facing privilege.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Automatic permission review is not a sufficient backstop against privilege escalation in agent harnesses.",
+          "excerpt": "Under automatic permission review, the attacks achieve all 13 objectives on all three harnesses that provide this mode.",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Persistent goals and scheduled tasks provided by a harness are additional vectors for the same escalation.",
+          "excerpt": "We further reproduce the vulnerability using harness-provided persistent goals and scheduled tasks.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "How a harness assembles context is a privilege boundary; if it can promote untrusted data, model-side instruction hierarchy provides little protection.",
+      "tags": [
+        "llm-agents",
+        "harness-security",
+        "instruction-hierarchy",
+        "privilege-escalation",
+        "coding-agents",
+        "prompt-injection"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Preserve provenance labels through harness context assembly",
+        "detail": "Audit how your agent harness concatenates system prompts, tool outputs, files, memory, and scheduled tasks; ensure untrusted content keeps its low-privilege label end-to-end and cannot be relocated into higher-trust sections, and test with attacker-controlled tool/file content aiming for RCE and exfiltration objectives."
+      },
+      "scores": {
+        "novelty": 82,
+        "relevance": 90,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 65.6,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Builds on instruction-hierarchy defenses (e.g., OpenAI instruction hierarchy) and indirect prompt injection; novel framing is escalation via harness context construction.",
+      "threat": "Attacker-controlled low-privilege content is promoted to trusted instruction level, enabling confidentiality/integrity/availability/RCE compromise.",
+      "conditions": "Agent harness ingests attacker-influenced content and reconstructs it into higher-trust context regions across six evaluated coding harnesses.",
+      "mitigations": "Provenance-preserving context assembly and boundaries that prevent relabeling of untrusted input; permission review alone is insufficient.",
+      "cluster": "B",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/when-context-gets-root-instruction-privilege-esc-6fe71d0c.txt",
+      "id": "when-context-gets-root-instruction-privilege-esc-6fe71d0c",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -152,7 +223,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 61.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Multi-turn tool-use benchmarks (BFCL, ToolBench) test accuracy but not history reliability. Related but distinct: memory-poisoning threat models on long-term agent memory and 'lost-in-the-middle' long-context degradation. The oracle-teacher / polluted-student distillation formulation is novel to this paper.",
       "discovered_via": "rss",
@@ -162,6 +233,77 @@
       "retrieved_at": "2026-08-14T20:08:53+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-research",
+      "domain": "Offensive-Security Evaluation",
+      "title": "How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation",
+      "source_url": "https://arxiv.org/abs/2608.26237",
+      "article_url": "https://arxiv.org/abs/2608.26237",
+      "published": "2026-08-26",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-research"
+      ],
+      "discovered_via": "rss",
+      "summary": "CTF benchmarks score agents with binary pass/fail, conflating real exploitation with flag exposure, memorized recall, external lookup, and guessing - overstating cyber capability. CTF-ABACUS reconstructs each run as an evidence-grounded solve profile across pentest phases to check whether the recovered flag is actually supported by demonstrated behavior. Across 1,435 attempts on 240 challenges, only 62-87% of recovered flags were trace-verified exploits.",
+      "lessons": [
+        {
+          "point": "Binary CTF scoring overstates agent offensive capability by conflating real exploitation with recall, lookup, and guessing.",
+          "excerpt": "actual exploitation is conflated with direct flag exposure, memorized recall, external lookup, guessing, and unsupported claims, potentially overstating the agent's cybersecurity capability",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Trace-level auditing should verify whether a recovered flag is actually supported by demonstrated exploit behavior.",
+          "excerpt": "whether the recovered flag is supported by demonstrated behavior",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Empirically, a substantial fraction of 'solves' are shortcuts, not intended exploits.",
+          "excerpt": "Trace-verified exploits account for only 62-87% of recovered flags across benchmarks",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Judge security agents on evidence of exploitation in the trace, not on whether the flag string appeared.",
+      "tags": [
+        "ctf",
+        "offensive-security",
+        "agent-evaluation",
+        "provenance",
+        "benchmark-integrity",
+        "capability-elicitation"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit agent CTF solves at the trace level",
+        "detail": "When benchmarking offensive agents, decompose each run into pentest phases, locate where the flag first appears versus where exploitation occurred, and flag flags recovered via lookup/recall/guessing as unsupported; report trace-verified exploit rates rather than raw solve counts."
+      },
+      "scores": {
+        "novelty": 76,
+        "relevance": 80,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 60.8,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Prior CTF agent benchmarks with binary/aggregate scoring; contribution is trace-based provenance auditing (CTF-ABACUS).",
+      "threat": "Not an attack: risk of over-attributing cyber-offense capability to agents due to shortcut solves.",
+      "conditions": "Evaluating autonomous LLM agents on CTF challenges with pass/fail flag scoring.",
+      "mitigations": "Evidence-grounded solve profiles and challenge signatures that separate intended exploits from shortcuts.",
+      "cluster": "L",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/how-do-llm-agents-actually-get-the-flag-trace-le-f8ab45fc.txt",
+      "id": "how-do-llm-agents-actually-get-the-flag-trace-le-f8ab45fc",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -225,7 +367,7 @@
         "newness": 20,
         "credibility": 80.0,
         "composite": 60.5,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
       "discovered_via": "rss",
@@ -237,6 +379,77 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null
+    },
+    {
+      "topic": "ai-research",
+      "domain": "Red-Teaming Methodology",
+      "title": "RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution",
+      "source_url": "https://arxiv.org/abs/2608.27439",
+      "article_url": "https://arxiv.org/abs/2608.27439",
+      "published": "2026-08-27",
+      "date": "2026-08",
+      "source_name": "arXiv cs.CR",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 60,
+      "source_topics": [
+        "ai-research"
+      ],
+      "discovered_via": "rss",
+      "summary": "Because LLM agents in product execution harnesses turn jailbreaks into harmful tool use and persistent state changes, red-teaming must target harnesses, not just text output. RedEvoAgent is a black-box red-teaming agent that distills cross-case attack trajectories into a concise human-readable 'attack skill' which evolves via tool-effectiveness profiling, Deciding-Tool Attribution, and a validation ratchet that keeps only improving updates.",
+      "lessons": [
+        {
+          "point": "In agent harnesses jailbreaks are more dangerous than in chat because they cause real tool use and durable state changes.",
+          "excerpt": "jailbreaks can trigger harmful tool use and persistent state changes, creating greater risks than unsafe text generation alone",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Distilling attack experience into a compact, human-readable skill beats retrieving full trajectories, which suffer retrieval bias and unclear tool credit.",
+          "excerpt": "distills cross-case attack trajectories into a concise, human-readable attack skill",
+          "confidence": 0.82,
+          "grounded": true
+        },
+        {
+          "point": "A validation ratchet that only keeps improving updates prevents skill regression during evolution.",
+          "excerpt": "a validation ratchet that retains only updates improving validation performance",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.",
+      "tags": [
+        "red-teaming",
+        "jailbreak",
+        "llm-agents",
+        "harness-security",
+        "skill-evolution",
+        "black-box"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Red-team the harness, not just the model",
+        "detail": "Adopt an evolving-skill red-team loop that profiles which jailbreak tools actually decide success (tool attribution), distills wins into concise reusable skills, and gates updates behind a validation ratchet; evaluate transfer across multiple target harnesses and attacker models to estimate real-world risk."
+      },
+      "scores": {
+        "novelty": 72,
+        "relevance": 80,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 59.6,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Fixed-attack automatic red-teaming and agentic attackers using trajectory-based retrieval; contribution is skill distillation with Deciding-Tool Attribution and a validation ratchet.",
+      "threat": "Adaptive jailbreaks that trigger harmful tool actions and persistent state changes in deployed agent harnesses.",
+      "conditions": "Black-box access to target LLM agents deployed in product execution harnesses.",
+      "mitigations": "Defensive use for continuous harness red-teaming and coverage measurement.",
+      "cluster": "L",
+      "related_claims": [],
+      "verified": true,
+      "raw_path": "data/_raw/redevoagent-automatic-red-teaming-agent-with-exp-f0ca5c22.txt",
+      "id": "redevoagent-automatic-red-teaming-agent-with-exp-f0ca5c22",
+      "retrieved_at": "2026-08-29T23:46:33+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -299,7 +512,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 58.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "General 'process reward' / 'reasoning-trace' evals (PRM, ORM), plus finance-specific benchmarks (FinBench, FinQA) that stop at QA or terminal P&L. The specific 5-tuple P→E→R→D→O framing plus 201k real-investor decisions is new.",
       "discovered_via": "rss",
@@ -377,7 +590,7 @@
         "newness": 4,
         "credibility": 72.5,
         "composite": 57.77,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Same class as CVE-2025-60616 in FFmpeg's LADSPA loader, cited by the author. On the AI-tooling side, extends the emerging pattern of agent-run CVE discovery on real OSS infra.",
       "discovered_via": "rss",
@@ -453,7 +666,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 53.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "LLM library's own 0.31 series (string-only tool loop) and OpenAI's Responses API (server-side tools). The novelty is the packaging: reasoning-on-stderr, typed events, Git-style log, and pause/resume as one coherent CLI/library.",
       "discovered_via": "rss",
@@ -531,7 +744,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 53.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Anthropic — 'Skills' progressive disclosure pattern in Claude Code",
@@ -594,7 +807,7 @@
         "newness": 26,
         "credibility": 60.0,
         "composite": 53.0,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "vLLM paper (Kwon et al. 2023, SOSP) introduced paged attention; the FlashAttention series and continuous-batching (Orca) both predate this. This post is a synthesis / walkthrough, not new research — value is pedagogical.",
       "actionable": {
@@ -672,7 +885,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 52.85,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' by giving a training-mechanism explanation for why the models behaved as they did.",
       "discovered_via": "rss",
@@ -749,7 +962,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 50.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends MAST (multi-agent failure taxonomy) and prior orchestration benchmarks by adding cascade radius, per-failure-mode recovery, and a failure-injection harness rather than raw task accuracy.",
       "discovered_via": "rss",
@@ -823,7 +1036,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 50.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Reuses tasks from claw-eval, QwenClawBench, WildClawBench, PinchBench, and skillsbench; positioned as part of the OpenJudge ecosystem. Similar in spirit to SWE-bench-style harness studies but explicitly separates model and harness axes.",
       "discovered_via": "github",
@@ -899,7 +1112,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 49.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Related to Voyager-style skill libraries, self-refinement literature, LLM-as-judge calibration (Zheng et al. MT-Bench), and control-theory-style bounds on noisy estimators.",
       "discovered_via": "rss",
@@ -963,7 +1176,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 49.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Broader work on LLM sensitivity to irrelevant demographic cues and to prompt formatting shows the same 'salience-over-instruction' pattern; this paper is narrower (country-metadata + Brier loss on survey forecasts) but adds a paired-attenuation design that most prior audits lack.",
       "discovered_via": "rss",
@@ -1043,7 +1256,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 47.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "ADAS (Meta Agent Search), DGM (Darwin-Godel Machine), OpenEvolve, GEPA, EvoSkill — AgentDescent explicitly ports these as examples. The specific contribution is the async aggregator + blast-radius + frozen-test-overlay combination, which is a real delta over any single one of those.",
       "verified": true,
@@ -1107,7 +1320,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 47.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "toon-cuts-input-tokens-vs-json (ai-research claim on input-token accounting) and general Simon Willison cost-of-tokens commentary.",
       "discovered_via": "rss",
@@ -1183,7 +1396,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 47.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the clarification-agent line (CLAM, ClarQ, InterCode-Clarify) and specification-decomposition planners; the new lever is the explicit dependency graph over framing factors combined with a spec-refinement wrapper around an unchanged DRA.",
       "verified": true,
@@ -1243,7 +1456,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 46.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "AgentGym, SWE-Gym, and RAGEN train tool-using agents but assume simpler harness structures. OpenForgeRL's contribution is treating a full production harness (Claude Code-style) as the training substrate, plus concrete ablations on harness choice.",
       "discovered_via": "rss",
@@ -1312,7 +1525,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 46.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Self-evolving / experience-distillation agents (Voyager-style skill libraries).",
@@ -1392,7 +1605,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 44.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits in the CoT-faithfulness / CoT-monitoring line (Turpin et al., Anthropic CoT-monitoring work, Lanham et al.); the delta is using counterfactual simulatability as the training reward rather than post-hoc faithfulness metrics.",
       "discovered_via": "rss",
@@ -1471,7 +1684,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 44.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "DSPy (Signature / Predict), Marvin's @ai_fn, Instructor's function-call retries, LangChain's @tool decorator — the 'docstring = prompt, types = schema' pattern is convergent. The 'code gate re-asks' framing and the flat DAG context model are the mild deltas.",
       "verified": true,
@@ -1548,7 +1761,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Related to prior critiques of agent benchmarks (e.g., harness-sensitivity of SWE-Bench scores, contamination arguments, reproducibility studies). This paper reframes as a taxonomy of three distinct targets rather than proposing a new benchmark.",
       "discovered_via": "rss",
@@ -1619,7 +1832,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends prior agent-tool grounding evals into a real-domain MCP surface; consistent with 'agent tool selection can be steered by untrusted context' but the failure driver here is intrinsic ambiguity, not injection.",
       "discovered_via": "rss",
@@ -1689,7 +1902,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "MLE-Bench, RE-Bench, and Sakana AI Scientist attempted narrow or peer-review-graded versions of the same question. Shadow evaluations on unpublished papers with author grading is the methodological novelty here.",
       "discovered_via": "rss",
@@ -1765,7 +1978,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Voyager-style skill libraries; agent memory design literature (MemGPT, Letta); AgentBench and SWE-bench (single-task, not longitudinal); rubric-based LLM-as-judge evaluation."
@@ -1836,7 +2049,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extensive prior work on few-shot brittleness (order sensitivity, format sensitivity, majority-label bias). This paper's specific finding — that same-formula demos still displace knowledge-driven derivation — is a sharper mechanistic claim than the usual 'few-shot is fragile' result.",
       "discovered_via": "rss",
@@ -1903,7 +2116,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Innovation-residual and conformal-anomaly auditing exist in statistics; the contribution is applying them to agent traces with explicit false-flag control and an identifiability lower bound.",
       "discovered_via": "rss",
@@ -1979,7 +2192,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 43.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "G-AP metric and prior contamination-mitigation decoding strategies (estimate-then-suppress) are the direct baselines this paper contests.",
       "verified": true,
@@ -2048,7 +2261,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Consistent with the broader 'benchmarks don't transfer' finding (SWE-bench generalization limits, capability elicitation gap); specializes the observation to agent-architecture selection for physical-instrument control.",
       "discovered_via": "rss",
@@ -2110,7 +2323,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Traditional agent-based economic simulation (Axtell, Farmer) and the Awesome-* curated list format. LLM-based multi-agent simulations (Generative Agents, Park 2023) already explored self-evolving societies.",
       "discovered_via": "rss",
@@ -2179,7 +2392,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Fits the broader 'VLM-as-annotator / VLM-as-judge' literature (e.g., LLaVA-based annotation, GPT-4V labelling studies); the specific angle here is synthetic-scene domain shift and quantifying the length/resolution/batching trade-off, not the ensemble or prompt-optimization ideas themselves.",
       "verified": true,
@@ -2248,7 +2461,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Voyager (Minecraft, Wang et al. 2023) demonstrated self-authored skills + a critic; AutoGPT's task queue; the specific 'markdown SKILL.md + cron + capability tiers' combination is a modest engineering delta over those.",
       "verified": true,
@@ -2320,7 +2533,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 41.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Model Context Protocol (Anthropic)",
@@ -2401,7 +2614,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 40.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Constrained-decoding and JSON-schema generation; LLM-as-judge evaluation for open-ended outputs; classic IE evaluation (MUC/ACE) using string-match F1; the constrained-decoding-for-structured-output claim in the ledger."
@@ -2472,7 +2685,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 40.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Voyager-style self-evolving skill libraries; ReAct/Toolformer-style search-augmented agents; existing rubric-as-reward RL like OpenAI's RLAIF work.",
       "discovered_via": "rss",
@@ -2543,7 +2756,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "AgentBench, GAIA, HotpotQA / MuSiQue task families are re-used; the contribution is priced actions plus the split-family scoring.",
       "discovered_via": "rss",
@@ -2603,7 +2816,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Semantic entropy (Farquhar 2024) and other UQ-for-LLMs work established entropy-family baselines. This paper's contribution is the mechanistic diagnosis of why they fail in RAG plus a gating fix; the mechanistic framing is the novel piece.",
       "discovered_via": "rss",
@@ -2672,7 +2885,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Kimi K2 (referenced as the baseline the paper claims ~2.5x scaling efficiency improvement over); DeepSeek-V3 and other open-weights MoE releases with long context.",
       "discovered_via": "rss",
@@ -2738,7 +2951,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "General LLM-as-judge / trajectory critique work; adjacent to prior benchmarks like SWE-bench and AgentBench but focused specifically on failure attribution in deep-search trajectories.",
       "discovered_via": "rss",
@@ -2811,7 +3024,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "LLM-as-Judge and Agent-as-Judge literature; distinguishes itself with directly inspectable artifacts and skills.",
       "discovered_via": "rss",
@@ -2881,7 +3094,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 38.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "The Dify-to-code transpilation is convergent with efforts around n8n/Flowise exports; the git-history-secret hazard is well-known (see: signature-based-detection-fails-on-llm-authored-malware and related supply-chain claims). Notable here as an in-the-wild admission in the readme itself.",
       "verified": true,
@@ -2943,7 +3156,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Agent memory / long-running-agent compaction literature; computer-use agent papers."
@@ -3017,7 +3230,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior repo-level agents (Agentless, SWE-agent, OpenHands) strengthen planning or memory in isolation; PMCoder's contribution is the bidirectional coupling plus a reproduction-verdict done-signal.",
       "discovered_via": "rss",
@@ -3083,7 +3296,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Star Attention (distributed blockwise attention) is explicitly the baseline; attention-sink tokens are a known softmax stabilization trick.",
       "discovered_via": "rss",
@@ -3155,7 +3368,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Token-eviction and token-merging KV-cache compression are the explicit baselines critiqued as fixed-rule.",
       "discovered_via": "rss",
@@ -3220,7 +3433,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Physics-engine benchmarking has been done piecewise (PhysGym, Kubric, PhysicsIQ); GAUGE's contribution is the joint numerical-simulator + video-world-model comparison with calibrated real-world trajectories and parameter-level diagnostics.",
       "verified": true,
@@ -3291,7 +3504,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "vqSGD is the named baseline. Local-DP mechanisms (randomized response, Laplace) are classical.",
       "discovered_via": "rss",
@@ -3363,7 +3576,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 37.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "LangChain/LangGraph agent primitives, CrewAI, AutoGen — the primitives here (agents, handoffs, guardrails, sessions, tracing) are convergent industry patterns, not new; the SandboxAgent formalization is the only mild delta and even that mirrors OpenDevin/Devin-style workspace agents.",
       "verified": true,
@@ -3429,7 +3642,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 36.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits alongside other LLM-for-RE benchmarks (e.g. asm2source style, BinaryCorp variants); specializes to cryptographic algorithms and CTF-style flag recovery.",
       "discovered_via": "rss",
@@ -3497,7 +3710,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Adversarial/synthetic problem generation for eval (WildBench-style pairwise difficulty, self-play question generation, evolving jailbreak suites like PAIR/TAP). Calibration-via-two-model-bracket framing is a modest refinement, not a new category.",
       "discovered_via": "rss",
@@ -3567,7 +3780,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard Bemis-Murcko scaffold splits and the more recent Lo-Hi and DataSAIL splitters, against which this frontier split is compared and shown to be harder on average.",
       "discovered_via": "rss",
@@ -3636,7 +3849,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Linear Representation Hypothesis, Anthropic/DeepMind SAE and dictionary-learning interpretability, group-equivariant CNNs (Cohen & Welling).",
       "discovered_via": "rss",
@@ -3697,7 +3910,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Analytical roofline models and ML-based predictors for GPU workloads exist; HYMELL is the hybrid variant specialized for LLM prefill+decode.",
       "verified": true,
@@ -3762,7 +3975,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior IBP/CROWN-IBP certified-training papers reported single natural/certified accuracy pairs; multi-objective evaluation of adversarial-training methods has been discussed but is not the norm.",
       "discovered_via": "rss",
@@ -3827,7 +4040,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Prior GEO/SEO-for-LLMs work (Aggarwal et al. 'GEO: Generative Engine Optimization', 2024); RAG evaluation harnesses like RAGGED, RGB; adversarial-web-document work on injecting instructions into scraped pages."
@@ -3898,7 +4111,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Self-refine, Reflexion, and tree-of-thought variants for agent skill evolution.",
       "discovered_via": "rss",
@@ -3971,7 +4184,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 35.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "DistServe, Splitwise, Mooncake are the named baselines. Attention-sink and CXL memory-tiering research exists separately.",
       "discovered_via": "rss",
@@ -4031,7 +4244,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 35.28,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends existing black-box watermarking literature that has repeatedly hit the robustness-vs-utility wall; the information-theoretic framing is the new contribution.",
       "discovered_via": "rss",
@@ -4099,7 +4312,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior sparse-attention work (StreamingLLM, H2O, SnapKV, Quest) uses runtime attention scores or calibration prompts; AoH's contribution is data-free spectral diagnosis from frozen QK weights.",
       "discovered_via": "rss",
@@ -4168,7 +4381,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Chunk-level KV cache reuse for RAG (e.g., CacheBlend, PromptCache) and fine-grained context distillation lines; CoinRAG differentiates on nugget-level granularity plus assembly with chunk context.",
       "discovered_via": "rss",
@@ -4235,7 +4448,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Deep-research agents (OpenAI, Perplexity, general-purpose report generation); prior finance-agent benchmarks like FinanceBench.",
       "discovered_via": "rss",
@@ -4297,7 +4510,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard OAEI methodology (consensus + silver-standard) applied to a new domain track; the aggregation-plus-manual-validation pattern is well established from earlier OAEI tracks (e.g., anatomy, large biomedical).",
       "verified": true,
@@ -4362,7 +4575,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior deepfake detectors are typically single CNN/transformer classifiers or single-MLLM prompted detectors; the specialist-plus-judge multi-agent decomposition is the novelty.",
       "discovered_via": "rss",
@@ -4429,7 +4642,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Counterfactual fairness evaluation (Kusner et al.); sycophancy benchmarks (Anthropic 2023, Sharma et al.); LLM political-bias measurement studies."
@@ -4506,7 +4719,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard single-model document-extraction pipelines are the baseline; the paper positions itself against always-strong and always-cheap defaults.",
       "threat": "N/A (cost-optimization paper; no direct adversarial threat model).",
@@ -4584,7 +4797,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the LLM-confidence-calibration line (Tian et al., Kadavath et al., Xiong et al.) by showing published results diverge because of unstated protocol choices rather than model differences.",
       "discovered_via": "rss",
@@ -4653,7 +4866,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Logit Lens interpretability technique; prior work attributing LVLM hallucination to insufficient visual attention (this paper contests that framing).",
       "verified": true,
@@ -4712,7 +4925,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 34.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Adapter-routing work (Arrow, LoraHub) established the problem framing; task-embedding classification is a standard technique. The mildly novel piece is GRACE reconstructing training data from logits alone, which extends contrastive-decoding-diffing (Zhu et al.) into a training-data-recovery tool.",
       "discovered_via": "rss",
@@ -4773,7 +4986,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 33.78,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends prior single-image T2I safety work by explicitly targeting the group-level narrative case.",
       "discovered_via": "rss",
@@ -4838,7 +5051,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 33.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Efficient LLM literature (perf/watt, quantization, MoE routing); the novelty here is the unified IPW metric plus a large longitudinal empirical study.",
       "discovered_via": "rss",
@@ -4909,7 +5122,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 33.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Distillation (Hinton), on-policy imitation and DAgger, SFT for LLM alignment, prior continual-learning surveys.",
       "discovered_via": "rss",
@@ -4976,7 +5189,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 32.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior anisotropy work (Ethayarajh 2019, BERT-flow, whitening for STS) motivates the geometric problem; the contribution is applying ZCA specifically as a WEAT pre-processing step and quantifying how much significance flips.",
       "discovered_via": "rss",
@@ -5042,7 +5255,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 32.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the long-line of long-context / memory-augmented LLM work (Memorizing Transformers, Longformer, memory-tokens); complementary to RAG.",
       "discovered_via": "rss",
@@ -5104,7 +5317,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 32.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Builds on membership inference attack literature (Shokri et al. 2017 and follow-ups) and conformal prediction; the contribution is combining them with a Beta-boundary estimator for BH.",
       "discovered_via": "rss",
@@ -5170,7 +5383,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 32.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "AutoBencher, DynaBench, and other adversarial-example curation pipelines; SABRE's contribution is the Test Primer specification and integrated image generation and human repair loop.",
       "discovered_via": "rss",
@@ -5230,7 +5443,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 32.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Multimodal LLM benchmarks; constrained-decoding literature."
@@ -5300,7 +5513,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 32.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "FActScore, SAFE, and other decompose-then-verify factuality evaluators using atomic facts; hyperrelational KG representations from the knowledge-graph literature.",
       "discovered_via": "rss",
@@ -5362,7 +5575,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Modality bias and text dominance in MLLMs is well documented; this paper adds a counterfactual-conflict axis and quantifies attention concentration.",
       "discovered_via": "rss",
@@ -5431,7 +5644,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Modern Hopfield networks (Ramsauer et al.), stochastic attention samplers, profile HMMs, ESM2 protein LMs, Pfam alignments.",
       "discovered_via": "rss",
@@ -5490,7 +5703,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Language-prior debiasing in VQA (VQA-CP, LMH), MLLM hallucination-reduction work (POPE, OPERA). TACT's specific contribution is text-only post-training via fact-frequency distillation; the diagnosis (decoder-side bias) is consistent with prior VQA-CP-era findings.",
       "discovered_via": "rss",
@@ -5553,7 +5766,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Domain-native BERT-based metrics for generation quality are a well-known pattern (BERTScore, PubMedBERT-scoring); the specific ECG-BERT variant and the two-encoder lead-aware architecture are the contribution.",
       "verified": true,
@@ -5618,7 +5831,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Best-of-N and per-step resampling in diffusion LMs",
@@ -5681,7 +5894,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Contrastive Activation Addition (CAA); prior work on linear probes for factuality (e.g., Azaria & Mitchell).",
       "discovered_via": "rss",
@@ -5748,7 +5961,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends existing linear-probe interpretability literature (Alain & Bengio 2016 style probing) to a domain-specific measurement task (ESG) and contrasts with the RFM concept-vector line of work.",
       "discovered_via": "rss",
@@ -5819,7 +6032,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits with vLLM PagedAttention, DeepSeek-V3 MLA reports, and tiered-memory KV work (e.g., FlexGen, InfiniGen). Novelty is the Beta-conjugate reuse predictor over (block-type, transition-type) pairs plus RoPE-aware prefetching; sizing claim about MLA over-provisioning is the most concrete measured contribution.",
       "discovered_via": "rss",
@@ -5885,7 +6098,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Self-Refine, Reflexion, Best-of-N with process reward models, beam search, lookahead decoding.",
       "discovered_via": "rss",
@@ -5945,7 +6158,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits in the causal-inference-for-decision-making tradition (Pearl, Bareinboim) applied to modern agentic AI stacks; overlaps with recent work on data-centric AI and knowledge-graph-backed retrieval.",
       "discovered_via": "rss",
@@ -6012,7 +6225,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Hindsight experience replay, GRPO, and dense-reward shaping for agentic RL are prior art; the trajectory-relative allocation scheme appears to be the novel contribution.",
       "discovered_via": "rss",
@@ -6076,7 +6289,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 31.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard operating-point analysis in classification; noisy-label learning benchmarks.",
       "discovered_via": "rss",
@@ -6136,7 +6349,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 30.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends continual learning replay-buffer literature and Johnson-Lindenstrauss sketching to implicit neural representation hypernetworks for scientific data compression.",
       "discovered_via": "rss",
@@ -6199,7 +6412,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 30.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends HQMM training (COSM and prior EM baselines) with a Stiefel-retraction optimizer; positioned against classical HMM EM training.",
       "discovered_via": "rss",
@@ -6264,7 +6477,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 30.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "RenderFormer (the paper's own baseline); NeRF-family and Transformer-based neural rendering methods with triangle-level attention.",
       "discovered_via": "rss",
@@ -6332,7 +6545,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 30.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Follows LoLCAT (Zhang et al., 2024) linearization recipe; positioned against blockwise semi-autoregressive dLLM decoding with KV caching.",
       "discovered_via": "rss",
@@ -6397,7 +6610,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 30.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Training-free conformal prediction methods around point forecasters; the paper positions itself explicitly against those.",
       "verified": true,
@@ -6462,7 +6675,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 30.05,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Classical causal discovery (PC, GES, Granger), neural causal discovery models (NOTEARS, DYNOTEARS), foundation-model literature.",
       "discovered_via": "rss",
@@ -6522,7 +6735,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Multi-agent scientific workflows (ChemCrow, Sakana AI Scientist) already use planner/executor/critic patterns; the specific 'physics-grounded Skeptic' framing here is domain-specialized, not architecturally novel.",
       "discovered_via": "rss",
@@ -6588,7 +6801,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits in the post-training-diversity-loss line (e.g., mode collapse from RLHF/DPO) and controllable-generation via special tokens; contribution is the [StartCreativity] switch plus a graph-edit-distance structural diversity metric.",
       "discovered_via": "rss",
@@ -6655,7 +6868,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Uniform integer quantization, FP4/FP8 formats, learned codebooks (e.g., GPTQ, AWQ).",
       "discovered_via": "rss",
@@ -6716,7 +6929,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "GPTKB 1.0 and prior LLM-materialized KB efforts (LLMs-as-KBs, KG-BERT-style extraction). Named contribution here is disambiguation-during-construction and the audit UI, not the KB extraction itself.",
       "discovered_via": "rss",
@@ -6783,7 +6996,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Adaptive LoRA methods based on local gradient/activation/matrix statistics; intervention tracing has prior use in interpretability.",
       "discovered_via": "rss",
@@ -6844,7 +7057,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Prior Kimi releases (K2, K1.5); other open-weights multimodal agents (Qwen2.5-VL, InternVL, LLaVA-agent); multi-agent orchestration frameworks (AutoGen, MetaGPT, Swarm)."
@@ -6915,7 +7128,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Existing personalized-LLM benchmarks based on textual personas or isolated behavior signals; retrieval-vs-summarization memory ablations in RAG literature.",
       "discovered_via": "rss",
@@ -6982,7 +7195,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Concept unlearning; representation debiasing; counterfactual data augmentation.",
       "discovered_via": "rss",
@@ -7049,7 +7262,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Feature attribution and visualization are named as the prior engineering approaches to ANN explainability that this work argues are only approximate.",
       "discovered_via": "rss",
@@ -7117,7 +7330,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "LexGLUE, LEXTREME, MultiEURLEX and other legal-NLP benchmarks; cross-lingual transfer studies (XTREME, XTREME-R); prior work on tokenizer fertility (Rust et al., Ahia et al.)."
@@ -7188,7 +7401,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "General LLM interpretability methods that describe internal state without testing causal sufficiency are the named target of critique; lesion studies from earlier work by the same authors are the direct precedent.",
       "discovered_via": "rss",
@@ -7255,7 +7468,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the training-free MLLM token-pruning line (importance/diversity/coverage methods, D2Pruner baseline explicitly beaten). Cluster-C-adjacent but not on token serialization or structured I/O; on visual-token retention specifically.",
       "discovered_via": "rss",
@@ -7319,7 +7532,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "PIBT, EPIBT, RHCR, and TP — cited as direct baselines PUSH combines and improves on.",
       "verified": true,
@@ -7378,7 +7591,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Strategic classification literature, mechanism design for ML, human-centered ML.",
       "discovered_via": "rss",
@@ -7438,7 +7651,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior LLM game-playing and RLHF work; poker solver literature (CFR family).",
       "discovered_via": "rss",
@@ -7505,7 +7718,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Deterministic autoregressive learning framework of Joshi et al. (COLT 2025) is the explicit prior generalized here.",
       "discovered_via": "rss",
@@ -7565,7 +7778,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "MICo, DBC bisimulation baselines; Wasserstein fixed-point operator literature.",
       "discovered_via": "rss",
@@ -7629,7 +7842,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Consolidates and extends ProxSkip, variance-reduced federated optimization, and Byzantine-robust aggregation literature; LoRA analysis builds on the well-established low-rank-adaptation family.",
       "discovered_via": "rss",
@@ -7691,7 +7904,7 @@
         "newness": 20,
         "credibility": 75.0,
         "composite": 29.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "llmstxt.org — llms.txt convention",
@@ -7753,7 +7966,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.45,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends in-context learning and meta-learning work from text LLMs to speech/auditory LLMs; related to multilingual ASR literature.",
       "discovered_via": "rss",
@@ -7824,7 +8037,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Handcrafted visual-token pruning heuristics and expert trial-and-error are the named baselines; AI4AI / LLM-as-algorithm-designer is the wider framing.",
       "discovered_via": "rss",
@@ -7896,7 +8109,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "HAS-FL and general adaptive capacity-allocation frameworks for sub-model federated learning are the explicit priors this work evaluates and refutes.",
       "threat": "",
@@ -7966,7 +8179,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "vLLM FCFS is the explicit baseline; SLO-aware deadline schedulers are the named prior class.",
       "threat": "N/A (serving-infrastructure paper, no adversarial threat model).",
@@ -8029,7 +8242,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "LoRA and other parameter-efficient fine-tuning methods; forward-only training and zeroth-order optimization work like MeZO."
@@ -8098,7 +8311,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior work on learned LR schedules (Hypergradient, learned optimizers such as VeLO) and neural-ODE modeling of training dynamics.",
       "discovered_via": "rss",
@@ -8159,7 +8372,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 29.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Alain & Bengio-style linear probing on internal representations; VLM interpretability work like CLIP probing; automated-driving VQA benchmarks (DriveLM, NuScenes-QA)."
@@ -8222,7 +8435,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior diffusion-based sequence labellers (SED, DiffusionNER); classical CRF-based taggers.",
       "discovered_via": "rss",
@@ -8292,7 +8505,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Policy-as-code frameworks (OPA, Rego); healthcare AI governance literature; enterprise multi-agent orchestration patterns."
@@ -8357,7 +8570,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Speculative decoding, contrastive decoding, and LLM-as-verifier setups all sit adjacent; FutureBridge's twist is a counterfactual SLM-usability score as the reranker target.",
       "discovered_via": "rss",
@@ -8418,7 +8631,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior LLM conceptual-understanding benchmarks using natural-language QA or narrow synthetic tasks — this paper argues those conflate skills.",
       "verified": true,
@@ -8478,7 +8691,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior latent world models (Dreamer family, JEPA-style) and Neural ODE lines of work; the paper positions itself against discrete-time world models with representation-collapse issues.",
       "discovered_via": "rss",
@@ -8541,7 +8754,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "System-prompt maintenance for post-cutoff facts is standard practice; this is a specific published instance.",
       "discovered_via": "rss",
@@ -8602,7 +8815,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Stein's method; kernelized Stein discrepancy; SVGD; gamma-divergence robust statistics.",
       "discovered_via": "rss",
@@ -8656,7 +8869,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "BNS-GCN, SANCUS, prior SmartNIC offload work.",
       "discovered_via": "rss",
@@ -8717,7 +8930,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Simulated-user benchmarks (WebArena, AndroidWorld, ToolBench) established the pattern; SenWorld's specific move is event-sourced pointer labels for personal-data retrieval on smartphones. Narrow domain, minor methodological contribution.",
       "discovered_via": "rss",
@@ -8777,7 +8990,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Multi-agent orchestration surveys; agent memory / state design literature."
@@ -8843,7 +9056,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 28.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Text-to-3D and scene-generation literature; RL from LLM-authored rewards (Eureka and successors); embodied AI synthetic-data pipelines."
@@ -8914,7 +9127,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Port-Hamiltonian neural networks (Desai et al., Massaroli et al.) and physics-informed EEG models; digital-twin work in BCI.",
       "discovered_via": "rss",
@@ -8975,7 +9188,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard Dirac-Frenkel variational principle; momentum-based optimizers (Nesterov, Polyak heavy-ball).",
       "discovered_via": "rss",
@@ -9037,7 +9250,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior work on surrogate-based configuration tuning (SMAC, model-based BO) established accuracy as the default selection criterion; this paper explicitly challenges that.",
       "discovered_via": "rss",
@@ -9102,7 +9315,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Registration-based few-shot medical segmentation and hyperbolic representation learning are established sub-fields; H2AL composes both.",
       "verified": true,
@@ -9167,7 +9380,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "General practice of treating generative-model latent spaces as chemical-space proxies is the explicit target of critique; no specific baseline named.",
       "discovered_via": "rss",
@@ -9227,7 +9440,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Builds on OCE, UBSR, and stochastic approximation literature (Ben-Tal & Teboulle, Rockafellar-Uryasev CVaR).",
       "discovered_via": "rss",
@@ -9291,7 +9504,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Prior dark-pattern taxonomies (Gray et al., Mathur et al.); chatbot-harm audits of Replika, Character AI; Mozilla's Privacy Not Included AI-companion reviews."
@@ -9356,7 +9569,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "RL with verifiable rewards on code/math; SVG generation benchmarks; cross-modal grounding with SigLIP/DINO.",
       "discovered_via": "rss",
@@ -9417,7 +9630,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Wanda, SparseGPT, RIA, ALPS post-training pruning literature.",
       "discovered_via": "rss",
@@ -9478,7 +9691,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends GRPO / RLHF-for-diffusion post-training patterns to flow-based CSP; builds on PXRDGen and OMatG backbones and MACE energy estimators.",
       "discovered_via": "rss",
@@ -9542,7 +9755,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 27.05,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Zeng et al., 'Are Transformers Effective for Time Series Forecasting?' (AAAI 2023); the DLinear result that a linear model beats Transformer baselines; long line of critique of ML benchmark selection bias."
@@ -9605,7 +9818,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "PQN (Parallelized Q-Network) is the direct baseline; Hadamax encoding and distributional/ensemble/dueling Q-heads are prior components composed here.",
       "verified": true,
@@ -9662,7 +9875,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Multi-agent enterprise orchestration papers going back years (ESB replacement narratives, autonomous-agent workflow proposals).",
       "discovered_via": "rss",
@@ -9732,7 +9945,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits in event-detection / temporal action localization work that argues loss-metric alignment matters; extends to biosignals (sleep, seizure). Related to prior boundary-BCE detectors as the paper's own baseline.",
       "discovered_via": "rss",
@@ -9799,7 +10012,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Marginal split-conformal calibration, temperature scaling, and evidential deep learning baselines are the named priors; test-time imputation is the class of methods being displaced.",
       "discovered_via": "rss",
@@ -9860,7 +10073,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Philosophical accounts of trustworthiness as competence and audience-orientation; extends prior fairness/explainability frameworks.",
       "discovered_via": "rss",
@@ -9920,7 +10133,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "CMA-ES, GRPO-LoRA, DARE-TIES weight merging.",
       "discovered_via": "rss",
@@ -9980,7 +10193,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "One of many niche CV benchmarks with hybrid-vs-classical comparisons; code and data released on GitHub and Zenodo.",
       "discovered_via": "rss",
@@ -10044,7 +10257,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Prior HTR benchmarks; MLLM-as-OCR-postprocessor line of work; document-understanding COLM/AAAI benchmarks."
@@ -10107,7 +10320,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "PINNs (Raissi et al.) plus prior gradient-balancing schemes such as NTK-based and gradient-norm-based adaptive weighting; CAML positions itself against these.",
       "discovered_via": "rss",
@@ -10176,7 +10389,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior VLM spatial-reasoning benchmarks (e.g., SpatialRGPT, What'sUp, 3DSRBench) mostly evaluated single-view or camera-relative spatial reasoning.",
       "discovered_via": "rss",
@@ -10242,7 +10455,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Bandit-feedback online conformal prediction methods and the label-efficient forecaster of Cesa-Bianchi, Lugosi, and Stoltz (2004) are the named priors this work adapts and compares against.",
       "threat": "",
@@ -10306,7 +10519,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "LLM-agents-with-tools harnesses generally (ReAct, Toolformer, MM-ReAct); passive-sensing mental-health work (StudentLife, Nepal et al.); tool-use eval confounds discussed in ToolBench, AgentBench."
@@ -10377,7 +10590,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Projection glyphs, map-continuity scores, and transport-based dimensionality-reduction diagnostics are explicitly named as prior methods unified by this work.",
       "discovered_via": "rss",
@@ -10438,7 +10651,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Topological data analysis on brain networks; simplicial-complex methods for higher-order network inference.",
       "discovered_via": "rss",
@@ -10502,7 +10715,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Positioned in the multi-agent framework space alongside AutoGen, LangGraph, and CrewAI. Biology-specific angle is the differentiator. Supply-chain incident sits alongside other 2025-2026 npm/PyPI campaigns against AI-adjacent packages.",
       "discovered_via": "github",
@@ -10564,7 +10777,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 26.29,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Consolidates SlowFormer and DeSparsify across A-ViT, ATS, and AdaViT; adjacent to the broader adversarial-ML literature on energy-latency attacks.",
       "discovered_via": "rss",
@@ -10626,7 +10839,7 @@
         "newness": 20,
         "credibility": 51.9,
         "composite": 26.29,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends existing generative text steganography (white-box provably-secure schemes and prior fixed-codebook black-box schemes) by introducing a dynamic codebook and MLLM-based extraction.",
       "discovered_via": "rss",
@@ -10686,7 +10899,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior GNN benchmarks for physical systems; building energy simulation literature (EnergyPlus, etc.).",
       "discovered_via": "rss",
@@ -10753,7 +10966,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Layer-wise mixed-precision quantization (MPQ), post-training quantization, and quantization-aware training are the explicit priors; BitFusion is the named accelerator baseline.",
       "discovered_via": "rss",
@@ -10818,7 +11031,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 26.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "ACI/AgACI online conformal prediction",
@@ -10883,7 +11096,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.85,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Bipolar argumentation frameworks and network-of-experts patterns are established in KR literature; the novelty is the arena-based clash resolution over LLM agents.",
       "discovered_via": "rss",
@@ -10946,7 +11159,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.55,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Meta-path selection in HIN / heterogeneous graph learning; LLM-agent + KG works like KG-Agent, Think-on-Graph."
@@ -11008,7 +11221,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior AFD systems using CPU/HBM-PIM offload; roofline modeling of accelerator inference.",
       "discovered_via": "rss",
@@ -11075,7 +11288,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Standard catastrophic-forgetting literature; instruction-tuning mix ratios (e.g., Alpaca-style)"
@@ -11138,7 +11351,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Ongoing pattern of hyperscalers withdrawing subsidized dev-tool APIs; nothing new theoretically.",
       "discovered_via": "rss",
@@ -11199,7 +11412,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard LoRA (Hu et al 2021) and vision-specific PEFT variants like KAdaptation, VPT, and Conv-LoRA precursors.",
       "discovered_via": "rss",
@@ -11259,7 +11472,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Fits within a large body of robust MDP / distributionally robust RL work; distinguishing contribution is minimax-optimality under the average-reward criterion with (s,a)-rectangular TV sets.",
       "discovered_via": "rss",
@@ -11323,7 +11536,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits in the LLM-augmented ontology construction line (e.g., work on OpenAlex, MAG, and topic modeling with embeddings).",
       "discovered_via": "rss",
@@ -11385,7 +11598,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "WLASL, How2Sign, YouTube-SL-25, OpenASL, and other sign-language video-text corpora; DWPose/OpenPose-based preprocessing on video datasets is standard."
@@ -11450,7 +11663,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits alongside other tensor-network ML libraries (e.g., TensorNetwork, quimb) and low-rank kernel toolkits.",
       "discovered_via": "rss",
@@ -11513,7 +11726,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "ISAC literature; agentic-AI surveys in networking."
@@ -11577,7 +11790,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 25.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior text-to-3D world generation (Infinigen, SceneScape, 3D-GPT); planner-executor decompositions common in agent frameworks.",
       "discovered_via": "rss",
@@ -11644,7 +11857,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Post-hoc temperature scaling is the explicit baseline; preference alignment is named as the cause of overconfidence.",
       "threat": "N/A (methodology paper on calibration; no direct threat model).",
@@ -11707,7 +11920,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Conformal prediction and invertible neural networks are the named priors; nonconvex inversion is the specific pain point addressed.",
       "discovered_via": "rss",
@@ -11767,7 +11980,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard scenario-weighted robust MDP with a Bayesian-adversary iterative extension; sits inside the OR/game-theory posture-planning literature.",
       "discovered_via": "rss",
@@ -11829,7 +12042,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Boosting / control-variates in finance and typed feature composition are prior art; the specific algebra formulation appears novel.",
       "discovered_via": "rss",
@@ -11897,7 +12110,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Combines standard multi-objective/Pareto optimization with LLM-assisted design; the architectural pattern (LLM narrows to candidates, deterministic layer scores) is common in tool-use pipelines but not framed here as a security control.",
       "discovered_via": "rss",
@@ -11962,7 +12175,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Alimama Criteo / Ali-CCP CVR datasets; multi-task learning baselines like MMoE, PLE, ESMM."
@@ -12031,7 +12244,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Related to broader multi-agent orchestration and edge LLM literature; the on-device memory of past repairs echoes standard case-based reasoning and agent-memory patterns. Nothing in the paper claims security-specific novelty.",
       "discovered_via": "rss",
@@ -12099,7 +12312,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 24.05,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "SMOTE (Chawla et al. 2002)",
@@ -12162,7 +12375,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Structured trajectory predictors on Argoverse 2 and ETH/UCY.",
       "discovered_via": "rss",
@@ -12223,7 +12436,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Prior UD/CoNLL parser comparisons; Kondratyuk & Straka (Udify); Dozat & Manning biaffine parser; low-resource transformer scaling studies (e.g., AfroXLMR)."
@@ -12294,7 +12507,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior dual-process VLA architectures with tightly coupled fast/slow modules; LIBERO benchmark for embodied tasks.",
       "discovered_via": "rss",
@@ -12354,7 +12567,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Federated learning for fMRI and Tucker decompositions for connectivity tensors are established; OT barycenter alignment is standard.",
       "discovered_via": "rss",
@@ -12415,7 +12628,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Volve field open data, prior condition-monitoring rig benchmarks.",
       "discovered_via": "rss",
@@ -12481,7 +12694,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Backpropagation-based continual learning and replay-buffer approaches are the named baselines being sidestepped; NCM classifiers are the borrowed prior.",
       "discovered_via": "rss",
@@ -12541,7 +12754,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sycophancy and belief-revision-under-pressure evals (Perez et al., Sharma et al.) already exist; MEDLEY-BENCH adds a metacognition rubric structure but the authors flag this release as proof-of-concept.",
       "discovered_via": "rss",
@@ -12600,7 +12813,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior mask/instruction-based diffusion editing (InstructPix2Pix, Blended Diffusion, mask-reference-based editing) — MaskFlow's contribution is the flow-matching objective + Soft-Poisson de-seaming, not a category shift.",
       "discovered_via": "rss",
@@ -12662,7 +12875,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior mental-health digital-phenotyping studies using smartphone and wearable data; this paper explicitly argues those are hard to compare due to heterogeneous datasets and preprocessing.",
       "discovered_via": "rss",
@@ -12725,7 +12938,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Follows a long line of neural-network PDE approximation theory (ReLU^k approximation, spectral Galerkin methods).",
       "discovered_via": "rss",
@@ -12787,7 +13000,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Genetic programming, FunSearch, LLM-based program synthesis with retained library of subroutines.",
       "discovered_via": "rss",
@@ -12854,7 +13067,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Similar in spirit to established skill libraries in embodied AI (e.g., SayCan, VoxPoser) and to allowlist-based tool gating in LLM agent harnesses. Adds an OpenArm-specific field report but no new formal defender framework.",
       "discovered_via": "rss",
@@ -12917,7 +13130,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Dynamic-graph learning and non-stationarity in time-series forecasting are established research areas (STGCN, DCRNN, Autoformer, etc.).",
       "discovered_via": "rss",
@@ -12982,7 +13195,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Textual gradient descent and reflect/refine multi-agent loops are widely used since 2024; specialist AutoML variants are common on arXiv.",
       "discovered_via": "rss",
@@ -13051,7 +13264,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Prior hyperbolic embedding methods across machine learning, network science, and algorithmics are the explicit population being benchmarked; no single named baseline is unifying.",
       "threat": "",
@@ -13121,7 +13334,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits alongside work on chain-of-thought supervision, plan-then-write pipelines, and citation-augmented long-form QA (ALCE, ExpertQA). Novelty is in the explicit intent-tag scheme and its use as SFT data for smaller writers, not the observation that structured planning helps generation.",
       "discovered_via": "rss",
@@ -13187,7 +13400,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Distance-sorting-based geometric preprocessing and CAD-trained point-cloud classifiers are the explicit prior baselines being replaced.",
       "threat": "",
@@ -13250,7 +13463,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Long line of two-tower / dual-encoder recommender work at Google, Netflix, Meta; DSSM and follow-ups."
@@ -13312,7 +13525,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 23.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Extends the existing weak-adversarial neural network method (WAN) to a new PDE class.",
       "discovered_via": "rss",
@@ -13375,7 +13588,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.85,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Villani-style OT texts; Rubin causal model and Neyman-Rubin potential outcomes framework; existing OT-for-causal-inference work."
@@ -13438,7 +13651,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.85,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard HPC optimization territory (Tensor-Core-friendly kernel rewrites, model-driven scheduling); the specific application is a LightDock successor.",
       "discovered_via": "rss",
@@ -13501,7 +13714,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.55,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Analytically solvable deep-linear toy models and prior work on onset-of-learning transitions are the named priors.",
       "threat": "N/A (theoretical physics-of-learning paper).",
@@ -13570,7 +13783,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.55,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Conventional ICS handling by event rejection or by acceptance with suboptimal positioning algorithms is the explicit baseline being compared against.",
       "threat": "",
@@ -13633,7 +13846,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "HCI literature on premature closure and mixed-initiative interaction predates this. The specific 'Fantasia' label is new; the underlying critique is not.",
       "discovered_via": "rss",
@@ -13700,7 +13913,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits within the broader KG-grounded LLM literature and reflexion-style agent loops; the HR-skills variant is domain-specific. No security novelty claimed.",
       "discovered_via": "rss",
@@ -13764,7 +13977,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Neural SDEs (Kidger et al.) and Variational Autoencoders (Kingma & Welling) — this paper combines both with region embeddings for socioeconomic data.",
       "discovered_via": "rss",
@@ -13834,7 +14047,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "SwiGLU is the standard gated-linear-unit variant in modern LM FFNs; closed-tail variants have been explored in the GLU family literature (ReGLU, GEGLU, etc.).",
       "discovered_via": "rss",
@@ -13901,7 +14114,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 22.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Delta-compressed and blob-compressed revision stores in version-control and document databases; nothing new architecturally, just a compact SQLite prototype.",
       "discovered_via": "rss",
@@ -13968,7 +14181,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 21.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Functional-connectivity-matrix classifiers are the standard neuroscience baseline; NeuroSTORM is the named prior foundation model being fine-tuned.",
       "discovered_via": "rss",
@@ -14028,7 +14241,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 21.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Established small-data time-series encoders (CNN1D/LSTM/GRU/Transformer) and NAS literature (DARTS, ENAS). Contribution is the FSD-RM framing and dimension-aware search, not the individual components.",
       "discovered_via": "rss",
@@ -14095,7 +14308,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 21.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Fits in the RL algorithm-composition literature (model-based RL, replay design, non-stationarity mitigations). No security novelty.",
       "discovered_via": "rss",
@@ -14158,7 +14371,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 21.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits with the Graph Transformer literature (Graphormer, GraphGPS) and hierarchical/pooling graph attention (GraphBERT, Cluster-GCN). Novelty is using off-the-shelf community detection for the attention partition rather than learned pooling.",
       "discovered_via": "rss",
@@ -14218,7 +14431,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 21.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Behavior-scripted social robots; LLM-driven dialogue for HRI.",
       "discovered_via": "rss",
@@ -14285,7 +14498,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 21.05,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Named baselines: Splatfacto-big, Scaffold-GS, MapAnything; general NeRF and 3D Gaussian Splatting methods.",
       "discovered_via": "rss",
@@ -14345,7 +14558,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 20.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard factor models and correlation-graph portfolio methods are the named baselines.",
       "threat": "N/A (finance paper, no threat model).",
@@ -14408,7 +14621,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 20.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard prompt-engineering-vs-baseline comparison for a general-purpose LLM against gradient boosting; sits inside the finance/ML application literature.",
       "discovered_via": "rss",
@@ -14472,7 +14685,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 20.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Rubric-based scoring and self-refinement via critique are established patterns; PSI's contribution is a pedagogy-specific rubric.",
       "discovered_via": "rss",
@@ -14535,7 +14748,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 20.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard voice-assistant architectures (Alexa, Google Assistant, Rhasspy, Home Assistant + LLM integrations) have covered wake-word + skill + tool patterns for years. Homebot's contribution is a specific runtime and dialogue-state contract, not a new architectural idea.",
       "discovered_via": "rss",
@@ -14594,7 +14807,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 20.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [
         "Classical LQR/LQG control",
@@ -14658,7 +14871,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 20.15,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Standard speech-based dementia screening with LLM embeddings replacing older acoustic pipelines; local-only inference is a common enterprise pattern.",
       "discovered_via": "rss",
@@ -14721,7 +14934,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 19.85,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits inside broader 'network modernization improves RL' literature (e.g., recent work on normalization, distributional value functions in RL). Novelty is that these are applied to MORL rather than single-objective RL.",
       "discovered_via": "rss",
@@ -14783,7 +14996,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 19.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Longstanding literature on binning/discretisation trade-offs in medical prediction models.",
       "discovered_via": "rss",
@@ -14847,7 +15060,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 19.25,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Sits in a well-established finance-NLP line (Loughran-McDonald dictionaries, iSent from Itaú explicitly cited as inspiration).",
       "discovered_via": "rss",
@@ -14908,7 +15121,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 18.65,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Fits within the normative-modeling literature (e.g., Marquand's Gaussian-process normative models) plus standard transfer-learning results for cross-cohort medical imaging.",
       "discovered_via": "rss",
@@ -14971,7 +15184,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 18.35,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": "Fits within the representation-alignment-for-diffusion literature (REPA-style) plus endoscopy foundation models EndoViT and Endo-FM referenced in the paper itself.",
       "discovered_via": "rss",
@@ -15027,7 +15240,7 @@
         "newness": 20,
         "credibility": 55.0,
         "composite": 17.75,
-        "scored_at": "2026-08-29T21:56:02+00:00"
+        "scored_at": "2026-08-29T23:46:33+00:00"
       },
       "prior_art": [],
       "discovered_via": "rss",

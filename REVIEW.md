@@ -4,7 +4,7 @@
 
 _Updated 2026-08-29._
 
-## AI Security (41)
+## AI Security (44)
 
 - **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 64.1 · _flagged needs_review (low confidence / novelty / relevance)_
   The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
@@ -20,6 +20,8 @@ _Updated 2026-08-29._
   Package-hallucination detection is the piece normal SAST tools miss: AI-generated code invents plausible dependency names that attackers can then squat. Verifying every…
 - **[MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027)** · composite 54.1 · _flagged needs_review (low confidence / novelty / relevance)_
   MCP's enterprise turn adds concrete auth hardening (iss validation) and a stateless architecture that removes one class of session-poisoning attack surface but relies on standard…
+- **[Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay](https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/)** · composite 53.42 · _flagged needs_review (low confidence / novelty / relevance)_
+  So-called encrypted LLM reasoning traces are recoverable by cross-model replay, so session files containing them can leak passwords, API keys and PII.
 - **[Third-party cyber evaluations involving OpenAI models](https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything)** · composite 53.15 · _flagged needs_review (low confidence / novelty / relevance)_
   Fictional-target naming inside CTF-style evals must be treated as a security control, not a flavour choice — collisions with real domains route models straight into real…
 - **[IBM's agentic AI platform is under active attack - patch now](https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535)** · composite 52.4 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -44,10 +46,14 @@ _Updated 2026-08-29._
   Third-party LLM proxies are an under-audited middlebox that can inject prompts, swap models, rewrite tool output, and leak errors. An operator-run 14-step audit with an explicit…
 - **[LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443)** · composite 50.28 · _flagged needs_review (low confidence / novelty / relevance)_
   Treat LLM-as-a-Judge outputs as an attackable surface: the same optimization-based adversarial suffixes that inflate scores in benchmarks will inflate scores in production…
+- **[The evolving role of the Red Team in the era of agentic security](https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/)** · composite 49.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  Prepare for machine-speed agentic attacks by building your own iterative red-teaming agents and ensuring detection/response is near real-time.
 - **[CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment](https://arxiv.org/abs/2604.00310)** · composite 47.75 · _flagged needs_review (low confidence / novelty / relevance)_
   A single internal, attention-gated safety decision over the shared multimodal representation lets text-only alignment transfer to image and audio inputs without modality-specific…
 - **[DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model](https://arxiv.org/abs/2608.05695)** · composite 47.28 · _flagged needs_review (low confidence / novelty / relevance)_
   Reactive per-action guardrails miss long-horizon drift toward hazardous states; a trajectory-level world-model guardrail reportedly gives a better safety-utility trade-off at 25…
+- **[Making private AI practical with homomorphic encryption (HEIR)](https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/)** · composite 46.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Homomorphic-encryption compilers like HEIR make encrypted AI inference (and encrypted-traffic detection) practical, protecting both user data and proprietary model weights.
 - **[Measuring and Detecting Harmful AI Sycophancy](https://arxiv.org/abs/2608.05624)** · composite 46.25 · _flagged needs_review (low confidence / novelty / relevance)_
   Preference-induced stance reversal (a specific, measurable sycophancy mode) is common (5-56%) and detectable from response text alone, but detectors don't generalize cleanly to…
 - **[agentplugins/agent-plugins-spec](https://github.com/agentplugins/agent-plugins-spec)** · composite 46.25 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -89,7 +95,7 @@ _Updated 2026-08-29._
 - **[anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection](https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection)** · composite 28.25 · _flagged needs_review (low confidence / novelty / relevance)_
   A popular community roadmap for AI/ML pentesting exists and now dedicates a phase to agentic-AI and MCP security — worth linking as a beginner ramp, but it's an index, not a…
 
-## Product Security (19)
+## Product Security (20)
 
 - **[ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/)** · composite 71.75 · _failed independent verification — adversarial refute pass skipped this session — needs human review before promoting from REVIEW.md_
   Valid npm provenance no longer distinguishes a safe artifact from an evasive one — pivot on the Rekor log identity and workflow, not on signature-checks-pass.
@@ -107,6 +113,8 @@ _Updated 2026-08-29._
   The Shai-Hulud/ChainDrop worm's secondary infection path targets Claude and VSCode configuration files as persistence, making AI coding tools an in-repo malware host — dependency…
 - **[Disrupting supply chain attacks on NPM and GitHub Actions](https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/)** · composite 52.15 · _flagged needs_review (low confidence / novelty / relevance)_
   The industry's ecosystem-level answer to 2025-2026's npm worms is to attack the propagation graph itself: slow releases (cooldown), decouple CI credentials from publishing (staged…
+- **[A Hybrid Security Framework for Mini-Programs: Visual UI Compliance and Network Risk Assessment](https://arxiv.org/abs/2608.25877)** · composite 52.1 · _flagged needs_review (low confidence / novelty / relevance)_
+  Mini-program app vetting must combine visual UI-compliance checks with network-redirect analysis to catch mis-click-to-payment dark patterns.
 - **[Snyk Evo Agentic AppSec: autonomous remediation, non-executing package scanning, and a Claude CTF that shipped malware to PyPI](https://snyk.io/blog/remediation-agent-malicious-code-defense/)** · composite 50.38 · _flagged needs_review (low confidence / novelty / relevance)_
   A control that lives inside the model cannot govern the environment the model runs in — a security scanner that installs and executes packages to test them is a self-inflicted…
 - **[go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)](https://github.com/advisories/GHSA-qgq7-7hm3-q39j)** · composite 48.5 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -575,4 +583,4 @@ _Updated 2026-08-29._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-08-29. 280 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-08-29. 284 item(s) awaiting review.</sub>
