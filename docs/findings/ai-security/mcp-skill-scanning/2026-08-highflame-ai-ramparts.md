@@ -1,16 +1,10 @@
 # highflame-ai/ramparts
 
-**Topic:** AI Security  ·  **Domain:** MCP & Skill Scanning  
-**Source:** [source](https://github.com/highflame-ai/ramparts)  ·  **Published:** Aug 8, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
-**Tags:** `mcp`, `skill-scanning`, `sarif`, `yara`, `owasp-mcp-top-10`  
-**Verification:** ✓ independently verified · closest prior art: OWASP MCP Top 10 tagging; NVIDIA SkillSpector YARA rules (adapted); overlaps with Snyk Agent Scan, Cisco AI Defense MCP Scanner, and Invariant Labs MCP-Scan.
+**Published:** Aug 8, 2026
 
 > **Takeaway:** The MCP-scanner ecosystem is converging on 'MCP + skills' as a single scanning target rather than treating them as separate problems. If you scan MCP servers today, extend the same detectors to skill bundles - the trust surface is symmetric.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://github.com/highflame-ai/ramparts) for the complete write-up._
 
 Ramparts (Rust CLI, ~96 stars) is a scanner that applies one YARA + LLM-analysis + OWASP MCP Top 10 pipeline to two agent-trust surfaces at once: MCP servers reached over HTTP/SSE/stdio, and skill files on disk (Claude Code slash commands, agentskills.io bundles, and Cursor/Codex/Windsurf/Gemini equivalents). It bundles 35+ static rules, walks agentskills.io bundles' sibling scripts/ and references/ directories, checks CVEs via OSV.dev for npx/uvx-launched stdio servers, and emits SARIF for GitHub/GitLab/Azure DevOps code-scanning. It also validates agentskills.io spec fields: a directory-vs-name mismatch surfaces as a HIGH-severity deception finding.
 
@@ -31,5 +25,11 @@ Ramparts (Rust CLI, ~96 stars) is a scanner that applies one YARA + LLM-analysis
 - **Mitigations:** Add a Ramparts (or equivalent) scan to CI for any repo that ships skills or MCP configs, and consume SARIF in code-scanning. Validate agentskills.io spec fields, especially the SKILL.md name vs. parent directory. Combine with runtime MCP guardrails; do not rely on static-metadata scanning alone. Version-pin skill bundles and MCP server versions so untracked metadata changes fail the gate.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** MCP & Skill Scanning  
+**Source:** [source](https://github.com/highflame-ai/ramparts)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
+**Tags:** `mcp`, `skill-scanning`, `sarif`, `yara`, `owasp-mcp-top-10`  
+**Verification:** ✓ independently verified · closest prior art: OWASP MCP Top 10 tagging; NVIDIA SkillSpector YARA rules (adapted); overlaps with Snyk Agent Scan, Cisco AI Defense MCP Scanner, and Invariant Labs MCP-Scan.
 
 _Source: [https://github.com/highflame-ai/ramparts](https://github.com/highflame-ai/ramparts)_  ·  [← back to index](../README.md)

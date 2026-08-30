@@ -1,16 +1,10 @@
 # Google dev kit spurs first-ever agent-on-agent violence
 
-**Topic:** AI Security  ·  **Domain:** Agent-to-Agent Security / CI Prompt Injection  
-**Source:** [source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)  ·  **Published:** Aug 3, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 70 · **Composite 67.1**  
-**Tags:** `agent-to-agent`, `prompt-injection`, `ci-cd`, `adk-python`, `gemini-cli`, `privilege-escalation`, `github-actions`  
-**Verification:** ✓ independently verified · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
+**Published:** Aug 3, 2026
 
 > **Takeaway:** Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped permissions, not tighter isolation - because 'isolation' still lets one agent produce input the other treats as trusted.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496) for the complete write-up._
 
 Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-python's CI workflows where a low-privilege public-facing triage agent could be manipulated to hand off to a high-privilege maintainer-only agent (@gemini-cli) via a poisoned PR text, exfiltrating a GitHub token with `pull-requests: write`. Google fixed the underlying workflow but classified it as social-engineering-adjacent and not bounty-eligible. Lisichkin's remediation ask: give agents their own identities and threat-model agent identity + agent resource access explicitly.
 
@@ -28,5 +22,11 @@ Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-pyt
 - **Mitigations:** Distinct bot identity per agent, not a shared collaborator PAT. Least-privilege GitHub token scopes per agent workflow. Explicit allowlist for who can trigger the privileged agent - never derived from untrusted text. Treat inter-agent handoff strings as untrusted; require signed/scoped invocation. Threat-model 'agent A can invoke agent B' edges as first-class trust boundaries.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Agent-to-Agent Security / CI Prompt Injection  
+**Source:** [source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)  ·  **Retrieved:** 2026-08-10  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 70 · **Composite 67.1**  
+**Tags:** `agent-to-agent`, `prompt-injection`, `ci-cd`, `adk-python`, `gemini-cli`, `privilege-escalation`, `github-actions`  
+**Verification:** ✓ independently verified · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
 
 _Source: [https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)_  ·  [← back to index](../README.md)

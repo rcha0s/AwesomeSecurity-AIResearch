@@ -1,16 +1,10 @@
 # CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://arxiv.org/abs/2607.21642)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 53.28**  
-**Tags:** `shell`, `command-verification`, `agent-sandbox`, `static-analysis`, `llm-judge`  
-**Verification:** ✓ independently verified · closest prior art: Extends generic LLM-judge guardrails and shell parsers with a shell-specific canonicalization and provenance-backed static pattern layer; accepted at ISSRE 2026.
+**Published:** Aug 7, 2026
 
 > **Takeaway:** A static-first, LLM-judge-only-for-borderline pattern for shell-command mediation gives near-parity F1 (~85%) at sub-millisecond latency versus an always-on LLM judge. This is a viable design template for cheap, auditable pre-execution gates on any high-stakes tool call, not just shell. Still not a full harm eliminator: static-only profile leaves ~37% harm on RedCode-gen.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2607.21642) for the complete write-up._
 
 CARE (Canonicalization, Attribution, and Resolution Engine) is a shell-specific, static-first verifier for individual shell commands produced by LLM agents. It canonicalizes commands, derives deterministic evidence over syntax/semantics/path context/provenance-backed risk patterns, and escalates only underdetermined cases to an LLM judge. On the balanced main split it reaches 85.64% F1 with 0.91% FPR at 2.32 ms mean latency; in static-only enforcement it retains 84.99% F1 at 0.34 ms and reduces realized harm on RedCode-gen to 37.33%.
 
@@ -27,5 +21,11 @@ CARE (Canonicalization, Attribution, and Resolution Engine) is a shell-specific,
 - **Mitigations:** Insert a static-first shell verifier at the dispatch boundary; canonicalize commands before matching against a provenance-backed risk-pattern list; reserve LLM-judge adjudication for borderline cases; combine with sandboxing since static-only leaves meaningful harm (37% on RedCode-gen).
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://arxiv.org/abs/2607.21642)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 53.28**  
+**Tags:** `shell`, `command-verification`, `agent-sandbox`, `static-analysis`, `llm-judge`  
+**Verification:** ✓ independently verified · closest prior art: Extends generic LLM-judge guardrails and shell parsers with a shell-specific canonicalization and provenance-backed static pattern layer; accepted at ISSRE 2026.
 
 _Source: [https://arxiv.org/abs/2607.21642](https://arxiv.org/abs/2607.21642)_  ·  [← back to index](../README.md)

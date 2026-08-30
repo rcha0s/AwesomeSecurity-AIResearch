@@ -1,16 +1,10 @@
 # Breaking Customized LLMs for Coding: Automated Red Teaming for Instruction Backdoor Attacks
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://arxiv.org/abs/2608.05659)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 55.68**  
-**Tags:** `instruction-backdoor`, `customized-llm`, `coding-assistant`, `automated-red-team`, `ase-2026`  
-**Verification:** ✓ independently verified · closest prior art: ['BadPrompt and other text-trigger prompt backdoors', 'OpenAI GPT Store / Gemini Gems customization platforms']
+**Published:** Aug 7, 2026
 
 > **Takeaway:** Instruction backdoors embedded in customization system prompts (no weight modification) are a distinct supply-chain surface from weight-level backdoors. Automated red-teaming with a structured stealthiness/utility/effectiveness feedback loop already saturates existing inspection defenses, so 'the model wasn't fine-tuned' is not a sufficient trust argument for customized LLM offerings.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.05659) for the complete write-up._
 
 Introduces ARIA, an attacker-LLM-driven red-teaming framework that iteratively crafts covert instruction-backdoored system prompts for customized code-intelligence LLMs. Reports 0.945 attack success rate across three code tasks and four LLMs, with false-negative rates against platform-side and user-side inspection reaching 1.000.
 
@@ -28,5 +22,11 @@ Introduces ARIA, an attacker-LLM-driven red-teaming framework that iteratively c
 - **Mitigations:** Treat customized-LLM listings as untrusted third-party software: require reproducible builds of system prompts, diff-review of prompt changes, red-team eval sets that include ARIA-style automatically-generated backdoors, and behavioral gating on code output (e.g., static analysis, dependency-integrity checks) rather than relying on prompt-inspection alone. Detection-only defenses are insufficient at FN rates observed here.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://arxiv.org/abs/2608.05659)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 55.68**  
+**Tags:** `instruction-backdoor`, `customized-llm`, `coding-assistant`, `automated-red-team`, `ase-2026`  
+**Verification:** ✓ independently verified · closest prior art: ['BadPrompt and other text-trigger prompt backdoors', 'OpenAI GPT Store / Gemini Gems customization platforms']
 
 _Source: [https://arxiv.org/abs/2608.05659](https://arxiv.org/abs/2608.05659)_  ·  [← back to index](../README.md)

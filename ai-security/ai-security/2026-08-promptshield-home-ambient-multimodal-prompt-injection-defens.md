@@ -1,16 +1,10 @@
 # PromptShield Home: Ambient Multimodal Prompt Injection Defense for Smart-Home Agents
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://arxiv.org/abs/2608.05495)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 52 · **Composite 53.28**  
-**Tags:** `prompt-injection`, `multimodal`, `smart-home`, `mllm`, `benchmark`, `sensor-fusion`  
-**Verification:** ✓ independently verified · closest prior art: ['InjecAgent / BIPIA text-only indirect prompt injection benchmarks', 'PromptGuard / LlamaGuard-style prompt-injection detectors']
+**Published:** Aug 7, 2026
 
 > **Takeaway:** Ambient multimodal prompt injection is a distinct threat class from text-only IPI: detectors over-act and MLLMs over-refuse, and no single layer dominates. Home-agent safety points toward learned routing plus sensor fusion, not a monolithic MLLM guardrail. Note this is an upper-bound analysis; no router is actually built.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.05495) for the complete write-up._
 
 Pilot benchmark for smart-home MLLM agents that must distinguish genuine user commands from ambient content (TV audio, on-screen text, overheard speech). Compares traditional detectors (L0), single MLLM agent (L1), and multi-agent mediation (L2); reports opposite failure modes and a 94.1% oracle upper bound versus 76.5% for the best single layer.
 
@@ -28,5 +22,11 @@ Pilot benchmark for smart-home MLLM agents that must distinguish genuine user co
 - **Mitigations:** Do not rely on a single detector or a single MLLM layer; combine layers with learned routing and sensor fusion. Report unsafe-execution and safe-completion separately from aggregate accuracy. Benchmark against realistic scenarios (addressee ambiguity, screen/audio injection, health-monitor false triggers, mixed occupancy) rather than text-only IPI sets.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://arxiv.org/abs/2608.05495)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 52 · **Composite 53.28**  
+**Tags:** `prompt-injection`, `multimodal`, `smart-home`, `mllm`, `benchmark`, `sensor-fusion`  
+**Verification:** ✓ independently verified · closest prior art: ['InjecAgent / BIPIA text-only indirect prompt injection benchmarks', 'PromptGuard / LlamaGuard-style prompt-injection detectors']
 
 _Source: [https://arxiv.org/abs/2608.05495](https://arxiv.org/abs/2608.05495)_  ·  [← back to index](../README.md)

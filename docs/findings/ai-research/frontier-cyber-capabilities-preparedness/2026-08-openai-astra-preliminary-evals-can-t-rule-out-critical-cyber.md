@@ -1,16 +1,10 @@
 # OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring
 
-**Topic:** AI Research  ·  **Domain:** Frontier Cyber Capabilities & Preparedness  
-**Source:** [source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 75 · 🏛️ Credibility 80 · **Composite 60.5**  
-**Tags:** `preparedness-framework`, `frontier-capability`, `cot-monitoring`, `cyber-evals`, `sandboxing`, `openai`, `astra`  
-**Verification:** ✓ independently verified · closest prior art: Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' - the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.
+**Published:** Aug 7, 2026
 
 > **Takeaway:** The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities) for the complete write-up._
 
 OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.
 
@@ -27,5 +21,11 @@ OpenAI reports that internal evaluations of Astra can no longer rule out the Pre
 - **Mitigations:** For downstream users: assume provider CoT monitoring is the primary containment layer and add a second layer (network egress caging, restricted tool set, sandboxed exec) at the integration boundary. For providers of higher-risk models: gate all training/eval workloads behind the same isolation controls used for deployment; hand off recommended controls to third-party testing partners rather than trusting them to reinvent the containment posture.
 
 ---
+
+**Topic:** AI Research  ·  **Domain:** Frontier Cyber Capabilities & Preparedness  
+**Source:** [source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)  ·  **Retrieved:** 2026-08-10  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 75 · 🏛️ Credibility 80 · **Composite 60.5**  
+**Tags:** `preparedness-framework`, `frontier-capability`, `cot-monitoring`, `cyber-evals`, `sandboxing`, `openai`, `astra`  
+**Verification:** ✓ independently verified · closest prior art: Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' - the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.
 
 _Source: [https://openai.com/index/responding-next-frontier-critical-cyber-capabilities](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)_  ·  [← back to index](../README.md)

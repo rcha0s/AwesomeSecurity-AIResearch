@@ -1,16 +1,10 @@
 # Diffusion LLMs as Targets and Adversaries: Mechanistic Safety Exploits
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://arxiv.org/abs/2608.07430)  ·  **Published:** Aug 10, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 57.65**  
-**Tags:** `jailbreak`, `diffusion-llm`, `safety-neurons`, `transfer-attack`, `black-box`  
-**Verification:** ✓ independently verified · closest prior art: Extends prior work on safety-neuron identification and pruning in autoregressive LLMs (Wei et al., 'Assessing the Brittleness of Safety Alignment via Pruning and Low-Rank Modifications') and mechanistic-interpretability-driven jailbreaks; novelty is showing the property transfers into diffusion LLMs and gives a cheap black-box jailbreak with cross-family reach.
+**Published:** Aug 10, 2026
 
 > **Takeaway:** Safety alignment in diffusion LLMs is sparse enough to be located by neuron mapping and cheaply bypassed - and the resulting attack transfers across families, including to a closed frontier model.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.07430) for the complete write-up._
 
 The authors show diffusion-based LLMs inherit a sparse, mappable set of 'safety neurons' from their autoregressive predecessors, so pruning those neurons (self- or transfer-pruning from models like Qwen2.5) drives attack success rates from single digits to 70 - 86 percent. They then build SN-Guided Diffusion, an offline black-box jailbreak that steers denoising away from safety-triggering regions and transfers to Llama-3-8B-Instruct, Qwen2.5-7B-Instruct, and Gemini-2.5-Flash-Lite with only 20 generation episodes per prompt.
 
@@ -27,5 +21,11 @@ The authors show diffusion-based LLMs inherit a sparse, mappable set of 'safety 
 - **Mitigations:** Do not treat sparse safety-neuron alignment as sufficient; combine mechanistic alignment with prompt-level classifiers and output filters; monitor for pruning-signature or SN-guided attack patterns; assume any DLLM derived from a known base model inherits its jailbreak surface and gate deployment accordingly.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://arxiv.org/abs/2608.07430)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 57.65**  
+**Tags:** `jailbreak`, `diffusion-llm`, `safety-neurons`, `transfer-attack`, `black-box`  
+**Verification:** ✓ independently verified · closest prior art: Extends prior work on safety-neuron identification and pruning in autoregressive LLMs (Wei et al., 'Assessing the Brittleness of Safety Alignment via Pruning and Low-Rank Modifications') and mechanistic-interpretability-driven jailbreaks; novelty is showing the property transfers into diffusion LLMs and gives a cheap black-box jailbreak with cross-family reach.
 
 _Source: [https://arxiv.org/abs/2608.07430](https://arxiv.org/abs/2608.07430)_  ·  [← back to index](../README.md)

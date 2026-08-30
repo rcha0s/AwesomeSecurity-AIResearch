@@ -589,50 +589,6 @@
     "winner_tier": "high",
     "first_seen": "2026-08-04"
   },
-  "c82f6d711c6fff00": {
-    "fp": {
-      "url": "https://wired.com/story/openais-hacking-debacle-was-a-human-mistake",
-      "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-      "tokens": [
-        "basics",
-        "defense",
-        "depth",
-        "eval",
-        "face",
-        "host",
-        "hugging",
-        "incident",
-        "openai",
-        "reduces",
-        "s",
-        "skipped",
-        "trust",
-        "zero"
-      ],
-      "shingles": [
-        "basics zero trust",
-        "defense depth eval",
-        "depth eval host",
-        "face incident reduces",
-        "hugging face incident",
-        "incident reduces skipped",
-        "openai s hugging",
-        "reduces skipped basics",
-        "s hugging face",
-        "skipped basics zero",
-        "trust defense depth",
-        "zero trust defense"
-      ],
-      "entities": [
-        "Hugging Face",
-        "OpenAI"
-      ],
-      "bucket": "2026-07-27"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-30"
-  },
   "a09435fa6a6a562c": {
     "fp": {
       "url": "https://armature.tech/",
@@ -1056,58 +1012,6 @@
     "winner_tier": "high",
     "first_seen": "2026-08-03"
   },
-  "a9f78ac7619b979e": {
-    "fp": {
-      "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-      "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
-      "tokens": [
-        "8",
-        "9",
-        "advisories",
-        "broken",
-        "bypass",
-        "check",
-        "checks",
-        "code",
-        "cryptographic",
-        "dominated",
-        "ecdsa",
-        "math",
-        "not",
-        "range",
-        "skipped",
-        "stopped",
-        "would"
-      ],
-      "shingles": [
-        "8 ecdsa bypass",
-        "9 8 ecdsa",
-        "advisories dominated skipped",
-        "broken math range",
-        "check would stopped",
-        "checks not broken",
-        "code checks not",
-        "cryptographic advisories dominated",
-        "dominated skipped code",
-        "math range check",
-        "not broken math",
-        "range check would",
-        "skipped code checks",
-        "stopped 9 8",
-        "would stopped 9"
-      ],
-      "entities": [
-        "Cryptographic Failures",
-        "Diptendu Kar",
-        "GitHub",
-        "OWASP A04"
-      ],
-      "bucket": "2026-07-27"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-30"
-  },
   "d135e283115faf5a": {
     "fp": {
       "url": "https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst",
@@ -1244,54 +1148,6 @@
     "corroborators": [],
     "winner_tier": "high",
     "first_seen": "2026-08-08"
-  },
-  "971cb0a9fc66be91": {
-    "fp": {
-      "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674",
-      "title": "Automated Claude Code + Opus 4.6 pipeline finds a real Linux sandbox-escape CVE (CVE-2026-5674)",
-      "tokens": [
-        "2026",
-        "4",
-        "5674",
-        "6",
-        "automated",
-        "claude",
-        "code",
-        "cve",
-        "escape",
-        "finds",
-        "linux",
-        "opus",
-        "pipeline",
-        "real",
-        "sandbox"
-      ],
-      "shingles": [
-        "4 6 pipeline",
-        "6 pipeline finds",
-        "automated claude code",
-        "claude code opus",
-        "code opus 4",
-        "cve 2026 5674",
-        "cve cve 2026",
-        "escape cve cve",
-        "finds real linux",
-        "linux sandbox escape",
-        "opus 4 6",
-        "pipeline finds real",
-        "real linux sandbox",
-        "sandbox escape cve"
-      ],
-      "entities": [
-        "Anthropic",
-        "Automated Claude Code",
-        "Johann Rehberger"
-      ],
-      "bucket": "2026-07-27"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-30"
   },
   "9fbeb62554a288b6": {
     "fp": {

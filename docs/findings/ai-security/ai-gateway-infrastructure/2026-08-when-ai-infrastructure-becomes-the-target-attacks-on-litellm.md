@@ -1,16 +1,10 @@
 # When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points
 
-**Topic:** AI Security  ·  **Domain:** AI Gateway & Infrastructure  
-**Source:** [Microsoft Threat Intelligence (Microsoft Security Blog)](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/)  ·  **Published:** Aug 26, 2026  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 88 · 🏛️ Credibility 72 · **Composite 60.74**  
-**Tags:** `litellm`, `ai-gateway`, `ragflow`, `kestra`, `credential-harvesting`, `cryptomining`, `supply-chain`  
-**Verification:** ✓ independently verified · closest prior art: Public LiteLLM CVE research; Embrace The Red's LiteLLM hijack post; general cryptomining intrusions
+**Published:** Aug 26, 2026
 
 > **Takeaway:** Attackers are already treating AI gateways like LiteLLM as a credential-rich control plane, so these services need the same scrutiny as any critical enterprise infrastructure.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/) for the complete write-up._
 
 Microsoft details in-the-wild compromises of three AI workloads - a LiteLLM gateway, a RAGFlow deployment, and a Kestra orchestration environment - where attackers converged on credential theft, persistence, and cryptomining. For LiteLLM, code execution in the gateway process led to harvesting /proc/1/environ secrets and dumping virtual-key/model tables. The report frames AI gateways/retrieval/orchestration as a high-value control plane needing dedicated monitoring.
 
@@ -28,5 +22,11 @@ Microsoft details in-the-wild compromises of three AI workloads - a LiteLLM gate
 - **Mitigations:** Patch known CVEs, remove public exposure, least-privilege secrets, secure Docker socket, monitor control-plane-origin execution and secret access.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Gateway & Infrastructure  
+**Source:** [Microsoft Threat Intelligence (Microsoft Security Blog)](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/)  ·  **Retrieved:** 2026-08-29  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 88 · 🏛️ Credibility 72 · **Composite 60.74**  
+**Tags:** `litellm`, `ai-gateway`, `ragflow`, `kestra`, `credential-harvesting`, `cryptomining`, `supply-chain`  
+**Verification:** ✓ independently verified · closest prior art: Public LiteLLM CVE research; Embrace The Red's LiteLLM hijack post; general cryptomining intrusions
 
 _Source: [https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/)_  ·  [← back to index](../README.md)

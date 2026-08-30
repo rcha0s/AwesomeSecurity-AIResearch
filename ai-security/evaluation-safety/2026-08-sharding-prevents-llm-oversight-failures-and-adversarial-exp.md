@@ -1,16 +1,10 @@
 # Sharding Prevents LLM Oversight Failures and Adversarial Exploitation
 
-**Topic:** AI Security  ·  **Domain:** Evaluation & Safety  
-**Source:** [source](https://arxiv.org/abs/2608.06422)  ·  **Published:** Aug 5, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 55 · **Composite 53.75**  
-**Tags:** `llm-as-judge`, `oversight`, `adversarial`, `evaluation`, `debate`  
-**Verification:** ✓ independently verified · closest prior art: LLM-as-judge bias literature; debate protocols (Irving et al.); ensemble judging.
+**Published:** Aug 5, 2026
 
 > **Takeaway:** A single-call multi-verdict LLM judge is exploitable by presentation-level adversaries; partitioning verdicts into separate calls, then debating, is the operational fix.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.06422) for the complete write-up._
 
 Studies LLM-judge overload: when one call must return many verdicts, agreement with experts degrades even at equal token/tool budget. Sharding (partition requirements, one call per group, aggregate) restores agreement across research replications, legal work, and clinical-trial assessments. Sharded weaker judges can match holistic stronger judges at full budget, and sharding blunts a best-of-N adversary who varies presentation to inflate acceptance of unmet criteria. Sharding does not defeat per-criterion persuasion attacks; debate-style opposition on top of sharding does.
 
@@ -27,5 +21,11 @@ Studies LLM-judge overload: when one call must return many verdicts, agreement w
 - **Mitigations:** Shard the requirements across separate calls with per-decision budget matched to the single-call panel; aggregate verdicts; layer debate-style opposition to cover per-criterion persuasion attacks that sharding alone does not stop.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Evaluation & Safety  
+**Source:** [source](https://arxiv.org/abs/2608.06422)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 55 · **Composite 53.75**  
+**Tags:** `llm-as-judge`, `oversight`, `adversarial`, `evaluation`, `debate`  
+**Verification:** ✓ independently verified · closest prior art: LLM-as-judge bias literature; debate protocols (Irving et al.); ensemble judging.
 
 _Source: [https://arxiv.org/abs/2608.06422](https://arxiv.org/abs/2608.06422)_  ·  [← back to index](../README.md)

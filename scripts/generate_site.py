@@ -101,6 +101,11 @@ def score_line(scores: dict) -> str:
     )
 
 
+def _entry_top_meta(entry: dict) -> str:
+    """The one line worth seeing before deciding to read: when this ran."""
+    return f"**Published:** {fmt_published(entry)}"
+
+
 def _entry_meta(entry: dict, scores: dict) -> list[str]:
     src = entry.get("source_url", "")
     topic_name = c.TOPICS.get(entry.get("topic", ""), {}).get("name", entry.get("topic", ""))
@@ -108,7 +113,6 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
         f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain', '-')}",
         f"**Source:** [{entry.get('source_name', 'source')}]({src})"
         + (f"  ·  **Author:** {entry['author']}" if entry.get("author") else "")
-        + f"  ·  **Published:** {fmt_published(entry)}"
         + (
             f"  ·  **Retrieved:** {entry['retrieved_at'][:10]}" if entry.get("retrieved_at") else ""
         ),
@@ -173,7 +177,7 @@ def render_entry_page(entry: dict, conf: c.Config) -> str:
     out = [
         f"# {entry.get('title', 'Untitled')}",
         "",
-        "  \n".join(_entry_meta(entry, entry_scores(entry, conf))),
+        _entry_top_meta(entry),
         "",
     ]
     if entry.get("takeaway"):
@@ -182,16 +186,19 @@ def render_entry_page(entry: dict, conf: c.Config) -> str:
         out += [
             "## TL;DR",
             "",
-            "_The gist, not every detail - read the [full source](#) for the complete write-up._".replace(
-                "(#)", f"({entry.get('source_url', '')})"
-            ),
-            "",
             entry["summary"].strip(),
             "",
         ]
     out += _entry_lessons_md(entry)
     out += _entry_tcm_md(entry)
-    out += ["---", "", f"_Source: [{src}]({src})_  ·  [← back to index](../README.md)", ""]
+    out += [
+        "---",
+        "",
+        "  \n".join(_entry_meta(entry, entry_scores(entry, conf))),
+        "",
+        f"_Source: [{src}]({src})_  ·  [← back to index](../README.md)",
+        "",
+    ]
     return "\n".join(out)
 
 
