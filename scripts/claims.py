@@ -110,7 +110,7 @@ MODERN_AI_TERMS = re.compile(
     r"|\bllms?\b|chatbot|jailbreak|ai[- ]generated|llm-generated",
     re.IGNORECASE,
 )
-MODERN_EVIDENCE_CUTOFF_YEAR = 2023
+MODERN_EVIDENCE_CUTOFF_YEAR = 2024
 
 
 def _evidence_years(claim: dict) -> list[int]:
