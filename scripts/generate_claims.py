@@ -52,11 +52,17 @@ def fmt_date(date: str | None) -> str:
     return "undated"
 
 
+def claim_title(claim: dict) -> str:
+    """Concise headline for a claim, falling back to the full statement for
+    claims (or test fixtures) written before the title field existed."""
+    return claim.get("title") or claim["statement"]
+
+
 def claim_link(claim_id: str, index: dict[str, dict]) -> str:
-    """A link to another claim on the same page: id, then its statement."""
+    """A link to another claim on the same page: id, then its title."""
     target = index.get(claim_id)
     label = f"[`{claim_id}`](#{anchor_id(claim_id)})"
-    return f"{label} — {target['statement']}" if target else label
+    return f"{label} — {claim_title(target)}" if target else label
 
 
 def evidence_block(claim: dict) -> list[str]:
@@ -95,19 +101,24 @@ def _meta_line(claim: dict) -> str:
 
 
 def render_live_claim(claim: dict, index: dict[str, dict]) -> list[str]:
-    """A standing answer: statement, what to do, limits, what it replaced."""
+    """A standing answer: title, the full statement, basis, limits, what to do."""
+    title = claim_title(claim)
     out = [
         f'<a id="{anchor_id(claim["id"])}"></a>',
         "",
-        f"### {claim['statement']}",
+        f"### {title}",
         "",
         _meta_line(claim),
         "",
     ]
+    if title != claim["statement"]:
+        out += [claim["statement"], ""]
+    if claim.get("basis"):
+        out += [f"**Basis —** {claim['basis']}", ""]
     if claim.get("guidance"):
         out += [f"**Do this —** {claim['guidance']}", ""]
     if claim.get("scope"):
-        out += [f"**Limits —** {claim['scope']}", ""]
+        out += [f"**Conditions —** {claim['scope']}", ""]
     for replaced in cl.edges(claim, "supersedes"):
         out += [f"**Replaces** {claim_link(replaced, index)}", ""]
     if claim.get("tags"):
@@ -117,13 +128,18 @@ def render_live_claim(claim: dict, index: dict[str, dict]) -> list[str]:
 
 def render_retired_claim(claim: dict, index: dict[str, dict]) -> list[str]:
     """A retired answer: struck through, with the reason and the replacement."""
+    title = claim_title(claim)
     out = [
         f'<a id="{anchor_id(claim["id"])}"></a>',
         "",
-        f"### ~~{claim['statement']}~~",
+        f"### ~~{title}~~",
         "",
         _meta_line(claim),
         "",
+    ]
+    if title != claim["statement"]:
+        out += [claim["statement"], ""]
+    out += [
         f"**Why it was retired —** {claim.get('supersession_reason', 'no reason recorded')}",
         "",
     ]
@@ -213,13 +229,13 @@ def _changelog(ledger: dict) -> list[str]:
     index = cl.claim_index(cl.all_claims(ledger))
     for claim in changes:
         winners = ", ".join(
-            f"[{index[w]['statement']}]({claim['topic']}.md#{anchor_id(w)})"
+            f"[{claim_title(index[w])}]({claim['topic']}.md#{anchor_id(w)})"
             for w in cl.edges(claim, "superseded_by")
             if w in index
         )
         out += [
             f"- **{fmt_date(claim.get('superseded_on'))}** · {claim.get('status')} · "
-            f"[~~{claim['statement']}~~]({claim['topic']}.md#{anchor_id(claim['id'])})  ",
+            f"[~~{claim_title(claim)}~~]({claim['topic']}.md#{anchor_id(claim['id'])})  ",
             f"  ↳ {claim.get('supersession_reason', '')}"
             + (f"  \n  ↳ **Now:** {winners}" if winners else ""),
         ]

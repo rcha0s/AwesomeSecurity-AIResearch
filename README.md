@@ -43,7 +43,7 @@ Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](
 - **[Product Security](claims/product-security.md)** - 11 standing · 2 retired
 - **[AI Research](claims/ai-research.md)** - 18 standing · 3 retired
 
-**Most recent reversal** (2026-07-20): ~~A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.~~  
+**Most recent reversal** (2026-07-20): ~~Assumed a clean scanner result meant a model was safe~~  
 ↳ Pickle-VM import tricks evaded ten separate model scanners and four model hubs. A clean scan result no longer distinguishes a safe artifact from an evasive one, so scanning cannot be the admission gate.
 
 ---

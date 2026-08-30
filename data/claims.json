@@ -51,7 +51,9 @@
       ],
       "first_seen": "2025-11",
       "last_reviewed": "2026-07-27",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "TOON beats JSON on input-side token cost",
+      "basis": "Benchmarked head-to-head against JSON on token count and retrieval accuracy for large uniform arrays; corroborated by the format's own reference implementation and an independent write-up, with one contesting benchmark finding the gain shrinks under instructional overhead."
     },
     {
       "id": "json-default-for-all-agent-io",
@@ -79,7 +81,9 @@
         "serialization"
       ],
       "first_seen": "2023-01",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "JSON assumed a neutral default for agent I/O",
+      "basis": "A prior working assumption, not a measured result — it had no benchmark of its own and was retired once a head-to-head comparison measured a real token-cost gap."
     },
     {
       "id": "constrained-decoding-for-structured-output",
@@ -110,7 +114,9 @@
       ],
       "first_seen": "2026-03",
       "last_reviewed": "2026-07-27",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "Constrained decoding wins for structured output, not TOON",
+      "basis": "Benchmarked head-to-head on one-shot in-context generation: plain JSON had the best accuracy and constrained decoding used the fewest tokens."
     },
     {
       "id": "toon-best-for-structured-output-generation",
@@ -139,7 +145,9 @@
         "structured-output"
       ],
       "first_seen": "2025-11",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "Assumed TOON's input savings would carry to generation",
+      "basis": "An untested extrapolation from the input-side result; refuted once the same benchmark authors tested generation directly."
     },
     {
       "id": "match-tool-schemas-to-the-target-model",
@@ -170,7 +178,9 @@
       ],
       "first_seen": "2026-07-04",
       "last_reviewed": "2026-07-27",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "Model upgrades can regress on non-native tool schemas",
+      "basis": "Observed directly on one third-party coding harness's custom edit-tool schema across model versions — a single reported case, not a controlled multi-harness study."
     },
     {
       "id": "newer-model-is-always-an-upgrade",
@@ -198,7 +208,9 @@
         "tool-use"
       ],
       "first_seen": "2024-01",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "Assumed newest model is a strict upgrade for any harness",
+      "basis": "A common prior assumption, retired after a documented case of newer models regressing on a harness-specific tool schema their older siblings handled correctly."
     },
     {
       "id": "few-distinct-tools-beat-many",
@@ -226,7 +238,9 @@
       ],
       "first_seen": "2026-07-21",
       "last_reviewed": "2026-07-27",
-      "phase": "deployment"
+      "phase": "deployment",
+      "title": "Lean tool sets and reasoning-first prompts work best",
+      "basis": "A first-party design account from the Claude Code team describing their own harness choices — a practitioner report, not a controlled comparison."
     },
     {
       "id": "score-evals-on-groundedness-not-headline-f1",
@@ -259,7 +273,9 @@
       ],
       "first_seen": "2026-07-17",
       "last_reviewed": "2026-07-27",
-      "phase": "evaluation"
+      "phase": "evaluation",
+      "title": "Headline F1 hides scanner groundedness and precision gaps",
+      "basis": "Semgrep audited its own benchmark against real-world IDOR findings, plus a separate model's code-security eval, both showing F1 masking large groundedness/precision gaps."
     },
     {
       "id": "prompt-injection-is-containment-not-prevention",
@@ -311,7 +327,9 @@
       ],
       "first_seen": "2026-05",
       "last_reviewed": "2026-08-29",
-      "phase": "threat-model"
+      "phase": "threat-model",
+      "title": "Prompt injection can't be closed by filtering alone",
+      "basis": "A formal impossibility argument plus large-scale red-teaming — a 78-study meta-analysis and a dedicated agentic red-team study — showing the vulnerability persists across model families and defenses."
     },
     {
       "id": "prompt-injection-solvable-by-filtering",
@@ -346,7 +364,9 @@
         "guardrails"
       ],
       "first_seen": "2023-05",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Assumed a good classifier plus instruction hierarchy solves injection",
+      "basis": "An early defensive assumption, refuted by an impossibility proof and corroborating red-team results showing filtering raises attacker cost without closing the surface."
     },
     {
       "id": "provenance-auditing-defends-context-aware-injection",
@@ -382,7 +402,9 @@
       ],
       "first_seen": "2026-05",
       "last_reviewed": "2026-07-27",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Provenance auditing may blunt context-aware injection",
+      "basis": "One paper (ARGUS) demonstrates a provenance-graph defense on benchmark tasks; a separate impossibility-argument paper contests that any context-based defense can be complete — unresolved."
     },
     {
       "id": "agent-memory-is-a-persistent-attack-surface",
@@ -422,7 +444,9 @@
       ],
       "first_seen": "2026-06",
       "last_reviewed": "2026-07-27",
-      "phase": "threat-model"
+      "phase": "threat-model",
+      "title": "Poisoned agent memory persists and resists correction",
+      "basis": "Three independent 2026 papers converge on the same result across coding-preference poisoning, self-state/syscall-level corruption, and cross-session stored injection."
     },
     {
       "id": "provider-guardrails-can-block-incident-response",
@@ -449,7 +473,9 @@
       ],
       "first_seen": "2026-07-19",
       "last_reviewed": "2026-07-27",
-      "phase": "incident"
+      "phase": "incident",
+      "title": "Provider guardrails can block incident response mid-breach",
+      "basis": "A single documented case from a live incident-response postmortem during a real agentic intrusion — an observed incident, not a controlled study."
     },
     {
       "id": "sandbox-model-deserialization",
@@ -478,7 +504,9 @@
       ],
       "first_seen": "2026-07-20",
       "last_reviewed": "2026-07-27",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Scanners alone aren't enough — sandbox deserialization too",
+      "basis": "A single research disclosure (ShadowPickle) demonstrated pickle-VM import tricks evading ten scanners and four model hubs simultaneously."
     },
     {
       "id": "model-scanners-are-sufficient-for-supply-chain",
@@ -506,7 +534,9 @@
         "scanning"
       ],
       "first_seen": "2024-06",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Assumed a clean scanner result meant a model was safe",
+      "basis": "A prior industry assumption, refuted by the same ShadowPickle disclosure that evaded ten scanners and four hubs at once."
     },
     {
       "id": "gate-agent-prs-with-automated-checks",
@@ -536,7 +566,9 @@
       ],
       "first_seen": "2026-07-19",
       "last_reviewed": "2026-07-27",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Automated gates catch what human review misses on agent PRs",
+      "basis": "Measured across a corpus of agent-generated pull requests: 38.9% carried a security smell that human review did not catch."
     },
     {
       "id": "human-review-catches-agent-pr-risk",
@@ -564,7 +596,9 @@
         "code-review"
       ],
       "first_seen": "2025-06",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Assumed normal review was enough for agent PR risk",
+      "basis": "A prior assumption, superseded by the measured 38.9%-security-smell result showing review misses the secret/dependency-integrity class specifically."
     },
     {
       "id": "import-time-payloads-defeat-install-time-controls",
@@ -593,7 +627,9 @@
       ],
       "first_seen": "2026-07-15",
       "last_reviewed": "2026-07-27",
-      "phase": "attack"
+      "phase": "attack",
+      "title": "Import-time npm payloads defeat --ignore-scripts and provenance",
+      "basis": "A forensic breakdown of a real supply-chain compromise (the AsyncAPI npm package) showing the payload fired at import time and shipped with a valid provenance attestation."
     },
     {
       "id": "ignore-scripts-blocks-npm-supply-chain",
@@ -621,7 +657,9 @@
         "npm"
       ],
       "first_seen": "2022-01",
-      "phase": "defense"
+      "phase": "defense",
+      "title": "Assumed --ignore-scripts plus provenance was adequate",
+      "basis": "A prior defensive assumption, refuted by the same AsyncAPI compromise, which defeated both controls at once."
     },
     {
       "id": "prompt-injection-is-a-permanent-attack-surface",
@@ -660,7 +698,9 @@
         "prompt-injection",
         "threat-model",
         "agents"
-      ]
+      ],
+      "title": "Mixing trusted and untrusted input is permanently exploitable",
+      "basis": "Converging evidence over three years: the original Dual-LLM threat model, an early academic demonstration against production LLM apps, and a 2026 study finding the same hijack pattern across six coding harnesses."
     },
     {
       "id": "indirect-injection-via-retrieved-content-is-viable",
@@ -684,16 +724,25 @@
           "title": "Hacking GitHub Copilot Chat via indirect prompt injection",
           "source_name": "Embrace The Red",
           "published": "2024"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "source_name": "Embrace The Red",
+          "published": "2026-08-26"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
         "rag",
         "indirect"
-      ]
+      ],
+      "title": "Indirect injection via retrieved content is a real vector",
+      "basis": "Demonstrated against a real production assistant (GitHub Copilot Chat) plus the original academic paper on indirect injection in LLM-integrated apps."
     },
     {
       "id": "jailbreak-transfers-across-models",
@@ -710,16 +759,25 @@
           "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
           "source_name": "arXiv",
           "published": "2023-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "source_name": "arXiv",
+          "published": "2025-12"
         }
       ],
       "first_seen": "2023-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.",
       "tags": [
         "jailbreak",
         "adversarial",
         "transfer"
-      ]
+      ],
+      "title": "Adversarial jailbreak suffixes transfer across models",
+      "basis": "Established by the original universal-adversarial-suffix paper, which measured transfer success across multiple aligned models including closed-source ones."
     },
     {
       "id": "dual-llm-pattern-mitigates-injection-blast-radius",
@@ -751,7 +809,9 @@
         "defense",
         "architecture",
         "dual-llm"
-      ]
+      ],
+      "title": "Planner/reader split contains prompt-injection blast radius",
+      "basis": "Originates from Willison's Dual-LLM design pattern; corroborated by a 2026 study finding capability-isolating planner/reader splits are what actually stops reframed exfiltration."
     },
     {
       "id": "constitutional-ai-reduces-refusal-brittleness",
@@ -777,7 +837,9 @@
         "alignment",
         "constitutional-ai",
         "rlaif"
-      ]
+      ],
+      "title": "Constitutional AI training gives an inspectable refusal spec",
+      "basis": "Established directly in Anthropic's original Constitutional AI paper, comparing self-critique/revision training against hand-tuned RLHF refusal."
     },
     {
       "id": "pickle-based-model-formats-are-code-execution",
@@ -810,7 +872,9 @@
         "pickle",
         "supply-chain",
         "safetensors"
-      ]
+      ],
+      "title": "Loading a pickle model file is arbitrary code execution",
+      "basis": "A structural property of the pickle format itself, documented by the original Trail of Bits exploitation writeup and Hugging Face's own pickle-scanning security docs."
     },
     {
       "id": "typosquatting-on-model-hubs-is-active",
@@ -836,7 +900,9 @@
         "typosquatting",
         "supply-chain",
         "huggingface"
-      ]
+      ],
+      "title": "Typosquatted model repos with backdoors are live on hubs",
+      "basis": "Observed in the wild: a documented case of malicious typosquatted models with silent backdoors actually published on Hugging Face."
     },
     {
       "id": "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -862,7 +928,9 @@
         "mcp",
         "prompt-injection",
         "tool-poisoning"
-      ]
+      ],
+      "title": "MCP tool metadata alone can inject instructions",
+      "basis": "First documented in Invariant Labs' tool-poisoning-attack disclosure, showing tool descriptions reach the model as system-prompt content without the tool being called."
     },
     {
       "id": "agent-tool-selection-can-be-steered-by-untrusted-context",
@@ -879,16 +947,25 @@
           "title": "Prompt Injection Attacks on Agentic Systems",
           "source_name": "arXiv",
           "published": "2024-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://checkmarx.com/zero-post/11-emerging-ai-security-risks-with-mcp-model-context-protocol/",
+          "title": "MCP tool poisoning attacks (TPAs) via hidden tool-description metadata",
+          "source_name": "Checkmarx Zero",
+          "published": "2026-02"
         }
       ],
       "first_seen": "2024-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.",
       "tags": [
         "tool-selection",
         "prompt-injection",
         "agents"
-      ]
+      ],
+      "title": "Untrusted context can steer which tool an agent picks",
+      "basis": "Established by the original 'Prompt Injection Attacks on Agentic Systems' paper, measuring tool-selection manipulation via adversarial retrieved content."
     },
     {
       "id": "long-term-memory-is-a-cross-session-poisoning-vector",
@@ -905,16 +982,25 @@
           "title": "ChatGPT: Hacking Memories with Prompt Injection",
           "source_name": "Embrace The Red",
           "published": "2024-09"
+        },
+        {
+          "stance": "supports",
+          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
+          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
+          "source_name": "OWASP GenAI Security Project",
+          "published": "2026-05-14"
         }
       ],
       "first_seen": "2024-09",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Gate what enters long-term memory with a policy check, not a post-hoc filter. Treat memory writes as security-relevant.",
       "tags": [
         "memory",
         "persistence",
         "prompt-injection"
-      ]
+      ],
+      "title": "Long-term memory lets injection outlast its session",
+      "basis": "Demonstrated directly against a production assistant's memory feature in a disclosed proof-of-concept."
     },
     {
       "id": "llm-eval-datasets-leak-into-training-sets",
@@ -931,16 +1017,25 @@
           "title": "Data Contamination Quiz",
           "source_name": "arXiv",
           "published": "2023-11"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.07341",
+          "title": "Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination",
+          "source_name": "arXiv",
+          "published": "2026-08-10"
         }
       ],
       "first_seen": "2023-11",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Rotate held-out red-team prompts; treat any published adversarial dataset as compromised for future models.",
       "tags": [
         "evaluation",
         "contamination",
         "benchmarks"
-      ]
+      ],
+      "title": "Public eval datasets leak into later training corpora",
+      "basis": "Measured via a data-contamination quiz methodology comparing model performance on published vs. held-out benchmark items."
     },
     {
       "id": "ssrf-guards-must-cover-agent-outbound-calls",
@@ -956,16 +1051,34 @@
           "url": "https://owasp.org/www-community/attacks/Server_Side_Request_Forgery",
           "title": "SSRF (OWASP)",
           "source_name": "OWASP"
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "source_name": "GitHub Advisory Database",
+          "published": "2026-07-15",
+          "note": "A malicious remote MCP server's WWW-Authenticate resource_metadata URL (and its redirects) drove host-side SSRF to cloud metadata; the fix was re-validating every redirect hop, not just the first URL."
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
+          "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
+          "source_name": "GitHub Advisory Database",
+          "published": "2026-07-15",
+          "note": "A caller-supplied storage_path let a request pick the LLM gateway's outbound backend, reaching internal/cloud-metadata endpoints from the gateway process rather than the user-facing endpoint."
         }
       ],
       "first_seen": "2020-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Apply the private-IP dialer guard to every outbound HTTP client in an agent runtime — not just the user-facing one. Re-validate on redirect.",
       "tags": [
         "ssrf",
         "agents",
         "defense"
-      ]
+      ],
+      "title": "SSRF guards must cover every agent outbound call, not just user input",
+      "basis": "Grounded in two 2026 GHSA advisories showing real agent/gateway processes making unguarded outbound requests from MCP server metadata and caller-controlled parameters, on top of the general OWASP SSRF threat model."
     },
     {
       "id": "path-traversal-defenses-must-cover-symlink-resolution",
@@ -990,7 +1103,9 @@
         "path-traversal",
         "symlinks",
         "defense"
-      ]
+      ],
+      "title": "Path validation must canonicalize, not just check the string",
+      "basis": "A structural argument from the CWE-22 canonical vulnerability definition — a class-level defense requirement, not a single incident."
     },
     {
       "id": "package-installers-run-arbitrary-code-by-default",
@@ -1022,7 +1137,9 @@
         "npm",
         "pip",
         "supply-chain"
-      ]
+      ],
+      "title": "Package installs run arbitrary code by default",
+      "basis": "General supply-chain best-practice guidance, corroborated by a real self-propagating npm worm (ChainDrop) that exploited exactly this default."
     },
     {
       "id": "typosquatting-in-package-registries-is-an-active-threat",
@@ -1048,7 +1165,9 @@
         "typosquatting",
         "npm",
         "pypi"
-      ]
+      ],
+      "title": "Typosquatted registry packages remain an active threat",
+      "basis": "A documented incident analysis of a typosquatting attack targeting a cryptocurrency npm package via manually-typed dependency names."
     },
     {
       "id": "imdsv1-must-be-disabled-on-agent-workloads",
@@ -1065,16 +1184,26 @@
           "title": "Get the full benefits of IMDSv2",
           "source_name": "AWS Security Blog",
           "published": "2023"
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "source_name": "GitHub Advisory Database",
+          "published": "2026-07-15",
+          "note": "An unguarded outbound client 302'd to 169.254.169.254 is exactly the IMDSv1 exploitation path this claim describes, demonstrated against a real MCP host process."
         }
       ],
       "first_seen": "2019-11",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Set HttpTokens=required on all EC2 instances hosting agent runtimes.",
       "tags": [
         "aws",
         "imds",
         "ssrf"
-      ]
+      ],
+      "title": "IMDSv1 is trivially exploitable; disable it for agent workloads",
+      "basis": "AWS's own security guidance documenting the IMDSv1 SSRF-to-credential-theft path and why IMDSv2 closes it."
     },
     {
       "id": "long-lived-cloud-credentials-are-obsolete",
@@ -1112,7 +1241,9 @@
         "aws",
         "credentials",
         "oidc"
-      ]
+      ],
+      "title": "Long-lived cloud credentials are the top breach root cause",
+      "basis": "Cross-referenced across a cloud-identity vendor writeup and two 2026 incident reports (AI API key resale, LiteLLM gateway secret harvesting) that both trace back to long-lived credentials."
     },
     {
       "id": "llm-generated-code-hallucinates-package-names",
@@ -1129,16 +1260,31 @@
           "title": "We Have a Package for You! A Comprehensive Analysis of Package Hallucinations",
           "source_name": "arXiv",
           "published": "2024-06"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+          "source_name": "Palo Alto Networks Unit 42",
+          "published": "2026-06-30"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm",
+          "title": "AI Coding Agents Skip Package Verification, and Attackers Are Exploiting It",
+          "published": "2026-07-01"
         }
       ],
       "first_seen": "2024-06",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Every LLM-suggested dependency must be verified against the actual registry before pinning.",
       "tags": [
         "ai-code-risk",
         "slopsquatting",
         "npm"
-      ]
+      ],
+      "title": "LLM-hallucinated package names enable slopsquatting",
+      "basis": "Established by the original 'package hallucinations' academic study, measuring how often LLM code suggests nonexistent import names."
     },
     {
       "id": "signature-based-detection-fails-on-llm-authored-malware",
@@ -1170,7 +1316,9 @@
         "malware",
         "detection",
         "ai-authored"
-      ]
+      ],
+      "title": "Signature detection underperforms on LLM-authored malware",
+      "basis": "Two Unit 42 studies: one showing LLM-based obfuscation defeating signatures, a second measuring ~97% of AI-assisted malware samples never reaching production."
     },
     {
       "id": "mobile-webviews-are-a-persistent-cross-context-attack-surface",
@@ -1196,7 +1344,9 @@
         "webview",
         "android",
         "ios"
-      ]
+      ],
+      "title": "WebView JS bridges turn web XSS into device RCE",
+      "basis": "Structural platform-security guidance from Android's own developer security documentation on the WebView/native-bridge risk."
     },
     {
       "id": "tool-count-degrades-agent-performance",
@@ -1213,16 +1363,26 @@
           "title": "ToolLLM",
           "source_name": "arXiv",
           "published": "2023-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2605.24660",
+          "title": "How Many Tools Should an LLM Agent See? A Chance-Corrected Answer",
+          "source_name": "arXiv",
+          "published": "2026-06",
+          "note": "Adaptive tool shortlists improved selection accuracy from 87.1% to 93.1% over always showing a fixed-size list, confirming tool-set size/composition materially affects selection accuracy."
         }
       ],
       "first_seen": "2023-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Curate the tool set. Retire tools whose calls the eval suite shows agents get wrong more than they get right.",
       "tags": [
         "agents",
         "harness",
         "tools"
-      ]
+      ],
+      "title": "Too many tools degrade agent tool-selection accuracy",
+      "basis": "Measured in the ToolLLM benchmark paper, evaluating tool-selection accuracy as available tool count scales up."
     },
     {
       "id": "chain-of-thought-does-not-transfer-to-multi-turn",
@@ -1239,16 +1399,25 @@
           "title": "Chain-of-thought reasoning without prompting",
           "source_name": "arXiv",
           "published": "2024-02"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.06057",
+          "title": "When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories",
+          "source_name": "arXiv",
+          "published": "2026-08-07"
         }
       ],
       "first_seen": "2024-02",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Evaluate agents on the multi-turn task, not a single-turn proxy.",
       "tags": [
         "chain-of-thought",
         "agents",
         "evals"
-      ]
+      ],
+      "title": "Single-turn CoT gains don't transfer to multi-turn tasks",
+      "basis": "Derived from chain-of-thought reasoning research measuring the gap between single-turn benchmark gains and multi-step task performance."
     },
     {
       "id": "retrieval-quality-dominates-generation-quality-in-rag",
@@ -1265,16 +1434,26 @@
           "title": "Retrieval-Augmented Generation for LLMs: A Survey",
           "source_name": "arXiv",
           "published": "2023-12"
+        },
+        {
+          "stance": "supports",
+          "url": "https://research.google/blog/deeper-insights-into-retrieval-augmented-generation-the-role-of-sufficient-context/",
+          "title": "Deeper insights into retrieval augmented generation: the role of sufficient context",
+          "source_name": "Google Research",
+          "published": "2025-05-14",
+          "note": "Even frontier models fail to abstain on insufficient context and hallucinate confidently instead - generation quality cannot compensate for what retrieval didn't surface."
         }
       ],
       "first_seen": "2023-12",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Invest in retrieval evals (recall@k, reranker quality) before spending on bigger generator models.",
       "tags": [
         "rag",
         "retrieval",
         "evals"
-      ]
+      ],
+      "title": "Retrieval quality dominates generator quality in RAG",
+      "basis": "Synthesized from a broad academic survey of RAG systems comparing retrieval and generation as accuracy determinants."
     },
     {
       "id": "hybrid-search-beats-pure-vector-for-most-domains",
@@ -1291,16 +1470,26 @@
           "title": "Hybrid Search Explained",
           "source_name": "Weaviate",
           "published": "2024"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2604.01733",
+          "title": "From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents",
+          "source_name": "arXiv",
+          "published": "2026-04",
+          "note": "Hybrid retrieval + reranking beat every single-stage method; BM25 alone beat state-of-the-art dense retrieval on financial documents."
         }
       ],
       "first_seen": "2023-06",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Default to hybrid retrieval unless you've measured that pure-vector wins on your specific corpus.",
       "tags": [
         "rag",
         "hybrid-search",
         "bm25"
-      ]
+      ],
+      "title": "Hybrid BM25 + vector search beats pure vector retrieval",
+      "basis": "A vendor benchmark comparison of hybrid vs. pure-vector search across enterprise/technical corpora."
     },
     {
       "id": "long-context-does-not-eliminate-retrieval-need",
@@ -1317,16 +1506,26 @@
           "title": "Lost in the Middle",
           "source_name": "arXiv",
           "published": "2023-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2510.05381",
+          "title": "Context Length Alone Hurts LLM Performance Despite Perfect Retrieval",
+          "source_name": "arXiv",
+          "published": "2025-10",
+          "note": "Performance degrades 13.9-85% as input length grows even when retrieval is perfect - context length itself is a cost independent of retrieval quality."
         }
       ],
       "first_seen": "2023-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.",
       "tags": [
         "long-context",
         "rag",
         "lost-in-the-middle"
-      ]
+      ],
+      "title": "Long context windows don't remove the need for retrieval",
+      "basis": "Grounded in the 'Lost in the Middle' study measuring attention degradation on distant tokens as context length grows."
     },
     {
       "id": "llm-as-judge-is-biased-toward-longer-answers",
@@ -1343,16 +1542,25 @@
           "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
           "source_name": "arXiv",
           "published": "2023-06"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "source_name": "arXiv",
+          "published": "2025-06"
         }
       ],
       "first_seen": "2023-06",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Cross-check LLM-judge scores with pairwise human eval on a small sample.",
       "tags": [
         "llm-as-judge",
         "eval-bias",
         "evals"
-      ]
+      ],
+      "title": "LLM-as-judge is biased toward longer answers",
+      "basis": "Measured directly in the MT-Bench/Chatbot Arena LLM-judge evaluation paper, controlling for answer length against human preference."
     },
     {
       "id": "swe-bench-doesnt-generalize-to-production-tasks",
@@ -1369,16 +1577,26 @@
           "title": "SWE-bench",
           "source_name": "arXiv",
           "published": "2023-10"
+        },
+        {
+          "stance": "supports",
+          "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+          "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
+          "source_name": "METR",
+          "published": "2025-07-10",
+          "note": "Randomized trial: experienced developers using AI tools on real tasks in mature repos were 19% slower, despite believing AI made them faster - high benchmark-style capability does not predict production task performance."
         }
       ],
       "first_seen": "2023-10",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Treat SWE-bench as one data point, not a complete picture. Build in-house evals on your task mix.",
       "tags": [
         "evals",
         "swe-bench",
         "benchmarks"
-      ]
+      ],
+      "title": "SWE-bench scores don't predict production task performance",
+      "basis": "Argued from the structure of the SWE-bench benchmark itself, which rewards a narrow small-diff bug-fix style."
     },
     {
       "id": "system-prompts-should-be-versioned-like-code",
@@ -1404,7 +1622,9 @@
         "prompting",
         "deployment",
         "regression"
-      ]
+      ],
+      "title": "System prompts are load-bearing config — version them like code",
+      "basis": "A practitioner argument treating production prompts as a security-relevant, version-controlled artifact rather than throwaway text."
     },
     {
       "id": "few-shot-prompting-brittle-on-format-changes",
@@ -1430,7 +1650,9 @@
         "prompting",
         "few-shot",
         "brittleness"
-      ]
+      ],
+      "title": "Few-shot prompting is brittle to formatting choices",
+      "basis": "Established in the 'Calibrate Before Use' paper, which measured accuracy swings from example ordering and formatting alone."
     },
     {
       "id": "capability-elicitation-lags-training",
@@ -1456,7 +1678,9 @@
         "capabilities",
         "elicitation",
         "safety"
-      ]
+      ],
+      "title": "Standard prompting understates a model's real capability ceiling",
+      "basis": "Referenced from Anthropic's Responsible Scaling Policy work on capability elicitation."
     },
     {
       "id": "quantization-preserves-most-benchmark-scores",
@@ -1482,7 +1706,9 @@
         "quantization",
         "deployment",
         "inference"
-      ]
+      ],
+      "title": "8/4-bit quantization preserves most benchmark accuracy",
+      "basis": "Measured directly in the SpQR quantization paper, comparing quantized vs. full-precision benchmark scores."
     },
     {
       "id": "coding-agents-produce-plausible-but-hallucinated-apis",
@@ -1499,16 +1725,25 @@
           "title": "Hallucinations in Code Generation",
           "source_name": "arXiv",
           "published": "2023-08"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2509.22202",
+          "title": "Library Hallucinations in LLM-Generated Code: A Risk Analysis Grounded in Developer Queries",
+          "source_name": "arXiv",
+          "published": "2025-09"
         }
       ],
       "first_seen": "2023-08",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Any LLM-suggested import or API call must be validated against the actual library documentation for the pinned version.",
       "tags": [
         "coding-agents",
         "hallucination",
         "apis"
-      ]
+      ],
+      "title": "Coding agents hallucinate plausible but nonexistent APIs",
+      "basis": "Measured in an academic study of code-generation hallucination rates against real library/version ground truth."
     },
     {
       "id": "diff-review-catches-more-than-full-file-review",
@@ -1534,7 +1769,9 @@
         "code-review",
         "diffs",
         "coding-agents"
-      ]
+      ],
+      "title": "Diff review catches more LLM-introduced defects than full-file review",
+      "basis": "Derived from a GitClear study on AI's impact on developer productivity, comparing defect detection across review styles."
     },
     {
       "id": "model-internal-refusal-is-not-a-security-boundary",
@@ -1560,7 +1797,9 @@
       "first_seen": "2026-08-29",
       "last_reviewed": "2026-08-29",
       "guidance": "Layer runtime guardrails, destination allow-lists, and planner/reader capability isolation in front of any deployed LLM; treat built-in refusal as best-effort UX safety, not an access-control boundary.",
-      "scope": "Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings."
+      "scope": "Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.",
+      "title": "Built-in model refusal is not a security boundary",
+      "basis": "Two independent 2026 mechanistic-interpretability findings: a neuron-level probing study locating refusal in ~0.014% of neurons, and a semantic-reframing study bypassing refusal at 100%."
     }
   ]
 }

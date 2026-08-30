@@ -352,6 +352,7 @@
   .claim h4 { font-family: var(--sans); font-size: 17px; font-weight: 600; line-height: 1.35;
     margin: 8px 0 0; letter-spacing: -.005em; color: var(--ink); }
   .claim.retired h4 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 500; }
+  .claim .desc { color: var(--ink-2); margin: 6px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide { color: var(--ink-2); margin: 8px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide b { color: var(--ink); }
   .claim .basis { color: var(--ink-2); margin: 8px 0 0; padding: 8px 10px; background: var(--paper-2);
@@ -850,7 +851,7 @@
     if (top) {
       out += '<div class="reversal"><div class="kick">Most recent reversal &nbsp;·&nbsp; ' +
         esc(top.superseded_on || "") + '</div>' +
-        '<p class="old" style="margin:6px 0">' + txt(top.statement) + '</p>' +
+        '<p class="old" style="margin:6px 0">' + txt(top.title || top.statement) + '</p>' +
         '<p style="margin:0;font-size:14px">' + txt(top.supersession_reason || "") + '</p></div>';
     }
     out += '<p style="margin:10px 0 0"><a class="link" href="#claims" data-goto="claims">Open the full ledger &#8594;</a></p>';
@@ -1017,10 +1018,18 @@
       ? '<p class="guide"><b>Why it fell.</b> ' + txt(c.supersession_reason) +
         (c.superseded_on ? ' <span style="color:var(--ink-3)">(' + esc(c.superseded_on) + ')</span>' : '') + '</p>'
       : "";
-    // scope carries the method/limits behind the claim - the part that
-    // answers "why was this claimed" - so it's surfaced as its own block
-    // rather than left implicit.
-    var basis = c.scope ? '<p class="basis"><b>Basis &amp; scope.</b> ' + txt(c.scope) + '</p>' : "";
+    // title is a concise headline; statement is the full claim, rendered as a
+    // description underneath it so a reader gets the short version first and
+    // the precise wording on demand. Older claims (or test fixtures) without
+    // a title fall back to using the statement as the headline directly.
+    var title = c.title || c.statement;
+    var desc = (c.title && c.title !== c.statement)
+      ? '<p class="desc">' + txt(c.statement) + '</p>' : "";
+    // basis answers "why was this claimed" (the method/evidence type); scope
+    // answers "under what conditions does it hold." Two distinct questions,
+    // two distinct blocks.
+    var basis = c.basis ? '<p class="basis"><b>Basis.</b> ' + txt(c.basis) + '</p>' : "";
+    var conditions = c.scope ? '<p class="basis"><b>Conditions.</b> ' + txt(c.scope) + '</p>' : "";
     var evHtml = claimEvidenceHTML(c.evidence);
     return '<div class="claim st-' + esc(c.status) + ' ' + (isRetired(c) ? 'retired' : '') + '">' +
       '<div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
@@ -1028,8 +1037,10 @@
         (c.confidence != null ? '<span class="conf-pill">' + Math.round(c.confidence * 100) + '% confidence</span>' : '') +
         (c.domain ? '<span style="color:var(--ink-3);font-size:12px">' + txt(c.domain) + '</span>' : '') +
       '</div>' +
-      '<h4>' + txt(c.statement) + '</h4>' +
+      '<h4>' + txt(title) + '</h4>' +
+      desc +
       basis +
+      conditions +
       (c.guidance && !isRetired(c) ? '<p class="guide"><b>Do.</b> ' + txt(c.guidance) + '</p>' : "") +
       reason +
       (meta.length ? '<div class="cmeta">' + meta.map(function (m) { return '<span>' + m + '</span>'; }).join("") + '</div>' : "") +

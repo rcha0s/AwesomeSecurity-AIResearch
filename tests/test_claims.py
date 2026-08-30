@@ -83,6 +83,69 @@ def test_evidence_needs_a_url_and_a_known_stance():
     assert any("stance" in e for e in errors)
 
 
+# --- Evidence currency: catch stale citations on fast-moving claims ---------
+def test_agent_era_claim_with_only_undated_generic_evidence_is_flagged():
+    """Regression guard for ssrf-guards-must-cover-agent-outbound-calls: an
+    agent/MCP-specific claim backed only by a generic, undated pre-agent
+    reference should fail validation, not silently ship."""
+    claim = make_claim(
+        statement=(
+            "SSRF guards on user-input URLs are not sufficient for agent "
+            "applications: the agent can be steered into making outbound "
+            "calls from tool responses, retrieval results, or MCP metadata."
+        ),
+        evidence=[{"stance": "supports", "url": "https://owasp.org/x", "title": "SSRF (OWASP)"}],
+    )
+    errors = claims.validate_claim(claim, {claim["id"]})
+    assert any("agent/LLM-era" in e for e in errors)
+
+
+def test_agent_era_claim_with_a_modern_dated_source_is_not_flagged():
+    claim = make_claim(
+        statement="MCP tool metadata can inject instructions into an agent.",
+        evidence=[
+            {"stance": "supports", "url": "https://example.com/a", "published": "2025-03-01"}
+        ],
+    )
+    assert claims.validate_claim(claim, {claim["id"]}) == []
+
+
+def test_retired_agent_era_claim_is_exempt_from_the_currency_check():
+    """A superseded/refuted claim's evidence is frozen on purpose — it's a
+    record of what was believed at the time, not something to keep fresh."""
+    claim = make_claim(
+        statement="Agents using MCP tools are inherently safe from injection.",
+        status="refuted",
+        evidence=[{"stance": "refutes", "url": "https://example.com/old"}],
+        superseded_by=["something-newer"],
+        superseded_on="2026-01-01",
+        supersession_reason="Shown false.",
+    )
+    errors = claims.validate_claim(claim, {claim["id"], "something-newer"})
+    assert not any("agent/LLM-era" in e for e in errors)
+
+
+def test_claim_without_agent_era_terms_is_exempt_from_the_currency_check():
+    claim = make_claim(
+        statement="Canonicalize a user-derived file path before checking it stays in-sandbox.",
+        evidence=[{"stance": "supports", "url": "https://cwe.mitre.org/data/definitions/22.html"}],
+    )
+    assert claims.validate_claim(claim, {claim["id"]}) == []
+
+
+def test_the_live_claim_ledger_has_no_stale_agent_era_evidence():
+    """The actual gate: every claim committed to data/claims.json must pass
+    the currency check, independent of any sandboxing. Run as part of the
+    normal test suite so a claim added or edited without a modern, on-topic
+    source fails CI before it reaches prod."""
+    import json
+    from pathlib import Path
+
+    real_path = Path(__file__).resolve().parent.parent / "data" / "claims.json"
+    ledger = json.loads(real_path.read_text(encoding="utf-8"))
+    assert claims.validate_ledger(ledger) == []
+
+
 # --- Status / edge consistency ---------------------------------------------
 def test_superseded_claim_must_name_its_successor_and_reason():
     claim = make_claim(status="superseded")

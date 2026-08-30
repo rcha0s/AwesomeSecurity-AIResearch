@@ -94,6 +94,53 @@ def evidence_by_stance(claim: dict, stance: str) -> list[dict]:
 
 
 # --- Validation -------------------------------------------------------------
+
+# A live claim whose statement invokes a fast-moving, recent domain (agents,
+# MCP, LLM-specific attack surface) needs at least one evidence item dated in
+# that era. Without one, the citation risks being a generic pre-agent
+# reference that doesn't actually corroborate the specific mechanism being
+# claimed — exactly the failure mode found in
+# ssrf-guards-must-cover-agent-outbound-calls, an agent/MCP-specific claim
+# whose only evidence was the undated, pre-2020 generic OWASP SSRF page.
+# Retired claims are exempt: their evidence is frozen on purpose, as a record
+# of what was believed at the time.
+MODERN_AI_TERMS = re.compile(
+    r"\bmcp\b|\bagents?\b|\bagentic\b|tool[- ](calls?|responses?|selection|descriptions?)"
+    r"|retrieval[- ]augmented|\brag\b|coding[- ](agents?|assistants?)|prompt injection"
+    r"|\bllms?\b|chatbot|jailbreak|ai[- ]generated|llm-generated",
+    re.IGNORECASE,
+)
+MODERN_EVIDENCE_CUTOFF_YEAR = 2024
+
+
+def _evidence_years(claim: dict) -> list[int]:
+    years = []
+    for item in claim.get("evidence") or []:
+        if not isinstance(item, dict):
+            continue
+        match = re.match(r"(\d{4})", str(item.get("published") or ""))
+        if match:
+            years.append(int(match.group(1)))
+    return years
+
+
+def _validate_evidence_currency(claim: dict) -> list[str]:
+    """A live claim describing agent/LLM-era concepts needs at least one
+    evidence item dated in that era — see MODERN_AI_TERMS docstring above."""
+    if claim.get("status") not in LIVE_STATUSES:
+        return []
+    text = f"{claim.get('statement') or ''} {' '.join(claim.get('tags') or [])}"
+    if not MODERN_AI_TERMS.search(text):
+        return []
+    if any(year >= MODERN_EVIDENCE_CUTOFF_YEAR for year in _evidence_years(claim)):
+        return []
+    return [
+        f"statement references agent/LLM-era concepts but no evidence item is dated "
+        f"{MODERN_EVIDENCE_CUTOFF_YEAR} or later — the citation may predate the specific "
+        "mechanism claimed; add a dated, on-topic source"
+    ]
+
+
 def _validate_evidence(claim: dict) -> list[str]:
     evidence = claim.get("evidence")
     if not isinstance(evidence, list) or not evidence:
@@ -168,6 +215,7 @@ def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
     return (
         errors
         + _validate_evidence(claim)
+        + _validate_evidence_currency(claim)
         + _validate_status(claim)
         + _validate_edges(claim, known_ids)
     )
