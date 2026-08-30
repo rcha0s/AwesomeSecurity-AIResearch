@@ -392,7 +392,8 @@ def _claims_index() -> list[str]:
         top = latest[0]
         lines += [
             "",
-            f"**Most recent reversal** ({top.get('superseded_on')}): ~~{top['statement']}~~  ",
+            f"**Most recent reversal** ({top.get('superseded_on')}): "
+            f"~~{top.get('title') or top['statement']}~~  ",
             f"↳ {top.get('supersession_reason', '')}",
         ]
     return lines + [""]

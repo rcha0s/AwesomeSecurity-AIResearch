@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_16 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-29_
+_16 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-30_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -12,9 +12,13 @@ _16 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-29_
 
 <a id="claim-pickle-based-model-formats-are-code-execution"></a>
 
-### Loading a pickle-based model file (PyTorch .pt/.bin) is equivalent to running arbitrary code; the format has no sandbox and no way to introspect what will execute at load time short of manual reversing.
+### Loading a pickle model file is arbitrary code execution
 
 `pickle-based-model-formats-are-code-execution` · confidence **0.95** · Model Supply Chain · standing since Mar 2021
+
+Loading a pickle-based model file (PyTorch .pt/.bin) is equivalent to running arbitrary code; the format has no sandbox and no way to introspect what will execute at load time short of manual reversing.
+
+**Basis —** A structural property of the pickle format itself, documented by the original Trail of Bits exploitation writeup and Hugging Face's own pickle-scanning security docs.
 
 **Do this —** Prefer safetensors for any model you didn't personally train. If you must load pickles, do it in a container with no outbound network.
 
@@ -31,9 +35,13 @@ _Tags: `pickle`, `supply-chain`, `safetensors`_
 
 <a id="claim-prompt-injection-is-a-permanent-attack-surface"></a>
 
-### LLM applications that mix trusted instructions with untrusted input are permanently vulnerable to instruction hijacking; the surface cannot be closed by prompt engineering alone.
+### Mixing trusted and untrusted input is permanently exploitable
 
 `prompt-injection-is-a-permanent-attack-surface` · confidence **0.90** · Prompt Injection · standing since Feb 2023
+
+LLM applications that mix trusted instructions with untrusted input are permanently vulnerable to instruction hijacking; the surface cannot be closed by prompt engineering alone.
+
+**Basis —** Converging evidence over three years: the original Dual-LLM threat model, an early academic demonstration against production LLM apps, and a 2026 study finding the same hijack pattern across six coding harnesses.
 
 **Do this —** Design agentic systems assuming injection succeeds sometimes: least-privilege tool scopes, human approval on irreversible actions, blast-radius caps that hold even when the model is fooled.
 
@@ -51,9 +59,13 @@ _Tags: `prompt-injection`, `threat-model`, `agents`_
 
 <a id="claim-indirect-injection-via-retrieved-content-is-viable"></a>
 
-### Indirect prompt injection — hostile instructions embedded in documents, web pages, or tool outputs that the LLM reads at run time — is a demonstrated attack vector against real production LLM assistants.
+### Indirect injection via retrieved content is a real vector
 
 `indirect-injection-via-retrieved-content-is-viable` · confidence **0.90** · Prompt Injection · standing since Feb 2023
+
+Indirect prompt injection — hostile instructions embedded in documents, web pages, or tool outputs that the LLM reads at run time — is a demonstrated attack vector against real production LLM assistants.
+
+**Basis —** Demonstrated against a real production assistant (GitHub Copilot Chat) plus the original academic paper on indirect injection in LLM-integrated apps.
 
 **Do this —** Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.
 
@@ -70,13 +82,17 @@ _Tags: `prompt-injection`, `rag`, `indirect`_
 
 <a id="claim-sandbox-model-deserialization"></a>
 
-### Prefer non-executable model formats and sandbox deserialization of any third-party model — a clean scanner result is weak evidence of safety.
+### Scanners alone aren't enough — sandbox deserialization too
 
 `sandbox-model-deserialization` · confidence **0.85** · Model Supply Chain · standing since Jul 20, 2026
 
+Prefer non-executable model formats and sandbox deserialization of any third-party model — a clean scanner result is weak evidence of safety.
+
+**Basis —** A single research disclosure (ShadowPickle) demonstrated pickle-VM import tricks evading ten scanners and four model hubs simultaneously.
+
 **Do this —** Load third-party weights only in a sandbox, prefer safetensors-style non-executable formats, and treat scanner output as one signal rather than an admission gate.
 
-**Replaces** [`model-scanners-are-sufficient-for-supply-chain`](#claim-model-scanners-are-sufficient-for-supply-chain) — A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.
+**Replaces** [`model-scanners-are-sufficient-for-supply-chain`](#claim-model-scanners-are-sufficient-for-supply-chain) — Assumed a clean scanner result meant a model was safe
 
 _Tags: `model-supply-chain`, `deserialization`, `scanning`_
 
@@ -90,15 +106,19 @@ _Tags: `model-supply-chain`, `deserialization`, `scanning`_
 
 <a id="claim-prompt-injection-is-containment-not-prevention"></a>
 
-### Prompt injection cannot be fully solved by context-based filtering: for any blocked flow an adversary can construct a context in which it appears legitimate.
+### Prompt injection can't be closed by filtering alone
 
 `prompt-injection-is-containment-not-prevention` · confidence **0.85** · Prompt Injection · standing since May 2026
 
+Prompt injection cannot be fully solved by context-based filtering: for any blocked flow an adversary can construct a context in which it appears legitimate.
+
+**Basis —** A formal impossibility argument plus large-scale red-teaming — a 78-study meta-analysis and a dedicated agentic red-team study — showing the vulnerability persists across model families and defenses.
+
 **Do this —** Design for containment rather than prevention: least-privilege tool scopes, human approval on irreversible actions, provenance tracking of untrusted context, and blast-radius limits that hold even when the model is fooled.
 
-**Limits —** An impossibility argument about context-inferred legitimacy, not a claim that defenses are worthless — layered defenses still raise cost and catch known patterns.
+**Conditions —** An impossibility argument about context-inferred legitimacy, not a claim that defenses are worthless — layered defenses still raise cost and catch known patterns.
 
-**Replaces** [`prompt-injection-solvable-by-filtering`](#claim-prompt-injection-solvable-by-filtering) — Prompt injection is fundamentally a filtering problem — a good input classifier plus an instruction-hierarchy system prompt solves it.
+**Replaces** [`prompt-injection-solvable-by-filtering`](#claim-prompt-injection-solvable-by-filtering) — Assumed a good classifier plus instruction hierarchy solves injection
 
 _Tags: `prompt-injection`, `agents`, `threat-model`_
 
@@ -115,9 +135,13 @@ _Tags: `prompt-injection`, `agents`, `threat-model`_
 
 <a id="claim-mcp-tool-descriptions-are-a-prompt-injection-surface"></a>
 
-### MCP tool descriptions are consumed by the model as part of the system prompt; a hostile MCP server can inject instructions via tool metadata alone, without needing the tool to be called.
+### MCP tool metadata alone can inject instructions
 
 `mcp-tool-descriptions-are-a-prompt-injection-surface` · confidence **0.85** · MCP & Tools · standing since Mar 2025
+
+MCP tool descriptions are consumed by the model as part of the system prompt; a hostile MCP server can inject instructions via tool metadata alone, without needing the tool to be called.
+
+**Basis —** First documented in Invariant Labs' tool-poisoning-attack disclosure, showing tool descriptions reach the model as system-prompt content without the tool being called.
 
 **Do this —** Version-pin and change-review every MCP tool description. Treat metadata updates as system-prompt changes requiring re-approval.
 
@@ -133,9 +157,13 @@ _Tags: `mcp`, `prompt-injection`, `tool-poisoning`_
 
 <a id="claim-long-term-memory-is-a-cross-session-poisoning-vector"></a>
 
-### Once an LLM assistant persists user-provided information to a long-term memory store, adversarial content can be planted in one session and reliably retrieved into a future session, producing effects that outlast the poisoning conversation.
+### Long-term memory lets injection outlast its session
 
 `long-term-memory-is-a-cross-session-poisoning-vector` · confidence **0.85** · Memory & Context Poisoning · standing since Sep 2024
+
+Once an LLM assistant persists user-provided information to a long-term memory store, adversarial content can be planted in one session and reliably retrieved into a future session, producing effects that outlast the poisoning conversation.
+
+**Basis —** Demonstrated directly against a production assistant's memory feature in a disclosed proof-of-concept.
 
 **Do this —** Gate what enters long-term memory with a policy check, not a post-hoc filter. Treat memory writes as security-relevant.
 
@@ -151,9 +179,13 @@ _Tags: `memory`, `persistence`, `prompt-injection`_
 
 <a id="claim-agent-memory-is-a-persistent-attack-surface"></a>
 
-### Poisoned preferences and instructions persist in agent long-term memory across sessions and resist normal in-conversation correction.
+### Poisoned agent memory persists and resists correction
 
 `agent-memory-is-a-persistent-attack-surface` · confidence **0.80** · Memory & Context Poisoning · standing since Jun 2026
+
+Poisoned preferences and instructions persist in agent long-term memory across sessions and resist normal in-conversation correction.
+
+**Basis —** Three independent 2026 papers converge on the same result across coding-preference poisoning, self-state/syscall-level corruption, and cross-session stored injection.
 
 **Do this —** Validate what is allowed to ENTER memory rather than trying to argue it out later. Treat an agent's memory and config files as protected assets with their own access control, change review, and backups.
 
@@ -171,9 +203,13 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 <a id="claim-typosquatting-on-model-hubs-is-active"></a>
 
-### Adversaries publish typosquatted model repositories on public hubs (name variants of popular models) that ship with malicious pickle payloads or exfiltration hooks; several have been observed in the wild on Hugging Face.
+### Typosquatted model repos with backdoors are live on hubs
 
 `typosquatting-on-model-hubs-is-active` · confidence **0.75** · Model Supply Chain · standing since Feb 2024
+
+Adversaries publish typosquatted model repositories on public hubs (name variants of popular models) that ship with malicious pickle payloads or exfiltration hooks; several have been observed in the wild on Hugging Face.
+
+**Basis —** Observed in the wild: a documented case of malicious typosquatted models with silent backdoors actually published on Hugging Face.
 
 **Do this —** Pin model artifacts by revision hash, not by name. Verify the model card against the vendor's known channels.
 
@@ -189,9 +225,13 @@ _Tags: `typosquatting`, `supply-chain`, `huggingface`_
 
 <a id="claim-llm-eval-datasets-leak-into-training-sets"></a>
 
-### Public benchmark datasets used to evaluate LLM security leak into the training corpora of later models, inflating scores without corresponding capability change.
+### Public eval datasets leak into later training corpora
 
 `llm-eval-datasets-leak-into-training-sets` · confidence **0.75** · Evaluation · standing since Nov 2023
+
+Public benchmark datasets used to evaluate LLM security leak into the training corpora of later models, inflating scores without corresponding capability change.
+
+**Basis —** Measured via a data-contamination quiz methodology comparing model performance on published vs. held-out benchmark items.
 
 **Do this —** Rotate held-out red-team prompts; treat any published adversarial dataset as compromised for future models.
 
@@ -207,13 +247,17 @@ _Tags: `evaluation`, `contamination`, `benchmarks`_
 
 <a id="claim-model-internal-refusal-is-not-a-security-boundary"></a>
 
-### A model's built-in refusal/alignment is not a security boundary: refusal behavior is concentrated in a fragile thin neuron layer and collapses when an unsafe request is semantically reframed, so it must be backed by external, payload-blind controls.
+### Built-in model refusal is not a security boundary
 
 `model-internal-refusal-is-not-a-security-boundary` · confidence **0.70** · LLM Red-Teaming · standing since Aug 29, 2026
 
+A model's built-in refusal/alignment is not a security boundary: refusal behavior is concentrated in a fragile thin neuron layer and collapses when an unsafe request is semantically reframed, so it must be backed by external, payload-blind controls.
+
+**Basis —** Two independent 2026 mechanistic-interpretability findings: a neuron-level probing study locating refusal in ~0.014% of neurons, and a semantic-reframing study bypassing refusal at 100%.
+
 **Do this —** Layer runtime guardrails, destination allow-lists, and planner/reader capability isolation in front of any deployed LLM; treat built-in refusal as best-effort UX safety, not an access-control boundary.
 
-**Limits —** Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.
+**Conditions —** Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.
 
 <details><summary>Evidence (2)</summary>
 
@@ -226,13 +270,17 @@ _Tags: `evaluation`, `contamination`, `benchmarks`_
 
 <a id="claim-provider-guardrails-can-block-incident-response"></a>
 
-### Commercial provider safety guardrails can refuse to assist during a real security incident, at exactly the moment you need the model most.
+### Provider guardrails can block incident response mid-breach
 
 `provider-guardrails-can-block-incident-response` · confidence **0.70** · Harness & Agent Security · standing since Jul 19, 2026
 
+Commercial provider safety guardrails can refuse to assist during a real security incident, at exactly the moment you need the model most.
+
+**Basis —** A single documented case from a live incident-response postmortem during a real agentic intrusion — an observed incident, not a controlled study.
+
 **Do this —** Pre-stage a local open-weight forensic model so breach response does not depend on a provider's refusal behavior, and test that path before you need it.
 
-**Limits —** Observed during a live agentic intrusion response. This is about availability of assistance under refusal, not about whether guardrails reduce harm overall.
+**Conditions —** Observed during a live agentic intrusion response. This is about availability of assistance under refusal, not about whether guardrails reduce harm overall.
 
 _Tags: `guardrails`, `incident-response`, `availability`_
 
@@ -246,9 +294,13 @@ _Tags: `guardrails`, `incident-response`, `availability`_
 
 <a id="claim-agent-tool-selection-can-be-steered-by-untrusted-context"></a>
 
-### An agent's tool selection can be influenced by content in its context window; adversarial content in retrieved documents can cause the agent to prefer a hostile tool over the intended one.
+### Untrusted context can steer which tool an agent picks
 
 `agent-tool-selection-can-be-steered-by-untrusted-context` · confidence **0.70** · MCP & Tools · standing since Jul 2024
+
+An agent's tool selection can be influenced by content in its context window; adversarial content in retrieved documents can cause the agent to prefer a hostile tool over the intended one.
+
+**Basis —** Established by the original 'Prompt Injection Attacks on Agentic Systems' paper, measuring tool-selection manipulation via adversarial retrieved content.
 
 **Do this —** Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.
 
@@ -264,9 +316,13 @@ _Tags: `tool-selection`, `prompt-injection`, `agents`_
 
 <a id="claim-jailbreak-transfers-across-models"></a>
 
-### Adversarial suffixes crafted against one aligned model transfer with non-trivial success to other models of similar family, including closed-source ones.
+### Adversarial jailbreak suffixes transfer across models
 
 `jailbreak-transfers-across-models` · confidence **0.70** · Prompt Injection · standing since Jul 2023
+
+Adversarial suffixes crafted against one aligned model transfer with non-trivial success to other models of similar family, including closed-source ones.
+
+**Basis —** Established by the original universal-adversarial-suffix paper, which measured transfer success across multiple aligned models including closed-source ones.
 
 **Do this —** Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.
 
@@ -282,9 +338,13 @@ _Tags: `jailbreak`, `adversarial`, `transfer`_
 
 <a id="claim-dual-llm-pattern-mitigates-injection-blast-radius"></a>
 
-### Splitting agent architecture into a privileged planner LLM that never sees untrusted input, and a quarantined LLM that processes untrusted input but has no tool access, contains prompt injection to non-privileged operations.
+### Planner/reader split contains prompt-injection blast radius
 
 `dual-llm-pattern-mitigates-injection-blast-radius` · confidence **0.70** · Prompt Injection · standing since Apr 2023
+
+Splitting agent architecture into a privileged planner LLM that never sees untrusted input, and a quarantined LLM that processes untrusted input but has no tool access, contains prompt injection to non-privileged operations.
+
+**Basis —** Originates from Willison's Dual-LLM design pattern; corroborated by a 2026 study finding capability-isolating planner/reader splits are what actually stops reframed exfiltration.
 
 **Do this —** For high-authority agents, use a two-tier architecture: the planner sees only tool schemas + user intent; the reader/quarantined LLM sees untrusted content and returns structured summaries the planner cannot execute as commands.
 
@@ -301,9 +361,13 @@ _Tags: `defense`, `architecture`, `dual-llm`_
 
 <a id="claim-constitutional-ai-reduces-refusal-brittleness"></a>
 
-### Constitutional AI-style training (self-critique + revision against a written set of principles) reduces the fragility of hand-tuned refusal training and gives the training process an inspectable specification.
+### Constitutional AI training gives an inspectable refusal spec
 
 `constitutional-ai-reduces-refusal-brittleness` · confidence **0.65** · Alignment · standing since Dec 2022
+
+Constitutional AI-style training (self-critique + revision against a written set of principles) reduces the fragility of hand-tuned refusal training and gives the training process an inspectable specification.
+
+**Basis —** Established directly in Anthropic's original Constitutional AI paper, comparing self-critique/revision training against hand-tuned RLHF refusal.
 
 **Do this —** Prefer alignment techniques with a written, auditable spec over hand-tuned refusal datasets you can't inspect.
 
@@ -323,13 +387,17 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 
 <a id="claim-provenance-auditing-defends-context-aware-injection"></a>
 
-### Provenance-aware decision auditing — tracking how untrusted context propagates into an agent's decisions — is an effective defense against context-aware prompt injection.
+### Provenance auditing may blunt context-aware injection
 
 `provenance-auditing-defends-context-aware-injection` · confidence **0.50** · Prompt Injection · standing since May 2026
 
+Provenance-aware decision auditing — tracking how untrusted context propagates into an agent's decisions — is an effective defense against context-aware prompt injection.
+
+**Basis —** One paper (ARGUS) demonstrates a provenance-graph defense on benchmark tasks; a separate impossibility-argument paper contests that any context-based defense can be complete — unresolved.
+
 **Do this —** Worth piloting as a layer, but do not treat it as a boundary: keep least-privilege scopes and approval gates behind it.
 
-**Limits —** Open question. The defense is demonstrated on specific benchmarks; the impossibility argument says no context-based defense can be complete. Both can be true — the unresolved part is how much residual risk remains in practice.
+**Conditions —** Open question. The defense is demonstrated on specific benchmarks; the impossibility argument says no context-based defense can be complete. Both can be true — the unresolved part is how much residual risk remains in practice.
 
 _Tags: `prompt-injection`, `defenses`, `provenance`_
 
@@ -348,13 +416,15 @@ _Tags: `prompt-injection`, `defenses`, `provenance`_
 
 <a id="claim-model-scanners-are-sufficient-for-supply-chain"></a>
 
-### ~~A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.~~
+### ~~Assumed a clean scanner result meant a model was safe~~
 
 `model-scanners-are-sufficient-for-supply-chain` · **refuted** on Jul 20, 2026 · had stood since Jun 2024
 
+A clean model-scanner result is adequate evidence that a third-party model artifact is safe to load.
+
 **Why it was retired —** Pickle-VM import tricks evaded ten separate model scanners and four model hubs. A clean scan result no longer distinguishes a safe artifact from an evasive one, so scanning cannot be the admission gate.
 
-**Replaced by** [`sandbox-model-deserialization`](#claim-sandbox-model-deserialization) — Prefer non-executable model formats and sandbox deserialization of any third-party model — a clean scanner result is weak evidence of safety.
+**Replaced by** [`sandbox-model-deserialization`](#claim-sandbox-model-deserialization) — Scanners alone aren't enough — sandbox deserialization too
 
 <details><summary>Evidence (1)</summary>
 
@@ -366,13 +436,15 @@ _Tags: `prompt-injection`, `defenses`, `provenance`_
 
 <a id="claim-prompt-injection-solvable-by-filtering"></a>
 
-### ~~Prompt injection is fundamentally a filtering problem — a good input classifier plus an instruction-hierarchy system prompt solves it.~~
+### ~~Assumed a good classifier plus instruction hierarchy solves injection~~
 
 `prompt-injection-solvable-by-filtering` · **refuted** on May 2026 · had stood since May 2023
 
+Prompt injection is fundamentally a filtering problem — a good input classifier plus an instruction-hierarchy system prompt solves it.
+
 **Why it was retired —** Impossibility result: an adversary can always construct a context under which a blocked flow looks legitimate, and a defender who tightens norms to stop it starts blocking genuinely legitimate flows. Large-scale red teaming confirmed the vulnerability persists across model families, so filtering is a cost-raiser, not a solution.
 
-**Replaced by** [`prompt-injection-is-containment-not-prevention`](#claim-prompt-injection-is-containment-not-prevention) — Prompt injection cannot be fully solved by context-based filtering: for any blocked flow an adversary can construct a context in which it appears legitimate.
+**Replaced by** [`prompt-injection-is-containment-not-prevention`](#claim-prompt-injection-is-containment-not-prevention) — Prompt injection can't be closed by filtering alone
 
 <details><summary>Evidence (2)</summary>
 

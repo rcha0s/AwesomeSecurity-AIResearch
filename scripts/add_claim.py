@@ -88,7 +88,7 @@ def cmd_new(args: argparse.Namespace) -> int:
         "first_seen": args.first_seen or today(),
         "last_reviewed": today(),
     }
-    for key in ("guidance", "scope"):
+    for key in ("title", "basis", "guidance", "scope"):
         if getattr(args, key):
             claim[key] = getattr(args, key)
     if args.tags:
@@ -207,6 +207,8 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("id", help="kebab-case stable id")
     new.add_argument("--topic", required=True, choices=list(c.TOPICS))
     new.add_argument("--statement", required=True, help="the claim, as one sentence")
+    new.add_argument("--title", help="concise headline (~5-10 words) shown on the claim card")
+    new.add_argument("--basis", help="the method/evidence type that established this (e.g. 'benchmarked head-to-head')")
     new.add_argument("--domain", default="")
     new.add_argument("--guidance", help="what a practitioner should DO about it")
     new.add_argument("--scope", help="boundary conditions / where it does not apply")
