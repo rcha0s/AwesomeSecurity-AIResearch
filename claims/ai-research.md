@@ -24,11 +24,12 @@ Coding assistants generate calls to functions and APIs that do not exist in the 
 
 _Tags: `coding-agents`, `hallucination`, `apis`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Hallucinations in Code Generation](https://arxiv.org/abs/2308.07922) | Aug 2023 |
+| supports | [Library Hallucinations in LLM-Generated Code: A Risk Analysis Grounded in Developer Queries](https://arxiv.org/abs/2509.22202) | Sep 2025 |
 
 </details>
 
@@ -94,11 +95,12 @@ Long-context models do not eliminate the need for retrieval: they exhibit lost-i
 
 _Tags: `long-context`, `rag`, `lost-in-the-middle`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Lost in the Middle](https://arxiv.org/abs/2307.03172) | Jul 2023 |
+| supports | [Context Length Alone Hurts LLM Performance Despite Perfect Retrieval](https://arxiv.org/abs/2510.05381) | Oct 2025 |
 
 </details>
 
@@ -116,11 +118,12 @@ Hybrid search (BM25 + dense vectors) outperforms pure vector retrieval on most e
 
 _Tags: `rag`, `hybrid-search`, `bm25`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Hybrid Search Explained](https://weaviate.io/blog/hybrid-search-explained) | undated |
+| supports | [From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents](https://arxiv.org/abs/2604.01733) | Apr 2026 |
 
 </details>
 
@@ -234,11 +237,12 @@ In production RAG systems, retrieval quality dominates generation quality as a d
 
 _Tags: `rag`, `retrieval`, `evals`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Retrieval-Augmented Generation for LLMs: A Survey](https://arxiv.org/abs/2312.10997) | Dec 2023 |
+| supports | [Deeper insights into retrieval augmented generation: the role of sufficient context](https://research.google/blog/deeper-insights-into-retrieval-augmented-generation-the-role-of-sufficient-context/) | May 14, 2025 |
 
 </details>
 
@@ -256,11 +260,12 @@ LLM-as-judge evaluators exhibit systematic bias toward longer, more elaborate an
 
 _Tags: `llm-as-judge`, `eval-bias`, `evals`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) | Jun 2023 |
+| supports | [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) | Jun 2025 |
 
 </details>
 
@@ -350,11 +355,12 @@ SWE-bench scores do not linearly predict agent performance on production enginee
 
 _Tags: `evals`, `swe-bench`, `benchmarks`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [SWE-bench](https://arxiv.org/abs/2310.06770) | Oct 2023 |
+| supports | [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) | Jul 10, 2025 |
 
 </details>
 
@@ -372,11 +378,12 @@ Adding more tools to an agent's available set beyond a modest number (roughly 10
 
 _Tags: `agents`, `harness`, `tools`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [ToolLLM](https://arxiv.org/abs/2307.16789) | Jul 2023 |
+| supports | [How Many Tools Should an LLM Agent See? A Chance-Corrected Answer](https://arxiv.org/abs/2605.24660) | Jun 2026 |
 
 </details>
 
@@ -416,11 +423,12 @@ Chain-of-thought accuracy gains measured on single-turn benchmarks do not reliab
 
 _Tags: `chain-of-thought`, `agents`, `evals`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Chain-of-thought reasoning without prompting](https://arxiv.org/abs/2402.10171) | Feb 2024 |
+| supports | [When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories](https://arxiv.org/abs/2608.06057) | Aug 7, 2026 |
 
 </details>
 

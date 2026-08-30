@@ -47,11 +47,12 @@ AWS IMDSv1 is trivially exploitable from any code that can cause an HTTP GET to 
 
 _Tags: `aws`, `imds`, `ssrf`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Get the full benefits of IMDSv2](https://aws.amazon.com/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/) | undated |
+| supports | [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) | Jul 15, 2026 |
 
 </details>
 
@@ -183,11 +184,13 @@ LLMs generate import statements for packages that do not exist ('slopsquatting')
 
 _Tags: `ai-code-risk`, `slopsquatting`, `npm`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [We Have a Package for You! A Comprehensive Analysis of Package Hallucinations](https://arxiv.org/abs/2406.10279) | Jun 2024 |
+| supports | [Phantom Squatting: attackers register the domains LLMs hallucinate](https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/) | Jun 30, 2026 |
+| supports | [AI Coding Agents Skip Package Verification, and Attackers Are Exploiting It](https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm) | Jul 1, 2026 |
 
 </details>
 

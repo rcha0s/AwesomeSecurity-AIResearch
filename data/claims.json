@@ -724,10 +724,17 @@
           "title": "Hacking GitHub Copilot Chat via indirect prompt injection",
           "source_name": "Embrace The Red",
           "published": "2024"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "source_name": "Embrace The Red",
+          "published": "2026-08-26"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
@@ -752,10 +759,17 @@
           "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
           "source_name": "arXiv",
           "published": "2023-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2512.14751",
+          "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+          "source_name": "arXiv",
+          "published": "2025-12"
         }
       ],
       "first_seen": "2023-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.",
       "tags": [
         "jailbreak",
@@ -933,10 +947,17 @@
           "title": "Prompt Injection Attacks on Agentic Systems",
           "source_name": "arXiv",
           "published": "2024-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://checkmarx.com/zero-post/11-emerging-ai-security-risks-with-mcp-model-context-protocol/",
+          "title": "MCP tool poisoning attacks (TPAs) via hidden tool-description metadata",
+          "source_name": "Checkmarx Zero",
+          "published": "2026-02"
         }
       ],
       "first_seen": "2024-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.",
       "tags": [
         "tool-selection",
@@ -961,10 +982,17 @@
           "title": "ChatGPT: Hacking Memories with Prompt Injection",
           "source_name": "Embrace The Red",
           "published": "2024-09"
+        },
+        {
+          "stance": "supports",
+          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
+          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
+          "source_name": "OWASP GenAI Security Project",
+          "published": "2026-05-14"
         }
       ],
       "first_seen": "2024-09",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Gate what enters long-term memory with a policy check, not a post-hoc filter. Treat memory writes as security-relevant.",
       "tags": [
         "memory",
@@ -989,10 +1017,17 @@
           "title": "Data Contamination Quiz",
           "source_name": "arXiv",
           "published": "2023-11"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.07341",
+          "title": "Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination",
+          "source_name": "arXiv",
+          "published": "2026-08-10"
         }
       ],
       "first_seen": "2023-11",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Rotate held-out red-team prompts; treat any published adversarial dataset as compromised for future models.",
       "tags": [
         "evaluation",
@@ -1149,10 +1184,18 @@
           "title": "Get the full benefits of IMDSv2",
           "source_name": "AWS Security Blog",
           "published": "2023"
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "source_name": "GitHub Advisory Database",
+          "published": "2026-07-15",
+          "note": "An unguarded outbound client 302'd to 169.254.169.254 is exactly the IMDSv1 exploitation path this claim describes, demonstrated against a real MCP host process."
         }
       ],
       "first_seen": "2019-11",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Set HttpTokens=required on all EC2 instances hosting agent runtimes.",
       "tags": [
         "aws",
@@ -1217,10 +1260,23 @@
           "title": "We Have a Package for You! A Comprehensive Analysis of Package Hallucinations",
           "source_name": "arXiv",
           "published": "2024-06"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+          "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+          "source_name": "Palo Alto Networks Unit 42",
+          "published": "2026-06-30"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm",
+          "title": "AI Coding Agents Skip Package Verification, and Attackers Are Exploiting It",
+          "published": "2026-07-01"
         }
       ],
       "first_seen": "2024-06",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Every LLM-suggested dependency must be verified against the actual registry before pinning.",
       "tags": [
         "ai-code-risk",
@@ -1307,10 +1363,18 @@
           "title": "ToolLLM",
           "source_name": "arXiv",
           "published": "2023-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2605.24660",
+          "title": "How Many Tools Should an LLM Agent See? A Chance-Corrected Answer",
+          "source_name": "arXiv",
+          "published": "2026-06",
+          "note": "Adaptive tool shortlists improved selection accuracy from 87.1% to 93.1% over always showing a fixed-size list, confirming tool-set size/composition materially affects selection accuracy."
         }
       ],
       "first_seen": "2023-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Curate the tool set. Retire tools whose calls the eval suite shows agents get wrong more than they get right.",
       "tags": [
         "agents",
@@ -1335,10 +1399,17 @@
           "title": "Chain-of-thought reasoning without prompting",
           "source_name": "arXiv",
           "published": "2024-02"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.06057",
+          "title": "When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories",
+          "source_name": "arXiv",
+          "published": "2026-08-07"
         }
       ],
       "first_seen": "2024-02",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Evaluate agents on the multi-turn task, not a single-turn proxy.",
       "tags": [
         "chain-of-thought",
@@ -1363,10 +1434,18 @@
           "title": "Retrieval-Augmented Generation for LLMs: A Survey",
           "source_name": "arXiv",
           "published": "2023-12"
+        },
+        {
+          "stance": "supports",
+          "url": "https://research.google/blog/deeper-insights-into-retrieval-augmented-generation-the-role-of-sufficient-context/",
+          "title": "Deeper insights into retrieval augmented generation: the role of sufficient context",
+          "source_name": "Google Research",
+          "published": "2025-05-14",
+          "note": "Even frontier models fail to abstain on insufficient context and hallucinate confidently instead - generation quality cannot compensate for what retrieval didn't surface."
         }
       ],
       "first_seen": "2023-12",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Invest in retrieval evals (recall@k, reranker quality) before spending on bigger generator models.",
       "tags": [
         "rag",
@@ -1391,10 +1470,18 @@
           "title": "Hybrid Search Explained",
           "source_name": "Weaviate",
           "published": "2024"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2604.01733",
+          "title": "From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents",
+          "source_name": "arXiv",
+          "published": "2026-04",
+          "note": "Hybrid retrieval + reranking beat every single-stage method; BM25 alone beat state-of-the-art dense retrieval on financial documents."
         }
       ],
       "first_seen": "2023-06",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Default to hybrid retrieval unless you've measured that pure-vector wins on your specific corpus.",
       "tags": [
         "rag",
@@ -1419,10 +1506,18 @@
           "title": "Lost in the Middle",
           "source_name": "arXiv",
           "published": "2023-07"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2510.05381",
+          "title": "Context Length Alone Hurts LLM Performance Despite Perfect Retrieval",
+          "source_name": "arXiv",
+          "published": "2025-10",
+          "note": "Performance degrades 13.9-85% as input length grows even when retrieval is perfect - context length itself is a cost independent of retrieval quality."
         }
       ],
       "first_seen": "2023-07",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.",
       "tags": [
         "long-context",
@@ -1447,10 +1542,17 @@
           "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
           "source_name": "arXiv",
           "published": "2023-06"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "source_name": "arXiv",
+          "published": "2025-06"
         }
       ],
       "first_seen": "2023-06",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Cross-check LLM-judge scores with pairwise human eval on a small sample.",
       "tags": [
         "llm-as-judge",
@@ -1475,10 +1577,18 @@
           "title": "SWE-bench",
           "source_name": "arXiv",
           "published": "2023-10"
+        },
+        {
+          "stance": "supports",
+          "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+          "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
+          "source_name": "METR",
+          "published": "2025-07-10",
+          "note": "Randomized trial: experienced developers using AI tools on real tasks in mature repos were 19% slower, despite believing AI made them faster - high benchmark-style capability does not predict production task performance."
         }
       ],
       "first_seen": "2023-10",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Treat SWE-bench as one data point, not a complete picture. Build in-house evals on your task mix.",
       "tags": [
         "evals",
@@ -1615,10 +1725,17 @@
           "title": "Hallucinations in Code Generation",
           "source_name": "arXiv",
           "published": "2023-08"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2509.22202",
+          "title": "Library Hallucinations in LLM-Generated Code: A Risk Analysis Grounded in Developer Queries",
+          "source_name": "arXiv",
+          "published": "2025-09"
         }
       ],
       "first_seen": "2023-08",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-30",
       "guidance": "Any LLM-suggested import or API call must be validated against the actual library documentation for the pinned version.",
       "tags": [
         "coding-agents",

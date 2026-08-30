@@ -71,12 +71,13 @@ Indirect prompt injection — hostile instructions embedded in documents, web pa
 
 _Tags: `prompt-injection`, `rag`, `indirect`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Not what you've signed up for](https://arxiv.org/abs/2302.12173) | Feb 2023 |
 | supports | [Hacking GitHub Copilot Chat via indirect prompt injection](https://embracethered.com/blog/posts/2024/hacking-github-copilot-chat-prompt-injection/) | undated |
+| supports | [Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
 
 </details>
 
@@ -169,11 +170,12 @@ Once an LLM assistant persists user-provided information to a long-term memory s
 
 _Tags: `memory`, `persistence`, `prompt-injection`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [ChatGPT: Hacking Memories with Prompt Injection](https://embracethered.com/blog/posts/2024/chatgpt-hacking-memories/) | Sep 2024 |
+| supports | [MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)](https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/) | May 14, 2026 |
 
 </details>
 
@@ -237,11 +239,12 @@ Public benchmark datasets used to evaluate LLM security leak into the training c
 
 _Tags: `evaluation`, `contamination`, `benchmarks`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Data Contamination Quiz](https://arxiv.org/abs/2311.09783) | Nov 2023 |
+| supports | [Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination](https://arxiv.org/abs/2608.07341) | Aug 10, 2026 |
 
 </details>
 
@@ -306,11 +309,12 @@ An agent's tool selection can be influenced by content in its context window; ad
 
 _Tags: `tool-selection`, `prompt-injection`, `agents`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Prompt Injection Attacks on Agentic Systems](https://arxiv.org/abs/2407.09164) | Jul 2024 |
+| supports | [MCP tool poisoning attacks (TPAs) via hidden tool-description metadata](https://checkmarx.com/zero-post/11-emerging-ai-security-risks-with-mcp-model-context-protocol/) | Feb 2026 |
 
 </details>
 
@@ -328,11 +332,12 @@ Adversarial suffixes crafted against one aligned model transfer with non-trivial
 
 _Tags: `jailbreak`, `adversarial`, `transfer`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043) | Jul 2023 |
+| supports | [One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs](https://arxiv.org/abs/2512.14751) | Dec 2025 |
 
 </details>
 
