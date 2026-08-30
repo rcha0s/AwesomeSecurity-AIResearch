@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Evaluation & Safety  
 **Source:** [source](https://arxiv.org/abs/2608.06422)  ·  **Published:** Aug 5, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 55 · **Composite 60.25**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 55 · **Composite 53.75**  
 **Tags:** `llm-as-judge`, `oversight`, `adversarial`, `evaluation`, `debate`  
 **Verification:** ✓ independently verified · closest prior art: LLM-as-judge bias literature; debate protocols (Irving et al.); ensemble judging.
 

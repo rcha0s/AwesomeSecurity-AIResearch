@@ -293,6 +293,12 @@
           "source_name": "arXiv",
           "published": "2026-01",
           "note": "Meta-analysis of 78 studies; taxonomy includes context-window manipulation as a delivery vector."
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 Auto Mode: a best-effort classifier is not a boundary; OS isolation/egress is",
+          "published": "2026-08-26"
         }
       ],
       "supersedes": [
@@ -304,7 +310,7 @@
         "threat-model"
       ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-08-29",
       "phase": "threat-model"
     },
     {
@@ -639,10 +645,16 @@
           "title": "Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection",
           "source_name": "arXiv",
           "published": "2023-02-23"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.27299",
+          "title": "Instruction privilege escalation: harness context assembly promotes untrusted content to a higher instruction level across six coding harnesses",
+          "published": "2026-08-27"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-29",
       "guidance": "Design agentic systems assuming injection succeeds sometimes: least-privilege tool scopes, human approval on irreversible actions, blast-radius caps that hold even when the model is fooled.",
       "tags": [
         "prompt-injection",
@@ -724,10 +736,16 @@
           "title": "The Dual LLM pattern",
           "source_name": "Simon Willison",
           "published": "2023-04"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.27092",
+          "title": "The Framing Gap: only a capability-isolating planner/reader split (and destination allow-lists) stop reframed exfiltration",
+          "published": "2026-08-27"
         }
       ],
       "first_seen": "2023-04",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-29",
       "guidance": "For high-authority agents, use a two-tier architecture: the planner sees only tool schemas + user intent; the reader/quarantined LLM sees untrusted content and returns structured summaries the planner cannot execute as commands.",
       "tags": [
         "defense",
@@ -1073,10 +1091,22 @@
           "title": "Workload identity federation",
           "source_name": "Google Cloud",
           "published": "2022"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
+          "title": "Token jacking: stolen AI API keys resold via gray-market transfer stations, ~$1M losses",
+          "published": "2026-08-06"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
+          "title": "Attackers harvest gateway secrets from /proc/1/environ on compromised LiteLLM AI infrastructure",
+          "published": "2026-08-26"
         }
       ],
       "first_seen": "2021-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-29",
       "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users.",
       "tags": [
         "aws",
@@ -1125,10 +1155,16 @@
           "title": "Using LLMs to obfuscate malicious JavaScript",
           "source_name": "Unit 42",
           "published": "2024"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
+          "title": "State of AI-Enabled Malware: ~97% of samples never reach production; AI changes authoring not execution",
+          "published": "2026-08-25"
         }
       ],
       "first_seen": "2024-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-08-29",
       "guidance": "Weight EDR and behavioral analytics over hash-based feeds for AI-authored threat classes.",
       "tags": [
         "malware",
@@ -1499,6 +1535,32 @@
         "diffs",
         "coding-agents"
       ]
+    },
+    {
+      "id": "model-internal-refusal-is-not-a-security-boundary",
+      "topic": "ai-security",
+      "domain": "LLM Red-Teaming",
+      "statement": "A model's built-in refusal/alignment is not a security boundary: refusal behavior is concentrated in a fragile thin neuron layer and collapses when an unsafe request is semantically reframed, so it must be backed by external, payload-blind controls.",
+      "status": "current",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "title": "Perturbation probing: ~0.014% of neurons carry the refusal template; removing them breaks refusal on 80% of harmful prompts",
+          "published": "2026-08-28"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2608.27092",
+          "title": "The Framing Gap: overt-refused leaks succeed at 100% when reframed; the acting model cannot recognize the attack",
+          "published": "2026-08-27"
+        }
+      ],
+      "first_seen": "2026-08-29",
+      "last_reviewed": "2026-08-29",
+      "guidance": "Layer runtime guardrails, destination allow-lists, and planner/reader capability isolation in front of any deployed LLM; treat built-in refusal as best-effort UX safety, not an access-control boundary.",
+      "scope": "Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings."
     }
   ]
 }

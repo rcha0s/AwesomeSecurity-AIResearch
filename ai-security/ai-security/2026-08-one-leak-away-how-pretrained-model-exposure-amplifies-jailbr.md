@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2512.14751)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 52 · **Composite 64.28**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 52 · **Composite 57.78**  
 **Tags:** `jailbreak`, `finetuning`, `transfer-attack`, `adversarial`, `open-weights`  
 **Verification:** ✓ independently verified · closest prior art: Extends the general 'jailbreak transfer' line (Zou et al. universal adversarial suffixes; cross-model transfer studies) by specializing to the pretrain-to-finetune direction and probing the hidden-state structure that carries the transfer.
 

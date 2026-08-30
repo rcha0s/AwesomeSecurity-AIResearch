@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** MCP & Skill Scanning  
 **Source:** [source](https://github.com/highflame-ai/ramparts)  ·  **Published:** Aug 8, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 62.95**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
 **Tags:** `mcp`, `skill-scanning`, `sarif`, `yara`, `owasp-mcp-top-10`  
 **Verification:** ✓ independently verified · closest prior art: OWASP MCP Top 10 tagging; NVIDIA SkillSpector YARA rules (adapted); overlaps with Snyk Agent Scan, Cisco AI Defense MCP Scanner, and Invariant Labs MCP-Scan.
 

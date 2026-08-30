@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.06130)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 61.28**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 54.78**  
 **Tags:** `mcp`, `agent-security`, `prompt-injection`, `hsm`, `pkcs11`, `zero-trust`  
 **Verification:** ✓ independently verified · closest prior art: AgentDojo (Debenedetti et al., arXiv:2406.13352) supplies the ImportantInstructionsAttack template used here; classic HSM/TPM literature and PKCS#11 predate this work by decades.
 

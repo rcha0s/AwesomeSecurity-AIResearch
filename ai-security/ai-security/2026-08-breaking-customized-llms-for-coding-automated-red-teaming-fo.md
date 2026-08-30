@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.05659)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 65 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 62.18**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 55.68**  
 **Tags:** `instruction-backdoor`, `customized-llm`, `coding-assistant`, `automated-red-team`, `ase-2026`  
 **Verification:** ✓ independently verified · closest prior art: ['BadPrompt and other text-trigger prompt backdoors', 'OpenAI GPT Store / Gemini Gems customization platforms']
 

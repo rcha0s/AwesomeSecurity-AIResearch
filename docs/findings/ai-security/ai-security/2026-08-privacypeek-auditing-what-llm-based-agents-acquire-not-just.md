@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2606.00152)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 70 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 62.78**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 56.28**  
 **Tags:** `agent-privacy`, `over-acquisition`, `tool-calls`, `audit`, `benchmark`  
 **Verification:** ✓ independently verified · closest prior art: Extends privacy-leakage benchmarks that audit agent outputs (e.g., PrivacyLens, ConfAIde) to also cover the acquisition (tool-call ingestion) stage with 1,182 cases across 16 domains.
 

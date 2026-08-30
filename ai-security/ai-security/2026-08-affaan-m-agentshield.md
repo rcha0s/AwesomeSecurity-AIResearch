@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/affaan-m/agentshield)  ·  **Published:** Aug 9, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 65 · 🎯 Relevance 72 · 🏛️ Credibility 55 · **Composite 60.85**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 72 · 🏛️ Credibility 55 · **Composite 54.35**  
 **Tags:** `agent-config`, `sast`, `claude-code`, `mcp`, `hooks`, `secrets`, `runtime-confidence`  
 **Verification:** ✓ independently verified · closest prior art: Adjacent to Praetorian augustus (LLM red-team) and sinewaveai agent-security-scanner-mcp (repo/package scanner), but scoped specifically to Claude Code / agent-harness configuration files rather than runtime LLM behavior. Ships alongside a false-positive-audit.md workflow.
 

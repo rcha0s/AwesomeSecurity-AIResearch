@@ -2,7 +2,7 @@
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 70 · **Composite 62.5**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 70 · **Composite 56.0**  
 **Tags:** `symlink`, `path-traversal`, `cwe-59`, `go`, `git`
 
 > **Takeaway:** A path-string allowlist is not a symlink-safe boundary; you have to make the filesystem wrapper itself reject symlink escapes at open time.

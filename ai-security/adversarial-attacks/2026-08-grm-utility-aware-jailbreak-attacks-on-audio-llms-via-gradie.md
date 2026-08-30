@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** Adversarial Attacks  
 **Source:** [source](https://arxiv.org/abs/2604.09222)  ·  **Published:** Aug 10, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 62 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 57.85**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 51.35**  
 **Tags:** `audio-llm`, `jailbreak`, `adversarial-perturbation`, `mel-bands`, `stealth`  
 **Verification:** ✓ independently verified · closest prior art: Extends universal adversarial audio work (perturbation-based ALLM jailbreaks referenced in the abstract) with an explicit utility-vs-attack tradeoff via band selection. Novel contribution is the gradient-ratio band ranking and the empirical non-monotonicity of JSR in bandwidth.
 

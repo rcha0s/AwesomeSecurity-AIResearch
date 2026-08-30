@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_15 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-14_
+_16 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-29_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -39,12 +39,13 @@ _Tags: `pickle`, `supply-chain`, `safetensors`_
 
 _Tags: `prompt-injection`, `threat-model`, `agents`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [The Dual LLM pattern](https://simonwillison.net/2023/Apr/14/worst-that-can-happen/) | Apr 14, 2023 |
 | supports | [Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection](https://arxiv.org/abs/2302.12173) | Feb 23, 2023 |
+| supports | [Instruction privilege escalation: harness context assembly promotes untrusted content to a higher instruction level across six coding harnesses](https://arxiv.org/abs/2608.27299) | Aug 27, 2026 |
 
 </details>
 
@@ -101,13 +102,14 @@ _Tags: `model-supply-chain`, `deserialization`, `scanning`_
 
 _Tags: `prompt-injection`, `agents`, `threat-model`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [AI Agents May Always Fall for Prompt Injections](https://arxiv.org/abs/2605.17634) | May 2026 |
 | supports | [Assessing Automated Prompt Injection Attacks in Agentic Environments](https://arxiv.org/abs/2606.10525) | Jun 2026 |
 | supports | [Prompt Injection Attacks on Agentic Coding Assistants: A Systematic Analysis](https://arxiv.org/abs/2601.17548) | Jan 2026 |
+| supports | [Breaking Claude Code Opus 5 Auto Mode: a best-effort classifier is not a boundary; OS isolation/egress is](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
 
 </details>
 
@@ -203,6 +205,25 @@ _Tags: `evaluation`, `contamination`, `benchmarks`_
 
 </details>
 
+<a id="claim-model-internal-refusal-is-not-a-security-boundary"></a>
+
+### A model's built-in refusal/alignment is not a security boundary: refusal behavior is concentrated in a fragile thin neuron layer and collapses when an unsafe request is semantically reframed, so it must be backed by external, payload-blind controls.
+
+`model-internal-refusal-is-not-a-security-boundary` · confidence **0.70** · LLM Red-Teaming · standing since Aug 29, 2026
+
+**Do this —** Layer runtime guardrails, destination allow-lists, and planner/reader capability isolation in front of any deployed LLM; treat built-in refusal as best-effort UX safety, not an access-control boundary.
+
+**Limits —** Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Perturbation probing: ~0.014% of neurons carry the refusal template; removing them breaks refusal on 80% of harmful prompts](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) | Aug 28, 2026 |
+| supports | [The Framing Gap: overt-refused leaks succeed at 100% when reframed; the acting model cannot recognize the attack](https://arxiv.org/abs/2608.27092) | Aug 27, 2026 |
+
+</details>
+
 <a id="claim-provider-guardrails-can-block-incident-response"></a>
 
 ### Commercial provider safety guardrails can refuse to assist during a real security incident, at exactly the moment you need the model most.
@@ -269,11 +290,12 @@ _Tags: `jailbreak`, `adversarial`, `transfer`_
 
 _Tags: `defense`, `architecture`, `dual-llm`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [The Dual LLM pattern](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/) | Apr 2023 |
+| supports | [The Framing Gap: only a capability-isolating planner/reader split (and destination allow-lists) stop reframed exfiltration](https://arxiv.org/abs/2608.27092) | Aug 27, 2026 |
 
 </details>
 

@@ -2,7 +2,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/alexgreensh/repo-forensics)  ·  **Published:** Aug 8, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 46 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 62.95**  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
 **Tags:** `mcp`, `supply-chain`, `scanner`, `hooks`, `sarif`, `prompt-injection`, `yara`  
 **Verification:** ✓ independently verified · closest prior art: Sits alongside mcp-scan (cloud-uploaded), NVIDIA SkillSpector (skill files only), and generic secrets scanners (Gitleaks, TruffleHog); the differentiator claimed is offline operation with correlation, live IOC + CISA KEV enrichment, and named-campaign IOCs.
 
