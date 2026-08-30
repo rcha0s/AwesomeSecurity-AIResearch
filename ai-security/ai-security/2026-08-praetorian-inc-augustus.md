@@ -1,16 +1,10 @@
 # praetorian-inc/augustus
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://github.com/praetorian-inc/augustus)  ·  **Published:** Aug 9, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 54.65**  
-**Tags:** `red-team`, `jailbreak`, `multi-turn`, `crescendo`, `goat`, `hydra`, `llm-scanner`  
-**Verification:** ✓ independently verified · closest prior art: Overlaps with garak (research-oriented, Python) and promptfoo (TypeScript, more providers). Cites Russinovich et al. arXiv:2404.01833 for Crescendo and Pavlova et al. arXiv:2410.01606 for GOAT. Mischievous User is inspired by Tau-bench and promptfoo's mischievous-user strategy.
+**Published:** Aug 9, 2026
 
 > **Takeaway:** Multi-turn adversarial testing needs distinct engines for distinct target profiles. Backtracking (Hydra) hides refused turns from the target, while gradual escalation (Crescendo) exploits models that track conversation tone; picking the wrong one wastes budget on the wrong failure mode.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://github.com/praetorian-inc/augustus) for the complete write-up._
 
 Praetorian's Go-based LLM vulnerability scanner. 210+ probes across 47 attack categories (jailbreaks, prompt injection, adversarial examples, data extraction, agent attacks), 28 providers, 90+ detectors including LLM-as-judge. Adds multi-turn attack engines: Crescendo (gradual escalation), GOAT (adaptive technique switching), Hydra (turn-level backtracking on refusal), and Mischievous User (rapport-first drift).
 
@@ -27,5 +21,11 @@ Praetorian's Go-based LLM vulnerability scanner. 210+ probes across 47 attack ca
 - **Mitigations:** Test the target with all four strategies (Crescendo, GOAT, Hydra, Mischievous User) rather than a single one; log full turn history and refusal events; add turn-limit and topic-drift monitors on production conversational endpoints; treat single-prompt safety benchmarks as necessary but not sufficient.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://github.com/praetorian-inc/augustus)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 54.65**  
+**Tags:** `red-team`, `jailbreak`, `multi-turn`, `crescendo`, `goat`, `hydra`, `llm-scanner`  
+**Verification:** ✓ independently verified · closest prior art: Overlaps with garak (research-oriented, Python) and promptfoo (TypeScript, more providers). Cites Russinovich et al. arXiv:2404.01833 for Crescendo and Pavlova et al. arXiv:2410.01606 for GOAT. Mischievous User is inspired by Tau-bench and promptfoo's mischievous-user strategy.
 
 _Source: [https://github.com/praetorian-inc/augustus](https://github.com/praetorian-inc/augustus)_  ·  [← back to index](../README.md)

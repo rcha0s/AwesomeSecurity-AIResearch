@@ -1,16 +1,10 @@
 # Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions
 
-**Topic:** AI Security  ·  **Domain:** MCP Server Scanning & Defender Tooling  
-**Source:** [source](https://github.com/cisco-ai-defense/mcp-scanner)  ·  **Published:** Aug 9, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 57.35**  
-**Tags:** `mcp`, `mcp-scanner`, `tool-poisoning`, `llm-as-judge`, `yara`, `supply-chain`, `static-analysis`  
-**Verification:** ✓ independently verified · closest prior art: Complements ToolHive MCP SSRF and 'Agent skill security is a lifecycle problem' (SkillSec-Eval) entries in the pool: both frame skill/tool metadata as needing lifecycle scanning, and this is the concrete tool that operationalizes it.
+**Published:** Aug 9, 2026
 
 > **Takeaway:** Treat every MCP surface - tools, prompts, resources, and server instructions - as a distinct attack surface with its own scanner; a single engine misses cases each of YARA, LLM-judge, and dataflow catches.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://github.com/cisco-ai-defense/mcp-scanner) for the complete write-up._
 
 mcp-scanner is a Python CLI/SDK that scans MCP servers for security issues across four surfaces - tools, prompts, resources, and the server's `InitializeResult` instructions - using three interchangeable engines: YARA rules, an LLM-as-judge, and Cisco's inspect API. It adds pip-audit-based vulnerable-dependency scanning, VirusTotal hash lookups for bundled binaries, and Docker-sandboxed PyPI/npm package downloads for behavioral analysis. Scanning `InitializeResult` instructions is called out as its own subcommand because those instructions are a first-class prompt-injection surface.
 
@@ -27,5 +21,11 @@ mcp-scanner is a Python CLI/SDK that scans MCP servers for security issues acros
 - **Mitigations:** Run mcp-scanner across all four MCP surfaces (tools, prompts, resources, instructions) at admission; add pip-audit and VirusTotal scans for bundled dependencies; keep pypi-scan/npm-scan sandboxed via Docker (default) and treat behavioral analyzer output as blocking for tools that mutate state.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** MCP Server Scanning & Defender Tooling  
+**Source:** [source](https://github.com/cisco-ai-defense/mcp-scanner)  ·  **Retrieved:** 2026-08-10  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 57.35**  
+**Tags:** `mcp`, `mcp-scanner`, `tool-poisoning`, `llm-as-judge`, `yara`, `supply-chain`, `static-analysis`  
+**Verification:** ✓ independently verified · closest prior art: Complements ToolHive MCP SSRF and 'Agent skill security is a lifecycle problem' (SkillSec-Eval) entries in the pool: both frame skill/tool metadata as needing lifecycle scanning, and this is the concrete tool that operationalizes it.
 
 _Source: [https://github.com/cisco-ai-defense/mcp-scanner](https://github.com/cisco-ai-defense/mcp-scanner)_  ·  [← back to index](../README.md)

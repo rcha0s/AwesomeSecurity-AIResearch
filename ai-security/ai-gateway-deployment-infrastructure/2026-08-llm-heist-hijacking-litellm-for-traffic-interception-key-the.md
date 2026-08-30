@@ -1,16 +1,10 @@
 # LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection
 
-**Topic:** AI Security  ·  **Domain:** AI Gateway / Deployment Infrastructure  
-**Source:** [source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)  ·  **Published:** Aug 3, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 90 · 🏛️ Credibility 72 · **Composite 66.28**  
-**Tags:** `ai-gateway`, `litellm`, `tool-call-injection`, `adversary-in-the-middle`, `credential-theft`, `red-team`  
-**Verification:** ✓ independently verified · closest prior art: Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).
+**Published:** Aug 3, 2026
 
 > **Takeaway:** AI gateways sit downstream of the model, so a proxy-admin credential compromise lets an attacker inject arbitrary tool calls into agent clients without ever touching the model prompt or its provider guardrails. Prompt-level defenses do not see this attack.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/) for the complete write-up._
 
 Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that a compromised proxy-admin credential lets an attacker (a) reroute traffic through an attacker-controlled LiteLLM instance, (b) harvest resolved backend LLM provider keys, and (c) modify or forge responses and tool-calls downstream of inference, bypassing all prompt-level defenses. The `llm-heist` tool automates harvest, provision, hijack, inject.
 
@@ -33,5 +27,11 @@ Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that 
 - **Mitigations:** Alert on any `api_base` or `use_litellm_proxy` change; snapshot model config as code. Alert on new callback/guardrail/hook registrations on the gateway. Restrict provider API keys to source IPs of approved gateway hosts; rotate on a schedule. Independent billing reconciliation against provider dashboards. Lock down admin API/UI: no internet exposure, MFA, short-lived admin tokens. Patch LiteLLM aggressively (CVE-2026-42271 is on CISA KEV). Do not run agent clients in yolo/auto-approve mode; require per-tool confirmation for shell/write tools.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Gateway / Deployment Infrastructure  
+**Source:** [source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)  ·  **Retrieved:** 2026-08-10  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 90 · 🏛️ Credibility 72 · **Composite 66.28**  
+**Tags:** `ai-gateway`, `litellm`, `tool-call-injection`, `adversary-in-the-middle`, `credential-theft`, `red-team`  
+**Verification:** ✓ independently verified · closest prior art: Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).
 
 _Source: [https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)_  ·  [← back to index](../README.md)

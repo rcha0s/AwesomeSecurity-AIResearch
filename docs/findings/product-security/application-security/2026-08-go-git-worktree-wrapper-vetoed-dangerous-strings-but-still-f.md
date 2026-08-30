@@ -1,15 +1,10 @@
 # go-git worktree wrapper vetoed dangerous strings but still followed symlinks that were already there (GHSA-hc8v-wwc9-vgxm)
 
-**Topic:** Product Security  ·  **Domain:** Application Security  
-**Source:** [source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 70 · **Composite 56.0**  
-**Tags:** `symlink`, `path-traversal`, `cwe-59`, `go`, `git`
+**Published:** Aug 7, 2026
 
 > **Takeaway:** A path-string allowlist is not a symlink-safe boundary; you have to make the filesystem wrapper itself reject symlink escapes at open time.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm) for the complete write-up._
 
 go-git's worktreeFilesystem wrapper rejected obviously dangerous path strings (containing .git, parent components, or control characters) but did not stop filesystem operations from following symlinks that were already present in the worktree. An attacker who can plant a symlink inside a worktree can therefore cause writes to land in .git/config or any other target, escaping the wrapper's string-level checks.
 
@@ -26,5 +21,10 @@ go-git's worktreeFilesystem wrapper rejected obviously dangerous path strings (c
 - **Mitigations:** Upgrade to go-git v5.19.2 or v6.0.0-alpha.5. Where infeasible, switch the storer/worktree to storage/memory or go-billy/memfs (not affected). Do not treat string-level path validation as a substitute for symlink-aware resolution.
 
 ---
+
+**Topic:** Product Security  ·  **Domain:** Application Security  
+**Source:** [source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)  ·  **Retrieved:** 2026-08-10  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 70 · **Composite 56.0**  
+**Tags:** `symlink`, `path-traversal`, `cwe-59`, `go`, `git`
 
 _Source: [https://github.com/advisories/GHSA-hc8v-wwc9-vgxm](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)_  ·  [← back to index](../README.md)

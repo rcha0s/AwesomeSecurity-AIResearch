@@ -1,16 +1,10 @@
 # GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking
 
-**Topic:** AI Security  ·  **Domain:** Adversarial Attacks  
-**Source:** [source](https://arxiv.org/abs/2604.09222)  ·  **Published:** Aug 10, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 51.35**  
-**Tags:** `audio-llm`, `jailbreak`, `adversarial-perturbation`, `mel-bands`, `stealth`  
-**Verification:** ✓ independently verified · closest prior art: Extends universal adversarial audio work (perturbation-based ALLM jailbreaks referenced in the abstract) with an explicit utility-vs-attack tradeoff via band selection. Novel contribution is the gradient-ratio band ranking and the empirical non-monotonicity of JSR in bandwidth.
+**Published:** Aug 10, 2026
 
 > **Takeaway:** Full-band audio perturbations aren't needed for a strong ALLM jailbreak; a small selected set of Mel bands yields stronger stealthier attacks, undercutting simple bandwidth-based monitoring.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2604.09222) for the complete write-up._
 
 Accepted at MM 2026. Studies universal audio perturbations that jailbreak audio LLMs. Observes that Jailbreak Success Rate is non-monotonic in perturbation bandwidth while utility degradation grows monotonically; ranks Mel bands by jailbreak-contribution / transcript-sensitivity and confines the perturbation to top bands, giving 88.46% average JSR across four ALLMs with less utility loss than full-band baselines. Code released.
 
@@ -27,5 +21,11 @@ Accepted at MM 2026. Studies universal audio perturbations that jailbreak audio 
 - **Mitigations:** Do not rely on bandwidth-based or utility-drop-based anomaly detection alone since JSR is non-monotonic in bandwidth; add frequency-selective universal perturbations to the pre-release red-team set; run safety alignment on the audio representation directly (see CASA in this batch) rather than only on text; log input audio spectra for post-incident forensics and flag repeated Mel-band concentration patterns.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Adversarial Attacks  
+**Source:** [source](https://arxiv.org/abs/2604.09222)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 51.35**  
+**Tags:** `audio-llm`, `jailbreak`, `adversarial-perturbation`, `mel-bands`, `stealth`  
+**Verification:** ✓ independently verified · closest prior art: Extends universal adversarial audio work (perturbation-based ALLM jailbreaks referenced in the abstract) with an explicit utility-vs-attack tradeoff via band selection. Novel contribution is the gradient-ratio band ranking and the empirical non-monotonicity of JSR in bandwidth.
 
 _Source: [https://arxiv.org/abs/2604.09222](https://arxiv.org/abs/2604.09222)_  ·  [← back to index](../README.md)

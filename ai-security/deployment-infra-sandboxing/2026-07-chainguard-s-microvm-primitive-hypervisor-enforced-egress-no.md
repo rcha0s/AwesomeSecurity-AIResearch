@@ -1,16 +1,10 @@
 # Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents
 
-**Topic:** AI Security  ·  **Domain:** Deployment Infra & Sandboxing  
-**Source:** [source](https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena)  ·  **Published:** Jul 29, 2026  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 4 · ✨ Novelty 75 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 58.75**  
-**Tags:** `microvm`, `sandboxing`, `gvisor`, `egress-control`, `imds`, `ephemeral-credentials`, `chainguard`, `athena`, `slsa-l3`  
-**Verification:** ✓ independently verified · closest prior art: Extends SLSA L3 build-isolation and Firecracker/gVisor microVM patterns; picks up the same 'containers don't contain' framing that Edera and others advance. Reinforces claims imdsv1-must-be-disabled-on-agent-workloads, long-lived-cloud-credentials-are-obsolete, ssrf-guards-must-cover-agent-outbound-calls.
+**Published:** Jul 29, 2026
 
 > **Takeaway:** Sandboxing agents is a solved discipline reused from CI/cloud, not a new one. The load-bearing primitives are hypervisor-enforced egress with default-destroy, no ambient credentials, ephemeral per-job root filesystems, and treating the sandbox itself as a target under recurring adversarial audit.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena) for the complete write-up._
 
 Chainguard describes how it extracted its Elastic Builds isolation layer into a standalone 'microVM' primitive that now hosts package builds, image builds, CI runs, and their internal AI agents (including Athena, which handles undisclosed vulns and working exploits). The design is explicit: containers are not a boundary, so every job runs in a hardware-virtualized QEMU/KVM guest with its own kernel. Egress is enforced at the hypervisor via a gVisor-based network stack with default-destroy on the first forbidden connection; cloud metadata, private ranges, and loopback are blocked even in relaxed configs. Pods hosting VMs have no service-account tokens; long-lived keys never enter the guest, and identity is minted per use. They also run recurring adversarial audits (including AI agents pointed at the codebase) and land every finding as a regression test.
 
@@ -29,5 +23,11 @@ Chainguard describes how it extracted its Elastic Builds isolation layer into a 
 - **Mitigations:** Adopt microVM-style per-job hardware virtualization; enforce egress at the hypervisor with default-destroy on first violation; hardcode a floor that blocks cloud metadata, private ranges, and loopback; strip service-account tokens from the guest pod; mint short-lived identity per use or proxy the authenticated call at the supervisor; run recurring adversarial audits against the sandbox and pin each finding as a regression test.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Deployment Infra & Sandboxing  
+**Source:** [source](https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena)  ·  **Retrieved:** 2026-08-10  
+**Scores:** 🆕 Newness 4 · ✨ Novelty 75 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 58.75**  
+**Tags:** `microvm`, `sandboxing`, `gvisor`, `egress-control`, `imds`, `ephemeral-credentials`, `chainguard`, `athena`, `slsa-l3`  
+**Verification:** ✓ independently verified · closest prior art: Extends SLSA L3 build-isolation and Firecracker/gVisor microVM patterns; picks up the same 'containers don't contain' framing that Edera and others advance. Reinforces claims imdsv1-must-be-disabled-on-agent-workloads, long-lived-cloud-credentials-are-obsolete, ssrf-guards-must-cover-agent-outbound-calls.
 
 _Source: [https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena](https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena)_  ·  [← back to index](../README.md)

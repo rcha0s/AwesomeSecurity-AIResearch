@@ -1,16 +1,10 @@
 # Auto mode is now the default in Claude Code for Pro, Max, and Team plans
 
-**Topic:** AI Security  ·  **Domain:** Harness & Agent Security  
-**Source:** [source](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything)  ·  **Published:** Aug 8, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 61.25**  
-**Tags:** `claude-code`, `auto-mode`, `prompt-injection`, `permission-classifier`, `agent-safety`, `evals`  
-**Verification:** ✓ independently verified · closest prior art: ["Simon Willison - 'The lethal trifecta' framing (2025)", 'Anthropic - Cat Wu/Thariq Shihipar Fireside Chat, July 2026', 'Trajectory Labs indirect-injection eval']
+**Published:** Aug 8, 2026
 
 > **Takeaway:** The result reframes agent permissioning as an accuracy problem: humans clicking OK repeatedly perform worse than a model-based classifier. Prompt injection remains the harder problem; a 0/720 result on held-out scenarios is strong but supply-chain-shaped injections (malicious third-party packages giving install-time instructions) are outside the tested distribution.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything) for the complete write-up._
 
 Anthropic is making Claude Code's auto mode (agent-side permission classifier that decides which actions require human approval) the default for Pro/Max/Team plans on Aug 14, citing evals where auto mode caught 89% of a swapped-in harmful command against human reviewers' 13.6%, and where 0/720 held-out indirect prompt-injection scenarios succeeded against Fable 5/Opus 5/Sonnet 5. Willison flags residual risk from third-party package instructions the agent trusts as authoritative.
 
@@ -32,5 +26,11 @@ Where `fetch-model-files` is itself a malicious package that exfiltrates all ava
 - **Mitigations:** Keep independent supply-chain controls (pinned deps, hash verification, npm/pip `ignore-scripts`, allowlisted registries). Segment agent execution into a sandbox without production credentials or writable prod paths. Log every tool call with the triggering context for post-hoc forensics. Do not treat a passing indirect-injection eval as proof that the lethal trifecta is 'solved' - request independent evaluations covering supply-chain-shaped injections.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Harness & Agent Security  
+**Source:** [source](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 90 · 🏛️ Credibility 55 · **Composite 61.25**  
+**Tags:** `claude-code`, `auto-mode`, `prompt-injection`, `permission-classifier`, `agent-safety`, `evals`  
+**Verification:** ✓ independently verified · closest prior art: ["Simon Willison - 'The lethal trifecta' framing (2025)", 'Anthropic - Cat Wu/Thariq Shihipar Fireside Chat, July 2026', 'Trajectory Labs indirect-injection eval']
 
 _Source: [https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything)_  ·  [← back to index](../README.md)

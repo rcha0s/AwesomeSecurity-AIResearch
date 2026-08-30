@@ -1,16 +1,10 @@
 # alexgreensh/repo-forensics
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://github.com/alexgreensh/repo-forensics)  ·  **Published:** Aug 8, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
-**Tags:** `mcp`, `supply-chain`, `scanner`, `hooks`, `sarif`, `prompt-injection`, `yara`  
-**Verification:** ✓ independently verified · closest prior art: Sits alongside mcp-scan (cloud-uploaded), NVIDIA SkillSpector (skill files only), and generic secrets scanners (Gitleaks, TruffleHog); the differentiator claimed is offline operation with correlation, live IOC + CISA KEV enrichment, and named-campaign IOCs.
+**Published:** Aug 8, 2026
 
 > **Takeaway:** There is a small but real category of local, hook-driven vetting tools for AI-agent extensions; borrow the pattern of pairing an offline scanner with signed rule feeds and PreToolUse blocking rather than trusting hub-side review.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://github.com/alexgreensh/repo-forensics) for the complete write-up._
 
 Offline, zero-dependency Python scanner that vets AI-agent repos, skills, MCP servers, and plugins before they are installed. Runs 27 scanners in parallel, correlates findings via 41 rules, ships with 190+ package IOCs and an Ed25519-signed daily rule feed, and integrates with Claude Code / Codex CLI / OpenClaw via PreToolUse, PostToolUse, and SessionStart hooks that block known-malicious packages and audit cloned/updated code.
 
@@ -28,5 +22,11 @@ Offline, zero-dependency Python scanner that vets AI-agent repos, skills, MCP se
 - **Mitigations:** Run an offline scanner (repo-forensics or equivalent) as a PreToolUse hook to block known-malicious packages; do full 27-scanner audits on PostToolUse; treat scanner rule feeds as signed and rollback-protected; export SARIF to GitHub Security tab for CI gating.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://github.com/alexgreensh/repo-forensics)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
+**Tags:** `mcp`, `supply-chain`, `scanner`, `hooks`, `sarif`, `prompt-injection`, `yara`  
+**Verification:** ✓ independently verified · closest prior art: Sits alongside mcp-scan (cloud-uploaded), NVIDIA SkillSpector (skill files only), and generic secrets scanners (Gitleaks, TruffleHog); the differentiator claimed is offline operation with correlation, live IOC + CISA KEV enrichment, and named-campaign IOCs.
 
 _Source: [https://github.com/alexgreensh/repo-forensics](https://github.com/alexgreensh/repo-forensics)_  ·  [← back to index](../README.md)

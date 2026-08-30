@@ -1,16 +1,10 @@
 # The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses
 
-**Topic:** AI Security  ·  **Domain:** Prompt Injection & Adversarial  
-**Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27092)  ·  **Published:** Aug 27, 2026  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 60 · **Composite 65.6**  
-**Tags:** `prompt-injection`, `data-exfiltration`, `tool-using-agents`, `allow-list`, `capability-isolation`, `secalign`  
-**Verification:** ✓ independently verified · closest prior art: SecAlign (CCS 2025), channel-separation and output-normalization defenses, AgentDojo-style injection benchmarks; contribution is the framing-gap characterization and payload-blind mitigations.
+**Published:** Aug 27, 2026
 
 > **Takeaway:** Don't rely on the acting model to recognize injection; constrain where data can go and isolate the capability that can send it.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.27092) for the complete write-up._
 
 Overt injection to exfiltrate a secret is refused (gpt-4o 0%), but reframing the identical leak as a mandatory 'integrity signature', config field, or look-alike trusted host drives success to 100%. The reusable asset is the template, not the mechanism, and the root cause is instruction/data confusion rather than defeated alignment. Only payload-blind controls - destination allow-lists and a planner/reader capability split - close the gap; SecAlign fine-tuning, channel separation, and output-normalizing guards do not.
 
@@ -28,5 +22,11 @@ Overt injection to exfiltrate a secret is refused (gpt-4o 0%), but reframing the
 - **Mitigations:** Closed destination allow-lists and capability-isolating planner/reader split; surface-level model defenses are inadequate.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Prompt Injection & Adversarial  
+**Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27092)  ·  **Retrieved:** 2026-08-29  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 60 · **Composite 65.6**  
+**Tags:** `prompt-injection`, `data-exfiltration`, `tool-using-agents`, `allow-list`, `capability-isolation`, `secalign`  
+**Verification:** ✓ independently verified · closest prior art: SecAlign (CCS 2025), channel-separation and output-normalization defenses, AgentDojo-style injection benchmarks; contribution is the framing-gap characterization and payload-blind mitigations.
 
 _Source: [https://arxiv.org/abs/2608.27092](https://arxiv.org/abs/2608.27092)_  ·  [← back to index](../README.md)

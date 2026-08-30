@@ -1,16 +1,10 @@
 # SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse
 
-**Topic:** AI Security  ·  **Domain:** Skills & Supply Chain  
-**Source:** [source](https://arxiv.org/abs/2608.05204)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 60 · 🏛️ Credibility 55 · **Composite 49.85**  
-**Tags:** `skills`, `provenance`, `supply-chain`, `clone-detection`, `agent-marketplace`  
-**Verification:** ✓ independently verified · closest prior art: Code-clone detection literature (Deckard, SourcererCC, CCFinder) and package-similarity tools; SkillTrace's contribution is the multi-modality framing plus operational-graph structure specific to LLM-agent skill packages.
+**Published:** Aug 7, 2026
 
 > **Takeaway:** Auditing reuse of agent 'skills' is not the same problem as code-clone detection: reuse can survive when only one of expression, code, or operational structure is preserved, so provenance needs multi-trace comparison across all three.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.05204) for the complete write-up._
 
 SKILLTRACE audits reuse in the emerging LLM-agent 'skills' marketplace. It extracts three provenance traces (Expression = natural-language authored text, Implementation = code, Operational = a Skill Operational Graph over activation/procedure/resource-flow) and compares them deterministically against per-function negatives. On SKILLTRACE-BENCH (820 transformed positives, 751 negative controls over 100 marketplace anchors) it reaches AUROC 0.938 / F1 0.898, and a 36,446-skill wild audit produces trace-attributed review queues beyond repository-similarity baselines.
 
@@ -27,5 +21,11 @@ SKILLTRACE audits reuse in the emerging LLM-agent 'skills' marketplace. It extra
 - **Mitigations:** Compute Expression / Implementation / Operational traces at ingestion; store deterministic-comparable representations for later audit; calibrate against same-function strict negatives; require attributable reuse evidence before admitting a skill; queue mismatched-provenance skills for manual review.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Skills & Supply Chain  
+**Source:** [source](https://arxiv.org/abs/2608.05204)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 60 · 🏛️ Credibility 55 · **Composite 49.85**  
+**Tags:** `skills`, `provenance`, `supply-chain`, `clone-detection`, `agent-marketplace`  
+**Verification:** ✓ independently verified · closest prior art: Code-clone detection literature (Deckard, SourcererCC, CCFinder) and package-similarity tools; SkillTrace's contribution is the multi-modality framing plus operational-graph structure specific to LLM-agent skill packages.
 
 _Source: [https://arxiv.org/abs/2608.05204](https://arxiv.org/abs/2608.05204)_  ·  [← back to index](../README.md)

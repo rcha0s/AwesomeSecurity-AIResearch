@@ -1,16 +1,10 @@
 # Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety
 
-**Topic:** AI Security  ·  **Domain:** LLM Safety / Alignment Robustness  
-**Source:** [Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)  ·  **Published:** Aug 28, 2026  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 72 · 🏛️ Credibility 77 · **Composite 59.72**  
-**Tags:** `llm-safety`, `jailbreak`, `alignment`, `mechanistic-interpretability`, `guardrails`, `defense-in-depth`  
-**Verification:** ✓ independently verified · closest prior art: Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work
+**Published:** Aug 28, 2026
 
 > **Takeaway:** LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) for the complete write-up._
 
 Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoints the tiny set of feed-forward neurons carrying an aligned LLM's refusal behavior. On Qwen3-4B, just 50 of 350,208 neurons (~0.014%) control the safety refusal template, and removing them breaks refusal formatting on 80% of harmful prompts. A derived FFN/Skip ratio predicts 81% of the variance in each model's steerability, offering a quantitative safety fragility score.
 
@@ -28,5 +22,11 @@ Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoi
 - **Mitigations:** Defense-in-depth: external content filters, runtime guardrails, and fragility scoring before deployment.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** LLM Safety / Alignment Robustness  
+**Source:** [Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)  ·  **Retrieved:** 2026-08-29  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 72 · 🏛️ Credibility 77 · **Composite 59.72**  
+**Tags:** `llm-safety`, `jailbreak`, `alignment`, `mechanistic-interpretability`, `guardrails`, `defense-in-depth`  
+**Verification:** ✓ independently verified · closest prior art: Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work
 
 _Source: [https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)_  ·  [← back to index](../README.md)

@@ -1,16 +1,10 @@
 # The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions
 
-**Topic:** AI Security  ·  **Domain:** Guardrails / Over-Refusal  
-**Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27009)  ·  **Published:** Aug 27, 2026  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 74 · 🎯 Relevance 82 · 🏛️ Credibility 60 · **Composite 60.8**  
-**Tags:** `guardrails`, `over-refusal`, `agent-safety`, `benchmark`, `authorization-policy`, `false-positives`  
-**Verification:** ✓ independently verified · closest prior art: Prior over-refusal/exaggerated-safety studies (e.g., XSTest-style) for chat models; extends the construct to agent action guardrails with a policy-certified benchmark.
+**Published:** Aug 27, 2026
 
 > **Takeaway:** Guardrails that key on scary-sounding surface labels will over-refuse legitimate work; evaluate over-safety with policy-derived benchmarks.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.27009) for the complete write-up._
 
 Agent guardrails suffer over-safety: they refuse authorized, genuinely safe actions, blocking deployment. The authors build Cautious Bench, the first benchmark that makes over-safety the measured construct, codesigning each sample with a stated authorization policy and mechanically re-deriving labels. Measuring six guardrails, they find a 'name-superstition effect' - the same authorized action is over-refused more often when the object simply has a scary-looking name.
 
@@ -27,5 +21,11 @@ Agent guardrails suffer over-safety: they refuse authorized, genuinely safe acti
 - **Mitigations:** Authorization-context-aware guardrails and policy-derived over-safety benchmarking (Cautious Bench).
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** Guardrails / Over-Refusal  
+**Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27009)  ·  **Retrieved:** 2026-08-29  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 74 · 🎯 Relevance 82 · 🏛️ Credibility 60 · **Composite 60.8**  
+**Tags:** `guardrails`, `over-refusal`, `agent-safety`, `benchmark`, `authorization-policy`, `false-positives`  
+**Verification:** ✓ independently verified · closest prior art: Prior over-refusal/exaggerated-safety studies (e.g., XSTest-style) for chat models; extends the construct to agent action guardrails with a policy-certified benchmark.
 
 _Source: [https://arxiv.org/abs/2608.27009](https://arxiv.org/abs/2608.27009)_  ·  [← back to index](../README.md)

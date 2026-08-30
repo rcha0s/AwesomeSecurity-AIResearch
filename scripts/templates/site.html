@@ -354,13 +354,27 @@
   .claim.retired h4 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 500; }
   .claim .guide { color: var(--ink-2); margin: 8px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide b { color: var(--ink); }
+  .claim .basis { color: var(--ink-2); margin: 8px 0 0; padding: 8px 10px; background: var(--paper-2);
+    border-radius: 8px; max-width: var(--measure); font-size: 13.5px; line-height: 1.5; }
+  .claim .basis b { color: var(--ink); }
+  .conf-pill { font-size: 11px; color: var(--ink-2); background: var(--paper-2); border: 1px solid var(--rule);
+    padding: 2px 8px; border-radius: 999px; }
   .claim .cmeta { font-size: 12px; color: var(--ink-3); margin-top: 10px;
     display: flex; flex-wrap: wrap; gap: 4px 12px; }
-  .ev { margin-top: 8px; font-size: 13.5px; }
-  .ev summary { font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 600; }
+  /* The evidence disclosure is deliberately set off from the claim body above it
+     (dashed rule + muted uppercase label) so a claim reads as a research finding
+     the ledger stands behind, and the linked articles/papers read as its sourcing -
+     not as more of the claim itself. */
+  .ev { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--rule); font-size: 13.5px; }
+  .ev summary { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3);
+    cursor: pointer; font-weight: 700; }
   .ev summary::marker { color: var(--ink-3); }
-  .ev ul { margin: 8px 0 0; padding-left: 18px; }
+  .ev-group-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3);
+    font-weight: 700; margin: 10px 0 4px; }
+  .ev-group-label.contests { color: var(--st-refuted); }
+  .ev ul { margin: 4px 0 0; padding-left: 18px; }
   .ev li { margin: 4px 0; }
+  .ev-note { color: var(--ink-3); font-size: 12.5px; }
   .ev .stance { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700;
     padding: 1px 6px; border-radius: 4px; margin-right: 4px; }
   .ev .supports { color: var(--st-current); background: var(--st-current-bg); }
@@ -968,31 +982,58 @@
     wrap.innerHTML = html;
   }
 
+  // A claim is a research finding the ledger stands behind; its evidence is
+  // the news/papers that back it up. The two are kept visually distinct:
+  // statement + basis (method/scope) + guidance render as the claim's own
+  // reasoning, while every external link lives in a separately-labeled,
+  // stance-grouped disclosure below a dashed rule.
+  function claimEvidenceHTML(evidence) {
+    function item(e) {
+      var when = e.published ? ", " + esc(e.published) : "";
+      var note = e.note ? '<br><span class="ev-note">' + txt(e.note) + '</span>' : "";
+      return '<li><a class="link" href="' + esc(e.url || "#") + '">' + txt(e.title || e.url || "source") + '</a>' +
+        (e.source_name ? ' <span style="color:var(--ink-3)">(' + esc(e.source_name) + when + ')</span>' : '') +
+        note + '</li>';
+    }
+    var supports = (evidence || []).filter(function (e) { return (e.stance || "supports") === "supports"; });
+    var contests = (evidence || []).filter(function (e) { return (e.stance || "supports") !== "supports"; });
+    var html = "";
+    if (supports.length) {
+      html += '<div class="ev-group-label">Supports the claim (' + supports.length + ')</div>' +
+        '<ul>' + supports.map(item).join("") + '</ul>';
+    }
+    if (contests.length) {
+      html += '<div class="ev-group-label contests">Contests / complicates (' + contests.length + ')</div>' +
+        '<ul>' + contests.map(item).join("") + '</ul>';
+    }
+    return html;
+  }
+
   function claimHTML(c) {
-    var ev = (c.evidence || []).map(function (e) {
-      var st = (e.stance || "supports");
-      return '<li><span class="stance ' + esc(st) + '">' + esc(st) + '</span> ' +
-        '<a class="link" href="' + esc(e.url || "#") + '">' + txt(e.title || e.url || "source") + '</a>' +
-        (e.source_name ? ' <span style="color:var(--ink-3)">(' + esc(e.source_name) + ')</span>' : '') + '</li>';
-    }).join("");
     var meta = [];
-    if (c.confidence != null) meta.push('confidence ' + Math.round(c.confidence * 100) + '%');
     if (c.first_seen) meta.push('since ' + esc(c.first_seen));
     if (c.last_reviewed) meta.push('reviewed ' + esc(c.last_reviewed));
     var reason = isRetired(c) && c.supersession_reason
       ? '<p class="guide"><b>Why it fell.</b> ' + txt(c.supersession_reason) +
         (c.superseded_on ? ' <span style="color:var(--ink-3)">(' + esc(c.superseded_on) + ')</span>' : '') + '</p>'
       : "";
+    // scope carries the method/limits behind the claim - the part that
+    // answers "why was this claimed" - so it's surfaced as its own block
+    // rather than left implicit.
+    var basis = c.scope ? '<p class="basis"><b>Basis &amp; scope.</b> ' + txt(c.scope) + '</p>' : "";
+    var evHtml = claimEvidenceHTML(c.evidence);
     return '<div class="claim st-' + esc(c.status) + ' ' + (isRetired(c) ? 'retired' : '') + '">' +
       '<div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
         topicPill(c.topic) +
+        (c.confidence != null ? '<span class="conf-pill">' + Math.round(c.confidence * 100) + '% confidence</span>' : '') +
         (c.domain ? '<span style="color:var(--ink-3);font-size:12px">' + txt(c.domain) + '</span>' : '') +
       '</div>' +
       '<h4>' + txt(c.statement) + '</h4>' +
+      basis +
       (c.guidance && !isRetired(c) ? '<p class="guide"><b>Do.</b> ' + txt(c.guidance) + '</p>' : "") +
       reason +
-      '<div class="cmeta">' + meta.map(function (m) { return '<span>' + m + '</span>'; }).join("") + '</div>' +
-      (ev ? '<details class="ev"><summary>Evidence (' + (c.evidence || []).length + ')</summary><ul>' + ev + '</ul></details>' : "") +
+      (meta.length ? '<div class="cmeta">' + meta.map(function (m) { return '<span>' + m + '</span>'; }).join("") + '</div>' : "") +
+      (evHtml ? '<details class="ev"><summary>Evidence &amp; sources (' + (c.evidence || []).length + ')</summary>' + evHtml + '</details>' : "") +
       '</div>';
   }
 

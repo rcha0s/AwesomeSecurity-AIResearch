@@ -1,16 +1,10 @@
 # Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture
 
-**Topic:** AI Security  ·  **Domain:** AI Security  
-**Source:** [source](https://arxiv.org/abs/2608.06130)  ·  **Published:** Aug 7, 2026  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 54.78**  
-**Tags:** `mcp`, `agent-security`, `prompt-injection`, `hsm`, `pkcs11`, `zero-trust`  
-**Verification:** ✓ independently verified · closest prior art: AgentDojo (Debenedetti et al., arXiv:2406.13352) supplies the ImportantInstructionsAttack template used here; classic HSM/TPM literature and PKCS#11 predate this work by decades.
+**Published:** Aug 7, 2026
 
 > **Takeaway:** Hardware confinement of agent signing keys, combined with content-aware authorisation, cut prompt-injection-driven Attack Success Rate from 19.3% baseline to 0% (Wilson 95% CI upper bound 2.0%) with zero false positives on benign tasks.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.06130) for the complete write-up._
 
 Proposes replacing software-resident private keys used by AI agents (Git signing, API auth, cert issuance) with hardware-confined keys accessed via PKCS#11 and surrounded by a five-layer Zero-Trust stack (SAGA identity, Smax scope bounds, RAV semantic validation, taint tracking, hardware execution boundary). Evaluated on 12 injection scenarios derived from AgentDojo's ImportantInstructionsAttack across four LLMs.
 
@@ -27,5 +21,11 @@ Proposes replacing software-resident private keys used by AI agents (Git signing
 - **Mitigations:** Move signing keys into an HSM/TPM/smart card exposed via PKCS#11, restrict operations to opaque handles, add session identity, scope bounds, semantic validation, and taint tracking around the hardware boundary; evaluate with an AgentDojo-style injection corpus.
 
 ---
+
+**Topic:** AI Security  ·  **Domain:** AI Security  
+**Source:** [source](https://arxiv.org/abs/2608.06130)  ·  **Retrieved:** 2026-08-14  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 54.78**  
+**Tags:** `mcp`, `agent-security`, `prompt-injection`, `hsm`, `pkcs11`, `zero-trust`  
+**Verification:** ✓ independently verified · closest prior art: AgentDojo (Debenedetti et al., arXiv:2406.13352) supplies the ImportantInstructionsAttack template used here; classic HSM/TPM literature and PKCS#11 predate this work by decades.
 
 _Source: [https://arxiv.org/abs/2608.06130](https://arxiv.org/abs/2608.06130)_  ·  [← back to index](../README.md)

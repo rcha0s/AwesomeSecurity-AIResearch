@@ -1,16 +1,10 @@
 # How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation
 
-**Topic:** AI Research  ·  **Domain:** Offensive-Security Evaluation  
-**Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.26237)  ·  **Published:** Aug 26, 2026  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 76 · 🎯 Relevance 80 · 🏛️ Credibility 60 · **Composite 60.8**  
-**Tags:** `ctf`, `offensive-security`, `agent-evaluation`, `provenance`, `benchmark-integrity`, `capability-elicitation`  
-**Verification:** ✓ independently verified · closest prior art: Prior CTF agent benchmarks with binary/aggregate scoring; contribution is trace-based provenance auditing (CTF-ABACUS).
+**Published:** Aug 26, 2026
 
 > **Takeaway:** Judge security agents on evidence of exploitation in the trace, not on whether the flag string appeared.
 
 ## TL;DR
-
-_The gist, not every detail - read the [full source](https://arxiv.org/abs/2608.26237) for the complete write-up._
 
 CTF benchmarks score agents with binary pass/fail, conflating real exploitation with flag exposure, memorized recall, external lookup, and guessing - overstating cyber capability. CTF-ABACUS reconstructs each run as an evidence-grounded solve profile across pentest phases to check whether the recovered flag is actually supported by demonstrated behavior. Across 1,435 attempts on 240 challenges, only 62-87% of recovered flags were trace-verified exploits.
 
@@ -27,5 +21,11 @@ CTF benchmarks score agents with binary pass/fail, conflating real exploitation 
 - **Mitigations:** Evidence-grounded solve profiles and challenge signatures that separate intended exploits from shortcuts.
 
 ---
+
+**Topic:** AI Research  ·  **Domain:** Offensive-Security Evaluation  
+**Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.26237)  ·  **Retrieved:** 2026-08-29  
+**Scores:** 🆕 Newness 20 · ✨ Novelty 76 · 🎯 Relevance 80 · 🏛️ Credibility 60 · **Composite 60.8**  
+**Tags:** `ctf`, `offensive-security`, `agent-evaluation`, `provenance`, `benchmark-integrity`, `capability-elicitation`  
+**Verification:** ✓ independently verified · closest prior art: Prior CTF agent benchmarks with binary/aggregate scoring; contribution is trace-based provenance auditing (CTF-ABACUS).
 
 _Source: [https://arxiv.org/abs/2608.26237](https://arxiv.org/abs/2608.26237)_  ·  [← back to index](../README.md)
