@@ -10,9 +10,9 @@ Studies LLM-judge overload: when one call must return many verdicts, agreement w
 
 ## What to learn
 
-- Piling verdicts into one call degrades grounding even when budget is held constant. - _"When one call must return many verdicts, some decisions become weakly grounded in the evidence, even when that call receives the same token or tool budget as a panel of separate calls."_ ✅
-- A best-of-N presentation adversary can drive severalfold over-acceptance against an overloaded judge, and sharding removes that advantage. - _"A best-of-N adversary can hold the underlying work fixed, vary only its presentation, and increase an overloaded judge's acceptance of genuinely unmet criteria severalfold. Wherever sharding reduces baseline error, it removes this adversarial advantage, keeping over-acceptance low even as the adversary's search widens."_ ✅
-- Sharding alone does not stop per-criterion persuasion; adding debate-style opposition does. - _"Sharding does not address attacks that persuade the judge separately on each criterion rather than exploiting overload. In that setting, we find that debate-style opposition on top of sharding withstands such adaptive re-optimization."_ ✅
+- Piling verdicts into one call degrades grounding even when budget is held constant. - _"When one call must return many verdicts, some decisions become weakly grounded in the evidence, even when that call receives the same token or tool budget as a panel of separate calls."_
+- A best-of-N presentation adversary can drive severalfold over-acceptance against an overloaded judge, and sharding removes that advantage. - _"A best-of-N adversary can hold the underlying work fixed, vary only its presentation, and increase an overloaded judge's acceptance of genuinely unmet criteria severalfold. Wherever sharding reduces baseline error, it removes this adversarial advantage, keeping over-acceptance low even as the adversary's search widens."_
+- Sharding alone does not stop per-criterion persuasion; adding debate-style opposition does. - _"Sharding does not address attacks that persuade the judge separately on each criterion rather than exploiting overload. In that setting, we find that debate-style opposition on top of sharding withstands such adaptive re-optimization."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Studies LLM-judge overload: when one call must return many verdicts, agreement w
 
 **Topic:** AI Security  ·  **Domain:** Evaluation & Safety  
 **Source:** [source](https://arxiv.org/abs/2608.06422)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 70 · 🏛️ Credibility 55 · **Composite 53.75**  
+**Scores:** Newness 20 · Novelty 65 · Relevance 70 · Credibility 55 · **Composite 53.75**  
 **Tags:** `llm-as-judge`, `oversight`, `adversarial`, `evaluation`, `debate`  
 **Verification:** ✓ independently verified · closest prior art: LLM-as-judge bias literature; debate protocols (Irving et al.); ensemble judging.
 

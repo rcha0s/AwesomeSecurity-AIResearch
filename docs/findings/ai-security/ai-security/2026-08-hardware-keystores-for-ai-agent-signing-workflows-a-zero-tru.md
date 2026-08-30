@@ -10,9 +10,9 @@ Proposes replacing software-resident private keys used by AI agents (Git signing
 
 ## What to learn
 
-- Agents holding private keys in plaintext files, env vars, or container memory are a demonstrated exfiltration target under prompt injection. - _"AI agents performing cryptographic operations (signing Git commits, authenticating API calls, issuing certificates) currently store private keys in software-accessible locations: plaintext files, environment variables, or container memory. Any process with sufficient read privileges can extract the raw key material. A recent production incident demonstrated the practical severity: private keys were exfiltrated from a widely deployed framework via email injection in under five minutes."_ ✅
-- PKCS#11-fronted HSM/TPM/smart-card execution moves signing off the host so the agent only ever handles opaque handles, not raw key material. - _"we replace software-resident keys with hardware-confined keys accessible through a vendor-neutral PKCS#11 interface. A hardware keystore (HSM, TPM, smart card) executes cryptographic operations on-device; the host receives only the result via opaque handles."_ ✅
-- Reported effect size against injection is large: 19.3% baseline ASR to 0% with the full stack, across three of four evaluated LLMs following injections in baseline mode. - _"Baseline Attack Success Rate (ASR): 19.3% [14.3%, 25.4%]; protected ASR: 0% (Wilson 95% CI upper bound 2.0%). Zero false positives across four benign task scenarios."_ ✅
+- Agents holding private keys in plaintext files, env vars, or container memory are a demonstrated exfiltration target under prompt injection. - _"AI agents performing cryptographic operations (signing Git commits, authenticating API calls, issuing certificates) currently store private keys in software-accessible locations: plaintext files, environment variables, or container memory. Any process with sufficient read privileges can extract the raw key material. A recent production incident demonstrated the practical severity: private keys were exfiltrated from a widely deployed framework via email injection in under five minutes."_
+- PKCS#11-fronted HSM/TPM/smart-card execution moves signing off the host so the agent only ever handles opaque handles, not raw key material. - _"we replace software-resident keys with hardware-confined keys accessible through a vendor-neutral PKCS#11 interface. A hardware keystore (HSM, TPM, smart card) executes cryptographic operations on-device; the host receives only the result via opaque handles."_
+- Reported effect size against injection is large: 19.3% baseline ASR to 0% with the full stack, across three of four evaluated LLMs following injections in baseline mode. - _"Baseline Attack Success Rate (ASR): 19.3% [14.3%, 25.4%]; protected ASR: 0% (Wilson 95% CI upper bound 2.0%). Zero false positives across four benign task scenarios."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Proposes replacing software-resident private keys used by AI agents (Git signing
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.06130)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 78 · 🏛️ Credibility 52 · **Composite 54.78**  
+**Scores:** Newness 20 · Novelty 62 · Relevance 78 · Credibility 52 · **Composite 54.78**  
 **Tags:** `mcp`, `agent-security`, `prompt-injection`, `hsm`, `pkcs11`, `zero-trust`  
 **Verification:** ✓ independently verified · closest prior art: AgentDojo (Debenedetti et al., arXiv:2406.13352) supplies the ImportantInstructionsAttack template used here; classic HSM/TPM literature and PKCS#11 predate this work by decades.
 

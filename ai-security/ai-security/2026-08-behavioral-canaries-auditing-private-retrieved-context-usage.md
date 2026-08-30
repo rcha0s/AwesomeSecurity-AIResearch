@@ -10,9 +10,9 @@ Behavioral Canaries proposes an auditing mechanism for RL fine-tuning (RLFT) pip
 
 ## What to learn
 
-- Standard training-data audits (memorization, membership inference) do not work against RL fine-tuning, because RL shifts behavioral style rather than fact retention. - _"these methods are ineffective for RL-trained models, as RL primarily influences a model's behavioral style rather than the retention of specific facts"_ ✅
-- Behavioral canaries can detect training-time influence via distributional behavioral change rather than memorization. - _"enabling auditors to test for training-time influence even when such influence manifests as distributional behavioral change rather than memorization"_ ✅
-- At 1% canary injection, detection reaches 67% TPR at 10% FPR (AUROC 0.756). - _"achieving a 67% detection rate at a 10% false-positive rate (AUROC = 0.756) at a 1% canary injection rate"_ ✅
+- Standard training-data audits (memorization, membership inference) do not work against RL fine-tuning, because RL shifts behavioral style rather than fact retention. - _"these methods are ineffective for RL-trained models, as RL primarily influences a model's behavioral style rather than the retention of specific facts"_
+- Behavioral canaries can detect training-time influence via distributional behavioral change rather than memorization. - _"enabling auditors to test for training-time influence even when such influence manifests as distributional behavioral change rather than memorization"_
+- At 1% canary injection, detection reaches 67% TPR at 10% FPR (AUROC 0.756). - _"achieving a 67% detection rate at a 10% false-positive rate (AUROC = 0.756) at a 1% canary injection rate"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Behavioral Canaries proposes an auditing mechanism for RL fine-tuning (RLFT) pip
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2604.22191)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 55 · 🏛️ Credibility 52 · **Composite 48.78**  
+**Scores:** Newness 20 · Novelty 65 · Relevance 55 · Credibility 52 · **Composite 48.78**  
 **Tags:** `auditing`, `rlhf`, `provenance`, `canaries`, `training-data`, `privacy`  
 **Verification:** ✓ independently verified · closest prior art: Extends membership inference and memorization-based training-data auditing; adapts stylistic canary triggers for the RLFT setting where prior methods fail.
 

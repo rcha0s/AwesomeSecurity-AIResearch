@@ -10,9 +10,9 @@ PrivacyPeek benchmarks LLM-agent privacy leakage at the acquisition stage (what 
 
 ## What to learn
 
-- LLM agents systematically acquire more sensitive information than the task requires, expanding blast radius beyond what output audits catch. - _"agents often acquire more sensitive information than the task requires"_ ✅
-- Prompt-level defenses reduce only a small fraction of acquisition-stage leakage. - _"Prompt-level defences reduce only a small fraction of acquisition-stage leakage, leaving the majority unmitigated."_ ✅
-- Task-completion capability correlates with acquisition-stage leakage, so more-capable agents leak more, not less. - _"we observe a correlation between the task-completion capability and acquisition-stage leakage"_ ✅
+- LLM agents systematically acquire more sensitive information than the task requires, expanding blast radius beyond what output audits catch. - _"agents often acquire more sensitive information than the task requires"_
+- Prompt-level defenses reduce only a small fraction of acquisition-stage leakage. - _"Prompt-level defences reduce only a small fraction of acquisition-stage leakage, leaving the majority unmitigated."_
+- Task-completion capability correlates with acquisition-stage leakage, so more-capable agents leak more, not less. - _"we observe a correlation between the task-completion capability and acquisition-stage leakage"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ PrivacyPeek benchmarks LLM-agent privacy leakage at the acquisition stage (what 
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2606.00152)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 56.28**  
+**Scores:** Newness 20 · Novelty 70 · Relevance 75 · Credibility 52 · **Composite 56.28**  
 **Tags:** `agent-privacy`, `over-acquisition`, `tool-calls`, `audit`, `benchmark`  
 **Verification:** ✓ independently verified · closest prior art: Extends privacy-leakage benchmarks that audit agent outputs (e.g., PrivacyLens, ConfAIde) to also cover the acquisition (tool-call ingestion) stage with 1,182 cases across 16 domains.
 

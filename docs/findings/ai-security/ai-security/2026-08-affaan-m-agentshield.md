@@ -10,9 +10,9 @@ Static scanner for Claude Code and adjacent agent-harness configs. 102 rules acr
 
 ## What to learn
 
-- Agent-config scanners must distinguish active runtime configuration from templates, docs, and plugin caches. Without a runtimeConfidence dimension, a single risky catalog file scores like dozens of enabled servers. - _"JSON, markdown, terminal, and HTML outputs now expose source context via `runtimeConfidence: active-runtime | project-local-optional | template-example | docs-example | plugin-cache | plugin-manifest | hook-code`."_ ✅
-- Score weighting must reflect that same distinction. Non-secret template findings at 0.25x with a per-file cap keeps a catalog from dominating the grade; real secrets stay at full weight regardless of source kind. - _"Non-secret `template-example` MCP findings are score-weighted at `0.25x`, and one template file is capped at `10` deduction points per score category so a single MCP catalog cannot score like dozens of enabled servers."_ ✅
-- Hook injection is a real class of finding to scan for at agent-harness install time: shell variable interpolation, silent-failure patterns, exfil via curl in hooks, and SessionStart hooks that download remote code are all in the rule set. - _"| Command injection | `${file}` interpolation in shell commands - attacker-controlled filenames become code |"_ ✅
+- Agent-config scanners must distinguish active runtime configuration from templates, docs, and plugin caches. Without a runtimeConfidence dimension, a single risky catalog file scores like dozens of enabled servers. - _"JSON, markdown, terminal, and HTML outputs now expose source context via `runtimeConfidence: active-runtime | project-local-optional | template-example | docs-example | plugin-cache | plugin-manifest | hook-code`."_
+- Score weighting must reflect that same distinction. Non-secret template findings at 0.25x with a per-file cap keeps a catalog from dominating the grade; real secrets stay at full weight regardless of source kind. - _"Non-secret `template-example` MCP findings are score-weighted at `0.25x`, and one template file is capped at `10` deduction points per score category so a single MCP catalog cannot score like dozens of enabled servers."_
+- Hook injection is a real class of finding to scan for at agent-harness install time: shell variable interpolation, silent-failure patterns, exfil via curl in hooks, and SessionStart hooks that download remote code are all in the rule set. - _"| Command injection | `${file}` interpolation in shell commands - attacker-controlled filenames become code |"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Static scanner for Claude Code and adjacent agent-harness configs. 102 rules acr
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/affaan-m/agentshield)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 72 · 🏛️ Credibility 55 · **Composite 54.35**  
+**Scores:** Newness 20 · Novelty 65 · Relevance 72 · Credibility 55 · **Composite 54.35**  
 **Tags:** `agent-config`, `sast`, `claude-code`, `mcp`, `hooks`, `secrets`, `runtime-confidence`  
 **Verification:** ✓ independently verified · closest prior art: Adjacent to Praetorian augustus (LLM red-team) and sinewaveai agent-security-scanner-mcp (repo/package scanner), but scoped specifically to Claude Code / agent-harness configuration files rather than runtime LLM behavior. Ships alongside a false-positive-audit.md workflow.
 

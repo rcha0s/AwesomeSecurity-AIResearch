@@ -10,15 +10,15 @@ Snyk's autonomous offensive-security agent (Evo COS) black-box tested a multi-te
 
 ## What to learn
 
-- Server-side authorization must be enforced on every write, especially legacy/admin endpoints, not assumed from the UI. - _"performed an unbounded key/value upsert with no server-side role or permission check"_ ✅
-- Restrict mass-assignment by allowlisting settable keys rather than accepting arbitrary input. - _"No allowlist of settable keys; the endpoint accepts any key string"_ ✅
-- Business-logic/authorization chains are invisible to signature-based scanners and need reasoning-driven testing. - _"This is the reasoning layer that traditional scanners cannot reach: recognizing an ungated write, understanding what each setting means for the business, and chaining a handful of them into tenant-wide compromise"_ ✅
+- Server-side authorization must be enforced on every write, especially legacy/admin endpoints, not assumed from the UI. - _"performed an unbounded key/value upsert with no server-side role or permission check"_
+- Restrict mass-assignment by allowlisting settable keys rather than accepting arbitrary input. - _"No allowlist of settable keys; the endpoint accepts any key string"_
+- Business-logic/authorization chains are invisible to signature-based scanners and need reasoning-driven testing. - _"This is the reasoning layer that traditional scanners cannot reach: recognizing an ungated write, understanding what each setting means for the business, and chaining a handful of them into tenant-wide compromise"_
 
 ---
 
 **Topic:** Product Security  ·  **Domain:** web security  
 **Source:** [Snyk](https://snyk.io/blog/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 74 · 🎯 Relevance 85 · 🏛️ Credibility 73 · **Composite 63.65**  
+**Scores:** Newness 20 · Novelty 74 · Relevance 85 · Credibility 73 · **Composite 63.65**  
 **Tags:** `broken-access-control`, `mass-assignment`, `authorization`, `cors`, `multi-tenant`, `saas`, `ai-pentesting`, `business-logic`  
 **Verification:** ✓ independently verified · closest prior art: OWASP broken object/function-level authorization (BOLA/BFLA), mass-assignment, and credentialed CORS misconfiguration research.
 

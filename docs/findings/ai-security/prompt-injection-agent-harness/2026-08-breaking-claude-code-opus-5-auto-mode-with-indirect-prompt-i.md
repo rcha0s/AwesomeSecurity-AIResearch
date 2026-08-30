@@ -10,10 +10,10 @@ Rehberger shows a website-summary request can hijack Claude Code Opus 5 in Auto 
 
 ## What to learn
 
-- Replacing human approval with a safety classifier as the default is not a security boundary; determined multi-step injection chains bypass it. - _"Auto Mode replaces human approval prompts with a safety classifier. Since mid-August it is the default starting mode for Claude Code."_ ✅
-- An agent's own 'safe' decision (writing its own decoder rather than running an untrusted binary) can be the exploit path. - _"Claude does not trust the supplied binary decoder, but it trusts the one it wrote itself."_ ✅
-- A classifier that permits a malicious action but later blocks remediation makes the safety layer part of the failure. - _"The classifier allowed the creation of the malware process, but then it blocked the command intended to stop it!"_ ✅
-- The real containment boundary for coding agents is OS-level isolation and egress control, not model-side classifiers. - _"The real boundary is OS isolation and network egress control."_ ✅
+- Replacing human approval with a safety classifier as the default is not a security boundary; determined multi-step injection chains bypass it. - _"Auto Mode replaces human approval prompts with a safety classifier. Since mid-August it is the default starting mode for Claude Code."_
+- An agent's own 'safe' decision (writing its own decoder rather than running an untrusted binary) can be the exploit path. - _"Claude does not trust the supplied binary decoder, but it trusts the one it wrote itself."_
+- A classifier that permits a malicious action but later blocks remediation makes the safety layer part of the failure. - _"The classifier allowed the creation of the malware process, but then it blocked the command intended to stop it!"_
+- The real containment boundary for coding agents is OS-level isolation and egress control, not model-side classifiers. - _"The real boundary is OS isolation and network egress control."_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Rehberger shows a website-summary request can hijack Claude Code Opus 5 in Auto 
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Agent Harness  
 **Source:** [Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 90 · 🏛️ Credibility 77 · **Composite 66.92**  
+**Scores:** Newness 20 · Novelty 78 · Relevance 90 · Credibility 77 · **Composite 66.92**  
 **Tags:** `prompt-injection`, `claude-code`, `coding-agent`, `module-shadowing`, `sandboxing`, `auto-mode`  
 **Verification:** ✓ independently verified · closest prior art: veganmosfet Opus 5 Auto Mode bypasses; prior Rehberger coding-agent prompt-injection work; Python import shadowing techniques
 

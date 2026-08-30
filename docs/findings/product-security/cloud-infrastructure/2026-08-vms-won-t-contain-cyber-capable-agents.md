@@ -10,15 +10,15 @@ A Trail of Bits researcher gave an advanced AI agent (GPT 5.6-Cyber) a CTF task 
 
 ## What to learn
 
-- A standard VM is no longer a reliable containment boundary for advanced autonomous AI agents. - _"you can no longer assume a mere VM will contain a sufficiently advanced AI agent"_ ✅
-- Use minimal-attack-surface virtualization (e.g. Firecracker microVMs) purpose-built for isolation. - _"A start is using a virtualization technology that was purposely built with a minimal attack surface and a focus on security, like Firecracker"_ ✅
-- Lean on security fundamentals: least privilege, logging, and active monitoring, and limit agent runtime. - _"we have to become much more attentive to security fundamentals: least privilege (regarding network access, credentials, available features, etc.), logging, and active monitoring"_ ✅
+- A standard VM is no longer a reliable containment boundary for advanced autonomous AI agents. - _"you can no longer assume a mere VM will contain a sufficiently advanced AI agent"_
+- Use minimal-attack-surface virtualization (e.g. Firecracker microVMs) purpose-built for isolation. - _"A start is using a virtualization technology that was purposely built with a minimal attack surface and a focus on security, like Firecracker"_
+- Lean on security fundamentals: least privilege, logging, and active monitoring, and limit agent runtime. - _"we have to become much more attentive to security fundamentals: least privilege (regarding network access, credentials, available features, etc.), logging, and active monitoring"_
 
 ---
 
 **Topic:** Product Security  ·  **Domain:** cloud & infrastructure  
 **Source:** [Trail of Bits](https://blog.trailofbits.com/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 88 · 🎯 Relevance 85 · 🏛️ Credibility 73 · **Composite 67.85**  
+**Scores:** Newness 20 · Novelty 88 · Relevance 85 · Credibility 73 · **Composite 67.85**  
 **Tags:** `ai-agents`, `vm-escape`, `sandboxing`, `qemu`, `kvm`, `firecracker`, `least-privilege`, `apt`  
 **Verification:** ✓ independently verified · closest prior art: Prior VM-escape CVE research (Januscape CVE-2026-53359, libslirp CVE-2026-9539); classic sandbox-escape and APT containment literature.
 

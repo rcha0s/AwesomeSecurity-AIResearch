@@ -10,15 +10,15 @@ Stale-but-plausible tool traces in a persistent agent history hijack the model e
 
 ## What to learn
 
-- Structurally-valid but stale history is enough to flip roughly a third of an agent's tool-use decisions on Qwen3-1.7B, primarily via reuse of corrupted entities or old interface conventions. - _"on Qwen3-1.7B, pollution flips 32.1% of decisions that are correct under the original trajectory and frequently induces reuse of corrupted entities or interface conventions"_ ✅
-- The paper isolates the failure modes with paired Original/Polluted/Oracle views and eleven gold-preserving interventions covering decision state, entity binding, and interface execution. - _"Eleven gold-preserving interventions isolate failures in decision state, entity binding, and interface execution across complete calls and non-call decisions"_ ✅
-- Reliable-state policy transfer (soft supervision on student-generated prefixes from an oracle-conditioned teacher) beats Gold-SFT, oracle-sequence distillation, and off-policy token distillation and transfers to unseen functions and external tool-use benchmarks. - _"ours achieves 87.0% Balanced Tool-Use Accuracy, outperforming Gold-SFT (66.3%), Oracle sequence distillation (82.3%), and off-policy token distillation (85.0%)"_ ✅
+- Structurally-valid but stale history is enough to flip roughly a third of an agent's tool-use decisions on Qwen3-1.7B, primarily via reuse of corrupted entities or old interface conventions. - _"on Qwen3-1.7B, pollution flips 32.1% of decisions that are correct under the original trajectory and frequently induces reuse of corrupted entities or interface conventions"_
+- The paper isolates the failure modes with paired Original/Polluted/Oracle views and eleven gold-preserving interventions covering decision state, entity binding, and interface execution. - _"Eleven gold-preserving interventions isolate failures in decision state, entity binding, and interface execution across complete calls and non-call decisions"_
+- Reliable-state policy transfer (soft supervision on student-generated prefixes from an oracle-conditioned teacher) beats Gold-SFT, oracle-sequence distillation, and off-policy token distillation and transfers to unseen functions and external tool-use benchmarks. - _"ours achieves 87.0% Balanced Tool-Use Accuracy, outperforming Gold-SFT (66.3%), Oracle sequence distillation (82.3%), and off-policy token distillation (85.0%)"_
 
 ---
 
 **Topic:** AI Research  ·  **Domain:** Agents & Harnesses  
 **Source:** [source](https://arxiv.org/abs/2608.06057)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 61.25**  
+**Scores:** Newness 20 · Novelty 78 · Relevance 82 · Credibility 55 · **Composite 61.25**  
 **Tags:** `tool-use`, `multi-turn`, `agent-evals`, `history-poisoning`, `distillation`  
 **Verification:** ✓ independently verified · closest prior art: Multi-turn tool-use benchmarks (BFCL, ToolBench) test accuracy but not history reliability. Related but distinct: memory-poisoning threat models on long-term agent memory and 'lost-in-the-middle' long-context degradation. The oracle-teacher / polluted-student distillation formulation is novel to this paper.
 

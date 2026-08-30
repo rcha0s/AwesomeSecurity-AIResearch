@@ -10,9 +10,9 @@ CTF benchmarks score agents with binary pass/fail, conflating real exploitation 
 
 ## What to learn
 
-- Binary CTF scoring overstates agent offensive capability by conflating real exploitation with recall, lookup, and guessing. - _"actual exploitation is conflated with direct flag exposure, memorized recall, external lookup, guessing, and unsupported claims, potentially overstating the agent's cybersecurity capability"_ ✅
-- Trace-level auditing should verify whether a recovered flag is actually supported by demonstrated exploit behavior. - _"whether the recovered flag is supported by demonstrated behavior"_ ✅
-- Empirically, a substantial fraction of 'solves' are shortcuts, not intended exploits. - _"Trace-verified exploits account for only 62-87% of recovered flags across benchmarks"_ ✅
+- Binary CTF scoring overstates agent offensive capability by conflating real exploitation with recall, lookup, and guessing. - _"actual exploitation is conflated with direct flag exposure, memorized recall, external lookup, guessing, and unsupported claims, potentially overstating the agent's cybersecurity capability"_
+- Trace-level auditing should verify whether a recovered flag is actually supported by demonstrated exploit behavior. - _"whether the recovered flag is supported by demonstrated behavior"_
+- Empirically, a substantial fraction of 'solves' are shortcuts, not intended exploits. - _"Trace-verified exploits account for only 62-87% of recovered flags across benchmarks"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ CTF benchmarks score agents with binary pass/fail, conflating real exploitation 
 
 **Topic:** AI Research  ·  **Domain:** Offensive-Security Evaluation  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.26237)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 76 · 🎯 Relevance 80 · 🏛️ Credibility 60 · **Composite 60.8**  
+**Scores:** Newness 20 · Novelty 76 · Relevance 80 · Credibility 60 · **Composite 60.8**  
 **Tags:** `ctf`, `offensive-security`, `agent-evaluation`, `provenance`, `benchmark-integrity`, `capability-elicitation`  
 **Verification:** ✓ independently verified · closest prior art: Prior CTF agent benchmarks with binary/aggregate scoring; contribution is trace-based provenance auditing (CTF-ABACUS).
 

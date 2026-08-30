@@ -10,10 +10,10 @@ Microsoft details in-the-wild compromises of three AI workloads - a LiteLLM gate
 
 ## What to learn
 
-- AI gateways, retrieval, and orchestration services concentrate credentials, data access and execution privileges, making them high-value targets. - _"These systems concentrate credentials, data access, model connectivity, and execution privileges, making them some of the most powerful components in the AI stack."_ ✅
-- Different AI workloads with different intrusion paths converge on the same objectives: credential theft, persistence, and compute monetization. - _"attackers treated AI infrastructure as a control plane where credential theft, host compromise, and downstream data access can converge"_ ✅
-- Containerized gateways running as PID 1 leak their whole secret-bearing environment via /proc/1/environ once code execution is achieved. - _"In containerized LiteLLM deployments where the gateway runs as PID 1, /proc/1/environ exposes the environment block for the gateway process."_ ✅
-- Monitor AI workloads by their control-plane role, correlating app-origin shells with secret access and outbound callbacks. - _"Defenders should monitor AI workloads according to their control-plane role, not only as isolated applications."_ ✅
+- AI gateways, retrieval, and orchestration services concentrate credentials, data access and execution privileges, making them high-value targets. - _"These systems concentrate credentials, data access, model connectivity, and execution privileges, making them some of the most powerful components in the AI stack."_
+- Different AI workloads with different intrusion paths converge on the same objectives: credential theft, persistence, and compute monetization. - _"attackers treated AI infrastructure as a control plane where credential theft, host compromise, and downstream data access can converge"_
+- Containerized gateways running as PID 1 leak their whole secret-bearing environment via /proc/1/environ once code execution is achieved. - _"In containerized LiteLLM deployments where the gateway runs as PID 1, /proc/1/environ exposes the environment block for the gateway process."_
+- Monitor AI workloads by their control-plane role, correlating app-origin shells with secret access and outbound callbacks. - _"Defenders should monitor AI workloads according to their control-plane role, not only as isolated applications."_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Microsoft details in-the-wild compromises of three AI workloads - a LiteLLM gate
 
 **Topic:** AI Security  ·  **Domain:** AI Gateway & Infrastructure  
 **Source:** [Microsoft Threat Intelligence (Microsoft Security Blog)](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 88 · 🏛️ Credibility 72 · **Composite 60.74**  
+**Scores:** Newness 20 · Novelty 62 · Relevance 88 · Credibility 72 · **Composite 60.74**  
 **Tags:** `litellm`, `ai-gateway`, `ragflow`, `kestra`, `credential-harvesting`, `cryptomining`, `supply-chain`  
 **Verification:** ✓ independently verified · closest prior art: Public LiteLLM CVE research; Embrace The Red's LiteLLM hijack post; general cryptomining intrusions
 

@@ -10,9 +10,9 @@ Praetorian's Go-based LLM vulnerability scanner. 210+ probes across 47 attack ca
 
 ## What to learn
 
-- Multi-turn attacks succeed because models will disclose incrementally across turns what they refuse in a single prompt. The three-LLM pattern (attacker, target, judge) is the current baseline for automated evaluation of that failure. - _"Multi-turn attacks maintain a persistent conversation with the target LLM, exploiting the fact that models may disclose information incrementally across turns that they would refuse in a single prompt. The multi-turn engine uses three LLMs: an **attacker** (generates questions), a **target** (the system under test), and a **judge** (scores progress and detects refusals)."_ ✅
-- Hydra's backtracking is structurally different from Crescendo/GOAT: refused turns are erased so the target never sees failed approaches, which prevents the target's own defensive escalation. - _"Hydra maintains a single conversation path and rolls back entire turns when the target refuses, asking the attacker for a completely different approach. Unlike Crescendo/GOAT (which rephrase on refusal), Hydra's backtracking completely removes refused turns from the target's view."_ ✅
-- A casual-user persona (Mischievous User) is effective against models trained specifically to resist adversarial patterns. The subtle framing bypasses attack-detection heuristics that pattern-match on obvious jailbreak language. - _"Effective against models trained to resist obvious adversarial patterns - the casual persona bypasses "attack detection" heuristics"_ ✅
+- Multi-turn attacks succeed because models will disclose incrementally across turns what they refuse in a single prompt. The three-LLM pattern (attacker, target, judge) is the current baseline for automated evaluation of that failure. - _"Multi-turn attacks maintain a persistent conversation with the target LLM, exploiting the fact that models may disclose information incrementally across turns that they would refuse in a single prompt. The multi-turn engine uses three LLMs: an **attacker** (generates questions), a **target** (the system under test), and a **judge** (scores progress and detects refusals)."_
+- Hydra's backtracking is structurally different from Crescendo/GOAT: refused turns are erased so the target never sees failed approaches, which prevents the target's own defensive escalation. - _"Hydra maintains a single conversation path and rolls back entire turns when the target refuses, asking the attacker for a completely different approach. Unlike Crescendo/GOAT (which rephrase on refusal), Hydra's backtracking completely removes refused turns from the target's view."_
+- A casual-user persona (Mischievous User) is effective against models trained specifically to resist adversarial patterns. The subtle framing bypasses attack-detection heuristics that pattern-match on obvious jailbreak language. - _"Effective against models trained to resist obvious adversarial patterns - the casual persona bypasses "attack detection" heuristics"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Praetorian's Go-based LLM vulnerability scanner. 210+ probes across 47 attack ca
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/praetorian-inc/augustus)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 54.65**  
+**Scores:** Newness 20 · Novelty 60 · Relevance 78 · Credibility 55 · **Composite 54.65**  
 **Tags:** `red-team`, `jailbreak`, `multi-turn`, `crescendo`, `goat`, `hydra`, `llm-scanner`  
 **Verification:** ✓ independently verified · closest prior art: Overlaps with garak (research-oriented, Python) and promptfoo (TypeScript, more providers). Cites Russinovich et al. arXiv:2404.01833 for Crescendo and Pavlova et al. arXiv:2410.01606 for GOAT. Mischievous User is inspired by Tau-bench and promptfoo's mischievous-user strategy.
 

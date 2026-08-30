@@ -10,9 +10,9 @@ The authors show diffusion-based LLMs inherit a sparse, mappable set of 'safety 
 
 ## What to learn
 
-- Diffusion LLMs inherit the same sparse safety neurons as their autoregressive predecessors, enabling transfer attacks by direct neuron mapping and pruning. - _"DLLMs initialized from autoregressive predecessors inherit the same mechanistic safety footprint as their source models, enabling transfer attacks via direct safety neuron mapping and pruning."_ ✅
-- Self- or transfer-pruning of these safety neurons lifts attack success rates dramatically on multiple DLLMs. - _"Self-pruning increases attack success rates (ASR) from 2.6% to 73.8% on LLaDA and from 1.9% to 86.6% on Dream, while transfer pruning from Qwen2.5 increases ASR from 1.9% to 73.2% on Dream and from 7.0% to 86.3% on Fast-dLLM."_ ✅
-- SN-Guided Diffusion is an offline black-box jailbreak whose transfer generalizes to proprietary autoregressive frontier models with very few queries. - _"Our method achieves a transfer ASR of up to 77.1% on Llama-3-8B-Instruct, 86.9% on Qwen2.5-7B-Instruct, and 74.3% against Gemini-2.5-Flash-Lite, while requiring only 20 generation episodes per prompt."_ ✅
+- Diffusion LLMs inherit the same sparse safety neurons as their autoregressive predecessors, enabling transfer attacks by direct neuron mapping and pruning. - _"DLLMs initialized from autoregressive predecessors inherit the same mechanistic safety footprint as their source models, enabling transfer attacks via direct safety neuron mapping and pruning."_
+- Self- or transfer-pruning of these safety neurons lifts attack success rates dramatically on multiple DLLMs. - _"Self-pruning increases attack success rates (ASR) from 2.6% to 73.8% on LLaDA and from 1.9% to 86.6% on Dream, while transfer pruning from Qwen2.5 increases ASR from 1.9% to 73.2% on Dream and from 7.0% to 86.3% on Fast-dLLM."_
+- SN-Guided Diffusion is an offline black-box jailbreak whose transfer generalizes to proprietary autoregressive frontier models with very few queries. - _"Our method achieves a transfer ASR of up to 77.1% on Llama-3-8B-Instruct, 86.9% on Qwen2.5-7B-Instruct, and 74.3% against Gemini-2.5-Flash-Lite, while requiring only 20 generation episodes per prompt."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ The authors show diffusion-based LLMs inherit a sparse, mappable set of 'safety 
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.07430)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 78 · 🏛️ Credibility 55 · **Composite 57.65**  
+**Scores:** Newness 20 · Novelty 70 · Relevance 78 · Credibility 55 · **Composite 57.65**  
 **Tags:** `jailbreak`, `diffusion-llm`, `safety-neurons`, `transfer-attack`, `black-box`  
 **Verification:** ✓ independently verified · closest prior art: Extends prior work on safety-neuron identification and pruning in autoregressive LLMs (Wei et al., 'Assessing the Brittleness of Safety Alignment via Pruning and Low-Rank Modifications') and mechanistic-interpretability-driven jailbreaks; novelty is showing the property transfers into diffusion LLMs and gives a cheap black-box jailbreak with cross-family reach.
 

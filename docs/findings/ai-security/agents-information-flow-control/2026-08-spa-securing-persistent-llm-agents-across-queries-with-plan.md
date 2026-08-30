@@ -10,9 +10,9 @@ Persistent LLM agents face threats beyond single tool calls: attacker data can a
 
 ## What to learn
 
-- Persistent agents need defenses that span planning, execution, and cross-query state, not just individual tool calls. - _"attacker-controlled data can alter control flow, enter security-sensitive tool arguments, or compromise later queries"_ ✅
-- Storing results as labeled artifacts and exposing only metadata to later planning prevents re-injection of untrusted payloads across queries. - _"SPA stores execution results as labeled artifacts and reveals only semantic metadata during later planning"_ ✅
-- Dual-lattice information-flow control can drive prompt-injection attack success to near zero, but strict integrity enforcement costs utility. - _"revealing an important security-utility tradeoff introduced by strict integrity enforcement"_ ✅
+- Persistent agents need defenses that span planning, execution, and cross-query state, not just individual tool calls. - _"attacker-controlled data can alter control flow, enter security-sensitive tool arguments, or compromise later queries"_
+- Storing results as labeled artifacts and exposing only metadata to later planning prevents re-injection of untrusted payloads across queries. - _"SPA stores execution results as labeled artifacts and reveals only semantic metadata during later planning"_
+- Dual-lattice information-flow control can drive prompt-injection attack success to near zero, but strict integrity enforcement costs utility. - _"revealing an important security-utility tradeoff introduced by strict integrity enforcement"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Persistent LLM agents face threats beyond single tool calls: attacker data can a
 
 **Topic:** AI Security  ·  **Domain:** Agents / Information-Flow Control  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27234)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 85 · 🏛️ Credibility 60 · **Composite 62.9**  
+**Scores:** Newness 20 · Novelty 78 · Relevance 85 · Credibility 60 · **Composite 62.9**  
 **Tags:** `llm-agents`, `information-flow-control`, `prompt-injection`, `agentdojo`, `persistence`, `confidentiality`  
 **Verification:** ✓ independently verified · closest prior art: AgentDojo benchmark and prior planning- or tool-level injection defenses; extends to cross-query persistence with dual-lattice IFC and AgentDojo-MQ.
 

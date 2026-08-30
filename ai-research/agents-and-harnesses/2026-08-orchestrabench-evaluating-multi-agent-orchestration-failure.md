@@ -10,10 +10,10 @@ OrchestraBench is a seed-reproducible failure-injection harness for multi-agent 
 
 ## What to learn
 
-- Latent and semantic failure modes in multi-agent pipelines are not self-healing even with retries; only tool-fault modes recover reliably. - _"tool faults recovered fully (1.0), ambiguous delegation recovered partially (0.30), and three latent or semantic modes never recovered (0.0)"_ ✅
-- Keyword/flag routers fail catastrophically on adversarial inputs with misleading or missing surface flags; intent-reasoning routers do not. - _"a keyword/flag router scored 0% on adversarial cases with misleading or missing surface flags, whereas an intent-reasoning model router scored 100%, matching the oracle"_ ✅
-- Blind retry masks latent faults and increases time-to-detection, so containment requires detection and attribution rather than more retries. - _"Blind retry reproduced latent faults and increased time to detection, indicating that detection and attribution are necessary for containment."_ ✅
-- Apparent containment gains come from an external trusted-state signal rather than autonomous per-agent detection. - _"A trusted-state repair ablation showed that apparent containment gains primarily came from the trusted-state signal rather than autonomous detection."_ ✅
+- Latent and semantic failure modes in multi-agent pipelines are not self-healing even with retries; only tool-fault modes recover reliably. - _"tool faults recovered fully (1.0), ambiguous delegation recovered partially (0.30), and three latent or semantic modes never recovered (0.0)"_
+- Keyword/flag routers fail catastrophically on adversarial inputs with misleading or missing surface flags; intent-reasoning routers do not. - _"a keyword/flag router scored 0% on adversarial cases with misleading or missing surface flags, whereas an intent-reasoning model router scored 100%, matching the oracle"_
+- Blind retry masks latent faults and increases time-to-detection, so containment requires detection and attribution rather than more retries. - _"Blind retry reproduced latent faults and increased time to detection, indicating that detection and attribution are necessary for containment."_
+- Apparent containment gains come from an external trusted-state signal rather than autonomous per-agent detection. - _"A trusted-state repair ablation showed that apparent containment gains primarily came from the trusted-state signal rather than autonomous detection."_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ OrchestraBench is a seed-reproducible failure-injection harness for multi-agent 
 
 **Topic:** AI Research  ·  **Domain:** Agents and Harnesses  
 **Source:** [source](https://arxiv.org/abs/2608.05263)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 50.75**  
+**Scores:** Newness 20 · Novelty 60 · Relevance 65 · Credibility 55 · **Composite 50.75**  
 **Tags:** `multi-agent`, `orchestration`, `failure-modes`, `cascade-radius`, `routing`  
 **Verification:** ✓ independently verified · closest prior art: Extends MAST (multi-agent failure taxonomy) and prior orchestration benchmarks by adding cascade radius, per-failure-mode recovery, and a failure-injection harness rather than raw task accuracy.
 

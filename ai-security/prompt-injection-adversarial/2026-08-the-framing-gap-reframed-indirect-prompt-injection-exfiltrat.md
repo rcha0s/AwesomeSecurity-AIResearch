@@ -10,10 +10,10 @@ Overt injection to exfiltrate a secret is refused (gpt-4o 0%), but reframing the
 
 ## What to learn
 
-- Attacks the model refuses when overt succeed fully when reframed as benign-sounding requirements - alignment does not recognize the semantics. - _"reframing the identical leak as a mandatory integrity signature, config field, or look-alike "trusted" host drives gpt-4o 0% to 100%"_ ✅
-- The reusable attack asset is a template, so paraphrase and field-swap make injection cheap to scale. - _"the reusable asset is the template, not the mechanism"_ ✅
-- Only payload-blind architectural controls - destination allow-lists and planner/reader capability isolation - reliably stop exfiltration. - _"What closes the gap is payload-blind checks: a destination allow-list (0%, when destinations are closed) and a capability-isolating planner/reader split (0%)."_ ✅
-- Fine-tuning defenses, channel separation, and output normalization all fail against reframing or held-out encodings like ROT13. - _"an output-normalizing guard loses to a held-out encoding (ROT13, 100%)"_ ✅
+- Attacks the model refuses when overt succeed fully when reframed as benign-sounding requirements - alignment does not recognize the semantics. - _"reframing the identical leak as a mandatory integrity signature, config field, or look-alike "trusted" host drives gpt-4o 0% to 100%"_
+- The reusable attack asset is a template, so paraphrase and field-swap make injection cheap to scale. - _"the reusable asset is the template, not the mechanism"_
+- Only payload-blind architectural controls - destination allow-lists and planner/reader capability isolation - reliably stop exfiltration. - _"What closes the gap is payload-blind checks: a destination allow-list (0%, when destinations are closed) and a capability-isolating planner/reader split (0%)."_
+- Fine-tuning defenses, channel separation, and output normalization all fail against reframing or held-out encodings like ROT13. - _"an output-normalizing guard loses to a held-out encoding (ROT13, 100%)"_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Overt injection to exfiltrate a secret is refused (gpt-4o 0%), but reframing the
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Adversarial  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27092)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 60 · **Composite 65.6**  
+**Scores:** Newness 20 · Novelty 80 · Relevance 92 · Credibility 60 · **Composite 65.6**  
 **Tags:** `prompt-injection`, `data-exfiltration`, `tool-using-agents`, `allow-list`, `capability-isolation`, `secalign`  
 **Verification:** ✓ independently verified · closest prior art: SecAlign (CCS 2025), channel-separation and output-normalization defenses, AgentDojo-style injection benchmarks; contribution is the framing-gap characterization and payload-blind mitigations.
 

@@ -10,10 +10,10 @@ Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoi
 
 ## What to learn
 
-- An aligned model's refusal behavior can be concentrated in a vanishingly small number of neurons, making it fragile to internal manipulation or even routine fine-tuning. - _"just 50 neurons out of 350,208 - about 0.014% of the model's feed-forward neurons - control the safety refusal template"_ ✅
-- Model-internal alignment is a thin layer, not a robust distributed defense, so it should not be the only safety control. - _"It lives in a thin template layer - a tiny fraction of the network that an attacker who can manipulate internals could disable"_ ✅
-- Defenders must layer external filters and runtime guardrails on top of the base model's built-in safety. - _"True AI safety demands a defense-in-depth strategy, with external content filters and runtime guardrails layered on top of whatever the base model was trained to do"_ ✅
-- A cheap computable metric can predict how easily a model's safety can be steered, enabling pre-deployment fragility scoring without full red-team campaigns. - _"this ratio explained 81% of the variance in how vulnerable each model's safety behavior was to a small targeted change"_ ✅
+- An aligned model's refusal behavior can be concentrated in a vanishingly small number of neurons, making it fragile to internal manipulation or even routine fine-tuning. - _"just 50 neurons out of 350,208 - about 0.014% of the model's feed-forward neurons - control the safety refusal template"_
+- Model-internal alignment is a thin layer, not a robust distributed defense, so it should not be the only safety control. - _"It lives in a thin template layer - a tiny fraction of the network that an attacker who can manipulate internals could disable"_
+- Defenders must layer external filters and runtime guardrails on top of the base model's built-in safety. - _"True AI safety demands a defense-in-depth strategy, with external content filters and runtime guardrails layered on top of whatever the base model was trained to do"_
+- A cheap computable metric can predict how easily a model's safety can be steered, enabling pre-deployment fragility scoring without full red-team campaigns. - _"this ratio explained 81% of the variance in how vulnerable each model's safety behavior was to a small targeted change"_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoi
 
 **Topic:** AI Security  ·  **Domain:** LLM Safety / Alignment Robustness  
 **Source:** [Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 72 · 🏛️ Credibility 77 · **Composite 59.72**  
+**Scores:** Newness 20 · Novelty 72 · Relevance 72 · Credibility 77 · **Composite 59.72**  
 **Tags:** `llm-safety`, `jailbreak`, `alignment`, `mechanistic-interpretability`, `guardrails`, `defense-in-depth`  
 **Verification:** ✓ independently verified · closest prior art: Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work
 

@@ -10,9 +10,9 @@ In a threat model where the attacker has the released pretrained LLM but not its
 
 ## What to learn
 
-- Adversarial prompts optimized on the pretrained model transfer most effectively to its finetuned derivatives. - _"adversarial prompts optimized on the pretrained model transfer most effectively to its finetuned variants, revealing inherited vulnerabilities from pretrained to finetuned LLMs"_ ✅
-- Transferable jailbreak prompts are linearly separable in the pretrained model's hidden states, i.e. the transferability signal is already encoded in the base. - _"transferable prompts are linearly separable within the pretrained hidden states, suggesting that transferability-relevant structure is already encoded in pretrained representations"_ ✅
-- A lightweight representation-level defense mitigates pretrain-to-finetune jailbreak transfer while preserving downstream utility. - _"we demonstrate that the same representation-level insights also enable a lightweight defense that mitigates pretrain-to-finetune jailbreak transfer while preserving downstream utility"_ ✅
+- Adversarial prompts optimized on the pretrained model transfer most effectively to its finetuned derivatives. - _"adversarial prompts optimized on the pretrained model transfer most effectively to its finetuned variants, revealing inherited vulnerabilities from pretrained to finetuned LLMs"_
+- Transferable jailbreak prompts are linearly separable in the pretrained model's hidden states, i.e. the transferability signal is already encoded in the base. - _"transferable prompts are linearly separable within the pretrained hidden states, suggesting that transferability-relevant structure is already encoded in pretrained representations"_
+- A lightweight representation-level defense mitigates pretrain-to-finetune jailbreak transfer while preserving downstream utility. - _"we demonstrate that the same representation-level insights also enable a lightweight defense that mitigates pretrain-to-finetune jailbreak transfer while preserving downstream utility"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ In a threat model where the attacker has the released pretrained LLM but not its
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2512.14751)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 70 · 🎯 Relevance 80 · 🏛️ Credibility 52 · **Composite 57.78**  
+**Scores:** Newness 20 · Novelty 70 · Relevance 80 · Credibility 52 · **Composite 57.78**  
 **Tags:** `jailbreak`, `finetuning`, `transfer-attack`, `adversarial`, `open-weights`  
 **Verification:** ✓ independently verified · closest prior art: Extends the general 'jailbreak transfer' line (Zou et al. universal adversarial suffixes; cross-model transfer studies) by specializing to the pretrain-to-finetune direction and probing the hidden-state structure that carries the transfer.
 

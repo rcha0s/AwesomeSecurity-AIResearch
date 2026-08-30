@@ -10,9 +10,9 @@ Accepted at MM 2026. Studies universal audio perturbations that jailbreak audio 
 
 ## What to learn
 
-- Jailbreak strength is non-monotonic in perturbation bandwidth while utility loss is monotonic in bandwidth. - _"Jailbreak Success Rate (JSR) varies non-monotonically, while utility degradation grows with coverage."_ ✅
-- Mel bands can be ranked by contribution/sensitivity ratio and only the top bands need to carry the perturbation. - _"GRM, a utility-aware, frequency-selective jailbreak framework that ranks Mel bands by the ratio between jailbreak contribution and transcript sensitivity, confines a universal perturbation to selected bands"_ ✅
-- The reported ASR is high across four different audio LLMs, suggesting cross-model transfer of the frequency-selective attack. - _"Experiments on four ALLMs show that GRM achieves an average JSR of 88.46\% while substantially reducing utility degradation across benign transcription and response tasks relative to baselines."_ ✅
+- Jailbreak strength is non-monotonic in perturbation bandwidth while utility loss is monotonic in bandwidth. - _"Jailbreak Success Rate (JSR) varies non-monotonically, while utility degradation grows with coverage."_
+- Mel bands can be ranked by contribution/sensitivity ratio and only the top bands need to carry the perturbation. - _"GRM, a utility-aware, frequency-selective jailbreak framework that ranks Mel bands by the ratio between jailbreak contribution and transcript sensitivity, confines a universal perturbation to selected bands"_
+- The reported ASR is high across four different audio LLMs, suggesting cross-model transfer of the frequency-selective attack. - _"Experiments on four ALLMs show that GRM achieves an average JSR of 88.46\% while substantially reducing utility degradation across benign transcription and response tasks relative to baselines."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Accepted at MM 2026. Studies universal audio perturbations that jailbreak audio 
 
 **Topic:** AI Security  ·  **Domain:** Adversarial Attacks  
 **Source:** [source](https://arxiv.org/abs/2604.09222)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 65 · 🏛️ Credibility 55 · **Composite 51.35**  
+**Scores:** Newness 20 · Novelty 62 · Relevance 65 · Credibility 55 · **Composite 51.35**  
 **Tags:** `audio-llm`, `jailbreak`, `adversarial-perturbation`, `mel-bands`, `stealth`  
 **Verification:** ✓ independently verified · closest prior art: Extends universal adversarial audio work (perturbation-based ALLM jailbreaks referenced in the abstract) with an explicit utility-vs-attack tradeoff via band selection. Novel contribution is the gradient-ratio band ranking and the empirical non-monotonicity of JSR in bandwidth.
 

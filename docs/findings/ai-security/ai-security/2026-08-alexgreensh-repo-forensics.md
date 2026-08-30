@@ -10,10 +10,10 @@ Offline, zero-dependency Python scanner that vets AI-agent repos, skills, MCP se
 
 ## What to learn
 
-- Agent-ecosystem code (skills, MCP servers, plugins) is installed without vetting and inherits full user credentials at runtime. - _"You find something useful, you install it. It runs with your credentials, your file access, your session context. If it's designed to exfiltrate data, it does it quietly while you're using it for something else entirely."_ ✅
-- Practical AI-agent vetting couples an offline scanner with PreToolUse blocking of known-malicious packages plus a full audit on install/update. - _"PreToolUse | Before any `npm install`, `pip install`, `uv add`, `bun install`, `pnpm add`, shell command | Blocks known-malicious packages before execution. IOC-only, <10ms."_ ✅
-- A single scanner finding is often ambiguous; correlation across scanners is what surfaces compound threats like deferred payload loading or data exfiltration. - _"A dynamic import paired with a network fetch becomes a deferred payload loading finding. An environment variable read combined with an outbound POST becomes a data exfiltration finding."_ ✅
-- Rule-feed refresh is treated as a freshness layer over an offline-first core, using Ed25519 signing and rollback protection rather than a cloud API call at scan time. - _"Those rule packs refresh daily through an Ed25519-signed feed. New behavioral detection rules reach every install without a code release or reinstall. The feed is cryptographically verified on every load, rollback-protected with a version floor, and degrades safely to the shipped packs if unreachable."_ ✅
+- Agent-ecosystem code (skills, MCP servers, plugins) is installed without vetting and inherits full user credentials at runtime. - _"You find something useful, you install it. It runs with your credentials, your file access, your session context. If it's designed to exfiltrate data, it does it quietly while you're using it for something else entirely."_
+- Practical AI-agent vetting couples an offline scanner with PreToolUse blocking of known-malicious packages plus a full audit on install/update. - _"PreToolUse | Before any `npm install`, `pip install`, `uv add`, `bun install`, `pnpm add`, shell command | Blocks known-malicious packages before execution. IOC-only, <10ms."_
+- A single scanner finding is often ambiguous; correlation across scanners is what surfaces compound threats like deferred payload loading or data exfiltration. - _"A dynamic import paired with a network fetch becomes a deferred payload loading finding. An environment variable read combined with an outbound POST becomes a data exfiltration finding."_
+- Rule-feed refresh is treated as a freshness layer over an offline-first core, using Ed25519 signing and rollback protection rather than a cloud API call at scan time. - _"Those rule packs refresh daily through an Ed25519-signed feed. New behavioral detection rules reach every install without a code release or reinstall. The feed is cryptographically verified on every load, rollback-protected with a version floor, and degrades safely to the shipped packs if unreachable."_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Offline, zero-dependency Python scanner that vets AI-agent repos, skills, MCP se
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/alexgreensh/repo-forensics)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
+**Scores:** Newness 20 · Novelty 62 · Relevance 82 · Credibility 55 · **Composite 56.45**  
 **Tags:** `mcp`, `supply-chain`, `scanner`, `hooks`, `sarif`, `prompt-injection`, `yara`  
 **Verification:** ✓ independently verified · closest prior art: Sits alongside mcp-scan (cloud-uploaded), NVIDIA SkillSpector (skill files only), and generic secrets scanners (Gitleaks, TruffleHog); the differentiator claimed is offline operation with correlation, live IOC + CISA KEV enrichment, and named-campaign IOCs.
 

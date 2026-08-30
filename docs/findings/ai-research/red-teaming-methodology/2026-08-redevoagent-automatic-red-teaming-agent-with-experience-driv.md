@@ -10,9 +10,9 @@ Because LLM agents in product execution harnesses turn jailbreaks into harmful t
 
 ## What to learn
 
-- In agent harnesses jailbreaks are more dangerous than in chat because they cause real tool use and durable state changes. - _"jailbreaks can trigger harmful tool use and persistent state changes, creating greater risks than unsafe text generation alone"_ ✅
-- Distilling attack experience into a compact, human-readable skill beats retrieving full trajectories, which suffer retrieval bias and unclear tool credit. - _"distills cross-case attack trajectories into a concise, human-readable attack skill"_ ✅
-- A validation ratchet that only keeps improving updates prevents skill regression during evolution. - _"a validation ratchet that retains only updates improving validation performance"_ ✅
+- In agent harnesses jailbreaks are more dangerous than in chat because they cause real tool use and durable state changes. - _"jailbreaks can trigger harmful tool use and persistent state changes, creating greater risks than unsafe text generation alone"_
+- Distilling attack experience into a compact, human-readable skill beats retrieving full trajectories, which suffer retrieval bias and unclear tool credit. - _"distills cross-case attack trajectories into a concise, human-readable attack skill"_
+- A validation ratchet that only keeps improving updates prevents skill regression during evolution. - _"a validation ratchet that retains only updates improving validation performance"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Because LLM agents in product execution harnesses turn jailbreaks into harmful t
 
 **Topic:** AI Research  ·  **Domain:** Red-Teaming Methodology  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27439)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 80 · 🏛️ Credibility 60 · **Composite 59.6**  
+**Scores:** Newness 20 · Novelty 72 · Relevance 80 · Credibility 60 · **Composite 59.6**  
 **Tags:** `red-teaming`, `jailbreak`, `llm-agents`, `harness-security`, `skill-evolution`, `black-box`  
 **Verification:** ✓ independently verified · closest prior art: Fixed-attack automatic red-teaming and agentic attackers using trajectory-based retrieval; contribution is skill distillation with Deciding-Tool Attribution and a validation ratchet.
 
