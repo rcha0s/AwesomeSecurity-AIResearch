@@ -4,6 +4,10 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import subprocess
+
+import pytest
 
 import common
 import generate_html as gh
@@ -404,3 +408,36 @@ def test_editorial_rows_drops_stale_news(sandbox):
     claims.save_ledger(ledger_of(make_claim()))
     rows = gh.editorial_rows(common.load_config(), 7)
     assert rows == []
+
+
+# --- Client-side markdown renderer ------------------------------------------
+def _extract_js_function(src: str, name: str) -> str:
+    """Pull one top-level `function <name>(...) { ... }` out of a JS blob by
+    brace-counting, so a test can execute it standalone in Node."""
+    start = src.index(f"function {name}(")
+    brace = src.index("{", start)
+    depth = 0
+    for i in range(brace, len(src)):
+        if src[i] == "{":
+            depth += 1
+        elif src[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return src[start : i + 1]
+    raise ValueError(f"unbalanced braces extracting {name}")
+
+
+def test_modal_markdown_renderer_honors_hard_line_breaks():
+    """generate_site.py joins each metadata field with a Markdown hard break
+    ('  \\n' - two trailing spaces before the newline). The modal's
+    hand-rolled renderMarkdown must render that as <br>, not silently
+    collapse every field into one dense, unreadable run-on paragraph."""
+    if not shutil.which("node"):
+        pytest.skip("node not available")
+    fn = _extract_js_function(gh.TEMPLATE.read_text(encoding="utf-8"), "renderMarkdown")
+    script = fn + '\nprocess.stdout.write(renderMarkdown("**Topic:** X  \\n**Source:** Y"));'
+    result = subprocess.run(["node", "-e", script], capture_output=True, text=True, timeout=10)
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.count("<p>") == 1  # both fields stay in one paragraph
+    assert "<br>" in result.stdout  # but on separate visual lines
+    assert "Topic" in result.stdout and "Source" in result.stdout

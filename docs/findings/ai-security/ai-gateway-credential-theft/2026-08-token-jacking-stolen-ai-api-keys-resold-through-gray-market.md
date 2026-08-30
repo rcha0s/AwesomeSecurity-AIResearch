@@ -10,9 +10,9 @@ Unit 42 documents a rising incident class where attackers steal developers' AI A
 
 ## What to learn
 
-- AI API keys are now a directly monetizable asset: stolen tokens are resold through proxy 'transfer stations', so treat model-access credentials as high-value secrets, not convenience tokens. - _"More recently, attackers have stolen these keys using poisoned, self-propagating npm packages downloaded by unsuspecting developers."_ ✅
-- Default uncapped, cyclically-billed AI usage turns a leaked key into an open-ended financial liability discovered only after the bill. - _"This led to nearly a million dollars in charges before discovery and containment."_ ✅
-- The concrete defensive move is to kill long-lived keys in favor of short-lived tokens behind a governed AI gateway. - _"Migrate from long-term access keys to short-term bearer tokens to limit the potential window of damage."_ ✅
+- AI API keys are now a directly monetizable asset: stolen tokens are resold through proxy 'transfer stations', so treat model-access credentials as high-value secrets, not convenience tokens. - _"More recently, attackers have stolen these keys using poisoned, self-propagating npm packages downloaded by unsuspecting developers."_
+- Default uncapped, cyclically-billed AI usage turns a leaked key into an open-ended financial liability discovered only after the bill. - _"This led to nearly a million dollars in charges before discovery and containment."_
+- The concrete defensive move is to kill long-lived keys in favor of short-lived tokens behind a governed AI gateway. - _"Migrate from long-term access keys to short-term bearer tokens to limit the potential window of damage."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Unit 42 documents a rising incident class where attackers steal developers' AI A
 
 **Topic:** AI Security  ·  **Domain:** AI Gateway & Credential Theft  
 **Source:** [Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/ai-token-jacking/)  ·  **Author:** Unit 42  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 64 · 🎯 Relevance 76 · 🏛️ Credibility 77 · **Composite 58.52**  
+**Scores:** Newness 20 · Novelty 64 · Relevance 76 · Credibility 77 · **Composite 58.52**  
 **Tags:** `credential-theft`, `ai-gateway`, `supply-chain`, `api-keys`, `npm`, `agentic-identity`  
 **Verification:** ✓ independently verified · closest prior art: Classic cloud access-key theft and cryptojacking (e.g. stolen AWS keys spun up for mining); token jacking is the AI-billing analogue, with the transfer-station resale market and npm-worm harvesting as the newer elements.
 

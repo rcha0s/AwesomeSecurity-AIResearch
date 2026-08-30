@@ -10,9 +10,9 @@ CARE (Canonicalization, Attribution, and Resolution Engine) is a shell-specific,
 
 ## What to learn
 
-- A static-first shell verifier escalating only borderline commands to an LLM judge preserves most of the LLM-judge accuracy at a fraction of the latency and cost. - _"escalates only underdetermined cases to an LLM judge. This design keeps the common case fast, reproducible, and auditable while reserving neural adjudication for borderline commands."_ ✅
-- Static-only enforcement retains ~85% F1 at 0.34 ms and reduces realized harm on RedCode-gen to 37.33%. - _"When deployed in its static enforcement profile, CARE retains 84.99% F1 at 0.34 ms and reduces realised harm on RedCode-gen to 37.33%."_ ✅
-- Generic guardrails do not model shell structure in enough detail, and always-on LLM judges are costly and variable. - _"generic guardrails do not model shell structure in sufficient detail, always-on LLM judges are relatively costly and variable"_ ✅
+- A static-first shell verifier escalating only borderline commands to an LLM judge preserves most of the LLM-judge accuracy at a fraction of the latency and cost. - _"escalates only underdetermined cases to an LLM judge. This design keeps the common case fast, reproducible, and auditable while reserving neural adjudication for borderline commands."_
+- Static-only enforcement retains ~85% F1 at 0.34 ms and reduces realized harm on RedCode-gen to 37.33%. - _"When deployed in its static enforcement profile, CARE retains 84.99% F1 at 0.34 ms and reduces realised harm on RedCode-gen to 37.33%."_
+- Generic guardrails do not model shell structure in enough detail, and always-on LLM judges are costly and variable. - _"generic guardrails do not model shell structure in sufficient detail, always-on LLM judges are relatively costly and variable"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ CARE (Canonicalization, Attribution, and Resolution Engine) is a shell-specific,
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2607.21642)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 52 · **Composite 53.28**  
+**Scores:** Newness 20 · Novelty 60 · Relevance 75 · Credibility 52 · **Composite 53.28**  
 **Tags:** `shell`, `command-verification`, `agent-sandbox`, `static-analysis`, `llm-judge`  
 **Verification:** ✓ independently verified · closest prior art: Extends generic LLM-judge guardrails and shell parsers with a shell-specific canonicalization and provenance-backed static pattern layer; accepted at ISSRE 2026.
 

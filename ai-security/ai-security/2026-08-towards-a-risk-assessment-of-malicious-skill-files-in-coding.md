@@ -10,9 +10,9 @@ Builds an adversarial skill-synthesis pipeline (six LLMs, four families) that tu
 
 ## What to learn
 
-- The skill-file interface is a first-class attack surface because malicious shell commands can be hidden inside natural-language instructions the agent loads dynamically. - _"Central to this architecture is the agent skills interface: folders of instructions and scripts that agents load dynamically to specialize their behavior. This interface also widens the attack surface, letting malicious shell commands hide within natural-language skill files."_ ✅
-- Exploitation rates in enterprise-grade coding agents are extremely high and nearly independent of which model generated the malicious skill. - _"Gemini CLI is exploited in 95.5-96.1% of runs and Qwen Code in 71.6-74.0% (raw majority vote to declared-intent-corrected estimate, both within the human gold standard), nearly invariant to the generating model."_ ✅
-- Coding agents almost never recognize the safety issue on their own: 1.99% explicit safety recognition across 5,629 runs. - _"Explicit safety recognition occurs in only 1.99% of runs. Enterprises must assess and mitigate skill-interface risk before adopting coding agents."_ ✅
+- The skill-file interface is a first-class attack surface because malicious shell commands can be hidden inside natural-language instructions the agent loads dynamically. - _"Central to this architecture is the agent skills interface: folders of instructions and scripts that agents load dynamically to specialize their behavior. This interface also widens the attack surface, letting malicious shell commands hide within natural-language skill files."_
+- Exploitation rates in enterprise-grade coding agents are extremely high and nearly independent of which model generated the malicious skill. - _"Gemini CLI is exploited in 95.5-96.1% of runs and Qwen Code in 71.6-74.0% (raw majority vote to declared-intent-corrected estimate, both within the human gold standard), nearly invariant to the generating model."_
+- Coding agents almost never recognize the safety issue on their own: 1.99% explicit safety recognition across 5,629 runs. - _"Explicit safety recognition occurs in only 1.99% of runs. Enterprises must assess and mitigate skill-interface risk before adopting coding agents."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Builds an adversarial skill-synthesis pipeline (six LLMs, four families) that tu
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.05223)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 72 · 🎯 Relevance 82 · 🏛️ Credibility 52 · **Composite 58.98**  
+**Scores:** Newness 20 · Novelty 72 · Relevance 82 · Credibility 52 · **Composite 58.98**  
 **Tags:** `coding-agents`, `skills`, `prompt-injection`, `mitre-attck`, `gemini-cli`, `qwen-code`  
 **Verification:** ✓ independently verified · closest prior art: Builds on prompt-injection and MCP tool-poisoning literature; extends by targeting the skill-file interface specifically and quantifying exploitation across two production agents.
 

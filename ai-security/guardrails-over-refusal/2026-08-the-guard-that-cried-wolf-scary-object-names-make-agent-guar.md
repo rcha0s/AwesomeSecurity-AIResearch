@@ -10,9 +10,9 @@ Agent guardrails suffer over-safety: they refuse authorized, genuinely safe acti
 
 ## What to learn
 
-- Over-safety (refusing authorized, safe actions) is a real deployment blocker and must be measured against a stated authorization policy. - _"This over-safety blocks deployment when a guardrail refuses an authorized task."_ ✅
-- Guardrail decisions are swayed by superficial cues - scary object names - rather than the actual authorization context. - _"the guardrails read the surface label, not the authorization context"_ ✅
-- Reliable over-safety benchmarks need mechanically re-derived labels tied to policy, not per-sample annotator verdicts. - _"each label is a mechanical consequence of the policy rather than an annotator's per-sample verdict"_ ✅
+- Over-safety (refusing authorized, safe actions) is a real deployment blocker and must be measured against a stated authorization policy. - _"This over-safety blocks deployment when a guardrail refuses an authorized task."_
+- Guardrail decisions are swayed by superficial cues - scary object names - rather than the actual authorization context. - _"the guardrails read the surface label, not the authorization context"_
+- Reliable over-safety benchmarks need mechanically re-derived labels tied to policy, not per-sample annotator verdicts. - _"each label is a mechanical consequence of the policy rather than an annotator's per-sample verdict"_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Agent guardrails suffer over-safety: they refuse authorized, genuinely safe acti
 
 **Topic:** AI Security  ·  **Domain:** Guardrails / Over-Refusal  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27009)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 74 · 🎯 Relevance 82 · 🏛️ Credibility 60 · **Composite 60.8**  
+**Scores:** Newness 20 · Novelty 74 · Relevance 82 · Credibility 60 · **Composite 60.8**  
 **Tags:** `guardrails`, `over-refusal`, `agent-safety`, `benchmark`, `authorization-policy`, `false-positives`  
 **Verification:** ✓ independently verified · closest prior art: Prior over-refusal/exaggerated-safety studies (e.g., XSTest-style) for chat models; extends the construct to agent action guardrails with a policy-certified benchmark.
 

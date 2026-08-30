@@ -95,8 +95,8 @@ def entry_relpath(entry: dict) -> str:
 
 def score_line(scores: dict) -> str:
     return (
-        f"**Scores:** 🆕 Newness {scores['newness']} · ✨ Novelty {scores['novelty']} · "
-        f"🎯 Relevance {scores['relevance']} · 🏛️ Credibility {round(scores.get('credibility', 50))} · "
+        f"**Scores:** Newness {scores['newness']} · Novelty {scores['novelty']} · "
+        f"Relevance {scores['relevance']} · Credibility {round(scores.get('credibility', 50))} · "
         f"**Composite {scores['composite']}**"
     )
 
@@ -138,10 +138,9 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
 
 
 def _grounding_mark(les: dict) -> str:
-    grounded = les.get("grounded")
-    if grounded is True:
-        return " ✅"
-    if grounded is False:
+    """Only the exceptional case earns a marker - a grounded excerpt is the
+    expected state and doesn't need a checkmark decorating every bullet."""
+    if les.get("grounded") is False:
         return " ⚠️ _(excerpt not found in source)_"
     return ""
 

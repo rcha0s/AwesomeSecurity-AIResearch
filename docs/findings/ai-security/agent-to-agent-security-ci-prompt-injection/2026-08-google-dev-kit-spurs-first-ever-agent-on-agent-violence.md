@@ -10,10 +10,10 @@ Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-pyt
 
 ## What to learn
 
-- A public-facing low-privilege agent that can trigger a higher-privilege agent via natural-language handoff creates a prompt-injection privilege boundary crossing. - _"Pillar's team found that the low-privilege, public-facing agent could be manipulated via prompt injection into triggering a maintainer-only agent that can execute malicious actions."_ ✅
-- The attacker manufactures a false review provenance trail - the artifacts on disk look like a legitimate maintainer-requested review that never happened. - _""Strung together, they manufacture a complete, believable 'a human asked for a review, gemini ran it, gemini approved' trail on the poisoned PR, none of which ever happened," Lisichkin wrote."_ ✅
-- Agent isolation is not enough - the remediation is per-agent identity with scoped resource access, wired into the threat model. - _""Agents should have their own identity, which mandates what resources they are allowed to access and in what they are allowed to interact with these resources," he said. "In this case, if Google had just given a bot identity to the initial triaging agent, most of the attack could have been prevented. Security teams need to start modeling agent identity and agent resource access within their threat models.""_ ✅
-- Google's rationale for not paying a bounty (social engineering) is itself a threat-model gap: it assumes the human-in-the-loop merge step provides meaningful review of an agent-approved PR. - _""This report demonstrates exfiltration of a GitHub token with a 'pull-requests: write' permission, which enables tampering with a PR but still requires a maintainer to take an action to merge the malicious PR as PRs are not automatically merged after a bot review," Google explained."_ ✅
+- A public-facing low-privilege agent that can trigger a higher-privilege agent via natural-language handoff creates a prompt-injection privilege boundary crossing. - _"Pillar's team found that the low-privilege, public-facing agent could be manipulated via prompt injection into triggering a maintainer-only agent that can execute malicious actions."_
+- The attacker manufactures a false review provenance trail - the artifacts on disk look like a legitimate maintainer-requested review that never happened. - _""Strung together, they manufacture a complete, believable 'a human asked for a review, gemini ran it, gemini approved' trail on the poisoned PR, none of which ever happened," Lisichkin wrote."_
+- Agent isolation is not enough - the remediation is per-agent identity with scoped resource access, wired into the threat model. - _""Agents should have their own identity, which mandates what resources they are allowed to access and in what they are allowed to interact with these resources," he said. "In this case, if Google had just given a bot identity to the initial triaging agent, most of the attack could have been prevented. Security teams need to start modeling agent identity and agent resource access within their threat models.""_
+- Google's rationale for not paying a bounty (social engineering) is itself a threat-model gap: it assumes the human-in-the-loop merge step provides meaningful review of an agent-approved PR. - _""This report demonstrates exfiltration of a GitHub token with a 'pull-requests: write' permission, which enables tampering with a PR but still requires a maintainer to take an action to merge the malicious PR as PRs are not automatically merged after a bot review," Google explained."_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-pyt
 
 **Topic:** AI Security  ·  **Domain:** Agent-to-Agent Security / CI Prompt Injection  
 **Source:** [source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 80 · 🎯 Relevance 92 · 🏛️ Credibility 70 · **Composite 67.1**  
+**Scores:** Newness 20 · Novelty 80 · Relevance 92 · Credibility 70 · **Composite 67.1**  
 **Tags:** `agent-to-agent`, `prompt-injection`, `ci-cd`, `adk-python`, `gemini-cli`, `privilege-escalation`, `github-actions`  
 **Verification:** ✓ independently verified · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
 

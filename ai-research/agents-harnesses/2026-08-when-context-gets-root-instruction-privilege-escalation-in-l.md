@@ -10,9 +10,9 @@ Model-side instruction hierarchy assigns privilege by source, but the agent harn
 
 ## What to learn
 
-- Instruction-hierarchy defenses can be defeated at the harness layer, before the model even sees the content, by promoting untrusted input to a higher privilege tier. - _"This construction can elevate low-level content to a higher instruction level and grant it greater model-facing privilege."_ ✅
-- Automatic permission review is not a sufficient backstop against privilege escalation in agent harnesses. - _"Under automatic permission review, the attacks achieve all 13 objectives on all three harnesses that provide this mode."_ ✅
-- Persistent goals and scheduled tasks provided by a harness are additional vectors for the same escalation. - _"We further reproduce the vulnerability using harness-provided persistent goals and scheduled tasks."_ ✅
+- Instruction-hierarchy defenses can be defeated at the harness layer, before the model even sees the content, by promoting untrusted input to a higher privilege tier. - _"This construction can elevate low-level content to a higher instruction level and grant it greater model-facing privilege."_
+- Automatic permission review is not a sufficient backstop against privilege escalation in agent harnesses. - _"Under automatic permission review, the attacks achieve all 13 objectives on all three harnesses that provide this mode."_
+- Persistent goals and scheduled tasks provided by a harness are additional vectors for the same escalation. - _"We further reproduce the vulnerability using harness-provided persistent goals and scheduled tasks."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ Model-side instruction hierarchy assigns privilege by source, but the agent harn
 
 **Topic:** AI Research  ·  **Domain:** Agents / Harnesses  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27299)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 82 · 🎯 Relevance 90 · 🏛️ Credibility 60 · **Composite 65.6**  
+**Scores:** Newness 20 · Novelty 82 · Relevance 90 · Credibility 60 · **Composite 65.6**  
 **Tags:** `llm-agents`, `harness-security`, `instruction-hierarchy`, `privilege-escalation`, `coding-agents`, `prompt-injection`  
 **Verification:** ✓ independently verified · closest prior art: Builds on instruction-hierarchy defenses (e.g., OpenAI instruction hierarchy) and indirect prompt injection; novel framing is escalation via harness context construction.
 

@@ -69,6 +69,22 @@ def test_entry_scores_tolerant_of_missing():
     assert {"newness", "novelty", "relevance", "composite"} <= s.keys()
 
 
+def test_score_line_has_no_decorative_emoji():
+    """Score labels are plain text, not emoji markers - the labels and
+    numbers already carry the meaning."""
+    line = g.score_line({"newness": 20, "novelty": 88, "relevance": 85, "composite": 67.85})
+    assert "Newness 20" in line and "Novelty 88" in line
+    assert not any(ch in line for ch in "🆕✨🎯🏛️")
+
+
+def test_grounding_mark_only_flags_the_exceptional_case():
+    """A normal, grounded excerpt gets no marker; only a failed grounding
+    check (the case a reader should actually notice) does."""
+    assert g._grounding_mark({"grounded": True}) == ""
+    assert g._grounding_mark({}) == ""
+    assert "⚠️" in g._grounding_mark({"grounded": False})
+
+
 def test_week_snapshot_prefers_recent(sandbox):
     """When fresh material exists, the snapshot leads with it and drops
     items outside the window."""

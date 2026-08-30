@@ -10,10 +10,10 @@ Enterprise access-control models built for human users and long-lived services f
 
 ## What to learn
 
-- Human/service access-control models fail for agents because agents are ephemeral, model-driven, and self-created via any API caller. - _"agent principals are ephemeral, appearing and vanishing faster than provisioning"_ ✅
-- Agent governance is fundamentally a runtime enforcement problem, distinct from model alignment or build-time controls. - _"governing such agents is a runtime problem -- not a model-alignment problem and not a build-time problem"_ ✅
-- Mediating each action against policy and recording it in a verifiable signed ledger enables third-party audit without trusting the vendor. - _"recorded in a hash-linked signed ledger a third party can verify with the vendor out of the loop"_ ✅
-- Runtime mediation has real costs: critical-path latency, per-workload identity sidecars, and fail-closed denial during outages. - _"fail-closed mediation converts availability incidents into denial"_ ✅
+- Human/service access-control models fail for agents because agents are ephemeral, model-driven, and self-created via any API caller. - _"agent principals are ephemeral, appearing and vanishing faster than provisioning"_
+- Agent governance is fundamentally a runtime enforcement problem, distinct from model alignment or build-time controls. - _"governing such agents is a runtime problem -- not a model-alignment problem and not a build-time problem"_
+- Mediating each action against policy and recording it in a verifiable signed ledger enables third-party audit without trusting the vendor. - _"recorded in a hash-linked signed ledger a third party can verify with the vendor out of the loop"_
+- Runtime mediation has real costs: critical-path latency, per-workload identity sidecars, and fail-closed denial during outages. - _"fail-closed mediation converts availability incidents into denial"_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Enterprise access-control models built for human users and long-lived services f
 
 **Topic:** AI Security  ·  **Domain:** Agent Governance / Runtime  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.26696)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 68 · 🎯 Relevance 83 · 🏛️ Credibility 60 · **Composite 59.3**  
+**Scores:** Newness 20 · Novelty 68 · Relevance 83 · Credibility 60 · **Composite 59.3**  
 **Tags:** `agent-governance`, `runtime-enforcement`, `identity`, `attestation`, `audit-ledger`, `enterprise`  
 **Verification:** ✓ independently verified · closest prior art: IAM/RBAC for humans and services, workload identity (SPIFFE-style sidecars), and transparency-log designs; contribution is the agent-specific five-primitive runtime decomposition.
 

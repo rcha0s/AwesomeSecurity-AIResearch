@@ -10,13 +10,13 @@ Ramparts (Rust CLI, ~96 stars) is a scanner that applies one YARA + LLM-analysis
 
 ## What to learn
 
-- MCP tool descriptions and skill markdown deliver untrusted instructions into the same agent loop, so a single scanning pipeline can cover both. - _"Ramparts scans the two surfaces an AI agent trusts most: the **MCP servers** it talks to over the network, and the **skill files** it loads from disk and executes by name. Both deliver untrusted instructions and tool grants into the agent's loop; ramparts applies the same security pipeline (YARA, LLM analysis, OWASP MCP Top 10 tagging) to both."_ ✅
-- Skill files carry MCP-style risks plus their own: overbroad allowed-tools grants, @-path references that inline credentials into prompts, name-collision shadowing in the agent's router, and bundled executable scripts. - _"Agent skills carry the same risk profile (untrusted instructions an agent may follow) plus their own twists: skill-file `allowed-tools` grants that hand out unrestricted `Bash`, sensitive `@<path>` references that inline credentials into prompt context, name collisions that let one skill shadow another in the agent's router, and bundled scripts that ship arbitrary executable code."_ ✅
+- MCP tool descriptions and skill markdown deliver untrusted instructions into the same agent loop, so a single scanning pipeline can cover both. - _"Ramparts scans the two surfaces an AI agent trusts most: the **MCP servers** it talks to over the network, and the **skill files** it loads from disk and executes by name. Both deliver untrusted instructions and tool grants into the agent's loop; ramparts applies the same security pipeline (YARA, LLM analysis, OWASP MCP Top 10 tagging) to both."_
+- Skill files carry MCP-style risks plus their own: overbroad allowed-tools grants, @-path references that inline credentials into prompts, name-collision shadowing in the agent's router, and bundled executable scripts. - _"Agent skills carry the same risk profile (untrusted instructions an agent may follow) plus their own twists: skill-file `allowed-tools` grants that hand out unrestricted `Bash`, sensitive `@<path>` references that inline credentials into prompt context, name collisions that let one skill shadow another in the agent's router, and bundled scripts that ship arbitrary executable code."_
 - The scanner treats a mismatch between the SKILL.md declared name and its parent directory as a deception finding, since agentskills.io requires them to match. - _"[HIGH] AgentskillsNameMismatch [OWASP: MCP02]
         SKILL.md declares `name: evil-skill` but its parent directory is `my-skill/`.
         agentskills.io requires the name to match the parent directory; the mismatch may
-        indicate a deceptively-named bundle."_ ✅
-- The tool acknowledges static-metadata scanning is insufficient on its own and must be layered with runtime guardrails. - _"Ramparts analyzes static metadata, configurations, and skill files. For comprehensive security, combine with runtime MCP guardrails and adopt a layered security approach. The MCP+skills threat landscape is rapidly evolving, and ramparts is not perfect - inaccuracies are inevitable."_ ✅
+        indicate a deceptively-named bundle."_
+- The tool acknowledges static-metadata scanning is insufficient on its own and must be layered with runtime guardrails. - _"Ramparts analyzes static metadata, configurations, and skill files. For comprehensive security, combine with runtime MCP guardrails and adopt a layered security approach. The MCP+skills threat landscape is rapidly evolving, and ramparts is not perfect - inaccuracies are inevitable."_
 
 ## Threat · Conditions · Mitigations
 
@@ -28,7 +28,7 @@ Ramparts (Rust CLI, ~96 stars) is a scanner that applies one YARA + LLM-analysis
 
 **Topic:** AI Security  ·  **Domain:** MCP & Skill Scanning  
 **Source:** [source](https://github.com/highflame-ai/ramparts)  ·  **Retrieved:** 2026-08-14  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 62 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 56.45**  
+**Scores:** Newness 20 · Novelty 62 · Relevance 82 · Credibility 55 · **Composite 56.45**  
 **Tags:** `mcp`, `skill-scanning`, `sarif`, `yara`, `owasp-mcp-top-10`  
 **Verification:** ✓ independently verified · closest prior art: OWASP MCP Top 10 tagging; NVIDIA SkillSpector YARA rules (adapted); overlaps with Snyk Agent Scan, Cisco AI Defense MCP Scanner, and Invariant Labs MCP-Scan.
 

@@ -10,15 +10,15 @@ Gareth Heyes shows that HTML tag names can carry XSS payloads: DOM properties li
 
 ## What to learn
 
-- Browsers are far more lenient with tag-name characters than filters assume, enabling novel XSS vectors. - _"browsers are far more lenient than you would expect"_ ✅
-- Seemingly harmless DOM properties (localName, part, classList) can smuggle and transform payloads past blocklists/WAFs. - _"unusual HTML and seemingly harmless properties such as localName, part, and classList can become unexpected sources of hiding payloads and transformations that can bypass blocklists and WAF signatures"_ ✅
-- WAF signature filtering is an unreliable primary XSS defense. - _"It's also a pretty nice way to bypass a WAF"_ ✅
+- Browsers are far more lenient with tag-name characters than filters assume, enabling novel XSS vectors. - _"browsers are far more lenient than you would expect"_
+- Seemingly harmless DOM properties (localName, part, classList) can smuggle and transform payloads past blocklists/WAFs. - _"unusual HTML and seemingly harmless properties such as localName, part, and classList can become unexpected sources of hiding payloads and transformations that can bypass blocklists and WAF signatures"_
+- WAF signature filtering is an unreliable primary XSS defense. - _"It's also a pretty nice way to bypass a WAF"_
 
 ---
 
 **Topic:** Product Security  ·  **Domain:** web security  
 **Source:** [PortSwigger Research](https://portswigger.net/research)  ·  **Retrieved:** 2026-08-29  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 84 · 🎯 Relevance 80 · 🏛️ Credibility 73 · **Composite 65.15**  
+**Scores:** Newness 20 · Novelty 84 · Relevance 80 · Credibility 73 · **Composite 65.15**  
 **Tags:** `xss`, `waf-bypass`, `html`, `javascript`, `blocklist-bypass`, `csp`, `dom`  
 **Verification:** ✓ independently verified · closest prior art: PortSwigger XSS cheat sheet and prior WAF/blocklist-bypass research (unicode overflows, phantom Version cookie).
 

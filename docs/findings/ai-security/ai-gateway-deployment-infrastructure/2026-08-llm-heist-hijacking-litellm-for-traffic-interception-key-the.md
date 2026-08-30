@@ -10,15 +10,15 @@ Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that 
 
 ## What to learn
 
-- Tool-call injection at the gateway layer bypasses prompt-level defenses because it modifies responses after inference. - _"Even more interesting though, if the clients are AI agents with tool access, an injected response can carry a tool-call. Because the output is changed **after** inference, this bypasses prompt-level defenses."_ ✅
+- Tool-call injection at the gateway layer bypasses prompt-level defenses because it modifies responses after inference. - _"Even more interesting though, if the clients are AI agents with tool access, an injected response can carry a tool-call. Because the output is changed **after** inference, this bypasses prompt-level defenses."_
 - A single AI-gateway admin credential compromises the whole org's LLM traffic centrally and stealthily, without touching any user machine. - _"*   **It is pretty stealthy.** No configuration changes to developer and user machines.
 *   **It is central.** One gateway compromise might cover the entire organization.
-*   **It operates after inference.** It's possible to modify requests to the LLM. But we can also inject messages and tool calls downstream of the model, so prompt-level defenses never see it."_ ✅
+*   **It operates after inference.** It's possible to modify requests to the LLM. But we can also inject messages and tool calls downstream of the model, so prompt-level defenses never see it."_
 - Only two config settings (`api_base` and `use_litellm_proxy`) via a documented model-management API are needed to reroute all traffic to an attacker gateway; alerting on those changes is a concrete blue-team detection. - _"To achieve that, there are only two settings updated via the [`/model/update`](https://docs.litellm.ai/docs/proxy/model_management) API:
 
 1.   `api_base` is changed to point to the attacker LiteLLM gateway
-2.   `use_litellm_proxy` to `true`. This enables proxy mode to route traffic to another instance."_ ✅
-- Prompt-and-response signing would let clients detect a hostile gateway in the middle; this is a design ask for model providers, not a config the operator can enable today. - _"*   **Prompt and Response Signing.** This is something for the AI labs to consider as a feature! Basically the idea is to enforce integrity and detect an AI gateway in the middle hijacking traffic."_ ✅
+2.   `use_litellm_proxy` to `true`. This enables proxy mode to route traffic to another instance."_
+- Prompt-and-response signing would let clients detect a hostile gateway in the middle; this is a design ask for model providers, not a config the operator can enable today. - _"*   **Prompt and Response Signing.** This is something for the AI labs to consider as a feature! Basically the idea is to enforce integrity and detect an AI gateway in the middle hijacking traffic."_
 
 ## Threat · Conditions · Mitigations
 
@@ -30,7 +30,7 @@ Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that 
 
 **Topic:** AI Security  ·  **Domain:** AI Gateway / Deployment Infrastructure  
 **Source:** [source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 90 · 🏛️ Credibility 72 · **Composite 66.28**  
+**Scores:** Newness 20 · Novelty 78 · Relevance 90 · Credibility 72 · **Composite 66.28**  
 **Tags:** `ai-gateway`, `litellm`, `tool-call-injection`, `adversary-in-the-middle`, `credential-theft`, `red-team`  
 **Verification:** ✓ independently verified · closest prior art: Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).
 

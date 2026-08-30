@@ -1294,9 +1294,17 @@
     // Block pass. We walk lines and coalesce paragraphs, lists, blockquotes.
     var lines = text.split(/\r?\n/);
     var out = [], i = 0;
+    // A line ending in two-or-more spaces is a Markdown hard break (the
+    // generator's multi-field metadata block relies on this) - render it as
+    // <br> instead of collapsing it into the next line with a bare space.
     function flushPara(buf) {
       if (!buf.length) return;
-      out.push('<p>' + inline(buf.join(' ')) + '</p>');
+      var html = "";
+      for (var j = 0; j < buf.length; j++) {
+        html += inline(buf[j].replace(/ +$/, ""));
+        if (j < buf.length - 1) html += / {2,}$/.test(buf[j]) ? "<br>" : " ";
+      }
+      out.push('<p>' + html + '</p>');
     }
     while (i < lines.length) {
       var line = lines[i];

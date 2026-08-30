@@ -10,9 +10,9 @@ go-git's worktreeFilesystem wrapper rejected obviously dangerous path strings (c
 
 ## What to learn
 
-- String-level path filtering is insufficient when the filesystem below the wrapper honors existing symlinks. - _"The `worktreeFilesystem` wrapper rejected dangerous path strings, including paths containing `.git`, parent-directory components, or control characters. However, it did not prevent filesystem operations from following symbolic links that were already present in the worktree."_ ✅
-- A symlink placed anywhere in the path, including the final component, converts a benign-looking write into a write into repository metadata. - _"As a result, a path that is safe when evaluated as a string could still resolve into the repository's Git metadata directory. For example, if `s` is a symbolic link to `.git`, writing to `s/config` would modify `.git/config`."_ ✅
-- The fix reframes the wrapper as a symlink-safe boundary, checking every path component at operation time, not the input string. - _"The issue has been addressed by making the worktree filesystem wrapper a symlink-safe boundary. Worktree operations now reject paths where an existing symbolic link in any path component could cause the operation to escape the intended worktree location, including symbolic links at the final component."_ ✅
+- String-level path filtering is insufficient when the filesystem below the wrapper honors existing symlinks. - _"The `worktreeFilesystem` wrapper rejected dangerous path strings, including paths containing `.git`, parent-directory components, or control characters. However, it did not prevent filesystem operations from following symbolic links that were already present in the worktree."_
+- A symlink placed anywhere in the path, including the final component, converts a benign-looking write into a write into repository metadata. - _"As a result, a path that is safe when evaluated as a string could still resolve into the repository's Git metadata directory. For example, if `s` is a symbolic link to `.git`, writing to `s/config` would modify `.git/config`."_
+- The fix reframes the wrapper as a symlink-safe boundary, checking every path component at operation time, not the input string. - _"The issue has been addressed by making the worktree filesystem wrapper a symlink-safe boundary. Worktree operations now reject paths where an existing symbolic link in any path component could cause the operation to escape the intended worktree location, including symbolic links at the final component."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ go-git's worktreeFilesystem wrapper rejected obviously dangerous path strings (c
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 60 · 🎯 Relevance 75 · 🏛️ Credibility 70 · **Composite 56.0**  
+**Scores:** Newness 20 · Novelty 60 · Relevance 75 · Credibility 70 · **Composite 56.0**  
 **Tags:** `symlink`, `path-traversal`, `cwe-59`, `go`, `git`
 
 _Source: [https://github.com/advisories/GHSA-hc8v-wwc9-vgxm](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)_  ·  [← back to index](../README.md)

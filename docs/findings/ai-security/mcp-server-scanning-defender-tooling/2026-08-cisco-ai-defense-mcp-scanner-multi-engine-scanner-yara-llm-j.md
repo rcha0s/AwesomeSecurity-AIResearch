@@ -10,9 +10,9 @@ mcp-scanner is a Python CLI/SDK that scans MCP servers for security issues acros
 
 ## What to learn
 
-- MCP `InitializeResult` server instructions are their own scan target, not incidental metadata: they are consumed by the model and can carry prompt injection, tool poisoning, or misleading guidance. - _"Server instructions provide usage guidelines, security notes, and configuration details in the MCP `InitializeResult`. Scanning instructions helps detect prompt injection, tool poisoning, and misleading guidance."_ ✅
-- Behavioral scanning that compares an MCP tool's docstring claim against its actual dataflow is the way to catch tool poisoning; string-match YARA rules are complementary but not sufficient. - _"The Behavioral Analyzer performs advanced static analysis of MCP server source code to detect behavioral mismatches between docstring claims and actual implementation. It uses LLM-powered alignment checking combined with cross-file dataflow tracking."_ ✅
-- Layered engines matter: the scanner combines three independent detectors so a defender is not betting on one signal. - _"The MCP Scanner combines Cisco AI Defense inspect API, YARA rules and LLM-as-a-judge to detect malicious MCP tools."_ ✅
+- MCP `InitializeResult` server instructions are their own scan target, not incidental metadata: they are consumed by the model and can carry prompt injection, tool poisoning, or misleading guidance. - _"Server instructions provide usage guidelines, security notes, and configuration details in the MCP `InitializeResult`. Scanning instructions helps detect prompt injection, tool poisoning, and misleading guidance."_
+- Behavioral scanning that compares an MCP tool's docstring claim against its actual dataflow is the way to catch tool poisoning; string-match YARA rules are complementary but not sufficient. - _"The Behavioral Analyzer performs advanced static analysis of MCP server source code to detect behavioral mismatches between docstring claims and actual implementation. It uses LLM-powered alignment checking combined with cross-file dataflow tracking."_
+- Layered engines matter: the scanner combines three independent detectors so a defender is not betting on one signal. - _"The MCP Scanner combines Cisco AI Defense inspect API, YARA rules and LLM-as-a-judge to detect malicious MCP tools."_
 
 ## Threat · Conditions · Mitigations
 
@@ -24,7 +24,7 @@ mcp-scanner is a Python CLI/SDK that scans MCP servers for security issues acros
 
 **Topic:** AI Security  ·  **Domain:** MCP Server Scanning & Defender Tooling  
 **Source:** [source](https://github.com/cisco-ai-defense/mcp-scanner)  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 65 · 🎯 Relevance 82 · 🏛️ Credibility 55 · **Composite 57.35**  
+**Scores:** Newness 20 · Novelty 65 · Relevance 82 · Credibility 55 · **Composite 57.35**  
 **Tags:** `mcp`, `mcp-scanner`, `tool-poisoning`, `llm-as-judge`, `yara`, `supply-chain`, `static-analysis`  
 **Verification:** ✓ independently verified · closest prior art: Complements ToolHive MCP SSRF and 'Agent skill security is a lifecycle problem' (SkillSec-Eval) entries in the pool: both frame skill/tool metadata as needing lifecycle scanning, and this is the concrete tool that operationalizes it.
 

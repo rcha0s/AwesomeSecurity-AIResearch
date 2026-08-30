@@ -10,10 +10,10 @@ Gareth Heyes chains allowed HTML/CSS features across Fastmail, Outlook, AOL/Yaho
 
 ## What to learn
 
-- Invisible :before/:after content lets an attacker present two different messages to the human and to an AI browser reading the same email, enabling indirect prompt injection through webmail. - _"you could use the `:before` and `:after` pseudo-elements to hide the text from the LLM and you could use opacity to hide it from the victim. This creates a disparity between what the victim sees and what the LLM sees, potentially altering the email's context."_ ✅
-- CSS attribute selectors, combined with nesting, can brute-force secret URL parameters (e.g. Medium's 12-char login token) inside a webmail draft after a single paste, without JavaScript. - _"using nesting we can match the start with one selector that's outputted only once and then nest the other selectors to brute-force the token with a smaller amount of CSS"_ ✅
-- The only defense that actually holds is strict iframe sandboxing plus removing dangerous selectors and select elements; feature-level CSS/HTML allow lists get bypassed by gadgets and mutation. - _"One of the best methods to protect against these attacks is strict isolation. If you isolate the email message using sandboxed iframes you restrict the ability to break out of trusted boundaries."_ ✅
-- CSS hotwiring lets an attacker with allow-listed CSS force the victim's next click, anywhere on the page, to fire a chosen UI action, including multi-step ones. - _"CSS hotwiring is a technique that allows you to force the victim to click a specific UI action when clicking anywhere on the page **including multi-step actions** using just CSS."_ ✅
+- Invisible :before/:after content lets an attacker present two different messages to the human and to an AI browser reading the same email, enabling indirect prompt injection through webmail. - _"you could use the `:before` and `:after` pseudo-elements to hide the text from the LLM and you could use opacity to hide it from the victim. This creates a disparity between what the victim sees and what the LLM sees, potentially altering the email's context."_
+- CSS attribute selectors, combined with nesting, can brute-force secret URL parameters (e.g. Medium's 12-char login token) inside a webmail draft after a single paste, without JavaScript. - _"using nesting we can match the start with one selector that's outputted only once and then nest the other selectors to brute-force the token with a smaller amount of CSS"_
+- The only defense that actually holds is strict iframe sandboxing plus removing dangerous selectors and select elements; feature-level CSS/HTML allow lists get bypassed by gadgets and mutation. - _"One of the best methods to protect against these attacks is strict isolation. If you isolate the email message using sandboxed iframes you restrict the ability to break out of trusted boundaries."_
+- CSS hotwiring lets an attacker with allow-listed CSS force the victim's next click, anywhere on the page, to fire a chosen UI action, including multi-step ones. - _"CSS hotwiring is a technique that allows you to force the victim to click a specific UI action when clicking anywhere on the page **including multi-step actions** using just CSS."_
 
 ## Threat · Conditions · Mitigations
 
@@ -25,7 +25,7 @@ Gareth Heyes chains allowed HTML/CSS features across Fastmail, Outlook, AOL/Yaho
 
 **Topic:** Product Security  ·  **Domain:** Web Application Security  
 **Source:** [source](https://portswigger.net/research/css-the-bomb-inside-your-inbox)  ·  **Retrieved:** 2026-08-10  
-**Scores:** 🆕 Newness 20 · ✨ Novelty 78 · 🎯 Relevance 88 · 🏛️ Credibility 75 · **Composite 66.05**  
+**Scores:** Newness 20 · Novelty 78 · Relevance 88 · Credibility 75 · **Composite 66.05**  
 **Tags:** `css`, `webmail`, `sanitization`, `prompt-injection`, `keylogger`, `atlas`, `outlook`  
 **Verification:** ✓ independently verified · closest prior art: Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.
 
