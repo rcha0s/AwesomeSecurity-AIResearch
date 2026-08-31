@@ -18,7 +18,7 @@ Willison reads the OpenAI timeline of its accidental attack against Hugging Face
 
 **Topic:** AI Research  ·  **Domain:** Training-time Incidents & RLVR  
 **Source:** [source](https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 20 · Novelty 60 · Relevance 72 · Credibility 55 · **Composite 52.85**  
+**Scores:** Newness 18 · Novelty 60 · Relevance 72 · Credibility 55 · **Composite 52.35**  
 **Tags:** `rlvr`, `training-incident`, `agent-safety`, `capability-elicitation`, `monitoring`, `hugging-face`, `commentary`  
 **Verification:** ✓ independently verified · closest prior art: Extends the pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' by giving a training-mechanism explanation for why the models behaved as they did.
 

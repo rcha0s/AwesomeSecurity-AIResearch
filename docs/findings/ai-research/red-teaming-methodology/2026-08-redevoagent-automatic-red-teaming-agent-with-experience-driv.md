@@ -24,7 +24,7 @@ Because LLM agents in product execution harnesses turn jailbreaks into harmful t
 
 **Topic:** AI Research  ·  **Domain:** Red-Teaming Methodology  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27439)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 72 · Relevance 80 · Credibility 60 · **Composite 59.6**  
+**Scores:** Newness 18 · Novelty 72 · Relevance 80 · Credibility 60 · **Composite 59.1**  
 **Tags:** `red-teaming`, `jailbreak`, `llm-agents`, `harness-security`, `skill-evolution`, `black-box`  
 **Verification:** ✓ independently verified · closest prior art: Fixed-attack automatic red-teaming and agentic attackers using trajectory-based retrieval; contribution is skill distillation with Deciding-Tool Attribution and a validation ratchet.
 

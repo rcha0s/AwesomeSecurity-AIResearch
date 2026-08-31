@@ -25,7 +25,7 @@ Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoi
 
 **Topic:** AI Security  ·  **Domain:** LLM Safety / Alignment Robustness  
 **Source:** [Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 72 · Relevance 72 · Credibility 77 · **Composite 59.72**  
+**Scores:** Newness 18 · Novelty 72 · Relevance 72 · Credibility 77 · **Composite 59.22**  
 **Tags:** `llm-safety`, `jailbreak`, `alignment`, `mechanistic-interpretability`, `guardrails`, `defense-in-depth`  
 **Verification:** ✓ independently verified · closest prior art: Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work
 

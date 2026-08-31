@@ -25,7 +25,7 @@ Offline, zero-dependency Python scanner that vets AI-agent repos, skills, MCP se
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://github.com/alexgreensh/repo-forensics)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 62 · Relevance 82 · Credibility 55 · **Composite 56.45**  
+**Scores:** Newness 18 · Novelty 62 · Relevance 82 · Credibility 55 · **Composite 55.95**  
 **Tags:** `mcp`, `supply-chain`, `scanner`, `hooks`, `sarif`, `prompt-injection`, `yara`  
 **Verification:** ✓ independently verified · closest prior art: Sits alongside mcp-scan (cloud-uploaded), NVIDIA SkillSpector (skill files only), and generic secrets scanners (Gitleaks, TruffleHog); the differentiator claimed is offline operation with correlation, live IOC + CISA KEV enrichment, and named-campaign IOCs.
 

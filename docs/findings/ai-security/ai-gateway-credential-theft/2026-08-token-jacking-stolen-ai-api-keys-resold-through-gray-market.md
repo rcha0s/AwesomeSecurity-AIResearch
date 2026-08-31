@@ -24,7 +24,7 @@ Unit 42 documents a rising incident class where attackers steal developers' AI A
 
 **Topic:** AI Security  ·  **Domain:** AI Gateway & Credential Theft  
 **Source:** [Unit 42 (Palo Alto Networks)](https://unit42.paloaltonetworks.com/ai-token-jacking/)  ·  **Author:** Unit 42  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 64 · Relevance 76 · Credibility 77 · **Composite 58.52**  
+**Scores:** Newness 18 · Novelty 64 · Relevance 76 · Credibility 77 · **Composite 58.02**  
 **Tags:** `credential-theft`, `ai-gateway`, `supply-chain`, `api-keys`, `npm`, `agentic-identity`  
 **Verification:** ✓ independently verified · closest prior art: Classic cloud access-key theft and cryptojacking (e.g. stolen AWS keys spun up for mining); token jacking is the AI-billing analogue, with the transfer-station resale market and npm-worm harvesting as the newer elements.
 

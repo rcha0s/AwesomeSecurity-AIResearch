@@ -24,7 +24,7 @@ Model-side instruction hierarchy assigns privilege by source, but the agent harn
 
 **Topic:** AI Research  ·  **Domain:** Agents / Harnesses  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27299)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 82 · Relevance 90 · Credibility 60 · **Composite 65.6**  
+**Scores:** Newness 18 · Novelty 82 · Relevance 90 · Credibility 60 · **Composite 65.1**  
 **Tags:** `llm-agents`, `harness-security`, `instruction-hierarchy`, `privilege-escalation`, `coding-agents`, `prompt-injection`  
 **Verification:** ✓ independently verified · closest prior art: Builds on instruction-hierarchy defenses (e.g., OpenAI instruction hierarchy) and indirect prompt injection; novel framing is escalation via harness context construction.
 

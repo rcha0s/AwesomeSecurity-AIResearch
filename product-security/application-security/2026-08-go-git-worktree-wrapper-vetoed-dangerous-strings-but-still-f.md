@@ -24,7 +24,7 @@ go-git's worktreeFilesystem wrapper rejected obviously dangerous path strings (c
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [source](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 20 · Novelty 60 · Relevance 75 · Credibility 70 · **Composite 56.0**  
+**Scores:** Newness 18 · Novelty 60 · Relevance 75 · Credibility 70 · **Composite 55.5**  
 **Tags:** `symlink`, `path-traversal`, `cwe-59`, `go`, `git`
 
 _Source: [https://github.com/advisories/GHSA-hc8v-wwc9-vgxm](https://github.com/advisories/GHSA-hc8v-wwc9-vgxm)_  ·  [← back to index](../README.md)

@@ -24,7 +24,7 @@ Persistent LLM agents face threats beyond single tool calls: attacker data can a
 
 **Topic:** AI Security  ·  **Domain:** Agents / Information-Flow Control  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27234)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 78 · Relevance 85 · Credibility 60 · **Composite 62.9**  
+**Scores:** Newness 18 · Novelty 78 · Relevance 85 · Credibility 60 · **Composite 62.4**  
 **Tags:** `llm-agents`, `information-flow-control`, `prompt-injection`, `agentdojo`, `persistence`, `confidentiality`  
 **Verification:** ✓ independently verified · closest prior art: AgentDojo benchmark and prior planning- or tool-level injection defenses; extends to cross-query persistence with dual-lattice IFC and AgentDojo-MQ.
 

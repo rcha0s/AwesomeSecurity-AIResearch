@@ -24,7 +24,7 @@ Studies LLM-judge overload: when one call must return many verdicts, agreement w
 
 **Topic:** AI Security  ·  **Domain:** Evaluation & Safety  
 **Source:** [source](https://arxiv.org/abs/2608.06422)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 65 · Relevance 70 · Credibility 55 · **Composite 53.75**  
+**Scores:** Newness 18 · Novelty 65 · Relevance 70 · Credibility 55 · **Composite 53.25**  
 **Tags:** `llm-as-judge`, `oversight`, `adversarial`, `evaluation`, `debate`  
 **Verification:** ✓ independently verified · closest prior art: LLM-as-judge bias literature; debate protocols (Irving et al.); ensemble judging.
 

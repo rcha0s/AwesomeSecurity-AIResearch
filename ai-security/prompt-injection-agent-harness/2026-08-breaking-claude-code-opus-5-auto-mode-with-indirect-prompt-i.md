@@ -25,7 +25,7 @@ Rehberger shows a website-summary request can hijack Claude Code Opus 5 in Auto 
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Agent Harness  
 **Source:** [Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 78 · Relevance 90 · Credibility 77 · **Composite 66.92**  
+**Scores:** Newness 18 · Novelty 78 · Relevance 90 · Credibility 77 · **Composite 66.42**  
 **Tags:** `prompt-injection`, `claude-code`, `coding-agent`, `module-shadowing`, `sandboxing`, `auto-mode`  
 **Verification:** ✓ independently verified · closest prior art: veganmosfet Opus 5 Auto Mode bypasses; prior Rehberger coding-agent prompt-injection work; Python import shadowing techniques
 

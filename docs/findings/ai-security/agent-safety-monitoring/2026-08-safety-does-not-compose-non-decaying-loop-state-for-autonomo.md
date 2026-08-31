@@ -24,7 +24,7 @@ Autonomous agents run as loops but their safety monitors are scoped to a single 
 
 **Topic:** AI Security  ·  **Domain:** Agent Safety / Monitoring  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27141)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 84 · Relevance 86 · Credibility 60 · **Composite 65.0**  
+**Scores:** Newness 18 · Novelty 84 · Relevance 86 · Credibility 60 · **Composite 64.5**  
 **Tags:** `agent-safety`, `autonomous-agents`, `monitoring`, `cross-iteration-attacks`, `irreversible-actions`, `loopharness`  
 **Verification:** ✓ independently verified · closest prior art: Trajectory-scoped agent monitors and Agent-SafetyBench; contribution is the impossibility separation and non-decaying loop-level state (LoopHarness).
 

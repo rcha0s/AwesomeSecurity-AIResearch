@@ -18,7 +18,7 @@ A Trail of Bits researcher gave an advanced AI agent (GPT 5.6-Cyber) a CTF task 
 
 **Topic:** Product Security  ·  **Domain:** cloud & infrastructure  
 **Source:** [Trail of Bits](https://blog.trailofbits.com/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 88 · Relevance 85 · Credibility 73 · **Composite 67.85**  
+**Scores:** Newness 18 · Novelty 88 · Relevance 85 · Credibility 73 · **Composite 67.35**  
 **Tags:** `ai-agents`, `vm-escape`, `sandboxing`, `qemu`, `kvm`, `firecracker`, `least-privilege`, `apt`  
 **Verification:** ✓ independently verified · closest prior art: Prior VM-escape CVE research (Januscape CVE-2026-53359, libslirp CVE-2026-9539); classic sandbox-escape and APT containment literature.
 

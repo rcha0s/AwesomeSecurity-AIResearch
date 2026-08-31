@@ -29,7 +29,7 @@ Where `fetch-model-files` is itself a malicious package that exfiltrates all ava
 
 **Topic:** AI Security  ·  **Domain:** Harness & Agent Security  
 **Source:** [source](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 70 · Relevance 90 · Credibility 55 · **Composite 61.25**  
+**Scores:** Newness 18 · Novelty 70 · Relevance 90 · Credibility 55 · **Composite 60.75**  
 **Tags:** `claude-code`, `auto-mode`, `prompt-injection`, `permission-classifier`, `agent-safety`, `evals`  
 **Verification:** ✓ independently verified · closest prior art: ["Simon Willison - 'The lethal trifecta' framing (2025)", 'Anthropic - Cat Wu/Thariq Shihipar Fireside Chat, July 2026', 'Trajectory Labs indirect-injection eval']
 

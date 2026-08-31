@@ -24,7 +24,7 @@ The authors show diffusion-based LLMs inherit a sparse, mappable set of 'safety 
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.07430)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 70 · Relevance 78 · Credibility 55 · **Composite 57.65**  
+**Scores:** Newness 18 · Novelty 70 · Relevance 78 · Credibility 55 · **Composite 57.15**  
 **Tags:** `jailbreak`, `diffusion-llm`, `safety-neurons`, `transfer-attack`, `black-box`  
 **Verification:** ✓ independently verified · closest prior art: Extends prior work on safety-neuron identification and pruning in autoregressive LLMs (Wei et al., 'Assessing the Brittleness of Safety Alignment via Pruning and Low-Rank Modifications') and mechanistic-interpretability-driven jailbreaks; novelty is showing the property transfers into diffusion LLMs and gives a cheap black-box jailbreak with cross-family reach.
 

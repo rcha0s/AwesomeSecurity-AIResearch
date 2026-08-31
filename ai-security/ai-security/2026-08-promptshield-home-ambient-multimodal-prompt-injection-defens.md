@@ -25,7 +25,7 @@ Pilot benchmark for smart-home MLLM agents that must distinguish genuine user co
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.05495)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 65 · Relevance 70 · Credibility 52 · **Composite 53.28**  
+**Scores:** Newness 18 · Novelty 65 · Relevance 70 · Credibility 52 · **Composite 52.78**  
 **Tags:** `prompt-injection`, `multimodal`, `smart-home`, `mllm`, `benchmark`, `sensor-fusion`  
 **Verification:** ✓ independently verified · closest prior art: ['InjecAgent / BIPIA text-only indirect prompt injection benchmarks', 'PromptGuard / LlamaGuard-style prompt-injection detectors']
 

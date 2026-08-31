@@ -25,7 +25,7 @@ Enterprise access-control models built for human users and long-lived services f
 
 **Topic:** AI Security  ·  **Domain:** Agent Governance / Runtime  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.26696)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 68 · Relevance 83 · Credibility 60 · **Composite 59.3**  
+**Scores:** Newness 18 · Novelty 68 · Relevance 83 · Credibility 60 · **Composite 58.8**  
 **Tags:** `agent-governance`, `runtime-enforcement`, `identity`, `attestation`, `audit-ledger`, `enterprise`  
 **Verification:** ✓ independently verified · closest prior art: IAM/RBAC for humans and services, workload identity (SPIFFE-style sidecars), and transparency-log designs; contribution is the agent-specific five-primitive runtime decomposition.
 

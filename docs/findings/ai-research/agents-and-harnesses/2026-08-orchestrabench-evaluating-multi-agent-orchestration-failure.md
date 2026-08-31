@@ -25,7 +25,7 @@ OrchestraBench is a seed-reproducible failure-injection harness for multi-agent 
 
 **Topic:** AI Research  ·  **Domain:** Agents and Harnesses  
 **Source:** [source](https://arxiv.org/abs/2608.05263)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 60 · Relevance 65 · Credibility 55 · **Composite 50.75**  
+**Scores:** Newness 18 · Novelty 60 · Relevance 65 · Credibility 55 · **Composite 50.25**  
 **Tags:** `multi-agent`, `orchestration`, `failure-modes`, `cascade-radius`, `routing`  
 **Verification:** ✓ independently verified · closest prior art: Extends MAST (multi-agent failure taxonomy) and prior orchestration benchmarks by adding cascade radius, per-failure-mode recovery, and a failure-injection harness rather than raw task accuracy.
 

@@ -24,7 +24,7 @@ Agent guardrails suffer over-safety: they refuse authorized, genuinely safe acti
 
 **Topic:** AI Security  ·  **Domain:** Guardrails / Over-Refusal  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27009)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 74 · Relevance 82 · Credibility 60 · **Composite 60.8**  
+**Scores:** Newness 18 · Novelty 74 · Relevance 82 · Credibility 60 · **Composite 60.3**  
 **Tags:** `guardrails`, `over-refusal`, `agent-safety`, `benchmark`, `authorization-policy`, `false-positives`  
 **Verification:** ✓ independently verified · closest prior art: Prior over-refusal/exaggerated-safety studies (e.g., XSTest-style) for chat models; extends the construct to agent action guardrails with a policy-certified benchmark.
 

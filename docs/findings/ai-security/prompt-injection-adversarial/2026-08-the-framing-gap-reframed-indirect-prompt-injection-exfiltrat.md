@@ -25,7 +25,7 @@ Overt injection to exfiltrate a secret is refused (gpt-4o 0%), but reframing the
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Adversarial  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.27092)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 80 · Relevance 92 · Credibility 60 · **Composite 65.6**  
+**Scores:** Newness 18 · Novelty 80 · Relevance 92 · Credibility 60 · **Composite 65.1**  
 **Tags:** `prompt-injection`, `data-exfiltration`, `tool-using-agents`, `allow-list`, `capability-isolation`, `secalign`  
 **Verification:** ✓ independently verified · closest prior art: SecAlign (CCS 2025), channel-separation and output-normalization defenses, AgentDojo-style injection benchmarks; contribution is the framing-gap characterization and payload-blind mitigations.
 

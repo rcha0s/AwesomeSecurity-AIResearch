@@ -148,9 +148,9 @@
       "topic": "ai-security",
       "tag": "mcp",
       "count": 17,
-      "recent": 13,
+      "recent": 12,
       "sources": 10,
-      "momentum": 30.0,
+      "momentum": 29.0,
       "first_seen": "2026-06-30",
       "last_seen": "2026-08-10",
       "members": [
@@ -230,7 +230,7 @@
           "title": "MCP gets an enterprise makeover",
           "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
           "date": "2026-07-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
@@ -566,60 +566,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "sandboxing",
-      "count": 7,
-      "recent": 7,
-      "sources": 6,
-      "momentum": 14.0,
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-08-26",
-      "members": [
-        {
-          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
-          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
-          "date": "2026-08-26",
-          "fresh": true
-        },
-        {
-          "title": "snyk/agent-scan",
-          "url": "https://github.com/snyk/agent-scan",
-          "date": "2026-08-09",
-          "fresh": true
-        },
-        {
-          "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
-          "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
-          "date": "2026-08-06",
-          "fresh": true
-        },
-        {
-          "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
-          "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
-          "date": "2026-08-06",
-          "fresh": true
-        },
-        {
-          "title": "Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)",
-          "url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
-          "date": "2026-08-05",
-          "fresh": true
-        },
-        {
-          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
-          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
-          "date": "2026-07-31",
-          "fresh": true
-        },
-        {
-          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
-          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
-          "date": "2026-07-29",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "coding-agents",
       "count": 7,
       "recent": 7,
@@ -669,6 +615,60 @@
           "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
           "date": "2026-08-06",
           "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "sandboxing",
+      "count": 7,
+      "recent": 6,
+      "sources": 6,
+      "momentum": 13.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-08-26",
+      "members": [
+        {
+          "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-26",
+          "fresh": true
+        },
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": true
+        },
+        {
+          "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
+          "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+          "date": "2026-08-06",
+          "fresh": true
+        },
+        {
+          "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
+          "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
+          "date": "2026-08-06",
+          "fresh": true
+        },
+        {
+          "title": "Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)",
+          "url": "https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything",
+          "date": "2026-08-05",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
+          "date": "2026-07-31",
+          "fresh": true
+        },
+        {
+          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
+          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
+          "date": "2026-07-29",
+          "fresh": false
         }
       ]
     },
@@ -1166,36 +1166,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "zero-trust",
-      "count": 3,
-      "recent": 3,
-      "sources": 3,
-      "momentum": 6.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
-          "url": "https://arxiv.org/abs/2608.06130",
-          "date": "2026-08-07",
-          "fresh": true
-        },
-        {
-          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
-          "date": "2026-08-04",
-          "fresh": true
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "multimodal",
       "count": 3,
       "recent": 3,
@@ -1334,36 +1304,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "openai",
-      "count": 3,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 5.0,
-      "first_seen": "2026-07-28",
-      "last_seen": "2026-08-06",
-      "members": [
-        {
-          "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
-          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
-          "date": "2026-08-06",
-          "fresh": true
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": true
-        },
-        {
-          "title": "The Generator Can't Be the Validator: What OpenAI's Hugging Face Incident Proves About AI Security",
-          "url": "https://snyk.io/blog/openai-hugging-face-incident/",
-          "date": "2026-07-28",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "tool-poisoning",
       "count": 3,
       "recent": 2,
@@ -1394,6 +1334,36 @@
     },
     {
       "topic": "ai-security",
+      "tag": "zero-trust",
+      "count": 3,
+      "recent": 2,
+      "sources": 3,
+      "momentum": 5.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+          "url": "https://arxiv.org/abs/2608.06130",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
+          "date": "2026-08-04",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "provenance",
       "count": 3,
       "recent": 2,
@@ -1418,6 +1388,36 @@
           "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
           "url": "https://arxiv.org/abs/2607.17550",
           "date": "2026-07-21",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "openai",
+      "count": 3,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 4.0,
+      "first_seen": "2026-07-28",
+      "last_seen": "2026-08-06",
+      "members": [
+        {
+          "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
+          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
+          "date": "2026-08-06",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "The Generator Can't Be the Validator: What OpenAI's Hugging Face Incident Proves About AI Security",
+          "url": "https://snyk.io/blog/openai-hugging-face-incident/",
+          "date": "2026-07-28",
           "fresh": false
         }
       ]
@@ -1640,30 +1640,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "defense-in-depth",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-28",
-      "members": [
-        {
-          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
-          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
-          "date": "2026-08-28",
-          "fresh": true
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "attestation",
       "count": 2,
       "recent": 2,
@@ -1682,54 +1658,6 @@
           "title": "PrismorSec/prismor",
           "url": "https://github.com/PrismorSec/prismor",
           "date": "2026-08-10",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "enterprise",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-08-27",
-      "members": [
-        {
-          "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
-          "url": "https://arxiv.org/abs/2608.26696",
-          "date": "2026-08-27",
-          "fresh": true
-        },
-        {
-          "title": "MCP gets an enterprise makeover",
-          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
-          "date": "2026-07-29",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "egress-control",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-07-30",
-      "members": [
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": true
-        },
-        {
-          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
-          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
-          "date": "2026-07-29",
           "fresh": true
         }
       ]
@@ -1826,30 +1754,6 @@
           "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
           "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
           "date": "2026-08-06",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "agent-sandbox",
-      "count": 2,
-      "recent": 2,
-      "sources": 2,
-      "momentum": 4.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
-          "url": "https://arxiv.org/abs/2607.21642",
-          "date": "2026-08-07",
-          "fresh": true
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
           "fresh": true
         }
       ]
@@ -2036,6 +1940,54 @@
     },
     {
       "topic": "ai-security",
+      "tag": "defense-in-depth",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-28",
+      "members": [
+        {
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "date": "2026-08-28",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "enterprise",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
+          "url": "https://arxiv.org/abs/2608.26696",
+          "date": "2026-08-27",
+          "fresh": true
+        },
+        {
+          "title": "MCP gets an enterprise makeover",
+          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
+          "date": "2026-07-29",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "package-hallucination",
       "count": 2,
       "recent": 1,
@@ -2054,6 +2006,30 @@
           "title": "AI Coding Agents Skip Package Verification, and Attackers Are Exploiting It",
           "url": "https://www.techtimes.com/articles/319457/20260701/ai-coding-agents-skip-package-verification-attackers-are-exploiting-it.htm",
           "date": "2026-07-01",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agent-sandbox",
+      "count": 2,
+      "recent": 1,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
+          "url": "https://arxiv.org/abs/2607.21642",
+          "date": "2026-08-07",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
           "fresh": false
         }
       ]
@@ -2249,6 +2225,30 @@
           "fresh": false
         }
       ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "egress-control",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-07-30",
+      "members": [
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
+          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
+          "date": "2026-07-29",
+          "fresh": false
+        }
+      ]
     }
   ],
   "product-security": [
@@ -2256,9 +2256,9 @@
       "topic": "product-security",
       "tag": "supply-chain",
       "count": 17,
-      "recent": 10,
+      "recent": 8,
       "sources": 12,
-      "momentum": 27.0,
+      "momentum": 25.0,
       "first_seen": "2026-06-30",
       "last_seen": "2026-08-17",
       "members": [
@@ -2314,13 +2314,13 @@
           "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
           "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
           "date": "2026-07-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "America bans imported robots due to supply chain and security risks",
           "url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
           "date": "2026-07-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
@@ -2370,9 +2370,9 @@
       "topic": "product-security",
       "tag": "npm",
       "count": 8,
-      "recent": 6,
+      "recent": 5,
       "sources": 6,
-      "momentum": 14.0,
+      "momentum": 13.0,
       "first_seen": "2026-07-15",
       "last_seen": "2026-08-06",
       "members": [
@@ -2410,7 +2410,7 @@
           "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
           "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
           "date": "2026-07-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
@@ -2466,9 +2466,9 @@
       "topic": "product-security",
       "tag": "ci-cd",
       "count": 4,
-      "recent": 2,
+      "recent": 1,
       "sources": 4,
-      "momentum": 6.0,
+      "momentum": 5.0,
       "first_seen": "2026-07-15",
       "last_seen": "2026-08-06",
       "members": [
@@ -2482,7 +2482,7 @@
           "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
           "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
           "date": "2026-07-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
@@ -2878,54 +2878,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "github-actions",
-      "count": 2,
-      "recent": 1,
-      "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-07-29",
-      "members": [
-        {
-          "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
-          "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
-          "date": "2026-07-29",
-          "fresh": true
-        },
-        {
-          "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
-          "date": "2026-07-16",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "code-review",
-      "count": 2,
-      "recent": 1,
-      "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-07-30",
-      "members": [
-        {
-          "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
-          "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-          "date": "2026-07-30",
-          "fresh": true
-        },
-        {
-          "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
-          "url": "https://arxiv.org/abs/2607.12428",
-          "date": "2026-07-19",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "android",
       "count": 2,
       "recent": 0,
@@ -3088,6 +3040,54 @@
           "title": "GigaWiper: modular destructive malware that fakes ransomware",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
           "date": "2026-07-09",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "github-actions",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-07-29",
+      "members": [
+        {
+          "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
+          "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
+          "date": "2026-07-29",
+          "fresh": false
+        },
+        {
+          "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
+          "date": "2026-07-16",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "code-review",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-07-30",
+      "members": [
+        {
+          "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
+          "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -5310,42 +5310,6 @@
     },
     {
       "topic": "ai-research",
-      "tag": "claude-code",
-      "count": 4,
-      "recent": 2,
-      "sources": 4,
-      "momentum": 6.0,
-      "first_seen": "2026-06",
-      "last_seen": "2026-08-10",
-      "members": [
-        {
-          "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
-          "url": "https://arxiv.org/abs/2607.21557",
-          "date": "2026-08-10",
-          "fresh": true
-        },
-        {
-          "title": "Automated Claude Code + Opus 4.6 pipeline finds a real Linux sandbox-escape CVE (CVE-2026-5674)",
-          "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
-          "date": "2026-07-30",
-          "fresh": true
-        },
-        {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
-          "fresh": false
-        },
-        {
-          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-          "url": "https://github.com/omnigent-ai/omnigent",
-          "date": "2026-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "llm-judge",
       "count": 3,
       "recent": 3,
@@ -5701,6 +5665,42 @@
           "url": "https://arxiv.org/abs/2605.01720",
           "date": "2026-08-10",
           "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "claude-code",
+      "count": 4,
+      "recent": 1,
+      "sources": 4,
+      "momentum": 5.0,
+      "first_seen": "2026-06",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
+          "url": "https://arxiv.org/abs/2607.21557",
+          "date": "2026-08-10",
+          "fresh": true
+        },
+        {
+          "title": "Automated Claude Code + Opus 4.6 pipeline finds a real Linux sandbox-escape CVE (CVE-2026-5674)",
+          "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        },
+        {
+          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
+          "fresh": false
         }
       ]
     },

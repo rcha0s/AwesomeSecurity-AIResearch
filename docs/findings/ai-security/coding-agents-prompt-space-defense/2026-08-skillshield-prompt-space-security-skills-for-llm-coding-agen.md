@@ -24,7 +24,7 @@ A coding agent runs shell commands and edits files with developer privileges, so
 
 **Topic:** AI Security  ·  **Domain:** Coding Agents / Prompt-Space Defense  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.25817)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 70 · Relevance 84 · Credibility 60 · **Composite 60.2**  
+**Scores:** Newness 18 · Novelty 70 · Relevance 84 · Credibility 60 · **Composite 59.7**  
 **Tags:** `coding-agents`, `system-prompt-defense`, `redcode`, `llama-guard`, `guardrails`  
 **Verification:** ✓ independently verified · closest prior art: Weight-level alignment, input filters, execution-boundary monitors, and Llama Guard 3; contribution is a classifier-free prompt-space skill defense evaluated on RedCode.
 

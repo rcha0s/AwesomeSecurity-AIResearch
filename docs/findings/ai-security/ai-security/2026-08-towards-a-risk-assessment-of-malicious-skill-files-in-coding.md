@@ -24,7 +24,7 @@ Builds an adversarial skill-synthesis pipeline (six LLMs, four families) that tu
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.05223)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 72 · Relevance 82 · Credibility 52 · **Composite 58.98**  
+**Scores:** Newness 18 · Novelty 72 · Relevance 82 · Credibility 52 · **Composite 58.48**  
 **Tags:** `coding-agents`, `skills`, `prompt-injection`, `mitre-attck`, `gemini-cli`, `qwen-code`  
 **Verification:** ✓ independently verified · closest prior art: Builds on prompt-injection and MCP tool-poisoning literature; extends by targeting the skill-file interface specifically and quantifying exploitation across two production agents.
 

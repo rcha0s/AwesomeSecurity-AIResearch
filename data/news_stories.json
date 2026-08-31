@@ -506,47 +506,6 @@
     "winner_tier": "high",
     "first_seen": "2026-08-10"
   },
-  "a1799ddd64b9361f": {
-    "fp": {
-      "url": "https://wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests",
-      "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
-      "tokens": [
-        "anthropic",
-        "breach",
-        "claude",
-        "cybersecurity",
-        "evals",
-        "infrastructure",
-        "let",
-        "models",
-        "production",
-        "real",
-        "s",
-        "three"
-      ],
-      "shingles": [
-        "anthropic s cybersecurity",
-        "breach real production",
-        "claude models breach",
-        "cybersecurity evals let",
-        "evals let three",
-        "let three claude",
-        "models breach real",
-        "real production infrastructure",
-        "s cybersecurity evals",
-        "three claude models"
-      ],
-      "entities": [
-        "Anthropic",
-        "Hugging Face",
-        "OpenAI"
-      ],
-      "bucket": "2026-07-27"
-    },
-    "corroborators": [],
-    "winner_tier": "high",
-    "first_seen": "2026-07-31"
-  },
   "2b96142583e246f4": {
     "fp": {
       "url": "https://microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops",

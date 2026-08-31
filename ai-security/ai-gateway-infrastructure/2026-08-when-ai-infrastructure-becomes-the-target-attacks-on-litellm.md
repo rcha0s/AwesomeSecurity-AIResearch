@@ -25,7 +25,7 @@ Microsoft details in-the-wild compromises of three AI workloads - a LiteLLM gate
 
 **Topic:** AI Security  ·  **Domain:** AI Gateway & Infrastructure  
 **Source:** [Microsoft Threat Intelligence (Microsoft Security Blog)](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 62 · Relevance 88 · Credibility 72 · **Composite 60.74**  
+**Scores:** Newness 18 · Novelty 62 · Relevance 88 · Credibility 72 · **Composite 60.24**  
 **Tags:** `litellm`, `ai-gateway`, `ragflow`, `kestra`, `credential-harvesting`, `cryptomining`, `supply-chain`  
 **Verification:** ✓ independently verified · closest prior art: Public LiteLLM CVE research; Embrace The Red's LiteLLM hijack post; general cryptomining intrusions
 

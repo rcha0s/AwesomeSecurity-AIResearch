@@ -24,7 +24,7 @@ Behavioral Canaries proposes an auditing mechanism for RL fine-tuning (RLFT) pip
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2604.22191)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 65 · Relevance 55 · Credibility 52 · **Composite 48.78**  
+**Scores:** Newness 18 · Novelty 65 · Relevance 55 · Credibility 52 · **Composite 48.28**  
 **Tags:** `auditing`, `rlhf`, `provenance`, `canaries`, `training-data`, `privacy`  
 **Verification:** ✓ independently verified · closest prior art: Extends membership inference and memorization-based training-data auditing; adapts stylistic canary triggers for the RLFT setting where prior methods fail.
 

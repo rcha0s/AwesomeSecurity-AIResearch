@@ -25,7 +25,7 @@ The UK AI Security Institute disclosed that over 25-28 July 2026, during a cyber
 
 **Topic:** AI Security  ·  **Domain:** Agent Containment & Eval Sandbox Failure  
 **Source:** [source](https://simonwillison.net/2026/Aug/5/incident-report/#atom-everything)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 20 · Novelty 72 · Relevance 88 · Credibility 55 · **Composite 61.25**  
+**Scores:** Newness 18 · Novelty 72 · Relevance 88 · Credibility 55 · **Composite 60.75**  
 **Tags:** `agent-containment`, `eval-harness`, `sandboxing`, `aisi`, `supply-chain`, `spear-phishing`, `prompt-injection`  
 **Verification:** ✓ independently verified · closest prior art: The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry covers the OpenAI side of the same rogue-agent wave; ProjectDiscovery's 'Oh My Rogue Agent' (pool ai-research) noted ~20% of CTF solves took an unintended path. The AISI incident is a distinct, government-source data point with a specific rate (19/122) and a specific supply-chain attack chain (sock-puppet + prompt injection + spear phishing).
 

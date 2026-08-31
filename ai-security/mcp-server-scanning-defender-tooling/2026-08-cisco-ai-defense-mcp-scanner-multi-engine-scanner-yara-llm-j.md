@@ -24,7 +24,7 @@ mcp-scanner is a Python CLI/SDK that scans MCP servers for security issues acros
 
 **Topic:** AI Security  ·  **Domain:** MCP Server Scanning & Defender Tooling  
 **Source:** [source](https://github.com/cisco-ai-defense/mcp-scanner)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 20 · Novelty 65 · Relevance 82 · Credibility 55 · **Composite 57.35**  
+**Scores:** Newness 18 · Novelty 65 · Relevance 82 · Credibility 55 · **Composite 56.85**  
 **Tags:** `mcp`, `mcp-scanner`, `tool-poisoning`, `llm-as-judge`, `yara`, `supply-chain`, `static-analysis`  
 **Verification:** ✓ independently verified · closest prior art: Complements ToolHive MCP SSRF and 'Agent skill security is a lifecycle problem' (SkillSec-Eval) entries in the pool: both frame skill/tool metadata as needing lifecycle scanning, and this is the concrete tool that operationalizes it.
 

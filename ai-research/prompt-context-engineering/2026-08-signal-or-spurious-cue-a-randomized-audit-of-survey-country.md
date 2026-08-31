@@ -17,7 +17,7 @@ A within-record audit across five API models and six countries tests whether LLM
 
 **Topic:** AI Research  ·  **Domain:** Prompt & Context Engineering  
 **Source:** [source](https://arxiv.org/abs/2608.06085)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 65 · Relevance 55 · Credibility 55 · **Composite 49.25**  
+**Scores:** Newness 18 · Novelty 65 · Relevance 55 · Credibility 55 · **Composite 48.75**  
 **Tags:** `prompt-engineering`, `spurious-cues`, `context-design`, `evals`, `brier-loss`  
 **Verification:** ✓ independently verified · closest prior art: Broader work on LLM sensitivity to irrelevant demographic cues and to prompt formatting shows the same 'salience-over-instruction' pattern; this paper is narrower (country-metadata + Brier loss on survey forecasts) but adds a paired-attenuation design that most prior audits lack.
 

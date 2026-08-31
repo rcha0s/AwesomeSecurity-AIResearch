@@ -76,10 +76,10 @@
       "scores": {
         "novelty": 85,
         "relevance": 95,
-        "newness": 26,
+        "newness": 24,
         "credibility": 75.0,
-        "composite": 71.75,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 71.25,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Continues the Shai-Hulud npm supply-chain lineage (JFrog, May 2026). Novel elements: Sigstore provenance mint via trusted-publishing OIDC, Ethereum-based C2 resolution, .claude/settings.json persistence, CI runner memory scraping.",
       "actionable": {
@@ -147,10 +147,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 95,
-        "newness": 25,
+        "newness": 23,
         "credibility": 85.0,
-        "composite": 71.5,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 71.0,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Extends James Kettle's 'Making HTTP Header Injection Critical via RQP' (2023) and Sergey Bobrov's nginx misconfig research. This paper is the BHUSA/DEFCON 2026 followup that operationalizes the technique across CDN infrastructure and introduces browser-powered variants.",
       "actionable": {
@@ -239,10 +239,10 @@
       "scores": {
         "novelty": 88,
         "relevance": 95,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 71.15,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 70.65,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Prior 'AI finds bugs' work (XBOW, buttercup DARPA AIxCC, Google's Big Sleep) established that agents can find known-class bugs. The HTTP Terminator's delta is (a) proving AI-proposed novel attack classes (Shared-Parser Confusion, dangling-byte) validated at scale, (b) the AI-vs-Code-vs-Human framing as design axis, and (c) shipping an open-source, reproducible research factory. Closest published methodology is Kettle's own HTTP/1.1 Must Die paper (manual) and Orange Tsai's Confusion Attacks on Apache (partial overlap with Shared-Parser Confusion but Apache-specific).",
       "discovered_via": "rss",
@@ -310,10 +310,10 @@
       "scores": {
         "novelty": 88,
         "relevance": 85,
-        "newness": 20,
+        "newness": 18,
         "credibility": 73.0,
-        "composite": 67.85,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 67.35,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Prior VM-escape CVE research (Januscape CVE-2026-53359, libslirp CVE-2026-9539); classic sandbox-escape and APT containment literature.",
       "cluster": "A",
@@ -380,10 +380,10 @@
       "scores": {
         "novelty": 83,
         "relevance": 86,
-        "newness": 20,
+        "newness": 18,
         "credibility": 73.0,
-        "composite": 66.65,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 66.15,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Chainguard's earlier Athena sandboxing and CVE-remediation-at-scale posts; SLSA provenance and reproducible-build practices.",
       "cluster": "A",
@@ -460,10 +460,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 88,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 66.05,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 65.55,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
       "discovered_via": "rss",
@@ -530,10 +530,10 @@
       "scores": {
         "novelty": 84,
         "relevance": 80,
-        "newness": 20,
+        "newness": 18,
         "credibility": 73.0,
-        "composite": 65.15,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 64.65,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "PortSwigger XSS cheat sheet and prior WAF/blocklist-bypass research (unicode overflows, phantom Version cookie).",
       "cluster": null,
@@ -600,10 +600,10 @@
       "scores": {
         "novelty": 74,
         "relevance": 85,
-        "newness": 20,
+        "newness": 18,
         "credibility": 73.0,
-        "composite": 63.65,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 63.15,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "OWASP broken object/function-level authorization (BOLA/BFLA), mass-assignment, and credentialed CORS misconfiguration research.",
       "cluster": "A",
@@ -673,10 +673,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 85,
-        "newness": 25,
+        "newness": 23,
         "credibility": 78.0,
-        "composite": 62.95,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 62.45,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Follow-up to Microsoft's May 2026 ClickFix documentation. Novelty is the server-side fingerprinting gate and its detection-evasion probes — not the ClickFix technique itself.",
       "actionable": {
@@ -757,10 +757,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 88,
-        "newness": 20,
+        "newness": 18,
         "credibility": 52.5,
-        "composite": 62.67,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 62.17,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Standing claims import-time-payloads-defeat-install-time-controls (AsyncAPI) and package-installers-run-arbitrary-code-by-default cover the install-time class. The novelty here is (a) the repo-local IDE hook path (.claude, .vscode) that fires on folder open with NO install required, (b) valid provenance signing a poisoned build via compromised source-tree, and (c) the gh-token-monitor 'revocation-triggers-persistence' pattern.",
       "discovered_via": "rss",
@@ -839,10 +839,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 88,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 60.65,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 60.15,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "ChainDrop npm worm (unit42) already in ledger under signature-based-detection-fails-on-llm-authored-malware / package-installers-run-arbitrary-code-by-default. Novelty here is (a) the Ethereum-smart-contract C2 domain lookup, (b) Bun-runtime-via-official-GitHub-releases evasion, and (c) explicit lineage tracing linking April PyTorch Lightning, May @antv, and August keyv as one toolkit.",
       "discovered_via": "rss",
@@ -913,10 +913,10 @@
       "scores": {
         "novelty": 61,
         "relevance": 74,
-        "newness": 20,
+        "newness": 18,
         "credibility": 76.8,
-        "composite": 57.02,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 56.52,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Prior 'AI in malware' commentary was largely anecdotal or vendor-hype; the contribution here is the empirical production-telemetry measurement (405 samples vs 12 in production) rather than a new technique.",
       "cluster": null,
@@ -980,10 +980,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 75,
-        "newness": 20,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 56.0,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 55.5,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "path-traversal-defenses-must-cover-symlink-resolution (standing claim in the ledger); same class as prior TOCTOU/symlink CVEs. New signal: a concrete example where a well-intentioned wrapper still fell through because it filtered strings instead of resolved paths.",
       "discovered_via": "github",
@@ -1063,10 +1063,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 88,
-        "newness": 20,
+        "newness": 18,
         "credibility": 76.8,
-        "composite": 54.92,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 54.42,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Pool digest already contains 'ChainDrop: Self-propagating npm worm mints valid Sigstore provenance and exfiltrates via Ethereum-routed C2' (unit42.paloaltonetworks.com) and 'AsyncAPI npm compromise: import-time payload defeats --ignore-scripts.' The Microsoft account is a second vendor angle on the same campaign; incremental novelty is the Claude/VSCode persistence targeting and the Defender detection surface, not the campaign itself.",
       "discovered_via": "rss",
@@ -1077,85 +1077,6 @@
       "verify_note": "All four excerpts verified verbatim. Cluster G ('AI-assisted code and CI risks') is the best fit because the malware's incremental novelty here is the Claude/VSCode config persistence pathway, which is exactly the AI-coding-tool-meets-supply-chain intersection cluster G names. Prior-art call-out lowers novelty score.",
       "id": "chaindrop-supply-chain-compromise-anatomy-of-a-s-437f185572",
       "retrieved_at": "2026-08-10T19:18:36+00:00",
-      "needs_review": true,
-      "grounding_score": null
-    },
-    {
-      "id": "disrupting-supply-chain-attacks-on-npm-and-githu-b915f01246",
-      "topic": "product-security",
-      "domain": "Supply Chain / CI-CD",
-      "cluster": null,
-      "related_claims": [
-        "ignore-scripts-blocks-npm-supply-chain",
-        "import-time-payloads-defeat-install-time-controls",
-        "long-lived-cloud-credentials-are-obsolete"
-      ],
-      "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
-      "source_url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
-      "article_url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
-      "published": "2026-07-29",
-      "date": "2026-07",
-      "raw_path": "data/_raw/mrscan-batch08-2.txt",
-      "source_id": null,
-      "source_topics": [],
-      "source_rank": 55.0,
-      "summary": "GitHub summarizes a series of concrete platform changes shipped in April–July 2026 to break links in the npm/GitHub Actions supply-chain attack kill chain: 72-hour read-only mode on high-impact npm accounts after email/2FA changes, safer pull_request_target checkout defaults, read-only cache for untrusted triggers, trusted publishing (removing long-lived CI credentials), staged publishing with extra 2FA at publish time, and default 3-day Dependabot cooldown so malicious releases surface before propagating.",
-      "takeaway": "The industry's ecosystem-level answer to 2025-2026's npm worms is to attack the propagation graph itself: slow releases (cooldown), decouple CI credentials from publishing (staged + trusted publishing), and default-deny common CI/CD escalation paths.",
-      "lessons": [
-        {
-          "point": "The most effective disruption of supply-chain attacks is removing long-lived credentials from CI pipelines via trusted publishing, not detection.",
-          "excerpt": "The number one thing you can do to disrupt these attacks is to remove long-lived credentials from your CI/CD pipeline.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "Dependabot now enforces a 3-day cooldown before opening version-update PRs, betting that detection signals will surface a malicious release before it propagates.",
-          "excerpt": "Version updates through Dependabot now wait until a release has been available for at least three days before opening a pull request, giving detection signals time to surface before a malicious release reaches your project. This cooldown is on by default, and security updates still open immediately, so critical fixes are never delayed.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "npm v12 disables install scripts by default, closing the primary install-time credential-exfiltration vector while preserving opt-in for legitimate use.",
-          "excerpt": "With npm v12, we are rolling out a breaking change that disables these install scripts by default. Since install scripts have legitimate use within the package installation processes that several popular packages rely on, you can reenable them by approving specific scripts. Additional vectors for install-time code execution have also been blocked by disabling dependencies via git or remote URLs by default.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "Staged publishing decouples the credentials used in CI/CD from those that can publish to the registry, requiring an extra interactive 2FA approval before a staged package is released.",
-          "excerpt": "With staged publishing, it’s not enough to have credentials to publish a new package on npm; those packages are staged until additional approval and 2FA authentication is provided in the npm cli or on npmjs.com.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "supply-chain",
-        "npm",
-        "github-actions",
-        "trusted-publishing",
-        "ci-cd",
-        "install-scripts"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Adopt trusted publishing + staged publishing before enabling install-time hooks",
-        "detail": "For any project you maintain that publishes to npm from CI, move to trusted publishing (removes the long-lived NPM_TOKEN), enable staged publishing (blocks single-credential publish), and audit your package.json to see which install scripts you'd need to explicitly re-enable under npm v12 defaults. Keep the 3-day Dependabot cooldown on and rely on security updates for the fast path."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 88,
-        "newness": 4,
-        "credibility": 55.0,
-        "composite": 52.15,
-        "scored_at": "2026-08-29T23:46:33+00:00"
-      },
-      "prior_art": "GitHub's own September 2025, December 2025, and March 2026 posts trailed most of these mitigations; several align with SLSA and the OpenSSF supply-chain roadmap. Novelty here is the specific default-on shipping (npm v12 no-install-scripts, staged publishing, Dependabot cooldown) rather than the strategic framing.",
-      "discovered_via": "hackernews",
-      "threat": "Supply-chain worms (e.g., Shai-Hulud-class) that compromise a maintainer account, exfiltrate credentials via CI or install-time scripts, and use those credentials to publish malicious versions across many packages in hours.",
-      "conditions": "Applies to open-source projects publishing to npm from CI/CD; particularly high-impact accounts and workflows that trigger on pull_request_target from forks.",
-      "mitigations": "Trusted publishing; staged publishing with extra 2FA; 72-hour read-only lockout on high-impact account changes; default-disabled install scripts (npm v12); read-only Actions cache for untrusted triggers; safer actions/checkout defaults; Dependabot 3-day cooldown; self-service credential revocation.",
-      "verified": true,
-      "verify_note": "All four excerpts appear verbatim in raw file lines 31, 40, 39, 38 respectively. Cluster set to null because the article is general CI/CD/supply-chain appsec that doesn't intersect with agents directly; the three related claim IDs are legitimately impacted (long-lived credentials, install-time payloads, ignore-scripts framing) and stay within the cap of 3.",
-      "retrieved_at": "2026-08-10T19:18:37+00:00",
       "needs_review": true,
       "grounding_score": null
     },
@@ -1212,10 +1133,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 72,
-        "newness": 20,
+        "newness": 18,
         "credibility": 60.0,
-        "composite": 52.1,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 51.6,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Prior WeChat Mini Program static/dynamic analysis and dark-pattern UI studies; novelty is the combined YOLOv8 UI + mitmproxy redirect pipeline.",
       "threat": "Involuntary payments and redirection to malicious/illegal pages via deceptively placed ad and payment controls.",
@@ -1294,10 +1215,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 70,
-        "newness": 20,
+        "newness": 18,
         "credibility": 52.5,
-        "composite": 50.38,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 49.88,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Claim gate-agent-prs-with-automated-checks and claim signature-based-detection-fails-on-llm-authored-malware cover the AI-authored-code and agent-PR problem. Novelty here is (a) the concrete Anthropic-Claude-CTF vs-security-vendor anecdote as a defender lesson, and (b) the fix-rate delta from grounding a frontier model in reachability/exploitability data.",
       "discovered_via": "rss",
@@ -1364,10 +1285,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 65,
-        "newness": 20,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 48.5,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 48.0,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Same class as prior go-git path/symlink CVEs and existing claim path-traversal-defenses-must-cover-symlink-resolution; the ref-name-as-path angle is the novel bit.",
       "discovered_via": "github",
@@ -1441,10 +1362,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 40,
-        "newness": 20,
+        "newness": 18,
         "credibility": 77.5,
-        "composite": 47.22,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 46.72,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -1455,156 +1376,6 @@
       "verify_note": "All four excerpts verified verbatim against raw_path. Cluster set to null because the piece is enclave-crypto/appsec and does not intersect the 13 clusters (nearest fit I is 'Deployment infra and sandboxing', but the material is HSM/KMS cryptography, not agent/LLM runtime).",
       "id": "a-few-notes-on-aws-nitro-enclaves-kms-integratio-a9fa51faa1",
       "retrieved_at": "2026-08-10T19:18:36+00:00",
-      "needs_review": true,
-      "grounding_score": null
-    },
-    {
-      "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
-      "topic": "product-security",
-      "domain": "Supply Chain / Policy",
-      "cluster": null,
-      "related_claims": [],
-      "title": "America bans imported robots due to supply chain and security risks",
-      "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
-      "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
-      "published": "2026-07-29",
-      "date": "2026-07",
-      "raw_path": "data/_raw/mrscan-batch08-0.txt",
-      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-      "source_topics": [
-        "product-security",
-        "ai-security"
-      ],
-      "source_rank": 70.0,
-      "summary": "The FCC added foreign-made advanced robotic devices to the Covered List, effectively banning their import due to supply-chain and security risks. The National Security Determination frames networked robots as broad attack surfaces vulnerable to remote takeover, data exfiltration, and insecure OTA updates, and points to UniPwn on Unitree humanoids as a concrete example.",
-      "takeaway": "US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.",
-      "lessons": [
-        {
-          "point": "US regulators now classify connected robots as broad attack surfaces subject to remote takeover, exfiltration, and OTA-update risk.",
-          "excerpt": "modern bots are now constantly connected to networks “which creates broad attack surfaces and leaves them vulnerable to data exfiltration, remote disruption of the physical robot, and dependencies on unsecure over the air updates.”",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The UniPwn flaws in Unitree humanoids are cited by name as the exemplar vulnerability motivating the ban.",
-          "excerpt": "One example of those vulnerabilities mentioned in the document is the UniPwn flaws that made it possible for attackers to take over humanoid robots made by Chinese company Unitree.",
-          "confidence": 0.95,
-          "grounded": false
-        },
-        {
-          "point": "The mechanism is import ban via the FCC Covered List, with a narrow Department of War carve-out and a country-of-manufacture (not country-of-ownership) exemption.",
-          "excerpt": "the FCC decided the foreign-made advanced robotic devices belong on its Covered List of products for which imports are banned because they pose an unacceptable risk to the national security of the United States and its residents.",
-          "confidence": 0.9,
-          "grounded": false
-        }
-      ],
-      "tags": [
-        "supply-chain",
-        "robotics",
-        "national-security",
-        "iot-security",
-        "fcc"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Track FCC Covered List entries as a supply-chain admission signal beyond telecom",
-        "detail": "Product-security teams that already gate procurement against the FCC Covered List for telecom should now extend that gate to robotics and other networked physical devices; the same list is being repurposed as a general-purpose national-security exclusion mechanism."
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 55,
-        "newness": 4,
-        "credibility": 70.0,
-        "composite": 41.5,
-        "scored_at": "2026-08-29T23:46:33+00:00"
-      },
-      "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
-      "discovered_via": "rss",
-      "threat": "Networked robots operating inside critical facilities can be remotely disrupted or exfiltrated via compromised firmware, OTA-update infrastructure, or embedded backdoors from the manufacturer's supply chain.",
-      "conditions": "Applies to future imports of foreign-made advanced robotic devices; already-approved models and stock, plus foreign-owned firms that manufacture in the US (e.g., Boston Dynamics), are exempt.",
-      "mitigations": "Import ban via FCC Covered List; case-by-case Department of War vouching for individual devices.",
-      "verified": true,
-      "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
-      "retrieved_at": "2026-08-10T19:18:37+00:00",
-      "needs_review": true,
-      "grounding_score": null
-    },
-    {
-      "topic": "product-security",
-      "domain": "Application Security",
-      "cluster": null,
-      "related_claims": [],
-      "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
-      "source_url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-      "article_url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-      "published": "2026-07-30",
-      "date": "2026-07",
-      "raw_path": "data/_raw/mrscan-batch07-2.txt",
-      "source_id": "rss:https-semgrep-dev-blog-rss",
-      "source_topics": [
-        "product-security"
-      ],
-      "source_rank": 52.5,
-      "summary": "Semgrep's Diptendu Kar analyzed the full GHSA advisory set filed under OWASP A04:2025 (Cryptographic Failures) and found the top CWEs are improper signature verification (CWE-347) and use of a broken/risky algorithm (CWE-327) — both of which are code-level omissions, not primitive breaks. Walkthrough example: CVE-2021-43572, a real FinTech signing library rated 9.8, was defeated by sending r=0, s=0 because the code never enforced 1 <= r,s <= n-1. Fix is a four-line range check.",
-      "takeaway": "Most 'crypto' bugs in the wild aren't crypto — they're validation checks that never run in the wrapper code around the primitive. Reviewers don't need a math background; they need to attack the input path.",
-      "lessons": [
-        {
-          "point": "At scale, cryptographic advisories cluster on skipped checks rather than broken primitives.",
-          "excerpt": "over and over, the math was intact and the code had simply skipped a check",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The top-ranked CWEs under OWASP A04 are validation problems, which the author explicitly reframes as code bugs.",
-          "excerpt": "Improper signature verification and algorithm confusion are _code_ problems. A validation check that doesn't run can allow untrusted input.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A real 9.8 ECDSA bug (CVE-2021-43572) is defeated by the laziest possible attacker input; you don't need to touch the math to find it.",
-          "excerpt": "The answer is zero. Send `r=0` and `s=0` then the whole computation collapses to zero on both sides. The signature validates since `0==0`.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The advisories recur across languages and libraries because reviewers keep deferring to 'the crypto library will handle it.'",
-          "excerpt": "The wrapper that checks input, compares two values, or picks which algorithm to use sails through reviews because everybody assumes it is over their head.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "cryptography",
-        "cwe-347",
-        "cwe-327",
-        "ecdsa",
-        "input-validation",
-        "code-review",
-        "owasp"
-      ],
-      "actionable": {
-        "type": "skill",
-        "title": "Add a 'boring-crypto-check' pass to code review checklists",
-        "detail": "When reviewing code that calls a crypto verify() function, enumerate what an attacker controls on both sides of the final comparison, and confirm each attacker-controlled input passes an explicit range/type check before the primitive runs. Do the same for algorithm selection: is the alg field attacker-controlled, and if so is 'none' or a weakened alg reachable? This is a reviewer skill, not a cryptographer skill.",
-        "target": "code-reviewer, security-reviewer"
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 55,
-        "newness": 4,
-        "credibility": 52.5,
-        "composite": 38.88,
-        "scored_at": "2026-08-29T23:46:33+00:00"
-      },
-      "prior_art": "Classic JWT alg=none, invalid-curve attacks, and Wycheproof-style test suites make the same point; this piece is a fresh restatement grounded in the current GHSA distribution.",
-      "discovered_via": "rss",
-      "threat": "Attackers submit malformed but well-formed-looking cryptographic payloads (all-zero ECDSA sigs, wrong-curve points, alg=none JWTs) to endpoints that call a crypto library's verify() but omit input validation. Result: signature-verified user impersonation, integrity bypass, or algorithm downgrade — CVSS 9.x-class bugs from a four-line omission.",
-      "conditions": "Application performs cryptographic signature verification or algorithm selection with attacker-controlled inputs, and the wrapper code around the primitive does not enforce 1 <= r,s <= n-1 (for ECDSA) or reject attacker-influenced algorithm identifiers before dispatching to the library.",
-      "mitigations": "Add explicit range checks on all numeric signature components before calling verify. Reject algorithm identifiers not on a static allowlist. Prefer AEAD/high-level constructs over hand-assembled signature verification. Add SAST rules (Semgrep-style) that flag verify() call sites lacking pre-condition checks.",
-      "verified": true,
-      "verify_note": "Excerpts verbatim-checked against raw_path. Related claims exist in data/claims.json. Cluster assignments align with data/interests.yaml.",
-      "id": "cryptographic-advisories-are-dominated-by-skippe-7778874a78",
-      "retrieved_at": "2026-08-10T19:18:37+00:00",
       "needs_review": true,
       "grounding_score": null
     },
@@ -1666,10 +1437,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 38.75,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 38.25,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Standard supply-chain security literature (SLSA, sigstore, provenance attestation). The 'malicious agent skills' finding was reported earlier in 2026 by third-party researchers and covered widely; this post is a marketing recap tied to the Gartner MQ, not new research.",
       "discovered_via": "rss",
@@ -1734,10 +1505,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 8,
-        "newness": 20,
+        "newness": 18,
         "credibility": 51.9,
-        "composite": 27.18,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 26.68,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": [
         "SARIMA baselines in network anomaly detection",
@@ -1804,10 +1575,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 20,
+        "newness": 18,
         "credibility": 51.9,
-        "composite": 26.29,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 25.79,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Classical STRIDE (Microsoft), prior quantum-specific attack papers cited in the abstract (calibration tampering, SWAP, QubitHammer).",
       "discovered_via": "rss",
@@ -1875,10 +1646,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 20,
+        "newness": 18,
         "credibility": 51.9,
-        "composite": 26.29,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 25.79,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Classical Common Criteria and ISO/IEC 25010, and prior ad hoc quantum obfuscation metrics (TVD, DFC).",
       "discovered_via": "rss",
@@ -1937,10 +1708,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 10,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 25.25,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 24.75,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": "Long-standing critique of DMCA/copyright takedown abuse for censorship.",
       "discovered_via": "rss",
@@ -2005,10 +1776,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 10,
-        "newness": 20,
+        "newness": 18,
         "credibility": 51.9,
-        "composite": 24.79,
-        "scored_at": "2026-08-29T23:46:33+00:00"
+        "composite": 24.29,
+        "scored_at": "2026-08-31T12:34:42+00:00"
       },
       "prior_art": [
         "Plonky3 STARK toolkit",

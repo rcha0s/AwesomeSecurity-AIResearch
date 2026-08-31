@@ -18,7 +18,7 @@ Gareth Heyes shows that HTML tag names can carry XSS payloads: DOM properties li
 
 **Topic:** Product Security  ·  **Domain:** web security  
 **Source:** [PortSwigger Research](https://portswigger.net/research)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 84 · Relevance 80 · Credibility 73 · **Composite 65.15**  
+**Scores:** Newness 18 · Novelty 84 · Relevance 80 · Credibility 73 · **Composite 64.65**  
 **Tags:** `xss`, `waf-bypass`, `html`, `javascript`, `blocklist-bypass`, `csp`, `dom`  
 **Verification:** ✓ independently verified · closest prior art: PortSwigger XSS cheat sheet and prior WAF/blocklist-bypass research (unicode overflows, phantom Version cookie).
 

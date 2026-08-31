@@ -25,7 +25,7 @@ Introduces ARIA, an attacker-LLM-driven red-teaming framework that iteratively c
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2608.05659)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 65 · Relevance 78 · Credibility 52 · **Composite 55.68**  
+**Scores:** Newness 18 · Novelty 65 · Relevance 78 · Credibility 52 · **Composite 55.18**  
 **Tags:** `instruction-backdoor`, `customized-llm`, `coding-assistant`, `automated-red-team`, `ase-2026`  
 **Verification:** ✓ independently verified · closest prior art: ['BadPrompt and other text-trigger prompt backdoors', 'OpenAI GPT Store / Gemini Gems customization platforms']
 

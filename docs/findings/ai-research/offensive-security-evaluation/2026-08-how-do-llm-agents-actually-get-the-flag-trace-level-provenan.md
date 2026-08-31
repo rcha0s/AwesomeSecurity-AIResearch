@@ -24,7 +24,7 @@ CTF benchmarks score agents with binary pass/fail, conflating real exploitation 
 
 **Topic:** AI Research  ·  **Domain:** Offensive-Security Evaluation  
 **Source:** [arXiv cs.CR](https://arxiv.org/abs/2608.26237)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 76 · Relevance 80 · Credibility 60 · **Composite 60.8**  
+**Scores:** Newness 18 · Novelty 76 · Relevance 80 · Credibility 60 · **Composite 60.3**  
 **Tags:** `ctf`, `offensive-security`, `agent-evaluation`, `provenance`, `benchmark-integrity`, `capability-elicitation`  
 **Verification:** ✓ independently verified · closest prior art: Prior CTF agent benchmarks with binary/aggregate scoring; contribution is trace-based provenance auditing (CTF-ABACUS).
 

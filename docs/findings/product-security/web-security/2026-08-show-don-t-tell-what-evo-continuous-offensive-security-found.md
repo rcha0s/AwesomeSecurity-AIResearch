@@ -18,7 +18,7 @@ Snyk's autonomous offensive-security agent (Evo COS) black-box tested a multi-te
 
 **Topic:** Product Security  ·  **Domain:** web security  
 **Source:** [Snyk](https://snyk.io/blog/)  ·  **Retrieved:** 2026-08-29  
-**Scores:** Newness 20 · Novelty 74 · Relevance 85 · Credibility 73 · **Composite 63.65**  
+**Scores:** Newness 18 · Novelty 74 · Relevance 85 · Credibility 73 · **Composite 63.15**  
 **Tags:** `broken-access-control`, `mass-assignment`, `authorization`, `cors`, `multi-tenant`, `saas`, `ai-pentesting`, `business-logic`  
 **Verification:** ✓ independently verified · closest prior art: OWASP broken object/function-level authorization (BOLA/BFLA), mass-assignment, and credentialed CORS misconfiguration research.
 

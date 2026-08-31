@@ -24,7 +24,7 @@ CARE (Canonicalization, Attribution, and Resolution Engine) is a shell-specific,
 
 **Topic:** AI Security  ·  **Domain:** AI Security  
 **Source:** [source](https://arxiv.org/abs/2607.21642)  ·  **Retrieved:** 2026-08-14  
-**Scores:** Newness 20 · Novelty 60 · Relevance 75 · Credibility 52 · **Composite 53.28**  
+**Scores:** Newness 18 · Novelty 60 · Relevance 75 · Credibility 52 · **Composite 52.78**  
 **Tags:** `shell`, `command-verification`, `agent-sandbox`, `static-analysis`, `llm-judge`  
 **Verification:** ✓ independently verified · closest prior art: Extends generic LLM-judge guardrails and shell parsers with a shell-specific canonicalization and provenance-backed static pattern layer; accepted at ISSRE 2026.
 
