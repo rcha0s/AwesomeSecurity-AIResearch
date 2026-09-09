@@ -14,10 +14,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 0,
+      "ingested": 1,
       "curated": 0
     },
-    "rank": 75.0,
+    "rank": 72.5,
     "added": "2026-07-13",
     "active": true,
     "notes": "Standards body / consortium",
@@ -72,10 +72,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 3,
-      "curated": 2
+      "ingested": 6,
+      "curated": 4
     },
-    "rank": 76.8,
+    "rank": 77.5,
     "added": "2026-07-13",
     "active": true,
     "notes": "Vendor research",
@@ -100,10 +100,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 7,
-      "curated": 2
+      "ingested": 8,
+      "curated": 3
     },
-    "rank": 71.6,
+    "rank": 72.9,
     "added": "2026-07-13",
     "active": true,
     "notes": "Vendor research",
@@ -392,10 +392,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 14,
-      "curated": 5
+      "ingested": 15,
+      "curated": 6
     },
-    "rank": 52.2,
+    "rank": 53.0,
     "added": "2026-07-13",
     "active": true,
     "notes": "Practitioner blog",
@@ -548,10 +548,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 5,
+      "ingested": 6,
       "curated": 1
     },
-    "rank": 50.8,
+    "rank": 50.0,
     "added": "2026-07-13",
     "active": true,
     "notes": "github search",
@@ -600,10 +600,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 1,
+      "ingested": 3,
       "curated": 0
     },
-    "rank": 52.5,
+    "rank": 49.6,
     "added": "2026-07-13",
     "active": true,
     "notes": "github search",
@@ -678,10 +678,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 6,
+      "ingested": 7,
       "curated": 0
     },
-    "rank": 47.5,
+    "rank": 47.0,
     "added": "2026-07-13",
     "active": true,
     "notes": "github search",
@@ -758,10 +758,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 3,
+      "ingested": 4,
       "curated": 1
     },
-    "rank": 73.2,
+    "rank": 71.9,
     "added": "2026-07-16",
     "active": true,
     "notes": "Vendor research",
@@ -784,10 +784,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 5,
+      "ingested": 8,
       "curated": 1
     },
-    "rank": 50.8,
+    "rank": 48.8,
     "added": "2026-07-16",
     "active": true,
     "notes": "Vendor research (supply chain)",
@@ -862,10 +862,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 1,
-      "curated": 1
+      "ingested": 2,
+      "curated": 2
     },
-    "rank": 77.5,
+    "rank": 79.2,
     "added": "2026-07-16",
     "active": true,
     "notes": "Offensive research",
@@ -914,10 +914,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 3,
+      "ingested": 7,
       "curated": 0
     },
-    "rank": 49.6,
+    "rank": 47.0,
     "added": "2026-07-16",
     "active": true,
     "notes": "Vendor research (SAST/appsec)",
@@ -940,10 +940,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 3,
+      "ingested": 4,
       "curated": 1
     },
-    "rank": 53.2,
+    "rank": 51.9,
     "added": "2026-07-16",
     "active": true,
     "notes": "Offensive tooling research",
@@ -1388,10 +1388,10 @@
     "scope": "ai",
     "signals": {},
     "stats": {
-      "ingested": 0,
-      "curated": 0
+      "ingested": 2,
+      "curated": 1
     },
-    "rank": 80.0,
+    "rank": 75.0,
     "added": "2026-08-06",
     "active": true,
     "notes": "Model release ecosystem — includes Kimi/Qwen/Llama mirrors",
@@ -1486,10 +1486,10 @@
     "scope": "both",
     "signals": {},
     "stats": {
-      "ingested": 6,
+      "ingested": 7,
       "curated": 1
     },
-    "rank": 50.0,
+    "rank": 49.3,
     "added": "2026-08-06",
     "active": true,
     "notes": "Incident and breach coverage; filter via classifier",

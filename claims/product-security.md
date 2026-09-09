@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_11 current · 0 contested · 1 superseded · 1 refuted · updated 2026-08-30_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-09-09_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -116,11 +116,12 @@ Typosquatted packages are regularly uploaded to public registries with malicious
 
 _Tags: `typosquatting`, `npm`, `pypi`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Typosquatting on npm](https://checkmarx.com/blog/typosquatting-attack-on-npm-cryptocurrency-package/) | undated |
+| supports | [Malicious Rust crate Arrayref runs a build-time payload](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/) | Aug 20, 2026 |
 
 </details>
 
@@ -218,6 +219,26 @@ _Tags: `ssrf`, `agents`, `defense`_
 
 </details>
 
+<a id="claim-package-yank-warnings-can-be-weaponized-to-push-malicious-versions"></a>
+
+### An attacker who compromises a package maintainer account can yank all prior clean versions, causing the package manager's own UX (e.g. Cargo's 'update to a non-yanked version' warning) to actively nudge developers toward installing the sole remaining, malicious version — a distribution technique beyond passive typosquatting or waiting for organic upgrades.
+
+`package-yank-warnings-can-be-weaponized-to-push-malicious-versions` · confidence **0.75** · Supply Chain & Dependencies · standing since Sep 9, 2026
+
+**Basis —** documented incident analysis (safedep.io + RustSec advisory)
+
+**Do this —** Flag a maintainer yanking multiple prior versions in quick succession, leaving only a very recent version installable, as a supply-chain risk signal — review before consuming the registry's 'update to a non-yanked version' prompt.
+
+**Conditions —** Applies to registries supporting version yanking (crates.io, npm, PyPI, etc); doesn't apply to registries without a yank/deprecate mechanism.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Malicious Rust crate Arrayref runs a build-time payload](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/) | Aug 20, 2026 |
+
+</details>
+
 <a id="claim-gate-agent-prs-with-automated-checks"></a>
 
 ### Automated gates catch what human review misses on agent PRs
@@ -241,6 +262,26 @@ _Tags: `ai-generated-code`, `code-review`, `ci`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [38.9% of agent-generated PRs carry a security smell — but humans introduce most of the real ones](https://arxiv.org/abs/2607.12428) | Jul 19, 2026 |
+
+</details>
+
+<a id="claim-shared-library-call-count-can-beat-timing-side-channels"></a>
+
+### In cryptographic implementations relying on a shared native library (e.g. libgmp) for non-constant-time operations, counting the underlying library's function calls via cache-timing techniques (e.g. Flush+Reload) can be a dramatically more sample-efficient side channel than wall-clock timing alone — recovering a full key from a single observation instead of dozens.
+
+`shared-library-call-count-can-beat-timing-side-channels` · confidence **0.70** · Application Security · standing since Sep 9, 2026
+
+**Basis —** detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)
+
+**Do this —** When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.
+
+**Conditions —** Demonstrated specifically against phpseclib's pure-PHP X25519 implementation under specific reachability conditions (ext-sodium absent, reused/long-lived key, local co-residency); the general principle likely generalizes but the specific sample-efficiency numbers don't.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [phpseclib non-constant-time X25519 scalar multiplication permits full private-key recovery](https://github.com/advisories/GHSA-q97c-8qh3-fpc6) | Sep 8, 2026 |
 
 </details>
 
