@@ -1172,7 +1172,7 @@
     "rank": 75.0,
     "added": "2026-07-21",
     "active": true,
-    "notes": "Replaces dead anthropic.com/rss.xml (404). JS-rendered index - needs scrape + free-text resolution.",
+    "notes": "Replaces dead anthropic.com/rss.xml (404). JS-rendered page itself needs no scrape though: harvested via ingest_sitemap.py against sitemap.xml (static XML, unlike the page), filtered to /research/ paths, lastmod as the freshness signal.",
     "track": "research",
     "scope": "ai"
   },
@@ -1648,5 +1648,28 @@
     "track": "research",
     "scope": "ai",
     "min_stars": 10
+  },
+  {
+    "id": "research_index:https-www-anthropic-com-news",
+    "type": "research_index",
+    "handle": "https://www.anthropic.com/news",
+    "name": "Anthropic News",
+    "url": "https://www.anthropic.com/news",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-09-09",
+    "active": true,
+    "notes": "Restores Anthropic News coverage after the dead RSS feed (see deactivated rss:https-www-anthropic-com-news-rss-xml). No RSS/Atom exists; harvested via ingest_sitemap.py against sitemap.xml, filtered to /news/ paths, lastmod as the freshness signal."
   }
 ]
