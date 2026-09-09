@@ -165,7 +165,6 @@ classification:
     "Web Application Security":
       - "web app"
       - "web application"
-      - "http"
       - "request smuggling"
       - "desync"
       - "xss"
