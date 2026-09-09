@@ -26,6 +26,7 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    run each scan for breadth:
    ```bash
    python scripts/aggregate.py       # RSS/Atom + newsletter feeds (the registry)
+   python scripts/ingest_sitemap.py  # sitemap.xml for research_index sources with no feed (e.g. Anthropic)
    python scripts/ingest_github.py   # trending/novel repos (needs `gh` authed)
    python scripts/ingest_ghsa.py     # reviewed supply-chain advisories (needs `gh` authed)
    python scripts/ingest_hn.py       # Hacker News velocity signal (keyless, network)

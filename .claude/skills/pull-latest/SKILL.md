@@ -31,7 +31,7 @@ belongs to `/research-scan`.
 
 ## Steps
 
-### 1. Ingest — five network-safe scripts
+### 1. Ingest — six network-safe scripts
 
 Each is idempotent (dedupes by URL + title against the pool + existing
 candidates), so re-running is safe. Individual failures don't halt
@@ -39,11 +39,16 @@ the loop — log the failure and continue.
 
 ```bash
 python scripts/aggregate.py            # RSS/Atom from the ranked registry
+python scripts/ingest_sitemap.py       # sitemap.xml for research_index sources with no feed (e.g. Anthropic)
 python scripts/ingest_hn.py            # HN keyword queries + top-stories tap
 python scripts/ingest_ghsa.py          # GitHub Security Advisories (needs `gh` authed)
 python scripts/ingest_conferences.py   # USENIX/NDSS/SaTML/AISec/CCS via arXiv
 python scripts/ingest_github.py        # trending/novel security repos (needs `gh` authed)
 ```
+
+`ingest_sitemap.py` fetches real article text per candidate (there's no
+feed summary to classify from), so it's slower than the others — expect
+it to take longer per candidate than a plain feed fetch.
 
 **Not run here:** `ingest_twitter.py` (needs WSL2 + burner cookies —
 out of scope for a headless refresh; if the user wants Twitter,
