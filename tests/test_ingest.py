@@ -32,6 +32,20 @@ def test_aggregate_classifies_tracks():
     assert sec["guess_topic"] == "product-security"
 
 
+def test_classify_domain_does_not_false_positive_on_bare_hyperlinks():
+    # Regression: a bare "http" keyword matched any text containing a link
+    # (e.g. markdown "[text](https://...)"), so classify_domain silently
+    # routed unrelated pages (math papers, product news) to Web Application
+    # Security whenever the body happened to cite a URL. See the
+    # "Formalizing Fermat's Last Theorem" false positive that surfaced this.
+    rules = c.load_yaml(c.SOURCES_FILE)["classification"]
+    blob = (
+        "we proved a theorem in the lean programming language. see the "
+        "resulting proof at https://github.com/anthropics/example for details."
+    )
+    assert aggregate.classify_domain(blob, rules, []) is None
+
+
 def test_parse_tweets_shape_tolerant():
     assert it.parse_tweets('{"tweets":[{"text":"hi"}]}') == [{"text": "hi"}]
     assert it.parse_tweets('[{"text":"hi"}]') == [{"text": "hi"}]
