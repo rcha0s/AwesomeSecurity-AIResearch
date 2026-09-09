@@ -55,7 +55,7 @@ def search_stories(query: str, limit: int, since_ts: int,
             HN_SEARCH,
             params=params,
             timeout=30,
-            headers={"User-Agent": "AwesomeSecurityResearch/1.0"},
+            headers={"User-Agent": c.HTTP_USER_AGENT},
         )
         resp.raise_for_status()
         return resp.json().get("hits", []) or []

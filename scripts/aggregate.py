@@ -105,7 +105,9 @@ def collect_rss(rules: dict, cutoff: datetime) -> list[dict]:
     for source in feeds:
         feed = feed_from_source(source)
         print(f"-> {feed['name']}: {feed['url']}")
-        parsed = feedparser.parse(feed["url"])
+        parsed = feedparser.parse(
+            feed["url"], request_headers={"User-Agent": c.HTTP_USER_AGENT}
+        )
         if parsed.bozo and not parsed.entries:
             print(f"   ! could not parse feed ({getattr(parsed, 'bozo_exception', '')})")
             continue

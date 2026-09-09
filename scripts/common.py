@@ -32,10 +32,21 @@ for _stream in (sys.stdout, sys.stderr):
             pass
 
 try:
+    import truststore
     import yaml
     from dateutil import parser as dateparser
 except ImportError as exc:  # pragma: no cover - environment guard
     raise SystemExit("Missing dependencies. Run: pip install -r requirements.txt") from exc
+
+# Use the OS-native certificate trust store (Windows/macOS/Linux) instead of
+# the bundled `certifi` CA list. A stale or unlucky `certifi` release can
+# silently break ingestion of major sources (OpenAI, Anthropic, GitHub
+# Security Lab, etc. all failed with "certificate has expired" simultaneously
+# in Sept 2026, even though their real certs were valid — `certifi`'s bundle
+# had simply drifted from what the OS already trusted). This monkey-patches
+# `ssl.SSLContext` process-wide, so it must run before any HTTPS request is
+# made by feedparser/urllib/requests in this process.
+truststore.inject_into_ssl()
 
 # --- Paths -----------------------------------------------------------------
 ROOT = Path(__file__).resolve().parent.parent
@@ -50,6 +61,12 @@ RAW_DIR = DATA_DIR / "_raw"
 
 SCHEMA_VERSION = "3.0"
 JINA_READER = "https://r.jina.ai/"
+
+# Several source sites (OpenAI Blog, Wired, tldr;sec, GitHub Security Lab)
+# reject the default library User-Agent (e.g. "Python-urllib/3.x",
+# "feedparser/6.x") with HTTP 403 — an explicit, honestly-identifying UA
+# clears it. Shared so every outbound request identifies consistently.
+HTTP_USER_AGENT = "AwesomeSecurityResearch/1.0"
 
 # --- Topics: the three tracked databases -----------------------------------
 # Each topic is its own rolling pool + rendered directory. `domains` are
@@ -264,7 +281,7 @@ def resolve_redirects(url: str, timeout: int = 12) -> str:
             url,
             allow_redirects=True,
             timeout=timeout,
-            headers={"User-Agent": "AwesomeSecurityResearch/1.0"},
+            headers={"User-Agent": HTTP_USER_AGENT},
         )
         return resp.url or url
     except Exception:  # noqa: BLE001 - resolution is best-effort
@@ -789,7 +806,7 @@ def fetch_readable(url: str, timeout: int = 30, max_chars: int = 20000) -> str:
     resp = requests.get(
         JINA_READER + url,
         timeout=timeout,
-        headers={"Accept": "text/plain", "User-Agent": "AwesomeSecurityResearch/1.0"},
+        headers={"Accept": "text/plain", "User-Agent": HTTP_USER_AGENT},
     )
     resp.raise_for_status()
     text = resp.text.strip()

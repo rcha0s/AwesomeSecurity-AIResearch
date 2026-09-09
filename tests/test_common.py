@@ -109,6 +109,22 @@ def test_resolve_redirects_skips_non_shortener():
     assert c.resolve_redirects("https://blog.example.com/post") == "https://blog.example.com/post"
 
 
+def test_http_user_agent_is_shared_non_empty_constant():
+    # Several sources (OpenAI Blog, Wired, tldr;sec, GitHub Security Lab)
+    # 403 the default library User-Agent; every outbound request must
+    # identify with this constant instead of a hand-rolled literal.
+    assert isinstance(c.HTTP_USER_AGENT, str) and c.HTTP_USER_AGENT
+
+
+def test_truststore_injected_into_ssl_module():
+    # common.py must patch ssl.SSLContext to use the OS trust store at
+    # import time, so a stale/unlucky `certifi` release can't silently
+    # break ingestion the way it did for OpenAI/Anthropic/GitHub in Sept 2026.
+    import ssl
+
+    assert ssl.SSLContext.__module__ == "truststore._api"
+
+
 def test_validate_entry_ok_and_errors():
     assert c.validate_entry(make_entry()) == []
     assert any("missing" in e for e in c.validate_entry({"topic": "ai-research"}))
