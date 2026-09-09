@@ -78,7 +78,7 @@ def search_venue(venue: str, limit: int) -> list[dict]:
         f"&sortBy=submittedDate&sortOrder=descending&max_results={limit}"
     )
     try:
-        resp = requests.get(url, timeout=45, headers={"User-Agent": "AwesomeSecurityResearch/1.0"})
+        resp = requests.get(url, timeout=45, headers={"User-Agent": c.HTTP_USER_AGENT})
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 - discovery is best-effort
         print(f"   ! arXiv search failed for {venue!r}: {exc}", file=sys.stderr)

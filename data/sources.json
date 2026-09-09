@@ -1271,8 +1271,8 @@
     },
     "rank": 80.0,
     "added": "2026-08-06",
-    "active": true,
-    "notes": "Anthropic news + incident disclosures",
+    "active": false,
+    "notes": "Dead as of 2026-09-09: confirmed 404 (not a cert/UA issue — verified with truststore + proper UA). Anthropic has no working RSS feed at any plausible path (/rss.xml, /feed.xml, /feed, /news.rss all 404 too). Coverage now relies on the research_index entries below (Anthropic Research, Alignment Science Blog, Red Team) until a scraper exists for that source type.",
     "strict": false
   },
   {
