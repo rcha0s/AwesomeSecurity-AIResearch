@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_18 current · 0 contested · 2 superseded · 1 refuted · updated 2026-08-30_
+_19 current · 0 contested · 2 superseded · 1 refuted · updated 2026-09-09_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -185,12 +185,15 @@ Headline benchmark F1 hides what actually matters for security scanning: grounde
 
 _Tags: `evals`, `benchmarks`, `security-scanning`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed](https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark) | Jul 17, 2026 |
 | supports | [Kimi K3 code-security eval: matching F1 hides a precision gap](https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision) | Jul 22, 2026 |
+| supports | [BenchMIRT: What are LLM benchmarks actually measuring?](https://huggingface.co/blog/allenai/benchmirt) | Sep 1, 2026 |
+| supports | [Semgrep Multimodal Goes Beyond Authentication](https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal) | Aug 27, 2026 |
+| supports | [We benchmarked A LOT of models](https://semgrep.dev/blog/2026/mythos-idor-benchmark) | Aug 25, 2026 |
 
 </details>
 
@@ -266,6 +269,26 @@ _Tags: `llm-as-judge`, `eval-bias`, `evals`_
 | --- | --- | --- |
 | supports | [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) | Jun 2023 |
 | supports | [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) | Jun 2025 |
+
+</details>
+
+<a id="claim-benchmark-category-labels-can-mask-conflated-capabilities"></a>
+
+### A benchmark's stated capability category (e.g. 'safety') doesn't guarantee its score is actually driven by that capability, or even moves in the direction you'd assume — independent multidimensional decomposition (multidimensional Item Response Theory) can reveal that a nominally 'safety' benchmark like WMDP actually correlates more strongly with general reasoning than safety, and in the inverse direction (stronger reasoners score LOWER, since WMDP scores refusing/failing to answer as the desired outcome).
+
+`benchmark-category-labels-can-mask-conflated-capabilities` · confidence **0.70** · Evaluation · standing since Sep 9, 2026
+
+**Basis —** empirical study (AllenAI BenchMIRT, multidimensional IRT across 100 models / 16 benchmarks)
+
+**Do this —** Before citing a benchmark score as evidence of a specific capability, check whether independent capability-decomposition analysis supports that the benchmark actually isolates that capability and moves in the expected direction, rather than assuming the category label is accurate.
+
+**Conditions —** Demonstrated specifically for WMDP and BBQ within one 16-benchmark, 100-model study; may not generalize to all benchmarks labeled 'safety'.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [BenchMIRT: What are LLM benchmarks actually measuring?](https://huggingface.co/blog/allenai/benchmirt) | Sep 1, 2026 |
 
 </details>
 

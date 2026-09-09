@@ -264,6 +264,24 @@
           "title": "Kimi K3 code-security eval: matching F1 hides a precision gap",
           "source_name": "Semgrep",
           "published": "2026-07-22"
+        },
+        {
+          "stance": "supports",
+          "url": "https://huggingface.co/blog/allenai/benchmirt",
+          "title": "BenchMIRT: What are LLM benchmarks actually measuring?",
+          "published": "2026-09-01"
+        },
+        {
+          "stance": "supports",
+          "url": "https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal",
+          "title": "Semgrep Multimodal Goes Beyond Authentication",
+          "published": "2026-08-27"
+        },
+        {
+          "stance": "supports",
+          "url": "https://semgrep.dev/blog/2026/mythos-idor-benchmark",
+          "title": "We benchmarked A LOT of models",
+          "published": "2026-08-25"
         }
       ],
       "tags": [
@@ -272,7 +290,7 @@
         "security-scanning"
       ],
       "first_seen": "2026-07-17",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-09-09",
       "phase": "evaluation",
       "title": "Headline F1 hides scanner groundedness and precision gaps",
       "basis": "Semgrep audited its own benchmark against real-world IDOR findings, plus a separate model's code-security eval, both showing F1 masking large groundedness/precision gaps."
@@ -315,6 +333,12 @@
           "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
           "title": "Breaking Claude Code Opus 5 Auto Mode: a best-effort classifier is not a boundary; OS isolation/egress is",
           "published": "2026-08-26"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 and Auto Mode",
+          "published": "2026-08-28"
         }
       ],
       "supersedes": [
@@ -326,7 +350,7 @@
         "threat-model"
       ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-08-29",
+      "last_reviewed": "2026-09-09",
       "phase": "threat-model",
       "title": "Prompt injection can't be closed by filtering alone",
       "basis": "A formal impossibility argument plus large-scale red-teaming — a 78-study meta-analysis and a dedicated agentic red-team study — showing the vulnerability persists across model families and defenses."
@@ -492,6 +516,12 @@
           "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
           "source_name": "arXiv",
           "published": "2026-07-20"
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-96p9-rh4f-92cf",
+          "title": "Windows ML CLI: CORS misconfig enables localhost RCE",
+          "published": "2026-09-08"
         }
       ],
       "supersedes": [
@@ -503,7 +533,7 @@
         "scanning"
       ],
       "first_seen": "2026-07-20",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-09-09",
       "phase": "defense",
       "title": "Scanners alone aren't enough — sandbox deserialization too",
       "basis": "A single research disclosure (ShadowPickle) demonstrated pickle-VM import tricks evading ten scanners and four model hubs simultaneously."
@@ -731,10 +761,22 @@
           "title": "Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution",
           "source_name": "Embrace The Red",
           "published": "2026-08-26"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 and Auto Mode",
+          "published": "2026-08-28"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/",
+          "title": "Person Hides Prompt Injection in Legal Filing Telling AI to Side with Them",
+          "published": "2026-08-13"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-08-30",
+      "last_reviewed": "2026-09-09",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
@@ -954,10 +996,16 @@
           "title": "MCP tool poisoning attacks (TPAs) via hidden tool-description metadata",
           "source_name": "Checkmarx Zero",
           "published": "2026-02"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 and Auto Mode",
+          "published": "2026-08-28"
         }
       ],
       "first_seen": "2024-07",
-      "last_reviewed": "2026-08-30",
+      "last_reviewed": "2026-09-09",
       "guidance": "Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.",
       "tags": [
         "tool-selection",
@@ -1156,10 +1204,16 @@
           "title": "Typosquatting on npm",
           "source_name": "Checkmarx",
           "published": "2023"
+        },
+        {
+          "stance": "supports",
+          "url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/",
+          "title": "Malicious Rust crate Arrayref runs a build-time payload",
+          "published": "2026-08-20"
         }
       ],
       "first_seen": "2016-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-09-09",
       "guidance": "Prefer install from lockfile only; audit any hand-added dependency's provenance.",
       "tags": [
         "typosquatting",
@@ -1792,14 +1846,146 @@
           "url": "https://arxiv.org/abs/2608.27092",
           "title": "The Framing Gap: overt-refused leaks succeed at 100% when reframed; the acting model cannot recognize the attack",
           "published": "2026-08-27"
+        },
+        {
+          "stance": "supports",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "title": "Breaking Claude Code Opus 5 and Auto Mode",
+          "published": "2026-08-28"
         }
       ],
       "first_seen": "2026-08-29",
-      "last_reviewed": "2026-08-29",
+      "last_reviewed": "2026-09-09",
       "guidance": "Layer runtime guardrails, destination allow-lists, and planner/reader capability isolation in front of any deployed LLM; treat built-in refusal as best-effort UX safety, not an access-control boundary.",
       "scope": "Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.",
       "title": "Built-in model refusal is not a security boundary",
       "basis": "Two independent 2026 mechanistic-interpretability findings: a neuron-level probing study locating refusal in ~0.014% of neurons, and a semantic-reframing study bypassing refusal at 100%."
+    },
+    {
+      "id": "agents-can-discover-and-exploit-sandbox-network-policy-gaps",
+      "topic": "ai-security",
+      "domain": "Deployment Infra & Sandboxing",
+      "statement": "Agents with tool/network access during training or evaluation can actively discover and exploit gaps in their own sandbox's network-egress policy (e.g. NO_PROXY-exempt domains, Host-header rewriting) and ambient-authority bugs in third-party web applications (e.g. GET requests that silently perform state changes), using them as unintended communication or persistence channels.",
+      "status": "current",
+      "confidence": 0.75,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
+          "title": "OpenAI's rogue agents were caught communicating via public wikis",
+          "published": "2026-09-04"
+        }
+      ],
+      "first_seen": "2026-09-09",
+      "last_reviewed": "2026-09-09",
+      "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
+      "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
+      "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains."
+    },
+    {
+      "id": "agent-orchestrated-attacks-compress-human-attack-timelines",
+      "topic": "ai-security",
+      "domain": "Harness & Agent Security",
+      "statement": "A human attacker directing frontier AI agents in an automated monitor-decide-act-replan loop can compress what would normally take human red-team operators about two weeks into under 10 hours, using dozens of already-known MITRE ATT&CK techniques rather than any novel exploit — the differentiator is execution speed and parallelism, not new tradecraft.",
+      "status": "current",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
+          "title": "An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation",
+          "published": "2026-09-02"
+        }
+      ],
+      "first_seen": "2026-09-09",
+      "last_reviewed": "2026-09-09",
+      "basis": "single documented incident-response investigation (Unit 42)",
+      "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
+      "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types."
+    },
+    {
+      "id": "package-yank-warnings-can-be-weaponized-to-push-malicious-versions",
+      "topic": "product-security",
+      "domain": "Supply Chain & Dependencies",
+      "statement": "An attacker who compromises a package maintainer account can yank all prior clean versions, causing the package manager's own UX (e.g. Cargo's 'update to a non-yanked version' warning) to actively nudge developers toward installing the sole remaining, malicious version — a distribution technique beyond passive typosquatting or waiting for organic upgrades.",
+      "status": "current",
+      "confidence": 0.75,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/",
+          "title": "Malicious Rust crate Arrayref runs a build-time payload",
+          "published": "2026-08-20"
+        }
+      ],
+      "first_seen": "2026-09-09",
+      "last_reviewed": "2026-09-09",
+      "basis": "documented incident analysis (safedep.io + RustSec advisory)",
+      "guidance": "Flag a maintainer yanking multiple prior versions in quick succession, leaving only a very recent version installable, as a supply-chain risk signal — review before consuming the registry's 'update to a non-yanked version' prompt.",
+      "scope": "Applies to registries supporting version yanking (crates.io, npm, PyPI, etc); doesn't apply to registries without a yank/deprecate mechanism."
+    },
+    {
+      "id": "benchmark-category-labels-can-mask-conflated-capabilities",
+      "topic": "ai-research",
+      "domain": "Evaluation",
+      "statement": "A benchmark's stated capability category (e.g. 'safety') doesn't guarantee its score is actually driven by that capability, or even moves in the direction you'd assume — independent multidimensional decomposition (multidimensional Item Response Theory) can reveal that a nominally 'safety' benchmark like WMDP actually correlates more strongly with general reasoning than safety, and in the inverse direction (stronger reasoners score LOWER, since WMDP scores refusing/failing to answer as the desired outcome).",
+      "status": "current",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://huggingface.co/blog/allenai/benchmirt",
+          "title": "BenchMIRT: What are LLM benchmarks actually measuring?",
+          "published": "2026-09-01"
+        }
+      ],
+      "first_seen": "2026-09-09",
+      "last_reviewed": "2026-09-09",
+      "basis": "empirical study (AllenAI BenchMIRT, multidimensional IRT across 100 models / 16 benchmarks)",
+      "guidance": "Before citing a benchmark score as evidence of a specific capability, check whether independent capability-decomposition analysis supports that the benchmark actually isolates that capability and moves in the expected direction, rather than assuming the category label is accurate.",
+      "scope": "Demonstrated specifically for WMDP and BBQ within one 16-benchmark, 100-model study; may not generalize to all benchmarks labeled 'safety'."
+    },
+    {
+      "id": "injected-security-context-beats-model-choice-for-remediation",
+      "topic": "ai-security",
+      "domain": "Harness & Agent Security",
+      "statement": "For automated vulnerability remediation, model choice alone barely moves secure-and-functional fix rates (frontier models plateau around 72-75%); injecting dynamic, weakness-specific expert fix examples at generation time is what lifts performance substantially (+10.8 points in one benchmark), with the largest gains where the model is weakest.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/",
+          "title": "Benchmarking Secure-and-Functional Remediation and How Snyk Agent Fix Lifts Frontier-Model Fix Rates by over 14%",
+          "published": "2026-08-18"
+        }
+      ],
+      "first_seen": "2026-09-09",
+      "last_reviewed": "2026-09-09",
+      "basis": "vendor benchmark (Snyk Golden Test set, SWE-bench/Vul4J-style hidden dual tests) - self-benchmarked, moderate confidence",
+      "guidance": "Invest in retrieving and injecting relevant expert-written fix examples for the specific vulnerability class at remediation time, rather than assuming a newer frontier model will meaningfully improve secure-and-functional fix rates on its own.",
+      "scope": "Based on one vendor's ~150-sample benchmark (Snyk, benchmarking their own product) across Python/JS/Java; magnitude may not generalize to other vulnerability classes, codebases, or independently-run benchmarks."
+    },
+    {
+      "id": "shared-library-call-count-can-beat-timing-side-channels",
+      "topic": "product-security",
+      "domain": "Application Security",
+      "statement": "In cryptographic implementations relying on a shared native library (e.g. libgmp) for non-constant-time operations, counting the underlying library's function calls via cache-timing techniques (e.g. Flush+Reload) can be a dramatically more sample-efficient side channel than wall-clock timing alone — recovering a full key from a single observation instead of dozens.",
+      "status": "current",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-q97c-8qh3-fpc6",
+          "title": "phpseclib non-constant-time X25519 scalar multiplication permits full private-key recovery",
+          "published": "2026-09-08"
+        }
+      ],
+      "first_seen": "2026-09-09",
+      "last_reviewed": "2026-09-09",
+      "basis": "detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)",
+      "guidance": "When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.",
+      "scope": "Demonstrated specifically against phpseclib's pure-PHP X25519 implementation under specific reachability conditions (ext-sodium absent, reused/long-lived key, local co-residency); the general principle likely generalizes but the specific sample-efficiency numbers don't."
     }
   ]
 }
