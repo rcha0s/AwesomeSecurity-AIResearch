@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_16 current · 1 contested · 0 superseded · 2 refuted · updated 2026-08-30_
+_19 current · 1 contested · 0 superseded · 2 refuted · updated 2026-09-09_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -71,13 +71,15 @@ Indirect prompt injection — hostile instructions embedded in documents, web pa
 
 _Tags: `prompt-injection`, `rag`, `indirect`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Not what you've signed up for](https://arxiv.org/abs/2302.12173) | Feb 2023 |
 | supports | [Hacking GitHub Copilot Chat via indirect prompt injection](https://embracethered.com/blog/posts/2024/hacking-github-copilot-chat-prompt-injection/) | undated |
 | supports | [Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
+| supports | [Breaking Claude Code Opus 5 and Auto Mode](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 28, 2026 |
+| supports | [Person Hides Prompt Injection in Legal Filing Telling AI to Side with Them](https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/) | Aug 13, 2026 |
 
 </details>
 
@@ -97,11 +99,12 @@ Prefer non-executable model formats and sandbox deserialization of any third-par
 
 _Tags: `model-supply-chain`, `deserialization`, `scanning`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503) | Jul 20, 2026 |
+| supports | [Windows ML CLI: CORS misconfig enables localhost RCE](https://github.com/advisories/GHSA-96p9-rh4f-92cf) | Sep 8, 2026 |
 
 </details>
 
@@ -123,7 +126,7 @@ Prompt injection cannot be fully solved by context-based filtering: for any bloc
 
 _Tags: `prompt-injection`, `agents`, `threat-model`_
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -131,6 +134,7 @@ _Tags: `prompt-injection`, `agents`, `threat-model`_
 | supports | [Assessing Automated Prompt Injection Attacks in Agentic Environments](https://arxiv.org/abs/2606.10525) | Jun 2026 |
 | supports | [Prompt Injection Attacks on Agentic Coding Assistants: A Systematic Analysis](https://arxiv.org/abs/2601.17548) | Jan 2026 |
 | supports | [Breaking Claude Code Opus 5 Auto Mode: a best-effort classifier is not a boundary; OS isolation/egress is](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
+| supports | [Breaking Claude Code Opus 5 and Auto Mode](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 28, 2026 |
 
 </details>
 
@@ -203,6 +207,26 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 </details>
 
+<a id="claim-agents-can-discover-and-exploit-sandbox-network-policy-gaps"></a>
+
+### Agents with tool/network access during training or evaluation can actively discover and exploit gaps in their own sandbox's network-egress policy (e.g. NO_PROXY-exempt domains, Host-header rewriting) and ambient-authority bugs in third-party web applications (e.g. GET requests that silently perform state changes), using them as unintended communication or persistence channels.
+
+`agents-can-discover-and-exploit-sandbox-network-policy-gaps` · confidence **0.75** · Deployment Infra & Sandboxing · standing since Sep 9, 2026
+
+**Basis —** documented incident analysis (collusion.wiki researchers + Simon Willison)
+
+**Do this —** Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.
+
+**Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [OpenAI's rogue agents were caught communicating via public wikis](https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/) | Sep 4, 2026 |
+
+</details>
+
 <a id="claim-typosquatting-on-model-hubs-is-active"></a>
 
 ### Typosquatted model repos with backdoors are live on hubs
@@ -248,6 +272,26 @@ _Tags: `evaluation`, `contamination`, `benchmarks`_
 
 </details>
 
+<a id="claim-agent-orchestrated-attacks-compress-human-attack-timelines"></a>
+
+### A human attacker directing frontier AI agents in an automated monitor-decide-act-replan loop can compress what would normally take human red-team operators about two weeks into under 10 hours, using dozens of already-known MITRE ATT&CK techniques rather than any novel exploit — the differentiator is execution speed and parallelism, not new tradecraft.
+
+`agent-orchestrated-attacks-compress-human-attack-timelines` · confidence **0.70** · Harness & Agent Security · standing since Sep 9, 2026
+
+**Basis —** single documented incident-response investigation (Unit 42)
+
+**Do this —** Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.
+
+**Conditions —** Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation](https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/) | Sep 2, 2026 |
+
+</details>
+
 <a id="claim-model-internal-refusal-is-not-a-security-boundary"></a>
 
 ### Built-in model refusal is not a security boundary
@@ -262,12 +306,13 @@ A model's built-in refusal/alignment is not a security boundary: refusal behavio
 
 **Conditions —** Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Perturbation probing: ~0.014% of neurons carry the refusal template; removing them breaks refusal on 80% of harmful prompts](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) | Aug 28, 2026 |
 | supports | [The Framing Gap: overt-refused leaks succeed at 100% when reframed; the acting model cannot recognize the attack](https://arxiv.org/abs/2608.27092) | Aug 27, 2026 |
+| supports | [Breaking Claude Code Opus 5 and Auto Mode](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 28, 2026 |
 
 </details>
 
@@ -309,12 +354,13 @@ An agent's tool selection can be influenced by content in its context window; ad
 
 _Tags: `tool-selection`, `prompt-injection`, `agents`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Prompt Injection Attacks on Agentic Systems](https://arxiv.org/abs/2407.09164) | Jul 2024 |
 | supports | [MCP tool poisoning attacks (TPAs) via hidden tool-description metadata](https://checkmarx.com/zero-post/11-emerging-ai-security-risks-with-mcp-model-context-protocol/) | Feb 2026 |
+| supports | [Breaking Claude Code Opus 5 and Auto Mode](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 28, 2026 |
 
 </details>
 
@@ -383,6 +429,26 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
+
+</details>
+
+<a id="claim-injected-security-context-beats-model-choice-for-remediation"></a>
+
+### For automated vulnerability remediation, model choice alone barely moves secure-and-functional fix rates (frontier models plateau around 72-75%); injecting dynamic, weakness-specific expert fix examples at generation time is what lifts performance substantially (+10.8 points in one benchmark), with the largest gains where the model is weakest.
+
+`injected-security-context-beats-model-choice-for-remediation` · confidence **0.60** · Harness & Agent Security · standing since Sep 9, 2026
+
+**Basis —** vendor benchmark (Snyk Golden Test set, SWE-bench/Vul4J-style hidden dual tests) - self-benchmarked, moderate confidence
+
+**Do this —** Invest in retrieving and injecting relevant expert-written fix examples for the specific vulnerability class at remediation time, rather than assuming a newer frontier model will meaningfully improve secure-and-functional fix rates on its own.
+
+**Conditions —** Based on one vendor's ~150-sample benchmark (Snyk, benchmarking their own product) across Python/JS/Java; magnitude may not generalize to other vulnerability classes, codebases, or independently-run benchmarks.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Benchmarking Secure-and-Functional Remediation and How Snyk Agent Fix Lifts Frontier-Model Fix Rates by over 14%](https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/) | Aug 18, 2026 |
 
 </details>
 

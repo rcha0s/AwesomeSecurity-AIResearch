@@ -46,6 +46,42 @@ def test_classify_domain_does_not_false_positive_on_bare_hyperlinks():
     assert aggregate.classify_domain(blob, rules, []) is None
 
 
+def test_collect_rss_passes_shared_user_agent(monkeypatch):
+    # feedparser's default UA (e.g. "feedparser/6.x") gets 403'd by several
+    # sources (OpenAI Blog, Wired, tldr;sec); every feed fetch must identify
+    # with the shared, honest UA instead.
+    calls = []
+
+    def fake_parse(url, request_headers=None, **kwargs):
+        calls.append((url, request_headers))
+
+        class _Parsed:
+            bozo = False
+            entries: list = []
+
+        return _Parsed()
+
+    def fake_sources_of_type(kind):
+        if kind == "rss":
+            return [
+                {
+                    "id": "rss:example",
+                    "name": "Example Feed",
+                    "handle": "https://example.com/feed.xml",
+                    "rank": 50.0,
+                    "topics": [],
+                }
+            ]
+        return []
+
+    monkeypatch.setattr(aggregate.feedparser, "parse", fake_parse)
+    monkeypatch.setattr(aggregate.sr, "sources_of_type", fake_sources_of_type)
+
+    aggregate.collect_rss({}, aggregate.datetime.now(aggregate.UTC))
+
+    assert calls == [("https://example.com/feed.xml", {"User-Agent": c.HTTP_USER_AGENT})]
+
+
 def test_parse_tweets_shape_tolerant():
     assert it.parse_tweets('{"tweets":[{"text":"hi"}]}') == [{"text": "hi"}]
     assert it.parse_tweets('[{"text":"hi"}]') == [{"text": "hi"}]
