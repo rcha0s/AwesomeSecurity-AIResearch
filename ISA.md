@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 5/9
+progress: 8/13
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -51,11 +51,16 @@ Why: the run must happen without a human or a Windows box.
 - [ ] ISC-7: One cloud routine run and one local `claude -p` run each open a scan PR of the same shape.
 - [ ] ISC-8: A run that finds no credit budget left exits before any LLM work and says so.
 - [ ] ISC-9: A failed run opens a GitHub issue.
+- [x] ISC-10: The credits question is answered and recorded here with sources: can a cloud routine read the remaining credit balance or be limited to credits only, and how is per-run token usage measured? (probe: Decisions row citing the docs; ISC-8's guard built on the answer). — Decisions 2026-10-19 (routines.md L389/L403, headless.md L121)
+- [ ] ISC-11: The cloud routine is created only after ISC-8 holds, and is reported to Rohan before its first scheduled run (probe: routine listed via `/schedule list`; creation PR/Log row dated after ISC-8).
+- [x] ISC-12: An issue exists for X/Twitter ingest as a future local-only runner (probe: `gh issue list`). — #57
+- [x] ISC-13: The render job opens its PR when it has drift (probe: the open-PR check uses `gh pr list --state open --head`; a dispatch run with drift opens one). — #55 via `scripts/ensure_pr.sh` (all 3 call sites); run 39213841133 opened #56, run 39214161882 reused it; pytest check-run green on #56 head 23fd86e
+- [ ] Anti ISC-A2: No F1 change merges without `/security-review`, `/code-review` and a green Tests check (probe: each PR's checks + review notes).
+
+Handoff: Rohan still has to delete the old Windows scheduled task; note it, never block on it. Commit attribution per harness settings. Every change lands as branch + PR.
 
 ## Not yet specified
 
-- Can a cloud routine read the remaining credit balance, or be limited to credits only?
-- Can per-run token usage be read inside a cloud session?
 - Phases 2–6 (taxonomy IDs, story ledger, evals, gated auto-merge, sources, README/site)
   graduate into claims when Phase 1 closes. Full plan: the "AwesomeSecurity-AIResearch
   Sustainability Plan" doc.
@@ -72,11 +77,13 @@ Why: the run must happen without a human or a Windows box.
 - 2026-10-18: no PR-triggered test workflow existed (only main-push render), so ISC-3 adds one;
   it is also the check Phase 4 auto-merge will gate on.
 
+- 2026-10-19 (ISC-10, from code.claude.com/docs/en/routines.md § Usage and limits, read this session): routines "draw down subscription usage the same way interactive sessions do"; usage credits only take over as "metered overage" once the subscription limit is hit, and "without usage credits, additional runs are rejected". So cloud runs spend Rohan's subscription allowance FIRST, not granted credits. No documented way for a run to read its remaining balance or its own token use; the only aggregate view is claude.ai/settings/usage. Local `claude -p --output-format json` reports `total_cost_usd` (headless.md). ISC-8's guard therefore takes the plan's "no" branch: a repo budget ledger plus a per-run story cap, with per-story cost measured locally and applied to cloud story counts.
+- 2026-10-19: code review on #55 (6 findings) dispositioned. Adopted: sibling `gh pr view` sites in source-scout.yml + research-scan skill (one helper, `scripts/ensure_pr.sh`); Tests dispatch for GITHUB_TOKEN-made PRs; numeric guard on `gh pr list` output; drift check scoped to staged paths (pre-existing bug); progress counter. Lesson: ISC-13's first pass fixed one file without the `rg 'gh pr view'` sweep.
+
 ## Verification
 
 ## Remaining Work
 
-- [ ] Render job never opens its PR: `gh pr view chore/render-refresh` matches the long-merged PR #13, so the create step is skipped silently (render refreshes have had no PR since 2026-07-31). The pruned render from run 39212192388 sits on that bot branch, unmerged. Fix in Phase 1 (`gh pr list --state open --head`).
-
 - [ ] Repo-wide lint pass (main has 19 ruff errors and 26 black-unformatted files), then add ruff + black to `tests.yml`. Kept out of the Phase 0 PR so the clock fix stays reviewable.
-- [ ] As soon as this merges, the push-triggered render job will prune every pool entry (all older than 31 days) and open a render PR with an empty briefing. Do not merge it; Phase 1's first scan supplies fresh content.
+- [ ] Bot PRs show no checks in their PR checks list: a workflow_dispatch check run lands on the head commit (green on #56) but GitHub doesn't roll it into the PR, and the bot-push `pull_request` run waits at `action_required`. Harmless while main requires no checks; Phase 4 auto-merge needs a GitHub App or fine-grained PAT token for bot PRs (Rohan: create the secret).
+- [ ] Render PR #56 prunes every pool entry (all older than 31 days) to an empty briefing. Do not merge it; Phase 1's first scan supplies fresh content.

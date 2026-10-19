@@ -21,6 +21,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write # ensure_pr.sh dispatches tests.yml onto the bot branch
 
 jobs:
   render:
@@ -73,7 +74,9 @@ jobs:
           paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md \
             ai-security product-security ai-research claims docs)
 
-          if [[ -z "$(git status --porcelain)" ]]; then
+          # Scope the drift check to what gets staged: drift elsewhere would
+          # pass this check and then fail `git commit` with nothing staged.
+          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
             echo "No render drift; nothing to PR."
             exit 0
           fi
@@ -87,12 +90,6 @@ jobs:
           # fetched, so it rejects with "stale info" on repeat runs.
           git push --force origin "HEAD:$branch"
 
-          # Idempotent PR: open one if none exists, otherwise leave the
-          # existing PR to pick up the new head automatically.
-          if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
-            gh pr create \
-              --base main \
-              --head "$branch" \
-              --title "chore: render refresh ($(date -u +%Y-%m-%d))" \
-              --body "Automated regeneration of the site, claims, trends, newsletter, review, and skill artifacts. Green CI = safe to merge."
-          fi
+          scripts/ensure_pr.sh "$branch" \
+            "chore: render refresh ($(date -u +%Y-%m-%d))" \
+            "Automated regeneration of the site, claims, trends, newsletter, review, and skill artifacts. Green CI = safe to merge."

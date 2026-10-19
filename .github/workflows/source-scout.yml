@@ -15,6 +15,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write # ensure_pr.sh dispatches tests.yml onto the bot branch
 
 jobs:
   scout:
@@ -54,10 +55,6 @@ jobs:
           git commit -m "chore: source proposals ($(date -u +%Y-%m-%d))"
           git push --force origin "HEAD:$branch"
 
-          if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
-            gh pr create \
-              --base main \
-              --head "$branch" \
-              --title "chore: source proposals ($(date -u +%Y-%m-%d))" \
-              --body "Automated source-scout run. Review data/source_proposals.json; merge to accept, close + \`scripts/remove_source.py <id> --blocklist\` if a proposal is wrong."
-          fi
+          scripts/ensure_pr.sh "$branch" \
+            "chore: source proposals ($(date -u +%Y-%m-%d))" \
+            "Automated source-scout run. Review data/source_proposals.json; merge to accept, close + \`scripts/remove_source.py <id> --blocklist\` if a proposal is wrong."
