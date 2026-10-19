@@ -6,9 +6,8 @@ name: Tests
 # the repo-wide formatting pass lands — main is not lint-clean yet.
 
 on:
+  # main is already gated by update.yml's pytest step on push.
   pull_request:
-  push:
-    branches: [main]
   workflow_dispatch: {}
 
 permissions:

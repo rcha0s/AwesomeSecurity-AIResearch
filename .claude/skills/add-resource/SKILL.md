@@ -41,14 +41,13 @@ re-rank. Same rubric as `/research-scan`, one item.
    python scripts/generate_site.py
    python scripts/trends.py
    python scripts/generate_newsletter.py
-   python scripts/generate_skills.py
+   python scripts/generate_html.py
    ```
 
 5. **Show the user, inline**, before finishing:
    - **Teachable summary** — the 2-3 sentence summary.
    - **Takeaway** — the one-liner.
-   - **Action** — the actionable leverage (type + what to do), and if a skill was
-     generated, its `skills/<slug>/SKILL.md` path.
+   - **Action** — the actionable leverage (type + what to do).
    - Which topic it landed in (`ai-security/`, `product-security/`, or `ai-research/…`) and
      whether the re-rank moved anything.
 

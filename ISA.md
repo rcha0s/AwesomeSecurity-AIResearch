@@ -38,9 +38,9 @@ review it day to day.
 Why: nothing else is safe to build while the gate that protects main is broken.
 
 - [x] ISC-1: `pytest` passes on Python 3.12 with the system clock set to any date after 2026-10-18 (probe: run suite under a faked far-future clock). — 375 passed at real clock and under time-machine 2031-03-01
-- [x] ISC-2: No code or test reads the wall clock except `common.utcnow()`, which `tests/conftest.py` pins (probe: `rg 'datetime.now' scripts tests` → only the seam). — 🧹 CLASS-SWEEP: wall-clock reads — 34 sites via rg; 33 routed through the seam, 1 is the seam
+- [x] ISC-2: No Python code or test reads the wall clock except `common.utcnow()`, which `tests/conftest.py` pins (probe: `rg 'datetime.now' scripts tests` → only the seam). — 🧹 CLASS-SWEEP: wall-clock reads — 34 sites via rg; 33 routed through the seam, 1 is the seam
 - [ ] ISC-3: A pull_request workflow runs pytest on every PR (probe: the PR shows a passing `Tests / pytest` check).
-- [x] ISC-4: No doc or prompt references a script that does not exist (probe: every `scripts/*.py` named in `daily_scan_prompt.md` exists; `rg generate_skills` → 0). — 🧹 CLASS-SWEEP: generate_skills refs — 6 via rg in 4 files; 6 fixed
+- [x] ISC-4: No doc or prompt references a script that does not exist (probe: every `scripts/*.py` named in `daily_scan_prompt.md` exists; `rg --hidden generate_skills` → 0). — 🧹 CLASS-SWEEP: generate_skills refs — 9 via `rg --hidden` in 6 files (first pass missed `.claude/`; caught by code review); 9 fixed
 - [ ] ISC-5: The render workflow passes on main after merge (probe: `gh run list --workflow update.yml` latest = success).
 - [ ] Anti ISC-A1: Phase 0 does not publish an emptied site — every pool entry is older than `max_age_days`, so a re-render now would prune the whole briefing (probe: `docs/index.html` findings count unchanged by this PR).
 
@@ -62,6 +62,9 @@ Why: the run must happen without a human or a Windows box.
 
 ## Decisions
 
+- 2026-10-18: the site's JS `Date.now()` (`scripts/templates/site.html`, "days ago" display) stays on the viewer's clock by design; ISC-2 scopes to the Python pipeline.
+- 2026-10-18: AGENTS.md documents ruff + black + coverage as the PR suite; CI runs pytest only until the lint pass lands (Remaining Work).
+
 - 2026-10-18: Phase 0 does not re-render the site. All pool entries are older than 31 days,
   so a re-render would publish an empty briefing; the first Phase 1 scan re-renders with
   fresh content instead.
@@ -74,4 +77,4 @@ Why: the run must happen without a human or a Windows box.
 ## Remaining Work
 
 - [ ] Repo-wide lint pass (main has 19 ruff errors and 26 black-unformatted files), then add ruff + black to `tests.yml`. Kept out of the Phase 0 PR so the clock fix stays reviewable.
-- [ ] After this merges, the Monday render job will prune every pool entry (all older than 31 days) and open a render PR with an empty briefing. Do not merge it; Phase 1's first scan supplies fresh content.
+- [ ] As soon as this merges, the push-triggered render job will prune every pool entry (all older than 31 days) and open a render PR with an empty briefing. Do not merge it; Phase 1's first scan supplies fresh content.
