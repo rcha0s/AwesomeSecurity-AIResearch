@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 5/9
+progress: 5/14
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -51,6 +51,13 @@ Why: the run must happen without a human or a Windows box.
 - [ ] ISC-7: One cloud routine run and one local `claude -p` run each open a scan PR of the same shape.
 - [ ] ISC-8: A run that finds no credit budget left exits before any LLM work and says so.
 - [ ] ISC-9: A failed run opens a GitHub issue.
+- [ ] ISC-10: The credits question is answered and recorded here with sources: can a cloud routine read the remaining credit balance or be limited to credits only, and how is per-run token usage measured? (probe: Decisions row citing the docs; ISC-8's guard built on the answer).
+- [ ] ISC-11: The cloud routine is created only after ISC-8 holds, and is reported to Rohan before its first scheduled run (probe: routine listed via `/schedule list`; creation PR/Log row dated after ISC-8).
+- [ ] ISC-12: An issue exists for X/Twitter ingest as a future local-only runner (probe: `gh issue list`).
+- [ ] ISC-13: The render job opens its PR when it has drift (probe: the open-PR check uses `gh pr list --state open --head`; a dispatch run with drift opens one).
+- [ ] Anti ISC-A2: No F1 change merges without `/security-review`, `/code-review` and a green Tests check (probe: each PR's checks + review notes).
+
+Handoff: Rohan still has to delete the old Windows scheduled task; note it, never block on it. Commit attribution per harness settings. Every change lands as branch + PR.
 
 ## Not yet specified
 

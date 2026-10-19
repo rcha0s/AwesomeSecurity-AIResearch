@@ -87,9 +87,12 @@ jobs:
           # fetched, so it rejects with "stale info" on repeat runs.
           git push --force origin "HEAD:$branch"
 
-          # Idempotent PR: open one if none exists, otherwise leave the
-          # existing PR to pick up the new head automatically.
-          if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
+          # Idempotent PR: open one if no OPEN PR exists for the branch,
+          # otherwise leave it to pick up the new head automatically. Never
+          # `gh pr view <branch>`: it also matches merged/closed PRs (it found
+          # the long-merged #13), so the create step was skipped silently.
+          open_prs="$(gh pr list --state open --head "$branch" --json number --jq length)"
+          if [[ "$open_prs" == "0" ]]; then
             gh pr create \
               --base main \
               --head "$branch" \
