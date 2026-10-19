@@ -126,6 +126,8 @@ def test_per_story_is_the_worst_actual_run_so_padding_cannot_lower_it():
         {"runner": "evil"},
         {"kind": "refund"},
         {"run_id": ""},
+        {"run_id": "a|b"},
+        {"run_id": "a\nb"},
     ],
 )
 def test_invalid_rows_fail_closed(tmp_path, bad):

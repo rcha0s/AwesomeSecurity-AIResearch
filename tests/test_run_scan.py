@@ -249,4 +249,5 @@ def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     assert "-X POST repos/" in calls and "/pulls" in calls
     assert SECRET not in calls and "withheld" in calls
     assert "Spend this month:** $2.00 charged of $10.00" in calls  # 8 stories x $0.25 reserved
+    assert "/blob/budget-ledger/SPEND.md" in calls and "https://github.com/" in calls
     assert [r["kind"] for r in ledger_rows(origin)] == ["reserve", "done"]

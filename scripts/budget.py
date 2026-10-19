@@ -45,6 +45,7 @@ SKIP_EXIT = 3
 RUNNERS = ("cloud", "local")
 KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")  # also keeps SPEND.md's table intact
 DEFAULT_LEDGER = c.DATA_DIR / "_budget_ledger.json"
 
 
@@ -60,7 +61,7 @@ def validate_row(row: dict) -> dict:
     cost, stories = row.get("cost_usd"), row.get("stories")
     ok = (
         isinstance(row.get("run_id"), str)
-        and bool(row["run_id"])
+        and RUN_ID_RE.match(row["run_id"]) is not None
         and DATE_RE.match(str(row.get("date", ""))) is not None
         and row.get("runner") in RUNNERS
         and row.get("kind") in KINDS

@@ -236,11 +236,14 @@ phase_post() {
 
 # One line for the PR body: the month so far, and where the full report lives.
 spend_line() {
-  local month
-  ledger_fetch || return 0 # the PR still opens; the report is on the branch
-  month="$(budget status | sed -n 's/^\*\*\(.* charged of .*\)\.\*\* .*/\1/p')"
-  printf '\n\n**Spend this month:** %s (this run reserved its ceiling; local runs settle to measured cost). Full report: [SPEND.md](../blob/%s/SPEND.md)' \
-    "${month:-unavailable}" "$LEDGER_BRANCH"
+  # Never fails, and prints nothing but the line: its stdout is the PR body,
+  # and a failure here must not raise a scan-failure alert.
+  local month=""
+  if ledger_fetch >/dev/null 2>&1; then
+    month="$(budget status 2>/dev/null | sed -n 's/^\*\*\(.* charged of .*\)\.\*\* .*/\1/p')" || month=""
+  fi
+  printf '\n\n**Spend this month:** %s (this run reserved its ceiling; local runs settle to measured cost). Full report: [SPEND.md](https://github.com/%s/blob/%s/SPEND.md)' \
+    "${month:-unavailable}" "$(repo_slug)" "$LEDGER_BRANCH"
 }
 
 # The local wrapper passes the run id it set, so the row can't be redirected
