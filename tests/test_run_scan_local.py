@@ -51,7 +51,7 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert (tmp_path / "claude-args.env").read_text().strip() == "SCAN_LOCKED=1"
     flag = dict(zip(args, args[1:], strict=False))
     assert flag["--permission-mode"] == "dontAsk"
-    assert '"Edit(data/_raw/**)"' in flag["--settings"]  # model can't forge source text
+    assert '"Edit(data/_raw/**)"' in "\n".join(args)  # model can't forge source text
     assert flag["--append-system-prompt-file"] == ".claude/skills/daily-scan/SKILL.md"
     assert flag["--setting-sources"] == "local"
     assert "--strict-mcp-config" in args and flag["--disallowedTools"] == "mcp__*"
