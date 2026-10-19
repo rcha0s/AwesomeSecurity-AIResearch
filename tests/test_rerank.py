@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from datetime import UTC, datetime
 
 import common as c
@@ -84,3 +85,45 @@ def test_rerank_main_cli(sandbox, monkeypatch):
     monkeypatch.setattr("sys.argv", ["rerank", "--topic", "ai-research"])
     assert rerank.main() == 0
     assert "composite" in c.load_pool("ai-research")["entries"][0]["scores"]
+
+
+def test_rerank_keeps_old_news_and_editorial_out_of_the_archive(sandbox):
+    """Findings age out; news is kept like claims (Rohan, 2026-10-19)."""
+    sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
+    old = {"topic": "ai-security", "domain": "Prompt Injection", "published": "2000-01-01"}
+    pool = c.load_pool("ai-security")
+    pool["entries"] = [
+        make_entry(**old, title="old finding", source_url="https://a/f"),
+        make_entry(**old, title="old news", source_url="https://a/n", source_id="rss:news"),
+        make_entry(
+            **old,
+            title="old editorial",
+            source_url="https://a/e",
+            editorial={"promoted": True, "at": "2000-01-02"},
+        ),
+    ]
+    c.save_pool("ai-security", pool)
+    rerank.rerank_pool("ai-security")
+    live = sorted(e["title"] for e in c.load_pool("ai-security")["entries"])
+    assert live == ["old editorial", "old news"]
+    archived = [e["title"] for e in c.load_json(c.ARCHIVE_FILE, default=[])]
+    assert archived == ["old finding"]
+
+
+def test_rerank_restores_news_that_was_archived_before(sandbox):
+    sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
+    old = {"topic": "ai-security", "domain": "Prompt Injection", "published": "2000-01-01"}
+    news = make_entry(**old, title="news", source_url="https://a/n", source_id="rss:news")
+    finding = make_entry(**old, title="finding", source_url="https://a/f")
+    other_topic = make_entry(
+        **{**old, "topic": "ai-research"},
+        title="other",
+        source_url="https://a/o",
+        source_id="rss:news",
+    )
+    c.save_json(c.ARCHIVE_FILE, [news, finding, other_topic])
+    rerank.rerank_pool("ai-security")
+    assert [e["title"] for e in c.load_pool("ai-security")["entries"]] == ["news"]
+    assert [e["title"] for e in c.load_json(c.ARCHIVE_FILE)] == ["finding", "other"]

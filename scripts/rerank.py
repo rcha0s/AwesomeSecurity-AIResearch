@@ -36,18 +36,32 @@ def sort_key(entry: dict) -> tuple:
     return (-float(scores.get("composite", 0)), entry.get("date") or "", entry.get("title", ""))
 
 
-def prune_stale(entries: list[dict], conf: c.Config, now=None) -> tuple[list[dict], list[dict]]:
-    """Split entries into (fresh, stale) by the hard freshness window."""
+def prune_stale(
+    entries: list[dict], conf: c.Config, now=None, keep=lambda e: False
+) -> tuple[list[dict], list[dict]]:
+    """Split entries into (fresh, stale) by the hard freshness window.
+
+    `keep` exempts entries that never age out (news stories, like claims)."""
     fresh, stale = [], []
     for e in entries:
-        (fresh if c.is_fresh(e, conf.max_age_days, now=now) else stale).append(e)
+        (fresh if keep(e) or c.is_fresh(e, conf.max_age_days, now=now) else stale).append(e)
     return fresh, stale
 
 
 def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     conf = conf or c.load_config()
     pool = c.load_pool(track)
-    fresh, stale = prune_stale(pool["entries"], conf, now=now)
+    sources = c.load_sources_by_id()
+
+    def is_news(e: dict) -> bool:
+        return c.is_news_story(e, conf, sources)
+
+    live = {e.get("id") for e in pool["entries"]}
+    restored = c.unarchive(lambda e: e.get("topic") == track and is_news(e))
+    pool["entries"] += [e for e in restored if e.get("id") not in live]
+    if restored:
+        print(f"  restored {len(restored)} archived news stories to {track}")
+    fresh, stale = prune_stale(pool["entries"], conf, now=now, keep=is_news)
     archived = c.archive_entries(stale)
     if stale:
         print(f"  pruned {len(stale)} stale from {track} (archived {archived})")

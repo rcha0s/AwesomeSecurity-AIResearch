@@ -20,13 +20,11 @@ import common as c
 
 
 def review_items(topic: str, conf: c.Config) -> list[dict]:
-    # Held findings still awaiting a verdict — excludes anything the editorial
-    # track already surfaced (those move to the "Trending & In the News" section).
-    return [
-        e
-        for e in c.load_pool(topic)["entries"]
-        if not c.is_curated(e, conf) and not c.is_editorial(e)
-    ]
+    # Held findings still awaiting a verdict. News stories (editorial or
+    # news-gated) live in the "Trending & In the News" section instead, and
+    # never age out, so they must not pile up here.
+    sources = c.load_sources_by_id()
+    return [e for e in c.load_pool(topic)["entries"] if c.is_held(e, conf, sources)]
 
 
 def build(conf: c.Config, now: str) -> str:
