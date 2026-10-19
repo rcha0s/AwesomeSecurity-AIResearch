@@ -40,7 +40,10 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
 INGESTORS=(aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences)
-RENDERERS=(rerank generate_site generate_claims generate_html generate_og trends
+# No generate_og: it needs the Ubuntu fonts in /usr/share/fonts (absent on the
+# Mac and not promised in the cloud VM). update.yml's render job on main owns
+# docs/og.png.
+RENDERERS=(rerank generate_site generate_claims generate_html trends
   generate_newsletter generate_review)
 # What a scan commits. data/ is staged with `-u` (tracked files only), so a
 # file the model invents under data/ never ships; rendered paths take new

@@ -142,9 +142,10 @@ def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
 
     - Editorial pass: entries flagged with editorial.promoted = true.
       Humans surface a timely/teachable held finding.
-    - News gate: entries that pass is_news_curated, i.e. a news-track
-      source dropped a fresh (≤7d) on-topic item that clears the deny
-      list.
+    - News gate: entries that pass is_news_curated with no age limit, i.e.
+      an on-topic item from a news-track source that clears the deny list.
+      News is kept like claims: a story entered the pools fresh, and it
+      stays in this lane, newest first, instead of aging out.
 
     News-gated rows are further deduped through the story-key index
     (dedupe_stories.py). Duplicates become corroborators on the winning
@@ -160,7 +161,7 @@ def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
     news_candidate_ids: set[str] = set()
     for topic in c.TOPICS:
         for entry in c.load_pool(topic)["entries"]:
-            if c.is_news_curated(entry, conf, sources_by_id):
+            if c.is_news_curated(entry, conf, sources_by_id, window=None):
                 news_candidate_ids.add(entry.get("id") or "")
 
     # Seed the story-key index from every recent finding EXCEPT the current
@@ -196,7 +197,7 @@ def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
                       signals=ed.get("signals") or [],
                       at=ed.get("at", ""))
                 continue
-            if c.is_news_curated(entry, conf, sources_by_id):
+            if c.is_news_curated(entry, conf, sources_by_id, window=None):
                 src = sources_by_id.get(entry.get("source_id") or "", {})
                 src_name = src.get("name", "")
                 tier = src.get("tier", "medium")

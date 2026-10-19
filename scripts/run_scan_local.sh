@@ -132,7 +132,10 @@ fi
 # Record what the session really cost on every outcome. Without a readable
 # cost, the reservation pre made stays as the charge.
 cost="$("$PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1])).get("total_cost_usd",""))' "$OUT" 2>/dev/null || true)"
-stories="$("$PYTHON" -c 'import json;print(json.load(open("data/_scan_result.json"))["stories"])' 2>/dev/null || echo 0)"
+# Counted here, not read from post's result: a run that fails in post still
+# analyzed its stories, and calibration needs that count.
+stories="$("$PYTHON" scripts/scan_count.py 2>/dev/null || echo 0)"
+[[ "$stories" =~ ^[0-9]+$ ]] || stories=0
 if [[ -n "$cost" ]]; then
   scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" || fail "local-ledger-actual"
 else
