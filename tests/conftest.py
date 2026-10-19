@@ -42,6 +42,7 @@ def sandbox(tmp_path, monkeypatch):
     # Keep grounding offline: kill the network re-fetch (raw_path reading still works).
     # Tests that need a fetched source override source_text_for themselves.
     monkeypatch.setattr(common, "fetch_readable", lambda *a, **k: None)
+    monkeypatch.setattr(common, "_MAIN_IDS", None)  # main_entry_ids cache
     for topic in common.TOPICS:
         common.save_pool(topic, common.empty_pool(topic))
     return tmp_path
@@ -67,3 +68,8 @@ def make_entry(**over) -> dict:
     }
     entry.update(over)
     return entry
+
+
+# The throwaway-repo fixture for the run_scan.sh end-to-end tests, shared with
+# test_run_scan_local.py.
+from test_run_scan import scan_repo  # noqa: E402,F401

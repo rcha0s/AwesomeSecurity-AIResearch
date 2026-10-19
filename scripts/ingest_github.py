@@ -8,7 +8,7 @@ repo's README for grounding, and stages candidates in data/candidates.json. The
 LLM analyze step (the /research-scan skill) judges novelty and curates — well-
 known or derivative repos score low and are held by the curation gate.
 
-Runs on Windows or WSL (needs `gh` authenticated). No LLM here.
+Needs `gh` authenticated. No LLM here.
 
 Usage:
     python scripts/ingest_github.py --dry-run

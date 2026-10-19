@@ -10,7 +10,7 @@ a wave breaking, hours to days before it reaches a curated feed. Novelty is judg
 at analysis time (the /research-scan skill); the curation gate holds derivative
 items as needs_review.
 
-Runs on Windows or WSL (network, no auth). No LLM here.
+Network only, no auth. No LLM here.
 
 Usage:
     python scripts/ingest_hn.py --dry-run

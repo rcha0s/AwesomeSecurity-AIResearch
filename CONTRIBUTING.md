@@ -31,7 +31,7 @@ Findings live in one of three growing topic pools (the source of truth):
 
 - One resource: `python scripts/add.py "<url>"` then run the **`/add-resource`** skill.
   (LinkedIn/auth-walled? paste it: `add.py "<url>" --text "<body>"`.)
-- A batch from your X feed + RSS: run the **`/research-scan`** skill.
+- A batch from the registered sources: run the **`/research-scan`** skill.
 
 Both extract lessons, score novelty/relevance, derive an actionable leverage, merge
 into the right pool, re-rank, and regenerate the site.
@@ -114,7 +114,7 @@ Sources live in the **ranked registry** [`data/sources.json`](data/sources.json)
 `sources.yaml` anymore. Add one with `scripts/add_source.py` (or the `/add-source` skill):
 
 ```bash
-python scripts/add_source.py x_account @simonw --topics ai-research --tier high
+python scripts/add_source.py x_account @simonw --topics ai-research --tier high  # registered; not harvested until #57
 python scripts/add_source.py blog https://blog.trailofbits.com --topics product-security
 python scripts/add_source.py github_user praetorian-inc --topics ai-security,product-security
 python scripts/add_source.py youtube https://youtube.com/@LiveOverflow --topics product-security
@@ -122,6 +122,6 @@ python scripts/add_source.py newsletter https://tldrsec.com --topics product-sec
 ```
 
 Each source is **ranked** `rank = 0.5·tier + 0.25·reach-signal + 0.25·hit-rate`, and the
-hit-rate rises as the source yields *curated* findings — so good sources climb over time. For
-X accounts, also **follow them on the burner**. `sources.yaml` now holds only classification
-rules + `home_feed`/`min_stars` knobs.
+hit-rate rises as the source yields *curated* findings — so good sources climb over time. X accounts
+are registered but not harvested until the local X runner lands (#57). `sources.yaml` holds
+only classification rules + the `min_stars` knob.
