@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import common as c
 import generate_review as gr
 import generate_site as g
@@ -116,3 +118,20 @@ def test_generate_review_lists_held_items(sandbox):
     review = (sandbox / "REVIEW.md").read_text(encoding="utf-8")
     assert "https://a/2" in review  # the flagged item is listed
     assert "https://a/1" not in review  # the vetted item is not
+
+
+def test_kept_news_is_not_held_for_review(sandbox):
+    """News never ages out, so it must not pile up in REVIEW.md."""
+    sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
+    pool = c.load_pool("ai-security")
+    pool["entries"] = [
+        make_entry(title="news", source_url="https://a/n", source_id="rss:news", needs_review=True),
+        make_entry(title="flagged", source_url="https://a/2", needs_review=True),
+    ]
+    c.save_pool("ai-security", pool)
+    assert gr.main() == 0
+    review = (sandbox / "REVIEW.md").read_text(encoding="utf-8")
+    assert "https://a/2" in review and "https://a/n" not in review
+    g.write_topic("ai-security", c.load_config(), "now")
+    assert "1 held for review" in (sandbox / "ai-security" / "README.md").read_text()

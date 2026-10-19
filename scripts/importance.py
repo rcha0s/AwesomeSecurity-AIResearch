@@ -114,8 +114,9 @@ def build_trend_index(trends: dict) -> dict[str, float]:
 
 
 def held_items(topic: str, conf: c.Config) -> list[dict]:
-    """The REVIEW.md queue for a topic: pool entries not in the curated view."""
-    return [e for e in c.load_pool(topic)["entries"] if not c.is_curated(e, conf)]
+    """The REVIEW.md queue for a topic: neither vetted findings nor kept news."""
+    sources = c.load_sources_by_id()
+    return [e for e in c.load_pool(topic)["entries"] if c.is_held(e, conf, sources)]
 
 
 def rank_review_queue(conf: c.Config, topic: str | None = None) -> list[tuple[dict, float]]:

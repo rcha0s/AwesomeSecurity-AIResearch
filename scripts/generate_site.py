@@ -261,7 +261,7 @@ def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) ->
         f"> {meta['blurb']}",
         "",
         f"_{len(curated)} vetted findings · updated {now} · ranked by composite · "
-        f"latest {conf.max_age_days} days only{held_note}._",
+        f"findings from the latest {conf.max_age_days} days{held_note}._",
         "",
     ]
     out += _editorial_section(list(editorial))
@@ -304,7 +304,8 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
 
     _write_entry_pages(base, by_domain, conf)
     base.mkdir(parents=True, exist_ok=True)
-    held = len(all_entries) - len(curated) - len(editorial)
+    sources = c.load_sources_by_id()
+    held = sum(1 for e in all_entries if c.is_held(e, conf, sources))
     md = _topic_index_md(topic, by_domain, curated, held, conf, now, editorial)
     (base / "README.md").write_text(_dedash(md), encoding="utf-8")
     return curated
@@ -622,7 +623,7 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "```",
         "",
         f"- **Latest only.** Findings older than {conf.max_age_days} days age out to "
-        "[`data/archive.json`](data/archive.json); the snapshot at the top is the last "
+        "[`data/archive.json`](data/archive.json); claims and news stories are kept. The snapshot at the top is the last "
         f"{conf.snapshot_days} days when we have fresh material, otherwise the most recent "
         "we have.",
         "- **Vetted only.** Everything that fails the gate waits in [REVIEW.md](REVIEW.md). "
@@ -641,8 +642,8 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "is not reproducible from a clean clone without the local pipeline and credentials.",
         f"- **Windows.** All three finding tracks share one rolling window of "
         f"{conf.max_age_days} days (the snapshot is the last {conf.snapshot_days}); older "
-        "findings move to [`data/archive.json`](data/archive.json). The claim ledger is "
-        "durable and never ages out. Findings tell you what was published lately; claims "
+        "findings move to [`data/archive.json`](data/archive.json). The claim ledger and "
+        "the news lane are durable and never age out. Findings tell you what was published lately; claims "
         "tell you what to believe now.",
         "- **What \"vetted\" and \"checked\" mean.** A finding is curated only if it clears "
         "the novelty and relevance bars, its lesson excerpt is found in the source text "

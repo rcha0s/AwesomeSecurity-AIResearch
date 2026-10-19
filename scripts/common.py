@@ -659,6 +659,11 @@ def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> 
     return is_editorial(entry) or is_news_curated(entry, conf, sources_by_id, window=None)
 
 
+def is_held(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """Waiting in REVIEW.md: not a vetted finding and not a kept news story."""
+    return not is_curated(entry, conf) and not is_news_story(entry, conf, sources_by_id)
+
+
 def load_sources_by_id() -> dict[str, dict]:
     """Cache-friendly lookup for the news gate. Reloads on every call — the
     registry is small (≤ hundreds of entries) and only the render pipeline
