@@ -398,15 +398,16 @@ def test_editorial_rows_dedupes_same_story_across_sources(sandbox):
     assert row["corroborators"][0]["source_name"] == "Hacker News"
 
 
-def test_editorial_rows_drops_stale_news(sandbox):
+def test_editorial_rows_keeps_old_news(sandbox):
+    """News is kept like claims: an old story stays in the lane."""
     _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
-    stale = _pool_news_entry(published="2020-01-01")
+    old = _pool_news_entry(published="2020-01-01")
     pool = common.load_pool("ai-research")
-    pool["entries"].append(stale)
+    pool["entries"].append(old)
     common.save_pool("ai-research", pool)
     claims.save_ledger(ledger_of(make_claim()))
     rows = gh.editorial_rows(common.load_config(), 7)
-    assert rows == []
+    assert [r["lane"] for r in rows] == ["news"]
 
 
 # --- Client-side markdown renderer ------------------------------------------

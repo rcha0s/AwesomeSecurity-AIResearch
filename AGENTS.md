@@ -50,6 +50,13 @@ README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · ai-security/ product-sec
 # section from the editorial track; everything else waits in REVIEW.md.
 ```
 
+## What ages out
+
+Findings age out after `max_age_days` into `data/archive.json`. Claims and
+news never do: news stories (editorial promotions and news-gated items) stay in
+their pools and in the "Trending & In the News" lane, newest first, and rerank
+pulls any archived news back.
+
 ## Findings vs claims (two different questions)
 
 The pools answer **"what was published lately"** — a rolling feed that ages out after

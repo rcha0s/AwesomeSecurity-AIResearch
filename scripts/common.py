@@ -537,7 +537,10 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
 # The news gate below tests trust + scope + freshness instead. It intentionally
 # never runs the grounding/verification step; news items describe events, not
 # claims we're ranking against a body of evidence.
-NEWS_MAX_AGE_DAYS = 7  # display window; dedup lookback lives in dedupe_stories.py
+# Freshness for a story to ENTER the news lane. Once in, a story stays: news
+# is kept like claims, never aged out (Rohan, 2026-10-19). Dedup lookback
+# lives in dedupe_stories.py.
+NEWS_MAX_AGE_DAYS = 7
 NEWS_HN_STANDALONE_MIN_POINTS = 100
 
 # Deny terms split into two lists: "hard" fires unconditionally, "puff" fires
@@ -620,7 +623,8 @@ def _source_track_and_tier(entry: dict, sources_by_id: dict[str, dict]) -> tuple
 
 def is_news_curated(entry: dict, conf: Config,
                     sources_by_id: dict[str, dict] | None = None,
-                    now: datetime | None = None) -> bool:
+                    now: datetime | None = None,
+                    window: int | None = NEWS_MAX_AGE_DAYS) -> bool:
     """True if the entry belongs in the news lane (Trending & in the news).
 
     Distinct from is_curated: novelty and grounding aren't tested here; instead
@@ -629,7 +633,7 @@ def is_news_curated(entry: dict, conf: Config,
     clearing the research floor."""
     if not topic_scope_ok(entry):
         return False
-    if not is_fresh(entry, NEWS_MAX_AGE_DAYS, now=now):
+    if window is not None and not is_fresh(entry, window, now=now):
         return False
     if news_denylist_hit(entry):
         return False
@@ -647,6 +651,12 @@ def is_news_curated(entry: dict, conf: Config,
         if points < NEWS_HN_STANDALONE_MIN_POINTS:
             return False
     return True
+
+
+def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """True for anything the news lane keeps: an editorial promotion, or a
+    news-gated story of any age. These are exempt from the freshness prune."""
+    return is_editorial(entry) or is_news_curated(entry, conf, sources_by_id, window=None)
 
 
 def load_sources_by_id() -> dict[str, dict]:
@@ -747,6 +757,16 @@ def archive_entries(entries: list[dict]) -> int:
     if added:
         save_json(ARCHIVE_FILE, existing + added)
     return len(added)
+
+
+def unarchive(keep) -> list[dict]:
+    """Take the archived entries `keep` accepts back out of data/archive.json
+    and return them (news archived before it was kept like claims)."""
+    existing = load_json(ARCHIVE_FILE, default=[]) or []
+    back = [e for e in existing if keep(e)]
+    if back:
+        save_json(ARCHIVE_FILE, [e for e in existing if not keep(e)])
+    return back
 
 
 def load_candidates() -> list[dict]:
