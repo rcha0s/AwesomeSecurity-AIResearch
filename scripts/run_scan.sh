@@ -15,6 +15,8 @@
 #                claude/scan-<date>-<runner> and open its PR.
 #   actual <stories> <cost_usd>   record a local run's measured cost.
 #   fail <phase> open or comment on the scan-failure issue.
+#   status       print this month's spend report (also kept as SPEND.md on the
+#                budget-ledger branch, rewritten on every ledger write).
 #
 # Trust boundary: the model shares this working tree, so nothing that guards
 # spend is read from it. The budget settings come from origin/main's
@@ -102,11 +104,15 @@ budget() {
 # scan's own checkout is never touched. Not a force push: a concurrent writer
 # makes it fail, and the callers retry from a fresh fetch.
 ledger_commit() {
-  local blob tree commit
+  local blob report tree commit
   local parent=()
   [[ -n "$LEDGER_PARENT" ]] && parent=(-p "$LEDGER_PARENT")
   blob="$(git hash-object -w "$WORK/ledger.json")" || return 1
-  tree="$(printf '100644 blob %s\tbudget.json\n' "$blob" | git mktree)" || return 1
+  # SPEND.md rides along so the month's spend is readable on GitHub.
+  budget status >"$WORK/SPEND.md" || return 1
+  report="$(git hash-object -w "$WORK/SPEND.md")" || return 1
+  tree="$(printf '100644 blob %s\tSPEND.md\n100644 blob %s\tbudget.json\n' "$report" "$blob" |
+    git mktree)" || return 1
   commit="$(git commit-tree "$tree" ${parent[@]+"${parent[@]}"} -m "budget: $1")" || return 1
   git push -q origin "$commit:refs/heads/$LEDGER_BRANCH"
 }
@@ -223,8 +229,18 @@ phase_post() {
   git commit -qm "chore: daily scan ($RUNNER, $day, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
   body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
+  body+="$(spend_line)"
   scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
   ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
+}
+
+# One line for the PR body: the month so far, and where the full report lives.
+spend_line() {
+  local month
+  ledger_fetch || return 0 # the PR still opens; the report is on the branch
+  month="$(budget status | sed -n 's/^\*\*\(.* charged of .*\)\.\*\* .*/\1/p')"
+  printf '\n\n**Spend this month:** %s (this run reserved its ceiling; local runs settle to measured cost). Full report: [SPEND.md](../blob/%s/SPEND.md)' \
+    "${month:-unavailable}" "$LEDGER_BRANCH"
 }
 
 # The local wrapper passes the run id it set, so the row can't be redirected
@@ -251,9 +267,14 @@ main() {
       "phase_$phase"
       ;;
     actual) phase_actual "$2" "$3" "$4" ;;
+    status)
+      main_config
+      ledger_fetch
+      budget status
+      ;;
     fail) on_error "${2:-unknown}" 0 ;;
     *)
-      echo "usage: $0 check|session-limits|pre|post|actual <run_id> <stories> <cost>|fail <phase>" >&2
+      echo "usage: $0 check|session-limits|pre|post|status|actual <run_id> <stories> <cost>|fail <phase>" >&2
       exit 2
       ;;
   esac
