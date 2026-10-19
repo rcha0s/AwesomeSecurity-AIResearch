@@ -45,7 +45,7 @@ export PYTHON="${PYTHON:-$REPO/.venv/bin/python}"
 CLAUDE="${CLAUDE_BIN:-claude}" # tests point this at a fake
 # The scan runs in its own worktree, reset to origin/main every run: a failed
 # run can't leave a dirty tree behind, and Rohan's checkout is never touched.
-WT="${SCAN_WORKTREE:-$HOME/.local/share/awesomesec-scan}"
+WT="${SCAN_WORKTREE:-$HOME/.local/share/awesomesec-worktree}"
 SCAN_DIR="$REPO" # where `fail` finds run_scan.sh; the worktree once it's ready
 OUT="$(mktemp)"
 # Outside the worktree, which every run cleans: the log an alert points to
