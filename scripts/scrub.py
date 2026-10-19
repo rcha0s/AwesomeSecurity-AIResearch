@@ -9,8 +9,14 @@ string and no exact copy of a secret-named environment variable's value;
 otherwise it prints the default body and says why on stderr. It never fails
 the run: publishing the plain default is always safe.
 
+`--diff` checks a staged diff on stdin instead (only added lines) and exits 1
+on a hit, so run_scan.sh refuses to push a commit that carries one. Both are
+pattern checks: they catch known token shapes and exact env values, not an
+encoded or split secret.
+
 Usage:
     python scripts/scrub.py data/_summary.md "<default body>"
+    git diff --cached -U0 | python scripts/scrub.py --diff
 """
 
 from __future__ import annotations
@@ -66,7 +72,18 @@ def safe_body(path: Path, default: str, environ: dict[str, str]) -> str:
     return text
 
 
+def diff_leak(diff: str, environ: dict[str, str]) -> str | None:
+    added = [ln[1:] for ln in diff.splitlines() if ln.startswith("+") and not ln.startswith("+++")]
+    return leak_reason("\n".join(added), environ)
+
+
 def main(argv: list[str]) -> int:
+    if argv == ["--diff"]:
+        reason = diff_leak(sys.stdin.read(), dict(os.environ))
+        if reason:
+            print(f"scrub: staged diff withheld ({reason})", file=sys.stderr)
+            return 1
+        return 0
     if len(argv) != 2:
         print(__doc__, file=sys.stderr)
         return 2

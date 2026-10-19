@@ -28,6 +28,11 @@ of three outcomes, stated in your last message:
 
 ## Phases
 
+**Wrapped mode.** When invoked as `/daily-scan wrapped` (the Mac runner), the wrapper has
+already run phase 1 and runs phase 4 itself after you finish: do only phases 2–3, and you
+can't call `run_scan.sh` (it is not on your allowlist). Otherwise (the cloud routine) run
+all four.
+
 1. **Pre:** `scripts/run_scan.sh pre`. If `data/_scan_skip` exists afterwards, stop: report
    the `SCAN_SKIP` reason and do nothing else. Otherwise it printed `SCAN_READY: <n> candidates`.
 
@@ -52,5 +57,6 @@ of three outcomes, stated in your last message:
 
 4. **Post:** `scripts/run_scan.sh post`. It renders the site, records spend, and opens the PR.
 
-If any step in 2–4 fails and you cannot fix it within the safety rules above, run
-`scripts/run_scan.sh fail <step-name>` and stop. `pre` and `post` alert on their own failures.
+If a step in 2–4 fails and you can't fix it within the safety rules, stop. In the cloud,
+first run `scripts/run_scan.sh fail <step-name>`; in wrapped mode, just say what failed in your
+final message, and the wrapper raises the alert. `pre` and `post` alert on their own failures.

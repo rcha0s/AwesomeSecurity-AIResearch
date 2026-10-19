@@ -91,9 +91,11 @@ def test_ceiling_must_fit_the_remaining_budget():
     assert ok and "reserves $2.00" in reason
 
 
-def test_per_story_mean_uses_actual_rows_only():
+def test_per_story_is_the_worst_actual_run_so_padding_cannot_lower_it():
     runs = [row("a", cost=2.0, stories=4), row("b", kind="reserve", cost=99.0, stories=1)]
     assert budget.usd_per_story(runs) == pytest.approx(0.5)
+    padded = runs + [row("c", cost=0.8, stories=8)]  # $0.10/story padding run
+    assert budget.usd_per_story(padded) == pytest.approx(0.5)
     assert budget.usd_per_story(runs, override=0.25) == 0.25
 
 

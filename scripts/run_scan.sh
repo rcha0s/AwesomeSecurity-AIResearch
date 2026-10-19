@@ -7,6 +7,7 @@
 #
 #   check        budget guard only (the local wrapper runs it before it pays
 #                for a `claude` session). Exit 0 = go, 3 = skip.
+#   ceiling      print the run's cost ceiling (the local --max-budget-usd).
 #   pre          budget guard, then RESERVE the run's ceiling on the ledger
 #                BEFORE any LLM work, then every ingestor. A refusal prints
 #                SCAN_SKIP and writes data/_scan_skip; the skill stops there.
@@ -39,16 +40,19 @@ trap 'rm -rf "$WORK"' EXIT
 INGESTORS=(aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences)
 RENDERERS=(rerank generate_site generate_claims generate_html generate_og trends
   generate_newsletter generate_review)
-# Directories, not globs: a glob would name gitignored files, and `git add`
-# exits 1 on those. `git add -A -- <dir>` skips ignored files by itself.
-PUBLISHED=(data README.md NEWSLETTER.md TRENDS.md REVIEW.md
+# What a scan commits. data/ is staged with `-u` (tracked files only), so a
+# file the model invents under data/ never ships; rendered paths take new
+# files because the renderers create pages. Directories, not globs: a glob
+# would name gitignored files, and `git add` exits 1 on those.
+DATA_DIR="data"
+RENDERED=(README.md NEWSLETTER.md TRENDS.md REVIEW.md
   ai-security product-security ai-research claims docs)
 
 # The published paths that exist or are tracked; git rejects a pathspec that
 # matches neither.
 published() {
   local p
-  for p in "${PUBLISHED[@]}"; do
+  for p in "${RENDERED[@]}"; do
     if [[ -e "$p" ]] || git ls-files --error-unmatch -- "$p" >/dev/null 2>&1; then echo "$p"; fi
   done
 }
@@ -150,6 +154,7 @@ phase_pre() {
     log "every ingestor failed"
     return 1
   fi
+  "$PY" scripts/fetch_raw.py --snapshot | tee -a "$LOG"
   log "SCAN_READY: $("$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))') candidates"
 }
 
@@ -176,14 +181,22 @@ phase_post() {
   echo "{\"runner\": \"$RUNNER\", \"stories\": $stories}" >"$RESULT"
   local paths=()
   while IFS= read -r p; do paths+=("$p"); done < <(published)
-  if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
+  local changes
+  changes="$(git status --porcelain --untracked-files=no -- "$DATA_DIR")"
+  if [[ ${#paths[@]} -gt 0 ]]; then changes+="$(git status --porcelain -- "${paths[@]}")"; fi
+  if [[ -z "$changes" ]]; then
     log "SCAN_RESULT: no changes; no PR"
     return 0
   fi
   day="$(date -u +%Y-%m-%d)"
   branch="claude/scan-$day-$RUNNER"
   git checkout -q -B "$branch"
-  git add -A -- "${paths[@]}"
+  git add -u -- "$DATA_DIR"
+  [[ ${#paths[@]} == 0 ]] || git add -A -- "${paths[@]}"
+  if ! git diff --cached -U0 | "$PY" scripts/scrub.py --diff; then
+    log "staged diff has secret-like content; not pushing"
+    return 1
+  fi
   git commit -qm "chore: daily scan ($RUNNER, $day, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
   body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
@@ -204,6 +217,11 @@ main() {
   mkdir -p data
   case "$phase" in
     check) guard ;;
+    ceiling)
+      main_config
+      ledger_fetch
+      budget ceiling --runner "$RUNNER"
+      ;;
     pre | post)
       trap "on_error $phase \$LINENO" ERR
       "phase_$phase"
@@ -211,7 +229,7 @@ main() {
     actual) phase_actual "$2" "$3" "$4" ;;
     fail) on_error "${2:-unknown}" 0 ;;
     *)
-      echo "usage: $0 check|pre|post|actual <run_id> <stories> <cost>|fail <phase>" >&2
+      echo "usage: $0 check|ceiling|pre|post|actual <run_id> <stories> <cost>|fail <phase>" >&2
       exit 2
       ;;
   esac

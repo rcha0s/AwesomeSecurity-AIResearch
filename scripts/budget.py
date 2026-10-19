@@ -25,6 +25,7 @@ Usage:
     python scripts/budget.py --config CFG reserve --runner cloud --run-id ID
     python scripts/budget.py --config CFG actual --run-id ID --stories 6 --cost-usd 1.84
     python scripts/budget.py --config CFG status
+    python scripts/budget.py --config CFG ceiling --runner local      # prints the run's cap
 """
 
 from __future__ import annotations
@@ -102,13 +103,17 @@ def month_spend(runs: list[dict], month: str) -> float:
 
 
 def usd_per_story(runs: list[dict], override: float | None = None) -> float | None:
-    """Mean measured cost per story across `actual` rows, or the config override."""
+    """Worst measured cost per story across `actual` rows, or the config override.
+
+    The worst run, not the mean: padding one run with cheap stories can't lower
+    the ceiling every later cloud run is charged.
+    """
     if override is not None:
         return float(override)
-    measured = [r for r in runs if r["kind"] == "actual" and r["stories"] > 0]
-    if not measured:
-        return None
-    return sum(r["cost_usd"] for r in measured) / sum(r["stories"] for r in measured)
+    measured = [
+        r["cost_usd"] / r["stories"] for r in runs if r["kind"] == "actual" and r["stories"] > 0
+    ]
+    return max(measured) if measured else None
 
 
 def run_ceiling(runs: list[dict], settings: dict, runner: str) -> tuple[float | None, str]:
@@ -167,6 +172,8 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     act.add_argument("--stories", type=int, required=True)
     act.add_argument("--cost-usd", type=float, required=True)
     sub.add_parser("status")
+    ceil = sub.add_parser("ceiling")
+    ceil.add_argument("--runner", choices=RUNNERS, required=True)
     return ap.parse_args(argv)
 
 
@@ -201,6 +208,12 @@ def main(argv: list[str] | None = None) -> int:
         return reserve(path, runs, settings, args, today)
     if args.cmd == "actual":
         return actual(path, runs, args)
+    if args.cmd == "ceiling":
+        ceiling, why = run_ceiling(runs, settings, args.runner)
+        if ceiling is None:
+            raise SystemExit(f"ceiling: {why}")
+        print(f"{ceiling:.4f}")
+        return 0
     cap = settings.get("monthly_cap_usd")
     print(f"budget: ${month_spend(runs, today[:7]):.2f} spent in {today[:7]}; cap {cap}")
     return 0

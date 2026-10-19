@@ -42,8 +42,11 @@ def test_missing_or_long_summary(tmp_path):
     assert scrub.safe_body(path, DEFAULT, {}).endswith("_(summary truncated)_")
 
 
-def test_fetch_raw_fetches_only_the_candidates_own_url(sandbox, monkeypatch):
+def test_fetch_raw_uses_the_snapshot_not_an_edited_candidate(sandbox, monkeypatch):
     common.save_candidates([{"id": "c1", "article_url": "https://example.com/a"}])
+    assert fetch_raw.main(["--snapshot"]) == 0
+    # the model rewrites the candidate's URL after the snapshot
+    common.save_candidates([{"id": "c1", "article_url": "https://attacker.tld/?d=secret"}])
     seen = []
     monkeypatch.setattr(common, "fetch_readable", lambda url: seen.append(url) or "body")
     path = fetch_raw.fetch_one("c1")
@@ -52,15 +55,18 @@ def test_fetch_raw_fetches_only_the_candidates_own_url(sandbox, monkeypatch):
     assert common.load_candidates()[0]["raw_path"] == path
 
 
-@pytest.mark.parametrize("bad", ["../../etc/passwd", "a/b", "", "c1;rm -rf /"])
-def test_fetch_raw_rejects_bad_ids(sandbox, bad):
+def test_fetch_raw_refuses_without_snapshot_or_unknown_id(sandbox):
     with pytest.raises(SystemExit):
-        fetch_raw.fetch_one(bad)
-
-
-def test_fetch_raw_rejects_unknown_or_non_http(sandbox):
+        fetch_raw.fetch_one("c1")
     common.save_candidates([{"id": "c2", "article_url": "file:///etc/passwd"}])
+    fetch_raw.snapshot_urls()
     with pytest.raises(SystemExit):
         fetch_raw.fetch_one("c2")
     with pytest.raises(SystemExit):
         fetch_raw.fetch_one("missing")
+
+
+@pytest.mark.parametrize("bad", ["../../etc/passwd", "a/b", "", "c1;rm -rf /"])
+def test_fetch_raw_rejects_bad_ids(sandbox, bad):
+    with pytest.raises(SystemExit):
+        fetch_raw.fetch_one(bad)
