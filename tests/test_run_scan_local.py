@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from test_run_scan import ledger_rows, open_budget, scan_repo  # noqa: F401  (fixture)
+from test_run_scan import ledger_rows, open_budget
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
@@ -47,7 +47,7 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     res, args = run_local(work, env, tmp_path, rc=claude_rc)
     assert (res.returncode == 0) == (claude_rc == 0), res.stdout + res.stderr
     assert args[:2] == ["-p", "/daily-scan wrapped"]
-    flag = dict(zip(args, args[1:]))
+    flag = dict(zip(args, args[1:], strict=False))
     assert flag["--permission-mode"] == "dontAsk"
     assert flag["--setting-sources"] == "local"
     assert "--strict-mcp-config" in args and flag["--disallowedTools"] == "mcp__*"

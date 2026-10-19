@@ -67,3 +67,8 @@ def make_entry(**over) -> dict:
     }
     entry.update(over)
     return entry
+
+
+# The throwaway-repo fixture for the run_scan.sh end-to-end tests, shared with
+# test_run_scan_local.py.
+from test_run_scan import scan_repo  # noqa: E402,F401
