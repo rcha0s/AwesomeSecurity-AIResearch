@@ -4,4 +4,4 @@
 
 | Date | Runner | Run | Stories | Charged | Basis | Finished |
 |---|---|---|---|---|---|---|
-| 2026-10-19 | local | `local-20261019T233010Z-93626` | 0 | $1.33 | measured | no |
+| 2026-10-19 | local | `local-20261019T233010Z-93626` | 3 | $1.33 | measured | yes |
