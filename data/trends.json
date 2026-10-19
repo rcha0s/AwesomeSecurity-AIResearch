@@ -1112,42 +1112,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "skill-scanning",
-      "count": 4,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 4.0,
-      "first_seen": "2026-06-23",
-      "last_seen": "2026-08-09",
-      "members": [
-        {
-          "title": "snyk/agent-scan",
-          "url": "https://github.com/snyk/agent-scan",
-          "date": "2026-08-09",
-          "fresh": false
-        },
-        {
-          "title": "highflame-ai/ramparts",
-          "url": "https://github.com/highflame-ai/ramparts",
-          "date": "2026-08-08",
-          "fresh": false
-        },
-        {
-          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
-          "fresh": false
-        },
-        {
-          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-          "date": "2026-06-23",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "openai",
       "count": 4,
       "recent": 0,
@@ -1178,6 +1142,78 @@
           "title": "The Generator Can't Be the Validator: What OpenAI's Hugging Face Incident Proves About AI Security",
           "url": "https://snyk.io/blog/openai-hugging-face-incident/",
           "date": "2026-07-28",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "evaluation",
+      "count": 4,
+      "recent": 0,
+      "sources": 4,
+      "momentum": 4.0,
+      "first_seen": "2026-07-31",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
+          "url": "https://arxiv.org/abs/2606.08531",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+          "url": "https://arxiv.org/abs/2506.09443",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Sharding Prevents LLM Oversight Failures and Adversarial Exploitation",
+          "url": "https://arxiv.org/abs/2608.06422",
+          "date": "2026-08-05",
+          "fresh": false
+        },
+        {
+          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
+          "date": "2026-07-31",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "benchmarks",
+      "count": 4,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 4.0,
+      "first_seen": "2026-08-18",
+      "last_seen": "2026-09-01",
+      "members": [
+        {
+          "title": "Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning",
+          "url": "https://huggingface.co/blog/allenai/benchmirt",
+          "date": "2026-09-01",
+          "fresh": false
+        },
+        {
+          "title": "Rule-Based Dataflow + LLM Reasoning Beats Pure-LLM Scanners 4-5x on Recall for Authorization Bugs",
+          "url": "https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal",
+          "date": "2026-08-27",
+          "fresh": false
+        },
+        {
+          "title": "Despite Heavy Hype, the Unreleased 'Mythos' Model Ranks 15th of 17 on IDOR Recall; a $4.29/run Open-Weight Model Beats It on Both Axes",
+          "url": "https://semgrep.dev/blog/2026/mythos-idor-benchmark",
+          "date": "2026-08-25",
+          "fresh": false
+        },
+        {
+          "title": "Injected Security Context, Not Model Choice, Is What Moves Frontier Models Past a 72-75% Plateau on Secure-and-Functional Vulnerability Fixes",
+          "url": "https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/",
+          "date": "2026-08-18",
           "fresh": false
         }
       ]
@@ -1220,36 +1256,36 @@
     },
     {
       "topic": "ai-security",
-      "tag": "evaluation",
+      "tag": "skill-scanning",
       "count": 4,
       "recent": 0,
-      "sources": 4,
+      "sources": 3,
       "momentum": 4.0,
-      "first_seen": "2026-07-31",
-      "last_seen": "2026-08-10",
+      "first_seen": "2026-06-23",
+      "last_seen": "2026-08-09",
       "members": [
         {
-          "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents",
-          "url": "https://arxiv.org/abs/2606.08531",
-          "date": "2026-08-10",
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
           "fresh": false
         },
         {
-          "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
-          "url": "https://arxiv.org/abs/2506.09443",
-          "date": "2026-08-07",
+          "title": "highflame-ai/ramparts",
+          "url": "https://github.com/highflame-ai/ramparts",
+          "date": "2026-08-08",
           "fresh": false
         },
         {
-          "title": "Sharding Prevents LLM Oversight Failures and Adversarial Exploitation",
-          "url": "https://arxiv.org/abs/2608.06422",
-          "date": "2026-08-05",
+          "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
           "fresh": false
         },
         {
-          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
-          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
-          "date": "2026-07-31",
+          "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+          "url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+          "date": "2026-06-23",
           "fresh": false
         }
       ]
@@ -1364,42 +1400,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "benchmarks",
-      "count": 4,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 4.0,
-      "first_seen": "2026-08-18",
-      "last_seen": "2026-09-01",
-      "members": [
-        {
-          "title": "Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning",
-          "url": "https://huggingface.co/blog/allenai/benchmirt",
-          "date": "2026-09-01",
-          "fresh": false
-        },
-        {
-          "title": "Rule-Based Dataflow + LLM Reasoning Beats Pure-LLM Scanners 4-5x on Recall for Authorization Bugs",
-          "url": "https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal",
-          "date": "2026-08-27",
-          "fresh": false
-        },
-        {
-          "title": "Despite Heavy Hype, the Unreleased 'Mythos' Model Ranks 15th of 17 on IDOR Recall; a $4.29/run Open-Weight Model Beats It on Both Axes",
-          "url": "https://semgrep.dev/blog/2026/mythos-idor-benchmark",
-          "date": "2026-08-25",
-          "fresh": false
-        },
-        {
-          "title": "Injected Security Context, Not Model Choice, Is What Moves Frontier Models Past a 72-75% Plateau on Secure-and-Functional Vulnerability Fixes",
-          "url": "https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/",
-          "date": "2026-08-18",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "red-teaming",
       "count": 3,
       "recent": 1,
@@ -1424,126 +1424,6 @@
           "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
           "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
           "date": "2026-08-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "memory-poisoning",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-05-14",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
-          "url": "https://arxiv.org/abs/2607.17619",
-          "date": "2026-07-20",
-          "fresh": false
-        },
-        {
-          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
-          "url": "https://arxiv.org/abs/2607.17986",
-          "date": "2026-07-20",
-          "fresh": false
-        },
-        {
-          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
-          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
-          "date": "2026-05-14",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "huggingface",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-06-29",
-      "last_seen": "2026-09-03",
-      "members": [
-        {
-          "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
-          "url": "https://github.com/huggingface/funes",
-          "date": "2026-09-03",
-          "fresh": false
-        },
-        {
-          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
-          "url": "https://arxiv.org/abs/2607.17503",
-          "date": "2026-07-20",
-          "fresh": false
-        },
-        {
-          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
-          "url": "https://arxiv.org/abs/2606.30373",
-          "date": "2026-06-29",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "tool-poisoning",
-      "count": 3,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-06-30",
-      "last_seen": "2026-08-09",
-      "members": [
-        {
-          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
-          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
-          "date": "2026-08-09",
-          "fresh": false
-        },
-        {
-          "title": "snyk/agent-scan",
-          "url": "https://github.com/snyk/agent-scan",
-          "date": "2026-08-09",
-          "fresh": false
-        },
-        {
-          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-          "date": "2026-06-30",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "rce",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-07-24",
-      "last_seen": "2026-09-08",
-      "members": [
-        {
-          "title": "Windows ML CLI's CORS Wildcard + trust_remote_code Combo Gives Any Website Localhost RCE",
-          "url": "https://github.com/advisories/GHSA-96p9-rh4f-92cf",
-          "date": "2026-09-08",
-          "fresh": false
-        },
-        {
-          "title": "IBM's agentic AI platform is under active attack - patch now",
-          "url": "https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
-          "date": "2026-08-05",
-          "fresh": false
-        },
-        {
-          "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
-          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
-          "date": "2026-07-24",
           "fresh": false
         }
       ]
@@ -1604,6 +1484,186 @@
           "title": "Online Security Learning in Cooperative Multi-Agent Systems under Hidden Byzantine Attacks",
           "url": "https://arxiv.org/abs/2608.06520",
           "date": "2026-08-06",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "tool-poisoning",
+      "count": 3,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": false
+        },
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": false
+        },
+        {
+          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+          "date": "2026-06-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "zero-trust",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+          "url": "https://arxiv.org/abs/2608.06130",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
+          "date": "2026-08-04",
+          "fresh": false
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "rce",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-09-08",
+      "members": [
+        {
+          "title": "Windows ML CLI's CORS Wildcard + trust_remote_code Combo Gives Any Website Localhost RCE",
+          "url": "https://github.com/advisories/GHSA-96p9-rh4f-92cf",
+          "date": "2026-09-08",
+          "fresh": false
+        },
+        {
+          "title": "IBM's agentic AI platform is under active attack - patch now",
+          "url": "https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
+          "date": "2026-08-05",
+          "fresh": false
+        },
+        {
+          "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
+          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+          "date": "2026-07-24",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "memory-poisoning",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-05-14",
+      "last_seen": "2026-07-20",
+      "members": [
+        {
+          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+          "url": "https://arxiv.org/abs/2607.17986",
+          "date": "2026-07-20",
+          "fresh": false
+        },
+        {
+          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
+          "url": "https://arxiv.org/abs/2607.17619",
+          "date": "2026-07-20",
+          "fresh": false
+        },
+        {
+          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
+          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
+          "date": "2026-05-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "huggingface",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-06-29",
+      "last_seen": "2026-09-03",
+      "members": [
+        {
+          "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
+          "url": "https://github.com/huggingface/funes",
+          "date": "2026-09-03",
+          "fresh": false
+        },
+        {
+          "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+          "url": "https://arxiv.org/abs/2607.17503",
+          "date": "2026-07-20",
+          "fresh": false
+        },
+        {
+          "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
+          "url": "https://arxiv.org/abs/2606.30373",
+          "date": "2026-06-29",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agent-harness",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-08-19",
+      "last_seen": "2026-09-08",
+      "members": [
+        {
+          "title": "CC Safety Net Blocks Destructive Agent Commands by Parsing Command Intent, Not Pattern-Matching Strings",
+          "url": "https://github.com/kenryu42/cc-safety-net",
+          "date": "2026-09-08",
+          "fresh": false
+        },
+        {
+          "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
+          "url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
+          "date": "2026-08-31",
+          "fresh": false
+        },
+        {
+          "title": "OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners",
+          "url": "https://github.com/onecli/onecli",
+          "date": "2026-08-19",
           "fresh": false
         }
       ]
@@ -1700,36 +1760,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "zero-trust",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
-          "url": "https://arxiv.org/abs/2608.06130",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
-          "date": "2026-08-04",
-          "fresh": false
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "llm-as-judge",
       "count": 3,
       "recent": 0,
@@ -1820,36 +1850,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "agent-harness",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-08-19",
-      "last_seen": "2026-09-08",
-      "members": [
-        {
-          "title": "CC Safety Net Blocks Destructive Agent Commands by Parsing Command Intent, Not Pattern-Matching Strings",
-          "url": "https://github.com/kenryu42/cc-safety-net",
-          "date": "2026-09-08",
-          "fresh": false
-        },
-        {
-          "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
-          "url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
-          "date": "2026-08-31",
-          "fresh": false
-        },
-        {
-          "title": "OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners",
-          "url": "https://github.com/onecli/onecli",
-          "date": "2026-08-19",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "idor",
       "count": 3,
       "recent": 0,
@@ -1874,6 +1874,294 @@
           "title": "Quoting OpenClaw",
           "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
           "date": "2026-08-10",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "gemini-cli",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05223",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Google dev kit spurs first-ever agent-on-agent violence",
+          "url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
+          "date": "2026-08-03",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "black-hat",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-08-06",
+      "members": [
+        {
+          "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
+          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
+          "date": "2026-08-06",
+          "fresh": false
+        },
+        {
+          "title": "Prompt injection isn't the bug, AI agent frameworks are",
+          "url": "https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
+          "date": "2026-08-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "auto-mode",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-08-08",
+      "last_seen": "2026-08-28",
+      "members": [
+        {
+          "title": "Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path",
+          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+          "date": "2026-08-28",
+          "fresh": false
+        },
+        {
+          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
+          "date": "2026-08-08",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "irregular",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-31",
+      "last_seen": "2026-08-05",
+      "members": [
+        {
+          "title": "Third-party cyber evaluations involving OpenAI models",
+          "url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything",
+          "date": "2026-08-05",
+          "fresh": false
+        },
+        {
+          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
+          "date": "2026-07-31",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "enterprise",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-08-27",
+      "members": [
+        {
+          "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
+          "url": "https://arxiv.org/abs/2608.26696",
+          "date": "2026-08-27",
+          "fresh": false
+        },
+        {
+          "title": "MCP gets an enterprise makeover",
+          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
+          "date": "2026-07-29",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "incident-response",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-09-02",
+      "members": [
+        {
+          "title": "An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours",
+          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
+          "date": "2026-09-02",
+          "fresh": false
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "defense-in-depth",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-28",
+      "members": [
+        {
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+          "date": "2026-08-28",
+          "fresh": false
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agent-sandbox",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
+          "url": "https://arxiv.org/abs/2607.21642",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "egress-control",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-07-30",
+      "members": [
+        {
+          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
+          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
+          "date": "2026-07-29",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "agent-memory",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-08-04",
+      "last_seen": "2026-09-03",
+      "members": [
+        {
+          "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
+          "url": "https://github.com/huggingface/funes",
+          "date": "2026-09-03",
+          "fresh": false
+        },
+        {
+          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
+          "date": "2026-08-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "rag",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-09-03",
+      "members": [
+        {
+          "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
+          "url": "https://github.com/huggingface/funes",
+          "date": "2026-09-03",
+          "fresh": false
+        },
+        {
+          "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
+          "url": "https://arxiv.org/abs/2607.17535",
+          "date": "2026-07-21",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "openclaw",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-31",
+      "members": [
+        {
+          "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
+          "url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
+          "date": "2026-08-31",
+          "fresh": false
+        },
+        {
+          "title": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents",
+          "url": "https://arxiv.org/abs/2608.05201",
+          "date": "2026-08-07",
           "fresh": false
         }
       ]
@@ -2168,102 +2456,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "incident-response",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-09-02",
-      "members": [
-        {
-          "title": "An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours",
-          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
-          "date": "2026-09-02",
-          "fresh": false
-        },
-        {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "rag",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-09-03",
-      "members": [
-        {
-          "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
-          "url": "https://github.com/huggingface/funes",
-          "date": "2026-09-03",
-          "fresh": false
-        },
-        {
-          "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
-          "url": "https://arxiv.org/abs/2607.17535",
-          "date": "2026-07-21",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "gemini-cli",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-08-03",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
-          "url": "https://arxiv.org/abs/2608.05223",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Google dev kit spurs first-ever agent-on-agent violence",
-          "url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
-          "date": "2026-08-03",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "black-hat",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-08-05",
-      "last_seen": "2026-08-06",
-      "members": [
-        {
-          "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
-          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
-          "date": "2026-08-06",
-          "fresh": false
-        },
-        {
-          "title": "Prompt injection isn't the bug, AI agent frameworks are",
-          "url": "https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
-          "date": "2026-08-05",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "litellm",
       "count": 2,
       "recent": 0,
@@ -2384,54 +2576,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "auto-mode",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-08-08",
-      "last_seen": "2026-08-28",
-      "members": [
-        {
-          "title": "Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path",
-          "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
-          "date": "2026-08-28",
-          "fresh": false
-        },
-        {
-          "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
-          "url": "https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything",
-          "date": "2026-08-08",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "egress-control",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-07-30",
-      "members": [
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": false
-        },
-        {
-          "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials, and per-job destruction as the default posture for AI agents",
-          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
-          "date": "2026-07-29",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "transfer-attack",
       "count": 2,
       "recent": 0,
@@ -2450,78 +2594,6 @@
           "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
           "url": "https://arxiv.org/abs/2512.14751",
           "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "irregular",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-31",
-      "last_seen": "2026-08-05",
-      "members": [
-        {
-          "title": "Third-party cyber evaluations involving OpenAI models",
-          "url": "https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything",
-          "date": "2026-08-05",
-          "fresh": false
-        },
-        {
-          "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
-          "url": "https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/",
-          "date": "2026-07-31",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "enterprise",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-08-27",
-      "members": [
-        {
-          "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
-          "url": "https://arxiv.org/abs/2608.26696",
-          "date": "2026-08-27",
-          "fresh": false
-        },
-        {
-          "title": "MCP gets an enterprise makeover",
-          "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
-          "date": "2026-07-29",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "agent-sandbox",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
-          "url": "https://arxiv.org/abs/2607.21642",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
           "fresh": false
         }
       ]
@@ -2576,30 +2648,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "defense-in-depth",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-08-28",
-      "members": [
-        {
-          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
-          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
-          "date": "2026-08-28",
-          "fresh": false
-        },
-        {
-          "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
-          "url": "https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/",
-          "date": "2026-07-30",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "excessive-agency",
       "count": 2,
       "recent": 0,
@@ -2648,30 +2696,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "agent-memory",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-08-04",
-      "last_seen": "2026-09-03",
-      "members": [
-        {
-          "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
-          "url": "https://github.com/huggingface/funes",
-          "date": "2026-09-03",
-          "fresh": false
-        },
-        {
-          "title": "Microsoft Zero Trust for AI: new DevSecOps pillar and Zero Trust Assessment coverage for AI agents",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/advance-zero-trust-for-ai-new-tools-and-guidance-to-secure-ai-agents-and-devsecops/",
-          "date": "2026-08-04",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "governance",
       "count": 2,
       "recent": 0,
@@ -2713,30 +2737,6 @@
         {
           "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
           "url": "https://arxiv.org/abs/2608.05909",
-          "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "openclaw",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-08-31",
-      "members": [
-        {
-          "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
-          "url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
-          "date": "2026-08-31",
-          "fresh": false
-        },
-        {
-          "title": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents",
-          "url": "https://arxiv.org/abs/2608.05201",
           "date": "2026-08-07",
           "fresh": false
         }
@@ -3025,14 +3025,14 @@
           "fresh": false
         },
         {
-          "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
-          "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
+          "title": "America bans imported robots due to supply chain and security risks",
+          "url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
           "date": "2026-07-29",
           "fresh": false
         },
         {
-          "title": "America bans imported robots due to supply chain and security risks",
-          "url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+          "title": "Disrupting supply chain attacks on NPM and GitHub Actions",
+          "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/",
           "date": "2026-07-29",
           "fresh": false
         },
@@ -3484,6 +3484,30 @@
     },
     {
       "topic": "product-security",
+      "tag": "code-review",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-07-30",
+      "members": [
+        {
+          "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
+          "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "date": "2026-07-19",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "exploit-chain",
       "count": 2,
       "recent": 0,
@@ -3766,30 +3790,6 @@
           "title": "TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source",
           "url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
           "date": "2026-07-17",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "code-review",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-07-30",
-      "members": [
-        {
-          "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
-          "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-          "date": "2026-07-30",
-          "fresh": false
-        },
-        {
-          "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
-          "url": "https://arxiv.org/abs/2607.12428",
-          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -6288,36 +6288,6 @@
     },
     {
       "topic": "ai-research",
-      "tag": "openai",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-07-09",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
-          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
-          "url": "https://github.com/algal/pi-openai-server-compaction",
-          "date": "2026-07-22",
-          "fresh": false
-        },
-        {
-          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
-          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
-          "date": "2026-07-09",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "sandboxing",
       "count": 3,
       "recent": 0,
@@ -6342,6 +6312,36 @@
           "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
           "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
           "date": "2026-07-22",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "openai",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+          "url": "https://github.com/algal/pi-openai-server-compaction",
+          "date": "2026-07-22",
+          "fresh": false
+        },
+        {
+          "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+          "url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
+          "date": "2026-07-09",
           "fresh": false
         }
       ]
@@ -6768,30 +6768,6 @@
     },
     {
       "topic": "ai-research",
-      "tag": "orchestration",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-06",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "OrchestraBench: Evaluating Multi-Agent Orchestration Failure Modes, Recovery, and Decomposition Quality",
-          "url": "https://arxiv.org/abs/2608.05263",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
-          "url": "https://github.com/omnigent-ai/omnigent",
-          "date": "2026-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "codex",
       "count": 2,
       "recent": 0,
@@ -6810,6 +6786,54 @@
           "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
           "url": "https://github.com/algal/pi-openai-server-compaction",
           "date": "2026-07-22",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "cot-monitoring",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-10",
+      "members": [
+        {
+          "title": "Counterfactual Simulation Training for Chain-of-Thought Faithfulness",
+          "url": "https://arxiv.org/abs/2602.20710",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+          "date": "2026-08-07",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "orchestration",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-06",
+      "last_seen": "2026-08-07",
+      "members": [
+        {
+          "title": "OrchestraBench: Evaluating Multi-Agent Orchestration Failure Modes, Recovery, and Decomposition Quality",
+          "url": "https://arxiv.org/abs/2608.05263",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Omnigent: an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
           "fresh": false
         }
       ]
@@ -6977,30 +7001,6 @@
         {
           "title": "Innocent Panels, Hateful Stories: Evaluating and Detecting Hateful Intent in Multi-Turn Visual Story Generation",
           "url": "https://arxiv.org/abs/2608.05210",
-          "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "cot-monitoring",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-08-10",
-      "members": [
-        {
-          "title": "Counterfactual Simulation Training for Chain-of-Thought Faithfulness",
-          "url": "https://arxiv.org/abs/2602.20710",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
-          "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
           "date": "2026-08-07",
           "fresh": false
         }

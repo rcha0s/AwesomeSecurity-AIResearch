@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research** - every finding vetted, distilled to one lesson, and filed by field. A [standing-claims ledger](claims/README.md) tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--19-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-2-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--19-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-9-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read the live briefing &#8594;</a></h3>
 
@@ -23,9 +23,9 @@ The live site is the best read - one page for the week's news, another for stand
 
 ## The three databases
 
-- **[AI Security](ai-security/README.md)** (1 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
+- **[AI Security](ai-security/README.md)** (6 vetted findings). Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 - **[Product Security](product-security/README.md)** (0 vetted findings). Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
-- **[AI Research](ai-research/README.md)** (1 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
+- **[AI Research](ai-research/README.md)** (3 vetted findings). Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
 Also generated every run: [Newsletter](NEWSLETTER.md) (full digest) · [Trends](TRENDS.md) (emerging themes) · [Review queue](REVIEW.md) (not-yet-vetted).
 
@@ -90,7 +90,7 @@ X / GitHub / YouTube / articles / RSS   (ranked source registry)
            └─ render  README · topic pages · claims · newsletter · trends · review
 ```
 
-- **Latest only.** Findings older than 31 days age out to [`data/archive.json`](data/archive.json); the snapshot at the top is the last 7 days when we have fresh material, otherwise the most recent we have.
+- **Latest only.** Findings older than 31 days age out to [`data/archive.json`](data/archive.json); claims and news stories are kept. The snapshot at the top is the last 7 days when we have fresh material, otherwise the most recent we have.
 - **Vetted only.** Everything that fails the gate waits in [REVIEW.md](REVIEW.md). Nothing is deleted.
 - **Emerging trends.** Tagged findings are clustered over time to surface waves early ([TRENDS.md](TRENDS.md)).
 
@@ -99,7 +99,7 @@ X / GitHub / YouTube / articles / RSS   (ranked source registry)
 A research tracker lives or dies on trust, so - being upfront:
 
 - **What runs where.** Ingestion and the LLM analysis run locally (the `/research-scan` and `/add-resource` skills, plus an X account for social sources). The GitHub Actions job only re-ranks the committed pools and regenerates the rendered files. In practice the repo is refreshed weekly by the maintainer; it is not reproducible from a clean clone without the local pipeline and credentials.
-- **Windows.** All three finding tracks share one rolling window of 31 days (the snapshot is the last 7); older findings move to [`data/archive.json`](data/archive.json). The claim ledger is durable and never ages out. Findings tell you what was published lately; claims tell you what to believe now.
+- **Windows.** All three finding tracks share one rolling window of 31 days (the snapshot is the last 7); older findings move to [`data/archive.json`](data/archive.json). The claim ledger and the news lane are durable and never age out. Findings tell you what was published lately; claims tell you what to believe now.
 - **What "vetted" and "checked" mean.** A finding is curated only if it clears the novelty and relevance bars, its lesson excerpt is found in the source text (grounding), and a separate model pass does not refute it. That is automated review with a mechanical grounding check, not human verification. Treat it as a strong filter, not a guarantee.
 - **Source caveat.** Social ingestion leans on an X account and is inherently fragile; when it stalls, the RSS, GitHub, arXiv, and advisory feeds keep the pipeline running.
 

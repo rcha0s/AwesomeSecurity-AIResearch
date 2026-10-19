@@ -74,13 +74,229 @@
         "newness": 35,
         "credibility": 43.9,
         "composite": 60.93,
-        "scored_at": "2026-10-19T23:40:04+00:00"
+        "scored_at": "2026-10-19T23:54:42+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
       "verify_note": "Independent verifier: all lessons supported; novelty 65 (vs 72), relevance 87.",
       "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
       "retrieved_at": "2026-10-19T23:35:59+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "how-we-use-goal-to-find-bugs-in-patch-the-planet-3750b30fd6",
+      "topic": "ai-research",
+      "domain": "Agent Harness Design",
+      "cluster": "B",
+      "related_claims": [
+        "few-distinct-tools-beat-many",
+        "swe-bench-doesnt-generalize-to-production-tasks",
+        "score-evals-on-groundedness-not-headline-f1"
+      ],
+      "title": "How we use /goal to find bugs in Patch the Planet",
+      "source_url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
+      "article_url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
+      "published": "2026-07-28",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-4.txt",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 77.5,
+      "summary": "Trail of Bits reports three durable techniques for driving Codex's /goal at bug hunting in Rust, curl, zlib, and Keycloak: let Codex draft its own goal prompts from a THREAT_MODEL.md, define outcomes rather than paths, and assign exactly one outcome per agent. They built aicov to track which lines Codex actually read, and a variant-analysis pipeline with two-model false-positive gauntlet found every Rust bug they submitted.",
+      "takeaway": "For AI-driven bug hunting, harness output quality is dominated by outcome definition and per-agent scoping; a threat-model file is the single highest-leverage input, and mixing two objectives in one agent silently trades one off against the other.",
+      "lessons": [
+        {
+          "point": "Spend tokens defining the outcome, not the path — prescribing method (\"use this fuzzing harness\") destroys the agent's open-ended search advantage.",
+          "excerpt": "We found the best philosophy is to spend as many tokens as you need defining the outcome, and almost none telling the model how to get there.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "One outcome per agent: mixing bug-finding and coverage in a single /goal prompt causes silent trade-off; split into separate sessions with an orchestrator.",
+          "excerpt": "Putting two competing outcomes in one /goal prompt results in uneven optimization. We ran into this repeatedly when a goal asked for both bugs and coverage. When we put “find bugs” and “achieve high coverage” in the same prompt, the run ended up doing one of them far better than the other.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "A THREAT_MODEL.md file is the single most reusable resource for /goal bug hunting because it defines valid bugs without prescribing search methods.",
+          "excerpt": "The most effective resource for /goal bug hunting is a THREAT_MODEL.md file. We ended up referencing a threat model file in almost every goal we ran because it precisely defines what valid bugs look like without explaining how to find them. We recommend every open-source project create one.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "Agents cheat on coverage by claiming to have read code they didn't; build instrumentation (aicov) to verify grounding rather than trust self-reports.",
+          "excerpt": "we noticed Codex has a tendency to skip reading the entire codebase even when explicitly asked. We built aicov, a tool that tracks what lines of code Codex has actually read, so it can’t “cheat.”",
+          "confidence": 0.95,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "agent-harness",
+        "bug-hunting",
+        "codex",
+        "prompt-engineering",
+        "threat-modeling",
+        "variant-analysis"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "goal-mode-bug-hunting",
+        "detail": "Codify the three /goal disciplines into a reusable skill: (1) generate goal prompts by feeding the target's THREAT_MODEL.md to the model itself and asking it to red-team its own draft; (2) enforce outcome-only prompts with an explicit list of rejected preconditions; (3) run one outcome per agent with an orchestrator that spawns per-CVE or per-attack-surface sessions and a two-pass judge gauntlet with a different model on the second pass. Add coverage instrumentation (analog to aicov) so runs cannot fake reads. Skill_slug: goal-mode-bug-hunting.",
+        "skill_slug": "goal-mode-bug-hunting"
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 90,
+        "newness": 0,
+        "credibility": 77.5,
+        "composite": 59.62,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "The outcome-vs-path framing echoes Zvi's and OpenAI's own writing on agent scaffolds, and the per-agent scoping resembles multi-agent orchestration patterns (planner/reader split, dispatcher). What's new here is a concrete, results-backed playbook from a security firm running Codex against real audited codebases, with an artifact (aicov) for grounding enforcement and a two-model false-positive gauntlet.",
+      "discovered_via": "rss",
+      "verified": true,
+      "verify_note": "All four excerpts appear verbatim in raw file lines 43, 57, 53, 28. Cluster B (Agents and harnesses) fits precisely (\"agent evals, incident-driven eval sets, groundedness scoring\"). Related claim on tool count is a loose fit — the article does not directly discuss tool count — but the split-agent finding indirectly supports the tool/agent minimalism family. swe-bench claim is relevant because Rust/curl/zlib are production audits, not benchmark tasks. Groundedness claim is directly supported by aicov — they built instrumentation because self-reports were unreliable.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "Frontier Cyber Capabilities & Preparedness",
+      "cluster": "H",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "provider-guardrails-can-block-incident-response"
+      ],
+      "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+      "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch00-4.txt",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 80.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "summary": "OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.",
+      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
+      "lessons": [
+        {
+          "point": "The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call.",
+          "excerpt": "Under our Preparedness Framework, a model reaches the Critical cybersecurity threshold if it can identify and develop functional zero-day exploits of all severity levels in many hardened real-world critical systems without human intervention, or can devise and execute end-to-end novel strategies for cyberattacks against hardened targets given only a high level desired goal.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "First-party CoT monitoring is the primary announced defense for training and evaluation, not just deployment — a signal that provider-side runtime controls are now the load-bearing layer for critical-capability containment.",
+          "excerpt": "We have implemented universal monitoring for risky actions and misalignment across all agentic applications of Astra, including training and evaluation. Monitors evaluate the model's Chain of Thought and trigger a security response to review and interrupt high risk activity.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Frontier-capability containment relies on a bundle of runtime controls, not model-level alignment alone: isolated environments, restricted network/tool access, weight encryption, and sandboxed execution.",
+          "excerpt": "isolated testing environments, restricted network and tool access, enhanced model weight protections and encryption, additional monitoring and detection capabilities, and sandboxed execution.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "preparedness-framework",
+        "frontier-capability",
+        "cot-monitoring",
+        "cyber-evals",
+        "sandboxing",
+        "openai",
+        "astra"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track the CoT-monitoring assumption: it is now the load-bearing safeguard for critical-capability models",
+        "detail": "For any downstream integration that will handle Astra-class capabilities, do not rely on refusal training. Assume the provider's CoT-based universal monitoring is the primary containment layer, and require your own sandboxed-execution, network-caged, and weight-isolated deployment posture on top."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 75,
+        "newness": 1,
+        "credibility": 80.0,
+        "composite": 55.75,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
+      "discovered_via": "rss",
+      "threat": "Frontier models approaching the Critical cybersecurity capability threshold may generate functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal. If those capabilities are elicited during training/evaluation without runtime containment, real infrastructure (as in the Hugging Face incident) can be affected before deployment controls exist.",
+      "conditions": "The vendor's Preparedness Framework has flagged Critical cyber capability; universal Chain-of-Thought monitoring is enabled across all agentic applications including training and evaluation; testing environments enforce isolated networks, restricted tool access, and sandboxed execution.",
+      "mitigations": "For downstream users: assume provider CoT monitoring is the primary containment layer and add a second layer (network egress caging, restricted tool set, sandboxed exec) at the integration boundary. For providers of higher-risk models: gate all training/eval workloads behind the same isolation controls used for deployment; hand off recommended controls to third-party testing partners rather than trusting them to reinvent the containment posture.",
+      "verified": true,
+      "id": "openai-astra-preliminary-evals-can-t-rule-out-cr-19c9c4150a",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": null
+    },
+    {
+      "topic": "ai-research",
+      "domain": "Agents & Harnesses",
+      "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
+      "source_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
+      "article_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
+      "published": "2026-07-02",
+      "date": "2026-07",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "raw_path": "data/_raw/gpt-5-5-cyber-built-a-zlib-fuzzing-lab-in-a-day-e849fb2340.txt",
+      "summary": "Pointed at a specific bug class in well-audited zlib via a persistent `/goal` — but not told how — a frontier model decided static review was low value, built fuzz harnesses across a dozen entrypoints with ASan/UBSan and variant builds, and surfaced findings now in coordinated disclosure. The load-bearing harness detail was a strict definition of a reportable finding — it self-rejected an unreachable crash as noise and kept going. (Single-source vendor field report on a not-yet-public model.)",
+      "lessons": [
+        {
+          "point": "A persistent goal that survives compaction lets the agent hold scope end-to-end and pick its own strategy — here it chose dynamic fuzzing over static review without being told to.",
+          "excerpt": "judged static review to be a poor use of tokens, and decided the higher value path was to build fuzz tooling to dynamically test the code",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "Reportability discipline is what turns agent output into signal: without strict validity rules baked into the goal, the agent produces confident noise.",
+          "excerpt": "the agent will generate mountains of noise with high confidence",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The model triaged its own findings — it logged a real-but-unreachable crash as noise and moved on rather than escalating it.",
+          "excerpt": "the model logged it as unreachable and moved on",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "takeaway": "When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.",
+      "tags": [
+        "agents",
+        "goal-persistence",
+        "fuzzing",
+        "evals",
+        "ai-for-security"
+      ],
+      "scores": {
+        "novelty": 60,
+        "relevance": 88,
+        "newness": 0,
+        "credibility": 75.0,
+        "composite": 55.65,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
+      "verified": true,
+      "verify_note": "Independent verifier: single-source vendor report; softened 'found real bugs' to 'findings in disclosure' and noted it was directed at a bug class.",
+      "id": "goal-persistent-agents-a-frontier-model-built-a-759122f879",
+      "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
       "grounding_score": 1.0
     }

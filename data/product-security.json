@@ -15,6 +15,76 @@
   "entries": [
     {
       "topic": "product-security",
+      "domain": "AI-Generated Code Risk",
+      "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+      "source_url": "https://arxiv.org/abs/2607.12428",
+      "article_url": "https://arxiv.org/abs/2607.12428",
+      "published": "2026-07-19",
+      "date": "2026-07",
+      "author": "A H M Nazmus Sakib et al.",
+      "discovered_via": "rss",
+      "source_rank": 57.5,
+      "raw_path": "data/_raw/trust-but-verify-uncovering-the-security-debt-of-7240fb0539.txt",
+      "summary": "A large-scale study of the AIDev dataset classified security smells across 16,112 file changes in 4,022 agent-generated pull requests. 38.9% of agent PRs contain at least one security smell and supply-chain integrity issues make up 82.3% of them - but the counterintuitive result is that human collaborators introduce 67.6% of the genuine leaked secrets in these agent-assisted workflows, and review catches almost none of them. All percentages are downstream of an LLM-as-a-judge classification pipeline plus manual review, so treat the precision of the figures accordingly.",
+      "lessons": [
+        {
+          "point": "Supply-chain integrity dominates the detected smell taxonomy (82.3%); the abstract does not enumerate the remaining categories, so everything else combined is a small residual - point provenance and dependency controls at agent output.",
+          "excerpt": "38.9% of agent-generated PRs contain at least one security smell, with supply chain integrity issues accounting for 82.3% of all detected security smells",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "Blaming the agent misreads the data: humans introduced most genuine leaked secrets, which the authors describe only as suggesting a *potential* reduction in developer vigilance - an association, not a causal finding.",
+          "excerpt": "human collaborators are responsible for introducing 67.6% of genuine leaked secrets within these agent-assisted workflows",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "Existing review is not a control here - automated and human review together missed 81.1% of these credentials before integration.",
+          "excerpt": "existing automated and human review processes fail to detect 81.1% of these credentials prior to integration",
+          "confidence": 0.96,
+          "grounded": true
+        }
+      ],
+      "threat": "Security debt accumulates in high-impact file paths faster than human review capacity, with hard-coded credentials making up 99.6% of critical-severity smells.",
+      "conditions": "Repositories that accept autonomous coding-agent pull requests through a conventional human review process.",
+      "mitigations": "Enforce secret scanning as a merge gate rather than a review step; apply provenance/dependency-integrity checks to agent PRs; add context-aware guardrails at the human-AI collaboration point rather than at final review.",
+      "takeaway": "Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.",
+      "tags": [
+        "ai-generated-code",
+        "coding-agents",
+        "secrets",
+        "supply-chain",
+        "code-review"
+      ],
+      "scores": {
+        "novelty": 57,
+        "relevance": 88,
+        "newness": 0,
+        "credibility": 57.5,
+        "composite": 52.12,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
+      "verified": true,
+      "verify_note": "Independent verifier: removed invented contrast categories (injection/logic bugs); restored the authors' 'potential' hedge on developer vigilance; surfaced that all figures come from an LLM-as-a-judge pipeline; novelty 68->57.",
+      "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
+      "retrieved_at": "2026-07-21T07:37:44+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
+        "signals": [
+          "trending",
+          "high-relevance",
+          "teachable"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
       "domain": "Mobile Security",
       "title": "How we found 24 Android vulnerabilities using our open source AI security agent",
       "source_url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
@@ -84,7 +154,7 @@
         "newness": 7,
         "credibility": 75.0,
         "composite": 51.1,
-        "scored_at": "2026-10-19T23:40:04+00:00"
+        "scored_at": "2026-10-19T23:54:42+00:00"
       },
       "prior_art": "Earlier GHSL Taskflow Agent posts on generic audit taskflows, and LLM-assisted SAST triage; the delta is the Android-specific entry-point and checklist decomposition plus its field results.",
       "verified": true,
@@ -104,6 +174,225 @@
         ],
         "at": "2026-10-19T23:36:16+00:00"
       }
+    },
+    {
+      "topic": "product-security",
+      "domain": "Confidential compute (Nitro Enclaves + KMS)",
+      "cluster": null,
+      "related_claims": [],
+      "title": "A few notes on AWS Nitro Enclaves: KMS integration",
+      "source_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
+      "article_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
+      "published": "2026-08-05",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch03-0.txt",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 77.5,
+      "summary": "Trail of Bits enumerates passive and active attack classes against the Nitro Enclave to AWS KMS communication channel: encryption-context omission, CMK substitution, attestation-request replay, and the fact that TLS to KMS terminates outside the HSM. They also flag an end-to-end verifiability gap: even with immutable key policies, AWS Support can restore default policies for a key owner, so there is no Certificate-Transparency-style public log a third-party client can independently verify.",
+      "takeaway": "Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker equivalence returns.",
+      "lessons": [
+        {
+          "point": "Attestation documents are not cryptographically bound to KMS requests, so a captured attestation is replayable for five minutes against any supported operation with attacker-chosen parameters.",
+          "excerpt": "As attestations are not cryptographically bound to the requests, the attacker can use the attestation with any supported operation with arbitrary params.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "KMS terminates TLS outside the HSM, so end-to-end confidentiality between the enclave and the HSM is not achievable and AWS insiders belong in the threat model.",
+          "excerpt": "KMS terminates TLS outside of HSM ([most likely](https://docs.aws.amazon.com/kms/latest/cryptographic-details/internal-communication-security.html)), and the attestation's pubkey encryption is probably done outside of HSM. This makes it impossible to have an end-to-end TLS channel between enclave and HSM, and AWS insiders may theoretically constitute an active attacker threat.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Even immutable key policies do not deliver true end-to-end verifiability, because AWS Support can restore a default policy on the owner's request and there is no public append-only log a third party can audit.",
+          "excerpt": "Note that key owners can always [contact AWS support to restore default key policies]... However, we are not aware of any \"Certificate Transparency\"-style public, append-only log for KMS key policies that an external party can independently verify.",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "The official aws-nitro-enclaves-sdk-c is C code that Trail of Bits found host-exploitable and recommends avoiding in favor of a Rust NSM library plus Boto3 for KMS.",
+          "excerpt": "Amazon ships a lot of SDKs for various tasks. Among them is [`aws-nitro-enclaves-sdk-c`](https://github.com/aws/aws-nitro-enclaves-sdk-c) that provides tools and a library for enclaves-KMS communication. Avoid it: this particular SDK is written in C, and we found it contains vulnerabilities that can be used to exploit enclaves from the parent host.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "nitro-enclaves",
+        "kms",
+        "attestation",
+        "confidential-compute",
+        "aws",
+        "tls",
+        "replay-attack"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Enclave-KMS hardening checklist",
+        "detail": "For any enclave-KMS integration: hardcode CMK ARN (attested), attest the IAM role via sts:GetCallerIdentity, initiate TLS from inside the enclave with a pinned Amazon CA, use encryption contexts that the host cannot fully control, and monitor kms:PutKeyPolicy externally since AWS Support can restore default policies."
+      },
+      "scores": {
+        "novelty": 62,
+        "relevance": 40,
+        "newness": 1,
+        "credibility": 77.5,
+        "composite": 42.47,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
+      "discovered_via": "rss",
+      "threat": "A privileged host or malicious insider between enclave and KMS can swap ciphertexts, substitute CMKs, replay attestations, or bypass immutable key policies via AWS Support restoration.",
+      "conditions": "Applies when a Nitro Enclave uses KMS with attestation-based key access, does not initiate its own TLS to KMS, or uses key aliases instead of full CMK ARNs.",
+      "mitigations": "Bundle KMS CA cert inside the enclave and pin it; initiate TLS from within the enclave; attest full CMK ARN and IAM role; use encryption contexts under enclave control; deny kms:PutKeyPolicy globally; alarm on key deletion; publish a client-visible policy monitor. Prefer aws-nitro-enclaves-nsm-api (Rust) + Boto3 over aws-nitro-enclaves-sdk-c (C).",
+      "verified": true,
+      "verify_note": "All four excerpts verified verbatim against raw_path. Cluster set to null because the piece is enclave-crypto/appsec and does not intersect the 13 clusters (nearest fit I is 'Deployment infra and sandboxing', but the material is HSM/KMS cryptography, not agent/LLM runtime).",
+      "id": "a-few-notes-on-aws-nitro-enclaves-kms-integratio-a9fa51faa1",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": true,
+      "grounding_score": null
+    },
+    {
+      "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
+      "topic": "product-security",
+      "domain": "Supply Chain / Policy",
+      "cluster": null,
+      "related_claims": [],
+      "title": "America bans imported robots due to supply chain and security risks",
+      "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "published": "2026-07-29",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-0.txt",
+      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 70.0,
+      "summary": "The FCC added foreign-made advanced robotic devices to the Covered List, effectively banning their import due to supply-chain and security risks. The National Security Determination frames networked robots as broad attack surfaces vulnerable to remote takeover, data exfiltration, and insecure OTA updates, and points to UniPwn on Unitree humanoids as a concrete example.",
+      "takeaway": "US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.",
+      "lessons": [
+        {
+          "point": "US regulators now classify connected robots as broad attack surfaces subject to remote takeover, exfiltration, and OTA-update risk.",
+          "excerpt": "modern bots are now constantly connected to networks “which creates broad attack surfaces and leaves them vulnerable to data exfiltration, remote disruption of the physical robot, and dependencies on unsecure over the air updates.”",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The UniPwn flaws in Unitree humanoids are cited by name as the exemplar vulnerability motivating the ban.",
+          "excerpt": "One example of those vulnerabilities mentioned in the document is the UniPwn flaws that made it possible for attackers to take over humanoid robots made by Chinese company Unitree.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "The mechanism is import ban via the FCC Covered List, with a narrow Department of War carve-out and a country-of-manufacture (not country-of-ownership) exemption.",
+          "excerpt": "the FCC decided the foreign-made advanced robotic devices belong on its Covered List of products for which imports are banned because they pose an unacceptable risk to the national security of the United States and its residents.",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "robotics",
+        "national-security",
+        "iot-security",
+        "fcc"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track FCC Covered List entries as a supply-chain admission signal beyond telecom",
+        "detail": "Product-security teams that already gate procurement against the FCC Covered List for telecom should now extend that gate to robotics and other networked physical devices; the same list is being repurposed as a general-purpose national-security exclusion mechanism."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 55,
+        "newness": 0,
+        "credibility": 70.0,
+        "composite": 40.5,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
+      "discovered_via": "rss",
+      "threat": "Networked robots operating inside critical facilities can be remotely disrupted or exfiltrated via compromised firmware, OTA-update infrastructure, or embedded backdoors from the manufacturer's supply chain.",
+      "conditions": "Applies to future imports of foreign-made advanced robotic devices; already-approved models and stock, plus foreign-owned firms that manufacture in the US (e.g., Boston Dynamics), are exempt.",
+      "mitigations": "Import ban via FCC Covered List; case-by-case Department of War vouching for individual devices.",
+      "verified": true,
+      "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": null
+    },
+    {
+      "topic": "product-security",
+      "domain": "Cloud & Infrastructure",
+      "title": "Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System",
+      "source_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
+      "cluster": null,
+      "related_claims": [],
+      "summary": "Signal's Automatic Key Verification depends on independent auditors maintaining consistency of a global public-key map; Trail of Bits operates one of the three required auditors (alongside Signal and Cloudflare), implemented from scratch (not from Signal's reference implementation) for independent verification. Clients require signatures from all three auditors within the last seven days, so a fully malicious Signal server can maintain a split view of the key map for at most one week before client warnings appear.",
+      "takeaway": "A key-transparency system's actual security guarantee is bounded by its auditor-signature freshness window, not by the cryptography alone — Signal's design means a compromised or malicious server can present different keys to different users for up to a week before detection, which is a concrete, quantifiable limit worth knowing when evaluating any similar transparency-log design.",
+      "lessons": [
+        {
+          "point": "Clients currently require valid signatures from three independently-operated auditors (Signal, Cloudflare, and Trail of Bits), not just one, to accept a given key-map state.",
+          "excerpt": "Clients currently require signatures from each of three auditors: one operated by Signal, one operated by Cloudflare, and one operated by Trail of Bits.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Auditor signatures must be within the last seven days, so a fully malicious server could maintain a split view of the public-key map for up to a week before clients start warning users.",
+          "excerpt": "within the last seven days. If the server does not present valid auditor signatures, the client will raise a warning and Automatic Key Verification will fail. A fully malicious server may therefore maintain a split view of the system for at most one week before client applications start to display warning messages.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Trail of Bits deliberately implemented its auditor from scratch based on the published specification, rather than reusing Signal's own reference implementation, specifically to provide genuinely independent verification rather than validating the same code against itself.",
+          "excerpt": "We chose to implement our auditor from scratch, based on the",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "signal",
+        "key-transparency",
+        "end-to-end-encryption",
+        "independent-audit"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Quantify the detection-latency window of any key-transparency or trust-log design you evaluate",
+        "detail": "When evaluating a key-transparency or certificate-transparency-style system, explicitly quantify the maximum time a malicious operator could maintain an undetected split view before an auditor-freshness requirement triggers a client warning — for Signal's Automatic Key Verification, that bound is one week."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 40,
+        "newness": 1,
+        "credibility": 73.2,
+        "composite": 29.23,
+        "scored_at": "2026-10-19T23:54:42+00:00"
+      },
+      "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
+      "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-08",
+      "published": "2026-08-11",
+      "raw_path": "data/_raw/how-trail-of-bits-helps-verify-the-integrity-of-c66db3759e.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
+      "source_rank": 73.2,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "verified": true,
+      "verify_note": "All facts directly confirmed; taking lower novelty (20 vs 38) and relevance (35 vs 40).",
+      "id": "trail-of-bits-runs-an-independent-from-scratch-a-e511ef895e",
+      "retrieved_at": "2026-09-09T06:16:09+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     }
   ]
 }

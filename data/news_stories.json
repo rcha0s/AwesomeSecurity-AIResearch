@@ -99,5 +99,779 @@
     "corroborators": [],
     "winner_tier": "high",
     "first_seen": "2026-10-19"
+  },
+  "fd2ac6a39fbab53c": {
+    "fp": {
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident",
+      "title": "OpenAI and Hugging Face partner to address security incident during model evaluation",
+      "tokens": [
+        "address",
+        "during",
+        "evaluation",
+        "face",
+        "hugging",
+        "incident",
+        "model",
+        "openai",
+        "partner",
+        "security"
+      ],
+      "shingles": [
+        "address security incident",
+        "during model evaluation",
+        "face partner address",
+        "hugging face partner",
+        "incident during model",
+        "openai hugging face",
+        "partner address security",
+        "security incident during"
+      ],
+      "entities": [
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-20"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-21"
+  },
+  "1341f3a469b2491d": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
+      "title": "Google dev kit spurs first-ever agent-on-agent violence",
+      "tokens": [
+        "agent",
+        "dev",
+        "ever",
+        "first",
+        "google",
+        "kit",
+        "spurs",
+        "violence"
+      ],
+      "shingles": [
+        "agent agent violence",
+        "dev kit spurs",
+        "ever agent agent",
+        "first ever agent",
+        "google dev kit",
+        "kit spurs first",
+        "spurs first ever"
+      ],
+      "entities": [
+        "Dan Lisichkin",
+        "Pillar Security"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-03"
+  },
+  "d3192391f827e8e0": {
+    "fp": {
+      "url": "https://wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree",
+      "title": "OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree",
+      "tokens": [
+        "agents",
+        "ai",
+        "board",
+        "didn",
+        "hacking",
+        "message",
+        "notice",
+        "openai",
+        "plan",
+        "spree",
+        "t",
+        "using"
+      ],
+      "shingles": [
+        "agents using message",
+        "ai agents using",
+        "board plan hacking",
+        "didn t notice",
+        "message board plan",
+        "notice ai agents",
+        "openai didn t",
+        "plan hacking spree",
+        "t notice ai",
+        "using message board"
+      ],
+      "entities": [
+        "Eric Wallace",
+        "Message Board",
+        "Michael Dalton",
+        "Notice Its AI Agents Using",
+        "OpenAI",
+        "OpenAI Didn",
+        "Plan Their Hacking Spree At Black Hat"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-06"
+  },
+  "1e98d536414483a7": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585",
+      "title": "Prompt injection isn't the bug, AI agent frameworks are",
+      "tokens": [
+        "agent",
+        "ai",
+        "bug",
+        "frameworks",
+        "injection",
+        "isn",
+        "prompt",
+        "t"
+      ],
+      "shingles": [
+        "ai agent frameworks",
+        "bug ai agent",
+        "injection isn t",
+        "isn t bug",
+        "prompt injection isn",
+        "t bug ai"
+      ],
+      "entities": [
+        "Check Point",
+        "Google ADK",
+        "Microsoft",
+        "Microsoft Agent Framework"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-05"
+  },
+  "18df36832508b094": {
+    "fp": {
+      "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode",
+      "title": "Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path",
+      "tokens": [
+        "5",
+        "auto",
+        "becomes",
+        "claude",
+        "code",
+        "exploit",
+        "mode",
+        "opus",
+        "part",
+        "path",
+        "rce",
+        "refusal",
+        "safety",
+        "summarization",
+        "tricked",
+        "via",
+        "website"
+      ],
+      "shingles": [
+        "5 auto mode",
+        "auto mode tricked",
+        "becomes part exploit",
+        "claude code opus",
+        "code opus 5",
+        "mode tricked rce",
+        "opus 5 auto",
+        "part exploit path",
+        "rce via website",
+        "refusal becomes part",
+        "safety refusal becomes",
+        "summarization safety refusal",
+        "tricked rce via",
+        "via website summarization",
+        "website summarization safety"
+      ],
+      "entities": [
+        "Anthropic",
+        "Auto Mode",
+        "Auto Mode Tricked Into RCE",
+        "Claude Code",
+        "Claude Code Opus",
+        "Exploit Path Security",
+        "Its Own Safety Refusal Becomes Part",
+        "Johann Rehberger",
+        "Website Summarization"
+      ],
+      "bucket": "2026-08-24"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-28"
+  },
+  "a1799ddd64b9361f": {
+    "fp": {
+      "url": "https://wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests",
+      "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+      "tokens": [
+        "anthropic",
+        "breach",
+        "claude",
+        "cybersecurity",
+        "evals",
+        "infrastructure",
+        "let",
+        "models",
+        "production",
+        "real",
+        "s",
+        "three"
+      ],
+      "shingles": [
+        "anthropic s cybersecurity",
+        "breach real production",
+        "claude models breach",
+        "cybersecurity evals let",
+        "evals let three",
+        "let three claude",
+        "models breach real",
+        "real production infrastructure",
+        "s cybersecurity evals",
+        "three claude models"
+      ],
+      "entities": [
+        "Anthropic",
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-07-31"
+  },
+  "6333bcbdf420120f": {
+    "fp": {
+      "url": "https://theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+      "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
+      "tokens": [
+        "agent",
+        "ai",
+        "coding",
+        "dangerous",
+        "humans",
+        "loop",
+        "miss",
+        "requests",
+        "third"
+      ],
+      "shingles": [
+        "ai coding agent",
+        "coding agent requests",
+        "dangerous ai coding",
+        "humans loop miss",
+        "loop miss third",
+        "miss third dangerous",
+        "third dangerous ai"
+      ],
+      "entities": [
+        "Anthropic",
+        "Claude Code"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-06"
+  },
+  "9d3f7cb717b168f1": {
+    "fp": {
+      "url": "https://theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
+      "title": "MCP gets an enterprise makeover",
+      "tokens": [
+        "enterprise",
+        "gets",
+        "makeover",
+        "mcp"
+      ],
+      "shingles": [
+        "gets enterprise makeover",
+        "mcp gets enterprise"
+      ],
+      "entities": [
+        "MCP",
+        "The Model Context Protocol"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-07-29"
+  },
+  "689ef3b1ddeb1d38": {
+    "fp": {
+      "url": "https://huggingface.co/blog/allenai/benchmirt",
+      "title": "Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning",
+      "tokens": [
+        "actually",
+        "auditing",
+        "benchmarks",
+        "general",
+        "item",
+        "measuring",
+        "multidimensional",
+        "reasoning",
+        "response",
+        "reveals",
+        "safety",
+        "some",
+        "theory"
+      ],
+      "shingles": [
+        "actually measuring general",
+        "auditing reveals some",
+        "benchmarks actually measuring",
+        "item response theory",
+        "measuring general reasoning",
+        "multidimensional item response",
+        "response theory auditing",
+        "reveals some safety",
+        "safety benchmarks actually",
+        "some safety benchmarks",
+        "theory auditing reveals"
+      ],
+      "entities": [
+        "Benchmarks Are Actually Measuring General Reasoning AllenAI",
+        "Item Response Theory",
+        "Multidimensional Item-Response-Theory Auditing Reveals Some"
+      ],
+      "bucket": "2026-08-31"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-09-01"
+  },
+  "c82f6d711c6fff00": {
+    "fp": {
+      "url": "https://wired.com/story/openais-hacking-debacle-was-a-human-mistake",
+      "title": "OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host",
+      "tokens": [
+        "basics",
+        "defense",
+        "depth",
+        "eval",
+        "face",
+        "host",
+        "hugging",
+        "incident",
+        "openai",
+        "reduces",
+        "s",
+        "skipped",
+        "trust",
+        "zero"
+      ],
+      "shingles": [
+        "basics zero trust",
+        "defense depth eval",
+        "depth eval host",
+        "face incident reduces",
+        "hugging face incident",
+        "incident reduces skipped",
+        "openai s hugging",
+        "reduces skipped basics",
+        "s hugging face",
+        "skipped basics zero",
+        "trust defense depth",
+        "zero trust defense"
+      ],
+      "entities": [
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-07-30"
+  },
+  "77fc5015f08465b0": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535",
+      "title": "IBM's agentic AI platform is under active attack - patch now",
+      "tokens": [
+        "active",
+        "agentic",
+        "ai",
+        "attack",
+        "ibm",
+        "now",
+        "patch",
+        "platform",
+        "s"
+      ],
+      "shingles": [
+        "active attack patch",
+        "agentic ai platform",
+        "ai platform active",
+        "attack patch now",
+        "ibm s agentic",
+        "platform active attack",
+        "s agentic ai"
+      ],
+      "entities": [
+        "DataStax Langflow",
+        "Known Exploited Vulnerabilities"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-05"
+  },
+  "20f4e657a862f37b": {
+    "fp": {
+      "url": "https://openai.com/index/scientific-computing-agentic-ai",
+      "title": "Scientific computing in the age of agentic AI",
+      "tokens": [
+        "age",
+        "agentic",
+        "ai",
+        "computing",
+        "scientific"
+      ],
+      "shingles": [
+        "age agentic ai",
+        "computing age agentic",
+        "scientific computing age"
+      ],
+      "entities": [
+        "AI OpenAI",
+        "Anthropic",
+        "Claude Code",
+        "OpenAI"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "1a3d012fa06d1247": {
+    "fp": {
+      "url": "https://github.com/huggingface/funes",
+      "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
+      "tokens": [
+        "agent",
+        "cross",
+        "distilling",
+        "evidence",
+        "facts",
+        "funes",
+        "instead",
+        "layer",
+        "memory",
+        "preserves",
+        "raw",
+        "session",
+        "time",
+        "write"
+      ],
+      "shingles": [
+        "agent memory layer",
+        "cross agent memory",
+        "distilling facts write",
+        "evidence instead distilling",
+        "facts write time",
+        "funes cross agent",
+        "instead distilling facts",
+        "layer preserves raw",
+        "memory layer preserves",
+        "preserves raw session",
+        "raw session evidence",
+        "session evidence instead"
+      ],
+      "entities": [
+        "Anthropic",
+        "Claude Code",
+        "Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead",
+        "Distilling It Into Facts",
+        "Hugging Face",
+        "OpenAI",
+        "Write Time Hugging Face"
+      ],
+      "bucket": "2026-08-31"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-09-03"
+  },
+  "23f7bbd6a10111a4": {
+    "fp": {
+      "url": "https://theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
+      "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
+      "tokens": [
+        "0",
+        "2",
+        "default",
+        "off",
+        "openclaw",
+        "opt",
+        "overhaul",
+        "s",
+        "sandbox",
+        "secrets",
+        "security",
+        "ships",
+        "still",
+        "unencrypted",
+        "usability"
+      ],
+      "shingles": [
+        "0 s usability",
+        "2 0 s",
+        "openclaw 2 0",
+        "opt unencrypted secrets",
+        "overhaul ships security",
+        "s usability overhaul",
+        "sandbox off default",
+        "secrets sandbox off",
+        "security still opt",
+        "ships security still",
+        "still opt unencrypted",
+        "unencrypted secrets sandbox",
+        "usability overhaul ships"
+      ],
+      "entities": [
+        "Default OpenClaw",
+        "Sandbox Off",
+        "Unencrypted Secrets",
+        "Usability Overhaul Ships With Security Still Opt-In"
+      ],
+      "bucket": "2026-08-31"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-08-31"
+  },
+  "7e9f9d1e5a46d476": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration",
+      "title": "A few notes on AWS Nitro Enclaves: KMS integration",
+      "tokens": [
+        "aws",
+        "enclaves",
+        "few",
+        "integration",
+        "kms",
+        "nitro",
+        "notes"
+      ],
+      "shingles": [
+        "aws nitro enclaves",
+        "enclaves kms integration",
+        "few notes aws",
+        "nitro enclaves kms",
+        "notes aws nitro"
+      ],
+      "entities": [
+        "AWS",
+        "AWS KMS",
+        "AWS Nitro Enclaves",
+        "Nitro Enclave"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-05"
+  },
+  "9825f7bb2c3658ad": {
+    "fp": {
+      "url": "https://theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "title": "America bans imported robots due to supply chain and security risks",
+      "tokens": [
+        "america",
+        "bans",
+        "chain",
+        "due",
+        "imported",
+        "risks",
+        "robots",
+        "security",
+        "supply"
+      ],
+      "shingles": [
+        "america bans imported",
+        "bans imported robots",
+        "chain security risks",
+        "due supply chain",
+        "imported robots due",
+        "robots due supply",
+        "supply chain security"
+      ],
+      "entities": [
+        "Covered List",
+        "The FCC",
+        "The National Security Determination"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "medium",
+    "first_seen": "2026-07-29"
+  },
+  "9dea323ddd51df4d": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats",
+      "title": "Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System",
+      "tokens": [
+        "auditor",
+        "bits",
+        "independent",
+        "key",
+        "runs",
+        "s",
+        "scratch",
+        "signal",
+        "system",
+        "trail",
+        "transparency"
+      ],
+      "shingles": [
+        "auditor signal s",
+        "bits runs independent",
+        "independent scratch auditor",
+        "key transparency system",
+        "runs independent scratch",
+        "s key transparency",
+        "scratch auditor signal",
+        "signal s key",
+        "trail bits runs"
+      ],
+      "entities": [
+        "Automatic Key Verification",
+        "Bits Runs",
+        "From-Scratch Auditor",
+        "Key Transparency System Signal"
+      ],
+      "bucket": "2026-08-10"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-11"
+  },
+  "e20f18a37a734517": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet",
+      "title": "How we use /goal to find bugs in Patch the Planet",
+      "tokens": [
+        "bugs",
+        "find",
+        "goal",
+        "how",
+        "patch",
+        "planet",
+        "use"
+      ],
+      "shingles": [
+        "bugs patch planet",
+        "find bugs patch",
+        "goal find bugs",
+        "how use goal",
+        "use goal find"
+      ],
+      "entities": [
+        "OpenAI",
+        "Planet Trail"
+      ],
+      "bucket": "2026-07-27"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-28"
+  },
+  "c716fb123f08c4d1": {
+    "fp": {
+      "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+      "tokens": [
+        "astra",
+        "based",
+        "can",
+        "capability",
+        "controls",
+        "cot",
+        "critical",
+        "cyber",
+        "evals",
+        "include",
+        "monitoring",
+        "new",
+        "openai",
+        "out",
+        "preliminary",
+        "rule",
+        "t",
+        "universal"
+      ],
+      "shingles": [
+        "astra preliminary evals",
+        "based universal monitoring",
+        "can t rule",
+        "capability new controls",
+        "controls include cot",
+        "cot based universal",
+        "critical cyber capability",
+        "cyber capability new",
+        "evals can t",
+        "include cot based",
+        "new controls include",
+        "openai astra preliminary",
+        "out critical cyber",
+        "preliminary evals can",
+        "rule out critical",
+        "t rule out"
+      ],
+      "entities": [
+        "OpenAI",
+        "Preparedness Framework"
+      ],
+      "bucket": "2026-08-03"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-08-07"
+  },
+  "c176036038a75238": {
+    "fp": {
+      "url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet",
+      "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
+      "tokens": [
+        "agents",
+        "bespoke",
+        "built",
+        "day",
+        "frontier",
+        "fuzzing",
+        "goal",
+        "lab",
+        "model",
+        "persistent",
+        "zlib"
+      ],
+      "shingles": [
+        "agents frontier model",
+        "bespoke zlib fuzzing",
+        "built bespoke zlib",
+        "frontier model built",
+        "fuzzing lab day",
+        "goal persistent agents",
+        "model built bespoke",
+        "persistent agents frontier",
+        "zlib fuzzing lab"
+      ],
+      "entities": [],
+      "bucket": "2026-06-29"
+    },
+    "corroborators": [],
+    "winner_tier": "high",
+    "first_seen": "2026-07-02"
   }
 }
