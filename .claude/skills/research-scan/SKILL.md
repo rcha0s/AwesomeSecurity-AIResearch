@@ -182,13 +182,11 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    git commit -m "chore: research scan refresh ($(date -u +%Y-%m-%d))"
    git push --force origin "HEAD:$branch"
 
-   # Reuse an existing PR if one is already open on this branch;
-   # otherwise open a new one. Never open a second PR.
-   if ! gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
-     gh pr create --base main --head "$branch" \
-       --title "chore: research scan refresh ($(date -u +%Y-%m-%d))" \
-       --body "<run summary — see below>"
-   fi
+   # Reuse an open PR on this branch, else open one. Never `gh pr view`:
+   # it matches merged PRs and silently skips the create.
+   scripts/ensure_pr.sh "$branch" \
+     "chore: research scan refresh ($(date -u +%Y-%m-%d))" \
+     "<run summary — see below>"
    ```
 
    **Run summary** (printed to the user AND set as the PR body): lead
