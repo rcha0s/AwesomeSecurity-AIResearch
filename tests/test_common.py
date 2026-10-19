@@ -199,7 +199,7 @@ def _news_entry(**over):
     """Fresh news-shaped entry for gate testing. Track A (research) items
     have novelty/relevance scores; news items don't, so we deliberately keep
     them off unless a test wants to prove the gate ignores them."""
-    from datetime import UTC, datetime, timedelta
+    from datetime import timedelta
 
     base = {
         "topic": "ai-security",
@@ -209,7 +209,7 @@ def _news_entry(**over):
         "takeaway": "MCP is now HTTP-first — check your existing servers.",
         "source_url": "https://modelcontextprotocol.io/spec",
         "source_id": "rss:mcp-spec",
-        "published": (datetime.now(UTC) - timedelta(days=3)).strftime("%Y-%m-%d"),
+        "published": (c.utcnow() - timedelta(days=3)).strftime("%Y-%m-%d"),
     }
     base.update(over)
     return base
@@ -286,12 +286,12 @@ def test_is_news_curated_rejects_stale():
 
 def test_is_news_curated_enforces_7_day_display_window():
     """The news lane shows only the last 7 days — anything older is not news."""
-    from datetime import UTC, datetime, timedelta
+    from datetime import timedelta
 
     conf = c.load_config()
     sources = {"rss:news": {"track": "news", "tier": "high"}}
-    day_6 = (datetime.now(UTC) - timedelta(days=6)).strftime("%Y-%m-%d")
-    day_8 = (datetime.now(UTC) - timedelta(days=8)).strftime("%Y-%m-%d")
+    day_6 = (c.utcnow() - timedelta(days=6)).strftime("%Y-%m-%d")
+    day_8 = (c.utcnow() - timedelta(days=8)).strftime("%Y-%m-%d")
     assert c.is_news_curated(_news_entry(published=day_6, source_id="rss:news"),
                              conf, sources)
     assert not c.is_news_curated(_news_entry(published=day_8, source_id="rss:news"),

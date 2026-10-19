@@ -15,7 +15,7 @@ Findings live in one of three growing topic pools (the source of truth):
   understanding, or architecture for using LLMs/agents. Not model internals / ML-research.
 
 `domain` within a topic is a free-text sub-grouping label. The rendered `README.md`,
-`NEWSLETTER.md`, `TRENDS.md`, the three topic dirs, `skills/`, and `LEARNINGS.md` are
+`NEWSLETTER.md`, `TRENDS.md`, the three topic dirs, `claims/`, and `docs/` are
 **generated** — never hand-edit them. Edit the pools and regenerate.
 
 ## What belongs here
@@ -63,7 +63,6 @@ python scripts/rerank.py
 python scripts/generate_site.py
 python scripts/generate_claims.py
 python scripts/generate_html.py
-python scripts/generate_skills.py
 ```
 
 Open a PR (direct-PR mode — see [AGENTS.md](AGENTS.md)). Keep lint + tests green.

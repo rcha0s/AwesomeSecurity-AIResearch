@@ -17,9 +17,10 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
+
+import common as c
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = ROOT / "data" / "sources.json"
@@ -77,7 +78,7 @@ def main(argv: list[str] | None = None) -> int:
                 "domain": domain,
                 "source_id": args.source_id,
                 "reason": args.reason,
-                "retired_at": datetime.now(UTC).strftime("%Y-%m-%d"),
+                "retired_at": c.utcnow().strftime("%Y-%m-%d"),
             })
             _save(BLOCKLIST, block)
             print(f"blocklisted: {domain}")

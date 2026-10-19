@@ -36,7 +36,7 @@ import argparse
 import re
 import sys
 import xml.etree.ElementTree as ET
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
 import aggregate as agg
@@ -194,7 +194,7 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    cutoff = datetime.now(UTC) - timedelta(days=c.load_config().max_age_days)
+    cutoff = c.utcnow() - timedelta(days=c.load_config().max_age_days)
     candidates = collect(rules, cutoff)
 
     if args.dry_run:

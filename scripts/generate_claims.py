@@ -19,7 +19,7 @@ Usage:
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import datetime
 
 import common as c
 
@@ -295,7 +295,7 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    now = datetime.now(UTC).strftime("%Y-%m-%d")
+    now = c.utcnow().strftime("%Y-%m-%d")
     base = c.ROOT / "claims"
     base.mkdir(parents=True, exist_ok=True)
     (base / "README.md").write_text(render_index(ledger, now), encoding="utf-8")

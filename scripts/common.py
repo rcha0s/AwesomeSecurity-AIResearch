@@ -427,7 +427,7 @@ def is_fresh(entry: dict, max_age_days: int, now: datetime | None = None) -> boo
     dt = parse_date_end(best_date(entry))
     if dt is None:
         return True
-    now = now or datetime.now(UTC)
+    now = now or utcnow()
     return (now - dt).days <= max_age_days
 
 
@@ -446,7 +446,7 @@ def newness_score(date: str, half_life_days: float, now: datetime | None = None)
     published = parse_month(date)
     if published is None:
         return 0
-    now = now or datetime.now(UTC)
+    now = now or utcnow()
     age_days = max(0.0, (now - published).total_seconds() / 86400.0)
     return round(100 * math.exp(-age_days / max(1.0, half_life_days)))
 
@@ -787,8 +787,13 @@ def add_candidates(new: list[dict]) -> list[dict]:
     return added
 
 
+def utcnow() -> datetime:
+    """The one wall-clock read. Tests pin it (conftest) so fixtures never age out."""
+    return datetime.now(UTC)
+
+
 def utcnow_iso() -> str:
-    return datetime.now(UTC).replace(microsecond=0).isoformat()
+    return utcnow().replace(microsecond=0).isoformat()
 
 
 def write_raw(cand_id: str, text: str) -> str:

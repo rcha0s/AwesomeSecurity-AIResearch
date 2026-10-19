@@ -2,12 +2,25 @@
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
+
 import common
 import dedupe_stories
 import pytest
 import sources_registry
 
 import claims
+
+# Fixture dates are written around mid-2026. Pin the clock so no test depends
+# on the real date: before this, fixtures aged past max_age_days and the
+# freshness prune emptied the pools mid-test (CI red from 2026-09-21).
+FIXED_NOW = datetime(2026, 7, 15, tzinfo=UTC)
+
+
+@pytest.fixture(autouse=True)
+def frozen_clock(monkeypatch):
+    monkeypatch.setattr(common, "utcnow", lambda: FIXED_NOW)
+    return FIXED_NOW
 
 
 @pytest.fixture

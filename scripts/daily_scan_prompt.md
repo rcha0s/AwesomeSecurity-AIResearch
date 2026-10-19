@@ -46,7 +46,7 @@ Follow the `/research-scan` skill (`.claude/skills/research-scan/SKILL.md`) step
 
 7. Re-render with the editorial results folded in, in order:
    `python scripts/generate_site.py`, `python scripts/generate_newsletter.py`,
-   `python scripts/generate_review.py`, `python scripts/generate_skills.py`.
+   `python scripts/generate_review.py`, `python scripts/generate_html.py`.
 
 8. Finally, print a one-block RUN SUMMARY (plain text, no code fence):
    `SCAN_RESULT: merged=<n> curated=<n> review=<n> promoted=<n> topics=<...> titles=<comma-list>`

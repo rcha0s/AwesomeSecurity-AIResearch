@@ -3,7 +3,7 @@ detection, and cross-pool index seeding for the news lane."""
 
 from __future__ import annotations
 
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
 import common as c
 import dedupe_stories as ds
@@ -99,7 +99,7 @@ def _news_row(title: str, url: str, entities_text: str = "") -> dict:
         "title": title,
         "source_url": url,
         "summary": entities_text,
-        "published": datetime.now(UTC).strftime("%Y-%m-%d"),
+        "published": c.utcnow().strftime("%Y-%m-%d"),
     }
 
 
@@ -179,7 +179,7 @@ def test_seed_from_pools_blocks_track_a_repeat(sandbox):
         topic="ai-security",
         title="Anthropic caught its own models breaching containment",
         source_url="https://www.anthropic.com/news/containment",
-        published=datetime.now(UTC).strftime("%Y-%m-%d"),
+        published=c.utcnow().strftime("%Y-%m-%d"),
     ))
     c.save_pool("ai-security", pool)
 
@@ -202,7 +202,7 @@ def test_seed_ignores_stale_pool_entries(sandbox):
         topic="ai-security",
         title="Old news that shouldn't hit the dedup window",
         source_url="https://old.example.com/x",
-        published=(datetime.now(UTC) - timedelta(days=60)).strftime("%Y-%m-%d"),
+        published=(c.utcnow() - timedelta(days=60)).strftime("%Y-%m-%d"),
     )
     pool = c.load_pool("ai-security")
     pool["entries"].append(stale)
@@ -228,7 +228,7 @@ def test_save_and_load_index_round_trips(sandbox, monkeypatch):
 
 
 def test_prune_index_drops_old_keys():
-    now = datetime.now(UTC)
+    now = c.utcnow()
     fresh = {"fp": {"url": "", "shingles": [], "entities": [], "bucket": "x"},
              "corroborators": [], "winner_tier": "high",
              "first_seen": (now - timedelta(days=10)).strftime("%Y-%m-%d")}

@@ -142,7 +142,7 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    python scripts/trends.py               # data/trends.json + TRENDS.md (emerging themes)
    python scripts/generate_newsletter.py  # NEWSLETTER.md (rolling, 3 topic sections)
    python scripts/generate_review.py      # REVIEW.md (non-vetted queue)
-   python scripts/generate_skills.py      # skills/<slug>/SKILL.md + LEARNINGS.md
+   python scripts/generate_html.py        # docs/index.html — the GitHub Pages site
    ```
    Only **vetted** findings (not `needs_review`, composite ≥ `curation.min_composite`) appear on
    the topic pages/newsletter; borderline ones land in `REVIEW.md` for a human to promote.
