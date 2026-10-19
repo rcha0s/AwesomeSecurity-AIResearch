@@ -30,6 +30,7 @@ def run_local(work: Path, env: dict, tmp: Path, rc: int = 0):
         "CLAUDE_ARGS": str(tmp / "claude-args"),
         "FAKE_CLAUDE_RC": str(rc),
         "SCAN_WORKTREE": str(tmp / "scan-worktree"),
+        "HOME": str(tmp / "home"),  # nothing a test runs may touch the real home
     }
     res = subprocess.run(
         ["/bin/bash", "scripts/run_scan_local.sh"],

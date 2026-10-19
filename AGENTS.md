@@ -126,8 +126,10 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   `python scripts/allowlist.py` plus the default package list; setup script
   `pip install -r requirements.txt`.
 - **Mac fallback:** `scripts/install_launchd.sh [HOUR MINUTE]` installs a launchd job
-  that runs `scripts/run_scan_local.sh`. The wrapper runs every guarding phase
-  itself in its own worktree (`~/.local/share/awesomesec-scan`, reset each run), and
+  that runs `scripts/run_scan_local.sh` from its own clone in
+  `~/.local/share/awesomesec-runner` (macOS won't let launchd jobs read
+  `~/Desktop`), pulled to main before each run. The wrapper runs every guarding phase
+  itself in its own worktree (`~/.local/share/awesomesec-worktree`, reset each run), and
   the model session only analyzes. It is idle on days a scan already finished;
   `--uninstall` removes it.
 - **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
