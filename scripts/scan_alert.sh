@@ -3,36 +3,34 @@
 #
 # One open `scan-failure` issue collects every failure until someone closes
 # it, so a dead pipeline is loud without opening an issue per day. REST only
-# (see lib.sh). If even the alert fails, it exits non-zero so the runner's
-# own log shows it.
+# (see lib.sh). The public issue carries the runner, phase and time, never log
+# text: logs hold model-written and ingested content, so a prompt injection
+# could use them to publish secrets. The log stays on the runner
+# (data/_scan.log locally, the session transcript in the cloud).
 #
-# Usage: scripts/scan_alert.sh <runner> <phase> [logfile]
+# Usage: scripts/scan_alert.sh <runner> <phase>
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
 runner="$1"
 phase="$2"
-log="${3:-}"
+[[ "$runner" =~ ^(cloud|local)$ ]] || runner="unknown"
+[[ "$phase" =~ ^[A-Za-z0-9_-]{1,40}$ ]] || phase="unknown"
 repo="$(repo_slug)"
 label="scan-failure"
 when="$(date -u +%Y-%m-%dT%H:%MZ)"
+where="the session transcript of the cloud run"
+[[ "$runner" == local ]] && where="data/_scan.log on the Mac"
+body="Scan failed: runner \`$runner\`, phase \`$phase\`, at $when. Details: $where."
 
-tail_text="(no log)"
-if [[ -n "$log" && -f "$log" ]]; then
-  tail_text="$(tail -n 40 "$log")"
+# Only "already exists" is expected here; any other failure is real.
+if ! out="$(gh api -X POST "repos/$repo/labels" -f name="$label" -f color=d73a4a \
+  -f description="Daily scan failed" 2>&1)"; then
+  [[ "$out" == *already_exists* ]] || {
+    echo "scan_alert: cannot create label: $out" >&2
+    exit 1
+  }
 fi
-body="Scan failed: runner \`$runner\`, phase \`$phase\`, at $when.
-
-<details><summary>Last 40 log lines</summary>
-
-\`\`\`
-$tail_text
-\`\`\`
-</details>"
-
-# 422 = the label already exists; anything else is a real error.
-gh api -X POST "repos/$repo/labels" -f name="$label" -f color=d73a4a \
-  -f description="Daily scan failed" >/dev/null 2>&1 || true
 
 open_issue="$(gh api "repos/$repo/issues?state=open&labels=$label" --jq '.[0].number // 0')"
 require_int "$open_issue" "scan_alert: open issue number"

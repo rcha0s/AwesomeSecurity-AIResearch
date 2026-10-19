@@ -53,9 +53,12 @@ limits:
                           # each run's known cost ceiling (scripts/budget.py)
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the
-# scan keeps a ledger on the `budget-ledger` branch and refuses LLM work once the
-# month's spend reaches the cap. Routines draw subscription usage first; usage
+# scan keeps a ledger on the `budget-ledger` branch, reserves each run's ceiling
+# before any LLM work, and refuses once the month's spend reaches the cap. Runs
+# read these values from origin/main, never from a working tree. Routines draw subscription usage first; usage
 # credits only cover overage (routines.md § Usage and limits).
 budget:
-  monthly_cap_usd: null   # Rohan sets this; null = every run skips LLM work
-  usd_per_story: null     # null = use the mean measured on local runs
+  monthly_cap_usd: null       # Rohan sets this; null = every run skips LLM work
+  usd_per_story: null         # null = use the mean measured on local runs
+  uncalibrated_run_usd: null  # what a first, uncalibrated local run reserves;
+                              # null = it can't run either

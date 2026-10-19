@@ -129,11 +129,19 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   that runs `scripts/run_scan_local.sh` (`claude -p "/daily-scan"`). It is idle on
   days the cloud run already recorded a ledger row; `--uninstall` removes it.
 - **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
-  Routines draw subscription usage first and can't read their balance, so each run
-  checks the month's spend against `budget.monthly_cap_usd` before any LLM work, and
-  `limits.max_stories_per_run` × the measured per-story cost bounds every run. Local
-  runs record `total_cost_usd`; cloud runs record that estimate. The cap ships as
-  `null`, which makes every run skip until it is set.
+  Routines draw subscription usage first and can't read their balance, so `pre`
+  checks the month's spend against `budget.monthly_cap_usd`, then **reserves** the
+  run's ceiling (`max_stories_per_run` × measured per-story cost, or
+  `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
+  run is still charged. Local runs replace the reservation with the measured
+  `total_cost_usd`; cloud runs are charged the ceiling. One scan per UTC day. The
+  settings come from `origin/main`, and ledger rows are appended to a fresh copy of
+  the remote branch, never read from the working tree the model shares. The cap
+  ships as `null`, which makes every run skip until it is set.
+- **Containment:** the local `claude -p` session reads only inside the repo,
+  edits only `data/`, runs only the named scripts, and fetches only a staged
+  candidate's own URL (`scripts/fetch_raw.py`). Alerts carry no log text, and the
+  PR body passes `scripts/scrub.py` (secret patterns + secret env values).
 - **GitHub in cloud sessions:** `gh pr` / `gh issue` are GraphQL and get a 403 there;
   the scripts use `gh api` (REST) only.
 - Requirement for every runner: headless Claude runs with

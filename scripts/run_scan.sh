@@ -5,15 +5,20 @@
 # around its LLM analysis, so a cloud run and a local run open a scan PR of
 # the same shape:
 #
-#   pre          sync the budget ledger, run the spend guard BEFORE any LLM
-#                work, then run every ingestor. A refused budget prints
+#   check        budget guard only (the local wrapper runs it before it pays
+#                for a `claude` session). Exit 0 = go, 3 = skip.
+#   pre          budget guard, then RESERVE the run's ceiling on the ledger
+#                BEFORE any LLM work, then every ingestor. A refusal prints
 #                SCAN_SKIP and writes data/_scan_skip; the skill stops there.
-#   post         enforce the per-run story cap, render everything, record the
-#                cloud run's estimated spend, push claude/scan-<date>-<runner>
-#                and open its PR.
-#   ledger-sync  pull the budget-ledger branch into data/_budget_ledger.json.
-#   ledger-push  push data/_budget_ledger.json to the budget-ledger branch.
+#   post         per-run story cap, render everything, push
+#                claude/scan-<date>-<runner> and open its PR.
+#   actual <stories> <cost_usd>   record a local run's measured cost.
 #   fail <phase> open or comment on the scan-failure issue.
+#
+# Trust boundary: the model shares this working tree, so nothing that guards
+# spend is read from it. The budget settings come from origin/main's
+# config.yaml, and every ledger write appends one row to a fresh copy of the
+# `budget-ledger` branch in a temp dir, never to a file under data/.
 #
 # Runner: SCAN_RUNNER=cloud (default) or local. Python: $PYTHON or python3.
 set -Eeuo pipefail # -E: the ERR trap fires inside functions too
@@ -23,69 +28,117 @@ source scripts/lib.sh
 RUNNER="${SCAN_RUNNER:-cloud}"
 PY="${PYTHON:-python3}"
 LOG="data/_scan.log"
-LEDGER="data/_budget_ledger.json"
 LEDGER_BRANCH="budget-ledger"
 SKIP_MARKER="data/_scan_skip"
 RESULT="data/_scan_result.json"
-SUMMARY="data/_scan_summary.md"
-export BUDGET_LEDGER="$LEDGER"
+SUMMARY="data/_summary.md"
+RUN_ID_FILE="data/_scan_run_id"
+WORK="$(mktemp -d)"
+trap 'rm -rf "$WORK"' EXIT
 
 INGESTORS=(aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences)
 RENDERERS=(rerank generate_site generate_claims generate_html generate_og trends
   generate_newsletter generate_review)
-PUBLISHED=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md
+# Directories, not globs: a glob would name gitignored files, and `git add`
+# exits 1 on those. `git add -A -- <dir>` skips ignored files by itself.
+PUBLISHED=(data README.md NEWSLETTER.md TRENDS.md REVIEW.md
   ai-security product-security ai-research claims docs)
+
+# The published paths that exist or are tracked; git rejects a pathspec that
+# matches neither.
+published() {
+  local p
+  for p in "${PUBLISHED[@]}"; do
+    if [[ -e "$p" ]] || git ls-files --error-unmatch -- "$p" >/dev/null 2>&1; then echo "$p"; fi
+  done
+}
 
 log() { echo "[$(date -u +%H:%M:%S)] $*" | tee -a "$LOG"; }
 
 on_error() {
   log "FAILED in phase '$1' (line $2)"
-  scripts/scan_alert.sh "$RUNNER" "$1" "$LOG" || log "alert itself failed"
+  scripts/scan_alert.sh "$RUNNER" "$1" || log "alert itself failed"
 }
 
-# Missing branch = first run, start empty. Any other git error must fail:
-# silently starting from an empty ledger would overspend.
-ledger_sync() {
+# Budget settings from origin/main: a branch the model can't push to.
+main_config() {
+  git fetch -q origin main
+  git show origin/main:config.yaml >"$WORK/config.yaml"
+}
+
+# A fresh copy of the remote ledger in $WORK/ledger.json. A missing branch
+# means the first run; any other git error fails, because starting from an
+# empty ledger would overspend.
+ledger_fetch() {
   local rc=0
   git ls-remote --exit-code --heads origin "$LEDGER_BRANCH" >/dev/null || rc=$?
   if [[ "$rc" == 2 ]]; then
-    echo '{"runs": []}' >"$LEDGER"
+    echo '{"runs": []}' >"$WORK/ledger.json"
+    LEDGER_PARENT=""
   elif [[ "$rc" == 0 ]]; then
     git fetch -q origin "$LEDGER_BRANCH"
-    git show "FETCH_HEAD:budget.json" >"$LEDGER"
+    LEDGER_PARENT="$(git rev-parse FETCH_HEAD)"
+    git show "$LEDGER_PARENT:budget.json" >"$WORK/ledger.json"
   else
     log "cannot reach origin to read the budget ledger (git exit $rc)"
     return 1
   fi
 }
 
-# Commit budget.json onto the ledger branch with plumbing: no worktree, and
-# the scan's own checkout is never touched.
-ledger_push() {
+budget() {
+  BUDGET_LEDGER="$WORK/ledger.json" "$PY" scripts/budget.py --config "$WORK/config.yaml" "$@"
+}
+
+# Commit the temp ledger onto its branch with plumbing: no worktree, and the
+# scan's own checkout is never touched. Not a force push: a concurrent writer
+# makes it fail, and ledger_append retries from a fresh fetch.
+ledger_commit() {
   local blob tree commit
   local parent=()
-  blob="$(git hash-object -w "$LEDGER")"
+  [[ -n "$LEDGER_PARENT" ]] && parent=(-p "$LEDGER_PARENT")
+  blob="$(git hash-object -w "$WORK/ledger.json")"
   tree="$(printf '100644 blob %s\tbudget.json\n' "$blob" | git mktree)"
-  if git ls-remote --exit-code --heads origin "$LEDGER_BRANCH" >/dev/null; then
-    git fetch -q origin "$LEDGER_BRANCH"
-    parent=(-p FETCH_HEAD)
-  fi
-  commit="$(git commit-tree "$tree" ${parent[@]+"${parent[@]}"} -m "budget: $RUNNER run $(date -u +%Y-%m-%d)")"
+  commit="$(git commit-tree "$tree" ${parent[@]+"${parent[@]}"} -m "budget: $1")"
   git push -q origin "$commit:refs/heads/$LEDGER_BRANCH"
-  log "ledger pushed to $LEDGER_BRANCH"
+}
+
+# Append one row (budget.py reserve|actual ...) to the remote ledger.
+ledger_append() {
+  local run_id="$1" try
+  shift
+  for try in 1 2; do
+    ledger_fetch
+    budget "$@" | tee -a "$LOG"
+    if ledger_commit "$run_id"; then
+      log "ledger: $1 recorded for $run_id"
+      return 0
+    fi
+    log "ledger push raced another writer; retrying ($try)"
+  done
+  return 1
+}
+
+guard() {
+  main_config
+  ledger_fetch
+  local repeat=()
+  [[ "${SCAN_ALLOW_REPEAT:-}" == 1 ]] && repeat=(--allow-repeat)
+  budget check --runner "$RUNNER" ${repeat[@]+"${repeat[@]}"} | tee -a "$LOG"
 }
 
 phase_pre() {
-  rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY"
-  ledger_sync
-  local rc=0
-  "$PY" scripts/budget.py check --runner "$RUNNER" | tee -a "$LOG" || rc=$?
+  rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE"
+  local rc=0 run_id
+  guard || rc=$?
   if [[ "$rc" == 3 ]]; then
     touch "$SKIP_MARKER"
     log "SCAN_SKIP: budget guard refused; no LLM work this run"
     return 0
   fi
   [[ "$rc" == 0 ]] || return "$rc"
+  run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
+  ledger_append "$run_id" reserve --runner "$RUNNER" --run-id "$run_id"
+  echo "$run_id" >"$RUN_ID_FILE"
   local failed=0
   for ing in "${INGESTORS[@]}"; do
     if "$PY" "scripts/$ing.py" >>"$LOG" 2>&1; then log "ingest ok: $ing"; else
@@ -97,18 +150,21 @@ phase_pre() {
     log "every ingestor failed"
     return 1
   fi
-  log "SCAN_READY: $("$PY" -c 'import json;print(len(json.load(open("data/candidates.json"))))') candidates"
+  log "SCAN_READY: $("$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))') candidates"
 }
 
 story_count() {
-  [[ -f data/analysis_out.json ]] || { echo 0; return; }
-  "$PY" -c 'import json;d=json.load(open("data/analysis_out.json"));print(len(d if isinstance(d,list) else d.get("entries",[])))'
+  "$PY" -c 'import json,os
+p="data/analysis_out.json"
+d=json.load(open(p)) if os.path.exists(p) else []
+print(len(d if isinstance(d,list) else (d or {}).get("entries",[])))'
 }
 
 phase_post() {
-  local stories cap
+  local stories cap day branch body
+  main_config
   stories="$(story_count)"
-  cap="$("$PY" -c 'import sys;sys.path.insert(0,"scripts");import budget;print(budget.budget_settings()["max_stories_per_run"])')"
+  cap="$("$PY" -c 'import sys;sys.path.insert(0,"scripts");import budget;print(budget.budget_settings(sys.argv[1])["max_stories_per_run"])' "$WORK/config.yaml")"
   require_int "$stories" "story count"
   require_int "$cap" "story cap"
   if ((stories > cap)); then
@@ -118,37 +174,44 @@ phase_post() {
   "$PY" scripts/add_claim.py validate >>"$LOG"
   for r in "${RENDERERS[@]}"; do "$PY" "scripts/$r.py" >>"$LOG"; done
   echo "{\"runner\": \"$RUNNER\", \"stories\": $stories}" >"$RESULT"
-  if [[ "$RUNNER" == "cloud" ]]; then
-    "$PY" scripts/budget.py record --runner cloud --stories "$stories" | tee -a "$LOG"
-    ledger_push
-  fi
-  if [[ -z "$(git status --porcelain -- "${PUBLISHED[@]}")" ]]; then
+  local paths=()
+  while IFS= read -r p; do paths+=("$p"); done < <(published)
+  if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
     log "SCAN_RESULT: no changes; no PR"
     return 0
   fi
-  local branch="claude/scan-$(date -u +%Y-%m-%d)-$RUNNER"
+  day="$(date -u +%Y-%m-%d)"
+  branch="claude/scan-$day-$RUNNER"
   git checkout -q -B "$branch"
-  git add -- "${PUBLISHED[@]}"
-  git commit -qm "chore: daily scan ($RUNNER, $(date -u +%Y-%m-%d), $stories stories)"
+  git add -A -- "${paths[@]}"
+  git commit -qm "chore: daily scan ($RUNNER, $day, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
-  local body="Daily scan, runner \`$RUNNER\`, $stories stories analyzed."
-  [[ -f "$SUMMARY" ]] && body="$(cat "$SUMMARY")"
-  scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $(date -u +%Y-%m-%d))" "$body" | tee -a "$LOG"
+  body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
+  scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
+}
+
+# The local wrapper passes the run id it set, so the row can't be redirected
+# by an edited data/_scan_run_id.
+phase_actual() {
+  local run_id="$1" stories="$2" cost="$3"
+  require_int "$stories" "actual: stories"
+  main_config
+  ledger_append "$run_id" actual --run-id "$run_id" --stories "$stories" --cost-usd "$cost"
 }
 
 main() {
   local phase="${1:-}"
   mkdir -p data
   case "$phase" in
+    check) guard ;;
     pre | post)
       trap "on_error $phase \$LINENO" ERR
       "phase_$phase"
       ;;
-    ledger-sync) ledger_sync ;;
-    ledger-push) ledger_push ;;
+    actual) phase_actual "$2" "$3" "$4" ;;
     fail) on_error "${2:-unknown}" 0 ;;
     *)
-      echo "usage: $0 pre|post|ledger-sync|ledger-push|fail <phase>" >&2
+      echo "usage: $0 check|pre|post|actual <run_id> <stories> <cost>|fail <phase>" >&2
       exit 2
       ;;
   esac

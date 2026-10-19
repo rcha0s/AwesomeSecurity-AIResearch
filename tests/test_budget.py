@@ -1,4 +1,4 @@
-"""Tests for scripts/budget.py — the spend guard runs before any LLM work (ISC-8)."""
+"""Tests for scripts/budget.py — reserve before spend; the guard runs before LLM work (ISC-8)."""
 
 from __future__ import annotations
 
@@ -6,98 +6,162 @@ import budget
 import common
 import pytest
 
-MONTH = "2026-07"  # conftest pins the clock to 2026-07-15
+TODAY = "2026-07-15"  # conftest pins the clock
+MONTH = TODAY[:7]
 
 
-def settings(cap=10.0, per_story=None, max_stories=8) -> dict:
-    return {"monthly_cap_usd": cap, "usd_per_story": per_story, "max_stories_per_run": max_stories}
-
-
-def run(date="2026-07-02", cost=1.0, stories=4, measured=True, runner="local") -> dict:
+def settings(cap=10.0, per_story=None, max_stories=8, uncalibrated=None) -> dict:
     return {
+        "monthly_cap_usd": cap,
+        "usd_per_story": per_story,
+        "uncalibrated_run_usd": uncalibrated,
+        "max_stories_per_run": max_stories,
+    }
+
+
+def row(run_id="r1", date="2026-07-02", kind="actual", cost=1.0, stories=4, runner="local"):
+    return {
+        "run_id": run_id,
         "date": date,
         "runner": runner,
+        "kind": kind,
         "stories": stories,
         "cost_usd": cost,
-        "measured": measured,
     }
 
 
 def test_no_cap_configured_skips():
-    ok, reason = budget.check([], settings(cap=None), "local", MONTH)
+    ok, reason = budget.check([], settings(cap=None), "local", TODAY)
     assert not ok and "monthly_cap_usd" in reason
 
 
 def test_exhausted_month_skips_both_runners():
-    runs = [run(cost=6.0), run(cost=4.0)]
+    runs = [row("a", cost=6.0), row("b", cost=4.0)]
     for runner in budget.RUNNERS:
-        ok, reason = budget.check(runs, settings(cap=10.0), runner, MONTH)
+        ok, reason = budget.check(runs, settings(cap=10.0), runner, TODAY)
         assert not ok and "exhausted" in reason
 
 
+def test_reservation_counts_until_an_actual_replaces_it():
+    reserved = [row("a", kind="reserve", cost=5.0, stories=0)]
+    assert budget.month_spend(reserved, MONTH) == 5.0
+    settled = reserved + [row("a", kind="actual", cost=1.5)]
+    assert budget.month_spend(settled, MONTH) == 1.5
+
+
+def test_failed_run_is_still_charged_its_reservation():
+    runs = [row("a", kind="reserve", cost=10.0, stories=0, date="2026-07-02")]
+    ok, reason = budget.check(runs, settings(cap=10.0, per_story=1.0), "cloud", TODAY)
+    assert not ok and "exhausted" in reason
+
+
 def test_previous_months_spend_does_not_count():
-    runs = [run(date="2026-06-30", cost=50.0, stories=500)]
-    ok, _ = budget.check(runs, settings(cap=10.0), "local", MONTH)
+    runs = [row(date="2026-06-30", cost=50.0, stories=500)]
+    ok, _ = budget.check(runs, settings(cap=10.0), "local", TODAY)
     assert ok
 
 
-def test_cloud_needs_a_measured_per_story_cost():
-    ok, reason = budget.check([], settings(), "cloud", MONTH)
+def test_one_scan_per_day_unless_allowed():
+    runs = [row("a", date=TODAY, cost=0.5, stories=5)]
+    ok, reason = budget.check(runs, settings(), "local", TODAY)
+    assert not ok and "already ran" in reason
+    ok, _ = budget.check(runs, settings(), "local", TODAY, allow_repeat=True)
+    assert ok
+
+
+def test_cloud_needs_calibration_and_local_needs_a_reserve():
+    ok, reason = budget.check([], settings(uncalibrated=2.0), "cloud", TODAY)
     assert not ok and "local scan first" in reason
-    ok, _ = budget.check([], settings(), "local", MONTH)
-    assert ok  # the uncalibrated local run is the calibration run
+    ok, reason = budget.check([], settings(), "local", TODAY)
+    assert not ok and "uncalibrated_run_usd" in reason
+    ok, reason = budget.check([], settings(uncalibrated=2.0), "local", TODAY)
+    assert ok and "reserves $2.00" in reason
+
+
+def test_uncalibrated_reserve_must_fit_too():
+    ok, reason = budget.check([], settings(cap=1.0, uncalibrated=2.0), "local", TODAY)
+    assert not ok and "ceiling $2.00" in reason
 
 
 def test_ceiling_must_fit_the_remaining_budget():
-    runs = [run(cost=8.0, stories=8)]  # $1/story measured, $2 left
-    ok, reason = budget.check(runs, settings(cap=10.0, max_stories=3), "cloud", MONTH)
+    runs = [row(cost=8.0, stories=8)]  # $1/story measured, $2 left
+    ok, reason = budget.check(runs, settings(cap=10.0, max_stories=3), "cloud", TODAY)
     assert not ok and "ceiling $3.00" in reason
-    ok, reason = budget.check(runs, settings(cap=10.0, max_stories=2), "cloud", MONTH)
-    assert ok and "at most $2.00" in reason
+    ok, reason = budget.check(runs, settings(cap=10.0, max_stories=2), "cloud", TODAY)
+    assert ok and "reserves $2.00" in reason
 
 
-def test_per_story_mean_uses_measured_runs_only():
-    runs = [run(cost=2.0, stories=4), run(cost=99.0, stories=1, measured=False)]
+def test_per_story_mean_uses_actual_rows_only():
+    runs = [row("a", cost=2.0, stories=4), row("b", kind="reserve", cost=99.0, stories=1)]
     assert budget.usd_per_story(runs) == pytest.approx(0.5)
     assert budget.usd_per_story(runs, override=0.25) == 0.25
 
 
-def test_cli_check_exit_codes(tmp_path, monkeypatch):
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {"cost_usd": -1000},
+        {"cost_usd": float("nan")},
+        {"cost_usd": True},
+        {"stories": -1},
+        {"date": "yesterday"},
+        {"runner": "evil"},
+        {"kind": "refund"},
+        {"run_id": ""},
+    ],
+)
+def test_invalid_rows_fail_closed(tmp_path, bad):
     ledger = tmp_path / "ledger.json"
-    monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
-    monkeypatch.setattr(budget, "budget_settings", lambda: settings(cap=None))
-    assert budget.main(["check", "--runner", "cloud"]) == budget.SKIP_EXIT
-    monkeypatch.setattr(budget, "budget_settings", lambda: settings(cap=5.0))
-    assert budget.main(["check", "--runner", "local"]) == 0
+    common.save_json(ledger, {"runs": [{**row(), **bad}]})
+    with pytest.raises(budget.LedgerError):
+        budget.load_ledger(ledger)
 
 
-def test_cli_record_measured_then_estimated(tmp_path, monkeypatch):
+def write_config(tmp_path, cap="5.0", uncalibrated="2.0", per_story="null"):
+    cfg = tmp_path / "config.yaml"
+    cfg.write_text(
+        "limits:\n  max_stories_per_run: 4\n"
+        f"budget:\n  monthly_cap_usd: {cap}\n  usd_per_story: {per_story}\n"
+        f"  uncalibrated_run_usd: {uncalibrated}\n"
+    )
+    return str(cfg)
+
+
+def test_cli_check_reserve_actual_cycle(tmp_path, monkeypatch):
     ledger = tmp_path / "ledger.json"
     monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
-    monkeypatch.setattr(budget, "budget_settings", lambda: settings(cap=5.0))
-    budget.main(["record", "--runner", "local", "--stories", "4", "--cost-usd", "2.0"])
-    budget.main(["record", "--runner", "cloud", "--stories", "3"])
+    cfg = write_config(tmp_path)
+    assert budget.main(["--config", cfg, "check", "--runner", "local"]) == 0
+    budget.main(["--config", cfg, "reserve", "--runner", "local", "--run-id", "L1"])
+    budget.main(
+        ["--config", cfg, "actual", "--run-id", "L1", "--stories", "4", "--cost-usd", "1.2"]
+    )
     rows = common.load_json(ledger)["runs"]
-    assert rows[0] == run(date="2026-07-15", cost=2.0, stories=4, measured=True)
-    assert rows[1]["cost_usd"] == pytest.approx(1.5) and rows[1]["measured"] is False
+    assert [r["kind"] for r in rows] == ["reserve", "actual"]
+    assert rows[0]["cost_usd"] == 2.0 and rows[1]["cost_usd"] == 1.2
+    assert budget.main(["--config", cfg, "check", "--runner", "cloud"]) == budget.SKIP_EXIT
 
 
-def test_cli_record_without_cost_or_calibration_fails(tmp_path, monkeypatch):
+def test_cli_cloud_reserves_calibrated_ceiling(tmp_path, monkeypatch):
+    ledger = tmp_path / "ledger.json"
+    common.save_json(ledger, {"runs": [row("L0", date="2026-07-01", cost=2.0, stories=4)]})
+    monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
+    cfg = write_config(tmp_path, cap="10.0")
+    assert budget.main(["--config", cfg, "check", "--runner", "cloud"]) == 0
+    budget.main(["--config", cfg, "reserve", "--runner", "cloud", "--run-id", "C1"])
+    assert common.load_json(ledger)["runs"][-1]["cost_usd"] == 2.0  # 4 stories x $0.50
+
+
+def test_cli_actual_needs_a_reservation(tmp_path, monkeypatch):
     monkeypatch.setenv("BUDGET_LEDGER", str(tmp_path / "ledger.json"))
-    monkeypatch.setattr(budget, "budget_settings", lambda: settings(cap=5.0))
+    cfg = write_config(tmp_path)
     with pytest.raises(SystemExit):
-        budget.main(["record", "--runner", "cloud", "--stories", "3"])
+        budget.main(
+            ["--config", cfg, "actual", "--run-id", "nope", "--stories", "1", "--cost-usd", "1"]
+        )
 
 
 def test_real_config_declares_the_guard_keys():
     s = budget.budget_settings()
-    assert "monthly_cap_usd" in s and "usd_per_story" in s
+    assert {"monthly_cap_usd", "usd_per_story", "uncalibrated_run_usd"} <= s.keys()
     assert s["max_stories_per_run"] > 0
-
-
-def test_cli_ran_today(tmp_path, monkeypatch):
-    ledger = tmp_path / "ledger.json"
-    common.save_json(ledger, {"runs": [run(date="2026-07-15", runner="cloud")]})
-    monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
-    assert budget.main(["ran-today", "--runner", "cloud"]) == 0
-    assert budget.main(["ran-today", "--runner", "local"]) == 1
