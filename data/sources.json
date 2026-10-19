@@ -129,10 +129,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 33,
-      "curated": 10
+      "ingested": 34,
+      "curated": 11
     },
-    "rank": 50.6,
+    "rank": 51.1,
     "added": "2026-07-13",
     "active": true,
     "notes": "Academic preprints",
@@ -181,10 +181,10 @@
     "tier": "high",
     "signals": {},
     "stats": {
-      "ingested": 0,
+      "ingested": 1,
       "curated": 0
     },
-    "rank": 75.0,
+    "rank": 72.5,
     "added": "2026-07-13",
     "active": true,
     "notes": "Vendor research",
@@ -340,10 +340,10 @@
     "tier": "medium",
     "signals": {},
     "stats": {
-      "ingested": 138,
-      "curated": 6
+      "ingested": 139,
+      "curated": 7
     },
-    "rank": 43.9,
+    "rank": 44.1,
     "added": "2026-07-13",
     "active": true,
     "notes": "Academic preprints",

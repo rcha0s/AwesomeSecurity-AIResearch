@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_19 current · 0 contested · 2 superseded · 1 refuted · updated 2026-09-09_
+_20 current · 0 contested · 2 superseded · 1 refuted · updated 2026-10-19_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -429,6 +429,26 @@ _Tags: `prompting`, `few-shot`, `brittleness`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Calibrate Before Use](https://arxiv.org/abs/2102.09690) | Feb 2021 |
+
+</details>
+
+<a id="claim-harness-evolution-gains-need-held-out-attribution"></a>
+
+### Gains from automatically evolving an agent harness (prompts, skills, tools, orchestration around a fixed model) are mostly search-set overfitting and extra inference compute rather than generalizable improvement, and a validation split alone does not prevent that overfitting.
+
+`harness-evolution-gains-need-held-out-attribution` · confidence **0.60** · Evaluation · standing since Oct 19, 2026
+
+**Basis —** single preprint: 11 executor models x 3 harness-evolution frameworks; in 21 settings with significant gains, overfitting and test-time scaling averaged 54% and 14% of the gain
+
+**Do this —** Accept an auto-evolved harness change only on its delta over a held-out task set the optimizer never saw, measured at matched inference budget; don't trust search-set or validation-set improvement.
+
+**Conditions —** Covers automated harness-evolution frameworks on math, coding, creativity and agentic benchmarks; the share varies widely by task, model and framework, and it says nothing about hand-engineered harness changes.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466) | Oct 19, 2026 |
 
 </details>
 

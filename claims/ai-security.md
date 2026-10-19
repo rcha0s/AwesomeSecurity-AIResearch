@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_19 current · 1 contested · 0 superseded · 2 refuted · updated 2026-09-09_
+_19 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-19_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -71,7 +71,7 @@ Indirect prompt injection — hostile instructions embedded in documents, web pa
 
 _Tags: `prompt-injection`, `rag`, `indirect`_
 
-<details><summary>Evidence (5)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -80,6 +80,7 @@ _Tags: `prompt-injection`, `rag`, `indirect`_
 | supports | [Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
 | supports | [Breaking Claude Code Opus 5 and Auto Mode](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 28, 2026 |
 | supports | [Person Hides Prompt Injection in Legal Filing Telling AI to Side with Them](https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/) | Aug 13, 2026 |
+| supports | [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) | Oct 19, 2026 |
 
 </details>
 
