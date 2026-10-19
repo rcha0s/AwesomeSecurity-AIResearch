@@ -11,7 +11,8 @@
 # Containment: this runs as Rohan on his Mac over attacker-controlled text.
 #   - dontAsk mode: only allowlisted tools run, everything else is denied.
 #     (acceptEdits would approve edits anywhere in the repo, e.g. .venv.)
-#   - Edits only under data/, never data/_scan* or candidates.json; file reads
+#   - Edits only under data/, never data/_scan*, data/_raw/ (fetch_raw.py is its
+#     only writer, so quotes ground against fetched text) or candidates.json; file reads
 #     only inside the repo; Bash only the named analysis scripts; no curl, git,
 #     gh, WebFetch or WebSearch. fetch_raw.py fetches URLs from pre's snapshot.
 #   - No outside settings or tools: --setting-sources local keeps the user's
@@ -59,7 +60,7 @@ SETTINGS='{"permissions": {
     "Edit(scripts/**)", "Edit(.claude/**)", "Edit(.github/**)", "Edit(.git/**)",
     "Edit(.venv/**)", "Edit(tests/**)", "Edit(**/*.pth)", "Edit(*.toml)", "Edit(*.cfg)",
     "Edit(config.yaml)", "Edit(ISA.md)", "Edit(CLAUDE.md)", "Edit(AGENTS.md)",
-    "Edit(data/_scan*)", "Edit(data/candidates.json)",
+    "Edit(data/_scan*)", "Edit(data/candidates.json)", "Edit(data/_raw/**)",
     "Read(~/.ssh/**)", "Read(~/.claude/**)", "Read(~/.config/**)", "Read(~/.aws/**)",
     "Read(~/.gnupg/**)", "Read(.env)", "Read(.env.*)",
     "Bash(curl *)", "Bash(wget *)", "Bash(git *)", "Bash(gh *)",
