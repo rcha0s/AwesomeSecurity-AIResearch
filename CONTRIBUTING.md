@@ -114,7 +114,7 @@ Sources live in the **ranked registry** [`data/sources.json`](data/sources.json)
 `sources.yaml` anymore. Add one with `scripts/add_source.py` (or the `/add-source` skill):
 
 ```bash
-python scripts/add_source.py x_account @simonw --topics ai-research --tier high
+python scripts/add_source.py x_account @simonw --topics ai-research --tier high  # registered; not harvested until #57
 python scripts/add_source.py blog https://blog.trailofbits.com --topics product-security
 python scripts/add_source.py github_user praetorian-inc --topics ai-security,product-security
 python scripts/add_source.py youtube https://youtube.com/@LiveOverflow --topics product-security

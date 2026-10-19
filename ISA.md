@@ -47,7 +47,7 @@ Why: nothing else is safe to build while the gate that protects main is broken.
 ### F1 · Phase 1 — one entrypoint, cloud + local (after: ISC-5)
 Why: the run must happen without a human or a Windows box.
 
-- [x] ISC-6: No Windows/WSL scan configuration remains in the repo (probe: no `*.ps1`, no `wsl`/`Agent Reach` references outside history). — 🧹 CLASS-SWEEP: Windows/WSL/Agent Reach/X-ingest refs — 18 files via `rg -i --hidden`; 3 deleted, 15 edited; content hits (findings text, `data/backlog.md` ideas) left as data
+- [x] ISC-6: No Windows/WSL scan configuration remains in the repo (probe: no `*.ps1`, no `wsl`/`Agent Reach` references outside history). — 🧹 CLASS-SWEEP: Windows/WSL/Agent Reach/X-ingest refs — 18 files via `rg -i --hidden`; 3 deleted, 15 edited; left by design: findings text, `data/backlog.md` idea lines (Rohan's text), and the `.agent-reach/` ignore line (keeps leftover cookies unstageable)
 - [ ] ISC-7: One cloud routine run and one local `claude -p` run each open a scan PR of the same shape.
 - [ ] ISC-8: A run that finds no credit budget left exits before any LLM work and says so.
 - [ ] ISC-9: A failed run opens a GitHub issue.
@@ -79,6 +79,9 @@ Handoff: Rohan still has to delete the old Windows scheduled task; note it, neve
 
 - 2026-10-19 (ISC-10, from code.claude.com/docs/en/routines.md § Usage and limits, read this session): routines "draw down subscription usage the same way interactive sessions do"; usage credits only take over as "metered overage" once the subscription limit is hit, and "without usage credits, additional runs are rejected". So cloud runs spend Rohan's subscription allowance FIRST, not granted credits. No documented way for a run to read its remaining balance or its own token use; the only aggregate view is claude.ai/settings/usage. Local `claude -p --output-format json` reports `total_cost_usd` (headless.md). ISC-8's guard therefore takes the plan's "no" branch: a repo budget ledger plus a per-run story cap, with per-story cost measured locally and applied to cloud story counts.
 - 2026-10-19: code review on #55 (6 findings) dispositioned. Adopted: sibling `gh pr view` sites in source-scout.yml + research-scan skill (one helper, `scripts/ensure_pr.sh`); Tests dispatch for GITHUB_TOKEN-made PRs; numeric guard on `gh pr list` output; drift check scoped to staged paths (pre-existing bug); progress counter. Lesson: ISC-13's first pass fixed one file without the `rg 'gh pr view'` sweep.
+
+- 2026-10-19: code review on the ISC-6 commit (#58→#59, 8 findings) dispositioned. Adopted: add-source skill's burner/harvest promise, AGENTS "scans X/Twitter" line, the acceptEdits bullet restated as an entrypoint requirement plus the stall fix, `.agent-reach/` ignore restored, CONTRIBUTING x_account example marked not-harvested, skills say "not batch-ingested; ad-hoc add.py works". Deferred to the entrypoint PR: orphaned `scripts/daily_scan_prompt.md` (becomes the /daily-scan skill). Rebutted: ISC-6 "probe fails" — the remaining hits are data and Rohan's backlog ideas, not scan configuration; `DISCOVERED_VIA=twitter` stays because ad-hoc x.com adds still use it.
+- 2026-10-19 (cloud-environments.md § GitHub proxy, read this session): in cloud sessions `gh pr` and `gh issue` get 403 (the proxy blocks GraphQL); REST via `gh api repos/...` works. So `ensure_pr.sh` and the failure alert (ISC-9) must use `gh api`, not `gh pr`/`gh issue`.
 
 ## Verification
 

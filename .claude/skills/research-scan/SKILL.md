@@ -9,7 +9,7 @@ Batch pipeline that turns fresh security/AI material into scored, source-cited,
 actionable pool entries. You (the model) are the analysis engine — the Python
 scripts handle deterministic ingestion, merging, ranking, and rendering.
 
-Run everything from the repo root. X/Twitter is not ingested (#57).
+Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc `add.py <x.com URL>` still works.
 
 ## Steps
 

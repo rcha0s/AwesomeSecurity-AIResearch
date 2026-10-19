@@ -6,7 +6,8 @@ branch and a PR you review/merge on GitHub. Nothing is merged unseen.
 
 ## What this project is
 
-An auto-updating analyzer that scans X/Twitter, LinkedIn/articles, and RSS for
+An auto-updating analyzer that scans RSS, research sitemaps, GitHub, GHSA, HN and
+peer-reviewed venues (plus ad-hoc LinkedIn/X/article adds) for
 **AI and security** material, extracts the most *teachable* lessons, scores them by
 newness / novelty / relevance, derives an actionable leverage per finding, and grows
 three source-cited public knowledge directories — **`ai-security/`**, **`product-security/`**,
@@ -118,8 +119,10 @@ The daily scan runs as a Claude Code cloud routine, with this Mac (launchd +
 `claude -p`) as the fallback; both call one entrypoint and open a scan PR (see
 `ISA.md` F1). Until the entrypoint lands, run `/research-scan` by hand.
 
-- Headless Claude runs with `--permission-mode acceptEdits` + an explicit
-  `--allowedTools` list (NOT `--dangerously-skip-permissions`).
+- Requirement for the entrypoint: headless Claude runs with
+  `--permission-mode acceptEdits` + an explicit `--allowedTools` list, never
+  `--dangerously-skip-permissions`. If a tool prompt stalls an unattended run,
+  widen `permissions.allow` rather than skipping permissions.
 - The curation gate still holds weak/ungrounded findings in `REVIEW.md`; only
   genuinely novel, grounded, verified items land in the curated view.
 - After the novelty gate, a **separate editorial pass** (the `editorial-review`

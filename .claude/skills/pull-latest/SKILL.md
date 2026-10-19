@@ -51,8 +51,8 @@ feed summary to classify from), so it's slower than the others — expect
 it to take longer per candidate than a plain feed fetch.
 
 **Not run here:** `ingest_youtube.py` (not in `/research-scan`
-either — track separately if you want it). X/Twitter is not ingested
-anywhere yet (#57).
+either — track separately if you want it). X/Twitter is not batch-ingested
+yet (#57); ad-hoc `add.py <x.com URL>` still works.
 
 Report per script: candidates added, and any failure. Then read
 `data/candidates.json` and note the running total.
