@@ -1,6 +1,6 @@
 ---
 name: research-scan
-description: Scan the X/Twitter feed + RSS for AI and security material, extract teachable lessons, score newness/novelty/relevance, derive actionable leverage, and grow the security/ and ai/ knowledge pools. Use for a full batch refresh (self-pace with /loop).
+description: Scan the registered sources (RSS, sitemaps, GitHub, GHSA, HN, conferences) for AI and security material, extract teachable lessons, score newness/novelty/relevance, derive actionable leverage, and grow the security/ and ai/ knowledge pools. Use for a full batch refresh (self-pace with /loop).
 ---
 
 # research-scan
@@ -9,21 +9,12 @@ Batch pipeline that turns fresh security/AI material into scored, source-cited,
 actionable pool entries. You (the model) are the analysis engine — the Python
 scripts handle deterministic ingestion, merging, ranking, and rendering.
 
-Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
+Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc `add.py <x.com URL>` still works.
 
 ## Steps
 
 1. **Ingest → stage candidates** (writes `data/candidates.json`, gitignored).
-   Twitter ingest MUST run inside WSL2 (that's where `twitter`/`agent-reach` live) with
-   the burner env sourced and the WSL venv:
-   ```bash
-   wsl bash -lc 'source ~/.agent-reach/twitter.env
-     cd /mnt/c/Users/rohan/Desktop/AwesomeSecurityResearch
-     ~/.venvs/asr/bin/python scripts/ingest_twitter.py --max 20
-     ~/.venvs/asr/bin/python scripts/aggregate.py'
-   ```
-   The other ingestors run fine on Windows Python (no WSL, no cookies) and should also
-   run each scan for breadth:
+   Run every ingestor each scan for breadth (no cookies; `gh` must be authed):
    ```bash
    python scripts/aggregate.py       # RSS/Atom + newsletter feeds (the registry)
    python scripts/ingest_sitemap.py  # sitemap.xml for research_index sources with no feed (e.g. Anthropic)
@@ -33,10 +24,6 @@ Run everything from the repo root. Twitter ingestion needs Agent Reach in WSL2.
    python scripts/ingest_conferences.py  # accepted papers at USENIX/NDSS/SaTML/AISec/CCS
                                          # (+security-gated NeurIPS/ICML/ISSTA) via arXiv
    ```
-   If Twitter ingest reports Agent Reach unhealthy, the cookies likely expired — refresh the
-   burner's `auth_token`+`ct0` into `~/.agent-reach/twitter.env` — and continue with the rest.
-   Note: the burner's **home feed is often low-signal** (algorithmic timeline); the
-   high-signal material comes from the curated `x_account` sources in the registry.
 
 2. **Read the candidates.** Load `data/candidates.json`. For each candidate, read its
    `raw_path` file under `data/_raw/` for the full article text. If `raw_path` is null

@@ -34,8 +34,8 @@ keep scanning.
      several). If unsure, omit — findings get classified at analysis time anyway.
    - **tier** is your authority call (high = first-party/renowned researcher;
      medium = solid practitioner; low = worth watching). It anchors the rank.
-   - For `x_account`, the user must also **follow the account on the burner** so
-     it appears in scans (the registry lists it; the burner following surfaces it).
+   - `x_account` sources are registered and ranked but **not harvested** until the
+     local X runner lands (#57). Tell the user so when they add one.
    - For `github_user`, follower count is fetched automatically; for others you
      may pass `--followers/--stars/--subscribers` if you know them.
 

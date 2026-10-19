@@ -3,11 +3,7 @@
 This repo was built locally. Follow either path below to get it onto your GitHub.
 
 > One-time cleanup: a partial `.git` folder may exist from the build environment.
-> Delete it first so you start clean. On Windows PowerShell, from the project folder:
->
-> ```powershell
-> Remove-Item -Recurse -Force .git -ErrorAction SilentlyContinue
-> ```
+> Delete it first so you start clean: `rm -rf .git` from the project folder.
 
 ## Option A — GitHub CLI (fastest)
 
@@ -39,31 +35,23 @@ git push -u origin main
 
 ## After pushing
 
-1. **Enable the render workflow.** `.github/workflows/update.yml` re-ranks the pools and regenerates the site weekly + on push. Go to **Settings → Actions → General → Workflow permissions** → **Read and write permissions**, then run it once from the **Actions** tab → *Render research site*. (It does **not** scan Twitter or run the LLM — that happens locally.)
+1. **Enable the render workflow.** `.github/workflows/update.yml` re-ranks the pools and regenerates the site weekly + on push. Go to **Settings → Actions → General → Workflow permissions** → **Read and write permissions**, then run it once from the **Actions** tab → *Render research site*. (It does **not** run the LLM; the daily scan does that.)
 2. **Add topics**: `security`, `ai`, `awesome`, `ai-security`, `web-security`, `mobile-security`, `agents`, `research`.
 3. **Set the description**: "Auto-updating, source-cited pool of the most teachable AI and security research."
 
 ## One-time local setup (for scanning)
 
-Twitter/article ingestion runs locally (in **WSL2**), never in CI. See [AGENTS.md](AGENTS.md).
+See [AGENTS.md](AGENTS.md) for the daily scan (cloud routine, Mac fallback).
 
 ```bash
 pip install -r requirements.txt
-# Agent Reach is NOT on PyPI — install from its GitHub archive:
-pipx install https://github.com/Panniantong/agent-reach/archive/main.zip
-agent-reach install --env=auto --channels twitter,linkedin   # --dry-run to preview
-agent-reach configure --from-browser chrome   # from the browser logged into the BURNER
-#   …or paste manually: agent-reach configure twitter-cookies '<cookie json>'
-agent-reach doctor --json           # confirm the twitter backend is ok
+gh auth login   # GitHub + GHSA ingestors
 ```
-
-Follow the AI/security accounts you want on the burner, and list them under
-`scripts/sources.yaml → twitter.accounts`.
 
 ## Day-to-day maintenance
 
 - **Capture one resource:** `python scripts/add.py "<url>"`, then run the **`/add-resource`** skill — it shows the teachable summary, takeaway, and action, and files it.
-- **Batch scan** your X feed + RSS: run the **`/research-scan`** skill (self-pace with `/loop 12h /research-scan`).
+- **Batch scan** the registered sources: run the **`/research-scan`** skill (self-pace with `/loop 12h /research-scan`).
 - **Just re-render** from the pools:
 
   ```bash
@@ -79,5 +67,4 @@ findings are flagged `needs_review` until verified.
 ## Further development with firstmate
 
 This repo is onboarded to **firstmate** (see [AGENTS.md](AGENTS.md) + `data/backlog.md`).
-From WSL2, launch firstmate and point it at `/mnt/c/Users/rohan/Desktop/AwesomeSecurityResearch`;
-dispatch `ship`/`scout` tasks to evolve the pipeline via PRs.
+Launch firstmate and point it at your clone; dispatch `ship`/`scout` tasks to evolve the pipeline via PRs.

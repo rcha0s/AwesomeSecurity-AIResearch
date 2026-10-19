@@ -14,17 +14,6 @@
 # as `max_age_days` — a single source of truth used by every ingestor and the
 # pool-pruning step. We track only the latest research.
 
-# ---------------------------------------------------------------------------
-# Twitter / X ingestion (via Agent Reach -> twitter-cli). Runs LOCALLY only —
-# never in CI (datacenter-IP ban risk). Use a DEDICATED BURNER account and
-# follow the AI/security accounts you want tracked on it.
-# ---------------------------------------------------------------------------
-twitter:
-  home_feed: true          # scan the burner's home timeline
-  # Curated X accounts now live in the ranked registry (data/sources.json,
-  # type: x_account) — add with `python scripts/add_source.py x_account @handle`.
-  # Per-run caps live in config.yaml (limits.twitter_feed / twitter_user_posts).
-
 # LinkedIn is auth-walled; ad-hoc adds fall back to pasted text/file. Handled
 # by scripts/add.py, not the batch aggregator.
 linkedin:
@@ -32,7 +21,7 @@ linkedin:
 
 # ---------------------------------------------------------------------------
 # GitHub trending/novel repo discovery (via `gh search repos`). Surfaces new
-# security research, tools, vulns, and patterns. Runs on Windows (gh is authed).
+# security research, tools, vulns, and patterns. Needs `gh` authed.
 # Novelty is judged at analysis time; well-known/old repos score low and are
 # held as needs_review by the curation gate.
 # ---------------------------------------------------------------------------
@@ -47,7 +36,7 @@ github:
 # Hacker News discovery (via the keyless Algolia API). A velocity signal: it
 # surfaces a wave breaking hours-to-days before it reaches a curated feed. Only
 # stories that keyword-match a topic AND clear the points floor are staged;
-# novelty/curation is judged at analysis time. Runs on Windows or WSL (network).
+# novelty/curation is judged at analysis time. Network only.
 # ---------------------------------------------------------------------------
 hackernews:
   min_points: 40        # keyword-search story score floor (noise gate)
@@ -124,7 +113,7 @@ conferences:
 # ---------------------------------------------------------------------------
 # GitHub Advisory Database (GHSA) discovery (via authed `gh api /advisories`).
 # Human-reviewed supply-chain disclosures — the dependency/package attack
-# surface an appsec reader must track. Runs on Windows or WSL (needs `gh`).
+# surface an appsec reader must track. Needs `gh` authed.
 # ---------------------------------------------------------------------------
 ghsa:
   enabled: true
