@@ -29,20 +29,32 @@ fi
 
 HOUR="${1:-9}"
 MINUTE="${2:-30}"
+# The path goes into XML and a single-quoted shell string unescaped.
+if [[ "$RUNNER" == *[\'\&\<\>]* ]]; then
+  echo "install_launchd: runner path can't contain ' & < >: $RUNNER" >&2
+  exit 1
+fi
 if [[ ! -d "$RUNNER/.git" ]]; then
   mkdir -p "$(dirname "$RUNNER")"
   git clone -q "$(git -C "$SRC" remote get-url origin)" "$RUNNER"
 fi
-git -C "$RUNNER" pull -q --ff-only origin main
+# Machine-owned clone: always match main, even if it diverged.
+git -C "$RUNNER" fetch -q origin main
+git -C "$RUNNER" reset -q --hard origin/main
 # macOS's /usr/bin/python3 is too old for requirements.txt; uv brings 3.12.
+# Built aside and swapped in only once it works, so a failed re-install
+# leaves the scheduled job its old venv.
+rm -rf "$RUNNER/.venv.new"
+uv venv -q --python 3.12 "$RUNNER/.venv.new"
+VIRTUAL_ENV="$RUNNER/.venv.new" uv pip install -q -r "$RUNNER/requirements.txt"
 rm -rf "$RUNNER/.venv"
-uv venv -q --python 3.12 "$RUNNER/.venv"
-VIRTUAL_ENV="$RUNNER/.venv" uv pip install -q -r "$RUNNER/requirements.txt"
+mv "$RUNNER/.venv.new" "$RUNNER/.venv"
 mkdir -p "$HOME/Library/LaunchAgents" "$RUNNER/data"
-# Fast-forward first, so the wrapper itself is main's current version.
-# No '&' or '<': this string goes into the plist's XML unescaped.
-RUN="cd '$RUNNER' || exit 1; git pull -q --ff-only origin main; exec /bin/bash scripts/run_scan_local.sh"
-cat >"$PLIST" <<EOF
+# Match main first, so the wrapper itself is main's current version. If that
+# fails (offline), the wrapper's own fetch fails too and raises the alert.
+RUN="cd '$RUNNER' || exit 1; git fetch -q origin main; git reset -q --hard origin/main; exec /bin/bash scripts/run_scan_local.sh"
+NEW="$PLIST.new"
+cat >"$NEW" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -58,7 +70,8 @@ cat >"$PLIST" <<EOF
 </dict>
 </plist>
 EOF
-plutil -lint "$PLIST" >/dev/null
+plutil -lint "$NEW" >/dev/null
+mv "$NEW" "$PLIST"
 launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
 launchctl bootstrap "$DOMAIN" "$PLIST"
 echo "Installed $LABEL: daily at $(printf '%02d:%02d' "$HOUR" "$MINUTE"), runs from $RUNNER (logs in its data/)"
