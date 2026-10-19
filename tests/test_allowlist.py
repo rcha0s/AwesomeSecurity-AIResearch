@@ -1,0 +1,28 @@
+"""Tests for scripts/allowlist.py — every fetched host is in the cloud allowlist."""
+
+from __future__ import annotations
+
+import allowlist
+
+
+def test_source_hosts_takes_feed_handle_and_site_url():
+    sources = [
+        {"type": "rss", "handle": "https://feeds.example.com/rss", "url": "https://Example.com"},
+        {"type": "research_index", "url": "https://www.anthropic.com/research"},
+        {"type": "rss", "handle": "https://off.example.org/feed", "active": False},
+        {"type": "x_account", "handle": "@someone"},
+    ]
+    assert allowlist.source_hosts(sources) == {
+        "feeds.example.com",
+        "example.com",
+        "www.anthropic.com",
+    }
+
+
+def test_fixed_hosts_cover_the_ingestor_apis():
+    import common
+    import ingest_conferences
+    import ingest_hn
+
+    for url in (common.JINA_READER, ingest_conferences.ARXIV_API, ingest_hn.HN_SEARCH):
+        assert any(h in url for h in allowlist.FIXED_HOSTS), url
