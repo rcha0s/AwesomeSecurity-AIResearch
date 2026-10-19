@@ -6,7 +6,7 @@
 # (see lib.sh). The public issue carries the runner, phase and time, never log
 # text: logs hold model-written and ingested content, so a prompt injection
 # could use them to publish secrets. The log stays on the runner
-# (the scan worktree's data/_scan.log locally, the session transcript in the cloud).
+# (data/_scan.log in the Mac checkout, the session transcript in the cloud).
 #
 # Usage: scripts/scan_alert.sh <runner> <phase>
 set -euo pipefail
@@ -20,7 +20,7 @@ repo="$(repo_slug)"
 label="scan-failure"
 when="$(date -u +%Y-%m-%dT%H:%MZ)"
 where="the session transcript of the cloud run"
-[[ "$runner" == local ]] && where="data/_scan.log in the Mac scan worktree"
+[[ "$runner" == local ]] && where="data/_scan.log in the Mac checkout"
 body="Scan failed: runner \`$runner\`, phase \`$phase\`, at $when. Details: $where."
 
 # Only "already exists" is expected here; any other failure is real.

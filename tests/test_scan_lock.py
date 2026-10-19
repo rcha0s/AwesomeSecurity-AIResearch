@@ -62,3 +62,17 @@ def json_copy(d: dict) -> dict:
     import json
 
     return json.loads(json.dumps(d))
+
+
+def test_published_entries_keep_their_grounding_under_the_lock(sandbox, monkeypatch):
+    """Regression: re-grounding the pools mid-scan must not demote old entries,
+    whose raw text isn't staged and whose URLs sit outside the lock."""
+    monkeypatch.setattr(common, "main_entry_ids", lambda: {"old-1"})
+    monkeypatch.setenv(common.SCAN_LOCK_ENV, "1")
+    lessons = [{"point": "p", "excerpt": "quoted", "grounded": True}]
+    old = {"id": "old-1", "article_url": "https://elsewhere.example/x", "grounding_score": 1.0}
+    old["lessons"] = lessons
+    kept = verify_citations.ground_entry(json_copy(old))
+    assert kept["grounding_score"] == 1.0 and verify_citations.fully_grounded(kept)
+    new = {**json_copy(old), "id": "new-1"}
+    assert verify_citations.ground_entry(new)["grounding_score"] == 0.0

@@ -28,7 +28,7 @@ source scripts/lib.sh
 
 RUNNER="${SCAN_RUNNER:-cloud}"
 PY="${PYTHON:-python3}"
-LOG="data/_scan.log"
+LOG="${SCAN_LOG:-data/_scan.log}" # the Mac wrapper keeps it outside its worktree
 LEDGER_BRANCH="budget-ledger"
 SKIP_MARKER="data/_scan_skip"
 RESULT="data/_scan_result.json"

@@ -825,6 +825,28 @@ def check_scan_lock(url: str) -> None:
         raise PermissionError(f"scan lock: {url} is not a staged candidate URL")
 
 
+_MAIN_IDS: set[str] | None = None
+
+
+def main_entry_ids() -> set[str]:
+    """Ids of every pool entry on origin/main (cached). Entries absent from main
+    are this run's own; the scan lock judges only those."""
+    global _MAIN_IDS
+    if _MAIN_IDS is None:
+        import subprocess
+
+        ids: set[str] = set()
+        for path in POOL_FILES.values():
+            rel = path.relative_to(ROOT).as_posix()
+            out = subprocess.run(
+                ["git", "show", f"origin/main:{rel}"], cwd=ROOT, capture_output=True, text=True
+            )
+            if out.returncode == 0:
+                ids |= {e.get("id") for e in json.loads(out.stdout).get("entries", [])}
+        _MAIN_IDS = ids
+    return _MAIN_IDS
+
+
 def raw_file(raw_path: str | None) -> Path | None:
     """The cached source file for a raw_path, only if it lives under data/_raw/.
 

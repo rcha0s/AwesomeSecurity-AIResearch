@@ -14,29 +14,16 @@ Usage:
 
 from __future__ import annotations
 
-import json
-import subprocess
 import sys
 
 import common as c
 
 
-def main_pool_ids(topic: str) -> set[str]:
-    rel = c.POOL_FILES[topic].relative_to(c.ROOT).as_posix()
-    out = subprocess.run(
-        ["git", "show", f"origin/main:{rel}"], cwd=c.ROOT, capture_output=True, text=True
-    )
-    if out.returncode != 0:  # a pool new on this branch: nothing on main yet
-        return set()
-    return {e.get("id") for e in json.loads(out.stdout).get("entries", [])}
-
-
 def new_entries() -> int:
-    count = 0
-    for topic in c.TOPICS:
-        before = main_pool_ids(topic)
-        count += sum(1 for e in c.load_pool(topic)["entries"] if e.get("id") not in before)
-    return count
+    on_main = c.main_entry_ids()
+    return sum(
+        1 for topic in c.TOPICS for e in c.load_pool(topic)["entries"] if e.get("id") not in on_main
+    )
 
 
 def analysis_count() -> int:

@@ -48,7 +48,10 @@ CLAUDE="${CLAUDE_BIN:-claude}" # tests point this at a fake
 WT="${SCAN_WORKTREE:-$HOME/.local/share/awesomesec-scan}"
 SCAN_DIR="$REPO" # where `fail` finds run_scan.sh; the worktree once it's ready
 OUT="$(mktemp)"
-LOG="data/_scan.log"
+# Outside the worktree, which every run cleans: the log an alert points to
+# survives, and the model session (confined to the worktree) can't read it.
+export SCAN_LOG="$REPO/data/_scan.log"
+LOG="$SCAN_LOG"
 trap 'rm -f "$OUT"' EXIT
 
 TOOLS="Read,Edit,Write,Glob,Grep,Bash,Task"
@@ -74,7 +77,7 @@ SETTINGS='{"permissions": {
 }}'
 
 fail() {
-  echo "[local] $1" | tee -a "$SCAN_DIR/$LOG"
+  echo "[local] $1" | tee -a "$LOG"
   "$SCAN_DIR/scripts/run_scan.sh" fail "$1"
   exit 1
 }
@@ -82,6 +85,8 @@ fail() {
 reset_worktree() {
   git -C "$REPO" fetch -q origin main || return 1
   if [[ ! -e "$WT/.git" ]]; then
+    # A worktree deleted from disk stays registered and blocks `worktree add`.
+    git -C "$REPO" worktree prune || return 1
     mkdir -p "$(dirname "$WT")" || return 1
     git -C "$REPO" worktree add -q --detach "$WT" origin/main || return 1
   fi
