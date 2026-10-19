@@ -55,7 +55,7 @@ Why: the run must happen without a human or a Windows box.
 - [ ] ISC-11: (BLOCKED on Rohan: approve creating the routine + its Custom environment) The cloud routine is created only after ISC-8 holds, and is reported to Rohan before its first scheduled run (probe: routine listed via `/schedule list`; creation PR/Log row dated after ISC-8).
 - [x] ISC-12: An issue exists for X/Twitter ingest as a future local-only runner (probe: `gh issue list`). — #57
 - [x] ISC-13: The render job opens its PR when it has drift (probe: the open-PR check uses `gh pr list --state open --head`; a dispatch run with drift opens one). — #55 via `scripts/ensure_pr.sh` (all 3 call sites); run 39213841133 opened #56, run 39214161882 reused it; pytest check-run green on #56 head 23fd86e
-- [ ] Anti ISC-A2: No F1 change merges without `/security-review`, `/code-review` and a green Tests check (probe: each PR's checks + review notes).
+- [x] Anti ISC-A2: No F1 change merges without `/security-review`, `/code-review` and a green Tests check (probe: each PR's checks + review notes). — #55, #59, #61: `/security-review` + `/code-review` dispositioned in Decisions, Tests green at merge
 
 Handoff: Rohan still has to delete the old Windows scheduled task; note it, never block on it. Commit attribution per harness settings. Every change lands as branch + PR.
 
