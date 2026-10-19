@@ -50,10 +50,9 @@ python scripts/ingest_github.py        # trending/novel security repos (needs `g
 feed summary to classify from), so it's slower than the others — expect
 it to take longer per candidate than a plain feed fetch.
 
-**Not run here:** `ingest_twitter.py` (needs WSL2 + burner cookies —
-out of scope for a headless refresh; if the user wants Twitter,
-invoke `/research-scan` directly). `ingest_youtube.py` (not in
-`/research-scan` either — track separately if you want it).
+**Not run here:** `ingest_youtube.py` (not in `/research-scan`
+either — track separately if you want it). X/Twitter is not ingested
+anywhere yet (#57).
 
 Report per script: candidates added, and any failure. Then read
 `data/candidates.json` and note the running total.
@@ -104,11 +103,8 @@ fixed `chore/research-scan-refresh` branch.
 Do NOT re-run render commands here. Do NOT try to commit, push, or
 open a PR here. Those are `/research-scan`'s job.
 
-Note: `/research-scan` step 1 re-runs the ingest scripts (including
-Twitter if WSL2 is set up). The re-ingest is idempotent, so no harm.
-The Twitter concern is deliberately not raised at the gate — users
-who invoke `pull-latest` are assumed to know that the full pipeline
-delegates to `/research-scan`.
+Note: `/research-scan` step 1 re-runs the ingest scripts. The
+re-ingest is idempotent, so no harm.
 
 ### 4. Report back
 

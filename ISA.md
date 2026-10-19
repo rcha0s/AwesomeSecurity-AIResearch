@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 8/13
+progress: 9/13
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -47,7 +47,7 @@ Why: nothing else is safe to build while the gate that protects main is broken.
 ### F1 · Phase 1 — one entrypoint, cloud + local (after: ISC-5)
 Why: the run must happen without a human or a Windows box.
 
-- [ ] ISC-6: No Windows/WSL scan configuration remains in the repo (probe: no `*.ps1`, no `wsl`/`Agent Reach` references outside history).
+- [x] ISC-6: No Windows/WSL scan configuration remains in the repo (probe: no `*.ps1`, no `wsl`/`Agent Reach` references outside history). — 🧹 CLASS-SWEEP: Windows/WSL/Agent Reach/X-ingest refs — 18 files via `rg -i --hidden`; 3 deleted, 15 edited; content hits (findings text, `data/backlog.md` ideas) left as data
 - [ ] ISC-7: One cloud routine run and one local `claude -p` run each open a scan PR of the same shape.
 - [ ] ISC-8: A run that finds no credit budget left exits before any LLM work and says so.
 - [ ] ISC-9: A failed run opens a GitHub issue.

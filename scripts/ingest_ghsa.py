@@ -9,7 +9,7 @@ Pulls recently-published, human-reviewed advisories via the authed `gh` CLI
 stages them as candidates. GHSA is a disclosure-velocity signal for the
 dependency/package attack surface — the material an appsec reader must track.
 
-Runs on Windows or WSL (needs `gh` authenticated). No LLM here.
+Needs `gh` authenticated. No LLM here.
 
 Usage:
     python scripts/ingest_ghsa.py --dry-run
