@@ -7,7 +7,7 @@
 #
 #   check        budget guard only (the local wrapper runs it before it pays
 #                for a `claude` session). Exit 0 = go, 3 = skip.
-#   ceiling      print the run's cost ceiling (the local --max-budget-usd).
+#   session-limits  print "<max_budget_usd> <max_turns>" for the local session.
 #   pre          budget guard, then RESERVE the run's ceiling on the ledger
 #                BEFORE any LLM work, then every ingestor. A refusal prints
 #                SCAN_SKIP and writes data/_scan_skip; the skill stops there.
@@ -64,10 +64,14 @@ on_error() {
   scripts/scan_alert.sh "$RUNNER" "$1" || log "alert itself failed"
 }
 
+# Every step in these helpers checks its own exit status: they are called
+# from `||` and `if` contexts, where bash turns errexit off, and a git failure
+# that slipped through would let the guard read a stale or empty ledger as GO.
+
 # Budget settings from origin/main: a branch the model can't push to.
 main_config() {
-  git fetch -q origin main
-  git show origin/main:config.yaml >"$WORK/config.yaml"
+  git fetch -q origin main || return 1
+  git show origin/main:config.yaml >"$WORK/config.yaml" || return 1
 }
 
 # A fresh copy of the remote ledger in $WORK/ledger.json. A missing branch
@@ -75,14 +79,15 @@ main_config() {
 # empty ledger would overspend.
 ledger_fetch() {
   local rc=0
+  rm -f "$WORK/ledger.json"
   git ls-remote --exit-code --heads origin "$LEDGER_BRANCH" >/dev/null || rc=$?
   if [[ "$rc" == 2 ]]; then
-    echo '{"runs": []}' >"$WORK/ledger.json"
+    echo '{"runs": []}' >"$WORK/ledger.json" || return 1
     LEDGER_PARENT=""
   elif [[ "$rc" == 0 ]]; then
-    git fetch -q origin "$LEDGER_BRANCH"
-    LEDGER_PARENT="$(git rev-parse FETCH_HEAD)"
-    git show "$LEDGER_PARENT:budget.json" >"$WORK/ledger.json"
+    git fetch -q origin "$LEDGER_BRANCH" || return 1
+    LEDGER_PARENT="$(git rev-parse FETCH_HEAD)" || return 1
+    git show "$LEDGER_PARENT:budget.json" >"$WORK/ledger.json" || return 1
   else
     log "cannot reach origin to read the budget ledger (git exit $rc)"
     return 1
@@ -95,24 +100,24 @@ budget() {
 
 # Commit the temp ledger onto its branch with plumbing: no worktree, and the
 # scan's own checkout is never touched. Not a force push: a concurrent writer
-# makes it fail, and ledger_append retries from a fresh fetch.
+# makes it fail, and the callers retry from a fresh fetch.
 ledger_commit() {
   local blob tree commit
   local parent=()
   [[ -n "$LEDGER_PARENT" ]] && parent=(-p "$LEDGER_PARENT")
-  blob="$(git hash-object -w "$WORK/ledger.json")"
-  tree="$(printf '100644 blob %s\tbudget.json\n' "$blob" | git mktree)"
-  commit="$(git commit-tree "$tree" ${parent[@]+"${parent[@]}"} -m "budget: $1")"
+  blob="$(git hash-object -w "$WORK/ledger.json")" || return 1
+  tree="$(printf '100644 blob %s\tbudget.json\n' "$blob" | git mktree)" || return 1
+  commit="$(git commit-tree "$tree" ${parent[@]+"${parent[@]}"} -m "budget: $1")" || return 1
   git push -q origin "$commit:refs/heads/$LEDGER_BRANCH"
 }
 
-# Append one row (budget.py reserve|actual ...) to the remote ledger.
+# Append one row (budget.py actual|done ...) to the remote ledger.
 ledger_append() {
   local run_id="$1" try
   shift
   for try in 1 2; do
-    ledger_fetch
-    budget "$@" | tee -a "$LOG"
+    ledger_fetch || return 1
+    budget "$@" | tee -a "$LOG" || return 1
     if ledger_commit "$run_id"; then
       log "ledger: $1 recorded for $run_id"
       return 0
@@ -122,26 +127,47 @@ ledger_append() {
   return 1
 }
 
+# The spend check alone (exit 0 go, 3 skip, else error).
 guard() {
-  main_config
-  ledger_fetch
-  local repeat=()
+  local repeat=() rc=0
   [[ "${SCAN_ALLOW_REPEAT:-}" == 1 ]] && repeat=(--allow-repeat)
-  budget check --runner "$RUNNER" ${repeat[@]+"${repeat[@]}"} | tee -a "$LOG"
+  main_config || return 1
+  ledger_fetch || return 1
+  budget check --runner "$RUNNER" ${repeat[@]+"${repeat[@]}"} | tee -a "$LOG" || rc=$?
+  return "$rc"
+}
+
+# Check and reserve against the same fetched ledger. If the push loses a race,
+# the retry re-runs the check on the newer ledger, so two runners can't both
+# reserve the last of the budget or the same day.
+check_and_reserve() {
+  local run_id="$1" try rc
+  for try in 1 2; do
+    rc=0
+    guard || rc=$?
+    [[ "$rc" == 0 ]] || return "$rc"
+    budget reserve --runner "$RUNNER" --run-id "$run_id" | tee -a "$LOG" || return 1
+    if ledger_commit "$run_id"; then
+      log "ledger: reserve recorded for $run_id"
+      return 0
+    fi
+    log "ledger push raced another writer; re-checking ($try)"
+  done
+  return 1
 }
 
 phase_pre() {
-  rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE"
+  rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" \
+    data/analysis_out.json data/editorial_out.json
   local rc=0 run_id
-  guard || rc=$?
+  run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
+  check_and_reserve "$run_id" || rc=$?
   if [[ "$rc" == 3 ]]; then
     touch "$SKIP_MARKER"
     log "SCAN_SKIP: budget guard refused; no LLM work this run"
     return 0
   fi
   [[ "$rc" == 0 ]] || return "$rc"
-  run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
-  ledger_append "$run_id" reserve --runner "$RUNNER" --run-id "$run_id"
   echo "$run_id" >"$RUN_ID_FILE"
   local failed=0
   for ing in "${INGESTORS[@]}"; do
@@ -158,17 +184,13 @@ phase_pre() {
   log "SCAN_READY: $("$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))') candidates"
 }
 
-story_count() {
-  "$PY" -c 'import json,os
-p="data/analysis_out.json"
-d=json.load(open(p)) if os.path.exists(p) else []
-print(len(d if isinstance(d,list) else (d or {}).get("entries",[])))'
-}
-
 phase_post() {
-  local stories cap day branch body
+  local stories cap day branch body run_id
+  run_id="$(cat "$RUN_ID_FILE")"
   main_config
-  stories="$(story_count)"
+  # The larger of analysis_out.json and entries new since main: the model
+  # could merge several capped batches before post sees only the last.
+  stories="$("$PY" scripts/scan_count.py)"
   cap="$("$PY" -c 'import sys;sys.path.insert(0,"scripts");import budget;print(budget.budget_settings(sys.argv[1])["max_stories_per_run"])' "$WORK/config.yaml")"
   require_int "$stories" "story count"
   require_int "$cap" "story cap"
@@ -186,6 +208,7 @@ phase_post() {
   if [[ ${#paths[@]} -gt 0 ]]; then changes+="$(git status --porcelain -- "${paths[@]}")"; fi
   if [[ -z "$changes" ]]; then
     log "SCAN_RESULT: no changes; no PR"
+    ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
     return 0
   fi
   day="$(date -u +%Y-%m-%d)"
@@ -201,6 +224,7 @@ phase_post() {
   git push -q --force origin "HEAD:refs/heads/$branch"
   body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
   scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
+  ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
 }
 
 # The local wrapper passes the run id it set, so the row can't be redirected
@@ -217,10 +241,10 @@ main() {
   mkdir -p data
   case "$phase" in
     check) guard ;;
-    ceiling)
+    session-limits)
       main_config
       ledger_fetch
-      budget ceiling --runner "$RUNNER"
+      budget session-limits --runner "$RUNNER"
       ;;
     pre | post)
       trap "on_error $phase \$LINENO" ERR
@@ -229,7 +253,7 @@ main() {
     actual) phase_actual "$2" "$3" "$4" ;;
     fail) on_error "${2:-unknown}" 0 ;;
     *)
-      echo "usage: $0 check|ceiling|pre|post|actual <run_id> <stories> <cost>|fail <phase>" >&2
+      echo "usage: $0 check|session-limits|pre|post|actual <run_id> <stories> <cost>|fail <phase>" >&2
       exit 2
       ;;
   esac

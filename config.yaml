@@ -51,6 +51,7 @@ limits:
   article_chars: 20000  # truncate fetched article text to this many chars
   max_stories_per_run: 8  # analyzed stories per scan; with usd_per_story this is
                           # each run's known cost ceiling (scripts/budget.py)
+  max_turns: 150          # hard turn cap on the local model session
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the
 # scan keeps a ledger on the `budget-ledger` branch, reserves each run's ceiling
@@ -62,3 +63,5 @@ budget:
   usd_per_story: null         # null = use the mean measured on local runs
   uncalibrated_run_usd: null  # what a first, uncalibrated local run reserves;
                               # null = it can't run either
+  session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this
+                              # (spend can overshoot the cap, so leave headroom)

@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from test_run_scan import ledger_rows, open_budget
+from test_run_scan import git, ledger_rows, open_budget
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
@@ -29,6 +29,7 @@ def run_local(work: Path, env: dict, tmp: Path, rc: int = 0):
         "CLAUDE_BIN": str(fake),
         "CLAUDE_ARGS": str(tmp / "claude-args"),
         "FAKE_CLAUDE_RC": str(rc),
+        "SCAN_WORKTREE": str(tmp / "scan-worktree"),
     }
     res = subprocess.run(
         ["/bin/bash", "scripts/run_scan_local.sh"],
@@ -59,7 +60,11 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert not any("run_scan.sh" in a for a in args)  # phases stay out of the model's reach
     assert "acceptEdits" not in args and "--dangerously-skip-permissions" not in args
     rows = [(r["kind"], r["cost_usd"]) for r in ledger_rows(origin)]
-    assert rows == [("reserve", 2.0), ("actual", 0.42)]
+    finished = [("done", 0)] if claude_rc == 0 else []  # post ran only on success
+    assert rows == [("reserve", 2.0), *finished, ("actual", 0.42)]
+    # the scan ran in its own worktree; Rohan's checkout is untouched
+    assert git(work, "status", "--porcelain", "--untracked-files=no") == ""
+    assert git(work, "branch", "--show-current") == "main"
 
 
 def test_wrapper_skips_without_launching_claude_when_budget_closed(scan_repo, tmp_path):

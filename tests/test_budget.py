@@ -61,12 +61,28 @@ def test_previous_months_spend_does_not_count():
     assert ok
 
 
-def test_one_scan_per_day_unless_allowed():
-    runs = [row("a", date=TODAY, cost=0.5, stories=5)]
-    ok, reason = budget.check(runs, settings(), "local", TODAY)
-    assert not ok and "already ran" in reason
-    ok, _ = budget.check(runs, settings(), "local", TODAY, allow_repeat=True)
+def test_a_finished_day_blocks_both_runners_unless_allowed():
+    runs = [row("a", date=TODAY, kind="reserve", runner="cloud", cost=0.5, stories=0)]
+    runs.append({**runs[0], "kind": "done", "cost_usd": 0, "stories": 5})
+    for runner in budget.RUNNERS:
+        ok, reason = budget.check(runs, settings(per_story=0.1), runner, TODAY)
+        assert not ok and "finished" in reason
+    ok, _ = budget.check(runs, settings(per_story=0.1), "local", TODAY, allow_repeat=True)
     assert ok
+
+
+def test_a_failed_cloud_run_does_not_block_the_mac_fallback():
+    failed_cloud = [row("c", date=TODAY, kind="reserve", runner="cloud", cost=0.5, stories=0)]
+    ok, reason = budget.check(failed_cloud, settings(per_story=0.1), "local", TODAY)
+    assert ok, reason
+    ok, reason = budget.check(failed_cloud, settings(per_story=0.1), "cloud", TODAY)
+    assert not ok and "already tried" in reason
+
+
+def test_done_rows_cost_nothing_and_keep_the_reservation_charged():
+    runs = [row("a", kind="reserve", cost=3.0, stories=0)]
+    runs.append({**runs[0], "kind": "done", "cost_usd": 0, "stories": 2})
+    assert budget.month_spend(runs, MONTH) == 3.0
 
 
 def test_cloud_needs_calibration_and_local_needs_a_reserve():
@@ -129,8 +145,23 @@ def write_config(tmp_path, cap="5.0", uncalibrated="2.0", per_story="null"):
     return str(cfg)
 
 
+def test_cli_refuses_a_missing_ledger_file(tmp_path, monkeypatch):
+    monkeypatch.setenv("BUDGET_LEDGER", str(tmp_path / "never-fetched.json"))
+    with pytest.raises(budget.LedgerError):
+        budget.main(["--config", write_config(tmp_path), "check", "--runner", "local"])
+
+
+def test_cli_session_limits(tmp_path, monkeypatch, capsys):
+    ledger = tmp_path / "ledger.json"
+    common.save_json(ledger, {"runs": []})
+    monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
+    budget.main(["--config", write_config(tmp_path), "session-limits", "--runner", "local"])
+    assert capsys.readouterr().out.strip() == "1.60 150"  # $2.00 reserve x 0.8; default turns
+
+
 def test_cli_check_reserve_actual_cycle(tmp_path, monkeypatch):
     ledger = tmp_path / "ledger.json"
+    common.save_json(ledger, {"runs": []})
     monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
     cfg = write_config(tmp_path)
     assert budget.main(["--config", cfg, "check", "--runner", "local"]) == 0
@@ -141,7 +172,9 @@ def test_cli_check_reserve_actual_cycle(tmp_path, monkeypatch):
     rows = common.load_json(ledger)["runs"]
     assert [r["kind"] for r in rows] == ["reserve", "actual"]
     assert rows[0]["cost_usd"] == 2.0 and rows[1]["cost_usd"] == 1.2
-    assert budget.main(["--config", cfg, "check", "--runner", "cloud"]) == budget.SKIP_EXIT
+    # unfinished local run (no done row): the other runner may still go, calibrated
+    assert budget.main(["--config", cfg, "check", "--runner", "cloud"]) == 0
+    assert budget.main(["--config", cfg, "check", "--runner", "local"]) == budget.SKIP_EXIT
 
 
 def test_cli_cloud_reserves_calibrated_ceiling(tmp_path, monkeypatch):
@@ -155,7 +188,9 @@ def test_cli_cloud_reserves_calibrated_ceiling(tmp_path, monkeypatch):
 
 
 def test_cli_actual_needs_a_reservation(tmp_path, monkeypatch):
-    monkeypatch.setenv("BUDGET_LEDGER", str(tmp_path / "ledger.json"))
+    ledger = tmp_path / "ledger.json"
+    common.save_json(ledger, {"runs": []})
+    monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
     cfg = write_config(tmp_path)
     with pytest.raises(SystemExit):
         budget.main(

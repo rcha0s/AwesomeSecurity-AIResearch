@@ -114,6 +114,13 @@ def open_budget(work: Path, **values: str) -> None:
     commit_main(work, "open budget")
 
 
+def reserved_run(work: Path, env: dict, run_id: str = "C1") -> None:
+    """Open the budget on main and run `pre`, so a reservation exists."""
+    open_budget(work, monthly_cap_usd="10.0", usd_per_story="0.25")
+    res = run_scan(work, env, "pre", SCAN_RUN_ID=run_id)
+    assert res.returncode == 0, res.stdout + res.stderr
+
+
 def test_pre_skips_before_any_ingest_when_no_cap(scan_repo):
     work, origin, env = scan_repo
     res = run_scan(work, env, "pre")
@@ -155,12 +162,20 @@ def test_pre_reserves_before_ingest_and_ignores_a_tampered_local_ledger(scan_rep
     assert log.index("ledger: reserve recorded") < log.index("ingest ok")
 
 
-def test_second_run_same_day_is_refused(scan_repo):
+def test_a_runner_does_not_retry_its_own_day(scan_repo):
     work, _, env = scan_repo
     open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
     assert run_scan(work, env, "pre", runner="local", SCAN_RUN_ID="L1").returncode == 0
     res = run_scan(work, env, "check", runner="local")
-    assert res.returncode == 3 and "already ran" in res.stdout
+    assert res.returncode == 3 and "already tried" in res.stdout
+
+
+def test_check_fails_closed_when_the_ledger_is_unreachable(scan_repo, tmp_path):
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    git(work, "remote", "set-url", "origin", f"file://{tmp_path}/gone.git")
+    res = run_scan(work, env, "check", runner="local")
+    assert res.returncode not in (0, 3) and "GO" not in res.stdout
 
 
 def test_actual_replaces_the_reservation_on_the_remote_ledger(scan_repo):
@@ -187,6 +202,7 @@ def test_fail_alert_never_publishes_log_text(scan_repo):
 
 def test_post_over_story_cap_fails_and_alerts(scan_repo):
     work, _, env = scan_repo
+    reserved_run(work, env)
     (work / "data/analysis_out.json").write_text(json.dumps([{"t": i} for i in range(9)]))
     res = run_scan(work, env, "post")
     assert res.returncode != 0
@@ -194,8 +210,20 @@ def test_post_over_story_cap_fails_and_alerts(scan_repo):
     assert "labels=scan-failure" in gh_calls(env)
 
 
+def test_post_counts_entries_merged_past_the_last_analysis_out(scan_repo):
+    work, _, env = scan_repo
+    reserved_run(work, env)
+    (work / "data/analysis_out.json").write_text("[]")
+    pool = {"topic": "ai-security", "entries": [{"id": f"e{i}"} for i in range(9)]}
+    (work / "data/ai-security.json").write_text(json.dumps(pool))
+    res = run_scan(work, env, "post")
+    assert res.returncode != 0
+    assert "analyzed 9 stories, over the per-run cap of 8" in (work / "data/_scan.log").read_text()
+
+
 def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     work, origin, env = scan_repo
+    reserved_run(work, env)
     for ignored in ("candidates.json", "analysis_out.json", "_budget_ledger.json"):
         (work / "data" / ignored).write_text("[]")
     (work / "data/_summary.md").write_text(f"Summary with {SECRET}")
@@ -210,3 +238,4 @@ def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     calls = gh_calls(env)
     assert "-X POST repos/" in calls and "/pulls" in calls
     assert SECRET not in calls and "withheld" in calls
+    assert [r["kind"] for r in ledger_rows(origin)] == ["reserve", "done"]

@@ -126,15 +126,19 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   `python scripts/allowlist.py` plus the default package list; setup script
   `pip install -r requirements.txt`.
 - **Mac fallback:** `scripts/install_launchd.sh [HOUR MINUTE]` installs a launchd job
-  that runs `scripts/run_scan_local.sh` (`claude -p "/daily-scan"`). It is idle on
-  days the cloud run already recorded a ledger row; `--uninstall` removes it.
+  that runs `scripts/run_scan_local.sh`. The wrapper runs every guarding phase
+  itself in its own worktree (`~/.local/share/awesomesec-scan`, reset each run), and
+  the model session only analyzes. It is idle on days a scan already finished;
+  `--uninstall` removes it.
 - **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
   Routines draw subscription usage first and can't read their balance, so `pre`
   checks the month's spend against `budget.monthly_cap_usd`, then **reserves** the
   run's ceiling (`max_stories_per_run` × measured per-story cost, or
   `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
   run is still charged. Local runs replace the reservation with the measured
-  `total_cost_usd`; cloud runs are charged the ceiling. One scan per UTC day. The
+  `total_cost_usd`; cloud runs are charged the ceiling. One finished scan per UTC
+  day: a failed cloud run doesn't block the Mac fallback, but a runner never
+  retries its own failed day unattended. The
   settings come from `origin/main`, and ledger rows are appended to a fresh copy of
   the remote branch, never read from the working tree the model shares. The cap
   ships as `null`, which makes every run skip until it is set.

@@ -25,8 +25,9 @@
 #     raw_path values can't point outside data/_raw/ (common.raw_file). The
 #     model can't clear it: a Bash command prefixed with an env assignment no
 #     longer matches its allow rules.
-#   - --max-budget-usd at 80% of the reserved ceiling (spend can overshoot the
-#     cap) and --max-turns bound the session's spend.
+#   - --max-budget-usd (the reservation x budget.session_cap_fraction, since
+#     spend can overshoot the cap) and --max-turns (limits.max_turns), both
+#     read from origin/main's config by `run_scan.sh session-limits`.
 # Never --dangerously-skip-permissions. If a needed tool is denied, add it to
 # ALLOWED_TOOLS deliberately.
 #
@@ -42,7 +43,10 @@ export SCAN_RUN_ID="local-$(date -u +%Y%m%dT%H%M%SZ)-$$"
 export PATH="$REPO/.venv/bin:$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin"
 export PYTHON="${PYTHON:-$REPO/.venv/bin/python}"
 CLAUDE="${CLAUDE_BIN:-claude}" # tests point this at a fake
-MAX_TURNS=150
+# The scan runs in its own worktree, reset to origin/main every run: a failed
+# run can't leave a dirty tree behind, and Rohan's checkout is never touched.
+WT="${SCAN_WORKTREE:-$HOME/.local/share/awesomesec-scan}"
+SCAN_DIR="$REPO" # where `fail` finds run_scan.sh; the worktree once it's ready
 OUT="$(mktemp)"
 LOG="data/_scan.log"
 trap 'rm -f "$OUT"' EXIT
@@ -70,26 +74,39 @@ SETTINGS='{"permissions": {
 }}'
 
 fail() {
-  echo "[local] $1" | tee -a "$LOG"
-  scripts/run_scan.sh fail "$1"
+  echo "[local] $1" | tee -a "$SCAN_DIR/$LOG"
+  "$SCAN_DIR/scripts/run_scan.sh" fail "$1"
   exit 1
 }
 
+reset_worktree() {
+  git -C "$REPO" fetch -q origin main || return 1
+  if [[ ! -e "$WT/.git" ]]; then
+    mkdir -p "$(dirname "$WT")" || return 1
+    git -C "$REPO" worktree add -q --detach "$WT" origin/main || return 1
+  fi
+  git -C "$WT" checkout -q -f --detach origin/main || return 1
+  git -C "$WT" clean -ffdxq || return 1
+}
+
+mkdir -p "$REPO/data"
+reset_worktree || fail "local-worktree"
+cd "$WT"
+SCAN_DIR="$WT"
 mkdir -p data
-[[ -z "$(git status --porcelain --untracked-files=no)" ]] || fail "local-dirty-tree"
-{ git checkout -q main && git pull -q --ff-only origin main; } || fail "local-git-sync"
 
 rc=0
 scripts/run_scan.sh check >/dev/null || rc=$?
 if [[ "$rc" == 3 ]]; then
-  echo "[local] budget guard says skip (already ran today, no cap, or no budget left)"
+  echo "[local] budget guard says skip (a scan finished today, no cap, or no budget left)"
   exit 0
 fi
 [[ "$rc" == 0 ]] || fail "local-budget-check"
-ceiling="$(scripts/run_scan.sh ceiling)" || fail "local-ceiling"
-cap_usd="$("$PYTHON" -c 'import sys;print(f"{float(sys.argv[1])*0.8:.2f}")' "$ceiling")"
+limits="$(scripts/run_scan.sh session-limits)" || fail "local-session-limits"
+cap_usd="${limits% *}"
+max_turns="${limits#* }"
 
-scripts/run_scan.sh pre || fail "local-pre"
+scripts/run_scan.sh pre || exit 1 # pre raises its own alert
 [[ -f data/_scan_skip ]] && exit 0 # raced: the guard refused at pre time
 
 claude_rc=0
@@ -100,7 +117,7 @@ env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN SCAN_LOCKED=1 "$CLAUDE" -p \
   --setting-sources local --strict-mcp-config --mcp-config '{"mcpServers": {}}' \
   --tools "$TOOLS" --settings "$SETTINGS" --allowedTools "${ALLOWED_TOOLS[@]}" \
   --disallowedTools "mcp__*" \
-  --max-budget-usd "$cap_usd" --max-turns "$MAX_TURNS" >"$OUT" || claude_rc=$?
+  --max-budget-usd "$cap_usd" --max-turns "$max_turns" >"$OUT" || claude_rc=$?
 
 post_rc=0
 if [[ "$claude_rc" == 0 ]]; then
@@ -117,6 +134,5 @@ else
   echo "[local] no total_cost_usd in claude output; the reservation stands" | tee -a "$LOG"
 fi
 
-git checkout -q main
 [[ "$claude_rc" == 0 ]] || fail "local-claude"
 [[ "$post_rc" == 0 ]] || exit 1 # post already raised its own alert

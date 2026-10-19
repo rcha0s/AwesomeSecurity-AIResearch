@@ -45,6 +45,14 @@ def ground_entry(entry: dict, source_text: str | None = None) -> dict:
     with_excerpt = [le for le in lessons if isinstance(le, dict) and le.get("excerpt")]
     if source_text is None:
         source_text = source_text_for(entry)
+    if not source_text and with_excerpt and c.scan_locked():
+        # Under the scan lock every staged candidate has fetched text, so an
+        # entry whose source can't be read had its raw_path or URL tampered
+        # with: hold it as ungrounded instead of passing it as unverifiable.
+        for le in with_excerpt:
+            le["grounded"] = False
+        entry["grounding_score"] = 0.0
+        return entry
     if not source_text or not with_excerpt:
         entry["grounding_score"] = None
         return entry

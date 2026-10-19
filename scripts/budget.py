@@ -25,7 +25,8 @@ Usage:
     python scripts/budget.py --config CFG reserve --runner cloud --run-id ID
     python scripts/budget.py --config CFG actual --run-id ID --stories 6 --cost-usd 1.84
     python scripts/budget.py --config CFG status
-    python scripts/budget.py --config CFG ceiling --runner local      # prints the run's cap
+    python scripts/budget.py --config CFG done --run-id ID --stories 6
+    python scripts/budget.py --config CFG session-limits --runner local  # "<usd> <turns>"
 """
 
 from __future__ import annotations
@@ -42,7 +43,7 @@ import common as c
 
 SKIP_EXIT = 3
 RUNNERS = ("cloud", "local")
-KINDS = ("reserve", "actual")
+KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 DEFAULT_LEDGER = c.DATA_DIR / "_budget_ledger.json"
 
@@ -84,7 +85,9 @@ def load_ledger(path: Path) -> list[dict]:
 def budget_settings(config: Path | str = c.CONFIG_FILE) -> dict:
     raw = c.load_yaml(Path(config))
     settings = dict(raw.get("budget") or {})
-    settings["max_stories_per_run"] = int(raw.get("limits", {}).get("max_stories_per_run", 8))
+    limits = raw.get("limits", {})
+    settings["max_stories_per_run"] = int(limits.get("max_stories_per_run", 8))
+    settings["max_turns"] = int(limits.get("max_turns", 150))
     return settings
 
 
@@ -92,6 +95,8 @@ def effective_runs(runs: Iterable[dict]) -> list[dict]:
     """One row per run: its `actual` row if it has one, else its reservation."""
     by_run: dict[str, dict] = {}
     for r in runs:
+        if r["kind"] == "done":
+            continue
         if r["kind"] == "actual" or r["run_id"] not in by_run:
             by_run[r["run_id"]] = r
     return list(by_run.values())
@@ -136,8 +141,15 @@ def check(
     cap = settings.get("monthly_cap_usd")
     if cap is None:
         return False, "no budget configured: set budget.monthly_cap_usd in config.yaml"
-    if not allow_repeat and any(r["date"] == today for r in runs):
-        return False, f"a scan already ran on {today}"
+    if not allow_repeat:
+        # A day is done once any run finished it. A run that failed doesn't
+        # block the other runner (the Mac falls back for a failed cloud run),
+        # but a runner never retries its own failed day unattended.
+        today_rows = [r for r in runs if r["date"] == today]
+        if any(r["kind"] == "done" for r in today_rows):
+            return False, f"a scan already finished on {today}"
+        if any(r["kind"] == "reserve" and r["runner"] == runner for r in today_rows):
+            return False, f"the {runner} runner already tried on {today}"
     month = today[:7]
     spent = month_spend(runs, month)
     remaining = round(float(cap) - spent, 4)
@@ -172,8 +184,11 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     act.add_argument("--stories", type=int, required=True)
     act.add_argument("--cost-usd", type=float, required=True)
     sub.add_parser("status")
-    ceil = sub.add_parser("ceiling")
-    ceil.add_argument("--runner", choices=RUNNERS, required=True)
+    lim = sub.add_parser("session-limits")
+    lim.add_argument("--runner", choices=RUNNERS, required=True)
+    done = sub.add_parser("done")
+    done.add_argument("--run-id", required=True)
+    done.add_argument("--stories", type=int, required=True)
     return ap.parse_args(argv)
 
 
@@ -195,9 +210,32 @@ def actual(path: Path, runs: list[dict], args) -> int:
     return 0
 
 
+def mark_done(path: Path, runs: list[dict], args) -> int:
+    held = [r for r in runs if r["run_id"] == args.run_id and r["kind"] == "reserve"]
+    if not held:
+        raise SystemExit(f"done: no reservation for run {args.run_id}")
+    row = {**held[0], "kind": "done", "stories": args.stories, "cost_usd": 0}
+    append_row(path, runs, row)
+    return 0
+
+
+def session_limits(runs: list[dict], settings: dict, runner: str) -> int:
+    """Print `<max_budget_usd> <max_turns>` for the model session."""
+    ceiling, why = run_ceiling(runs, settings, runner)
+    if ceiling is None:
+        raise SystemExit(f"session-limits: {why}")
+    fraction = float(settings.get("session_cap_fraction", 0.8))
+    print(f"{ceiling * fraction:.2f} {settings['max_turns']}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     path, settings = ledger_path(), budget_settings(args.config)
+    if args.cmd != "status" and not path.exists():
+        # run_scan.sh always writes the fetched ledger first; a missing file
+        # means the fetch failed, and an empty ledger would read as "GO".
+        raise LedgerError(f"ledger file missing: {path}")
     runs = load_ledger(path)
     today = c.utcnow().strftime("%Y-%m-%d")
     if args.cmd == "check":
@@ -208,12 +246,10 @@ def main(argv: list[str] | None = None) -> int:
         return reserve(path, runs, settings, args, today)
     if args.cmd == "actual":
         return actual(path, runs, args)
-    if args.cmd == "ceiling":
-        ceiling, why = run_ceiling(runs, settings, args.runner)
-        if ceiling is None:
-            raise SystemExit(f"ceiling: {why}")
-        print(f"{ceiling:.4f}")
-        return 0
+    if args.cmd == "done":
+        return mark_done(path, runs, args)
+    if args.cmd == "session-limits":
+        return session_limits(runs, settings, args.runner)
     cap = settings.get("monthly_cap_usd")
     print(f"budget: ${month_spend(runs, today[:7]):.2f} spent in {today[:7]}; cap {cap}")
     return 0

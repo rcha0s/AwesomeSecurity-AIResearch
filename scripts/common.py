@@ -12,8 +12,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import math
+import os
 import re
 import sys
 from dataclasses import dataclass
@@ -813,8 +813,12 @@ SCAN_LOCK_ENV = "SCAN_LOCKED"
 SCAN_URL_SNAPSHOT = "_scan_urls.json"
 
 
+def scan_locked() -> bool:
+    return os.environ.get(SCAN_LOCK_ENV) == "1"
+
+
 def check_scan_lock(url: str) -> None:
-    if os.environ.get(SCAN_LOCK_ENV) != "1":
+    if not scan_locked():
         return
     allowed = set((load_json(DATA_DIR / SCAN_URL_SNAPSHOT, default={}) or {}).values())
     if url not in allowed:
