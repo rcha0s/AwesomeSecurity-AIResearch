@@ -26,11 +26,9 @@ import common as c
 
 def source_text_for(entry: dict) -> str | None:
     """Cached raw text if available, else a best-effort re-fetch of the source."""
-    raw = entry.get("raw_path")
-    if raw:
-        path = c.ROOT / raw
-        if path.exists():
-            return path.read_text(encoding="utf-8", errors="replace")
+    path = c.raw_file(entry.get("raw_path"))
+    if path and path.exists():
+        return path.read_text(encoding="utf-8", errors="replace")
     url = entry.get("article_url") or entry.get("source_url") or ""
     if url and not url.startswith("manual:"):
         try:
@@ -47,6 +45,19 @@ def ground_entry(entry: dict, source_text: str | None = None) -> dict:
     with_excerpt = [le for le in lessons if isinstance(le, dict) and le.get("excerpt")]
     if source_text is None:
         source_text = source_text_for(entry)
+    if not source_text and c.scan_locked():
+        if entry.get("id") in c.main_entry_ids():
+            # Already published on main: its raw text isn't staged this run, and
+            # its URL is outside the lock. Keep the grounding it already has.
+            return entry
+        if with_excerpt:
+            # This run's own entry: every staged candidate has fetched text, so
+            # an unreadable source means its raw_path or URL was tampered with.
+            # Hold it as ungrounded instead of passing it as unverifiable.
+            for le in with_excerpt:
+                le["grounded"] = False
+            entry["grounding_score"] = 0.0
+            return entry
     if not source_text or not with_excerpt:
         entry["grounding_score"] = None
         return entry

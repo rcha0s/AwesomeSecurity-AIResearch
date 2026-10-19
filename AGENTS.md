@@ -115,14 +115,43 @@ likewise unharvested.
 
 ## Daily automation (unattended scan -> PR)
 
-The daily scan runs as a Claude Code cloud routine, with this Mac (launchd +
-`claude -p`) as the fallback; both call one entrypoint and open a scan PR (see
-`ISA.md` F1). Until the entrypoint lands, run `/research-scan` by hand.
+One entrypoint, two runners. Both run the `/daily-scan` skill
+(`.claude/skills/daily-scan/SKILL.md`), which wraps `scripts/run_scan.sh`:
+`pre` (budget guard, then every ingestor) → LLM analysis → `post` (story cap,
+render, spend record, PR on `claude/scan-<date>-<runner>`). A failed run opens or
+comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
 
-- Requirement for the entrypoint: headless Claude runs with
+- **Cloud (default):** a Claude Code routine with prompt `/daily-scan`, this repo
+  attached, scheduled daily. Environment: Custom network access with the hosts from
+  `python scripts/allowlist.py` plus the default package list; setup script
+  `pip install -r requirements.txt`.
+- **Mac fallback:** `scripts/install_launchd.sh [HOUR MINUTE]` installs a launchd job
+  that runs `scripts/run_scan_local.sh`. The wrapper runs every guarding phase
+  itself in its own worktree (`~/.local/share/awesomesec-scan`, reset each run), and
+  the model session only analyzes. It is idle on days a scan already finished;
+  `--uninstall` removes it.
+- **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
+  Routines draw subscription usage first and can't read their balance, so `pre`
+  checks the month's spend against `budget.monthly_cap_usd`, then **reserves** the
+  run's ceiling (`max_stories_per_run` × measured per-story cost, or
+  `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
+  run is still charged. Local runs replace the reservation with the measured
+  `total_cost_usd`; cloud runs are charged the ceiling. One finished scan per UTC
+  day: a failed cloud run doesn't block the Mac fallback, but a runner never
+  retries its own failed day unattended. The
+  settings come from `origin/main`, and ledger rows are appended to a fresh copy of
+  the remote branch, never read from the working tree the model shares. The cap
+  ships as `null`, which makes every run skip until it is set.
+- **Containment:** the local `claude -p` session reads only inside the repo,
+  edits only `data/`, runs only the named scripts, and fetches only a staged
+  candidate's own URL (`scripts/fetch_raw.py`). Alerts carry no log text, and the
+  PR body passes `scripts/scrub.py` (secret patterns + secret env values).
+- **GitHub in cloud sessions:** `gh pr` / `gh issue` are GraphQL and get a 403 there;
+  the scripts use `gh api` (REST) only.
+- Requirement for every runner: headless Claude runs with
   `--permission-mode acceptEdits` + an explicit `--allowedTools` list, never
   `--dangerously-skip-permissions`. If a tool prompt stalls an unattended run,
-  widen `permissions.allow` rather than skipping permissions.
+  widen the allowlist rather than skipping permissions.
 - The curation gate still holds weak/ungrounded findings in `REVIEW.md`; only
   genuinely novel, grounded, verified items land in the curated view.
 - After the novelty gate, a **separate editorial pass** (the `editorial-review`

@@ -13,6 +13,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import re
 import sys
 from dataclasses import dataclass
@@ -804,9 +805,64 @@ def write_raw(cand_id: str, text: str) -> str:
     return str(path.relative_to(ROOT))
 
 
+# Set (to "1") only in the environment of the Mac scan's model session. Under
+# it, the only URLs any script may fetch are the staged candidates' own, as
+# `run_scan.sh pre` recorded them: model-written entry fields can't make the
+# runner request an attacker's URL.
+SCAN_LOCK_ENV = "SCAN_LOCKED"
+SCAN_URL_SNAPSHOT = "_scan_urls.json"
+
+
+def scan_locked() -> bool:
+    return os.environ.get(SCAN_LOCK_ENV) == "1"
+
+
+def check_scan_lock(url: str) -> None:
+    if not scan_locked():
+        return
+    allowed = set((load_json(DATA_DIR / SCAN_URL_SNAPSHOT, default={}) or {}).values())
+    if url not in allowed:
+        raise PermissionError(f"scan lock: {url} is not a staged candidate URL")
+
+
+_MAIN_IDS: set[str] | None = None
+
+
+def main_entry_ids() -> set[str]:
+    """Ids of every pool entry on origin/main (cached). Entries absent from main
+    are this run's own; the scan lock judges only those."""
+    global _MAIN_IDS
+    if _MAIN_IDS is None:
+        import subprocess
+
+        ids: set[str] = set()
+        for path in POOL_FILES.values():
+            rel = path.relative_to(ROOT).as_posix()
+            out = subprocess.run(
+                ["git", "show", f"origin/main:{rel}"], cwd=ROOT, capture_output=True, text=True
+            )
+            if out.returncode == 0:
+                ids |= {e.get("id") for e in json.loads(out.stdout).get("entries", [])}
+        _MAIN_IDS = ids
+    return _MAIN_IDS
+
+
+def raw_file(raw_path: str | None) -> Path | None:
+    """The cached source file for a raw_path, only if it lives under data/_raw/.
+
+    raw_path is model-writable, and `ROOT / "/abs/path"` would escape ROOT.
+    """
+    if not raw_path:
+        return None
+    path = (ROOT / raw_path).resolve()
+    return path if path.is_relative_to(RAW_DIR.resolve()) else None
+
+
 def fetch_readable(url: str, timeout: int = 30, max_chars: int = 20000) -> str:
     """Fetch clean reader text for a URL via Jina Reader. Raises on failure."""
     import requests  # local import keeps offline unit tests import-clean
+
+    check_scan_lock(url)
 
     resp = requests.get(
         JINA_READER + url,

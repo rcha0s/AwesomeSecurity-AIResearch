@@ -46,6 +46,22 @@ curation:
   require_verification: true  # a finding the independent verifier pass REFUTED (verified=false)
                               # ⇒ needs_review. Un-verified (verified absent) is not penalized.
 
-# Per-run ingestion caps (bound cost/ban-risk of a single scan).
+# Per-run caps (bound the cost of a single scan).
 limits:
   article_chars: 20000  # truncate fetched article text to this many chars
+  max_stories_per_run: 8  # analyzed stories per scan; with usd_per_story this is
+                          # each run's known cost ceiling (scripts/budget.py)
+  max_turns: 150          # hard turn cap on the local model session
+
+# Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the
+# scan keeps a ledger on the `budget-ledger` branch, reserves each run's ceiling
+# before any LLM work, and refuses once the month's spend reaches the cap. Runs
+# read these values from origin/main, never from a working tree. Routines draw subscription usage first; usage
+# credits only cover overage (routines.md § Usage and limits).
+budget:
+  monthly_cap_usd: null       # Rohan sets this; null = every run skips LLM work
+  usd_per_story: null         # null = use the mean measured on local runs
+  uncalibrated_run_usd: null  # what a first, uncalibrated local run reserves;
+                              # null = it can't run either
+  session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this
+                              # (spend can overshoot the cap, so leave headroom)

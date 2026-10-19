@@ -28,6 +28,9 @@ data/editorial_out.json
 data/_batches/
 data/_pool_digest.json
 data/_raw/
+data/_budget_ledger.json
+data/_scan*
+data/_summary.md
 
 # Secrets / auth — NEVER commit (cookies, env). .agent-reach/ is the retired
 # X ingest's cookie dir; kept ignored so a leftover copy can never be staged.
