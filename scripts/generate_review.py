@@ -16,8 +16,6 @@ Usage:
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
-
 import common as c
 
 
@@ -72,7 +70,7 @@ def build(conf: c.Config, now: str) -> str:
 
 def main() -> int:
     conf = c.load_config()
-    now = datetime.now(UTC).strftime("%Y-%m-%d")
+    now = c.utcnow().strftime("%Y-%m-%d")
     (c.ROOT / "REVIEW.md").write_text(build(conf, now), encoding="utf-8")
     n = sum(len(review_items(t, conf)) for t in c.TOPICS)
     print(f"Wrote REVIEW.md ({n} item(s) awaiting review).")

@@ -44,12 +44,11 @@ scripts/templates/site.html # the site template (__DATA__ placeholder; a code as
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
-scripts/generate_skills.py# skills/<slug>/SKILL.md + LEARNINGS.md (vetted only)
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
 scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
 .claude/skills/           # /research-scan /add-resource /add-source /editorial-review — the LLM stages
 docs/                     # GENERATED site served by GitHub Pages (branch main, folder /docs)
-README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · LEARNINGS.md · ai-security/ product-security/ ai-research/ claims/ skills/  # GENERATED
+README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · ai-security/ product-security/ ai-research/ claims/  # GENERATED
 # Curated view = VETTED findings (novelty gate) PLUS a separate "Trending & In the News"
 # section from the editorial track; everything else waits in REVIEW.md.
 ```
@@ -91,7 +90,6 @@ python scripts/add_claim.py validate    # ledger integrity (edges resolve, no cy
 python scripts/generate_site.py
 python scripts/generate_claims.py
 python scripts/generate_html.py
-python scripts/generate_skills.py
 
 # New source ingestors (Windows Python, no cookies):
 python scripts/ingest_github.py --max 5
@@ -156,7 +154,7 @@ A change is only "done" when the pipeline runs clean on real data — not just u
 2. Round-trip a sample: stage a candidate (`add.py … --text "…"`), hand-write a
    one-entry `data/analysis_out.json`, run `merge_analysis.py` → confirm it lands in
    the correct pool, low-confidence flags `needs_review`, and re-adding is idempotent.
-3. `python scripts/rerank.py && python scripts/generate_site.py && python scripts/generate_skills.py`
+3. `python scripts/rerank.py && python scripts/generate_site.py && python scripts/generate_html.py`
    — confirm the 3 topic trees regenerate, per-entry pages + `TRENDS.md`/`NEWSLETTER.md` exist,
    and the pools ↔ rendered site stay in sync (a second run is a no-op diff).
 4. `python scripts/add_claim.py validate && python scripts/generate_claims.py` — the ledger's

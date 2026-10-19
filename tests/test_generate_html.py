@@ -7,10 +7,9 @@ import re
 import shutil
 import subprocess
 
-import pytest
-
 import common
 import generate_html as gh
+import pytest
 from conftest import make_entry
 from test_claims import ledger_of, make_claim
 
@@ -339,14 +338,14 @@ def _write_sources(sandbox, sources):
 
 
 def _pool_news_entry(**over):
-    from datetime import UTC, datetime, timedelta
+    from datetime import timedelta
     base = make_entry(
         id="news-openai-fast-mode",
         topic="ai-research",
         title="OpenAI ships Fast mode: Sol 2.5x quicker at same price",
         source_url="https://openai.com/blog/fast-mode",
         source_id="rss:openai-blog",
-        published=(datetime.now(UTC) - timedelta(days=2)).strftime("%Y-%m-%d"),
+        published=(common.utcnow() - timedelta(days=2)).strftime("%Y-%m-%d"),
         needs_review=True,
     )
     base.update(over)
@@ -370,8 +369,8 @@ def test_editorial_rows_dedupes_same_story_across_sources(sandbox):
         _news_source("rss:openai-blog", "OpenAI Blog", tier="high"),
         _news_source("rss:hn", "Hacker News", tier="medium"),
     ])
-    from datetime import UTC, datetime, timedelta
-    same_day = (datetime.now(UTC) - timedelta(days=2)).strftime("%Y-%m-%d")
+    from datetime import timedelta
+    same_day = (common.utcnow() - timedelta(days=2)).strftime("%Y-%m-%d")
 
     a = _pool_news_entry(
         id="a-1", source_id="rss:openai-blog",

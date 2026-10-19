@@ -77,7 +77,7 @@ def test_collect_rss_passes_shared_user_agent(monkeypatch):
     monkeypatch.setattr(aggregate.feedparser, "parse", fake_parse)
     monkeypatch.setattr(aggregate.sr, "sources_of_type", fake_sources_of_type)
 
-    aggregate.collect_rss({}, aggregate.datetime.now(aggregate.UTC))
+    aggregate.collect_rss({}, c.utcnow())
 
     assert calls == [("https://example.com/feed.xml", {"User-Agent": c.HTTP_USER_AGENT})]
 

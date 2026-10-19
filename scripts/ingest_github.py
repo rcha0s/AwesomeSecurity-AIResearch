@@ -22,7 +22,7 @@ import base64
 import json
 import subprocess
 import sys
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
 import common as c
 import sources_registry as sr
@@ -161,7 +161,7 @@ def collect(cfg: dict, per_query: int | None, fetch: bool) -> list[dict]:
     default_min_stars = gh_cfg.get("min_stars", 0)
     limit = per_query or gh_cfg.get("per_query", 8)
     max_chars = conf.limits.get("article_chars", 20000)
-    cutoff = datetime.now(UTC) - timedelta(days=conf.max_age_days)
+    cutoff = c.utcnow() - timedelta(days=conf.max_age_days)
     active_after = cutoff.strftime("%Y-%m-%d")
 
     out: list[dict] = []

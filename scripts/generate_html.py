@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import re
 import shutil
-from datetime import UTC, datetime
 from html import escape
 from json import dumps
 from pathlib import Path
@@ -370,7 +369,7 @@ def main() -> int:
         return 1
 
     conf = c.load_config()
-    now = datetime.now(UTC).strftime("%Y-%m-%d")
+    now = c.utcnow().strftime("%Y-%m-%d")
     payload = build_payload(ledger, conf, now)
 
     docs = c.ROOT / "docs"

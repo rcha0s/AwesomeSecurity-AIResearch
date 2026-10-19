@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import re
 from collections import defaultdict
-from datetime import UTC, datetime
+from datetime import datetime
 
 import common as c
 
@@ -673,7 +673,7 @@ def _methodology_details(conf: c.Config) -> list[str]:
 
 def main() -> int:
     conf = c.load_config()
-    now = datetime.now(UTC).strftime("%Y-%m-%d")
+    now = c.utcnow().strftime("%Y-%m-%d")
     all_entries: list[dict] = []
     for topic in c.TOPICS:
         all_entries += write_topic(topic, conf, now)

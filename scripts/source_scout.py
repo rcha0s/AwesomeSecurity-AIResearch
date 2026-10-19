@@ -30,12 +30,10 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from dataclasses import dataclass, field
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
-from typing import Iterable
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -74,7 +72,7 @@ def _hn_trending() -> list[dict]:
     """Return recent high-scoring HN stories with (title, url, points)."""
     import requests
 
-    cutoff = int((datetime.now(UTC) - timedelta(days=HN_WINDOW_DAYS)).timestamp())
+    cutoff = int((c.utcnow() - timedelta(days=HN_WINDOW_DAYS)).timestamp())
     params = {
         "tags": "story",
         "numericFilters": f"created_at_i>={cutoff},points>={HN_TRENDING_POINTS}",
@@ -297,7 +295,7 @@ def scout(ctx: Context, trending: list[dict]) -> dict:
     skipped = [p for p in proposals if p["status"] == "skipped"]
 
     return {
-        "generated": datetime.now(UTC).strftime("%Y-%m-%d"),
+        "generated": c.utcnow().strftime("%Y-%m-%d"),
         "proposed": proposed,
         "skipped": skipped,
         "summary": {

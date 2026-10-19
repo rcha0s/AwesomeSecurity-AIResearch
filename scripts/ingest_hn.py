@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
 import aggregate as agg
 import common as c
@@ -129,7 +129,7 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
     limit = per_query or hn_cfg.get("per_query", 8)
     top_limit = per_query or hn_cfg.get("top_stories_per_run", 30)
     max_age = c.load_config().max_age_days
-    cutoff = datetime.now(UTC) - timedelta(days=max_age)
+    cutoff = c.utcnow() - timedelta(days=max_age)
     since_ts = int(cutoff.timestamp())
 
     out: list[dict] = []

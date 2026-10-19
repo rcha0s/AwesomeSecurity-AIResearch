@@ -15,7 +15,7 @@ Usage:
 from __future__ import annotations
 
 from collections import defaultdict
-from datetime import UTC, datetime
+from datetime import datetime
 
 import common as c
 
@@ -116,7 +116,7 @@ def render_md(all_trends: dict[str, list[dict]], now: str) -> str:
 
 def main() -> int:
     conf = c.load_config()
-    now_dt = datetime.now(UTC)
+    now_dt = c.utcnow()
     now = now_dt.strftime("%Y-%m-%d")
     all_trends = {t: build_trends(t, conf, now_dt) for t in c.TOPICS}
     c.save_json(c.DATA_DIR / "trends.json", all_trends)

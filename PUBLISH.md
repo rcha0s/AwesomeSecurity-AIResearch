@@ -69,7 +69,7 @@ Follow the AI/security accounts you want on the burner, and list them under
   ```bash
   python scripts/rerank.py
   python scripts/generate_site.py
-  python scripts/generate_skills.py
+  python scripts/generate_html.py
   ```
 
 The skills extract lessons, score novelty/relevance, derive actionable leverage, merge

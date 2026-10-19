@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 
 import common as c
 import sources_registry as sr
@@ -127,7 +127,7 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    cutoff = datetime.now(UTC) - timedelta(days=c.load_config().max_age_days)
+    cutoff = c.utcnow() - timedelta(days=c.load_config().max_age_days)
     candidates = collect_rss(rules, cutoff)
 
     if args.dry_run:

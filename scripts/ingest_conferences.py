@@ -30,7 +30,7 @@ import argparse
 import re
 import sys
 import urllib.parse
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 
 import aggregate as agg
 import common as c
@@ -157,7 +157,7 @@ def collect(cfg: dict, rules: dict, per_venue: int | None) -> list[dict]:
         return []
     limit = per_venue or conf_cfg.get("per_venue", 20)
     max_age = c.load_config().max_age_days
-    cutoff = (datetime.now(UTC) - timedelta(days=max_age)).date().isoformat()
+    cutoff = (c.utcnow() - timedelta(days=max_age)).date().isoformat()
 
     out: list[dict] = []
     for idx, (venue, terms) in enumerate(plan):

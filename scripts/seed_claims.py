@@ -25,13 +25,14 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import UTC, datetime
+
+import common as c
 
 import claims as cl
 
 
 def _today() -> str:
-    return datetime.now(UTC).strftime("%Y-%m-%d")
+    return c.utcnow().strftime("%Y-%m-%d")
 
 
 # Existing 19 claims' phase backfill.

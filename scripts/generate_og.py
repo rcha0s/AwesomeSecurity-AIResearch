@@ -13,15 +13,11 @@ Usage:
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
-
+import common as c
+from generate_html import build_payload
 from PIL import Image, ImageDraw, ImageFont
 
-import common as c
-
 import claims as cl
-
-from generate_html import build_payload
 
 W, H, S = 1200, 630, 2  # final size, and supersample factor for crisp text
 
@@ -174,7 +170,7 @@ def build_image(payload: dict) -> Image.Image:
 def main() -> int:
     conf = c.load_config()
     ledger = cl.load_ledger()
-    now = datetime.now(UTC).strftime("%Y-%m-%d")
+    now = c.utcnow().strftime("%Y-%m-%d")
     payload = build_payload(ledger, conf, now)
     docs = c.ROOT / "docs"
     docs.mkdir(parents=True, exist_ok=True)

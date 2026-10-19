@@ -49,6 +49,8 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
+import common as c
+
 # Alias map for common labs / model families. Each canonical name maps to a
 # set of aliases that all resolve to the canonical when detected. Seeded
 # by hand — the fallback capitalized-bigram scanner catches anything we miss.
@@ -296,9 +298,7 @@ def seed_index_from_pools(index: dict, *, lookback_days: int = STORY_KEY_TTL_DAY
 
     Returns the number of new fingerprints added. Idempotent — a second
     run with the same pools adds zero."""
-    import common as c
-
-    now = now or datetime.now(UTC)
+    now = now or c.utcnow()
     cutoff = (now - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
     skip_ids = skip_ids or set()
     added = 0
@@ -371,7 +371,7 @@ def save_index(index: dict) -> None:
 
 def prune_index(index: dict, now: datetime | None = None) -> dict:
     """Drop keys older than STORY_KEY_TTL_DAYS."""
-    now = now or datetime.now(UTC)
+    now = now or c.utcnow()
     cutoff = (now - timedelta(days=STORY_KEY_TTL_DAYS)).strftime("%Y-%m-%d")
     return {sid: rec for sid, rec in index.items() if rec.get("first_seen", "") >= cutoff}
 
@@ -428,6 +428,6 @@ def assign_story_id(entry: dict, index: dict, *, source_tier: str = "medium",
         "corroborators": [],
         "winner_tier": source_tier,
         "first_seen": (entry.get("published") or entry.get("date")
-                       or datetime.now(UTC).strftime("%Y-%m-%d"))[:10],
+                       or c.utcnow().strftime("%Y-%m-%d"))[:10],
     }
     return sid, True

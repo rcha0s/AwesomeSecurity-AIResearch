@@ -34,7 +34,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-from datetime import UTC, datetime
 
 import common as c
 
@@ -61,7 +60,7 @@ def parse_evidence(specs: list[str] | None) -> list[dict]:
 
 
 def today() -> str:
-    return datetime.now(UTC).strftime("%Y-%m-%d")
+    return c.utcnow().strftime("%Y-%m-%d")
 
 
 def save_validated(ledger: dict) -> int:
