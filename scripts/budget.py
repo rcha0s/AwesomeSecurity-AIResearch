@@ -24,7 +24,7 @@ Usage:
     python scripts/budget.py --config CFG check --runner cloud     # exit 0 go, 3 skip
     python scripts/budget.py --config CFG reserve --runner cloud --run-id ID
     python scripts/budget.py --config CFG actual --run-id ID --stories 6 --cost-usd 1.84
-    python scripts/budget.py --config CFG status
+    python scripts/budget.py --config CFG status          # this month's spend report (markdown)
     python scripts/budget.py --config CFG done --run-id ID --stories 6
     python scripts/budget.py --config CFG session-limits --runner local  # "<usd> <turns>"
 """
@@ -45,6 +45,7 @@ SKIP_EXIT = 3
 RUNNERS = ("cloud", "local")
 KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")  # also keeps SPEND.md's table intact
 DEFAULT_LEDGER = c.DATA_DIR / "_budget_ledger.json"
 
 
@@ -60,7 +61,7 @@ def validate_row(row: dict) -> dict:
     cost, stories = row.get("cost_usd"), row.get("stories")
     ok = (
         isinstance(row.get("run_id"), str)
-        and bool(row["run_id"])
+        and RUN_ID_RE.match(row["run_id"]) is not None
         and DATE_RE.match(str(row.get("date", ""))) is not None
         and row.get("runner") in RUNNERS
         and row.get("kind") in KINDS
@@ -163,6 +164,35 @@ def check(
     return True, f"${remaining:.2f} left in {month}; this run reserves ${ceiling:.2f} ({why})"
 
 
+def spend_report(runs: list[dict], settings: dict, month: str) -> str:
+    """This month's spend as markdown: the total against the cap, then one row per run."""
+    cap = settings.get("monthly_cap_usd")
+    cap_txt = f"${float(cap):.2f}" if cap is not None else "no cap set (runs skip)"
+    finished = {r["run_id"]: r["stories"] for r in runs if r["kind"] == "done"}
+    rows = [r for r in effective_runs(runs) if r["date"].startswith(month)]
+    lines = [
+        f"# Scan spend, {month}",
+        "",
+        f"**${month_spend(runs, month):.2f} charged of {cap_txt}.** Local runs are charged "
+        "their measured `total_cost_usd`; cloud runs can't read their cost, so they are "
+        "charged their reserved ceiling.",
+        "",
+        "| Date | Runner | Run | Stories | Charged | Basis | Finished |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for r in sorted(rows, key=lambda r: (r["date"], r["run_id"])):
+        basis = "measured" if r["kind"] == "actual" else "reserved ceiling"
+        stories = finished.get(r["run_id"], r["stories"])
+        done = "yes" if r["run_id"] in finished else "no"
+        lines.append(
+            f"| {r['date']} | {r['runner']} | `{r['run_id']}` | {stories} "
+            f"| ${float(r['cost_usd']):.2f} | {basis} | {done} |"
+        )
+    if not rows:
+        lines.append("| | | no runs yet | | | | |")
+    return "\n".join(lines) + "\n"
+
+
 def append_row(path: Path, runs: list[dict], row: dict) -> None:
     runs.append(validate_row(row))
     c.save_json(path, {"runs": runs})
@@ -250,8 +280,7 @@ def main(argv: list[str] | None = None) -> int:
         return mark_done(path, runs, args)
     if args.cmd == "session-limits":
         return session_limits(runs, settings, args.runner)
-    cap = settings.get("monthly_cap_usd")
-    print(f"budget: ${month_spend(runs, today[:7]):.2f} spent in {today[:7]}; cap {cap}")
+    print(spend_report(runs, settings, today[:7]), end="")
     return 0
 
 

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -43,8 +44,12 @@ def git(cwd: Path, *args: str) -> str:
 def set_budget(cfg: Path, **values: str) -> None:
     text = cfg.read_text()
     for key, val in values.items():
-        text = text.replace(f"  {key}: null", f"  {key}: {val}", 1)
+        text = re.sub(rf"(?m)^  {key}: \S+", f"  {key}: {val}", text, count=1)
     cfg.write_text(text)
+
+
+# Every test starts from a closed budget, whatever the real config ships.
+CLOSED = {"monthly_cap_usd": "null", "usd_per_story": "null", "uncalibrated_run_usd": "null"}
 
 
 def commit_main(work: Path, msg: str) -> None:
@@ -64,6 +69,7 @@ def scan_repo(tmp_path: Path):
     for name in STUBBED:
         (work / "scripts" / f"{name}.py").write_text("print('stub')\n")
     shutil.copy(REPO / "config.yaml", work / "config.yaml")
+    set_budget(work / "config.yaml", **CLOSED)
     shutil.copy(REPO / ".gitignore", work / ".gitignore")
     (work / "data").mkdir()
     (work / "data" / "pool.json").write_text("[]")
@@ -188,6 +194,10 @@ def test_actual_replaces_the_reservation_on_the_remote_ledger(scan_repo):
     assert kinds == [("reserve", 2.0), ("actual", 1.25)]
     assert git(origin, "rev-list", "--count", "budget-ledger") == "2"
     assert git(work, "branch", "--show-current") == "main"
+    report = git(origin, "show", "budget-ledger:SPEND.md")
+    assert "$1.25 charged of $10.00" in report and "| measured |" in report
+    status = run_scan(work, env, "status", runner="local")
+    assert status.returncode == 0 and "$1.25 charged of $10.00" in status.stdout
 
 
 def test_fail_alert_never_publishes_log_text(scan_repo):
@@ -238,4 +248,6 @@ def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     calls = gh_calls(env)
     assert "-X POST repos/" in calls and "/pulls" in calls
     assert SECRET not in calls and "withheld" in calls
+    assert "Spend this month:** $2.00 charged of $10.00" in calls  # 8 stories x $0.25 reserved
+    assert "/blob/budget-ledger/SPEND.md" in calls and "https://github.com/" in calls
     assert [r["kind"] for r in ledger_rows(origin)] == ["reserve", "done"]

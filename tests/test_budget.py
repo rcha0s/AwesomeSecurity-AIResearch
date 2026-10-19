@@ -126,6 +126,8 @@ def test_per_story_is_the_worst_actual_run_so_padding_cannot_lower_it():
         {"runner": "evil"},
         {"kind": "refund"},
         {"run_id": ""},
+        {"run_id": "a|b"},
+        {"run_id": "a\nb"},
     ],
 )
 def test_invalid_rows_fail_closed(tmp_path, bad):
@@ -133,6 +135,22 @@ def test_invalid_rows_fail_closed(tmp_path, bad):
     common.save_json(ledger, {"runs": [{**row(), **bad}]})
     with pytest.raises(budget.LedgerError):
         budget.load_ledger(ledger)
+
+
+def test_spend_report_shows_each_run_and_what_it_was_charged():
+    runs = [
+        row("L1", kind="reserve", cost=5.0, stories=0),
+        row("L1", kind="actual", cost=1.8, stories=6),
+        {**row("L1", kind="done", cost=0, stories=6)},
+        row("C1", date="2026-07-03", kind="reserve", runner="cloud", cost=2.4, stories=0),
+        row("old", date="2026-06-30", cost=40.0),
+    ]
+    report = budget.spend_report(runs, settings(cap=100.0), MONTH)
+    assert "**$4.20 charged of $100.00.**" in report
+    assert "| 2026-07-02 | local | `L1` | 6 | $1.80 | measured | yes |" in report
+    assert "| 2026-07-03 | cloud | `C1` | 0 | $2.40 | reserved ceiling | no |" in report
+    assert "`old`" not in report
+    assert "no cap set" in budget.spend_report([], settings(cap=None), MONTH)
 
 
 def write_config(tmp_path, cap="5.0", uncalibrated="2.0", per_story="null"):

@@ -59,9 +59,9 @@ limits:
 # read these values from origin/main, never from a working tree. Routines draw subscription usage first; usage
 # credits only cover overage (routines.md § Usage and limits).
 budget:
-  monthly_cap_usd: null       # Rohan sets this; null = every run skips LLM work
-  usd_per_story: null         # null = use the mean measured on local runs
-  uncalibrated_run_usd: null  # what a first, uncalibrated local run reserves;
+  monthly_cap_usd: 100        # Rohan, 2026-10-19; null = every run skips LLM work
+  usd_per_story: null         # null = the worst measured on local runs
+  uncalibrated_run_usd: 5     # what a first, uncalibrated local run reserves;
                               # null = it can't run either
   session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this
                               # (spend can overshoot the cap, so leave headroom)

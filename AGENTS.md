@@ -141,11 +141,20 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   retries its own failed day unattended. The
   settings come from `origin/main`, and ledger rows are appended to a fresh copy of
   the remote branch, never read from the working tree the model shares. The cap
-  ships as `null`, which makes every run skip until it is set.
+  is $100/month (`null` makes every run skip).
+- **Spend visibility:** every ledger write also rewrites `SPEND.md` on the
+  `budget-ledger` branch (month total vs cap, one row per run, measured or
+  reserved). Each scan PR body carries the month's total, and
+  `scripts/run_scan.sh status` prints the report locally.
 - **Containment:** the local `claude -p` session reads only inside the repo,
   edits only `data/`, runs only the named scripts, and fetches only a staged
   candidate's own URL (`scripts/fetch_raw.py`). Alerts carry no log text, and the
   PR body passes `scripts/scrub.py` (secret patterns + secret env values).
+  The cloud routine can't be scoped per tool: routines have no permission-mode
+  picker and run shell commands without approval (routines.md). Its limits are
+  the environment's: Custom network allowlist, no connectors, a GitHub proxy
+  scoped to this repo, no readable secrets in the VM, and PRs that still need a
+  human merge.
 - **GitHub in cloud sessions:** `gh pr` / `gh issue` are GraphQL and get a 403 there;
   the scripts use `gh api` (REST) only.
 - Requirement for every runner: headless Claude runs with
