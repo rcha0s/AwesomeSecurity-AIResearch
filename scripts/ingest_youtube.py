@@ -5,7 +5,7 @@ ingest_youtube.py — Harvest recent videos from registered YouTube channels.
 For each `youtube` source in the registry, lists the channel's most recent
 videos via yt-dlp (title, description, upload date, URL) and stages them as
 candidates. The analyze step can pull the full transcript later (yt-dlp
-subtitles or Agent Reach). Degrades gracefully if yt-dlp is not installed.
+subtitles). Degrades gracefully if yt-dlp is not installed.
 
 Usage:
     python scripts/ingest_youtube.py --dry-run

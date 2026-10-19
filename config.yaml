@@ -48,6 +48,4 @@ curation:
 
 # Per-run ingestion caps (bound cost/ban-risk of a single scan).
 limits:
-  twitter_feed: 40      # home-timeline items per run
-  twitter_user_posts: 20  # posts per curated account per run
   article_chars: 20000  # truncate fetched article text to this many chars

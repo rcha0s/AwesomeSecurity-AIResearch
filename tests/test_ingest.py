@@ -1,4 +1,4 @@
-"""Tests for the ingestion pure functions (aggregate, ingest_twitter, add) + fetch."""
+"""Tests for the ingestion pure functions (aggregate, add) + fetch."""
 
 from __future__ import annotations
 
@@ -8,7 +8,6 @@ import add
 import aggregate
 import common as c
 import ingest_conferences as ic
-import ingest_twitter as it
 import pytest
 
 
@@ -94,57 +93,6 @@ def test_classify_domain_does_not_false_positive_on_bare_hyperlinks():
         "resulting proof at https://github.com/anthropics/example for details."
     )
     assert aggregate.classify_domain(blob, rules, []) is None
-
-
-def test_parse_tweets_shape_tolerant():
-    assert it.parse_tweets('{"tweets":[{"text":"hi"}]}') == [{"text": "hi"}]
-    assert it.parse_tweets('[{"text":"hi"}]') == [{"text": "hi"}]
-    assert it.parse_tweets("not json") == []
-
-
-def test_normalize_tweet_extracts_external_link():
-    t = {
-        "full_text": "great post https://blog.example.com/x",
-        "screen_name": "@researcher",
-        "url": "https://x.com/researcher/status/1",
-        "entities": {"urls": [{"expanded_url": "https://blog.example.com/x"}]},
-    }
-    n = it.normalize_tweet(t)
-    assert n["author"] == "researcher"
-    assert n["links"] == ["https://blog.example.com/x"]
-
-
-def test_normalize_tweet_real_twitter_cli_schema():
-    # the actual shape twitter-cli emits under data[]
-    t = {
-        "id": "2075744411502133559",
-        "text": "New writeup on agent harness security https://blog.example.com/harness",
-        "author": {"screenName": "researcher", "name": "A Researcher", "verified": True},
-        "urls": [{"expandedUrl": "https://blog.example.com/harness"}],
-        "createdAtISO": "2026-07-11T00:50:07+00:00",
-    }
-    n = it.normalize_tweet(t)
-    assert n["author"] == "researcher"
-    assert n["links"] == ["https://blog.example.com/harness"]
-    assert n["url"] == "https://x.com/researcher/status/2075744411502133559"
-    assert n["created"].startswith("2026-07")
-    cand = it.tweet_to_candidate(t, fetch=False)
-    assert cand["date"] == "2026-07"
-    assert cand["tweet_url"].endswith("2075744411502133559")
-
-
-def test_tweet_to_candidate():
-    cand = it.tweet_to_candidate(
-        {
-            "text": "MCP tool poisoning writeup https://b.io/mcp",
-            "screen_name": "sec",
-            "entities": {"urls": [{"expanded_url": "https://b.io/mcp"}]},
-        },
-        fetch=False,
-    )
-    assert cand["discovered_via"] == "twitter"
-    assert cand["article_url"] == "https://b.io/mcp"
-    assert it.tweet_to_candidate({"text": "", "links": []}, fetch=False) is None
 
 
 def test_add_source_via():
@@ -234,32 +182,6 @@ def test_add_main_stages(sandbox, monkeypatch):
     )
     assert add.main() == 0
     assert len(c.load_candidates()) == 1
-
-
-def test_ingest_run_cli_missing_returns_none():
-    assert it.run_cli(["definitely-not-a-real-cmd-xyz", "--help"]) is None
-
-
-def test_ingest_doctor_ok_false(monkeypatch):
-    monkeypatch.setattr(it, "run_cli", lambda *a, **k: None)
-    assert it.doctor_ok() is False
-
-
-def test_collect_tweets_empty_when_no_sources():
-    assert it.collect_tweets({"twitter": {"home_feed": False, "accounts": []}}, {}) == []
-
-
-def test_tweet_to_candidate_fetch_writes_raw(sandbox, monkeypatch):
-    monkeypatch.setattr(c, "fetch_readable", lambda url, **k: "clean text")
-    cand = it.tweet_to_candidate(
-        {
-            "text": "post https://b.io/x",
-            "screen_name": "a",
-            "entities": {"urls": [{"expanded_url": "https://b.io/x"}]},
-        },
-        fetch=True,
-    )
-    assert cand["raw_path"] is not None
 
 
 def test_fetch_readable_mocked(monkeypatch):
