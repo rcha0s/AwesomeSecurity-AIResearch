@@ -26,11 +26,9 @@ import common as c
 
 def source_text_for(entry: dict) -> str | None:
     """Cached raw text if available, else a best-effort re-fetch of the source."""
-    raw = entry.get("raw_path")
-    if raw:
-        path = c.ROOT / raw
-        if path.exists():
-            return path.read_text(encoding="utf-8", errors="replace")
+    path = c.raw_file(entry.get("raw_path"))
+    if path and path.exists():
+        return path.read_text(encoding="utf-8", errors="replace")
     url = entry.get("article_url") or entry.get("source_url") or ""
     if url and not url.startswith("manual:"):
         try:

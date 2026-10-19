@@ -2,8 +2,9 @@
 # run_scan_local.sh - The Mac fallback runner for /daily-scan (launchd calls it).
 #
 # The wrapper, not the model, runs every phase that guards spend or publishes:
-# check -> pre (reserve + ingest) -> `claude -p "/daily-scan wrapped"` (analysis
-# only) -> post (render + PR) -> actual (measured cost). The model can't skip,
+# check -> pre (reserve + ingest) -> a `claude -p` session running the
+# daily-scan skill in wrapped mode (analysis only) -> post (render + PR) ->
+# actual (measured cost). The model can't skip,
 # re-run or fake any of them, and the measured cost is recorded on every
 # outcome because the wrapper itself made the reservation.
 #
@@ -15,7 +16,14 @@
 #     gh, WebFetch or WebSearch. fetch_raw.py fetches URLs from pre's snapshot.
 #   - No outside settings or tools: --setting-sources local keeps the user's
 #     and the repo's broad allow rules out, and every MCP server and connector
-#     is off (--strict-mcp-config with none, plus a deny on mcp__*).
+#     is off (--strict-mcp-config with none, plus a deny on mcp__*). Without the
+#     project source the skill isn't auto-loaded, so its text goes in through
+#     --append-system-prompt-file.
+#   - SCAN_LOCKED=1 in the session's environment: every script may fetch only
+#     a staged candidate's own URL (common.check_scan_lock), and model-written
+#     raw_path values can't point outside data/_raw/ (common.raw_file). The
+#     model can't clear it: a Bash command prefixed with an env assignment no
+#     longer matches its allow rules.
 #   - --max-budget-usd at 80% of the reserved ceiling (spend can overshoot the
 #     cap) and --max-turns bound the session's spend.
 # Never --dangerously-skip-permissions. If a needed tool is denied, add it to
@@ -84,7 +92,9 @@ scripts/run_scan.sh pre || fail "local-pre"
 [[ -f data/_scan_skip ]] && exit 0 # raced: the guard refused at pre time
 
 claude_rc=0
-env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN "$CLAUDE" -p "/daily-scan wrapped" \
+env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN SCAN_LOCKED=1 "$CLAUDE" -p \
+  "Run the daily scan in wrapped mode, following the daily-scan instructions appended to your system prompt." \
+  --append-system-prompt-file .claude/skills/daily-scan/SKILL.md \
   --output-format json --permission-mode dontAsk \
   --setting-sources local --strict-mcp-config --mcp-config '{"mcpServers": {}}' \
   --tools "$TOOLS" --settings "$SETTINGS" --allowedTools "${ALLOWED_TOOLS[@]}" \

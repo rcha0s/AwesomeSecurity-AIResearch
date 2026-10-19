@@ -28,7 +28,8 @@ of three outcomes, stated in your last message:
 
 ## Phases
 
-**Wrapped mode.** When invoked as `/daily-scan wrapped` (the Mac runner), the wrapper has
+**Wrapped mode.** When invoked as `/daily-scan wrapped` or told to run in wrapped mode (the
+Mac runner), the wrapper has
 already run phase 1 and runs phase 4 itself after you finish: do only phases 2–3, and you
 can't call `run_scan.sh` (it is not on your allowlist). Otherwise (the cloud routine) run
 all four.

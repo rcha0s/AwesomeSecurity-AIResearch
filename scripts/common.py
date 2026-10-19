@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import math
 import re
 import sys
@@ -804,9 +805,38 @@ def write_raw(cand_id: str, text: str) -> str:
     return str(path.relative_to(ROOT))
 
 
+# Set (to "1") only in the environment of the Mac scan's model session. Under
+# it, the only URLs any script may fetch are the staged candidates' own, as
+# `run_scan.sh pre` recorded them: model-written entry fields can't make the
+# runner request an attacker's URL.
+SCAN_LOCK_ENV = "SCAN_LOCKED"
+SCAN_URL_SNAPSHOT = "_scan_urls.json"
+
+
+def check_scan_lock(url: str) -> None:
+    if os.environ.get(SCAN_LOCK_ENV) != "1":
+        return
+    allowed = set((load_json(DATA_DIR / SCAN_URL_SNAPSHOT, default={}) or {}).values())
+    if url not in allowed:
+        raise PermissionError(f"scan lock: {url} is not a staged candidate URL")
+
+
+def raw_file(raw_path: str | None) -> Path | None:
+    """The cached source file for a raw_path, only if it lives under data/_raw/.
+
+    raw_path is model-writable, and `ROOT / "/abs/path"` would escape ROOT.
+    """
+    if not raw_path:
+        return None
+    path = (ROOT / raw_path).resolve()
+    return path if path.is_relative_to(RAW_DIR.resolve()) else None
+
+
 def fetch_readable(url: str, timeout: int = 30, max_chars: int = 20000) -> str:
     """Fetch clean reader text for a URL via Jina Reader. Raises on failure."""
     import requests  # local import keeps offline unit tests import-clean
+
+    check_scan_lock(url)
 
     resp = requests.get(
         JINA_READER + url,

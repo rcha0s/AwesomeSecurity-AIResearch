@@ -15,6 +15,7 @@ from test_run_scan import ledger_rows, open_budget
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
+echo "SCAN_LOCKED=$SCAN_LOCKED" >> "$CLAUDE_ARGS.env"
 echo '{"total_cost_usd": 0.42}'
 exit "${FAKE_CLAUDE_RC:-0}"
 """
@@ -46,9 +47,11 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
     res, args = run_local(work, env, tmp_path, rc=claude_rc)
     assert (res.returncode == 0) == (claude_rc == 0), res.stdout + res.stderr
-    assert args[:2] == ["-p", "/daily-scan wrapped"]
+    assert args[0] == "-p" and "wrapped mode" in args[1]
+    assert (tmp_path / "claude-args.env").read_text().strip() == "SCAN_LOCKED=1"
     flag = dict(zip(args, args[1:], strict=False))
     assert flag["--permission-mode"] == "dontAsk"
+    assert flag["--append-system-prompt-file"] == ".claude/skills/daily-scan/SKILL.md"
     assert flag["--setting-sources"] == "local"
     assert "--strict-mcp-config" in args and flag["--disallowedTools"] == "mcp__*"
     assert flag["--max-budget-usd"] == "1.60"  # 80% of the $2.00 reservation

@@ -21,7 +21,7 @@ import sys
 
 import common as c
 
-URL_SNAPSHOT = "_scan_urls.json"
+URL_SNAPSHOT = c.SCAN_URL_SNAPSHOT
 ID_RE = re.compile(r"^[A-Za-z0-9_.:-]{1,200}$")
 
 
