@@ -306,26 +306,36 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   and no duplicate id/URL in its lane; every pool + archive entry has a valid ID and
   http(s) URLs. Runs in the Tests workflow on every PR and in `merge_gate.py`
   (`automerge.evals`, required).
-- **Recall** (`scripts/eval_recall.py --live --write`, ISC-22): this week's headlines
-  from tl;dr sec, Simon Willison (security + prompt-injection tags), critical GHSA and
-  new CISA KEV entries, kept when on-thesis by taxonomy keyword hints, matched against
-  the pools + archive by canonical URL, CVE/GHSA id, or title + entities. Prints the
-  misses and their hosts (the source-tuning signal). `post` runs it once per ISO week.
+- **Recall** (`scripts/eval_recall.py --live [--write | --out PATH]`, ISC-22): this
+  week's headlines from tl;dr sec, Simon Willison (security + prompt-injection tags),
+  critical GHSA and new CISA KEV entries, kept when on-thesis by taxonomy keyword hints,
+  matched against the pools + archive by canonical URL, CVE/GHSA id, or title +
+  entities. Prints the misses and their hosts (the source-tuning signal). It writes no
+  result when any curator errored. `post` fetches it fresh every run into a temp file
+  (never into the tree).
 - **Golden** (`data/evals/golden.json` + `scripts/eval_golden.py`, ISC-23): ~30 past
   stories with checked keep/drop, on-topic, domain ID and key facts. `score` grades an
   analyzer output file deterministically; `scripts/run_golden_local.sh` is the weekly
-  LLM run (a rotating slice, staged in a throwaway worktree with the cases' own entries
-  hidden, under the scan's lockdown) and opens a `claude/golden-<date>` PR with the
-  result. **A wrong answer in a real run adds a case:** copy the story's entry into
-  `cases` with the checked answer, a `reason`, and 1-3 `facts` (each with `any`
-  phrases), mark doubts in `unsure`, and run `eval_golden.py check`.
+  LLM run: a rotating slice staged in a throwaway worktree that `stage` scrubs of every
+  trace of those stories (entries, fields naming them, claim evidence, rendered site,
+  `data/evals/`, story ledger; it refuses if a title or URL survives), under the scan's
+  lockdown plus Read denies on `data/evals/`, `data/_golden*` and `.git/`. It opens a
+  `claude/golden-<date>` PR with the result. **A wrong answer in a real run adds a
+  case:** copy the story's entry into `cases` with the checked answer, a `reason`, and
+  1-3 `facts` (each with `any` phrases), mark doubts in `unsure`, and run
+  `eval_golden.py check`.
 - **Cost + gate** (`scripts/eval_history.py`, ISC-25/26): `post` appends one row per
-  scan PR to `data/evals/history.json` (candidates, stories, kept, integrity, the newest
-  recall/golden scores, the ledger charge vs the per-run cap) and puts the numbers and
-  the 7-run trend in the PR body. `eval_history.py gate` passes when the last
-  `evals.gate_runs` rows all clear `evals.thresholds`. `post` resets `data/evals/` to
-  main's copy before appending, and `merge_guard.py` refuses scan PRs that touch
-  `data/evals/golden*`, so a scan can't grade itself.
+  scan PR to `data/evals/history.json` (candidates, stories, kept, integrity, this run's
+  recall, the newest golden result, the ledger charge with its basis) and puts the
+  numbers and the 7-run trend in the PR body. `eval_history.py gate` passes when the
+  last `evals.gate_runs` rows all clear `evals.thresholds`: a measured charge against
+  the per-run cap, a reservation against its own ceiling, and staleness judged at each
+  run's date. **A scan can't grade itself:** `post` resets `data/evals/` to main's copy
+  before appending; `merge_guard.py` lets a scan PR change only `data/evals/history.json`
+  there; and `merge_gate.py` (`content_checks.history_problems`) requires main's rows
+  to be an exact prefix, at most one new row, and that row's charge to match the budget
+  ledger and its integrity, golden result and cap to match what the gate recomputes.
+  The recall score is the one value taken on trust (it needs the network).
 
 ## How to validate a change end-to-end
 

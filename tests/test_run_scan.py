@@ -304,6 +304,9 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     rows = json.loads(git(origin, "show", f"{branch}:data/evals/history.json"))["runs"]
     assert [r["run_id"] for r in rows] == ["C1"]
     assert rows[0]["cost_usd"] == 2.0 and rows[0]["candidates"] == 0
+    assert (rows[0]["cost_basis"], rows[0]["ceiling_usd"]) == ("reserved", 2.0)
+    assert rows[0]["recall"] is None  # the stubbed fetch wrote nothing; no tree file stands in
+    assert [f for f in files.split() if f.startswith("data/evals/")] == ["data/evals/history.json"]
     assert rows[0]["integrity"]["passed"] is False  # no rendered site in this repo
     calls = gh_calls(env)
     assert "**Run numbers:** 0 candidates staged" in calls and "LLM calls:" in calls

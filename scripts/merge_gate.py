@@ -11,7 +11,10 @@ config.yaml. An eval whose script is missing is skipped with a notice until it i
 declared `required: true`; from then on a missing script fails the gate (closed).
 
 It also runs content_checks.py in-process: URL schemes in data/*.json, render
-equality of docs/index.html, and claim-ledger history against main (`--base`).
+equality of docs/index.html, and claim-ledger history against main (`--base`),
+and the eval history: main's rows untouched, at most one new row, and that row's
+charge, integrity, golden result and cap checked against the budget ledger
+(origin/budget-ledger) and recomputed on this tree.
 
 Usage: python scripts/merge_gate.py [--base <main sha or ref>] [--dry-run]
 """
@@ -28,6 +31,7 @@ import content_checks as cc
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
+LEDGER_REF = "origin/budget-ledger"  # where run_scan.sh keeps the spend ledger
 
 # Always run. Each is a command, from the repo root.
 BUILTIN = (
@@ -97,7 +101,36 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     stories = root / "data" / "news_stories.json"
     pr_stories = json.loads(stories.read_text(encoding="utf-8")) if stories.is_file() else {}
     out += cc.story_membership_problems(main_stories(base), pr_stories)
+    out += history_check(base, root)
     return out
+
+
+def git_json(ref_path: str, default: object) -> object:
+    """A JSON file from a git ref (`<ref>:<path>`), or `default` if it isn't there."""
+    out = subprocess.run(["git", "show", ref_path], cwd=ROOT, capture_output=True)
+    return json.loads(out.stdout) if out.returncode == 0 else default
+
+
+def history_check(base: str, root: Path = ROOT, ledger_ref: str = LEDGER_REF) -> list[str]:
+    """The eval history (ISC-26) only grows by one row that the gate can vouch for:
+    its ledger charge, and the integrity, golden result and cap recomputed here."""
+    import eval_history as eh
+    import eval_integrity
+    import eval_lib as el
+
+    path = root / "data" / "evals" / "history.json"
+    pr_history = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    main_history = git_json(f"{base}:data/evals/history.json", {})
+    if pr_history == main_history:
+        return []
+    ledger = git_json(f"{ledger_ref}:budget.json", {}) or {}
+    cfg = el.settings(root / "config.yaml")
+    recomputed = {
+        "integrity": eval_integrity.run()["passed"],
+        "golden": eh.weekly("golden", eh.GOLDEN_KEYS, int(cfg["max_result_age_days"])),
+        "cap_usd": el.per_run_cap(root / "config.yaml"),
+    }
+    return cc.history_problems(main_history, pr_history, ledger.get("runs") or [], recomputed)
 
 
 def main(argv: list[str] | None = None) -> int:

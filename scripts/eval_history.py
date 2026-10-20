@@ -9,17 +9,23 @@ weekly recall and golden results, and the run's charge on the budget ledger
 against the per-run cap. `body` renders those numbers and the 7-run trend for
 the scan PR. `gate` says whether the last `evals.gate_runs` rows all pass:
 
-  recall     >= thresholds.recall_min, from a result at most max_result_age_days old
+  recall     >= thresholds.recall_min from a clean result (it passed, no curator
+             errored) at most max_result_age_days old and not future-dated
   golden     >= thresholds.golden_min and off-topic <= thresholds.off_topic_max (same age rule)
   integrity  passed: all or nothing
-  cost       charged <= the per-run cap (thresholds.max_run_usd, else monthly cap / 30)
+  cost       a measured charge <= the per-run cap (thresholds.max_run_usd, else monthly
+             cap / 30); a reserved charge (every cloud run, and a local run at post
+             time) <= the ceiling it reserved, since its true cost is unknowable
 
-A run counts only once its scan PR merges: rows ride on the PR, and post resets
-data/evals/ to main's copy before it appends, so nothing a session wrote there ships.
+A run counts only once its scan PR merges: rows ride on the PR. post resets
+data/evals/ to main's copy before it appends, merge_guard lets a scan PR touch
+only data/evals/history.json there, and merge_gate (content_checks.history_problems)
+proves main's rows are untouched and the one new row agrees with the budget
+ledger, the merged tree's integrity and the newest golden result.
 
 Usage:
     python scripts/eval_history.py append --run-id ID --runner cloud --stories 6 \\
-        --candidates 40 [--ledger L] [--config CFG]
+        --candidates 40 [--ledger L] [--recall R] [--config CFG]
     python scripts/eval_history.py body --run-id ID     # markdown for the PR body
     python scripts/eval_history.py gate [--json]         # exit 0 = the last N runs pass
 """
@@ -28,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import datetime
 from pathlib import Path
 
 import budget
@@ -36,6 +43,7 @@ import eval_integrity
 import eval_lib as el
 
 HISTORY_FILE = "history.json"
+AGE = el.DEFAULTS["max_result_age_days"]
 LLM_CALLS_NOTE = "not measurable in-run (cloud runs expose no usage; local cost lands in SPEND.md)"
 
 
@@ -55,14 +63,28 @@ def save_row(row: dict, path: Path | None = None) -> list[dict]:
 
 
 # --- Inputs for one row -------------------------------------------------------
+RECALL_KEYS = ("recall", "week", "generated", "passed")
+GOLDEN_KEYS = ("score", "off_topic_rate", "cases", "generated")
+
+
+def summarize(result: dict, keys: tuple[str, ...], name: str, max_age: int) -> dict:
+    row = {k: result.get(k) for k in keys}
+    errors = result.get("errors") or []
+    return {**row, "errors": len(errors), "file": name, "stale": el.is_stale(result, max_age)}
+
+
 def weekly(prefix: str, keys: tuple[str, ...], max_age: int) -> dict | None:
     """The newest recall/golden result's headline numbers, with a staleness flag."""
     found = el.latest_result(prefix)
-    if not found:
-        return None
-    path, result = found
-    row = {k: result.get(k) for k in keys}
-    return {**row, "file": path.name, "stale": el.is_stale(result, max_age)}
+    return summarize(found[1], keys, found[0].name, max_age) if found else None
+
+
+def recall_from(path: Path | None, max_age: int) -> dict | None:
+    """This run's own recall result (post fetches it fresh, outside the tree)."""
+    if path is None:
+        return weekly("recall", RECALL_KEYS, max_age)
+    result = c.load_json(path, default=None) if path.exists() else None
+    return summarize(result, RECALL_KEYS, path.name, max_age) if isinstance(result, dict) else None
 
 
 def kept_new() -> tuple[int, int]:
@@ -73,12 +95,20 @@ def kept_new() -> tuple[int, int]:
     return len(new), len(kept)
 
 
-def run_charge(ledger: Path | None, run_id: str) -> float | None:
-    """This run's charge: its measured cost, else its reservation."""
+def run_charge(ledger: Path | None, run_id: str) -> dict:
+    """This run's charge on the ledger: cost, basis (measured | reserved), and the
+    ceiling it reserved. All None when the ledger or the run is missing."""
+    out = {"cost_usd": None, "cost_basis": None, "ceiling_usd": None}
     if ledger is None or not ledger.exists():
-        return None
-    rows = budget.effective_runs(budget.load_ledger(ledger))
-    return next((float(r["cost_usd"]) for r in rows if r["run_id"] == run_id), None)
+        return out
+    runs = budget.load_ledger(ledger)
+    held = [r for r in runs if r["run_id"] == run_id and r["kind"] == "reserve"]
+    charge = next((r for r in budget.effective_runs(runs) if r["run_id"] == run_id), None)
+    if charge is None or not held:
+        return out
+    basis = "measured" if charge["kind"] == "actual" else "reserved"
+    return {"cost_usd": float(charge["cost_usd"]), "cost_basis": basis,
+            "ceiling_usd": float(held[0]["cost_usd"])}  # fmt: skip
 
 
 def build_row(args) -> dict:
@@ -97,24 +127,36 @@ def build_row(args) -> dict:
         "stories": args.stories,
         "kept": kept,
         "kept_ratio": round(kept / new, 3) if new else None,
-        "recall": weekly("recall", ("recall", "week", "generated"), age),
-        "golden": weekly("golden", ("score", "off_topic_rate", "cases", "generated"), age),
+        "recall": recall_from(args.recall, age),
+        "golden": weekly("golden", GOLDEN_KEYS, age),
         "integrity": {"passed": integrity["passed"], "problems": len(integrity["problems"])},
-        "cost_usd": run_charge(args.ledger, args.run_id),
+        **run_charge(args.ledger, args.run_id),
         "cap_usd": el.per_run_cap(args.config),
     }
 
 
 # --- The gate -----------------------------------------------------------------
-def verdict(row: dict, thresholds: dict) -> list[str]:
+def stale_at_run(result: dict, row: dict, max_age_days: int) -> bool:
+    """Staleness as of the run's own date, from the result's `generated` stamp, so a
+    row can't simply claim `stale: false`."""
+    try:
+        asof = datetime.fromisoformat(f"{row.get('date')}T23:59:59+00:00")
+    except ValueError:
+        return True
+    return bool(result.get("stale", True)) or el.is_stale(result, max_age_days, now=asof)
+
+
+def verdict(row: dict, thresholds: dict, max_age_days: int = AGE) -> list[str]:
     """Why this run fails the gate ([] = it passes)."""
     out = []
     rec, gold = row.get("recall") or {}, row.get("golden") or {}
-    if rec.get("stale", True) or rec.get("recall") is None:
+    if stale_at_run(rec, row, max_age_days) or rec.get("recall") is None:
         out.append("no fresh recall result")
+    elif rec.get("errors", 1) or rec.get("passed") is not True:
+        out.append("recall result is not clean (curator errors or not passed)")
     elif rec["recall"] < float(thresholds["recall_min"]):
         out.append(f"recall {rec['recall']:.2f} < {thresholds['recall_min']}")
-    if gold.get("stale", True) or gold.get("score") is None:
+    if stale_at_run(gold, row, max_age_days) or gold.get("score") is None:
         out.append("no fresh golden result")
     else:
         if gold["score"] < float(thresholds["golden_min"]):
@@ -124,12 +166,19 @@ def verdict(row: dict, thresholds: dict) -> list[str]:
     integ = row.get("integrity") or {}
     if not integ.get("passed"):
         out.append(f"integrity failed ({integ.get('problems', '?')} problems)")
-    cost, cap = row.get("cost_usd"), row.get("cap_usd")
-    if cost is None or cap is None:
-        out.append("cost or per-run cap unknown")
-    elif cost > cap:
-        out.append(f"cost ${cost:.2f} > cap ${cap:.2f}")
-    return out
+    return out + cost_fails(row)
+
+
+def cost_fails(row: dict) -> list[str]:
+    """A measured charge must fit the per-run cap; a reservation, its own ceiling."""
+    cost, basis = row.get("cost_usd"), row.get("cost_basis")
+    cap = row.get("cap_usd") if basis == "measured" else row.get("ceiling_usd")
+    if cost is None or cap is None or basis not in ("measured", "reserved"):
+        return ["cost, basis or cap unknown"]
+    if cost > cap:
+        limit = "per-run cap" if basis == "measured" else "reserved ceiling"
+        return [f"cost ${cost:.2f} > {limit} ${cap:.2f}"]
+    return []
 
 
 def gate(rows: list[dict], cfg: dict) -> dict:
@@ -137,9 +186,11 @@ def gate(rows: list[dict], cfg: dict) -> dict:
     need = int(cfg["gate_runs"])
     window = rows[-need:]
     checked = [{"run_id": r.get("run_id"), "date": r.get("date"),
-                "fails": verdict(r, cfg["thresholds"])} for r in window]  # fmt: skip
+                "fails": verdict(r, cfg["thresholds"], int(cfg["max_result_age_days"]))} for r in window]  # fmt: skip
     streak = 0
-    for r in reversed([verdict(r, cfg["thresholds"]) for r in rows]):
+    for r in reversed(
+        [verdict(r, cfg["thresholds"], int(cfg["max_result_age_days"])) for r in rows]
+    ):
         if r:
             break
         streak += 1
@@ -165,8 +216,9 @@ def body(rows: list[dict], run_id: str, cfg: dict) -> str:
         "",
         f"**Run numbers:** {row['candidates']} candidates staged · {row['stories']} stories "
         f"analyzed · {row['kept']} kept ({_pct(row['kept_ratio'])} of new entries) · "
-        f"LLM calls: {LLM_CALLS_NOTE} · charged {_money(row['cost_usd'])} of a "
-        f"{_money(row['cap_usd'])} per-run cap.",
+        f"LLM calls: {LLM_CALLS_NOTE} · charged {_money(row.get('cost_usd'))} "
+        f"({row.get('cost_basis') or 'unknown'}; reserved ceiling "
+        f"{_money(row.get('ceiling_usd'))}, per-run cap {_money(row.get('cap_usd'))}).",
         "",
         f"**Last {cfg['gate_runs']} runs** (Phase 3 gate):",
         "",
@@ -174,7 +226,7 @@ def body(rows: list[dict], run_id: str, cfg: dict) -> str:
         "|---|---|---|---|---|---|---|",
     ]
     for r in rows[-int(cfg["gate_runs"]) :]:
-        fails = verdict(r, cfg["thresholds"])
+        fails = verdict(r, cfg["thresholds"], int(cfg["max_result_age_days"]))
         mark = "pass" if not fails else "fail: " + "; ".join(fails)
         lines.append(
             f"| {r.get('date')} | {r.get('runner')} | {r.get('candidates')} | {r.get('stories')} "
@@ -194,6 +246,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     app.add_argument("--stories", type=int, required=True)
     app.add_argument("--candidates", type=int, default=0)
     app.add_argument("--ledger", type=Path)
+    app.add_argument("--recall", type=Path, help="this run's recall result (eval_recall --out)")
     bod = sub.add_parser("body")
     bod.add_argument("--run-id", required=True)
     gat = sub.add_parser("gate")
@@ -207,7 +260,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "append":
         row = build_row(args)
         save_row(row)
-        fails = verdict(row, cfg["thresholds"])
+        fails = verdict(row, cfg["thresholds"], int(cfg["max_result_age_days"]))
         print(el.summary_line("run", not fails, run_id=row["run_id"], fails=len(fails)))
         return 0
     if args.cmd == "body":

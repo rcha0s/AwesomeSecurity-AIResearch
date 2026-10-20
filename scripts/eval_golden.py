@@ -203,30 +203,132 @@ def to_candidate(case: dict, entry: dict | None) -> dict:
     return {**cand, **{k: entry.get(k) for k in CANDIDATE_FIELDS if entry.get(k) is not None}}
 
 
-def hide_cases(ids: set[str]) -> int:
-    """Remove the staged cases' own entries from this tree's pools and archive, so
-    the analyzer judges novelty without seeing its earlier answer. Scratch trees only."""
+def needles_for(cases: list[dict]) -> set[str]:
+    """Lowercased strings that name a case: its title and its scheme-less canonical URL."""
+    out = {k["title"].lower() for k in cases}
+    return out | {ds.canonical_url(k["url"]).split("://", 1)[-1].lower() for k in cases}
+
+
+def _mentions(value: object, needles: set[str]) -> bool:
+    text = json.dumps(value, ensure_ascii=False).lower()
+    return any(n in text for n in needles)
+
+
+def forget(entries: list[dict], ids: set[str], needles: set[str]) -> tuple[list[dict], int]:
+    """Drop the cases' entries (and any other entry whose title or URL is one of
+    them), and delete fields of the rest that mention a case, e.g. a `prior_art`
+    naming it. Returns (kept entries, entries dropped)."""
+    kept = []
+    for e in entries:
+        same = {k: e.get(k) for k in ("title", "source_url", "article_url", "tweet_url")}
+        if e.get("id") in ids or _mentions(same, needles):
+            continue
+        kept.append({k: v for k, v in e.items() if not _mentions(v, needles)})
+    return kept, len(entries) - len(kept)
+
+
+def hide_cases(ids: set[str], needles: set[str] = frozenset()) -> int:
+    """Remove the staged cases from this tree's pools and archive, so the analyzer
+    judges novelty without seeing its earlier answer. Scratch trees only."""
     removed = 0
     for topic in c.TOPICS:
         pool = c.load_pool(topic)
-        keep = [e for e in pool["entries"] if e.get("id") not in ids]
-        removed += len(pool["entries"]) - len(keep)
+        keep, gone = forget(pool["entries"], ids, set(needles))
+        removed += gone
         c.save_pool(topic, {**pool, "entries": keep})
-    archive = c.load_json(c.ARCHIVE_FILE, default=[]) or []
-    kept = [e for e in archive if e.get("id") not in ids]
-    removed += len(archive) - len(kept)
-    c.save_json(c.ARCHIVE_FILE, kept)
-    return removed
+    archive, gone = forget(c.load_json(c.ARCHIVE_FILE, default=[]) or [], ids, set(needles))
+    c.save_json(c.ARCHIVE_FILE, archive)
+    return removed + gone
 
 
-def stage(out: Path, limit: int | None, offset: int) -> dict:
+# What a scratch tree must lose before the golden session sees it: every place
+# a hidden case's old analysis, title or verdict is rendered or indexed. Pools,
+# archive and claims are kept (novelty and related_claims need them) but have
+# the hidden cases cut out.
+SCRUB_PATHS = (
+    "README.md", "NEWSLETTER.md", "TRENDS.md", "REVIEW.md",
+    "ai-security", "product-security", "ai-research", "claims", "docs",
+    "data/evals", "data/news_stories.json", "data/story_shortlist.json",
+    "data/story_verdicts.json", "data/trends.json", "data/backlog.md",
+    "data/candidates.backlog.json", "data/taxonomy_migration.json",
+    "data/taxonomy_proposals.json",
+)  # fmt: skip
+SCRUB_GLOBS = ("data/discovery-*.md",)
+# Where the staged cases legitimately appear: what the session is asked to analyze.
+TRACE_ALLOWED = ("data/candidates.json", "data/_scan_urls.json", "data/_raw/")
+TRACE_SKIP_DIRS = (".git", ".venv", "__pycache__", "node_modules")
+
+
+def _remove(path: Path) -> bool:
+    if path.is_dir():
+        import shutil
+
+        shutil.rmtree(path)
+        return True
+    if path.exists():
+        path.unlink()
+        return True
+    return False
+
+
+def strip_claim_evidence(cases: list[dict]) -> int:
+    """Drop claim evidence citing a hidden case (by canonical URL or title)."""
+    urls = {ds.canonical_url(k["url"]) for k in cases}
+    titles = {k["title"].lower() for k in cases}
+    path = c.DATA_DIR / "claims.json"
+    ledger = c.load_json(path, default=None)
+    if not isinstance(ledger, dict):
+        return 0
+    cut = 0
+    for claim in ledger.get("claims") or []:
+        kept = [
+            ev for ev in claim.get("evidence") or []
+            if ds.canonical_url(ev.get("url") or "") not in urls
+            and (ev.get("title") or "").lower() not in titles
+        ]  # fmt: skip
+        cut += len(claim.get("evidence") or []) - len(kept)
+        claim["evidence"] = kept
+    c.save_json(path, ledger)
+    return cut
+
+
+def traces(cases: list[dict], root: Path | None = None) -> list[str]:
+    """Files under the tree (outside TRACE_ALLOWED) that still name a hidden case
+    by title or URL. [] = the session can't read its old answer."""
+    root = root or c.ROOT
+    needles = needles_for(cases)
+    found = []
+    for path in sorted(root.rglob("*")):
+        rel = path.relative_to(root).as_posix()
+        if not path.is_file() or any(part in TRACE_SKIP_DIRS for part in path.parts):
+            continue
+        if rel.startswith(TRACE_ALLOWED):
+            continue
+        text = path.read_text(encoding="utf-8", errors="ignore").lower()
+        found += [f"{rel}: {n[:60]}" for n in needles if n in text]
+    return found
+
+
+def scrub_tree(cases: list[dict]) -> dict:
+    """Make a scratch tree forget the staged cases (see SCRUB_PATHS)."""
+    hidden = hide_cases({k["id"] for k in cases}, needles_for(cases))
+    removed = [p for p in SCRUB_PATHS if _remove(c.ROOT / p)]
+    for pattern in SCRUB_GLOBS:
+        removed += [p.relative_to(c.ROOT).as_posix() for p in c.ROOT.glob(pattern) if _remove(p)]
+    return {"hidden": hidden, "removed": removed, "evidence_cut": strip_claim_evidence(cases)}
+
+
+def stage(out: Path, limit: int | None, offset: int, manifest: Path | None = None) -> dict:
+    """Stage a slice of cases as candidates and scrub the tree of their answers.
+    The manifest (the staged ids) goes to `manifest`, outside the tree."""
     chosen = select(load_cases(), limit, offset)
     cands = [to_candidate(k, find_entry(k)) for k in chosen]
+    manifest = manifest or out.parent / MANIFEST
+    c.save_json(manifest, {"generated": c.utcnow_iso(), "ids": [k["id"] for k in chosen]})
+    report = scrub_tree(chosen)
     c.save_json(out, cands)
-    manifest = {"generated": c.utcnow_iso(), "ids": [k["id"] for k in chosen]}
-    c.save_json(out.parent / MANIFEST, manifest)
-    hidden = hide_cases(set(manifest["ids"]))
-    return {"staged": len(cands), "hidden": hidden, "manifest": str(out.parent / MANIFEST)}
+    left = traces(chosen)
+    return {"staged": len(cands), **report, "manifest": str(manifest), "traces": left}
 
 
 # --- The answer file itself ---------------------------------------------------
@@ -259,7 +361,7 @@ def _outputs(path: Path) -> list[dict]:
 
 
 def cmd_score(args) -> int:
-    cases = load_cases()
+    cases = load_cases(Path(args.golden) if args.golden else None)
     if args.manifest:
         ids = set((c.load_json(Path(args.manifest), default={}) or {}).get("ids") or [])
         cases = [k for k in cases if k["id"] in ids]
@@ -286,7 +388,12 @@ def cmd_stage(args) -> int:
             file=sys.stderr,
         )
         return 2
-    print(json.dumps(stage(Path(args.out), args.limit, args.offset)))
+    manifest = Path(args.manifest) if args.manifest else None
+    report = stage(Path(args.out), args.limit, args.offset, manifest)
+    print(json.dumps(report))
+    if report["traces"]:
+        print("stage: the tree still names a staged case; refusing to analyze", file=sys.stderr)
+        return 3
     return 0
 
 
@@ -307,12 +414,14 @@ def main(argv: list[str] | None = None) -> int:
     sc = sub.add_parser("score", help="score an analyzer output file")
     sc.add_argument("analysis")
     sc.add_argument("--manifest", help="score only the cases a stage run listed")
+    sc.add_argument("--golden", help="the answer file (stage deletes data/evals/)")
     sc.add_argument("--write", action="store_true", help="save data/evals/golden-<date>.json")
     st = sub.add_parser("stage", help="stage golden cases as candidates (scratch trees only)")
     st.add_argument("--out", default=str(c.CANDIDATES_FILE))
     st.add_argument("--limit", type=int, default=None)
     st.add_argument("--offset", type=int, default=0)
     st.add_argument("--scratch", action="store_true", help="confirm this tree is disposable")
+    st.add_argument("--manifest", help="where to write the staged ids (keep it outside the tree)")
     sub.add_parser("check", help="validate data/evals/golden.json")
     args = ap.parse_args(argv)
     return {"score": cmd_score, "stage": cmd_stage, "check": cmd_check}[args.cmd](args)

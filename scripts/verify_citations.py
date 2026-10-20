@@ -76,6 +76,14 @@ def fully_grounded(entry: dict) -> bool:
     return score is None or score >= 1.0
 
 
+def publishable_grounding(entry: dict) -> bool:
+    """fully_grounded, and no lesson carries a `grounded: false` verdict. The bar
+    every rendered lane and eval_integrity.py hold a published story to."""
+    lessons = entry.get("lessons") or []
+    bad = any(isinstance(le, dict) and le.get("grounded") is False for le in lessons)
+    return fully_grounded(entry) and not bad
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", action="store_true", help="print, don't persist")

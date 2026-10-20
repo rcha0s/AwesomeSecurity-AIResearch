@@ -17,6 +17,12 @@ FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
 cp data/candidates.json "$CLAUDE_ARGS.candidates"
 cp data/ai-research.json "$CLAUDE_ARGS.pool"
+prev=""
+for a in "$@"; do
+  [ "$prev" = "--settings" ] && printf '%s' "$a" > "$CLAUDE_ARGS.settings"
+  prev="$a"
+done
+grep -rIl --exclude-dir=.git -e "Harness escalation story" -e "example.com/a" . | sort > "$CLAUDE_ARGS.traces"
 cat > data/analysis_out.json <<'JSON'
 [{"topic": "ai-research", "domain": "air.agents", "title": "Harness escalation story",
   "source_url": "https://example.com/a", "summary": "All 13 attack objectives worked.",
@@ -41,8 +47,18 @@ def test_golden_run_stages_in_its_worktree_and_opens_a_result_pr(scan_repo, tmp_
     (work / "scripts" / "fetch_raw.py").write_text("print('stub')\n")  # no network
     (work / "data" / "evals").mkdir()
     (work / "data" / "evals" / "golden.json").write_text(json.dumps({"cases": CASES}))
-    pool = {"topic": "ai-research", "entries": [{"id": "a", "title": "x"}, {"id": "keep-me"}]}
+    entries = [
+        {"id": "a", "title": "Harness escalation story", "source_url": "https://example.com/a"},
+        {"id": "keep-me", "title": "Other", "prior_art": "Harness escalation story (2026)"},
+    ]
+    pool = {"topic": "ai-research", "entries": entries}
     (work / "data" / "ai-research.json").write_text(json.dumps(pool))
+    # The old answer, rendered and cited: all of it must be gone before the session.
+    (work / "docs").mkdir()
+    (work / "docs" / "index.html").write_text("<p>Harness escalation story</p>")
+    (work / "README.md").write_text("- Harness escalation story\n")
+    claims = {"claims": [{"id": "c", "evidence": [{"url": "https://example.com/a", "title": "t"}]}]}
+    (work / "data" / "claims.json").write_text(json.dumps(claims))
     commit_main(work, "golden set")
     fake = tmp_path / "fake-claude"
     fake.write_text(FAKE_CLAUDE)
@@ -66,7 +82,11 @@ def test_golden_run_stages_in_its_worktree_and_opens_a_result_pr(scan_repo, tmp_
     staged = json.loads((tmp_path / "claude-args.candidates").read_text())
     assert [c["id"] for c in staged] == ["a", "b"] and "domain" not in staged[0]
     hidden = json.loads((tmp_path / "claude-args.pool").read_text())
-    assert [e["id"] for e in hidden["entries"]] == ["keep-me"]  # the old answer is out of view
+    assert hidden["entries"] == [{"id": "keep-me", "title": "Other"}]  # prior_art naming it cut
+    assert (tmp_path / "claude-args.traces").read_text().split() == ["./data/candidates.json"]
+    deny = json.loads((tmp_path / "claude-args.settings").read_text())["permissions"]["deny"]
+    assert {"Read(data/evals/**)", "Read(data/_golden*)", "Read(.git/**)"} <= set(deny)
+    assert "Edit(data/evals/**)" in deny and "Bash(git *)" in deny  # the daily lockdown kept
     day = datetime.now(UTC).strftime("%Y-%m-%d")
     branch = f"claude/golden-{day}"
     assert git(origin, "diff", "--name-only", "main", branch) == f"data/evals/golden-{day}.json"

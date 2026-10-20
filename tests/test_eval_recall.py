@@ -36,7 +36,7 @@ def test_tldrsec_takes_each_paragraphs_first_story_link_from_security_sections()
     issues = er.parse_tldrsec_sitemap((FIXTURES / "tldrsec_sitemap.xml").read_text(), SINCE)
     assert issues == [("https://tldrsec.com/p/tldr-sec-339", "2026-07-10")]  # 337 is too old
     page = (FIXTURES / "tldr-sec-339.html").read_text()
-    items = er.parse_tldrsec_issue(page, issues[0][0], issues[0][1])
+    items = er.parse_tldrsec_issue(page, issues[0][1])
     assert [i["title"] for i in items] == [
         "Pre-auth heap overflow in a SAML parser",
         "ChainDrop npm worm steals CI OIDC tokens",
@@ -133,14 +133,47 @@ def test_cli_fixtures_mode_writes_the_weekly_file_and_prints_the_summary(sandbox
     assert any(line.startswith("MISS [kev] Acme Widget") for line in out)
     saved = json.loads((sandbox / "data" / "evals" / "recall-2026-W29.json").read_text())
     assert saved["passed"] is False and saved["generated"].startswith("2026-07-15")
-    assert er.main(["--live", "--write", "--if-missing"]) == 0  # this week's file exists
+    out_file = sandbox / "elsewhere" / "recall.json"
+    assert er.main(["--fixtures", str(FIXTURES), "--out", str(out_file)]) == 1
+    assert json.loads(out_file.read_text())["recall"] == saved["recall"]
+
+
+REAL_FIXTURE_SOURCE = er.fixture_source
+
+
+def failing_source(*down):
+    def factory(directory, since):
+        real = REAL_FIXTURE_SOURCE(directory, since)
+
+        def get(name):
+            if name in down:
+                raise ConnectionError(f"{name} down")
+            return real(name)
+
+        return get
+
+    return factory
 
 
 def test_a_curator_outage_is_an_error_and_fails_the_eval(sandbox, capsys):
-    def get(name):
-        if name == "kev":
-            raise ConnectionError("cisa down")
-        return er.fixture_source(FIXTURES, SINCE)(name)
+    items, errors = er.collect(failing_source("kev")(FIXTURES, SINCE), SINCE)
+    assert errors == ["kev: ConnectionError: kev down"] and items  # others still counted
 
-    items, errors = er.collect(get, SINCE)
-    assert errors == ["kev: ConnectionError: cisa down"] and items  # others still counted
+
+@pytest.mark.parametrize("down,rc", [(("kev",), 1), (("tldrsec", "simon", "ghsa", "kev"), 2)])
+def test_a_partial_or_total_outage_writes_no_result(sandbox, monkeypatch, capsys, down, rc):
+    """A score from three curators of four isn't this week's recall: nothing is
+    written, so neither post's row nor a --write file can carry it."""
+    monkeypatch.setattr(er, "fixture_source", failing_source(*down))
+    out_file = sandbox / "recall.json"
+    assert er.main(["--fixtures", str(FIXTURES), "--write"]) == rc
+    assert er.main(["--fixtures", str(FIXTURES), "--out", str(out_file)]) == rc
+    assert not out_file.exists() and not (sandbox / "data" / "evals").exists()
+    out = capsys.readouterr()
+    assert "not writing" in out.err and "EVAL recall FAIL" in out.out
+
+
+def test_tldrsec_headlines_carry_only_their_story_url():
+    page = (FIXTURES / "tldr-sec-339.html").read_text()
+    for it in er.parse_tldrsec_issue(page, "2026-07-10"):
+        assert it["urls"] == [it["url"]] and "tldrsec.com" not in it["url"]

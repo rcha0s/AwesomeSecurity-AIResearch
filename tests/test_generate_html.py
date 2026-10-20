@@ -360,6 +360,24 @@ def test_editorial_rows_includes_news_curated_entries(sandbox):
     assert "OpenAI Blog" in rows[0]["reason"]
 
 
+@pytest.mark.parametrize(
+    "over",
+    [
+        {"grounding_score": 0.5},
+        {"lessons": [{"point": "p", "excerpt": "e", "confidence": 0.9, "grounded": False}]},
+        {"editorial": {"promoted": True}, "grounding_score": 0.0},
+    ],
+)
+def test_news_lane_never_shows_an_ungrounded_story(sandbox, over):
+    """The renderer holds the same grounding floor eval_integrity.py checks."""
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(_pool_news_entry(**over))
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+    assert gh.editorial_rows(common.load_config(), 7) == []
+
+
 def test_editorial_rows_dedupes_same_story_across_sources(sandbox):
     _write_sources(
         sandbox,

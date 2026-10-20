@@ -27,6 +27,7 @@ def good_entry(**over) -> dict:
 def site_row(entry: dict) -> dict:
     return {
         "id": entry["id"],
+        "story_id": f"story-{entry['id']}",
         "topic": entry["topic"],
         "domain_id": entry["domain"],
         "url": entry.get("article_url") or entry["source_url"],
@@ -94,15 +95,19 @@ def test_an_excerpt_missing_from_its_raw_source_text_fails(sandbox):
     assert ei.run()["passed"]
 
 
-def test_duplicates_inside_a_lane_fail_but_across_lanes_only_warn(sandbox):
+def test_a_story_rendered_twice_fails_in_one_lane_or_across_both(sandbox):
+    """The story ledger's own check (content_checks.site_story_problems)."""
     e = good_entry()
     publish(sandbox, [e], findings=[site_row(e), site_row(e)])
-    problems = ei.run()["problems"]
-    assert any("story id good appears 2 times" in p for p in problems)
-    assert any("URL https://example.com/posts/compact appears 2 times" in p for p in problems)
+    assert any("duplicate story id on the site: story-good" in p for p in ei.run()["problems"])
     publish(sandbox, [e], editorial=[site_row(e)])
-    report = ei.run()
-    assert report["passed"] and any("shown in both lanes" in w for w in report["warnings"])
+    assert any("duplicate story id on the site: story-good" in p for p in ei.run()["problems"])
+
+
+def test_a_rendered_row_without_a_story_id_fails(sandbox):
+    e = good_entry()
+    publish(sandbox, [e], findings=[{**site_row(e), "story_id": ""}])
+    assert any("row without story_id: good" in p for p in ei.run()["problems"])
 
 
 def test_a_rendered_story_missing_from_the_pools_fails(sandbox):

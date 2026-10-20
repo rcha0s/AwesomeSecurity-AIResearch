@@ -19,10 +19,12 @@ GHSA id, or (dedupe_stories.is_collision) its title and entities.
 The misses are the source-tuning signal: the report lists them and their hosts.
 
 Usage:
-    python scripts/eval_recall.py --live [--write] [--if-missing]   # fetch the curators (network)
-    python scripts/eval_recall.py --fixtures DIR     # recorded responses (tests)
+    python scripts/eval_recall.py --live [--write | --out PATH]   # fetch the curators (network)
+    python scripts/eval_recall.py --fixtures DIR                  # recorded responses (tests)
 Exit 0 = recall >= evals.thresholds.recall_min, 1 = below, 2 = could not run.
---write saves data/evals/recall-<ISO week>.json.
+--write saves data/evals/recall-<ISO week>.json (for a reviewed PR); --out saves
+anywhere (run_scan.sh post keeps it outside the tree). Neither writes a result
+when a curator errored or nothing was on-thesis: a partial score is not a score.
 
 Only the curator hosts in CURATOR_HOSTS are fetched (also printed by
 scripts/allowlist.py); GitHub goes through the authed `gh` CLI.
@@ -99,7 +101,7 @@ def _is_story_link(url: str) -> bool:
     return url.startswith("http") and not any(p in host for p in PEOPLE_HOSTS + ("tldrsec.com",))
 
 
-def parse_tldrsec_issue(page: str, issue_url: str, published: str) -> list[dict]:
+def parse_tldrsec_issue(page: str, published: str) -> list[dict]:
     """The first story link of every paragraph in the issue's security sections."""
     out = []
     parts = H2.split(page)  # [preamble, heading, body, heading, body, ...]
@@ -113,7 +115,7 @@ def parse_tldrsec_issue(page: str, issue_url: str, published: str) -> list[dict]
             if links:
                 href, anchor = links[0]
                 url = ds.canonical_url(html.unescape(href))
-                out.append(item("tldrsec", TAG.sub("", anchor), url, published, para, (issue_url,)))
+                out.append(item("tldrsec", TAG.sub("", anchor), url, published, para))
     return out
 
 
@@ -218,8 +220,8 @@ def collect(get: Callable[[str], object], since: str) -> tuple[list[dict], list[
         try:
             raw = get(name)
             if name == "tldrsec":
-                for url, published, page in raw:
-                    items += parse_tldrsec_issue(page, url, published)
+                for _url, published, page in raw:
+                    items += parse_tldrsec_issue(page, published)
             elif name == "simon":
                 for feed in raw:
                     items += parse_atom(feed, since)
@@ -333,15 +335,12 @@ def main(argv: list[str] | None = None) -> int:
     mode = ap.add_mutually_exclusive_group(required=True)
     mode.add_argument("--live", action="store_true", help="fetch the curators (network)")
     mode.add_argument("--fixtures", type=Path, help="read recorded responses from DIR")
-    ap.add_argument("--write", action="store_true", help="save data/evals/recall-<week>.json")
+    out = ap.add_mutually_exclusive_group()
+    out.add_argument("--write", action="store_true", help="save data/evals/recall-<week>.json")
+    out.add_argument("--out", type=Path, help="save the result to PATH")
     ap.add_argument("--json", action="store_true", help="print the full result")
-    ap.add_argument("--if-missing", action="store_true", help="skip if this week's file exists")
     args = ap.parse_args(argv)
     cfg, now = el.settings(), c.utcnow()
-    existing = el.evals_dir() / f"recall-{el.iso_week(now)}.json"
-    if args.if_missing and existing.exists():
-        print(f"recall: {existing.name} already exists; not re-fetching")
-        return 0
     since = (now - timedelta(days=int(cfg["recall"]["lookback_days"]))).strftime("%Y-%m-%d")
     get = (
         live_source(since, now.strftime("%Y-%m-%d"))
@@ -352,10 +351,12 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps(result, indent=2)) if args.json else print_report(result)
     recall, floor = result["recall"], float(cfg["thresholds"]["recall_min"])
     passed = recall is not None and recall >= floor and not result["errors"]
-    if args.write:
-        path = el.evals_dir() / f"recall-{result['week']}.json"
+    path = el.evals_dir() / f"recall-{result['week']}.json" if args.write else args.out
+    if path and (result["errors"] or recall is None):
+        print(f"recall: not writing {path.name}: curator errors or no headlines", file=sys.stderr)
+    elif path:
         c.save_json(path, {**result, "passed": passed})
-        print(f"wrote {path.relative_to(c.ROOT)}", file=sys.stderr)
+        print(f"wrote {path}", file=sys.stderr)
     print(
         el.summary_line(
             "recall", passed, recall=recall if recall is not None else "none", matched=result["matched"],

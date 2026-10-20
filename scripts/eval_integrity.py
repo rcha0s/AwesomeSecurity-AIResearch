@@ -14,14 +14,14 @@ block in docs/index.html and joined back to their pool entries) must be clean:
             verify_citations.ground_entry
   article   the citation is an article, not a homepage or site root
   domain    the domain is a taxonomy ID of the entry's own topic
-  unique    no story id or canonical URL appears twice in one lane (story_duplicates
-            is the seam the Phase 2b story ledger replaces)
+  unique    every rendered row carries a story_id and no story is rendered twice,
+            across both lanes (content_checks.site_story_problems, the story ledger's
+            own check)
 
 Every pool and archive entry must have a valid domain ID and http(s) URLs
 (content_checks.url_problems, shared with the merge gate), and
 no id may repeat inside the live pools. Warnings never fail the eval: a held
-entry citing a homepage, an id in both a pool and the archive, the same story
-in both lanes of the site (ISC-21's job).
+entry citing a homepage, an id in both a pool and the archive, an entry with no id.
 
 Usage:
     python scripts/eval_integrity.py            # problems, then the summary line
@@ -40,11 +40,10 @@ from collections import Counter
 from urllib.parse import urlparse
 
 import common as c
-import dedupe_stories as ds
+import content_checks as cc
 import eval_lib as el
 import taxonomy as tx
 import verify_citations as vc
-from content_checks import PAYLOAD
 from content_checks import url_problems as bad_urls  # the one http(s)-only URL rule
 
 SITE = "docs/index.html"
@@ -83,27 +82,18 @@ def grounding_problems(entry: dict) -> list[str]:
     return out
 
 
-def story_duplicates(rows: list[tuple[str, str, str]]) -> list[str]:
-    """(lane, id, url) rows -> one problem per id or canonical URL repeated in a lane.
-
-    The seam Phase 2b's story ledger replaces with its own duplicate check."""
-    out = []
-    for lane in sorted({r[0] for r in rows}):
-        ids = Counter(r[1] for r in rows if r[0] == lane)
-        urls = Counter(ds.canonical_url(r[2]) for r in rows if r[0] == lane and r[2])
-        out += [f"{lane}: story id {i} appears {n} times" for i, n in ids.items() if n > 1]
-        out += [f"{lane}: URL {u} appears {n} times" for u, n in urls.items() if n > 1]
-    return out
-
-
 # --- Loading -----------------------------------------------------------------
-def site_rows(page: str) -> list[tuple[str, dict]]:
-    """(lane, row) for every story the site renders. Raises on a missing data block."""
-    blocks = PAYLOAD.findall(page)
+def site_payload(page: str) -> dict:
+    """The site's data block. Raises on a missing or repeated block."""
+    blocks = cc.PAYLOAD.findall(page)
     if len(blocks) != 1:
         raise ValueError(f"{SITE}: expected one site-data block, found {len(blocks)}")
-    data = json.loads(blocks[0])
-    return [(lane, row) for lane in LANES for row in data.get(lane) or []]
+    return json.loads(blocks[0])
+
+
+def site_rows(payload: dict) -> list[tuple[str, dict]]:
+    """(lane, row) for every story the site renders."""
+    return [(lane, row) for lane in LANES for row in payload.get(lane) or []]
 
 
 def load_entries() -> tuple[list[tuple[str, dict]], list[dict]]:
@@ -165,18 +155,14 @@ def run(page: str | None = None) -> dict:
     ids = Counter(e.get("id") for _, e in pools)
     problems += [f"[pools] id {i} appears {n} times" for i, n in ids.items() if i and n > 1]
     page = page if page is not None else (c.ROOT / SITE).read_text(encoding="utf-8")
-    rows = site_rows(page)
+    payload = site_payload(page)
+    rows = site_rows(payload)
     by_id = {e.get("id"): e for _, e in pools}
     for lane, row in rows:
         found = published_problems(lane, row, by_id.get(row.get("id")), tax)
         problems += [f"[site] {row.get('id')}: {p}" for p in found]
-    keyed = [(lane, row.get("id"), row.get("url") or "") for lane, row in rows]
-    problems += [f"[site] {p}" for p in story_duplicates(keyed)]
-    lanes: dict[str, set[str]] = {}
-    for lane, sid, _ in keyed:
-        lanes.setdefault(sid, set()).add(lane)
+    problems += [f"[site] {p}" for p in cc.site_story_problems(payload)]
     warnings = data_warnings(pools, archive)
-    warnings += [f"[site] {i}: shown in both lanes" for i, seen in lanes.items() if len(seen) > 1]
     return {
         "passed": not problems,
         "published": len(rows),

@@ -12,7 +12,6 @@ history) live under data/evals/.
 
 from __future__ import annotations
 
-import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -31,7 +30,7 @@ DEFAULTS = {
     "golden": {"min_fact_coverage": 0.5, "cases_per_run": 8, "max_usd": 4},
 }
 _DAYS_PER_MONTH = 30
-_WEEK_FILE = re.compile(r"-(\d{4}-W\d{2}|\d{4}-\d{2}-\d{2})\.json$")
+FUTURE_SKEW = timedelta(hours=1)  # clock drift allowed on a `generated` stamp
 
 
 def evals_dir() -> Path:
@@ -78,26 +77,38 @@ def iso_week(day: datetime) -> str:
     return f"{year}-W{week:02d}"
 
 
+def generated_at(result: dict) -> datetime | None:
+    """A result's tz-aware `generated` stamp, or None when missing or malformed."""
+    try:
+        made = datetime.fromisoformat(str(result.get("generated") or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return made if made.tzinfo is not None else None
+
+
 def latest_result(prefix: str, directory: Path | None = None) -> tuple[Path, dict] | None:
-    """The newest data/evals/<prefix>-<week or date>.json, by its name's key."""
+    """The data/evals/<prefix>-*.json result with the newest `generated` stamp.
+
+    By stamp, not filename: a file named for a later week can't outrank a newer
+    result. Files without a valid stamp, or stamped in the future, never win."""
+    now = c.utcnow() + FUTURE_SKEW
     found = []
     for path in (directory or evals_dir()).glob(f"{prefix}-*.json"):
-        m = _WEEK_FILE.search(path.name)
-        if m:
-            found.append((m.group(1), path))
+        result = c.load_json(path, default={}) or {}
+        made = generated_at(result) if isinstance(result, dict) else None
+        if made is not None and made <= now:
+            found.append((made, path.name, path, result))
     if not found:
         return None
-    path = max(found)[1]
-    return path, c.load_json(path, default={}) or {}
+    _, _, path, result = max(found)
+    return path, result
 
 
 def is_stale(result: dict, max_age_days: int, now: datetime | None = None) -> bool:
-    """True when a result has no `generated` stamp or is older than max_age_days."""
-    stamp = str(result.get("generated") or "")
-    try:
-        made = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
-    except ValueError:
+    """True when a result has no valid `generated` stamp, is older than
+    max_age_days, or claims to come from the future (a forged freshness)."""
+    made = generated_at(result)
+    if made is None:
         return True
-    if made.tzinfo is None:
-        return True
-    return (now or c.utcnow()) - made > timedelta(days=max_age_days)
+    now = now or c.utcnow()
+    return made > now + FUTURE_SKEW or now - made > timedelta(days=max_age_days)

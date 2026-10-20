@@ -33,13 +33,15 @@ SETTINGS='{"permissions": {
 
 # contained_claude <prompt> <system-prompt-file> <max_usd> <max_turns>
 # Runs $CLAUDE locked down, SCAN_LOCKED=1, subscription billing only; its JSON
-# result goes to stdout.
+# result goes to stdout. A caller may tighten (never loosen) the settings by
+# setting CONTAINED_SETTINGS to $SETTINGS with more denies (the golden run does).
 contained_claude() {
   env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN SCAN_LOCKED=1 "$CLAUDE" -p "$1" \
     --append-system-prompt-file "$2" \
     --output-format json --permission-mode dontAsk \
     --setting-sources local --strict-mcp-config --mcp-config '{"mcpServers": {}}' \
-    --tools "$TOOLS" --settings "$SETTINGS" --allowedTools "${ALLOWED_TOOLS[@]}" \
+    --tools "$TOOLS" --settings "${CONTAINED_SETTINGS:-$SETTINGS}" \
+    --allowedTools "${ALLOWED_TOOLS[@]}" \
     --disallowedTools "mcp__*" \
     --max-budget-usd "$3" --max-turns "$4"
 }

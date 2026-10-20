@@ -255,22 +255,23 @@ phase_post() {
 }
 
 # Phase 3 evals (ISC-22..26). data/evals/ is reset to main's copy first, so a
-# file the session wrote there never ships; then the weekly recall score is
-# fetched if main has none for this ISO week, and this run's history row is
-# appended (integrity, the weekly scores, its charge vs the per-run cap).
+# file the session wrote there never ships; then recall is fetched fresh into
+# $WORK (outside the tree: scan PRs may change only history.json there), and
+# this run's history row is appended (integrity, recall, the newest golden
+# result, its ledger charge). merge_gate re-checks that row before any merge.
 # Advisory: the caller logs a failure and the scan still opens its PR.
 run_evals() {
   local run_id="$1" stories="$2" staged
-  rm -rf "$EVALS_DIR"
+  rm -rf "$EVALS_DIR" "$WORK/recall.json"
   git checkout -q origin/main -- "$EVALS_DIR" 2>/dev/null || mkdir -p "$EVALS_DIR"
-  "$PY" scripts/eval_recall.py --live --write --if-missing >>"$LOG" 2>&1 ||
+  "$PY" scripts/eval_recall.py --live --out "$WORK/recall.json" >>"$LOG" 2>&1 ||
     log "recall eval WARN: below the bar or could not run"
   ledger_fetch >/dev/null 2>&1 || log "evals: ledger unreadable; cost unknown"
   staged="$(cat "$STAGED_FILE" 2>/dev/null || echo 0)"
   [[ "$staged" =~ ^[0-9]+$ ]] || staged=0
   "$PY" scripts/eval_history.py --config "$WORK/config.yaml" append --run-id "$run_id" \
     --runner "$RUNNER" --stories "$stories" --candidates "$staged" \
-    --ledger "$WORK/ledger.json" | tee -a "$LOG"
+    --ledger "$WORK/ledger.json" --recall "$WORK/recall.json" | tee -a "$LOG"
 }
 
 # The run's numbers and the 7-run trend for the PR body. Never fails: like

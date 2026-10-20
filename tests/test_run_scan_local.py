@@ -56,6 +56,8 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     flag = dict(zip(args, args[1:], strict=False))
     assert flag["--permission-mode"] == "dontAsk"
     assert '"Edit(data/_raw/**)"' in "\n".join(args)  # model can't forge source text
+    assert '"Edit(data/evals/**)"' in "\n".join(args)  # nor its own eval results
+    assert "Read(data/evals/**)" not in "\n".join(args)  # golden-only tightening
     for denied in ("news_stories.json", "story_shortlist.json", "_story_outcomes.md"):
         assert f'"Edit(data/{denied})"' in "\n".join(args)  # the story guard's inputs
     assert flag["--append-system-prompt-file"] == ".claude/skills/daily-scan/SKILL.md"

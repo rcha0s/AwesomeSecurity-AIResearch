@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import shutil
+from pathlib import Path
 
 import common
 import eval_golden as eg
@@ -151,6 +153,42 @@ def test_stage_needs_scratch_and_hides_the_cases_entries(sandbox, capsys):
     assert [cand["id"] for cand in common.load_candidates()] == ["a", "b"]
     manifest = json.loads((sandbox / "data" / "_golden_manifest.json").read_text())
     assert manifest["ids"] == ["a", "b"]
+
+
+REPO = Path(__file__).resolve().parent.parent
+TREE = ("data", "docs", "ai-security", "product-security", "ai-research", "claims",
+        "README.md", "NEWSLETTER.md", "TRENDS.md", "REVIEW.md")  # fmt: skip
+
+
+def test_staging_the_whole_real_set_leaves_no_trace_of_any_case(sandbox):
+    """Over a copy of the real data and rendered site, a staged case's title and URL
+    survive only in what the session is asked to analyze."""
+    for name in TREE:
+        src, dst = REPO / name, sandbox / name
+        if src.is_dir():
+            shutil.rmtree(dst, ignore_errors=True)
+            shutil.copytree(src, dst, ignore=shutil.ignore_patterns("_*"))
+        elif src.exists():
+            shutil.copy(src, dst)
+    cases = eg.load_cases()
+    assert eg.traces(cases)  # before: the answers are all over the tree
+    manifest = sandbox.parent / "manifest.json"
+    report = eg.stage(sandbox / "data" / "candidates.json", None, 0, manifest)
+    assert report["traces"] == [] and report["staged"] == len(cases)
+    assert report["evidence_cut"] > 0 and "docs" in report["removed"]
+    assert not (sandbox / "data" / "evals").exists()  # the answer key is gone
+    assert json.loads(manifest.read_text())["ids"] == [k["id"] for k in cases]
+    kept = {e["id"] for t in common.TOPICS for e in common.load_pool(t)["entries"]}
+    assert kept and not kept & {k["id"] for k in cases}
+
+
+def test_stage_refuses_when_a_trace_survives(sandbox, capsys):
+    (sandbox / "data" / "evals").mkdir()
+    k = case("a")
+    (sandbox / "data" / "evals" / "golden.json").write_text(json.dumps({"cases": [k]}))
+    (sandbox / "data" / "notes.md").write_text(f"Remember: {k['title']} was a keep.")
+    rc = eg.main(["stage", "--scratch", "--out", str(sandbox / "data" / "candidates.json")])
+    assert rc == 3 and "data/notes.md" in capsys.readouterr().out
 
 
 def test_cli_score_prints_per_case_lines_and_writes_the_result(sandbox, capsys):

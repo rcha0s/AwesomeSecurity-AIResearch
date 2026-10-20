@@ -47,11 +47,13 @@ DENIED_FILES = frozenset(
     }
 )
 # Transient staging (gitignored): its appearance in a PR is itself an anomaly.
-# The golden set's answer key and its scored results (data/evals/golden*.json)
-# arrive only by reviewed PRs and the claude/golden-* runner: a scan session
-# that could edit them could grade itself. Scans may add recall results and
-# history rows.
-DENIED_PREFIXES = ("data/_", "data/evals/golden")
+# Eval inputs and results (data/evals/: the golden answer key, recall and
+# golden scores) arrive only through reviewed PRs: a scan that could write them
+# could grade itself. The one exception is the history file, where a scan adds
+# its own row; merge_gate.py (content_checks.history_problems) proves that row
+# is the only change and that it agrees with the ledger and the merged tree.
+DENIED_PREFIXES = ("data/_", "data/evals/")
+SCAN_WRITABLE_EVALS = frozenset({"data/evals/history.json"})
 DENIED_NAMES = frozenset(
     {
         "candidates.json",
@@ -127,7 +129,8 @@ def path_reason(path: str) -> str | None:
     if bad:
         return bad
     name = path.rsplit("/", 1)[-1]
-    if path in DENIED_FILES or name in DENIED_NAMES or path.startswith(DENIED_PREFIXES):
+    denied = path.startswith(DENIED_PREFIXES) and path not in SCAN_WRITABLE_EVALS
+    if path in DENIED_FILES or name in DENIED_NAMES or denied:
         return "pipeline config or transient staging file"
     in_dir = path.startswith(ALLOWED_DIRS)
     if not in_dir and path not in ALLOWED_ROOT_FILES:
