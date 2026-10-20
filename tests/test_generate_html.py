@@ -441,3 +441,59 @@ def test_modal_markdown_renderer_honors_hard_line_breaks():
     assert result.stdout.count("<p>") == 1  # both fields stay in one paragraph
     assert "<br>" in result.stdout  # but on separate visual lines
     assert "Topic" in result.stdout and "Source" in result.stdout
+
+
+# --- Front-page news cap and the News tab ------------------------------------
+def _run_js(names: list[str], body: str) -> str:
+    if not shutil.which("node"):
+        pytest.skip("node not available")
+    src = gh.TEMPLATE.read_text(encoding="utf-8")
+    script = "\n".join(_extract_js_function(src, n) for n in names) + "\n" + body
+    result = subprocess.run(["node", "-e", script], capture_output=True, text=True, timeout=10)
+    assert result.returncode == 0, result.stderr
+    return result.stdout
+
+
+def test_front_page_news_is_last_n_days_newest_first_capped():
+    """The front page shows only recent news, newest first, at most `max`;
+    older stories are left for the News tab."""
+    body = """
+    function day(n) { return new Date(Date.now() - n * 864e5).toISOString().slice(0, 10); }
+    var rows = [];
+    for (var i = 0; i < 40; i++) rows.push({ id: "n" + i, published: day(i % 6) });
+    rows.push({ id: "old", published: day(8) }, { id: "undated", published: "" });
+    var out = frontNews(rows, 7, 30);
+    process.stdout.write(JSON.stringify({
+      n: out.length, ids: out.map(function (r) { return r.id; }),
+      sorted: out.every(function (r, i) { return !i || out[i - 1].published >= r.published; })
+    }));
+    """
+    got = json.loads(_run_js(["_daysAgo", "frontNews"], body))
+    assert got["n"] == 30 and got["sorted"]
+    assert "old" not in got["ids"] and "undated" not in got["ids"]
+
+
+def test_news_tab_groups_every_story_by_month_newest_first():
+    body = """
+    var g = newsByMonth([{ published: "2026-09-03" }, { published: "2026-10-12" },
+      { published: "2026-10-01" }, { published: "" }]);
+    process.stdout.write(JSON.stringify(g.map(function (x) { return [x.month, x.rows.length]; })));
+    """
+    assert json.loads(_run_js(["newsByMonth"], body)) == [
+        ["2026-10", 2],
+        ["2026-09", 1],
+        ["undated", 1],
+    ]
+
+
+def test_payload_carries_the_front_page_news_settings(sandbox):
+    claims.save_ledger(ledger_of(make_claim()))
+    conf = common.load_config()
+    payload = gh.build_payload(claims.load_ledger(), conf, "2026-07-15")
+    assert payload["news_front_page_days"] == conf.news_front_page_days
+    assert payload["news_front_page_max"] == conf.news_front_page_max
+
+
+def test_real_config_caps_front_page_news_at_30_over_7_days():
+    conf = common.load_config()
+    assert (conf.news_front_page_days, conf.news_front_page_max) == (7, 30)

@@ -67,6 +67,7 @@ Handoff: Rohan still has to delete the old Windows scheduled task; note it, neve
 
 ## Decisions
 
+- 2026-10-19: Rohan: front-page news capped at 30 stories from the last 7 days (`news_front_page_*` in config.yaml); every kept story moves to a News tab grouped by month, and retired claims collapse. Keeping data and showing it are separate decisions.
 - 2026-10-18: the site's JS `Date.now()` (`scripts/templates/site.html`, "days ago" display) stays on the viewer's clock by design; ISC-2 scopes to the Python pipeline.
 - 2026-10-18: AGENTS.md documents ruff + black + coverage as the PR suite; CI runs pytest only until the lint pass lands (Remaining Work).
 

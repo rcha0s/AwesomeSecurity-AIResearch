@@ -164,6 +164,8 @@ class Config:
     curation: dict[str, float]
     max_age_days: int
     snapshot_days: int
+    news_front_page_days: int = 7
+    news_front_page_max: int = 30
 
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -180,6 +182,8 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         curation=raw.get("curation", {}),
         max_age_days=int(raw.get("max_age_days", 31)),
         snapshot_days=int(raw.get("snapshot_days", 7)),
+        news_front_page_days=int(raw.get("news_front_page_days", 7)),
+        news_front_page_max=int(raw.get("news_front_page_max", 30)),
     )
 
 

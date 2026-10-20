@@ -320,6 +320,8 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "generated": now,
         "snapshot_days": snapshot_days,
         "max_age_days": conf.max_age_days,
+        "news_front_page_days": conf.news_front_page_days,
+        "news_front_page_max": conf.news_front_page_max,
         "archive_count": len(archive),
         "claims_since": _claims_since(ledger),
         "topic_order": list(c.TOPICS.keys()),
