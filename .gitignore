@@ -25,12 +25,15 @@ data/candidates.json
 data/candidates.filtered.json
 data/analysis_out.json
 data/editorial_out.json
+data/story_shortlist.json
+data/story_verdicts.json
 data/_batches/
 data/_pool_digest.json
 data/_raw/
 data/_budget_ledger.json
 data/_scan*
 data/_summary.md
+data/_story_outcomes.md
 
 # Secrets / auth — NEVER commit (cookies, env). .agent-reach/ is the retired
 # X ingest's cookie dir; kept ignored so a leftover copy can never be staged.

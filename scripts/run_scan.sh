@@ -167,7 +167,8 @@ check_and_reserve() {
 
 phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" \
-    data/analysis_out.json data/editorial_out.json
+    data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
+    data/_story_outcomes.md
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -190,6 +191,9 @@ phase_pre() {
     return 1
   fi
   "$PY" scripts/fetch_raw.py --snapshot | tee -a "$LOG"
+  # Story shortlist for the judge (story_ledger.py). Advisory: without it every
+  # candidate is judged new, which costs more but loses nothing.
+  "$PY" scripts/story_ledger.py shortlist | tee -a "$LOG" || log "story shortlist WARN: failed"
   log "SCAN_READY: $("$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))') candidates"
 }
 
@@ -235,6 +239,10 @@ phase_post() {
   git commit -qm "chore: daily scan ($RUNNER, $day, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
   body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
+  # Code-owned verdict record (merge_analysis.py), never the model's word for it.
+  if [[ -f data/_story_outcomes.md ]]; then
+    body+=$'\n\n'"$("$PY" scripts/scrub.py data/_story_outcomes.md "")"
+  fi
   body+="$(spend_line)"
   scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
   ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"

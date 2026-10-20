@@ -49,7 +49,14 @@ DENIED_FILES = frozenset(
 # Transient staging (gitignored): its appearance in a PR is itself an anomaly.
 DENIED_PREFIXES = ("data/_",)
 DENIED_NAMES = frozenset(
-    {"candidates.json", "candidates.filtered.json", "analysis_out.json", "editorial_out.json"}
+    {
+        "candidates.json",
+        "candidates.filtered.json",
+        "analysis_out.json",
+        "editorial_out.json",
+        "story_shortlist.json",
+        "story_verdicts.json",
+    }
 )
 ALLOWED_SUFFIXES = (".json", ".md", ".png")
 # HTML runs script on the site's origin: only the one rendered page, which

@@ -92,3 +92,11 @@ automerge:
                         # skipped until `required: true`, then they fail closed.
     - script: scripts/eval_integrity.py
       required: false
+
+# Story ledger (ISA ISC-19/20). data/news_stories.json is permanent: one row per
+# story, never pruned. A new candidate is matched only against stories touched
+# in the last `match_window_days`; the deterministic shortlist (tuned to
+# over-match) hands at most `shortlist_max` of them to the small-model judge.
+stories:
+  match_window_days: 90
+  shortlist_max: 5

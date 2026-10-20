@@ -21,6 +21,7 @@ data/ai-security.json     # AI Security pool (source of truth)
 data/product-security.json# Product Security pool (source of truth)
 data/ai-research.json     # AI Research (practitioner) pool (source of truth)
 data/claims.json          # CLAIM LEDGER — durable standing answers + supersession edges
+data/news_stories.json    # STORY LEDGER — one row per story + every covering source; never pruned
 data/taxonomy.yaml        # THE vocabulary: 3 topics x fixed domain IDs (ais.* ps.* air.*)
 data/taxonomy_migration.json # one-time label -> ID table (every pre-migration label)
 data/taxonomy_proposals.json # verified new-domain proposals (taxonomy_proposals.py)
@@ -42,6 +43,8 @@ scripts/taxonomy_proposals.py # record verified proposals; recurring -> `taxonom
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
+scripts/story_ledger.py   # story ledger: shortlist, judge verdicts (same/update/new), ledgering
+scripts/replay_stories.py # replay a window of pool history through the story matcher (ISC-21)
 scripts/claims.py         # claim model: validation, supersession edges, ordering, lineage
 scripts/add_claim.py      # the ONLY sanctioned writer for data/claims.json (CLI)
 scripts/generate_claims.py# claims/ — standing answers on top, retired ones underneath

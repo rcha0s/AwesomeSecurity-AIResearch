@@ -98,6 +98,9 @@ REFUSED = [
     "data/_raw/abc.txt",
     "data/_scan_lock",
     "data/_budget_ledger.json",
+    "data/_story_outcomes.md",
+    "data/story_shortlist.json",
+    "data/story_verdicts.json",
     # wrong file types inside content dirs
     "data/evil.py",
     "data/x.sh",

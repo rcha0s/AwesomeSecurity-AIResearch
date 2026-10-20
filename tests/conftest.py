@@ -5,7 +5,6 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 import common
-import dedupe_stories
 import pytest
 import sources_registry
 
@@ -39,7 +38,6 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sources_registry, "REGISTRY_FILE", data / "sources.json")
     monkeypatch.setattr(sources_registry, "STATS_FILE", data / "source_stats.json")
     monkeypatch.setattr(claims, "CLAIMS_FILE", data / "claims.json")
-    monkeypatch.setattr(dedupe_stories, "STORY_INDEX", data / "news_stories.json")
     # Keep grounding offline: kill the network re-fetch (raw_path reading still works).
     # Tests that need a fetched source override source_text_for themselves.
     monkeypatch.setattr(common, "fetch_readable", lambda *a, **k: None)

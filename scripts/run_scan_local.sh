@@ -70,6 +70,8 @@ SETTINGS='{"permissions": {
     "Edit(data/_scan*)", "Edit(data/candidates.json)", "Edit(data/_raw/**)",
     "Edit(data/taxonomy.yaml)", "Edit(data/taxonomy_migration.json)",
     "Edit(data/taxonomy_proposals.json)",
+    "Edit(data/news_stories.json)", "Edit(data/story_shortlist.json)",
+    "Edit(data/_story_outcomes.md)",
     "Read(~/.ssh/**)", "Read(~/.claude/**)", "Read(~/.config/**)", "Read(~/.aws/**)",
     "Read(~/.gnupg/**)", "Read(.env)", "Read(.env.*)",
     "Bash(curl *)", "Bash(wget *)", "Bash(git *)", "Bash(gh *)",

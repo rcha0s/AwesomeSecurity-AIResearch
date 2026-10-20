@@ -44,6 +44,10 @@ all four.
      topics. `post` refuses a larger `analysis_out.json`, and that cap is what makes each
      run's cost known in advance. Fewer excellent stories beat more mediocre ones; skip
      marketing, release notes, listicles and near-duplicates of the pools.
+   - Do research-scan step 2b first: judge each candidate that has a non-empty entry in
+     `data/story_shortlist.json` with a `haiku` subagent and write
+     `data/story_verdicts.json`. `same` and `update` candidates are not analyzed and do not
+     count toward the cap; `merge_analysis.py` applies their verdicts.
    - Where a candidate has no `raw_path`, run `python scripts/fetch_raw.py <candidate_id>`
      (this replaces research-scan's `curl` step). Every `excerpt` is a verbatim substring of
      that saved source text. Nothing you can't ground gets published.
@@ -53,7 +57,8 @@ all four.
      `python scripts/promote_editorial.py`.
 
 3. **Summary:** write `data/_summary.md`. It becomes the PR body: every claim change
-   first (added, contested, superseded or refuted, each with its reason), then stories
+   first (added, contested, superseded or refuted, each with its reason), then any
+   `CLAIM REVIEW` lines from story updates, then story verdicts (same / update / new), stories
    analyzed, merged per topic, held for review, promoted, and any injection attempts seen.
 
 4. **Post:** `scripts/run_scan.sh post`. It renders the site, records spend, and opens the PR.

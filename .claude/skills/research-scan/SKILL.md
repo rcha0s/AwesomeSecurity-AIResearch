@@ -30,6 +30,33 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    `raw_path` file under `data/_raw/` for the full article text. If `raw_path` is null
    but `article_url` is set, fetch clean text yourself: `curl -s https://r.jina.ai/<url>`.
 
+2b. **Match each candidate to a known story (small-model judge).** The story is the unit:
+   one row per real-world story in `data/news_stories.json`, never expiring. Stage the
+   deterministic shortlist (the daily scan's `pre` phase already did):
+   ```bash
+   python scripts/story_ledger.py shortlist   # -> data/story_shortlist.json
+   ```
+   It maps each candidate id to at most 5 stories from the last 90 days that it *might*
+   be (tuned to over-match). Candidates with an empty list are new; skip them here. For the
+   rest, spawn ONE fresh subagent on the smallest model (`model: haiku`) per batch of up
+   to 10 candidates, given ONLY each candidate's title, source and first ~1,500 chars of
+   text, plus its shortlisted stories (title, sources, latest update). Ask for one verdict
+   per candidate:
+   - `same` — another report of a story we have (same event, same facts). No new entry.
+   - `update` — a real new development on that story (new facts, a new victim, a fix, a
+     reversal). One-sentence `note` saying what changed; it becomes the story's dated
+     "Updated" line.
+   - `new` — none of the shortlisted stories; when unsure between `same` and `new`, `new`.
+   Write its answers, unedited, to `data/story_verdicts.json`:
+   `[{"candidate_id": "...", "verdict": "same|update|new", "story_id": "<from the shortlist>", "note": "..."}]`.
+   Do NOT analyze `same` or `update` candidates in step 3; `merge_analysis.py` applies the
+   verdicts (adds the covering source, the Updated line, drops those candidates) and rejects
+   any `story_id` that wasn't on that candidate's shortlist (recomputed from the ledger, not
+   read back from the file). Never edit `data/news_stories.json` or the shortlist yourself;
+   merge_analysis.py writes its own record of every verdict to the PR body. An `update` prints
+   `CLAIM REVIEW` lines for the story's linked claims: put them in the run summary and
+   reconcile them in step 6 if the evidence warrants. Never auto-supersede on an update.
+
 3. **Analyze each candidate** grounded in the source text (never invent facts):
    - **topic** — exactly one of three (see `scripts/common.py` `TOPICS`):
      - `ai-security` — securing AI systems: harness/agent security, MCP, skill scanning,
@@ -138,7 +165,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
 
 7. **Merge + rerank + render:**
    ```bash
-   python scripts/merge_analysis.py       # validate, dedup, route by topic, GROUND excerpts, flag, rerank
+   python scripts/merge_analysis.py       # story verdicts, validate, dedup, route by topic, GROUND excerpts, flag, rerank
    python scripts/verify_citations.py     # re-verify every lesson excerpt vs its source (persist grounding)
    python scripts/add_claim.py validate   # claim ledger integrity (edges resolve, no cycles)
    python scripts/generate_site.py        # README.md + ai-security/ product-security/ ai-research/

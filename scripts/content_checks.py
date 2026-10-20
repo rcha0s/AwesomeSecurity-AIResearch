@@ -13,6 +13,13 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
+  story_membership_problems every entry in main's story ledger stays in the
+                        same story in the PR, and no story disappears: a PR can
+                        only add stories, or add NEW entries to existing ones
+                        (what a judge verdict does), never re-collapse old ones.
+  story_id_problems     every rendered story row (findings + news lane) carries
+                        a story id and no story renders twice (ISC-21; the
+                        Phase 3 integrity eval and generate_html.py call it).
 
 Pure functions over parsed data; merge_gate.py does the I/O.
 """
@@ -95,4 +102,51 @@ def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
     out = [f"claim {cid} on main is missing from the PR" for cid in sorted(set(old) - set(new))]
     for cid in sorted(set(old) & set(new)):
         out += _claim_change_problems(cid, old[cid], new[cid])
+    return out
+
+
+def duplicate_story_ids(rows: list[dict]) -> list[str]:
+    """Story ids that appear on more than one rendered row (sorted)."""
+    seen: dict[str, int] = {}
+    for row in rows:
+        sid = row.get("story_id") or ""
+        seen[sid] = seen.get(sid, 0) + 1
+    return sorted(sid for sid, n in seen.items() if sid and n > 1)
+
+
+def story_id_problems(rows: list[dict]) -> list[str]:
+    """A rendered row with no story id, or a story rendered twice. [] = clean."""
+    out = [
+        f"row without story_id: {r.get('id') or r.get('title', '?')}"
+        for r in rows
+        if not r.get("story_id")
+    ]
+    out += [f"duplicate story id on the site: {sid}" for sid in duplicate_story_ids(rows)]
+    return out
+
+
+def site_story_problems(payload: dict) -> list[str]:
+    """story_id_problems over a site payload's findings + news-lane rows."""
+    return story_id_problems((payload.get("findings") or []) + (payload.get("editorial") or []))
+
+
+def _stories(ledger: object) -> dict:
+    if not isinstance(ledger, dict) or ledger.get("version") != 2:
+        return {}  # main still on the pre-ledger index: nothing to hold steady
+    stories = ledger.get("stories")
+    return stories if isinstance(stories, dict) else {}
+
+
+def story_membership_problems(main_ledger: object, pr_ledger: object) -> list[str]:
+    """A scan PR may add stories and add new entries to stories; it may not move
+    an entry main already placed, or drop a story."""
+    old, new = _stories(main_ledger), _stories(pr_ledger)
+    if old and not isinstance(pr_ledger, dict):
+        return ["story ledger is not a ledger"]
+    where = {e: sid for sid, row in new.items() for e in (row or {}).get("entry_ids") or []}
+    out = [f"story {sid} on main is missing from the PR" for sid in sorted(set(old) - set(new))]
+    for sid, row in sorted(old.items()):
+        for eid in (row or {}).get("entry_ids") or []:
+            if where.get(eid) != sid:
+                out.append(f"entry {eid} moved from story {sid} to {where.get(eid) or 'nowhere'}")
     return out
