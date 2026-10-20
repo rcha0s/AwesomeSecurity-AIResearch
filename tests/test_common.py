@@ -128,7 +128,7 @@ def test_truststore_injected_into_ssl_module():
 def test_validate_entry_ok_and_errors():
     assert c.validate_entry(make_entry()) == []
     assert any("missing" in e for e in c.validate_entry({"topic": "ai-research"}))
-    # domain is free-text now — any string is valid
+    # a free-text domain is not a schema error: merge HOLDS it (taxonomy.enforce)
     assert c.validate_entry(make_entry(domain="Any Free Domain")) == []
     assert any("unknown topic" in e for e in c.validate_entry(make_entry(topic="nope")))
     # lessons, if provided, must be a list
@@ -136,31 +136,33 @@ def test_validate_entry_ok_and_errors():
     assert any("lessons must be a list" in e for e in c.validate_entry(bad))
 
 
-def test_validate_entry_accepts_optional_cluster_and_related_claims():
-    """MR-A extension: analyzer emits `cluster` (A-M or null) and
-    `related_claims` (list, max 3). Both are optional."""
+def test_validate_entry_accepts_optional_related_claims_and_legacy_cluster():
+    """`related_claims` (list, max 3) is optional. The old `cluster` letter is
+    legacy data that the taxonomy's per-domain `claim_eligible` replaced: old
+    entries still carry it, so it must not fail validation."""
     ok = make_entry(cluster="B", related_claims=["some-claim-id", "other-id"])
     assert c.validate_entry(ok) == []
-    # cluster: null is the "adjacent" signal — valid.
     assert c.validate_entry(make_entry(cluster=None)) == []
-    # Absent entirely is fine (legacy entries pre-dating the extension).
     entry = make_entry()
-    entry.pop("cluster", None)
     entry.pop("related_claims", None)
     assert c.validate_entry(entry) == []
 
 
-def test_validate_entry_rejects_bad_cluster_letter():
-    """cluster must be a valid A-M letter (or null). 'Z', 'a', numbers → error."""
-    for bad in ["Z", "a", 1, ""]:
-        errs = c.validate_entry(make_entry(cluster=bad))
-        assert any("cluster" in e for e in errs), (bad, errs)
+def test_validate_entry_checks_proposed_domain_shape():
+    good = {"name": "Agent Payments", "scope": "Agents that spend money", "nearest": "x"}
+    assert c.validate_entry(make_entry(proposed_domain=good)) == []
+    assert c.validate_entry(make_entry(proposed_domain=None)) == []
+    assert any("must be an object" in e for e in c.validate_entry(make_entry(proposed_domain="x")))
+    errs = c.validate_entry(make_entry(proposed_domain={"name": "Agent Payments"}))
+    assert any("proposed_domain missing: scope" in e for e in errs)
 
 
 def test_validate_entry_related_claims_must_be_list_of_strings_max_three():
     """related_claims: list of claim IDs, capped at 3 to bound drift-review cost."""
-    assert any("related_claims must be a list" in e
-               for e in c.validate_entry(make_entry(related_claims="a-string")))
+    assert any(
+        "related_claims must be a list" in e
+        for e in c.validate_entry(make_entry(related_claims="a-string"))
+    )
     too_many = make_entry(related_claims=["a", "b", "c", "d"])
     assert any("related_claims exceeds cap" in e for e in c.validate_entry(too_many))
     non_string = make_entry(related_claims=["ok", 42])
@@ -186,7 +188,9 @@ def test_add_candidates_dedup(sandbox):
 def test_add_candidates_skips_pooled(sandbox):
     pool = c.load_pool("ai-security")
     pool["entries"].append(
-        make_entry(topic="ai-security", domain="Prompt Injection", source_url="https://a.com/known")
+        make_entry(
+            topic="ai-security", domain="ais.prompt-injection", source_url="https://a.com/known"
+        )
     )
     c.save_pool("ai-security", pool)
     assert (
@@ -203,7 +207,7 @@ def _news_entry(**over):
 
     base = {
         "topic": "ai-security",
-        "domain": "MCP & Tools",
+        "domain": "ais.mcp-tools",
         "title": "MCP 2026-07-28 spec drops stateful core for stateless HTTP",
         "summary": "The new spec targets serverless deployments.",
         "takeaway": "MCP is now HTTP-first — check your existing servers.",
@@ -241,7 +245,8 @@ def test_news_denylist_puff_with_technical_rescue():
     # Puff + technical rescue → pass.
     rescued = _news_entry(
         title="Anthropic signs deal with former NSA cryptographer to lead red team",
-        summary="", takeaway="",
+        summary="",
+        takeaway="",
     )
     assert not c.news_denylist_hit(rescued)
 
@@ -292,10 +297,8 @@ def test_is_news_curated_enforces_7_day_display_window():
     sources = {"rss:news": {"track": "news", "tier": "high"}}
     day_6 = (c.utcnow() - timedelta(days=6)).strftime("%Y-%m-%d")
     day_8 = (c.utcnow() - timedelta(days=8)).strftime("%Y-%m-%d")
-    assert c.is_news_curated(_news_entry(published=day_6, source_id="rss:news"),
-                             conf, sources)
-    assert not c.is_news_curated(_news_entry(published=day_8, source_id="rss:news"),
-                                 conf, sources)
+    assert c.is_news_curated(_news_entry(published=day_6, source_id="rss:news"), conf, sources)
+    assert not c.is_news_curated(_news_entry(published=day_8, source_id="rss:news"), conf, sources)
 
 
 def test_is_news_curated_hn_standalone_needs_100_points():
@@ -304,18 +307,21 @@ def test_is_news_curated_hn_standalone_needs_100_points():
     conf = c.load_config()
     sources = {"rss:hn": {"track": "news", "tier": "high"}}
 
-    weak = _news_entry(source_id="rss:hn", discovered_via="hackernews",
-                       signals={"hn_points": 50})
+    weak = _news_entry(source_id="rss:hn", discovered_via="hackernews", signals={"hn_points": 50})
     assert not c.is_news_curated(weak, conf, sources)
 
-    strong = _news_entry(source_id="rss:hn", discovered_via="hackernews",
-                         signals={"hn_points": 150})
+    strong = _news_entry(
+        source_id="rss:hn", discovered_via="hackernews", signals={"hn_points": 150}
+    )
     assert c.is_news_curated(strong, conf, sources)
 
     # Below floor but corroborated by another source → passes.
-    corroborated = _news_entry(source_id="rss:hn", discovered_via="hackernews",
-                               signals={"hn_points": 50},
-                               corroborating_sources=[{"source_name": "OpenAI Blog"}])
+    corroborated = _news_entry(
+        source_id="rss:hn",
+        discovered_via="hackernews",
+        signals={"hn_points": 50},
+        corroborating_sources=[{"source_name": "OpenAI Blog"}],
+    )
     assert c.is_news_curated(corroborated, conf, sources)
 
 

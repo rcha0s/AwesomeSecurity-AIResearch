@@ -1,0 +1,486 @@
+# taxonomy.yaml — the ONE vocabulary for what a finding is about.
+#
+# Three topics (the pools), each split into a fixed set of domains. Every
+# pool and archive entry carries `domain: <id>`, and the id must belong to the
+# entry's own topic. `scripts/taxonomy.py` is the only loader; everything that
+# groups, filters, routes or prompts by domain reads it from there.
+#
+# ID scheme: `<topic prefix>.<slug>`, lowercase kebab slug.
+#   ais = ai-security · ps = product-security · air = ai-research
+# IDs are STABLE: rename a domain's `name` freely, never its id. A retired id
+# moves to `aliases` (pointing at its successor) so old data still resolves.
+#
+# Per domain:
+#   name            display name (site, README, topic pages)
+#   scope           one line: what belongs here
+#   keywords        deterministic hints (prefilter routing, fallback resolution).
+#                   Prefer multi-word phrases; a single token fires on unrelated text.
+#   claim_eligible  true = a finding here gets full claim work (ledger, refuter
+#                   panel, drift review). false = news lane only. This replaces
+#                   the old per-entry `cluster: <A-M | null>` from interests.yaml.
+#   legacy_clusters the interests.yaml cluster letters folded into this domain
+#                   (provenance only; nothing reads letters any more).
+#
+# Free-text labels the analyzer used to coin are NOT domains: they land in
+# `tags`. `aliases` maps each known label (and every pre-migration label, see
+# data/taxonomy_migration.json) to the id it normalizes to. Matching ignores
+# case, punctuation and the word "and".
+#
+# When no domain fits, the analyzer still picks the nearest id and fills
+# `proposed_domain`; scripts/taxonomy_proposals.py records verified proposals
+# and opens a `taxonomy` issue when one recurs (see .claude/skills/research-scan).
+
+version: 1
+
+topics:
+  ai-security:
+    prefix: ais
+    default_domain: ais.agent-security
+  product-security:
+    prefix: ps
+    default_domain: ps.appsec
+  ai-research:
+    prefix: air
+    default_domain: air.ml-research
+
+domains:
+  # --- ai-security ---------------------------------------------------------
+  ais.agent-security:
+    name: Agent & Harness Security
+    scope: Permission models, agent runtimes and governance, multi-agent trust, computer-use agents, and agents acting outside their mandate.
+    claim_eligible: true
+    legacy_clusters: [B, K]
+    keywords: [agent security, permission model, permission classifier, agent governance, agent-to-agent, multi-agent security, computer-use agent, rogue agent, human-in-the-loop approval, agent mandate, information-flow control, ambient authority]
+  ais.prompt-injection:
+    name: Prompt Injection & Jailbreaks
+    scope: Direct and indirect prompt injection, jailbreaks and adversarial suffixes, system-prompt extraction, and the defender's containment patterns.
+    claim_eligible: true
+    legacy_clusters: [E]
+    keywords: [prompt injection, indirect prompt injection, jailbreak, jailbreaks, adversarial suffix, universal jailbreak, system-prompt extraction, system prompt extraction, ascii smuggling, dual-llm, dual llm, containment pattern]
+  ais.mcp-tools:
+    name: MCP, Tools & Skills
+    scope: The MCP protocol and its servers, tool poisoning, agent skills and plugin marketplaces, and scanners for them.
+    claim_eligible: true
+    legacy_clusters: [F]
+    keywords: [mcp, model context protocol, mcp server, mcp scanner, tool poisoning, tool-description injection, tool description injection, invariant labs, skill marketplace, skill file, agent skill, agent plugin]
+  ais.data-poisoning:
+    name: Memory, RAG & Data Poisoning
+    scope: Poisoning what a model reads or remembers - RAG corpora, long-term agent memory, training and fine-tuning data - and auditing its use.
+    claim_eligible: true
+    legacy_clusters: [A, E]
+    keywords: [memory poisoning, rag poisoning, retrieval poisoning, data poisoning, poisoning attack, training data poisoning, self-state attack, salience induction, corpus poisoning, long-term memory]
+  ais.model-supply-chain:
+    name: Model Supply Chain & Theft
+    scope: Model artifacts and hubs (pickle, safetensors, trust_remote_code), backdoors, quantization and fine-tune risks, model extraction and protection.
+    claim_eligible: true
+    legacy_clusters: [D]
+    keywords: [pickle, safetensors, model hub, hugging face, model artifact, trust_remote_code, backdoor, quantization backdoor, model provenance, model scanner, model extraction, model stealing, model theft]
+  ais.red-teaming:
+    name: Red-Teaming & Threat Modeling
+    scope: Red-teaming and adversarial testing of AI systems, cyber-capability evals, security benchmarks and ranges, and threat modeling of AI apps.
+    claim_eligible: true
+    legacy_clusters: [K, L]
+    keywords: [red team, red-team, red-teaming, automated jailbreak, cyber eval, cyber evaluation, security benchmark, threat model, threat modeling, stride, trust boundary, blast radius, attacker capability, eval leak]
+  ais.guardrails:
+    name: Guardrails & Defensive Tooling
+    scope: Guardrails, refusal and alignment robustness, LLM firewalls, runtime classifiers, and the scanners and DLP a defender builds or buys.
+    claim_eligible: true
+    legacy_clusters: [H, M]
+    keywords: [guardrail, guardrails, llm firewall, runtime guardrail, over-refusal, refusal training, safety alignment, sycophancy, tool-call classifier, prompt-injection detection, agent scanner, semantic dlp, constitutional ai]
+  ais.ai-infra:
+    name: AI Infrastructure & Incident Response
+    scope: Gateways, API keys and credentials, sandboxes and microVMs for agent code, zero trust for AI, data exposure, and AI incident response.
+    claim_eligible: true
+    legacy_clusters: [I, J]
+    keywords: [ai gateway, llm gateway, litellm, api key, credential injection, sandbox escape, sandboxing, firecracker, gvisor, microvm, imdsv2, zero trust, incident response, forensics, agent telemetry, audit trail]
+
+  # --- product-security ----------------------------------------------------
+  ps.appsec:
+    name: Application Security
+    scope: Web and application vulnerabilities - injection, path traversal, request smuggling, WAF bypass, memory-safety bugs, crypto implementation flaws.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [web application, sql injection, xss, command injection, template injection, path traversal, request smuggling, desync, deserialization, waf, csrf, cors, remote code execution, heap overflow]
+  ps.supply-chain:
+    name: Software Supply Chain
+    scope: Package registries, dependency compromise and typosquatting, build and CI/CD integrity, extension marketplaces, provenance and pinning.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [supply chain, supply-chain, npm, pypi, crates.io, typosquat, typosquatting, dependency confusion, github actions, sha-pinning, sigstore, provenance, worm, postinstall, preinstall]
+  ps.cloud-infra:
+    name: Cloud, Network & Infrastructure
+    scope: Cloud services and IAM, confidential compute, networks and appliances, OT/ICS devices, and the isolation they provide.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [cloud, aws, azure, gcp, kubernetes, nitro enclaves, kms, confidential compute, network security, ot/ics, ics, scada, firmware, virtual machine]
+  ps.identity:
+    name: Identity & Access
+    scope: Authentication, authorization and access control, OAuth and session flows, phishing that targets identity.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [access control, authorization, authentication, oauth, device code, phishing, idor, privilege escalation, session hijack, mfa, sso]
+  ps.mobile:
+    name: Mobile & Device Security
+    scope: Mobile apps and platforms, spyware and zero-click chains, baseband and OS hardening, consumer devices.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [android, ios, iphone, mobile app, apk, spyware, zero-click, 0-click, baseband, pegasus, samsung, pixel]
+  ps.detection-response:
+    name: Detection, Response & Threat Intel
+    scope: Malware and campaigns, threat intelligence, detection engineering, logging and incident response for products.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [malware, wiper, ransomware, botnet, threat intel, threat intelligence, campaign, detection engineering, clickfix, malvertising, anomaly detection, log forging]
+  ps.offensive:
+    name: Vulnerability Research & Red Teaming
+    scope: Offensive research, pentesting and red teaming (AI-assisted or not), attack-surface scanning, and threat modeling of products.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [vulnerability research, pentest, pentesting, penetration testing, red teaming, offensive security, attack surface, zero-day discovery, fuzzing, threat model]
+  ps.ai-code:
+    name: AI in the SDLC
+    scope: Where AI meets the code you ship - AI-generated code risk, slopsquatting, coding-agent PR and CI risks, AI-augmented SAST and code review.
+    claim_eligible: true
+    legacy_clusters: [G]
+    keywords: [ai-generated code, ai generated code, slopsquat, slopsquatting, hallucinated package, hallucinated dependency, agent-generated pr, coding assistant, copilot, vibe coding, ai-augmented sast, agentic appsec]
+
+  # --- ai-research ---------------------------------------------------------
+  air.agents:
+    name: Agents & Harnesses
+    scope: Building agents and harnesses for real tasks - harness design, tool use and schemas, orchestration, skills, long-running agents.
+    claim_eligible: true
+    legacy_clusters: [B]
+    keywords: [agent harness, agentic, multi-agent, multi agent, tool schema, tool use, tool calling, orchestration, subagent, claude code, coding agent, long-running agent, agent memory, compaction, trajectory]
+  air.context:
+    name: Retrieval, Prompting & Context
+    scope: Feeding a model the right information - RAG, long context and KV-cache reuse, context engineering, prompts, summarization and compaction.
+    claim_eligible: true
+    legacy_clusters: [A]
+    keywords: [rag, retrieval augmented, retrieval-augmented, hybrid search, reranking, chunking, long context, long-context, lost in the middle, context window, context engineering, context compression, system prompt, few-shot, kv cache]
+  air.model-io:
+    name: Model I/O & Cost
+    scope: Serialization, structured output and constrained decoding, extraction pipelines, token cost, caching and model routing.
+    claim_eligible: true
+    legacy_clusters: [C]
+    keywords: [structured output, constrained decoding, json schema, grammar-based generation, token cost, toon, prompt cache, prompt caching, batching, model routing, information extraction, serialization]
+  air.evals:
+    name: Evaluation & Benchmarks
+    scope: How to measure LLMs and agents honestly - eval design, benchmarks, LLM-as-judge, and red-team eval methodology.
+    claim_eligible: true
+    legacy_clusters: [B, L]
+    keywords: [benchmark, evaluation, eval harness, evals, llm-as-judge, llm judge, leaderboard, agent eval, groundedness, recall@k]
+  air.tooling:
+    name: Tooling & Serving
+    scope: Frameworks, protocols and platforms for building with LLMs, plus serving and inference infrastructure (vLLM, KV-cache management, GPUs).
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [llm framework, sdk, vllm, inference serving, llm serving, gpu inference, paged attention, deployment, vector database, embedding, tool calling protocol]
+  air.alignment:
+    name: Alignment & Reliability
+    scope: Model behavior a builder must design around - alignment and safety behavior, hallucination, calibration, chain-of-thought faithfulness.
+    claim_eligible: true
+    legacy_clusters: [H]
+    keywords: [alignment, hallucination, calibration, chain-of-thought faithfulness, cot faithfulness, sycophancy, bias, fairness, safety behavior, refusal]
+  air.models:
+    name: Models & Capabilities
+    scope: Frontier model releases and capability shifts, reasoning behavior, test-time compute - the news a builder tracks.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [model release, frontier model, reasoning model, test-time, capabilities, gpt-5, claude opus, gemini, kimi, open-weights]
+  air.ml-research:
+    name: General ML Research
+    scope: Off-thesis ML research and applications (vision, medical, time series, theory, model internals) kept for the record; news lane only.
+    claim_eligible: false
+    legacy_clusters: []
+    keywords: [time-series, time series, medical imaging, computer vision, reinforcement learning, federated learning, neural network, interpretability, diffusion model, robotics, graph neural]
+
+# Tier-2 notes for the analyzer (news-lane material; never a reason to coin a domain).
+adjacent:
+  - Frontier-model capability shifts (GPT-N, Claude-N, open-weights releases) -> air.models
+  - Regulation and policy (EU AI Act, NIST AI RMF) -> nearest domain, news lane
+  - General appsec when it intersects with agents -> ps.* or ais.agent-security
+excluded:
+  - Mobile security, general enterprise IT, general malware and wipers (product-security domains, news lane only)
+  - Frontier-model pricing announcements
+  - Business and consumer AI product coverage
+
+# Global deny terms — the prefilter drops a candidate that hits any of these.
+excluded_terms:
+  - clinical automl
+  - medical imaging
+  - protein folding
+  - drug discovery
+  - autonomous driving
+  - trajectory prediction
+  - recommender system
+  - time-series forecasting
+  - image editing
+  - image generation
+  - text-to-image
+  - text to image
+  - speech recognition
+  - speech synthesis
+  - machine translation
+  - question generation
+  - question answering benchmark
+  - reinforcement learning benchmark
+  - wireless communication
+  - integrated sensing
+  - care plan
+  - pedagogical
+  - tutor
+  - portfolio optimization
+
+# Free-text label -> id, per topic. Every pre-migration label is here (generated once from
+# data/taxonomy_migration.json; a test keeps the two in step). Add a line when the analyzer
+# keeps coining the same label; never point an alias at another topic's id.
+aliases:
+  ai-security:
+    "Adversarial Attacks": ais.prompt-injection
+    "Adversarial ML (Vision)": ais.red-teaming
+    "Agent framework security": ais.agent-security
+    "Agent Governance / Runtime": ais.agent-security
+    "Agent Harness & Permission Model": ais.agent-security
+    "Agent platform vulnerabilities": ais.agent-security
+    "Agent runtime / code-interpreter sandbox": ais.ai-infra
+    "Agent Safety / Monitoring": ais.agent-security
+    "Agent Sandbox Escape & Evaluation Containment": ais.ai-infra
+    "Agent Verification & Stewardship": ais.agent-security
+    "Agent-to-Agent Security / CI Prompt Injection": ais.agent-security
+    "Agentic AI": ais.agent-security
+    "Agentic AI / MCP": ais.mcp-tools
+    "Agentic AI / Supply Chain": ais.mcp-tools
+    "Agents & Harnesses": ais.agent-security
+    "Agents / Information-Flow Control": ais.agent-security
+    "AI Gateway & Credential Theft": ais.ai-infra
+    "AI Gateway & Infrastructure": ais.ai-infra
+    "AI Gateway / Deployment Infrastructure": ais.ai-infra
+    "AI Security": ais.agent-security
+    "AI Security Training & Red-Team Ranges": ais.red-teaming
+    "AI-Generated Code Risk / Package Verification Gap": ais.agent-security
+    "Coding Agents / Prompt-Space Defense": ais.guardrails
+    "computer-use agent security": ais.agent-security
+    "Deployment Infra & Sandboxing": ais.ai-infra
+    "Guardrails & Alignment": ais.guardrails
+    "Guardrails & alignment": ais.guardrails
+    "Guardrails / Over-Refusal": ais.guardrails
+    "Harness & Agent Security": ais.agent-security
+    "Independent Validation & Incident Response": ais.ai-infra
+    "Information Disclosure": ais.prompt-injection
+    "LLM gateway / AI infrastructure": ais.ai-infra
+    "LLM Red-Teaming": ais.red-teaming
+    "LLM Safety / Alignment Robustness": ais.guardrails
+    "LLM Security Testing": ais.red-teaming
+    "MCP": ais.mcp-tools
+    "MCP & Offensive Security Tooling": ais.mcp-tools
+    "MCP & Skill Scanning": ais.mcp-tools
+    "MCP & Tools": ais.mcp-tools
+    "MCP Observability / Product Analytics": ais.mcp-tools
+    "MCP Protocol": ais.mcp-tools
+    "MCP Protocol / Output-Neutralization Injection": ais.mcp-tools
+    "MCP Server Scanning & Defender Tooling": ais.mcp-tools
+    "MCP server security / agentic AWS access": ais.mcp-tools
+    "Memory & Context Poisoning": ais.data-poisoning
+    "Model I/O & Reasoning Traces": ais.ai-infra
+    "Model Supply Chain": ais.model-supply-chain
+    "Model Theft / Extraction": ais.model-supply-chain
+    "Multi-Agent Lateral Movement & Covert Coordination": ais.agent-security
+    "Orchestration": ais.agent-security
+    "Privacy-Preserving AI / Model Protection": ais.model-supply-chain
+    "Prompt Injection": ais.prompt-injection
+    "Prompt Injection & Adversarial": ais.prompt-injection
+    "RAG & Retrieval Poisoning": ais.data-poisoning
+    "RAG / Data Poisoning": ais.data-poisoning
+    "Red-Teaming Methodology (Agentic)": ais.red-teaming
+    "Skill Supply Chain": ais.mcp-tools
+    "Skills & Supply Chain": ais.mcp-tools
+    "Zero Trust for AI / DevSecOps": ais.ai-infra
+  product-security:
+    "Access Control": ps.identity
+    "AI coding assistant sandbox escape / path traversal": ps.ai-code
+    "AI-Assisted AppSec / Supply Chain": ps.ai-code
+    "AI-augmented SAST": ps.ai-code
+    "AI-Generated Code Risk": ps.ai-code
+    "Annual Roundup": ps.appsec
+    "Application Security": ps.appsec
+    "Authorization & Access Control": ps.identity
+    "Autonomous Application Testing": ps.offensive
+    "Autonomous Vulnerability Research": ps.offensive
+    "browser-delivered malware / malvertising": ps.detection-response
+    "Censorship & Trust & Safety": ps.detection-response
+    "Cloud & Infrastructure": ps.cloud-infra
+    "cloud & infrastructure": ps.cloud-infra
+    "Cloud Security": ps.cloud-infra
+    "Confidential compute (Nitro Enclaves + KMS)": ps.cloud-infra
+    "Cryptography & Blockchain": ps.appsec
+    "Detection & Response": ps.detection-response
+    "Developer Tooling & Template Injection": ps.appsec
+    "Identity & Access": ps.identity
+    "Insecure Storage / Cryptography": ps.mobile
+    "Internal Vulnerability Scanning & Attack Surface": ps.offensive
+    "Legacy CVE Exposure": ps.mobile
+    "Malware & Threat Intel": ps.detection-response
+    "Malware & Wipers": ps.detection-response
+    "Mobile / App Compliance": ps.mobile
+    "Mobile Security": ps.mobile
+    "Network Security & Anomaly Detection": ps.detection-response
+    "OT/ICS device security": ps.cloud-infra
+    "phishing / identity / OAuth device-code": ps.identity
+    "Platform / OS": ps.mobile
+    "Quantum Software Security": ps.appsec
+    "Request Smuggling / Desync": ps.appsec
+    "Shell escaping / command injection (Node.js)": ps.appsec
+    "Software Supply Chain": ps.supply-chain
+    "software supply chain": ps.supply-chain
+    "Spyware / Zero-Day": ps.mobile
+    "Supply Chain": ps.supply-chain
+    "Supply Chain & Dependencies": ps.supply-chain
+    "Supply Chain & Dependencies (npm)": ps.supply-chain
+    "Supply chain (npm)": ps.supply-chain
+    "Supply Chain / CI-CD": ps.supply-chain
+    "Supply Chain / Policy": ps.supply-chain
+    "Targeted Surveillance": ps.detection-response
+    "Threat Modeling & Red Teaming": ps.offensive
+    "WAF Bypass": ps.appsec
+    "Web Application Security": ps.appsec
+    "web security": ps.appsec
+  ai-research:
+    "3D Reconstruction Benchmarks": air.ml-research
+    "3D world generation": air.ml-research
+    "Agent Applications": air.agents
+    "Agent debugging and observability": air.agents
+    "Agent Harness Design": air.agents
+    "Agent Harnesses": air.agents
+    "Agent Methodology": air.agents
+    "Agent reliability & capability boundaries": air.alignment
+    "Agent skill acquisition": air.agents
+    "Agentic AI": air.agents
+    "Agentic Platforms": air.agents
+    "Agentic RL / Synthetic Data": air.ml-research
+    "Agents & Harnesses": air.agents
+    "Agents & Orchestration": air.agents
+    "Agents & Simulation": air.agents
+    "Agents / Harnesses": air.agents
+    "Agents and Harnesses": air.agents
+    "AI ethics": air.alignment
+    "AI Fairness / Bias Measurement": air.ml-research
+    "AI Research": air.ml-research
+    "AI Security": air.ml-research
+    "AI Sociotechnical Harms": air.alignment
+    "AI-assisted Vulnerability Research": air.agents
+    "Alignment & Safety": air.alignment
+    "Applications": air.ml-research
+    "Applications & Case Studies": air.ml-research
+    "Applied ML / Bio": air.ml-research
+    "Applied NLP": air.ml-research
+    "Architecture & Optimization": air.ml-research
+    "Autonomous vulnerability discovery": air.agents
+    "Chain-of-Thought & Monitoring": air.alignment
+    "Clinical ML": air.ml-research
+    "coding-agent harness design (first-party Anthropic practices)": air.agents
+    "Computer Vision": air.ml-research
+    "Computer Vision / Image Editing": air.ml-research
+    "Control & Certified ML": air.ml-research
+    "Cost & Serialization": air.model-io
+    "Datasets & Benchmarks": air.evals
+    "Deep Learning Theory": air.ml-research
+    "Deep Reinforcement Learning": air.ml-research
+    "Deep Research Agents / Clarification Policies": air.agents
+    "Deepfake Forensics": air.ml-research
+    "Deployment & Infrastructure": air.tooling
+    "Deployment infra": air.tooling
+    "Distributed / Federated Optimization": air.ml-research
+    "Edge & On-Device ML": air.ml-research
+    "Edge AI & Explainability": air.ml-research
+    "Edge Deep Learning & Sensor Simulation": air.ml-research
+    "Efficiency & Deployment": air.tooling
+    "Enterprise AI Integration": air.agents
+    "Eval harness design & containment": air.evals
+    "Evals": air.evals
+    "Evals & Benchmarks": air.evals
+    "Evaluation": air.evals
+    "Evaluation & Safety": air.evals
+    "Evaluation & Signal Design": air.evals
+    "Federated Learning": air.ml-research
+    "Finance / LLM Applications": air.ml-research
+    "Frontier Cyber Capabilities & Preparedness": air.models
+    "Frontier model release": air.models
+    "Generative Models": air.ml-research
+    "Graph Embeddings & Benchmarking": air.ml-research
+    "Guardrails & Alignment": air.alignment
+    "Harness / context management": air.context
+    "HPC & Scientific Computing": air.ml-research
+    "Human-AI Interaction": air.ml-research
+    "Industrial Anomaly Detection": air.ml-research
+    "Inference Efficiency": air.ml-research
+    "Inference Optimization": air.ml-research
+    "Interpretability": air.ml-research
+    "Interpretability & Diagnostics": air.ml-research
+    "Interpretability & Explainability": air.ml-research
+    "Interpretability & Probing": air.ml-research
+    "Interpretability & Safety": air.ml-research
+    "Learning Theory": air.ml-research
+    "LLM Calibration": air.alignment
+    "LLM Concept Probing": air.ml-research
+    "LLM Inference Cost Modeling": air.model-io
+    "LLM security-eval methodology": air.evals
+    "LLM Serving Infrastructure": air.tooling
+    "LLM training methods": air.ml-research
+    "LLM-Derived Knowledge Bases": air.ml-research
+    "Long-context & KV Cache": air.context
+    "Machine Learning": air.ml-research
+    "Machine Learning Research": air.ml-research
+    "MCP and Tool Ecosystem": air.tooling
+    "Medical AI / Clinical Reports": air.ml-research
+    "Medical Image Segmentation": air.ml-research
+    "Medical Imaging": air.ml-research
+    "Medical ML": air.ml-research
+    "Meta-Harness": air.agents
+    "ML Frameworks": air.ml-research
+    "Model Architectures": air.ml-research
+    "Model Capabilities": air.models
+    "Model Efficiency": air.ml-research
+    "Model I/O & Decoding": air.model-io
+    "Model I/O & Tokens": air.model-io
+    "Model Routing": air.model-io
+    "Models & Capabilities": air.ml-research
+    "Multi-Agent Path Finding": air.ml-research
+    "Multimodal Reasoning / Debiasing": air.ml-research
+    "Neural rendering": air.ml-research
+    "Numerical Analysis": air.ml-research
+    "Numerical methods for training": air.ml-research
+    "Ontology Alignment & Knowledge Graphs": air.ml-research
+    "Operations Research": air.ml-research
+    "Personalization benchmarks": air.evals
+    "Physical Simulation & World Models": air.ml-research
+    "Post-training & Diversity": air.ml-research
+    "Privacy & Cryptography": air.ml-research
+    "Prompt & Context Engineering": air.context
+    "Prompting": air.context
+    "Prompting & Context": air.context
+    "Quantitative Finance / Graph Learning": air.ml-research
+    "Red-Teaming Methodology": air.evals
+    "Reinforcement Learning Theory": air.ml-research
+    "Retrieval & Context": air.context
+    "Robotics & Embodied AI": air.ml-research
+    "Scientific Computing": air.ml-research
+    "Scientific Machine Learning": air.ml-research
+    "Serving & Ops": air.tooling
+    "Software Engineering": air.ml-research
+    "Speech & Multilingual LLMs": air.ml-research
+    "Statistical ML": air.ml-research
+    "Statistical ML methods": air.ml-research
+    "Structured decoding": air.model-io
+    "Structured Extraction": air.model-io
+    "Test-Time Inference": air.models
+    "Time-Series / Small-Data ML": air.ml-research
+    "Time-Series Forecasting": air.ml-research
+    "Tooling & Infrastructure": air.tooling
+    "Training-time Incidents & RLVR": air.alignment
+    "Trajectory Prediction": air.ml-research
+    "Uncertainty & Calibration": air.ml-research
+    "Uncertainty Quantification": air.ml-research
+    "Vision-Language Model Hallucination": air.alignment
+    "Vision-Language-Action / Robotics": air.ml-research
+    "VLM-as-Annotator Harnesses": air.agents
+    "Wireless & Networking": air.ml-research

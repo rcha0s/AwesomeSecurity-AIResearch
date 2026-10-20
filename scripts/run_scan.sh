@@ -209,6 +209,9 @@ phase_post() {
   fi
   "$PY" scripts/add_claim.py validate >>"$LOG"
   for r in "${RENDERERS[@]}"; do "$PY" "scripts/$r.py" >>"$LOG"; done
+  # A recurring verified new-domain proposal opens/comments a `taxonomy`
+  # issue (ISC-18). Advisory: a GitHub hiccup must not fail the scan.
+  "$PY" scripts/taxonomy_proposals.py notify >>"$LOG" 2>&1 || log "taxonomy notify WARN: failed"
   echo "{\"runner\": \"$RUNNER\", \"stories\": $stories}" >"$RESULT"
   local paths=()
   while IFS= read -r p; do paths+=("$p"); done < <(published)

@@ -4,7 +4,7 @@
 
 > **A weekly, source-cited briefing on AI security, product security, and applied AI research** - every finding vetted, distilled to one lesson, and filed by field. A [standing-claims ledger](claims/README.md) tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.
 
-![Updated](https://img.shields.io/badge/updated-2026--09--09-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-25-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--20-1f6feb) ![Vetted findings](https://img.shields.io/badge/vetted-25-2da44e) ![Window](https://img.shields.io/badge/findings_window-last_31_days-bf8700) ![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 <h3 align="center"><a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">Read the live briefing &#8594;</a></h3>
 
@@ -14,18 +14,18 @@ The live site is the best read - one page for the week's news, another for stand
 
 ## Latest findings
 
-> The top curated findings published in the last 7 days. Each links to its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
+> The most recent curated findings we have (nothing new this 7-day window). Each links to its writeup here **and** the original source. For the full digest see the [newsletter](NEWSLETTER.md).
 
-- **[An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours](ai-security/harness-agent-security/2026-09-an-ai-assisted-cyber-attack-frontier-ai-agents-compress-a-tw.md)** · _AI Security · Sep 2, 2026_  
+- **[An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours](ai-security/agent-security/2026-09-an-ai-assisted-cyber-attack-frontier-ai-agents-compress-a-tw.md)** · _AI Security · Sep 2, 2026_  
   The differentiator in this attack wasn't exploit sophistication - it was speed and parallelism from letting agents monitor, decide, and re-plan in a loop. Defenses built for human…
-- **[OpenAI's Training-Time Agents Discovered and Exploited a CGI Ambient-Authority Bug and an Egress-Filter Bypass to Collude via Public Wikis](ai-security/harness-agent-security/2026-09-openai-s-training-time-agents-discovered-and-exploited-a-cgi.md)** · _AI Security · Sep 4, 2026_  
+- **[OpenAI's Training-Time Agents Discovered and Exploited a CGI Ambient-Authority Bug and an Egress-Filter Bypass to Collude via Public Wikis](ai-security/agent-security/2026-09-openai-s-training-time-agents-discovered-and-exploited-a-cgi.md)** · _AI Security · Sep 4, 2026_  
   Two separate, self-discovered technique classes let training-time agents escape their intended interaction boundary: an old web application flaw (GET-as-state-change) gave them an…
 - **[ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion](ai-security/prompt-injection/2026-09-ascii-smuggling-crosses-over-from-ai-prompt-injection-resear.md)** · _AI Security · Sep 3, 2026_  
   A detection technique built for one threat model (AI prompt injection) surfaced an unrelated, larger threat (traditional phishing filter evasion) using the identical underlying…
-- **[phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](product-security/application-security/2026-09-phpseclib-s-pure-php-x25519-implementation-leaks-the-full-pr.md)** · _Product Security · Sep 8, 2026_  
-  This isn't a low-order-input vulnerability that input validation can fix - it's a genuine implementation-level timing/call-count side channel triggered by ordinary use with the…
-- **[SEAL: A Router-Independent 'Shared Expert' Anchor Cuts Jailbreak Success on Mixture-of-Experts Models by Up to 60%](ai-security/llm-red-teaming/2026-09-seal-a-router-independent-shared-expert-anchor-cuts-jailbrea.md)** · _AI Security · Sep 2, 2026_  
-  Router-hardening defenses for MoE model safety can still be bypassed because routing itself is nondeterministic and manipulable - anchoring safety to the always-activated…
+- **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](ai-security/red-teaming/2026-09-multidimensional-item-response-theory-auditing-reveals-some.md)** · _AI Security · Sep 1, 2026_  
+  A benchmark's stated purpose (e.g. "safety") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume - a model that scores well on…
+- **[This Shit is Hard: Patching a vulnerability that has no fix](product-security/supply-chain/2026-08-this-shit-is-hard-patching-a-vulnerability-that-has-no-fix.md)** · _Product Security · Aug 17, 2026_  
+  When remediating (including AI-generated) fixes, gate every patch on feasibility, regression testing, and an independent exploit test, batch interdependent fixes, re-validate on…
 
 ## The three databases
 
@@ -96,7 +96,7 @@ X / GitHub / YouTube / articles / RSS   (ranked source registry)
            └─ render  README · topic pages · claims · newsletter · trends · review
 ```
 
-- **Latest only.** Findings older than 31 days age out to [`data/archive.json`](data/archive.json); the snapshot at the top is the last 7 days when we have fresh material, otherwise the most recent we have.
+- **Latest only.** Findings older than 31 days age out to [`data/archive.json`](data/archive.json); claims and news stories are kept. The snapshot at the top is the last 7 days when we have fresh material, otherwise the most recent we have.
 - **Vetted only.** Everything that fails the gate waits in [REVIEW.md](REVIEW.md). Nothing is deleted.
 - **Emerging trends.** Tagged findings are clustered over time to surface waves early ([TRENDS.md](TRENDS.md)).
 
@@ -105,7 +105,7 @@ X / GitHub / YouTube / articles / RSS   (ranked source registry)
 A research tracker lives or dies on trust, so - being upfront:
 
 - **What runs where.** Ingestion and the LLM analysis run locally (the `/research-scan` and `/add-resource` skills, plus an X account for social sources). The GitHub Actions job only re-ranks the committed pools and regenerates the rendered files. In practice the repo is refreshed weekly by the maintainer; it is not reproducible from a clean clone without the local pipeline and credentials.
-- **Windows.** All three finding tracks share one rolling window of 31 days (the snapshot is the last 7); older findings move to [`data/archive.json`](data/archive.json). The claim ledger is durable and never ages out. Findings tell you what was published lately; claims tell you what to believe now.
+- **Windows.** All three finding tracks share one rolling window of 31 days (the snapshot is the last 7); older findings move to [`data/archive.json`](data/archive.json). The claim ledger and the news lane are durable and never age out. Findings tell you what was published lately; claims tell you what to believe now.
 - **What "vetted" and "checked" mean.** A finding is curated only if it clears the novelty and relevance bars, its lesson excerpt is found in the source text (grounding), and a separate model pass does not refute it. That is automated review with a mechanical grounding check, not human verification. Treat it as a strong filter, not a guarantee.
 - **Source caveat.** Social ingestion leans on an X account and is inherently fragile; when it stalls, the RSS, GitHub, arXiv, and advisory feeds keep the pipeline running.
 
@@ -128,4 +128,4 @@ README.md NEWSLETTER.md TRENDS.md REVIEW.md            generated - do not hand-e
 
 Curated content under [CC BY 4.0](LICENSE); scripts under MIT. Linked research remains the property of its original authors - every finding cites its source.
 
-<sub>Generated by <code>scripts/generate_site.py</code> on 2026-09-09. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>
+<sub>Generated by <code>scripts/generate_site.py</code> on 2026-10-20. Edit the pools in <code>data/</code> and regenerate - do not hand-edit rendered files.</sub>

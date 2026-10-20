@@ -62,9 +62,10 @@ def test_title_from_reader_text_parses_title_line():
 
 def test_title_from_reader_text_falls_back_to_slug_without_title_line():
     body = "Markdown Content:\nno title line here"
-    assert ism.title_from_reader_text(
-        body, "https://www.anthropic.com/news/disrupting-ai-espionage"
-    ) == "Disrupting Ai Espionage"
+    assert (
+        ism.title_from_reader_text(body, "https://www.anthropic.com/news/disrupting-ai-espionage")
+        == "Disrupting Ai Espionage"
+    )
 
 
 def test_url_to_candidate_classifies_from_real_fetched_body(monkeypatch):
@@ -81,7 +82,8 @@ def test_url_to_candidate_classifies_from_real_fetched_body(monkeypatch):
         RULES,
     )
     assert cand is not None
-    assert cand["guess_domain"] == "AI Security"
+    assert cand["guess_label"] == "AI Security"
+    assert cand["guess_domain"].startswith("ais.")
     assert cand["title"] == "Disrupting the first reported AI-orchestrated cyber espionage campaign"
     assert cand["published"] == "2026-09-07"
     assert cand["date"] == "2026-09"

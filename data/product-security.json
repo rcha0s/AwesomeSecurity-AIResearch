@@ -3,19 +3,19 @@
   "topic": "product-security",
   "name": "Product Security",
   "domains": [
-    "Application Security",
-    "Supply Chain & Dependencies",
-    "Cloud & Infrastructure",
-    "Identity & Access",
-    "Mobile Security",
-    "Threat Modeling & Red Teaming",
-    "Detection & Response",
-    "AI-Generated Code Risk"
+    "ps.appsec",
+    "ps.supply-chain",
+    "ps.cloud-infra",
+    "ps.identity",
+    "ps.mobile",
+    "ps.detection-response",
+    "ps.offensive",
+    "ps.ai-code"
   ],
   "entries": [
     {
       "topic": "product-security",
-      "domain": "cloud & infrastructure",
+      "domain": "ps.cloud-infra",
       "title": "VMs won't contain cyber-capable agents",
       "source_url": "https://blog.trailofbits.com/",
       "article_url": "https://blog.trailofbits.com/2026/08/26/vms-wont-contain-cyber-capable-agents/",
@@ -81,11 +81,12 @@
       "id": "vms-won-t-contain-cyber-capable-agents-eac5fbef",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 0.33
+      "grounding_score": 0.33,
+      "domain_label": "cloud & infrastructure"
     },
     {
       "topic": "product-security",
-      "domain": "software supply chain",
+      "domain": "ps.supply-chain",
       "title": "This Shit is Hard: Patching a vulnerability that has no fix",
       "source_url": "https://www.chainguard.dev/unchained",
       "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
@@ -151,11 +152,12 @@
       "id": "this-shit-is-hard-patching-a-vulnerability-that--54a43a0b",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "software supply chain"
     },
     {
       "topic": "product-security",
-      "domain": "Application Security",
+      "domain": "ps.appsec",
       "title": "phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation",
       "source_url": "https://github.com/advisories/GHSA-q97c-8qh3-fpc6",
       "cluster": null,
@@ -226,11 +228,12 @@
       "id": "phpseclib-s-pure-php-x25519-implementation-leaks-3f9abfc0d6",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Application Security"
     },
     {
       "topic": "product-security",
-      "domain": "web security",
+      "domain": "ps.appsec",
       "title": "What's in a tag name? JavaScript, apparently",
       "source_url": "https://portswigger.net/research",
       "article_url": "https://portswigger.net/research/whats-in-a-tag-name-javascript-apparently",
@@ -295,11 +298,12 @@
       "id": "what-s-in-a-tag-name-javascript-apparently-f25dab65",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 0.67
+      "grounding_score": 0.67,
+      "domain_label": "web security"
     },
     {
       "topic": "product-security",
-      "domain": "web security",
+      "domain": "ps.offensive",
       "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
       "source_url": "https://snyk.io/blog/",
       "article_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
@@ -365,11 +369,12 @@
       "id": "show-don-t-tell-what-evo-continuous-offensive-se-e186831a",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "web security"
     },
     {
       "topic": "product-security",
-      "domain": "Mobile Security",
+      "domain": "ps.mobile",
       "title": "Consumer Smart Glasses Enable a General Video-Based Password-Cracking Pipeline That Cuts Human-Chosen Password Entropy by Up to 60 Bits",
       "source_url": "http://arxiv.org/abs/2609.06539v1",
       "cluster": null,
@@ -426,11 +431,12 @@
       "id": "consumer-smart-glasses-enable-a-general-video-ba-fadab74b12",
       "retrieved_at": "2026-09-09T06:16:10+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Mobile Security"
     },
     {
       "topic": "product-security",
-      "domain": "Application Security",
+      "domain": "ps.appsec",
       "title": "Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) Traced to an Unchecked Fixed-Size Buffer Copy During SAML Signature Canonicalization",
       "source_url": "https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/",
       "cluster": null,
@@ -496,7 +502,8 @@
       "id": "citrix-netscaler-pre-auth-heap-overflow-cve-2026-8b36b44e46",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Application Security"
     },
     {
       "article_url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
@@ -514,7 +521,7 @@
       "source_name": "Unit 42 (Palo Alto Networks)",
       "id": "u42-state-of-ai-enabled-malware-2026-08",
       "topic": "product-security",
-      "domain": "Malware & Threat Intel",
+      "domain": "ps.detection-response",
       "title": "Measuring AI-enabled malware: ~97% of samples never reach production; AI changes how malware is authored, not how it executes",
       "source_url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
       "raw_path": "data/_raw/u42-ai-enabled-malware-2026-08.txt",
@@ -567,11 +574,12 @@
       "verify_note": "Self-verified: all three excerpts ground verbatim to the Unit 42 source; independent subagent pass skipped (automated cyber-safeguard blocked the delegated agent), novelty held conservative as this is a measurement/framing contribution.",
       "retrieved_at": "2026-08-29T21:56:02+00:00",
       "needs_review": false,
-      "grounding_score": 0.33
+      "grounding_score": 0.33,
+      "domain_label": "Malware & Threat Intel"
     },
     {
       "topic": "product-security",
-      "domain": "Supply Chain & Dependencies",
+      "domain": "ps.supply-chain",
       "title": "Rust Supply-Chain Compromise Used Cargo's Own Yank Warning to Socially Engineer Developers Into the Malicious Version",
       "source_url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/",
       "cluster": null,
@@ -643,11 +651,12 @@
       "id": "rust-supply-chain-compromise-used-cargo-s-own-ya-3da9f261c5",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Supply Chain & Dependencies"
     },
     {
       "topic": "product-security",
-      "domain": "Supply Chain & Dependencies",
+      "domain": "ps.supply-chain",
       "title": "Composer Trusted a Package's Perforce Source URL Enough to Hand It to the p4 CLI as a Local Command",
       "source_url": "https://github.com/advisories/GHSA-rvx4-ffvw-m9q3",
       "cluster": null,
@@ -707,11 +716,12 @@
       "id": "composer-trusted-a-package-s-perforce-source-url-145889f01b",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Supply Chain & Dependencies"
     },
     {
       "topic": "product-security",
-      "domain": "Supply Chain & Dependencies",
+      "domain": "ps.supply-chain",
       "title": "A Widely-Used VS Code Extension (9.5M Installs) Chained a Markdown eval() Sink, an Untrusted Webview Message Dispatcher, and a vm.runInNewContext() Escape Into RCE",
       "source_url": "https://projectdiscovery.io/blog/a-9-5m-install-vs-code-extension-one-markdown-file-and-a-supply-chain-foothold",
       "cluster": null,
@@ -789,11 +799,12 @@
       "id": "a-widely-used-vs-code-extension-9-5m-installs-ch-c179f10918",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Supply Chain & Dependencies"
     },
     {
       "topic": "product-security",
-      "domain": "Mobile / App Compliance",
+      "domain": "ps.mobile",
       "title": "A Hybrid Security Framework for Mini-Programs: Visual UI Compliance and Network Risk Assessment",
       "source_url": "https://arxiv.org/abs/2608.25877",
       "article_url": "https://arxiv.org/abs/2608.25877",
@@ -860,11 +871,12 @@
       "id": "a-hybrid-security-framework-for-mini-programs-vi-9ee71794",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Mobile / App Compliance"
     },
     {
       "topic": "product-security",
-      "domain": "Application Security",
+      "domain": "ps.appsec",
       "title": "Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp",
       "source_url": "https://github.com/advisories/GHSA-26w7-cxv4-gfx2",
       "cluster": null,
@@ -918,11 +930,12 @@
       "id": "astro-s-default-image-optimizer-allowed-remote-c-4221545631",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Application Security"
     },
     {
       "topic": "product-security",
-      "domain": "Application Security",
+      "domain": "ps.appsec",
       "title": "Hono's Path-Traversal Fix Only Blocked One Parent-Directory Segment — a Longer Run of '..' Still Escapes the Output Directory",
       "source_url": "https://github.com/advisories/GHSA-gqvv-2mrq-wpjv",
       "cluster": null,
@@ -975,11 +988,12 @@
       "id": "hono-s-path-traversal-fix-only-blocked-one-paren-f3c68c7dc8",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Application Security"
     },
     {
       "topic": "product-security",
-      "domain": "Detection & Response",
+      "domain": "ps.appsec",
       "title": "morgan's Log-Forging Fix Missed Unicode Line-Separator Code Points, Letting Attacker-Controlled Headers Split Log Records",
       "source_url": "https://github.com/advisories/GHSA-jxfw-x594-9x9m",
       "cluster": null,
@@ -1045,11 +1059,12 @@
       "id": "morgan-s-log-forging-fix-missed-unicode-line-sep-602fc56f55",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Detection & Response"
     },
     {
       "topic": "product-security",
-      "domain": "Supply Chain & Dependencies",
+      "domain": "ps.supply-chain",
       "title": "A One-Week Dependency Cooldown Produces Outsized Supply-Chain Protection for Minimal Developer Friction",
       "source_url": "https://semgrep.dev/blog/2026/rolling-out-dependency-cooldowns-org-wide",
       "cluster": null,
@@ -1110,11 +1125,12 @@
       "id": "a-one-week-dependency-cooldown-produces-outsized-75057a017e",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Supply Chain & Dependencies"
     },
     {
       "topic": "product-security",
-      "domain": "Supply Chain & Dependencies",
+      "domain": "ps.supply-chain",
       "title": "Rolling Out Org-Wide GitHub Actions SHA-Pinning Enforcement Has Non-Obvious Failure Modes Beyond the Obvious Tag-Pinning Fix",
       "source_url": "https://semgrep.dev/blog/2026/sha-pinning-for-github-actions-org-wide",
       "cluster": null,
@@ -1185,11 +1201,12 @@
       "id": "rolling-out-org-wide-github-actions-sha-pinning-dc83fe00c6",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Supply Chain & Dependencies"
     },
     {
       "topic": "product-security",
-      "domain": "Cloud & Infrastructure",
+      "domain": "ps.appsec",
       "title": "Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System",
       "source_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
       "cluster": null,
@@ -1254,7 +1271,8 @@
       "id": "trail-of-bits-runs-an-independent-from-scratch-a-e511ef895e",
       "retrieved_at": "2026-09-09T06:16:09+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Cloud & Infrastructure"
     }
   ]
 }

@@ -39,6 +39,8 @@ try:
 except ImportError as exc:  # pragma: no cover - environment guard
     raise SystemExit("Missing dependencies. Run: pip install -r requirements.txt") from exc
 
+import taxonomy  # noqa: E402  (after the dependency guard: it needs yaml)
+
 # Use the OS-native certificate trust store (Windows/macOS/Linux) instead of
 # the bundled `certifi` CA list. A stale or unlucky `certifi` release can
 # silently break ingestion of major sources (OpenAI, Anthropic, GitHub
@@ -70,55 +72,29 @@ JINA_READER = "https://r.jina.ai/"
 HTTP_USER_AGENT = "AwesomeSecurityResearch/1.0"
 
 # --- Topics: the three tracked databases -----------------------------------
-# Each topic is its own rolling pool + rendered directory. `domains` are
-# suggested sub-groupings (not enforced — the analyzer picks a sensible one).
+# Each topic is its own rolling pool + rendered directory. `domains` are the
+# topic's domain IDs from data/taxonomy.yaml (enforced at merge; taxonomy.py).
 TOPICS: dict[str, dict] = {
     "ai-security": {
         "name": "AI Security",
         "blurb": "Securing AI systems: harness & agent security, MCP, skill scanning, "
         "prompt injection, memory poisoning, model supply chain, LLM red-teaming.",
-        "domains": [
-            "Harness & Agent Security",
-            "MCP & Tools",
-            "Prompt Injection",
-            "Memory & Context Poisoning",
-            "Model Supply Chain",
-            "LLM Red-Teaming",
-            "RAG / Data Poisoning",
-            "Information Disclosure",
-        ],
     },
     "product-security": {
         "name": "Product Security",
         "blurb": "Securing products: application security, supply chain, cloud & infra, "
         "identity, mobile, plus red teaming and threat modeling (AI-assisted or not).",
-        "domains": [
-            "Application Security",
-            "Supply Chain & Dependencies",
-            "Cloud & Infrastructure",
-            "Identity & Access",
-            "Mobile Security",
-            "Threat Modeling & Red Teaming",
-            "Detection & Response",
-            "AI-Generated Code Risk",
-        ],
     },
     "ai-research": {
         "name": "AI Research",
         "blurb": "Practitioner AI: improving your harness, understanding, and architecture "
         "for using LLMs/agents on real tasks. Not model internals or ML-research.",
-        "domains": [
-            "Agents & Harnesses",
-            "Prompting & Context",
-            "Tooling & Infrastructure",
-            "Evaluation",
-            "Architecture & Optimization",
-            "Models & Capabilities",
-        ],
     },
 }
+for _topic, _meta in TOPICS.items():
+    _meta["domains"] = [d.id for d in taxonomy.get().for_topic(_topic)]
 
-# Convenience: {topic: [domains]} (mirrors the old TRACK_DOMAINS shape).
+# Convenience: {topic: [domain ids]} (mirrors the old TRACK_DOMAINS shape).
 TOPIC_DOMAINS: dict[str, list[str]] = {k: v["domains"] for k, v in TOPICS.items()}
 
 POOL_FILES: dict[str, Path] = {t: DATA_DIR / f"{t}.json" for t in TOPICS}
@@ -136,22 +112,55 @@ LEGACY_DOMAIN_TO_TOPIC: dict[str, str] = {
     "Evaluation & Safety": "ai-research",
 }
 
+# The pre-taxonomy TOPICS "suggested domains" display names. Main's
+# topic_for_domain resolved these by TOPICS membership; frozen here so an ingest
+# path handing one in still guesses the same topic (tests pin the whole table).
+_OLD_TOPIC_DOMAINS: dict[str, tuple[str, ...]] = {
+    "ai-security": ("Harness & Agent Security", "MCP & Tools", "Prompt Injection",
+                    "Memory & Context Poisoning", "Model Supply Chain", "LLM Red-Teaming",
+                    "RAG / Data Poisoning", "Information Disclosure"),
+    "product-security": ("Application Security", "Supply Chain & Dependencies",
+                         "Cloud & Infrastructure", "Identity & Access", "Mobile Security",
+                         "Threat Modeling & Red Teaming", "Detection & Response",
+                         "AI-Generated Code Risk"),
+    "ai-research": ("Agents & Harnesses", "Prompting & Context", "Tooling & Infrastructure",
+                    "Evaluation", "Architecture & Optimization", "Models & Capabilities"),
+}  # fmt: skip
+for _topic, _names in _OLD_TOPIC_DOMAINS.items():
+    for _name in _names:
+        LEGACY_DOMAIN_TO_TOPIC.setdefault(_name, _topic)
+
 DISCOVERED_VIA = ("twitter", "linkedin", "rss", "github", "youtube", "manual")
 
 
 def domain_slug(domain: str) -> str:
-    """Directory-safe slug for a domain, e.g. 'AI Security' -> 'ai-security'."""
-    return slugify(domain)
+    """Directory-safe slug for a domain: an ID's slug part ('ais.mcp-tools' ->
+    'mcp-tools'), else the slugified label ('AI Security' -> 'ai-security')."""
+    dom = taxonomy.get().domains.get(domain)
+    return dom.slug if dom else slugify(domain)
+
+
+def moved_slug(entry: dict) -> str | None:
+    """The directory an entry's page lived in before domains became taxonomy
+    IDs (the slugified free-text label, from `domain_label` provenance), when it
+    differs from today's. Renderers leave a "Moved" stub there so old links work."""
+    label = entry.get("domain_label")
+    if not label:
+        return None
+    old = slugify(label)
+    return old if old != domain_slug(entry.get("domain") or "General") else None
+
+
+def domain_name(domain: str) -> str:
+    """Display name for a domain ID; a non-ID label passes through."""
+    return taxonomy.get().name(domain)
 
 
 def topic_for_domain(domain: str) -> str | None:
-    """Best topic for a (possibly legacy) domain string."""
-    if domain in LEGACY_DOMAIN_TO_TOPIC:
-        return LEGACY_DOMAIN_TO_TOPIC[domain]
-    for topic, domains in TOPIC_DOMAINS.items():
-        if domain in domains:
-            return topic
-    return None
+    """Topic for a domain ID, else exactly what main's pre-taxonomy code returned
+    for a legacy ingest label (None for anything it didn't know)."""
+    dom = taxonomy.get().domains.get(domain)
+    return dom.topic if dom else LEGACY_DOMAIN_TO_TOPIC.get(domain)
 
 
 # --- Config ----------------------------------------------------------------
@@ -499,7 +508,7 @@ def is_curated(entry: dict, conf: Config) -> bool:
     """True if the finding belongs in the public curated view (topic pages +
     newsletter). Everything else — flagged needs_review, unscored, ungrounded, OR
     below the composite floor — is held in the REVIEW.md queue (still in the pool)."""
-    if entry.get("needs_review") or not is_scored(entry):
+    if entry.get("needs_review") or domain_held(entry) or not is_scored(entry):
         return False
     if conf.curation.get("require_verification", True) and entry.get("verified") is False:
         return False  # the independent verifier refuted it
@@ -508,6 +517,12 @@ def is_curated(entry: dict, conf: Config) -> bool:
         if gs is not None and gs < 1.0:  # verified a source and found a bad quote
             return False
     return entry_composite(entry, conf) >= conf.curation.get("min_composite", 0)
+
+
+def domain_held(entry: dict) -> bool:
+    """True while merge holds the entry because the analyzer's domain was not a
+    taxonomy ID (taxonomy.enforce). An integrity floor: no lane publishes it."""
+    return bool(entry.get("domain_hold"))
 
 
 def is_editorial(entry: dict) -> bool:
@@ -525,7 +540,7 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
     floors: an ungrounded quote or a verifier-refuted claim is not a matter of
     editorial taste. Only findings the novelty gate held (i.e. not already
     curated), that are scored, grounded, and not refuted, are in play."""
-    if is_curated(entry, conf) or not is_scored(entry):
+    if is_curated(entry, conf) or not is_scored(entry) or domain_held(entry):
         return False
     if entry.get("verified") is False:
         return False
@@ -555,35 +570,100 @@ NEWS_HN_STANDALONE_MIN_POINTS = 100
 # match `stock jumps`).
 NEWS_DENY_HARD = (
     # Stock / market
-    "stock jumps", "stock drops", "stock price", "stock soars", "stock rally",
-    "stock plummets", "share price", "market cap", "price target",
-    "quarterly earnings", "beats earnings", "misses earnings", " ipo ",
-    "ipo filing", "valuation of $", "$nvda", "$meta", "$msft", "$googl", "$amzn",
-    "ticker symbol", "analyst rating", "upgraded to buy", "downgraded to sell",
-    "wall street", "shareholders", "hedge fund", "trading day",
+    "stock jumps",
+    "stock drops",
+    "stock price",
+    "stock soars",
+    "stock rally",
+    "stock plummets",
+    "share price",
+    "market cap",
+    "price target",
+    "quarterly earnings",
+    "beats earnings",
+    "misses earnings",
+    " ipo ",
+    "ipo filing",
+    "valuation of $",
+    "$nvda",
+    "$meta",
+    "$msft",
+    "$googl",
+    "$amzn",
+    "ticker symbol",
+    "analyst rating",
+    "upgraded to buy",
+    "downgraded to sell",
+    "wall street",
+    "shareholders",
+    "hedge fund",
+    "trading day",
     # Consumer / social feed noise
-    "chatgpt tips", "prompts to try", "best ai apps", "chatgpt for beginners",
-    "chatgpt hacks", "genius chatgpt", "ai girlfriend", "ai boyfriend",
-    "ai for coffee", "ways to use chatgpt", "ai productivity hacks",
+    "chatgpt tips",
+    "prompts to try",
+    "best ai apps",
+    "chatgpt for beginners",
+    "chatgpt hacks",
+    "genius chatgpt",
+    "ai girlfriend",
+    "ai boyfriend",
+    "ai for coffee",
+    "ways to use chatgpt",
+    "ai productivity hacks",
     # Pure hype
-    "agi is here", "will ai replace", "ai is coming for", "ai apocalypse",
+    "agi is here",
+    "will ai replace",
+    "ai is coming for",
+    "ai apocalypse",
     "ai-driven revolution",
 )
 NEWS_DENY_PUFF = (
-    "signs deal", "signs partnership", "signs cloud partnership",
-    "signs strategic", "partnership announced", "strategic partnership",
-    "joins the board", "appointed ceo", "hires former",
-    "raised $", "closes series", "funding round", "seed round",
+    "signs deal",
+    "signs partnership",
+    "signs cloud partnership",
+    "signs strategic",
+    "partnership announced",
+    "strategic partnership",
+    "joins the board",
+    "appointed ceo",
+    "hires former",
+    "raised $",
+    "closes series",
+    "funding round",
+    "seed round",
 )
 # Terms that RESCUE a puff hit — the co-occurrence carve-out.
 NEWS_TECHNICAL_TERMS = (
-    "security research", "sandbox", "sandbox escape", "red team", "red-team",
-    "red-team methodology", "evaluation", "alignment", "guardrail",
-    "prompt injection", "memory poisoning", "supply chain", "provenance",
-    "attestation", "eval", "benchmark", "vulnerability", "exploit",
-    "cve", "advisory", "harness", "agent framework", "mcp",
-    "model context protocol", "open weights", "capability", "spec",
-    "release notes", "regulation", "disclosure",
+    "security research",
+    "sandbox",
+    "sandbox escape",
+    "red team",
+    "red-team",
+    "red-team methodology",
+    "evaluation",
+    "alignment",
+    "guardrail",
+    "prompt injection",
+    "memory poisoning",
+    "supply chain",
+    "provenance",
+    "attestation",
+    "eval",
+    "benchmark",
+    "vulnerability",
+    "exploit",
+    "cve",
+    "advisory",
+    "harness",
+    "agent framework",
+    "mcp",
+    "model context protocol",
+    "open weights",
+    "capability",
+    "spec",
+    "release notes",
+    "regulation",
+    "disclosure",
 )
 
 
@@ -597,11 +677,13 @@ def news_denylist_hit(entry: dict) -> bool:
     A hard hit fires no matter what. A puff hit fires only when no technical
     term co-occurs — that's the "Anthropic + red team + hires former"
     rescue case."""
-    hay = " ".join([
-        (entry.get("title") or ""),
-        (entry.get("summary") or ""),
-        (entry.get("takeaway") or ""),
-    ]).lower()
+    hay = " ".join(
+        [
+            (entry.get("title") or ""),
+            (entry.get("summary") or ""),
+            (entry.get("takeaway") or ""),
+        ]
+    ).lower()
     if _has_any(hay, NEWS_DENY_HARD):
         return True
     if _has_any(hay, NEWS_DENY_PUFF) and not _has_any(hay, NEWS_TECHNICAL_TERMS):
@@ -625,17 +707,20 @@ def _source_track_and_tier(entry: dict, sources_by_id: dict[str, dict]) -> tuple
     return src.get("track", "research"), src.get("tier", "low")
 
 
-def is_news_curated(entry: dict, conf: Config,
-                    sources_by_id: dict[str, dict] | None = None,
-                    now: datetime | None = None,
-                    window: int | None = NEWS_MAX_AGE_DAYS) -> bool:
+def is_news_curated(
+    entry: dict,
+    conf: Config,
+    sources_by_id: dict[str, dict] | None = None,
+    now: datetime | None = None,
+    window: int | None = NEWS_MAX_AGE_DAYS,
+) -> bool:
     """True if the entry belongs in the news lane (Trending & in the news).
 
     Distinct from is_curated: novelty and grounding aren't tested here; instead
     we check freshness, source track/tier, topic scope, and the deny list. A
     news source can pass this gate on the same day it publishes, without ever
     clearing the research floor."""
-    if not topic_scope_ok(entry):
+    if not topic_scope_ok(entry) or domain_held(entry):
         return False
     if window is not None and not is_fresh(entry, window, now=now):
         return False
@@ -673,11 +758,14 @@ def load_sources_by_id() -> dict[str, dict]:
     registry is small (≤ hundreds of entries) and only the render pipeline
     calls this once per run."""
     from sources_registry import load_sources
+
     return {s["id"]: s for s in load_sources() if "id" in s}
 
 
 def review_reason(entry: dict, conf: Config) -> str:
     """Why an entry is in the review queue (for REVIEW.md)."""
+    if domain_held(entry):
+        return f"domain not in the taxonomy — {entry['domain_hold']}"
     if entry.get("verified") is False:
         note = entry.get("verify_note") or "the independent verifier refuted a claim/score"
         return f"failed independent verification — {note}"
@@ -693,8 +781,9 @@ def review_reason(entry: dict, conf: Config) -> str:
 
 
 # --- Schema validation -----------------------------------------------------
-# `topic` is the hard constraint; `domain` is a free-text sub-grouping label
-# (the analyzer picks a sensible one, so we don't enforce membership).
+# `topic` is the hard constraint. `domain` must be a taxonomy ID of that topic,
+# but a free-text label is not a schema error: merge_analysis HOLDS the entry
+# for review (taxonomy.enforce) rather than dropping the analysis.
 REQUIRED_FIELDS = ("topic", "domain", "title", "source_url")
 
 # Drift review reads `related_claims` on every analyzed entry; capping at 3
@@ -702,13 +791,29 @@ REQUIRED_FIELDS = ("topic", "domain", "title", "source_url")
 MAX_RELATED_CLAIMS = 3
 
 
+def _related_claims_errors(related: object) -> list[str]:
+    if not isinstance(related, list):
+        return ["related_claims must be a list of claim IDs"]
+    errors: list[str] = []
+    if len(related) > MAX_RELATED_CLAIMS:
+        errors.append(f"related_claims exceeds cap of {MAX_RELATED_CLAIMS} (got {len(related)})")
+    if any(not isinstance(x, str) for x in related):
+        errors.append("related_claims entries must all be strings")
+    return errors
+
+
+def _proposed_domain_errors(proposal: object) -> list[str]:
+    """A `proposed_domain` (no existing domain fits) needs a name and a scope."""
+    if proposal is None:
+        return []
+    if not isinstance(proposal, dict):
+        return ["proposed_domain must be an object"]
+    missing = [k for k in ("name", "scope") if not str(proposal.get(k) or "").strip()]
+    return [f"proposed_domain missing: {', '.join(missing)}"] if missing else []
+
+
 def validate_entry(entry: dict) -> list[str]:
     """Return a list of human-readable validation errors (empty == valid)."""
-    # Local import so `common` stays importable when `interests.py` is
-    # absent (bootstrap / migration order); the taxonomy is only needed
-    # at validate-time.
-    from interests import VALID_CLUSTERS
-
     errors: list[str] = []
     for field in REQUIRED_FIELDS:
         if not entry.get(field):
@@ -719,21 +824,9 @@ def validate_entry(entry: dict) -> list[str]:
     lessons = entry.get("lessons")
     if lessons is not None and not isinstance(lessons, list):
         errors.append("lessons must be a list")
-    if "cluster" in entry:
-        cluster = entry["cluster"]
-        if cluster is not None and cluster not in VALID_CLUSTERS:
-            errors.append(f"cluster must be one of A-M or null (got {cluster!r})")
     if "related_claims" in entry:
-        related = entry["related_claims"]
-        if not isinstance(related, list):
-            errors.append("related_claims must be a list of claim IDs")
-        else:
-            if len(related) > MAX_RELATED_CLAIMS:
-                errors.append(
-                    f"related_claims exceeds cap of {MAX_RELATED_CLAIMS} (got {len(related)})"
-                )
-            if any(not isinstance(x, str) for x in related):
-                errors.append("related_claims entries must all be strings")
+        errors += _related_claims_errors(entry["related_claims"])
+    errors += _proposed_domain_errors(entry.get("proposed_domain"))
     return errors
 
 

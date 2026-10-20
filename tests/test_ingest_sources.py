@@ -77,7 +77,8 @@ def test_ghsa_ai_package_routes_to_ai_security():
         "vulnerabilities": [{"package": {"ecosystem": "pip", "name": "some-agent-lib"}}],
     }
     cand = gh.advisory_to_candidate(adv, RULES)
-    assert cand["guess_domain"] == "AI Security"
+    assert cand["guess_label"] == "AI Security"
+    assert cand["guess_domain"].startswith("ais.")
     assert cand["guess_topic"] == "ai-security"
 
 

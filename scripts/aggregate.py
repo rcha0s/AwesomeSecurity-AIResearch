@@ -23,6 +23,7 @@ from datetime import datetime, timedelta
 import common as c
 import paper_gate as pg
 import sources_registry as sr
+import taxonomy as tx
 
 try:
     import feedparser
@@ -46,6 +47,24 @@ def classify_subtype(text: str, domain: str, rules: dict) -> str:
         if any(kw in text for kw in keywords):
             return subtype
     return "Uncategorized"
+
+
+def guess_fields(blob: str, label: str, rules: dict, topic: str | None = None) -> dict:
+    """The router's verdict as candidate fields.
+
+    `label` is the sources.yaml router class (or a source's fallback label). It
+    alone decides whether an item is ingested and which topic it guesses, exactly
+    as before the taxonomy. `guess_domain` is a taxonomy ID of that topic, picked
+    from the taxonomy's keyword hints (the label itself if it is an ID, else the
+    topic default, when none fire); the router label is kept as `guess_label`."""
+    topic = c.topic_for_domain(label) or topic
+    hint = tx.domain_hint(topic, blob, default=label) if topic else None
+    return {
+        "guess_topic": topic,
+        "guess_domain": hint,
+        "guess_label": label,
+        "guess_subtype": classify_subtype(blob, label, rules),
+    }
 
 
 def build_candidate(entry: dict, feed: dict, rules: dict) -> dict | None:
@@ -76,9 +95,7 @@ def build_candidate(entry: dict, feed: dict, rules: dict) -> dict | None:
         "date": dt.strftime("%Y-%m") if dt else None,
         "excerpt": excerpt,
         "raw_path": None,
-        "guess_topic": c.topic_for_domain(domain),
-        "guess_domain": domain,
-        "guess_subtype": classify_subtype(blob, domain, rules),
+        **guess_fields(blob, domain, rules),
         "source_id": feed.get("source_id"),
         "source_rank": feed.get("source_rank"),
         "source_topics": feed.get("topics", []),

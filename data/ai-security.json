@@ -3,19 +3,19 @@
   "topic": "ai-security",
   "name": "AI Security",
   "domains": [
-    "Harness & Agent Security",
-    "MCP & Tools",
-    "Prompt Injection",
-    "Memory & Context Poisoning",
-    "Model Supply Chain",
-    "LLM Red-Teaming",
-    "RAG / Data Poisoning",
-    "Information Disclosure"
+    "ais.agent-security",
+    "ais.prompt-injection",
+    "ais.mcp-tools",
+    "ais.data-poisoning",
+    "ais.model-supply-chain",
+    "ais.red-teaming",
+    "ais.guardrails",
+    "ais.ai-infra"
   ],
   "entries": [
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours",
       "source_url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
       "cluster": "K",
@@ -96,11 +96,12 @@
       "id": "an-ai-assisted-cyber-attack-frontier-ai-agents-c-68bf92a4a5",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "OpenAI's Training-Time Agents Discovered and Exploited a CGI Ambient-Authority Bug and an Egress-Filter Bypass to Collude via Public Wikis",
       "source_url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
       "cluster": "B",
@@ -172,11 +173,12 @@
       "id": "openai-s-training-time-agents-discovered-and-exp-55598df21c",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Prompt Injection",
+      "domain": "ais.prompt-injection",
       "title": "ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
       "cluster": "E",
@@ -251,11 +253,12 @@
       "id": "ascii-smuggling-crosses-over-from-ai-prompt-inje-4f527e04ae",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Prompt Injection"
     },
     {
       "topic": "ai-security",
-      "domain": "LLM Red-Teaming",
+      "domain": "ais.red-teaming",
       "title": "Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning",
       "source_url": "https://huggingface.co/blog/allenai/benchmirt",
       "cluster": "L",
@@ -329,11 +332,12 @@
       "id": "multidimensional-item-response-theory-auditing-r-50bbf04165",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming"
     },
     {
       "topic": "ai-security",
-      "domain": "Model Supply Chain",
+      "domain": "ais.model-supply-chain",
       "title": "Windows ML CLI's CORS Wildcard + trust_remote_code Combo Gives Any Website Localhost RCE",
       "source_url": "https://github.com/advisories/GHSA-96p9-rh4f-92cf",
       "cluster": "I",
@@ -395,11 +399,12 @@
       "id": "windows-ml-cli-s-cors-wildcard-trust-remote-code-5e967f4ce7",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model Supply Chain"
     },
     {
       "topic": "ai-security",
-      "domain": "Prompt Injection & Adversarial",
+      "domain": "ais.prompt-injection",
       "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
       "source_url": "https://arxiv.org/abs/2608.27092",
       "article_url": "https://arxiv.org/abs/2608.27092",
@@ -472,11 +477,12 @@
       "id": "the-framing-gap-reframed-indirect-prompt-injecti-59b640f5",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Prompt Injection & Adversarial"
     },
     {
       "topic": "ai-security",
-      "domain": "Agent Safety / Monitoring",
+      "domain": "ais.agent-security",
       "title": "Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents",
       "source_url": "https://arxiv.org/abs/2608.27141",
       "article_url": "https://arxiv.org/abs/2608.27141",
@@ -543,11 +549,12 @@
       "id": "safety-does-not-compose-non-decaying-loop-state--5b44621e",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 0.67
+      "grounding_score": 0.67,
+      "domain_label": "Agent Safety / Monitoring"
     },
     {
       "topic": "ai-security",
-      "domain": "LLM Red-Teaming",
+      "domain": "ais.red-teaming",
       "title": "Commercial LLMs Used as Live Troubleshooting Backends in Latin American Intrusion Campaigns — OpSec Failures Remain the Best Detection Signal",
       "source_url": "https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/",
       "cluster": null,
@@ -620,11 +627,12 @@
       "id": "commercial-llms-used-as-live-troubleshooting-bac-63baa0b688",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming"
     },
     {
       "topic": "ai-security",
-      "domain": "LLM Red-Teaming",
+      "domain": "ais.guardrails",
       "title": "SEAL: A Router-Independent 'Shared Expert' Anchor Cuts Jailbreak Success on Mixture-of-Experts Models by Up to 60%",
       "source_url": "http://arxiv.org/abs/2609.02293v1",
       "cluster": "H",
@@ -689,11 +697,12 @@
       "id": "seal-a-router-independent-shared-expert-anchor-c-5da5ac128e",
       "retrieved_at": "2026-09-09T06:16:10+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming"
     },
     {
       "topic": "ai-security",
-      "domain": "Agents / Information-Flow Control",
+      "domain": "ais.agent-security",
       "title": "SPA: Securing Persistent LLM Agents Across Queries with Plan-First Information-Flow Control",
       "source_url": "https://arxiv.org/abs/2608.27234",
       "article_url": "https://arxiv.org/abs/2608.27234",
@@ -760,11 +769,12 @@
       "id": "spa-securing-persistent-llm-agents-across-querie-9f1fa61f",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents / Information-Flow Control"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "n8n Agent Workflow Tool Bypassed Sub-Workflow Caller Restrictions, Letting Agents Read Data Their Owner Restricted",
       "source_url": "https://github.com/advisories/GHSA-7hgx-277f-7vmg",
       "cluster": "B",
@@ -818,11 +828,12 @@
       "id": "n8n-agent-workflow-tool-bypassed-sub-workflow-ca-715eaf01d4",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Prompt Injection",
+      "domain": "ais.prompt-injection",
       "title": "Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path",
       "source_url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
       "article_url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
@@ -903,11 +914,12 @@
       "tweet_url": null,
       "author": null,
       "verify_note": "All 4 lessons match the source text closely; minor nit that 'OS isolation and network egress control' is Rehberger's gloss on Anthropic's reply rather than a verbatim Anthropic quote — noted, doesn't change substance.",
-      "corroborating_sources": []
+      "corroborating_sources": [],
+      "domain_label": "Prompt Injection"
     },
     {
       "topic": "ai-security",
-      "domain": "Guardrails / Over-Refusal",
+      "domain": "ais.guardrails",
       "title": "The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions",
       "source_url": "https://arxiv.org/abs/2608.27009",
       "article_url": "https://arxiv.org/abs/2608.27009",
@@ -974,11 +986,12 @@
       "id": "the-guard-that-cried-wolf-scary-object-names-mak-0b3166c2",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Guardrails / Over-Refusal"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Gateway & Infrastructure",
+      "domain": "ais.ai-infra",
       "title": "When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
       "article_url": "https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/",
@@ -1052,11 +1065,12 @@
       "id": "when-ai-infrastructure-becomes-the-target-attack-4887e1ba",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 0.75
+      "grounding_score": 0.75,
+      "domain_label": "AI Gateway & Infrastructure"
     },
     {
       "topic": "ai-security",
-      "domain": "Coding Agents / Prompt-Space Defense",
+      "domain": "ais.guardrails",
       "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
       "source_url": "https://arxiv.org/abs/2608.25817",
       "article_url": "https://arxiv.org/abs/2608.25817",
@@ -1122,11 +1136,12 @@
       "id": "skillshield-prompt-space-security-skills-for-llm-1d3bcc76",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Coding Agents / Prompt-Space Defense"
     },
     {
       "topic": "ai-security",
-      "domain": "LLM Safety / Alignment Robustness",
+      "domain": "ais.guardrails",
       "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
       "source_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
       "article_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
@@ -1199,11 +1214,12 @@
       "id": "perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 0.75
+      "grounding_score": 0.75,
+      "domain_label": "LLM Safety / Alignment Robustness"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
       "source_url": "https://github.com/huggingface/funes",
       "cluster": "B",
@@ -1263,11 +1279,12 @@
       "id": "funes-a-cross-agent-memory-layer-that-preserves-0f0e02a9d1",
       "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Agent Governance / Runtime",
+      "domain": "ais.agent-security",
       "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
       "source_url": "https://arxiv.org/abs/2608.26696",
       "article_url": "https://arxiv.org/abs/2608.26696",
@@ -1340,11 +1357,12 @@
       "id": "five-primitives-for-governing-autonomous-ai-agen-1458bcb2",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agent Governance / Runtime"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "OWASP GenAI Security Project Unveils 2026 Top 10 for LLM Applications, New Agent Control Standard",
       "source_url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
       "cluster": "K",
@@ -1403,11 +1421,12 @@
       "id": "owasp-genai-security-project-unveils-2026-top-10-be98b1e553",
       "retrieved_at": "2026-09-09T06:16:05+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Model Supply Chain",
+      "domain": "ais.model-supply-chain",
       "title": "ChainDrop npm Worm Used Blockchain C2 and Targeted Claude Code / VS Code Configs, Stealing OIDC Tokens from Live CI Runner Memory",
       "source_url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
       "cluster": "D",
@@ -1477,12 +1496,13 @@
       "id": "chaindrop-npm-worm-used-blockchain-c2-and-target-72c0b2678c",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model Supply Chain"
     },
     {
       "id": "diffusion-llms-as-targets-and-adversaries-mechan-c5999481f3",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.prompt-injection",
       "cluster": "E",
       "related_claims": [
         "jailbreak-transfers-across-models",
@@ -1550,11 +1570,12 @@
       "verify_note": "All three excerpts verbatim from fetched abstract. Related_claims chosen for content overlap on jailbreak transfer and durability of the injection/jailbreak surface — both exist in claims.json.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "MCP Server Scanning & Defender Tooling",
+      "domain": "ais.mcp-tools",
       "cluster": "M",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -1625,11 +1646,12 @@
       "id": "cisco-ai-defense-mcp-scanner-multi-engine-scanne-686c007196",
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
-      "grounding_score": 0.67
+      "grounding_score": 0.67,
+      "domain_label": "MCP Server Scanning & Defender Tooling"
     },
     {
       "topic": "ai-security",
-      "domain": "MCP & Offensive Security Tooling",
+      "domain": "ais.mcp-tools",
       "cluster": "F",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -1705,12 +1727,13 @@
       "id": "burpmcp-ultra-150-tool-mcp-server-for-burp-with-057dc3ab1f",
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": true,
-      "grounding_score": 0.5
+      "grounding_score": 0.5,
+      "domain_label": "MCP & Offensive Security Tooling"
     },
     {
       "id": "snyk-agent-scan-f565968f99",
       "topic": "ai-security",
-      "domain": "MCP & Skill Scanning",
+      "domain": "ais.mcp-tools",
       "cluster": "M",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -1778,11 +1801,12 @@
       "verify_note": "All three excerpts verified verbatim against data/_raw/snyk-agent-scan-f565968f99.txt (lines 41, 48, 98-100). Related claims exist in claims.json.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "MCP & Skill Scanning"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "Omnigent: A Widely-Adopted (9,800+ Star) Meta-Harness Adds Policy Enforcement and Sandboxing Across Multiple Coding-Agent Backends",
       "source_url": "https://github.com/omnigent-ai/omnigent",
       "cluster": "B",
@@ -1841,11 +1865,12 @@
       "id": "omnigent-a-widely-adopted-9-800-star-meta-harnes-011142be2c",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.red-teaming",
       "cluster": "L",
       "related_claims": [
         "jailbreak-transfers-across-models",
@@ -1917,11 +1942,12 @@
       "id": "praetorian-inc-augustus-c9c523c4b2",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.guardrails",
       "cluster": "M",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -1993,11 +2019,12 @@
       "id": "affaan-m-agentshield-db00f0dd96",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.mcp-tools",
       "cluster": "G",
       "related_claims": [
         "llm-generated-code-hallucinates-package-names",
@@ -2067,11 +2094,12 @@
       "id": "sinewaveai-agent-security-scanner-mcp-23ccc1b0ce",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Model I/O & Reasoning Traces",
+      "domain": "ais.ai-infra",
       "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
       "source_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
       "article_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
@@ -2143,12 +2171,13 @@
       "id": "recovering-plaintext-from-encrypted-llm-reasonin-b9207da4",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": true,
-      "grounding_score": 0.75
+      "grounding_score": 0.75,
+      "domain_label": "Model I/O & Reasoning Traces"
     },
     {
       "id": "prismorsec-prismor-0bce7e4063",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.guardrails",
       "cluster": "M",
       "related_claims": [
         "prompt-injection-is-containment-not-prevention",
@@ -2225,12 +2254,13 @@
       "stars": 281,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.25
+      "grounding_score": 0.25,
+      "domain_label": "AI Security"
     },
     {
       "id": "fu351-doberman-core-e4ac92e630",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.guardrails",
       "cluster": "M",
       "related_claims": [
         "prompt-injection-is-containment-not-prevention",
@@ -2307,11 +2337,12 @@
       "stars": 123,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "MCP & Tools",
+      "domain": "ais.mcp-tools",
       "title": "MCP ZAP Server Hardens Its Own Attack Surface by Shipping a Distroless Runtime With No Shell or curl",
       "source_url": "https://github.com/dtkmn/mcp-zap-server",
       "cluster": "F",
@@ -2370,12 +2401,13 @@
       "id": "mcp-zap-server-hardens-its-own-attack-surface-by-cb3999c399",
       "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "MCP & Tools"
     },
     {
       "id": "grm-utility-aware-jailbreak-attacks-on-audio-llm-81be243778",
       "topic": "ai-security",
-      "domain": "Adversarial Attacks",
+      "domain": "ais.prompt-injection",
       "cluster": "E",
       "related_claims": [
         "jailbreak-transfers-across-models",
@@ -2443,12 +2475,13 @@
       "mitigations": "Do not rely on bandwidth-based or utility-drop-based anomaly detection alone since JSR is non-monotonic in bandwidth; add frequency-selective universal perturbations to the pre-release red-team set; run safety alignment on the audio representation directly (see CASA in this batch) rather than only on text; log input audio spectra for post-incident forensics and flag repeated Mel-band concentration patterns.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Adversarial Attacks"
     },
     {
       "id": "taxonomy-driven-analysis-of-open-source-ai-risk-099bd6b069",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.guardrails",
       "cluster": "M",
       "related_claims": [
         "prompt-injection-is-containment-not-prevention",
@@ -2516,11 +2549,12 @@
       "verify_note": "All three excerpts verbatim from abstract. Related_claims linked to containment-vs-prevention and model-scanner-sufficiency claims since the paper's central finding is that no combination of technical tools covers the full risk surface.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security Training & Red-Team Ranges",
+      "domain": "ais.red-teaming",
       "cluster": "L",
       "related_claims": [
         "prompt-injection-is-a-permanent-attack-surface",
@@ -2591,12 +2625,13 @@
       "id": "llmvault-a-webgoat-for-the-owasp-llm-top-10-with-85f8fc75fe",
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "AI Security Training & Red-Team Ranges"
     },
     {
       "id": "the-perils-of-agency-how-developers-perceive-pri-d412e54c11",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.agent-security",
       "cluster": "K",
       "related_claims": [
         "tool-count-degrades-agent-performance",
@@ -2669,11 +2704,12 @@
       "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-b018-2.txt. related_claims tool-count-degrades-agent-performance and prompt-injection-is-containment-not-prevention both exist in data/claims.json and connect to the paper's containment-only-through-capability-clamping finding.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.ai-infra",
       "cluster": "M",
       "related_claims": [
         "prompt-injection-is-containment-not-prevention",
@@ -2743,11 +2779,12 @@
       "id": "toby-bridges-api-relay-audit-75dc24523e",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "CC Safety Net Blocks Destructive Agent Commands by Parsing Command Intent, Not Pattern-Matching Strings",
       "source_url": "https://github.com/kenryu42/cc-safety-net",
       "cluster": "B",
@@ -2805,11 +2842,12 @@
       "id": "cc-safety-net-blocks-destructive-agent-commands-baea0f05ff",
       "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Red-Teaming Methodology (Agentic)",
+      "domain": "ais.red-teaming",
       "title": "The evolving role of the Red Team in the era of agentic security",
       "source_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
       "article_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
@@ -2881,11 +2919,12 @@
       "id": "the-evolving-role-of-the-red-team-in-the-era-of--39c3911b",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Red-Teaming Methodology (Agentic)"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "Injected Security Context, Not Model Choice, Is What Moves Frontier Models Past a 72-75% Plateau on Secure-and-Functional Vulnerability Fixes",
       "source_url": "https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/",
       "cluster": "G",
@@ -2952,11 +2991,12 @@
       "id": "injected-security-context-not-model-choice-is-wh-66e96b1a83",
       "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "LLM Red-Teaming",
+      "domain": "ais.red-teaming",
       "title": "Rule-Based Dataflow + LLM Reasoning Beats Pure-LLM Scanners 4-5x on Recall for Authorization Bugs",
       "source_url": "https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal",
       "cluster": "M",
@@ -3018,12 +3058,13 @@
       "id": "rule-based-dataflow-llm-reasoning-beats-pure-llm-ebc435961d",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming"
     },
     {
       "id": "casa-classification-augmented-with-safety-attent-54ea2638d1",
       "topic": "ai-security",
-      "domain": "Guardrails & Alignment",
+      "domain": "ais.guardrails",
       "cluster": "H",
       "related_claims": [
         "jailbreak-transfers-across-models",
@@ -3091,11 +3132,12 @@
       "mitigations": "Add an internal decoding-time safety token whose logits are scaled by attention between a fixed safety query prompt and the input (CASA), or otherwise run the alignment check on the SHARED multimodal representation rather than per-modality; require multimodal safety evals (MM-SafetyBench, JailbreakV-28k, adversarial audio) as a release gate for any model exposing image or audio inputs; keep a standard safety-prompt baseline as belt-and-suspenders since it provides most of the reported gain.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Guardrails & Alignment"
     },
     {
       "topic": "ai-security",
-      "domain": "Privacy-Preserving AI / Model Protection",
+      "domain": "ais.model-supply-chain",
       "title": "Making private AI practical with homomorphic encryption (HEIR)",
       "source_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
       "article_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
@@ -3167,11 +3209,12 @@
       "id": "making-private-ai-practical-with-homomorphic-enc-bdd3b443",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Privacy-Preserving AI / Model Protection"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.mcp-tools",
       "cluster": "F",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface"
@@ -3239,11 +3282,12 @@
       "id": "agentplugins-agent-plugins-spec-0acb73ba65",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.67
+      "grounding_score": 0.67,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "Snyk's Agent Baseline: Agent Governance Products Cover Different Outcomes, and the Right Control Sequence Depends on Deployment Pattern",
       "source_url": "https://snyk.io/blog/agent-baseline-35-controls-where-should-you-start/",
       "cluster": "K",
@@ -3301,12 +3345,13 @@
       "id": "snyk-s-agent-baseline-agent-governance-products-5e906f866d",
       "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "id": "quoting-openclaw-68fce38a1d",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.agent-security",
       "cluster": "K",
       "related_claims": [
         "prompt-injection-is-a-permanent-attack-surface"
@@ -3363,11 +3408,12 @@
       "verify_note": "Excerpts copy-checked against data/_raw/mrscan-b035-1.txt. Related claim 'prompt-injection-is-a-permanent-attack-surface' exists in claims.json — kept as a loose thematic link (agent blast radius); did not force a tighter match. Cluster K (threat modelling / blast-radius) is the clean fit; not J because no incident-response/forensics angle.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.ai-infra",
       "title": "OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners",
       "source_url": "https://github.com/onecli/onecli",
       "cluster": "I",
@@ -3430,11 +3476,12 @@
       "id": "onecli-per-employee-sandboxed-agents-behind-a-cr-a4c1f22efd",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "LLM Red-Teaming",
+      "domain": "ais.red-teaming",
       "title": "Despite Heavy Hype, the Unreleased 'Mythos' Model Ranks 15th of 17 on IDOR Recall; a $4.29/run Open-Weight Model Beats It on Both Axes",
       "source_url": "https://semgrep.dev/blog/2026/mythos-idor-benchmark",
       "cluster": "L",
@@ -3495,11 +3542,12 @@
       "id": "despite-heavy-hype-the-unreleased-mythos-model-r-05586a29f4",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming"
     },
     {
       "topic": "ai-security",
-      "domain": "Agentic AI / MCP",
+      "domain": "ais.red-teaming",
       "cluster": "L",
       "related_claims": [
         "agent-memory-is-a-persistent-attack-surface",
@@ -3568,11 +3616,12 @@
       "id": "foresightsafety-sage-a-fully-automated-scenario-99155f3827",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agentic AI / MCP"
     },
     {
       "topic": "ai-security",
-      "domain": "Prompt Injection",
+      "domain": "ais.prompt-injection",
       "title": "Litigant Hides Prompt Injection in Real Court Filing Telling AI Reviewers to Rule in Their Favor",
       "source_url": "https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/",
       "cluster": "E",
@@ -3636,11 +3685,12 @@
       "id": "litigant-hides-prompt-injection-in-real-court-fi-92f5bdb285",
       "retrieved_at": "2026-09-09T06:16:06+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Prompt Injection"
     },
     {
       "topic": "ai-security",
-      "domain": "Prompt Injection & Adversarial",
+      "domain": "ais.prompt-injection",
       "cluster": "E",
       "related_claims": [
         "jailbreak-transfers-across-models",
@@ -3709,11 +3759,12 @@
       "id": "minimal-local-causal-explanations-for-jailbreak-3f904cae12",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Prompt Injection & Adversarial"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
       "source_url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
       "cluster": "B",
@@ -3779,11 +3830,12 @@
       "id": "openclaw-2-0-s-usability-overhaul-ships-with-sec-a42e167a84",
       "retrieved_at": "2026-09-09T06:16:07+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.data-poisoning",
       "cluster": null,
       "related_claims": [],
       "title": "TOFD: Target-Oriented Feature Decoupling against Poisoning Attacks in Split Federated Learning",
@@ -3849,11 +3901,12 @@
       "id": "tofd-target-oriented-feature-decoupling-against-66c02af5ee",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.agent-security",
       "title": "Isolated AI Security Tools Each Report Clean While an Attacker Bridges an Untrusted Prompt to a Backend Execution Sink",
       "source_url": "https://snyk.io/blog/why-your-ai-application-is-exposed/",
       "cluster": "K",
@@ -3924,12 +3977,13 @@
       "id": "isolated-ai-security-tools-each-report-clean-whi-f60ec51699",
       "retrieved_at": "2026-09-09T06:16:10+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "id": "corrupting-attention-evasion-based-adversarial-a-84efe0a94f",
       "topic": "ai-security",
-      "domain": "Adversarial ML (Vision)",
+      "domain": "ais.red-teaming",
       "cluster": null,
       "related_claims": [],
       "title": "Corrupting Attention: Evasion-Based Adversarial Attacks on Encoder Attention in Detection Transformers",
@@ -3994,11 +4048,12 @@
       "verify_note": "Excerpts verbatim; unicode chars for L-infinity and approximation are preserved as-fetched. This is classical CV adversarial ML, not LLM prompt injection, so cluster E (prompt injection and adversarial) is not the right fit; no cluster covers CV adversarial evasion. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Adversarial ML (Vision)"
     },
     {
       "topic": "ai-security",
-      "domain": "Agentic AI / MCP",
+      "domain": "ais.agent-security",
       "cluster": "B",
       "related_claims": [
         "agent-tool-selection-can-be-steered-by-untrusted-context",
@@ -4067,11 +4122,12 @@
       "id": "trustworthy-agent-network-trust-in-agent-network-172bf256db",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agentic AI / MCP"
     },
     {
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.mcp-tools",
       "cluster": "F",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface"
@@ -4133,11 +4189,12 @@
       "id": "modelcontextprotocol-modelcontextprotocol-df31a46650",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.5
+      "grounding_score": 0.5,
+      "domain_label": "AI Security"
     },
     {
       "topic": "ai-security",
-      "domain": "Harness & Agent Security",
+      "domain": "ais.guardrails",
       "title": "Pydantic AI Ships Official First-Party Guardrails, Upstreaming a Community Library",
       "source_url": "https://github.com/pydantic/pydantic-ai-harness",
       "cluster": "M",
@@ -4189,12 +4246,13 @@
       "id": "pydantic-ai-ships-official-first-party-guardrail-ba86ae0a9f",
       "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "id": "anmolksachan-ai-ml-free-resources-for-security-a-c0ea160d38",
       "topic": "ai-security",
-      "domain": "AI Security",
+      "domain": "ais.prompt-injection",
       "cluster": null,
       "related_claims": [],
       "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
@@ -4253,7 +4311,8 @@
       "verify_note": "Excerpts copy-checked against data/_raw/anmolksachan-ai-ml-free-resources-for-security-a-c0ea160d38.txt (TOC and blurb). No related claims — this is a learning aggregator, not a claim-worthy finding. Cluster deliberately null; relevance low.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.5
+      "grounding_score": 0.5,
+      "domain_label": "AI Security"
     }
   ]
 }

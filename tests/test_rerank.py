@@ -41,8 +41,8 @@ def test_rerank_pool_sorts_by_composite(sandbox):
 
 def test_rerank_all_scores_pools(sandbox):
     for topic, domain in (
-        ("ai-research", "Agents & Harnesses"),
-        ("ai-security", "Prompt Injection"),
+        ("ai-research", "air.agents"),
+        ("ai-security", "ais.prompt-injection"),
     ):
         pool = c.load_pool(topic)
         pool["entries"] = [make_entry(topic=topic, domain=domain, source_url=f"https://a/{topic}")]
@@ -57,14 +57,14 @@ def test_rerank_prunes_stale_to_archive(sandbox):
     pool["entries"] = [
         make_entry(
             topic="ai-security",
-            domain="Prompt Injection",
+            domain="ais.prompt-injection",
             title="fresh",
             source_url="https://a/fresh",
             published="2099-01-01",
         ),
         make_entry(
             topic="ai-security",
-            domain="Prompt Injection",
+            domain="ais.prompt-injection",
             title="stale",
             source_url="https://a/stale",
             published="2000-01-01",
@@ -91,7 +91,7 @@ def test_rerank_keeps_old_news_and_editorial_out_of_the_archive(sandbox):
     """Findings age out; news is kept like claims (Rohan, 2026-10-19)."""
     sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
     (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
-    old = {"topic": "ai-security", "domain": "Prompt Injection", "published": "2000-01-01"}
+    old = {"topic": "ai-security", "domain": "ais.prompt-injection", "published": "2000-01-01"}
     pool = c.load_pool("ai-security")
     pool["entries"] = [
         make_entry(**old, title="old finding", source_url="https://a/f"),
@@ -114,7 +114,7 @@ def test_rerank_keeps_old_news_and_editorial_out_of_the_archive(sandbox):
 def test_rerank_restores_news_that_was_archived_before(sandbox):
     sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
     (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
-    old = {"topic": "ai-security", "domain": "Prompt Injection", "published": "2000-01-01"}
+    old = {"topic": "ai-security", "domain": "ais.prompt-injection", "published": "2000-01-01"}
     news = make_entry(**old, title="news", source_url="https://a/n", source_id="rss:news")
     finding = make_entry(**old, title="finding", source_url="https://a/f")
     other_topic = make_entry(

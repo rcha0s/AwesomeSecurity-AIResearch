@@ -5,8 +5,10 @@ merge_analysis.py — Fold the LLM's analysis output into the research pools.
 Reads data/analysis_out.json (a list of fully-analyzed v2 entries emitted by the
 /research-scan or /add-resource skill), validates each against the schema,
 de-duplicates against the existing pools (URL + fuzzy title), gates low-confidence
-findings to needs_review, routes each into data/security.json or data/ai.json,
-clears the merged candidates, and re-ranks. Idempotent: re-merging the same URL
+findings to needs_review, holds any entry whose `domain` is not a taxonomy ID
+(data/taxonomy.yaml; the free-text label moves to `tags`), routes each into its
+topic pool, records verified new-domain proposals, clears the merged candidates,
+and re-ranks. Idempotent: re-merging the same URL
 updates the entry in place rather than duplicating it.
 
 Usage:
@@ -20,6 +22,8 @@ import sys
 import common as c
 import rerank
 import sources_registry as sr
+import taxonomy as tx
+import taxonomy_proposals as tp
 import verify_citations as vc
 
 
@@ -76,6 +80,10 @@ def reconcile(existing: dict, new: dict) -> dict:
             }
         )
     return {**existing, "corroborating_sources": corr}
+
+
+def same_url(a: dict, b: dict) -> bool:
+    return c.normalize_url(a.get("source_url", "")) == c.normalize_url(b.get("source_url", ""))
 
 
 def match_index(entries: list[dict], entry: dict) -> int | None:
@@ -136,7 +144,7 @@ def merge(
         if problems:
             errors.append(f"{raw.get('title', '?')[:50]}: {'; '.join(problems)}")
             continue
-        entry = normalize_entry(raw, conf)
+        entry = tx.enforce(normalize_entry(raw, conf), tx.get())
         # Ground each cited excerpt against the source; unverified quotes → review.
         vc.ground_entry(entry)
         if conf.curation.get("require_grounding", True) and not vc.fully_grounded(entry):
@@ -156,6 +164,9 @@ def merge(
             newly_added.append(entry)
         else:
             entries[idx] = reconcile(entries[idx], entry)
+            if "domain_hold" not in entry and same_url(entries[idx], entry):
+                for stale in ("domain_hold", "domain_label"):  # re-analysis fixed it
+                    entries[idx].pop(stale, None)
         merged.append(entry)
         for k in ("source_url", "article_url"):
             if entry.get(k):
@@ -202,6 +213,9 @@ def main() -> int:
     print(f"Cleared {cleared} staged candidate(s).")
 
     update_source_hit_rate(newly_added)  # credit only NEW findings, never re-counts
+    proposals = tp.record(merged)
+    if proposals:
+        print(f"Recorded {len(proposals)} verified new-domain proposal(s).")
     rerank.rerank_all(conf)
     return 0
 

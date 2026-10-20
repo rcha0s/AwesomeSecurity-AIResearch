@@ -52,7 +52,7 @@ def make_entry(**over) -> dict:
     """A valid analyzed entry; override any field via kwargs."""
     entry = {
         "topic": "ai-research",
-        "domain": "Agents & Harnesses",
+        "domain": "air.agents",
         "subtype": "Orchestration",
         "title": "Compacting tool outputs cuts agent tokens",
         "source_url": "https://example.com/compact",

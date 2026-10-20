@@ -33,9 +33,10 @@ except ImportError:  # pragma: no cover - environment guard
 
 NVD_URL = "https://nvd.nist.gov/vuln/detail/"
 # KEV entries are product vulnerabilities; titles rarely hit the AI/web keyword
-# rules, so without a fallback nearly all would be dropped. (Legacy domain name;
-# c.topic_for_domain maps it to product-security.)
-KEV_DEFAULT_DOMAINS = ["Web Application Security"]
+# rules, so without a fallback nearly all would be dropped. The fallback is a
+# taxonomy ID: it routes to product-security like the old "Web Application
+# Security" label did, and guess_domain refines it by keyword (ps.mobile, ...).
+KEV_DEFAULT_DOMAINS = ["ps.appsec"]
 
 
 def fetch_json(url: str, **params) -> dict | list | None:
@@ -76,9 +77,7 @@ def _classify(cand: dict, blob: str, fallback: list[str], rules: dict) -> dict |
     domain = agg.classify_domain(blob, rules, fallback)
     if domain is None:
         return None
-    cand["guess_topic"] = c.topic_for_domain(domain)
-    cand["guess_domain"] = domain
-    cand["guess_subtype"] = agg.classify_subtype(blob, domain, rules)
+    cand.update(agg.guess_fields(blob, domain, rules))
     return cand
 
 

@@ -68,6 +68,8 @@ SETTINGS='{"permissions": {
     "Edit(.venv/**)", "Edit(tests/**)", "Edit(**/*.pth)", "Edit(*.toml)", "Edit(*.cfg)",
     "Edit(config.yaml)", "Edit(ISA.md)", "Edit(CLAUDE.md)", "Edit(AGENTS.md)",
     "Edit(data/_scan*)", "Edit(data/candidates.json)", "Edit(data/_raw/**)",
+    "Edit(data/taxonomy.yaml)", "Edit(data/taxonomy_migration.json)",
+    "Edit(data/taxonomy_proposals.json)",
     "Read(~/.ssh/**)", "Read(~/.claude/**)", "Read(~/.config/**)", "Read(~/.aws/**)",
     "Read(~/.gnupg/**)", "Read(.env)", "Read(.env.*)",
     "Bash(curl *)", "Bash(wget *)", "Bash(git *)", "Bash(gh *)",

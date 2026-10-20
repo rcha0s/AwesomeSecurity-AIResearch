@@ -36,7 +36,7 @@ def test_merge_flags_refuted(sandbox):
     conf = c.load_config()
     refuted = make_entry(
         topic="ai-security",
-        domain="MCP",
+        domain="ais.mcp-tools",
         source_url="https://a/r",
         source_rank=90,
         scores={"novelty": 90, "relevance": 90},

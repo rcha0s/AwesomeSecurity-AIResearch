@@ -3,17 +3,19 @@
   "topic": "ai-research",
   "name": "AI Research",
   "domains": [
-    "Agents & Harnesses",
-    "Prompting & Context",
-    "Tooling & Infrastructure",
-    "Evaluation",
-    "Architecture & Optimization",
-    "Models & Capabilities"
+    "air.agents",
+    "air.context",
+    "air.model-io",
+    "air.evals",
+    "air.tooling",
+    "air.alignment",
+    "air.models",
+    "air.ml-research"
   ],
   "entries": [
     {
       "topic": "ai-research",
-      "domain": "Agents / Harnesses",
+      "domain": "air.agents",
       "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
       "source_url": "https://arxiv.org/abs/2608.27299",
       "article_url": "https://arxiv.org/abs/2608.27299",
@@ -80,11 +82,12 @@
       "id": "when-context-gets-root-instruction-privilege-esc-6fe71d0c",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents / Harnesses"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "title": "How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation",
       "source_url": "https://arxiv.org/abs/2608.26237",
       "article_url": "https://arxiv.org/abs/2608.26237",
@@ -151,11 +154,12 @@
       "id": "how-do-llm-agents-actually-get-the-flag-trace-le-f8ab45fc",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "topic": "ai-research",
-      "domain": "Red-Teaming Methodology",
+      "domain": "air.evals",
       "title": "RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution",
       "source_url": "https://arxiv.org/abs/2608.27439",
       "article_url": "https://arxiv.org/abs/2608.27439",
@@ -222,12 +226,13 @@
       "id": "redevoagent-automatic-red-teaming-agent-with-exp-f0ca5c22",
       "retrieved_at": "2026-08-29T23:46:33+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Red-Teaming Methodology"
     },
     {
       "id": "ratel-ai-ratel-6453f7c140",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [
         "tool-count-degrades-agent-performance",
@@ -302,11 +307,12 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/ratel-ai-ratel-6453f7c140.txt (lines 30, 34-35, 141, 139). Related claims verified in data/claims.json.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [
         "score-evals-on-groundedness-not-headline-f1",
@@ -379,12 +385,13 @@
       "id": "ratchet-how-reliable-must-an-llm-judge-be-to-ret-e5fac85a1c",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 0.5
+      "grounding_score": 0.5,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "id": "birfy-agentdescent-c7050d6bf1",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [
         "few-distinct-tools-beat-many"
@@ -460,12 +467,13 @@
       "mitigations": null,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "id": "openforgerl-train-harness-native-agents-in-any-e-c80b08ad18",
       "topic": "ai-research",
-      "domain": "Agents & Orchestration",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [],
       "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
@@ -521,11 +529,12 @@
       "verify_note": "Both excerpts appear verbatim in data/_raw/mrscan-b012-2.txt. No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Orchestration"
     },
     {
       "topic": "ai-research",
-      "domain": "Chain-of-Thought & Monitoring",
+      "domain": "air.alignment",
       "cluster": "H",
       "related_claims": [
         "chain-of-thought-does-not-transfer-to-multi-turn"
@@ -596,12 +605,13 @@
       "id": "counterfactual-simulation-training-for-chain-of-cb6ca3804e",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Chain-of-Thought & Monitoring"
     },
     {
       "id": "fzkuji-openprogram-3fde2215b0",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [
         "few-distinct-tools-beat-many"
@@ -676,11 +686,12 @@
       "mitigations": null,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.75
+      "grounding_score": 0.75,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": "B",
       "related_claims": [
         "swe-bench-doesnt-generalize-to-production-tasks",
@@ -752,12 +763,13 @@
       "id": "llm-agent-performance-is-not-a-single-evaluation-1324dcbc19",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "can-ai-agents-conduct-open-ended-ai-research-ear-668cefd12e",
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": "B",
       "related_claims": [],
       "title": "Can AI agents conduct open-ended AI research? Early evidence from two case studies",
@@ -819,12 +831,13 @@
       "verify_note": "All three excerpts appear verbatim in data/_raw/mrscan-b012-3.txt. No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "in-context-examples-suppress-scientific-knowledg-bc6b6b464d",
       "topic": "ai-research",
-      "domain": "Retrieval & Context",
+      "domain": "air.context",
       "cluster": "A",
       "related_claims": [],
       "title": "In-Context Examples Suppress Scientific Knowledge Recall in LLMs",
@@ -885,12 +898,13 @@
       "verify_note": "All three excerpts appear verbatim in the abstract text at data/_raw/mrscan-b010-4.txt. No related_claims asserted; note this could feed a future claim on few-shot demos as strategy switches.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Retrieval & Context"
     },
     {
       "id": "zero-gap-is-not-restoration-stratified-per-quest-6adca2d9a7",
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": "L",
       "related_claims": [],
       "title": "Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination",
@@ -957,12 +971,13 @@
       "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-b007-3.txt line 10 (LaTeX \\textbf{} markup preserved). Cluster L chosen because interests.yaml cluster L scope includes 'Red-team eval sets that don't leak into training data' — benchmark contamination measurement is directly the same integrity concern, even though this paper is not framed as red-team methodology. related_claims empty: no existing claim in claims.json addresses benchmark contamination evaluation metrics.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "aeonfun-aeon-942d5256b2",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [],
       "title": "aeonfun/aeon",
@@ -1029,12 +1044,13 @@
       "mitigations": null,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "id": "universal-tool-calling-protocol-utcp-specificati-cc93cec492",
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.tooling",
       "cluster": "F",
       "related_claims": [
         "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -1105,12 +1121,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/universal-tool-calling-protocol-utcp-specificati-cc93cec492.txt (lines 10, 25, 26). Cluster F fit is real but content is a spec-repo README, so novelty scored modestly.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.33
+      "grounding_score": 0.33,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "intrygue-induction-aware-entropy-gating-for-reli-ec2d847655",
       "topic": "ai-research",
-      "domain": "Retrieval & Context",
+      "domain": "air.context",
       "cluster": "A",
       "related_claims": [],
       "title": "INTRYGUE: Induction-Aware Entropy Gating for Reliable RAG Uncertainty Estimation",
@@ -1165,12 +1182,13 @@
       "verify_note": "Both excerpts appear verbatim in the abstract text at data/_raw/mrscan-b010-1.txt. No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Retrieval & Context"
     },
     {
       "id": "kimi-k3-open-frontier-intelligence-aba26e8d5f",
       "topic": "ai-research",
-      "domain": "Frontier model release",
+      "domain": "air.models",
       "cluster": null,
       "related_claims": [],
       "title": "Kimi K3: Open Frontier Intelligence",
@@ -1234,12 +1252,13 @@
       "verify_note": "Excerpts verbatim from abstract. Filed as adjacent (frontier-model capability shift) per interests.yaml; cluster=null is the honest call.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Frontier model release"
     },
     {
       "id": "wanmol-goal-flow-aa3b161192",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [],
       "title": "wanmol/goal-flow",
@@ -1306,12 +1325,13 @@
       "mitigations": null,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "id": "coupling-planning-with-episodic-memory-in-llm-ag-c4a99886bf",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [
         "swe-bench-doesnt-generalize-to-production-tasks"
@@ -1375,12 +1395,13 @@
       "verify_note": "All excerpts verbatim from data/_raw/mrscan-b002-0.txt abstract. Cluster B (agent harness design) is defensible; relevance to security engineer briefing is modest — this is agent-quality research, not agent-security research.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "id": "dropping-the-anchor-statistical-context-summariz-411ec00428",
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.context",
       "cluster": "A",
       "related_claims": [],
       "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
@@ -1441,12 +1462,13 @@
       "verify_note": "Excerpts verbatim from raw fetched abstract. Cluster A (Retrieval and context) fits long-context/attention scope; but paper is purely performance-oriented, no security angle, hence low relevance.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "id": "every-cache-entry-earns-its-place-global-allocat-6c93c30949",
       "topic": "ai-research",
-      "domain": "Long-context & KV Cache",
+      "domain": "air.context",
       "cluster": "A",
       "related_claims": [],
       "title": "Every Cache Entry Earns Its Place: Global Allocation of Resolution and Coverage for KV Cache Compression",
@@ -1513,12 +1535,13 @@
       "verify_note": "Excerpts verbatim. Cluster A (Retrieval and context) covers long-context behavior and context compression, which fits KV-cache compression for LLMs. No security angle, so relevance stays modest.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Long-context & KV Cache"
     },
     {
       "id": "sstq-privacy-preserving-vector-quantization-via-6a4429ddb6",
       "topic": "ai-research",
-      "domain": "Privacy & Cryptography",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "SSTQ: Privacy-Preserving Vector Quantization via Subsampled Stochastic TurboQuant",
@@ -1585,12 +1608,13 @@
       "verify_note": "Excerpts verbatim from raw fetched abstract; MSE big-O notation preserved as displayed. Privacy-preserving ML is adjacent to but not squarely in any cluster (no direct fit for D, I, or M); cluster=null. Notable side-fact: paper openly credits an agentic system for the initial derivations, which is itself an interesting agent-in-the-loop research pattern.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Privacy & Cryptography"
     },
     {
       "id": "openai-openai-agents-python-7d8177a42b",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [
         "few-distinct-tools-beat-many"
@@ -1659,11 +1683,12 @@
       "mitigations": null,
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.33
+      "grounding_score": 0.33,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [
         "score-evals-on-groundedness-not-headline-f1",
@@ -1728,12 +1753,13 @@
       "id": "ask-e-an-environment-for-calibrated-question-gen-b4c8f75531",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "beyond-scaffold-splits-structural-frontier-evalu-96badeee40",
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [
         "score-evals-on-groundedness-not-headline-f1"
@@ -1800,12 +1826,13 @@
       "verify_note": "All three excerpts verified verbatim on line 10 of data/_raw/mrscan-b032-2.txt. Related claim 'score-evals-on-groundedness-not-headline-f1' exists in data/claims.json (evaluation-methodology cluster); linkage is thematic, not identical domain.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "equivariant-sparse-autoencoders-mechanistic-inte-0218963c00",
       "topic": "ai-research",
-      "domain": "Interpretability & Safety",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Equivariant Sparse Autoencoders: Mechanistic Interpretability of Neural Networks on Symmetric Data",
@@ -1866,12 +1893,13 @@
       "verify_note": "Excerpts verbatim from the arxiv abstract; scientific-data framing keeps this well outside AI-security scope, so cluster=null and low relevance.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Interpretability & Safety"
     },
     {
       "id": "multi-level-modeling-of-large-language-model-inf-311eb9fe30",
       "topic": "ai-research",
-      "domain": "LLM Inference Cost Modeling",
+      "domain": "air.model-io",
       "cluster": "C",
       "related_claims": [],
       "title": "Multi-Level Modeling of Large Language Model Inference Latency and Energy via Hybrid Analytical--Machine-Learning Predictors",
@@ -1926,12 +1954,13 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b000-3.txt (line 27). Cluster C chosen because cost-optimization for LLM serving falls under 'Model I/O and tokens' → 'Cost optimization' in interests.yaml. No related claim in claims.json is a close match — leaving related_claims empty.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Inference Cost Modeling"
     },
     {
       "id": "rethinking-evaluation-paradigms-in-ibp-based-cer-ad3d705017",
       "topic": "ai-research",
-      "domain": "AI Security",
+      "domain": "air.ml-research",
       "cluster": "L",
       "related_claims": [],
       "title": "Rethinking Evaluation Paradigms in IBP-based Certified Training",
@@ -1995,12 +2024,13 @@
       "verify_note": "All three excerpts verified verbatim against data/_raw/mrscan-b018-1.txt. related_claims empty because no existing claim in data/claims.json covers certified-training evaluation methodology.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Security"
     },
     {
       "id": "sageo-arena-a-realistic-environment-for-evaluati-b93fd76f27",
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [],
       "title": "SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization",
@@ -2062,12 +2092,13 @@
       "mitigations": "Sanitize schema markup before feeding into ranker/reader; treat retrieved document text as untrusted and enforce instruction/data separation; measure visibility manipulation as part of red-team eval.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "topology-aware-data-movement-for-disaggregated-g-48da426445",
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "Topology-Aware Data Movement for Disaggregated GPU Inference",
@@ -2135,12 +2166,13 @@
       "verify_note": "Excerpts verbatim. Serving-infra paper with no security angle; cluster=null. Note the projected-not-measured caveat: authors admit they lack hardware to fully evaluate.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "autonomy-of-heads-data-free-sparse-attention-fro-92acc48e5f",
       "topic": "ai-research",
-      "domain": "Inference Optimization",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [
         "long-context-does-not-eliminate-retrieval-need"
@@ -2203,11 +2235,12 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b002-2.txt; note the raw uses LaTeX-escaped percent signs which I preserved. Cluster=null: pure inference-perf research, not security.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Inference Optimization"
     },
     {
       "topic": "ai-research",
-      "domain": "Retrieval & Context",
+      "domain": "air.context",
       "cluster": "A",
       "related_claims": [
         "retrieval-quality-dominates-generation-quality-in-rag",
@@ -2273,12 +2306,13 @@
       "id": "coinrag-contextualized-information-nugget-kv-cac-f1e498c44d",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Retrieval & Context"
     },
     {
       "id": "financeharness-autonomous-financial-deep-researc-acbd97cc17",
       "topic": "ai-research",
-      "domain": "Agent Harnesses",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [],
       "title": "FinanceHarness: Autonomous Financial Deep Research Framework",
@@ -2339,12 +2373,13 @@
       "verify_note": "Excerpts verbatim. Cluster B (Agents and harnesses) fits because it's a harness-design + agent-eval paper, though the domain (finance) is outside security. Relevance modest.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agent Harnesses"
     },
     {
       "id": "multi-agent-forensic-reasoning-for-generalizable-e74226424e",
       "topic": "ai-research",
-      "domain": "Deepfake Forensics",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Multi-Agent Forensic Reasoning for Generalizable Deepfake Video Detection",
@@ -2405,12 +2440,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b002-3.txt. Cluster=null: content-forensics does not map cleanly to the 13-cluster taxonomy; not agent security or LLM-app security. Relevance is soft — pattern of judge+specialists could inform detector design elsewhere.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Deepfake Forensics"
     },
     {
       "id": "pre-inference-routing-for-cost-efficient-documen-be36e961df",
       "topic": "ai-research",
-      "domain": "Model Routing",
+      "domain": "air.model-io",
       "cluster": "C",
       "related_claims": [],
       "title": "Pre-Inference Routing for Cost-Efficient Document Field Extraction",
@@ -2480,11 +2516,12 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Fits Cluster C (cost optimization / model routing) even though the setting is CV/OCR rather than LLM; the routing-preconditions finding generalizes.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model Routing"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [
         "score-evals-on-groundedness-not-headline-f1"
@@ -2556,12 +2593,13 @@
       "id": "same-answer-different-confidence-protocol-sensit-a926f4b1db",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "same-attention-different-truths-put-logit-lens-o-620604a265",
       "topic": "ai-research",
-      "domain": "Vision-Language Model Hallucination",
+      "domain": "air.alignment",
       "cluster": null,
       "related_claims": [],
       "title": "Same Attention, Different Truths: Put Logit-Lens over Visual Attention to Detect and Mitigate LVLM Object Hallucination",
@@ -2623,12 +2661,13 @@
       "verify_note": "All three excerpts verified verbatim against data/_raw/mrscan-b007-0.txt line 8. Cluster null: LVLM object hallucination is a CV/interpretability topic, outside the agent-harness/AI-security taxonomy in interests.yaml.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Vision-Language Model Hallucination"
     },
     {
       "id": "semantic-adapter-routing-with-fine-tuning-task-e-6db8d81ee2",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Semantic Adapter Routing with Fine-Tuning Task Embeddings",
@@ -2683,11 +2722,12 @@
       "verify_note": "Both excerpts appear verbatim in data/_raw/mrscan-b012-0.txt. No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Efficiency & Deployment",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "Intelligence per Watt: Measuring Intelligence Efficiency of Local AI",
@@ -2752,12 +2792,13 @@
       "id": "intelligence-per-watt-measuring-intelligence-eff-b03359b661",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Efficiency & Deployment"
     },
     {
       "id": "self-distillation-enables-continual-learning-608253bf65",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Self-Distillation Enables Continual Learning",
@@ -2819,12 +2860,13 @@
       "verify_note": "Excerpts verbatim from raw file; no security framing in the paper so cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "calibrating-weat-against-anisotropy-zca-whitenin-64be0b687b",
       "topic": "ai-research",
-      "domain": "AI Fairness / Bias Measurement",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Calibrating WEAT Against Anisotropy: ZCA Whitening as a Geometric Pre-Processing Step for Embedding Association Tests",
@@ -2886,12 +2928,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b002-4.txt (percent signs preserved as in source). Cluster=null: fairness-measurement methodology is outside the 13 security clusters; not agent security or LLM-app security.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 0.67
+      "grounding_score": 0.67,
+      "domain_label": "AI Fairness / Bias Measurement"
     },
     {
       "id": "livemem-maintaining-memory-state-continuity-in-l-329bc8051b",
       "topic": "ai-research",
-      "domain": "AI Research",
+      "domain": "air.context",
       "cluster": null,
       "related_claims": [],
       "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
@@ -2955,11 +2998,12 @@
       "verify_note": "Excerpts copy-checked against data/_raw/mrscan-b035-0.txt (abstract). No related claims asserted, so no claim-ID check needed. Deliberately kept cluster null and relevance low — this is an ML mechanism paper, not an AI-security finding.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Research"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [],
       "title": "Provable Training Data Identification for Large Language Models",
@@ -3018,12 +3062,13 @@
       "id": "provable-training-data-identification-for-large-09140f69c1",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "sabre-scalable-and-automated-benchmarking-of-vlm-0dc566e3f6",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.evals",
       "cluster": "L",
       "related_claims": [
         "swe-bench-doesnt-generalize-to-production-tasks"
@@ -3080,12 +3125,13 @@
       "verify_note": "Both excerpts verbatim from abstract. Cluster L (red-teaming methodology) is defensible because the paper is fundamentally an adversarial-eval curation pipeline; relevance kept modest because it targets VLM capability, not security-specific behaviors.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "conditioning-protein-generation-via-hopfield-pat-333ad47da8",
       "topic": "ai-research",
-      "domain": "Applied ML / Bio",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Conditioning Protein Generation via Hopfield Pattern Multiplicity",
@@ -3146,11 +3192,12 @@
       "verify_note": "Excerpts verbatim from raw file; cluster=null, no direct AI-security relevance.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Applied ML / Bio"
     },
     {
       "topic": "ai-research",
-      "domain": "Multimodal Reasoning / Debiasing",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Debias in Text, Believe Your Eyes: Text-Anchored Cross-Modal Transfer for Visual Counter-Commonsense Reasoning",
@@ -3206,11 +3253,12 @@
       "id": "debias-in-text-believe-your-eyes-text-anchored-c-a94ad724e3",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Multimodal Reasoning / Debiasing"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Inference-Time Scaling of Diffusion Language Models via Trajectory Refinement",
@@ -3276,11 +3324,12 @@
       "id": "inference-time-scaling-of-diffusion-language-mod-ae4ad928fd",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Interpretability & Probing",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Measuring Concept Content in Text from LLM Activations: ESG Evidence from Concept Vectors and Linear Probes",
@@ -3343,12 +3392,13 @@
       "id": "measuring-concept-content-in-text-from-llm-activ-3fcd91ee09",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Interpretability & Probing"
     },
     {
       "id": "predictive-multi-tier-memory-management-for-kv-c-b991a890cf",
       "topic": "ai-research",
-      "domain": "Deployment & Infrastructure",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [
         "long-context-does-not-eliminate-retrieval-need"
@@ -3413,11 +3463,12 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b016-4.txt. Included one related_claim tenuously ('long-context-does-not-eliminate-retrieval-need') because cache-tiering informs the cost side of long-context vs retrieval; cluster=null since this is a systems paper, not a security or agent-harness paper.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Deployment & Infrastructure"
     },
     {
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Toward a Causal Data Management Ecosystem for Decision Making and Agentic AI",
@@ -3474,11 +3525,12 @@
       "id": "toward-a-causal-data-management-ecosystem-for-de-ab82c8dab0",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Trajectory-Relative Hindsight Distillation for Agentic Reinforcement Learning",
@@ -3544,11 +3596,12 @@
       "id": "trajectory-relative-hindsight-distillation-for-a-dcc0110081",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Scientific Computing",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "In Situ Training of Implicit Neural Compressors for Scientific Simulations via Sketch-Based Regularization",
@@ -3607,11 +3660,12 @@
       "id": "in-situ-training-of-implicit-neural-compressors-7b91ff55ed",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Scientific Computing"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Newton-Schulz Retraction-Based Inference Enables Hidden Quantum Markov Models to Outperform Classical HMMs",
@@ -3670,12 +3724,13 @@
       "id": "newton-schulz-retraction-based-inference-enables-839047ed57",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "renderformer-scalable-and-physics-informed-feed-a8487f89fb",
       "topic": "ai-research",
-      "domain": "Neural rendering",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "RenderFormer++: Scalable and Physics-Informed Feed-Forward Neural Rendering",
@@ -3734,11 +3789,12 @@
       "mitigations": "N/A",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Neural rendering"
     },
     {
       "topic": "ai-research",
-      "domain": "Inference Efficiency",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Retrofitting Linear Attention into Diffusion Language Models",
@@ -3803,12 +3859,13 @@
       "id": "retrofitting-linear-attention-into-diffusion-lan-ed981ad53d",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Inference Efficiency"
     },
     {
       "id": "kref-training-free-retrieval-for-long-term-time-55d7bcf953",
       "topic": "ai-research",
-      "domain": "Time-Series Forecasting",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "KReF: Training-Free Retrieval for Long-Term Time-Series Forecasting and Predictive Uncertainty",
@@ -3863,12 +3920,13 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b000-4.txt (line 10) — the 'querylocal' spelling in the abstract is preserved as-is. Cluster null because non-LLM retrieval falls outside cluster A's LLM-RAG scope.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Time-Series Forecasting"
     },
     {
       "id": "large-causal-models-for-temporal-causal-discover-88b3c6c2b3",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Large Causal Models for Temporal Causal Discovery",
@@ -3929,12 +3987,13 @@
       "verify_note": "Excerpts verbatim from raw file; no adversary or defender content, cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "automoose-an-agentic-ai-for-autonomous-phase-fie-0b3ec09c26",
       "topic": "ai-research",
-      "domain": "Agents & Orchestration",
+      "domain": "air.agents",
       "cluster": "B",
       "related_claims": [],
       "title": "AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation",
@@ -3989,11 +4048,12 @@
       "verify_note": "Both excerpts appear verbatim in the abstract text at data/_raw/mrscan-b010-0.txt. No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Orchestration"
     },
     {
       "topic": "ai-research",
-      "domain": "Post-training & Diversity",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "CreativeInstruct: Scalably Teaching LLMs to Balance Quality, Creativity, and Diversity",
@@ -4056,11 +4116,12 @@
       "id": "creativeinstruct-scalably-teaching-llms-to-balan-b647c24a88",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Post-training & Diversity"
     },
     {
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights",
@@ -4123,11 +4184,12 @@
       "id": "cubicquant-parametric-non-uniform-codebooks-for-a796b0db2b",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "topic": "ai-research",
-      "domain": "LLM-Derived Knowledge Bases",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "GPTKB 2.0: Browsing, Querying, and Auditing a Disambiguated LLM-Derived Knowledge Base",
@@ -4184,12 +4246,13 @@
       "id": "gptkb-2-0-browsing-querying-and-auditing-a-disam-25f48c0e45",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM-Derived Knowledge Bases"
     },
     {
       "id": "ifclora-topology-aware-rank-allocation-for-param-7d7be9555d",
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "IFCLoRA: Topology-Aware Rank Allocation for Parameter-Efficient Fine-Tuning",
@@ -4250,12 +4313,13 @@
       "verify_note": "Excerpts verbatim. Pure PEFT/fine-tuning research, no security or supply-chain angle relevant to any cluster; cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "id": "kimi-k2-5-visual-agentic-intelligence-24d111123e",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.models",
       "cluster": null,
       "related_claims": [],
       "title": "Kimi K2.5: Visual Agentic Intelligence",
@@ -4316,11 +4380,12 @@
       "mitigations": "Enforce per-sub-agent least-privilege tool scoping, deterministic policy checks on inter-agent messages, and audit logs on Agent Swarm dispatch.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Alignment & Safety",
+      "domain": "air.alignment",
       "cluster": null,
       "related_claims": [],
       "title": "Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs",
@@ -4383,12 +4448,13 @@
       "id": "let-s-unlearn-stereotypes-before-decision-making-a7539353fb",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Alignment & Safety"
     },
     {
       "id": "mathematical-principles-and-experimental-discove-a77ef46647",
       "topic": "ai-research",
-      "domain": "Interpretability & Explainability",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Mathematical Principles and Experimental Discoveries of the Emergence of Symbolic Patterns in Artificial Neural Networks",
@@ -4449,12 +4515,13 @@
       "verify_note": "Excerpts verbatim. Theoretical XAI paper, tangential to security (interpretability could inform audit tooling), but no direct fit for any cluster; cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Interpretability & Explainability"
     },
     {
       "id": "multi-legal-bench-evaluating-llms-on-legal-reaso-89ef2a449a",
       "topic": "ai-research",
-      "domain": "Evals & Benchmarks",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [],
       "title": "Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions",
@@ -4522,12 +4589,13 @@
       "mitigations": "Not applicable.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evals & Benchmarks"
     },
     {
       "id": "recovering-lesion-parameters-from-aphasic-pictur-984b19491d",
       "topic": "ai-research",
-      "domain": "Interpretability",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Recovering Lesion Parameters from Aphasic Picture Naming Error Profiles in Large Language Models",
@@ -4588,12 +4656,13 @@
       "verify_note": "Excerpts verbatim. Interpretability paper adjacent to model transparency, but no direct fit to any listed security cluster. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Interpretability"
     },
     {
       "id": "rora-role-oriented-regional-allocation-for-visua-2d3406542e",
       "topic": "ai-research",
-      "domain": "Model I/O & Tokens",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs",
@@ -4658,12 +4727,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b004-3.txt. cluster=null despite MLLM/token relevance: the paper is a benign inference-efficiency result with no attacker model or defender workflow; cluster C's scope is serialization/structured decoding/model routing, not visual-token pruning.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model I/O & Tokens"
     },
     {
       "id": "scalable-long-horizon-planning-with-staggered-up-4a8f8134dd",
       "topic": "ai-research",
-      "domain": "Multi-Agent Path Finding",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Scalable Long-Horizon Planning with Staggered Updates for Lifelong MAPF",
@@ -4718,11 +4788,12 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b000-2.txt (line 10). Cluster is null because LMAPF/robotic fleet planning falls outside the LLM-agent-harness scope of clusters A–M and inside the adjacent bucket in interests.yaml.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Multi-Agent Path Finding"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Solver-Guided Reasoning for Mixed-Equilibrium Strategies",
@@ -4779,12 +4850,13 @@
       "id": "solver-guided-reasoning-for-mixed-equilibrium-st-34d9dc9a13",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "stochastic-autoregressive-learning-2e0017f726",
       "topic": "ai-research",
-      "domain": "Learning Theory",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Stochastic Autoregressive Learning",
@@ -4845,11 +4917,12 @@
       "verify_note": "Excerpts verbatim (LaTeX spacing artifacts as in fetched text preserved; ε substituted for the ε in the raw). Pure learning-theory paper; guess_topic 'ai-security' not supported. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Learning Theory"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Sub-Quadratic Bisimulation Metrics via Approximate Nearest Neighbors: Coverage-Augmented Guarantees and Computable Two-Sided Certificates",
@@ -4906,11 +4979,12 @@
       "id": "sub-quadratic-bisimulation-metrics-via-approxima-437b048d2c",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Distributed / Federated Optimization",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Theoretical Foundations of Communication-Efficient, Robust, and Practical Distributed and Federated Optimization",
@@ -4971,12 +5045,13 @@
       "id": "theoretical-foundations-of-communication-efficie-025e89b386",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Distributed / Federated Optimization"
     },
     {
       "id": "jdevalk-specification-website-635ff5d4da",
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "jdevalk/specification.website",
@@ -5034,11 +5109,12 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/jdevalk-specification-website-635ff5d4da.txt (lines 41, 97). No AI-security cluster fit; adjacent-at-best. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 0.5
+      "grounding_score": 0.5,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "topic": "ai-research",
-      "domain": "Speech & Multilingual LLMs",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "MetaSICL: Globalizing Auditory LLMs for Underserved Speakers and Languages via Meta Speech In-Context Learning",
@@ -5097,12 +5173,13 @@
       "id": "metasicl-globalizing-auditory-llms-for-underserv-42cee167a9",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Speech & Multilingual LLMs"
     },
     {
       "id": "an-ai4ai-framework-for-visual-token-pruning-23f90a59fd",
       "topic": "ai-research",
-      "domain": "Model Efficiency",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "An AI4AI Framework for Visual Token Pruning",
@@ -5164,12 +5241,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Efficiency paper; the initial guess_topic 'ai-security' is not supported by the abstract. cluster=null, relevance low.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model Efficiency"
     },
     {
       "id": "capacity-confounds-and-coverage-guarantees-in-ad-bde3ab408e",
       "topic": "ai-research",
-      "domain": "Federated Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Capacity Confounds and Coverage Guarantees in Adaptive Sub-model Federated Learning",
@@ -5239,12 +5317,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Federated-learning methodology paper; touches privacy-adjacent territory only via the FL setting. The batch's guess_subtype 'RAG / Data Poisoning' does not match the paper's actual content. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Federated Learning"
     },
     {
       "id": "cascade-exploiting-slo-aware-latency-budget-for-6b780c1291",
       "topic": "ai-research",
-      "domain": "LLM Serving Infrastructure",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "Cascade: Exploiting SLO-Aware latency budget for fair and high goodput LLM inference serving",
@@ -5309,12 +5388,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract; note '2.4x' appears without a space in the original text and is preserved. Serving-perf paper, no direct security cluster; cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Serving Infrastructure"
     },
     {
       "id": "loca-forward-only-llm-tuning-after-one-shot-cali-db266136a2",
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "LoCA: Forward-Only LLM Tuning after One-Shot Calibration with Local Credit Assignment",
@@ -5371,12 +5451,13 @@
       "verify_note": "Excerpts copied verbatim from the arXiv abstract text at data/_raw/mrscan-b013-0.txt. Low relevance: standard ML efficiency paper with no security angle. related_claims empty because no existing claim in data/claims.json covers PEFT/LoRA.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "id": "optimization-as-a-dynamical-system-generative-sc-631507e97a",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Optimization as a Dynamical System: Generative Schedules from Latent ODEs",
@@ -5438,12 +5519,13 @@
       "verify_note": "Excerpts pulled verbatim from arxiv abstract in raw file; related_claims left empty because no existing claim in claims.json overlaps with LR-schedule meta-learning.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "probing-visual-concepts-in-lightweight-vision-la-aafd6279dd",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Probing Visual Concepts in Lightweight Vision-Language Models for Automated Driving",
@@ -5501,12 +5583,13 @@
       "verify_note": "Excerpts verbatim from arXiv abstract at data/_raw/mrscan-b015-3.txt. Guess_topic 'ai-security' and guess_subtype 'RAG / Data Poisoning' are both wrong; this is VLM interpretability. Cluster null.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "diffusion-mf-approximate-structured-diffusion-fo-ce50cad999",
       "topic": "ai-research",
-      "domain": "Structured decoding",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Diffusion-MF: Approximate Structured Diffusion for Sequence Labelling",
@@ -5565,12 +5648,13 @@
       "mitigations": "N/A",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Structured decoding"
     },
     {
       "id": "futurebridge-token-selection-beyond-local-prefer-69706d468c",
       "topic": "ai-research",
-      "domain": "Model I/O & Decoding",
+      "domain": "air.model-io",
       "cluster": null,
       "related_claims": [],
       "title": "FutureBridge: Token Selection Beyond Local Preference in Collaborative Decoding",
@@ -5625,12 +5709,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b002-1.txt. Set cluster=null: no security-engineer angle; the paper is pure decoding-quality work.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model I/O & Decoding"
     },
     {
       "id": "geo-spatial-concept-probing-of-large-language-mo-a824b8cfa6",
       "topic": "ai-research",
-      "domain": "LLM Concept Probing",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Geo-Spatial Concept Probing of Large Language Models: Abstraction, Compositionality, and Grounding",
@@ -5685,12 +5770,13 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b007-4.txt line 8. Cluster null: LLM concept probing is outside the AI-security taxonomy in interests.yaml. Topic corrected to ai-research; the source's guess_topic 'ai-security' was a mislabel.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Concept Probing"
     },
     {
       "id": "odeworld-a-continuous-predictive-architecture-vi-92d45c986b",
       "topic": "ai-research",
-      "domain": "Machine Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "ODEWorld: A Continuous Predictive Architecture via Physical-Time Flow",
@@ -5749,11 +5835,12 @@
       "verify_note": "Both excerpts verified verbatim on line 10 of data/_raw/mrscan-b032-4.txt.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Machine Learning"
     },
     {
       "topic": "ai-research",
-      "domain": "Guardrails & Alignment",
+      "domain": "air.alignment",
       "cluster": "H",
       "related_claims": [],
       "title": "Quoting Claude Opus 5 system prompt",
@@ -5810,11 +5897,12 @@
       "id": "quoting-claude-opus-5-system-prompt-9f063d24a9",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Guardrails & Alignment"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Robust inference using density-powered Stein operators",
@@ -5871,12 +5959,13 @@
       "id": "robust-inference-using-density-powered-stein-ope-2d478cb2b7",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "senworld-a-digital-twin-simulation-for-generatin-6dc67d31fc",
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [],
       "title": "SenWorld: A Digital-Twin Simulation for Generating Context-Rich Evaluation Data",
@@ -5931,12 +6020,13 @@
       "verify_note": "Both excerpts appear verbatim in data/_raw/mrscan-b012-1.txt. No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "a-physics-inspired-classical-digital-twin-of-cor-4c75b89721",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "A Physics-Inspired Classical Digital Twin of Cortical Dynamics: A Band-Stratified Metriplectic Port-Hamiltonian Neural Network Learned from Brain-Computer-Interface EEG",
@@ -5997,12 +6087,13 @@
       "verify_note": "All three excerpts verified verbatim against data/_raw/mrscan-b018-5.txt, including the artifact '1/fslope' from the source (missing space is in the original). cluster=null; BCI/neuroscience paper with no AI-security surface. threat/conditions/mitigations omitted since topic is not ai-security.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "dirac-frenkel-dynamics-with-inertia-for-nonlinea-feedbd3fdf",
       "topic": "ai-research",
-      "domain": "Numerical methods for training",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Dirac-Frenkel dynamics with inertia for nonlinearly parametrized solutions of evolution problems",
@@ -6061,11 +6152,12 @@
       "mitigations": "N/A",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Numerical methods for training"
     },
     {
       "topic": "ai-research",
-      "domain": "Software Engineering",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Evaluating Useful Surrogate Models for Configuration Tuning Beyond Accuracy: A Fitness Landscape Analysis Perspective",
@@ -6124,12 +6216,13 @@
       "id": "evaluating-useful-surrogate-models-for-configura-927cf28b84",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Software Engineering"
     },
     {
       "id": "h2al-hyperbolic-hierarchy-aware-aggregative-lear-21de3a9ba0",
       "topic": "ai-research",
-      "domain": "Medical Image Segmentation",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "H2AL: Hyperbolic Hierarchy-aware Aggregative Learning for Registration-based Few-shot Medical Image Segmentation",
@@ -6184,12 +6277,13 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b007-2.txt line 10. Cluster null: medical imaging is outside the interests.yaml taxonomy.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Medical Image Segmentation"
     },
     {
       "id": "how-molecular-generative-models-organize-molecul-404294ae31",
       "topic": "ai-research",
-      "domain": "Generative Models",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "How Molecular Generative Models Organize Molecular Identity",
@@ -6250,12 +6344,13 @@
       "verify_note": "Excerpts verbatim. Domain-specific (molecular generative models) paper; no cluster fit, adjacent to none of the listed security clusters. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Generative Models"
     },
     {
       "id": "optimized-certainty-equivalent-risk-minimization-3eeea27e73",
       "topic": "ai-research",
-      "domain": "Statistical ML",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Optimized Certainty Equivalent Risk Minimization Using Samples: Algorithms, Convergence Rates, and Applications",
@@ -6313,12 +6408,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b029-4.txt line 10.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Statistical ML"
     },
     {
       "id": "playing-games-with-my-heart-an-evaluation-of-ai-d431833e62",
       "topic": "ai-research",
-      "domain": "AI Sociotechnical Harms",
+      "domain": "air.alignment",
       "cluster": null,
       "related_claims": [],
       "title": "Playing Games with My Heart: An Evaluation of AI Companion Apps",
@@ -6379,11 +6475,12 @@
       "mitigations": "Not applicable.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "AI Sociotechnical Harms"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Symbolic Graphics Programming with Large Language Models",
@@ -6440,11 +6537,12 @@
       "id": "symbolic-graphics-programming-with-large-languag-c997774979",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "The Sparsity Whisperer",
@@ -6501,11 +6599,12 @@
       "id": "the-sparsity-whisperer-a02bc77eb0",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Scientific Machine Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction",
@@ -6565,12 +6664,13 @@
       "id": "crystalgrpo-target-aligned-and-coverage-preservi-820c12ce6c",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Scientific Machine Learning"
     },
     {
       "id": "seeking-sota-time-series-forecasting-must-adopt-55c0860509",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains",
@@ -6627,12 +6727,13 @@
       "verify_note": "Excerpts verbatim from arXiv abstract at data/_raw/mrscan-b015-4.txt. Off-topic for security research; the transferable lesson is about evaluation hygiene, hence non-zero but low relevance.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "aftab-a-comprehensive-benchmark-of-cnn-encoders-737d7b8270",
       "topic": "ai-research",
-      "domain": "Deep Reinforcement Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Aftab: A Comprehensive Benchmark of CNN Encoders and Advanced Value Functions in Parallelized Q-Networks",
@@ -6687,11 +6788,12 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b007-1.txt line 8. Cluster null: value-based deep RL on Atari falls outside the LLM-agent/AI-security taxonomy in interests.yaml.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Deep Reinforcement Learning"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation & Signal Design",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Boundary Density Likelihood for Direct Event-Time Supervision",
@@ -6754,12 +6856,13 @@
       "id": "boundary-density-likelihood-for-direct-event-tim-511ff583eb",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation & Signal Design"
     },
     {
       "id": "conformal-fusion-under-missing-modalities-44fb69d2df",
       "topic": "ai-research",
-      "domain": "Uncertainty & Calibration",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Conformal Fusion Under Missing Modalities",
@@ -6820,12 +6923,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Pure ML methodology paper on multimodal uncertainty; no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Uncertainty & Calibration"
     },
     {
       "id": "icehorizon-a-dataset-for-horizon-detection-in-ic-5925dae61c",
       "topic": "ai-research",
-      "domain": "Computer Vision",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "IceHorizon: A Dataset for Horizon Detection in Ice-Covered Maritime Environments and Comparative Evaluation of Detection Methods",
@@ -6883,12 +6987,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b029-2.txt line 25.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Computer Vision"
     },
     {
       "id": "judge-a-book-by-its-cover-investigating-multi-mo-d8bb80ba0e",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Judge a Book by its Cover: Investigating Multi-Modal LLMs for Multi-Page Handwritten Document Transcription",
@@ -6946,12 +7051,13 @@
       "verify_note": "Excerpts verbatim from arXiv abstract in data/_raw/mrscan-b013-3.txt. Original guess_topic 'ai-security' is incorrect; this is an applied MLLM/HTR paper.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "mitigating-gradient-pathology-in-pinns-through-a-a869e67f06",
       "topic": "ai-research",
-      "domain": "Machine Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Mitigating Gradient Pathology in PINNs through Aligned Constraint",
@@ -7010,12 +7116,13 @@
       "verify_note": "Excerpts verified verbatim from data/_raw/mrscan-b032-1.txt line 27; ICML 2026 acceptance also on line 29.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Machine Learning"
     },
     {
       "id": "multiview-bench-a-diagnostic-benchmark-for-world-1783f2ec8e",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "MultiView-Bench: A Diagnostic Benchmark for World-Centric Multi-View Integration in VLMs",
@@ -7076,12 +7183,13 @@
       "verify_note": "All three excerpts verified verbatim against data/_raw/mrscan-b018-4.txt. cluster=null; pure capabilities benchmark with no security angle. threat/conditions/mitigations omitted since topic is not ai-security.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "online-conformal-prediction-beyond-feedback-b82b4dfcf1",
       "topic": "ai-research",
-      "domain": "Uncertainty Quantification",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Online Conformal Prediction Beyond Feedback",
@@ -7145,12 +7253,13 @@
       "verify_note": "Excerpts verbatim (Unicode math symbols preserved as-is from raw). Uncertainty-quantification theory paper; safety-critical framing is only motivational. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Uncertainty Quantification"
     },
     {
       "id": "pulse-agentic-investigation-with-passive-sensing-5d865bfd4b",
       "topic": "ai-research",
-      "domain": "Agent Applications",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "PULSE: Agentic Investigation with Passive Sensing for Proactive Affective Intervention in Cancer Survivorship",
@@ -7211,12 +7320,13 @@
       "mitigations": "Not applicable to the paper as written.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agent Applications"
     },
     {
       "id": "understanding-differentiable-embeddings-through-e07f422dfb",
       "topic": "ai-research",
-      "domain": "Interpretability & Diagnostics",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Understanding Differentiable Embeddings Through Differential and Integral Geometry",
@@ -7277,12 +7387,13 @@
       "verify_note": "Excerpts verbatim from raw fetched abstract. Pure ML methodology paper on interpretability of nonlinear DR embeddings; no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Interpretability & Diagnostics"
     },
     {
       "id": "vector-space-of-cycles-ea2a581438",
       "topic": "ai-research",
-      "domain": "Statistical ML methods",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Vector Space of Cycles",
@@ -7341,11 +7452,12 @@
       "mitigations": "N/A",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Statistical ML methods"
     },
     {
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": null,
       "related_claims": [
         "typosquatting-in-package-registries-is-an-active-threat"
@@ -7403,11 +7515,12 @@
       "id": "aristoteleo-pantheonos-9c11374bbd",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "topic": "ai-research",
-      "domain": "Applications",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "ArchEGraph: A Large-Scale Graph Dataset for Geometry-Topology-Physics Aligned Building Energy Modeling",
@@ -7464,12 +7577,13 @@
       "id": "archegraph-a-large-scale-graph-dataset-for-geome-178a38da9e",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Applications"
     },
     {
       "id": "micopro-end-to-end-mixed-precision-hw-sw-co-desi-2d3b94cc3f",
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "MiCoPro: End-to-End Mixed Precision HW/SW Co-design with HW-aware Proxy Model",
@@ -7530,11 +7644,12 @@
       "verify_note": "Excerpts verbatim (LaTeX-escaped percent signs preserved as in source). Pure performance/co-design paper; no backdoor-through-quantization angle that would place it in cluster D. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Optimization-based Online Conformal Prediction for Multi-step Forecasting",
@@ -7599,12 +7714,13 @@
       "id": "optimization-based-online-conformal-prediction-f-3b63f0ae28",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "harnessing-the-synergy-between-llm-agents-and-kn-0441f636c6",
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Harnessing the Synergy between LLM Agents and Knowledge Graphs for Urban Socioeconomic Prediction",
@@ -7661,11 +7777,12 @@
       "verify_note": "Excerpts verbatim from arXiv abstract in data/_raw/mrscan-b013-2.txt. Guess_topic tagged 'ai-security' but the paper is not security research; overriding cluster to null and topic to ai-research.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "topic": "ai-research",
-      "domain": "Architecture & Optimization",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
@@ -7722,11 +7839,12 @@
       "id": "chime-a-case-for-efficient-long-context-attentio-be92f92177",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Architecture & Optimization"
     },
     {
       "topic": "ai-research",
-      "domain": "Deployment infra",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "Dual-Node NVIDIA DGX Spark over Tailscale: A Remote-Access Testbed for Distributed LLM Training and Cyber-Threat-Intelligence Fine-Tuning",
@@ -7791,11 +7909,12 @@
       "id": "dual-node-nvidia-dgx-spark-over-tailscale-a-remo-da4ff6c418",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Deployment infra"
     },
     {
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "GitHub Models is now retired",
@@ -7852,12 +7971,13 @@
       "id": "github-models-is-now-retired-5d98092084",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "loca-spatially-aware-low-rank-convolutional-adap-10ed3fe6e3",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "LoCA: Spatially-Aware Low-Rank Convolutional Adaptation of Vision Foundation Models",
@@ -7912,11 +8032,12 @@
       "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b018-3.txt. cluster=null and low relevance because the paper is a pure ML capabilities contribution with no security surface. threat/conditions/mitigations omitted since topic is not ai-security.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Reinforcement Learning Theory",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Robust Average-Reward Markov Decision Processes: Minimax-Optimal Learning via Plug-in Reductions",
@@ -7976,11 +8097,12 @@
       "id": "robust-average-reward-markov-decision-processes-5fd72e33b5",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Reinforcement Learning Theory"
     },
     {
       "topic": "ai-research",
-      "domain": "Applied NLP",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension",
@@ -8037,12 +8159,13 @@
       "id": "scale-scientific-concept-aggregation-via-llms-an-ad48798a5f",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Applied NLP"
     },
     {
       "id": "signverse-2m-a-two-million-clip-pose-native-univ-6329902c0a",
       "topic": "ai-research",
-      "domain": "Datasets & Benchmarks",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages",
@@ -8103,12 +8226,13 @@
       "mitigations": "Not applicable.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Datasets & Benchmarks"
     },
     {
       "id": "tensor-network-kernel-machines-a-jax-framework-f-18046ea8e3",
       "topic": "ai-research",
-      "domain": "ML Frameworks",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Tensor Network Kernel Machines: A JAX Framework for Machine Learning and Nonlinear System Identification",
@@ -8166,12 +8290,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b029-3.txt line 27.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "ML Frameworks"
     },
     {
       "id": "beyond-post-hoc-temperature-scaling-bilevel-opti-5868efe689",
       "topic": "ai-research",
-      "domain": "LLM Calibration",
+      "domain": "air.alignment",
       "cluster": null,
       "related_claims": [],
       "title": "Beyond Post-Hoc Temperature Scaling: Bilevel Optimization for LLM Calibration",
@@ -8235,12 +8360,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Pure LLM-methodology paper; calibration is safety-adjacent but no direct security cluster fits. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "LLM Calibration"
     },
     {
       "id": "certified-feedforward-tracking-for-unknown-nonli-193db09e99",
       "topic": "ai-research",
-      "domain": "Control & Certified ML",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Certified Feedforward Tracking for Unknown Nonlinear Systems via Invertible Neural Networks",
@@ -8295,11 +8421,12 @@
       "verify_note": "Excerpts verbatim. Control-theory paper; no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Control & Certified ML"
     },
     {
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Residual Algebra for Representation-Preserving Learning",
@@ -8355,12 +8482,13 @@
       "id": "residual-algebra-for-representation-preserving-l-3a6a54e59d",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 0.0
+      "grounding_score": 0.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "human-centered-explainable-ai-for-tinyml-edge-de-2f335cb071",
       "topic": "ai-research",
-      "domain": "Edge AI & Explainability",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Human-Centered Explainable AI for TinyML Edge Devices: A Pareto-Based Selection Framework with LLM-Guided Design",
@@ -8425,12 +8553,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b004-4.txt. cluster=null: the LLM-bounded-mapper pattern is adjacent to cluster E containment thinking but the paper is a clinical XAI design study with no threat model or attacker analysis; related_claims empty.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Edge AI & Explainability"
     },
     {
       "id": "mac-a-conversion-rate-prediction-benchmark-featu-1f75f4b087",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "MAC: A Conversion Rate Prediction Benchmark Featuring Labels Under Multiple Attribution Mechanisms",
@@ -8489,12 +8618,13 @@
       "verify_note": "Excerpts verbatim from arXiv abstract at data/_raw/mrscan-b015-2.txt. No security relevance; cluster null, relevance 2.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "phoenix-fine-tuned-slm-powered-autonomous-satell-116489784f",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "PHOENIX: Fine-Tuned SLM-Powered Autonomous Satellite Lifetime Extension via Predictive Self-Healing and Multi-Agent AI Recovery",
@@ -8559,11 +8689,12 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b005-1.txt. cluster=null: while the ground side is nominally multi-agent (cluster B), the paper is a preliminary application-domain report with no security analysis and no transferable eval methodology, so it does not earn full claim treatment.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Certified Interpolation Oversampling: Per-Instance Safety Guarantees for Imbalanced Learning",
@@ -8628,12 +8759,13 @@
       "id": "certified-interpolation-oversampling-per-instanc-8665338fce",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "dependency-parsing-across-the-resource-spectrum-1e8cb6fe0f",
       "topic": "ai-research",
-      "domain": "Model Architectures",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Dependency Parsing Across the Resource Spectrum: Evaluating Architectures on High and Low-Resource Languages",
@@ -8694,12 +8826,13 @@
       "mitigations": "Not applicable.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Model Architectures"
     },
     {
       "id": "fast-and-accurate-an-adaptive-vla-inference-fram-b40efd6a13",
       "topic": "ai-research",
-      "domain": "Vision-Language-Action / Robotics",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Fast and Accurate: An Adaptive VLA Inference Framework through Environment-aware Model Selection",
@@ -8760,11 +8893,12 @@
       "verify_note": "Excerpts verbatim. Robotics VLA paper; no security angle, but tangential design analogy to dual-LLM/agent-harness routing. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Vision-Language-Action / Robotics"
     },
     {
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "FedDOSE: Federated Learning Framework Decomposing Site Effects for Modeling Brain Dynamic Functional Connectivity",
@@ -8821,12 +8955,13 @@
       "id": "feddose-federated-learning-framework-decomposing-88a1090a6b",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "maupiti-on-device-prototype-based-learning-on-a-f5040c7645",
       "topic": "ai-research",
-      "domain": "Edge & On-Device ML",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "MAUPITI: On-Device Prototype-Based Learning on a Smart Infrared Sensor",
@@ -8887,12 +9022,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract (unicode approx-equal preserved). Embedded ML letter with privacy-preserving framing but no security-research content. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Edge & On-Device ML"
     },
     {
       "id": "medley-bench-benchmarking-behavioural-metacognit-4727207953",
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.evals",
       "cluster": null,
       "related_claims": [],
       "title": "MEDLEY-BENCH: Benchmarking Behavioural Metacognition and Belief Revision Under Social Pressure in Large Language Models",
@@ -8947,11 +9083,12 @@
       "verify_note": "Both excerpts appear verbatim in the abstract text at data/_raw/mrscan-b010-2.txt. Cluster set to null: metacognition/sycophancy is adjacent to Cluster J (evaluation) but not squarely inside the security-relevant taxonomy.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Evaluation"
     },
     {
       "topic": "ai-research",
-      "domain": "Computer Vision / Image Editing",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "MaskFlow: Precise, Consistent and Seamless Regional Image Editing",
@@ -9007,12 +9144,13 @@
       "id": "maskflow-precise-consistent-and-seamless-regiona-c04a37d8a7",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Computer Vision / Image Editing"
     },
     {
       "id": "neurai-vn-benchmark-standardized-machine-learnin-2c06fe67e8",
       "topic": "ai-research",
-      "domain": "Machine Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification",
@@ -9071,12 +9209,13 @@
       "verify_note": "Excerpts verified verbatim from data/_raw/mrscan-b032-3.txt line 27.",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Machine Learning"
     },
     {
       "id": "optimal-neural-network-approximation-via-empiric-ed9c5ec81f",
       "topic": "ai-research",
-      "domain": "Numerical Analysis",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Optimal Neural Network Approximation via Empirical Least Squares with Deterministic Samples",
@@ -9134,12 +9273,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b029-0.txt lines 29 and 35.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Numerical Analysis"
     },
     {
       "id": "pace-primitive-aware-code-evolution-for-automate-3423b56af5",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "PACE: Primitive-Aware Code Evolution for Automated Algorithm Design",
@@ -9193,12 +9333,13 @@
       "verify_note": "Both excerpts verbatim from abstract. Not security research; cluster null and low relevance.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "representation-handoffs-for-openarm-based-labora-8b4e848718",
       "topic": "ai-research",
-      "domain": "Robotics & Embodied AI",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Representation Handoffs for OpenArm-Based Laboratory Mobile Manipulation",
@@ -9263,11 +9404,12 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b005-2.txt. cluster=null because the safety framing is reliability/integration, not adversarial; noted in prior_art that the skill-registration pattern is adjacent to cluster E defender taxonomies but the paper doesn't earn claim treatment on its own.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Robotics & Embodied AI"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "When GNNs Fail: Quantifying and Overcoming Temporal Correlation Volatility in Time Series",
@@ -9327,12 +9469,13 @@
       "id": "when-gnns-fail-quantifying-and-overcoming-tempor-7f48094fd9",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "hyperbolic-graph-embedders-for-link-prediction-a-36beef5156",
       "topic": "ai-research",
-      "domain": "Graph Embeddings & Benchmarking",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Hyperbolic Graph Embedders for Link Prediction and Topology Reconstruction",
@@ -9396,12 +9539,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Pure ML/network-science benchmarking paper; no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Graph Embeddings & Benchmarking"
     },
     {
       "id": "improving-attributed-long-form-question-answerin-8657c884c2",
       "topic": "ai-research",
-      "domain": "Prompting & Context",
+      "domain": "air.context",
       "cluster": null,
       "related_claims": [],
       "title": "Improving Attributed Long-form Question Answering with Intent Awareness",
@@ -9463,12 +9607,13 @@
       "verify_note": "Excerpts checked verbatim against the arXiv abstract in data/_raw/mrscan-b016-0.txt. No related_claims asserted; the piece is generation-quality, not security.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Prompting & Context"
     },
     {
       "id": "synthetic-lidar-data-generation-and-deterministi-0e0c975814",
       "topic": "ai-research",
-      "domain": "Edge Deep Learning & Sensor Simulation",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Synthetic LiDAR Data Generation and Deterministic Downsampling for Point Cloud Classification on the Edge",
@@ -9532,12 +9677,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Embedded/robotics ML paper; no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Edge Deep Learning & Sensor Simulation"
     },
     {
       "id": "towards-a-theoretical-understanding-of-two-tower-066882634f",
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Towards a Theoretical Understanding of Two Tower Recommendation Models",
@@ -9594,12 +9740,13 @@
       "verify_note": "Excerpts verbatim from arXiv abstract in data/_raw/mrscan-b013-1.txt. Off-topic for security; cluster set to null.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "weak-adversarial-neural-pushforward-method-for-b-554beb286a",
       "topic": "ai-research",
-      "domain": "Numerical Analysis",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Weak Adversarial Neural Pushforward Method for Boltzmann Equation",
@@ -9657,12 +9804,13 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b029-1.txt line 27.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Numerical Analysis"
     },
     {
       "id": "a-primer-on-optimal-transport-for-causal-inferen-14f7a76c33",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "A primer on optimal transport for causal inference with observational data",
@@ -9719,12 +9867,13 @@
       "verify_note": "Excerpts verbatim from arXiv abstract in data/_raw/mrscan-b013-4.txt. Off-topic for security; cluster null, low relevance.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "scalable-high-fidelity-macromolecular-docking-fo-ca9a18a104",
       "topic": "ai-research",
-      "domain": "HPC & Scientific Computing",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Scalable High-Fidelity Macromolecular Docking for GPU-Accelerated Supercomputers",
@@ -9783,12 +9932,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b004-1.txt. cluster=null and near-zero relevance are correct: this is HPC/structural biology, not AI-security.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "HPC & Scientific Computing"
     },
     {
       "id": "cascading-through-the-hierarchy-regularizer-indu-ebe1130a00",
       "topic": "ai-research",
-      "domain": "Deep Learning Theory",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Cascading Through the Hierarchy: Regularizer-Induced Feature Detection as Phase Transitions in Deep Linear Neural Networks",
@@ -9846,12 +9996,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Theoretical, no security cluster fits; cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Deep Learning Theory"
     },
     {
       "id": "machine-learning-based-inter-crystal-scatter-rec-f2b41abf04",
       "topic": "ai-research",
-      "domain": "Medical Imaging",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Machine Learning-Based Inter-Crystal Scatter Recovery for Ultra-High Resolution PET Imaging",
@@ -9915,12 +10066,13 @@
       "verify_note": "Excerpts verbatim from fetched abstract; the third excerpt is truncated at the sentence break in the source markdown where a link fragment corrupts the raw text, so it stops at the last clean phrase. Medical physics paper; no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:49+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Medical Imaging"
     },
     {
       "id": "alignment-has-a-fantasia-problem-4cb1fd4d57",
       "topic": "ai-research",
-      "domain": "Evaluation",
+      "domain": "air.alignment",
       "cluster": null,
       "related_claims": [],
       "title": "Alignment has a Fantasia Problem",
@@ -9975,12 +10127,13 @@
       "verify_note": "Both excerpts appear verbatim in the abstract text at data/_raw/mrscan-b010-3.txt. Cluster null: position paper, no security-relevant mechanism.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Evaluation"
     },
     {
       "id": "an-agentic-hybrid-top-down-and-bottom-up-approac-4a5782a2cc",
       "topic": "ai-research",
-      "domain": "Agents & Harnesses",
+      "domain": "air.agents",
       "cluster": null,
       "related_claims": [],
       "title": "An Agentic Hybrid Top-Down and Bottom-Up Approach to Knowledge Graph Generation",
@@ -10045,12 +10198,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b004-0.txt. cluster=null: the reflexion pipeline is adjacent to cluster B agents & harnesses but the paper has no attacker model or transferable defender lesson. related_claims empty because no existing claim covers KG-grounded agent design.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Agents & Harnesses"
     },
     {
       "id": "embedded-variational-neural-stochastic-different-b31d2c6164",
       "topic": "ai-research",
-      "domain": "Machine Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Embedded Variational Neural Stochastic Differential Equations for Learning Heterogeneous Dynamics",
@@ -10109,11 +10263,12 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b032-0.txt lines 10; no related claims asserted.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Machine Learning"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Is SwiGLU's Open Positive Tail Necessary? Evidence from Closed-Tail Gating with MemGLU",
@@ -10177,11 +10332,12 @@
       "id": "is-swiglu-s-open-positive-tail-necessary-evidenc-4ab90fd4a2",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Tooling & Infrastructure",
+      "domain": "air.tooling",
       "cluster": null,
       "related_claims": [],
       "title": "SQLite compressed text-history prototypes",
@@ -10244,12 +10400,13 @@
       "id": "sqlite-compressed-text-history-prototypes-017f0e5dc5",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Tooling & Infrastructure"
     },
     {
       "id": "a-foundation-model-approach-to-pediatric-headach-7296766460",
       "topic": "ai-research",
-      "domain": "Medical ML",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "A foundation-model approach to pediatric headache classification from rs-fMRI",
@@ -10310,11 +10467,12 @@
       "verify_note": "Excerpts verbatim from fetched abstract. Medical-ML paper; guess_topic 'ai-security' not supported. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Medical ML"
     },
     {
       "topic": "ai-research",
-      "domain": "Time-Series / Small-Data ML",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction",
@@ -10371,12 +10529,13 @@
       "id": "beyond-foundation-models-dimension-aware-neural-9f78a17f1d",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Time-Series / Small-Data ML"
     },
     {
       "id": "beyond-isolation-unlocking-reinforcement-learnin-0f87ff6eca",
       "topic": "ai-research",
-      "domain": "Machine Learning Research",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Beyond Isolation: Unlocking Reinforcement Learning Component Synergy for Sample-Efficient Continuous Control",
@@ -10440,12 +10599,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b004-2.txt. cluster=null and low relevance correct: RL algorithmic methods paper with no security angle.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Machine Learning Research"
     },
     {
       "id": "cluster-attention-for-graph-machine-learning-eacd2644dc",
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Cluster Attention for Graph Machine Learning",
@@ -10500,11 +10660,12 @@
       "verify_note": "Excerpts verbatim from data/_raw/mrscan-b016-2.txt. No security relevance; cluster deliberately null, related_claims empty.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Models & Capabilities"
     },
     {
       "topic": "ai-research",
-      "domain": "Agentic AI",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Robot guide with multi-agent control and automatic scenario generation with LLM",
@@ -10561,12 +10722,13 @@
       "id": "robot-guide-with-multi-agent-control-and-automat-a093a70424",
       "retrieved_at": "2026-08-14T20:08:51+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Agentic AI"
     },
     {
       "id": "uav3dcrop-benchmarking-3d-reconstruction-in-repe-146dd5296d",
       "topic": "ai-research",
-      "domain": "3D Reconstruction Benchmarks",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "UAV3DCrop: Benchmarking 3D Reconstruction in Repeated Multi-Angle UAV Crop Surveys",
@@ -10627,12 +10789,13 @@
       "verify_note": "Excerpts verbatim. Agricultural CV benchmark, no security angle. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "3D Reconstruction Benchmarks"
     },
     {
       "id": "beyond-co-movement-locality-by-exposures-enables-43f0aca32b",
       "topic": "ai-research",
-      "domain": "Quantitative Finance / Graph Learning",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Beyond Co-Movement: Locality by Exposures Enables a Joint Factor-Graph Framework for Portfolio Diversification",
@@ -10690,12 +10853,13 @@
       "verify_note": "Excerpts verbatim. Off-domain finance paper; the RSS-guessed 'Mobile Security' label is wrong. cluster=null.",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Quantitative Finance / Graph Learning"
     },
     {
       "id": "homebot-a-personal-ai-agent-for-conversational-h-f87fc4e5a3",
       "topic": "ai-research",
-      "domain": "Agents & Orchestration",
+      "domain": "air.agents",
       "cluster": null,
       "related_claims": [],
       "title": "Homebot: A Personal AI Agent for Conversational Home Assistance and Automation",
@@ -10750,11 +10914,12 @@
       "verify_note": "Both excerpts appear verbatim in data/_raw/mrscan-b012-4.txt (including the LaTeX \\texttt{Homebot} formatting). No related_claims asserted.",
       "retrieved_at": "2026-08-14T20:08:48+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Agents & Orchestration"
     },
     {
       "topic": "ai-research",
-      "domain": "Models & Capabilities",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Wasserstein Policy Gradient for Entropy-Regularized Linear-Quadratic Control",
@@ -10813,12 +10978,13 @@
       "id": "wasserstein-policy-gradient-for-entropy-regulari-a2916b2458",
       "retrieved_at": "2026-08-14T20:08:50+00:00",
       "needs_review": true,
-      "grounding_score": 0.5
+      "grounding_score": 0.5,
+      "domain_label": "Models & Capabilities"
     },
     {
       "id": "lsead-a-privacy-preserving-llm-based-speech-anal-a35f971c1e",
       "topic": "ai-research",
-      "domain": "Applications & Case Studies",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "LSEAD: A Privacy-Preserving LLM-Based Speech Analysis Framework for Early Alzheimer's Disease Screening",
@@ -10876,12 +11042,13 @@
       "verify_note": "Both excerpts are verbatim from the fetched abstract; cluster null and low relevance because the paper is a healthcare application with only surface-level privacy framing.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Applications & Case Studies"
     },
     {
       "id": "momba-network-modernization-improves-multi-objec-eef7791288",
       "topic": "ai-research",
-      "domain": "Machine Learning Research",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Momba: Network Modernization Improves Multi-Objective Reinforcement Learning",
@@ -10939,11 +11106,12 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b005-4.txt. cluster=null correct; MORL is neither a cluster nor an adjacent topic in interests.yaml.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Machine Learning Research"
     },
     {
       "topic": "ai-research",
-      "domain": "Applied NLP",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Reading Copom's Tone: A Weighted LLM Framework for Hawkish-Dovish Sentiment, Forward Guidance, and Uncertainty",
@@ -11000,12 +11168,13 @@
       "id": "reading-copom-s-tone-a-weighted-llm-framework-fo-80c5571aa6",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Applied NLP"
     },
     {
       "id": "international-transfer-of-stochastic-cortical-se-ca9b13b44d",
       "topic": "ai-research",
-      "domain": "Machine Learning Research",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "International Transfer of Stochastic Cortical Self-Reconstruction",
@@ -11063,12 +11232,13 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b005-0.txt. cluster=null and low relevance are correct given interests.yaml scope (medical imaging is neither in a cluster nor in adjacent). No related_claims linked.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Machine Learning Research"
     },
     {
       "id": "representation-driven-endoscopic-visual-embeddin-972aa000fe",
       "topic": "ai-research",
-      "domain": "Machine Learning Research",
+      "domain": "air.ml-research",
       "cluster": null,
       "related_claims": [],
       "title": "Representation-driven Endoscopic Visual Embedding Alignment for Latent Generation",
@@ -11126,7 +11296,8 @@
       "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b005-3.txt. cluster=null and low scores correct: medical imaging is outside the 13-cluster taxonomy.",
       "retrieved_at": "2026-08-14T20:08:47+00:00",
       "needs_review": true,
-      "grounding_score": null
+      "grounding_score": null,
+      "domain_label": "Machine Learning Research"
     }
   ]
 }

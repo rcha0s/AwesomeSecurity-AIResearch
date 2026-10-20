@@ -71,3 +71,11 @@ budget:
                               # null = it can't run either
   session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this
                               # (spend can overshoot the cap, so leave headroom)
+
+# Taxonomy proposals (ISA ISC-18). A verified `proposed_domain` that recurs on
+# at least `proposal_min_count` entries within `proposal_window_days` opens (or
+# comments on) a GitHub issue with this label. Vocabulary: data/taxonomy.yaml.
+taxonomy:
+  proposal_window_days: 30
+  proposal_min_count: 3
+  issue_label: taxonomy

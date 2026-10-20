@@ -10,20 +10,20 @@ tokens on obvious noise:
                                or a near-duplicate of a pool/archive entry.
                                Never gets a full-text fetch. Never sees an LLM.
 
-    candidates.routed.json     High-confidence cluster hint from the keyword
-                               table. Downstream analysis skips cluster/topic
-                               classification and only writes lessons+excerpts.
+    candidates.routed.json     High-confidence domain hint (a taxonomy ID)
+                               from the keyword table. The analyzer starts
+                               from that domain instead of classifying cold.
 
-    candidates.filtered.json   Ambiguous. Cluster hint was weak/tied, or the
+    candidates.filtered.json   Ambiguous. Domain hint was weak/tied, or the
                                item lives in the tier-2 news lane. The LLM
                                does the full classification pass here.
 
 Input, output, and behavior are pure JSON I/O. No network. No LLM. Operates
 only on data the ingestors already stored.
 
-The keyword source of truth is `data/cluster_keywords.yaml`. The reasoning
-source of truth stays `data/interests.yaml` — the LLM still owns the call
-for anything that lands in `candidates.filtered.json`.
+Keywords and deny terms come from `data/taxonomy.yaml` (via taxonomy.py), the
+same vocabulary the analyzer picks domain IDs from; the LLM still owns the
+call for anything that lands in `candidates.filtered.json`.
 
 Usage:
     python scripts/prefilter.py             # write the three buckets
@@ -38,9 +38,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import common as c
-
-def _cluster_keywords_file() -> Path:
-    return c.DATA_DIR / "cluster_keywords.yaml"
+import taxonomy as tx
 
 
 def _dropped_file() -> Path:
@@ -54,27 +52,25 @@ def _routed_file() -> Path:
 def _filtered_file() -> Path:
     return c.DATA_DIR / "candidates.filtered.json"
 
-# A cluster claim is authoritative only if its keyword-hit count is >= this
+
+# A domain hint is authoritative only if its keyword-hit count is >= this
 # AND beats the runner-up by at least this margin. Ties or weak wins fall
 # through to `candidates.filtered.json` for the LLM to adjudicate.
-CLUSTER_MIN_HITS = 2
-CLUSTER_MIN_MARGIN = 1
+DOMAIN_MIN_HITS = 2
+DOMAIN_MIN_MARGIN = 1
 
 
 @dataclass(frozen=True)
-class ClusterTable:
-    keywords: dict[str, tuple[str, ...]]
+class KeywordTable:
+    keywords: dict[str, tuple[str, ...]]  # domain id -> keyword hints
     excluded: tuple[str, ...]
 
 
-def load_cluster_keywords(path: Path | None = None) -> ClusterTable:
-    raw = c.load_yaml(path or _cluster_keywords_file())
-    clusters = {
-        letter: tuple(k.lower() for k in terms)
-        for letter, terms in raw.get("clusters", {}).items()
-    }
-    excluded = tuple(t.lower() for t in raw.get("excluded_terms", []))
-    return ClusterTable(keywords=clusters, excluded=excluded)
+def load_keywords(path: Path | None = None) -> KeywordTable:
+    """The prefilter's view of the taxonomy: every domain's hints + deny terms."""
+    tax = tx.load(path) if path else tx.get()
+    keywords = {did: dom.keywords for did, dom in tax.domains.items()}
+    return KeywordTable(keywords=keywords, excluded=tax.excluded_terms)
 
 
 def haystack(candidate: dict) -> str:
@@ -82,34 +78,32 @@ def haystack(candidate: dict) -> str:
     parts = [
         candidate.get("title") or "",
         candidate.get("excerpt") or "",
+        candidate.get("guess_label") or "",
         candidate.get("guess_domain") or "",
         candidate.get("guess_subtype") or "",
     ]
     return " ".join(parts).lower()
 
 
-def score_clusters(text: str, table: ClusterTable) -> dict[str, int]:
-    """Keyword-hit count per cluster on the given haystack."""
-    return {
-        letter: sum(1 for kw in terms if kw in text)
-        for letter, terms in table.keywords.items()
-    }
+def score_domains(text: str, table: KeywordTable) -> dict[str, int]:
+    """Keyword-hit count per domain on the given haystack."""
+    return {did: sum(1 for kw in terms if kw in text) for did, terms in table.keywords.items()}
 
 
-def best_cluster(scores: dict[str, int]) -> tuple[str | None, int, int]:
-    """Return (winning_cluster, winner_hits, margin_over_runner_up).
+def best_domain(scores: dict[str, int]) -> tuple[str | None, int, int]:
+    """Return (winning_domain, winner_hits, margin_over_runner_up).
 
-    winning_cluster is None if no cluster scored above zero. Ties return the
+    winning_domain is None if no domain scored above zero. Ties return the
     first alphabetically but with margin=0, so the caller can reject."""
     if not scores or max(scores.values()) == 0:
         return None, 0, 0
     ordered = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))
-    top_letter, top_hits = ordered[0]
+    top_id, top_hits = ordered[0]
     runner_hits = ordered[1][1] if len(ordered) > 1 else 0
-    return top_letter, top_hits, top_hits - runner_hits
+    return top_id, top_hits, top_hits - runner_hits
 
 
-def excluded_hit(text: str, table: ClusterTable) -> str | None:
+def excluded_hit(text: str, table: KeywordTable) -> str | None:
     """Return the first excluded term found in `text`, else None."""
     for term in table.excluded:
         if term in text:
@@ -136,7 +130,7 @@ class Bucketed:
     filtered: list[dict]
 
 
-def bucket(candidates: list[dict], table: ClusterTable) -> Bucketed:
+def bucket(candidates: list[dict], table: KeywordTable) -> Bucketed:
     """Sort candidates into (dropped, routed, filtered)."""
     pool_entries = c.all_pool_entries()
     pool_urls = c.known_urls()
@@ -152,7 +146,7 @@ def bucket(candidates: list[dict], table: ClusterTable) -> Bucketed:
         if c.news_denylist_hit(cand):
             dropped.append(_annotate(cand, "denylist"))
             continue
-        # 2. Cluster excluded-terms deny list (out-of-scope domains).
+        # 2. Taxonomy excluded-terms deny list (out-of-scope subjects).
         term = excluded_hit(text, table)
         if term is not None:
             dropped.append(_annotate(cand, f"excluded:{term}"))
@@ -161,17 +155,18 @@ def bucket(candidates: list[dict], table: ClusterTable) -> Bucketed:
         if duplicate_of_pool(cand, pool_urls, pool_titles):
             dropped.append(_annotate(cand, "duplicate"))
             continue
-        # 4. Cluster hint from keywords.
-        scores = score_clusters(text, table)
-        cluster, hits, margin = best_cluster(scores)
-        if cluster and hits >= CLUSTER_MIN_HITS and margin >= CLUSTER_MIN_MARGIN:
-            routed.append(_annotate(cand, "routed", cluster_hint=cluster,
-                                    cluster_hits=hits, cluster_margin=margin))
+        # 4. Domain hint from keywords.
+        scores = score_domains(text, table)
+        domain, hits, margin = best_domain(scores)
+        if domain and hits >= DOMAIN_MIN_HITS and margin >= DOMAIN_MIN_MARGIN:
+            routed.append(
+                _annotate(
+                    cand, "routed", domain_hint=domain, domain_hits=hits, domain_margin=margin
+                )
+            )
         else:
             # No hint or ambiguous — hand to the LLM.
-            filtered.append(_annotate(cand, "filtered",
-                                      cluster_hits=hits,
-                                      cluster_margin=margin))
+            filtered.append(_annotate(cand, "filtered", domain_hits=hits, domain_margin=margin))
 
     return Bucketed(dropped=dropped, routed=routed, filtered=filtered)
 
@@ -189,11 +184,9 @@ def _write(path: Path, entries: list[dict]) -> None:
 
 def summarize(b: Bucketed) -> str:
     lines = [
-        f"prefilter: dropped={len(b.dropped)} routed={len(b.routed)} "
-        f"filtered={len(b.filtered)}"
+        f"prefilter: dropped={len(b.dropped)} routed={len(b.routed)} " f"filtered={len(b.filtered)}"
     ]
-    for label, group in (("dropped", b.dropped), ("routed", b.routed),
-                          ("filtered", b.filtered)):
+    for label, group in (("dropped", b.dropped), ("routed", b.routed), ("filtered", b.filtered)):
         if not group:
             continue
         top = ", ".join((e.get("title") or "")[:40] for e in group[:3])
@@ -203,16 +196,16 @@ def summarize(b: Bucketed) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Print counts only; do not write output files.")
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Print counts only; do not write output files."
+    )
     args = parser.parse_args(argv)
 
     candidates = c.load_candidates()
     if not candidates:
-        print("prefilter: no candidates to sort — did the ingest run?",
-              file=sys.stderr)
+        print("prefilter: no candidates to sort — did the ingest run?", file=sys.stderr)
         return 1
-    table = load_cluster_keywords()
+    table = load_keywords()
     result = bucket(candidates, table)
     print(summarize(result))
     if args.dry_run:

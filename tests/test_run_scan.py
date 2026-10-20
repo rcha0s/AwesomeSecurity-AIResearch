@@ -73,6 +73,8 @@ def scan_repo(tmp_path: Path):
     shutil.copy(REPO / ".gitignore", work / ".gitignore")
     (work / "data").mkdir()
     (work / "data" / "pool.json").write_text("[]")
+    # The vocabulary is load-bearing config like config.yaml: common imports it.
+    shutil.copy(REPO / "data" / "taxonomy.yaml", work / "data" / "taxonomy.yaml")
     (work / "README.md").write_text("v1\n")
     env = {
         **os.environ,

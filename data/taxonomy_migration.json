@@ -1,0 +1,1576 @@
+{
+  "version": 1,
+  "migrated_on": "2026-10-19",
+  "about": "One-time map from every pre-migration free-text `domain` label to a taxonomy id (data/taxonomy.yaml). `labels` is keyed by topic, then the label exactly as it appeared; `entries` counts pool + archive entries that carried it. Where a label was ambiguous the call was made entry by entry: `entry_overrides` (keyed by entry id) wins over the label's id. Applied by scripts/migrate_taxonomy.py (idempotent) and re-applied on every rerank so other branches' pools converge.",
+  "labels": {
+    "ai-research": {
+      "Models & Capabilities": {
+        "id": "air.ml-research",
+        "entries": 30,
+        "entries_overridden": 3,
+        "note": "Mostly off-thesis arXiv papers; real frontier releases overridden to air.models."
+      },
+      "Evaluation": {
+        "id": "air.evals",
+        "entries": 24,
+        "entries_overridden": 6
+      },
+      "Agents & Harnesses": {
+        "id": "air.agents",
+        "entries": 20,
+        "entries_overridden": 3
+      },
+      "Tooling & Infrastructure": {
+        "id": "air.tooling",
+        "entries": 13,
+        "entries_overridden": 7
+      },
+      "Architecture & Optimization": {
+        "id": "air.ml-research",
+        "entries": 7,
+        "entries_overridden": 3,
+        "note": "Mostly model-internals/PEFT research; inference and context papers overridden."
+      },
+      "Machine Learning": {
+        "id": "air.ml-research",
+        "entries": 4
+      },
+      "Machine Learning Research": {
+        "id": "air.ml-research",
+        "entries": 4
+      },
+      "Agents & Orchestration": {
+        "id": "air.agents",
+        "entries": 3
+      },
+      "AI Research": {
+        "id": "air.ml-research",
+        "entries": 3,
+        "entries_overridden": 1,
+        "note": "Generic label; decided per entry."
+      },
+      "Retrieval & Context": {
+        "id": "air.context",
+        "entries": 3
+      },
+      "Agents and Harnesses": {
+        "id": "air.agents",
+        "entries": 2
+      },
+      "Applied NLP": {
+        "id": "air.ml-research",
+        "entries": 2
+      },
+      "Model Capabilities": {
+        "id": "air.models",
+        "entries": 2,
+        "entries_overridden": 2,
+        "note": "Both entries are evaluations; overridden to air.evals."
+      },
+      "Numerical Analysis": {
+        "id": "air.ml-research",
+        "entries": 2
+      },
+      "Red-Teaming Methodology": {
+        "id": "air.evals",
+        "entries": 2,
+        "note": "ai-research has no red-team domain; red-team eval methodology lives in evals."
+      },
+      "3D Reconstruction Benchmarks": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "3D world generation": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Agent Applications": {
+        "id": "air.agents",
+        "entries": 1,
+        "entries_overridden": 1
+      },
+      "Agent debugging and observability": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Agent Harness Design": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Agent Harnesses": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Agent Methodology": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Agent reliability & capability boundaries": {
+        "id": "air.alignment",
+        "entries": 1,
+        "note": "Hallucinated capability under a protective role is a reliability finding."
+      },
+      "Agent skill acquisition": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Agentic AI": {
+        "id": "air.agents",
+        "entries": 1,
+        "entries_overridden": 1
+      },
+      "Agentic Platforms": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Agentic RL / Synthetic Data": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Agents & Simulation": {
+        "id": "air.agents",
+        "entries": 1,
+        "entries_overridden": 1
+      },
+      "Agents / Harnesses": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "AI ethics": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "AI Fairness / Bias Measurement": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Embedding-geometry method paper, not builder-facing."
+      },
+      "AI Security": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Mis-topic label: the entry is certified-training research."
+      },
+      "AI Sociotechnical Harms": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "AI-assisted Vulnerability Research": {
+        "id": "air.agents",
+        "entries": 1,
+        "note": "An agent pipeline applied to vuln research."
+      },
+      "Alignment & Safety": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "Applications": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Applications & Case Studies": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Applied ML / Bio": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Autonomous vulnerability discovery": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Chain-of-Thought & Monitoring": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "Clinical ML": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "coding-agent harness design (first-party Anthropic practices)": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Computer Vision": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Computer Vision / Image Editing": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Control & Certified ML": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Cost & Serialization": {
+        "id": "air.model-io",
+        "entries": 1
+      },
+      "Datasets & Benchmarks": {
+        "id": "air.evals",
+        "entries": 1,
+        "entries_overridden": 1
+      },
+      "Deep Learning Theory": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Deep Reinforcement Learning": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Deep Research Agents / Clarification Policies": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Deepfake Forensics": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Deployment & Infrastructure": {
+        "id": "air.tooling",
+        "entries": 1
+      },
+      "Deployment infra": {
+        "id": "air.tooling",
+        "entries": 1
+      },
+      "Distributed / Federated Optimization": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Edge & On-Device ML": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Edge AI & Explainability": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Edge Deep Learning & Sensor Simulation": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Efficiency & Deployment": {
+        "id": "air.tooling",
+        "entries": 1
+      },
+      "Enterprise AI Integration": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Eval harness design & containment": {
+        "id": "air.evals",
+        "entries": 1
+      },
+      "Evals": {
+        "id": "air.evals",
+        "entries": 1
+      },
+      "Evals & Benchmarks": {
+        "id": "air.evals",
+        "entries": 1
+      },
+      "Evaluation & Signal Design": {
+        "id": "air.evals",
+        "entries": 1,
+        "entries_overridden": 1
+      },
+      "Federated Learning": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Finance / LLM Applications": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Frontier Cyber Capabilities & Preparedness": {
+        "id": "air.models",
+        "entries": 1,
+        "note": "A frontier capability shift (OpenAI preparedness evals)."
+      },
+      "Frontier model release": {
+        "id": "air.models",
+        "entries": 1
+      },
+      "Generative Models": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Graph Embeddings & Benchmarking": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Guardrails & Alignment": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "Harness / context management": {
+        "id": "air.context",
+        "entries": 1,
+        "note": "Compaction protocol: context management."
+      },
+      "HPC & Scientific Computing": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Human-AI Interaction": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Industrial Anomaly Detection": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Inference Efficiency": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Attention-architecture research, not serving practice."
+      },
+      "Inference Optimization": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Attention-architecture research, not serving practice."
+      },
+      "Interpretability": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Model internals are off-thesis for ai-research."
+      },
+      "Interpretability & Diagnostics": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Interpretability & Explainability": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Interpretability & Probing": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Interpretability & Safety": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Learning Theory": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "LLM Calibration": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "LLM Concept Probing": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "LLM Inference Cost Modeling": {
+        "id": "air.model-io",
+        "entries": 1
+      },
+      "LLM security-eval methodology": {
+        "id": "air.evals",
+        "entries": 1
+      },
+      "LLM Serving Infrastructure": {
+        "id": "air.tooling",
+        "entries": 1
+      },
+      "LLM training methods": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "LLM-Derived Knowledge Bases": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Long-context & KV Cache": {
+        "id": "air.context",
+        "entries": 1
+      },
+      "MCP and Tool Ecosystem": {
+        "id": "air.tooling",
+        "entries": 1,
+        "entries_overridden": 1,
+        "note": "The label fits tooling; its one entry is a clinical paper, overridden."
+      },
+      "Medical AI / Clinical Reports": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Medical Image Segmentation": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Medical Imaging": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Medical ML": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Meta-Harness": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "ML Frameworks": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "A JAX research framework, not an LLM builder tool."
+      },
+      "Model Architectures": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Model Efficiency": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Model I/O & Decoding": {
+        "id": "air.model-io",
+        "entries": 1
+      },
+      "Model I/O & Tokens": {
+        "id": "air.model-io",
+        "entries": 1,
+        "entries_overridden": 1,
+        "note": "The label fits model-io; its one entry is visual token pruning, overridden."
+      },
+      "Model Routing": {
+        "id": "air.model-io",
+        "entries": 1
+      },
+      "Multi-Agent Path Finding": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Robot path planning, not LLM agents."
+      },
+      "Multimodal Reasoning / Debiasing": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Neural rendering": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Numerical methods for training": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Ontology Alignment & Knowledge Graphs": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Operations Research": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Personalization benchmarks": {
+        "id": "air.evals",
+        "entries": 1
+      },
+      "Physical Simulation & World Models": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Post-training & Diversity": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Privacy & Cryptography": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Prompt & Context Engineering": {
+        "id": "air.context",
+        "entries": 1
+      },
+      "Prompting & Context": {
+        "id": "air.context",
+        "entries": 1
+      },
+      "Quantitative Finance / Graph Learning": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Reinforcement Learning Theory": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Robotics & Embodied AI": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Scientific Computing": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Scientific Machine Learning": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Serving & Ops": {
+        "id": "air.tooling",
+        "entries": 1
+      },
+      "Software Engineering": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Surrogate models for config tuning; not LLM tooling."
+      },
+      "Speech & Multilingual LLMs": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Statistical ML": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Statistical ML methods": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Structured decoding": {
+        "id": "air.model-io",
+        "entries": 1,
+        "entries_overridden": 1,
+        "note": "The label fits model-io; its one entry is sequence labelling, overridden."
+      },
+      "Structured Extraction": {
+        "id": "air.model-io",
+        "entries": 1
+      },
+      "Test-Time Inference": {
+        "id": "air.models",
+        "entries": 1,
+        "note": "Test-time self-correction is reasoning behavior."
+      },
+      "Time-Series / Small-Data ML": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Time-Series Forecasting": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Training-time Incidents & RLVR": {
+        "id": "air.alignment",
+        "entries": 1,
+        "note": "A safety incident during a training run."
+      },
+      "Trajectory Prediction": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Uncertainty & Calibration": {
+        "id": "air.ml-research",
+        "entries": 1,
+        "note": "Conformal prediction for missing modalities; not LLM calibration."
+      },
+      "Uncertainty Quantification": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "Vision-Language Model Hallucination": {
+        "id": "air.alignment",
+        "entries": 1
+      },
+      "Vision-Language-Action / Robotics": {
+        "id": "air.ml-research",
+        "entries": 1
+      },
+      "VLM-as-Annotator Harnesses": {
+        "id": "air.agents",
+        "entries": 1
+      },
+      "Wireless & Networking": {
+        "id": "air.ml-research",
+        "entries": 1
+      }
+    },
+    "ai-security": {
+      "AI Security": {
+        "id": "ais.agent-security",
+        "entries": 34,
+        "entries_overridden": 27,
+        "note": "Generic label; decided per entry (the old cluster letter guided each call)."
+      },
+      "Harness & Agent Security": {
+        "id": "ais.agent-security",
+        "entries": 18,
+        "entries_overridden": 6
+      },
+      "LLM Red-Teaming": {
+        "id": "ais.red-teaming",
+        "entries": 10,
+        "entries_overridden": 3
+      },
+      "Model Supply Chain": {
+        "id": "ais.model-supply-chain",
+        "entries": 7
+      },
+      "Prompt Injection": {
+        "id": "ais.prompt-injection",
+        "entries": 7
+      },
+      "Agentic AI / MCP": {
+        "id": "ais.mcp-tools",
+        "entries": 5,
+        "entries_overridden": 3
+      },
+      "Agents & Harnesses": {
+        "id": "ais.agent-security",
+        "entries": 3
+      },
+      "MCP & Tools": {
+        "id": "ais.mcp-tools",
+        "entries": 3
+      },
+      "Deployment Infra & Sandboxing": {
+        "id": "ais.ai-infra",
+        "entries": 2
+      },
+      "MCP & Skill Scanning": {
+        "id": "ais.mcp-tools",
+        "entries": 2
+      },
+      "Memory & Context Poisoning": {
+        "id": "ais.data-poisoning",
+        "entries": 2
+      },
+      "Prompt Injection & Adversarial": {
+        "id": "ais.prompt-injection",
+        "entries": 2
+      },
+      "Adversarial Attacks": {
+        "id": "ais.prompt-injection",
+        "entries": 1,
+        "note": "Its entry is a jailbreak attack."
+      },
+      "Adversarial ML (Vision)": {
+        "id": "ais.red-teaming",
+        "entries": 1
+      },
+      "Agent framework security": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agent Governance / Runtime": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agent Harness & Permission Model": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agent platform vulnerabilities": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agent runtime / code-interpreter sandbox": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      },
+      "Agent Safety / Monitoring": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agent Sandbox Escape & Evaluation Containment": {
+        "id": "ais.ai-infra",
+        "entries": 1,
+        "note": "Sandbox containment."
+      },
+      "Agent Verification & Stewardship": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agent-to-Agent Security / CI Prompt Injection": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Agentic AI / Supply Chain": {
+        "id": "ais.mcp-tools",
+        "entries": 1,
+        "note": "Skill-registry poisoning."
+      },
+      "Agents / Information-Flow Control": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "AI Gateway & Credential Theft": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      },
+      "AI Gateway & Infrastructure": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      },
+      "AI Gateway / Deployment Infrastructure": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      },
+      "AI Security Training & Red-Team Ranges": {
+        "id": "ais.red-teaming",
+        "entries": 1
+      },
+      "AI-Generated Code Risk / Package Verification Gap": {
+        "id": "ais.agent-security",
+        "entries": 1,
+        "note": "Coding agents skipping package checks: an agent-behavior risk (ps.ai-code is the product-security twin)."
+      },
+      "Coding Agents / Prompt-Space Defense": {
+        "id": "ais.guardrails",
+        "entries": 1
+      },
+      "computer-use agent security": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Guardrails & Alignment": {
+        "id": "ais.guardrails",
+        "entries": 1
+      },
+      "Guardrails & alignment": {
+        "id": "ais.guardrails",
+        "entries": 1
+      },
+      "Guardrails / Over-Refusal": {
+        "id": "ais.guardrails",
+        "entries": 1
+      },
+      "Independent Validation & Incident Response": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      },
+      "Information Disclosure": {
+        "id": "ais.prompt-injection",
+        "entries": 1,
+        "note": "Its entry is system-prompt extraction."
+      },
+      "LLM gateway / AI infrastructure": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      },
+      "LLM Safety / Alignment Robustness": {
+        "id": "ais.guardrails",
+        "entries": 1
+      },
+      "LLM Security Testing": {
+        "id": "ais.red-teaming",
+        "entries": 1
+      },
+      "MCP & Offensive Security Tooling": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "MCP Observability / Product Analytics": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "MCP Protocol": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "MCP Protocol / Output-Neutralization Injection": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "MCP Server Scanning & Defender Tooling": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "MCP server security / agentic AWS access": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "Model I/O & Reasoning Traces": {
+        "id": "ais.ai-infra",
+        "entries": 1,
+        "note": "Plaintext recovered from 'encrypted' reasoning traces: data exposure."
+      },
+      "Multi-Agent Lateral Movement & Covert Coordination": {
+        "id": "ais.agent-security",
+        "entries": 1
+      },
+      "Orchestration": {
+        "id": "ais.agent-security",
+        "entries": 1,
+        "note": "Only a leaked test fixture ('stale') carries it."
+      },
+      "Privacy-Preserving AI / Model Protection": {
+        "id": "ais.model-supply-chain",
+        "entries": 1
+      },
+      "RAG & Retrieval Poisoning": {
+        "id": "ais.data-poisoning",
+        "entries": 1
+      },
+      "RAG / Data Poisoning": {
+        "id": "ais.data-poisoning",
+        "entries": 1
+      },
+      "Red-Teaming Methodology (Agentic)": {
+        "id": "ais.red-teaming",
+        "entries": 1
+      },
+      "Skill Supply Chain": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "Skills & Supply Chain": {
+        "id": "ais.mcp-tools",
+        "entries": 1
+      },
+      "Zero Trust for AI / DevSecOps": {
+        "id": "ais.ai-infra",
+        "entries": 1
+      }
+    },
+    "product-security": {
+      "Application Security": {
+        "id": "ps.appsec",
+        "entries": 9,
+        "entries_overridden": 1
+      },
+      "Supply Chain & Dependencies": {
+        "id": "ps.supply-chain",
+        "entries": 9
+      },
+      "Supply Chain": {
+        "id": "ps.supply-chain",
+        "entries": 5,
+        "entries_overridden": 1
+      },
+      "Spyware / Zero-Day": {
+        "id": "ps.mobile",
+        "entries": 3,
+        "note": "All three entries are mobile zero-days."
+      },
+      "AI-Generated Code Risk": {
+        "id": "ps.ai-code",
+        "entries": 2
+      },
+      "Detection & Response": {
+        "id": "ps.detection-response",
+        "entries": 2,
+        "entries_overridden": 1
+      },
+      "Insecure Storage / Cryptography": {
+        "id": "ps.mobile",
+        "entries": 2,
+        "note": "Both entries are mobile-app storage findings."
+      },
+      "Malware & Threat Intel": {
+        "id": "ps.detection-response",
+        "entries": 2
+      },
+      "Quantum Software Security": {
+        "id": "ps.appsec",
+        "entries": 2,
+        "entries_overridden": 1
+      },
+      "Request Smuggling / Desync": {
+        "id": "ps.appsec",
+        "entries": 2
+      },
+      "web security": {
+        "id": "ps.appsec",
+        "entries": 2,
+        "entries_overridden": 1
+      },
+      "Access Control": {
+        "id": "ps.identity",
+        "entries": 1
+      },
+      "AI coding assistant sandbox escape / path traversal": {
+        "id": "ps.ai-code",
+        "entries": 1
+      },
+      "AI-Assisted AppSec / Supply Chain": {
+        "id": "ps.ai-code",
+        "entries": 1
+      },
+      "AI-augmented SAST": {
+        "id": "ps.ai-code",
+        "entries": 1
+      },
+      "Annual Roundup": {
+        "id": "ps.appsec",
+        "entries": 1,
+        "note": "PortSwigger's web-hacking top 10."
+      },
+      "Authorization & Access Control": {
+        "id": "ps.identity",
+        "entries": 1
+      },
+      "Autonomous Application Testing": {
+        "id": "ps.offensive",
+        "entries": 1
+      },
+      "Autonomous Vulnerability Research": {
+        "id": "ps.offensive",
+        "entries": 1
+      },
+      "browser-delivered malware / malvertising": {
+        "id": "ps.detection-response",
+        "entries": 1
+      },
+      "Censorship & Trust & Safety": {
+        "id": "ps.detection-response",
+        "entries": 1,
+        "note": "Abuse campaign; closest is threat intel."
+      },
+      "Cloud & Infrastructure": {
+        "id": "ps.cloud-infra",
+        "entries": 1,
+        "entries_overridden": 1
+      },
+      "cloud & infrastructure": {
+        "id": "ps.cloud-infra",
+        "entries": 1
+      },
+      "Confidential compute (Nitro Enclaves + KMS)": {
+        "id": "ps.cloud-infra",
+        "entries": 1
+      },
+      "Cryptography & Blockchain": {
+        "id": "ps.appsec",
+        "entries": 1
+      },
+      "Developer Tooling & Template Injection": {
+        "id": "ps.appsec",
+        "entries": 1
+      },
+      "Internal Vulnerability Scanning & Attack Surface": {
+        "id": "ps.offensive",
+        "entries": 1
+      },
+      "Legacy CVE Exposure": {
+        "id": "ps.mobile",
+        "entries": 1,
+        "note": "Its entry is about shipped mobile apps."
+      },
+      "Malware & Wipers": {
+        "id": "ps.detection-response",
+        "entries": 1
+      },
+      "Mobile / App Compliance": {
+        "id": "ps.mobile",
+        "entries": 1
+      },
+      "Mobile Security": {
+        "id": "ps.mobile",
+        "entries": 1
+      },
+      "Network Security & Anomaly Detection": {
+        "id": "ps.detection-response",
+        "entries": 1
+      },
+      "OT/ICS device security": {
+        "id": "ps.cloud-infra",
+        "entries": 1
+      },
+      "phishing / identity / OAuth device-code": {
+        "id": "ps.identity",
+        "entries": 1
+      },
+      "Platform / OS": {
+        "id": "ps.mobile",
+        "entries": 1,
+        "note": "Pixel baseband hardening."
+      },
+      "Shell escaping / command injection (Node.js)": {
+        "id": "ps.appsec",
+        "entries": 1
+      },
+      "Software Supply Chain": {
+        "id": "ps.supply-chain",
+        "entries": 1
+      },
+      "software supply chain": {
+        "id": "ps.supply-chain",
+        "entries": 1
+      },
+      "Supply Chain & Dependencies (npm)": {
+        "id": "ps.supply-chain",
+        "entries": 1
+      },
+      "Supply chain (npm)": {
+        "id": "ps.supply-chain",
+        "entries": 1
+      },
+      "Supply Chain / CI-CD": {
+        "id": "ps.supply-chain",
+        "entries": 1
+      },
+      "Supply Chain / Policy": {
+        "id": "ps.supply-chain",
+        "entries": 1
+      },
+      "Targeted Surveillance": {
+        "id": "ps.detection-response",
+        "entries": 1,
+        "note": "Spyware-vendor reporting: threat intel."
+      },
+      "WAF Bypass": {
+        "id": "ps.appsec",
+        "entries": 1
+      },
+      "Web Application Security": {
+        "id": "ps.appsec",
+        "entries": 1
+      }
+    }
+  },
+  "entry_overrides": {
+    "a-working-taxonomy-of-open-source-ai-code-securi-41b13f54e0": {
+      "id": "ps.ai-code",
+      "topic": "product-security",
+      "label": "Application Security",
+      "title": "A working taxonomy of open-source AI code-security harnesses: exploitgen, skill-boosting, SAST+LLM",
+      "why": "AI code-security harnesses."
+    },
+    "adaptive-arena-based-contestable-argumentative-n-e415018011": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Agents & Harnesses",
+      "title": "Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordinat",
+      "why": "Care-plan argumentation application paper."
+    },
+    "aegisshield-democratizing-cyber-threat-modeling-bb08289115": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "AegisShield: Democratizing Cyber Threat Modeling with Generative AI",
+      "why": "Threat modeling with GenAI (cluster K)."
+    },
+    "affaan-m-agentshield-db00f0dd96": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "affaan-m/agentshield",
+      "why": "Defensive agent tooling (cluster M)."
+    },
+    "agentplugins-agent-plugins-spec-0acb73ba65": {
+      "id": "ais.mcp-tools",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "agentplugins/agent-plugins-spec",
+      "why": "Agent plugin spec (cluster F)."
+    },
+    "ai-security-leaderboard-methodology-results-and-e78c96cb60": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "AI Security Leaderboard: Methodology, Results and Minimal Standard",
+      "why": "Security leaderboard methodology (cluster L)."
+    },
+    "alexgreensh-repo-forensics-416ef8eb39": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "alexgreensh/repo-forensics",
+      "why": "Defensive repo forensics (cluster M)."
+    },
+    "algebraic-cryptanalytic-extraction-on-hard-label-c954c467e6": {
+      "id": "ais.model-supply-chain",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Algebraic Cryptanalytic Extraction on Hard-Label Neural Networks",
+      "why": "Model extraction."
+    },
+    "alignment-has-a-fantasia-problem-4cb1fd4d57": {
+      "id": "air.alignment",
+      "topic": "ai-research",
+      "label": "Evaluation",
+      "title": "Alignment has a Fantasia Problem",
+      "why": "An alignment argument, not an eval."
+    },
+    "an-end-to-end-threat-model-for-the-quantum-as-a-013be39b48": {
+      "id": "ps.offensive",
+      "topic": "product-security",
+      "label": "Quantum Software Security",
+      "title": "An End-to-End Threat Model for the Quantum-as-a-Service Pipeline",
+      "why": "A threat model."
+    },
+    "anmolksachan-ai-ml-free-resources-for-security-a-c0ea160d38": {
+      "id": "ais.prompt-injection",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+      "why": "Prompt-injection learning resources."
+    },
+    "anthropic-s-own-cybersecurity-evals-let-three-cl-129f00213b": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "Harness & Agent Security",
+      "title": "Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure",
+      "why": "Cyber-capability evals."
+    },
+    "behavioral-canaries-auditing-private-retrieved-c-2bbb7287ba": {
+      "id": "ais.data-poisoning",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Behavioral Canaries: Auditing Private Retrieved Context Usage in RL Fine-Tuning",
+      "why": "Auditing retrieved-context use in fine-tuning data."
+    },
+    "better-models-worse-tools-sota-models-regress-on-23a5b69b6f": {
+      "id": "air.agents",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+      "why": "Tool-schema design for agents (old cluster B scope)."
+    },
+    "beyond-scaffold-splits-structural-frontier-evalu-96badeee40": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Evaluation",
+      "title": "Beyond Scaffold Splits: Structural-Frontier Evaluation Reveals Hidden Failures in ADMET Models",
+      "why": "ADMET molecular-property evaluation, off-thesis."
+    },
+    "boundary-density-likelihood-for-direct-event-tim-511ff583eb": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Evaluation & Signal Design",
+      "title": "Boundary Density Likelihood for Direct Event-Time Supervision",
+      "why": "Event-time supervision method, off-thesis."
+    },
+    "breaking-customized-llms-for-coding-automated-re-2684a007e1": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Breaking Customized LLMs for Coding: Automated Red Teaming for Instruction Backdoor Attacks",
+      "why": "Automated red teaming (cluster L)."
+    },
+    "c-3-po-evaluating-cross-modal-composition-and-co-13cccde0ce": {
+      "id": "air.evals",
+      "topic": "ai-research",
+      "label": "Model Capabilities",
+      "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
+      "why": "An omnimodal evaluation."
+    },
+    "cascade-an-agentic-regulatory-network-framework-d9724305f3": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "MCP and Tool Ecosystem",
+      "title": "CASCADE: An Agentic Regulatory Network Framework for Patient-Data-Validated Downstream Perturbation ",
+      "why": "A clinical regulatory-network paper mislabelled as MCP."
+    },
+    "certified-interpolation-oversampling-per-instanc-8665338fce": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Evaluation",
+      "title": "Certified Interpolation Oversampling: Per-Instance Safety Guarantees for Imbalanced Learning",
+      "why": "Imbalanced-learning oversampling, off-thesis."
+    },
+    "chime-a-case-for-efficient-long-context-attentio-be92f92177": {
+      "id": "air.tooling",
+      "topic": "ai-research",
+      "label": "Architecture & Optimization",
+      "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
+      "why": "Long-context inference serving architecture."
+    },
+    "cubicquant-parametric-non-uniform-codebooks-for-a796b0db2b": {
+      "id": "air.tooling",
+      "topic": "ai-research",
+      "label": "Architecture & Optimization",
+      "title": "CubicQuant: Parametric Non-Uniform Codebooks for High-Throughput LLM Inference with 1-8-Bit Weights",
+      "why": "LLM inference quantization for serving throughput."
+    },
+    "diffusion-llms-as-targets-and-adversaries-mechan-c5999481f3": {
+      "id": "ais.prompt-injection",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Diffusion LLMs as Targets and Adversaries: Mechanistic Safety Exploits",
+      "why": "Jailbreaks on diffusion LLMs (cluster E)."
+    },
+    "diffusion-mf-approximate-structured-diffusion-fo-ce50cad999": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Structured decoding",
+      "title": "Diffusion-MF: Approximate Structured Diffusion for Sequence Labelling",
+      "why": "Sequence labelling, not structured LLM output."
+    },
+    "doctoragents-an-agentic-framework-to-iteratively-d0bd4e72b0": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Agents & Harnesses",
+      "title": "DoctorAgents: an agentic framework to iteratively refine AutoML pipeline for small clinical temporal",
+      "why": "Clinical AutoML application paper."
+    },
+    "dreamguard-efficient-runtime-guardrail-for-llm-a-c713ebe2b5": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
+      "why": "Runtime guardrail (cluster M)."
+    },
+    "dropping-the-anchor-statistical-context-summariz-411ec00428": {
+      "id": "air.context",
+      "topic": "ai-research",
+      "label": "Architecture & Optimization",
+      "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
+      "why": "Context summarization (old cluster A)."
+    },
+    "echo-a-locally-deployable-agentic-health-assista-0b2b4b1140": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "ECHO: A Locally-Deployable Agentic Health Assistant with Temporal Memory, Safety Guardrails, and Spe",
+      "why": "Safety guardrails in an agent (cluster M)."
+    },
+    "evaluating-and-improving-pedagogical-fit-in-llm-5e800359e7": {
+      "id": "air.evals",
+      "topic": "ai-research",
+      "label": "Model Capabilities",
+      "title": "Evaluating and Improving Pedagogical Fit in LLM-Based AI Tutors with the Pedagogical Suitability Ind",
+      "why": "An evaluation suite for LLM tutors."
+    },
+    "feddose-federated-learning-framework-decomposing-88a1090a6b": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "FedDOSE: Federated Learning Framework Decomposing Site Effects for Modeling Brain Dynamic Functional",
+      "why": "Federated brain-dynamics modeling."
+    },
+    "foresightsafety-sage-a-fully-automated-scenario-99155f3827": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "Agentic AI / MCP",
+      "title": "ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM ",
+      "why": "Automated safety evaluation (cluster L)."
+    },
+    "from-economic-agents-to-agentic-economies-a-syst-416794bc7d": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Agents & Simulation",
+      "title": "From Economic Agents to Agentic Economies: A Systems Blueprint for Economic World Models",
+      "why": "Economic world-model blueprint, not agent building."
+    },
+    "fu351-doberman-core-e4ac92e630": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "fu351/Doberman-Core",
+      "why": "Defensive tooling (cluster M)."
+    },
+    "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0": {
+      "id": "air.models",
+      "topic": "ai-research",
+      "label": "Models & Capabilities",
+      "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
+      "why": "A frontier model release."
+    },
+    "hardware-keystores-for-ai-agent-signing-workflow-e45a213682": {
+      "id": "ais.mcp-tools",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
+      "why": "Zero-trust MCP enforcement (cluster F)."
+    },
+    "harnessing-the-synergy-between-llm-agents-and-kn-0441f636c6": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "Harnessing the Synergy between LLM Agents and Knowledge Graphs for Urban Socioeconomic Prediction",
+      "why": "Urban socioeconomic prediction application."
+    },
+    "incident-report-unsanctioned-agent-behaviour-dur-87ffc75167": {
+      "id": "ais.agent-security",
+      "topic": "ai-security",
+      "label": "LLM Red-Teaming",
+      "title": "Incident Report: unsanctioned agent behaviour during cyber testing (UK AISI)",
+      "why": "Unsanctioned agent behaviour during testing."
+    },
+    "kimi-k2-5-visual-agentic-intelligence-24d111123e": {
+      "id": "air.models",
+      "topic": "ai-research",
+      "label": "Models & Capabilities",
+      "title": "Kimi K2.5: Visual Agentic Intelligence",
+      "why": "A frontier model release."
+    },
+    "latent-fact-checking-detecting-misinformation-th-4fdb24efde": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Evaluation",
+      "title": "Latent Fact-Checking: Detecting Misinformation through Activation Engineering",
+      "why": "Activation-engineering misinformation detection (model internals)."
+    },
+    "livemem-maintaining-memory-state-continuity-in-l-329bc8051b": {
+      "id": "air.context",
+      "topic": "ai-research",
+      "label": "AI Research",
+      "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+      "why": "Memory-state continuity in long-running LLM inference."
+    },
+    "llms-cannot-reliably-judge-yet-a-comprehensive-a-8985f12e8a": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+      "why": "Robustness of LLM-as-judge (cluster L)."
+    },
+    "mmaligner-safeguarding-multimodal-large-language-4fafd4b6e2": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
+      "why": "Alignment safeguard (cluster H)."
+    },
+    "modelcontextprotocol-modelcontextprotocol-df31a46650": {
+      "id": "ais.mcp-tools",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "modelcontextprotocol/modelcontextprotocol",
+      "why": "The MCP spec repo (cluster F)."
+    },
+    "morgan-s-log-forging-fix-missed-unicode-line-sep-602fc56f55": {
+      "id": "ps.appsec",
+      "topic": "product-security",
+      "label": "Detection & Response",
+      "title": "morgan's Log-Forging Fix Missed Unicode Line-Separator Code Points, Letting Attacker-Controlled Head",
+      "why": "A log-forging library fix."
+    },
+    "one-leak-away-how-pretrained-model-exposure-ampl-3ef47be443": {
+      "id": "ais.prompt-injection",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
+      "why": "Jailbreak transfer (cluster E)."
+    },
+    "onecli-per-employee-sandboxed-agents-behind-a-cr-a4c1f22efd": {
+      "id": "ais.ai-infra",
+      "topic": "ai-security",
+      "label": "Harness & Agent Security",
+      "title": "OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only",
+      "why": "Credential-injecting gateway (cluster I)."
+    },
+    "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b": {
+      "id": "ais.mcp-tools",
+      "topic": "ai-security",
+      "label": "Harness & Agent Security",
+      "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+      "why": "Skill-marketplace attack surface."
+    },
+    "optimization-based-online-conformal-prediction-f-3b63f0ae28": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Evaluation",
+      "title": "Optimization-based Online Conformal Prediction for Multi-step Forecasting",
+      "why": "Conformal forecasting, off-thesis."
+    },
+    "phantom-squatting-ai-hallucinated-domains-as-a-s-99acdb5c5d": {
+      "id": "ps.ai-code",
+      "topic": "product-security",
+      "label": "Supply Chain",
+      "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+      "why": "Squatting domains LLMs hallucinate."
+    },
+    "phoenix-fine-tuned-slm-powered-autonomous-satell-116489784f": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Agents & Harnesses",
+      "title": "PHOENIX: Fine-Tuned SLM-Powered Autonomous Satellite Lifetime Extension via Predictive Self-Healing ",
+      "why": "Satellite operations application paper."
+    },
+    "policyguard-prompt-configurable-semantic-dlp-for-c4c102b9f0": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents",
+      "why": "Semantic DLP for coding agents (cluster M)."
+    },
+    "praetorian-inc-augustus-c9c523c4b2": {
+      "id": "ais.red-teaming",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "praetorian-inc/augustus",
+      "why": "LLM vulnerability scanner (cluster L)."
+    },
+    "prismorsec-prismor-0bce7e4063": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "Agentic AI / MCP",
+      "title": "Prismor: a runtime firewall that blocks rogue AI-agent tool calls",
+      "why": "Runtime firewall for agent tool calls."
+    },
+    "promptshield-home-ambient-multimodal-prompt-inje-d57591526c": {
+      "id": "ais.prompt-injection",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "PromptShield Home: Ambient Multimodal Prompt Injection Defense for Smart-Home Agents",
+      "why": "Prompt-injection defense (cluster E)."
+    },
+    "provider-safety-guardrails-blocked-incident-resp-5fb920778d": {
+      "id": "ais.ai-infra",
+      "topic": "ai-security",
+      "label": "Harness & Agent Security",
+      "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+      "why": "Incident response blocked by provider guardrails (cluster J)."
+    },
+    "pulse-agentic-investigation-with-passive-sensing-5d865bfd4b": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Agent Applications",
+      "title": "PULSE: Agentic Investigation with Passive Sensing for Proactive Affective Intervention in Cancer Sur",
+      "why": "Affective-computing application paper."
+    },
+    "pydantic-ai-ships-official-first-party-guardrail-ba86ae0a9f": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "Harness & Agent Security",
+      "title": "Pydantic AI Ships Official First-Party Guardrails, Upstreaming a Community Library",
+      "why": "First-party guardrails (cluster M)."
+    },
+    "residual-algebra-for-representation-preserving-l-3a6a54e59d": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "Residual Algebra for Representation-Preserving Learning",
+      "why": "Representation-learning theory."
+    },
+    "robot-guide-with-multi-agent-control-and-automat-a093a70424": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Agentic AI",
+      "title": "Robot guide with multi-agent control and automatic scenario generation with LLM",
+      "why": "Robotics application."
+    },
+    "robust-context-aware-detection-of-malicious-inst-1c7223b934": {
+      "id": "ais.prompt-injection",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Robust Context-Aware Detection of Malicious Instructions in Text",
+      "why": "Malicious-instruction detection (cluster E)."
+    },
+    "rora-role-oriented-regional-allocation-for-visua-2d3406542e": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Model I/O & Tokens",
+      "title": "RoRA: Role-Oriented Regional Allocation for Visual Token Pruning in MLLMs",
+      "why": "Visual token pruning in MLLMs (architecture research)."
+    },
+    "sabre-scalable-and-automated-benchmarking-of-vlm-0dc566e3f6": {
+      "id": "air.evals",
+      "topic": "ai-research",
+      "label": "Models & Capabilities",
+      "title": "SABRE: Scalable and Automated Benchmarking of VLMs under Stress",
+      "why": "A VLM stress benchmark."
+    },
+    "sageo-arena-a-realistic-environment-for-evaluati-b93fd76f27": {
+      "id": "air.evals",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization",
+      "why": "An evaluation environment."
+    },
+    "seal-a-router-independent-shared-expert-anchor-c-5da5ac128e": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "LLM Red-Teaming",
+      "title": "SEAL: A Router-Independent 'Shared Expert' Anchor Cuts Jailbreak Success on Mixture-of-Experts Model",
+      "why": "Jailbreak defense for MoE models (cluster H)."
+    },
+    "self-state-attacks-corrupting-an-agent-s-own-mem-497dc1cdff": {
+      "id": "ais.data-poisoning",
+      "topic": "ai-security",
+      "label": "Harness & Agent Security",
+      "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+      "why": "Corrupting an agent's own memory."
+    },
+    "sharding-prevents-llm-oversight-failures-and-adv-d98d144453": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "LLM Red-Teaming",
+      "title": "Sharding Prevents LLM Oversight Failures and Adversarial Exploitation",
+      "why": "Oversight-failure defense."
+    },
+    "show-don-t-tell-what-evo-continuous-offensive-se-e186831a": {
+      "id": "ps.offensive",
+      "topic": "product-security",
+      "label": "web security",
+      "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
+      "why": "Continuous offensive security findings."
+    },
+    "signverse-2m-a-two-million-clip-pose-native-univ-6329902c0a": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Datasets & Benchmarks",
+      "title": "SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages",
+      "why": "Sign-language pose dataset, off-thesis."
+    },
+    "sinewaveai-agent-security-scanner-mcp-23ccc1b0ce": {
+      "id": "ais.mcp-tools",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "sinewaveai/agent-security-scanner-mcp",
+      "why": "A security scanner shipped as an MCP server."
+    },
+    "sni-gnn-smartnic-assisted-full-graph-gnn-trainin-7b2418fc7e": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "SNI-GNN: SmartNIC-Assisted Full-Graph GNN Training with In-Network Embedding Prediction",
+      "why": "GNN training hardware."
+    },
+    "taxonomy-driven-analysis-of-open-source-ai-risk-099bd6b069": {
+      "id": "ais.guardrails",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Taxonomy-Driven Analysis of Open-Source AI Risk Mitigation Tools",
+      "why": "Survey of AI risk-mitigation tools (cluster M)."
+    },
+    "toby-bridges-api-relay-audit-75dc24523e": {
+      "id": "ais.ai-infra",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "toby-bridges/api-relay-audit",
+      "why": "Auditing third-party API relays."
+    },
+    "tofd-target-oriented-feature-decoupling-against-66c02af5ee": {
+      "id": "ais.data-poisoning",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "TOFD: Target-Oriented Feature Decoupling against Poisoning Attacks in Split Federated Learning",
+      "why": "Poisoning defense in split federated learning."
+    },
+    "towards-a-risk-assessment-of-malicious-skill-fil-8b37c578fd": {
+      "id": "ais.mcp-tools",
+      "topic": "ai-security",
+      "label": "AI Security",
+      "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+      "why": "Malicious skill files."
+    },
+    "towards-a-theoretical-understanding-of-two-tower-066882634f": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Tooling & Infrastructure",
+      "title": "Towards a Theoretical Understanding of Two Tower Recommendation Models",
+      "why": "Recommender-model theory."
+    },
+    "trail-of-bits-runs-an-independent-from-scratch-a-e511ef895e": {
+      "id": "ps.appsec",
+      "topic": "product-security",
+      "label": "Cloud & Infrastructure",
+      "title": "Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System",
+      "why": "Key-transparency auditor (cryptographic correctness)."
+    },
+    "trustworthy-agent-network-trust-in-agent-network-172bf256db": {
+      "id": "ais.agent-security",
+      "topic": "ai-security",
+      "label": "Agentic AI / MCP",
+      "title": "Trustworthy Agent Network: Trust in Agent Networks Must Be Baked In, Not Bolted On",
+      "why": "Trust in agent networks (cluster B)."
+    },
+    "unmasking-removal-budget-confounding-a-matched-o-ff920693b5": {
+      "id": "air.ml-research",
+      "topic": "ai-research",
+      "label": "Evaluation",
+      "title": "Unmasking Removal-Budget Confounding: A Matched Operating-Point Evaluation Framework for Adaptive Da",
+      "why": "Attribution-method evaluation, off-thesis."
+    }
+  }
+}

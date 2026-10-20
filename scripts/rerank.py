@@ -7,6 +7,10 @@ novelty/relevance into a weighted composite, and re-sorts each pool. This is
 cheap (no LLM) and runs after every ingest/merge and in CI, so ordering stays
 fresh as findings age and as new ones arrive.
 
+Every pass also normalizes `domain` to a taxonomy ID (pool and archive), with the
+same rules as scripts/migrate_taxonomy.py, so a branch carrying pre-taxonomy
+pool data converges the next time it re-renders.
+
 Usage:
     python scripts/rerank.py            # rerank both pools in place
     python scripts/rerank.py --track ai
@@ -17,6 +21,7 @@ from __future__ import annotations
 import argparse
 
 import common as c
+import taxonomy as tx
 
 
 def score_entry(entry: dict, conf: c.Config, now=None) -> dict:
@@ -61,6 +66,10 @@ def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     pool["entries"] += [e for e in restored if e.get("id") not in live]
     if restored:
         print(f"  restored {len(restored)} archived news stories to {track}")
+    migrated = tx.normalize_entries(pool["entries"], tx.get(), tx.load_overrides())
+    if migrated:
+        print(f"  normalized {migrated} free-text domain(s) in {track} to taxonomy IDs")
+    pool["domains"] = c.TOPICS[track]["domains"]
     fresh, stale = prune_stale(pool["entries"], conf, now=now, keep=is_news)
     archived = c.archive_entries(stale)
     if stale:
@@ -70,8 +79,19 @@ def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     return pool
 
 
+def normalize_archive() -> int:
+    """Give archived entries taxonomy IDs too (rewrites the file only on change)."""
+    archive = c.load_json(c.ARCHIVE_FILE, default=[]) or []
+    changed = tx.normalize_entries(archive, tx.get(), tx.load_overrides())
+    if changed:
+        c.save_json(c.ARCHIVE_FILE, archive)
+        print(f"  normalized {changed} free-text domain(s) in the archive")
+    return changed
+
+
 def rerank_all(conf: c.Config | None = None, now=None) -> None:
     conf = conf or c.load_config()
+    normalize_archive()
     for track in c.TOPICS:
         pool = rerank_pool(track, conf, now=now)
         print(f"reranked {track}: {len(pool['entries'])} entries")

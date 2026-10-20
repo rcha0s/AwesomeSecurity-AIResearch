@@ -16,7 +16,7 @@ def _seed(sandbox):
         # security entry: scored (so it's curated), no summary, has threat block
         {
             "topic": "ai-security",
-            "domain": "Injection",
+            "domain": "ais.prompt-injection",
             "title": "Legacy XSS finding",
             "source_url": "https://a/sec1",
             "date": "2026-01",
@@ -35,8 +35,8 @@ def test_generate_site_builds_trees_and_pages(sandbox):
     assert (sandbox / "README.md").exists()
     assert (sandbox / "ai-security" / "README.md").exists()
     assert (sandbox / "ai-research" / "README.md").exists()
-    ai_pages = list((sandbox / "ai-research" / c.domain_slug("Agents & Harnesses")).glob("*.md"))
-    sec_pages = list((sandbox / "ai-security" / c.domain_slug("Injection")).glob("*.md"))
+    ai_pages = list((sandbox / "ai-research" / c.domain_slug("air.agents")).glob("*.md"))
+    sec_pages = list((sandbox / "ai-security" / c.domain_slug("ais.prompt-injection")).glob("*.md"))
     assert ai_pages and sec_pages
     readme = (sandbox / "README.md").read_text(encoding="utf-8")
     # Reader-first shape: the landing view leads with findings and links

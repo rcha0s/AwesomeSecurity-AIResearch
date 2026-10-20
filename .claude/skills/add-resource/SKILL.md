@@ -28,7 +28,9 @@ re-rank. Same rubric as `/research-scan`, one item.
 
 3. **Analyze the single item** with the `/research-scan` rubric:
    a valid `topic` (`ai-security` | `product-security` | `ai-research` — see `common.py`
-   `TOPICS`) + a free-text `domain`; a teachable `summary`; `lessons` as
+   `TOPICS`) + a `domain` ID of that topic from `python scripts/taxonomy.py list`
+   (never free text: merge holds a non-ID for review; if nothing fits, pick the nearest
+   ID and fill `proposed_domain` as in `/research-scan` step 3); a teachable `summary`; `lessons` as
    `{point, excerpt, confidence}`; a one-line `takeaway`; `tags`; and an open-ended
    `actionable` `{type, title, detail, skill_slug?}` (skill | harness | tool | takeaway |
    other). Score `novelty` (vs. the existing pools — skim `data/{ai-security,product-security,

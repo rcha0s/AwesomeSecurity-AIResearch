@@ -47,6 +47,7 @@ def _detail_relpath(entry: dict) -> str:
     domain = c.domain_slug(entry.get("domain") or "General")
     return f"findings/{topic}/{domain}/{_entry_filename(entry)}"
 
+
 # Normalize em/en dashes to a SPACED hyphen so they never read as a compound
 # ("word-word"); an em dash acting as a clause break becomes " - ".
 _DASH = re.compile(r"\s*[—–]\s*")
@@ -54,6 +55,7 @@ _DASH = re.compile(r"\s*[—–]\s*")
 
 def _sub_dash(text: str) -> str:
     return _DASH.sub(" - ", text)
+
 
 # A code asset that ships beside this script - not data under ROOT.
 TEMPLATE = Path(__file__).resolve().parent / "templates" / "site.html"
@@ -102,7 +104,8 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
     return {
         "id": entry.get("id", ""),
         "topic": entry.get("topic", ""),
-        "domain": entry.get("domain", ""),
+        "domain": c.domain_name(entry.get("domain") or ""),
+        "domain_id": entry.get("domain", ""),
         "title": entry.get("title", ""),
         "url": c.clean_source_url(entry.get("source_url") or entry.get("article_url") or ""),
         "takeaway": entry.get("takeaway") or entry.get("summary") or "",
@@ -175,8 +178,7 @@ def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
     seen_ids: set[str] = set()
     row_by_story: dict[str, int] = {}
 
-    def _emit(entry: dict, *, lane: str, reason: str = "", signals=None,
-              at: str = "") -> None:
+    def _emit(entry: dict, *, lane: str, reason: str = "", signals=None, at: str = "") -> None:
         row = finding_row(entry, conf, snapshot_days)
         row["signals"] = signals or []
         row["reason"] = reason
@@ -192,17 +194,21 @@ def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
                 continue
             if c.is_editorial(entry):
                 ed = entry.get("editorial") or {}
-                _emit(entry, lane="editorial",
-                      reason=ed.get("reason", ""),
-                      signals=ed.get("signals") or [],
-                      at=ed.get("at", ""))
+                _emit(
+                    entry,
+                    lane="editorial",
+                    reason=ed.get("reason", ""),
+                    signals=ed.get("signals") or [],
+                    at=ed.get("at", ""),
+                )
                 continue
             if c.is_news_curated(entry, conf, sources_by_id, window=None):
                 src = sources_by_id.get(entry.get("source_id") or "", {})
                 src_name = src.get("name", "")
                 tier = src.get("tier", "medium")
                 story_id, is_new = ds.assign_story_id(
-                    entry, dedup_idx,
+                    entry,
+                    dedup_idx,
                     source_tier=tier,
                     source_name=src_name,
                 )
@@ -211,21 +217,20 @@ def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
                     # this story. If the collision is against a research
                     # finding not in `rows`, skip — we don't repeat it.
                     if story_id in row_by_story:
-                        rows[row_by_story[story_id]].setdefault(
-                            "corroborators", []
-                        ).append({
-                            "url": entry.get("source_url", ""),
-                            "source_name": src_name,
-                            "tier": tier,
-                        })
+                        rows[row_by_story[story_id]].setdefault("corroborators", []).append(
+                            {
+                                "url": entry.get("source_url", ""),
+                                "source_name": src_name,
+                                "tier": tier,
+                            }
+                        )
                     continue
                 reason = (
-                    f"{src_name} announcement" if src_name
+                    f"{src_name} announcement"
+                    if src_name
                     else "Passed the news gate — fresh + on-topic + trusted source"
                 )
-                _emit(entry, lane="news",
-                      reason=reason,
-                      at=entry.get("published", ""))
+                _emit(entry, lane="news", reason=reason, at=entry.get("published", ""))
                 row_by_story[story_id] = len(rows) - 1
 
     ds.save_index(dedup_idx)
@@ -261,16 +266,37 @@ def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
         for entry in pool["entries"]:
             if not (c.is_curated(entry, conf) or c.is_editorial(entry)):
                 continue
-            src = src_root / c.domain_slug(entry.get("domain") or "General") / _entry_filename(entry)
+            src = (
+                src_root / c.domain_slug(entry.get("domain") or "General") / _entry_filename(entry)
+            )
             if not src.is_file():
                 # generate_site.py hasn't run in this workflow step yet, or
                 # slug drifted — skip silently rather than fail the render.
                 continue
-            dst = target_root / topic / c.domain_slug(entry.get("domain") or "General") / _entry_filename(entry)
+            dst = (
+                target_root
+                / topic
+                / c.domain_slug(entry.get("domain") or "General")
+                / _entry_filename(entry)
+            )
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(src, dst)
             written += 1
+            _copy_moved_stub(src_root, target_root / topic, entry)
     return written
+
+
+def _copy_moved_stub(src_root: Path, dst_root: Path, entry: dict) -> None:
+    """Mirror generate_site's "Moved" stub at the entry's pre-taxonomy path, so
+    old docs/findings/ links (the modal's URLs) keep resolving."""
+    old = c.moved_slug(entry)
+    src = src_root / old / _entry_filename(entry) if old else None
+    if src is None or not src.is_file():
+        return
+    dst = dst_root / old / _entry_filename(entry)
+    if not dst.exists():
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
 
 
 def lessons_index(conf: c.Config, snapshot_days: int) -> list[dict]:
@@ -329,7 +355,7 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
             slug: {
                 "name": meta["name"],
                 "blurb": meta["blurb"],
-                "domains": meta.get("domains", []),
+                "domains": [c.domain_name(d) for d in meta.get("domains", [])],
             }
             for slug, meta in c.TOPICS.items()
         },
@@ -348,7 +374,9 @@ def render(payload: dict, now: str) -> str:
     sequence that could break out is `</script>`; escaping the opening angle
     bracket of any closing tag keeps it inert without corrupting the JSON.
     """
-    data = _sub_dash(dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
+    data = _sub_dash(
+        dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    )
     html = TEMPLATE.read_text(encoding="utf-8")
     for token, value in (
         ("__DATA__", data),

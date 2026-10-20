@@ -23,7 +23,7 @@ Security researcher Johann Rehberger (wunderwuzzi) showed that Claude Code runni
 
 ---
 
-**Topic:** AI Security  ·  **Domain:** Prompt Injection  
+**Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)  ·  **Retrieved:** 2026-09-09  
 **Scores:** Newness 11 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 59.15**  
 **Tags:** `claude-code`, `prompt-injection`, `sandbox-escape`, `python`, `module-shadowing`, `auto-mode`  

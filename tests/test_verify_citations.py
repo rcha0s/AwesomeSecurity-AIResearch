@@ -68,7 +68,7 @@ def test_merge_flags_ungrounded(sandbox, monkeypatch):
     conf = c.load_config()
     entry = make_entry(
         topic="ai-security",
-        domain="MCP",
+        domain="ais.mcp-tools",
         source_url="https://a/x",
         lessons=[{"point": "p", "excerpt": "an invented quote", "confidence": 0.9}],
     )

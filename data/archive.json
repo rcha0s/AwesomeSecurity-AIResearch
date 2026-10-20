@@ -7,7 +7,7 @@
     "date": "2026-05",
     "discovered_via": "rss",
     "id": "memory-is-a-feature-it-is-also-an-attack-surface-cca67f7490",
-    "domain": "Memory & Context Poisoning",
+    "domain": "ais.data-poisoning",
     "subtype": "Memory & Context Poisoning",
     "summary": "OWASP's ASI06 (Memory & Context Poisoning) is illustrated by Cisco's 'MemoryTrap' vulnerability in Claude Code: a routine workflow (clone repo → approve an npm install) let a payload reach persistent memory, global hooks config, and the system-prompt layer — turning a one-time action into prompt injection that persists across sessions, projects, and reboots.",
     "takeaway": "Agent memory/persistence is a first-class attack surface: untrusted input carried forward becomes durable, trusted instruction.",
@@ -41,7 +41,8 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-05-14",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Memory & Context Poisoning"
   },
   {
     "source_url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
@@ -51,7 +52,7 @@
     "date": "2026-05",
     "discovered_via": "rss",
     "id": "a-0-click-exploit-chain-for-the-pixel-10-when-a-c350610bca",
-    "domain": "Spyware / Zero-Day",
+    "domain": "ps.mobile",
     "subtype": "Spyware / Zero-Day",
     "summary": "Google Project Zero published a 0-click exploit chain targeting the Pixel 10 ('When a Door Closes, a Window Opens'), continuing its deep-dive series on modern Android/Pixel exploitation and the mitigations that shape real-world attack chains.",
     "takeaway": "0-click chains remain viable on flagship, hardened devices; defense-in-depth and rapid patching still matter most.",
@@ -80,7 +81,8 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-05",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Spyware / Zero-Day"
   },
   {
     "source_url": "https://github.com/PrismorSec/prismor",
@@ -91,7 +93,7 @@
     "date": "2026-02",
     "discovered_via": "github",
     "id": "prismorsec-prismor-0bce7e4063",
-    "domain": "Agentic AI / MCP",
+    "domain": "ais.guardrails",
     "subtype": "Agentic AI / MCP",
     "summary": "Prismor is a runtime firewall for AI agents: it intercepts an agent's tool calls before they execute and blocks dangerous commands, secret leakage, and rogue actions. It represents a shift from static agent auditing to runtime enforcement at the tool-call boundary.",
     "takeaway": "The strongest control point for agent safety is the tool-call boundary — enforce policy at call time, not just in the prompt.",
@@ -125,7 +127,8 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-02",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Agentic AI / MCP"
   },
   {
     "source_url": "https://github.com/praetorian-inc/augustus",
@@ -136,7 +139,7 @@
     "date": "2026-02",
     "discovered_via": "github",
     "id": "praetorian-inc-augustus-c9c523c4b2",
-    "domain": "LLM Security Testing",
+    "domain": "ais.red-teaming",
     "subtype": "LLM Security Testing",
     "summary": "Augustus (Praetorian) is a single-binary Go LLM vulnerability scanner that tests models against 210+ adversarial probes — prompt injection, jailbreaks, encoding exploits, data extraction — across 28 providers. Unlike research tools (garak, promptfoo), it is built for production security testing with concurrency, rate limiting, and retry logic.",
     "takeaway": "LLM red-teaming is becoming an operational, CI-ready discipline — run a probe suite against every model/prompt change, not just at launch.",
@@ -170,7 +173,8 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-02",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "LLM Security Testing"
   },
   {
     "source_url": "http://security.googleblog.com/2026/04/ai-threats-in-wild-current-state-of.html",
@@ -180,7 +184,7 @@
     "date": "2026-04",
     "discovered_via": "rss",
     "id": "ai-threats-in-the-wild-the-current-state-of-prom-f7b3d9da35",
-    "domain": "Prompt Injection",
+    "domain": "ais.prompt-injection",
     "subtype": "Prompt Injection",
     "summary": "Google's Security team reports on the current real-world state of prompt injection on the web — moving the conversation from lab demos to observed in-the-wild indirect prompt-injection against browsing/agentic systems.",
     "takeaway": "Indirect prompt injection is now an operational threat, not a theoretical one; design agents assuming hostile web content.",
@@ -208,7 +212,8 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-04",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Prompt Injection"
   },
   {
     "source_url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2025",
@@ -218,7 +223,7 @@
     "date": "2026-02",
     "discovered_via": "rss",
     "id": "top-10-web-hacking-techniques-of-2025-cddbe440d3",
-    "domain": "Annual Roundup",
+    "domain": "ps.appsec",
     "subtype": "Annual Roundup",
     "summary": "PortSwigger's 19th annual community-powered ranking of the most innovative web security research of 2025, selected from 63 nominations by community vote plus an expert panel. James Kettle's 'HTTP/1.1 Must Die: the desync endgame' was a finalist.",
     "takeaway": "The single best reading list for web-security researchers each year — a curated map of the techniques that will define the next cycle of attacks.",
@@ -251,7 +256,8 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-02-05",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Annual Roundup"
   },
   {
     "source_url": "http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html",
@@ -261,7 +267,7 @@
     "date": "2026-04",
     "discovered_via": "rss",
     "id": "bringing-rust-to-the-pixel-baseband-ecfc893b29",
-    "domain": "Platform / OS",
+    "domain": "ps.mobile",
     "subtype": "Platform / OS",
     "summary": "Google is rewriting parts of the Pixel cellular baseband in Rust, bringing memory safety to one of the most attractive and hard-to-reach remote attack surfaces on a phone.",
     "takeaway": "Memory-safe languages are reaching the lowest, most security-critical layers — the baseband — meaningfully shrinking remote attack surface.",
@@ -290,11 +296,12 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-04",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Platform / OS"
   },
   {
     "id": "ai-mcp-supply-chain-2026",
-    "domain": "Agentic AI / MCP",
+    "domain": "ais.mcp-tools",
     "subtype": "Agentic AI / MCP",
     "title": "Systemic MCP implementation flaw exposes up to ~200k instances",
     "date": "2026-05",
@@ -316,11 +323,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-04-14",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Agentic AI / MCP"
   },
   {
     "id": "web-npm-typosquat-secrets-2026",
-    "domain": "Supply Chain",
+    "domain": "ps.supply-chain",
     "subtype": "Supply Chain",
     "title": "Typosquatted npm packages steal cloud and CI/CD secrets",
     "date": "2026-05",
@@ -342,11 +350,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-05-28",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Supply Chain"
   },
   {
     "id": "ai-agent-registry-poisoning-2026",
-    "domain": "Agentic AI / Supply Chain",
+    "domain": "ais.mcp-tools",
     "subtype": "Agentic AI / Supply Chain",
     "title": "AI agent skill registry poisoned at scale (ClawHub)",
     "date": "2026-03",
@@ -368,11 +377,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-04-14",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Agentic AI / Supply Chain"
   },
   {
     "id": "web-axios-npm-2026",
-    "domain": "Supply Chain",
+    "domain": "ps.supply-chain",
     "subtype": "Supply Chain",
     "title": "Axios npm package compromised (100M+ weekly downloads)",
     "date": "2026-03",
@@ -394,11 +404,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-04-20",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Supply Chain"
   },
   {
     "id": "ai-indirect-pi-wild-2026",
-    "domain": "Prompt Injection",
+    "domain": "ais.prompt-injection",
     "subtype": "Prompt Injection",
     "title": "First large-scale indirect prompt injection attacks observed in the wild",
     "date": "2026-03",
@@ -420,11 +431,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-03",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Prompt Injection"
   },
   {
     "id": "mobile-qualcomm-zeroday-2026",
-    "domain": "Spyware / Zero-Day",
+    "domain": "ps.mobile",
     "subtype": "Spyware / Zero-Day",
     "title": "Qualcomm zero-day (CVE-2026-21385) in March 2026 Android update",
     "date": "2026-03",
@@ -446,11 +458,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-03",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Spyware / Zero-Day"
   },
   {
     "id": "mobile-hardcoded-aws-creds-2026",
-    "domain": "Insecure Storage / Cryptography",
+    "domain": "ps.mobile",
     "subtype": "Insecure Storage / Cryptography",
     "title": "50+ mobile apps ship hardcoded AWS credentials",
     "date": "2026-02",
@@ -472,11 +485,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-02",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Insecure Storage / Cryptography"
   },
   {
     "id": "web-ai-authored-code-risk-2026",
-    "domain": "AI-Generated Code Risk",
+    "domain": "ps.ai-code",
     "subtype": "AI-Generated Code Risk",
     "title": "AI-authored code is a leading source of new web-app vulnerabilities",
     "date": "2026-02",
@@ -498,11 +512,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-02",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "AI-Generated Code Risk"
   },
   {
     "id": "mobile-hardcoded-crypto-keys-2026",
-    "domain": "Insecure Storage / Cryptography",
+    "domain": "ps.mobile",
     "subtype": "Insecure Storage / Cryptography",
     "title": "Hardcoded cryptographic keys in 47.8% of Android and 17.6% of iOS apps",
     "date": "2026-02",
@@ -524,11 +539,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-02",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Insecure Storage / Cryptography"
   },
   {
     "id": "ai-mcp-tool-poisoning-2026",
-    "domain": "Agentic AI / MCP",
+    "domain": "ais.mcp-tools",
     "subtype": "Agentic AI / MCP",
     "title": "MCP tool poisoning attacks (TPAs) via hidden tool-description metadata",
     "date": "2026-02",
@@ -550,11 +566,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-02",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Agentic AI / MCP"
   },
   {
     "id": "ai-rag-poisoning-2026",
-    "domain": "RAG / Data Poisoning",
+    "domain": "ais.data-poisoning",
     "subtype": "RAG / Data Poisoning",
     "title": "RAG poisoning via injected malicious documents in the retrieval corpus",
     "date": "2026-02",
@@ -576,11 +593,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-02",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "RAG / Data Poisoning"
   },
   {
     "id": "mobile-legacy-cve-exposure-2026",
-    "domain": "Legacy CVE Exposure",
+    "domain": "ps.mobile",
     "subtype": "Legacy CVE Exposure",
     "title": "Shipped apps carry years-old Critical CVEs in bundled components",
     "date": "2026-02",
@@ -602,11 +620,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-02",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Legacy CVE Exposure"
   },
   {
     "id": "web-cl0-desync-smuggling",
-    "domain": "Request Smuggling / Desync",
+    "domain": "ps.appsec",
     "subtype": "Request Smuggling / Desync",
     "title": "CL.0 and browser-powered desync request smuggling",
     "date": "2025-12",
@@ -628,11 +647,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2025-12",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Request Smuggling / Desync"
   },
   {
     "id": "web-waffled-waf-bypass",
-    "domain": "WAF Bypass",
+    "domain": "ps.appsec",
     "subtype": "WAF Bypass",
     "title": "WAFFLED: parsing discrepancies bypass web application firewalls",
     "date": "2025-12",
@@ -654,11 +674,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2025-12",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "WAF Bypass"
   },
   {
     "id": "ai-image-prompt-injection-2026",
-    "domain": "Prompt Injection",
+    "domain": "ais.prompt-injection",
     "subtype": "Prompt Injection",
     "title": "Image-based prompt injection hijacks multimodal LLMs",
     "date": "2026-01",
@@ -680,11 +701,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-01",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Prompt Injection"
   },
   {
     "id": "ai-system-prompt-extraction-2026",
-    "domain": "Information Disclosure",
+    "domain": "ais.prompt-injection",
     "subtype": "Information Disclosure",
     "title": "System-prompt extraction remains broadly effective",
     "date": "2026-01",
@@ -706,11 +728,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2026-01",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Information Disclosure"
   },
   {
     "id": "mobile-landfall-samsung-zeroday",
-    "domain": "Spyware / Zero-Day",
+    "domain": "ps.mobile",
     "subtype": "Spyware / Zero-Day",
     "title": "LANDFALL spyware exploited Samsung zero-day (CVE-2025-21042)",
     "date": "2025-11",
@@ -732,11 +755,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2025-11",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Spyware / Zero-Day"
   },
   {
     "id": "web-owasp-2025-supply-chain-category",
-    "domain": "Supply Chain",
+    "domain": "ps.supply-chain",
     "subtype": "Supply Chain",
     "title": "New OWASP category: Software Supply Chain Failures (A03)",
     "date": "2025-11",
@@ -758,11 +782,12 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2025-11",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Supply Chain"
   },
   {
     "id": "web-owasp-2025-bac-ssrf",
-    "domain": "Access Control",
+    "domain": "ps.identity",
     "subtype": "Access Control",
     "title": "OWASP Top 10:2025 — Broken Access Control (#1) now subsumes SSRF",
     "date": "2025-11",
@@ -784,7 +809,8 @@
       "scored_at": "2026-07-13T00:46:09+00:00"
     },
     "published": "2025-11",
-    "topic": "product-security"
+    "topic": "product-security",
+    "domain_label": "Access Control"
   },
   {
     "source_url": "https://github.com/agentscope-ai/PawBench",
@@ -795,7 +821,7 @@
     "date": "2026-05",
     "discovered_via": "github",
     "id": "agentscope-ai-pawbench-2caeb55853",
-    "domain": "Evals",
+    "domain": "air.evals",
     "subtype": "Evals",
     "summary": "PawBench is a benchmark for evaluating LLM × harness performance — measuring not just the model but the model-plus-harness system, reflecting that agent capability depends heavily on the surrounding scaffold.",
     "takeaway": "Evaluate the model-plus-harness as a unit; the harness is a first-class variable in agent performance.",
@@ -823,10 +849,11 @@
     "retrieved_at": "2026-07-13T00:46:09+00:00",
     "needs_review": false,
     "published": "2026-05",
-    "topic": "ai-research"
+    "topic": "ai-research",
+    "domain_label": "Evals"
   },
   {
-    "domain": "Orchestration",
+    "domain": "ais.agent-security",
     "subtype": "Orchestration",
     "title": "stale",
     "source_url": "https://a/stale",
@@ -850,7 +877,8 @@
       "context"
     ],
     "published": "2000-01-01",
-    "topic": "ai-security"
+    "topic": "ai-security",
+    "domain_label": "Orchestration"
   },
   {
     "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
@@ -863,7 +891,7 @@
     "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
     "source_rank": 75.0,
     "topic": "ai-security",
-    "domain": "Harness & Agent Security",
+    "domain": "ais.mcp-tools",
     "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
     "summary": "Unit 42 found five evasive malicious 'skills' persisting on ClawHub — the marketplace OpenClaw's agent pulls third-party, markdown-driven packages from with broad local system access — despite VirusTotal + ClawScan screening added after February's incidents. The five span infostealers (macOS, C2), scanner evasion (inflated file size to exceed thresholds), and two NOVEL agentic threats: runtime agentic affiliate injection and agentic front-running.",
     "takeaway": "Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.",
@@ -905,11 +933,12 @@
     "id": "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b",
     "retrieved_at": "2026-07-13T04:19:32+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Harness & Agent Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Model Supply Chain",
+    "domain": "ais.model-supply-chain",
     "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials, some carry embedded backdoors",
     "source_url": "https://arxiv.org/abs/2606.30373",
     "article_url": "https://arxiv.org/abs/2606.30373",
@@ -965,11 +994,12 @@
     "id": "over-970-000-ai-apps-on-model-hubs-measured-thou-6bac2eb552",
     "retrieved_at": "2026-07-21T14:42:54+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Model Supply Chain"
   },
   {
     "topic": "ai-security",
-    "domain": "Model Supply Chain",
+    "domain": "ais.model-supply-chain",
     "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
     "source_url": "https://arxiv.org/abs/2606.27511",
     "article_url": "https://arxiv.org/abs/2606.27511",
@@ -1025,11 +1055,12 @@
     "id": "a-malicious-federated-learning-aggregator-can-ba-926ac18741",
     "retrieved_at": "2026-07-21T14:42:54+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Model Supply Chain"
   },
   {
     "topic": "ai-security",
-    "domain": "Model Supply Chain",
+    "domain": "ais.model-supply-chain",
     "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
     "source_url": "https://arxiv.org/abs/2606.29239",
     "article_url": "https://arxiv.org/abs/2606.29239",
@@ -1085,11 +1116,12 @@
     "id": "quantguard-a-pre-quantization-defense-against-ba-29adf96f8b",
     "retrieved_at": "2026-07-21T14:42:54+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Model Supply Chain"
   },
   {
     "topic": "ai-security",
-    "domain": "computer-use agent security",
+    "domain": "ais.agent-security",
     "title": "TOCTOU race condition in computer-use agents: the screen changes between screenshot and click",
     "source_url": "https://embracethered.com/blog/posts/2026/toctou-agent-what-you-click-is-not-what-you-get/",
     "summary": "Computer-use agents capture a screenshot, reason about it for several seconds, then act on pixel coordinates — but an attacker-controlled page can change what sits at those coordinates during the reasoning window, so the agent clicks something other than what it saw. Johann Rehberger reproduces Jun Kokatsu's original ChatGPT Operator race condition against Claude Computer-Use, showing a reliable time-of-check-to-time-of-use (TOCTOU) attack where a 'Continue' button is swapped for a Send/consent button at identical coordinates. It is a classic race-condition bug surfacing in a novel agentic context, with the practical fix being a re-check of the UI at action time.",
@@ -1162,11 +1194,12 @@
     "retrieved_at": "2026-07-26T05:30:54+00:00",
     "needs_review": true,
     "grounding_score": 0.8,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "computer-use agent security"
   },
   {
     "topic": "product-security",
-    "domain": "Application Security",
+    "domain": "ps.appsec",
     "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
     "source_url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
     "article_url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
@@ -1225,11 +1258,12 @@
     "id": "kemp-loadmaster-pre-auth-rce-uninitialized-heap-d5e3554441",
     "retrieved_at": "2026-07-16T07:43:12+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Application Security"
   },
   {
     "topic": "ai-security",
-    "domain": "MCP & Tools",
+    "domain": "ais.mcp-tools",
     "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
     "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
     "article_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
@@ -1298,7 +1332,8 @@
         "timely"
       ],
       "at": "2026-07-26T21:08:26+00:00"
-    }
+    },
+    "domain_label": "MCP & Tools"
   },
   {
     "source_url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
@@ -1308,7 +1343,7 @@
     "date": "2026-07",
     "discovered_via": "rss",
     "id": "phantom-squatting-ai-hallucinated-domains-as-a-s-99acdb5c5d",
-    "domain": "Supply Chain",
+    "domain": "ps.ai-code",
     "subtype": "Supply Chain",
     "summary": "Unit 42 documented 'phantom squatting': LLMs consistently hallucinate web domains for legitimate brands, and adversaries register those nonexistent domains to intercept AI-generated traffic. Across 913 brands and 685,339 queries they found 13,229 malicious URLs and ~250,000 still-unregistered hallucinated domains — and predicted adversary registrations 18–51 days ahead.",
     "takeaway": "LLM hallucinations are a predictable supply-chain attack surface: attackers pre-register the domains/packages models invent.",
@@ -1346,11 +1381,12 @@
     "needs_review": false,
     "published": "2026-06-30",
     "topic": "product-security",
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Supply Chain"
   },
   {
     "topic": "product-security",
-    "domain": "AI coding assistant sandbox escape / path traversal",
+    "domain": "ps.ai-code",
     "title": "Committed git symlinks + misleading approval dialogs let AI coding assistants read/write files outside the workspace (Wiz 'GhostApproval')",
     "source_url": "https://snyk.io/blog/symlinks-are-still-scary/",
     "summary": "Git faithfully recreates symlinks stored in a repo (file mode 120000, blob is just the target path as text), so a file with an innocent name like project_settings.json can secretly point at ~/.ssh/authorized_keys or ~/.zshrc. When an AI coding assistant is asked to 'set up the workspace' and follows repo instructions, it follows the symlink transparently out of the sandbox, and the human approval dialog shows the benign in-repo name rather than the true resolved target. Wiz Research's GhostApproval tested six major assistants — Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf — and found all vulnerable.",
@@ -1425,7 +1461,8 @@
     "needs_review": false,
     "grounding_score": 1.0,
     "raw_path": "data/_raw/symlinks-full-8fx.txt",
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "AI coding assistant sandbox escape / path traversal"
   },
   {
     "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
@@ -1438,7 +1475,7 @@
     "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
     "source_rank": 75.0,
     "topic": "product-security",
-    "domain": "Malware & Wipers",
+    "domain": "ps.detection-response",
     "title": "GigaWiper: modular destructive malware that fakes ransomware",
     "summary": "Microsoft analyzed GigaWiper, a Golang backdoor that folds several separate malware families into on-demand destructive commands: a raw-disk wiper, a Crucio-derived routine that encrypts with keys that are never saved (irrecoverable), and a FlockWiper reimplementation. It marks a shift toward consolidated, modular destruction platforms.",
     "takeaway": "Wiper malware is consolidating into modular platforms, and 'ransomware' may be undecryptable destruction in disguise — plan recovery accordingly.",
@@ -1474,11 +1511,12 @@
     "id": "gigawiper-modular-destructive-malware-that-fakes-2b20f20b50",
     "retrieved_at": "2026-07-13T04:19:32+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Malware & Wipers"
   },
   {
     "id": "web-redhat-npm-2026",
-    "domain": "Supply Chain",
+    "domain": "ps.supply-chain",
     "subtype": "Supply Chain",
     "title": "@redhat-cloud-services npm namespace compromise (32+ packages)",
     "date": "2026-06",
@@ -1502,7 +1540,8 @@
     },
     "published": "2026-06",
     "topic": "product-security",
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply Chain"
   },
   {
     "source_url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
@@ -1515,7 +1554,7 @@
     "source_id": "rss:https-simonwillison-net-atom-everything",
     "source_rank": 55.0,
     "topic": "ai-research",
-    "domain": "Tooling & Infrastructure",
+    "domain": "air.agents",
     "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
     "summary": "Armin (building the Pi harness) found newer Claude models (Opus 4.8, Sonnet 5) invent made-up fields when calling Pi's custom edit tool — worse than older models — likely because they're RL-trained on Claude Code's built-in edit tool. Third-party harnesses with their own tool schemas get degraded tool-calling from the very newest models.",
     "takeaway": "Newer ≠ better for YOUR tools: match your harness's tool schemas to what the target model was trained on.",
@@ -1551,11 +1590,12 @@
     "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
     "retrieved_at": "2026-07-13T04:19:32+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Tooling & Infrastructure"
   },
   {
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
     "source_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
     "article_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
@@ -1612,7 +1652,8 @@
     "id": "goal-persistent-agents-a-frontier-model-built-a-759122f879",
     "retrieved_at": "2026-07-16T07:43:12+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "source_url": "https://github.com/omnigent-ai/omnigent",
@@ -1623,7 +1664,7 @@
     "date": "2026-06",
     "discovered_via": "github",
     "id": "omnigent-ai-omnigent-b26281bf0e",
-    "domain": "Meta-Harness",
+    "domain": "air.agents",
     "subtype": "Meta-Harness",
     "summary": "Omnigent is an open-source meta-harness: a common orchestration layer over Claude Code, Codex, Cursor, OpenCode, Pi and custom agents. You swap or combine harnesses without rewriting, enforce policies and sandboxing, and drive sessions from terminal, browser, or phone.",
     "takeaway": "The 'meta-harness' is emerging as an abstraction layer above individual coding agents — orchestrate many, swap freely, enforce policy centrally.",
@@ -1661,7 +1702,8 @@
     "needs_review": false,
     "published": "2026-06",
     "topic": "ai-research",
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Meta-Harness"
   },
   {
     "source_url": "https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything",
@@ -1674,7 +1716,7 @@
     "source_id": "rss:https-simonwillison-net-atom-everything",
     "source_rank": 55.0,
     "topic": "ai-research",
-    "domain": "Models & Capabilities",
+    "domain": "air.models",
     "title": "GPT-5.6 (Luna/Terra/Sol): three tiers, 1M context, agentic benchmark claims",
     "summary": "OpenAI shipped GPT-5.6 in three sizes (Luna/Terra/Sol) at $1-5 in / $6-30 out per Mtok, all with a 1M-token context, 128k max output, and a Feb 2026 cutoff. OpenAI's headline claim is long-running agentic performance beating Claude Fable 5.",
     "takeaway": "Evaluate the tiers on your own agentic task — per-token price means less now that reasoning-token counts dominate cost.",
@@ -1703,11 +1745,12 @@
     "id": "gpt-5-6-luna-terra-sol-three-tiers-1m-context-ag-c37d1d22d0",
     "retrieved_at": "2026-07-13T04:19:32+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Models & Capabilities"
   },
   {
     "topic": "ai-security",
-    "domain": "AI-Generated Code Risk / Package Verification Gap",
+    "domain": "ais.agent-security",
     "cluster": "G",
     "related_claims": [
       "llm-generated-code-hallucinates-package-names",
@@ -1795,11 +1838,12 @@
     "id": "ai-coding-agents-skip-package-verification-and-a-4cb9d7e9e7",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 0.75
+    "grounding_score": 0.75,
+    "domain_label": "AI-Generated Code Risk / Package Verification Gap"
   },
   {
     "topic": "ai-security",
-    "domain": "Agent Sandbox Escape & Evaluation Containment",
+    "domain": "ais.ai-infra",
     "cluster": "B",
     "related_claims": [
       "provider-guardrails-can-block-incident-response",
@@ -1876,11 +1920,12 @@
     "id": "openai-and-hugging-face-partner-to-address-secur-08135780c4",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 0.75
+    "grounding_score": 0.75,
+    "domain_label": "Agent Sandbox Escape & Evaluation Containment"
   },
   {
     "topic": "ai-security",
-    "domain": "MCP & Tools",
+    "domain": "ais.mcp-tools",
     "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
     "source_url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
     "article_url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
@@ -1937,11 +1982,12 @@
     "id": "toolhive-mcp-ssrf-host-side-discovery-runs-outsi-2efcb63df1",
     "retrieved_at": "2026-07-16T07:43:12+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "MCP & Tools"
   },
   {
     "topic": "ai-security",
-    "domain": "Independent Validation & Incident Response",
+    "domain": "ais.ai-infra",
     "cluster": "J",
     "related_claims": [
       "provider-guardrails-can-block-incident-response",
@@ -2020,11 +2066,12 @@
     "id": "the-generator-can-t-be-the-validator-what-openai-d1e4e10746",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Independent Validation & Incident Response"
   },
   {
     "topic": "ai-security",
-    "domain": "Model Supply Chain",
+    "domain": "ais.model-supply-chain",
     "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
     "source_url": "https://arxiv.org/abs/2607.17503",
     "article_url": "https://arxiv.org/abs/2607.17503",
@@ -2080,11 +2127,12 @@
     "id": "shadowpickle-pickle-vm-import-tricks-evade-ten-m-edd0ba8c12",
     "retrieved_at": "2026-07-21T07:37:44+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Model Supply Chain"
   },
   {
     "topic": "ai-security",
-    "domain": "MCP Protocol / Output-Neutralization Injection",
+    "domain": "ais.mcp-tools",
     "cluster": "F",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -2162,11 +2210,12 @@
     "id": "ansi-escape-injection-in-mcp-servers-hidden-from-9c26d856ab",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 0.5
+    "grounding_score": 0.5,
+    "domain_label": "MCP Protocol / Output-Neutralization Injection"
   },
   {
     "topic": "ai-security",
-    "domain": "Skill Supply Chain",
+    "domain": "ais.mcp-tools",
     "title": "Agent skill security is a lifecycle problem, not just a runtime one (SkillSec-Eval)",
     "source_url": "https://arxiv.org/abs/2607.13987",
     "article_url": "https://arxiv.org/abs/2607.13987",
@@ -2223,11 +2272,12 @@
     "id": "agent-skill-security-is-a-lifecycle-problem-not-097f176061",
     "retrieved_at": "2026-07-16T07:43:12+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Skill Supply Chain"
   },
   {
     "topic": "ai-security",
-    "domain": "MCP server security / agentic AWS access",
+    "domain": "ais.mcp-tools",
     "title": "AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)",
     "source_url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
     "summary": "The AWS API MCP Server (awslabs.aws-api-mcp-server) loads the data needed to enforce its configured deny/gate security policy at process startup. If that load fails, the server keeps running with no enforcement in place, so the per-request security check is skipped for the entire life of the process and AWS operations the policy was meant to restrict execute unchecked. This is a fail-open (CWE-455) design flaw that turns a transient startup error into a durable, silent policy bypass on an agent's path to real AWS infrastructure.",
@@ -2292,11 +2342,12 @@
     "retrieved_at": "2026-07-26T05:30:56+00:00",
     "needs_review": true,
     "grounding_score": 0.5,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "MCP server security / agentic AWS access"
   },
   {
     "topic": "ai-security",
-    "domain": "Harness & Agent Security",
+    "domain": "ais.ai-infra",
     "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
     "source_url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
     "article_url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
@@ -2363,11 +2414,12 @@
         "timely"
       ],
       "at": "2026-07-26T21:08:26+00:00"
-    }
+    },
+    "domain_label": "Harness & Agent Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Memory & Context Poisoning",
+    "domain": "ais.data-poisoning",
     "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
     "source_url": "https://arxiv.org/abs/2607.17619",
     "article_url": "https://arxiv.org/abs/2607.17619",
@@ -2423,11 +2475,12 @@
     "id": "insecure-coding-preferences-persist-in-llm-long-1b637b5adc",
     "retrieved_at": "2026-07-21T07:37:44+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Memory & Context Poisoning"
   },
   {
     "topic": "ai-security",
-    "domain": "Agent runtime / code-interpreter sandbox",
+    "domain": "ais.ai-infra",
     "title": "AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)",
     "source_url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
     "summary": "The AWS Bedrock AgentCore Python SDK (bedrock-agentcore) exposes a Code Interpreter client whose install_packages() method builds a pip invocation from caller-supplied package names without neutralizing argument delimiters (CWE-88). A crafted package specifier can smuggle extra pip options/arguments, so a remote authenticated user who can influence those arguments — including via model-generated output routed into the installer — can execute arbitrary commands inside the managed sandbox. Fixed in 1.18.1; CVSS 8.4 High.",
@@ -2494,7 +2547,8 @@
     "retrieved_at": "2026-07-26T05:30:55+00:00",
     "needs_review": true,
     "grounding_score": 0.75,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "Agent runtime / code-interpreter sandbox"
   },
   {
     "article_url": "https://arxiv.org/abs/2607.17535",
@@ -2512,7 +2566,7 @@
     "source_name": "arXiv cs.CR (Cryptography and Security)",
     "id": "salience-induction-against-multi-hop-rag-agents-ceb90f3168",
     "topic": "ai-security",
-    "domain": "RAG & Retrieval Poisoning",
+    "domain": "ais.data-poisoning",
     "title": "Salience Induction: steering a multi-hop RAG agent to the wrong answer using only true statements and no instructions",
     "source_url": "https://arxiv.org/abs/2607.17535",
     "raw_path": "data/_raw/salience-induction-against-multi-hop-rag-agents-ceb90f3168.txt",
@@ -2561,7 +2615,8 @@
     "verify_note": "Verifier scored novelty 45, arguing the salience channel largely reduces to known context-position/distractor effects and that 'a third attack surface' oversells; it also caught two overstatements now fixed (the strongest baseline does reduce ASR by ~7.6 points, so 'defenses do not catch them' was wrong; and the five-model/three-architecture generalization applies to the attack, not to the defense figures). Held for review on novelty disagreement.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "RAG & Retrieval Poisoning"
   },
   {
     "article_url": "https://arxiv.org/abs/2607.17550",
@@ -2579,7 +2634,7 @@
     "source_name": "arXiv cs.CR (Cryptography and Security)",
     "id": "a-ispy-parasitic-trojans-for-machine-learning-in-6997eb9850",
     "topic": "ai-security",
-    "domain": "Model Supply Chain",
+    "domain": "ais.model-supply-chain",
     "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
     "source_url": "https://arxiv.org/abs/2607.17550",
     "raw_path": "data/_raw/a-ispy-parasitic-trojans-for-machine-learning-in-6997eb9850.txt",
@@ -2629,11 +2684,12 @@
     "verify_note": "Verifier confirmed every claim traces to the abstract but scored novelty far lower (42), naming Blind Backdoors and ImpNet as covering the core 'untrusted execution substrate' idea years earlier; it also flagged that all figures are abstract-only, self-reported, and that the evasion claim names no defense it defeats. Held for review on novelty disagreement and evidence level.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Model Supply Chain"
   },
   {
     "topic": "ai-security",
-    "domain": "Prompt Injection",
+    "domain": "ais.prompt-injection",
     "title": "Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection",
     "source_url": "https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/",
     "article_url": "https://embracethered.com/blog/posts/2026/macos-terminal-dillma-dns-exfil-ansi-escape-code-fix/",
@@ -2689,11 +2745,12 @@
     "id": "apple-fixed-the-macos-terminal-ansi-dns-exfiltra-23f6fdd39e",
     "retrieved_at": "2026-07-21T07:37:44+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Prompt Injection"
   },
   {
     "topic": "ai-security",
-    "domain": "Harness & Agent Security",
+    "domain": "ais.data-poisoning",
     "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
     "source_url": "https://arxiv.org/abs/2607.17986",
     "article_url": "https://arxiv.org/abs/2607.17986",
@@ -2758,11 +2815,12 @@
         "timely"
       ],
       "at": "2026-07-26T21:08:26+00:00"
-    }
+    },
+    "domain_label": "Harness & Agent Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Agent Verification & Stewardship",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "coding-agents-produce-plausible-but-hallucinated-apis",
@@ -2841,7 +2899,8 @@
     "id": "scientific-computing-in-the-age-of-agentic-ai-c5ee21665e",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Agent Verification & Stewardship"
   },
   {
     "article_url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
@@ -2856,7 +2915,7 @@
     "source_name": "GitHub Advisory Database",
     "id": "ghsa-824w-x939-6cmc-a20ac667fe",
     "topic": "ai-security",
-    "domain": "LLM gateway / AI infrastructure",
+    "domain": "ais.ai-infra",
     "title": "TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF",
     "source_url": "https://github.com/advisories/GHSA-824w-x939-6cmc",
     "raw_path": "data/_raw/ghsa-824w-x939-6cmc-a20ac667fe.txt",
@@ -2905,11 +2964,12 @@
     "verify_note": "Verifier scored novelty 12/100 - 'the conceptual delta over prior art is approximately zero', same primitive, sinks, fix and workaround as a decade of prior bugs, and it does not even carry the LLM-specific wrinkle (no prompt-injection-reachable path). Also corrected: the advisory says files that MAY contain credentials, does not demonstrate metadata retrieval, states exposure as a precondition rather than an observed fact, and gives no CVE/CVSS/affected range. Held for review as derivative.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "LLM gateway / AI infrastructure"
   },
   {
     "topic": "product-security",
-    "domain": "Supply Chain & Dependencies",
+    "domain": "ps.supply-chain",
     "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
     "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
     "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
@@ -2980,11 +3040,12 @@
     "id": "asyncapi-npm-compromise-import-time-payload-defe-ebb4a53599",
     "retrieved_at": "2026-07-16T07:43:12+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Supply Chain & Dependencies"
   },
   {
     "topic": "product-security",
-    "domain": "Supply Chain & Dependencies (npm)",
+    "domain": "ps.supply-chain",
     "cluster": "G",
     "related_claims": [
       "package-installers-run-arbitrary-code-by-default",
@@ -3064,7 +3125,8 @@
     "id": "the-npm-threat-landscape-attack-surface-and-miti-1441bd7ff9",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Supply Chain & Dependencies (npm)"
   },
   {
     "article_url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
@@ -3083,7 +3145,7 @@
     "source_name": "@Unit42_Intel",
     "id": "a-developer-used-ai-to-build-tuxbot-an-iot-botne-da7b722c49",
     "topic": "product-security",
-    "domain": "Malware & Threat Intel",
+    "domain": "ps.detection-response",
     "title": "TuxBot v3: an LLM-assisted IoT botnet shipped with the model's safety disclaimer and raw chain-of-thought still in the source",
     "source_url": "https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/",
     "raw_path": "data/_raw/a-developer-used-ai-to-build-tuxbot-an-iot-botne-da7b722c49.txt",
@@ -3133,7 +3195,8 @@
     "verify_note": "Verifier refuted the original framing on two points, both corrected here: 'LLM-built' overstated a borrowed-code assembly (AISURU/Wuhan lineage, ported MHDDoS) that was LLM-assisted, and the IRC/HTTP failures were wrongly attributed to the model when Unit 42 pins that XOR key desync on the developer. It also confirmed no vendor or model is named anywhere, that the ~70% is an analyst estimate, and that the cached source text is truncated at the ingest limit. Remaining claims verified as supported.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Malware & Threat Intel"
   },
   {
     "article_url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
@@ -3148,7 +3211,7 @@
     "source_name": "GitHub Advisory Database",
     "id": "ghsa-6xj8-qv9j-xcjq-aae4e4a05d",
     "topic": "product-security",
-    "domain": "Developer Tooling & Template Injection",
+    "domain": "ps.appsec",
     "title": "Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd",
     "source_url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
     "raw_path": "data/_raw/ghsa-6xj8-qv9j-xcjq-aae4e4a05d.txt",
@@ -3197,11 +3260,12 @@
     "verify_note": "Verifier found all five claims supported by the advisory's code walk-through and two PoCs, and confirmed the fix guidance. Corrections applied: the trigger needs a prompt render after cd rather than being wholly passive, the file-write PoC is stated verified on Windows while Linux/macOS exploitation is argued rather than shown, and the slash-free ${IFS} bypass is asserted without output. It scored novelty lower (30) on the grounds that double-eval SSTI and malicious-repo-metadata attacks are established classes; we hold 62 against this pool's prior art and record the disagreement here.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Developer Tooling & Template Injection"
   },
   {
     "topic": "product-security",
-    "domain": "AI-Generated Code Risk",
+    "domain": "ps.ai-code",
     "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
     "source_url": "https://arxiv.org/abs/2607.12428",
     "article_url": "https://arxiv.org/abs/2607.12428",
@@ -3267,11 +3331,12 @@
         "teachable"
       ],
       "at": "2026-07-26T21:08:26+00:00"
-    }
+    },
+    "domain_label": "AI-Generated Code Risk"
   },
   {
     "topic": "product-security",
-    "domain": "phishing / identity / OAuth device-code",
+    "domain": "ps.identity",
     "title": "Four stacked evasion techniques hide device-code phishing from scanners: blob URLs, client-side CAPTCHA gates, multi-hop SaaS flows, and source-code confusables",
     "source_url": "https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt",
     "summary": "Unit 42 documents a Microsoft-impersonating OAuth device-code phishing campaign that layers four independent evasion techniques, each defeating a different class of defense: blob-URL delivery (no network-fetchable content for blocklists/safe-browsing), client-side-only CAPTCHA gates (block non-JS scanners), multi-step chains through legitimate SaaS platforms (bypass URL/domain reputation), and source-code corruption via Cyrillic confusables plus invisible characters and injected HTML (defeat substring and hash-based signatures). The takeaway for defenders is that static URL/content reputation and signature matching all fail here; detection must render the page (execute JS, recover DOM text) and normalize Unicode confusables before comparison.",
@@ -3351,11 +3416,12 @@
     "retrieved_at": "2026-07-26T05:30:54+00:00",
     "needs_review": true,
     "grounding_score": 0.0,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "phishing / identity / OAuth device-code"
   },
   {
     "topic": "product-security",
-    "domain": "browser-delivered malware / malvertising",
+    "domain": "ps.detection-response",
     "title": "SourTrade: browser reassembles a Bun-based executable from split parts, defeating hash-based detection with per-session builds",
     "source_url": "https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html",
     "summary": "The SourTrade malvertising campaign never serves a complete malicious binary. A cloaked landing page uses a ServiceWorker + SharedWorker to fetch a legitimate Bun runtime from one domain and the malicious PE headers plus JavaScriptCore bytecode (as Base64 in a /config response) from another, then byte-copies them together in the browser per a template recipe. An AES-CTR pseudorandom stream seeded per session changes the file hash on every build while keeping the payload code intact, so no finished malware ever traverses the wire as one artifact.",
@@ -3433,11 +3499,12 @@
     "retrieved_at": "2026-07-26T05:30:58+00:00",
     "needs_review": false,
     "grounding_score": 1.0,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "browser-delivered malware / malvertising"
   },
   {
     "topic": "product-security",
-    "domain": "OT/ICS device security",
+    "domain": "ps.cloud-infra",
     "title": "Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches",
     "source_url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
     "summary": "Unit 42 and Siemens disclosed a chained trilogy of zero-days in Ruggedcom ROX II OT switches (CVE-2025-40948 file disclosure, CVE-2025-40947 feature-key command injection, CVE-2025-40949 task-scheduler cron injection) that escalates from reconnaissance to persistent root. Each link abuses a root-privileged process that passes unsanitized user input to a shell command: xz misused as a file reader, a gpgv signature string injected via system(), and web-UI scheduler fields written into the root cron table. Fixed in firmware V2.17.1; the takeaway is that an OT switch built to secure the network is itself a full command-injection attack surface.",
@@ -3517,7 +3584,8 @@
     "retrieved_at": "2026-07-26T05:30:54+00:00",
     "needs_review": true,
     "grounding_score": 1.0,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "OT/ICS device security"
   },
   {
     "article_url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
@@ -3532,7 +3600,7 @@
     "source_name": "GitHub Advisory Database",
     "id": "ghsa-xg4h-6gfc-h4m8-52cdd221cc",
     "topic": "product-security",
-    "domain": "Authorization & Access Control",
+    "domain": "ps.identity",
     "title": "etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies",
     "source_url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
     "raw_path": "data/_raw/ghsa-xg4h-6gfc-h4m8-52cdd221cc.txt",
@@ -3582,11 +3650,12 @@
     "verify_note": "Verifier scored novelty 20/100 - the 'stream endpoint skips the read endpoint's authz check' pattern has many documented prior instances, so only the instance is new. It also flagged that the advisory gives no root cause (the per-endpoint-drift explanation is our inference and is labelled as such), that 'only Watch' overstates a list of three unaffected request types, and that Watch delivers events rather than a keyspace snapshot. Held for review as a known class.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Authorization & Access Control"
   },
   {
     "topic": "product-security",
-    "domain": "Autonomous Application Testing",
+    "domain": "ps.offensive",
     "cluster": "L",
     "related_claims": [
       "capability-elicitation-lags-training",
@@ -3670,11 +3739,12 @@
     "id": "what-is-ai-pentesting-and-how-does-it-work-b1ec5b2854",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Autonomous Application Testing"
   },
   {
     "topic": "product-security",
-    "domain": "AI-augmented SAST",
+    "domain": "ps.ai-code",
     "cluster": "M",
     "related_claims": [
       "coding-agents-produce-plausible-but-hallucinated-apis",
@@ -3746,11 +3816,12 @@
     "id": "introducing-semgrep-agentic-workflows-automate-d-82c3b5ed3a",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "AI-augmented SAST"
   },
   {
     "topic": "product-security",
-    "domain": "Shell escaping / command injection (Node.js)",
+    "domain": "ps.appsec",
     "title": "Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses",
     "source_url": "https://github.com/advisories/GHSA-w4hw-qcx7-56pr",
     "summary": "Shescape, a popular Node.js library whose whole purpose is to safely escape untrusted arguments for a shell, failed to neutralize parentheses on Windows CMD, letting an attacker break out of a conditional and inject commands via the escape/escapeAll APIs (CVSS 9.2, patched in 2.1.14 / 3.0.1). It is one of four Shescape advisories in this batch — alongside Zsh/Dash path-disclosure and quadratic-DoS bugs — showing that per-shell quoting edge cases keep producing bypasses. The recurring lesson: shell-escaping libraries are fragile across shells and OSes because each shell has its own metacharacter grammar, and a single missed construct re-opens injection.",
@@ -3814,11 +3885,12 @@
     "retrieved_at": "2026-07-26T05:30:56+00:00",
     "needs_review": true,
     "grounding_score": 0.0,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "Shell escaping / command injection (Node.js)"
   },
   {
     "topic": "product-security",
-    "domain": "Application Security",
+    "domain": "ps.ai-code",
     "title": "A working taxonomy of open-source AI code-security harnesses: exploitgen, skill-boosting, SAST+LLM",
     "source_url": "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses",
     "article_url": "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses",
@@ -3870,11 +3942,12 @@
     "id": "a-working-taxonomy-of-open-source-ai-code-securi-41b13f54e0",
     "retrieved_at": "2026-07-21T07:37:44+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Application Security"
   },
   {
     "topic": "product-security",
-    "domain": "Internal Vulnerability Scanning & Attack Surface",
+    "domain": "ps.offensive",
     "cluster": null,
     "related_claims": [],
     "title": "Introducing Internal Network Scanning: see your network the way an attacker inside it would",
@@ -3941,12 +4014,13 @@
     "id": "introducing-internal-network-scanning-see-your-n-f1f7162f74",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Internal Vulnerability Scanning & Attack Surface"
   },
   {
     "id": "co-founder-of-controversial-spyware-firm-had-isr-2e9bd23ff9",
     "topic": "product-security",
-    "domain": "Targeted Surveillance",
+    "domain": "ps.detection-response",
     "cluster": null,
     "related_claims": [],
     "title": "Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport",
@@ -4005,12 +4079,13 @@
     "verify_note": "Both excerpts appear verbatim in raw file lines 96 and 98. Cluster set to null because Mobile security / spyware attribution is explicitly excluded (news-lane only) in data/interests.yaml. No claim IDs in the ledger match this domain.",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 0.5
+    "grounding_score": 0.5,
+    "domain_label": "Targeted Surveillance"
   },
   {
     "id": "how-we-use-goal-to-find-bugs-in-patch-the-planet-3750b30fd6",
     "topic": "ai-research",
-    "domain": "Agent Harness Design",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "few-distinct-tools-beat-many",
@@ -4085,11 +4160,12 @@
     "verify_note": "All four excerpts appear verbatim in raw file lines 43, 57, 53, 28. Cluster B (Agents and harnesses) fits precisely (\"agent evals, incident-driven eval sets, groundedness scoring\"). Related claim on tool count is a loose fit — the article does not directly discuss tool count — but the split-agent finding indirectly supports the tool/agent minimalism family. swe-bench claim is relevant because Rust/curl/zlib are production audits, not benchmark tasks. Groundedness claim is directly supported by aicov — they built instrumentation because self-reports were unreliable.",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 0.0
+    "grounding_score": 0.0,
+    "domain_label": "Agent Harness Design"
   },
   {
     "topic": "ai-research",
-    "domain": "coding-agent harness design (first-party Anthropic practices)",
+    "domain": "air.agents",
     "title": "How the Claude Code team designs its harness: tool minimalism, incident-driven evals, system-prompt compaction, and an auto-mode permission classifier",
     "source_url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
     "summary": "An annotated transcript of Simon Willison's interview with Cat Wu and Thariq from Anthropic's Claude Code team, giving a first-party account of how they actually build and dogfood a coding agent. Key transferable practices: keep the tool set small and each tool functionally distinct (they removed grep/glob in favor of bash), grow eval sets from real production incidents rather than speculation, and shrink the system prompt by removing examples and replacing hard rules with nuanced context. Security is enforced by a Sonnet 'auto mode' classifier that reads the tool call plus conversation context to grant dynamic permissions, plus credential injection and red-teamed sandbox evals.",
@@ -4171,11 +4247,12 @@
     "retrieved_at": "2026-07-26T05:30:54+00:00",
     "needs_review": false,
     "grounding_score": 0.2,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "coding-agent harness design (first-party Anthropic practices)"
   },
   {
     "topic": "ai-research",
-    "domain": "Harness / context management",
+    "domain": "air.context",
     "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
     "source_url": "https://github.com/algal/pi-openai-server-compaction",
     "summary": "OpenAI's Codex compacts long-running sessions by calling the Responses API's server-side compaction protocol — sending a `compaction_trigger` through `POST /v1/responses` and getting back an opaque, encrypted `compaction` artifact instead of a text summary — which reportedly lets it 'keep hammering' on long tasks as if context were infinite. Because the endpoint is public and Codex is open source, a third party reconstructed exactly how Codex uses it and packaged it as a Pi extension, running it alongside a portable Pi text summary so non-OpenAI models and session forking still work. The author's own held-out benchmark shows this native/remote policy recalling more old state (78% vs 48% exact recall) but at 4.58x more compaction output tokens and a 29% larger billed context, with high run-to-run variance — so it is not shown to be better at an equal token budget.",
@@ -4252,11 +4329,12 @@
     "retrieved_at": "2026-07-26T05:30:58+00:00",
     "needs_review": false,
     "grounding_score": 1.0,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "Harness / context management"
   },
   {
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "title": "Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone",
     "source_url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
     "article_url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
@@ -4308,7 +4386,8 @@
     "id": "auditing-a-cyber-benchmark-for-groundedness-mode-bfc4099549",
     "retrieved_at": "2026-07-21T07:37:44+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Evaluation"
   },
   {
     "article_url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
@@ -4325,7 +4404,7 @@
     "source_name": "ProjectDiscovery Blog",
     "id": "oh-my-rogue-agent-87a47d2f7a",
     "topic": "ai-research",
-    "domain": "Eval harness design & containment",
+    "domain": "air.evals",
     "title": "Rogue agents in security evals are not unprecedented: ~20% of ProjectDiscovery's CTF solves took an unintended path",
     "source_url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
     "raw_path": "data/_raw/oh-my-rogue-agent-87a47d2f7a.txt",
@@ -4372,11 +4451,12 @@
     "verify_note": "Verifier confirmed the figures are quoted accurately but demanded scoping now applied: the ~20% is an unintended-solve rate on their own suite with open-weight models and no published denominator, not a general rogue-behavior rate; the 60-turn cap is an operator-overridable default and the $10-$20 budget is an average; and web search is deliberately allowed, so framing the network as fully sealed was wrong. All Hugging Face / OpenAI incident detail is the author's second-hand recap of public statements and is not asserted here. It scored novelty 55 and relevance 88, and flagged the tracing-service leak as the strongest material, which is now a lesson.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Eval harness design & containment"
   },
   {
     "topic": "ai-research",
-    "domain": "Red-Teaming Methodology",
+    "domain": "air.evals",
     "cluster": "L",
     "related_claims": [
       "capability-elicitation-lags-training",
@@ -4455,11 +4535,12 @@
     "id": "enhancing-ai-security-through-global-ai-red-team-58e381fc0f",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Red-Teaming Methodology"
   },
   {
     "topic": "ai-research",
-    "domain": "LLM security-eval methodology",
+    "domain": "air.evals",
     "title": "Kimi K3 code-security eval: matching F1 hides a precision gap that shifts cost to human triage",
     "source_url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
     "summary": "When benchmarking LLMs for code-security scanning (IDOR detection across repos), Kimi K3's aggregate F1 (0.340) sat within noise of GLM-5.2 and Claude Opus 4.8, but its precision (0.684 vs a 0.84-0.91 competitor band) was far lower and it collapsed to ~6% F1 on the largest enterprise-style repo while peers held ~20%. The transferable lesson: a headline F1 or recall number can mask where the real deployment cost lives (false positives your team must triage), so evaluate precision, per-repo behavior, and repos that resemble your own rather than a single aggregate score.",
@@ -4533,7 +4614,8 @@
     "retrieved_at": "2026-07-26T05:30:57+00:00",
     "needs_review": true,
     "grounding_score": 0.8,
-    "corroborating_sources": []
+    "corroborating_sources": [],
+    "domain_label": "LLM security-eval methodology"
   },
   {
     "article_url": "https://arxiv.org/abs/2607.13596",
@@ -4551,7 +4633,7 @@
     "source_name": "arXiv cs.CR (Cryptography and Security)",
     "id": "protective-capacity-hallucination-when-large-lan-2e300c2a4e",
     "topic": "ai-research",
-    "domain": "Agent reliability & capability boundaries",
+    "domain": "air.alignment",
     "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
     "source_url": "https://arxiv.org/abs/2607.13596",
     "raw_path": "data/_raw/protective-capacity-hallucination-when-large-lan-2e300c2a4e.txt",
@@ -4598,12 +4680,13 @@
     "verify_note": "Verifier scored novelty 34, arguing this is a new label on a known cluster (capability miscalibration plus domain-selective alignment), and refuted the original framing of the actionable: the source names deployment-side capability specification as a mitigation target and never tests it, never specifies where to state it, and covers conversational sessions rather than tool-using agents - so the agent/tool-call implication is our extrapolation and is marked as such. 'Will claim' was softened to 'may claim'. Held for review.",
     "retrieved_at": "2026-07-26T19:54:37+00:00",
     "needs_review": true,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "Agent reliability & capability boundaries"
   },
   {
     "id": "google-dev-kit-spurs-first-ever-agent-on-agent-v-f48af27031",
     "topic": "ai-security",
-    "domain": "Agent-to-Agent Security / CI Prompt Injection",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "gate-agent-prs-with-automated-checks",
@@ -4681,11 +4764,12 @@
     "verify_note": "Four excerpts verified verbatim against data/_raw/mrscan-batch06-4.txt. Cluster B (agent-to-agent security) is the best fit; cluster E (prompt injection) also applies but B is more specific to the agent-privilege-boundary mechanism. Related claims all exist in claims.json.",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent-to-Agent Security / CI Prompt Injection"
   },
   {
     "topic": "ai-security",
-    "domain": "Multi-Agent Lateral Movement & Covert Coordination",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "agent-memory-is-a-persistent-attack-surface",
@@ -4763,12 +4847,13 @@
     "id": "openai-didn-t-notice-its-ai-agents-using-a-messa-4f8630d341",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Multi-Agent Lateral Movement & Covert Coordination"
   },
   {
     "id": "llm-heist-hijacking-litellm-for-traffic-intercep-7dd99ae13f",
     "topic": "ai-security",
-    "domain": "AI Gateway / Deployment Infrastructure",
+    "domain": "ais.ai-infra",
     "cluster": "I",
     "related_claims": [
       "long-lived-cloud-credentials-are-obsolete",
@@ -4844,11 +4929,12 @@
     "verify_note": "All four excerpts were verified verbatim against data/_raw/mrscan-batch06-1.txt. Cluster I fits (deployment infra, IAM for agents). Related claims exist in claims.json.",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Gateway / Deployment Infrastructure"
   },
   {
     "topic": "ai-security",
-    "domain": "Agent framework security",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "prompt-injection-is-a-permanent-attack-surface",
@@ -4927,12 +5013,13 @@
     "id": "prompt-injection-isn-t-the-bug-ai-agent-framewor-b51514d4e2",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent framework security"
   },
   {
     "id": "watching-agents-work-a-behavioral-audit-of-offen-624415e38b",
     "topic": "ai-security",
-    "domain": "LLM Red-Teaming",
+    "domain": "ais.red-teaming",
     "cluster": "L",
     "related_claims": [
       "capability-elicitation-lags-training",
@@ -5008,12 +5095,13 @@
     "verify_note": "Four excerpts verified verbatim against data/_raw/mrscan-batch06-3.txt. Cluster L (red-teaming methodology) fits precisely. Related claims all exist in claims.json. High novelty because the trajectory-audit methodology and the 46/54 execution-failure result are new empirical observations.",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "LLM Red-Teaming"
   },
   {
     "id": "auto-mode-is-now-the-default-in-claude-code-for-d63bf31ef4",
     "topic": "ai-security",
-    "domain": "Harness & Agent Security",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -5093,11 +5181,12 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b039-4.txt (lines 21, 36, 46-48, 27). All three related_claims exist in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Harness & Agent Security"
   },
   {
     "topic": "ai-security",
-    "domain": "LLM Red-Teaming",
+    "domain": "ais.agent-security",
     "cluster": "I",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -5173,12 +5262,13 @@
     "id": "incident-report-unsanctioned-agent-behaviour-dur-87ffc75167",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "LLM Red-Teaming"
   },
   {
     "id": "towards-a-risk-assessment-of-malicious-skill-fil-8b37c578fd",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.mcp-tools",
     "cluster": "B",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -5249,11 +5339,12 @@
     "verify_note": "Excerpts verbatim from raw fetch; all three related_claims are present in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Deployment Infra & Sandboxing",
+    "domain": "ais.ai-infra",
     "cluster": "I",
     "related_claims": [
       "imdsv1-must-be-disabled-on-agent-workloads",
@@ -5339,11 +5430,12 @@
     "id": "chainguard-s-microvm-primitive-hypervisor-enforc-b16b5c02e2",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Deployment Infra & Sandboxing"
   },
   {
     "topic": "ai-security",
-    "domain": "Agent Harness & Permission Model",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "human-review-catches-agent-pr-risk",
@@ -5419,7 +5511,8 @@
     "id": "humans-in-the-loop-miss-a-third-of-dangerous-ai-b4f1199a6d",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent Harness & Permission Model"
   },
   {
     "article_url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
@@ -5437,7 +5530,7 @@
     "source_name": "Unit 42 (Palo Alto Networks)",
     "id": "u42-token-jacking-ai-resource-theft",
     "topic": "ai-security",
-    "domain": "AI Gateway & Credential Theft",
+    "domain": "ais.ai-infra",
     "title": "Token jacking: stolen AI API keys resold through gray-market 'transfer stations', costing victims up to ~$1M",
     "source_url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
     "raw_path": "data/_raw/u42-token-jacking-2026-08.txt",
@@ -5494,12 +5587,13 @@
     "verify_note": "Self-verified: all three excerpts ground verbatim to the Unit 42 source; independent subagent pass skipped (automated cyber-safeguard blocked the delegated agent), so novelty held conservative.",
     "retrieved_at": "2026-08-29T21:56:02+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "AI Gateway & Credential Theft"
   },
   {
     "id": "one-leak-away-how-pretrained-model-exposure-ampl-3ef47be443",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.prompt-injection",
     "cluster": "E",
     "related_claims": [
       "jailbreak-transfers-across-models",
@@ -5568,11 +5662,12 @@
     "verify_note": "All lesson excerpts verbatim from raw abstract. Related claims jailbreak-transfers-across-models and prompt-injection-is-a-permanent-attack-surface exist in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Harness & Agent Security",
+    "domain": "ais.red-teaming",
     "cluster": "I",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -5650,12 +5745,13 @@
     "id": "anthropic-s-own-cybersecurity-evals-let-three-cl-129f00213b",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Harness & Agent Security"
   },
   {
     "id": "alexgreensh-repo-forensics-416ef8eb39",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.guardrails",
     "cluster": "M",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -5732,12 +5828,13 @@
     "verify_note": "All four excerpts are verbatim from the raw README; related_claims exist in claims.json.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": false,
-    "grounding_score": 1.0
+    "grounding_score": 1.0,
+    "domain_label": "AI Security"
   },
   {
     "id": "highflame-ai-ramparts-156bbd1ea2",
     "topic": "ai-security",
-    "domain": "MCP & Skill Scanning",
+    "domain": "ais.mcp-tools",
     "cluster": "M",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -5811,12 +5908,13 @@
     "verify_note": "All four excerpts verified verbatim against data/_raw/highflame-ai-ramparts-156bbd1ea2.txt (lines 24, 33, 67, 217-220). Related claims exist in claims.json.",
     "retrieved_at": "2026-08-14T20:08:47+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "MCP & Skill Scanning"
   },
   {
     "id": "privacypeek-auditing-what-llm-based-agents-acqui-2bcf067f98",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "agent-memory-is-a-persistent-attack-surface",
@@ -5886,12 +5984,13 @@
     "verify_note": "All lesson excerpts verbatim in abstract. Related claims all exist in data/claims.json; acquisition-stage leakage aligns with agent-memory-is-a-persistent-attack-surface (temporary context is a leakage surface) and agent-tool-selection-can-be-steered-by-untrusted-context (once acquired, an attacker can elicit).",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "breaking-customized-llms-for-coding-automated-re-2684a007e1",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.red-teaming",
     "cluster": "L",
     "related_claims": [
       "prompt-injection-is-a-permanent-attack-surface",
@@ -5970,11 +6069,12 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-4.txt (lines 10, 12). Accepted at ASE 2026 (line 14). Related claims prompt-injection-is-a-permanent-attack-surface, coding-agents-produce-plausible-but-hallucinated-apis, mcp-tool-descriptions-are-a-prompt-injection-surface verified in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.guardrails",
     "cluster": "M",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -6046,11 +6146,12 @@
     "id": "echo-a-locally-deployable-agentic-health-assista-0b2b4b1140",
     "retrieved_at": "2026-08-14T20:08:54+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "LLM Red-Teaming",
+    "domain": "ais.red-teaming",
     "cluster": "L",
     "related_claims": [
       "capability-elicitation-lags-training",
@@ -6118,12 +6219,13 @@
     "id": "meta-joins-openai-and-anthropic-on-the-list-of-f-5e4a087057",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "LLM Red-Teaming"
   },
   {
     "id": "hardware-keystores-for-ai-agent-signing-workflow-e45a213682",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.mcp-tools",
     "cluster": "F",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -6194,12 +6296,13 @@
     "verify_note": "Excerpts copied verbatim from raw fetch (mrscan-b043-0.txt); related_claims all present in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "mcp-gets-an-enterprise-makeover-c33a62e2a6",
     "topic": "ai-security",
-    "domain": "MCP Protocol",
+    "domain": "ais.mcp-tools",
     "cluster": "F",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface"
@@ -6267,11 +6370,12 @@
     "verify_note": "All three excerpts are verbatim in raw file lines 20, 34, 44. Cluster F fits (\"MCP protocol security — spec changes, silent metadata updates\"). Related claim on tool-description injection is thematically adjacent but this article does not directly bear on that specific claim; keeping it as a single loose link only.",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "MCP Protocol"
   },
   {
     "topic": "ai-security",
-    "domain": "LLM Red-Teaming",
+    "domain": "ais.guardrails",
     "cluster": "F",
     "related_claims": [
       "llm-as-judge-is-biased-toward-longer-answers",
@@ -6340,12 +6444,13 @@
     "id": "sharding-prevents-llm-oversight-failures-and-adv-d98d144453",
     "retrieved_at": "2026-08-14T20:08:49+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "LLM Red-Teaming"
   },
   {
     "id": "care-pre-execution-command-verification-for-shel-d22ff13097",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.agent-security",
     "cluster": "I",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -6415,12 +6520,13 @@
     "verify_note": "All lesson excerpts verbatim in abstract. Related claims exist in data/claims.json; CARE's static-first verifier is a concrete instance of prompt-injection-is-containment-not-prevention applied at the shell tool boundary.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "promptshield-home-ambient-multimodal-prompt-inje-d57591526c",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.prompt-injection",
     "cluster": "E",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -6500,11 +6606,12 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-2.txt (line 8). Accepted as poster at UbiComp 2026 (line 10). Related claims verified in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "LLM Red-Teaming",
+    "domain": "ais.red-teaming",
     "cluster": "I",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -6573,11 +6680,12 @@
     "id": "third-party-cyber-evaluations-involving-openai-m-fc7831cf1c",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "LLM Red-Teaming"
   },
   {
     "topic": "ai-security",
-    "domain": "Agent platform vulnerabilities",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "prompt-injection-is-a-permanent-attack-surface",
@@ -6649,11 +6757,12 @@
     "id": "ibm-s-agentic-ai-platform-is-under-active-attack-faaee2d01b",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent platform vulnerabilities"
   },
   {
     "topic": "ai-security",
-    "domain": "Deployment Infra & Sandboxing",
+    "domain": "ais.ai-infra",
     "cluster": "I",
     "related_claims": [
       "imdsv1-must-be-disabled-on-agent-workloads",
@@ -6731,12 +6840,13 @@
     "id": "openai-s-hugging-face-incident-reduces-to-skippe-e7e6b7fd44",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Deployment Infra & Sandboxing"
   },
   {
     "id": "ai-security-leaderboard-methodology-results-and-e78c96cb60",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.red-teaming",
     "cluster": "L",
     "related_claims": [
       "jailbreak-transfers-across-models",
@@ -6813,12 +6923,13 @@
     "verify_note": "All lesson excerpts verbatim in abstract. Related claims (jailbreak-transfers-across-models, prompt-injection-is-a-permanent-attack-surface, prompt-injection-is-containment-not-prevention) all exist in data/claims.json and are directly relevant to universal-jailbreak leaderboard results.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "the-vulnerability-with-no-cve-managing-persisten-63bb328fd5",
     "topic": "ai-security",
-    "domain": "Agents & Harnesses",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "agent-tool-selection-can-be-steered-by-untrusted-context",
@@ -6893,12 +7004,13 @@
     "verify_note": "All four excerpts verbatim from mrscan-b042-3.txt. Related claims agent-tool-selection-can-be-steered-by-untrusted-context and gate-agent-prs-with-automated-checks both exist in claims.json and match the excessive-agency framing. Cluster B (Agents and harnesses) is the correct home; the paper is specifically about coding-agent posture.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "robust-context-aware-detection-of-malicious-inst-1c7223b934",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.prompt-injection",
     "cluster": "E",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -6972,12 +7084,13 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-1.txt (line 10). Related claims prompt-injection-is-containment-not-prevention, indirect-injection-via-retrieved-content-is-viable, prompt-injection-solvable-by-filtering verified in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "llms-cannot-reliably-judge-yet-a-comprehensive-a-8985f12e8a",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.red-teaming",
     "cluster": "L",
     "related_claims": [
       "llm-as-judge-is-biased-toward-longer-answers",
@@ -7047,11 +7160,12 @@
     "verify_note": "All lesson excerpts appear verbatim in the raw abstract. Related claims (llm-as-judge-is-biased-toward-longer-answers, jailbreak-transfers-across-models, score-evals-on-groundedness-not-headline-f1) all exist in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Skills & Supply Chain",
+    "domain": "ais.mcp-tools",
     "cluster": "D",
     "related_claims": [],
     "title": "SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse",
@@ -7117,12 +7231,13 @@
     "id": "skilltrace-multi-trace-provenance-auditing-for-l-b738597b68",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Skills & Supply Chain"
   },
   {
     "id": "behavioral-canaries-auditing-private-retrieved-c-2bbb7287ba",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.data-poisoning",
     "cluster": "J",
     "related_claims": [
       "llm-eval-datasets-leak-into-training-sets",
@@ -7192,12 +7307,13 @@
     "verify_note": "All lesson excerpts appear verbatim in raw abstract. Related claims exist in data/claims.json (llm-eval-datasets-leak-into-training-sets and agent-memory-is-a-persistent-attack-surface are loose fits; behavioral canary is closer to provenance auditing but no direct claim on RLFT audit exists).",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "dreamguard-efficient-runtime-guardrail-for-llm-a-c713ebe2b5",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.guardrails",
     "cluster": "M",
     "related_claims": [
       "prompt-injection-is-containment-not-prevention",
@@ -7266,12 +7382,13 @@
     "verify_note": "Excerpts verbatim from raw fetch; related_claims present in data/claims.json. Effect-size claims left at moderate confidence pending independent benchmarks.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "measuring-and-detecting-harmful-ai-sycophancy-62cb98846c",
     "topic": "ai-security",
-    "domain": "Guardrails & alignment",
+    "domain": "ais.guardrails",
     "cluster": "H",
     "related_claims": [
       "constitutional-ai-reduces-refusal-brittleness",
@@ -7339,11 +7456,12 @@
     "mitigations": "Add a PSRS eval to release gates that anchors then challenges a stance and measures reversal rate; prefer more capable models where PSRS rate is empirically lower; if using a response-text detector, retrain per model family since cross-family generalization is weak.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Guardrails & alignment"
   },
   {
     "topic": "ai-security",
-    "domain": "Zero Trust for AI / DevSecOps",
+    "domain": "ais.ai-infra",
     "cluster": "K",
     "related_claims": [
       "agent-memory-is-a-persistent-attack-surface",
@@ -7413,12 +7531,13 @@
     "id": "microsoft-zero-trust-for-ai-new-devsecops-pillar-8e63f19805",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Zero Trust for AI / DevSecOps"
   },
   {
     "id": "mmaligner-safeguarding-multimodal-large-language-4fafd4b6e2",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.guardrails",
     "cluster": "H",
     "related_claims": [
       "constitutional-ai-reduces-refusal-brittleness",
@@ -7493,12 +7612,13 @@
     "verify_note": "All four excerpts verbatim from mrscan-b042-4.txt. Cluster H (Guardrails, alignment, and refusal) is the closest fit; the paper is about refusal geometry and utility trade-off. Related claims constitutional-ai-reduces-refusal-brittleness and jailbreak-transfers-across-models both exist in claims.json and are thematically adjacent (alignment method reduces brittleness; modality-shift attacks are a transfer surface).",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "show-hn-product-analytics-and-evals-for-agent-se-5cf4d5fe81",
     "topic": "ai-security",
-    "domain": "MCP Observability / Product Analytics",
+    "domain": "ais.mcp-tools",
     "cluster": "J",
     "related_claims": [
       "score-evals-on-groundedness-not-headline-f1",
@@ -7565,12 +7685,13 @@
     "verify_note": "Three excerpts verified verbatim against data/_raw/mrscan-batch06-5.txt. This is a vendor/marketing page (Show HN), so novelty and relevance are moderate. Cluster J (observability) fits. Related claims are a stretch — this maps loosely to eval-quality claims but does not directly refute or support any specific existing claim; kept to two to avoid over-linking.",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "MCP Observability / Product Analytics"
   },
   {
     "id": "post-hoc-trajectory-risk-certification-for-modul-919f90f6e1",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [
       "score-evals-on-groundedness-not-headline-f1"
@@ -7638,12 +7759,13 @@
     "verify_note": "Excerpts verbatim from arXiv abstract; related_claims cross-checked against claims.json.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "asteld-a-six-axis-classification-framework-for-a-414323665c",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.agent-security",
     "cluster": "K",
     "related_claims": [
       "mcp-tool-descriptions-are-a-prompt-injection-surface",
@@ -7711,12 +7833,13 @@
     "verify_note": "Excerpts verbatim from arXiv abstract; related_claims cross-checked.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "id": "aegisshield-democratizing-cyber-threat-modeling-bb08289115",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.red-teaming",
     "cluster": "K",
     "related_claims": [],
     "title": "AegisShield: Democratizing Cyber Threat Modeling with Generative AI",
@@ -7782,11 +7905,12 @@
     "verify_note": "All excerpts verbatim from raw abstract. No exact-match related_claims exist for GenAI-assisted STRIDE threat modeling; left empty rather than force-fit.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Agents & Harnesses",
+    "domain": "ais.agent-security",
     "cluster": null,
     "related_claims": [],
     "title": "Online Security Learning in Cooperative Multi-Agent Systems under Hidden Byzantine Attacks",
@@ -7845,12 +7969,13 @@
     "id": "online-security-learning-in-cooperative-multi-ag-a63b0afd84",
     "retrieved_at": "2026-08-14T20:08:49+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "algebraic-cryptanalytic-extraction-on-hard-label-c954c467e6",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.model-supply-chain",
     "cluster": null,
     "related_claims": [],
     "title": "Algebraic Cryptanalytic Extraction on Hard-Label Neural Networks",
@@ -7916,11 +8041,12 @@
     "verify_note": "All three excerpts are verbatim from the arXiv abstract (mrscan-b042-0.txt). Novelty claim (first hard-label extraction on max-pooling CNNs) is stated explicitly in the abstract. No related_claims in claims.json cover neural network extraction, so left empty.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "ai-security",
-    "domain": "Agents & Harnesses",
+    "domain": "ais.agent-security",
     "cluster": "B",
     "related_claims": [],
     "title": "Quantigence: A Multi-Agent Framework for Post-Quantum Security Analysis on Commodity Hardware",
@@ -7987,12 +8113,13 @@
     "id": "quantigence-a-multi-agent-framework-for-post-qua-7cc834548f",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "policyguard-prompt-configurable-semantic-dlp-for-c4c102b9f0",
     "topic": "ai-security",
-    "domain": "AI Security",
+    "domain": "ais.guardrails",
     "cluster": "M",
     "related_claims": [
       "prompt-injection-solvable-by-filtering"
@@ -8060,11 +8187,12 @@
     "verify_note": "All lesson excerpts verbatim in abstract; withdrawal note verbatim from the paper page. Confidence deliberately capped low because the paper is withdrawn. Related claim prompt-injection-solvable-by-filtering exists in claims.json (this paper is loosely relevant as an input-filter proposal, though DLP is not the same as injection filtering).",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Security"
   },
   {
     "topic": "product-security",
-    "domain": "Supply Chain & Dependencies",
+    "domain": "ps.supply-chain",
     "cluster": "G",
     "related_claims": [
       "package-installers-run-arbitrary-code-by-default",
@@ -8142,11 +8270,12 @@
     "id": "chaindrop-self-propagating-npm-worm-mints-valid-e0515b2a85",
     "retrieved_at": "2026-08-10T05:24:14+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply Chain & Dependencies"
   },
   {
     "topic": "product-security",
-    "domain": "Request Smuggling / Desync",
+    "domain": "ps.appsec",
     "cluster": null,
     "related_claims": [],
     "title": "CRLF-Powered Desync Attacks: header injection escalates to CDN-wide response queue poisoning + browser-side XSS",
@@ -8213,11 +8342,12 @@
     "id": "crlf-powered-desync-attacks-header-injection-esc-34b6f03a12",
     "retrieved_at": "2026-08-10T05:24:14+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Request Smuggling / Desync"
   },
   {
     "topic": "product-security",
-    "domain": "Autonomous Vulnerability Research",
+    "domain": "ps.offensive",
     "cluster": "L",
     "related_claims": [
       "coding-agents-produce-plausible-but-hallucinated-apis",
@@ -8302,11 +8432,12 @@
     "id": "can-ai-do-novel-security-research-meet-the-http-bd72712fe0",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Autonomous Vulnerability Research"
   },
   {
     "topic": "product-security",
-    "domain": "Web Application Security",
+    "domain": "ps.appsec",
     "cluster": "E",
     "related_claims": [
       "indirect-injection-via-retrieved-content-is-viable",
@@ -8383,11 +8514,12 @@
     "id": "css-the-bomb-sanitized-webmail-css-steals-tokens-ccb02c3f70",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Web Application Security"
   },
   {
     "topic": "product-security",
-    "domain": "Detection & Response",
+    "domain": "ps.detection-response",
     "cluster": null,
     "related_claims": [],
     "title": "macOS ClickFix campaign moves from open lures to server-side browser-fingerprinting gates that cloak the payload from crawlers",
@@ -8460,11 +8592,12 @@
     "id": "macos-clickfix-campaign-moves-from-open-lures-to-a98782de48",
     "retrieved_at": "2026-08-10T05:24:14+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Detection & Response"
   },
   {
     "topic": "product-security",
-    "domain": "Supply Chain & Dependencies",
+    "domain": "ps.supply-chain",
     "cluster": "G",
     "related_claims": [
       "import-time-payloads-defeat-install-time-controls",
@@ -8542,11 +8675,12 @@
     "id": "inside-the-keyv-npm-compromise-preinstall-droppe-35e2a90582",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply Chain & Dependencies"
   },
   {
     "topic": "product-security",
-    "domain": "Supply Chain & Dependencies",
+    "domain": "ps.supply-chain",
     "cluster": "G",
     "related_claims": [
       "import-time-payloads-defeat-install-time-controls",
@@ -8624,11 +8758,12 @@
     "id": "keyv-cacheable-mini-shai-hulud-self-propagating-f614bda734",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply Chain & Dependencies"
   },
   {
     "topic": "product-security",
-    "domain": "Application Security",
+    "domain": "ps.appsec",
     "cluster": null,
     "related_claims": [
       "path-traversal-defenses-must-cover-symlink-resolution"
@@ -8692,11 +8827,12 @@
     "id": "go-git-worktree-wrapper-vetoed-dangerous-strings-0e4f32675b",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Application Security"
   },
   {
     "topic": "product-security",
-    "domain": "Supply chain (npm)",
+    "domain": "ps.supply-chain",
     "cluster": "G",
     "related_claims": [
       "import-time-payloads-defeat-install-time-controls",
@@ -8777,12 +8913,13 @@
     "id": "chaindrop-supply-chain-compromise-anatomy-of-a-s-437f185572",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply chain (npm)"
   },
   {
     "id": "disrupting-supply-chain-attacks-on-npm-and-githu-b915f01246",
     "topic": "product-security",
-    "domain": "Supply Chain / CI-CD",
+    "domain": "ps.supply-chain",
     "cluster": null,
     "related_claims": [
       "ignore-scripts-blocks-npm-supply-chain",
@@ -8856,11 +8993,12 @@
     "verify_note": "All four excerpts appear verbatim in raw file lines 31, 40, 39, 38 respectively. Cluster set to null because the article is general CI/CD/supply-chain appsec that doesn't intersect with agents directly; the three related claim IDs are legitimately impacted (long-lived credentials, install-time payloads, ignore-scripts framing) and stay within the cap of 3.",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply Chain / CI-CD"
   },
   {
     "topic": "product-security",
-    "domain": "AI-Assisted AppSec / Supply Chain",
+    "domain": "ps.ai-code",
     "cluster": "G",
     "related_claims": [
       "signature-based-detection-fails-on-llm-authored-malware",
@@ -8937,11 +9075,12 @@
     "id": "snyk-evo-agentic-appsec-autonomous-remediation-n-4d2a40ea87",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI-Assisted AppSec / Supply Chain"
   },
   {
     "topic": "product-security",
-    "domain": "Application Security",
+    "domain": "ps.appsec",
     "cluster": null,
     "related_claims": [
       "path-traversal-defenses-must-cover-symlink-resolution"
@@ -9005,11 +9144,12 @@
     "id": "go-git-reference-names-as-path-traversal-refs-he-70def20d22",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Application Security"
   },
   {
     "topic": "product-security",
-    "domain": "Confidential compute (Nitro Enclaves + KMS)",
+    "domain": "ps.cloud-infra",
     "cluster": null,
     "related_claims": [],
     "title": "A few notes on AWS Nitro Enclaves: KMS integration",
@@ -9084,12 +9224,13 @@
     "id": "a-few-notes-on-aws-nitro-enclaves-kms-integratio-a9fa51faa1",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Confidential compute (Nitro Enclaves + KMS)"
   },
   {
     "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
     "topic": "product-security",
-    "domain": "Supply Chain / Policy",
+    "domain": "ps.supply-chain",
     "cluster": null,
     "related_claims": [],
     "title": "America bans imported robots due to supply chain and security risks",
@@ -9155,11 +9296,12 @@
     "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Supply Chain / Policy"
   },
   {
     "topic": "product-security",
-    "domain": "Application Security",
+    "domain": "ps.appsec",
     "cluster": null,
     "related_claims": [],
     "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
@@ -9234,12 +9376,13 @@
     "id": "cryptographic-advisories-are-dominated-by-skippe-7778874a78",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Application Security"
   },
   {
     "id": "why-ai-assisted-attacks-made-software-supply-cha-0a1355188a",
     "topic": "product-security",
-    "domain": "Software Supply Chain",
+    "domain": "ps.supply-chain",
     "cluster": "G",
     "related_claims": [
       "gate-agent-prs-with-automated-checks",
@@ -9308,12 +9451,13 @@
     "verify_note": "Three excerpts verified verbatim against data/_raw/mrscan-batch06-2.txt. The 'hundreds of malicious skills' claim is asserted by the post but not linked to a specific study in the article; treat as Chainguard's summary of third-party research, not independent evidence. This is a vendor essay and scored accordingly on novelty.",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Software Supply Chain"
   },
   {
     "id": "enhancing-anomaly-resilience-in-research-network-fe4bfda1f6",
     "topic": "product-security",
-    "domain": "Network Security & Anomaly Detection",
+    "domain": "ps.detection-response",
     "cluster": null,
     "related_claims": [],
     "title": "Enhancing Anomaly Resilience in Research Networks: A Large-Scale Forecasting Benchmark for Dynamic Security Baselining",
@@ -9376,12 +9520,13 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-3.txt (line 8). Subject is REN traffic forecasting for anomaly detection, not AI-specific security. cluster=null; related_claims=[].",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Network Security & Anomaly Detection"
   },
   {
     "id": "an-end-to-end-threat-model-for-the-quantum-as-a-013be39b48",
     "topic": "product-security",
-    "domain": "Quantum Software Security",
+    "domain": "ps.offensive",
     "cluster": null,
     "related_claims": [],
     "title": "An End-to-End Threat Model for the Quantum-as-a-Service Pipeline",
@@ -9446,12 +9591,13 @@
     "verify_note": "Excerpts verbatim from mrscan-b042-2.txt. Quantum-specific; correctly cluster null.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Quantum Software Security"
   },
   {
     "id": "on-the-figures-of-merit-for-quantum-software-sec-fb3abab723",
     "topic": "product-security",
-    "domain": "Quantum Software Security",
+    "domain": "ps.appsec",
     "cluster": null,
     "related_claims": [],
     "title": "On the Figures of Merit for Quantum Software Security: Toward a Benchmarking Rubric",
@@ -9517,11 +9663,12 @@
     "verify_note": "All excerpts verbatim from mrscan-b042-1.txt. Topic is quantum software security, not AI security; correctly marked cluster null and low relevance.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Quantum Software Security"
   },
   {
     "topic": "product-security",
-    "domain": "Censorship & Trust & Safety",
+    "domain": "ps.detection-response",
     "cluster": null,
     "related_claims": [],
     "title": "Inside the Fake Copyright Racket Silencing News Outlets",
@@ -9580,12 +9727,13 @@
     "id": "inside-the-fake-copyright-racket-silencing-news-bf516fc11b",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Censorship & Trust & Safety"
   },
   {
     "id": "the-trust-free-aggregation-layer-of-the-unicity-4a8ec952e9",
     "topic": "product-security",
-    "domain": "Cryptography & Blockchain",
+    "domain": "ps.appsec",
     "cluster": null,
     "related_claims": [],
     "title": "The Trust-Free Aggregation Layer of the Unicity Infrastructure",
@@ -9647,11 +9795,12 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b041-0.txt (line 8). Confirmed off-topic: cs.CR label but subject is blockchain infrastructure, not AI/agent security. cluster=null; related_claims=[] correctly.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Cryptography & Blockchain"
   },
   {
     "topic": "ai-research",
-    "domain": "Autonomous vulnerability discovery",
+    "domain": "air.agents",
     "cluster": "M",
     "related_claims": [
       "score-evals-on-groundedness-not-headline-f1",
@@ -9727,11 +9876,12 @@
     "id": "the-frontier-ai-vulnerability-burst-industrializ-076f328753",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Autonomous vulnerability discovery"
   },
   {
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "tool-count-degrades-agent-performance",
@@ -9799,11 +9949,12 @@
     "id": "when-history-lies-evaluating-and-improving-tool-858a5b43f3",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "topic": "ai-research",
-    "domain": "Frontier Cyber Capabilities & Preparedness",
+    "domain": "air.models",
     "cluster": "H",
     "related_claims": [
       "capability-elicitation-lags-training",
@@ -9874,11 +10025,12 @@
     "id": "openai-astra-preliminary-evals-can-t-rule-out-cr-19c9c4150a",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Frontier Cyber Capabilities & Preparedness"
   },
   {
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": "B",
     "related_claims": [
       "score-evals-on-groundedness-not-headline-f1",
@@ -9946,11 +10098,12 @@
     "id": "evaluating-investment-logic-in-large-language-mo-7469ca5418",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "topic": "ai-research",
-    "domain": "AI-assisted Vulnerability Research",
+    "domain": "air.agents",
     "cluster": "G",
     "related_claims": [
       "coding-agents-produce-plausible-but-hallucinated-apis"
@@ -10024,11 +10177,12 @@
     "id": "automated-claude-code-opus-4-6-pipeline-finds-a-e231868d4a",
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI-assisted Vulnerability Research"
   },
   {
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "few-distinct-tools-beat-many",
@@ -10100,11 +10254,12 @@
     "id": "llm-0-32-reasoning-traces-server-side-provider-t-88c9ad3b35",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "topic": "ai-research",
-    "domain": "Serving & Ops",
+    "domain": "air.tooling",
     "cluster": "I",
     "related_claims": [],
     "title": "vLLM anatomy: paged attention + continuous batching + KV-cache block pool as the load-bearing abstractions for high-throughput LLM serving",
@@ -10166,11 +10321,12 @@
     "id": "vllm-anatomy-paged-attention-continuous-batching-9b4e45ad94",
     "retrieved_at": "2026-08-10T05:24:14+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Serving & Ops"
   },
   {
     "topic": "ai-research",
-    "domain": "Training-time Incidents & RLVR",
+    "domain": "air.alignment",
     "cluster": "K",
     "related_claims": [
       "capability-elicitation-lags-training",
@@ -10238,12 +10394,13 @@
     "id": "willison-the-openai-hugging-face-accidental-atta-7ee188b6fd",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Training-time Incidents & RLVR"
   },
   {
     "id": "orchestrabench-evaluating-multi-agent-orchestrat-02cae376d2",
     "topic": "ai-research",
-    "domain": "Agents and Harnesses",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "tool-count-degrades-agent-performance",
@@ -10318,11 +10475,12 @@
     "verify_note": "All four lesson excerpts appear verbatim in raw abstract at data/_raw/mrscan-b048-1.txt. related_claims (tool-count-degrades-agent-performance, score-evals-on-groundedness-not-headline-f1, chain-of-thought-does-not-transfer-to-multi-turn) confirmed present in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents and Harnesses"
   },
   {
     "topic": "ai-research",
-    "domain": "Prompt & Context Engineering",
+    "domain": "air.context",
     "cluster": "A",
     "related_claims": [
       "few-shot-prompting-brittle-on-format-changes",
@@ -10382,11 +10540,12 @@
     "id": "signal-or-spurious-cue-a-randomized-audit-of-sur-20c582fb4d",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": false,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Prompt & Context Engineering"
   },
   {
     "topic": "ai-research",
-    "domain": "Cost & Serialization",
+    "domain": "air.model-io",
     "cluster": "C",
     "related_claims": [
       "toon-cuts-input-tokens-vs-json"
@@ -10444,12 +10603,13 @@
     "id": "pdf-to-markdown-pipelines-are-the-hidden-token-c-4d9f178839",
     "retrieved_at": "2026-08-10T19:18:36+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Cost & Serialization"
   },
   {
     "id": "personalized-deep-research-query-refinement-with-b8c6824eea",
     "topic": "ai-research",
-    "domain": "Deep Research Agents / Clarification Policies",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "few-shot-prompting-brittle-on-format-changes"
@@ -10519,12 +10679,13 @@
     "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-b053-1.txt. Abstract-only; no numeric evaluation-detail claims made beyond what the abstract states.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Deep Research Agents / Clarification Policies"
   },
   {
     "id": "when-self-evolution-backfires-pre-commit-gating-ace06a9112",
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "agent-memory-is-a-persistent-attack-surface"
@@ -10594,12 +10755,13 @@
     "verify_note": "Excerpts confirmed verbatim against data/_raw/mrscan-b052-3.txt. cluster=B (agents and harnesses): fits 'long-running agents / memory hierarchy'. Related_claim agent-memory-is-a-persistent-attack-surface confirmed present in claims.json — the paper's pre-commit thesis parallels that claim's 'validate what is allowed to ENTER memory rather than trying to argue it out later'.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "cascade-an-agentic-regulatory-network-framework-d9724305f3",
     "topic": "ai-research",
-    "domain": "MCP and Tool Ecosystem",
+    "domain": "air.ml-research",
     "cluster": "F",
     "related_claims": [
       "agent-tool-selection-can-be-steered-by-untrusted-context",
@@ -10667,12 +10829,13 @@
     "verify_note": "All three lesson excerpts appear verbatim in raw abstract at data/_raw/mrscan-b048-3.txt. related_claims (agent-tool-selection-can-be-steered-by-untrusted-context, few-distinct-tools-beat-many) confirmed present in data/claims.json; not force-fitting a third.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "MCP and Tool Ecosystem"
   },
   {
     "id": "finevo-bench-a-longitudinal-benchmark-for-self-e-b65adab472",
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": "B",
     "related_claims": [
       "agent-memory-is-a-persistent-attack-surface"
@@ -10748,12 +10911,13 @@
     "verify_note": "Excerpts verbatim from data/_raw/mrscan-b056-2.txt. cluster=B (agents and harnesses): fits 'long-running agents / memory hierarchy' and 'agent evals'. related_claims: agent-memory-is-a-persistent-attack-surface is tangentially related (skill-vs-memory persistence choice), noted but not a strong support/contest tie.",
     "retrieved_at": "2026-08-14T20:08:54+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "innovation-residual-auditing-of-autonomous-analy-9dcd197617",
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "cluster": "J",
     "related_claims": [],
     "title": "Innovation-Residual Auditing of Autonomous Analysis Agents: Localization, Detection Limits, Error Control, and Identifiability",
@@ -10818,12 +10982,13 @@
     "verify_note": "All three excerpts verbatim from the arXiv abstract at 2608.05490. Cluster J (observability, IR, forensics) fits: this is directly about post-hoc attribution of operations inside an autonomous agent.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "agentic-self-driving-microscopy-benchmarks-suppo-1a8fbe68a1",
     "topic": "ai-research",
-    "domain": "Agents and Harnesses",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [
       "swe-bench-doesnt-generalize-to-production-tasks",
@@ -10891,11 +11056,12 @@
     "verify_note": "All three lesson excerpts appear verbatim in raw abstract at data/_raw/mrscan-b048-2.txt. related_claims (swe-bench-doesnt-generalize-to-production-tasks, score-evals-on-groundedness-not-headline-f1) confirmed present in data/claims.json.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents and Harnesses"
   },
   {
     "topic": "ai-research",
-    "domain": "Agents & Simulation",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "From Economic Agents to Agentic Economies: A Systems Blueprint for Economic World Models",
@@ -10951,12 +11117,13 @@
     "id": "from-economic-agents-to-agentic-economies-a-syst-416794bc7d",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Simulation"
   },
   {
     "id": "vlms-for-videogame-data-annotation-8e9f1c0137",
     "topic": "ai-research",
-    "domain": "VLM-as-Annotator Harnesses",
+    "domain": "air.agents",
     "cluster": "C",
     "related_claims": [
       "few-shot-prompting-brittle-on-format-changes",
@@ -11018,12 +11185,13 @@
     "verify_note": "All three excerpts verified verbatim against data/_raw/mrscan-b053-4.txt. Cluster C (Model I/O and tokens) chosen because the concrete harness insight is a quality-vs-token-cost trade-off; the domain (video-game annotation) is adjacent, but the transferable lesson is about I/O sizing knobs.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "VLM-as-Annotator Harnesses"
   },
   {
     "id": "schema-guided-hierarchical-information-extractio-b70bc3f706",
     "topic": "ai-research",
-    "domain": "Structured Extraction",
+    "domain": "air.model-io",
     "cluster": "C",
     "related_claims": [
       "constrained-decoding-for-structured-output"
@@ -11098,11 +11266,12 @@
     "verify_note": "Excerpts verbatim from data/_raw/mrscan-b056-4.txt. cluster=C (Model I/O and tokens - structured output): schema-driven single-call extraction with structured output; A (retrieval) is also plausible but the substance is schema/output design, not retrieval. related_claims: constrained-decoding-for-structured-output is loosely related (both concern structured-output design) — noted but not a direct support/contest.",
     "retrieved_at": "2026-08-14T20:08:54+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Structured Extraction"
   },
   {
     "topic": "ai-research",
-    "domain": "Agent skill acquisition",
+    "domain": "air.agents",
     "cluster": "B",
     "related_claims": [],
     "title": "Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning",
@@ -11165,12 +11334,13 @@
     "id": "search2skill-skill-distillation-beyond-knowledge-673f2bbba7",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent skill acquisition"
   },
   {
     "id": "ecoagent-bench-evaluating-economic-decision-maki-e8a754fd97",
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": "B",
     "related_claims": [
       "tool-count-degrades-agent-performance",
@@ -11235,11 +11405,12 @@
     "verify_note": "Excerpts checked against fetched abstract verbatim.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "topic": "ai-research",
-    "domain": "Agent debugging and observability",
+    "domain": "air.agents",
     "cluster": "J",
     "related_claims": [],
     "title": "SearchAuditor: Auditing and Attributing Failures in Long-Horizon Search Agents",
@@ -11305,12 +11476,13 @@
     "id": "searchauditor-auditing-and-attributing-failures-d656c85930",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent debugging and observability"
   },
   {
     "id": "skilltv-bench-benchmarking-how-well-judges-perfo-e9291b823a",
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": "B",
     "related_claims": [
       "llm-as-judge-is-biased-toward-longer-answers",
@@ -11374,12 +11546,13 @@
     "verify_note": "Excerpts verbatim from fetched abstract.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "activity-frames-deterministic-screen-activity-co-33512ac9ca",
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "cluster": null,
     "related_claims": [],
     "title": "Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay",
@@ -11439,12 +11612,13 @@
     "verify_note": "Excerpts confirmed verbatim against data/_raw/mrscan-b052-1.txt. cluster=null: nearest cluster is A (retrieval and context) / B (agents), but the work is capability/cost focused with no security angle. Not tying to a claim to avoid forcing a fit.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "gauge-a-measurement-grounded-benchmark-for-physi-e054957201",
     "topic": "ai-research",
-    "domain": "Physical Simulation & World Models",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "GAUGE: A Measurement-Grounded Benchmark for Physical Fidelity in Simulation Engines and Video World Models",
@@ -11503,12 +11677,13 @@
     "verify_note": "All three excerpts verified verbatim against data/_raw/mrscan-b053-3.txt. Adjacent to Tier-1 (embodied AI / world models, not security or agent-harness).",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Physical Simulation & World Models"
   },
   {
     "id": "crebench-evaluating-large-language-models-in-cry-01d46ce00b",
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [
       "capability-elicitation-lags-training"
@@ -11567,12 +11742,13 @@
     "verify_note": "Excerpts verbatim from raw abstract. Cluster set to null: capability benchmark rather than a threat, defender playbook, or supply-chain question in the taxonomy. Related claim capability-elicitation-lags-training is tangential but justifiable.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "skillhex-improving-agent-skills-via-hypothesis-d-0bbc816028",
     "topic": "ai-research",
-    "domain": "Agent Methodology",
+    "domain": "air.agents",
     "cluster": null,
     "related_claims": [],
     "title": "SkillHEX: Improving Agent Skills via Hypothesis-Driven Autonomous Exploration and Exploitation",
@@ -11633,12 +11809,13 @@
     "verify_note": "Excerpts checked verbatim against the raw arXiv abstract at data/_raw/mrscan-b051-0.txt. No related_claims cited so no claim ID lookup needed. Cluster set to null: paper is agent-adjacent (Cluster B scope) but focused on ML self-evolution methodology, not harness security or agent evals for production defenses.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agent Methodology"
   },
   {
     "id": "revisiting-black-box-model-ownership-verificatio-3d19596461",
     "topic": "ai-research",
-    "domain": "AI Research",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Revisiting Black-Box Model Ownership Verification through Information Theory",
@@ -11693,12 +11870,13 @@
     "verify_note": "Excerpts verbatim from raw fetch. Cluster null because model watermarking for IP protection sits outside the 13-cluster taxonomy (nearest is D, but that focuses on adversarial supply-chain, not IP watermarking); no related claims match.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Research"
   },
   {
     "id": "improving-interoperability-among-defence-and-nat-326b75e8b1",
     "topic": "ai-research",
-    "domain": "Ontology Alignment & Knowledge Graphs",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Improving Interoperability among Defence and National Security Ontologies: Analysis and Evaluation Tasks",
@@ -11754,12 +11932,13 @@
     "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b053-0.txt; abstract-only, so lessons stay at the methodology level.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Ontology Alignment & Knowledge Graphs"
   },
   {
     "id": "poli-bias-understanding-and-measuring-large-lang-67a6a17c74",
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [],
     "title": "Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts",
@@ -11826,12 +12005,13 @@
     "verify_note": "Excerpts verbatim from data/_raw/mrscan-b056-1.txt. cluster=null: bias-measurement methodology paper; H (guardrails/alignment) is nearest but the substance is fairness evaluation, not refusal-training or safety training — not a Tier-1 fit. No claim-ledger tie.",
     "retrieved_at": "2026-08-14T20:08:54+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "innocent-panels-hateful-stories-evaluating-and-d-f95669d765",
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [],
     "title": "Innocent Panels, Hateful Stories: Evaluating and Detecting Hateful Intent in Multi-Turn Visual Story Generation",
@@ -11887,12 +12067,13 @@
     "verify_note": "Excerpts verbatim from raw fetch; no directly-related claim in the current claims list, so related_claims is empty. Cluster null because content-safety of image generation sits outside the 13-cluster security-engineering taxonomy.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "seeing-is-not-deciding-can-multimodal-llms-act-a-769a7622d4",
     "topic": "ai-research",
-    "domain": "Models & Capabilities",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Seeing Is Not Deciding: Can Multimodal LLMs Act as Effective CEOs?",
@@ -11952,11 +12133,12 @@
     "verify_note": "Excerpts confirmed verbatim against data/_raw/mrscan-b052-4.txt. cluster=null: capability/eval finding on MLLM decision agents; no security angle in the abstract. related_claims empty.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Models & Capabilities"
   },
   {
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [],
     "title": "TriQua: Reconciling Granularity and Context in Factuality Evaluation",
@@ -12018,12 +12200,13 @@
     "id": "triqua-reconciling-granularity-and-context-in-fa-f183f7843f",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "c-3-po-evaluating-cross-modal-composition-and-co-13cccde0ce",
     "topic": "ai-research",
-    "domain": "Model Capabilities",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [],
     "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
@@ -12082,12 +12265,13 @@
     "verify_note": "Both excerpts verbatim from the arXiv abstract for 2608.05381. Security framing marked speculative; the paper does not itself claim an attack.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Model Capabilities"
   },
   {
     "id": "ecg-lens-lead-aware-clinical-context-enriched-ec-a8b6c819d6",
     "topic": "ai-research",
-    "domain": "Medical AI / Clinical Reports",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "ECG-LENS: Lead-Aware Clinical Context Enriched ECG Report Generation and Evaluation",
@@ -12143,11 +12327,12 @@
     "verify_note": "Both excerpts verified verbatim against data/_raw/mrscan-b053-2.txt. Filed outside Tier-1 (medical AI, not security/harness/agent scope).",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Medical AI / Clinical Reports"
   },
   {
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Latent Fact-Checking: Detecting Misinformation through Activation Engineering",
@@ -12203,12 +12388,13 @@
     "id": "latent-fact-checking-detecting-misinformation-th-4fdb24efde",
     "retrieved_at": "2026-08-14T20:08:49+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "id": "refining-over-resampling-test-time-self-correcti-b2c8673abd",
     "topic": "ai-research",
-    "domain": "Test-Time Inference",
+    "domain": "air.models",
     "cluster": null,
     "related_claims": [],
     "title": "Refining Over Resampling: Test-Time Self-Correction for LLM Reasoning",
@@ -12269,11 +12455,12 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b051-1.txt (including the raw '58.0%on MATH500' spacing from the abstract). Cluster null: pure reasoning-method paper with no security angle.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Test-Time Inference"
   },
   {
     "topic": "ai-research",
-    "domain": "Evaluation",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [
       "score-evals-on-groundedness-not-headline-f1"
@@ -12330,11 +12517,12 @@
     "id": "unmasking-removal-budget-confounding-a-matched-o-ff920693b5",
     "retrieved_at": "2026-08-14T20:08:49+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Evaluation"
   },
   {
     "topic": "ai-research",
-    "domain": "Personalization benchmarks",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [],
     "title": "LUNAR: Benchmarking Personalized Large Language Models on UNiversal User BehAvioR Logs",
@@ -12397,12 +12585,13 @@
     "id": "lunar-benchmarking-personalized-large-language-m-4a837eef63",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Personalization benchmarks"
   },
   {
     "id": "shaping-human-ai-interactions-to-provide-improve-b94ce7dd16",
     "topic": "ai-research",
-    "domain": "Human-AI Interaction",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Shaping Human-AI Interactions to Provide Improvement Pathways and Balance Competing Objectives",
@@ -12457,12 +12646,13 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b051-4.txt. Cluster null: adjacent to Cluster L (adversarial testing) and H (guardrails) framings but the thesis is a fairness/mechanism-design work, not an AI-security paper; no forced security relevance.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Human-AI Interaction"
   },
   {
     "id": "from-siloed-algorithms-to-compliance-first-agent-364fe7e0a7",
     "topic": "ai-research",
-    "domain": "Agentic Platforms",
+    "domain": "air.agents",
     "cluster": null,
     "related_claims": [],
     "title": "From Siloed Algorithms to Compliance-First Agentic Platforms: A Multi-Layered Architecture for Hospital AI Systems",
@@ -12529,11 +12719,12 @@
     "verify_note": "Excerpts verbatim from data/_raw/mrscan-b056-0.txt. cluster=null: healthcare-vertical agentic architecture with regulatory framing; not a Tier-1 fit — closest would be B (agents/harnesses) but the substance is compliance/PET plumbing, not harness design. No security-claim ledger fit.",
     "retrieved_at": "2026-08-14T20:08:54+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agentic Platforms"
   },
   {
     "topic": "ai-research",
-    "domain": "Tooling & Infrastructure",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "SNI-GNN: SmartNIC-Assisted Full-Graph GNN Training with In-Network Embedding Prediction",
@@ -12583,12 +12774,13 @@
     "id": "sni-gnn-smartnic-assisted-full-graph-gnn-trainin-7b2418fc7e",
     "retrieved_at": "2026-08-14T20:08:49+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Tooling & Infrastructure"
   },
   {
     "id": "unified-agent-managing-interactions-across-devic-6451f4f864",
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.agents",
     "cluster": null,
     "related_claims": [],
     "title": "Unified Agent: Managing Interactions across Devices",
@@ -12648,12 +12840,13 @@
     "verify_note": "Excerpts confirmed verbatim against data/_raw/mrscan-b052-0.txt. cluster=null: paper is agent-capability research with no security dimension in the abstract. related_claims empty (no directly relevant claim in claims.json).",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "iarcs-iterative-agentic-rl-for-controllable-3d-s-374e173721",
     "topic": "ai-research",
-    "domain": "Agentic RL / Synthetic Data",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "iARCS: Iterative Agentic RL for Controllable 3D Scene Generation",
@@ -12714,11 +12907,12 @@
     "verify_note": "Excerpts verbatim from data/_raw/mrscan-b056-3.txt. cluster=null: embodied-AI / CV domain paper; guess of ai-security is not defensible from the abstract. No claim-ledger fit.",
     "retrieved_at": "2026-08-14T20:08:54+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agentic RL / Synthetic Data"
   },
   {
     "topic": "ai-research",
-    "domain": "Enterprise AI Integration",
+    "domain": "air.agents",
     "cluster": null,
     "related_claims": [],
     "title": "Agentic Nesting: A New Methodology for Existing Enterprise Application Integration and Services",
@@ -12776,12 +12970,13 @@
     "id": "agentic-nesting-a-new-methodology-for-existing-e-af6c9fa7a8",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Enterprise AI Integration"
   },
   {
     "id": "epistemic-trustworthiness-in-generative-ai-a-nor-f3f230f567",
     "topic": "ai-research",
-    "domain": "AI ethics",
+    "domain": "air.alignment",
     "cluster": null,
     "related_claims": [],
     "title": "Epistemic Trustworthiness in Generative AI: A Normative Framework for Warranted Reliance in High-Stakes Workflows",
@@ -12837,12 +13032,13 @@
     "verify_note": "Excerpts verbatim from fetched abstract. Cluster null: normative/philosophical, not an engineering or security artifact.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI ethics"
   },
   {
     "id": "hyper-es-effective-evolution-strategies-for-llm-2d5b87ebb1",
     "topic": "ai-research",
-    "domain": "LLM training methods",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Hyper-ES: Effective Evolution Strategies for LLM Reasoning via Descent Direction Merging",
@@ -12897,12 +13093,13 @@
     "verify_note": "Excerpts verbatim from fetched abstract. Cluster null: pure capability method with no security angle.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "LLM training methods"
   },
   {
     "id": "a-survey-of-adversarial-efficiency-degradation-f-b0dc29b82f",
     "topic": "ai-research",
-    "domain": "Models & Capabilities",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "A Survey of Adversarial Efficiency Degradation for Vision Transformer by Exploiting Input-adaptive Optimization",
@@ -12958,12 +13155,13 @@
     "verify_note": "Excerpts verbatim from arXiv abstract. Cluster set to null: ViT efficiency-degradation is outside the 13-cluster taxonomy and only tangentially adjacent.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Models & Capabilities"
   },
   {
     "id": "text-steganography-with-dynamic-codebook-and-mul-229ab94298",
     "topic": "ai-research",
-    "domain": "AI Research",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Text Steganography with Dynamic Codebook and Multimodal Large Language Model",
@@ -13020,12 +13218,13 @@
     "verify_note": "Excerpts verbatim from raw abstract. Cluster set to null: text steganography is outside the 13-cluster taxonomy (not covered by A-M). No related_claims in claims.json apply.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "AI Research"
   },
   {
     "id": "adaptive-arena-based-contestable-argumentative-n-e415018011",
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordination",
@@ -13084,12 +13283,13 @@
     "verify_note": "Excerpts verbatim from the arXiv abstract at 2608.05391.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "when-agentic-ai-meets-integrated-sensing-and-com-593dd27c84",
     "topic": "ai-research",
-    "domain": "Wireless & Networking",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "When Agentic AI Meets Integrated Sensing and Communication",
@@ -13149,11 +13349,12 @@
     "verify_note": "Excerpts confirmed verbatim against data/_raw/mrscan-b052-2.txt. cluster=null: wireless/networking survey; the guess of ai-security is not defensible from the abstract. No related_claim fit.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Wireless & Networking"
   },
   {
     "topic": "ai-research",
-    "domain": "3D world generation",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "WorldClaw: Agentic 3D Open-World Generation at Scale",
@@ -13209,12 +13410,13 @@
     "id": "worldclaw-agentic-3d-open-world-generation-at-sc-e11e7a782c",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "3D world generation"
   },
   {
     "id": "posture-and-sustainment-optimization-under-adver-dbd68cdaa0",
     "topic": "ai-research",
-    "domain": "Operations Research",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Posture and Sustainment Optimization Under Adversarial Uncertainty",
@@ -13272,12 +13474,13 @@
     "verify_note": "Both lesson excerpts appear verbatim in the raw abstract at data/_raw/mrscan-b048-0.txt. related_claims left empty because no defense/AI-security claim in data/claims.json applies; cluster null because this is OR, not one of the 13 AI-security clusters.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Operations Research"
   },
   {
     "id": "a-unified-framework-for-trajectory-prediction-wi-c01d1cdd63",
     "topic": "ai-research",
-    "domain": "Trajectory Prediction",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "A Unified Framework for Trajectory Prediction with Explicit Planning and Reaction Decomposition",
@@ -13331,12 +13534,13 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b051-2.txt. Cluster null: pure autonomous-driving trajectory prediction, no AI-security intersection.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Trajectory Prediction"
   },
   {
     "id": "grounded-well-condition-anomaly-detection-on-the-c2cbf8b9d1",
     "topic": "ai-research",
-    "domain": "Industrial Anomaly Detection",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Grounded Well-Condition Anomaly Detection on the Volve Field: Constructed Labels, a Baseline, and a Dual-Head Model",
@@ -13391,12 +13595,13 @@
     "verify_note": "Excerpts checked verbatim against data/_raw/mrscan-b051-3.txt. Cluster null: industrial ML, not AI security.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Industrial Anomaly Detection"
   },
   {
     "id": "doctoragents-an-agentic-framework-to-iteratively-d0bd4e72b0",
     "topic": "ai-research",
-    "domain": "Agents & Harnesses",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "DoctorAgents: an agentic framework to iteratively refine AutoML pipeline for small clinical temporal data",
@@ -13455,12 +13660,13 @@
     "verify_note": "All excerpts copied verbatim from the arXiv abstract at 2608.05375; no claim linkage attempted because none in claims.json applies.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Agents & Harnesses"
   },
   {
     "id": "counterfactual-analysis-via-large-language-model-0e486bbc3d",
     "topic": "ai-research",
-    "domain": "Finance / LLM Applications",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "Counterfactual Analysis via Large Language Models",
@@ -13518,12 +13724,13 @@
     "verify_note": "Both lesson excerpts appear verbatim in raw abstract at data/_raw/mrscan-b048-4.txt. related_claims left empty because no defense/AI-security claim in data/claims.json applies; cluster null because the paper is applied-LLM finance, not one of the 13 AI-security clusters.",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Finance / LLM Applications"
   },
   {
     "id": "evaluating-and-improving-pedagogical-fit-in-llm-5e800359e7",
     "topic": "ai-research",
-    "domain": "Model Capabilities",
+    "domain": "air.evals",
     "cluster": null,
     "related_claims": [],
     "title": "Evaluating and Improving Pedagogical Fit in LLM-Based AI Tutors with the Pedagogical Suitability Index",
@@ -13582,11 +13789,12 @@
     "verify_note": "Excerpts verbatim from the arXiv abstract at 2608.05411.",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Model Capabilities"
   },
   {
     "topic": "ai-research",
-    "domain": "Clinical ML",
+    "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
     "title": "From Continuous Predictors to Clinical Thresholds: Early Evidence on Performance Trade-offs of Guideline-Based Categorisation for Ischaemic Stroke Outcome Prediction",
@@ -13645,12 +13853,13 @@
     "id": "from-continuous-predictors-to-clinical-threshold-5975f7a2e9",
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Clinical ML"
   },
   {
     "id": "quoting-john-gruber-9fc18ab550",
     "topic": "ai-research",
-    "domain": "Tooling & Infrastructure",
+    "domain": "air.tooling",
     "cluster": null,
     "related_claims": [],
     "title": "Quoting John Gruber",
@@ -13698,6 +13907,7 @@
     "verify_note": "Excerpt checked verbatim against data/_raw/mrscan-b039-5.txt (lines 12-13). No cluster fit; cluster=null and relevance intentionally low.",
     "retrieved_at": "2026-08-14T20:08:51+00:00",
     "needs_review": true,
-    "grounding_score": null
+    "grounding_score": null,
+    "domain_label": "Tooling & Infrastructure"
   }
 ]

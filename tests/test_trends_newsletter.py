@@ -15,7 +15,7 @@ def _seed_cluster(topic="ai-security"):
     pool["entries"] = [
         make_entry(
             topic=topic,
-            domain="MCP & Tools",
+            domain="ais.mcp-tools",
             title="Tool A",
             source_url="https://a/1",
             source_id="src-1",
@@ -24,7 +24,7 @@ def _seed_cluster(topic="ai-security"):
         ),
         make_entry(
             topic=topic,
-            domain="MCP & Tools",
+            domain="ais.mcp-tools",
             title="Tool B",
             source_url="https://a/2",
             source_id="src-2",

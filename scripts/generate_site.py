@@ -110,7 +110,7 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
     src = entry.get("source_url", "")
     topic_name = c.TOPICS.get(entry.get("topic", ""), {}).get("name", entry.get("topic", ""))
     meta = [
-        f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain', '-')}",
+        f"**Topic:** {topic_name}  ·  **Domain:** {c.domain_name(entry.get('domain') or '-')}",
         f"**Source:** [{entry.get('source_name', 'source')}]({src})"
         + (f"  ·  **Author:** {entry['author']}" if entry.get("author") else "")
         + (
@@ -228,6 +228,31 @@ def _write_entry_pages(base: c.Path, by_domain: dict[str, list[dict]], conf: c.C
             )
 
 
+def moved_stub(entry: dict) -> str:
+    """A deterministic pointer page left at a finding's pre-taxonomy path."""
+    new = f"../{c.domain_slug(entry.get('domain') or 'General')}/{entry_filename(entry)}"
+    return (
+        "# Moved\n\n"
+        f"This finding now lives at [{entry.get('title', 'its new page')}]({new}).\n\n"
+        "_Domains became fixed taxonomy IDs (data/taxonomy.yaml) and its page moved "
+        "with its domain._\n"
+    )
+
+
+def _write_moved_stubs(base: c.Path, entries: list[dict]) -> int:
+    """Leave a "Moved" stub at each page's old path so outside links still resolve."""
+    written = 0
+    for e in entries:
+        old = c.moved_slug(e)
+        path = base / old / entry_filename(e) if old else None
+        if path is None or path.exists():  # never shadow a real page
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(moved_stub(e), encoding="utf-8")
+        written += 1
+    return written
+
+
 def _editorial_section(editorial: list[dict]) -> list[str]:
     """A compact 'Trending & In the News' block for a topic page (links to source)."""
     if not editorial:
@@ -267,10 +292,10 @@ def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) ->
     out += _editorial_section(list(editorial))
     out += ["| Domain | Findings |", "| --- | --- |"]
     order = sorted(by_domain, key=lambda d: -len(by_domain[d]))
-    out += [f"| {d} | {len(by_domain[d])} |" for d in order] + [""]
+    out += [f"| {c.domain_name(d)} | {len(by_domain[d])} |" for d in order] + [""]
     for domain in order:
         out += (
-            [f"## {domain}", ""]
+            [f"## {c.domain_name(domain)}", ""]
             + [render_index_block(e, conf) for e in rank(by_domain[domain], conf)]
             + [""]
         )
@@ -303,6 +328,7 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
         by_domain[e.get("domain") or "General"].append(e)
 
     _write_entry_pages(base, by_domain, conf)
+    _write_moved_stubs(base, [e for items in by_domain.values() for e in items])
     base.mkdir(parents=True, exist_ok=True)
     sources = c.load_sources_by_id()
     held = sum(1 for e in all_entries if c.is_held(e, conf, sources))
@@ -453,8 +479,8 @@ def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
         "![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) "
         "![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)",
         "",
-        "<h3 align=\"center\">"
-        "<a href=\"https://rcha0s.github.io/AwesomeSecurity-AIResearch/\">"
+        '<h3 align="center">'
+        '<a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">'
         "Read the live briefing &#8594;</a></h3>",
         "",
         "The live site is the best read — one page for the week's news, another for "
@@ -565,7 +591,7 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "gets only the raw source and the extracted claims — no scores, no prior context — "
         "and tries to refute. Novelty is re-scored as *claim-level delta vs. named prior "
         "art*, not text similarity. The **lower** of the two novelty scores wins. This "
-        "mirrors the \"adversarial collaboration\" pattern from meta-science (Mellers, "
+        'mirrors the "adversarial collaboration" pattern from meta-science (Mellers, '
         "Tetlock 2019) — a single scorer overrates their own work; two independent scorers, "
         "one incentivized to refute, produce calibrated estimates.",
         "- **Story-key dedup across the news lane.** Same story on three sites (vendor blog, "
@@ -596,9 +622,9 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "",
         "### What we deliberately don't do",
         "",
-        "- **We don't score \"quality\" holistically.** Every axis (newness, novelty, "
+        '- **We don\'t score "quality" holistically.** Every axis (newness, novelty, '
         "relevance, credibility) is scored separately with a written rubric. An LLM asked "
-        "\"how good is this paper\" is systematically biased toward long, elaborate output "
+        '"how good is this paper" is systematically biased toward long, elaborate output '
         "([Zheng et al., 2023](https://arxiv.org/abs/2306.05685) — LLM-as-judge prefers "
         "longer answers independent of quality); we don't ask.",
         "- **We don't dedupe by URL alone.** URL dedup misses same-story-different-URL, "
@@ -645,7 +671,7 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "findings move to [`data/archive.json`](data/archive.json). The claim ledger and "
         "the news lane are durable and never age out. Findings tell you what was published lately; claims "
         "tell you what to believe now.",
-        "- **What \"vetted\" and \"checked\" mean.** A finding is curated only if it clears "
+        '- **What "vetted" and "checked" mean.** A finding is curated only if it clears '
         "the novelty and relevance bars, its lesson excerpt is found in the source text "
         "(grounding), and a separate model pass does not refute it. That is automated "
         "review with a mechanical grounding check, not human verification. Treat it as a "
