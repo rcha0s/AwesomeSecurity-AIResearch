@@ -26,3 +26,10 @@ def test_fixed_hosts_cover_the_ingestor_apis():
 
     for url in (common.JINA_READER, ingest_conferences.ARXIV_API, ingest_hn.HN_SEARCH):
         assert any(h in url for h in allowlist.FIXED_HOSTS), url
+
+
+def test_fixed_hosts_cover_the_recall_eval_curators():
+    import eval_recall
+
+    for url in (eval_recall.TLDRSEC_SITEMAP, *eval_recall.SIMON_FEEDS, eval_recall.KEV_URL):
+        assert any(h in url for h in allowlist.FIXED_HOSTS), url

@@ -1,0 +1,228 @@
+{
+  "generated": "2026-10-20T07:54:25+00:00",
+  "week": "2026-W43",
+  "since": "2026-10-13",
+  "errors": [],
+  "headlines": 35,
+  "on_thesis": 32,
+  "matched": 1,
+  "recall": 0.031,
+  "by_curator": {
+    "tldrsec": 13,
+    "ghsa": 11,
+    "kev": 8
+  },
+  "misses": [
+    {
+      "curator": "tldrsec",
+      "title": "Zero to Calc in Six Days: Inside XBOW’s Chrome Full Chain",
+      "url": "https://xbow.com/labs/research/zero-to-calc-in-six-days-inside-xbow-chrome-full-chain",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "What Is EntraGoat? A Deliberately Vulnerable Entra ID Simulation Environment",
+      "url": "https://semperis.com/blog/what-is-entragoat-entra-id-simulation-environment",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "AgentCorruption: How A Single Prompt Collapsed The Entire Cloud Security Model",
+      "url": "https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "runZeroInc/sshamble",
+      "url": "https://github.com/runZeroInc/sshamble",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "Introducing CAIRN: Frontier tracking for AI-integrated malware",
+      "url": "https://blog.talosintelligence.com/introducing-cairn-frontier-tracking-for-ai-integrated-malware",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "The Closed Quorum: Inside the first reported autonomous AI C2 implant",
+      "url": "https://blog.talosintelligence.com/the-closed-quorum-inside-the-first-reported-autonomous-ai-c2-implant",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "Context Collapse, Part 3 - AI Worming through Word",
+      "url": "https://enklypesalt.com/posts/context-collapse-part3-ai-worming-through-word",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "REA - Reverse Engineer Anything",
+      "url": "https://rea.tools/",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "AI for Offensive Security: What Works, What Does Not, and How to Adopt It",
+      "url": "https://specterops.io/blog/2026/09/24/ai-for-offensive-security",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "OAuth risk analysis: Turn 45 minutes into 15 seconds",
+      "url": "https://nudgesecurity.com/features/nudge-ai-agents",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "How DigitalOcean Manages Credentials for Autonomous Agents",
+      "url": "https://digitalocean.com/blog/how-digitalocean-manages-credentials-for-autonomous-agents",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "tldrsec",
+      "title": "Test-driving Jev on a security task: identity resolution",
+      "url": "https://vincenzoiozzo.com/blog/jev-identity-resolution",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Mercury: Unauthenticated Remote Code Execution in /api/terminals - access control bypass",
+      "url": "https://github.com/advisories/GHSA-f8c7-rwf9-fmgm",
+      "published": "2026-10-19"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Mercury: Unauthenticated Remote Code Execution via /api/kernels",
+      "url": "https://github.com/advisories/GHSA-rv4m-xm3f-3ccq",
+      "published": "2026-10-19"
+    },
+    {
+      "curator": "ghsa",
+      "title": "LMCache: Remote code execution via unsafe deserialization in multiprocess mode transport",
+      "url": "https://github.com/advisories/GHSA-w5f2-9q9c-ff4h",
+      "published": "2026-10-16"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Claude Agent SDK: Argument Injection via resume Option Allows Arbitrary Command Execution",
+      "url": "https://github.com/advisories/GHSA-h4mw-j7qp-8mwm",
+      "published": "2026-10-16"
+    },
+    {
+      "curator": "ghsa",
+      "title": "TanStack Router: Unauthenticated reflected XSS in TanStack Start server-function responses",
+      "url": "https://github.com/advisories/GHSA-qx66-fv34-fjm8",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Podman: The `podman run` command can be instructed to disable almost all sandboxing by image annotation",
+      "url": "https://github.com/advisories/GHSA-2cvf-wqm6-wr9g",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "ghsa",
+      "title": "KEDA: Privilege escalation from namespace admin to cluster admin via KEDA TriggerAuthentication",
+      "url": "https://github.com/advisories/GHSA-637c-6jxx-4rwm",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Dgraph: Zero Unauthenticated HTTP Admin removeNode Denial of Service",
+      "url": "https://github.com/advisories/GHSA-qj98-gp63-54xj",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Vitess vttablet /twopcz reflected XSS",
+      "url": "https://github.com/advisories/GHSA-v75v-6fpf-gvw8",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Microsoft Security Advisory CVE-2026-88092 - ASP.NET Core Security Feature Bypass Vulnerability",
+      "url": "https://github.com/advisories/GHSA-rv87-ccxw-8ggf",
+      "published": "2026-10-13"
+    },
+    {
+      "curator": "ghsa",
+      "title": "Microsoft Security Advisory CVE-2026-105016 - Microsoft QUIC Remote Code Execution Vulnerability",
+      "url": "https://github.com/advisories/GHSA-5gjq-3f94-rcf7",
+      "published": "2026-10-13"
+    },
+    {
+      "curator": "kev",
+      "title": "BeyondTrust Remote Support Authentication Bypass by Spoofing Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102764",
+      "published": "2026-10-16"
+    },
+    {
+      "curator": "kev",
+      "title": "Fortinet Multiple Products Path Traversal Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-61624",
+      "published": "2026-10-16"
+    },
+    {
+      "curator": "kev",
+      "title": "Atlassian Multiple Products Files or Directories Accessible to External Parties Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-21589",
+      "published": "2026-10-15"
+    },
+    {
+      "curator": "kev",
+      "title": "Ahsay AhsayCBS Command Injection Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105134",
+      "published": "2026-10-14"
+    },
+    {
+      "curator": "kev",
+      "title": "Cisco Secure Email Gateway Relative Path Traversal Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76519",
+      "published": "2026-10-14"
+    },
+    {
+      "curator": "kev",
+      "title": "Ahsay AhsayCBS Improper Authentication Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105133",
+      "published": "2026-10-14"
+    },
+    {
+      "curator": "kev",
+      "title": "Ivanti Connect Secure Authentication Bypass by Spoofing Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104935",
+      "published": "2026-10-13"
+    },
+    {
+      "curator": "kev",
+      "title": "Microsoft Windows Command Injection Vulnerability",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96951",
+      "published": "2026-10-13"
+    }
+  ],
+  "miss_hosts": {
+    "github.com": 12,
+    "nvd.nist.gov": 8,
+    "blog.talosintelligence.com": 2,
+    "xbow.com": 1,
+    "semperis.com": 1,
+    "labs.zenity.io": 1,
+    "enklypesalt.com": 1,
+    "rea.tools": 1,
+    "specterops.io": 1,
+    "nudgesecurity.com": 1,
+    "digitalocean.com": 1,
+    "vincenzoiozzo.com": 1
+  },
+  "matched_rows": [
+    {
+      "curator": "tldrsec",
+      "title": "Grounded or Gamed? We Audited Our Own Cyber Benchmark",
+      "url": "https://semgrep.dev/blog/2026/grounded-or-gamed-we-audited-our-own-cyber-benchmark",
+      "published": "2026-10-15",
+      "matched": "auditing-a-cyber-benchmark-for-groundedness-mode-bfc4099549",
+      "how": "url"
+    }
+  ],
+  "passed": false
+}

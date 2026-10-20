@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Simon Willison's Weblog: security</title>
+  <link href="https://simonwillison.net/" rel="alternate"/>
+  <id>https://simonwillison.net/</id>
+  <updated>2026-07-13T23:57:57+00:00</updated>
+  <entry>
+    <title>Indirect prompt injection in a coding agent's web fetch</title>
+    <link href="https://simonwillison.net/2026/Jul/13/coding-agent-injection/" rel="alternate"/>
+    <published>2026-07-13T23:57:57+00:00</published>
+    <updated>2026-07-13T23:57:57+00:00</updated>
+    <id>https://simonwillison.net/2026/Jul/13/coding-agent-injection/</id>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;a href="https://embracethered.example.com/blog/agent-rce"&gt;Agent RCE via summarization&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt; Another prompt injection story.</summary>
+  </entry>
+  <entry>
+    <title>Datasette 9.9 release notes</title>
+    <link href="https://simonwillison.net/2026/Jul/12/datasette/" rel="alternate"/>
+    <published>2026-07-12T10:00:00+00:00</published>
+    <updated>2026-07-12T10:00:00+00:00</updated>
+    <id>https://simonwillison.net/2026/Jul/12/datasette/</id>
+    <summary type="html">&lt;p&gt;New plugin hooks and a faster table view.&lt;/p&gt;</summary>
+  </entry>
+  <entry>
+    <title>An old jailbreak write-up</title>
+    <link href="https://simonwillison.net/2026/Jun/01/old-jailbreak/" rel="alternate"/>
+    <published>2026-06-01T10:00:00+00:00</published>
+    <updated>2026-06-01T10:00:00+00:00</updated>
+    <id>https://simonwillison.net/2026/Jun/01/old-jailbreak/</id>
+    <summary type="html">&lt;p&gt;Outside the lookback window.&lt;/p&gt;</summary>
+  </entry>
+</feed>

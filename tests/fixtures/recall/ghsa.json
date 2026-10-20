@@ -1,0 +1,20 @@
+[
+  {
+    "ghsa_id": "GHSA-pr64-jmmf-jp54",
+    "cve_id": "CVE-2026-1111",
+    "html_url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+    "summary": "ToolHive: SSRF from host-side MCP discovery",
+    "description": "A malicious MCP server can redirect discovery to cloud metadata (aws credentials).",
+    "severity": "critical",
+    "published_at": "2026-07-12T10:00:00Z"
+  },
+  {
+    "ghsa_id": "GHSA-qj98-gp63-54xj",
+    "cve_id": null,
+    "html_url": "https://github.com/advisories/GHSA-qj98-gp63-54xj",
+    "summary": "Dgraph: Zero unauthenticated admin endpoint denial of service",
+    "description": "An admin endpoint lets anyone remove a node.",
+    "severity": "critical",
+    "published_at": "2026-07-11T10:00:00Z"
+  }
+]
