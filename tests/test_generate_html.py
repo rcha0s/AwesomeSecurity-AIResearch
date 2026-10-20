@@ -548,3 +548,58 @@ def test_old_page_paths_get_a_moved_stub_in_the_tree_and_the_docs_mirror(sandbox
 def test_moved_stubs_are_deterministic(sandbox):
     first = _render_moved(sandbox)
     assert _render_moved(sandbox) == first
+
+
+# --- Link hardening (auto-merge audit F3) ------------------------------------
+# Scan PRs carry attacker-influenced URLs and markdown; the page must never turn
+# them into script. Each case runs the template's own JS in Node.
+LINK_FNS = ["esc", "safeUrl", "hrefOf", "safeRel", "renderMarkdown"]
+
+
+def _links(body: str) -> list:
+    return json.loads(_run_js(LINK_FNS, "process.stdout.write(JSON.stringify(" + body + "));"))
+
+
+def test_non_http_hrefs_are_neutralised():
+    got = _links(
+        "['javascript:alert(1)', ' javascript:alert(1)', 'JaVaScRiPt:alert(1)',"
+        " 'data:text/html,<b>x</b>', 'vbscript:x', 'https://ok.example/a?b=1&c=2',"
+        " 'http://ok.example/', 'https://x.example/\"onmouseover=alert(1)', '', null]"
+        ".map(hrefOf)"
+    )
+    assert got[:5] == ["#"] * 5
+    assert got[5] == "https://ok.example/a?b=1&amp;c=2"
+    assert got[6] == "http://ok.example/"
+    assert got[7:] == ["#", "#", "#"]
+
+
+def test_markdown_links_cannot_run_script_or_break_out_of_href():
+    got = _links(
+        "[renderMarkdown('[x](javascript:alert(1))'),"
+        " renderMarkdown('[x](a\"onmouseover=alert(1))'),"
+        " renderMarkdown('[x](https://e.example/\"onmouseover=alert(1))'),"
+        " renderMarkdown('[ok](https://ok.example/p)'),"
+        " renderMarkdown('say \"hi\" [t\"x](https://ok.example/)')]"
+    )
+    # Quotes are escaped before link substitution, so none survive raw in text.
+    assert "&quot;hi&quot;" in got[4] and "t&quot;x" in got[4]
+    assert got[4].count('"') == 4  # exactly the two attribute value delimiters pairs
+    assert 'href="#"' in got[0] and "javascript" not in got[0].split("</a>")[0].split(">")[0]
+    assert 'href="#"' in got[1]
+    for html in got[:3]:
+        assert not re.search(r'<a [^>]*\son\w+=', html), html  # no event-handler attribute
+    assert '<a href="https://ok.example/p"' in got[3]
+
+
+def test_detail_paths_must_be_relative_findings_markdown():
+    got = _links(
+        "['findings/ai-security/x/a.md', 'javascript:alert(1)', 'https://evil.example/a.md',"
+        " 'findings/../../x.md', '/findings/a.md', 'findings/a.html'].map(safeRel)"
+    )
+    assert got == ["findings/ai-security/x/a.md", "", "", "", "", ""]
+
+
+def test_every_data_href_goes_through_the_scheme_check():
+    src = gh.TEMPLATE.read_text(encoding="utf-8")
+    assert not re.search(r"href=\"' \+ esc\([a-z]+\.url", src)
+    assert "window.open(finding.url" not in src

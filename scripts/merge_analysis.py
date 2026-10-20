@@ -20,6 +20,7 @@ from __future__ import annotations
 import sys
 
 import common as c
+import content_checks as cc
 import rerank
 import sources_registry as sr
 import taxonomy as tx
@@ -140,7 +141,8 @@ def merge(
     merged_urls: set[str] = set()
     newly_added: list[dict] = []
     for raw in analyzed:
-        problems = c.validate_entry(raw)
+        # Only http(s) links reach the site: a javascript: URL is rejected here.
+        problems = c.validate_entry(raw) + cc.url_problems(raw)
         if problems:
             errors.append(f"{raw.get('title', '?')[:50]}: {'; '.join(problems)}")
             continue

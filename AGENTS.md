@@ -25,7 +25,8 @@ data/taxonomy.yaml        # THE vocabulary: 3 topics x fixed domain IDs (ais.* p
 data/taxonomy_migration.json # one-time label -> ID table (every pre-migration label)
 data/taxonomy_proposals.json # verified new-domain proposals (taxonomy_proposals.py)
 data/archive.json         # aged-out findings (preserved, not shown)
-data/sources.json         # ranked source registry (add via add_source.py)
+data/sources.json         # ranked source registry (add via add_source.py; reviewed PRs only)
+data/source_stats.json    # per-source hit-rate counts written by scans (overlaid on the registry)
 data/candidates.json      # transient ingest staging (gitignored)
 data/_raw/                # transient fetched article text (gitignored)
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
@@ -51,6 +52,10 @@ scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
 scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
+scripts/merge_guard.py    # auto-merge security boundary: is this PR content-only? (pure)
+scripts/automerge.py      # drives .github/workflows/automerge.yml (REST gh api only)
+scripts/merge_gate.py     # checks a scan PR must pass to auto-merge; the Phase 3 eval hook
+scripts/content_checks.py # http(s)-only URLs, render equality, claim history (used by the gate)
 .claude/skills/           # /research-scan /add-resource /add-source /editorial-review — the LLM stages
 docs/                     # GENERATED site served by GitHub Pages (branch main, folder /docs)
 README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · ai-security/ product-security/ ai-research/ claims/  # GENERATED
@@ -196,7 +201,7 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   picker and run shell commands without approval (routines.md). Its limits are
   the environment's: Custom network allowlist, no connectors, a GitHub proxy
   scoped to this repo, no readable secrets in the VM, and PRs that still need a
-  human merge.
+  human merge (in auto-merge's `merge` mode, content-only PRs excepted; see below).
 - **GitHub in cloud sessions:** `gh pr` / `gh issue` are GraphQL and get a 403 there;
   the scripts use `gh api` (REST) only.
 - Requirement for every runner: headless Claude runs with
@@ -211,6 +216,78 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   It never overrides the novelty reviewer and never surfaces an ungrounded or
   verifier-refuted item — `promote_editorial.py` re-checks eligibility. Its
   staging file `data/editorial_out.json` is gitignored like `analysis_out.json`.
+
+### Auto-merge (Phase 4): content merges itself, the pipeline never does
+
+`.github/workflows/automerge.yml` runs every 30 minutes (and on manual dispatch
+from main) with main's code and main's config only. It looks at every open PR
+on a `claude/scan-*` branch.
+
+- **What can auto-merge:** a PR whose every changed path, including both sides
+  of a rename and every deletion, is content: `data/`, `docs/`, the topic trees
+  (`ai-security/`, `product-security/`, `ai-research/`, `claims/`) or the
+  generated `README.md`, `NEWSLETTER.md`, `TRENDS.md`, `REVIEW.md`. Inside those
+  directories only `.json`, `.md` and `.png` regular files count, plus exactly
+  `docs/index.html` and `docs/.nojekyll`: no other HTML, because HTML runs
+  script on the site's origin.
+- **It must also pass `scripts/merge_gate.py`**, run inside the workflow on main
+  merged with the PR head: pytest, the claim ledger, the analysis eval, any eval
+  listed under `automerge.evals`, and three content checks
+  (`scripts/content_checks.py`):
+  - every `url` / `*_url` field in `data/*.json` is an `http(s)://` URL;
+  - `docs/index.html` is byte-equal to main's `generate_html.render()` applied to
+    the payload and stamp the page carries, so the page is main's template plus
+    data, never hand-written HTML. The payload itself is still PR-shaped, so
+    the template treats every payload value as hostile: text through
+    `esc()`/`txt()`, links through `safeUrl()`, numbers through `num()`, and
+    `generate_html` coerces trend numbers, dropping rows that fail;
+  - every claim on main still exists, and **a scan PR may add new claims and
+    append evidence to existing ones (bumping `last_reviewed`), nothing more.**
+    Any other change to an existing claim, live or retired (status,
+    statement, title, guidance, supersession fields, confidence, scope, a
+    rewritten evidence item), is refused with "claim change needs human
+    review": the PR stays open for a human to merge. Superseding a claim is
+    therefore always a human merge.
+- **What never auto-merges, whatever the branch name or author:** anything
+  else. That covers `scripts/`, `.github/`, `.claude/`, `tests/`, `evals/`,
+  `config.yaml`, `requirements*.txt`, `*.toml`, `*.cfg`, `ISA.md`, `AGENTS.md`,
+  `CLAUDE.md`, any dotfile, the source registry (`data/sources.json`,
+  `data/source_proposals.json`: what scans fetch changes only through reviewed
+  add-source PRs), the pipeline tuning under `data/` (`cluster_keywords.yaml`,
+  `interests.yaml`, `source_blocklist.json`, any `.yaml`), staging files
+  (`data/_*`, `candidates.json`, `analysis_out.json`, `editorial_out.json`),
+  symlinks, submodules, executables and type changes. So does a PR from a fork,
+  one not based on main, a draft, one labelled `automerge:hold`, and one whose
+  head moved after it was tested: the merge call pins `sha=<tested head>`.
+- **Source stats:** scans used to rewrite `data/sources.json` with hit-rate
+  counts. Those now go to `data/source_stats.json` (allowed), which
+  `sources_registry.load_sources()` lays over the registry, recomputing rank.
+- **The boundary** is `scripts/merge_guard.py`, a pure module with exhaustive
+  tests (`tests/test_merge_guard.py`). When it was built, a hand-run mutation
+  pass (each rule loosened in turn) was killed by those tests; that pass is not
+  in CI. Widening the allowlist is a security change: review it as one.
+- **Shadow mode:** `automerge.mode` in `config.yaml` ships as `shadow`. The
+  workflow evaluates every scan PR and reports its verdict in the job summary and
+  one PR comment per head and verdict ("would merge", "refused" + reasons), and
+  merges nothing. Anything other than exactly `merge` reads as shadow.
+- **Merge mode needs owner-side settings the workflow cannot provide:** branch
+  protection that restricts pushes to main to the owner only, `enforce_admins`
+  on, a merge credential scoped to a main-only Environment, and scan identities
+  (cloud routine, Mac runner) that can neither push workflow files nor merge.
+  Without them a hijacked scan can go around this gate entirely. See ISA.md.
+- **Flipping it:** set `automerge.mode: merge` in a normal reviewed PR to main,
+  after the settings above are in place. That's Rohan's decision, recorded in
+  ISA.md, once ISC-26's eval gate holds. To stop it again, set it back to
+  `shadow`, or label one PR `automerge:hold`.
+- **Phase 3 hook:** add an eval under `automerge.evals` in `config.yaml`. A
+  listed script that doesn't exist yet is skipped until `required: true`; from
+  then on a missing script fails the gate.
+- In `merge` mode it also clears what main's protection needs: a branch that is
+  behind main gets `update-branch` (the new head is judged on the next run), and
+  a judged head missing the `pytest` check gets `tests.yml` dispatched, only
+  after re-confirming the head hasn't moved. After merging it dispatches
+  `update.yml` and requests a Pages build, because merges made with
+  `GITHUB_TOKEN` start neither on their own.
 
 ## How to validate a change end-to-end
 

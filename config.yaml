@@ -79,3 +79,16 @@ taxonomy:
   proposal_window_days: 30
   proposal_min_count: 3
   issue_label: taxonomy
+
+# Gated auto-merge of claude/scan-* PRs (ISA ISC-27/28, .github/workflows/automerge.yml).
+# The workflow reads this from main, never from the PR. Only content paths can
+# merge (scripts/merge_guard.py); code, workflows, skills and config never do.
+automerge:
+  mode: shadow          # shadow = evaluate + report only; merge = actually merge.
+                        # Flipping to merge is Rohan's call, recorded in ISA.md, once
+                        # ISC-26's eval gate holds (shadow week first).
+  merge_method: squash
+  evals:                # Phase 3 hook (scripts/merge_gate.py). Missing scripts are
+                        # skipped until `required: true`, then they fail closed.
+    - script: scripts/eval_integrity.py
+      required: false

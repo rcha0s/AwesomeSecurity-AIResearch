@@ -1,0 +1,157 @@
+name: Auto-merge gate
+
+# Gated auto-merge of claude/scan-* PRs (ISA ISC-27, ISC-28, Anti ISC-A3).
+#
+# Threat model: scan PRs are written by a model that reads attacker-controlled
+# text. A prompt injection may change content; it must never change the pipeline.
+# So a PR merges only if every changed path is content (scripts/merge_guard.py,
+# the security boundary) and main's checks pass on the tree that would land.
+#
+# Trigger choice: schedule + workflow_dispatch, NOT pull_request_target or
+# workflow_run.
+#   - pull_request_target runs with a write token and secrets in the base
+#     context; the classic "pwn request" is checking out the PR head there. It
+#     also never fires for PRs opened with GITHUB_TOKEN (GitHub suppresses those
+#     events), so render/scout-style bot PRs would be missed.
+#   - workflow_run chained off Tests means consuming the outputs/artifacts of a
+#     run that executed PR code: the second classic pitfall. And bot pushes'
+#     pull_request runs wait at action_required (ISA Remaining Work).
+#   - A scheduled run always uses main's workflow file and main's code, sees every
+#     open PR however it was opened (the cloud routine's proxy pushes as the
+#     owner, GITHUB_TOKEN PRs, the Mac runner), and nothing in a PR can choose
+#     what runs. The cost is up to 30 minutes of latency.
+#   Every job also refuses to run on any ref but main, so dispatching an old copy
+#   of this file from a branch does nothing. (A branch that REWRITES this file
+#   is out of reach of any workflow-level check; see AGENTS.md "Auto-merge".)
+#
+# Job split (no job both runs PR content and holds a write token):
+#   select  read-only. Main's code evaluates every open claude/scan-* PR with
+#           the path guard (git objects are fetched and diffed, never executed)
+#           and picks the oldest that passes.
+#   test    read-only (contents: read, no credentials persisted). Main merged
+#           with that PR head, which by then is content-only; runs
+#           scripts/merge_gate.py (pytest, ledger, http(s)-only URLs,
+#           docs/index.html == main's renderer on its own payload, claim
+#           history vs main, and the Phase 3 eval hook).
+#           Its only input to `decide` is its pass/fail result.
+#   decide  write. Checks out main only and runs main's code: re-fetches and
+#           re-judges every PR (TOCTOU), reports each verdict, and in `merge`
+#           mode merges the tested PR with sha=<tested head> so a moved head
+#           gets a 409.
+#
+# Mode (shadow | merge) is `automerge.mode` in main's config.yaml. It ships as
+# shadow: evaluate and report, never merge. No caches anywhere in this file: a
+# cache written by a job that read untrusted input could poison a later one.
+
+on:
+  schedule:
+    - cron: "17,47 * * * *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: automerge-gate
+  cancel-in-progress: false
+
+jobs:
+  select:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      number: ${{ steps.pick.outputs.number }}
+      sha: ${{ steps.pick.outputs.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Install main's dependencies
+        run: pip install -r requirements.txt
+
+      - name: Evaluate open scan PRs with the path guard
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/automerge.py select --repo "$GITHUB_REPOSITORY" --main-sha "$GITHUB_SHA"
+
+  test:
+    needs: select
+    if: github.ref == 'refs/heads/main' && needs.select.outputs.number != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Merge the evaluated PR head into main (the tree that would land)
+        env:
+          NUMBER: ${{ needs.select.outputs.number }}
+          SHA: ${{ needs.select.outputs.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$NUMBER" =~ ^[0-9]+$ && "$SHA" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags origin "+refs/pull/$NUMBER/head:refs/pr/$NUMBER"
+          [[ "$(git rev-parse "refs/pr/$NUMBER")" == "$SHA" ]] || {
+            echo "PR head moved since select; not testing it"; exit 1; }
+          git -c user.name=automerge-gate -c user.email=automerge-gate@invalid \
+            merge --no-ff --no-edit "$SHA"
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      # requirements.txt and every script are main's: the guard refused any PR
+      # that touches them before this job could run.
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest
+
+      # --base is main's commit: claim history is compared against git, not the tree.
+      - name: Merge gate (pytest, ledger, URLs, render equality, claim history, evals)
+        run: python scripts/merge_gate.py --base "$GITHUB_SHA"
+
+  decide:
+    needs: [select, test]
+    if: always() && github.ref == 'refs/heads/main' && needs.select.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # merge, update-branch
+      pull-requests: write # merge, verdict comments
+      actions: write # dispatch tests.yml (required check) and update.yml after a merge
+      pages: write # request a Pages build: GITHUB_TOKEN pushes don't start one
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Install main's dependencies
+        run: pip install -r requirements.txt
+
+      - name: Re-check, report, and (merge mode only) merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ needs.select.outputs.number }}
+          SHA: ${{ needs.select.outputs.sha }}
+          TESTS: ${{ needs.test.result }}
+        run: >-
+          python scripts/automerge.py decide --repo "$GITHUB_REPOSITORY"
+          --main-sha "$GITHUB_SHA" --number "$NUMBER" --sha "$SHA" --tests "$TESTS"
