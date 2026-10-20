@@ -23,7 +23,7 @@ FIXED_HOSTS = (
     "export.arxiv.org",  # ingest_conferences ARXIV_API
     "hn.algolia.com",  # ingest_hn / source_scout HN_SEARCH
 )
-URL_TYPES = ("rss", "newsletter", "research_index")
+URL_TYPES = ("rss", "newsletter", "research_index", "kev_json", "hf_papers")
 
 
 def source_hosts(sources: list[dict]) -> set[str]:

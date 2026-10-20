@@ -326,58 +326,6 @@
     "scope": "security"
   },
   {
-    "id": "rss:http-export-arxiv-org-rss-cs-ai",
-    "type": "rss",
-    "handle": "http://export.arxiv.org/rss/cs.AI",
-    "name": "arXiv cs.AI (Artificial Intelligence)",
-    "url": "http://export.arxiv.org/rss/cs.AI",
-    "topics": [
-      "ai-research"
-    ],
-    "domains": [
-      "Models & Capabilities"
-    ],
-    "tier": "medium",
-    "signals": {},
-    "stats": {
-      "ingested": 138,
-      "curated": 6
-    },
-    "rank": 43.9,
-    "added": "2026-07-13",
-    "active": true,
-    "notes": "Academic preprints",
-    "strict": true,
-    "track": "research",
-    "scope": "ai"
-  },
-  {
-    "id": "rss:http-export-arxiv-org-rss-cs-lg",
-    "type": "rss",
-    "handle": "http://export.arxiv.org/rss/cs.LG",
-    "name": "arXiv cs.LG (Machine Learning)",
-    "url": "http://export.arxiv.org/rss/cs.LG",
-    "topics": [
-      "ai-research"
-    ],
-    "domains": [
-      "Models & Capabilities"
-    ],
-    "tier": "medium",
-    "signals": {},
-    "stats": {
-      "ingested": 76,
-      "curated": 1
-    },
-    "rank": 43.4,
-    "added": "2026-07-13",
-    "active": true,
-    "notes": "Academic preprints",
-    "strict": true,
-    "track": "research",
-    "scope": "ai"
-  },
-  {
     "id": "rss:https-simonwillison-net-atom-everything",
     "type": "rss",
     "handle": "https://simonwillison.net/atom/everything/",
@@ -1671,5 +1619,185 @@
     "added": "2026-09-09",
     "active": true,
     "notes": "Restores Anthropic News coverage after the dead RSS feed (see deactivated rss:https-www-anthropic-com-news-rss-xml). No RSS/Atom exists; harvested via ingest_sitemap.py against sitemap.xml, filtered to /news/ paths, lastmod as the freshness signal."
+  },
+  {
+    "id": "rss:https-www-wiz-io-feed-rss-xml",
+    "type": "rss",
+    "handle": "https://www.wiz.io/feed/rss.xml",
+    "name": "Wiz Research",
+    "url": "https://www.wiz.io/feed/rss.xml",
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "Vendor research (cloud/AI security)"
+  },
+  {
+    "id": "rss:https-metr-org-feed-xml",
+    "type": "rss",
+    "handle": "https://metr.org/feed.xml",
+    "name": "METR",
+    "url": "https://metr.org/feed.xml",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "AI evaluation / dangerous-capability research"
+  },
+  {
+    "id": "rss:https-developer-nvidia-com-blog-tag-ai-red-team",
+    "type": "rss",
+    "handle": "https://developer.nvidia.com/blog/tag/ai-red-team/feed/",
+    "name": "NVIDIA AI Red Team (technical blog tag)",
+    "url": "https://developer.nvidia.com/blog/tag/ai-red-team/feed/",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "Vendor research (AI red teaming)"
+  },
+  {
+    "id": "rss:https-developer-nvidia-com-blog-category-cyberse",
+    "type": "rss",
+    "handle": "https://developer.nvidia.com/blog/category/cybersecurity/feed/",
+    "name": "NVIDIA Technical Blog - Cybersecurity",
+    "url": "https://developer.nvidia.com/blog/category/cybersecurity/feed/",
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "Vendor research; broad category, classifier filters per item"
+  },
+  {
+    "id": "rss:https-github-com-mitre-atlas-atlas-data-releases",
+    "type": "rss",
+    "handle": "https://github.com/mitre-atlas/atlas-data/releases.atom",
+    "name": "MITRE ATLAS releases",
+    "url": "https://github.com/mitre-atlas/atlas-data/releases.atom",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "Standards body: ATLAS matrix/data releases (updates)"
+  },
+  {
+    "id": "research_index:https-www-aisi-gov-uk-blog",
+    "type": "research_index",
+    "handle": "https://www.aisi.gov.uk/blog",
+    "name": "UK AI Security Institute Blog",
+    "url": "https://www.aisi.gov.uk/blog",
+    "topics": [
+      "ai-security",
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "No RSS (all feed paths 404); harvested via ingest_sitemap.py: sitemap.xml has 100 /blog/ URLs with lastmod"
+  },
+  {
+    "id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+    "type": "kev_json",
+    "handle": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+    "name": "CISA Known Exploited Vulnerabilities",
+    "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+    "topics": [
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "Exploited-in-the-wild signal; JSON catalog, harvested by ingest_json_feeds.py"
+  },
+  {
+    "id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "type": "hf_papers",
+    "handle": "https://huggingface.co/api/daily_papers",
+    "name": "Hugging Face Daily Papers",
+    "url": "https://huggingface.co/api/daily_papers",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-20",
+    "active": true,
+    "notes": "Paper quality signal (paper_gate hf-daily); harvested by ingest_json_feeds.py"
   }
 ]

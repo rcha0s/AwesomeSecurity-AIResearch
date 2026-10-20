@@ -111,6 +111,10 @@ def resolve(args: argparse.Namespace) -> tuple[str, str, str | None]:
         # Proceedings/accepted-papers index; harvested by the conference ingestor,
         # which resolves each title to a FREE full text (no paywalled fetches).
         return "conference", handle, handle
+    if stype in ("kev_json", "hf_papers"):
+        # Keyless JSON API (no RSS): handle is the endpoint, harvested by
+        # ingest_json_feeds.py.
+        return stype, handle, handle
     if stype == "research_index":
         # A lab's research listing that publishes no feed (JS-rendered index).
         # Same harvest path as `conference`: scrape the index, resolve free text.

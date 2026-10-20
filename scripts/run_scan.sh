@@ -39,7 +39,7 @@ RUN_ID_FILE="data/_scan_run_id"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
-INGESTORS=(aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences)
+INGESTORS=(aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences ingest_json_feeds)
 # No generate_og: it needs the Ubuntu fonts in /usr/share/fonts (absent on the
 # Mac and not promised in the cloud VM). update.yml's render job on main owns
 # docs/og.png.

@@ -21,6 +21,7 @@ import sys
 from datetime import datetime, timedelta
 
 import common as c
+import paper_gate as pg
 import sources_registry as sr
 
 try:
@@ -55,8 +56,8 @@ def build_candidate(entry: dict, feed: dict, rules: dict) -> dict | None:
     title = (entry.get("title") or "").strip()
     excerpt = c.clean_summary(entry.get("summary", ""))
     blob = f"{title} {excerpt}"
-    # A `strict` feed (e.g. the high-volume arXiv cs.AI/cs.LG firehose) only stages
-    # items that actually keyword-match a topic — no single-domain fallback.
+    # A `strict` feed (any high-volume feed) only stages items that actually
+    # keyword-match a topic — no single-domain fallback.
     feed_domains = [] if feed.get("strict") else feed.get("domains", [])
     domain = classify_domain(blob, rules, feed_domains)
     if domain is None:
@@ -98,26 +99,41 @@ def feed_from_source(source: dict) -> dict:
     }
 
 
-def collect_rss(rules: dict, cutoff: datetime) -> list[dict]:
-    """Fetch every registered rss/newsletter feed and build fresh candidates."""
+def collect_rss(rules: dict, cutoff: datetime, signals: pg.Signals | None = None) -> list[dict]:
+    """Fetch every registered rss/newsletter feed and build fresh candidates.
+
+    Two passes: first parse every feed (trusted-curator feeds supply the paper
+    gate's curator-link signal), then build candidates and drop any preprint
+    that carries no quality signal (paper_gate.admit, ISC-29).
+    """
+    signals = signals or pg.Signals()
     feeds = sr.sources_of_type("rss") + sr.sources_of_type("newsletter")
-    candidates: list[dict] = []
+    parsed_feeds: list[tuple[dict, list]] = []
     for source in feeds:
         feed = feed_from_source(source)
         print(f"-> {feed['name']}: {feed['url']}")
-        parsed = feedparser.parse(
-            feed["url"], request_headers={"User-Agent": c.HTTP_USER_AGENT}
-        )
+        parsed = feedparser.parse(feed["url"], request_headers={"User-Agent": c.HTTP_USER_AGENT})
         if parsed.bozo and not parsed.entries:
             print(f"   ! could not parse feed ({getattr(parsed, 'bozo_exception', '')})")
             continue
-        for entry in parsed.entries:
+        if source["id"] in pg.TRUSTED_CURATORS:
+            signals.curator_ids |= pg.curator_ids_from_entries(parsed.entries)
+        parsed_feeds.append((feed, parsed.entries))
+
+    candidates: list[dict] = []
+    for feed, entries in parsed_feeds:
+        for entry in entries:
             dt = c.entry_datetime(entry)
             if dt is None or dt < cutoff:
                 continue
             cand = build_candidate(entry, feed, rules)
-            if cand:
+            if not cand:
+                continue
+            ok, reason = pg.admit(cand, signals)
+            if ok:
                 candidates.append(cand)
+            else:
+                print(f"   - gated ({reason}): {cand['title'][:70]}")
     return candidates
 
 

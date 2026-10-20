@@ -76,6 +76,8 @@ conferences:
     - "SaTML"
     - "AISec"
     - "CCS"
+    - "IEEE S&P"
+    - "IEEE Symposium on Security and Privacy"
   # General ML/SE venues. These are firehoses that publish mostly off-thesis
   # work, so an item must ALSO match a `security_terms` keyword to be staged -
   # that keeps the adversarial-ML papers and drops the object-detection ones.

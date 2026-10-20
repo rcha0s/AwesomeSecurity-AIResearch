@@ -23,6 +23,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    python scripts/ingest_hn.py       # Hacker News velocity signal (keyless, network)
    python scripts/ingest_conferences.py  # accepted papers at USENIX/NDSS/SaTML/AISec/CCS
                                          # (+security-gated NeurIPS/ICML/ISSTA) via arXiv
+   python scripts/ingest_json_feeds.py   # CISA KEV (exploited in the wild) + HF Daily Papers
    ```
 
 2. **Read the candidates.** Load `data/candidates.json`. For each candidate, read its
