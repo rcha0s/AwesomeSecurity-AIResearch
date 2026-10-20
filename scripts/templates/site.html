@@ -342,6 +342,10 @@
   .claim.st-superseded { border-left-color: var(--st-superseded); }
   .claim.st-refuted { border-left-color: var(--st-refuted); }
   .claim.retired { opacity: .88; background: var(--paper-2); }
+  details.retired-group > summary { cursor: pointer; list-style: none; }
+  details.retired-group > summary::-webkit-details-marker { display: none; }
+  details.retired-group > summary h2::before { content: "\25B8  "; color: var(--ink-3); }
+  details.retired-group[open] > summary h2::before { content: "\25BE  "; }
   .claim-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .status { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
     padding: 2px 8px; border-radius: 999px; font-weight: 700; }
@@ -506,6 +510,7 @@
   <nav class="views" role="tablist" aria-label="Views">
     <button class="vtab" role="tab" data-view="week" aria-selected="true">Briefing</button>
     <button class="vtab" role="tab" data-view="fields">Fields <span class="ct" id="ct-fields"></span></button>
+    <button class="vtab" role="tab" data-view="news">News <span class="ct" id="ct-news"></span></button>
     <button class="vtab" role="tab" data-view="claims">Claims ledger <span class="ct" id="ct-claims"></span></button>
     <button class="vtab" role="tab" data-view="lessons">Lessons <span class="ct" id="ct-lessons"></span></button>
     <button class="vtab" role="tab" data-view="feed">All findings <span class="ct" id="ct-feed"></span></button>
@@ -514,6 +519,7 @@
   <main>
     <section class="view" id="view-week" role="tabpanel"></section>
     <section class="view" id="view-fields" role="tabpanel" hidden></section>
+    <section class="view" id="view-news" role="tabpanel" hidden></section>
     <section class="view" id="view-claims" role="tabpanel" hidden></section>
     <section class="view" id="view-lessons" role="tabpanel" hidden></section>
     <section class="view" id="view-feed" role="tabpanel" hidden></section>
@@ -707,12 +713,46 @@
     return _daysAgo(f.published) <= BRIEFING_MAX_AGE_DAYS;
   }
 
+  // The front page's news lane: stories from the last `days`, newest first,
+  // at most `max`. Every kept story is still on the News tab.
+  function frontNews(rows, days, max) {
+    return (rows || []).filter(function (f) { return _daysAgo(f.published) <= days; })
+      .sort(function (a, b) { return (b.published || "").localeCompare(a.published || ""); })
+      .slice(0, max);
+  }
+
+  function newsCardHTML(f) {
+    // Use the finding's takeaway (the sharp one-line lesson) rather
+    // than editorial.reason. Signals ("trending", "timely", "newsworthy")
+    // in the meta row already answer the "why now" question.
+    var corr = "";
+    if (f.corroborators && f.corroborators.length) {
+      corr = '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
+        'Also reported by: ' +
+        f.corroborators.slice(0, 4).map(function (c) {
+          return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
+        }).join(", ") +
+        '</p>';
+    }
+    return '<article class="art">' +
+      '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
+      (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      corr +
+      '<div class="meta">' + topicPill(f.topic) +
+        (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
+        (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
+          return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
+        '<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
+      '</div></article>';
+  }
+
   function renderWeek() {
     var root = $("#view-week");
     // Only findings inside the briefing window count — anything older stays
     // in All findings but doesn't drag the front page down.
     var pool = (DATA.findings || []).filter(_withinBriefing);
-    var editorial = (DATA.editorial || []).filter(_withinBriefing);
+    var newsDays = DATA.news_front_page_days, allNews = DATA.editorial || [];
+    var editorial = frontNews(allNews, newsDays, DATA.news_front_page_max);
     var fresh = pool.filter(function (f) { return f.fresh; });
 
     var shown = {};
@@ -724,39 +764,21 @@
     // in the field this week, not last month's paper of note.
     if (editorial.length) {
       html += secHead("Trending &amp; in the news",
-        editorial.length + " item" + (editorial.length === 1 ? "" : "s"));
+        editorial.length + " item" + (editorial.length === 1 ? "" : "s") + ", last " + newsDays + " days");
       html += '<p class="sec-lede">What the field is watching right now — capability releases, ' +
         'incident disclosures, spec changes. Deduped across sources; the source you\'d cite is on each card.</p>';
       html += '<div class="artlist">';
-      editorial.slice(0, 8).forEach(function (f) {
-        // Use the finding's takeaway (the sharp one-line lesson) rather
-        // than editorial.reason. Signals ("trending", "timely", "newsworthy")
-        // in the meta row already answer the "why now" question.
-        var corr = "";
-        if (f.corroborators && f.corroborators.length) {
-          corr = '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
-            'Also reported by: ' +
-            f.corroborators.slice(0, 4).map(function (c) {
-              return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
-            }).join(", ") +
-            '</p>';
-        }
-        html += '<article class="art">' +
-          '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
-          (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
-          corr +
-          '<div class="meta">' + topicPill(f.topic) +
-            (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
-            (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
-              return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
-            '<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
-          '</div></article>';
-      });
+      editorial.forEach(function (f) { html += newsCardHTML(f); });
       html += '</div>';
+      html += '<p class="why"><a class="link" href="#news" data-goto="news">All ' + allNews.length +
+        ' news stories &#8594;</a></p>';
     } else {
-      html += secHead("Trending &amp; in the news", "no items in the last " + BRIEFING_MAX_AGE_DAYS + " days");
-      html += '<p class="sec-lede">Nothing has cleared the news gate yet. Once the news lane is ingesting, ' +
-        'this is where capability releases and incident disclosures land.</p>';
+      html += secHead("Trending &amp; in the news", "no items in the last " + newsDays + " days");
+      html += allNews.length
+        ? '<p class="sec-lede">No new stories this week. <a class="link" href="#news" data-goto="news">All ' +
+          allNews.length + ' kept news stories &#8594;</a></p>'
+        : '<p class="sec-lede">Nothing has cleared the news gate yet. Once the news lane is ingesting, ' +
+          'this is where capability releases and incident disclosures land.</p>';
     }
 
     // --- LEAD RESEARCH FINDING — only if fresh enough to lead ---
@@ -976,9 +998,11 @@
     var html = '<p class="count">' + live.length + ' standing, ' + retired.length + ' retired</p>';
     live.forEach(function (c) { html += claimHTML(c); });
     if (retired.length) {
-      html += '<div class="sec-hd" style="margin-top:30px"><h2 style="font-size:18px">Retired answers</h2>' +
-        '<span class="note">kept for the record</span></div>';
+      html += '<details class="retired-group"' + (live.length ? '' : ' open') + '>' +
+        '<summary class="sec-hd" style="margin-top:30px"><h2 style="font-size:18px">Retired answers (' +
+        retired.length + ')</h2><span class="note">kept for the record</span></summary>';
       retired.forEach(function (c) { html += claimHTML(c); });
+      html += '</details>';
     }
     wrap.innerHTML = html;
   }
@@ -1054,6 +1078,71 @@
         return '<button class="opt" data-k="' + key + '" data-v="' + esc(o[0]) + '" aria-pressed="' +
           (o[0] === active ? "true" : "false") + '">' + esc(o[1]) + '</button>';
       }).join("") + '</div></div>';
+  }
+
+  // ================= NEWS =================
+  // Every kept news story, newest first, grouped by month. News never ages
+  // out; the front page shows only the latest slice of it.
+  var newsState = { topic: "all", q: "" };
+  function renderNews() {
+    var root = $("#view-news");
+    var html = '<div class="sec-hd"><h2>News</h2>' +
+      '<span class="note">' + (DATA.editorial || []).length + ' stories, kept for the record</span></div>' +
+      '<p class="sec-lede">Every story that cleared the news gate or the editorial pass, newest first. ' +
+      'The front page shows the last ' + DATA.news_front_page_days + ' days; nothing here ages out.</p>';
+    html += '<div class="toolbar">' +
+      '<div class="fgroup search"><span>Search</span><input id="news-q" type="search" ' +
+      'placeholder="Search titles, takeaways, sources..." value="' + esc(newsState.q) + '"></div></div>';
+    html += '<div class="toolbar" style="margin-top:-6px">';
+    html += filterGroup("Track", "ntopic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
+      return [t, tname(t)]; })), newsState.topic);
+    html += '</div><div id="news-list"></div>';
+    root.innerHTML = html;
+
+    $("#news-q").addEventListener("input", function () { newsState.q = this.value; drawNews(); });
+    root.querySelectorAll(".toolbar .opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        newsState.topic = b.dataset.v;
+        root.querySelectorAll('.opt[data-k="ntopic"]').forEach(function (o) {
+          o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
+        drawNews();
+      });
+    });
+    drawNews();
+  }
+
+  // Rows grouped under their publication month ("2026-10"), newest month first.
+  function newsByMonth(rows) {
+    var sorted = rows.slice().sort(function (a, b) {
+      return (b.published || "").localeCompare(a.published || ""); });
+    var groups = [], idx = {};
+    sorted.forEach(function (f) {
+      var m = String(f.published || "").slice(0, 7) || "undated";
+      if (idx[m] == null) { idx[m] = groups.length; groups.push({ month: m, rows: [] }); }
+      groups[idx[m]].rows.push(f);
+    });
+    return groups;
+  }
+
+  function drawNews() {
+    var wrap = $("#news-list");
+    var q = newsState.q.trim().toLowerCase();
+    var rows = (DATA.editorial || []).filter(function (f) {
+      if (newsState.topic !== "all" && f.topic !== newsState.topic) return false;
+      if (!q) return true;
+      var hay = (f.title + " " + f.takeaway + " " + (f.source_name || "") + " " + (f.tags || []).join(" ")).toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+    if (!rows.length) { wrap.innerHTML = '<p class="empty-note">No stories match. Try a broader search.</p>'; return; }
+    var html = '<p class="count">' + rows.length + ' stor' + (rows.length === 1 ? 'y' : 'ies') + '</p>';
+    newsByMonth(rows).forEach(function (g) {
+      var label = g.month === "undated" ? "Undated" : fmtDate(g.month);
+      html += '<div class="sec-hd" style="margin-top:24px"><h2 style="font-size:18px">' + esc(label) + '</h2>' +
+        '<span class="note">' + g.rows.length + '</span></div><div class="artlist">';
+      g.rows.forEach(function (f) { html += newsCardHTML(f); });
+      html += '</div>';
+    });
+    wrap.innerHTML = html;
   }
 
   // ================= FEED =================
@@ -1195,7 +1284,7 @@
   }
 
   // ================= chrome =================
-  var VIEWS = { week: renderWeek, fields: renderFields, claims: renderClaims,
+  var VIEWS = { week: renderWeek, fields: renderFields, news: renderNews, claims: renderClaims,
     lessons: renderLessons, feed: renderFeed };
   var drawn = {};
   function show(view) {
@@ -1231,6 +1320,7 @@
     var ctLessons = $("#ct-lessons");
     if (ctLessons) ctLessons.textContent = (DATA.lessons || []).length;
     var ctFeed = $("#ct-feed"); if (ctFeed) ctFeed.textContent = findingsN;
+    var ctNews = $("#ct-news"); if (ctNews) ctNews.textContent = (DATA.editorial || []).length;
     var cells = [[fresh, "this week"], [findingsN, "vetted findings"],
       [live, "standing claims"], [reversals, "reversals"]];
     $("#dateline").innerHTML = cells.map(function (c) {

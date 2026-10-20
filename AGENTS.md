@@ -54,8 +54,11 @@ README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · ai-security/ product-sec
 
 Findings age out after `max_age_days` into `data/archive.json`. Claims and
 news never do: news stories (editorial promotions and news-gated items) stay in
-their pools and in the "Trending & In the News" lane, newest first, and rerank
-pulls any archived news back.
+their pools, and rerank pulls any archived news back. Keeping is not showing:
+the front page's "Trending & In the News" lane shows only the last
+`news_front_page_days` (7), newest first, at most `news_front_page_max` (30).
+Every kept story is on the site's News tab, grouped by month. Retired claims
+fold into a collapsed section under the live ones.
 
 ## Findings vs claims (two different questions)
 
