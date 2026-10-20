@@ -282,7 +282,21 @@ def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(src, dst)
             written += 1
+            _copy_moved_stub(src_root, target_root / topic, entry)
     return written
+
+
+def _copy_moved_stub(src_root: Path, dst_root: Path, entry: dict) -> None:
+    """Mirror generate_site's "Moved" stub at the entry's pre-taxonomy path, so
+    old docs/findings/ links (the modal's URLs) keep resolving."""
+    old = c.moved_slug(entry)
+    src = src_root / old / _entry_filename(entry) if old else None
+    if src is None or not src.is_file():
+        return
+    dst = dst_root / old / _entry_filename(entry)
+    if not dst.exists():
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
 
 
 def lessons_index(conf: c.Config, snapshot_days: int) -> list[dict]:

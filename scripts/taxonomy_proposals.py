@@ -15,11 +15,12 @@ This module is the deterministic part (ISC-18):
                within `proposal_window_days`;
   - `notify`   open — or comment on — one GitHub issue labelled `taxonomy` per
                recurring proposal, via `gh api` REST only (cloud sessions block
-               GraphQL; same pattern as scan_alert.sh).
+               GraphQL; same pattern as scan_alert.sh). A closed issue is a
+               decision: it is never reopened or duplicated.
 
-The verifier is injectable (`verify=`), so tests stub it. The issue body carries
-model-written text, so it passes scrub.leak_reason first and falls back to a
-plain body on a hit, like the scan PR body.
+The verifier is injectable (`verify=`), so tests stub it. The issue title and
+body carry model-written text, so together they pass scrub.leak_reason first
+and fall back to a plain title and body on a hit, like the scan PR body.
 
 Usage:
     python scripts/taxonomy_proposals.py notify [--dry-run]
@@ -28,6 +29,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -172,10 +174,25 @@ def _clip(text: str) -> str:
     return text if len(text) <= MAX_TEXT else text[: MAX_TEXT - 1] + "…"
 
 
+def _digest(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def marker(key: str) -> str:
+    """Hidden issue marker. Hashed, so a model-chosen proposal name never has to
+    appear verbatim for the lookup (the plain fallback body carries only this)."""
+    return MARKER.format(key=_digest(key))
+
+
+def entry_ref(row: dict) -> str:
+    """`entry:<hash>` — what makes re-comments idempotent, safe in any body."""
+    return f"`entry:{_digest(row['entry'])}`"
+
+
 def entry_line(row: dict) -> str:
-    """One evidence line; `entry:<key>` is what makes re-comments idempotent."""
+    """One evidence line, led by its entry_ref."""
     return (
-        f"- `entry:{row['entry']}` [{_clip(row['title'])}]({row['source_url']}) — filed under "
+        f"- {entry_ref(row)} [{_clip(row['title'])}]({row['source_url']}) — filed under "
         f"`{row['filed_under']}`; verifier: nearest `{row['verifier_nearest']}`, "
         f"different because {_clip(row['verifier_reason'])}"
     )
@@ -184,7 +201,7 @@ def entry_line(row: dict) -> str:
 def issue_body(key: str, rows: list[dict], conf: dict) -> str:
     first = rows[0]
     lines = [
-        MARKER.format(key=key),
+        marker(key),
         f"The analyzer proposed a new **{first['topic']}** domain, "
         f"**{_clip(first['name'])}**, on {len(rows)} entries in {conf['window_days']} days, "
         "and the verifier passed each one.",
@@ -192,23 +209,34 @@ def issue_body(key: str, rows: list[dict], conf: dict) -> str:
         f"Proposed scope: {_clip(first['scope'])}",
         "",
         "Decide: add it to `data/taxonomy.yaml` (then re-file these entries), "
-        "or widen the nearest domain's scope and close this.",
+        "or widen the nearest domain's scope and close this. A closed issue stays "
+        f"closed unless the proposal recurs on {conf['min_count']}+ new entries after it.",
         "",
         *[entry_line(r) for r in rows],
     ]
     return "\n".join(lines)
 
 
-def safe(body: str, key: str) -> str:
-    """The body, or a plain one if it looks like it leaks a secret."""
-    if scrub.leak_reason(body, dict(os.environ)) is None:
-        return body
-    return f"{MARKER.format(key=key)}\nA new-domain proposal `{key}` recurred (details withheld)."
+def safe(title: str, body: str, key: str, rows: list[dict]) -> tuple[str, str]:
+    """(title, body), or plain ones if either looks like it leaks a secret. Both
+    carry model-written text (the proposal name, the verifier's reason)."""
+    if scrub.leak_reason(f"{title}\n{body}", dict(os.environ)) is None:
+        return title, body
+    plain = [marker(key), "A new-domain proposal recurred (details withheld)."]
+    plain += [f"- {entry_ref(r)}" for r in rows]
+    return f"Taxonomy: proposed {rows[0]['topic']} domain (details withheld)", "\n".join(plain)
 
 
-def _open_issues(repo: str, label: str) -> list[dict]:
-    raw = gh_api(f"repos/{repo}/issues?state=open&labels={label}&per_page=100")
+def _issues(repo: str, label: str) -> list[dict]:
+    """Every `label` issue, open AND closed: a closed one is a decision."""
+    raw = gh_api(f"repos/{repo}/issues?state=all&labels={label}&per_page=100")
     return [i for i in json.loads(raw or "[]") if "pull_request" not in i]
+
+
+def _match(issues: list[dict], key: str) -> dict | None:
+    """The issue for `key`: an open one if any, else the newest closed one."""
+    hits = [i for i in issues if marker(key) in (i.get("body") or "")]
+    return next((i for i in hits if i.get("state") == "open"), hits[0] if hits else None)
 
 
 def _ensure_label(repo: str, label: str) -> None:
@@ -224,31 +252,38 @@ def _already_listed(repo: str, issue: dict) -> str:
     return (issue.get("body") or "") + "".join(x.get("body") or "" for x in json.loads(raw))
 
 
+def _open(repo: str, key: str, rows: list[dict], conf: dict) -> str:
+    title = f"Taxonomy: proposed {rows[0]['topic']} domain '{_clip(rows[0]['name'])[:60]}'"
+    title, body = safe(title, issue_body(key, rows, conf), key, rows)
+    gh_api("-X", "POST", f"repos/{repo}/issues", "-f", f"title={title}", "-f", f"body={body}",
+           "-f", f"labels[]={conf['label']}")  # fmt: skip
+    return "opened"
+
+
+def _since_close(issue: dict, rows: list[dict]) -> list[dict]:
+    closed = datetime.fromisoformat((issue.get("closed_at") or "").replace("Z", "+00:00"))
+    return [r for r in rows if datetime.fromisoformat(r["recorded_at"]) > closed]
+
+
 def notify_one(repo: str, key: str, rows: list[dict], conf: dict, issues: list[dict]) -> str:
     """Open an issue for `key`, or comment the entries it doesn't list yet.
-    Returns 'opened', 'commented' or 'unchanged'."""
-    marker = MARKER.format(key=key)
-    issue = next((i for i in issues if marker in (i.get("body") or "")), None)
+
+    A CLOSED issue is a reviewer's decision: never reopened or duplicated. It
+    only gets a comment once the proposal recurs on `min_count`+ new entries
+    recorded after the close. Returns opened | commented | unchanged | closed."""
+    issue = _match(issues, key)
     if issue is None:
-        title = f"Taxonomy: proposed {rows[0]['topic']} domain '{_clip(rows[0]['name'])[:60]}'"
-        body = safe(issue_body(key, rows, conf), key)
-        gh_api(
-            "-X",
-            "POST",
-            f"repos/{repo}/issues",
-            "-f",
-            f"title={title}",
-            "-f",
-            f"body={body}",
-            "-f",
-            f"labels[]={conf['label']}",
-        )
-        return "opened"
+        return _open(repo, key, rows, conf)
     listed = _already_listed(repo, issue)
-    new = [r for r in rows if f"entry:{r['entry']}`" not in listed]
+    new = [r for r in rows if entry_ref(r) not in listed]
+    if issue.get("state") != "open":
+        new = _since_close(issue, new)
+        if len({r["entry"] for r in new}) < conf["min_count"]:
+            return "closed"
     if not new:
         return "unchanged"
-    body = safe("\n".join(["Seen again:", *[entry_line(r) for r in new]]), key)
+    lead = "Seen again:" if issue.get("state") == "open" else "Recurred since this was closed:"
+    _, body = safe("", "\n".join([lead, *[entry_line(r) for r in new]]), key, new)
     gh_api("-X", "POST", f"repos/{repo}/issues/{issue['number']}/comments", "-f", f"body={body}")
     return "commented"
 
@@ -262,7 +297,7 @@ def notify(now: datetime | None = None, dry_run: bool = False) -> dict[str, str]
         return {key: "due" for key in due}
     repo = repo_slug()
     _ensure_label(repo, conf["label"])
-    issues = _open_issues(repo, conf["label"])
+    issues = _issues(repo, conf["label"])
     return {key: notify_one(repo, key, kr, conf, issues) for key, kr in sorted(due.items())}
 
 

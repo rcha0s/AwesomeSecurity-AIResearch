@@ -499,3 +499,52 @@ def test_payload_carries_the_front_page_news_settings(sandbox):
 def test_real_config_caps_front_page_news_at_30_over_7_days():
     conf = common.load_config()
     assert (conf.news_front_page_days, conf.news_front_page_max) == (7, 30)
+
+
+def _render_moved(sandbox) -> tuple[str, str]:
+    import generate_site
+
+    claims.save_ledger(ledger_of(make_claim()))
+    pool = common.load_pool("ai-research")
+    pool["entries"] += [
+        make_entry(
+            title="Relocated finding", domain="air.agents", domain_label="Agents & Harnesses"
+        ),
+        make_entry(
+            title="Same dir",
+            source_url="https://a/same",
+            domain="air.agents",
+            domain_label="Agents",
+        ),
+    ]
+    common.save_pool("ai-research", pool)
+    generate_site.main()
+    assert gh.main() == 0
+    tree = (
+        sandbox / "ai-research" / "agents-harnesses" / "2026-07-relocated-finding.md"
+    ).read_text()
+    docs = sandbox / "docs" / "findings" / "ai-research" / "agents-harnesses"
+    return tree, (docs / "2026-07-relocated-finding.md").read_text()
+
+
+def test_old_page_paths_get_a_moved_stub_in_the_tree_and_the_docs_mirror(sandbox):
+    """Pages moved when domains became IDs (old dir = slugified free-text label).
+    A stub at the old path points at the new page, so outside links still work."""
+    tree, docs = _render_moved(sandbox)
+    assert tree == docs
+    assert tree.startswith("# Moved\n")
+    assert "](../agents/2026-07-relocated-finding.md)" in tree
+    new_page = sandbox / "ai-research" / "agents" / "2026-07-relocated-finding.md"
+    assert new_page.is_file() and not new_page.read_text().startswith("# Moved")
+    # A label whose slug already equals the ID slug needs no stub (and never
+    # overwrites the real page).
+    assert (
+        not (sandbox / "ai-research" / "agents" / "2026-07-same-dir.md")
+        .read_text()
+        .startswith("# Moved")
+    )
+
+
+def test_moved_stubs_are_deterministic(sandbox):
+    first = _render_moved(sandbox)
+    assert _render_moved(sandbox) == first

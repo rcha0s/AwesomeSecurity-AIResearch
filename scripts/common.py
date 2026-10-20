@@ -112,6 +112,24 @@ LEGACY_DOMAIN_TO_TOPIC: dict[str, str] = {
     "Evaluation & Safety": "ai-research",
 }
 
+# The pre-taxonomy TOPICS "suggested domains" display names. Main's
+# topic_for_domain resolved these by TOPICS membership; frozen here so an ingest
+# path handing one in still guesses the same topic (tests pin the whole table).
+_OLD_TOPIC_DOMAINS: dict[str, tuple[str, ...]] = {
+    "ai-security": ("Harness & Agent Security", "MCP & Tools", "Prompt Injection",
+                    "Memory & Context Poisoning", "Model Supply Chain", "LLM Red-Teaming",
+                    "RAG / Data Poisoning", "Information Disclosure"),
+    "product-security": ("Application Security", "Supply Chain & Dependencies",
+                         "Cloud & Infrastructure", "Identity & Access", "Mobile Security",
+                         "Threat Modeling & Red Teaming", "Detection & Response",
+                         "AI-Generated Code Risk"),
+    "ai-research": ("Agents & Harnesses", "Prompting & Context", "Tooling & Infrastructure",
+                    "Evaluation", "Architecture & Optimization", "Models & Capabilities"),
+}  # fmt: skip
+for _topic, _names in _OLD_TOPIC_DOMAINS.items():
+    for _name in _names:
+        LEGACY_DOMAIN_TO_TOPIC.setdefault(_name, _topic)
+
 DISCOVERED_VIA = ("twitter", "linkedin", "rss", "github", "youtube", "manual")
 
 
@@ -122,21 +140,27 @@ def domain_slug(domain: str) -> str:
     return dom.slug if dom else slugify(domain)
 
 
+def moved_slug(entry: dict) -> str | None:
+    """The directory an entry's page lived in before domains became taxonomy
+    IDs (the slugified free-text label, from `domain_label` provenance), when it
+    differs from today's. Renderers leave a "Moved" stub there so old links work."""
+    label = entry.get("domain_label")
+    if not label:
+        return None
+    old = slugify(label)
+    return old if old != domain_slug(entry.get("domain") or "General") else None
+
+
 def domain_name(domain: str) -> str:
     """Display name for a domain ID; a non-ID label passes through."""
     return taxonomy.get().name(domain)
 
 
 def topic_for_domain(domain: str) -> str | None:
-    """Best topic for a domain ID, a legacy ingest-guess label, or a known alias."""
-    tax = taxonomy.get()
-    if domain in tax.domains:
-        return tax.domains[domain].topic
-    if domain in LEGACY_DOMAIN_TO_TOPIC:
-        return LEGACY_DOMAIN_TO_TOPIC[domain]
-    key = taxonomy.norm_label(domain)
-    topics = {topic for (topic, label) in tax.aliases if label == key}
-    return topics.pop() if len(topics) == 1 else None
+    """Topic for a domain ID, else exactly what main's pre-taxonomy code returned
+    for a legacy ingest label (None for anything it didn't know)."""
+    dom = taxonomy.get().domains.get(domain)
+    return dom.topic if dom else LEGACY_DOMAIN_TO_TOPIC.get(domain)
 
 
 # --- Config ----------------------------------------------------------------

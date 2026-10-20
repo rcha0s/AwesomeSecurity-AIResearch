@@ -19,6 +19,11 @@ import taxonomy as tx
 
 REPO = Path(__file__).resolve().parent.parent
 RULES = c.load_yaml(c.SOURCES_FILE)["classification"]
+# {label: topic} frozen from origin/main's pre-taxonomy topic_for_domain (generated
+# once, committed): every router + subtype label, every legacy key, the old TOPICS
+# display names and every registered source's domain label. Not computed here.
+FROZEN = json.loads((REPO / "tests" / "fixtures" / "legacy_label_topics.json").read_text())
+MAIN_TOPIC = FROZEN["labels"]
 FEEDS = [
     {"name": "strict", "strict": True, "domains": ["AI Security"]},
     {"name": "fallback", "domains": ["Web Application Security"]},
@@ -53,7 +58,7 @@ def test_router_decisions_are_unchanged_and_domains_are_ids(feed):
             continue
         kept += 1
         assert cand["guess_label"] == label
-        assert cand["guess_topic"] == c.topic_for_domain(label)  # same topic guess
+        assert cand["guess_topic"] == MAIN_TOPIC[label]  # main's topic guess, frozen
         assert tx.get().is_valid(cand["guess_domain"], cand["guess_topic"])
     assert kept  # the replay exercised the keep path
 
@@ -96,3 +101,18 @@ def test_hf_paper_candidates_carry_ids():
 def test_domain_hint_falls_back_to_a_valid_default():
     assert tx.domain_hint("product-security", "nothing here", default="ps.mobile") == "ps.mobile"
     assert tx.domain_hint("product-security", "nothing", default="Web App") == "ps.appsec"
+
+
+def test_frozen_table_covers_every_label_the_router_can_emit():
+    labels = set(RULES["domains"]) | {s for sub in RULES["subtypes"].values() for s in sub}
+    sources = json.loads((REPO / "data" / "sources.json").read_text())
+    labels |= {d for src in sources for d in src.get("domains") or []}
+    labels |= set(c.LEGACY_DOMAIN_TO_TOPIC)
+    assert labels <= set(MAIN_TOPIC), sorted(labels - set(MAIN_TOPIC))
+    assert len(MAIN_TOPIC) >= 50
+
+
+@pytest.mark.parametrize("label", sorted(MAIN_TOPIC))
+def test_topic_for_a_legacy_label_matches_main_exactly(label):
+    """Nulls included: a label main didn't know must not start guessing a topic."""
+    assert c.topic_for_domain(label) == MAIN_TOPIC[label]

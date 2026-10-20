@@ -228,6 +228,31 @@ def _write_entry_pages(base: c.Path, by_domain: dict[str, list[dict]], conf: c.C
             )
 
 
+def moved_stub(entry: dict) -> str:
+    """A deterministic pointer page left at a finding's pre-taxonomy path."""
+    new = f"../{c.domain_slug(entry.get('domain') or 'General')}/{entry_filename(entry)}"
+    return (
+        "# Moved\n\n"
+        f"This finding now lives at [{entry.get('title', 'its new page')}]({new}).\n\n"
+        "_Domains became fixed taxonomy IDs (data/taxonomy.yaml) and its page moved "
+        "with its domain._\n"
+    )
+
+
+def _write_moved_stubs(base: c.Path, entries: list[dict]) -> int:
+    """Leave a "Moved" stub at each page's old path so outside links still resolve."""
+    written = 0
+    for e in entries:
+        old = c.moved_slug(e)
+        path = base / old / entry_filename(e) if old else None
+        if path is None or path.exists():  # never shadow a real page
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(moved_stub(e), encoding="utf-8")
+        written += 1
+    return written
+
+
 def _editorial_section(editorial: list[dict]) -> list[str]:
     """A compact 'Trending & In the News' block for a topic page (links to source)."""
     if not editorial:
@@ -303,6 +328,7 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
         by_domain[e.get("domain") or "General"].append(e)
 
     _write_entry_pages(base, by_domain, conf)
+    _write_moved_stubs(base, [e for items in by_domain.values() for e in items])
     base.mkdir(parents=True, exist_ok=True)
     sources = c.load_sources_by_id()
     held = sum(1 for e in all_entries if c.is_held(e, conf, sources))
