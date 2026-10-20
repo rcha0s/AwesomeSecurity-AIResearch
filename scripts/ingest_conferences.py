@@ -34,6 +34,7 @@ from datetime import timedelta
 
 import aggregate as agg
 import common as c
+import paper_gate as pg
 
 ARXIV_API = "http://export.arxiv.org/api/query"
 # Peer-reviewed acceptance at a named venue outranks a bare preprint, but is not
@@ -169,7 +170,7 @@ def collect(cfg: dict, rules: dict, per_venue: int | None) -> list[dict]:
             if (item.get("published") or "")[:10] < cutoff:
                 continue
             cand = entry_to_candidate(item, venue, rules, terms)
-            if cand:
+            if cand and pg.admit(cand, pg.Signals(hf_ids=set()))[0]:  # venue = the signal
                 out.append(cand)
     return out
 

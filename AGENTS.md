@@ -28,6 +28,8 @@ data/_raw/                # transient fetched article text (gitignored)
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
+scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
+scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube)
 scripts/merge_analysis.py # validate + dedup + route by topic + ground excerpts + rerank
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
@@ -102,11 +104,12 @@ python scripts/ingest_github.py --max 5
 python scripts/ingest_ghsa.py --max 25    # reviewed supply-chain advisories (gh)
 python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
+python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 ```
 
 ### Conference ingestion
 
-The approved venues (USENIX Security, NDSS, IEEE SaTML, ACM AISec, CCS, plus
+The approved venues (USENIX Security, NDSS, IEEE S&P, IEEE SaTML, ACM AISec, ACM CCS, plus
 security-gated NeurIPS/ICML/ISSTA) publish no usable feed, and some proceedings
 are paywalled — which we never fetch. Authors record acceptance in the arXiv
 `comments` field, so `ingest_conferences.py` searches that (`co:"<venue>"`) via
@@ -118,6 +121,15 @@ the free keyless arXiv API and always lands on a free full text. Two gates:
 - **On-thesis only** — broad ML/SE venues (`broad_venues` in `sources.yaml`)
   must additionally match a `security_terms` keyword, so venue acceptance alone
   can't drag the whole ML firehose into scope.
+
+### Paper admission gate
+
+A paper (arXiv/OpenReview/IACR preprint) enters the queue only with a quality signal,
+checked deterministically by `scripts/paper_gate.py`: accepted at a registered venue,
+listed on Hugging Face Daily Papers, or linked by a trusted curator (tl;dr sec, Simon
+Willison, Project Zero). The raw arXiv cs.AI/cs.LG feeds were removed; cs.CR stays but
+only yields papers that pass the gate. If a signal source is unreachable the gate fails
+closed (papers dropped, never admitted).
 
 Black Hat and DEF CON are **not** covered — they aren't on arXiv and still need
 an archive scraper. `research_index` sources (Anthropic) are registered but

@@ -44,6 +44,7 @@ python scripts/ingest_hn.py            # HN keyword queries + top-stories tap
 python scripts/ingest_ghsa.py          # GitHub Security Advisories (needs `gh` authed)
 python scripts/ingest_conferences.py   # USENIX/NDSS/SaTML/AISec/CCS via arXiv
 python scripts/ingest_github.py        # trending/novel security repos (needs `gh` authed)
+python scripts/ingest_json_feeds.py    # CISA KEV (exploited in the wild) + HF Daily Papers
 ```
 
 `ingest_sitemap.py` fetches real article text per candidate (there's no

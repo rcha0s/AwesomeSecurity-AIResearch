@@ -32,6 +32,8 @@ SOURCE_TYPES = (
     "newsletter",
     "conference",
     "research_index",
+    "kev_json",  # CISA Known Exploited Vulnerabilities JSON catalog
+    "hf_papers",  # Hugging Face Daily Papers API (a paper quality signal)
 )
 
 # The three tracked topics (Pass 2 restructures the pools to match these).
