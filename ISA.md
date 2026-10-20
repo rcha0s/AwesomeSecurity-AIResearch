@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 11/13
+progress: 11/35
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -59,14 +59,56 @@ Why: the run must happen without a human or a Windows box.
 
 Handoff: Rohan still has to delete the old Windows scheduled task; note it, never block on it. Commit attribution per harness settings. Every change lands as branch + PR.
 
-## Not yet specified
+### F2a · Phase 2a — one taxonomy with fixed IDs
+Why: 127 free-text domain labels across 246 entries; nothing checks the LLM's `domain`.
 
-- Phases 2–6 (taxonomy IDs, story ledger, evals, gated auto-merge, sources, README/site)
-  graduate into claims when Phase 1 closes. Full plan: the "AwesomeSecurity-AIResearch
-  Sustainability Plan" doc.
+- [ ] ISC-14: `data/taxonomy.yaml` is the only vocabulary: 3 topics, 6–8 domains each, every domain a stable `<topic>.<slug>` ID with its keyword hints; `interests.yaml` clusters and `cluster_keywords.yaml` fold into it (probe: `rg` for the old vocabularies' readers → only taxonomy loaders).
+- [ ] ISC-15: `merge_analysis.py` rejects an entry whose domain is not a taxonomy ID, and free text lands in `tags` through an alias map (probe: test with an unknown ID).
+- [ ] ISC-16: 100% of pool and archive entries carry a valid domain ID (probe: a test over the real data files).
+- [ ] ISC-17: The one-time migration's label→ID mapping is committed as a table and reviewed once (probe: `data/taxonomy_migration.json` covers every pre-migration label).
+- [ ] ISC-18: An analyzer `proposed_domain` goes to a verifier that must name the nearest existing domain and why the new one differs; one that passes and recurs 3+ times in 30 days opens a taxonomy issue (probe: tests with a stubbed verifier).
+
+### F2b · Phase 2b — story ledger and dedup (after: ISC-16)
+Why: ~7 entries for one story; the story becomes the unit and its history is permanent.
+
+- [ ] ISC-19: `data/news_stories.json` becomes a permanent story ledger: one row per story (id, canonical title, entities, first seen, every covering source), never expiring (probe: a test that a 400-day-old row survives every prune).
+- [ ] ISC-20: A candidate is matched against stories from the last 90 days: the deterministic matcher shortlists up to 5 (tuned to over-match), and a small-model judge returns same / update / new (probe: tests with a stubbed judge for all three verdicts).
+- [ ] ISC-21: Zero duplicate story IDs on the rendered site, and replaying the Aug 2026 pool collapses the frontier-agent-escape coverage into one story (probe: integrity test + replay script output).
+
+### F3 · Phase 3 — evals that replace daily review (after: ISC-21)
+Why: nobody reviews day to day, so the evals are the reviewer.
+
+- [ ] ISC-22: A recall eval scores the week's headline stories from reference curators (tl;dr sec, Simon Willison, GHSA critical, CISA KEV) against the pool, and lists misses (probe: script run on real data prints a score + misses).
+- [ ] ISC-23: A golden set of about 30 past stories with checked answers (keep/drop, domain ID, key facts) scores the analyzer; a wrong answer adds a case (probe: `eval_golden` run prints per-case pass/fail).
+- [ ] ISC-24: A deterministic integrity eval runs in CI on every PR: quotes found in source, citation is the article not a homepage, valid domain ID, no duplicate story IDs (probe: Tests check includes it; a seeded bad entry fails it).
+- [ ] ISC-25: Every scan PR body carries the run's cost eval: candidates, stories, LLM calls, kept ratio, spend, and the weekly trend (probe: a scan PR body).
+- [ ] ISC-26: Phase 3 gate: recall ≥85%, golden ≥90%, integrity 100%, cost under the per-run cap for 7 straight runs (probe: the eval history file). Time-gated: needs 7 daily runs.
+
+### F4 · Phase 4 — gated auto-merge (after: ISC-24)
+Why: auto-deployed means scan PRs merge themselves, but only content, never the pipeline.
+
+- [ ] ISC-27: A merge workflow merges a `claude/scan-*` PR only when every changed path is under `data/`, `docs/` or a rendered `.md`, and the evals pass; any path under `scripts/`, `.github/`, `.claude/` or config never auto-merges (probe: a test PR touching `scripts/` is refused; a data-only PR merges unattended).
+- [ ] ISC-28: Shadow mode: the workflow evaluates and reports for 7 days without merging, and switches to merging only after ISC-26 holds (probe: the workflow's mode flag + a shadow-run log).
+- [ ] Anti ISC-A3: No auto-merge path can merge a change to code, workflows, skills or config, whatever the PR's branch name or author (probe: the path guard's tests, including renames and deletions).
+
+### F5 · Phase 5 — research sources and cuts (after: ISC-23)
+Why: the raw arXiv cs.AI/cs.LG firehose is where off-topic items came from.
+
+- [ ] ISC-29: A paper enters only with a quality signal: venue acceptance, Hugging Face Daily Papers, or a trusted-curator link (probe: tests on the admission gate).
+- [ ] ISC-30: Each new source (UK AISI, NCC Group, Wiz Research, MSRC, CISA KEV, NVIDIA AI Red Team, METR, MITRE ATLAS, IEEE S&P, ACM CCS) has a feed that parsed live before it entered `sources.json`; a dead one is recorded, not added (probe: per-source fetch log).
+- [ ] ISC-31: Raw arXiv cs.AI and cs.LG feeds and the finished one-off scripts (`seed_claims.py`, `migrate_lessons.py`) are gone (probe: `rg`).
+- [ ] ISC-32: Phase 5 gate: golden-set off-topic rate under 10%, and recall does not drop after the cuts (probe: eval runs before/after).
+
+### F6 · Phase 6 — README and GitHub Pages (after: ISC-16)
+Why: the site is the product; the README is a short pointer into it, generated from the same data.
+
+- [ ] ISC-33: README is short: what it is, this week's top 3 stories and top 3 claims linking to site pages, big links (Briefing, Claims, Topics, Methodology, Archive), contribute, last-updated (probe: README under ~80 lines, every link resolves).
+- [ ] ISC-34: The site shows this week's top 5–8 stories with all sources, the claim ledger with supersession history, topic/domain pages on taxonomy IDs, trends, methodology and archive (probe: Interceptor read of each view).
+- [ ] ISC-35: Screenshot-verified at desktop and phone width (probe: two Interceptor captures, viewed).
 
 ## Decisions
 
+- 2026-10-19: Rohan: "go ahead and complete all the phases." The plan doc's rule that no phase starts before the previous gate passes is relaxed for building: phases 2a–6 are built now, in dependency order. Time-gated gates (ISC-26's 7 runs, ISC-28's shadow week) start their clocks and close when the runs exist. The one gate that still holds is ISC-28: nothing auto-merges before the evals hold.
 - 2026-10-19: Rohan: front-page news capped at 30 stories from the last 7 days (`news_front_page_*` in config.yaml); every kept story moves to a News tab grouped by month, and retired claims collapse. Keeping data and showing it are separate decisions.
 - 2026-10-18: the site's JS `Date.now()` (`scripts/templates/site.html`, "days ago" display) stays on the viewer's clock by design; ISC-2 scopes to the Python pipeline.
 - 2026-10-18: AGENTS.md documents ruff + black + coverage as the PR suite; CI runs pytest only until the lint pass lands (Remaining Work).
