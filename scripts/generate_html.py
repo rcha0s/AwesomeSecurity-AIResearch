@@ -26,10 +26,12 @@ from html import escape
 from json import dumps
 from pathlib import Path
 
+import briefing
 import common as c
 import content_checks as cc
 import dedupe_stories as ds
 import story_ledger as sl
+import taxonomy
 import verify_citations as vc
 
 import claims as cl
@@ -66,6 +68,7 @@ def _sub_dash(text: str) -> str:
 TEMPLATE = Path(__file__).resolve().parent / "templates" / "site.html"
 REPO_NAME = "AwesomeSecurity-AIResearch"
 REPO_URL = f"https://github.com/rcha0s/{REPO_NAME}"
+SITE_URL = f"https://rcha0s.github.io/{REPO_NAME}/"
 SITE_TITLE = "Awesome Security & AI Research: a weekly vetted briefing"
 SITE_DESC = (
     "A weekly, source-cited briefing on AI security, product security, and applied "
@@ -383,6 +386,9 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
     ctx = sl.render_context()
     findings = curated_findings(conf, snapshot_days, ctx)
     shown = {row["story_id"] for row in findings}
+    editorial = without_missing_pages(editorial_rows(conf, snapshot_days, ctx, exclude=shown))
+    archived = archive_rows(archive, conf)
+    tax = taxonomy.get()
     return {
         "generated": now,
         "snapshot_days": snapshot_days,
@@ -390,21 +396,92 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "news_front_page_days": conf.news_front_page_days,
         "news_front_page_max": conf.news_front_page_max,
         "archive_count": len(archive),
+        "archive_vetted": len(archived),
         "claims_since": _claims_since(ledger),
         "topic_order": list(c.TOPICS.keys()),
-        "topics": {
-            slug: {
-                "name": meta["name"],
-                "blurb": meta["blurb"],
-                "domains": [c.domain_name(d) for d in meta.get("domains", [])],
-            }
-            for slug, meta in c.TOPICS.items()
-        },
-        "claims": cl.all_claims(ledger),
+        "topics": topics_payload(tax),
+        "claims": claims_payload(ledger, tax),
         "findings": findings,
-        "editorial": editorial_rows(conf, snapshot_days, ctx, exclude=shown),
+        "editorial": editorial,
         "lessons": lessons_index(conf, snapshot_days),
-        "trends": {t: _trend_rows(trends.get(t, [])) for t in c.TOPICS},
+        "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
+        "archive": archived,
+        **front_page(findings + editorial, cl.all_claims(ledger), now, snapshot_days),
+    }
+
+
+# --- Phase 6 views: topics/domains, archive, front-page picks ------------------
+# Kept apart from the rows above so concurrent work on the lanes rebases cleanly.
+TREND_ROWS = 10  # per topic; the site shows at most this many (topic pages)
+ARCHIVE_TAKEAWAY_CHARS = 180
+
+
+def topics_payload(tax: taxonomy.Taxonomy) -> dict:
+    """Each topic with its taxonomy domains (stable IDs + display names + scope)."""
+    return {
+        slug: {
+            "name": meta["name"],
+            "blurb": meta["blurb"],
+            "domains": [c.domain_name(d) for d in meta.get("domains", [])],
+            "domain_ids": [
+                {"id": d.id, "name": d.name, "scope": d.scope} for d in tax.for_topic(slug)
+            ],
+        }
+        for slug, meta in c.TOPICS.items()
+    }
+
+
+def claims_payload(ledger: dict, tax: taxonomy.Taxonomy) -> list[dict]:
+    """The ledger's claims, each tagged with the taxonomy ID its domain label names."""
+    return [
+        {**claim, "domain_id": briefing.claim_domain(claim, tax)} for claim in cl.all_claims(ledger)
+    ]
+
+
+def without_missing_pages(rows: list[dict]) -> list[dict]:
+    """News-gate rows get no rendered .md (only curated and editorial ones do), so
+    their detail_path is cleared and the modal builds the story from the row."""
+    return [row if row.get("lane") == "editorial" else {**row, "detail_path": ""} for row in rows]
+
+
+def trend_view(rows: list[dict]) -> list[dict]:
+    """The rows the site renders, without their member lists (never shown)."""
+    return [{k: v for k, v in row.items() if k != "members"} for row in rows[:TREND_ROWS]]
+
+
+def archive_rows(archive: list, conf: c.Config) -> list[dict]:
+    """Aged-out findings that were vetted, as compact searchable rows, newest first.
+
+    Only what passed the curation gate is shown (the rest was never published).
+    Rows link to the source; archived findings have no detail page."""
+    rows = [
+        {
+            "id": e.get("id", ""),
+            "topic": e.get("topic", ""),
+            "domain": c.domain_name(e.get("domain") or ""),
+            "domain_id": e.get("domain", ""),
+            "title": e.get("title", ""),
+            "url": c.clean_source_url(e.get("source_url") or e.get("article_url") or ""),
+            "source_name": e.get("source_name", ""),
+            "published": c.best_date(e) or "",
+            "takeaway": c.clean_summary(
+                e.get("takeaway") or e.get("summary") or "", ARCHIVE_TAKEAWAY_CHARS
+            ),
+        }
+        for e in archive
+        if isinstance(e, dict) and c.is_curated(e, conf)
+    ]
+    return sorted(rows, key=lambda r: (r["published"], r["id"]), reverse=True)
+
+
+def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dict:
+    """The README teaser's and the Briefing's shared picks, as row/claim ids."""
+    stories, topped_up = briefing.top_stories(rows, now, days)
+    return {
+        "top_stories": [row["id"] for row in stories],
+        "top_stories_topped_up": topped_up,
+        "top_stories_fresh": briefing.fresh_count(stories, now, days),
+        "top_claims": [claim["id"] for claim in briefing.top_claims(claims)],
     }
 
 

@@ -54,7 +54,7 @@ def test_num_only_ever_yields_digits():
 def test_trend_rows_with_html_numbers_render_inert(field):
     row = {"tag": "x", "count": 3, "recent": 1, "momentum": 1, field: EVIL}
     prelude = "var TMETA = {}; var DATA = {topics: {}, trends: {t: [" + json.dumps(row) + "]}};"
-    html = _js(["esc", "num", "clean", "tname", "tvar", "emergingBlock"], prelude,
+    html = _js(["esc", "num", "clean", "tname", "tvar", "arr", "emergingBlock"], prelude,
                "emergingBlock('t', false)")  # fmt: skip
     assert "<img" not in html and "onerror" not in html
     assert "0 total" in html or "0 recent" in html
