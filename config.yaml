@@ -91,7 +91,7 @@ automerge:
   evals:                # Phase 3 hook (scripts/merge_gate.py). Missing scripts are
                         # skipped until `required: true`, then they fail closed.
     - script: scripts/eval_integrity.py
-      required: false
+      required: true    # exists since Phase 3: a missing copy now fails the gate
 
 # Story ledger (ISA ISC-19/20). data/news_stories.json is permanent: one row per
 # story, never pruned. A new candidate is matched only against stories touched
@@ -100,3 +100,23 @@ automerge:
 stories:
   match_window_days: 90
   shortlist_max: 5
+
+# Phase 3 evals (ISA ISC-22..26): the reviewer nobody has to be. Each eval is a
+# CLI that exits 0 on pass and prints one `EVAL <name> PASS|FAIL k=v ...` line,
+# so a merge gate can run it. data/evals/history.json gets one row per scan;
+# `eval_history.py gate` says whether the last `gate_runs` rows all pass, with
+# integrity all-or-nothing.
+evals:
+  gate_runs: 7               # consecutive scan runs that must all pass
+  max_result_age_days: 8     # a weekly recall/golden result older than this counts as missing
+  thresholds:
+    recall_min: 0.85         # share of on-thesis curator headlines we hold
+    golden_min: 0.90         # share of golden cases the analyzer gets right
+    off_topic_max: 0.10      # share of the analyzer's kept golden cases that are off-topic
+    max_run_usd: null        # per-run cost cap; null = budget.monthly_cap_usd / 30
+  recall:
+    lookback_days: 7         # curator headlines published in the last N days
+  golden:
+    min_fact_coverage: 0.5   # a kept case passes when at least this share of its facts appear
+    cases_per_run: 8         # cases staged per weekly analyzer run (rotates through the set)
+    max_usd: 4               # --max-budget-usd for the weekly golden analyzer session

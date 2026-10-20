@@ -30,6 +30,7 @@ import common as c
 import content_checks as cc
 import dedupe_stories as ds
 import story_ledger as sl
+import verify_citations as vc
 
 import claims as cl
 
@@ -184,7 +185,10 @@ _TIER_RANK = {"high": 0, "medium": 1, "low": 2}
 
 
 def _lane_row(entry: dict, conf: c.Config, snapshot_days: int, sources_by_id: dict):
-    """(row, tier) for an entry the news lane shows, else None."""
+    """(row, tier) for an entry the news lane shows, else None. News skips the
+    novelty gate, never the grounding floor: an ungrounded quote is not shown."""
+    if not vc.publishable_grounding(entry):
+        return None
     if c.is_editorial(entry):
         ed = entry.get("editorial") or {}
         meta = {

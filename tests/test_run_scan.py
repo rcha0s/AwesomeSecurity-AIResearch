@@ -23,7 +23,7 @@ REPO = Path(__file__).resolve().parent.parent
 STUBBED = (
     "aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences ingest_json_feeds "
     "rerank generate_site generate_claims generate_html generate_og trends "
-    "generate_newsletter generate_review add_claim"
+    "generate_newsletter generate_review add_claim eval_recall"
 ).split()
 FAKE_GH = """#!/bin/sh
 echo "$*" >> "$GH_LOG"
@@ -281,3 +281,34 @@ def test_pre_clears_a_stale_story_record(scan_repo):
     (work / "data/_story_outcomes.md").write_text("stale")
     reserved_run(work, env)
     assert not (work / "data/_story_outcomes.md").exists()
+
+
+def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo):
+    """ISC-25/26: the PR body carries the run's numbers and trend; data/evals is
+    reset to main's before post appends, so files the session wrote never ship."""
+    work, origin, env = scan_repo
+    evals = work / "data" / "evals"
+    evals.mkdir()
+    (evals / "history.json").write_text(json.dumps({"runs": []}))
+    commit_main(work, "evals dir")
+    reserved_run(work, env)
+    assert (work / "data/_scan_candidates").read_text().strip() == "0"
+    (evals / "history.json").write_text(json.dumps({"runs": [{"run_id": "forged"}]}))
+    (evals / "golden-2099-01-01.json").write_text('{"score": 1.0}')
+    (work / "README.md").write_text("v2\n")
+    res = run_scan(work, env, "post")
+    assert res.returncode == 0, res.stderr + (work / "data/_scan.log").read_text()
+    branch = f"claude/scan-{datetime.now(UTC).strftime('%Y-%m-%d')}-cloud"
+    files = git(origin, "ls-tree", "-r", "--name-only", branch)
+    assert "data/evals/golden-2099-01-01.json" not in files
+    rows = json.loads(git(origin, "show", f"{branch}:data/evals/history.json"))["runs"]
+    assert [r["run_id"] for r in rows] == ["C1"]
+    assert rows[0]["cost_usd"] == 2.0 and rows[0]["candidates"] == 0
+    assert (rows[0]["cost_basis"], rows[0]["ceiling_usd"]) == ("reserved", 2.0)
+    assert rows[0]["recall"] is None  # the stubbed fetch wrote nothing; no tree file stands in
+    assert [f for f in files.split() if f.startswith("data/evals/")] == ["data/evals/history.json"]
+    assert rows[0]["integrity"]["passed"] is False  # no rendered site in this repo
+    calls = gh_calls(env)
+    assert "**Run numbers:** 0 candidates staged" in calls and "LLM calls:" in calls
+    assert "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |" in calls
+    assert "Spend this month:**" in calls

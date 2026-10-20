@@ -34,6 +34,7 @@ data/_budget_ledger.json
 data/_scan*
 data/_summary.md
 data/_story_outcomes.md
+data/_golden*
 
 # Secrets / auth — NEVER commit (cookies, env). .agent-reach/ is the retired
 # X ingest's cookie dir; kept ignored so a leftover copy can never be staged.

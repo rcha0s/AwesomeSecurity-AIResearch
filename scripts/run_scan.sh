@@ -36,6 +36,8 @@ SKIP_MARKER="data/_scan_skip"
 RESULT="data/_scan_result.json"
 SUMMARY="data/_summary.md"
 RUN_ID_FILE="data/_scan_run_id"
+STAGED_FILE="data/_scan_candidates" # pre's candidate count, for the cost eval
+EVALS_DIR="data/evals"              # post owns it: reset to main's, then appended
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
@@ -166,7 +168,7 @@ check_and_reserve() {
 }
 
 phase_pre() {
-  rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" \
+  rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
     data/_story_outcomes.md
   local rc=0 run_id
@@ -194,7 +196,8 @@ phase_pre() {
   # Story shortlist for the judge (story_ledger.py). Advisory: without it every
   # candidate is judged new, which costs more but loses nothing.
   "$PY" scripts/story_ledger.py shortlist | tee -a "$LOG" || log "story shortlist WARN: failed"
-  log "SCAN_READY: $("$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))') candidates"
+  "$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))' >"$STAGED_FILE"
+  log "SCAN_READY: $(cat "$STAGED_FILE") candidates"
 }
 
 phase_post() {
@@ -227,11 +230,13 @@ phase_post() {
     ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
     return 0
   fi
+  run_evals "$run_id" "$stories" || log "evals WARN: history not updated"
   day="$(date -u +%Y-%m-%d)"
   branch="claude/scan-$day-$RUNNER"
   git checkout -q -B "$branch"
   git add -u -- "$DATA_DIR"
   [[ ${#paths[@]} == 0 ]] || git add -A -- "${paths[@]}"
+  if [[ -d "$EVALS_DIR" ]]; then git add -A -- "$EVALS_DIR"; fi
   if ! git diff --cached -U0 | "$PY" scripts/scrub.py --diff; then
     log "staged diff has secret-like content; not pushing"
     return 1
@@ -243,9 +248,37 @@ phase_post() {
   if [[ -f data/_story_outcomes.md ]]; then
     body+=$'\n\n'"$("$PY" scripts/scrub.py data/_story_outcomes.md "")"
   fi
+  body+="$(eval_body "$run_id")"
   body+="$(spend_line)"
   scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
   ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
+}
+
+# Phase 3 evals (ISC-22..26). data/evals/ is reset to main's copy first, so a
+# file the session wrote there never ships; then recall is fetched fresh into
+# $WORK (outside the tree: scan PRs may change only history.json there), and
+# this run's history row is appended (integrity, recall, the newest golden
+# result, its ledger charge). merge_gate re-checks that row before any merge.
+# Advisory: the caller logs a failure and the scan still opens its PR.
+run_evals() {
+  local run_id="$1" stories="$2" staged
+  rm -rf "$EVALS_DIR" "$WORK/recall.json"
+  git checkout -q origin/main -- "$EVALS_DIR" 2>/dev/null || mkdir -p "$EVALS_DIR"
+  "$PY" scripts/eval_recall.py --live --out "$WORK/recall.json" >>"$LOG" 2>&1 ||
+    log "recall eval WARN: below the bar or could not run"
+  ledger_fetch >/dev/null 2>&1 || log "evals: ledger unreadable; cost unknown"
+  staged="$(cat "$STAGED_FILE" 2>/dev/null || echo 0)"
+  [[ "$staged" =~ ^[0-9]+$ ]] || staged=0
+  "$PY" scripts/eval_history.py --config "$WORK/config.yaml" append --run-id "$run_id" \
+    --runner "$RUNNER" --stories "$stories" --candidates "$staged" \
+    --ledger "$WORK/ledger.json" --recall "$WORK/recall.json" | tee -a "$LOG"
+}
+
+# The run's numbers and the 7-run trend for the PR body. Never fails: like
+# spend_line, its stdout is the body.
+eval_body() {
+  "$PY" scripts/eval_history.py --config "$WORK/config.yaml" body --run-id "$1" 2>/dev/null ||
+    printf '\n\n**Run numbers:** unavailable (eval history could not be read).'
 }
 
 # One line for the PR body: the month so far, and where the full report lives.
