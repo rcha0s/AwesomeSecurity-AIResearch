@@ -47,7 +47,11 @@ DENIED_FILES = frozenset(
     }
 )
 # Transient staging (gitignored): its appearance in a PR is itself an anomaly.
-DENIED_PREFIXES = ("data/_",)
+# The golden set's answer key and its scored results (data/evals/golden*.json)
+# arrive only by reviewed PRs and the claude/golden-* runner: a scan session
+# that could edit them could grade itself. Scans may add recall results and
+# history rows.
+DENIED_PREFIXES = ("data/_", "data/evals/golden")
 DENIED_NAMES = frozenset(
     {
         "candidates.json",

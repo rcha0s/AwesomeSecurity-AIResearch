@@ -1,0 +1,725 @@
+{
+  "version": 1,
+  "built": "2026-10-20",
+  "about": "Checked answers for scripts/eval_golden.py. keep = the story belongs in the curated view; on_topic = it is AI security, product security or applied AI research at all; domain = the correct taxonomy ID (also_accept lists defensible alternatives); facts = what a correct analysis must state, matched case-insensitively by any of `any`. `unsure` marks answers Rohan should check. A wrong answer in a real run adds a case.",
+  "cases": [
+    {
+      "id": "an-ai-assisted-cyber-attack-frontier-ai-agents-c-68bf92a4a5",
+      "title": "An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours",
+      "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.agent-security",
+      "reason": "Curated: a primary-source incident investigation with measured numbers and a concrete defense.",
+      "facts": [
+        {
+          "fact": "Agents compressed about two weeks of intrusion work into under 10 hours",
+          "any": [
+            "10 hours",
+            "ten hours"
+          ]
+        },
+        {
+          "fact": "More than 50 MITRE ATT&CK techniques, no novel zero-day",
+          "any": [
+            "50 mitre",
+            "50+ mitre",
+            "more than 50"
+          ]
+        },
+        {
+          "fact": "Branch protection stopped the Terraform backdoor step",
+          "any": [
+            "branch protection",
+            "branch-protection"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the-framing-gap-reframed-indirect-prompt-injecti-59b640f5",
+      "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
+      "url": "https://arxiv.org/abs/2608.27092",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.prompt-injection",
+      "reason": "Curated: novel, measured attack result plus which defenses close it.",
+      "facts": [
+        {
+          "fact": "Reframing the same leak as a benign requirement takes success to 100%",
+          "any": [
+            "100%"
+          ]
+        },
+        {
+          "fact": "Only payload-blind controls (destination allow-lists, planner/reader split) close the gap",
+          "any": [
+            "allow-list",
+            "allowlist",
+            "allow list"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breaking-claude-code-opus-5-auto-mode-with-indir-e4fb3a34",
+      "title": "Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path",
+      "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.prompt-injection",
+      "also_accept": [
+        "ais.agent-security"
+      ],
+      "reason": "Curated: a reproduced RCE chain against a shipping coding agent.",
+      "facts": [
+        {
+          "fact": "Summarizing a malicious website yields RCE 60-80% of the time",
+          "any": [
+            "60-80%",
+            "60–80%",
+            "60 to 80"
+          ]
+        },
+        {
+          "fact": "Python module shadowing (a planted struct.py) is the trigger",
+          "any": [
+            "struct.py",
+            "module shadowing"
+          ]
+        },
+        {
+          "fact": "Anthropic says the boundary is OS sandboxing and egress control",
+          "any": [
+            "egress",
+            "os-level sandbox",
+            "os sandbox"
+          ]
+        }
+      ],
+      "unsure": "Could equally be ais.agent-security (auto-mode permission model). I picked prompt-injection because the entry vector is indirect injection via a fetched page."
+    },
+    {
+      "id": "the-guard-that-cried-wolf-scary-object-names-mak-0b3166c2",
+      "title": "The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions",
+      "url": "https://arxiv.org/abs/2608.27009",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.guardrails",
+      "reason": "Curated: a new benchmark that measures guardrail over-refusal.",
+      "facts": [
+        {
+          "fact": "Scary-looking object names raise over-refusal of authorized actions",
+          "any": [
+            "name-superstition",
+            "name superstition",
+            "scary"
+          ]
+        },
+        {
+          "fact": "Cautious Bench measures over-safety against a stated policy",
+          "any": [
+            "cautious bench",
+            "cautiousbench"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chaindrop-npm-worm-used-blockchain-c2-and-target-72c0b2678c",
+      "title": "ChainDrop npm Worm Used Blockchain C2 and Targeted Claude Code / VS Code Configs, Stealing OIDC Tokens from Live CI Runner Memory",
+      "url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.model-supply-chain",
+      "also_accept": [
+        "ps.supply-chain"
+      ],
+      "reason": "Curated: a worm that targets AI coding-agent configs and steals CI OIDC tokens.",
+      "facts": [
+        {
+          "fact": "Over 400 npm packages infected",
+          "any": [
+            "400+",
+            "400 packages",
+            "over 400",
+            "more than 400"
+          ]
+        },
+        {
+          "fact": "Stole OIDC tokens from live GitHub Actions runner memory",
+          "any": [
+            "oidc"
+          ]
+        },
+        {
+          "fact": "C2 over Ethereum blockchain transactions",
+          "any": [
+            "ethereum",
+            "blockchain"
+          ]
+        }
+      ],
+      "unsure": "Unsure of the topic: an npm worm is classic software supply chain (product-security, ps.supply-chain); it sits in ai-security only because it backdoors Claude Code configs. Either answer is accepted."
+    },
+    {
+      "id": "this-shit-is-hard-patching-a-vulnerability-that--54a43a0b",
+      "title": "This Shit is Hard: Patching a vulnerability that has no fix",
+      "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ps.supply-chain",
+      "reason": "Curated: a concrete gate for trusting AI-written patches.",
+      "facts": [
+        {
+          "fact": "An exploit test written before the fix must fail on the patched build",
+          "any": [
+            "exploit test"
+          ]
+        },
+        {
+          "fact": "Patch application is made fatal so a skipped patch never ships",
+          "any": [
+            "fatal"
+          ]
+        }
+      ],
+      "unsure": "Could be ps.ai-code (AI-generated patches). I kept ps.supply-chain because the work is patching packages with no upstream fix."
+    },
+    {
+      "id": "citrix-netscaler-pre-auth-heap-overflow-cve-2026-8b36b44e46",
+      "title": "Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) Traced to an Unchecked Fixed-Size Buffer Copy During SAML Signature Canonicalization",
+      "url": "https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ps.appsec",
+      "reason": "Curated: a pre-auth memory-corruption root cause from a patch diff.",
+      "facts": [
+        {
+          "fact": "CVE-2026-8452",
+          "any": [
+            "cve-2026-8452",
+            "8452"
+          ]
+        },
+        {
+          "fact": "Oversized SAML ds:SignedInfo copied into a fixed-size buffer",
+          "any": [
+            "signedinfo",
+            "saml"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust-supply-chain-compromise-used-cargo-s-own-ya-3da9f261c5",
+      "title": "Rust Supply-Chain Compromise Used Cargo's Own Yank Warning to Socially Engineer Developers Into the Malicious Version",
+      "url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ps.supply-chain",
+      "reason": "Curated: a new social-engineering trick (yanking clean releases) in a crates.io compromise.",
+      "facts": [
+        {
+          "fact": "The attacker yanked clean releases 0.3.5-0.3.9 so Cargo nudges to the malicious one",
+          "any": [
+            "yank"
+          ]
+        },
+        {
+          "fact": "Typosquatted proc-macro1 impersonated dtolnay",
+          "any": [
+            "proc-macro1",
+            "dtolnay",
+            "dtolney"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "when-context-gets-root-instruction-privilege-esc-6fe71d0c",
+      "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+      "url": "https://arxiv.org/abs/2608.27299",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "air.agents",
+      "also_accept": [
+        "ais.agent-security"
+      ],
+      "reason": "Curated: harness-layer privilege escalation across six coding-agent harnesses.",
+      "facts": [
+        {
+          "fact": "All 13 attack objectives achieved",
+          "any": [
+            "13 attack",
+            "all 13",
+            "13 objectives"
+          ]
+        },
+        {
+          "fact": "Six coding-agent harnesses, even under automatic permission review",
+          "any": [
+            "six coding",
+            "six harness",
+            "6 coding",
+            "6 harness",
+            "six agent"
+          ]
+        }
+      ],
+      "unsure": "Arguably ais.agent-security (topic ai-security). It lives in ai-research because the lesson is harness design; both are accepted."
+    },
+    {
+      "id": "how-do-llm-agents-actually-get-the-flag-trace-le-f8ab45fc",
+      "title": "How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation",
+      "url": "https://arxiv.org/abs/2608.26237",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "air.evals",
+      "reason": "Curated: shows binary CTF scoring overstates agent cyber capability.",
+      "facts": [
+        {
+          "fact": "Only 62-87% of recovered flags were trace-verified exploits",
+          "any": [
+            "62-87",
+            "62%",
+            "87%"
+          ]
+        },
+        {
+          "fact": "1,435 attempts on 240 challenges",
+          "any": [
+            "1,435",
+            "1435",
+            "240"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shadowpickle-pickle-vm-import-tricks-evade-ten-m-edd0ba8c12",
+      "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
+      "url": "https://arxiv.org/abs/2607.17503",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.model-supply-chain",
+      "reason": "Curated: measured scanner evasion for pickle model files.",
+      "facts": [
+        {
+          "fact": "Evades ten model scanners and four model hubs",
+          "any": [
+            "ten scanners",
+            "10 scanners",
+            "ten model scanners",
+            "ten state-of-the-art",
+            "four model hubs",
+            "4 model hubs"
+          ]
+        },
+        {
+          "fact": "The Overwritten variant reaches a 63% evasion rate",
+          "any": [
+            "63%"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toolhive-mcp-ssrf-host-side-discovery-runs-outsi-2efcb63df1",
+      "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+      "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.mcp-tools",
+      "reason": "Curated: a control that runs outside the sandbox it enforces.",
+      "facts": [
+        {
+          "fact": "Host-side discovery follows a server-controlled resource_metadata URL",
+          "any": [
+            "resource_metadata",
+            "www-authenticate"
+          ]
+        },
+        {
+          "fact": "Redirect to 169.254.169.254 reaches cloud metadata",
+          "any": [
+            "169.254.169.254",
+            "imds"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asyncapi-npm-compromise-import-time-payload-defe-ebb4a53599",
+      "title": "AsyncAPI npm compromise: import-time payload defeats --ignore-scripts",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ps.supply-chain",
+      "reason": "Curated: an import-time payload that --ignore-scripts does not stop.",
+      "facts": [
+        {
+          "fact": "Payload runs at import/require time, not install time",
+          "any": [
+            "import time",
+            "import-time",
+            "module load",
+            "module-load",
+            "require()"
+          ]
+        },
+        {
+          "fact": "--ignore-scripts does not stop it",
+          "any": [
+            "ignore-scripts"
+          ]
+        },
+        {
+          "fact": "Valid provenance attestations from the project's own OIDC pipeline",
+          "any": [
+            "provenance",
+            "attestation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phantom-squatting-ai-hallucinated-domains-as-a-s-99acdb5c5d",
+      "title": "Phantom Squatting: attackers register the domains LLMs hallucinate",
+      "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ps.ai-code",
+      "reason": "Curated: attackers register domains LLMs hallucinate.",
+      "facts": [
+        {
+          "fact": "913 brands and 685,339 queries",
+          "any": [
+            "913",
+            "685,339"
+          ]
+        },
+        {
+          "fact": "13,229 malicious URLs",
+          "any": [
+            "13,229",
+            "13229"
+          ]
+        },
+        {
+          "fact": "About 250,000 still-unregistered hallucinated domains",
+          "any": [
+            "250,000",
+            "250k"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "better-models-worse-tools-sota-models-regress-on-23a5b69b6f",
+      "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+      "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "air.agents",
+      "reason": "Curated: newer models regress on non-native tool schemas.",
+      "facts": [
+        {
+          "fact": "Newer Claude models invent fields on Pi's custom edit tool",
+          "any": [
+            "pi's",
+            "pi harness",
+            "custom edit tool"
+          ]
+        },
+        {
+          "fact": "Likely because they are RL-trained on Claude Code's built-in edit tool",
+          "any": [
+            "rl-trained",
+            "rl trained",
+            "reinforcement",
+            "trained on"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "server-side-encrypted-compaction-porting-codex-s-ee38bf09a0",
+      "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
+      "url": "https://github.com/algal/pi-openai-server-compaction",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "air.context",
+      "reason": "Curated: a reverse-engineered provider compaction protocol, ported to another harness.",
+      "facts": [
+        {
+          "fact": "A compaction_trigger to POST /v1/responses returns an encrypted compaction item",
+          "any": [
+            "compaction_trigger",
+            "encrypted"
+          ]
+        },
+        {
+          "fact": "Continuity via store: true and previous_response_id",
+          "any": [
+            "previous_response_id"
+          ]
+        },
+        {
+          "fact": "The recall gain came with 4.58x more output tokens",
+          "any": [
+            "4.58"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kemp-loadmaster-pre-auth-rce-uninitialized-heap-d5e3554441",
+      "title": "Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)",
+      "url": "https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/",
+      "from": "archive",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ps.appsec",
+      "reason": "Curated: pre-auth RCE from a missing null terminator.",
+      "facts": [
+        {
+          "fact": "CVE-2026-8037",
+          "any": [
+            "cve-2026-8037",
+            "8037"
+          ]
+        },
+        {
+          "fact": "escape_quotes() left the buffer without a null terminator",
+          "any": [
+            "null terminat",
+            "null byte",
+            "null-terminat",
+            "escape_quotes"
+          ]
+        },
+        {
+          "fact": "Heap spray via JSON key/value pairs places the payload",
+          "any": [
+            "heap spray",
+            "spray"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "owasp-genai-security-project-unveils-2026-top-10-be98b1e553",
+      "title": "OWASP GenAI Security Project Unveils 2026 Top 10 for LLM Applications, New Agent Control Standard",
+      "url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ais.agent-security",
+      "reason": "Held: a versioned-list announcement, not new research; the verifier scored novelty 25.",
+      "facts": []
+    },
+    {
+      "id": "n8n-agent-workflow-tool-bypassed-sub-workflow-ca-715eaf01d4",
+      "title": "n8n Agent Workflow Tool Bypassed Sub-Workflow Caller Restrictions, Letting Agents Read Data Their Owner Restricted",
+      "url": "https://github.com/advisories/GHSA-7hgx-277f-7vmg",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ais.agent-security",
+      "reason": "Held: novelty 40; a single advisory restating a known 'agent tool path skips the access check' pattern.",
+      "facts": [],
+      "unsure": "Borderline. It is a real agent authorization bypass; a stricter golden answer could keep it."
+    },
+    {
+      "id": "kimi-k3-open-frontier-intelligence-aba26e8d5f",
+      "title": "Kimi K3: Open Frontier Intelligence",
+      "url": "https://arxiv.org/abs/2607.24653",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "air.models",
+      "reason": "Held: a model release tech report; relevance 30 for harness builders (news lane at most).",
+      "facts": []
+    },
+    {
+      "id": "github-models-is-now-retired-5d98092084",
+      "title": "GitHub Models is now retired",
+      "url": "https://simonwillison.net/2026/Aug/9/github-models-is-now-retired/#atom-everything",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "air.tooling",
+      "reason": "Held: a product-retirement link post; novelty 20, relevance 20.",
+      "facts": []
+    },
+    {
+      "id": "anmolksachan-ai-ml-free-resources-for-security-a-c0ea160d38",
+      "title": "anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+      "url": "https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ais.red-teaming",
+      "also_accept": [
+        "ais.prompt-injection"
+      ],
+      "reason": "Held: a curated link list with no original claims.",
+      "facts": [],
+      "unsure": "Domain unsure: the pool files it under ais.prompt-injection; I think a learning roadmap is ais.red-teaming. Both accepted."
+    },
+    {
+      "id": "pydantic-ai-ships-official-first-party-guardrail-ba86ae0a9f",
+      "title": "Pydantic AI Ships Official First-Party Guardrails, Upstreaming a Community Library",
+      "url": "https://github.com/pydantic/pydantic-ai-harness",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ais.guardrails",
+      "reason": "Held: a library moving repos; novelty 20.",
+      "facts": []
+    },
+    {
+      "id": "what-is-ai-pentesting-and-how-does-it-work-b1ec5b2854",
+      "title": "What Is AI Pentesting and How Does It Work?",
+      "url": "https://snyk.io/blog/what-is-ai-pentesting/",
+      "from": "archive",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ps.offensive",
+      "reason": "Held: a vendor explainer of a known architecture; novelty 52, relevance 78 (below the bar on confidence/novelty).",
+      "facts": [],
+      "unsure": "Borderline. The 30%-hallucinated-findings and 61%/26% benchmark numbers are useful; I hold it because it is vendor content restating known patterns."
+    },
+    {
+      "id": "introducing-internal-network-scanning-see-your-n-f1f7162f74",
+      "title": "Introducing Internal Network Scanning: see your network the way an attacker inside it would",
+      "url": "https://projectdiscovery.io/blog/introducing-internal-network-scanning-see-your-network-the-way-an-attacker-inside-it-would",
+      "from": "archive",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ps.offensive",
+      "reason": "Held: a product launch post.",
+      "facts": []
+    },
+    {
+      "id": "protective-capacity-hallucination-when-large-lan-2e300c2a4e",
+      "title": "Protective Capacity Hallucination: given a protective role and no capability boundary, models may claim to have taken actions they cannot perform",
+      "url": "https://arxiv.org/abs/2607.13596",
+      "from": "archive",
+      "keep": false,
+      "on_topic": true,
+      "domain": "air.alignment",
+      "reason": "Held: the verifier refuted the framing and scored novelty 34.",
+      "facts": []
+    },
+    {
+      "id": "ghsa-xg4h-6gfc-h4m8-52cdd221cc",
+      "title": "etcd: a READ grant on one key reads everything after it, because the Watch API skipped the range authorization Range/Get applies",
+      "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+      "from": "archive",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ps.identity",
+      "reason": "Held: the verifier scored novelty 20 (a known stream-endpoint authz-drift class).",
+      "facts": []
+    },
+    {
+      "id": "hono-s-path-traversal-fix-only-blocked-one-paren-f3c68c7dc8",
+      "title": "Hono's Path-Traversal Fix Only Blocked One Parent-Directory Segment — a Longer Run of '..' Still Escapes the Output Directory",
+      "url": "https://github.com/advisories/GHSA-gqvv-2mrq-wpjv",
+      "from": "pool",
+      "keep": false,
+      "on_topic": true,
+      "domain": "ps.appsec",
+      "reason": "Held: an incomplete-fix advisory of a known class; novelty 30, relevance 42.",
+      "facts": []
+    },
+    {
+      "id": "co-founder-of-controversial-spyware-firm-had-isr-2e9bd23ff9",
+      "title": "Co-Founder of Controversial Spyware Firm Had Israeli Diplomatic Passport",
+      "url": "https://citizenlab.ca/co-founder-of-controversial-spyware-firm-had-israeli-diplomatic-passport/",
+      "from": "archive",
+      "keep": false,
+      "on_topic": false,
+      "domain": "ps.mobile",
+      "also_accept": [
+        "ps.detection-response"
+      ],
+      "reason": "Held: political attribution reporting with no technical content.",
+      "facts": [],
+      "unsure": "on_topic=false is my call: spyware is in scope, but a passport story has no security lesson. The pool files it under ps.detection-response."
+    },
+    {
+      "id": "conditioning-protein-generation-via-hopfield-pat-333ad47da8",
+      "title": "Conditioning Protein Generation via Hopfield Pattern Multiplicity",
+      "url": "https://arxiv.org/abs/2603.20115",
+      "from": "pool",
+      "keep": false,
+      "on_topic": false,
+      "domain": "air.ml-research",
+      "reason": "Held: off-thesis ML (protein generation).",
+      "facts": []
+    },
+    {
+      "id": "icehorizon-a-dataset-for-horizon-detection-in-ic-5925dae61c",
+      "title": "IceHorizon: A Dataset for Horizon Detection in Ice-Covered Maritime Environments and Comparative Evaluation of Detection Methods",
+      "url": "https://arxiv.org/abs/2608.07018",
+      "from": "pool",
+      "keep": false,
+      "on_topic": false,
+      "domain": "air.ml-research",
+      "reason": "Held: off-thesis ML (maritime horizon detection).",
+      "facts": []
+    },
+    {
+      "id": "reading-copom-s-tone-a-weighted-llm-framework-fo-80c5571aa6",
+      "title": "Reading Copom's Tone: A Weighted LLM Framework for Hawkish-Dovish Sentiment, Forward Guidance, and Uncertainty",
+      "url": "https://arxiv.org/abs/2608.07251",
+      "from": "pool",
+      "keep": false,
+      "on_topic": false,
+      "domain": "air.ml-research",
+      "reason": "Held: off-thesis applied NLP (central-bank sentiment).",
+      "facts": []
+    },
+    {
+      "id": "multi-legal-bench-evaluating-llms-on-legal-reaso-89ef2a449a",
+      "title": "Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions",
+      "url": "https://arxiv.org/abs/2605.29738",
+      "from": "pool",
+      "keep": false,
+      "on_topic": false,
+      "domain": "air.evals",
+      "reason": "Held: a legal-NLP benchmark with no security or harness angle.",
+      "facts": []
+    },
+    {
+      "id": "signverse-2m-a-two-million-clip-pose-native-univ-6329902c0a",
+      "title": "SignVerse-2M: A Two-Million-Clip Pose-Native Universe of 55+ Sign Languages",
+      "url": "https://arxiv.org/abs/2605.01720",
+      "from": "pool",
+      "keep": false,
+      "on_topic": false,
+      "domain": "air.ml-research",
+      "reason": "Held: off-thesis ML (sign-language dataset).",
+      "facts": []
+    }
+  ]
+}

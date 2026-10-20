@@ -44,6 +44,8 @@ ALLOWED = [
     "data/ai-security.json",
     "data/source_stats.json",
     "data/claims.json",
+    "data/evals/history.json",
+    "data/evals/recall-2026-W43.json",
     "data/backlog.md",
     "docs/index.html",
     "docs/og.png",
@@ -101,6 +103,9 @@ REFUSED = [
     "data/_story_outcomes.md",
     "data/story_shortlist.json",
     "data/story_verdicts.json",
+    # the golden answer key and its results: a scan can't grade itself
+    "data/evals/golden.json",
+    "data/evals/golden-2026-10-20.json",
     # wrong file types inside content dirs
     "data/evil.py",
     "data/x.sh",

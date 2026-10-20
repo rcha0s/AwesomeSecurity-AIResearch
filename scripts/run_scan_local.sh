@@ -54,31 +54,9 @@ export SCAN_LOG="$REPO/data/_scan.log"
 LOG="$SCAN_LOG"
 trap 'rm -f "$OUT"' EXIT
 
-TOOLS="Read,Edit,Write,Glob,Grep,Bash,Task"
-ALLOWED_TOOLS=(
-  "Read" "Glob" "Grep" "Task" "Edit(data/**)"
-  "Bash(python scripts/fetch_raw.py *)"
-  "Bash(python scripts/merge_analysis.py)" "Bash(python scripts/verify_citations.py)"
-  "Bash(python scripts/importance.py *)" "Bash(python scripts/promote_editorial.py)"
-)
-SETTINGS='{"permissions": {
-  "blockReadsOutsideWorkingDirectories": true,
-  "deny": [
-    "Edit(scripts/**)", "Edit(.claude/**)", "Edit(.github/**)", "Edit(.git/**)",
-    "Edit(.venv/**)", "Edit(tests/**)", "Edit(**/*.pth)", "Edit(*.toml)", "Edit(*.cfg)",
-    "Edit(config.yaml)", "Edit(ISA.md)", "Edit(CLAUDE.md)", "Edit(AGENTS.md)",
-    "Edit(data/_scan*)", "Edit(data/candidates.json)", "Edit(data/_raw/**)",
-    "Edit(data/taxonomy.yaml)", "Edit(data/taxonomy_migration.json)",
-    "Edit(data/taxonomy_proposals.json)",
-    "Edit(data/news_stories.json)", "Edit(data/story_shortlist.json)",
-    "Edit(data/_story_outcomes.md)",
-    "Read(~/.ssh/**)", "Read(~/.claude/**)", "Read(~/.config/**)", "Read(~/.aws/**)",
-    "Read(~/.gnupg/**)", "Read(.env)", "Read(.env.*)",
-    "Bash(curl *)", "Bash(wget *)", "Bash(git *)", "Bash(gh *)",
-    "Bash(scripts/*)", "Bash(bash *)", "Bash(sh *)",
-    "WebFetch", "WebSearch", "mcp__*"
-  ]
-}}'
+# TOOLS, ALLOWED_TOOLS, SETTINGS and contained_claude: one lockdown, shared
+# with the weekly golden-set run (run_golden_local.sh).
+source scripts/scan_containment.sh
 
 fail() {
   echo "[local] $1" | tee -a "$LOG"
@@ -119,14 +97,9 @@ scripts/run_scan.sh pre || exit 1 # pre raises its own alert
 [[ -f data/_scan_skip ]] && exit 0 # raced: the guard refused at pre time
 
 claude_rc=0
-env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN SCAN_LOCKED=1 "$CLAUDE" -p \
+contained_claude \
   "Run the daily scan in wrapped mode, following the daily-scan instructions appended to your system prompt." \
-  --append-system-prompt-file .claude/skills/daily-scan/SKILL.md \
-  --output-format json --permission-mode dontAsk \
-  --setting-sources local --strict-mcp-config --mcp-config '{"mcpServers": {}}' \
-  --tools "$TOOLS" --settings "$SETTINGS" --allowedTools "${ALLOWED_TOOLS[@]}" \
-  --disallowedTools "mcp__*" \
-  --max-budget-usd "$cap_usd" --max-turns "$max_turns" >"$OUT" || claude_rc=$?
+  .claude/skills/daily-scan/SKILL.md "$cap_usd" "$max_turns" >"$OUT" || claude_rc=$?
 
 post_rc=0
 if [[ "$claude_rc" == 0 ]]; then
