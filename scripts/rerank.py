@@ -9,7 +9,8 @@ fresh as findings age and as new ones arrive.
 
 Every pass also normalizes `domain` to a taxonomy ID (pool and archive), with the
 same rules as scripts/migrate_taxonomy.py, so a branch carrying pre-taxonomy
-pool data converges the next time it re-renders.
+pool data converges the next time it re-renders. Every pass also ledgers any
+pool or archive entry the story ledger (story_ledger.py) has not seen yet.
 
 Usage:
     python scripts/rerank.py            # rerank both pools in place
@@ -21,6 +22,7 @@ from __future__ import annotations
 import argparse
 
 import common as c
+import story_ledger as sl
 import taxonomy as tx
 
 
@@ -95,6 +97,9 @@ def rerank_all(conf: c.Config | None = None, now=None) -> None:
     for track in c.TOPICS:
         pool = rerank_pool(track, conf, now=now)
         print(f"reranked {track}: {len(pool['entries'])} entries")
+    merges = sl.sync_and_save()  # the story ledger never prunes; it only grows
+    if merges:
+        print(f"  story ledger: {len(merges)} entr(y/ies) joined an existing story")
 
 
 def main() -> int:

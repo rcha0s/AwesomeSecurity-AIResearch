@@ -27,6 +27,9 @@ from json import dumps
 from pathlib import Path
 
 import common as c
+import content_checks as cc
+import dedupe_stories as ds
+import story_ledger as sl
 
 import claims as cl
 
@@ -128,114 +131,120 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
     }
 
 
-def curated_findings(conf: c.Config, snapshot_days: int) -> list[dict]:
-    """Every vetted finding across the three pools, ranked by composite."""
+def story_fields(entry: dict, ctx: tuple[dict, dict[str, str]]) -> dict:
+    """The row's story id, the story's other covering sources ('Also reported
+    by'), and its dated Updated lines."""
+    ledger, index = ctx
+    eid = entry.get("id") or c.slugify(entry.get("title", ""), 60)
+    sid = index.get(eid) or f"e-{eid}"
+    story = ledger["stories"].get(sid) or {}
+    own = ds.canonical_url(entry.get("source_url") or entry.get("article_url") or "")
+    corr = [
+        {
+            "url": s.get("url", ""),
+            "source_name": s.get("source_name", ""),
+            "tier": s.get("tier", ""),
+        }
+        for s in story.get("sources", [])
+        if ds.canonical_url(s.get("url", "")) != own
+    ]
+    keys = ("date", "note", "url", "source_name")
+    updates = [{k: u.get(k, "") for k in keys} for u in story.get("updates", [])]
+    return {
+        "story_id": sid,
+        "corroborators": corr,
+        "updates": updates,
+        "updated": max((u["date"] for u in updates), default=""),
+    }
+
+
+def one_per_story(rows: list[dict], rank) -> list[dict]:
+    """Keep the best-ranked row of each story (lowest `rank(row)`), in the
+    order the kept rows first appear after ranking."""
+    kept: dict[str, dict] = {}
+    for row in sorted(rows, key=rank):
+        kept.setdefault(row["story_id"], row)
+    return list(kept.values())
+
+
+def curated_findings(conf: c.Config, snapshot_days: int, ctx=None) -> list[dict]:
+    """Every vetted finding across the three pools, one row per story, ranked
+    by composite. A story's other entries show as 'Also reported by'."""
+    ctx = ctx or sl.render_context()
     rows = [
-        finding_row(entry, conf, snapshot_days)
+        {**finding_row(entry, conf, snapshot_days), **story_fields(entry, ctx)}
         for topic in c.TOPICS
         for entry in c.load_pool(topic)["entries"]
         if c.is_curated(entry, conf)
     ]
-    return sorted(rows, key=lambda row: -row["composite"])
+    return one_per_story(rows, lambda row: -row["composite"])
 
 
-def editorial_rows(conf: c.Config, snapshot_days: int) -> list[dict]:
-    """Findings for the 'Trending & in the news' lane.
+_TIER_RANK = {"high": 0, "medium": 1, "low": 2}
 
-    Two sources of truth feed this band, unioned and deduped:
+
+def _lane_row(entry: dict, conf: c.Config, snapshot_days: int, sources_by_id: dict):
+    """(row, tier) for an entry the news lane shows, else None."""
+    if c.is_editorial(entry):
+        ed = entry.get("editorial") or {}
+        meta = {
+            "lane": "editorial",
+            "reason": ed.get("reason", ""),
+            "signals": ed.get("signals") or [],
+            "at": ed.get("at", ""),
+        }
+        tier = "high"
+    elif c.is_news_curated(entry, conf, sources_by_id, window=None):
+        src = sources_by_id.get(entry.get("source_id") or "", {})
+        name, tier = src.get("name", ""), src.get("tier", "medium")
+        reason = (
+            f"{name} announcement"
+            if name
+            else "Passed the news gate — fresh + on-topic + trusted source"
+        )
+        meta = {"lane": "news", "reason": reason, "signals": [], "at": entry.get("published", "")}
+    else:
+        return None
+    return {**finding_row(entry, conf, snapshot_days), **meta}, tier
+
+
+def editorial_rows(conf: c.Config, snapshot_days: int, ctx=None, exclude=()) -> list[dict]:
+    """Findings for the 'Trending & in the news' lane, one row per story.
+
+    Two sources of truth feed this band:
 
     - Editorial pass: entries flagged with editorial.promoted = true.
-      Humans surface a timely/teachable held finding.
-    - News gate: entries that pass is_news_curated with no age limit, i.e.
-      an on-topic item from a news-track source that clears the deny list.
-      News is kept like claims: a story entered the pools fresh, and it
-      stays in this lane, newest first, instead of aging out.
+    - News gate: entries that pass is_news_curated with no age limit. News is
+      kept like claims: a story stays in this lane, newest first.
 
-    News-gated rows are further deduped through the story-key index
-    (dedupe_stories.py). Duplicates become corroborators on the winning
-    row — a story on OpenAI's blog and mirrored on Hugging Face collapses
-    to one entry with 'Also reported by: Hugging Face'."""
-    import dedupe_stories as ds
-
+    A story's rows collapse through the story ledger (story_ledger.py): the
+    editorial pick, else the highest-tier source, else the earliest report
+    leads, and the story's other sources become 'Also reported by'. Stories in
+    `exclude` (already shown as findings) are left out, so a story renders once.
+    A story with a fresh Updated line sorts by that date (it moves back up)."""
+    ctx = ctx or sl.render_context()
     sources_by_id = c.load_sources_by_id()
-
-    # First pass — identify which entries will be news candidates so we
-    # can exclude them from the seed pass (otherwise every candidate
-    # fingerprint-matches itself and gets marked as a duplicate).
-    news_candidate_ids: set[str] = set()
+    ranked = []
     for topic in c.TOPICS:
         for entry in c.load_pool(topic)["entries"]:
-            if c.is_news_curated(entry, conf, sources_by_id, window=None):
-                news_candidate_ids.add(entry.get("id") or "")
+            got = _lane_row(entry, conf, snapshot_days, sources_by_id)
+            if got:
+                row, tier = got
+                ranked.append(({**row, **story_fields(entry, ctx)}, tier))
+    tier_of = {id(row): tier for row, tier in ranked}
 
-    # Seed the story-key index from every recent finding EXCEPT the current
-    # news candidates. What remains is prior art: research findings and
-    # already-shipped news that we don't want to re-surface.
-    dedup_idx = ds.load_index()
-    dedup_idx = ds.prune_index(dedup_idx)
-    ds.seed_index_from_pools(dedup_idx, skip_ids=news_candidate_ids)
+    def rank(row: dict) -> tuple:
+        return (
+            row["lane"] != "editorial",
+            _TIER_RANK.get(tier_of[id(row)], 3),
+            row.get("published") or "",
+            row["id"],
+        )
 
-    rows: list[dict] = []
-    seen_ids: set[str] = set()
-    row_by_story: dict[str, int] = {}
-
-    def _emit(entry: dict, *, lane: str, reason: str = "", signals=None, at: str = "") -> None:
-        row = finding_row(entry, conf, snapshot_days)
-        row["signals"] = signals or []
-        row["reason"] = reason
-        row["at"] = at
-        row["lane"] = lane
-        rows.append(row)
-        seen_ids.add(entry.get("id") or "")
-
-    for topic in c.TOPICS:
-        for entry in c.load_pool(topic)["entries"]:
-            eid = entry.get("id") or ""
-            if eid and eid in seen_ids:
-                continue
-            if c.is_editorial(entry):
-                ed = entry.get("editorial") or {}
-                _emit(
-                    entry,
-                    lane="editorial",
-                    reason=ed.get("reason", ""),
-                    signals=ed.get("signals") or [],
-                    at=ed.get("at", ""),
-                )
-                continue
-            if c.is_news_curated(entry, conf, sources_by_id, window=None):
-                src = sources_by_id.get(entry.get("source_id") or "", {})
-                src_name = src.get("name", "")
-                tier = src.get("tier", "medium")
-                story_id, is_new = ds.assign_story_id(
-                    entry,
-                    dedup_idx,
-                    source_tier=tier,
-                    source_name=src_name,
-                )
-                if not is_new:
-                    # Attach as corroborator to whatever row already holds
-                    # this story. If the collision is against a research
-                    # finding not in `rows`, skip — we don't repeat it.
-                    if story_id in row_by_story:
-                        rows[row_by_story[story_id]].setdefault("corroborators", []).append(
-                            {
-                                "url": entry.get("source_url", ""),
-                                "source_name": src_name,
-                                "tier": tier,
-                            }
-                        )
-                    continue
-                reason = (
-                    f"{src_name} announcement"
-                    if src_name
-                    else "Passed the news gate — fresh + on-topic + trusted source"
-                )
-                _emit(entry, lane="news", reason=reason, at=entry.get("published", ""))
-                row_by_story[story_id] = len(rows) - 1
-
-    ds.save_index(dedup_idx)
-    return sorted(rows, key=lambda row: row.get("at", ""), reverse=True)
+    rows = [r for r in one_per_story([r for r, _ in ranked], rank) if r["story_id"] not in exclude]
+    return sorted(
+        rows, key=lambda row: max(row.get("at", ""), row.get("updated", "")), reverse=True
+    )
 
 
 def _claims_since(ledger: dict) -> str:
@@ -367,6 +376,9 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
     snapshot_days = conf.snapshot_days
     trends = c.load_json(c.DATA_DIR / "trends.json", {}) or {}
     archive = c.load_json(c.DATA_DIR / "archive.json", []) or []
+    ctx = sl.render_context()
+    findings = curated_findings(conf, snapshot_days, ctx)
+    shown = {row["story_id"] for row in findings}
     return {
         "generated": now,
         "snapshot_days": snapshot_days,
@@ -385,8 +397,8 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
             for slug, meta in c.TOPICS.items()
         },
         "claims": cl.all_claims(ledger),
-        "findings": curated_findings(conf, snapshot_days),
-        "editorial": editorial_rows(conf, snapshot_days),
+        "findings": findings,
+        "editorial": editorial_rows(conf, snapshot_days, ctx, exclude=shown),
         "lessons": lessons_index(conf, snapshot_days),
         "trends": {t: _trend_rows(trends.get(t, [])) for t in c.TOPICS},
     }
@@ -427,6 +439,12 @@ def main() -> int:
     conf = c.load_config()
     now = c.utcnow().strftime("%Y-%m-%d")
     payload = build_payload(ledger, conf, now)
+    problems = cc.site_story_problems(payload)
+    if problems:
+        print(f"story integrity failed - refusing to render the site ({len(problems)} problems):")
+        for problem in problems[:20]:
+            print(f"  - {problem}")
+        return 1
 
     docs = c.ROOT / "docs"
     docs.mkdir(parents=True, exist_ok=True)

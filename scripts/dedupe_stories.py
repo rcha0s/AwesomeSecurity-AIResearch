@@ -22,41 +22,30 @@ on two sites (different URL) still collides via title-shingle + entity overlap;
 a "Kimi K3 tutorial" and the "Kimi K3 release" don't collide (entities overlap
 but title shingles differ).
 
-Dedup horizon: 30 days. The news lane only DISPLAYS the last 7 days
-(NEWS_MAX_AGE_DAYS in common.py), but we look back a full month across every
-finding — Track A and Track B, current pool and archive — so last week's
-story doesn't reappear as this week's news, and a story we already have as
-a research finding never repeats in the news lane.
-
-The index (data/news_stories.json) persists story keys for 30 days. Older keys
-are pruned so the file stays small and the extractor stays fast.
-
-Usage — as a library:
-
-    from dedupe_stories import assign_story_id, load_index, save_index
-    idx = load_index()
-    seed_index_from_pool(idx)             # includes Track A findings
-    story_id, is_new = assign_story_id(candidate, idx)
-    save_index(idx)
+These are the pure fingerprint + collision primitives. The permanent story
+ledger that uses them (data/news_stories.json, never pruned) lives in
+story_ledger.py; this module does no I/O.
 """
 
 from __future__ import annotations
 
-import hashlib
-import json
 import re
 from datetime import UTC, datetime, timedelta
-from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
-
-import common as c
 
 # Alias map for common labs / model families. Each canonical name maps to a
 # set of aliases that all resolve to the canonical when detected. Seeded
 # by hand — the fallback capitalized-bigram scanner catches anything we miss.
 _ENTITY_ALIASES: dict[str, tuple[str, ...]] = {
     "OpenAI": ("openai", "gpt-5.6", "gpt-5", "gpt5.6", "gpt5", "luna", "terra", "sol", "codex"),
-    "Anthropic": ("anthropic", "claude", "claude fable 5", "claude opus", "claude sonnet", "claude haiku"),
+    "Anthropic": (
+        "anthropic",
+        "claude",
+        "claude fable 5",
+        "claude opus",
+        "claude sonnet",
+        "claude haiku",
+    ),
     "Google DeepMind": ("deepmind", "google deepmind", "gemini", "gemini robotics"),
     "Meta AI": ("meta ai", "llama", "llama 3", "llama-3", "llama 4"),
     "Moonshot": ("moonshot", "kimi", "kimi k3", "kimi k2"),
@@ -71,9 +60,7 @@ _ENTITY_ALIASES: dict[str, tuple[str, ...]] = {
 }
 # Flat lookup: alias -> canonical.
 _ALIAS_TO_CANONICAL: dict[str, str] = {
-    alias: canonical
-    for canonical, aliases in _ENTITY_ALIASES.items()
-    for alias in aliases
+    alias: canonical for canonical, aliases in _ENTITY_ALIASES.items() for alias in aliases
 }
 
 # English stopwords for title-shingle prep. Small on purpose — we want the
@@ -93,12 +80,9 @@ _TRACKING_PARAMS = frozenset(
     ).split()
 )
 
-STORY_INDEX = Path(__file__).resolve().parent.parent / "data" / "news_stories.json"
-
-STORY_KEY_TTL_DAYS = 30
 BUCKET_DAYS = 7  # week-of-published
-COLLISION_JACCARD_TITLE = 0.5   # token-set OR trigram Jaccard; real-world
-                                 # rewrites hover around .45–.55
+COLLISION_JACCARD_TITLE = 0.5  # token-set OR trigram Jaccard; real-world
+# rewrites hover around .45–.55
 COLLISION_JACCARD_ENTITY = 0.6  # overlap coefficient (subset-friendly)
 
 
@@ -120,11 +104,13 @@ def canonical_url(url: str) -> str:
     host = p.netloc.lower()
     if host.startswith("www."):
         host = host[4:]
-    query = [(k, v) for k, v in parse_qsl(p.query, keep_blank_values=False)
-             if k.lower() not in _TRACKING_PARAMS]
+    query = [
+        (k, v)
+        for k, v in parse_qsl(p.query, keep_blank_values=False)
+        if k.lower() not in _TRACKING_PARAMS
+    ]
     path = p.path.rstrip("/") or "/"
-    return urlunparse((p.scheme.lower() or "https", host, path,
-                       "", urlencode(query), ""))
+    return urlunparse((p.scheme.lower() or "https", host, path, "", urlencode(query), ""))
 
 
 # ---------------------------------------------------------------------------
@@ -151,7 +137,7 @@ def title_shingles(title: str) -> set[str]:
     toks = _tokens(title)
     if len(toks) < 3:
         return set(toks)
-    return {" ".join(toks[i:i + 3]) for i in range(len(toks) - 2)}
+    return {" ".join(toks[i : i + 3]) for i in range(len(toks) - 2)}
 
 
 def title_similarity(a_title: str, b_title: str) -> float:
@@ -266,168 +252,3 @@ def is_collision(a: dict, b: dict) -> bool:
     if overlap_coefficient(a["entities"], b["entities"]) >= COLLISION_JACCARD_ENTITY:
         hits += 1
     return hits >= 2
-
-
-# ---------------------------------------------------------------------------
-# Story index
-# ---------------------------------------------------------------------------
-def _story_id(fp: dict) -> str:
-    """Stable ID from the fingerprint. Not intended to be human-readable;
-    used to link corroborators."""
-    parts = [
-        fp["url"],
-        "|".join(sorted(fp["shingles"])),
-        "|".join(sorted(fp["entities"])),
-        fp["bucket"],
-    ]
-    return hashlib.sha1("::".join(parts).encode("utf-8")).hexdigest()[:16]
-
-
-def seed_index_from_pools(index: dict, *, lookback_days: int = STORY_KEY_TTL_DAYS,
-                          skip_ids: set | None = None,
-                          now: datetime | None = None) -> int:
-    """Populate the index with fingerprints from every recent pool entry.
-    This is the 'dedup wide, across the last month' rule — a Track B
-    candidate that matches an already-pooled finding gets treated as a
-    repeat.
-
-    `skip_ids`: entry IDs to NOT seed. Use this to exclude the very entries
-    the caller is about to run through assign_story_id in the same pass
-    (otherwise those entries fingerprint-match themselves and the caller
-    thinks every candidate is a duplicate).
-
-    Returns the number of new fingerprints added. Idempotent — a second
-    run with the same pools adds zero."""
-    now = now or c.utcnow()
-    cutoff = (now - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
-    skip_ids = skip_ids or set()
-    added = 0
-
-    def _consider(entry: dict) -> None:
-        nonlocal added
-        # Normalize id lookup — an entry may have id=None (unanalyzed), and
-        # callers who build skip_ids from `entry.get("id") or ""` need this
-        # to see the same string.
-        if (entry.get("id") or "") in skip_ids:
-            return
-        published = (entry.get("published") or entry.get("date") or "")[:10]
-        if published and published < cutoff:
-            return
-        fp = story_fingerprint(entry)
-        # Skip empty fingerprints (untitled / unURLed rows).
-        if not fp["url"] and not fp["shingles"]:
-            return
-        for rec in index.values():
-            if is_collision(fp, _hydrate_fp(rec["fp"])):
-                return
-        sid = _story_id(fp)
-        if sid in index:
-            return
-        index[sid] = {
-            "fp": fp,
-            "corroborators": [],
-            "winner_tier": "high",  # pooled findings assumed high-tier
-            "first_seen": published or now.strftime("%Y-%m-%d"),
-        }
-        added += 1
-
-    for entry in c.all_pool_entries():
-        _consider(entry)
-    for entry in c.load_json(c.DATA_DIR / "archive.json", []) or []:
-        _consider(entry)
-    return added
-
-
-def load_index() -> dict:
-    """{story_id: {"fp": {...}, "corroborators": [...], "winner_tier": str,
-       "first_seen": iso_date}}. Missing file → empty index."""
-    if not STORY_INDEX.exists():
-        return {}
-    return json.loads(STORY_INDEX.read_text(encoding="utf-8"))
-
-
-def save_index(index: dict) -> None:
-    STORY_INDEX.parent.mkdir(parents=True, exist_ok=True)
-    # Serialize sets to lists for JSON.
-    ser = {
-        sid: {
-            "fp": {
-                "url": rec["fp"]["url"],
-                "title": rec["fp"].get("title", ""),
-                "tokens": sorted(rec["fp"].get("tokens", [])),
-                "shingles": sorted(rec["fp"]["shingles"]),
-                "entities": sorted(rec["fp"]["entities"]),
-                "bucket": rec["fp"]["bucket"],
-            },
-            "corroborators": rec.get("corroborators", []),
-            "winner_tier": rec.get("winner_tier", "medium"),
-            "first_seen": rec.get("first_seen", ""),
-        }
-        for sid, rec in index.items()
-    }
-    STORY_INDEX.write_text(json.dumps(ser, indent=2, ensure_ascii=False) + "\n",
-                           encoding="utf-8")
-
-
-def prune_index(index: dict, now: datetime | None = None) -> dict:
-    """Drop keys older than STORY_KEY_TTL_DAYS."""
-    now = now or c.utcnow()
-    cutoff = (now - timedelta(days=STORY_KEY_TTL_DAYS)).strftime("%Y-%m-%d")
-    return {sid: rec for sid, rec in index.items() if rec.get("first_seen", "") >= cutoff}
-
-
-def _hydrate_fp(fp: dict) -> dict:
-    """Turn a persisted fingerprint (lists) back into a working one (sets)."""
-    return {
-        "url": fp.get("url", ""),
-        "title": fp.get("title", ""),
-        "tokens": set(fp.get("tokens", [])),
-        "shingles": set(fp.get("shingles", [])),
-        "entities": set(fp.get("entities", [])),
-        "bucket": fp.get("bucket", "unbucketed"),
-    }
-
-
-# ---------------------------------------------------------------------------
-# Public entry point
-# ---------------------------------------------------------------------------
-_TIER_RANK = {"high": 3, "medium": 2, "low": 1}
-
-
-def assign_story_id(entry: dict, index: dict, *, source_tier: str = "medium",
-                    source_name: str = "") -> tuple[str, bool]:
-    """Look up (or create) the story ID for this entry.
-
-    Returns (story_id, is_new). If a collision hits an existing story, the
-    entry is added as a corroborator and the returned ID points at the
-    existing story. The winner-tier tie-breaker only rewrites the winner
-    when the new candidate is strictly higher tier.
-
-    Mutates `index` in place — call save_index() when done."""
-    fp = story_fingerprint(entry)
-
-    for sid, rec in index.items():
-        other = _hydrate_fp(rec["fp"])
-        if is_collision(fp, other):
-            new_rank = _TIER_RANK.get(source_tier, 0)
-            cur_rank = _TIER_RANK.get(rec.get("winner_tier", "medium"), 0)
-            corroborator = {
-                "url": fp["url"] or entry.get("source_url", ""),
-                "source_name": source_name or entry.get("source_name", ""),
-                "tier": source_tier,
-            }
-            rec.setdefault("corroborators", []).append(corroborator)
-            if new_rank > cur_rank:
-                rec["fp"] = fp
-                rec["winner_tier"] = source_tier
-            return sid, False
-
-    sid = _story_id(fp)
-    index[sid] = {
-        "fp": fp,
-        "corroborators": [],
-        "winner_tier": source_tier,
-        "first_seen": (entry.get("published") or entry.get("date")
-                       or c.utcnow().strftime("%Y-%m-%d"))[:10],
-    }
-    return sid, True

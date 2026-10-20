@@ -13,6 +13,9 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
+  story_id_problems     every rendered story row (findings + news lane) carries
+                        a story id and no story renders twice (ISC-21; the
+                        Phase 3 integrity eval and generate_html.py call it).
 
 Pure functions over parsed data; merge_gate.py does the I/O.
 """
@@ -96,3 +99,28 @@ def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
     for cid in sorted(set(old) & set(new)):
         out += _claim_change_problems(cid, old[cid], new[cid])
     return out
+
+
+def duplicate_story_ids(rows: list[dict]) -> list[str]:
+    """Story ids that appear on more than one rendered row (sorted)."""
+    seen: dict[str, int] = {}
+    for row in rows:
+        sid = row.get("story_id") or ""
+        seen[sid] = seen.get(sid, 0) + 1
+    return sorted(sid for sid, n in seen.items() if sid and n > 1)
+
+
+def story_id_problems(rows: list[dict]) -> list[str]:
+    """A rendered row with no story id, or a story rendered twice. [] = clean."""
+    out = [
+        f"row without story_id: {r.get('id') or r.get('title', '?')}"
+        for r in rows
+        if not r.get("story_id")
+    ]
+    out += [f"duplicate story id on the site: {sid}" for sid in duplicate_story_ids(rows)]
+    return out
+
+
+def site_story_problems(payload: dict) -> list[str]:
+    """story_id_problems over a site payload's findings + news-lane rows."""
+    return story_id_problems((payload.get("findings") or []) + (payload.get("editorial") or []))

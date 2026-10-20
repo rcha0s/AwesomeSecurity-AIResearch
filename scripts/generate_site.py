@@ -23,6 +23,7 @@ from collections import defaultdict
 from datetime import datetime
 
 import common as c
+import story_ledger as sl
 
 import claims as cl
 
@@ -698,15 +699,25 @@ def _methodology_details(conf: c.Config) -> list[str]:
     ]
 
 
+def one_entry_per_story(entries: list[dict], conf: c.Config) -> list[dict]:
+    """The best-composite entry of each story (story_ledger.py), so the README
+    snapshot lists a story once however many outlets covered it."""
+    _, index = sl.render_context()
+    best: dict[str, dict] = {}
+    for entry in sorted(entries, key=lambda e: -c.entry_composite(e, conf)):
+        eid = entry.get("id") or ""
+        best.setdefault(index.get(eid) or f"e-{eid}", entry)
+    return list(best.values())
+
+
 def main() -> int:
     conf = c.load_config()
     now = c.utcnow().strftime("%Y-%m-%d")
     all_entries: list[dict] = []
     for topic in c.TOPICS:
         all_entries += write_topic(topic, conf, now)
-    (c.ROOT / "README.md").write_text(
-        _dedash(render_readme(all_entries, conf, now)), encoding="utf-8"
-    )
+    readme = render_readme(one_entry_per_story(all_entries, conf), conf, now)
+    (c.ROOT / "README.md").write_text(_dedash(readme), encoding="utf-8")
     print(f"Rendered README.md + {'/ '.join(c.TOPICS)}/ ({len(all_entries)} vetted findings).")
     return 0
 

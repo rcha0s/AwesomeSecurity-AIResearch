@@ -167,7 +167,7 @@ check_and_reserve() {
 
 phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" \
-    data/analysis_out.json data/editorial_out.json
+    data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -190,6 +190,9 @@ phase_pre() {
     return 1
   fi
   "$PY" scripts/fetch_raw.py --snapshot | tee -a "$LOG"
+  # Story shortlist for the judge (story_ledger.py). Advisory: without it every
+  # candidate is judged new, which costs more but loses nothing.
+  "$PY" scripts/story_ledger.py shortlist | tee -a "$LOG" || log "story shortlist WARN: failed"
   log "SCAN_READY: $("$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))') candidates"
 }
 

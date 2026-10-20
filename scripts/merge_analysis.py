@@ -8,7 +8,9 @@ de-duplicates against the existing pools (URL + fuzzy title), gates low-confiden
 findings to needs_review, holds any entry whose `domain` is not a taxonomy ID
 (data/taxonomy.yaml; the free-text label moves to `tags`), routes each into its
 topic pool, records verified new-domain proposals, clears the merged candidates,
-and re-ranks. Idempotent: re-merging the same URL
+and re-ranks. Before that it applies the story judge's verdicts
+(data/story_verdicts.json, see story_ledger.py): `same`/`update` candidates join
+their story without a new entry, and every merged entry is put in its story. Idempotent: re-merging the same URL
 updates the entry in place rather than duplicating it.
 
 Usage:
@@ -23,6 +25,7 @@ import common as c
 import content_checks as cc
 import rerank
 import sources_registry as sr
+import story_ledger as sl
 import taxonomy as tx
 import taxonomy_proposals as tp
 import verify_citations as vc
@@ -130,11 +133,12 @@ def normalize_entry(entry: dict, conf: c.Config) -> dict:
 
 
 def merge(
-    analyzed: list[dict], conf: c.Config
+    analyzed: list[dict], conf: c.Config, placements: list | None = None
 ) -> tuple[list[dict], list[str], set[str], list[dict]]:
     """Returns (merged, errors, merged_urls, newly_added). `newly_added` are the
     entries that were freshly appended (not in-place updates) — only these should
-    credit a source's hit-rate, so re-merging the same input never double-counts."""
+    credit a source's hit-rate, so re-merging the same input never double-counts.
+    `placements`, when given, collects (pool entry id, merged entry) pairs."""
     pools = {t: c.load_pool(t) for t in c.TOPICS}
     merged: list[dict] = []
     errors: list[str] = []
@@ -170,6 +174,8 @@ def merge(
                 for stale in ("domain_hold", "domain_label"):  # re-analysis fixed it
                     entries[idx].pop(stale, None)
         merged.append(entry)
+        if placements is not None:
+            placements.append((entries[len(entries) - 1 if idx is None else idx]["id"], entry))
         for k in ("source_url", "article_url"):
             if entry.get(k):
                 merged_urls.add(c.normalize_url(entry[k]))
@@ -191,16 +197,114 @@ def clear_candidates(merged: list[dict], merged_urls: set[str]) -> int:
     return before - len(remaining)
 
 
+def _corroborate_leads(outcomes: list[dict], ledger: dict) -> int:
+    """A `same`/`update` source raises the story's lead pool entry's
+    corroboration (and so its credibility). Archived leads are left alone."""
+    pools = {t: c.load_pool(t) for t in c.TOPICS}
+    by_id = {e.get("id"): e for p in pools.values() for e in p["entries"]}
+    bumped = 0
+    for out in outcomes:
+        if out["action"] not in ("same", "update"):
+            continue
+        story = ledger["stories"][out["story_id"]]
+        lead = next((by_id[e] for e in story["entry_ids"] if e in by_id), None)
+        src = {"url": out["url"], "source_name": out.get("source_name"), "date": ""}
+        if lead is not None and sl.corroborate_entry(lead, src):
+            bumped += 1
+    if bumped:
+        for topic, pool in pools.items():
+            c.save_pool(topic, pool)
+    return bumped
+
+
+def apply_story_verdicts() -> list[dict]:
+    """Apply data/story_verdicts.json (the judge's output) to the ledger, drop
+    the candidates it settled (same/update need no analysis), and print what a
+    human should see: every update's claims to review, every rejected verdict."""
+    verdicts = c.load_json(c.DATA_DIR / sl.VERDICTS_FILE.name, default=None)
+    if not verdicts:
+        return []
+    ledger = sl.load_ledger()
+    shortlists = c.load_json(c.DATA_DIR / sl.SHORTLIST_FILE.name, default={}) or {}
+    cands = c.load_candidates()
+    entries_by_id = {e["id"]: e for e in sl.all_entries() if e.get("id")}
+    outcomes = sl.apply_verdicts(
+        ledger,
+        verdicts,
+        cands,
+        shortlists,
+        sources_by_id=c.load_sources_by_id(),
+        entries_by_id=entries_by_id,
+    )
+    for out in outcomes:
+        out["source_name"] = next(
+            (x.get("source_name") for x in cands if x.get("id") == out.get("candidate_id")), ""
+        )
+    sl.save_ledger(ledger)
+    _corroborate_leads(outcomes, ledger)
+    settled = {o["candidate_id"] for o in outcomes if o["action"] in ("same", "update")}
+    c.save_candidates([x for x in cands if x.get("id") not in settled])
+    (c.DATA_DIR / sl.VERDICTS_FILE.name).unlink(missing_ok=True)
+    _print_outcomes(outcomes)
+    return outcomes
+
+
+def _print_outcomes(outcomes: list[dict]) -> None:
+    counts = {a: sum(1 for o in outcomes if o["action"] == a) for a in sl.VERDICTS}
+    rejected = [o for o in outcomes if o["action"] == "rejected"]
+    print(
+        f"Story verdicts: {counts['same']} same, {counts['update']} update, "
+        f"{counts['new']} new, {len(rejected)} rejected."
+    )
+    for o in outcomes:
+        if o["action"] == "update" and o.get("claims_to_review"):
+            print(
+                f"  CLAIM REVIEW: story {o['story_id']} updated by {o['url']}; linked claims "
+                f"{', '.join(o['claims_to_review'])} may need supersession (not automatic)"
+            )
+    for o in rejected:
+        print(f"  rejected verdict for {o.get('candidate_id')}: {o.get('reason')}", file=sys.stderr)
+
+
+def ledger_placements(placements: list, outcomes: list[dict]) -> None:
+    """Put every merged entry in its story: the judge's story for a judged
+    candidate that was analyzed anyway, a forced new story for a `new`
+    verdict, else the conservative deterministic match."""
+    by_url = {c.normalize_url(o.get("url", "")): o for o in outcomes if o.get("url")}
+    ledger = sl.load_ledger()
+    sources = c.load_sources_by_id()
+    window = sl.settings()["match_window_days"]
+    for pool_id, entry in placements:
+        out = by_url.get(c.normalize_url(entry.get("source_url", ""))) or {}
+        src = sources.get(entry.get("source_id") or "", {})
+        sl.assign_entry(
+            ledger,
+            {**entry, "id": pool_id},
+            story_id=out.get("story_id") if out.get("action") in ("same", "update") else None,
+            force_new=out.get("action") == "new",
+            tier=src.get("tier", ""),
+            source_name=src.get("name", ""),
+            window_days=window,
+        )
+    sl.save_ledger(ledger)
+
+
 def main() -> int:
     conf = c.load_config()
+    outcomes = apply_story_verdicts()
     analyzed = c.load_json(c.ANALYSIS_OUT, default=None)
     if not analyzed:
+        if outcomes:
+            rerank.rerank_all(conf)
+            return 0
         print(f"No {c.ANALYSIS_OUT.name} to merge.", file=sys.stderr)
         return 1
     if isinstance(analyzed, dict):
         analyzed = analyzed.get("entries", [])
 
-    merged, errors, merged_urls, newly_added = merge(analyzed, conf)
+    placements: list = []
+    merged, errors, merged_urls, newly_added = merge(analyzed, conf, placements)
+    ledger_placements(placements, outcomes)
     print(f"Merged {len(merged)} entr(y/ies) into the pools ({len(newly_added)} new).")
     for topic in c.TOPICS:
         flagged = sum(1 for m in merged if m["topic"] == topic and m.get("needs_review"))

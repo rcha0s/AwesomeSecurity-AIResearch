@@ -636,6 +636,7 @@
     return '<article class="art">' +
       '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + meta.join("") + '</div>' +
       '</article>';
   }
@@ -731,25 +732,39 @@
 
   // The front page's news lane: stories from the last `days`, newest first,
   // at most `max`. Every kept story is still on the News tab.
+  // A story with a dated Updated line counts from that date (it moves back up).
   function frontNews(rows, days, max) {
-    return (rows || []).filter(function (f) { return _daysAgo(f.published) <= days; })
-      .sort(function (a, b) { return (b.published || "").localeCompare(a.published || ""); })
+    function last(f) { return f.updated && f.updated > (f.published || "") ? f.updated : f.published; }
+    return (rows || []).filter(function (f) { return _daysAgo(last(f)) <= days; })
+      .sort(function (a, b) { return (last(b) || "").localeCompare(last(a) || ""); })
       .slice(0, max);
+  }
+
+  // One story, many outlets: the story's other covering sources.
+  function alsoReported(f) {
+    if (!f.corroborators || !f.corroborators.length) return "";
+    return '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
+      'Also reported by: ' +
+      f.corroborators.slice(0, 4).map(function (c) {
+        return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
+      }).join(", ") +
+      (f.corroborators.length > 4 ? " +" + (f.corroborators.length - 4) : "") +
+      '</p>';
+  }
+  // The story's dated "Updated" lines, newest first (at most two).
+  function storyUpdates(f) {
+    if (!f.updates || !f.updates.length) return "";
+    return f.updates.slice(-2).reverse().map(function (u) {
+      return '<p class="why" style="font-size:12.5px"><strong>Updated ' + esc(fmtDate(u.date)) +
+        ':</strong> ' + txt(u.note) + '</p>';
+    }).join("");
   }
 
   function newsCardHTML(f) {
     // Use the finding's takeaway (the sharp one-line lesson) rather
     // than editorial.reason. Signals ("trending", "timely", "newsworthy")
     // in the meta row already answer the "why now" question.
-    var corr = "";
-    if (f.corroborators && f.corroborators.length) {
-      corr = '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
-        'Also reported by: ' +
-        f.corroborators.slice(0, 4).map(function (c) {
-          return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
-        }).join(", ") +
-        '</p>';
-    }
+    var corr = alsoReported(f) + storyUpdates(f);
     return '<article class="art">' +
       '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
