@@ -22,13 +22,14 @@ def test_aggregate_classifies_tracks():
         {"name": "F", "type": "blog", "domains": ["Agents & Harnesses"]},
         rules,
     )
-    assert ai["guess_topic"] == "ai-research" and ai["guess_domain"] == "Agents & Harnesses"
+    assert ai["guess_topic"] == "ai-research" and ai["guess_label"] == "Agents & Harnesses"
+    assert ai["guess_domain"] == "air.agents"  # a taxonomy ID of the routed topic
     sec = aggregate.build_candidate(
         {"link": "https://x/b", "title": "request smuggling desync", "summary": "waf bypass"},
         {"name": "G", "type": "v", "domains": ["Web Application Security"]},
         rules,
     )
-    assert sec["guess_topic"] == "product-security"
+    assert sec["guess_topic"] == "product-security" and sec["guess_domain"] == "ps.appsec"
 
 
 def test_classify_domain_does_not_false_positive_on_bare_hyperlinks():
@@ -79,20 +80,6 @@ def test_collect_rss_passes_shared_user_agent(monkeypatch):
     aggregate.collect_rss({}, c.utcnow())
 
     assert calls == [("https://example.com/feed.xml", {"User-Agent": c.HTTP_USER_AGENT})]
-
-
-def test_classify_domain_does_not_false_positive_on_bare_hyperlinks():
-    # Regression: a bare "http" keyword matched any text containing a link
-    # (e.g. markdown "[text](https://...)"), so classify_domain silently
-    # routed unrelated pages (math papers, product news) to Web Application
-    # Security whenever the body happened to cite a URL. See the
-    # "Formalizing Fermat's Last Theorem" false positive that surfaced this.
-    rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    blob = (
-        "we proved a theorem in the lean programming language. see the "
-        "resulting proof at https://github.com/anthropics/example for details."
-    )
-    assert aggregate.classify_domain(blob, rules, []) is None
 
 
 def test_add_source_via():

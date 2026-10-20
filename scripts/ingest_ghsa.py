@@ -92,9 +92,7 @@ def advisory_to_candidate(adv: dict, rules: dict) -> dict | None:
             f"[{severity}] {summary} — affects {packages or 'n/a'}. {description}", 400
         ),
         "raw_path": None,
-        "guess_topic": c.topic_for_domain(domain) or "product-security",
-        "guess_domain": domain,
-        "guess_subtype": agg.classify_subtype(blob, domain, rules),
+        **agg.guess_fields(blob, domain, rules, topic="product-security"),
         "severity": severity,
         "source_id": None,
         "source_rank": 70.0,  # first-party GitHub, human-reviewed

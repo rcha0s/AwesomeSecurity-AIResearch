@@ -26,8 +26,20 @@ from datetime import timedelta
 
 import common as c
 import sources_registry as sr
+import taxonomy as tx
 
 REPO_FIELDS = "fullName,description,url,stargazersCount,updatedAt,createdAt"
+
+
+def _guess(label: str | None, text: str) -> dict:
+    """Topic from the source's (legacy) domain label, as before; the domain guess
+    is a taxonomy ID of that topic by keyword hint, plus the label as provenance."""
+    topic = c.topic_for_domain(label) if label else None
+    return {
+        "guess_topic": topic,
+        "guess_domain": tx.domain_hint(topic, text, default=label) if topic else None,
+        "guess_label": label,
+    }
 
 
 def run_gh(args: list[str], timeout: int = 60) -> str | None:
@@ -118,8 +130,7 @@ def repo_to_candidate(repo: dict, source: dict, fetch: bool, max_chars: int) -> 
         "excerpt": c.clean_summary(f"{desc} ({stars} stars)", 320),
         "raw_path": raw_path,
         "stars": stars,
-        "guess_topic": c.topic_for_domain(domains[0]) if domains else None,
-        "guess_domain": domains[0] if domains else None,
+        **_guess(domains[0] if domains else None, f"{full_name} {desc}"),
         "guess_subtype": None,
         "source_id": source.get("id"),
         "source_rank": source.get("rank"),

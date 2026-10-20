@@ -66,6 +66,9 @@ else for review; rerank normalizes old free-text labels through the alias map. C
 work follows the domain's `claim_eligible` flag (it replaced the 13 interests.yaml
 clusters). Add or rename a domain only in the YAML, and never reuse or change an ID:
 retire it into `aliases`. A recurring verified `proposed_domain` opens a `taxonomy` issue.
+Ingestors emit `guess_domain` as an ID too: the `sources.yaml` keyword router still makes
+every ingest decision and topic guess (its class is kept as `guess_label`); the ID is
+picked from the taxonomy's keyword hints within that topic.
 
 ## What ages out
 

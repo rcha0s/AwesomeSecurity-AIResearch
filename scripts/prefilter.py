@@ -78,6 +78,7 @@ def haystack(candidate: dict) -> str:
     parts = [
         candidate.get("title") or "",
         candidate.get("excerpt") or "",
+        candidate.get("guess_label") or "",
         candidate.get("guess_domain") or "",
         candidate.get("guess_subtype") or "",
     ]

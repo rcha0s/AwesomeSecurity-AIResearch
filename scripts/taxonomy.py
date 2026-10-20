@@ -190,6 +190,17 @@ def resolve(tax: Taxonomy, topic: str, label: str, text: str = "") -> tuple[str,
     return tax.defaults[topic], "default"
 
 
+def domain_hint(topic: str, text: str, default: str | None = None) -> str:
+    """Best domain ID of `topic` for raw text by keyword hints (ingest guesses);
+    `default` (else the topic's default) when no hint fires."""
+    tax = get()
+    scores = keyword_scores(text, tax.for_topic(topic))
+    best = max(scores.values(), default=0)
+    if best > 0:
+        return next(d for d, s in scores.items() if s == best)
+    return default if tax.is_valid(default, topic) else tax.defaults[topic]
+
+
 def entry_text(entry: dict) -> str:
     """What keyword resolution reads when the label alone doesn't decide."""
     return " ".join(str(entry.get(k) or "") for k in ("title", "summary", "takeaway"))

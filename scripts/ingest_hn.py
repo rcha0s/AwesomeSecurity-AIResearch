@@ -103,9 +103,7 @@ def hit_to_candidate(hit: dict, rules: dict) -> dict | None:
         "excerpt": body
         or f"HN: {hit.get('points', 0)} points, {hit.get('num_comments', 0)} comments",
         "raw_path": None,
-        "guess_topic": c.topic_for_domain(domain),
-        "guess_domain": domain,
-        "guess_subtype": agg.classify_subtype(blob, domain, rules),
+        **agg.guess_fields(blob, domain, rules),
         "source_id": None,
         "source_rank": HN_SOURCE_RANK,
         "source_topics": [],
