@@ -134,6 +134,7 @@ def collect_rss(rules: dict, cutoff: datetime, signals: pg.Signals | None = None
                 candidates.append(cand)
             else:
                 print(f"   - gated ({reason}): {cand['title'][:70]}")
+    print(f"   [{signals.status_line()}]")
     return candidates
 
 

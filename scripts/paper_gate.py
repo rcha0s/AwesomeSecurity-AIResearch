@@ -68,11 +68,17 @@ def curator_ids_from_entries(entries: list[dict]) -> set[str]:
     return ids
 
 
-def fetch_hf_daily_ids() -> set[str]:
-    """arXiv ids on HF Daily Papers over the lookback window; empty set on failure."""
+def fetch_hf_daily() -> tuple[set[str], int]:
+    """(arXiv ids on HF Daily Papers over the lookback window, days that answered).
+
+    A day "answers" when the API returns a JSON list (empty is fine: weekends).
+    Prints HF-SIGNAL-UNAVAILABLE when no day answered, so a total outage or a schema
+    change is visible in the scan log instead of silently closing the gate.
+    """
     import requests  # local import keeps offline unit tests import-clean
 
     ids: set[str] = set()
+    ok_days = 0
     today = c.utcnow().date()
     for back in range(HF_LOOKBACK_DAYS):
         day = (today - timedelta(days=back)).isoformat()
@@ -84,10 +90,27 @@ def fetch_hf_daily_ids() -> set[str]:
                 headers={"User-Agent": c.HTTP_USER_AGENT},
             )
             resp.raise_for_status()
-            ids |= {str(i["paper"]["id"]).lower() for i in resp.json()}
+            data = resp.json()
+            if not isinstance(data, list):
+                raise ValueError(f"unexpected {type(data).__name__} payload")
+            ids |= {
+                str(i["paper"]["id"]).lower()
+                for i in data
+                if isinstance(i, dict) and isinstance(i.get("paper"), dict) and i["paper"].get("id")
+            }
+            ok_days += 1
         except Exception as exc:  # noqa: BLE001 - fail closed, never block the scan
             print(f"   ! HF Daily Papers {day} unavailable: {exc}", file=sys.stderr)
-    return ids
+    if ok_days == 0:
+        print(
+            "HF-SIGNAL-UNAVAILABLE: Hugging Face Daily Papers answered 0 of "
+            f"{HF_LOOKBACK_DAYS} days; ungated preprints will be dropped this run"
+        )
+    return ids, ok_days
+
+
+def fetch_hf_daily_ids() -> set[str]:
+    return fetch_hf_daily()[0]
 
 
 class Signals:
@@ -95,13 +118,24 @@ class Signals:
 
     def __init__(self, hf_ids: set[str] | None = None, curator_ids: set[str] | None = None):
         self._hf_ids = hf_ids
+        self.hf_days_ok: int | None = None  # None until fetched (or when preset)
         self.curator_ids: set[str] = set(curator_ids or ())
+        self.gated = 0
 
     @property
     def hf_ids(self) -> set[str]:
         if self._hf_ids is None:
-            self._hf_ids = fetch_hf_daily_ids()
+            self._hf_ids, self.hf_days_ok = fetch_hf_daily()
         return self._hf_ids
+
+    def status_line(self) -> str:
+        if self.hf_days_ok is None:
+            hf = "not needed"
+        elif self.hf_days_ok == 0:
+            hf = "unavailable"
+        else:
+            hf = f"ok ({self.hf_days_ok}/{HF_LOOKBACK_DAYS} days)"
+        return f"papers gated: {self.gated}, HF signal: {hf}"
 
 
 def admit(cand: dict, signals: Signals) -> tuple[bool, str]:
@@ -116,4 +150,5 @@ def admit(cand: dict, signals: Signals) -> tuple[bool, str]:
         return True, "curator-link"
     if pid and pid in signals.hf_ids:
         return True, "hf-daily"
+    signals.gated += 1
     return False, "no-quality-signal"

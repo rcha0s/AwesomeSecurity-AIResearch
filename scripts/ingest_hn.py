@@ -25,6 +25,7 @@ from datetime import timedelta
 
 import aggregate as agg
 import common as c
+import paper_gate as pg
 
 HN_SEARCH = "http://hn.algolia.com/api/v1/search_by_date"
 HN_ITEM = "https://news.ycombinator.com/item?id="
@@ -32,8 +33,7 @@ HN_ITEM = "https://news.ycombinator.com/item?id="
 HN_SOURCE_RANK = 55.0
 
 
-def search_stories(query: str, limit: int, since_ts: int,
-                   min_points: int = 0) -> list[dict]:
+def search_stories(query: str, limit: int, since_ts: int, min_points: int = 0) -> list[dict]:
     """Recent HN stories matching `query`, newest first. [] on any failure.
 
     When called with query="" and min_points>=100, this is the "top-stories"
@@ -134,6 +134,7 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
 
     out: list[dict] = []
     seen_ids: set[str] = set()
+    signals = pg.Signals()  # HN velocity is not a paper quality signal
 
     def _stage(hits, floor: int, label: str) -> None:
         kept = 0
@@ -142,6 +143,8 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
                 continue
             cand = hit_to_candidate(hit, rules)
             if not cand or cand["id"] in seen_ids:
+                continue
+            if not pg.admit(cand, signals)[0]:
                 continue
             seen_ids.add(cand["id"])
             out.append(cand)
@@ -163,6 +166,7 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
             "top-stories",
         )
 
+    print(f"   [{signals.status_line()}]")
     return out
 
 

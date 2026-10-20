@@ -238,3 +238,132 @@ def test_new_source_types_are_registered_and_allowlisted(kind):
     assert kind in sr.SOURCE_TYPES
     host = allowlist.source_hosts([{"type": kind, "handle": "https://api.example.org/x"}])
     assert host == {"api.example.org"}
+
+
+# --- review fixes: robustness, HF outage visibility, HN gating --------------
+
+SRC = {"id": "s", "name": "S", "rank": 1.0, "topics": [], "handle": "x://"}
+
+
+def test_hf_candidates_survive_malformed_items():
+    rules = c.load_yaml(c.SOURCES_FILE)["classification"]
+    items = [
+        {"no_paper": 1},
+        {"paper": None},
+        {"paper": {"title": "no id jailbreak"}},
+        "junk",
+        _hf_item("2607.00001", "Jailbreak and prompt injection of LLM agents", "attack on llm"),
+    ]
+    out = ijf.hf_candidates(items, SRC, rules, c.utcnow() - timedelta(days=31))
+    assert [x["article_url"] for x in out] == ["https://arxiv.org/abs/2607.00001"]
+
+
+def test_kev_candidates_tolerate_non_dict_payloads():
+    rules = c.load_yaml(c.SOURCES_FILE)["classification"]
+    cutoff = c.utcnow() - timedelta(days=31)
+    for bad in (None, [], "x", {"vulnerabilities": "nope"}, {"vulnerabilities": [None, 3]}):
+        assert ijf.kev_candidates(bad, SRC, rules, cutoff) == []
+
+
+def test_collect_stages_kev_even_when_hf_returns_dict_or_raises(monkeypatch):
+    rules = c.load_yaml(c.SOURCES_FILE)["classification"]
+    kev = {
+        "vulnerabilities": [
+            {
+                "cveID": "CVE-2026-9",
+                "vulnerabilityName": "Acme Authentication Bypass",
+                "dateAdded": "2026-07-10",
+                "shortDescription": "auth bypass",
+            }
+        ]
+    }
+    sources = {
+        "kev_json": [{**SRC, "handle": "kev://"}],
+        "hf_papers": [{**SRC, "handle": "hf://"}],
+    }
+    monkeypatch.setattr(ijf.sr, "sources_of_type", lambda k: sources.get(k, []))
+    for hf_resp in ({"error": "rate limited"}, RuntimeError("boom")):
+
+        def fake_fetch(url, hf_resp=hf_resp, **params):
+            if url == "kev://":
+                return kev
+            if isinstance(hf_resp, Exception):
+                raise hf_resp
+            return hf_resp
+
+        monkeypatch.setattr(ijf, "fetch_json", fake_fetch)
+        out = ijf.collect(rules, c.utcnow() - timedelta(days=31))
+        assert [x["kev"]["cveID"] for x in out] == ["CVE-2026-9"]
+
+
+class _Resp:
+    def __init__(self, payload):
+        self.payload = payload
+
+    def raise_for_status(self):
+        pass
+
+    def json(self):
+        return self.payload
+
+
+def test_hf_total_outage_is_loud_and_counted(monkeypatch, capsys):
+    import requests
+
+    def boom(*a, **k):
+        raise requests.ConnectionError("down")
+
+    monkeypatch.setattr(requests, "get", boom)
+    sig = pg.Signals()
+    assert pg.admit(paper(), sig) == (False, "no-quality-signal")
+    assert "HF-SIGNAL-UNAVAILABLE" in capsys.readouterr().out
+    assert sig.status_line() == "papers gated: 1, HF signal: unavailable"
+
+
+def test_hf_schema_change_counts_as_unavailable(monkeypatch, capsys):
+    import requests
+
+    monkeypatch.setattr(requests, "get", lambda *a, **k: _Resp({"error": "schema changed"}))
+    ids, ok = pg.fetch_hf_daily()
+    assert ids == set() and ok == 0
+    assert "HF-SIGNAL-UNAVAILABLE" in capsys.readouterr().out
+
+
+def test_hf_partial_success_is_not_unavailable(monkeypatch, capsys):
+    import requests
+
+    monkeypatch.setattr(requests, "get", lambda *a, **k: _Resp([{"paper": {"id": "2607.00001"}}]))
+    sig = pg.Signals()
+    assert pg.admit(paper(), sig) == (True, "hf-daily")
+    assert "HF-SIGNAL-UNAVAILABLE" not in capsys.readouterr().out
+    assert sig.status_line().endswith("ok (7/7 days)")
+
+
+def test_allowlist_fixed_hosts_include_hf():
+    import allowlist
+
+    assert "huggingface.co" in allowlist.FIXED_HOSTS
+
+
+def test_hn_arxiv_link_needs_a_quality_signal(monkeypatch):
+    import ingest_hn as hn
+
+    rules = c.load_yaml(c.SOURCES_FILE)["classification"]
+    hit = {
+        "title": "Jailbreak and prompt injection attack on LLM agents",
+        "url": "https://arxiv.org/abs/2607.00001",
+        "objectID": "1",
+        "points": 300,
+        "created_at": "2026-07-14T00:00:00Z",
+    }
+    blog = {**hit, "url": "https://blog.example.com/jailbreak", "objectID": "2"}
+    cfg = {"hackernews": {"queries": ["x"], "top_stories": False, "min_points": 1}}
+    monkeypatch.setattr(hn, "search_stories", lambda *a, **k: [hit, blog])
+
+    monkeypatch.setattr(pg, "fetch_hf_daily", lambda: (set(), 7))
+    urls = {x["article_url"] for x in hn.collect(cfg, rules, None)}
+    assert urls == {"https://blog.example.com/jailbreak"}  # arXiv link dropped
+
+    monkeypatch.setattr(pg, "fetch_hf_daily", lambda: ({"2607.00001"}, 7))
+    urls = {x["article_url"] for x in hn.collect(cfg, rules, None)}
+    assert "https://arxiv.org/abs/2607.00001" in urls

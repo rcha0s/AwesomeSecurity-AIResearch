@@ -21,6 +21,7 @@ import sources_registry as sr
 FIXED_HOSTS = (
     "r.jina.ai",  # common.fetch_readable — every article fetch
     "export.arxiv.org",  # ingest_conferences ARXIV_API
+    "huggingface.co",  # paper_gate HF_DAILY_API: the gate needs it even if hf_papers is off
     "hn.algolia.com",  # ingest_hn / source_scout HN_SEARCH
 )
 URL_TYPES = ("rss", "newsletter", "research_index", "kev_json", "hf_papers")
