@@ -72,6 +72,13 @@ def main_ledger(base: str) -> object:
     return json.loads(out.stdout)
 
 
+def main_stories(base: str) -> object:
+    """main's story ledger, straight from git ({} if main has none yet)."""
+    cmd = ["git", "show", f"{base}:data/news_stories.json"]
+    out = subprocess.run(cmd, cwd=ROOT, capture_output=True)
+    return json.loads(out.stdout) if out.returncode == 0 else {}
+
+
 def content_problems(base: str, root: Path = ROOT) -> list[str]:
     """URL schemes, render equality and claim history for the tree at `root`."""
     import generate_html  # main's renderer (import is slow; only when checking)
@@ -87,6 +94,9 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
         out.append("docs/index.html is missing")
     pr_ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
     out += cc.claim_history_problems(main_ledger(base), pr_ledger)
+    stories = root / "data" / "news_stories.json"
+    pr_stories = json.loads(stories.read_text(encoding="utf-8")) if stories.is_file() else {}
+    out += cc.story_membership_problems(main_stories(base), pr_stories)
     return out
 
 

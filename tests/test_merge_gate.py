@@ -114,6 +114,12 @@ def _tree(tmp_path, url="https://ok.example/", page=None):
     return tmp_path
 
 
+@pytest.fixture(autouse=True)
+def _no_main_stories(monkeypatch):
+    """main's story ledger comes from git; these trees carry none."""
+    monkeypatch.setattr(gate, "main_stories", lambda base: {})
+
+
 def test_content_problems_on_a_clean_tree(tmp_path, monkeypatch):
     monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
     assert gate.content_problems("main", _tree(tmp_path)) == []

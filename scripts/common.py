@@ -21,6 +21,7 @@ from datetime import UTC, datetime, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 # Windows consoles default to cp1252, which can't encode much of the research
 # text we print (curly quotes, non-breaking hyphens, emoji). Force UTF-8 so the
@@ -477,14 +478,33 @@ CORROBORATION_BONUS = 5  # credibility points per independent corroborating sour
 CORROBORATION_CAP = 4  # …up to this many sources
 
 
+def _host(url: str) -> str:
+    host = urlparse(url or "").netloc.lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def story_corroboration_count(entry: dict) -> int:
+    """Distinct hosts among the judge-verdict sources (`story_corroboration`,
+    story_ledger.py) that may count for credibility: high/medium tier, and not
+    the lead entry's own host. Never consulted by the news gate."""
+    lead = _host(entry.get("source_url", ""))
+    hosts = {
+        _host(s.get("url", ""))
+        for s in entry.get("story_corroboration") or []
+        if s.get("tier") in ("high", "medium")
+    }
+    return len(hosts - {"", lead})
+
+
 def credibility_of(entry: dict, default: float = 50.0) -> float:
     """A finding's source authority (0-100): its source registry rank, plus a
     bonus for each independent source that corroborates the same story (a finding
-    3 sources report is more trustworthy). Neutral default for unknown sources."""
+    3 sources report is more trustworthy). Neutral default for unknown sources.
+    Judge-verdict corroboration counts only per story_corroboration_count."""
     rank = entry.get("source_rank")
     base = float(rank) if rank is not None else default
-    corr = min(len(entry.get("corroborating_sources") or []), CORROBORATION_CAP)
-    return min(100.0, base + corr * CORROBORATION_BONUS)
+    n = len(entry.get("corroborating_sources") or []) + story_corroboration_count(entry)
+    return min(100.0, base + min(n, CORROBORATION_CAP) * CORROBORATION_BONUS)
 
 
 def entry_composite(entry: dict, conf: Config) -> float:

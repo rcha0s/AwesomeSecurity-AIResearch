@@ -208,7 +208,7 @@ def _corroborate_leads(outcomes: list[dict], ledger: dict) -> int:
             continue
         story = ledger["stories"][out["story_id"]]
         lead = next((by_id[e] for e in story["entry_ids"] if e in by_id), None)
-        src = {"url": out["url"], "source_name": out.get("source_name"), "date": ""}
+        src = {"url": out["url"], "source_name": out.get("source_name"), "tier": out.get("tier")}
         if lead is not None and sl.corroborate_entry(lead, src):
             bumped += 1
     if bumped:
@@ -219,15 +219,17 @@ def _corroborate_leads(outcomes: list[dict], ledger: dict) -> int:
 
 def apply_story_verdicts() -> list[dict]:
     """Apply data/story_verdicts.json (the judge's output) to the ledger, drop
-    the candidates it settled (same/update need no analysis), and print what a
-    human should see: every update's claims to review, every rejected verdict."""
+    the candidates it settled (same/update need no analysis), and record what a
+    human should see — counts, every same/update, every CLAIM REVIEW, every
+    rejection — both on stdout and in the code-owned data/_story_outcomes.md.
+    Each verdict is checked against a freshly recomputed shortlist."""
     verdicts = c.load_json(c.DATA_DIR / sl.VERDICTS_FILE.name, default=None)
     if not verdicts:
         return []
     ledger = sl.load_ledger()
-    shortlists = c.load_json(c.DATA_DIR / sl.SHORTLIST_FILE.name, default={}) or {}
     cands = c.load_candidates()
     entries_by_id = {e["id"]: e for e in sl.all_entries() if e.get("id")}
+    shortlists = sl.recompute_shortlists(ledger, cands, entries_by_id)
     outcomes = sl.apply_verdicts(
         ledger,
         verdicts,
@@ -245,6 +247,7 @@ def apply_story_verdicts() -> list[dict]:
     settled = {o["candidate_id"] for o in outcomes if o["action"] in ("same", "update")}
     c.save_candidates([x for x in cands if x.get("id") not in settled])
     (c.DATA_DIR / sl.VERDICTS_FILE.name).unlink(missing_ok=True)
+    sl.append_outcomes(outcomes)
     _print_outcomes(outcomes)
     return outcomes
 

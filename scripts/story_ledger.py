@@ -56,6 +56,9 @@ import dedupe_stories as ds
 LEDGER_FILE = c.DATA_DIR / "news_stories.json"
 SHORTLIST_FILE = c.DATA_DIR / "story_shortlist.json"
 VERDICTS_FILE = c.DATA_DIR / "story_verdicts.json"
+# Code-owned record of what the verdicts did; run_scan.sh post puts it in the PR
+# body. data/_* is never committed and never written by the model.
+OUTCOMES_FILE = c.DATA_DIR / "_story_outcomes.md"
 LEDGER_VERSION = 2
 VERDICTS = ("same", "update", "new")
 DEFAULT_WINDOW_DAYS = 90
@@ -486,6 +489,7 @@ def apply_verdict(
         "story_id": sid,
         "title": cand.get("title", ""),
         "url": cand.get("source_url", ""),
+        "tier": tier,
     }
     if v not in VERDICTS:
         return {**base, "action": "rejected", "reason": f"unknown verdict {v!r}"}
@@ -545,18 +549,69 @@ def apply_verdicts(
 
 
 def corroborate_entry(entry: dict, src: dict) -> bool:
-    """Record a `same` source on the story's lead pool entry, so its
-    credibility gets the corroboration bonus (common.credibility_of)."""
-    corr = entry.setdefault("corroborating_sources", [])
+    """Record a judged `same`/`update` source on the story's lead pool entry,
+    in `story_corroboration` — NOT `corroborating_sources`. A verdict comes
+    from a model that read untrusted text, so it only earns what
+    common.credibility_of allows (high/medium tier, a different host) and
+    never satisfies the HN-standalone rule or keeps a story out of the prune."""
+    corr = entry.setdefault("story_corroboration", [])
     nu = c.normalize_url(src.get("url", ""))
     if not nu or nu == c.normalize_url(entry.get("source_url", "")):
         return False
-    if any(c.normalize_url(s.get("url", "")) == nu for s in corr):
+    known = (entry.get("corroborating_sources") or []) + corr
+    if any(c.normalize_url(s.get("url", "")) == nu for s in known):
         return False
     corr.append(
-        {"name": src.get("source_name"), "url": src.get("url"), "published": src.get("date")}
+        {
+            "name": src.get("source_name"),
+            "url": src.get("url"),
+            "tier": src.get("tier") or "",
+            "published": src.get("date"),
+        }
     )
     return True
+
+
+def outcomes_record(outcomes: list[dict]) -> str:
+    """The code-owned markdown record of one verdict application."""
+    counts = {a: sum(1 for o in outcomes if o["action"] == a) for a in (*VERDICTS, "rejected")}
+    lines = [
+        "### Story verdicts (applied by merge_analysis.py)",
+        "",
+        ", ".join(f"{n} {a}" for a, n in counts.items()),
+        "",
+    ]
+    for o in outcomes:
+        act, sid, url = o["action"], o.get("story_id") or "-", o.get("url") or "-"
+        if act in ("same", "update"):
+            lines.append(f"- `{act}`: {url} -> story `{sid}`")
+        if act == "update" and o.get("claims_to_review"):
+            lines.append(
+                f"  - CLAIM REVIEW: linked claims {', '.join(o['claims_to_review'])} "
+                "may need supersession (not automatic)"
+            )
+        if act == "rejected":
+            lines.append(f"- rejected `{o.get('candidate_id')}`: {o.get('reason')}")
+    return "\n".join(lines) + "\n"
+
+
+def append_outcomes(outcomes: list[dict]) -> None:
+    path = c.DATA_DIR / OUTCOMES_FILE.name
+    prior = path.read_text(encoding="utf-8") if path.exists() else ""
+    path.write_text(prior + ("\n" if prior else "") + outcomes_record(outcomes), encoding="utf-8")
+
+
+def recompute_shortlists(ledger: dict, cands: list[dict], entries_by_id: dict) -> dict:
+    """The shortlists a verdict is checked against: recomputed from the ledger
+    and the staged candidates, never read back from data/story_shortlist.json
+    (which the model session could have edited)."""
+    conf = settings()
+    sync_entries(
+        ledger, list(entries_by_id.values()), c.load_sources_by_id(), conf["match_window_days"]
+    )
+    return shortlist_many(
+        cands, ledger, entries_by_id, window_days=conf["match_window_days"], k=conf["shortlist_max"]
+    )
 
 
 # --- integrity ---------------------------------------------------------------

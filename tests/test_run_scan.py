@@ -253,3 +253,31 @@ def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     assert "Spend this month:** $2.00 charged of $10.00" in calls  # 8 stories x $0.25 reserved
     assert "/blob/budget-ledger/SPEND.md" in calls and "https://github.com/" in calls
     assert [r["kind"] for r in ledger_rows(origin)] == ["reserve", "done"]
+
+
+def test_post_puts_the_code_owned_story_record_in_the_pr_body(scan_repo):
+    work, origin, env = scan_repo
+    reserved_run(work, env)
+    record = "### Story verdicts (applied by merge_analysis.py)\n\n1 same\n"
+    (work / "data/_story_outcomes.md").write_text(record + f"- `same`: {SECRET}\n")
+    (work / "data/_summary.md").write_text("Model summary.")
+    (work / "README.md").write_text("v2\n")
+    res = run_scan(work, env, "post")
+    assert res.returncode == 0, res.stderr + (work / "data/_scan.log").read_text()
+    calls = gh_calls(env)
+    assert "Model summary." in calls and SECRET not in calls  # scrubbed like the summary
+    files = git(
+        origin, "ls-tree", "-r", "--name-only", f"claude/scan-{datetime.now(UTC):%Y-%m-%d}-cloud"
+    )
+    assert "data/_story_outcomes.md" not in files
+    (work / "data/_story_outcomes.md").write_text(record)
+    (work / "README.md").write_text("v3\n")
+    res = run_scan(work, env, "post")
+    assert "Story verdicts (applied by merge_analysis.py)" in gh_calls(env)
+
+
+def test_pre_clears_a_stale_story_record(scan_repo):
+    work, origin, env = scan_repo
+    (work / "data/_story_outcomes.md").write_text("stale")
+    reserved_run(work, env)
+    assert not (work / "data/_story_outcomes.md").exists()

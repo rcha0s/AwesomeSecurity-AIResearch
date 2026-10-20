@@ -51,7 +51,9 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    `[{"candidate_id": "...", "verdict": "same|update|new", "story_id": "<from the shortlist>", "note": "..."}]`.
    Do NOT analyze `same` or `update` candidates in step 3; `merge_analysis.py` applies the
    verdicts (adds the covering source, the Updated line, drops those candidates) and rejects
-   any `story_id` that wasn't on that candidate's shortlist. An `update` prints
+   any `story_id` that wasn't on that candidate's shortlist (recomputed from the ledger, not
+   read back from the file). Never edit `data/news_stories.json` or the shortlist yourself;
+   merge_analysis.py writes its own record of every verdict to the PR body. An `update` prints
    `CLAIM REVIEW` lines for the story's linked claims: put them in the run summary and
    reconcile them in step 6 if the evidence warrants. Never auto-supersede on an update.
 

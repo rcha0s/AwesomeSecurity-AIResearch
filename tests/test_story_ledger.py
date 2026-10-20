@@ -301,7 +301,9 @@ def test_merge_applies_same_without_a_new_entry(sandbox, capsys):
     assert m.main() == 0  # no analysis_out.json needed when only verdicts landed
     pool = c.load_pool("ai-security")["entries"]
     assert [e["id"] for e in pool] == ["e-escape"]
-    assert pool[0]["corroborating_sources"][0]["url"] == "https://news.example/agent-escape"
+    # Judge corroboration goes to its own field, never corroborating_sources.
+    assert "corroborating_sources" not in pool[0]
+    assert pool[0]["story_corroboration"][0]["url"] == "https://news.example/agent-escape"
     assert [x["id"] for x in c.load_candidates()] == ["cand-2"]
     assert not (sandbox / "data" / "story_verdicts.json").exists()
     assert len(sl.load_ledger()["stories"][sid]["sources"]) == 2
@@ -446,3 +448,116 @@ def test_front_page_news_moves_an_updated_story_back_up():
     process.stdout.write(JSON.stringify(frontNews(rows, 7, 30).map(function (r) { return r.id; })));
     """
     assert json.loads(_run_js(["_daysAgo", "frontNews"], body)) == ["old-but-updated", "fresh"]
+
+
+# --- review fixes: shortlist guard, ledger stability, verdict corroboration, record ---
+def test_a_tampered_shortlist_file_cannot_widen_the_guard(sandbox):
+    """The model can edit data/story_shortlist.json; merge recomputes it."""
+    _stage_judged_scan(sandbox, [])
+    ledger = sl.load_ledger()
+    ledger["stories"]["s-victim"] = sl.new_row("Unrelated curated story", [], "2026-07-10")
+    sl.save_ledger(ledger)
+    c.save_json(sandbox / "data" / "story_shortlist.json", {"cand-2": [{"story_id": "s-victim"}]})
+    c.save_json(
+        sandbox / "data" / "story_verdicts.json",
+        [{"candidate_id": "cand-2", "verdict": "same", "story_id": "s-victim"}],
+    )
+    outcomes = m.apply_story_verdicts()
+    assert [o["action"] for o in outcomes] == ["rejected"]
+    assert sl.load_ledger()["stories"]["s-victim"]["sources"] == []
+    assert len(c.load_candidates()) == 2
+
+
+def _v2(stories: dict) -> dict:
+    return {"version": 2, "stories": stories}
+
+
+def test_story_membership_holds_main_placements_steady():
+    main = _v2({"s1": {"entry_ids": ["a"]}, "s2": {"entry_ids": ["b"]}})
+    grown = _v2({"s1": {"entry_ids": ["a", "new"]}, "s2": {"entry_ids": ["b"]}, "s3": {}})
+    assert cc.story_membership_problems(main, grown) == []
+    collapsed = _v2({"s1": {"entry_ids": ["a", "b"]}, "s2": {"entry_ids": []}})
+    assert cc.story_membership_problems(main, collapsed) == ["entry b moved from story s2 to s1"]
+    dropped = _v2({"s1": {"entry_ids": ["a"]}})
+    probs = cc.story_membership_problems(main, dropped)
+    assert "story s2 on main is missing from the PR" in probs
+    assert "entry b moved from story s2 to nowhere" in probs
+    assert cc.story_membership_problems({"abc": {"fp": {}}}, _v2({})) == []  # legacy main
+
+
+def test_merge_gate_checks_the_story_ledger(tmp_path, monkeypatch):
+    import merge_gate as gate
+    from test_merge_gate import _tree
+
+    root = _tree(tmp_path)
+    monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
+    monkeypatch.setattr(gate, "main_stories", lambda base: _v2({"s1": {"entry_ids": ["a"]}}))
+    (root / "data" / "news_stories.json").write_text(json.dumps(_v2({"s1": {"entry_ids": ["a"]}})))
+    assert gate.content_problems("main", root) == []
+    (root / "data" / "news_stories.json").write_text(
+        json.dumps(_v2({"s1": {"entry_ids": []}, "s9": {"entry_ids": ["a"]}}))
+    )
+    assert gate.content_problems("main", root) == ["entry a moved from story s1 to s9"]
+
+
+@pytest.mark.parametrize("name", ["story_shortlist.json", "story_verdicts.json"])
+def test_merge_guard_refuses_story_staging_files(name):
+    import merge_guard as mg
+
+    assert mg.path_reason(f"data/{name}") is not None
+
+
+def _lead(**over) -> dict:
+    base = {"source_url": "https://lab.example/a", "source_rank": 60}
+    base.update(over)
+    return base
+
+
+def test_verdict_corroboration_counts_only_trusted_other_hosts():
+    srcs = [
+        {"url": "https://news.example/1", "tier": "high"},
+        {"url": "https://www.news.example/2", "tier": "medium"},  # same host as above
+        {"url": "https://lab.example/b", "tier": "high"},  # the lead's own host
+        {"url": "https://hn.example/3", "tier": "low"},
+        {"url": "https://other.example/4", "tier": ""},
+    ]
+    assert c.story_corroboration_count(_lead(story_corroboration=srcs)) == 1
+    assert c.credibility_of(_lead(story_corroboration=srcs)) == 65.0
+    many = [{"url": f"https://h{i}.example/", "tier": "high"} for i in range(9)]
+    assert c.credibility_of(_lead(story_corroboration=many)) == 80.0  # capped at 4
+
+
+def test_verdict_corroboration_never_lifts_an_hn_only_story():
+    conf = c.load_config()
+    sources = {"rss:hn": {"id": "rss:hn", "track": "news", "tier": "medium", "scope": "ai"}}
+    hn = pool_entry(
+        source_id="rss:hn",
+        discovered_via="hackernews",
+        signals={"hn_points": 50},
+        published="2026-07-14",
+        story_corroboration=[{"url": "https://big.example/x", "tier": "high"}],
+    )
+    assert not c.is_news_curated(hn, conf, sources)
+    assert not c.is_news_story(hn, conf, sources)
+    real = {**hn, "corroborating_sources": [{"url": "https://big.example/x"}]}
+    assert c.is_news_curated(real, conf, sources)  # the gate itself still works
+
+
+def test_outcomes_are_recorded_by_code_and_appended(sandbox):
+    sid = _stage_judged_scan(
+        sandbox,
+        [
+            {"candidate_id": "cand-1", "verdict": "update", "note": "Fixed."},
+            {"candidate_id": "cand-2", "verdict": "same", "story_id": "s-nope"},
+        ],
+    )
+    m.apply_story_verdicts()
+    text = (sandbox / "data" / "_story_outcomes.md").read_text(encoding="utf-8")
+    assert "0 same, 1 update, 0 new, 1 rejected" in text
+    assert f"- `update`: https://news.example/agent-escape -> story `{sid}`" in text
+    assert "CLAIM REVIEW: linked claims sandbox-claim" in text
+    assert "- rejected `cand-2`:" in text
+    c.save_json(sandbox / "data" / "story_verdicts.json", [{"candidate_id": "x", "verdict": "new"}])
+    m.apply_story_verdicts()
+    again = (sandbox / "data" / "_story_outcomes.md").read_text(encoding="utf-8")
+    assert again.startswith(text) and again.count("### Story verdicts") == 2
