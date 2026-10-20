@@ -10,16 +10,21 @@ This is THE hook for Phase 3 evals: list a script under `automerge.evals` in
 config.yaml. An eval whose script is missing is skipped with a notice until it is
 declared `required: true`; from then on a missing script fails the gate (closed).
 
-Usage: python scripts/merge_gate.py [--dry-run]
+It also runs content_checks.py in-process: URL schemes in data/*.json, render
+equality of docs/index.html, and claim-ledger history against main (`--base`).
+
+Usage: python scripts/merge_gate.py [--base <main sha or ref>] [--dry-run]
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
 from pathlib import Path
 
+import content_checks as cc
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -60,12 +65,43 @@ def plan(config: dict, root: Path = ROOT) -> tuple[list[tuple[str, list[str]]], 
     return steps, problems
 
 
+def main_ledger(base: str) -> object:
+    """main's claim ledger, straight from git (never from the PR's tree)."""
+    cmd = ["git", "show", f"{base}:data/claims.json"]
+    out = subprocess.run(cmd, cwd=ROOT, capture_output=True, check=True)
+    return json.loads(out.stdout)
+
+
+def content_problems(base: str, root: Path = ROOT) -> list[str]:
+    """URL schemes, render equality and claim history for the tree at `root`."""
+    import generate_html  # main's renderer (import is slow; only when checking)
+
+    out: list[str] = []
+    for path in sorted((root / "data").glob("*.json")):
+        found = cc.url_problems(json.loads(path.read_text(encoding="utf-8")))
+        out += [f"{path.name}: {p}" for p in found]
+    page = root / "docs" / "index.html"
+    if page.is_file():
+        out += cc.render_problems(page.read_text(encoding="utf-8"), generate_html.render)
+    else:
+        out.append("docs/index.html is missing")
+    pr_ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
+    out += cc.claim_history_problems(main_ledger(base), pr_ledger)
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="scan-PR merge gate")
+    ap.add_argument("--base", default="origin/main", help="main's commit, for claim history")
     ap.add_argument("--dry-run", action="store_true", help="print the plan, run nothing")
     args = ap.parse_args(argv)
     config = yaml.safe_load((ROOT / "config.yaml").read_text()) or {}
     steps, problems = plan(config)
+    if not args.dry_run:
+        try:
+            problems += content_problems(args.base)
+        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+            problems.append(f"content checks could not run: {type(exc).__name__}")
     for p in problems:
         print(f"merge_gate: FAIL {p}")
     failed = bool(problems)

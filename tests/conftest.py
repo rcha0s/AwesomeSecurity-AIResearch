@@ -37,6 +37,7 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(common, "ARCHIVE_FILE", data / "archive.json")
     monkeypatch.setattr(common, "RAW_DIR", data / "_raw")
     monkeypatch.setattr(sources_registry, "REGISTRY_FILE", data / "sources.json")
+    monkeypatch.setattr(sources_registry, "STATS_FILE", data / "source_stats.json")
     monkeypatch.setattr(claims, "CLAIMS_FILE", data / "claims.json")
     monkeypatch.setattr(dedupe_stories, "STORY_INDEX", data / "news_stories.json")
     # Keep grounding offline: kill the network re-fetch (raw_path reading still works).

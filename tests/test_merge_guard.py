@@ -42,7 +42,7 @@ def judge(paths: list[str], **pr_over) -> mg.Verdict:
 
 ALLOWED = [
     "data/ai-security.json",
-    "data/sources.json",
+    "data/source_stats.json",
     "data/claims.json",
     "data/backlog.md",
     "docs/index.html",
@@ -88,6 +88,8 @@ REFUSED = [
     "sitecustomize.py",
     # pipeline tuning and staging under data/
     "data/cluster_keywords.yaml",
+    "data/sources.json",
+    "data/source_proposals.json",
     "data/interests.yaml",
     "data/source_blocklist.json",
     "data/candidates.json",
@@ -100,6 +102,13 @@ REFUSED = [
     "data/evil.py",
     "data/x.sh",
     "docs/app.js",
+    "docs/evil.html",
+    "docs/findings/x/y.html",
+    "docs/index.htm",
+    "docs/index.html.md.html",
+    "data/index.html",
+    "ai-security/index.html",
+    "index.html",
     "docs/conftest.py",
     "ai-security/run.yaml",
     "data/noext",

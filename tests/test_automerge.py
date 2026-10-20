@@ -175,7 +175,8 @@ def test_failed_tests_are_reported_as_refused(monkeypatch, tmp_path):
     assert "refused" in fake.comments[7][0]["body"]
 
 
-def test_behind_main_updates_branch_and_dispatches_tests(monkeypatch, tmp_path):
+def test_behind_main_updates_branch_but_does_not_dispatch(monkeypatch, tmp_path):
+    # update-branch makes a new, unjudged head; the next run judges it first.
     fake = FakeGitHub([scan_pr()], *content_only(), behind=2).install(
         monkeypatch, tmp_path, "merge"
     )
@@ -183,7 +184,28 @@ def test_behind_main_updates_branch_and_dispatches_tests(monkeypatch, tmp_path):
     assert not fake.did("/merge")
     (update,) = fake.did("update-branch")
     assert f"expected_head_sha={SHA}" in update
-    assert fake.did("tests.yml/dispatches")
+    assert not fake.did("tests.yml/dispatches")
+
+
+def test_no_dispatch_if_head_moved_just_before(monkeypatch, tmp_path):
+    """Audit F7: tests.yml runs the branch's own workflow file, so a dispatch
+    goes out only after re-confirming the head is still the judged SHA."""
+    fake = FakeGitHub([scan_pr()], *content_only(), check=None).install(
+        monkeypatch, tmp_path, "merge"
+    )
+    orig, fetches = fake.gh, []
+
+    def gh(path, *args):
+        if path.endswith("/pulls/7") and not args:
+            fetches.append(path)
+            # first fetch (judge) sees the judged head; the re-check sees a new one
+            return scan_pr() if len(fetches) == 1 else scan_pr(sha="b" * 40)
+        return orig(path, *args)
+
+    monkeypatch.setattr(am, "gh", gh)
+    run_decide(fake)
+    assert len(fetches) == 2
+    assert not fake.did("tests.yml/dispatches")
 
 
 def test_missing_required_check_dispatches_tests(monkeypatch, tmp_path):

@@ -30,7 +30,9 @@ name: Auto-merge gate
 #           and picks the oldest that passes.
 #   test    read-only (contents: read, no credentials persisted). Main merged
 #           with that PR head, which by then is content-only; runs
-#           scripts/merge_gate.py (pytest, ledger, evals: the Phase 3 hook).
+#           scripts/merge_gate.py (pytest, ledger, http(s)-only URLs,
+#           docs/index.html == main's renderer on its own payload, claim
+#           history vs main, and the Phase 3 eval hook).
 #           Its only input to `decide` is its pass/fail result.
 #   decide  write. Checks out main only and runs main's code: re-fetches and
 #           re-judges every PR (TOCTOU), reports each verdict, and in `merge`
@@ -117,8 +119,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt pytest
 
-      - name: Merge gate (pytest, claim ledger, evals)
-        run: python scripts/merge_gate.py
+      # --base is main's commit: claim history is compared against git, not the tree.
+      - name: Merge gate (pytest, ledger, URLs, render equality, claim history, evals)
+        run: python scripts/merge_gate.py --base "$GITHUB_SHA"
 
   decide:
     needs: [select, test]

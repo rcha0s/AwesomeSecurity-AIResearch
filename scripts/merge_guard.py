@@ -33,16 +33,28 @@ from pathlib import Path
 # .claude/, tests/, evals/, config, requirements, agent docs, ...) never auto-merges.
 ALLOWED_DIRS = ("data/", "docs/", "ai-security/", "product-security/", "ai-research/", "claims/")
 ALLOWED_ROOT_FILES = frozenset({"README.md", "NEWSLETTER.md", "TRENDS.md", "REVIEW.md"})
-# Pipeline tuning that lives under data/ but steers the code: never via a scan PR.
+# Pipeline tuning that lives under data/ but steers the code, and the source
+# registry (what future scans fetch): never via a scan PR. Sources change only
+# through reviewed add-source PRs; scans write hit-rate stats to the separate,
+# allowed data/source_stats.json instead.
 DENIED_FILES = frozenset(
-    {"data/cluster_keywords.yaml", "data/interests.yaml", "data/source_blocklist.json"}
+    {
+        "data/cluster_keywords.yaml",
+        "data/interests.yaml",
+        "data/source_blocklist.json",
+        "data/sources.json",
+        "data/source_proposals.json",
+    }
 )
 # Transient staging (gitignored): its appearance in a PR is itself an anomaly.
 DENIED_PREFIXES = ("data/_",)
 DENIED_NAMES = frozenset(
     {"candidates.json", "candidates.filtered.json", "analysis_out.json", "editorial_out.json"}
 )
-ALLOWED_SUFFIXES = (".json", ".md", ".html", ".png")
+ALLOWED_SUFFIXES = (".json", ".md", ".png")
+# HTML runs script on the site's origin: only the one rendered page, which
+# merge_gate.py also proves is main's renderer output.
+EXACT_FILES = frozenset({"docs/index.html", "docs/.nojekyll"})
 ALLOWED_DOTFILES = frozenset({"docs/.nojekyll"})
 SAFE_PATH = re.compile(r"[A-Za-z0-9._/-]+")
 MAX_PATH_LEN = 300
@@ -109,7 +121,7 @@ def path_reason(path: str) -> str | None:
     in_dir = path.startswith(ALLOWED_DIRS)
     if not in_dir and path not in ALLOWED_ROOT_FILES:
         return "outside the content allowlist"
-    if in_dir and path not in ALLOWED_DOTFILES and not path.endswith(ALLOWED_SUFFIXES):
+    if in_dir and path not in EXACT_FILES and not path.endswith(ALLOWED_SUFFIXES):
         return "file type not allowed in content directories"
     return None
 

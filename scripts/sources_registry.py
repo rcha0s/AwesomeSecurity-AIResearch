@@ -22,6 +22,7 @@ import math
 import common as c
 
 REGISTRY_FILE = c.DATA_DIR / "sources.json"
+STATS_FILE = c.DATA_DIR / "source_stats.json"
 
 SOURCE_TYPES = (
     "x_account",
@@ -47,8 +48,26 @@ HITRATE_PRIOR_CURATED = 2
 HITRATE_PRIOR_TOTAL = 4
 
 
+def load_stats() -> dict[str, dict]:
+    """Per-source hit-rate counts written by scans (data/source_stats.json).
+
+    Kept apart from the registry so a scan PR never edits data/sources.json:
+    the registry says WHAT gets fetched and changes only in reviewed PRs, while
+    these counts may change on every scan (and can auto-merge)."""
+    stats = c.load_json(STATS_FILE, default={}) or {}
+    return stats if isinstance(stats, dict) else {}
+
+
 def load_sources() -> list[dict]:
-    return c.load_json(REGISTRY_FILE, default=[]) or []
+    """The registry, with scan-written stats laid over it and ranks recomputed."""
+    sources = c.load_json(REGISTRY_FILE, default=[]) or []
+    stats = load_stats()
+    for s in sources:
+        counts = stats.get(s.get("id"))
+        if isinstance(counts, dict):
+            s["stats"] = {k: int(counts.get(k, 0) or 0) for k in ("ingested", "curated")}
+            s["rank"] = compute_rank(s)
+    return sources
 
 
 def save_sources(sources: list[dict]) -> None:
@@ -164,19 +183,22 @@ def get_by_id(sid: str) -> dict | None:
 
 
 def update_stats(source_id_map: dict[str, tuple[int, int]]) -> None:
-    """Bulk-apply (ingested_delta, curated_delta) per source id, recompute rank."""
+    """Bulk-apply (ingested_delta, curated_delta) per source id.
+
+    Writes only data/source_stats.json; ranks are recomputed when loaded."""
     if not source_id_map:
         return
-    sources = load_sources()
+    stats = load_stats()
     changed = False
-    for s in sources:
+    for s in load_sources():
         delta = source_id_map.get(s.get("id"))
         if not delta:
             continue
-        stats = s.setdefault("stats", {"ingested": 0, "curated": 0})
-        stats["ingested"] = int(stats.get("ingested", 0)) + delta[0]
-        stats["curated"] = int(stats.get("curated", 0)) + delta[1]
-        s["rank"] = compute_rank(s)
+        base = s.get("stats") or {}
+        stats[s["id"]] = {
+            "ingested": int(base.get("ingested", 0) or 0) + delta[0],
+            "curated": int(base.get("curated", 0) or 0) + delta[1],
+        }
         changed = True
     if changed:
-        save_sources(sources)
+        c.save_json(STATS_FILE, dict(sorted(stats.items())))

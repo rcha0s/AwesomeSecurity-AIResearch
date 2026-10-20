@@ -200,13 +200,19 @@ def unblock(repo: str, pr: dict, problems: dict[str, str]) -> str:
     sha, ref = pr["head"]["sha"], pr["head"]["ref"]
     try:
         if "behind" in problems:
+            # The new head is unjudged: the next run judges it before any dispatch.
             gh(f"repos/{repo}/pulls/{pr['number']}/update-branch", "-X", "PUT", "-f",
                f"expected_head_sha={sha}")  # fmt: skip
-        # Either blocker needs a fresh `pytest` run: update-branch makes a new head.
+            return "waiting (branch update requested)"
+        # A dispatch runs the BRANCH's tests.yml, so only at the head we judged:
+        # re-confirm it right before (a moved head may carry a rewritten workflow).
+        current = (gh(f"repos/{repo}/pulls/{pr['number']}") or {}).get("head", {}).get("sha")
+        if current != sha:
+            return "waiting (head moved; not dispatching)"
         gh(f"repos/{repo}/actions/workflows/tests.yml/dispatches", "-X", "POST", "-f", f"ref={ref}")
     except subprocess.CalledProcessError:
         return "waiting (unblock request FAILED)"
-    return "waiting (unblock requested)"
+    return "waiting (required check dispatched)"
 
 
 def merge(repo: str, number: int, sha: str, method: str) -> str:

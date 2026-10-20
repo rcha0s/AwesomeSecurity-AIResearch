@@ -567,7 +567,7 @@
   // when opened in a new tab (right-click → open) — GitHub Pages serves
   // the .md, so a middle-click still lands somewhere sensible.
   function detailAnchor(f, inner) {
-    var href = f.detail_path ? esc(f.detail_path) : esc(f.url);
+    var href = safeRel(f.detail_path) ? esc(safeRel(f.detail_path)) : hrefOf(f.url);
     var id = esc(f.id || "");
     return '<a class="detail-open" href="' + href + '" data-fid="' + id + '">' + inner + '</a>';
   }
@@ -576,6 +576,19 @@
     return String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+  // Only http(s) links leave the page. Anything else (javascript:, data:,
+  // vbscript:, a stray quote or space) becomes "#". Same rule as
+  // scripts/content_checks.py HTTP_URL: keep them in step.
+  function safeUrl(u) {
+    var s = String(u == null ? "" : u);
+    return /^https?:\/\/[^\s"<>`]+$/i.test(s) ? s : "#";
+  }
+  function hrefOf(u) { return esc(safeUrl(u)); }
+  // A finding's detail page: a same-origin relative .md under findings/, or "".
+  function safeRel(p) {
+    var s = String(p == null ? "" : p);
+    return /^findings\/[A-Za-z0-9._\/-]+\.md$/.test(s) && s.indexOf("..") < 0 ? s : "";
   }
   function clean(s) { return String(s == null ? "" : s).replace(/\s*[—–]\s*/g, " - "); }
   function txt(s) { return esc(clean(s)); }
@@ -616,7 +629,7 @@
     if (f.published) meta.push('<span>' + esc(fmtDate(f.published)) + '</span>');
     if (opts.showScore) meta.push('<span class="num">signal ' + Math.round(f.composite) + '</span>');
     if (f.verified) meta.push('<span title="lesson excerpt grounded against the source and cross-checked by a separate model pass">checked</span>');
-    meta.push('<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>');
+    meta.push('<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>');
     return '<article class="art">' +
       '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
@@ -645,7 +658,7 @@
           (caveats ? ' <span class="chips" style="margin-left:4px">' + caveats + '</span>' : '') +
           lesson + '</td>' +
         (opts.showScore ? '<td class="c-signal">' + Math.round(f.composite || 0) + '</td>' : '') +
-        '<td class="c-src"><a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a></td>' +
+        '<td class="c-src"><a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a></td>' +
         '</tr>';
     }).join("");
     return '<div class="idx-wrap"><table class="idx"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
@@ -742,7 +755,7 @@
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
         (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
           return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
-        '<a class="link" href="' + esc(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
+        '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
       '</div></article>';
   }
 
@@ -796,7 +809,7 @@
         '<div class="meta" style="margin-top:12px;font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center">' +
           '<span>' + esc(fmtDate(lead.published)) + '</span>' +
           (lead.verified ? '<span title="grounded against source, cross-checked by a separate model pass">checked</span>' : '') +
-          '<a class="link" href="' + esc(lead.url) + '">' + esc(src(lead)) + ' &#8599;</a>' +
+          '<a class="link" href="' + hrefOf(lead.url) + '">' + esc(src(lead)) + ' &#8599;</a>' +
         '</div></div>';
     }
 
@@ -1016,7 +1029,7 @@
     function item(e) {
       var when = e.published ? ", " + esc(e.published) : "";
       var note = e.note ? '<br><span class="ev-note">' + txt(e.note) + '</span>' : "";
-      return '<li><a class="link" href="' + esc(e.url || "#") + '">' + txt(e.title || e.url || "source") + '</a>' +
+      return '<li><a class="link" href="' + hrefOf(e.url) + '">' + txt(e.title || e.url || "source") + '</a>' +
         (e.source_name ? ' <span style="color:var(--ink-3)">(' + esc(e.source_name) + when + ')</span>' : '') +
         note + '</li>';
     }
@@ -1277,7 +1290,7 @@
           (le.domain ? '<span>' + txt(le.domain) + '</span>' : '') +
           (le.published ? '<span>' + esc(fmtDate(le.published)) + '</span>' : '') +
           'from ' + detailAnchor(fake, txt(le.finding_title)) +
-          '<a class="link" href="' + esc(le.url) + '">source &#8599;</a>' +
+          '<a class="link" href="' + hrefOf(le.url) + '">source &#8599;</a>' +
         '</div></article>';
     }).join("");
     wrap.innerHTML = '<div class="artlist">' + html + '</div>';
@@ -1368,7 +1381,8 @@
     });
 
     // Escape HTML.
-    text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
 
     // Inline: `code`, **bold**, _italic_ / *italic*, [text](url).
     function inline(s) {
@@ -1377,7 +1391,7 @@
       s = s.replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>');
       s = s.replace(/(^|[^_])_([^_]+)_/g, '$1<em>$2</em>');
       s = s.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+&quot;[^&]*&quot;)?\)/g,
-        function (_, t, u) { return '<a href="' + u + '" rel="noopener noreferrer">' + t + '</a>'; });
+        function (_, t, u) { return '<a href="' + safeUrl(u) + '" rel="noopener noreferrer">' + t + '</a>'; });
       return s;
     }
 
@@ -1503,13 +1517,13 @@
     var closeBtn = modal.querySelector('.modal-close');
     if (closeBtn && closeBtn.focus) { try { closeBtn.focus({ preventScroll: true }); } catch (e) { closeBtn.focus(); } }
 
-    var path = finding.detail_path;
+    var path = safeRel(finding.detail_path);
     function renderInto(rawMd) {
       var html = '<article class="prose">' + renderMarkdown(rawMd) + '</article>';
       if (finding.url) {
         html += '<div class="modal-source">' +
           '<span style="color:var(--ink-3)">Source:</span> ' +
-          '<a href="' + esc(finding.url) + '" target="_blank" rel="noopener noreferrer">' +
+          '<a href="' + hrefOf(finding.url) + '" target="_blank" rel="noopener noreferrer">' +
           esc(src(finding)) + ' &#8599;</a></div>';
       }
       modalBody.innerHTML = html;
@@ -1518,7 +1532,7 @@
 
     if (!path) {
       modalBody.innerHTML = '<p class="modal-error">No detail page for this finding — opening the source instead.</p>';
-      if (finding.url) window.open(finding.url, '_blank', 'noopener');
+      if (safeUrl(finding.url) !== "#") window.open(safeUrl(finding.url), '_blank', 'noopener');
       return;
     }
 
@@ -1533,7 +1547,7 @@
     }).catch(function () {
       modalBody.innerHTML = '<p class="modal-error">Couldn’t load the detail page. Falling back to the source.</p>';
       if (finding.url) {
-        modalBody.innerHTML += '<p><a class="link" href="' + esc(finding.url) +
+        modalBody.innerHTML += '<p><a class="link" href="' + hrefOf(finding.url) +
           '" target="_blank" rel="noopener noreferrer">Open source ↗</a></p>';
       }
     });
