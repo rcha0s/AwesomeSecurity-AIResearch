@@ -39,12 +39,10 @@ def test_generate_site_builds_trees_and_pages(sandbox):
     sec_pages = list((sandbox / "ai-security" / c.domain_slug("ais.prompt-injection")).glob("*.md"))
     assert ai_pages and sec_pages
     readme = (sandbox / "README.md").read_text(encoding="utf-8")
-    # Reader-first shape: the landing view leads with findings and links
-    # to the databases; methodology + honesty live inside a collapsible
-    # <details> block later in the file.
-    assert "## Latest findings" in readme
-    assert "## The three databases" in readme
-    assert "How this is built" in readme  # the collapsed methodology section
+    # The short guide: teaser of this week's picks, big links into the site.
+    assert "## This week's top stories" in readme
+    assert "## What to do now" in readme
+    assert "## Contribute" in readme
 
 
 def test_legacy_entry_renders_without_scores(sandbox):
@@ -83,28 +81,3 @@ def test_grounding_mark_only_flags_the_exceptional_case():
     assert g._grounding_mark({"grounded": True}) == ""
     assert g._grounding_mark({}) == ""
     assert "⚠️" in g._grounding_mark({"grounded": False})
-
-
-def test_week_snapshot_prefers_recent(sandbox):
-    """When fresh material exists, the snapshot leads with it and drops
-    items outside the window."""
-    conf = c.load_config()
-    in_week = make_entry(title="recent-item", source_url="https://a/r", published="2099-01-05")
-    ancient = make_entry(title="ancient-item", source_url="https://a/o", published="2000-01-01")
-    lines = "\n".join(g._week_snapshot([in_week, ancient], conf))
-    assert "## Latest findings" in lines
-    assert "recent-item" in lines
-    assert "ancient-item" not in lines  # dropped: outside the snapshot window
-
-
-def test_week_snapshot_falls_back_to_newest_when_window_is_empty(sandbox):
-    """If nothing is in the snapshot window, show the newest N we have and
-    say so honestly — an empty landing view kills trust in the pitch above
-    it, and 'the most recent we have' is more useful than 'nothing here.'"""
-    conf = c.load_config()
-    a = make_entry(title="older-a", source_url="https://a/1", published="2000-01-05")
-    b = make_entry(title="older-b", source_url="https://a/2", published="2000-01-06")
-    lines = "\n".join(g._week_snapshot([a, b], conf))
-    assert "## Latest findings" in lines
-    assert "older-a" in lines and "older-b" in lines
-    assert "nothing new" in lines.lower()  # the fallback header text
