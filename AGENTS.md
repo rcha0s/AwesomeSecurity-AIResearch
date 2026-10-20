@@ -21,6 +21,9 @@ data/ai-security.json     # AI Security pool (source of truth)
 data/product-security.json# Product Security pool (source of truth)
 data/ai-research.json     # AI Research (practitioner) pool (source of truth)
 data/claims.json          # CLAIM LEDGER — durable standing answers + supersession edges
+data/taxonomy.yaml        # THE vocabulary: 3 topics x fixed domain IDs (ais.* ps.* air.*)
+data/taxonomy_migration.json # one-time label -> ID table (every pre-migration label)
+data/taxonomy_proposals.json # verified new-domain proposals (taxonomy_proposals.py)
 data/archive.json         # aged-out findings (preserved, not shown)
 data/sources.json         # ranked source registry (add via add_source.py)
 data/candidates.json      # transient ingest staging (gitignored)
@@ -31,7 +34,10 @@ scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # inges
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube)
-scripts/merge_analysis.py # validate + dedup + route by topic + ground excerpts + rerank
+scripts/merge_analysis.py # validate + domain-ID gate + dedup + route + ground + rerank
+scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analyzer's domain list)
+scripts/migrate_taxonomy.py # free-text domain -> ID (idempotent; rerank runs it too)
+scripts/taxonomy_proposals.py # record verified proposals; recurring -> `taxonomy` issue
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
@@ -51,6 +57,15 @@ README.md · NEWSLETTER.md · TRENDS.md · REVIEW.md · ai-security/ product-sec
 # Curated view = VETTED findings (novelty gate) PLUS a separate "Trending & In the News"
 # section from the editorial track; everything else waits in REVIEW.md.
 ```
+
+## Domains are IDs
+
+Every entry's `domain` is an ID from `data/taxonomy.yaml` that belongs to its topic
+(`ais.prompt-injection` on an `ai-security` entry). `merge_analysis.py` holds anything
+else for review; rerank normalizes old free-text labels through the alias map. Claim
+work follows the domain's `claim_eligible` flag (it replaced the 13 interests.yaml
+clusters). Add or rename a domain only in the YAML, and never reuse or change an ID:
+retire it into `aliases`. A recurring verified `proposed_domain` opens a `taxonomy` issue.
 
 ## What ages out
 

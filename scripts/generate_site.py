@@ -110,7 +110,7 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
     src = entry.get("source_url", "")
     topic_name = c.TOPICS.get(entry.get("topic", ""), {}).get("name", entry.get("topic", ""))
     meta = [
-        f"**Topic:** {topic_name}  ·  **Domain:** {entry.get('domain', '-')}",
+        f"**Topic:** {topic_name}  ·  **Domain:** {c.domain_name(entry.get('domain') or '-')}",
         f"**Source:** [{entry.get('source_name', 'source')}]({src})"
         + (f"  ·  **Author:** {entry['author']}" if entry.get("author") else "")
         + (
@@ -267,10 +267,10 @@ def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) ->
     out += _editorial_section(list(editorial))
     out += ["| Domain | Findings |", "| --- | --- |"]
     order = sorted(by_domain, key=lambda d: -len(by_domain[d]))
-    out += [f"| {d} | {len(by_domain[d])} |" for d in order] + [""]
+    out += [f"| {c.domain_name(d)} | {len(by_domain[d])} |" for d in order] + [""]
     for domain in order:
         out += (
-            [f"## {domain}", ""]
+            [f"## {c.domain_name(domain)}", ""]
             + [render_index_block(e, conf) for e in rank(by_domain[domain], conf)]
             + [""]
         )
@@ -453,8 +453,8 @@ def render_readme(curated_entries: list[dict], conf: c.Config, now: str) -> str:
         "![Cadence](https://img.shields.io/badge/refreshed-weekly-6f42c1) "
         "![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)",
         "",
-        "<h3 align=\"center\">"
-        "<a href=\"https://rcha0s.github.io/AwesomeSecurity-AIResearch/\">"
+        '<h3 align="center">'
+        '<a href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/">'
         "Read the live briefing &#8594;</a></h3>",
         "",
         "The live site is the best read — one page for the week's news, another for "
@@ -565,7 +565,7 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "gets only the raw source and the extracted claims — no scores, no prior context — "
         "and tries to refute. Novelty is re-scored as *claim-level delta vs. named prior "
         "art*, not text similarity. The **lower** of the two novelty scores wins. This "
-        "mirrors the \"adversarial collaboration\" pattern from meta-science (Mellers, "
+        'mirrors the "adversarial collaboration" pattern from meta-science (Mellers, '
         "Tetlock 2019) — a single scorer overrates their own work; two independent scorers, "
         "one incentivized to refute, produce calibrated estimates.",
         "- **Story-key dedup across the news lane.** Same story on three sites (vendor blog, "
@@ -596,9 +596,9 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "",
         "### What we deliberately don't do",
         "",
-        "- **We don't score \"quality\" holistically.** Every axis (newness, novelty, "
+        '- **We don\'t score "quality" holistically.** Every axis (newness, novelty, '
         "relevance, credibility) is scored separately with a written rubric. An LLM asked "
-        "\"how good is this paper\" is systematically biased toward long, elaborate output "
+        '"how good is this paper" is systematically biased toward long, elaborate output '
         "([Zheng et al., 2023](https://arxiv.org/abs/2306.05685) — LLM-as-judge prefers "
         "longer answers independent of quality); we don't ask.",
         "- **We don't dedupe by URL alone.** URL dedup misses same-story-different-URL, "
@@ -645,7 +645,7 @@ def _methodology_details(conf: c.Config) -> list[str]:
         "findings move to [`data/archive.json`](data/archive.json). The claim ledger and "
         "the news lane are durable and never age out. Findings tell you what was published lately; claims "
         "tell you what to believe now.",
-        "- **What \"vetted\" and \"checked\" mean.** A finding is curated only if it clears "
+        '- **What "vetted" and "checked" mean.** A finding is curated only if it clears '
         "the novelty and relevance bars, its lesson excerpt is found in the source text "
         "(grounding), and a separate model pass does not refute it. That is automated "
         "review with a mechanical grounding check, not human verification. Treat it as a "

@@ -47,10 +47,10 @@ def test_match_index_by_url_and_title():
 def test_merge_routes_and_flags_low_confidence(sandbox):
     conf = c.load_config()
     analyzed = [
-        make_entry(topic="ai-research", domain="Agents & Harnesses", source_url="https://a/ai"),
+        make_entry(topic="ai-research", domain="air.agents", source_url="https://a/ai"),
         make_entry(
             topic="ai-security",
-            domain="Prompt Injection",
+            domain="ais.prompt-injection",
             subtype="Prompt Injection",
             title="Calendar prompt injection",
             source_url="https://a/sec",
@@ -70,7 +70,7 @@ def test_low_credibility_unverified_flagged(sandbox):
     # low-authority source (rank 20) whose excerpt can't be confirmed -> review
     low = make_entry(
         topic="ai-security",
-        domain="MCP",
+        domain="ais.mcp-tools",
         source_url="https://a/low",
         source_rank=20,
         scores={"novelty": 90, "relevance": 90},
@@ -83,7 +83,7 @@ def test_high_credibility_not_flagged(sandbox):
     conf = c.load_config()
     high = make_entry(
         topic="ai-security",
-        domain="MCP",
+        domain="ais.mcp-tools",
         source_url="https://a/high",
         source_rank=90,
         scores={"novelty": 90, "relevance": 90},
@@ -97,14 +97,14 @@ def test_curation_gate_flags_low_novelty(sandbox):
     # high confidence but derivative (low novelty) → held as needs_review
     derivative = make_entry(
         track="ai",
-        domain="Agents & Harnesses",
+        domain="air.agents",
         source_url="https://a/deriv",
         scores={"novelty": 20, "relevance": 90},
         lessons=[{"point": "known", "confidence": 0.95}],
     )
     novel = make_entry(
         track="ai",
-        domain="Agents & Harnesses",
+        domain="air.agents",
         source_url="https://a/novel",
         scores={"novelty": 85, "relevance": 90},
         lessons=[{"point": "fresh", "confidence": 0.95}],
@@ -119,7 +119,7 @@ def test_corroboration_from_second_source(sandbox):
     conf = c.load_config()
     a = make_entry(
         topic="ai-security",
-        domain="MCP",
+        domain="ais.mcp-tools",
         title="MCP tool poisoning wave",
         source_url="https://siteA.com/mcp",
         source_name="Site A",
@@ -127,7 +127,7 @@ def test_corroboration_from_second_source(sandbox):
     # same story (same title), DIFFERENT source -> corroboration, not a 2nd entry
     b = make_entry(
         topic="ai-security",
-        domain="MCP",
+        domain="ais.mcp-tools",
         title="MCP tool poisoning wave",
         source_url="https://siteB.com/mcp",
         source_name="Site B",
@@ -151,7 +151,7 @@ def test_reconcile_same_source_updates(sandbox):
 def test_merge_is_idempotent(sandbox):
     conf = c.load_config()
     analyzed = [
-        make_entry(topic="ai-security", domain="Prompt Injection", source_url="https://a/dup")
+        make_entry(topic="ai-security", domain="ais.prompt-injection", source_url="https://a/dup")
     ]
     m.merge(analyzed, conf)
     m.merge(analyzed, conf)
@@ -161,7 +161,7 @@ def test_merge_is_idempotent(sandbox):
 def test_main_merges_and_reranks(sandbox):
     c.save_json(
         c.ANALYSIS_OUT,
-        [make_entry(topic="ai-research", domain="Agents & Harnesses", source_url="https://a/main")],
+        [make_entry(topic="ai-research", domain="air.agents", source_url="https://a/main")],
     )
     assert m.main() == 0
     entries = c.load_pool("ai-research")["entries"]
@@ -170,7 +170,7 @@ def test_main_merges_and_reranks(sandbox):
 
 def test_merge_returns_only_new_on_remerge(sandbox):
     conf = c.load_config()
-    analyzed = [make_entry(topic="ai-security", domain="MCP", source_url="https://a/x")]
+    analyzed = [make_entry(topic="ai-security", domain="ais.mcp-tools", source_url="https://a/x")]
     _, _, _, new1 = m.merge(analyzed, conf)
     _, _, _, new2 = m.merge(analyzed, conf)  # same input again (idempotent)
     assert len(new1) == 1  # first merge: appended
@@ -183,7 +183,7 @@ def test_hit_rate_credited_once(sandbox):
     src = sr.new_source("rss", "https://feed", tier="medium")
     sr.add_source(src)
     entry = make_entry(
-        topic="ai-security", domain="MCP", source_url="https://a/hit", source_id=src["id"]
+        topic="ai-security", domain="ais.mcp-tools", source_url="https://a/hit", source_id=src["id"]
     )
     c.save_json(c.ANALYSIS_OUT, [entry])
     m.main()
@@ -198,3 +198,52 @@ def test_clear_candidates_removes_merged(sandbox):
     removed = m.clear_candidates([{"id": "gone"}], {c.normalize_url("https://a/gone")})
     assert removed == 1
     assert [x["id"] for x in c.load_candidates()] == ["keep"]
+
+
+# --- domain gate (ISC-15) ----------------------------------------------------
+def _merged(entry: dict) -> dict:
+    m.merge([entry], c.load_config())
+    return c.load_pool(entry["topic"])["entries"][0]
+
+
+def test_unknown_domain_is_held_not_published(sandbox):
+    """An analyzer domain that is not a taxonomy ID is held for review (kept in
+    the pool, never curated), filed under the nearest ID, label kept as a tag."""
+    got = _merged(make_entry(topic="ai-security", domain="MCP Protocol Drift"))
+    assert got["needs_review"] is True and got["domain_hold"]
+    assert got["domain"] == "ais.mcp-tools"
+    assert "mcp-protocol-drift" in got["tags"]
+    assert not c.is_curated(got, c.load_config())
+
+
+def test_valid_domain_id_is_not_held(sandbox):
+    got = _merged(make_entry(topic="ai-security", domain="ais.mcp-tools"))
+    assert "domain_hold" not in got and got["needs_review"] is False
+
+
+def test_another_topics_id_is_held(sandbox):
+    got = _merged(make_entry(topic="ai-research", domain="ais.prompt-injection"))
+    assert got["domain_hold"] and got["domain"].startswith("air.")
+
+
+def test_reanalysis_with_a_valid_id_clears_the_hold(sandbox):
+    url = "https://a/held"
+    _merged(make_entry(topic="ai-security", domain="Free Text", source_url=url))
+    got = _merged(make_entry(topic="ai-security", domain="ais.guardrails", source_url=url))
+    assert "domain_hold" not in got and got["domain"] == "ais.guardrails"
+    assert got["needs_review"] is False
+
+
+def test_main_records_a_verified_domain_proposal(sandbox):
+    import taxonomy_proposals as tp
+
+    proposal = {
+        "name": "Agent Payments",
+        "scope": "Agents that hold and spend money",
+        "verifier": {"verdict": "pass", "nearest": "ais.agent-security", "reason": "money"},
+    }
+    entry = make_entry(topic="ai-security", domain="ais.agent-security", proposed_domain=proposal)
+    c.save_json(c.ANALYSIS_OUT, [entry])
+    m.main()
+    rows = c.load_json(tp.proposals_file())
+    assert [r["key"] for r in rows] == ["ai-security/agent-payments"]

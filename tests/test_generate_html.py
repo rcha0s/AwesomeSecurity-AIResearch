@@ -128,12 +128,10 @@ def test_rendered_html_wires_caveat_chip_template(sandbox):
     payload_of(sandbox, entries=[entry])
     html = gh.render(gh.build_payload(ledger_of(make_claim()), common.load_config(), NOW), NOW)
     # (a) The JS uses this exact class name; CSS keys on it.
-    assert 'chip caveat' in html
+    assert "chip caveat" in html
     # (b) The caveat lens + note reach the client. Extract the JSON payload and
     # look for the caveat there, so a broken payload can't slip past.
-    block = re.search(
-        r'<script id="site-data" type="application/json">(.*?)</script>', html, re.S
-    )
+    block = re.search(r'<script id="site-data" type="application/json">(.*?)</script>', html, re.S)
     data = json.loads(block.group(1).replace("<\\/", "</"))
     row = data["findings"][0]
     assert row["caveats"] == [{"lens": "prior-art", "note": "cf. Zhao 2024"}]
@@ -253,8 +251,7 @@ def test_finding_row_carries_detail_path(sandbox):
     data = payload_of(sandbox, entries=[make_entry(title="AsyncAPI npm compromise")])
     row = data["findings"][0]
     assert row["detail_path"] == (
-        "findings/ai-research/agents-harnesses/"
-        "2026-07-asyncapi-npm-compromise.md"
+        "findings/ai-research/agents/" "2026-07-asyncapi-npm-compromise.md"
     )
 
 
@@ -278,7 +275,7 @@ def test_main_mirrors_finding_markdown_into_docs_findings(sandbox):
         / "docs"
         / "findings"
         / "ai-research"
-        / "agents-harnesses"
+        / "agents"
         / "2026-07-compaction-saves-tokens.md"
     )
     assert detail.is_file()
@@ -315,7 +312,7 @@ def test_main_mirrors_editorial_finding_markdown(sandbox):
         / "docs"
         / "findings"
         / "ai-research"
-        / "agents-harnesses"
+        / "agents"
         / "2026-07-provider-guardrails-blocked-incident-response.md"
     )
     assert detail.is_file(), (
@@ -325,20 +322,19 @@ def test_main_mirrors_editorial_finding_markdown(sandbox):
 
 
 # --- News-lane wiring in editorial_rows -------------------------------------
-def _news_source(sid: str, name: str, tier: str = "high",
-                 track: str = "news", scope: str = "ai") -> dict:
-    return {"id": sid, "name": name, "tier": tier,
-            "track": track, "scope": scope}
+def _news_source(
+    sid: str, name: str, tier: str = "high", track: str = "news", scope: str = "ai"
+) -> dict:
+    return {"id": sid, "name": name, "tier": tier, "track": track, "scope": scope}
 
 
 def _write_sources(sandbox, sources):
-    (sandbox / "data" / "sources.json").write_text(
-        json.dumps(sources), encoding="utf-8"
-    )
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
 
 
 def _pool_news_entry(**over):
     from datetime import timedelta
+
     base = make_entry(
         id="news-openai-fast-mode",
         topic="ai-research",
@@ -365,21 +361,27 @@ def test_editorial_rows_includes_news_curated_entries(sandbox):
 
 
 def test_editorial_rows_dedupes_same_story_across_sources(sandbox):
-    _write_sources(sandbox, [
-        _news_source("rss:openai-blog", "OpenAI Blog", tier="high"),
-        _news_source("rss:hn", "Hacker News", tier="medium"),
-    ])
+    _write_sources(
+        sandbox,
+        [
+            _news_source("rss:openai-blog", "OpenAI Blog", tier="high"),
+            _news_source("rss:hn", "Hacker News", tier="medium"),
+        ],
+    )
     from datetime import timedelta
+
     same_day = (common.utcnow() - timedelta(days=2)).strftime("%Y-%m-%d")
 
     a = _pool_news_entry(
-        id="a-1", source_id="rss:openai-blog",
+        id="a-1",
+        source_id="rss:openai-blog",
         title="OpenAI ships Fast mode: Sol 2.5x quicker at same price",
         source_url="https://openai.com/blog/fast-mode",
         published=same_day,
     )
     b = _pool_news_entry(
-        id="b-2", source_id="rss:hn",
+        id="b-2",
+        source_id="rss:hn",
         title="Sol Fast mode: OpenAI ships 2.5x quicker at the same price",
         source_url="https://news.ycombinator.com/item?id=999",
         discovered_via="hackernews",
