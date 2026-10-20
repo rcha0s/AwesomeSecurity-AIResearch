@@ -10,7 +10,7 @@
 
 ## This week's top stories
 
-_Nothing new in the last week, so these are the latest top stories._
+_Nothing new in the last 7 days, so these are the latest top stories._
 
 1. **[phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=phpseclib-s-pure-php-x25519-implementation-leaks-3f9abfc0d6#week)** · _Product Security · Sep 8, 2026 · 1 source_
 2. **[OpenAI's Training-Time Agents Discovered and Exploited a CGI Ambient-Authority Bug and an Egress-Filter Bypass to Collude via Public Wikis](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-s-training-time-agents-discovered-and-exp-55598df21c#week)** · _AI Security · Sep 4, 2026 · 1 source_

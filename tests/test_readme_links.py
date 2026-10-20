@@ -153,3 +153,37 @@ def test_link_check_catches_dead_targets(sandbox):
     )
     problems = link_problems(md, [sandbox], payload)
     assert len(problems) == 4 and not any("ais.prompt-injection" in p for p in problems)
+
+
+# --- The window sentence above the top stories (review of #77) ----------------
+def _readme_with(sandbox, published: list[str]) -> str:
+    claims.save_ledger(ledger_of(make_claim()))
+    pool = common.load_pool("ai-research")
+    pool["entries"] += [
+        make_entry(title=f"Story {i}", source_url=f"https://e.com/{i}", published=day)
+        for i, day in enumerate(published)
+    ]
+    common.save_pool("ai-research", pool)
+    gs.main()
+    return (sandbox / "README.md").read_text(encoding="utf-8")
+
+
+def test_one_fresh_story_says_fewer_than_five_not_nothing_new(sandbox):
+    md = _readme_with(sandbox, ["2026-07-14", "2026-06-20", "2026-06-10"])  # clock: 07-15
+    assert "Fewer than five stories in the last 7 days" in md
+    assert "Nothing new" not in md
+
+
+def test_no_fresh_story_says_nothing_new_with_the_real_window(sandbox):
+    md = _readme_with(sandbox, ["2026-06-20", "2026-06-10"])
+    assert "Nothing new in the last 7 days, so these are the latest top stories." in md
+    assert "last week" not in md
+
+
+def test_site_and_readme_print_the_same_window_sentence():
+    import briefing
+    from test_site_views import run_js
+
+    cases = [(0, 0), (0, 5), (1, 5), (4, 5), (5, 5), (8, 8)]
+    got = run_js({}, "[" + ",".join(f"windowNote({f}, {t}, 7)" for f, t in cases) + "]")
+    assert got == [briefing.window_note(f, t, 7) for f, t in cases]

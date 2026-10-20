@@ -63,13 +63,37 @@ def top_stories(
     n_min: int = TOP_STORIES_MIN,
 ) -> tuple[list[dict], bool]:
     """(the front page's top stories, whether the window had to be topped up)."""
-    cutoff = (datetime.strptime(now, "%Y-%m-%d") - timedelta(days=days)).strftime("%Y-%m-%d")
+    cutoff = _cutoff(now, days)
     fresh = [r for r in rows if last_activity(r) >= cutoff]
     picked = _ranked(fresh, source_count, last_activity, _composite)[:n_max]
     if len(picked) >= n_min:
         return picked, False
     older = _ranked([r for r in rows if last_activity(r) < cutoff], last_activity, source_count)
     return picked + older[: n_min - len(picked)], True
+
+
+def _cutoff(now: str, days: int) -> str:
+    return (datetime.strptime(now, "%Y-%m-%d") - timedelta(days=days)).strftime("%Y-%m-%d")
+
+
+def fresh_count(rows: list[dict], now: str, days: int) -> int:
+    """How many of `rows` were active in the last `days` (the rest topped up)."""
+    cutoff = _cutoff(now, days)
+    return sum(1 for r in rows if last_activity(r) >= cutoff)
+
+
+def window_note(fresh: int, total: int, days: int) -> str:
+    """The one sentence README and site both print above the top stories."""
+    if not total:
+        return "No stories yet."
+    if fresh == 0:
+        return f"Nothing new in the last {days} days, so these are the latest top stories."
+    if fresh < total:
+        return (
+            f"Fewer than five stories in the last {days} days, so the most recent ones "
+            "before it fill in."
+        )
+    return f"The last {days} days: the stories with the most covering sources first."
 
 
 def top_claims(claims: list[dict], n: int = TOP_CLAIMS) -> list[dict]:

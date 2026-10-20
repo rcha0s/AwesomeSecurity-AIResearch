@@ -395,12 +395,10 @@ def _teaser(payload: dict) -> list[str]:
     names = {t: m["name"] for t, m in payload["topics"].items()}
     stories = [rows[i] for i in payload["top_stories"][:3] if i in rows]
     picks = [claims[i] for i in payload["top_claims"][:3] if i in claims]
-    when = (
-        "Nothing new in the last week, so these are the latest top stories"
-        if payload["top_stories_topped_up"]
-        else f"The last {payload['snapshot_days']} days, most-covered first"
+    when = briefing.window_note(
+        payload["top_stories_fresh"], len(payload["top_stories"]), payload["snapshot_days"]
     )
-    out = ["## This week's top stories", "", f"_{when}._", ""]
+    out = ["## This week's top stories", "", f"_{when}_", ""]
     out += [_story_line(i, r, names) for i, r in enumerate(stories, 1)] or ["_No stories yet._"]
     out += ["", "## What to do now", "", "_Standing answers from the claim ledger._", ""]
     out += [_claim_line(i, cl_) for i, cl_ in enumerate(picks, 1)] or ["_No claims yet._"]

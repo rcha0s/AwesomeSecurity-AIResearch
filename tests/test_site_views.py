@@ -141,6 +141,7 @@ FNS = [
     "archiveRowHTML",
     "archiveMatches",
     "tvar",
+    "windowNote",
     "emergingBlock",
 ]
 

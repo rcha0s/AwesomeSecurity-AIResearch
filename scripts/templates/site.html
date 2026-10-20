@@ -1390,6 +1390,13 @@
       (arr(f.updates).length ? '<h2>Updates</h2>' + allUpdates(f) : '') +
       '<h2>Sources</h2>' + storySources(f) + '</article>';
   }
+  // Same sentence as scripts/briefing.py:window_note (the README prints that one).
+  function windowNote(fresh, total, days) {
+    if (!total) return "No stories yet.";
+    if (fresh === 0) return "Nothing new in the last " + days + " days, so these are the latest top stories.";
+    if (fresh < total) return "Fewer than five stories in the last " + days + " days, so the most recent ones before it fill in.";
+    return "The last " + days + " days: the stories with the most covering sources first.";
+  }
   function topStoriesHTML(shown) {
     var m = rowsById();
     var rows = arr(DATA.top_stories).map(function (id) { return has(m, id) ? m[id] : null; }).filter(Boolean);
@@ -1399,10 +1406,8 @@
     }
     rows.forEach(function (f) { shown[f.id] = 1; });
     return secHead(title, DATA.top_stories_topped_up ? "latest we have" : "last " + num(DATA.snapshot_days) + " days") +
-      '<p class="sec-lede">' + (DATA.top_stories_topped_up
-        ? 'Fewer than five stories in the last ' + num(DATA.snapshot_days) + ' days, so this adds the most recent ones before it. '
-        : 'The stories with the most covering sources first, then the most recent. ') +
-      'Every source that covered each story is listed with it.</p>' +
+      '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0)) +
+      ' Every source that covered each story is listed with it.</p>' +
       '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
   }
   function nowClaimsHTML() {

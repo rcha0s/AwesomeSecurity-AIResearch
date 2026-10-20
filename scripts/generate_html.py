@@ -480,6 +480,7 @@ def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dic
     return {
         "top_stories": [row["id"] for row in stories],
         "top_stories_topped_up": topped_up,
+        "top_stories_fresh": briefing.fresh_count(stories, now, days),
         "top_claims": [claim["id"] for claim in briefing.top_claims(claims)],
     }
 
