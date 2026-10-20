@@ -28,3 +28,12 @@ jobs:
 
       - name: Run tests
         run: pytest -q
+
+      # ISC-24: deterministic integrity of the pools and the rendered site
+      # (grounded quotes, article citations, taxonomy IDs, http(s) URLs, no
+      # duplicate stories). No network, no LLM.
+      - name: Integrity eval
+        run: python scripts/eval_integrity.py --verbose
+
+      - name: Golden set is well-formed
+        run: python scripts/eval_golden.py check
