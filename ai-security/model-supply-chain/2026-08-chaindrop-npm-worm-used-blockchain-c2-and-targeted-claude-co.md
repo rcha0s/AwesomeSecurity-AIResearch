@@ -16,7 +16,7 @@ Unit 42's SDLC supply-chain roundup details the ChainDrop npm worm, which infect
 
 ---
 
-**Topic:** AI Security  ·  **Domain:** Model Supply Chain  
+**Topic:** AI Security  ·  **Domain:** Model Supply Chain & Theft  
 **Source:** [source](https://unit42.paloaltonetworks.com/sdlc-supply-chain/)  ·  **Retrieved:** 2026-09-09  
 **Scores:** Newness 11 · Novelty 62 · Relevance 78 · Credibility 77 · **Composite 56.27**  
 **Tags:** `npm`, `supply-chain`, `chaindrop`, `blockchain-c2`, `oidc`, `ci-cd`, `claude-code`  

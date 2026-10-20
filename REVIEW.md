@@ -2,9 +2,9 @@
 
 > Findings in the last 31 days that are **not yet vetted** — held out of the topic pages and newsletter. Flagged for low confidence/novelty/relevance, or below the composite floor (20). Nothing here is deleted; promote an item by raising its scores or clearing `needs_review`, then regenerate.
 
-_Updated 2026-09-09._
+_Updated 2026-10-20._
 
-## AI Security (42)
+## AI Security (40)
 
 - **[Windows ML CLI's CORS Wildcard + trust_remote_code Combo Gives Any Website Localhost RCE](https://github.com/advisories/GHSA-96p9-rh4f-92cf)** · composite 63.75 · _flagged needs_review (low confidence / novelty / relevance)_
   Binding a local tooling server to localhost is not a security boundary by itself if it also sets a wildcard CORS policy — the loopback bind stops remote network attackers, but a…
@@ -18,8 +18,6 @@ _Updated 2026-09-09._
   Attackers are already treating AI gateways like LiteLLM as a credential-rich control plane, so these services need the same scrutiny as any critical enterprise infrastructure.
 - **[Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/)** · composite 57.47 · _ungrounded excerpt — only 75% of quotes verified against the source_
   LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.
-- **[funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time](https://github.com/huggingface/funes)** · composite 57.15 · _flagged needs_review (low confidence / novelty / relevance)_
-  For agent memory systems, preserving raw evidence with exact provenance rather than summarizing into distilled facts at write time avoids the lossy-compression failure mode of…
 - **[OWASP GenAI Security Project Unveils 2026 Top 10 for LLM Applications, New Agent Control Standard](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)** · composite 57.0 · _failed independent verification — Lessons are accurately quoted, but this is a PR announcement of a versioned refresh and a donated standard, not new research; independent reviewer scored novelty/relevance lower (25/55 vs 55/75) — sent to review as a scoring disagreement, not a factual refutation._
   Excessive Agency jumped to #3 in the OWASP LLM Top 10 once the ranking was checked against real incident data instead of just expert consensus — validating that the actual failure…
 - **[Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner)** · composite 55.1 · _ungrounded excerpt — only 67% of quotes verified against the source_
@@ -74,8 +72,6 @@ _Updated 2026-09-09._
   Prompt injection has moved from a technical curiosity into real adversarial legal process, and courts are already building doctrine around it: a judge explicitly framed hidden…
 - **[Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models](https://arxiv.org/abs/2605.00123)** · composite 39.5 · _flagged needs_review (low confidence / novelty / relevance)_
   Jailbreak success is not one global mechanism; per-attack, per-category local causal explanations require far fewer interpretable interventions to force refusal than global…
-- **[OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492)** · composite 38.75 · _flagged needs_review (low confidence / novelty / relevance)_
-  Naming a feature 'protected' or shipping a 'sandbox' does not make it secure by default — both of OpenClaw 2.0's new security features require the operator to opt in to the actual…
 - **[TOFD: Target-Oriented Feature Decoupling against Poisoning Attacks in Split Federated Learning](https://arxiv.org/abs/2608.07274)** · composite 36.5 · _flagged needs_review (low confidence / novelty / relevance)_
   Split Federated Learning has attack surfaces (the split boundary and smashed activations) that generic FL defenses miss; TOFD exploits the split paradigm itself for detection.
 - **[Isolated AI Security Tools Each Report Clean While an Attacker Bridges an Untrusted Prompt to a Backend Execution Sink](https://snyk.io/blog/why-your-ai-application-is-exposed/)** · composite 35.57 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -91,7 +87,7 @@ _Updated 2026-09-09._
 - **[anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection](https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection)** · composite 26.0 · _ungrounded excerpt — only 50% of quotes verified against the source_
   A popular community roadmap for AI/ML pentesting exists and now dedicates a phase to agentic-AI and MCP security — worth linking as a beginner ramp, but it's an index, not a…
 
-## Product Security (13)
+## Product Security (12)
 
 - **[VMs won't contain cyber-capable agents](https://blog.trailofbits.com/)** · composite 65.6 · _ungrounded excerpt — only 33% of quotes verified against the source_
   Treat capable AI agents as an advanced persistent threat: isolate them with hardened microVMs, enforce least privilege, monitor actively, and keep host and hypervisor dependencies…
@@ -117,8 +113,6 @@ _Updated 2026-09-09._
   Most malicious package versions are caught within hours to days of publication, so simply refusing to install anything published in the last week closes most of that attack window…
 - **[Rolling Out Org-Wide GitHub Actions SHA-Pinning Enforcement Has Non-Obvious Failure Modes Beyond the Obvious Tag-Pinning Fix](https://semgrep.dev/blog/2026/sha-pinning-for-github-actions-org-wide)** · composite 32.09 · _flagged needs_review (low confidence / novelty / relevance)_
   Enforcing SHA-pinning for CI actions requires closing three distinct gaps — tag references, branch references (especially to internal actions), and transitively unpinned actions…
-- **[Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System](https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/)** · composite 31.73 · _flagged needs_review (low confidence / novelty / relevance)_
-  A key-transparency system's actual security guarantee is bounded by its auditor-signature freshness window, not by the cryptography alone — Signal's design means a compromised or…
 
 ## AI Research (166)
 
@@ -457,4 +451,4 @@ _Updated 2026-09-09._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-09-09. 221 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-20. 218 item(s) awaiting review.</sub>

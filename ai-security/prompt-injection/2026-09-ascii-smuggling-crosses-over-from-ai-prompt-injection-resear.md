@@ -17,7 +17,7 @@ Microsoft built a hunting signature for invisible Unicode Tags-block characters 
 
 ---
 
-**Topic:** AI Security  ·  **Domain:** Prompt Injection  
+**Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [source](https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/)  ·  **Retrieved:** 2026-09-09  
 **Scores:** Newness 63 · Novelty 60 · Relevance 72 · Credibility 72 · **Composite 66.09**  
 **Tags:** `ascii-smuggling`, `prompt-injection`, `phishing`, `unicode`, `detection`  
