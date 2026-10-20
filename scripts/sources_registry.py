@@ -23,6 +23,8 @@ import common as c
 
 REGISTRY_FILE = c.DATA_DIR / "sources.json"
 STATS_FILE = c.DATA_DIR / "source_stats.json"
+STAT_KEYS = ("ingested", "curated")
+MAX_STAT = 10**9  # far above any real count; bounds what a scan-written file can claim
 
 SOURCE_TYPES = (
     "x_account",
@@ -55,7 +57,20 @@ def load_stats() -> dict[str, dict]:
     the registry says WHAT gets fetched and changes only in reviewed PRs, while
     these counts may change on every scan (and can auto-merge)."""
     stats = c.load_json(STATS_FILE, default={}) or {}
-    return stats if isinstance(stats, dict) else {}
+    if not isinstance(stats, dict):
+        return {}
+    # Scan-written, so untrusted: an id whose counts aren't sane ints is ignored
+    # (its registry baseline stands) rather than crashing every ingestor.
+    return {sid: counts for sid, counts in stats.items() if _sane_counts(counts)}
+
+
+def _sane_counts(counts: object) -> bool:
+    if not isinstance(counts, dict):
+        return False
+    values = [counts.get(k, 0) for k in STAT_KEYS]
+    return all(
+        isinstance(v, int) and not isinstance(v, bool) and 0 <= v <= MAX_STAT for v in values
+    )
 
 
 def load_sources() -> list[dict]:
@@ -64,8 +79,8 @@ def load_sources() -> list[dict]:
     stats = load_stats()
     for s in sources:
         counts = stats.get(s.get("id"))
-        if isinstance(counts, dict):
-            s["stats"] = {k: int(counts.get(k, 0) or 0) for k in ("ingested", "curated")}
+        if counts is not None:
+            s["stats"] = {k: counts.get(k, 0) for k in STAT_KEYS}
             s["rank"] = compute_rank(s)
     return sources
 

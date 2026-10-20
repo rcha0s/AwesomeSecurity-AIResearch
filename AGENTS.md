@@ -237,10 +237,17 @@ on a `claude/scan-*` branch.
   - every `url` / `*_url` field in `data/*.json` is an `http(s)://` URL;
   - `docs/index.html` is byte-equal to main's `generate_html.render()` applied to
     the payload and stamp the page carries, so the page is main's template plus
-    data, never hand-written HTML;
-  - every claim on main still exists, and a retired (superseded/refuted) claim
-    changes only the way `add_claim.py` changes it: evidence appended,
-    `last_reviewed`, and `supersedes` growing.
+    data, never hand-written HTML. The payload itself is still PR-shaped, so
+    the template treats every payload value as hostile: text through
+    `esc()`/`txt()`, links through `safeUrl()`, numbers through `num()`, and
+    `generate_html` coerces trend numbers, dropping rows that fail;
+  - every claim on main still exists, and **a scan PR may add new claims and
+    append evidence to existing ones (bumping `last_reviewed`), nothing more.**
+    Any other change to an existing claim, live or retired (status,
+    statement, title, guidance, supersession fields, confidence, scope, a
+    rewritten evidence item), is refused with "claim change needs human
+    review": the PR stays open for a human to merge. Superseding a claim is
+    therefore always a human merge.
 - **What never auto-merges, whatever the branch name or author:** anything
   else. That covers `scripts/`, `.github/`, `.claude/`, `tests/`, `evals/`,
   `config.yaml`, `requirements*.txt`, `*.toml`, `*.cfg`, `ISA.md`, `AGENTS.md`,

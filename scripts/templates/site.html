@@ -585,6 +585,9 @@
     return /^https?:\/\/[^\s"<>`]+$/i.test(s) ? s : "#";
   }
   function hrefOf(u) { return esc(safeUrl(u)); }
+  // A payload number as markup-safe digits. The payload is attacker-shaped in a
+  // scan PR, so a "count" may be a string of HTML: never concatenate it raw.
+  function num(v) { return esc(String(Number(v) | 0)); }
   // A finding's detail page: a same-origin relative .md under findings/, or "".
   function safeRel(p) {
     var s = String(p == null ? "" : p);
@@ -817,12 +820,12 @@
     var freshList = fresh.filter(function (f) { return !shown[f.id]; });
     html += secHead("New this week", "last " + DATA.snapshot_days + " days");
     if (!fresh.length) {
-      html += '<p class="sec-lede">Nothing new cleared the bar in the last ' + DATA.snapshot_days +
+      html += '<p class="sec-lede">Nothing new cleared the bar in the last ' + num(DATA.snapshot_days) +
         ' days. See the strongest research below.</p>';
     } else if (!freshList.length) {
       html += '<p class="sec-lede">The lead above is the only new finding this week.</p>';
     } else {
-      html += '<p class="sec-lede">Published in the last ' + DATA.snapshot_days + ' days.</p>';
+      html += '<p class="sec-lede">Published in the last ' + num(DATA.snapshot_days) + ' days.</p>';
       html += '<div class="cols2"><div class="col"><div class="artlist">';
       freshList.forEach(function (f) { shown[f.id] = 1; html += articleHTML(f); });
       html += '</div></div><div class="col">' + claimsTeaser() + '</div></div>';
@@ -832,7 +835,7 @@
     html += secHead("The strongest in each field",
       "last " + BRIEFING_MAX_AGE_DAYS + " days");
     html += '<p class="sec-lede">The highest-signal vetted findings in each track. Items from the last ' +
-      DATA.snapshot_days + ' days are tagged new.</p>';
+      num(DATA.snapshot_days) + ' days are tagged new.</p>';
     html += '<div class="cols3">';
     TOPIC_ORDER.forEach(function (t) {
       var items = pool.filter(function (f) { return f.topic === t && !shown[f.id]; }).slice(0, 4);
@@ -869,7 +872,7 @@
     return head + rows.map(function (r) {
       var rising = (r.momentum || 0) > 0 ? '<span class="rise">&#9650; rising</span>' : '';
       return '<div class="tagrow"><span class="tg">' + esc(clean(r.tag)) + '</span> ' + rising +
-        '<span class="ct">' + r.count + ' total / ' + r.recent + ' recent</span></div>';
+        '<span class="ct">' + num(r.count) + ' total / ' + num(r.recent) + ' recent</span></div>';
     }).join("");
   }
 
@@ -1102,7 +1105,7 @@
     var html = '<div class="sec-hd"><h2>News</h2>' +
       '<span class="note">' + (DATA.editorial || []).length + ' stories, kept for the record</span></div>' +
       '<p class="sec-lede">Every story that cleared the news gate or the editorial pass, newest first. ' +
-      'The front page shows the last ' + DATA.news_front_page_days + ' days; nothing here ages out.</p>';
+      'The front page shows the last ' + num(DATA.news_front_page_days) + ' days; nothing here ages out.</p>';
     html += '<div class="toolbar">' +
       '<div class="fgroup search"><span>Search</span><input id="news-q" type="search" ' +
       'placeholder="Search titles, takeaways, sources..." value="' + esc(newsState.q) + '"></div></div>';
@@ -1168,7 +1171,7 @@
         : "Index view — scan by date, field, signal. Switch to Reader for cards."
     );
     html += '<div class="sec-hd"><h2>All findings</h2>' +
-      '<span class="note">' + (DATA.findings || []).length + ' vetted, last ' + DATA.max_age_days + ' days</span></div>';
+      '<span class="note">' + (DATA.findings || []).length + ' vetted, last ' + num(DATA.max_age_days) + ' days</span></div>';
     html += '<div class="toolbar">' +
       '<div class="fgroup search"><span>Search</span><input id="feed-q" type="search" ' +
       'placeholder="Search titles, lessons, tags, fields..." value="' + esc(feedState.q) + '"></div></div>';
@@ -1337,15 +1340,15 @@
     var cells = [[fresh, "this week"], [findingsN, "vetted findings"],
       [live, "standing claims"], [reversals, "reversals"]];
     $("#dateline").innerHTML = cells.map(function (c) {
-      return '<div class="cell"><span class="n">' + c[0] + '</span><span class="k">' + c[1] + '</span></div>';
+      return '<div class="cell"><span class="n">' + num(c[0]) + '</span><span class="k">' + esc(c[1]) + '</span></div>';
     }).join("");
 
     var since = DATA.claims_since ? String(DATA.claims_since).slice(0, 4) : "";
     var arch = DATA.archive_count || 0;
     $("#methods").innerHTML =
-      '<b>Findings</b> cover a rolling last ' + DATA.max_age_days + ' days (this-week snapshot: last ' +
-      DATA.snapshot_days + '); older ones move to an archive of ' + arch + '. ' +
-      '<b>Claims</b> are durable and never age out' + (since ? ', tracked since ' + since : '') + '. ' +
+      '<b>Findings</b> cover a rolling last ' + num(DATA.max_age_days) + ' days (this-week snapshot: last ' +
+      num(DATA.snapshot_days) + '); older ones move to an archive of ' + num(arch) + '. ' +
+      '<b>Claims</b> are durable and never age out' + (since ? ', tracked since ' + esc(since) : '') + '. ' +
       '<b>Checked</b> means a finding’s lesson excerpt was grounded against its source and cross-checked ' +
       'by a separate model pass; it is not human review.';
   })();

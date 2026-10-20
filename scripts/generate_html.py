@@ -19,6 +19,7 @@ Usage:
 
 from __future__ import annotations
 
+import math
 import re
 import shutil
 from html import escape
@@ -338,6 +339,30 @@ def lessons_index(conf: c.Config, snapshot_days: int) -> list[dict]:
     return out
 
 
+_TREND_NUMBERS = (("count", int), ("recent", int), ("momentum", float))
+
+
+def _trend_rows(rows: object) -> list[dict]:
+    """data/trends.json rows with their numbers coerced; a row that fails is dropped.
+
+    trends.json can arrive in a scan PR, so a "count" could be a string of HTML.
+    The page renders these numbers; only real numbers reach it."""
+    out = []
+    for row in rows if isinstance(rows, list) else []:
+        if not isinstance(row, dict):
+            continue
+        try:
+            fixed = {key: cast(row.get(key, 0) or 0) for key, cast in _TREND_NUMBERS}
+        except (TypeError, ValueError, OverflowError):
+            continue
+        if any(isinstance(row.get(k), bool) for k, _ in _TREND_NUMBERS):
+            continue
+        if not math.isfinite(fixed["momentum"]):  # NaN/inf would break the page's JSON
+            continue
+        out.append({**row, **fixed})
+    return out
+
+
 def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
     snapshot_days = conf.snapshot_days
     trends = c.load_json(c.DATA_DIR / "trends.json", {}) or {}
@@ -363,7 +388,7 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "findings": curated_findings(conf, snapshot_days),
         "editorial": editorial_rows(conf, snapshot_days),
         "lessons": lessons_index(conf, snapshot_days),
-        "trends": {t: trends.get(t, []) for t in c.TOPICS},
+        "trends": {t: _trend_rows(trends.get(t, [])) for t in c.TOPICS},
     }
 
 

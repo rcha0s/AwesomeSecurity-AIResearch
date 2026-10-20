@@ -3,8 +3,11 @@ allowlist), so scan-time hit-rate stats live in data/source_stats.json."""
 
 from __future__ import annotations
 
+import json
+
 import common as c
 import merge_analysis as m
+import pytest
 import sources_registry as sr
 from conftest import make_entry
 
@@ -46,6 +49,47 @@ def test_malformed_stats_file_is_ignored(sandbox):
     sr.STATS_FILE.write_text("[1, 2]")
     assert sr.load_stats() == {}
     assert sr.get_by_id(src["id"])["stats"] == {"ingested": 0, "curated": 0}
+
+
+@pytest.mark.parametrize(
+    "counts",
+    [
+        {"ingested": "abc", "curated": 1},
+        {"ingested": 10**12, "curated": 1},
+        {"ingested": 5, "curated": -1},
+        {"ingested": [1], "curated": 1},
+        {"ingested": 1.5, "curated": 1},
+        {"ingested": True, "curated": 1},
+        {"ingested": None, "curated": 1},
+        "not a dict",
+        [1, 2],
+        7,
+    ],
+)
+def test_insane_stats_are_ignored_not_fatal(sandbox, counts):
+    """Re-audit item 2: a scan-written stats file can't crash every ingestor
+    (or allowlist.py); the bad id falls back to its registry baseline."""
+    bad, good = sr.new_source("rss", "https://bad/feed"), sr.new_source("rss", "https://good/feed")
+    bad["stats"] = {"ingested": 4, "curated": 2}
+    sr.save_sources([bad, good])
+    ok = {"ingested": 9, "curated": 3}
+    sr.STATS_FILE.write_text(json.dumps({bad["id"]: counts, good["id"]: ok}))
+    assert sr.load_stats() == {good["id"]: ok}
+    by_id = {s["id"]: s for s in sr.load_sources()}
+    assert by_id[bad["id"]]["stats"] == {"ingested": 4, "curated": 2}
+    assert by_id[good["id"]]["stats"] == ok
+    sr.update_stats({bad["id"]: (1, 0)})  # still works, from the baseline
+    assert sr.load_stats()[bad["id"]] == {"ingested": 5, "curated": 2}
+
+
+def test_stats_bounds_are_inclusive(sandbox):
+    src = sr.new_source("rss", "https://edge/feed")
+    sr.save_sources([src])
+    edge = {"ingested": sr.MAX_STAT, "curated": 0}
+    sr.STATS_FILE.write_text(json.dumps({src["id"]: edge}))
+    assert sr.load_stats() == {src["id"]: edge}
+    sr.STATS_FILE.write_text(json.dumps({src["id"]: {"ingested": sr.MAX_STAT + 1}}))
+    assert sr.load_stats() == {}
 
 
 def test_merge_analysis_rejects_non_http_urls(sandbox):

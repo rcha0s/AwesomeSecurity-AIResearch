@@ -10,8 +10,9 @@ bound what that content can do once published:
   render_problems       docs/index.html is byte-equal to main's renderer applied
                         to the payload and stamp it carries: the page is main's
                         template plus data, never hand-written HTML or script.
-  claim_history_problems no claim on main disappears, and a retired claim's
-                        record changes only the way add_claim.py changes it.
+  claim_history_problems no claim on main disappears, and an existing claim
+                        (live or retired) only gains evidence; any other change
+                        is refused as "claim change needs human review".
 
 Pure functions over parsed data; merge_gate.py does the I/O.
 """
@@ -28,11 +29,13 @@ HTTP_URL = re.compile(r"https?://[^\s\"<>`]+", re.IGNORECASE)
 PAYLOAD = re.compile(r'<script id="site-data" type="application/json">(.*?)</script>', re.S)
 STAMP = re.compile(r"<span>Generated <b>([^<]*)</b></span>")
 
-RETIRED = ("superseded", "refuted")
-# What add_claim.py may still change on a retired claim: `evidence` (append
-# only), `last_reviewed` (any `evidence`/`status` command), and `supersedes`
-# (grows only, when the claim is a supersede target).
-RETIRED_MUTABLE = frozenset({"evidence", "last_reviewed", "supersedes"})
+# Policy (coordinator, 2026-10-20): a scan PR may ADD claims and APPEND evidence
+# to existing ones (bumping `last_reviewed`), which is all a scan does (#68).
+# Any other change to an existing claim, live or retired (status, statement,
+# title, guidance, supersession edges, confidence, scope, ...), means the PR does
+# not auto-merge: it stays open for a human.
+CLAIM_MUTABLE = frozenset({"evidence", "last_reviewed"})
+NEEDS_REVIEW = "claim change needs human review"
 
 
 def _is_url_key(key: object) -> bool:
@@ -75,24 +78,21 @@ def _claims_by_id(ledger: object) -> dict[str, dict]:
     return {c["id"]: c for c in claims or [] if isinstance(c, dict) and "id" in c}
 
 
-def _retired_change_problems(cid: str, old: dict, new: dict) -> list[str]:
+def _claim_change_problems(cid: str, old: dict, new: dict) -> list[str]:
     out = []
-    for key in sorted((set(old) | set(new)) - RETIRED_MUTABLE):
+    for key in sorted((set(old) | set(new)) - CLAIM_MUTABLE):
         if old.get(key) != new.get(key):
-            out.append(f"retired claim {cid}: `{key}` changed")
+            out.append(f"{NEEDS_REVIEW}: {cid} `{key}` changed")
     old_ev, new_ev = old.get("evidence") or [], new.get("evidence") or []
     if not isinstance(new_ev, list) or new_ev[: len(old_ev)] != old_ev:
-        out.append(f"retired claim {cid}: evidence was rewritten, not appended to")
-    if not set(old.get("supersedes") or []) <= set(new.get("supersedes") or []):
-        out.append(f"retired claim {cid}: a `supersedes` edge was dropped")
+        out.append(f"{NEEDS_REVIEW}: {cid} evidence was rewritten, not appended to")
     return out
 
 
 def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
-    """Claims are durable: none vanish, and retired ones keep their history."""
+    """Scan PRs may add claims and append evidence; nothing else about a claim."""
     old, new = _claims_by_id(main_ledger), _claims_by_id(pr_ledger)
     out = [f"claim {cid} on main is missing from the PR" for cid in sorted(set(old) - set(new))]
     for cid in sorted(set(old) & set(new)):
-        if old[cid].get("status") in RETIRED:
-            out += _retired_change_problems(cid, old[cid], new[cid])
+        out += _claim_change_problems(cid, old[cid], new[cid])
     return out
