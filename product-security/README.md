@@ -2,37 +2,24 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_5 vetted findings · updated 2026-10-20 · ranked by composite · findings from the latest 31 days · [12 held for review](../REVIEW.md)._
+_0 vetted findings · updated 2026-10-20 · ranked by composite · findings from the latest 31 days._
+
+## 📈 Trending & In the News
+
+_Not new ideas - what the field is watching now, surfaced by the editorial pass._
+
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
+  _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
 
 | Domain | Findings |
 | --- | --- |
-| Software Supply Chain | 2 |
-| Application Security | 2 |
-| Vulnerability Research & Red Teaming | 1 |
+| AI in the SDLC | 1 |
 
-## Software Supply Chain
+## AI in the SDLC
 
-- **[This Shit is Hard: Patching a vulnerability that has no fix](supply-chain/2026-08-this-shit-is-hard-patching-a-vulnerability-that-has-no-fix.md)** · composite **64.4** · Aug 17, 2026  
-  When remediating (including AI-generated) fixes, gate every patch on feasibility, regression testing, and an independent exploit test, batch interdependent fixes, re-validate on each backported…  
-  _[Chainguard](https://www.chainguard.dev/unchained)_
-- **[Rust Supply-Chain Compromise Used Cargo's Own Yank Warning to Socially Engineer Developers Into the Malicious Version](supply-chain/2026-08-rust-supply-chain-compromise-used-cargo-s-own-yank-warning-t.md)** · composite **51.5** · Aug 20, 2026  
-  Yanking prior clean versions of a compromised crate is a novel, low-effort social-engineering step that weaponizes the package manager's own UX (Cargo's "consider updating to a version that is not…  
-  _[source](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/)_
-
-## Application Security
-
-- **[phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](appsec/2026-09-phpseclib-s-pure-php-x25519-implementation-leaks-the-full-pr.md)** · composite **63.15** · Sep 8, 2026  
-  This isn't a low-order-input vulnerability that input validation can fix - it's a genuine implementation-level timing/call-count side channel triggered by ordinary use with the standard base point,…  
-  _[source](https://github.com/advisories/GHSA-q97c-8qh3-fpc6)_
-- **[Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) Traced to an Unchecked Fixed-Size Buffer Copy During SAML Signature Canonicalization](appsec/2026-08-citrix-netscaler-pre-auth-heap-overflow-cve-2026-8452-traced.md)** · composite **58.17** · Aug 14, 2026  
-  A classic, decades-old bug class (unchecked fixed-size buffer copy of attacker-controlled data) is still shipping in 2026 in a security-critical XML/SAML signature-parsing path of a widely deployed…  
-  _[source](https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/)_
-
-## Vulnerability Research & Red Teaming
-
-- **[Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS](offensive/2026-08-show-don-t-tell-what-evo-continuous-offensive-security-found.md)** · composite **61.4** · Aug 10, 2026  
-  Enforce server-side role/permission checks and key allowlists on every write endpoint (including legacy admin ones), actually validate HMAC signatures, and lock down credentialed CORS, then test for…  
-  _[Snyk](https://snyk.io/blog/)_
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-code/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **52.12** · Jul 19, 2026 · ⚠️ _review_  
+  Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.  
+  _[source](https://arxiv.org/abs/2607.12428)_
 
 ---
 

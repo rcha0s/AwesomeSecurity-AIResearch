@@ -2,27 +2,24 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_3 vetted findings · updated 2026-10-20 · ranked by composite · findings from the latest 31 days · [166 held for review](../REVIEW.md)._
+_2 vetted findings · updated 2026-10-20 · ranked by composite · findings from the latest 31 days._
 
 | Domain | Findings |
 | --- | --- |
-| Evaluation & Benchmarks | 2 |
+| Models & Capabilities | 1 |
 | Agents & Harnesses | 1 |
 
-## Evaluation & Benchmarks
+## Models & Capabilities
 
-- **[How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation](evals/2026-08-how-do-llm-agents-actually-get-the-flag-trace-level-provenan.md)** · composite **58.55** · Aug 26, 2026  
-  Judge security agents on evidence of exploitation in the trace, not on whether the flag string appeared.  
-  _[arXiv cs.CR](https://arxiv.org/abs/2608.26237)_
-- **[RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution](evals/2026-08-redevoagent-automatic-red-teaming-agent-with-experience-driv.md)** · composite **57.35** · Aug 27, 2026  
-  Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.  
-  _[arXiv cs.CR](https://arxiv.org/abs/2608.27439)_
+- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](models/2026-08-openai-astra-preliminary-evals-can-t-rule-out-critical-cyber.md)** · composite **55.75** · Aug 7, 2026  
+  The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better…  
+  _[source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)_
 
 ## Agents & Harnesses
 
-- **[When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses](agents/2026-08-when-context-gets-root-instruction-privilege-escalation-in-l.md)** · composite **63.35** · Aug 27, 2026  
-  How a harness assembles context is a privilege boundary; if it can promote untrusted data, model-side instruction hierarchy provides little protection.  
-  _[arXiv cs.CR](https://arxiv.org/abs/2608.27299)_
+- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](agents/2026-07-goal-persistent-agents-a-frontier-model-built-a-bespoke-zlib.md)** · composite **55.65** · Jul 2, 2026  
+  When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise - the rules, not the model alone, are what make the…  
+  _[source](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)_
 
 ---
 

@@ -15,1194 +15,226 @@
   "entries": [
     {
       "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+      "source_url": "https://arxiv.org/abs/2607.12428",
+      "article_url": "https://arxiv.org/abs/2607.12428",
+      "published": "2026-07-19",
+      "date": "2026-07",
+      "author": "A H M Nazmus Sakib et al.",
+      "discovered_via": "rss",
+      "source_rank": 57.5,
+      "raw_path": "data/_raw/trust-but-verify-uncovering-the-security-debt-of-7240fb0539.txt",
+      "summary": "A large-scale study of the AIDev dataset classified security smells across 16,112 file changes in 4,022 agent-generated pull requests. 38.9% of agent PRs contain at least one security smell and supply-chain integrity issues make up 82.3% of them - but the counterintuitive result is that human collaborators introduce 67.6% of the genuine leaked secrets in these agent-assisted workflows, and review catches almost none of them. All percentages are downstream of an LLM-as-a-judge classification pipeline plus manual review, so treat the precision of the figures accordingly.",
+      "lessons": [
+        {
+          "point": "Supply-chain integrity dominates the detected smell taxonomy (82.3%); the abstract does not enumerate the remaining categories, so everything else combined is a small residual - point provenance and dependency controls at agent output.",
+          "excerpt": "38.9% of agent-generated PRs contain at least one security smell, with supply chain integrity issues accounting for 82.3% of all detected security smells",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "Blaming the agent misreads the data: humans introduced most genuine leaked secrets, which the authors describe only as suggesting a *potential* reduction in developer vigilance - an association, not a causal finding.",
+          "excerpt": "human collaborators are responsible for introducing 67.6% of genuine leaked secrets within these agent-assisted workflows",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "Existing review is not a control here - automated and human review together missed 81.1% of these credentials before integration.",
+          "excerpt": "existing automated and human review processes fail to detect 81.1% of these credentials prior to integration",
+          "confidence": 0.96,
+          "grounded": true
+        }
+      ],
+      "threat": "Security debt accumulates in high-impact file paths faster than human review capacity, with hard-coded credentials making up 99.6% of critical-severity smells.",
+      "conditions": "Repositories that accept autonomous coding-agent pull requests through a conventional human review process.",
+      "mitigations": "Enforce secret scanning as a merge gate rather than a review step; apply provenance/dependency-integrity checks to agent PRs; add context-aware guardrails at the human-AI collaboration point rather than at final review.",
+      "takeaway": "Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.",
+      "tags": [
+        "ai-generated-code",
+        "coding-agents",
+        "secrets",
+        "supply-chain",
+        "code-review"
+      ],
+      "scores": {
+        "novelty": 57,
+        "relevance": 88,
+        "newness": 0,
+        "credibility": 57.5,
+        "composite": 52.12,
+        "scored_at": "2026-10-20T16:34:06+00:00"
+      },
+      "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
+      "verified": true,
+      "verify_note": "Independent verifier: removed invented contrast categories (injection/logic bugs); restored the authors' 'potential' hedge on developer vigilance; surfaced that all figures come from an LLM-as-a-judge pipeline; novelty 68->57.",
+      "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
+      "retrieved_at": "2026-07-21T07:37:44+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
+        "signals": [
+          "trending",
+          "high-relevance",
+          "teachable"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      },
+      "domain_label": "AI-Generated Code Risk"
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.cloud-infra",
-      "title": "VMs won't contain cyber-capable agents",
-      "source_url": "https://blog.trailofbits.com/",
-      "article_url": "https://blog.trailofbits.com/2026/08/26/vms-wont-contain-cyber-capable-agents/",
-      "published": "2026-08-26",
-      "date": "2026-08",
-      "source_name": "Trail of Bits",
-      "source_id": "rss:trailofbits",
-      "source_rank": 73,
-      "source_topics": [
-        "product-security"
-      ],
-      "discovered_via": "rss",
-      "summary": "A Trail of Bits researcher gave an advanced AI agent (GPT 5.6-Cyber) a CTF task to escape a QEMU/KVM sandbox VM; it succeeded three separate times, chaining disclosed CVEs, an unmarked libslirp fix, and several 0-days. The takeaway is that a standard VM can no longer be trusted to contain a sufficiently capable autonomous agent. Defenders should treat such agents as an advanced persistent threat and fall back on hardened isolation plus security fundamentals.",
-      "lessons": [
-        {
-          "point": "A standard VM is no longer a reliable containment boundary for advanced autonomous AI agents.",
-          "excerpt": "you can no longer assume a mere VM will contain a sufficiently advanced AI agent",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Use minimal-attack-surface virtualization (e.g. Firecracker microVMs) purpose-built for isolation.",
-          "excerpt": "A start is using a virtualization technology that was purposely built with a minimal attack surface and a focus on security, like Firecracker",
-          "confidence": 0.85,
-          "grounded": false
-        },
-        {
-          "point": "Lean on security fundamentals: least privilege, logging, and active monitoring, and limit agent runtime.",
-          "excerpt": "we have to become much more attentive to security fundamentals: least privilege (regarding network access, credentials, available features, etc.), logging, and active monitoring",
-          "confidence": 0.85,
-          "grounded": false
-        }
-      ],
-      "takeaway": "Treat capable AI agents as an advanced persistent threat: isolate them with hardened microVMs, enforce least privilege, monitor actively, and keep host and hypervisor dependencies fully patched.",
-      "tags": [
-        "ai-agents",
-        "vm-escape",
-        "sandboxing",
-        "qemu",
-        "kvm",
-        "firecracker",
-        "least-privilege",
-        "apt"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Harden agent sandboxes beyond a plain VM",
-        "detail": "Run autonomous agents in minimal-attack-surface microVMs like Firecracker, apply least privilege to network/credentials/features, enable logging and active monitoring, keep host kernel/QEMU/libslirp patched, and time-box each run in a pristine environment."
-      },
-      "scores": {
-        "novelty": 88,
-        "relevance": 85,
-        "newness": 11,
-        "credibility": 73.0,
-        "composite": 65.6,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Prior VM-escape CVE research (Januscape CVE-2026-53359, libslirp CVE-2026-9539); classic sandbox-escape and APT containment literature.",
-      "cluster": "A",
-      "related_claims": [],
-      "verified": true,
-      "raw_path": "data/_raw/vms-won-t-contain-cyber-capable-agents-eac5fbef.txt",
-      "id": "vms-won-t-contain-cyber-capable-agents-eac5fbef",
-      "retrieved_at": "2026-08-29T23:46:33+00:00",
-      "needs_review": false,
-      "grounding_score": 0.33,
-      "domain_label": "cloud & infrastructure"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "title": "This Shit is Hard: Patching a vulnerability that has no fix",
-      "source_url": "https://www.chainguard.dev/unchained",
-      "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
-      "published": "2026-08-17",
-      "date": "2026-08",
-      "source_name": "Chainguard",
-      "source_id": "rss:chainguard",
-      "source_rank": 73,
-      "source_topics": [
-        "product-security"
-      ],
-      "discovered_via": "rss",
-      "summary": "Chainguard describes how its Athena clearinghouse authors patches for AI-discovered zero-days that have no upstream fix, where the hard problem is trusting an AI-generated diff rather than producing one. Every candidate patch is gated by feasibility, regression (baseline test suite before/after), and an exploit test written before the fix that must pass on the unpatched build and fail on the patched one. Fixes are batched per package, backported with the full gate re-run per version, rebuilt from source with signed provenance/SBOM, and made fatal so a patch that fails to apply breaks the build loudly.",
-      "lessons": [
-        {
-          "point": "An AI-generated patch is only trustworthy once you independently prove it, since there is no upstream fix to compare against.",
-          "excerpt": "when there's no upstream fix to compare against, the only way to tell them apart is to prove it yourself",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Write an exploit test first and require it to fail against the patched build to prove the fix works.",
-          "excerpt": "we author an exploit test and prove it demonstrates real harm against the unpatched build",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Make patch application fatal so an unapplied security patch never ships silently as a warning.",
-          "excerpt": "a security patch that doesn't apply cleanly has to fail the build and never slip through as a warning",
-          "confidence": 0.88,
-          "grounded": true
-        }
-      ],
-      "takeaway": "When remediating (including AI-generated) fixes, gate every patch on feasibility, regression testing, and an independent exploit test, batch interdependent fixes, re-validate on each backported version, rebuild from source with signed provenance, and fail the build loudly if a patch doesn't apply.",
-      "tags": [
-        "supply-chain",
-        "vulnerability-remediation",
-        "zero-day",
-        "ai-patching",
-        "backporting",
-        "provenance",
-        "sbom",
-        "regression-testing"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Prove security patches instead of trusting them",
-        "detail": "Gate each candidate fix on feasibility, a before/after regression baseline, and an exploit test authored first (must fail post-patch); batch interdependent CVEs per package; re-run the full gate on every backported version; rebuild from source with signed provenance and SBOM; and make patch application fatal to the build."
-      },
-      "scores": {
-        "novelty": 83,
-        "relevance": 86,
-        "newness": 11,
-        "credibility": 73.0,
-        "composite": 64.4,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Chainguard's earlier Athena sandboxing and CVE-remediation-at-scale posts; SLSA provenance and reproducible-build practices.",
-      "cluster": "A",
-      "related_claims": [],
-      "verified": true,
-      "raw_path": "data/_raw/this-shit-is-hard-patching-a-vulnerability-that--54a43a0b.txt",
-      "id": "this-shit-is-hard-patching-a-vulnerability-that--54a43a0b",
-      "retrieved_at": "2026-08-29T23:46:33+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "software supply chain"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation",
-      "source_url": "https://github.com/advisories/GHSA-q97c-8qh3-fpc6",
       "cluster": null,
       "related_claims": [],
-      "summary": "phpseclib's pure-PHP X25519 scalar multiplication performs data-dependent conditional modular reductions whose cost is a function of the secret scalar's prefix. A timing side-channel recovers the full 251-bit clamped private key from 32 observed operations using ordinary RFC 7748 base-point input (u=9) — no attacker-chosen input required, and rejecting low-order inputs does not close it. Critically, counting libgmp function calls instead of timing (e.g. via a Flush+Reload cache spy on the shared libgmp.so mapping) recovers a key from a single operation, tolerating 20-30% wrong per-step counts.",
-      "takeaway": "This isn't a low-order-input vulnerability that input validation can fix — it's a genuine implementation-level timing/call-count side channel triggered by ordinary use with the standard base point, and it demonstrates that counting a shared library's internal function calls (via cache-timing techniques) can be a strictly more powerful side channel than wall-clock timing, extracting a full key from a single observed operation instead of dozens.",
-      "lessons": [
-        {
-          "point": "The attack recovers the full private key using the standard RFC 7748 base point (u=9) with no attacker-chosen input at all, and explicitly is not a low-order-input issue — rejecting low-order public values does not mitigate it.",
-          "excerpt": "This is not a low-order-input issue. Recovery works with the RFC 7748 base point `u = 9`, with no attacker-chosen input at all. Rejecting low-order public values does not close it.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "An observer that counts libgmp function calls instead of measuring timing recovers a full key from a single observed operation, and tolerates 20-30% of individual per-step counts being wrong, compared to 32 observations needed for the timing-based variant.",
-          "excerpt": "libgmp call counts | either | **1** | 20/20 keys; tolerates 20–30% of per-step counts being wrong",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The vulnerable code path in the common key-loading APIs is reachable only when PHP's bundled ext-sodium extension is absent, since the safe sodium implementation is used instead whenever it's available.",
-          "excerpt": "`PKCS8` / `PublicKeyLoader::load` / `EC::createKey` run the ladder **only when ext-sodium is absent** — `PKCS8.php:194` gates on `sodium_crypto_box_publickey_from_secretkey`. OpenSSL does not help here.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Because ext-sodium is bundled and enabled by default in PHP 7.2+, most default installations are not exposed via the common code paths — but hardened or stripped-down PHP builds (disable_functions hardening, --disable-sodium builds, common in shared hosting) are.",
-          "excerpt": "ext-sodium is bundled and enabled by default in PHP 7.2+, so the reachable configurations are a minority — though `disable_functions` hardening and `--disable-sodium` builds do occur, particularly in shared hosting.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "phpseclib",
-        "x25519",
-        "timing-side-channel",
-        "cryptography",
-        "ghsa"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Treat shared-library call-count side channels as at least as dangerous as timing side channels in crypto reviews",
-        "detail": "When reviewing cryptographic implementations for constant-time behavior, don't stop at wall-clock timing analysis — also check whether the operation count of underlying library calls (e.g. libgmp) varies with secret data, since a call-count observer via cache-timing techniques can be dramatically more sample-efficient than timing alone (1 observation vs 32 here)."
-      },
-      "scores": {
-        "novelty": 68,
-        "relevance": 55,
-        "newness": 63,
-        "credibility": 70.0,
-        "composite": 63.15,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Non-constant-time EC/RSA timing side channels and cache-based operation-counting attacks (Percival 2005, Flush+Reload) are an established class; using library call-counting to cut required observations from dozens to one is a novel specific contribution.",
-      "article_url": "https://github.com/advisories/GHSA-q97c-8qh3-fpc6",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-08",
-      "raw_path": "data/_raw/ghsa-q97c-8qh3-fpc6-19b9910d01.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "All lessons precisely supported; reviewer notes the lessons omit the advisory's caveat that exploitation requires a reused/long-lived key and local co-residency, which narrows real-world impact though nothing stated is wrong. Taking lower relevance (52 vs 55).",
-      "id": "phpseclib-s-pure-php-x25519-implementation-leaks-3f9abfc0d6",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "Application Security"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "What's in a tag name? JavaScript, apparently",
-      "source_url": "https://portswigger.net/research",
-      "article_url": "https://portswigger.net/research/whats-in-a-tag-name-javascript-apparently",
-      "published": "2026-08-25",
+      "title": "A few notes on AWS Nitro Enclaves: KMS integration",
+      "source_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
+      "article_url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
+      "published": "2026-08-05",
       "date": "2026-08",
-      "source_name": "PortSwigger Research",
-      "source_id": "rss:portswigger",
-      "source_rank": 73,
+      "raw_path": "data/_raw/mrscan-batch03-0.txt",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
       "source_topics": [
-        "product-security"
+        "product-security",
+        "ai-security"
       ],
-      "discovered_via": "rss",
-      "summary": "Gareth Heyes shows that HTML tag names can carry XSS payloads: DOM properties like localName, part, and classList expose case-preserving or array-split versions of the tag name that can be fed back into event handlers, the Function constructor, or setHTMLUnsafe to execute JavaScript across every browser. Because these vectors use unusual, uppercase, or separator-character HTML, they readily bypass blocklists and WAF signatures. The defensive lesson is that WAF/blocklist filtering is fragile and should not be relied on in place of proper output encoding and CSP.",
-      "lessons": [
-        {
-          "point": "Browsers are far more lenient with tag-name characters than filters assume, enabling novel XSS vectors.",
-          "excerpt": "browsers are far more lenient than you would expect",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Seemingly harmless DOM properties (localName, part, classList) can smuggle and transform payloads past blocklists/WAFs.",
-          "excerpt": "unusual HTML and seemingly harmless properties such as localName, part, and classList can become unexpected sources of hiding payloads and transformations that can bypass blocklists and WAF signatures",
-          "confidence": 0.9,
-          "grounded": false
-        },
-        {
-          "point": "WAF signature filtering is an unreliable primary XSS defense.",
-          "excerpt": "It's also a pretty nice way to bypass a WAF",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Do not rely on WAFs or character blocklists to stop XSS; enforce context-aware output encoding, a strict Content-Security-Policy, and trusted HTML sanitization, since exotic tag-name and DOM-property tricks bypass signature-based filters in every browser.",
-      "tags": [
-        "xss",
-        "waf-bypass",
-        "html",
-        "javascript",
-        "blocklist-bypass",
-        "csp",
-        "dom"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Defend XSS with encoding and CSP, not WAF signatures",
-        "detail": "Treat WAF/blocklist filtering as defense-in-depth only; enforce context-aware output encoding, a strict CSP, and a vetted HTML sanitizer, and test filters against uppercase, separator-character, and DOM-property (localName/part/classList) vectors."
-      },
-      "scores": {
-        "novelty": 84,
-        "relevance": 80,
-        "newness": 11,
-        "credibility": 73.0,
-        "composite": 62.9,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "PortSwigger XSS cheat sheet and prior WAF/blocklist-bypass research (unicode overflows, phantom Version cookie).",
-      "cluster": null,
-      "related_claims": [],
-      "verified": true,
-      "raw_path": "data/_raw/what-s-in-a-tag-name-javascript-apparently-f25dab65.txt",
-      "id": "what-s-in-a-tag-name-javascript-apparently-f25dab65",
-      "retrieved_at": "2026-08-29T23:46:33+00:00",
-      "needs_review": false,
-      "grounding_score": 0.67,
-      "domain_label": "web security"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.offensive",
-      "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
-      "source_url": "https://snyk.io/blog/",
-      "article_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
-      "published": "2026-08-10",
-      "date": "2026-08",
-      "source_name": "Snyk",
-      "source_id": "rss:snyk",
-      "source_rank": 73,
-      "source_topics": [
-        "product-security"
-      ],
-      "discovered_via": "rss",
-      "summary": "Snyk's autonomous offensive-security agent (Evo COS) black-box tested a multi-tenant SaaS and found 33 validated issues, including a legacy admin JSON endpoint that did an unbounded key/value upsert with no role check and no enforcement of its HMAC signature/timestamp, letting the lowest-privilege user rewrite tenant-wide security settings for full compromise. It also proved a credentialed CORS origin-reflection flaw enabling zero-interaction token theft. The lessons are classic broken-authorization and CORS defenses: enforce server-side role checks, allowlist settable keys, actually verify signatures, and lock down cross-origin credentialed responses.",
-      "lessons": [
-        {
-          "point": "Server-side authorization must be enforced on every write, especially legacy/admin endpoints, not assumed from the UI.",
-          "excerpt": "performed an unbounded key/value upsert with no server-side role or permission check",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Restrict mass-assignment by allowlisting settable keys rather than accepting arbitrary input.",
-          "excerpt": "No allowlist of settable keys; the endpoint accepts any key string",
-          "confidence": 0.88,
-          "grounded": true
-        },
-        {
-          "point": "Business-logic/authorization chains are invisible to signature-based scanners and need reasoning-driven testing.",
-          "excerpt": "This is the reasoning layer that traditional scanners cannot reach: recognizing an ungated write, understanding what each setting means for the business, and chaining a handful of them into tenant-wide compromise",
-          "confidence": 0.82,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Enforce server-side role/permission checks and key allowlists on every write endpoint (including legacy admin ones), actually validate HMAC signatures, and lock down credentialed CORS, then test for authorization and business-logic chains that signature scanners miss.",
-      "tags": [
-        "broken-access-control",
-        "mass-assignment",
-        "authorization",
-        "cors",
-        "multi-tenant",
-        "saas",
-        "ai-pentesting",
-        "business-logic"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Close broken-authorization and CORS gaps on write endpoints",
-        "detail": "Add server-side role/permission checks to every write (including legacy admin JSON endpoints), allowlist settable keys to block mass assignment, verify HMAC signature/timestamp params instead of trusting their presence, and never reflect arbitrary Origin with Access-Control-Allow-Credentials: true."
-      },
-      "scores": {
-        "novelty": 74,
-        "relevance": 85,
-        "newness": 11,
-        "credibility": 73.0,
-        "composite": 61.4,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "OWASP broken object/function-level authorization (BOLA/BFLA), mass-assignment, and credentialed CORS misconfiguration research.",
-      "cluster": "A",
-      "related_claims": [],
-      "verified": true,
-      "raw_path": "data/_raw/show-don-t-tell-what-evo-continuous-offensive-se-e186831a.txt",
-      "id": "show-don-t-tell-what-evo-continuous-offensive-se-e186831a",
-      "retrieved_at": "2026-08-29T23:46:33+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "web security"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.mobile",
-      "title": "Consumer Smart Glasses Enable a General Video-Based Password-Cracking Pipeline That Cuts Human-Chosen Password Entropy by Up to 60 Bits",
-      "source_url": "http://arxiv.org/abs/2609.06539v1",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "A CCS 2026 paper presents the first general video-based keystroke-inference pipeline that recovers rule-based alphanumeric smartphone passwords across all four QWERTY keyboard layouts, using nothing but the built-in camera of consumer Meta Ray-Ban smart glasses. It tracks fingertips at sub-pixel resolution, predicts keystrokes via a self-supervised neural-network ensemble, and combines video-derived per-key probabilities with prior statistics from 2.19 billion leaked passwords, reducing human-chosen password entropy by up to 60 bits and cracking password-manager-generated random passwords up to 13 characters in under an hour on a modern GPU, from up to 1.8 meters away.",
-      "takeaway": "Consumer AI-enabled wearables (smart glasses with a built-in camera) turn a previously specialist side-channel attack (video-based keystroke inference) into something achievable with off-the-shelf consumer hardware at conversational distance, and even password-manager-generated random passwords are not immune once video evidence is combined with prior password-distribution statistics.",
-      "lessons": [
-        {
-          "point": "The pipeline uses the built-in camera of popular consumer Meta Ray-Ban smart glasses — not specialized surveillance equipment — to track device and fingertip position at sub-pixel resolution and predict keystrokes via a self-supervised neural network ensemble.",
-          "excerpt": "Using the built-in camera of the popular Meta Ray-Ban smart glasses, our pipeline tracks the device and typing fingertips at sub-pixel resolution, predicts keystrokes via a self-supervised ensemble of neural networks, dynamically estimates the on-screen keyboard layout, and computes per-key probability distributions.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Even password-manager-generated random passwords up to 13 characters were cracked in under an hour on a modern GPU, and combining video evidence with prior password statistics yielded a further ~20-bit entropy reduction beyond either source alone for human-chosen passwords.",
-          "excerpt": "password-manager-chosen random passwords of up to 13 characters in under an hour on a modern GPU, reducing password entropy by up to 60 bits relative to the prior baseline. For human-chosen passwords, combining video evidence with prior statistics yields an additional statistically significant reduction of approximately 20 bits compared to either source alone.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "side-channel",
-        "smart-glasses",
-        "password-security",
-        "keystroke-inference",
-        "ccs2026"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Don't assume typing in public with password-manager-generated passwords is safe from shoulder-surfing-class attacks",
-        "detail": "Treat consumer smart-glasses cameras as a viable keystroke-inference threat at distances up to ~1.8m; for high-value accounts, prefer authentication methods that don't require visible on-screen typing in public (passkeys, biometric unlock) over even long random passwords typed on a visible touchscreen."
-      },
-      "scores": {
-        "novelty": 72,
-        "relevance": 40,
-        "newness": 63,
-        "credibility": 72.0,
-        "composite": 60.15,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Prior video-based keystroke inference targeted tablets/PINs/pattern locks under simplified conditions (cited by the paper); this is the first general full-alphanumeric-QWERTY pipeline on unmodified consumer smart-glasses hardware.",
-      "article_url": "http://arxiv.org/abs/2609.06539v1",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-06",
-      "raw_path": "data/_raw/watch-and-crack-password-inference-from-smart-gl-1d55427415.txt",
-      "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "verified": true,
-      "verify_note": "Both lessons match the CCS 2026 abstract almost verbatim; taking lower novelty (72 vs 78) and lower relevance (30 vs 40, since the ai-research audience is harness/agent builders this barely serves).",
-      "id": "consumer-smart-glasses-enable-a-general-video-ba-fadab74b12",
-      "retrieved_at": "2026-09-09T06:16:10+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Mobile Security"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) Traced to an Unchecked Fixed-Size Buffer Copy During SAML Signature Canonicalization",
-      "source_url": "https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "watchTowr Labs reverse-engineered a silent Citrix NetScaler ADC/Gateway patch (13.1-63.18, 14.1-72.61) and identified an unauthenticated, remotely-reachable memory corruption reachable when the appliance is configured to use SAML as a Service Provider or Identity Provider. The root cause: earlier firmware copied attacker-controlled data from a SAML message's ds:SignedInfo element into a fixed-size global buffer during signature canonicalization without checking whether it fit, and an oversized SignedInfo element corrupts adjacent packet-engine state and crashes the root packet engine (nsppe).",
-      "takeaway": "A classic, decades-old bug class (unchecked fixed-size buffer copy of attacker-controlled data) is still shipping in 2026 in a security-critical XML/SAML signature-parsing path of a widely deployed enterprise VPN gateway — any code that canonicalizes or parses XML signatures from an untrusted party needs an explicit size check before copying into a fixed buffer, regardless of how mature the codebase is.",
-      "lessons": [
-        {
-          "point": "The vulnerability is a pre-auth, remotely reachable memory corruption triggered by an oversized ds:SignedInfo element in a SAML message, reachable whenever the appliance is configured to use SAML as either a Service Provider or Identity Provider.",
-          "excerpt": "the vulnerability we’re discussing today is reachable when the Netscaler appliance is configured to use SAML as either a Service Provider (SP) or an Identity Provider (IdP).",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The root cause is a copy of attacker-controlled data from the SAML message's SignedInfo element into a fixed-size global buffer during signature canonicalization, without a bounds check — an oversized element overflows into and corrupts adjacent packet-engine state.",
-          "excerpt": "During signature canonicalization, earlier versions of the NetScaler solution copy attacker-controlled data from the SAML message's `ds:SignedInfo` element into a fixed-size global buffer, without checking whether it actually fits. Send an oversized `SignedInfo` element and the copy continues beyond the end of the buffer, corrupting adjacent packet-engine state and eventually crashing `nsppe`, the root packet engine.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The patch itself was the clue: the fixed version added explicit size checks around exactly the copy operations that led researchers to find the original unbounded copy.",
-          "excerpt": "the `63.18` patch adds explicit size checks around these copies, which, conveniently for us, is exactly what led us to the vulnerability in the first place.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "citrix",
-        "netscaler",
-        "saml",
-        "heap-overflow",
-        "pre-auth-rce",
-        "cve-2026-8452"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Audit XML/SAML signature-parsing code for unchecked fixed-buffer copies",
-        "detail": "Any code path that canonicalizes or parses XML digital signatures (SAML, WS-Security, XML-DSig) from an untrusted party should be audited for fixed-size buffer copies of attacker-controlled elements (like ds:SignedInfo) without an explicit length check — this is a decades-old bug class still shipping in mature, widely-deployed enterprise software."
-      },
-      "scores": {
-        "novelty": 68,
-        "relevance": 78,
-        "newness": 11,
-        "credibility": 77.5,
-        "composite": 58.17,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "CVE-2023-3519 (Bishop Fox's prior NetScaler RCE writeup, cited in the source) is the closest prior art; the underlying bug class (unchecked fixed-size buffer copy) is decades-old.",
-      "article_url": "https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-08",
-      "published": "2026-08-14",
-      "raw_path": "data/_raw/you-re-back-in-the-room-citrix-netscaler-pre-aut-e0548bc5b4.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-labs-watchtowr-com-rss",
       "source_rank": 77.5,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "All three lessons directly and accurately quoted; taking lower novelty (68 vs 72).",
-      "id": "citrix-netscaler-pre-auth-heap-overflow-cve-2026-8b36b44e46",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "Application Security"
-    },
-    {
-      "article_url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
-      "tweet_url": null,
-      "author": "Sara McBroom",
-      "date": "2026-08",
-      "published": "2026-08-25",
-      "discovered_via": "rss",
-      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-      "source_rank": 76.8,
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "source_name": "Unit 42 (Palo Alto Networks)",
-      "id": "u42-state-of-ai-enabled-malware-2026-08",
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "Measuring AI-enabled malware: ~97% of samples never reach production; AI changes how malware is authored, not how it executes",
-      "source_url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
-      "raw_path": "data/_raw/u42-ai-enabled-malware-2026-08.txt",
-      "summary": "Unit 42 analyzed 405 AI-integrating malware samples and found only 12 reached protected production endpoints; ~97% exist only in sandboxes, VirusTotal, and research repos. Their thesis: AI lowers the barrier to authoring malware and speeds iteration (e.g. FunkSec's seven builds in six days), but the resulting binaries are caught by the same behavioral/sandbox/entropy detection as conventional malware.",
+      "summary": "Trail of Bits enumerates passive and active attack classes against the Nitro Enclave to AWS KMS communication channel: encryption-context omission, CMK substitution, attestation-request replay, and the fact that TLS to KMS terminates outside the HSM. They also flag an end-to-end verifiability gap: even with immutable key policies, AWS Support can restore default policies for a key owner, so there is no Certificate-Transparency-style public log a third-party client can independently verify.",
+      "takeaway": "Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker equivalence returns.",
       "lessons": [
         {
-          "point": "The 'AI malware wave' is largely PoC/test/brand-abuse noise today — right-size the threat instead of over-rotating on it.",
-          "excerpt": "Approximately 97% of AI-enabled malware samples exist only in research repositories, sandbox environments and security validation platforms.",
+          "point": "Attestation documents are not cryptographically bound to KMS requests, so a captured attestation is replayable for five minutes against any supported operation with attacker-chosen parameters.",
+          "excerpt": "As attestations are not cryptographically bound to the requests, the attacker can use the attestation with any supported operation with arbitrary params.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "KMS terminates TLS outside the HSM, so end-to-end confidentiality between the enclave and the HSM is not achievable and AWS insiders belong in the threat model.",
+          "excerpt": "KMS terminates TLS outside of HSM ([most likely](https://docs.aws.amazon.com/kms/latest/cryptographic-details/internal-communication-security.html)), and the attestation's pubkey encryption is probably done outside of HSM. This makes it impossible to have an end-to-end TLS channel between enclave and HSM, and AWS insiders may theoretically constitute an active attacker threat.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Even immutable key policies do not deliver true end-to-end verifiability, because AWS Support can restore a default policy on the owner's request and there is no public append-only log a third party can audit.",
+          "excerpt": "Note that key owners can always [contact AWS support to restore default key policies]... However, we are not aware of any \"Certificate Transparency\"-style public, append-only log for KMS key policies that an external party can independently verify.",
           "confidence": 0.9,
           "grounded": false
         },
         {
-          "point": "AI shifts the authoring process, not the runtime behavior, so existing behavioral detection still works — no need to buy an 'AI malware' point product.",
-          "excerpt": "The AI component does not evade detection. It changes how the code is authored, not how it executes.",
+          "point": "The official aws-nitro-enclaves-sdk-c is C code that Trail of Bits found host-exploitable and recommends avoiding in favor of a Rust NSM library plus Boto3 for KMS.",
+          "excerpt": "Amazon ships a lot of SDKs for various tasks. Among them is [`aws-nitro-enclaves-sdk-c`](https://github.com/aws/aws-nitro-enclaves-sdk-c) that provides tools and a library for enclaves-KMS communication. Avoid it: this particular SDK is written in C, and we found it contains vulnerabilities that can be used to exploit enclaves from the parent host.",
           "confidence": 0.9,
           "grounded": true
-        },
-        {
-          "point": "The real signal is development velocity: LLM assistance compresses malware iteration cycles, which shortens defender response windows.",
-          "excerpt": "Seven distinct builds in six days is a pace that suggests LLM-assisted development, where generating a new variant is closer to a prompt generation rather than a software development task.",
-          "confidence": 0.82,
-          "grounded": false
         }
       ],
-      "takeaway": "Don't over-index on 'AI malware' hype: your existing behavioral/sandbox detection still catches it — but expect faster variant iteration.",
       "tags": [
-        "ai-malware",
-        "threat-intel",
-        "behavioral-detection",
-        "ransomware",
-        "measurement"
+        "nitro-enclaves",
+        "kms",
+        "attestation",
+        "confidential-compute",
+        "aws",
+        "tls",
+        "replay-attack"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Keep behavioral detection primary; track AI's effect on iteration speed, not novelty of execution",
-        "detail": "Resist 'AI malware' point solutions; validate that behavioral analytics, sandbox detonation, code-signing anomaly and entropy checks remain tuned; assume shorter variant cycles and shorten signature/hunt refresh cadence accordingly."
+        "title": "Enclave-KMS hardening checklist",
+        "detail": "For any enclave-KMS integration: hardcode CMK ARN (attested), attest the IAM role via sts:GetCallerIdentity, initiate TLS from inside the enclave with a pinned Amazon CA, use encryption contexts that the host cannot fully control, and monitor kms:PutKeyPolicy externally since AWS Support can restore default policies."
       },
       "scores": {
-        "novelty": 61,
-        "relevance": 74,
-        "newness": 11,
-        "credibility": 76.8,
-        "composite": 54.77,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Prior 'AI in malware' commentary was largely anecdotal or vendor-hype; the contribution here is the empirical production-telemetry measurement (405 samples vs 12 in production) rather than a new technique.",
-      "cluster": null,
-      "related_claims": [],
-      "verified": true,
-      "verify_note": "Self-verified: all three excerpts ground verbatim to the Unit 42 source; independent subagent pass skipped (automated cyber-safeguard blocked the delegated agent), novelty held conservative as this is a measurement/framing contribution.",
-      "retrieved_at": "2026-08-29T21:56:02+00:00",
-      "needs_review": false,
-      "grounding_score": 0.33,
-      "domain_label": "Malware & Threat Intel"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "title": "Rust Supply-Chain Compromise Used Cargo's Own Yank Warning to Socially Engineer Developers Into the Malicious Version",
-      "source_url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/",
-      "cluster": null,
-      "related_claims": [
-        "typosquatting-in-package-registries-is-an-active-threat"
-      ],
-      "summary": "A compromised maintainer account published a malicious arrayref 0.3.10 (245M+ all-time downloads, used transitively through tiny-skia/winit/egui/iced) depending on a typosquatted proc-macro1 crate impersonating dtolnay. The attacker yanked the prior clean releases (0.3.5-0.3.9), which makes Cargo print a warning nudging developers toward the only non-yanked version — the malicious one. proc-macro1's build script fetched a certificate-validation-free, base64-fragment-obfuscated payload URL and ran an architecture-specific binary detached from the build process at compile time.",
-      "takeaway": "Yanking prior clean versions of a compromised crate is a novel, low-effort social-engineering step that weaponizes the package manager's own UX (Cargo's \"consider updating to a version that is not yanked\" warning) to actively push developers toward the malicious release, rather than passively waiting for auto-upgrades — a supply-chain defense that only watches for new/anomalous versions misses this.",
-      "lessons": [
-        {
-          "point": "The attacker yanked all prior clean releases (0.3.5 through 0.3.9), which causes Cargo to print a warning nudging developers to update to the only remaining, non-yanked (malicious) version — turning the package manager's own UX into part of the attack.",
-          "excerpt": "The owner account yanked the older `arrayref` releases 0.3.5 through 0.3.9. Yanking a crate makes Cargo print a “consider updating to a version that is not yanked” warning, which nudges developers toward the only non-yanked release, the malicious 0.3.10. The reporter who filed the RustSec advisory noted this is how they hit it.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The malicious proc-macro1 crate impersonated a well-known Rust maintainer via a lookalike username (dtolney vs. the real dtolnay) and forged the authors metadata field with that maintainer's real name.",
-          "excerpt": "A separate account, `dtolney`, published `proc-macro1`. The username closely resembles David Tolnay’s real `dtolnay` account. Its metadata forges `authors = [\"David Tolnay <rchaitm@gmail.com>\"]`",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The malicious crate's actual source code was a genuine, unmodified copy of the legitimate proc-macro2 crate, specifically so that builds kept working normally while the separate build-time payload ran undetected.",
-          "excerpt": "The `src/` of the malicious `proc-macro1` is a genuine copy of `proc-macro2`, so builds kept working while the build script ran.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The build-time payload fetches an architecture-specific binary over TLS with no certificate validation, using a URL reassembled from base64-encoded fragments embedded in the build script, then runs it detached so the compiler doesn't wait for it to finish.",
-          "excerpt": "The script fetches an architecture-specific binary over a TLS connection that accepts any certificate without validation, then runs it detached from the build. On Unix it drops and runs `/tmp/rust-setup`.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "rust",
-        "cargo",
-        "supply-chain",
-        "typosquatting",
-        "build-time-malware",
-        "arrayref"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Flag yank-then-single-remaining-version patterns as a supply-chain risk signal",
-        "detail": "Add a detection rule for package registries/scanners: when a maintainer yanks multiple prior versions in quick succession, leaving only a single very recent version installable, flag it for manual review before the registry's own 'update to a non-yanked version' UX nudges consumers toward it — this is now a documented technique for pushing a malicious release."
-      },
-      "scores": {
-        "novelty": 65,
-        "relevance": 70,
-        "newness": 11,
-        "credibility": 55.0,
-        "composite": 51.5,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Build-time RCE via a typosquatted crate's build.rs is a known pattern; using the registry's own yank-warning UX as an active lure toward the malicious version is the genuinely new wrinkle.",
-      "article_url": "https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/",
-      "tweet_url": null,
-      "author": "abhisek",
-      "date": "2026-08",
-      "published": "2026-08-20",
-      "raw_path": "data/_raw/malicious-rust-crate-arrayref-runs-a-build-time-7db917ec3e.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "verified": true,
-      "verify_note": "All lessons match the source almost verbatim; one minor nit (proc-macro1's src/ described as 'unmodified' vs the advisory's 'mechanical find-and-replace' rename) doesn't change the substance. Taking lower novelty (65 vs 75).",
-      "id": "rust-supply-chain-compromise-used-cargo-s-own-ya-3da9f261c5",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "Supply Chain & Dependencies"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "title": "Composer Trusted a Package's Perforce Source URL Enough to Hand It to the p4 CLI as a Local Command",
-      "source_url": "https://github.com/advisories/GHSA-rvx4-ffvw-m9q3",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "Composer passed a package's Perforce source address directly to the `p4` CLI client without validating it, and `p4` accepts addresses that mean \"run this local command\" instead of \"connect to this server\" — so a malicious dependency from a repository allowing arbitrary Perforce source URLs could achieve remote code execution with the privileges of whoever ran `composer install`, if the `p4` client happened to be installed on that machine.",
-      "takeaway": "Passing user- or dependency-supplied configuration data unvalidated into a CLI tool's argument is dangerous whenever that CLI has any \"local command\" or \"connect to this address\" ambiguity in its own address-parsing syntax — the vulnerability lived entirely in Composer trusting a value it never needed to interpret itself, just forward.",
-      "lessons": [
-        {
-          "point": "Composer forwarded a package's Perforce source address to the p4 CLI client without validating it, and p4's own address syntax allows a value that means 'run this local command' rather than 'connect to this network address', giving RCE with the privileges of the account running Composer.",
-          "excerpt": "Composer passed a package's Perforce source address to the `p4` CLI client without validating it. The `p4` CLI client accepts addresses that mean \"run this local command\" instead of \"connect to this server\". This is remote code execution with the privileges of the user or CI account running Composer.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Exploitability requires three specific conditions: the p4 client installed and on PATH, a source of untrusted package metadata (Packagist itself doesn't allow Perforce sources, so a custom or inline repository is required), and a source (not dist) install of that package — meaning most Composer users are not affected by default.",
-          "excerpt": "You are only affected if all of the following are true:\n\n- The Perforce `p4` command line client is installed and on the `PATH` of the machine running Composer.\n- An attacker can control a package metadata's `source` section with a perforce type. Packagist.org does not allow perforce source metadata, so you are only exploitable if you rely on another Composer repository (any custom `composer`-type repository, or an inline `package` repository entry), or a `composer.lock` file you obtained from somewhere you do not trust.\n- The package gets installed from source, either because it has no dist artifact or because source installs are selected (for example `--prefer-source`).",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "composer",
-        "php",
-        "command-injection",
-        "perforce",
-        "supply-chain",
-        "ghsa"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Validate any dependency-supplied address before forwarding it to an external VCS/CLI tool",
-        "detail": "When a package manager or build tool forwards dependency-declared metadata (VCS source URLs, addresses) to an external CLI tool, validate that the value is actually a network endpoint the tool expects — don't assume the external tool's own parser rejects local-command-like syntax."
-      },
-      "scores": {
-        "novelty": 38,
-        "relevance": 45,
-        "newness": 63,
-        "credibility": 70.0,
-        "composite": 51.15,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Argument/command injection via unvalidated VCS-source-URL forwarding to a CLI is a known bug class (git ext:: URL abuse, CVE-2017-1000117); the p4-address ambiguity is a narrow instance.",
-      "article_url": "https://github.com/advisories/GHSA-rvx4-ffvw-m9q3",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-08",
-      "raw_path": "data/_raw/ghsa-rvx4-ffvw-m9q3-9ec08d9986.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "Both lessons near-verbatim matches; taking lower novelty (38 vs 55).",
-      "id": "composer-trusted-a-package-s-perforce-source-url-145889f01b",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Supply Chain & Dependencies"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "title": "A Widely-Used VS Code Extension (9.5M Installs) Chained a Markdown eval() Sink, an Untrusted Webview Message Dispatcher, and a vm.runInNewContext() Escape Into RCE",
-      "source_url": "https://projectdiscovery.io/blog/a-9-5m-install-vs-code-extension-one-markdown-file-and-a-supply-chain-foothold",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "ProjectDiscovery's Neo audited Markdown Preview Enhanced (9.5M installs) and found five CVEs across two attack surfaces. A WaveDrom diagram renderer called `window.eval()` on raw Markdown-file content, reachable by opening any file, no opt-in required. That webview then dispatched attacker-controlled command names straight from postMessage into VS Code's command system, one of which wrote arbitrary files. Separately, workspace config files (.crossnote/config.js) were evaluated with Node's `vm.runInNewContext()`, which Node's own documentation says is not a security boundary, and a shared-realm prototype-chain trick reliably escaped it to full OS command execution.",
-      "takeaway": "Both root causes here are well-documented anti-patterns that keep recurring: evaluating any part of untrusted content as code (even a diagram-rendering \"data\" field) and trusting Node's vm module as a sandbox when its own documentation explicitly disclaims that guarantee. Editor extensions with auto-update and full user privileges deserve the same supply-chain scrutiny as a direct dependency, even though they rarely show up in an SBOM.",
-      "lessons": [
-        {
-          "point": "The vulnerable code evaluated raw Markdown-file text as JavaScript specifically for WaveDrom diagram blocks, an allowlisted exception carved into an otherwise-sanitizing pipeline, meaning the sanitizer's own carve-out was the vulnerability.",
-          "excerpt": "the sanitizer kept a small allowlist of script-like diagram types (`new Set(['wavedrom', 'text/tikz'])`) and let the WaveDrom carrier through. Sanitization held at one layer; a later feature treated that preserved content as code anyway.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The extension host dispatched webview-originated postMessage commands directly into VS Code's command execution API without validating them as untrusted, and one reachable command wrote to any file:// URI with no workspace-boundary check.",
-          "excerpt": "One reachable command, `_crossnote.updateMarkdown`, wrote content to a URI with no containment check:",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The updateMarkdown handler wrote arbitrary content to any file:// URI passed to it, with the code's own comment acknowledging there was no workspace-boundary check at all.",
-          "excerpt": "// any file:// URI, any content, no workspace boundary check",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Workspace configuration files were evaluated with Node's vm.runInNewContext(), which Node's own documentation explicitly states is not a security mechanism, since the sandbox object's prototype chain still leads back to the host's real constructors.",
-          "excerpt": "Node's documentation explicitly states that `vm` is not a security mechanism. The sandbox object lives in the host V8 realm, so its prototype chain leads back to the host's constructors:",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The escape requires no user interaction at all — placing the payload in a workspace config file and simply opening any Markdown file in that workspace triggers evaluation during preview initialization, running arbitrary OS commands under the developer's account.",
-          "excerpt": "Place this in `.crossnote/config.js`, open any Markdown file in the same workspace, and MPE evaluates it during preview initialization. Arbitrary OS commands run under the developer's account. No preview interaction, no opt-in, no dialog.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "vscode-extension",
-        "supply-chain",
-        "sandbox-escape",
-        "nodejs-vm",
-        "rce",
-        "markdown"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Audit editor extensions for eval() sinks and Node vm-module usage as if they were production dependencies",
-        "detail": "Treat popular IDE/editor extensions as first-class supply-chain risk: audit for any eval()/vm.runInNewContext()/similar dynamic-code-execution use on content that originates from an opened file or workspace config, since Node's vm module is explicitly not a security boundary per its own docs, and webview-to-extension-host message handlers must treat postMessage content as untrusted, never dispatch it directly into a privileged command API."
-      },
-      "scores": {
-        "novelty": 58,
-        "relevance": 76,
-        "newness": 11,
-        "credibility": 53.2,
-        "composite": 50.93,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Trail of Bits' 2023 'Escaping misconfigured VSCode extensions' and STAR Labs' 'Breaking Out of Restricted Mode' writeups already document webview-postMessage-trust and extension-escape bug classes; vm.runInNewContext() escapes are well-known.",
-      "article_url": "https://projectdiscovery.io/blog/a-9-5m-install-vs-code-extension-one-markdown-file-and-a-supply-chain-foothold",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-08",
-      "published": "2026-08-16",
-      "raw_path": "data/_raw/supply-chain-security-analysis-of-a-9-5m-install-c054a0ae4a.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-blog-projectdiscovery-io-rss",
-      "source_rank": 53.2,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "All five lessons verified against direct code excerpts; individually known bug classes but the concrete 5-CVE chain in a 9.5M-install extension is genuinely new. Taking lower novelty (58 vs 74).",
-      "id": "a-widely-used-vs-code-extension-9-5m-installs-ch-c179f10918",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Supply Chain & Dependencies"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.mobile",
-      "title": "A Hybrid Security Framework for Mini-Programs: Visual UI Compliance and Network Risk Assessment",
-      "source_url": "https://arxiv.org/abs/2608.25877",
-      "article_url": "https://arxiv.org/abs/2608.25877",
-      "published": "2026-08-26",
-      "date": "2026-08",
-      "source_name": "arXiv cs.CR",
-      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
-      "source_rank": 60,
-      "source_topics": [
-        "product-security"
-      ],
-      "discovered_via": "rss",
-      "summary": "WeChat Mini Programs embed payment and ad entrances with deceptive, mis-clickable UI (tiny/hidden cancel buttons) that trigger involuntary payments or redirects to illegal pages. The authors build a detector that uses YOLOv8 to locate and size on-screen buttons/icons and mitmproxy to intercept click-triggered network requests, flagging non-compliant layouts and unsafe redirections.",
-      "lessons": [
-        {
-          "point": "Deceptive mobile UI (dark patterns) is a concrete security risk, not just a UX nuisance, because mis-clicks lead to real financial loss.",
-          "excerpt": "This can result in involuntary payments or being redirected to illegal pages, causing unnecessary financial losses and seriously harming users' property security and legal rights.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Visual/computer-vision analysis of rendered UI can automate detection of non-standard, mis-clickable button layouts.",
-          "excerpt": "YOLOv8 is used to identify various buttons in images, displaying the corresponding icon and its data based on the mouse click position.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Pairing UI inspection with proxy-based traffic capture lets you assess where clicks actually send users and data.",
-          "excerpt": "mitmproxy is used to capture relevant data requests generated during clicks, analyzing the safety of redirections",
-          "confidence": 0.82,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Mini-program app vetting must combine visual UI-compliance checks with network-redirect analysis to catch mis-click-to-payment dark patterns.",
-      "tags": [
-        "mobile",
-        "wechat-mini-programs",
-        "dark-patterns",
-        "app-vetting",
-        "ui-compliance",
-        "mitmproxy"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Add deceptive-UI and redirect checks to mobile app vetting",
-        "detail": "For hosted mini-app/superapp platforms, screenshot each screen, use an object detector to verify button hit-target sizes and that close/cancel controls are present and reachable, and proxy click-driven traffic to confirm redirect destinations resolve inside an allowed, safe range before publishing."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 72,
-        "newness": 11,
-        "credibility": 60.0,
-        "composite": 49.85,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Prior WeChat Mini Program static/dynamic analysis and dark-pattern UI studies; novelty is the combined YOLOv8 UI + mitmproxy redirect pipeline.",
-      "threat": "Involuntary payments and redirection to malicious/illegal pages via deceptively placed ad and payment controls.",
-      "conditions": "User interacts with a non-compliant WeChat Mini Program whose cancel/close controls are undersized or hidden.",
-      "mitigations": "Automated UI-size/position compliance detection plus redirect safety analysis before store approval.",
-      "cluster": null,
-      "related_claims": [],
-      "verified": true,
-      "raw_path": "data/_raw/a-hybrid-security-framework-for-mini-programs-vi-9ee71794.txt",
-      "id": "a-hybrid-security-framework-for-mini-programs-vi-9ee71794",
-      "retrieved_at": "2026-08-29T23:46:33+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Mobile / App Compliance"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp",
-      "source_url": "https://github.com/advisories/GHSA-26w7-cxv4-gfx2",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "A vulnerability in libheif, used by Astro's default Sharp-based image optimization service, allows remote code execution when a malicious AVIF image is processed — affecting any Astro project that lets an attacker cause an untrusted AVIF image to be optimized. Fixed in Astro 7.2.8, which requires Sharp 0.35.4.",
-      "takeaway": "Image-processing pipelines are a recurring RCE vector because they sit at the boundary of parsing complex, attacker-influenced binary formats (here, AVIF via libheif) with native code, and a framework's default, opt-out image optimization feature inherits that risk for every project that accepts user-uploaded images without evaluating it as a distinct attack surface.",
-      "lessons": [
-        {
-          "point": "The RCE is reachable through Astro's default image service, meaning any project that lets an attacker cause an untrusted AVIF image to be processed through Astro's built-in optimization pipeline is affected, not just projects using a niche or opt-in feature.",
-          "excerpt": "A vulnerability in `libheif`, used by the default Sharp image service in Astro, can lead to remote code execution when a malicious AVIF image is optimized. Projects are affected when an attacker can cause Astro to process an untrusted AVIF image.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "astro",
-        "image-processing",
-        "avif",
-        "libheif",
-        "rce",
-        "ghsa"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Treat framework-default image optimization pipelines as attacker-reachable native-code parsing surface",
-        "detail": "For any web framework's built-in image optimization/transformation feature, verify which image parsing library (and native codec, e.g. libheif for AVIF/HEIF) it uses and confirm it's patched, especially if the application accepts user-uploaded images — default/opt-out image pipelines carry the same native-parsing risk as an explicit image-processing dependency."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 50,
-        "newness": 63,
-        "credibility": 70.0,
-        "composite": 47.85,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Native image-codec parser RCEs are one of the longest-running vulnerability classes (ImageTragick 2016, recurring libheif/libjpeg/libpng CVEs); this is a new instance in Astro's default pipeline.",
-      "article_url": "https://github.com/advisories/GHSA-26w7-cxv4-gfx2",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-08",
-      "raw_path": "data/_raw/ghsa-26w7-cxv4-gfx2-3c83ada228.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "The lesson is a direct restatement of the short advisory; taking lower novelty (22 vs 40).",
-      "id": "astro-s-default-image-optimizer-allowed-remote-c-4221545631",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Application Security"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "Hono's Path-Traversal Fix Only Blocked One Parent-Directory Segment — a Longer Run of '..' Still Escapes the Output Directory",
-      "source_url": "https://github.com/advisories/GHSA-gqvv-2mrq-wpjv",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "Hono's static-site-generation `toSSG()` function had a path-traversal fix (for CVE-2026-39408) that only collapsed a single run of parent-directory segments in route-parameter-derived output paths. A value carrying enough consecutive parent-directory segments still produces a path the containment check accepts but the filesystem resolves outside the configured output directory, affecting any app that builds a static site from route-parameter values it doesn't fully control (CMS slugs, API-sourced values, user submissions).",
-      "takeaway": "A path-traversal fix that handles the exact reported payload but not the general pattern (arbitrarily many parent-directory segments, not just one) is a fix in name only — path-normalization and containment checks need to fully collapse traversal sequences of any length, and validating against a single previously-reported case is not the same as validating against the vulnerability class.",
-      "lessons": [
-        {
-          "point": "The original fix for CVE-2026-39408 blocked the exact traversal sequence originally reported (a single parent-directory segment) but the underlying path-normalization routine still didn't fully collapse longer runs of consecutive parent-directory segments, so a value with enough of them still escapes the output-directory containment check.",
-          "excerpt": "That check normalizes the path with the same routine that built it, and the routine did not fully collapse runs of consecutive parent-directory segments. A value carrying enough of them produces a path the check accepts, but the filesystem resolves outside the output directory. The earlier fix handled a single parent-directory segment, so it blocks the sequence reported at the time while leaving longer runs unhandled.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "hono",
-        "path-traversal",
-        "static-site-generation",
-        "incomplete-fix",
-        "ghsa"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Verify path-traversal fixes handle the general pattern, not just the reported payload",
-        "detail": "When reviewing or writing a path-traversal fix, test with an arbitrarily long run of '../' sequences and mixed encodings, not just the single-segment case from the original report — a normalization routine that only collapses one parent-directory reference per pass is a common, recurring incomplete-fix pattern."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 42,
-        "newness": 63,
-        "credibility": 70.0,
-        "composite": 47.85,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Classic single-pass '../' stripping bypass, a well-documented incomplete-path-traversal-fix pattern (CWE-22/23).",
-      "article_url": "https://github.com/advisories/GHSA-gqvv-2mrq-wpjv",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-08",
-      "raw_path": "data/_raw/ghsa-gqvv-2mrq-wpjv-cfe14bcbb1.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "Lesson is an accurate, non-overstated restatement; taking lower novelty (30 vs 48) and relevance (42 vs 42, unchanged).",
-      "id": "hono-s-path-traversal-fix-only-blocked-one-paren-f3c68c7dc8",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Application Security"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "morgan's Log-Forging Fix Missed Unicode Line-Separator Code Points, Letting Attacker-Controlled Headers Split Log Records",
-      "source_url": "https://github.com/advisories/GHSA-jxfw-x594-9x9m",
-      "cluster": null,
-      "related_claims": [],
-      "summary": "The Node.js logging middleware morgan's fix for a prior log-forging CVE neutralized C0 control characters, DEL, and backslash, but did not escape the Unicode line separators U+0085 (NEL), U+2028, and U+2029 — which are reachable through the request URL, User-Agent, Referrer, arbitrary request headers, and the Basic-auth username, and NEL is valid in HTTP header syntax. Logged, these characters split what should be one log record into multiple logical records for any downstream Unicode-aware log processor, forging log entries in all of morgan's built-in formats.",
-      "takeaway": "A log-injection fix that escapes ASCII control characters but not Unicode line-separator code points is incomplete for any downstream consumer that is Unicode-aware rather than byte-oriented — request headers are a valid, standards-compliant transport for these characters (NEL is legal HTTP header obs-text), so the fix needs to match what downstream log processors actually treat as a line break, not just the ASCII definition of one.",
-      "lessons": [
-        {
-          "point": "The prior fix neutralized C0 control characters, DEL, and backslash, but did not escape the Unicode line separators NEL (U+0085), LINE SEPARATOR (U+2028), or PARAGRAPH SEPARATOR (U+2029), which remain reachable through the request URL and headers including User-Agent, Referrer, and Basic-auth username.",
-          "excerpt": "The 1.11.0 fix neutralizes C0 control characters, DEL, and backslash, but it does not escape the Unicode line separators `U+0085` (NEL), `U+2028` (LINE SEPARATOR), or `U+2029` (PARAGRAPH SEPARATOR). These code points are reachable through several tokens, including the request URL (`:url`), request headers such as `:user-agent` and `:referrer`, arbitrary `:req[header]` values, and the Basic auth username (`:remote-user`).",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "NEL (U+0085) is valid obs-text in an HTTP header value per spec, meaning an attacker can place it in an ordinary request header without any protocol-level rejection.",
-          "excerpt": "NEL is valid `obs-text` in HTTP header values, so an attacker can place it in an ordinary request header.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "No format-based mitigation exists short of upgrading, since the affected values (request URL and headers) are core to what access logging records in the first place.",
-          "excerpt": "None. The affected values include the request URL and request headers, which are core to access logging, so there is no practical format-based mitigation. Upgrade to 1.12.0.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "morgan",
-        "log-injection",
-        "unicode",
-        "nodejs",
-        "incomplete-fix",
-        "ghsa"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Escape Unicode line-separator code points, not just ASCII control characters, in any log-sanitization routine",
-        "detail": "When sanitizing untrusted data before writing to logs, explicitly escape or strip U+0085 (NEL), U+2028, and U+2029 in addition to ASCII control characters — verify against whatever downstream log processor/SIEM will read the logs, since many Unicode-aware tools treat these as line breaks even though they're legal in HTTP header values."
-      },
-      "scores": {
-        "novelty": 28,
+        "novelty": 62,
         "relevance": 40,
-        "newness": 63,
-        "credibility": 70.0,
-        "composite": 46.65,
-        "scored_at": "2026-09-09T06:16:11+00:00"
+        "newness": 1,
+        "credibility": 77.5,
+        "composite": 42.47,
+        "scored_at": "2026-10-20T16:34:06+00:00"
       },
-      "prior_art": "Classic CRLF/log-injection (CWE-117); Unicode line-separator bypass of naive CRLF-only sanitizers is a known, less commonly discussed variant.",
-      "article_url": "https://github.com/advisories/GHSA-jxfw-x594-9x9m",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-08",
-      "raw_path": "data/_raw/ghsa-jxfw-x594-9x9m-aeba5492e6.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "verified": true,
-      "verify_note": "Both lessons quoted near-verbatim and accurate; taking lower novelty (28 vs 42) and relevance (40 vs 40).",
-      "id": "morgan-s-log-forging-fix-missed-unicode-line-sep-602fc56f55",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Detection & Response"
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "title": "A One-Week Dependency Cooldown Produces Outsized Supply-Chain Protection for Minimal Developer Friction",
-      "source_url": "https://semgrep.dev/blog/2026/rolling-out-dependency-cooldowns-org-wide",
-      "cluster": null,
-      "related_claims": [
-        "typosquatting-in-package-registries-is-an-active-threat"
-      ],
-      "summary": "Semgrep's security team rolled out package-manager dependency cooldowns (via uv's exclude-newer setting) org-wide across ~350 repositories, constraining which package versions are eligible for installation to ones published at least a week ago. Since most malicious package versions are detected and revoked within hours to days, a one-week cooldown window blocks installation of a freshly-published malicious version by the time it would otherwise be pulled in, while adding minimal day-to-day friction for developers.",
-      "takeaway": "Most malicious package versions are caught within hours to days of publication, so simply refusing to install anything published in the last week closes most of that attack window for very little cost — a mechanical, low-friction control that doesn't require detecting the malicious package at all, just waiting it out.",
-      "lessons": [
-        {
-          "point": "Malicious package versions are typically caught within hours to days after publication, and registries revoke them once identified — meaning a cooldown window of about a week captures most of that detection-and-response cycle before an org's own tooling would install the bad version.",
-          "excerpt": "Many get caught within a few hours to a few days. Once an attack is identified, package registries like npm and PyPI can revoke the malicious versions, preventing additional downloads, thus limiting the window of opportunity for attackers.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A one-week cooldown, implemented via uv's exclude-newer setting, is described as producing a surprisingly large security benefit for very little day-to-day developer friction, and needs specific exclusions for internal packages, registries without upload timestamps, and packages installed less than a week before rollout.",
-          "excerpt": "A one week cooldown produces a surprisingly large security benefit with very little developer friction.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "supply-chain",
-        "dependency-cooldown",
-        "uv",
-        "python",
-        "package-management"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Enable a one-week dependency cooldown on package managers that support it",
-        "detail": "Enable a 1-week install cooldown (uv's `exclude-newer`, or equivalent settings in other package managers) org-wide, with explicit exclusions for internal packages, registries lacking upload timestamps, and any package intentionally installed within the cooldown window — this is a cheap, mechanical control against fast-published malicious package versions."
-      },
-      "scores": {
-        "novelty": 28,
-        "relevance": 62,
-        "newness": 11,
-        "credibility": 49.6,
-        "composite": 37.19,
-        "scored_at": "2026-09-09T06:16:11+00:00"
-      },
-      "prior_art": "Dependency cooldowns were already proposed and named by Yossarian's blog, explicitly cited as the inspiration; this is an implementation case study.",
-      "article_url": "https://semgrep.dev/blog/2026/rolling-out-dependency-cooldowns-org-wide",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-08",
-      "published": "2026-08-31",
-      "raw_path": "data/_raw/feeling-the-heat-from-malicious-packages-cool-of-8d85d0fb0d.txt",
+      "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
-      "source_id": "rss:https-semgrep-dev-blog-rss",
-      "source_rank": 49.6,
-      "source_topics": [
-        "product-security"
-      ],
+      "threat": "A privileged host or malicious insider between enclave and KMS can swap ciphertexts, substitute CMKs, replay attestations, or bypass immutable key policies via AWS Support restoration.",
+      "conditions": "Applies when a Nitro Enclave uses KMS with attestation-based key access, does not initiate its own TLS to KMS, or uses key aliases instead of full CMK ARNs.",
+      "mitigations": "Bundle KMS CA cert inside the enclave and pin it; initiate TLS from within the enclave; attest full CMK ARN and IAM role; use encryption contexts under enclave control; deny kms:PutKeyPolicy globally; alarm on key deletion; publish a client-visible policy monitor. Prefer aws-nitro-enclaves-nsm-api (Rust) + Boto3 over aws-nitro-enclaves-sdk-c (C).",
       "verified": true,
-      "verify_note": "Both lessons directly supported, including the specific exclusion categories. Taking lower novelty (28 vs 40).",
-      "id": "a-one-week-dependency-cooldown-produces-outsized-75057a017e",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
+      "verify_note": "All four excerpts verified verbatim against raw_path. Cluster set to null because the piece is enclave-crypto/appsec and does not intersect the 13 clusters (nearest fit I is 'Deployment infra and sandboxing', but the material is HSM/KMS cryptography, not agent/LLM runtime).",
+      "id": "a-few-notes-on-aws-nitro-enclaves-kms-integratio-a9fa51faa1",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Supply Chain & Dependencies"
+      "grounding_score": null,
+      "domain_label": "Confidential compute (Nitro Enclaves + KMS)"
     },
     {
+      "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
       "topic": "product-security",
       "domain": "ps.supply-chain",
-      "title": "Rolling Out Org-Wide GitHub Actions SHA-Pinning Enforcement Has Non-Obvious Failure Modes Beyond the Obvious Tag-Pinning Fix",
-      "source_url": "https://semgrep.dev/blog/2026/sha-pinning-for-github-actions-org-wide",
       "cluster": null,
       "related_claims": [],
-      "summary": "A year and a half after the tj-actions/changed-files supply-chain incident (a compromised tag pointed at malicious code), Semgrep rolled out GitHub's \"require actions to be pinned to a full-length commit SHA\" setting org-wide across ~350 repositories. The practical difficulty wasn't pinning obvious `uses: action@v4` tags — it was also eliminating unpinned branch references to internal actions and transitively unpinned actions called by already-pinned actions, neither of which existing pinning tools handle by default.",
-      "takeaway": "Enforcing SHA-pinning for CI actions requires closing three distinct gaps — tag references, branch references (especially to internal actions), and transitively unpinned actions called by an already-pinned action — and tooling that only automates the first gives a false sense of completion while branch-referenced internal actions remain a live supply-chain vector.",
+      "title": "America bans imported robots due to supply chain and security risks",
+      "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "published": "2026-07-29",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-0.txt",
+      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 70.0,
+      "summary": "The FCC added foreign-made advanced robotic devices to the Covered List, effectively banning their import due to supply-chain and security risks. The National Security Determination frames networked robots as broad attack surfaces vulnerable to remote takeover, data exfiltration, and insecure OTA updates, and points to UniPwn on Unitree humanoids as a concrete example.",
+      "takeaway": "US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.",
       "lessons": [
         {
-          "point": "Beyond the well-known tag-pinning gap, org-wide SHA-pinning enforcement also requires eliminating unpinned references to internal actions by branch name (e.g. @main), and transitively unpinned actions that a pinned action itself calls — both of which standard pinning tools don't handle automatically.",
-          "excerpt": "To turn on this setting without breaking things you need to eliminate:",
-          "confidence": 0.85,
+          "point": "US regulators now classify connected robots as broad attack surfaces subject to remote takeover, exfiltration, and OTA-update risk.",
+          "excerpt": "modern bots are now constantly connected to networks “which creates broad attack surfaces and leaves them vulnerable to data exfiltration, remote disruption of the physical robot, and dependencies on unsecure over the air updates.”",
+          "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "The three categories that must all be eliminated are tag references, branch references, and transitively unpinned actions called by an already-pinned action.",
-          "excerpt": "**Transitively unpinned actions**",
-          "confidence": 0.8,
-          "grounded": true
+          "point": "The UniPwn flaws in Unitree humanoids are cited by name as the exemplar vulnerability motivating the ban.",
+          "excerpt": "One example of those vulnerabilities mentioned in the document is the UniPwn flaws that made it possible for attackers to take over humanoid robots made by Chinese company Unitree.",
+          "confidence": 0.95,
+          "grounded": false
         },
         {
-          "point": "GitHub's enforcement setting is binary (per-repo or org-wide, no partial exceptions or evaluation-only mode), making it hard to safely ratchet up enforcement gradually at a large organization without breaking CI for repos not yet audited.",
-          "excerpt": "Enforcement is either per-repo or org-wide, no exceptions.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The author explicitly notes that a missing evaluation mode would help organizations ratchet up enforcement gradually, and expects org-wide rollout to be genuinely difficult at a large organization.",
-          "excerpt": "Having an evaluation mode and more flexibility would help organizations ratchet up enforcement over time. I think enabling this org-wide at a large organization would be fairly challenging.",
-          "confidence": 0.8,
-          "grounded": true
+          "point": "The mechanism is import ban via the FCC Covered List, with a narrow Department of War carve-out and a country-of-manufacture (not country-of-ownership) exemption.",
+          "excerpt": "the FCC decided the foreign-made advanced robotic devices belong on its Covered List of products for which imports are banned because they pose an unacceptable risk to the national security of the United States and its residents.",
+          "confidence": 0.9,
+          "grounded": false
         }
       ],
       "tags": [
-        "github-actions",
-        "sha-pinning",
-        "ci-cd",
         "supply-chain",
-        "tj-actions"
+        "robotics",
+        "national-security",
+        "iot-security",
+        "fcc"
       ],
       "actionable": {
-        "type": "harness",
-        "title": "Audit for branch-referenced and transitively-unpinned actions before enabling org-wide SHA-pin enforcement",
-        "detail": "Before turning on GitHub's 'require full-length commit SHA' setting org-wide, explicitly check for (1) internal actions referenced by branch name rather than tag, and (2) actions your already-pinned actions call transitively — standard SHA-pinning automation tools typically only handle the tag-reference case."
+        "type": "takeaway",
+        "title": "Track FCC Covered List entries as a supply-chain admission signal beyond telecom",
+        "detail": "Product-security teams that already gate procurement against the FCC Covered List for telecom should now extend that gate to robotics and other networked physical devices; the same list is being repurposed as a general-purpose national-security exclusion mechanism."
       },
       "scores": {
-        "novelty": 25,
-        "relevance": 48,
-        "newness": 11,
-        "credibility": 49.6,
-        "composite": 32.09,
-        "scored_at": "2026-09-09T06:16:11+00:00"
+        "novelty": 45,
+        "relevance": 55,
+        "newness": 0,
+        "credibility": 70.0,
+        "composite": 40.5,
+        "scored_at": "2026-10-20T16:34:06+00:00"
       },
-      "prior_art": "SHA-pinning as tj-actions mitigation and the tags/branches/transitive pinning gaps are already discussed in the CI/CD security community (StepSecurity, pinact/ratchet tooling).",
-      "article_url": "https://semgrep.dev/blog/2026/sha-pinning-for-github-actions-org-wide",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-08",
-      "published": "2026-08-12",
-      "raw_path": "data/_raw/speedrunning-sha-pinning-for-github-actions-org-85f8b7649e.txt",
+      "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
-      "source_id": "rss:https-semgrep-dev-blog-rss",
-      "source_rank": 49.6,
-      "source_topics": [
-        "product-security"
-      ],
+      "threat": "Networked robots operating inside critical facilities can be remotely disrupted or exfiltrated via compromised firmware, OTA-update infrastructure, or embedded backdoors from the manufacturer's supply chain.",
+      "conditions": "Applies to future imports of foreign-made advanced robotic devices; already-approved models and stock, plus foreign-owned firms that manufacture in the US (e.g., Boston Dynamics), are exempt.",
+      "mitigations": "Import ban via FCC Covered List; case-by-case Department of War vouching for individual devices.",
       "verified": true,
-      "verify_note": "All lessons directly supported; taking lower novelty (25 vs 30) and relevance (45 vs 48).",
-      "id": "rolling-out-org-wide-github-actions-sha-pinning-dc83fe00c6",
-      "retrieved_at": "2026-09-09T06:16:09+00:00",
+      "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
       "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Supply Chain & Dependencies"
+      "grounding_score": null,
+      "domain_label": "Supply Chain / Policy"
     },
     {
       "topic": "product-security",
@@ -1247,10 +279,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 40,
-        "newness": 11,
+        "newness": 1,
         "credibility": 73.2,
-        "composite": 31.73,
-        "scored_at": "2026-09-09T06:16:11+00:00"
+        "composite": 29.23,
+        "scored_at": "2026-10-20T16:34:06+00:00"
       },
       "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
       "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
