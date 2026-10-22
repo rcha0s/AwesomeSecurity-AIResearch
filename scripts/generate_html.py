@@ -444,7 +444,40 @@ def trend_view(rows: list[dict]) -> list[dict]:
     return [{k: v for k, v in row.items() if k != "members"} for row in rows[:TREND_ROWS]]
 
 
-_SENTENCE_END = re.compile(r"[.!?](?=\s)")
+# A sentence ends at . ! or ? followed by space and a capital, digit or quote;
+# "vs." / "e.g." / "U.S." followed by one is an abbreviation, not an end.
+_SENTENCE_END = re.compile(r"[.!?](?=\s+[\"'“‘(A-Z0-9])")
+_ABBREVIATIONS = frozenset(
+    {
+        "vs",
+        "e.g",
+        "i.e",
+        "etc",
+        "u.s",
+        "u.k",
+        "mr",
+        "mrs",
+        "ms",
+        "dr",
+        "al",
+        "cf",
+        "approx",
+        "no",
+        "fig",
+        "inc",
+        "ltd",
+        "corp",
+        "jr",
+        "sr",
+        "st",
+    }
+)
+
+
+def _is_sentence_end(text: str, at: int) -> bool:
+    words = text[:at].split()
+    word = words[-1].lower().rstrip(".") if words else ""
+    return word not in _ABBREVIATIONS and len(word) > 1
 
 
 def sentence_cut(text: str, limit: int = ARCHIVE_TAKEAWAY_CHARS) -> str:
@@ -453,7 +486,11 @@ def sentence_cut(text: str, limit: int = ARCHIVE_TAKEAWAY_CHARS) -> str:
     text = c.clean_summary(str(text or ""), 10**6)
     if len(text) <= limit:
         return text
-    ends = [m.end() for m in _SENTENCE_END.finditer(text[: limit + 1]) if m.end() >= limit // 2]
+    ends = [
+        m.end()
+        for m in _SENTENCE_END.finditer(text[: limit + 2])
+        if limit // 2 <= m.end() <= limit and _is_sentence_end(text, m.start())
+    ]
     if ends:
         return text[: ends[-1]] + " …"
     return text[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"

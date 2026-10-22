@@ -113,13 +113,28 @@ def test_contested_without_contesting_evidence_dates_from_first_seen():
     assert got == [{"kind": "contested", "date": "2026-05", "claim": "c"}]
 
 
-def test_a_full_week_shows_only_the_week_capped():
+def test_a_full_week_is_capped_counted_in_full_and_keeps_a_slot_for_the_reversal():
     claims = [claim(f"c{i}", first_seen=f"2026-10-1{i}") for i in range(4, 10)]
     claims += [claim("c-extra", first_seen="2026-10-19"), claim("old", first_seen="2026-01-01")]
     claims += [retired("gone", "old", "2026-09-01")]
     got, fresh = b.claim_changes(claims, NOW, 7, n_max=6)
-    assert fresh == 6 and len(got) == 7  # the week's six, plus the latest reversal
+    assert fresh == 7  # every change in the window, not just the ones shown
+    assert len(got) == 6  # the cap holds, the reversal included
     assert got[-1]["kind"] == "overturned" and got[-1]["replaced"] == "gone"
+    assert [ch["date"] for ch in got] == sorted((ch["date"] for ch in got), reverse=True)
+
+
+def test_a_fresh_reversal_past_the_cap_beats_an_older_one():
+    """Review of #94: 8 adds this week + a reversal on 10-15 showed six adds and a
+    January reversal; this week's reversal was dropped."""
+    claims = [claim(f"a{i}", first_seen=f"2026-10-{16 + i % 4}") for i in range(8)]
+    claims += [claim("w1", supersedes=["l1"]), retired("l1", "w1", "2026-10-15")]
+    claims += [claim("w0", supersedes=["l0"]), retired("l0", "w0", "2026-01-01")]
+    got, fresh = b.claim_changes(claims, "2026-10-22", 7)
+    assert fresh == 9 and len(got) == b.CHANGES_MAX
+    reversals = [ch for ch in got if ch["kind"] == "overturned"]
+    assert [(ch["replaced"], ch["date"]) for ch in reversals] == [("l1", "2026-10-15")]
+    assert b.changes_note(fresh, len(got), 7) == "The 6 newest of 9 changes in the last 7 days."
 
 
 def test_a_quiet_week_tops_up_with_dated_earlier_changes():
@@ -147,6 +162,7 @@ def test_changes_note_says_what_the_window_held():
     assert b.changes_note(0, 3, 7).startswith("No claim changed in the last 7 days")
     assert b.changes_note(1, 3, 7).startswith("1 change in the last 7 days")
     assert b.changes_note(2, 3, 7).startswith("2 changes in the last 7 days")
+    assert b.changes_note(9, 6, 7) == "The 6 newest of 9 changes in the last 7 days."
     assert (
         b.changes_note(3, 3, 7) == "Every claim added, contested or overturned in the last 7 days."
     )

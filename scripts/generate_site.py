@@ -361,7 +361,7 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
 SITE_URL = gh.SITE_URL
 SITE_VIEWS = (
     ("Briefing", "week"),
-    ("News", "news"),
+    ("Stories", "news"),
     ("Claims", "claims"),
     ("Topics", "topics"),
     ("Archive", "archive"),

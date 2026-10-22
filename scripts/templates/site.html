@@ -361,7 +361,6 @@
     .title-row .sub { font-size: 14px; margin-top: 6px; }
     .dateline { margin: 2px 0 10px; gap: 6px; }
     .dateline .cell { padding: 3px 8px; }
-    .sitesearch { order: 3; flex-basis: 100%; max-width: none; }
     .sec-hd:first-of-type { margin-top: 6px; }
     .flag .meta { font-size: 11px; }
     .sec-hd { flex-wrap: wrap; }
@@ -474,6 +473,7 @@
   .chain { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; }
   .chain .here { font-weight: 600; color: var(--ink); }
   .sitesearch { flex: 1 1 220px; max-width: 360px; }
+  @media (max-width: 640px) { .sitesearch { order: 3; flex-basis: 100%; max-width: none; } }
   .sitesearch input { width: 100%; font: inherit; font-size: 14px; padding: 6px 10px; background: var(--card);
     border: 1px solid var(--rule); color: var(--ink); border-radius: 8px; }
   .hits-h { margin-top: 20px; }
@@ -1172,8 +1172,12 @@
   function lessonsHTML(f) {
     var rows = arr(f.lessons).filter(function (l) { return l && typeof l === "object" && l.excerpt; });
     if (!rows.length) return "";
+    // A quote the grounding check could not find is not shown as verbatim;
+    // the point carries the same mark the rendered page uses.
     return '<h2>Lessons</h2><ul class="lessons">' + rows.map(function (l) {
-      return '<li>' + txt(l.point) + '<blockquote><p>&ldquo;' + txt(l.excerpt) + '&rdquo;</p></blockquote></li>';
+      return '<li>' + txt(l.point) + (l.grounded === false
+        ? ' <em class="ev-note">(excerpt not found in source)</em>'
+        : '<blockquote><p>&ldquo;' + txt(l.excerpt) + '&rdquo;</p></blockquote>') + '</li>';
     }).join("") + '</ul>';
   }
   // The detail modal for a story with no rendered page (news-gate rows), and
@@ -1217,6 +1221,7 @@
   function changesNote(fresh, total, days, last) {
     if (!total) return "No claim has changed yet.";
     if (fresh === 0) return "No claim changed in the last " + days + " days; the last change was " + last + ".";
+    if (fresh > total) return "The " + total + " newest of " + fresh + " changes in the last " + days + " days.";
     if (fresh < total) return fresh + " change" + (fresh > 1 ? "s" : "") + " in the last " + days +
       " days; earlier ones fill in, each with its date.";
     return "Every claim added, contested or overturned in the last " + days + " days.";
@@ -1297,11 +1302,18 @@
     return out;
   }
   // ?claim=<id>: clear the filters, open the retired group if needed, scroll + highlight.
+  // Clear any filter, or a search the claim doesn't match, that would hide the
+  // claim a link points at. True when something changed (the list must redraw).
+  function clearFiltersFor(c) {
+    var changed = claimState.topic !== "all" || claimState.status !== "all";
+    claimState.topic = "all"; claimState.status = "all";
+    var q = String(claimState.q || "").trim().toLowerCase();
+    if (q && !claimMatches(c, q)) { claimState.q = ""; changed = true; }
+    return changed;
+  }
   function focusClaim(id) {
     if (!claimById(id)) return;
-    if (claimState.topic !== "all" || claimState.status !== "all") {
-      claimState.topic = "all"; claimState.status = "all"; renderClaims();
-    }
+    if (clearFiltersFor(claimById(id))) renderClaims();
     var el = document.getElementById("claim-" + id);
     if (!el) return;
     el.open = true;

@@ -173,15 +173,25 @@ def claim_changes(
     n_max: int = CHANGES_MAX,
     n_min: int = CHANGES_MIN,
 ) -> tuple[list[dict], int]:
-    """(the front page's claim changes, how many fall in the last `days`)."""
+    """(the front page's claim changes, how many changes fall in the last `days`).
+
+    At most `n_max` are shown. The newest reversal always gets one of those
+    slots, whether it is this week's or older; the count is of every change in
+    the window, not just the ones shown."""
     cutoff = _cutoff(now, days)
     changes = all_changes(claims)
-    fresh = [ch for ch in changes if ch["date"] >= cutoff][:n_max]
+    fresh = [ch for ch in changes if ch["date"] >= cutoff]
     older = [ch for ch in changes if ch["date"] < cutoff]
-    picked = fresh + older[: max(0, n_min - len(fresh))]
-    if not any(ch["kind"] == "overturned" for ch in picked):
-        picked += [ch for ch in older if ch["kind"] == "overturned"][:1]
-    return picked, len(fresh)
+    picked = fresh[:n_max] + older[: max(0, n_min - len(fresh))]
+    reversal = next((ch for ch in changes if ch["kind"] == "overturned"), None)
+    if reversal is not None and reversal not in picked:
+        picked = picked[: max(0, n_max - 1)] + [reversal]
+    return _by_date(picked), len(fresh)
+
+
+def _by_date(changes: list[dict]) -> list[dict]:
+    """Newest first, in all_changes' order within a date (stable sort)."""
+    return sorted(changes, key=lambda ch: ch["date"], reverse=True)
 
 
 def changes_note(fresh: int, total: int, days: int, last: str = "") -> str:
@@ -191,6 +201,8 @@ def changes_note(fresh: int, total: int, days: int, last: str = "") -> str:
         return "No claim has changed yet."
     if fresh == 0:
         return f"No claim changed in the last {days} days; the last change was {last}."
+    if fresh > total:
+        return f"The {total} newest of {fresh} changes in the last {days} days."
     if fresh < total:
         return (
             f"{fresh} change{'s' if fresh > 1 else ''} in the last {days} days; "

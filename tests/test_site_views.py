@@ -197,6 +197,7 @@ FNS = [
     "storyMatches",
     "allStories",
     "storyCard",
+    "clearFiltersFor",
 ]
 
 
@@ -216,6 +217,7 @@ def run_js(data: dict, expr: str):
     src = gh.TEMPLATE.read_text(encoding="utf-8")
     labels = re.search(r"var CHANGE_LABEL = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var CHECKED_TIP = .*?;\n", src, re.S).group(0)
+    labels += "\n" + re.search(r"var claimState = \{.*?\};", src).group(0)
     prelude = (
         "var TMETA = {}; var TOPIC_ORDER = ['ai-security'];\n"
         f"{labels}\nvar DATA = {json.dumps(data)};\n"
@@ -416,7 +418,7 @@ def test_claim_change_card_shows_the_reversal_and_keeps_guidance_off_the_front_p
 def test_site_and_readme_print_the_same_changes_sentence():
     import briefing
 
-    cases = [(0, 0), (0, 3), (1, 3), (2, 4), (3, 3)]
+    cases = [(0, 0), (0, 3), (1, 3), (2, 4), (3, 3), (9, 6)]
     js = ",".join(f"changesNote({f}, {t}, 7, 'Jul 20, 2026')" for f, t in cases)
     got = run_js({}, "[" + js + "]")
     assert got == [briefing.changes_note(f, t, 7, "Jul 20, 2026") for f, t in cases]
@@ -700,3 +702,43 @@ def test_archive_takeaways_end_at_a_sentence():
     assert got.endswith(". …") and len(got) <= 122
     assert gh.sentence_cut("short", 120) == "short"
     assert gh.sentence_cut("word " * 100, 50).endswith("…")
+
+
+def test_a_claim_link_clears_a_search_that_would_hide_the_claim():
+    data = {"claims": [{"id": "a", "status": "current", "title": "Pickle loads run code"}]}
+    got = run_js(
+        data,
+        "(function () { var out = [];"
+        " claimState.q = 'pickle'; out.push(clearFiltersFor(DATA.claims[0]), claimState.q);"
+        " claimState.q = 'zzz'; out.push(clearFiltersFor(DATA.claims[0]), claimState.q);"
+        " claimState.topic = 'ai-research'; out.push(clearFiltersFor(DATA.claims[0]), claimState.topic);"
+        " return out; })()",
+    )
+    assert got == [False, "pickle", True, "", True, "all"]
+
+
+def test_an_ungrounded_excerpt_is_not_shown_as_a_verbatim_quote():
+    row = {
+        "lessons": [
+            {"point": "kept", "excerpt": "real quote", "grounded": True},
+            {"point": "flagged", "excerpt": "INVENTED QUOTE", "grounded": False},
+        ]
+    }
+    html = run_js({"findings": [row]}, "lessonsHTML(DATA.findings[0])")
+    assert "real quote" in html and "flagged" in html
+    assert "INVENTED QUOTE" not in html and "excerpt not found in source" in html
+
+
+def test_sentence_cut_does_not_end_at_abbreviations():
+    text = (
+        "Agents compared vs. humans in the U.S. trial, e.g. Claude, did well across tasks. "
+        "The rest of this takeaway runs on for a long while past the limit."
+    )
+    got = gh.sentence_cut(text, 100)
+    assert (
+        got == "Agents compared vs. humans in the U.S. trial, e.g. Claude, did well across tasks. …"
+    )
+    assert (
+        gh.sentence_cut("We tested v. 2. It held up. More " + "x " * 60, 40)
+        == "We tested v. 2. It held up. …"
+    )
