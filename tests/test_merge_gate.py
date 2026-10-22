@@ -119,7 +119,19 @@ def _no_main_stories(monkeypatch):
     """main's story ledger and eval history come from git; these trees carry
     neither (the real main does once a scan has merged)."""
     monkeypatch.setattr(gate, "main_stories", lambda base: {})
-    monkeypatch.setattr(gate, "git_json", lambda ref_path, default: default)
+    no_main_history(monkeypatch)
+
+
+def no_main_history(monkeypatch) -> None:
+    """main's data/evals/history.json reads as absent; every other git read is real."""
+    real = gate.git_json
+
+    def fake(ref_path: str, default: object) -> object:
+        if ref_path.endswith(":data/evals/history.json"):
+            return default
+        return real(ref_path, default)
+
+    monkeypatch.setattr(gate, "git_json", fake)
 
 
 def test_content_problems_on_a_clean_tree(tmp_path, monkeypatch):

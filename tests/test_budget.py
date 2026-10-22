@@ -220,3 +220,47 @@ def test_real_config_declares_the_guard_keys():
     s = budget.budget_settings()
     assert {"monthly_cap_usd", "usd_per_story", "uncalibrated_run_usd"} <= s.keys()
     assert s["max_stories_per_run"] > 0
+    assert 0 < s["retry_max_usd"] <= 2  # a small, named allowance
+
+
+def failed_empty(run_id="L1", cost=0.4, runner="local", outcome="analysis-empty") -> list[dict]:
+    reserve = row(run_id, date=TODAY, kind="reserve", cost=2.0, stories=0, runner=runner)
+    actual = {**reserve, "kind": "actual", "cost_usd": cost}
+    if outcome:
+        actual["outcome"] = outcome
+    return [reserve, actual]
+
+
+RETRY = {**settings(per_story=0.1), "retry_max_usd": 1.0}
+
+
+def test_one_local_retry_after_a_cheap_analysis_empty_failure():
+    ok, reason = budget.check(failed_empty(), RETRY, "local", TODAY)
+    assert ok, reason
+    # The retry's own reservation is the record: a second retry is blocked.
+    second = failed_empty() + failed_empty("L2")[:1]
+    ok, reason = budget.check(second, RETRY, "local", TODAY)
+    assert not ok and "already tried" in reason
+    second += failed_empty("L2")[1:]  # even when the retry also came back empty
+    assert not budget.check(second, RETRY, "local", TODAY)[0]
+
+
+@pytest.mark.parametrize(
+    "runs, settings_",
+    [
+        (failed_empty(cost=1.0), RETRY),  # cost not below the limit
+        (failed_empty(), {**RETRY, "retry_max_usd": None}),  # no allowance configured
+        (failed_empty()[:1], RETRY),  # no actual row: outcome unknown
+        (failed_empty(outcome=None), RETRY),  # failed some other way
+        (failed_empty(runner="cloud"), RETRY),  # the cloud never retries
+    ],
+)
+def test_no_retry_unless_local_cheap_and_analysis_empty(runs, settings_):
+    runner = runs[0]["runner"]
+    assert not budget.check(runs, settings_, runner, TODAY)[0]
+
+
+def test_actual_rows_carry_only_known_outcomes():
+    budget.validate_row(failed_empty()[1])
+    with pytest.raises(budget.LedgerError):
+        budget.validate_row({**failed_empty()[1], "outcome": "whatever"})

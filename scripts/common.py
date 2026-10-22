@@ -891,6 +891,18 @@ def unarchive(keep) -> list[dict]:
     return back
 
 
+# merge_analysis.py's code-owned record of what it merged this run (summed over
+# invocations); `scan_count.py --work` reads it. Never written by the model.
+MERGE_RECORD_NAME = "_merge_outcomes.json"
+MERGE_COUNTS = ("merged", "new", "updated", "skipped_invalid")
+
+
+def merge_record() -> dict:
+    """This run's merge counts so far (zeros when nothing merged yet)."""
+    raw = load_json(DATA_DIR / MERGE_RECORD_NAME, default=None) or {}
+    return {k: int(raw.get(k, 0)) for k in MERGE_COUNTS}
+
+
 def load_candidates() -> list[dict]:
     return load_json(CANDIDATES_FILE, default=[]) or []
 

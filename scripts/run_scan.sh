@@ -15,7 +15,8 @@
 #   post         a session that produced no analysis fails (analysis-empty,
 #                no PR); else the per-run story cap, render everything, push
 #                claude/scan-<date>-<runner> and open its PR.
-#   actual <stories> <cost_usd>   record a local run's measured cost.
+#   actual <run_id> <stories> <cost_usd> [outcome]   record a local run's
+#                measured cost (outcome: analysis-empty, which allows one retry).
 #   fail <phase> open or comment on the scan-failure issue.
 #   status       print this month's spend report (also kept as SPEND.md on the
 #                budget-ledger branch, rewritten on every ledger write).
@@ -39,6 +40,7 @@ RESULT="data/_scan_result.json"
 SUMMARY="data/_summary.md"
 RUN_ID_FILE="data/_scan_run_id"
 STAGED_FILE="data/_scan_candidates" # candidates ingested (before the batch cut), for the cost eval
+ANALYSIS_EMPTY_EXIT=4                # post: the session did no work (alert raised)
 EVALS_DIR="data/evals"              # post owns it: reset to main's, then appended
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
@@ -176,7 +178,7 @@ staged_count() {
 phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
-    data/_story_outcomes.md data/_scan_backlog.json
+    data/_story_outcomes.md data/_merge_outcomes.json data/_scan_backlog.json
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -218,10 +220,10 @@ phase_post() {
   # fail the run rather than ship a rerank (prune) as if it were a scan.
   "$PY" scripts/scan_count.py --work | tee -a "$LOG" || work=$?
   if [[ "$work" == 3 ]]; then
-    log "SCAN_FAILED: the session wrote no analysis and applied no story verdict; no PR"
+    log "SCAN_FAILED: the session merged no entry and applied no story verdict; no PR"
     trap - ERR
     on_error analysis-empty "$LINENO"
-    exit 1
+    exit "$ANALYSIS_EMPTY_EXIT"
   fi
   [[ "$work" == 0 ]] || return 1
   # The larger of analysis_out.json and entries new since main: the model
@@ -316,10 +318,12 @@ spend_line() {
 # The local wrapper passes the run id it set, so the row can't be redirected
 # by an edited data/_scan_run_id.
 phase_actual() {
-  local run_id="$1" stories="$2" cost="$3"
+  local run_id="$1" stories="$2" cost="$3" outcome=()
+  [[ -n "${4:-}" ]] && outcome=(--outcome "$4")
   require_int "$stories" "actual: stories"
   main_config
-  ledger_append "$run_id" actual --run-id "$run_id" --stories "$stories" --cost-usd "$cost"
+  ledger_append "$run_id" actual --run-id "$run_id" --stories "$stories" --cost-usd "$cost" \
+    ${outcome[@]+"${outcome[@]}"}
 }
 
 main() {
@@ -336,7 +340,7 @@ main() {
       trap "on_error $phase \$LINENO" ERR
       "phase_$phase"
       ;;
-    actual) phase_actual "$2" "$3" "$4" ;;
+    actual) phase_actual "$2" "$3" "$4" "${5:-}" ;;
     status)
       main_config
       ledger_fetch

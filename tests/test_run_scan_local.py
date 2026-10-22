@@ -16,7 +16,15 @@ from test_run_scan import SECRET, gh_calls, git, ledger_rows, open_budget
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
 echo "SCAN_LOCKED=$SCAN_LOCKED" >> "$CLAUDE_ARGS.env"
-[ -n "$FAKE_ANALYSIS" ] && echo '[{"id": "a"}, {"id": "b"}]' > data/analysis_out.json
+echo call >> "$CLAUDE_ARGS.calls"
+# FAKE_ANALYSIS_ON_RETRY: analyze only on the second session of the day.
+if [ -n "$FAKE_ANALYSIS_ON_RETRY" ] && [ "$(wc -l < "$CLAUDE_ARGS.calls")" -ge 2 ]; then
+  FAKE_ANALYSIS=1
+fi
+if [ -n "$FAKE_ANALYSIS" ]; then
+  echo '[{"id": "a"}, {"id": "b"}]' > data/analysis_out.json
+  echo '{"merged": 2, "new": 2}' > data/_merge_outcomes.json  # as merge_analysis.py writes
+fi
 printf '{"total_cost_usd": 0.42, "subtype": "success", "num_turns": 7, "result": "%s"}' \\
   "${FAKE_RESULT:-Analyzed the batch.}"
 exit "${FAKE_CLAUDE_RC:-0}"
@@ -61,7 +69,8 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert "Read(data/evals/**)" not in "\n".join(args)  # golden-only tightening
     assert '"Edit(data/_scan*)"' in "\n".join(args)  # the batch cut + backlog
     assert '"Read(data/_scan_backlog.json)"' in "\n".join(args)  # the batch is the job
-    for denied in ("news_stories.json", "story_shortlist.json", "_story_outcomes.md"):
+    code_owned = ("_story_outcomes.md", "_merge_outcomes.json")  # what post's --work reads
+    for denied in ("news_stories.json", "story_shortlist.json", *code_owned):
         assert f'"Edit(data/{denied})"' in "\n".join(args)  # the story guard's inputs
     assert flag["--append-system-prompt-file"] == ".claude/skills/daily-scan/SKILL.md"
     assert flag["--setting-sources"] == "local"
@@ -94,13 +103,26 @@ def test_wrapper_skips_without_launching_claude_when_budget_closed(scan_repo, tm
     assert args == []
 
 
+def sessions(tmp: Path) -> int:
+    calls = tmp / "claude-args.calls"
+    return len(calls.read_text().splitlines()) if calls.exists() else 0
+
+
+def attempts(origin: Path) -> list[tuple]:
+    return [(r["kind"], r["stories"], r.get("outcome")) for r in ledger_rows(origin)]
+
+
+EMPTY = [("reserve", 0, None), ("actual", 0, "analysis-empty")]
+
+
 def test_a_session_with_no_analysis_fails_without_a_pr_and_logs_why(scan_repo, tmp_path):
     work, origin, env = scan_repo
-    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", retry_max_usd="0.1")
     res, _ = run_local(work, env, tmp_path, FAKE_RESULT="I stopped before analyzing anything")
     assert res.returncode != 0
     rows = [(r["kind"], r["stories"], r["cost_usd"]) for r in ledger_rows(origin)]
     assert rows == [("reserve", 0, 2.0), ("actual", 0, 0.42)]  # no done row, no fake count
+    assert sessions(tmp_path) == 1  # $0.42 is not below retry_max_usd: no retry
     calls = gh_calls(env)
     assert "Daily scan failing (local, analysis-empty)" in calls and "/pulls" not in calls
     assert "I stopped" not in calls  # the session's words stay out of public issues
@@ -117,3 +139,36 @@ def test_the_logged_session_result_is_scrubbed(scan_repo, tmp_path):
     log = (work / "data/_scan.log").read_text()
     assert "session result withheld" in log and SECRET not in log
     assert SECRET not in gh_calls(env)
+
+
+def test_a_cheap_analysis_empty_day_gets_exactly_one_retry(scan_repo, tmp_path):
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", retry_max_usd="1.0")
+    res, _ = run_local(work, env, tmp_path)  # every session comes back empty
+    assert res.returncode != 0
+    assert sessions(tmp_path) == 2
+    assert attempts(origin) == EMPTY + EMPTY
+    run_ids = [r["run_id"] for r in ledger_rows(origin) if r["kind"] == "reserve"]
+    assert run_ids[1] == run_ids[0] + "-retry"
+    assert "/pulls" not in gh_calls(env)
+    # The same day again (launchd, or by hand): the ledger blocks a third session.
+    res, _ = run_local(work, env, tmp_path)
+    assert res.returncode == 0 and "skip" in res.stdout
+    assert sessions(tmp_path) == 2 and attempts(origin) == EMPTY + EMPTY
+
+
+def test_the_retry_ships_when_its_session_analyzes(scan_repo, tmp_path):
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", retry_max_usd="1.0")
+    res, _ = run_local(work, env, tmp_path, FAKE_ANALYSIS_ON_RETRY="1")
+    assert res.returncode == 0, res.stdout + res.stderr
+    assert sessions(tmp_path) == 2
+    assert attempts(origin) == [
+        *EMPTY,
+        ("reserve", 0, None),
+        ("done", 2, None),
+        ("actual", 2, None),
+    ]
+    log = (work / "data/_scan.log").read_text()
+    assert log.count("FAILED in phase 'analysis-empty'") == 1  # only the first attempt
+    assert "SCAN_RESULT" in log  # the retry's post ran to the end

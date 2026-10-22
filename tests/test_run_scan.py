@@ -129,9 +129,16 @@ def reserved_run(work: Path, env: dict, run_id: str = "C1") -> None:
     assert res.returncode == 0, res.stdout + res.stderr
 
 
+def merged(work: Path, n: int) -> None:
+    """merge_analysis.py's code-owned record: it merged `n` entries."""
+    rec = {"merged": n, "new": n, "updated": 0, "skipped_invalid": 0}
+    (work / "data/_merge_outcomes.json").write_text(json.dumps(rec))
+
+
 def analyzed(work: Path, n: int = 1) -> None:
-    """The session analyzed `n` stories (what post requires to ship a PR)."""
+    """The session analyzed and merged `n` stories (what post requires to ship a PR)."""
     (work / "data/analysis_out.json").write_text(json.dumps([{"id": f"a{i}"} for i in range(n)]))
+    merged(work, n)
 
 
 def test_pre_skips_before_any_ingest_when_no_cap(scan_repo):
@@ -221,6 +228,7 @@ def test_post_over_story_cap_fails_and_alerts(scan_repo):
     work, _, env = scan_repo
     reserved_run(work, env)
     (work / "data/analysis_out.json").write_text(json.dumps([{"t": i} for i in range(9)]))
+    merged(work, 9)
     res = run_scan(work, env, "post")
     assert res.returncode != 0
     assert "over the per-run cap of 8" in (work / "data/_scan.log").read_text()
@@ -231,6 +239,7 @@ def test_post_counts_entries_merged_past_the_last_analysis_out(scan_repo):
     work, _, env = scan_repo
     reserved_run(work, env)
     (work / "data/analysis_out.json").write_text("[]")
+    merged(work, 9)
     pool = {"topic": "ai-security", "entries": [{"id": f"e{i}"} for i in range(9)]}
     (work / "data/ai-security.json").write_text(json.dumps(pool))
     res = run_scan(work, env, "post")
@@ -352,13 +361,14 @@ def test_pre_hands_the_session_only_this_runs_batch(scan_repo):
 
 def test_post_without_analysis_fails_and_opens_no_pr(scan_repo):
     """2026-10-20: the session analyzed nothing and post shipped the rerank's
-    prune as a "0 stories" scan PR anyway."""
+    prune as a "0 stories" scan PR anyway. An analysis_out.json that never
+    merged is not work either: only merge_analysis.py's record counts."""
     work, origin, env = scan_repo
     reserved_run(work, env)
-    (work / "data/analysis_out.json").write_text("[]")
+    (work / "data/analysis_out.json").write_text(json.dumps([{"id": "a"}, {"id": "b"}]))
     (work / "README.md").write_text("v2\n")  # a rerank's drift alone
     res = run_scan(work, env, "post")
-    assert res.returncode != 0
+    assert res.returncode == 4
     calls = gh_calls(env)
     assert "Daily scan failing (cloud, analysis-empty)" in calls
     assert "/pulls" not in calls

@@ -10,9 +10,11 @@ matters: rerank pulls archived news stories back into the pools, and those are
 main's own entries, not this run's analysis (the 2026-10-20 run analyzed
 nothing, yet counted the 19 it restored).
 
-`--work` exits 3 when the session produced nothing to ship: no analyzed entry
-and no applied `same`/`update` story verdict (read from merge_analysis.py's
-code-owned record, data/_story_outcomes.md). `post` fails such a run.
+`--work` exits 3 when the session produced nothing to ship: no entry that
+merge_analysis.py merged and no `same`/`update` story verdict it applied. Both
+come from its code-owned records (data/_merge_outcomes.json and
+data/_story_outcomes.md), never from the model's analysis_out.json. `post`
+fails such a run.
 
 Usage:
     python scripts/scan_count.py          # print the story count
@@ -64,9 +66,9 @@ def settled_verdicts() -> int:
 def main(argv: list[str]) -> int:
     stories = max(new_entries(), analysis_count())
     if argv == ["--work"]:
-        settled = settled_verdicts()
-        print(f"analyzed={stories} settled_verdicts={settled}")
-        return 0 if stories or settled else NO_WORK
+        merged, settled = c.merge_record()["merged"], settled_verdicts()
+        print(f"analyzed={stories} merged={merged} settled_verdicts={settled}")
+        return 0 if merged or settled else NO_WORK
     print(stories)
     return 0
 

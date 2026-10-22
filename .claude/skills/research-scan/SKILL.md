@@ -28,8 +28,9 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
 
 2. **Read the candidates.** Load `data/candidates.json`. In the daily scan it holds only this
    run's batch (`scripts/select_batch.py`), and the session's budget is sized for that batch:
-   work through the whole batch, and never stop for budget reasons before analyzing. For
-   each candidate, read its `raw_path` file under `data/_raw/` for the full article text.
+   work through the whole batch, and never stop for budget reasons before analyzing. A weak
+   candidate is analyzed with honest low scores (the curation gate holds it in REVIEW.md),
+   never dropped, so a real analysis is never empty. For each candidate, read its `raw_path` file under `data/_raw/` for the full article text.
    If `raw_path` is null but `article_url` is set, fetch clean text yourself:
    `curl -s https://r.jina.ai/<url>`.
 

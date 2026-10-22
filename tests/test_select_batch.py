@@ -27,11 +27,15 @@ def table() -> prefilter.KeywordTable:
     )
 
 
-def conf(cap: int = 2, margin: int = 1) -> common.Config:
+def conf(cap: int = 2, margin: int = 1, per_source: int = 2, bonus: float = 5) -> common.Config:
     base = common.load_config()
-    return common.Config(
-        **{**base.__dict__, "limits": {"max_stories_per_run": cap, "batch_margin": margin}}
-    )
+    limits = {
+        "max_stories_per_run": cap,
+        "batch_margin": margin,
+        "batch_per_source": per_source,
+        "batch_routed_bonus": bonus,
+    }
+    return common.Config(**{**base.__dict__, "limits": limits})
 
 
 def cands(n: int, **over) -> list[dict]:
@@ -51,6 +55,7 @@ def test_batch_size_is_the_story_cap_plus_the_named_margin():
     assert select_batch.batch_size(conf(8, 4)) == 12
     real = common.load_config()
     assert real.limits["batch_margin"] == 4  # named in config.yaml, not a code default
+    assert real.limits["batch_per_source"] == 2 and real.limits["batch_routed_bonus"] == 5
     assert select_batch.batch_size(real) == real.limits["max_stories_per_run"] + 4
 
 
@@ -62,20 +67,78 @@ def test_the_batch_is_cut_to_size_and_nothing_is_lost(sandbox, table):
     assert [b["batch_rank"] for b in backlog] == list(range(4, 11))
 
 
-def test_rank_prefers_routed_then_credible_then_new(sandbox, table):
-    routed = _cand(
+def test_score_prefers_credible_then_new_and_routing_only_nudges(sandbox, table):
+    one = {"source_id": "rss:one"}  # one source, one class: pure score order
+    credible = _cand(id="credible", source_url="https://c.example/1", source_rank=90.0, **one)
+    fresh = _cand(id="fresh", source_url="https://f.example/1", published="2026-07-14", **one)
+    stale = _cand(id="stale", source_url="https://s.example/1", published="2026-06-20", **one)
+    weak_routed = _cand(
         id="routed",
         title="Prompt injection and jailbreak via memory poisoning",
         source_url="https://r.example/1",
-        source_rank=10.0,
+        source_rank=30.0,
         published="2026-06-20",
+        **one,
     )
-    credible = _cand(id="credible", source_url="https://c.example/1", source_rank=90.0)
-    fresh = _cand(id="fresh", source_url="https://f.example/1", published="2026-07-14")
-    stale = _cand(id="stale", source_url="https://s.example/1", published="2026-06-20")
-    batch, backlog = select_batch.select([stale, fresh, credible, routed], conf(2, 1), table)
-    assert [c["id"] for c in batch] == ["routed", "credible", "fresh"]
+    staged = [stale, weak_routed, fresh, credible]
+    batch, backlog = select_batch.select(staged, conf(2, 1, per_source=9), table)
+    assert [c["id"] for c in batch] == ["credible", "fresh", "routed"]  # +5 beats stale only
     assert [c["id"] for c in backlog] == ["stale"]
+    batch, _ = select_batch.select(staged, conf(2, 1, per_source=9, bonus=0), table)
+    assert [c["id"] for c in batch] == ["credible", "fresh", "stale"]
+
+
+def realistic_mix() -> list[dict]:
+    """2026-10-20's shape: many routed, credible GHSA/vendor items that would win
+    on score alone, and filtered KEV, HN and Simon Willison items."""
+
+    def make(prefix, n, rank, title, **over):
+        return [
+            _cand(
+                id=f"{prefix}{i}",
+                title=f"{title} {prefix} {i} item{prefix}{i}",
+                source_url=f"https://{prefix}.example/{i}",
+                article_url=f"https://{prefix}.example/{i}",
+                source_rank=rank,
+                published="2026-07-14",
+                **over,
+            )
+            for i in range(n)
+        ]
+
+    routed = "Prompt injection jailbreak"
+    return [
+        *make(
+            "ghsa", 60, 80.0, routed, source_id=None, discovered_via="github", source_type="GHSA"
+        ),
+        *make("vendor", 10, 75.0, routed, source_id="rss:vendor"),
+        *make("kev", 10, 50.0, "CISA KEV entry", source_id="kev_json:cisa"),
+        *make(
+            "hn",
+            5,
+            40.0,
+            "Show HN",
+            source_id=None,
+            discovered_via="hackernews",
+            source_type="Hacker News",
+        ),
+        *make("simon", 10, 60.0, "Notes on", source_id="rss:simonwillison"),
+        *[x for j in range(3) for x in make(f"blog{j}", 3, 55.0, "Post", source_id=f"rss:b{j}")],
+    ]
+
+
+def test_no_source_class_starves_the_others(sandbox, table):
+    batch, _ = select_batch.select(realistic_mix(), conf(8, 4), table)
+    sources = [select_batch.source_key(c) for c in batch]
+    assert len(batch) == 12
+    assert "kev_json:cisa" in sources and "hackernews:Hacker News" in sources
+    assert max(sources.count(s) for s in set(sources)) <= 2  # batch_per_source
+    assert sources.count("github:GHSA") == 2  # the score leader still gets its share
+
+
+def test_the_per_source_cap_yields_when_nothing_else_is_left(sandbox, table):
+    batch, _ = select_batch.select(cands(10), conf(2, 2), table)  # all one source
+    assert len(batch) == 4
 
 
 def test_prefilter_drops_never_enter_the_batch(sandbox, table):
@@ -124,11 +187,11 @@ def test_entries_rerank_restored_from_the_archive_are_not_this_runs(sandbox, on_
     assert scan_count.main([]) == 0 and capsys.readouterr().out.strip() == "1"
 
 
-def test_work_is_analysis_or_an_applied_same_or_update_verdict(sandbox, on_main):
+def test_work_is_a_merge_or_an_applied_same_or_update_verdict(sandbox, on_main):
     on_main()
     assert scan_count.main(["--work"]) == scan_count.NO_WORK
-    common.save_json(common.ANALYSIS_OUT, [])
-    assert scan_count.main(["--work"]) == scan_count.NO_WORK
+    common.save_json(common.ANALYSIS_OUT, [{"id": "a"}, {"id": "b"}])
+    assert scan_count.main(["--work"]) == scan_count.NO_WORK  # written, never merged
     outcomes = sandbox / "data" / "_story_outcomes.md"
     new_only = [{"action": "new", "candidate_id": "x"}]
     outcomes.write_text(story_ledger.outcomes_record(new_only))
@@ -137,8 +200,10 @@ def test_work_is_analysis_or_an_applied_same_or_update_verdict(sandbox, on_main)
     outcomes.write_text(story_ledger.outcomes_record(same))
     assert scan_count.main(["--work"]) == 0
     outcomes.unlink()
-    common.save_json(common.ANALYSIS_OUT, [{"id": "a"}])
-    assert scan_count.main(["--work"]) == 0
+    common.save_json(common.DATA_DIR / common.MERGE_RECORD_NAME, {"merged": 0, "new": 0})
+    assert scan_count.main(["--work"]) == scan_count.NO_WORK
+    common.save_json(common.DATA_DIR / common.MERGE_RECORD_NAME, {"merged": 1, "new": 0})
+    assert scan_count.main(["--work"]) == 0  # an in-place re-merge is analysis too
 
 
 def test_settled_count_reads_the_code_owned_record():
