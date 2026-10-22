@@ -36,6 +36,7 @@ scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # inges
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube)
+scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
 scripts/merge_analysis.py # validate + domain-ID gate + dedup + route + ground + rerank
 scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analyzer's domain list)
 scripts/migrate_taxonomy.py # free-text domain -> ID (idempotent; rerank runs it too)
@@ -168,9 +169,25 @@ likewise unharvested.
 
 One entrypoint, two runners. Both run the `/daily-scan` skill
 (`.claude/skills/daily-scan/SKILL.md`), which wraps `scripts/run_scan.sh`:
-`pre` (budget guard, then every ingestor) → LLM analysis → `post` (story cap,
-render, spend record, PR on `claude/scan-<date>-<runner>`). A failed run opens or
-comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
+`pre` (budget guard, then every ingestor, then the batch cut) → LLM analysis →
+`post` (story cap, render, spend record, PR on `claude/scan-<date>-<runner>`). A
+failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
+
+- **Batch:** the session's budget is sized for `limits.max_stories_per_run` stories,
+  so `scripts/select_batch.py` leaves only `max_stories_per_run + batch_margin`
+  candidates in `data/candidates.json`. Prefilter drops stay out; slots are dealt
+  round-robin across ingestor classes (KEV, HN, GHSA, RSS, ...) by newness + source
+  credibility, with a small `batch_routed_bonus` and at most `batch_per_source`
+  slots per source. The rest go to `data/_scan_backlog.json` for diagnosis
+  (Edit- and Read-denied to the Mac session; a convention only in the cloud);
+  tomorrow's ingest re-stages any that are still fresh.
+- **No analysis = failed run:** `post` refuses a run where `merge_analysis.py`
+  merged nothing (its code-owned `data/_merge_outcomes.json`) and applied no
+  `same`/`update` verdict (`data/_story_outcomes.md`), raises `analysis-empty`,
+  and opens no PR. The story count excludes entries rerank restored from main's
+  archive. The Mac wrapper logs the session's final message, scrubbed, to
+  `data/_scan.log` (grep `session result`), and retries once the same day when the
+  failure was analysis-empty and cost under `budget.retry_max_usd`.
 
 - **Cloud (default):** a Claude Code routine with prompt `/daily-scan`, this repo
   attached, scheduled daily. Environment: Custom network access with the hosts from
@@ -191,7 +208,8 @@ comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
   run is still charged. Local runs replace the reservation with the measured
   `total_cost_usd`; cloud runs are charged the ceiling. One finished scan per UTC
   day: a failed cloud run doesn't block the Mac fallback, but a runner never
-  retries its own failed day unattended. The
+  retries its own failed day unattended, except the Mac's one retry after a cheap
+  analysis-empty failure (the retry's own reservation blocks any further one). The
   settings come from `origin/main`, and ledger rows are appended to a fresh copy of
   the remote branch, never read from the working tree the model shares. The cap
   is $100/month (`null` makes every run skip).

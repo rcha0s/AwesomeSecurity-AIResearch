@@ -57,6 +57,11 @@ limits:
   article_chars: 20000  # truncate fetched article text to this many chars
   max_stories_per_run: 8  # analyzed stories per scan; with usd_per_story this is
                           # each run's known cost ceiling (scripts/budget.py)
+  batch_margin: 4         # extra candidates in the session's batch for ones the story
+                          # judge finds same/update (scripts/select_batch.py)
+  batch_per_source: 2     # most batch slots one source may take while others wait
+  batch_routed_bonus: 5   # composite points for a confident prefilter domain hint
+                          # (taxonomy confidence, not newsworthiness: a nudge only)
   max_turns: 150          # hard turn cap on the local model session
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the
@@ -71,6 +76,8 @@ budget:
                               # null = it can't run either
   session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this
                               # (spend can overshoot the cap, so leave headroom)
+  retry_max_usd: 1.0          # a local run that failed analysis-empty and cost less
+                              # than this may retry once the same day (budget.py)
 
 # Taxonomy proposals (ISA ISC-18). A verified `proposed_domain` that recurs on
 # at least `proposal_min_count` entries within `proposal_window_days` opens (or

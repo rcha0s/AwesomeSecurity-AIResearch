@@ -487,11 +487,12 @@ def test_story_membership_holds_main_placements_steady():
 
 def test_merge_gate_checks_the_story_ledger(tmp_path, monkeypatch):
     import merge_gate as gate
-    from test_merge_gate import _tree
+    from test_merge_gate import _tree, no_main_history
 
     root = _tree(tmp_path)
     monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
     monkeypatch.setattr(gate, "main_stories", lambda base: _v2({"s1": {"entry_ids": ["a"]}}))
+    no_main_history(monkeypatch)
     (root / "data" / "news_stories.json").write_text(json.dumps(_v2({"s1": {"entry_ids": ["a"]}})))
     assert gate.content_problems("main", root) == []
     (root / "data" / "news_stories.json").write_text(

@@ -13,6 +13,11 @@ and re-ranks. Before that it applies the story judge's verdicts
 their story without a new entry, and every merged entry is put in its story. Idempotent: re-merging the same URL
 updates the entry in place rather than duplicating it.
 
+Each run also adds its counts to data/_merge_outcomes.json (merged, new,
+updated, skipped_invalid), a code-owned record like data/_story_outcomes.md:
+the scan session can't edit it, and `scan_count.py --work` reads it to decide
+whether a scan did any work.
+
 Usage:
     python scripts/merge_analysis.py
 """
@@ -29,6 +34,15 @@ import story_ledger as sl
 import taxonomy as tx
 import taxonomy_proposals as tp
 import verify_citations as vc
+
+
+def record_merge(merged: int, new: int, invalid: int) -> dict:
+    """Add one merge_analysis.py run's counts to the code-owned record."""
+    rec = c.merge_record()
+    add = {"merged": merged, "new": new, "updated": merged - new, "skipped_invalid": invalid}
+    rec = {k: rec[k] + add[k] for k in c.MERGE_COUNTS}
+    c.save_json(c.DATA_DIR / c.MERGE_RECORD_NAME, rec)
+    return rec
 
 
 def update_source_hit_rate(new_entries: list[dict]) -> None:
@@ -308,6 +322,7 @@ def main() -> int:
     placements: list = []
     merged, errors, merged_urls, newly_added = merge(analyzed, conf, placements)
     ledger_placements(placements, outcomes)
+    record_merge(len(merged), len(newly_added), len(errors))
     print(f"Merged {len(merged)} entr(y/ies) into the pools ({len(newly_added)} new).")
     for topic in c.TOPICS:
         flagged = sum(1 for m in merged if m["topic"] == topic and m.get("needs_review"))

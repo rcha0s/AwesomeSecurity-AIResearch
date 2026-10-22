@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""
+select_batch.py — Hand the scan's model session a batch sized to the run.
+
+`run_scan.sh pre` runs this right after ingest. The session's budget is sized
+for `limits.max_stories_per_run` analyzed stories, so the session must not see
+the whole ingest (286 candidates on 2026-10-20: it judged the set too big for
+its budget and analyzed nothing). This keeps
+`max_stories_per_run + batch_margin` candidates in data/candidates.json, the
+file the session reads. The margin covers batch members the story judge finds
+to be `same`/`update` (they are not analyzed and don't count toward the cap).
+
+Scoring reuses the existing signals, no new scorer: the composite formula over
+the two axes known before analysis, newness (decayed from the source date) and
+credibility (source registry rank), with config.yaml's weights, plus a small
+`batch_routed_bonus` when prefilter.py routed the candidate to a domain.
+Routing measures taxonomy confidence, not newsworthiness, so it only nudges.
+prefilter.py's deny-list, excluded-term and pool/archive-duplicate hits never
+enter the batch.
+
+Fairness: one source class would otherwise take every slot (on 2026-10-20 a
+pure score order gave six GHSA advisories and no KEV, HN or Simon Willison).
+Slots are dealt round-robin across ingestor classes (KEV, HN, GHSA, GitHub
+search, HF papers, conference papers, research sitemaps, RSS feeds), best
+class first, each class giving its best remaining candidate, and no single
+source takes more than `batch_per_source` slots unless nothing else is left.
+
+Everything not selected goes to data/_scan_backlog.json, each with its
+prefilter reason and rank. On the Mac runner the session can neither edit nor
+read it (scan_containment.sh denies both); the cloud routine has no per-tool
+scoping, so there it is only a convention. It is a record for diagnosis, not a
+queue: the next scan's ingest re-stages any candidate still fresh and still in
+its feed, and it competes for that day's batch again.
+
+Usage:
+    python scripts/select_batch.py [--config config.yaml]
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from collections import Counter
+from pathlib import Path
+
+import common as c
+import prefilter as pf
+
+BACKLOG_NAME = "_scan_backlog.json"
+DEFAULTS = {"batch_margin": 4, "batch_per_source": 2, "batch_routed_bonus": 5.0}
+# source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
+OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap")
+
+
+def backlog_file() -> Path:
+    return c.DATA_DIR / BACKLOG_NAME
+
+
+def setting(conf: c.Config, key: str) -> float:
+    return conf.limits.get(key, DEFAULTS[key])
+
+
+def batch_size(conf: c.Config) -> int:
+    """Stories the run may analyze, plus the margin for same/update verdicts."""
+    cap = int(conf.limits.get("max_stories_per_run", 8))
+    return max(0, cap) + max(0, int(setting(conf, "batch_margin")))
+
+
+def source_key(cand: dict) -> str:
+    """The source a candidate came from (registry id, else ingestor + type)."""
+    return cand.get("source_id") or f"{cand.get('discovered_via')}:{cand.get('source_type')}"
+
+
+def ingestor_class(cand: dict) -> str:
+    sid = cand.get("source_id") or ""
+    prefix = sid.split(":", 1)[0]
+    if prefix in OWN_CLASS:
+        return prefix
+    return str(cand.get("discovered_via")) if sid else source_key(cand)
+
+
+def score(cand: dict, conf: c.Config) -> float:
+    """Composite over the axes known before analysis, plus the routing nudge."""
+    axes = {
+        "newness": c.newness_score(c.best_date(cand) or "", conf.half_life_days),
+        "credibility": c.credibility_of(cand),
+    }
+    routed = (cand.get("prefilter") or {}).get("reason") == "routed"
+    return c.composite_score(axes, conf.weights) + (
+        float(setting(conf, "batch_routed_bonus")) if routed else 0.0
+    )
+
+
+def deal(ranked: list[dict], size: int, per_source: int) -> list[dict]:
+    """Round-robin over ingestor classes (best head first), per-source capped;
+    then fill any slots left by score alone. `ranked` is best-first."""
+    queues: dict[str, list[dict]] = {}
+    for cand in ranked:
+        queues.setdefault(ingestor_class(cand), []).append(cand)
+    pos = {id(x): i for i, x in enumerate(ranked)}
+    taken: list[dict] = []
+    used: Counter = Counter()
+    while len(taken) < size:
+        dealt = False
+        for cls in sorted(queues, key=lambda k: pos[id(queues[k][0])] if queues[k] else len(pos)):
+            pick = next((x for x in queues[cls] if used[source_key(x)] < per_source), None)
+            if pick is None or len(taken) >= size:
+                continue
+            queues[cls].remove(pick)
+            used[source_key(pick)] += 1
+            taken.append(pick)
+            dealt = True
+        if not dealt:
+            break
+    ids = {id(x) for x in taken}
+    return taken + [x for x in ranked if id(x) not in ids][: size - len(taken)]
+
+
+def select(
+    candidates: list[dict], conf: c.Config, table: pf.KeywordTable
+) -> tuple[list[dict], list[dict]]:
+    """Split staged candidates into (batch, backlog)."""
+    buckets = pf.bucket(candidates, table)
+    ranked = sorted(
+        buckets.routed + buckets.filtered,
+        key=lambda x: (-score(x, conf), str(x.get("id") or "")),
+    )
+    batch = deal(ranked, batch_size(conf), max(1, int(setting(conf, "batch_per_source"))))
+    ids = {id(x) for x in batch}
+    rest = [x for x in ranked if id(x) not in ids]
+    backlog = [{**x, "batch_rank": i} for i, x in enumerate(rest, start=len(batch) + 1)]
+    return batch, backlog + buckets.dropped
+
+
+def composition(batch: list[dict]) -> str:
+    counts = Counter(source_key(x) for x in batch)
+    return ", ".join(f"{k} x{n}" for k, n in counts.most_common())
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", default=str(c.CONFIG_FILE))
+    args = parser.parse_args(argv)
+    conf = c.load_config(Path(args.config))
+    candidates = c.load_candidates()
+    batch, backlog = select(candidates, conf, pf.load_keywords())
+    c.save_candidates(batch)
+    c.save_json(backlog_file(), backlog)
+    dropped = sum(1 for b in backlog if "batch_rank" not in b)
+    print(
+        f"SCAN_BATCH: {len(batch)} of {len(candidates)} candidates selected "
+        f"(batch size {batch_size(conf)}); {len(backlog) - dropped} below the cut and "
+        f"{dropped} prefilter-dropped -> data/{BACKLOG_NAME}"
+    )
+    print(f"SCAN_BATCH sources: {composition(batch)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -17,13 +17,18 @@ cost is unreadable, so they are charged the ceiling.
 
 `check` refuses when no cap is set, the month's spend has reached it, the run
 ceiling no longer fits, a cloud run has no calibration yet, or any run already
-happened today (unless --allow-repeat). The settings come from the config file
+happened today (unless --allow-repeat). One exception: a local run whose
+`actual` row says `outcome: analysis-empty` and cost less than
+`budget.retry_max_usd` may be followed by exactly one more local run that day.
+The retry's own reservation is the record: a second tried run id blocks the day. The settings come from the config file
 passed with --config, which run_scan.sh takes from origin/main.
 
 Usage:
     python scripts/budget.py --config CFG check --runner cloud     # exit 0 go, 3 skip
     python scripts/budget.py --config CFG reserve --runner cloud --run-id ID
     python scripts/budget.py --config CFG actual --run-id ID --stories 6 --cost-usd 1.84
+    python scripts/budget.py --config CFG actual --run-id ID --stories 0 --cost-usd 0.4 \
+        --outcome analysis-empty
     python scripts/budget.py --config CFG status          # this month's spend report (markdown)
     python scripts/budget.py --config CFG done --run-id ID --stories 6
     python scripts/budget.py --config CFG session-limits --runner local  # "<usd> <turns>"
@@ -44,6 +49,7 @@ import common as c
 SKIP_EXIT = 3
 RUNNERS = ("cloud", "local")
 KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
+OUTCOMES = ("analysis-empty",)  # optional on an actual row: why the run failed
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")  # also keeps SPEND.md's table intact
 DEFAULT_LEDGER = c.DATA_DIR / "_budget_ledger.json"
@@ -72,6 +78,7 @@ def validate_row(row: dict) -> dict:
         and not isinstance(cost, bool)
         and math.isfinite(cost)
         and cost >= 0
+        and row.get("outcome", OUTCOMES[0]) in OUTCOMES
     )
     if not ok:
         raise LedgerError(f"invalid ledger row: {row}")
@@ -135,6 +142,22 @@ def run_ceiling(runs: list[dict], settings: dict, runner: str) -> tuple[float | 
     return round(float(reserve), 4), "uncalibrated reserve"
 
 
+def retry_allowed(today_rows: list[dict], tried: set[str], settings: dict, runner: str) -> bool:
+    """One local retry a day: the only earlier attempt failed analysis-empty and
+    its measured cost stayed under budget.retry_max_usd."""
+    limit = settings.get("retry_max_usd")
+    if runner != "local" or len(tried) != 1 or limit is None:
+        return False
+    (run_id,) = tried
+    return any(
+        r["run_id"] == run_id
+        and r["kind"] == "actual"
+        and r.get("outcome") == "analysis-empty"
+        and r["cost_usd"] < float(limit)
+        for r in today_rows
+    )
+
+
 def check(
     runs: list[dict], settings: dict, runner: str, today: str, allow_repeat: bool = False
 ) -> tuple[bool, str]:
@@ -149,7 +172,10 @@ def check(
         today_rows = [r for r in runs if r["date"] == today]
         if any(r["kind"] == "done" for r in today_rows):
             return False, f"a scan already finished on {today}"
-        if any(r["kind"] == "reserve" and r["runner"] == runner for r in today_rows):
+        tried = {
+            r["run_id"] for r in today_rows if r["kind"] == "reserve" and r["runner"] == runner
+        }
+        if tried and not retry_allowed(today_rows, tried, settings, runner):
             return False, f"the {runner} runner already tried on {today}"
     month = today[:7]
     spent = month_spend(runs, month)
@@ -213,6 +239,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     act.add_argument("--run-id", required=True)
     act.add_argument("--stories", type=int, required=True)
     act.add_argument("--cost-usd", type=float, required=True)
+    act.add_argument("--outcome", choices=OUTCOMES)
     sub.add_parser("status")
     lim = sub.add_parser("session-limits")
     lim.add_argument("--runner", choices=RUNNERS, required=True)
@@ -236,6 +263,8 @@ def actual(path: Path, runs: list[dict], args) -> int:
     if not held:
         raise SystemExit(f"actual: no reservation for run {args.run_id}")
     row = {**held[0], "kind": "actual", "stories": args.stories, "cost_usd": args.cost_usd}
+    if args.outcome:
+        row["outcome"] = args.outcome
     append_row(path, runs, row)
     return 0
 

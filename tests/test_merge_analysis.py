@@ -168,6 +168,16 @@ def test_main_merges_and_reranks(sandbox):
     assert len(entries) == 1 and "composite" in entries[0]["scores"]
 
 
+def test_main_keeps_a_code_owned_merge_record(sandbox):
+    good = make_entry(topic="ai-research", domain="air.agents", source_url="https://a/rec")
+    c.save_json(c.ANALYSIS_OUT, [good, {"title": "invalid"}])
+    m.main()
+    assert c.merge_record() == {"merged": 1, "new": 1, "updated": 0, "skipped_invalid": 1}
+    c.save_json(c.ANALYSIS_OUT, [good])
+    m.main()  # a second merge in the same run adds to the record
+    assert c.merge_record() == {"merged": 2, "new": 1, "updated": 1, "skipped_invalid": 1}
+
+
 def test_merge_returns_only_new_on_remerge(sandbox):
     conf = c.load_config()
     analyzed = [make_entry(topic="ai-security", domain="ais.mcp-tools", source_url="https://a/x")]

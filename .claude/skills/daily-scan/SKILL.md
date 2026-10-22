@@ -35,16 +35,24 @@ can't call `run_scan.sh` (it is not on your allowlist). Otherwise (the cloud rou
 all four.
 
 1. **Pre:** `scripts/run_scan.sh pre`. If `data/_scan_skip` exists afterwards, stop: report
-   the `SCAN_SKIP` reason and do nothing else. Otherwise it printed `SCAN_READY: <n> candidates`.
+   the `SCAN_SKIP` reason and do nothing else. Otherwise it printed `SCAN_READY: <n> candidates
+   in this run's batch`: `data/candidates.json` holds only this run's batch,
+   `limits.max_stories_per_run` plus `limits.batch_margin` candidates spread across sources.
 
 2. **Analyze:** follow the `research-scan` skill (`.claude/skills/research-scan/SKILL.md`)
    steps 2–6 — read, analyze, independently verify, emit `data/analysis_out.json`, reconcile
    the claim ledger — with these bounds:
-   - Shortlist at most `limits.max_stories_per_run` (config.yaml) stories across all three
-     topics. `post` refuses a larger `analysis_out.json`, and that cap is what makes each
-     run's cost known in advance. Fewer excellent stories beat more mediocre ones; skip
-     marketing, release notes, listicles and near-duplicates of the pools.
-   - Do research-scan step 2b first: judge each candidate that has a non-empty entry in
+   - This session's budget is sized for the batch: work through all of it. Never stop, or
+     skip the analysis, for budget reasons. If you truly can't finish, analyze as many as you
+     can, write `data/analysis_out.json` with those, and carry on with the steps below.
+   - Analyze up to `limits.max_stories_per_run` (config.yaml) stories across all three
+     topics, the strongest first. `post` refuses a larger `analysis_out.json`, and that cap
+     is what makes each run's cost known in advance.
+   - Don't drop a weak candidate: analyze it with honest low novelty and relevance scores,
+     and the curation gate holds it in REVIEW.md. Marketing, release notes, listicles and
+     near-duplicates score low; they are not skipped. A real analysis is never empty: only
+     `same`/`update` verdicts leave a batch candidate unanalyzed.
+   - Do research-scan step 2b first: judge each batch candidate that has a non-empty entry in
      `data/story_shortlist.json` with a `haiku` subagent and write
      `data/story_verdicts.json`. `same` and `update` candidates are not analyzed and do not
      count toward the cap; `merge_analysis.py` applies their verdicts.
@@ -62,7 +70,10 @@ all four.
    analyzed, merged per topic, held for review, promoted, and any injection attempts seen.
 
 4. **Post:** `scripts/run_scan.sh post`. It renders the site, records spend, and opens the PR.
+   A run where `merge_analysis.py` merged no entry and applied no `same`/`update` verdict is a
+   failed run: `post` raises the `analysis-empty` alert itself and opens no PR.
 
-If a step in 2–4 fails and you can't fix it within the safety rules, stop. In the cloud,
+If a step in 2–3 fails and you can't fix it within the safety rules, stop. In the cloud,
 first run `scripts/run_scan.sh fail <step-name>`; in wrapped mode, just say what failed in your
-final message, and the wrapper raises the alert. `pre` and `post` alert on their own failures.
+final message, and the wrapper raises the alert. `pre` and `post` alert on their own failures:
+never run `fail` after either of them failed (that would raise a second alert).
