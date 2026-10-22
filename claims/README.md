@@ -17,7 +17,7 @@ _60 claims tracked · updated 2026-10-22_
 | --- | --- | --- | --- |
 | [AI Security](ai-security.md) | 19 | 1 | 2 |
 | [Product Security](product-security.md) | 13 | 0 | 2 |
-| [AI Research](ai-research.md) | 20 | 0 | 3 |
+| [AI Research](ai-research.md) | 18 | 2 | 3 |
 
 ## 🔁 What changed recently
 

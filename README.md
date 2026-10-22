@@ -20,12 +20,12 @@ _The last 7 days: the stories with the most covering sources first._
 
 _Standing answers from the claim ledger._
 
-1. **[Indirect injection via retrieved content is a real vector](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=indirect-injection-via-retrieved-content-is-viable#claims)**  
-   Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.
-2. **[WebView JS bridges turn web XSS into device RCE](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=mobile-webviews-are-a-persistent-cross-context-attack-surface#claims)**  
-   Never expose native bridges to WebViews that render third-party content.
-3. **[Auto-evolved harness gains are mostly overfitting](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims)**  
-   Accept an auto-evolved harness change only on its delta over a held-out task set the optimizer never saw, measured at matched inference budget; don't trust search-set or validation-set improvement.
+1. **[Package installs run arbitrary code by default](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=package-installers-run-arbitrary-code-by-default#claims)**  
+   Do first-touch installs in a sandbox. Where possible, prefer --ignore-scripts + explicit build orchestration.
+2. **[IMDSv1 is trivially exploitable; disable it for agent workloads](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=imdsv1-must-be-disabled-on-agent-workloads#claims)**  
+   Set HttpTokens=required on all EC2 instances hosting agent runtimes.
+3. **[Path validation must canonicalize, not just check the string](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=path-traversal-defenses-must-cover-symlink-resolution#claims)**  
+   Resolve with realpath()/Path.resolve(), then check containment by path components, not string prefix ('/srv/app2' passes a '/srv/app' prefix test). Where the race matters, open with O\_NOFOLLOW or…
 
 ## Explore
 

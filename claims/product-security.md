@@ -14,9 +14,9 @@ _13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-22_
 
 ### Package installs run arbitrary code by default
 
-`package-installers-run-arbitrary-code-by-default` · confidence **0.98** · Supply Chain & Dependencies · standing since Jan 2020
+`package-installers-run-arbitrary-code-by-default` · confidence **0.98** · Software Supply Chain · standing since Jun 8, 2016
 
-Installing a package with pip, npm, or gem executes arbitrary code at install time by default. Treat 'installed a dep' as 'ran their code'.
+Installing a package with npm or gem, or a source distribution with pip, executes arbitrary package code at install time by default. Treat 'installed a dep' as 'ran their code'.
 
 **Basis —** General supply-chain best-practice guidance, corroborated by a real self-propagating npm worm (ChainDrop) that exploited exactly this default.
 
@@ -24,12 +24,13 @@ Installing a package with pip, npm, or gem executes arbitrary code at install ti
 
 _Tags: `npm`, `pip`, `supply-chain`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Supply chain best practices](https://blog.trailofbits.com/2020/12/22/how-are-teams-currently-handling-web-attacks-at-scale/) | undated |
+| supports | [npm docs: preinstall/install/postinstall lifecycle scripts run on npm install](https://docs.npmjs.com/cli/v10/using-npm/scripts) | undated |
 | supports | [ChainDrop: Inside a Self-Propagating npm Worm](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) | Aug 6, 2026 |
+| supports | [Typosquatting programming language package managers: install-time code ran on 17,000 hosts via PyPI, npm and RubyGems](https://incolumitas.com/2016/06/08/typosquatting-package-managers/) | Jun 8, 2016 |
 
 </details>
 
@@ -37,7 +38,7 @@ _Tags: `npm`, `pip`, `supply-chain`_
 
 ### IMDSv1 is trivially exploitable; disable it for agent workloads
 
-`imdsv1-must-be-disabled-on-agent-workloads` · confidence **0.95** · Cloud & IAM · standing since Nov 2019
+`imdsv1-must-be-disabled-on-agent-workloads` · confidence **0.95** · Cloud, Network & Infrastructure · standing since Nov 2019
 
 AWS IMDSv1 is trivially exploitable from any code that can cause an HTTP GET to 169.254.169.254; agent workloads that may fetch user-provided URLs must disable v1 in favor of v2.
 
@@ -51,7 +52,7 @@ _Tags: `aws`, `imds`, `ssrf`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Get the full benefits of IMDSv2](https://aws.amazon.com/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/) | undated |
+| supports | [Get the full benefits of IMDSv2](https://aws.amazon.com/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/) | Sep 28, 2023 |
 | supports | [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) | Jul 15, 2026 |
 
 </details>
@@ -60,21 +61,22 @@ _Tags: `aws`, `imds`, `ssrf`_
 
 ### Path validation must canonicalize, not just check the string
 
-`path-traversal-defenses-must-cover-symlink-resolution` · confidence **0.95** · Application Security · standing since Jan 2010
+`path-traversal-defenses-must-cover-symlink-resolution` · confidence **0.95** · Application Security · standing since Jul 19, 2006
 
-Any code that opens a file whose path derives from user input must canonicalize the resolved target and verify it stays within the intended sandbox; validating the raw path string is insufficient.
+Any code that opens a file whose path derives from user input must canonicalize the resolved target (following '..' and symbolic links) and verify it stays inside the intended directory; validating the raw path string is insufficient.
 
 **Basis —** A structural argument from the CWE-22 canonical vulnerability definition — a class-level defense requirement, not a single incident.
 
-**Do this —** Use realpath() then verify prefix. Never trust the input string alone.
+**Do this —** Resolve with realpath()/Path.resolve(), then check containment by path components, not string prefix ('/srv/app2' passes a '/srv/app' prefix test). Where the race matters, open with O_NOFOLLOW or openat2(RESOLVE_BENEATH) instead of check-then-open.
 
 _Tags: `path-traversal`, `symlinks`, `defense`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [CWE-22](https://cwe.mitre.org/data/definitions/22.html) | undated |
+| supports | [CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') — recommends realpath()-style canonicalization that removes '..' and symbolic links](https://cwe.mitre.org/data/definitions/22.html) | Jul 19, 2006 |
+| supports | [CWE-59: Improper Link Resolution Before File Access ('Link Following')](https://cwe.mitre.org/data/definitions/59.html) | Jul 19, 2006 |
 
 </details>
 
@@ -82,9 +84,9 @@ _Tags: `path-traversal`, `symlinks`, `defense`_
 
 ### Long-lived cloud credentials are the top breach root cause
 
-`long-lived-cloud-credentials-are-obsolete` · confidence **0.90** · Cloud & IAM · standing since Jan 2021
+`long-lived-cloud-credentials-are-obsolete` · confidence **0.90** · Identity & Access · standing since Jan 2021
 
-Long-lived static cloud credentials in CI or on developer machines are the highest-frequency root cause of breach in cloud environments; short-lived OIDC / role-assumption flows should be used for every automated workload.
+Long-lived static cloud credentials are the most common cause of publicly documented cloud breaches, and leaked long-lived AI API keys are monetized within minutes; automated workloads should use short-lived OIDC or role-assumption credentials instead.
 
 **Basis —** Cross-referenced across a cloud-identity vendor writeup and two 2026 incident reports (AI API key resale, LiteLLM gateway secret harvesting) that both trace back to long-lived credentials.
 
@@ -92,13 +94,14 @@ Long-lived static cloud credentials in CI or on developer machines are the highe
 
 _Tags: `aws`, `credentials`, `oidc`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Workload identity federation](https://cloud.google.com/blog/products/identity-security/rip-secret-storage) | undated |
+| supports | [Datadog State of Cloud Security: long-lived credentials are the most common cause of publicly documented cloud breaches](https://www.datadoghq.com/state-of-cloud-security/) | Oct 2025 |
 | supports | [Token jacking: stolen AI API keys resold via gray-market transfer stations, ~$1M losses](https://unit42.paloaltonetworks.com/ai-token-jacking/) | Aug 6, 2026 |
 | supports | [Attackers harvest gateway secrets from /proc/1/environ on compromised LiteLLM AI infrastructure](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/) | Aug 26, 2026 |
+| supports | [GitHub Actions OpenID Connect: exchange short-lived cloud tokens instead of long-lived secrets](https://docs.github.com/en/actions/concepts/security/openid-connect) | undated |
 
 </details>
 
@@ -106,7 +109,7 @@ _Tags: `aws`, `credentials`, `oidc`_
 
 ### Typosquatted registry packages remain an active threat
 
-`typosquatting-in-package-registries-is-an-active-threat` · confidence **0.90** · Supply Chain & Dependencies · standing since Jan 2016
+`typosquatting-in-package-registries-is-an-active-threat` · confidence **0.90** · Software Supply Chain · standing since Jun 8, 2016
 
 Typosquatted packages are regularly uploaded to public registries with malicious install-time payloads; the technique remains effective because dependency selection is often typed manually.
 
@@ -120,7 +123,7 @@ _Tags: `typosquatting`, `npm`, `pypi`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Typosquatting on npm](https://checkmarx.com/blog/typosquatting-attack-on-npm-cryptocurrency-package/) | undated |
+| supports | [Typosquatting programming language package managers (PyPI, npm, RubyGems)](https://incolumitas.com/2016/06/08/typosquatting-package-managers/) | Jun 8, 2016 |
 | supports | [Malicious Rust crate Arrayref runs a build-time payload](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/) | Aug 20, 2026 |
 
 </details>
@@ -129,9 +132,9 @@ _Tags: `typosquatting`, `npm`, `pypi`_
 
 ### WebView JS bridges turn web XSS into device RCE
 
-`mobile-webviews-are-a-persistent-cross-context-attack-surface` · confidence **0.90** · Mobile Security · standing since Jan 2014
+`mobile-webviews-are-a-persistent-cross-context-attack-surface` · confidence **0.90** · Mobile & Device Security · standing since Jan 2014
 
-Mobile applications that render web content in a WebView with JS bridges exposed to native code create a persistent cross-context attack surface — any XSS in the rendered content becomes device-level RCE.
+Mobile apps that render web content in a WebView with JavaScript bridges exposed to native code create a persistent cross-context attack surface: any script injected into the rendered content can call the exposed native methods with the app's privileges (and, on pre-4.2 Android, reach arbitrary code execution).
 
 **Basis —** Structural platform-security guidance from Android's own developer security documentation on the WebView/native-bridge risk.
 
@@ -143,7 +146,7 @@ _Tags: `mobile`, `webview`, `android`, `ios`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Insecure WebView native bridge](https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridge) | undated |
+| supports | [Android Developers: WebView – Native bridges (addJavascriptInterface risks)](https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridges) | undated |
 | supports | [How we found 24 Android vulnerabilities using our open source AI security agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/) | Sep 28, 2026 |
 
 </details>
@@ -152,7 +155,7 @@ _Tags: `mobile`, `webview`, `android`, `ios`_
 
 ### Import-time npm payloads defeat --ignore-scripts and provenance
 
-`import-time-payloads-defeat-install-time-controls` · confidence **0.85** · Supply Chain & Dependencies · standing since Jul 15, 2026
+`import-time-payloads-defeat-install-time-controls` · confidence **0.85** · Software Supply Chain · standing since Jul 15, 2026
 
 npm supply-chain payloads delivered at IMPORT time defeat --ignore-scripts, and a valid provenance attestation does not indicate the package is trustworthy.
 
@@ -172,11 +175,35 @@ _Tags: `supply-chain`, `npm`, `provenance`_
 
 </details>
 
+<a id="claim-ssrf-guards-must-cover-agent-outbound-calls"></a>
+
+### SSRF guards must cover every agent outbound call, not just user input
+
+`ssrf-guards-must-cover-agent-outbound-calls` · confidence **0.85** · Application Security · standing since Jun 4, 2026
+
+SSRF guards on user-input URLs are not sufficient for agent applications: the agent can be steered into making outbound calls from tool responses, retrieval results, or MCP metadata.
+
+**Basis —** Grounded in two 2026 GHSA advisories showing real agent/gateway processes making unguarded outbound requests from MCP server metadata and caller-controlled parameters, on top of the general OWASP SSRF threat model.
+
+**Do this —** Apply the private-IP dialer guard to every outbound HTTP client in an agent runtime — not just the user-facing one. Re-validate on redirect.
+
+_Tags: `ssrf`, `agents`, `defense`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [SSRF (OWASP)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) | undated |
+| supports | [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) | Jun 26, 2026 |
+| supports | [TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF](https://github.com/advisories/GHSA-824w-x939-6cmc) | Jun 4, 2026 |
+
+</details>
+
 <a id="claim-llm-generated-code-hallucinates-package-names"></a>
 
 ### LLM-hallucinated package names enable slopsquatting
 
-`llm-generated-code-hallucinates-package-names` · confidence **0.85** · AI-Generated Code Risk · standing since Jun 2024
+`llm-generated-code-hallucinates-package-names` · confidence **0.85** · AI in the SDLC · standing since Jun 2024
 
 LLMs generate import statements for packages that do not exist ('slopsquatting'); attackers observe these hallucinated names and register malicious packages to catch the next developer who copies the generated code.
 
@@ -196,35 +223,11 @@ _Tags: `ai-code-risk`, `slopsquatting`, `npm`_
 
 </details>
 
-<a id="claim-ssrf-guards-must-cover-agent-outbound-calls"></a>
-
-### SSRF guards must cover every agent outbound call, not just user input
-
-`ssrf-guards-must-cover-agent-outbound-calls` · confidence **0.85** · Application Security · standing since Jan 2020
-
-SSRF guards on user-input URLs are not sufficient for agent applications: the agent can be steered into making outbound calls from tool responses, retrieval results, or MCP metadata.
-
-**Basis —** Grounded in two 2026 GHSA advisories showing real agent/gateway processes making unguarded outbound requests from MCP server metadata and caller-controlled parameters, on top of the general OWASP SSRF threat model.
-
-**Do this —** Apply the private-IP dialer guard to every outbound HTTP client in an agent runtime — not just the user-facing one. Re-validate on redirect.
-
-_Tags: `ssrf`, `agents`, `defense`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [SSRF (OWASP)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) | undated |
-| supports | [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) | Jul 15, 2026 |
-| supports | [TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF](https://github.com/advisories/GHSA-824w-x939-6cmc) | Jul 15, 2026 |
-
-</details>
-
 <a id="claim-package-yank-warnings-can-be-weaponized-to-push-malicious-versions"></a>
 
 ### An attacker who compromises a package maintainer account can yank all prior clean versions, causing the package manager's own UX (e.g. Cargo's 'update to a non-yanked version' warning) to actively nudge developers toward installing the sole remaining, malicious version — a distribution technique beyond passive typosquatting or waiting for organic upgrades.
 
-`package-yank-warnings-can-be-weaponized-to-push-malicious-versions` · confidence **0.75** · Supply Chain & Dependencies · standing since Sep 9, 2026
+`package-yank-warnings-can-be-weaponized-to-push-malicious-versions` · confidence **0.75** · Software Supply Chain · standing since Sep 9, 2026
 
 **Basis —** documented incident analysis (safedep.io + RustSec advisory)
 
@@ -244,15 +247,15 @@ _Tags: `ssrf`, `agents`, `defense`_
 
 ### Automated gates catch what human review misses on agent PRs
 
-`gate-agent-prs-with-automated-checks` · confidence **0.75** · AI-Generated Code Risk · standing since Jul 19, 2026
+`gate-agent-prs-with-automated-checks` · confidence **0.75** · AI in the SDLC · standing since Jul 14, 2026
 
-Agent-generated PRs need automated secret and dependency-integrity gates — human review demonstrably does not catch that class of issue.
+Secret and dependency-integrity checks belong in the required-checks set for agent-assisted PRs: in 4,022 agent PRs, existing human and automated review missed 81.1% of leaked credentials, and supply-chain integrity issues made up 82.3% of security smells.
 
 **Basis —** Measured across a corpus of agent-generated pull requests: 38.9% carried a security smell that human review did not catch.
 
 **Do this —** Put automated secret scanning and dependency-integrity checks in the required-checks set for agent PRs, and keep human review for design and logic where it actually performs.
 
-**Conditions —** Measured on agent-generated PRs; 38.9% carried a security smell, though humans still introduce most of the severe defects overall.
+**Conditions —** Measured on the AIDev dataset of agent-generated PRs: 38.9% carried a security smell, and humans introduced 67.6% of the genuine leaked secrets. The point is placing the check in the pipeline, not that a reviewer is useless.
 
 **Replaces** [`human-review-catches-agent-pr-risk`](#claim-human-review-catches-agent-pr-risk) — Assumed normal review was enough for agent PR risk
 
@@ -262,27 +265,7 @@ _Tags: `ai-generated-code`, `code-review`, `ci`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [38.9% of agent-generated PRs carry a security smell — but humans introduce most of the real ones](https://arxiv.org/abs/2607.12428) | Jul 19, 2026 |
-
-</details>
-
-<a id="claim-shared-library-call-count-can-beat-timing-side-channels"></a>
-
-### In cryptographic implementations relying on a shared native library (e.g. libgmp) for non-constant-time operations, counting the underlying library's function calls via cache-timing techniques (e.g. Flush+Reload) can be a dramatically more sample-efficient side channel than wall-clock timing alone — recovering a full key from a single observation instead of dozens.
-
-`shared-library-call-count-can-beat-timing-side-channels` · confidence **0.70** · Application Security · standing since Sep 9, 2026
-
-**Basis —** detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)
-
-**Do this —** When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.
-
-**Conditions —** Demonstrated specifically against phpseclib's pure-PHP X25519 implementation under specific reachability conditions (ext-sodium absent, reused/long-lived key, local co-residency); the general principle likely generalizes but the specific sample-efficiency numbers don't.
-
-<details><summary>Evidence (1)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [phpseclib non-constant-time X25519 scalar multiplication permits full private-key recovery](https://github.com/advisories/GHSA-q97c-8qh3-fpc6) | Sep 8, 2026 |
+| supports | [Trust but Verify? Uncovering the Security Debt of Autonomous Coding Agents](https://arxiv.org/abs/2607.12428) | Jul 14, 2026 |
 
 </details>
 
@@ -290,7 +273,7 @@ _Tags: `ai-generated-code`, `code-review`, `ci`_
 
 ### Signature detection underperforms on LLM-authored malware
 
-`signature-based-detection-fails-on-llm-authored-malware` · confidence **0.70** · Detection & Response · standing since Jan 2024
+`signature-based-detection-fails-on-llm-authored-malware` · confidence **0.70** · Detection, Response & Threat Intel · standing since Dec 20, 2024
 
 Signature-based detection under-performs against LLM-authored malware because trivial regeneration produces novel binaries at zero cost, while behavior and delivery-chain signals remain stable.
 
@@ -304,8 +287,28 @@ _Tags: `malware`, `detection`, `ai-authored`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Using LLMs to obfuscate malicious JavaScript](https://unit42.paloaltonetworks.com/using-llms-obfuscate-malicious-javascript/) | undated |
+| supports | [Now You See Me, Now You Don't: Using LLMs to Obfuscate Malicious JavaScript](https://unit42.paloaltonetworks.com/using-llms-obfuscate-malicious-javascript/) | Dec 20, 2024 |
 | supports | [State of AI-Enabled Malware: ~97% of samples never reach production; AI changes authoring not execution](https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/) | Aug 25, 2026 |
+
+</details>
+
+<a id="claim-shared-library-call-count-can-beat-timing-side-channels"></a>
+
+### In cryptographic code that leans on a shared native library (e.g. libgmp) for non-constant-time operations, an observer that counts the library's calls can recover a full key from a single operation where wall-clock timing needs dozens; Flush+Reload on the shared mapping is the proposed but not yet demonstrated way to get that count.
+
+`shared-library-call-count-can-beat-timing-side-channels` · confidence **0.55** · Application Security · standing since Sep 9, 2026
+
+**Basis —** detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)
+
+**Do this —** When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.
+
+**Conditions —** Shown with an instrumented call-count observer against phpseclib's pure-PHP X25519 (ext-sodium absent, reused key, local co-residency); a working Flush+Reload spy was not built.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [phpseclib non-constant-time X25519 scalar multiplication permits full private-key recovery](https://github.com/advisories/GHSA-q97c-8qh3-fpc6) | Aug 26, 2026 |
 
 </details>
 
