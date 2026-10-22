@@ -38,6 +38,7 @@ candidates), so re-running is safe. Individual failures don't halt
 the loop — log the failure and continue.
 
 ```bash
+python scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (run first)
 python scripts/aggregate.py            # RSS/Atom from the ranked registry
 python scripts/ingest_sitemap.py       # sitemap.xml for research_index sources with no feed (e.g. Anthropic)
 python scripts/ingest_hn.py            # HN keyword queries + top-stories tap

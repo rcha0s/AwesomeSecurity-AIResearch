@@ -24,7 +24,7 @@ FIXED_HOSTS = (
     "export.arxiv.org",  # ingest_conferences ARXIV_API
     "huggingface.co",  # paper_gate HF_DAILY_API: the gate needs it even if hf_papers is off
     "hn.algolia.com",  # ingest_hn / source_scout HN_SEARCH
-    *eval_recall.CURATOR_HOSTS,  # the weekly recall eval's reference curators
+    *eval_recall.CURATOR_HOSTS,  # recall eval curators; tldrsec.com is also ingest_curator_links
 )
 URL_TYPES = ("rss", "newsletter", "research_index", "kev_json", "hf_papers")
 

@@ -8,7 +8,9 @@ it carries a quality signal other than "it exists on arXiv":
   * venue          accepted at a registered venue (the ingest_conferences path;
                    the candidate carries a `venue` that path already vetted),
   * hf-daily       listed on Hugging Face Daily Papers (keyless public API),
-  * curator-link   linked from a trusted curator's feed (TRUSTED_CURATORS).
+  * curator-link   linked from a trusted curator's feed (TRUSTED_CURATORS), or
+                   from a recent tl;dr sec issue page (ingest_curator_links.py
+                   records those ids in data/_curator_arxiv.json).
 
 Deterministic by design — no LLM judgment. Non-paper candidates (blogs, advisories,
 repos) are not this gate's business and pass through. If a signal source cannot be
@@ -30,11 +32,15 @@ HF_LOOKBACK_DAYS = 7  # the API serves one day per call; weekends come back empt
 # Registry source ids whose links count as a curator endorsement.
 TRUSTED_CURATORS = frozenset(
     {
-        "rss:https-tldrsec-com-feed",  # tl;dr sec
+        "rss:https-tldrsec-com-feed",  # tl;dr sec (feed 404s since ~2026-10; see below)
         "rss:https-simonwillison-net-atom-everything",  # Simon Willison
         "rss:https-googleprojectzero-blogspot-com-feeds-posts",  # Project Zero
     }
 )
+# tl;dr sec's issue pages, read by ingest_curator_links.py, which records the arXiv
+# ids they link to here ({arxiv id: issue date}). It runs before aggregate.py.
+CURATOR_LINKS_NAME = "_curator_arxiv.json"
+CURATOR_LINKS_MAX_AGE_DAYS = 21  # an issue older than this no longer vouches
 
 PREPRINT_HOSTS = ("arxiv.org", "openreview.net", "eprint.iacr.org")
 ARXIV_ID_RE = re.compile(
@@ -66,6 +72,24 @@ def curator_ids_from_entries(entries: list[dict]) -> set[str]:
         parts += [part.get("value", "") for part in entry.get("content") or []]
         ids |= arxiv_ids(" ".join(parts))
     return ids
+
+
+def curator_links_file():
+    return c.DATA_DIR / CURATOR_LINKS_NAME
+
+
+def save_curator_link_ids(ids: dict[str, str]) -> None:
+    """Record {arXiv id: issue date} found in curator issues (ingest_curator_links)."""
+    c.save_json(curator_links_file(), dict(sorted(ids.items())))
+
+
+def curator_link_ids(max_age_days: int = CURATOR_LINKS_MAX_AGE_DAYS) -> set[str]:
+    """arXiv ids a trusted curator's recent issues linked to. Missing file = none."""
+    data = c.load_json(curator_links_file(), default={}) or {}
+    since = (c.utcnow() - timedelta(days=max_age_days)).date().isoformat()
+    if not isinstance(data, dict):
+        return set()
+    return {str(k).lower() for k, day in data.items() if str(day or "") >= since}
 
 
 def fetch_hf_daily() -> tuple[set[str], int]:

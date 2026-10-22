@@ -28,6 +28,19 @@ def test_fixed_hosts_cover_the_ingestor_apis():
         assert any(h in url for h in allowlist.FIXED_HOSTS), url
 
 
+def test_fixed_hosts_cover_the_curator_link_ingestor():
+    """It fetches the sitemap and issue pages itself; the linked articles go
+    through r.jina.ai (fetch_raw.py) like every other candidate."""
+    from urllib.parse import urlparse
+
+    import common
+    import eval_recall
+
+    for url in (eval_recall.TLDRSEC_SITEMAP, "https://tldrsec.com/p/tldr-sec-350",
+                common.JINA_READER):  # fmt: skip
+        assert urlparse(url).hostname in allowlist.FIXED_HOSTS, url
+
+
 def test_fixed_hosts_cover_the_recall_eval_curators():
     import eval_recall
 

@@ -173,6 +173,38 @@ def test_a_partial_or_total_outage_writes_no_result(sandbox, monkeypatch, capsys
     assert "not writing" in out.err and "EVAL recall FAIL" in out.out
 
 
+def test_recall_is_reported_per_curator_and_independent_of_curator_link_ingest():
+    entries = pool_entries()
+    # ChainDrop is held only because the curator-link ingestor staged it.
+    entries[2] = {**entries[2], "curated_by": "tldrsec"}
+    entries[0] = {**entries[0], "source_id": "curator:tldrsec"}  # ToolHive, via source_id
+    result = er.score(collected(), entries, tx.get())
+    per = result["recall_by_curator"]
+    assert set(per) == set(result["by_curator"])
+    assert sum(t["on_thesis"] for t in per.values()) == result["on_thesis"]
+    assert sum(t["matched"] for t in per.values()) == result["matched"]
+    assert per["tldrsec"]["matched"] == 1 and per["tldrsec"]["independent_matched"] == 0
+    assert per["ghsa"]["matched"] == 1 and per["ghsa"]["independent_matched"] == 0
+    assert per["kev"]["independent_matched"] == per["kev"]["matched"] == 1
+    ind = result["independent"]
+    assert ind["independent_matched"] == result["matched"] - 2
+    assert ind["independent_recall"] == round(ind["independent_matched"] / result["on_thesis"], 3)
+    assert result["recall"] > ind["independent_recall"]
+
+
+def test_without_curator_staged_entries_independent_equals_overall():
+    result = er.score(collected(), pool_entries(), tx.get())
+    assert result["independent"]["independent_recall"] == result["recall"]
+    assert all(not r["via_curator"] for r in result["matched_rows"])
+
+
+def test_cli_prints_per_curator_lines_and_the_independent_figure(sandbox, capsys):
+    er.main(["--fixtures", str(FIXTURES)])
+    out = capsys.readouterr().out.splitlines()
+    assert any(line.startswith("CURATOR tldrsec: ") for line in out)
+    assert " independent=" in out[-1]
+
+
 def test_tldrsec_headlines_carry_only_their_story_url():
     page = (FIXTURES / "tldr-sec-339.html").read_text()
     for it in er.parse_tldrsec_issue(page, "2026-07-10"):

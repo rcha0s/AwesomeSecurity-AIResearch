@@ -306,6 +306,32 @@ def ledger_placements(placements: list, outcomes: list[dict]) -> None:
     sl.save_ledger(ledger)
 
 
+CURATOR_FIELDS = ("curated_by", "curator_issue")
+
+
+def stamp_curator(analyzed: list[dict], candidates: list[dict]) -> int:
+    """Copy a curator-link candidate's provenance onto its analyzed entry.
+
+    The recall eval's independent figure must know which entries came from a
+    curator's own links (ingest_curator_links.py), so the marker is copied here,
+    by candidate id or source URL, instead of trusting the analyzer to carry it."""
+    by_key: dict[str, dict] = {}
+    for cand in candidates:
+        if cand.get("curated_by"):
+            for key in (cand.get("id"), c.normalize_url(cand.get("source_url", ""))):
+                if key:
+                    by_key[str(key)] = cand
+    stamped = 0
+    for entry in (e for e in analyzed if isinstance(e, dict)):
+        keys = (entry.get("id"), c.normalize_url(entry.get("source_url") or ""))
+        cand = next((by_key[str(k)] for k in keys if k and str(k) in by_key), None)
+        if cand:
+            entry.update({k: cand[k] for k in CURATOR_FIELDS if cand.get(k)})
+            entry.setdefault("source_id", cand.get("source_id"))
+            stamped += 1
+    return stamped
+
+
 def main() -> int:
     conf = c.load_config()
     outcomes = apply_story_verdicts()
@@ -319,6 +345,7 @@ def main() -> int:
     if isinstance(analyzed, dict):
         analyzed = analyzed.get("entries", [])
 
+    stamp_curator(analyzed, c.load_candidates())
     placements: list = []
     merged, errors, merged_urls, newly_added = merge(analyzed, conf, placements)
     ledger_placements(placements, outcomes)

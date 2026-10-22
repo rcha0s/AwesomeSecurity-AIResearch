@@ -18,6 +18,13 @@ GHSA id, or (dedupe_stories.is_collision) its title and entities.
 
 The misses are the source-tuning signal: the report lists them and their hosts.
 
+Recall is reported overall, per curator, and "independent". ingest_curator_links.py
+stages the stories tl;dr sec links to, so a tl;dr sec headline we hold only because
+we ingested that curator's own links is partly circular. Independent recall counts a
+headline as held only when the matching entry was NOT staged via a curator link
+(`curated_by` set, or a `curator:` source_id); the gap between the two is how much
+of the score the curator ingestor supplies. The 7-run gate keeps the overall figure.
+
 Usage:
     python scripts/eval_recall.py --live [--write | --out PATH]   # fetch the curators (network)
     python scripts/eval_recall.py --fixtures DIR                  # recorded responses (tests)
@@ -43,7 +50,7 @@ from collections import Counter
 from collections.abc import Callable
 from datetime import datetime, timedelta
 from pathlib import Path
-from urllib.parse import quote, urlparse
+from urllib.parse import parse_qs, quote, urlparse
 
 import common as c
 import dedupe_stories as ds
@@ -63,6 +70,12 @@ ISSUE_URL = re.compile(r"^https://tldrsec\.com/p/tldr-sec-\d+$")
 SKIP_SECTIONS = ("misc", "wrapping up", "advice", "sponsor", "")
 # Paragraph links to people and social posts are credits, not stories.
 PEOPLE_HOSTS = ("linkedin.com", "x.com", "twitter.com", "bsky.app", "youtube.com", "mastodon")
+# Sponsor blocks sit under headings like "\N{WHITE RIGHT POINTING BACKHAND INDEX} Explore
+# the demo portal \N{WHITE LEFT POINTING BACKHAND INDEX}".
+SPONSOR_HEADING = "\N{WHITE LEFT POINTING BACKHAND INDEX}"
+# tl;dr sec's editorial links carry utm_medium=referral (or no utm at all); paid
+# placements carry the advertiser's medium (cpc, sponsored, paid-email, newsletter).
+EDITORIAL_MEDIUM = "referral"
 VULN_ID = re.compile(r"\b(CVE-\d{4}-\d{4,7}|GHSA(?:-[23456789cfghjmpqrvwx]{4}){3})\b", re.I)
 TAG = re.compile(r"<[^>]+>")
 LINK = re.compile(r'<a\b[^>]*href="([^"]+)"[^>]*>(.*?)</a>', re.S | re.I)
@@ -101,21 +114,42 @@ def _is_story_link(url: str) -> bool:
     return url.startswith("http") and not any(p in host for p in PEOPLE_HOSTS + ("tldrsec.com",))
 
 
+def is_sponsored(url: str) -> bool:
+    """A paid placement: its utm_medium is the advertiser's, not tl;dr sec's referral."""
+    medium = parse_qs(urlparse(url).query).get("utm_medium", [""])[0].strip().lower()
+    return bool(medium) and medium != EDITORIAL_MEDIUM
+
+
+def _plain(fragment: str) -> str:
+    return " ".join(html.unescape(TAG.sub(" ", fragment)).split())
+
+
 def parse_tldrsec_issue(page: str, published: str) -> list[dict]:
-    """The first story link of every paragraph in the issue's security sections."""
+    """The first story link of every paragraph in the issue's security sections.
+
+    Sponsor sections and paid links are skipped. Each item also carries `href`
+    (the link as published, for citation), `section`, and `lead`: True when the
+    paragraph opens with that link, i.e. it is a headline, not a follow-on
+    paragraph pointing at supporting material."""
     out = []
     parts = H2.split(page)  # [preamble, heading, body, heading, body, ...]
     for heading, body in zip(parts[1::2], parts[2::2], strict=False):
-        name = TAG.sub("", html.unescape(heading)).strip().lower()
-        name = re.sub(r"^[^a-z0-9]+", "", name)
-        if any(name.startswith(s) for s in SKIP_SECTIONS if s) or not name:
+        raw_name = TAG.sub("", html.unescape(heading)).strip()
+        name = re.sub(r"^[^a-z0-9]+", "", raw_name.lower())
+        skip = any(name.startswith(s) for s in SKIP_SECTIONS if s) or not name
+        if skip or SPONSOR_HEADING in raw_name:
             continue
         for para in PARA.findall(body):
             links = [(h, t) for h, t in LINK.findall(para) if _is_story_link(html.unescape(h))]
-            if links:
-                href, anchor = links[0]
-                url = ds.canonical_url(html.unescape(href))
-                out.append(item("tldrsec", TAG.sub("", anchor), url, published, para))
+            if not links or is_sponsored(html.unescape(links[0][0])):
+                continue
+            href, anchor = links[0]
+            url = ds.canonical_url(html.unescape(href))
+            it = item("tldrsec", TAG.sub("", anchor), url, published, para)
+            title = _plain(anchor)
+            lead = bool(title) and _plain(para).startswith(title)
+            it.update(href=html.unescape(href), section=name, lead=lead)
+            out.append(it)
     return out
 
 
@@ -180,11 +214,17 @@ def gh_advisories(since: str, today: str) -> list[dict]:
     return json.loads(out.stdout)
 
 
+def tldrsec_issues(fetch: Callable[[str], str], since: str) -> list[tuple[str, str, str]]:
+    """(issue URL, lastmod, page HTML) for every issue since `since`, via the sitemap.
+    Shared with scripts/ingest_curator_links.py."""
+    issues = parse_tldrsec_sitemap(fetch(TLDRSEC_SITEMAP), since)
+    return [(u, mod, fetch(u)) for u, mod in issues]
+
+
 def live_source(since: str, today: str) -> Callable[[str], object]:
     def get(name: str) -> object:
         if name == "tldrsec":
-            issues = parse_tldrsec_sitemap(http_get(TLDRSEC_SITEMAP), since)
-            return [(u, mod, http_get(u)) for u, mod in issues]
+            return tldrsec_issues(http_get, since)
         if name == "simon":
             return [http_get(u) for u in SIMON_FEEDS]
         if name == "ghsa":
@@ -286,6 +326,29 @@ def find_match(it: dict, index: dict) -> tuple[dict, str] | None:
     return None
 
 
+def staged_via_curator(entry: dict) -> bool:
+    """True when the entry came from a curator's own links (ingest_curator_links.py)."""
+    sid = str(entry.get("source_id") or "")
+    return bool(entry.get("curated_by")) or sid.startswith("curator:")
+
+
+def _ratio(n: int, d: int) -> float | None:
+    return round(n / d, 3) if d else None
+
+
+def tally(rows: list[dict]) -> dict:
+    """on_thesis / matched / recall, plus the independent (not curator-staged) share."""
+    matched = [r for r in rows if "matched" in r]
+    independent = sum(1 for r in matched if not r.get("via_curator"))
+    return {
+        "on_thesis": len(rows),
+        "matched": len(matched),
+        "recall": _ratio(len(matched), len(rows)),
+        "independent_matched": independent,
+        "independent_recall": _ratio(independent, len(rows)),
+    }
+
+
 def score(items: list[dict], entries: list[dict], tax: tx.Taxonomy) -> dict:
     index = entry_index(entries)
     scored, misses = [], []
@@ -294,17 +357,23 @@ def score(items: list[dict], entries: list[dict], tax: tx.Taxonomy) -> dict:
         row = {k: it[k] for k in ("curator", "title", "url", "published")}
         if hit:
             row.update(matched=hit[0].get("id"), how=hit[1])
+            row["via_curator"] = staged_via_curator(hit[0])
         else:
             misses.append(row)
         scored.append(row)
     hosts = Counter((urlparse(m["url"]).hostname or "?").removeprefix("www.") for m in misses)
     by_curator = Counter(r["curator"] for r in scored)
+    overall = tally(scored)
     return {
         "headlines": len(items),
         "on_thesis": len(scored),
         "matched": len(scored) - len(misses),
-        "recall": round((len(scored) - len(misses)) / len(scored), 3) if scored else None,
+        "recall": overall["recall"],
+        "independent": {k: overall[k] for k in ("independent_matched", "independent_recall")},
         "by_curator": dict(by_curator),
+        "recall_by_curator": {
+            cur: tally([r for r in scored if r["curator"] == cur]) for cur in sorted(by_curator)
+        },
         "misses": misses,
         "miss_hosts": dict(hosts.most_common()),
         "matched_rows": [r for r in scored if "matched" in r],
@@ -323,11 +392,20 @@ def run(get: Callable[[str], object], now: datetime, lookback_days: int) -> dict
 def print_report(result: dict) -> None:
     for err in result["errors"]:
         print(f"ERROR {err}")
+    for cur, t in result.get("recall_by_curator", {}).items():
+        print(
+            f"CURATOR {cur}: {t['matched']}/{t['on_thesis']} held,"
+            f" {t['independent_matched']} without curator-link ingest"
+        )
     for m in result["misses"]:
         print(f"MISS [{m['curator']}] {m['title'][:90]} <{m['url']}>")
     if result["miss_hosts"]:
         hosts = ", ".join(f"{h} ({n})" for h, n in result["miss_hosts"].items())
         print(f"Miss hosts: {hosts}")
+
+
+def _or_none(value: float | None) -> object:
+    return value if value is not None else "none"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -360,6 +438,7 @@ def main(argv: list[str] | None = None) -> int:
     print(
         el.summary_line(
             "recall", passed, recall=recall if recall is not None else "none", matched=result["matched"],
+            independent=_or_none(result["independent"]["independent_recall"]),
             on_thesis=result["on_thesis"], headlines=result["headlines"],
             misses=len(result["misses"]), errors=len(result["errors"]), week=result["week"],
         )

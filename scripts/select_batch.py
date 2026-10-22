@@ -24,6 +24,13 @@ Slots are dealt round-robin across ingestor classes (KEV, HN, GHSA, GitHub
 search, HF papers, conference papers, research sitemaps, RSS feeds), best
 class first, each class giving its best remaining candidate, and no single
 source takes more than `batch_per_source` slots unless nothing else is left.
+Curator links (ingest_curator_links.py, `curator:` source ids) are their own
+class, and `batch_class_min` reserves each named class a floor of slots right
+after the must-not-miss lane: a curator link carries the issue's date, so its
+newness can sink it under fresher feeds, and the per-source cap (all curator
+links share one source) holds it to `batch_per_source`. With a floor of 1 and
+a cap of 2, each batch gets one or two.
+
 `batch_class_slots` lets a class deal more than one candidate per round: plain
 RSS feeds are one class of 60+ feeds and a third of the staged set, and the
 research posts the recall eval misses most come from them.
@@ -65,7 +72,7 @@ DEFAULTS = {
     "batch_priority_per_source": 2,
 }
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
-OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap")
+OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator")
 
 
 def backlog_file() -> Path:
@@ -173,6 +180,20 @@ def priority_lane(ranked: list[dict], limit: int, per_source: int) -> list[dict]
     return deal(eligible, limit, per_source, fill=False)
 
 
+def class_floor(
+    ranked: list[dict], mins: dict[str, int], room: int, per_source: int, used: Counter
+) -> list[dict]:
+    """The best `mins[class]` candidates of each named class, before the deal, so a
+    class whose heads score low (curator links carry the issue's date, not the
+    article's) still reaches the batch. Per-source capped like the deal."""
+    out: list[dict] = []
+    for cls in sorted(mins):
+        pool = [x for x in ranked if ingestor_class(x) == cls]
+        limit = min(max(0, int(mins[cls])), room - len(out))
+        out += deal(pool, limit, per_source, used=used + Counter(map(source_key, out)), fill=False)
+    return out
+
+
 def lane_order(cand: dict) -> int:
     kind = priority_class(cand)
     if kind == "ghsa-critical" and is_ai_tooling(cand):
@@ -192,16 +213,23 @@ def select(
     size = batch_size(conf)
     lane_max = min(size, max(0, int(setting(conf, "batch_priority_max"))))
     lane = priority_lane(ranked, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))))
-    in_lane = {id(x) for x in lane}
     per_source = max(1, int(setting(conf, "batch_per_source")))
+    mins = conf.limits.get("batch_class_min") or {}
+    lane_ids = {id(x) for x in lane}
+    floor = class_floor(
+        [x for x in ranked if id(x) not in lane_ids], mins, size - len(lane),
+        per_source, Counter(source_key(x) for x in lane),
+    )  # fmt: skip
+    in_lane = {id(x) for x in lane + floor}
     slots = conf.limits.get("batch_class_slots") or {}
-    used = Counter(source_key(x) for x in lane)
+    used = Counter(source_key(x) for x in lane + floor)
     dealt = deal(
-        [x for x in ranked if id(x) not in in_lane], size - len(lane), per_source, slots, used
-    )
+        [x for x in ranked if id(x) not in in_lane],
+        size - len(lane) - len(floor), per_source, slots, used,
+    )  # fmt: skip
     ids = in_lane | {id(x) for x in dealt}
     rest = [x for x in ranked if id(x) not in ids]
-    batch = [{**x, "batch_priority": priority_class(x)} for x in lane] + dealt
+    batch = [{**x, "batch_priority": priority_class(x)} for x in lane] + floor + dealt
     backlog = [{**x, "batch_rank": i} for i, x in enumerate(rest, start=len(batch) + 1)]
     return batch, backlog + buckets.dropped
 

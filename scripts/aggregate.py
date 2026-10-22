@@ -124,6 +124,7 @@ def collect_rss(rules: dict, cutoff: datetime, signals: pg.Signals | None = None
     that carries no quality signal (paper_gate.admit, ISC-29).
     """
     signals = signals or pg.Signals()
+    signals.curator_ids |= pg.curator_link_ids()  # arXiv links in tl;dr sec issues
     feeds = sr.sources_of_type("rss") + sr.sources_of_type("newsletter")
     parsed_feeds: list[tuple[dict, list]] = []
     for source in feeds:
