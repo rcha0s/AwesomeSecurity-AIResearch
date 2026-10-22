@@ -10,9 +10,10 @@ that branch, never to a working-tree file the model could edit.
 Reserve before spending. Once `check` passes, `pre` appends a `reserve` row for
 the run's whole ceiling (max_stories_per_run × measured per-story cost, or
 `uncalibrated_run_usd` before any calibration). A run that fails halfway is
-therefore still charged. Local runs later append an `actual` row with the
-`total_cost_usd` that `claude -p --output-format json` reported; an actual row
-replaces its run's reservation. Cloud runs keep the reservation: their true
+therefore still charged. Local runs append an `actual` row with the
+`total_cost_usd` that `claude -p --output-format json` reported, after the
+session and before `post`, so the scan PR shows it; an actual row replaces its
+run's reservation (the latest actual row wins). Cloud runs keep the reservation: their true
 cost is unreadable, so they are charged the ceiling.
 
 `check` refuses when no cap is set, the month's spend has reached it, the run

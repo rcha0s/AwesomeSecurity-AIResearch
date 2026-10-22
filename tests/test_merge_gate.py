@@ -122,16 +122,45 @@ def _no_main_stories(monkeypatch):
     no_main_history(monkeypatch)
 
 
+# main's files these fixture trees don't model: the eval history, and the pools
+# + archive the sticky-promotion check reads (the real main has promotions).
+ABSENT_ON_MAIN = tuple(
+    f":data/{n}"
+    for n in ("evals/history.json", "ai-security.json", "product-security.json",
+              "ai-research.json", "archive.json")
+)  # fmt: skip
+
+
 def no_main_history(monkeypatch) -> None:
-    """main's data/evals/history.json reads as absent; every other git read is real."""
+    """main's history, pools and archive read as absent; every other git read is real."""
     real = gate.git_json
 
     def fake(ref_path: str, default: object) -> object:
-        if ref_path.endswith(":data/evals/history.json"):
+        if ref_path.endswith(ABSENT_ON_MAIN):
             return default
         return real(ref_path, default)
 
     monkeypatch.setattr(gate, "git_json", fake)
+
+
+def test_editorial_check_holds_a_demotion_for_a_human(tmp_path, monkeypatch):
+    import json
+
+    root = _tree(tmp_path)
+    monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
+    promo = {"id": "p1", "editorial": {"promoted": True}, "grounding_score": 1.0}
+    main = {"BASE:data/ai-security.json": {"entries": [promo]}}
+    monkeypatch.setattr(gate, "git_json", lambda ref, default: main.get(ref, default))
+    pool = root / "data" / "ai-security.json"
+    pool.write_text(json.dumps({"entries": [{"id": "p1", "grounding_score": 1.0}]}))
+    problems = gate.content_problems("BASE", root)
+    assert problems == ["editorial demotion needs human review: p1 lost its promotion "
+                        "with its integrity intact"]  # fmt: skip
+    pool.write_text(json.dumps({"entries": [{"id": "p1", "verified": False}]}))
+    assert gate.editorial_check("BASE", root) == []  # refuted: the one automatic removal
+    pool.unlink()
+    (root / "data" / "archive.json").write_text(json.dumps([promo]))
+    assert gate.editorial_check("BASE", root) == []  # aged into the archive, still promoted
 
 
 def test_content_problems_on_a_clean_tree(tmp_path, monkeypatch):

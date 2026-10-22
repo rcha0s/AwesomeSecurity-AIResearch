@@ -3,8 +3,8 @@
 #
 # The wrapper, not the model, runs every phase that guards spend or publishes:
 # check -> pre (reserve + ingest) -> a `claude -p` session running the
-# daily-scan skill in wrapped mode (analysis only) -> post (render + PR) ->
-# actual (measured cost). The model can't skip,
+# daily-scan skill in wrapped mode (analysis only) -> actual (measured cost,
+# recorded before post so the PR shows it) -> post (render + PR). The model can't skip,
 # re-run or fake any of them, and the measured cost is recorded on every
 # outcome because the wrapper itself made the reservation. A session that
 # merged nothing (post's analysis-empty) gets one same-day retry in a fresh
@@ -100,13 +100,24 @@ enter_worktree() {
   mkdir -p data
 }
 
-# One attempt: check -> pre -> session -> post -> actual. Returns 0 when a PR
+# The session's measured cost on the ledger (an `actual` row replaces the
+# reservation). Returns 1 only when a readable cost could not be recorded.
+record_actual() {
+  local cost="$1" stories="$2" outcome="${3:-}"
+  if [[ -z "$cost" ]]; then
+    echo "[local] no total_cost_usd in claude output; the reservation stands" | tee -a "$LOG"
+    return 0
+  fi
+  scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome"
+}
+
+# One attempt: check -> pre -> session -> actual -> post. Returns 0 when a PR
 # was opened (or there was nothing to change), 3 when the budget guard skipped,
 # and 4 when post failed the run as analysis-empty (it raised the alert). Any
 # other failure exits here. Called from `||`, so errexit is off inside: every
 # step checks its own status.
 attempt() {
-  local rc=0 limits cap_usd max_turns claude_rc=0 post_rc=0 cost stories outcome=""
+  local rc=0 limits cap_usd max_turns claude_rc=0 post_rc=0 cost stories outcome="" actual_ok=1 work_rc=0
   scripts/run_scan.sh check >/dev/null || rc=$?
   if [[ "$rc" == 3 ]]; then
     echo "[local] budget guard says skip (a scan finished today, no cap, or no budget left)" |
@@ -126,26 +137,34 @@ attempt() {
     .claude/skills/daily-scan/SKILL.md "$cap_usd" "$max_turns" >"$OUT" || claude_rc=$?
   log_session_result
 
+  # Record what the session really cost BEFORE post, so post's history row and
+  # PR body show the measured charge (the gate checks it against this ledger
+  # row). Without a readable cost, the reservation pre made stays the charge.
+  cost="$("$PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1])).get("total_cost_usd",""))' "$OUT" 2>/dev/null || true)"
+  # Counted here, not read from post's result: a run that fails in post still
+  # analyzed its stories, and calibration needs that count. Same tree post
+  # counts, so the same number.
+  stories="$("$PYTHON" scripts/scan_count.py 2>/dev/null || echo 0)"
+  [[ "$stories" =~ ^[0-9]+$ ]] || stories=0
+  # post's own analysis-empty test (scan_count.py --work), run first so the
+  # actual row carries the outcome that budget.retry_allowed reads.
+  if [[ "$claude_rc" == 0 ]]; then
+    "$PYTHON" scripts/scan_count.py --work >/dev/null 2>&1 || work_rc=$?
+    [[ "$work_rc" == 3 ]] && outcome="analysis-empty"
+  fi
+  record_actual "$cost" "$stories" "$outcome" || actual_ok=0
+
   # post fails a session that merged nothing and applied no story verdict
   # (analysis-empty, exit 4): it raises the alert and opens no PR.
   if [[ "$claude_rc" == 0 ]]; then
     scripts/run_scan.sh post || post_rc=$?
   fi
-  [[ "$post_rc" == 4 ]] && outcome="analysis-empty"
-
-  # Record what the session really cost on every outcome. Without a readable
-  # cost, the reservation pre made stays as the charge.
-  cost="$("$PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1])).get("total_cost_usd",""))' "$OUT" 2>/dev/null || true)"
-  # Counted here, not read from post's result: a run that fails in post still
-  # analyzed its stories, and calibration needs that count.
-  stories="$("$PYTHON" scripts/scan_count.py 2>/dev/null || echo 0)"
-  [[ "$stories" =~ ^[0-9]+$ ]] || stories=0
-  if [[ -n "$cost" ]]; then
-    scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome" ||
-      fail "local-ledger-actual"
-  else
-    echo "[local] no total_cost_usd in claude output; the reservation stands" | tee -a "$LOG"
+  # post is the authority: if it failed the run as analysis-empty when the
+  # check above didn't, correct the row so the retry rule sees it.
+  if [[ "$post_rc" == 4 && "$outcome" != "analysis-empty" ]]; then
+    record_actual "$cost" "$stories" analysis-empty || actual_ok=0
   fi
+  [[ "$actual_ok" == 1 ]] || fail "local-ledger-actual"
 
   [[ "$claude_rc" == 0 ]] || fail "local-claude"
   [[ "$post_rc" == 4 ]] && return 4

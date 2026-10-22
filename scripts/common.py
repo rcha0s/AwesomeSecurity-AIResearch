@@ -562,12 +562,17 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
     curated), that are scored, grounded, and not refuted, are in play."""
     if is_curated(entry, conf) or not is_scored(entry) or domain_held(entry):
         return False
+    return not integrity_lost(entry)
+
+
+def integrity_lost(entry: dict) -> bool:
+    """The integrity floor the editorial track can never cross: the verifier
+    refuted it, or a quote didn't ground. The one fact (besides an explicit,
+    reasoned demotion) that takes an earlier promotion away."""
     if entry.get("verified") is False:
-        return False
+        return True
     gs = entry.get("grounding_score")
-    if gs is not None and gs < 1.0:
-        return False
-    return True
+    return gs is not None and gs < 1.0
 
 
 # --- Track-B (news lane) gate ----------------------------------------------

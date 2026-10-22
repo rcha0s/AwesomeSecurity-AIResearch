@@ -61,7 +61,8 @@ all four.
      that saved source text. Nothing you can't ground gets published.
    - Then run `python scripts/merge_analysis.py` and `python scripts/verify_citations.py`.
    - Editorial pass per the `editorial-review` skill: `python scripts/importance.py --top 15`,
-     judge the eligible held items, write `data/editorial_out.json` (`[]` if none qualify),
+     judge the eligible held items, write `data/editorial_out.json` (`[]` if none qualify;
+     earlier promotions are sticky, a demotion needs `"demote": true` and a reason),
      `python scripts/promote_editorial.py`.
 
 3. **Summary:** write `data/_summary.md`. It becomes the PR body: every claim change
