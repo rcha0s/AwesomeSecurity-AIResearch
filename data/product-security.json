@@ -63,7 +63,7 @@
         "newness": 0,
         "credibility": 57.5,
         "composite": 52.12,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:45:36+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -149,7 +149,7 @@
         "newness": 1,
         "credibility": 77.5,
         "composite": 42.47,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:45:36+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -172,7 +172,7 @@
         "newness": 31,
         "credibility": 70.0,
         "composite": 40.75,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:45:36+00:00"
       },
       "verified": true,
       "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
@@ -305,7 +305,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 40.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:45:36+00:00"
       },
       "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
@@ -327,7 +327,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 32.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:45:36+00:00"
       },
       "verified": false,
       "verify_note": "Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source.",
@@ -419,7 +419,7 @@
         "newness": 1,
         "credibility": 73.2,
         "composite": 29.23,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:45:36+00:00"
       },
       "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
       "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
