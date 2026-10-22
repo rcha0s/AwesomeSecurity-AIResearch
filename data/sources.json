@@ -631,8 +631,8 @@
     },
     "rank": 47.0,
     "added": "2026-07-13",
-    "active": true,
-    "notes": "github search",
+    "active": false,
+    "notes": "github search | 2026-10-22: deactivated: 7 ingested, 0 curated in pools+archive; harvests generic agent frameworks, off-thesis for a security reader.",
     "strict": false,
     "track": "research",
     "scope": "ai"
@@ -859,16 +859,16 @@
       "Web Application Security"
     ],
     "strict": false,
-    "tier": "medium",
+    "tier": "low",
     "signals": {},
     "stats": {
       "ingested": 7,
       "curated": 0
     },
-    "rank": 47.0,
+    "rank": 32.0,
     "added": "2026-07-16",
     "active": true,
-    "notes": "Vendor research (SAST/appsec)",
+    "notes": "Vendor research (SAST/appsec) | 2026-10-22: demoted medium->low: 7 ingested, 0 curated in pools+archive; recent items are vendor marketing.",
     "track": "research",
     "scope": "security"
   },
@@ -1799,5 +1799,208 @@
     "added": "2026-10-20",
     "active": true,
     "notes": "Paper quality signal (paper_gate hf-daily); harvested by ingest_json_feeds.py"
+  },
+  {
+    "id": "rss:https-blog-talosintelligence-com-rss",
+    "type": "rss",
+    "handle": "https://blog.talosintelligence.com/rss/",
+    "name": "Cisco Talos Intelligence",
+    "url": "https://blog.talosintelligence.com/rss/",
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Vendor threat research; 15 posts in 31d (probe 2026-10-22). 2 tl;dr sec misses in 2026-W43 (CAIRN, Closed Quorum AI C2)."
+  },
+  {
+    "id": "rss:https-specterops-io-blog-category-research-feed",
+    "type": "rss",
+    "handle": "https://specterops.io/blog/category/research/feed/",
+    "name": "SpecterOps Research & Tradecraft",
+    "url": "https://specterops.io/blog/category/research/feed/",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Research category feed only (the main feed mixes podcasts); 3 posts in 31d, 18 in 90d. tl;dr sec miss 2026-W43."
+  },
+  {
+    "id": "rss:https-securitylabs-datadoghq-com-rss-feed-xml",
+    "type": "rss",
+    "handle": "https://securitylabs.datadoghq.com/rss/feed.xml",
+    "name": "Datadog Security Labs",
+    "url": "https://securitylabs.datadoghq.com/rss/feed.xml",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Cloud + AI security research; 8 posts in 31d (LiteLLM compromise, OpenCode RCE, Bedrock key abuse)."
+  },
+  {
+    "id": "rss:https-xbow-com-blog-feed-xml",
+    "type": "rss",
+    "handle": "https://xbow.com/blog/feed.xml",
+    "name": "XBOW",
+    "url": "https://xbow.com/blog/feed.xml",
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "AI offensive-security research mixed with product posts (medium); 8 in 31d. tl;dr sec miss 2026-W43 (Chrome full chain)."
+  },
+  {
+    "id": "rss:https-www-semperis-com-feed-post-type-post",
+    "type": "rss",
+    "handle": "https://www.semperis.com/feed/?post_type=post",
+    "name": "Semperis",
+    "url": "https://www.semperis.com/feed/?post_type=post",
+    "topics": [
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Identity / Entra ID / AD research, some product posts; 4 in 31d. /blog/feed/ is empty, this URL is the posts feed. tl;dr sec miss 2026-W43 (EntraGoat)."
+  },
+  {
+    "id": "rss:https-research-checkpoint-com-feed",
+    "type": "rss",
+    "handle": "https://research.checkpoint.com/feed/",
+    "name": "Check Point Research",
+    "url": "https://research.checkpoint.com/feed/",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Vendor research (LLM gateway, AI attack vectors) plus weekly digest posts (medium); 7 in 31d."
+  },
+  {
+    "id": "rss:https-socket-dev-api-blog-feed-atom",
+    "type": "rss",
+    "handle": "https://socket.dev/api/blog/feed.atom",
+    "name": "Socket",
+    "url": "https://socket.dev/api/blog/feed.atom",
+    "topics": [
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Package supply-chain incidents (LiteLLM, PHP embargo) plus product posts; 10 in 31d."
+  },
+  {
+    "id": "rss:https-safedep-io-rss-xml",
+    "type": "rss",
+    "handle": "https://safedep.io/rss.xml",
+    "name": "SafeDep",
+    "url": "https://safedep.io/rss.xml",
+    "topics": [
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "Malicious-package and supply-chain compromise research; 14 in 31d (first write-up of LiteLLM 1.107.0)."
+  },
+  {
+    "id": "rss:https-www-stepsecurity-io-blog-rss-xml",
+    "type": "rss",
+    "handle": "https://www.stepsecurity.io/blog/rss.xml",
+    "name": "StepSecurity",
+    "url": "https://www.stepsecurity.io/blog/rss.xml",
+    "topics": [
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-22",
+    "active": true,
+    "notes": "CI/CD and package compromise research (GhostAction, tensorlake, LiteLLM) plus product posts; 7 in 31d."
   }
 ]
