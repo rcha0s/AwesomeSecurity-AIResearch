@@ -366,7 +366,10 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     assert rows[0]["integrity"]["passed"] is False  # no rendered site in this repo
     calls = gh_calls(env)
     assert "**Run numbers:** 0 candidates staged" in calls and "LLM calls:" in calls
-    assert "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |" in calls
+    assert (
+        "| Date | Runner | Candidates | Stories | Kept | Recall (independent) | Charged | Gate |"
+        in calls
+    )
     assert "Spend this month:**" in calls
     # The cloud can't measure its cost: the body says reserved, honestly.
     assert "charged $2.50 (reserved; reserved ceiling $2.50" in calls

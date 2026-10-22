@@ -19,15 +19,7 @@ from conftest import make_entry
 FIXTURES = Path(__file__).parent / "fixtures" / "curator"
 ISSUE_349 = "https://tldrsec.com/p/tldr-sec-349"
 ISSUE_350 = "https://tldrsec.com/p/tldr-sec-350"
-STAGED = [  # the lead, on-thesis, free story links of both recorded issues
-    "How XBOW Finds IDORs with High Accuracy and Low Noise",
-    "HTTP/3 in Burp Suite - it’s time to find a bigger wordlist",
-    "Graphalgo campaign spreads to Terraform providers and Go Modules",
-    "Package Manager Sandboxing",
-    "Where do detection ideas come from",
-    "Vulnerability Discovery and Exploitation Trends in the AI Era",
-    "$1 Million Sandbox Challenge Uncovers Linux Kernel Flaws",
-    "Escaping SPACE: Part I",
+STAGED = [  # the lead, on-thesis, free story links of both recorded issues, newest first
     "Zero to Calc in Six Days: Inside XBOW’s Chrome Full Chain",
     "Grounded or Gamed? We Audited Our Own Cyber Benchmark",
     "What Is EntraGoat? A Deliberately Vulnerable Entra ID Simulation Environment",
@@ -39,6 +31,14 @@ STAGED = [  # the lead, on-thesis, free story links of both recorded issues
     "AI for Offensive Security: What Works, What Does Not, and How to Adopt It",
     "How DigitalOcean Manages Credentials for Autonomous Agents",
     "Test-driving Jev on a security task: identity resolution",
+    "How XBOW Finds IDORs with High Accuracy and Low Noise",
+    "HTTP/3 in Burp Suite - it’s time to find a bigger wordlist",
+    "Graphalgo campaign spreads to Terraform providers and Go Modules",
+    "Package Manager Sandboxing",
+    "Where do detection ideas come from",
+    "Vulnerability Discovery and Exploitation Trends in the AI Era",
+    "$1 Million Sandbox Challenge Uncovers Linux Kernel Flaws",
+    "Escaping SPACE: Part I",
 ]
 SPONSORED = ("nudgesecurity.com", "wiz.io", "opal.dev")
 
@@ -88,12 +88,21 @@ def issue(n: int) -> str:
 
 # --- Fetching -----------------------------------------------------------------
 def test_reads_the_sitemap_then_only_issues_inside_the_window(sandbox):
+    """By issue number, never lastmod: #126 (2022) carries a fresh lastmod and the
+    newest issues a 2025 bulk-touch one, as on the live sitemap."""
     fetch = Recorded()
-    icl.collect(fetch, cfg(), rules())
-    assert fetch.asked == [er.TLDRSEC_SITEMAP, ISSUE_349, ISSUE_350]  # 348 is 21 days old
-    narrow = Recorded()
-    icl.collect(narrow, cfg(lookback_days=3), rules())
-    assert narrow.asked == [er.TLDRSEC_SITEMAP, ISSUE_350]
+    result = icl.collect(fetch, cfg(), rules())
+    assert fetch.asked == [er.TLDRSEC_SITEMAP, ISSUE_350, ISSUE_349]  # newest 2; not #126
+    assert result["counts"]["issues"] == 2  # staged despite their old bulk lastmod
+    one = Recorded()
+    icl.collect(one, cfg(max_issues=1), rules())
+    assert one.asked == [er.TLDRSEC_SITEMAP, ISSUE_350]
+
+
+def test_the_window_is_judged_by_the_issues_own_publish_date(sandbox):
+    result = run(lookback_days=3)  # since 2026-07-12: #349 (published 07-08) is out
+    assert list(result["per_issue"]) == [ISSUE_350]
+    assert {x["curator_issue"] for x in result["candidates"]} == {ISSUE_350}
 
 
 def test_live_fetch_is_held_to_the_curator_hosts():
@@ -103,8 +112,42 @@ def test_live_fetch_is_held_to_the_curator_hosts():
 
 def test_settings_come_from_sources_yaml():
     s = icl.settings()
-    assert s["lookback_days"] == 14
+    assert s["lookback_days"] == 14 and s["max_issues"] == 2 and s["source_rank"] == 70.0
     assert "link.springer.com" in s["paywall_hosts"] and "archive.is" in s["paywall_hosts"]
+
+
+def test_the_staged_rank_is_the_configured_one(sandbox):
+    assert {x["source_rank"] for x in run(source_rank=55.0)["candidates"]} == {55.0}
+
+
+def test_an_issue_page_without_a_publish_date_is_skipped(capsys):
+    pages = {er.TLDRSEC_SITEMAP: (FIXTURES / "tldrsec_sitemap.xml").read_text(),
+             ISSUE_350: issue(350).replace('"datePublished"', '"dateModified"'),
+             ISSUE_349: issue(349)}  # fmt: skip
+    got = er.tldrsec_issues(pages.__getitem__, "2026-07-01")
+    assert [(u, d) for u, d, _ in got] == [(ISSUE_349, "2026-07-08")]
+    assert "tldr-sec-350 has no publish date" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "page,day",
+    [
+        ('<script>{"datePublished":"2026-10-15T14:30:00.000Z"}</script>', "2026-10-15"),
+        ('<meta property="article:published_time" content="2026-10-08T14:30:00Z">', "2026-10-08"),
+        ('<meta content="2026-10-01T00:00:00Z" property="article:published_time"/>', "2026-10-01"),
+        ('<meta property="og:updated_time" content="2026-10-20">', None),
+        ("", None),
+    ],
+)
+def test_issue_published_reads_the_pages_own_date(page, day):
+    assert er.issue_published(page) == day
+
+
+def test_the_newest_issues_are_picked_by_number_not_lastmod():
+    xml = (FIXTURES / "tldrsec_sitemap.xml").read_text()
+    assert er.parse_tldrsec_sitemap(xml, 3) == [ISSUE_350, ISSUE_349,
+                                                "https://tldrsec.com/p/tldr-sec-348"]  # fmt: skip
+    assert er.parse_tldrsec_sitemap(xml, 0) == []
 
 
 # --- The shared parser ----------------------------------------------------------
@@ -178,7 +221,7 @@ def test_a_candidate_cites_the_article_not_the_newsletter(sandbox):
     assert cand["published"] == "2026-07-15"  # the issue's sitemap date
     assert "AWS Bedrock" in cand["excerpt"]  # the curator's blurb
     assert cand["guess_topic"] in common.TOPICS and cand["guess_domain"]
-    assert cand["source_rank"] == icl.DEFAULT_RANK  # no registry in the sandbox
+    assert cand["source_rank"] == 70.0  # sources.yaml curator_links.source_rank, not a registry row
 
 
 def test_off_thesis_links_are_not_staged(sandbox):
@@ -264,7 +307,7 @@ def test_the_same_link_in_two_issues_is_staged_once(sandbox, monkeypatch):
     same = issue(350)
     fetch = Recorded()
     monkeypatch.setattr(
-        er, "tldrsec_issues", lambda f, since: [(ISSUE_349, "2026-07-08", same),
+        er, "tldrsec_issues", lambda f, since, newest: [(ISSUE_349, "2026-07-08", same),
                                                 (ISSUE_350, "2026-07-15", same)]
     )  # fmt: skip
     result = icl.collect(fetch, cfg(), rules())
@@ -273,7 +316,7 @@ def test_the_same_link_in_two_issues_is_staged_once(sandbox, monkeypatch):
 
 def two_issues(monkeypatch, first: str, second: str) -> list[str]:
     pages = [(ISSUE_349, "2026-07-08", first), (ISSUE_350, "2026-07-15", second)]
-    monkeypatch.setattr(er, "tldrsec_issues", lambda f, since: pages)
+    monkeypatch.setattr(er, "tldrsec_issues", lambda f, since, newest: pages)
     return titles(icl.collect(Recorded(), cfg(), rules()))
 
 
@@ -377,3 +420,22 @@ def test_merge_stamps_curator_provenance_from_the_candidate():
     assert analyzed[0]["curated_by"] == "tldrsec" and analyzed[0]["curator_issue"] == ISSUE_350
     assert analyzed[0]["source_id"] == "curator:tldrsec"
     assert "curated_by" not in analyzed[1]
+
+
+def test_merge_stamps_by_article_url_or_raw_path_and_logs_the_rest(capsys):
+    base = {"curated_by": "tldrsec", "curator_issue": ISSUE_350, "source_id": "curator:tldrsec"}
+    cands = [
+        {**base, "id": "a", "title": "By article", "source_url": "https://x.example/1",
+         "article_url": "https://art.example/1"},
+        {**base, "id": "b", "title": "By raw", "source_url": "https://x.example/2",
+         "raw_path": "data/_raw/b.txt"},
+        {**base, "id": "c", "title": "Never analyzed", "source_url": "https://x.example/3"},
+    ]  # fmt: skip
+    analyzed = [
+        {"id": "e1", "source_url": "https://other.example/1", "article_url": "https://art.example/1/"},
+        {"id": "e2", "source_url": "https://other.example/2", "raw_path": "data/_raw/b.txt"},
+    ]  # fmt: skip
+    assert merge_analysis.stamp_curator(analyzed, cands) == 2
+    assert all(e["curated_by"] == "tldrsec" for e in analyzed)
+    err = capsys.readouterr().err
+    assert "left unstamped (not analyzed): Never analyzed" in err and "By raw" not in err

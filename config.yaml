@@ -143,6 +143,8 @@ evals:
     max_run_usd: null        # per-run cost cap; null = budget.monthly_cap_usd / 30
   recall:
     lookback_days: 7         # curator headlines published in the last N days
+    tldrsec_max_issues: 2    # newest tl;dr sec issues by number (sitemap lastmod is an
+                             # edit date, not a publish date; the page's own date decides)
   golden:
     min_fact_coverage: 0.5   # a kept case passes when at least this share of its facts appear
     cases_per_run: 8         # cases staged per weekly analyzer run (rotates through the set)

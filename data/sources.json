@@ -1514,9 +1514,11 @@
     },
     "rank": 80.0,
     "added": "2026-08-06",
-    "active": true,
+    "active": false,
     "notes": "Weekly security newsletter by Clint Gibler; high signal",
-    "strict": false
+    "strict": false,
+    "deactivated": "2026-10-22",
+    "deactivated_reason": "tldrsec.com/feed redirects (302) to /?404=%2Ffeed since at least 2026-10-22; issues are read from the sitemap by ingest_curator_links.py"
   },
   {
     "id": "rss:https---github-com-modelcontextprotocol-specific",

@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Shaped like the live sitemap on 2026-10-22: most issues share one bulk-touch
+     lastmod, and an old issue (#126, published 2022) carries a recent lastmod. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tldrsec.com/</loc>
     <lastmod>2026-07-15T06:58:58+00:00</lastmod>
   </url>
   <url>
-    <loc>https://tldrsec.com/p/tldr-sec-348</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://tldrsec.com/p/tldr-sec-126</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
   <url>
-    <loc>https://tldrsec.com/p/tldr-sec-349</loc>
-    <lastmod>2026-07-08</lastmod>
+    <loc>https://tldrsec.com/p/tldr-sec-348</loc>
+    <lastmod>2025-04-14</lastmod>
   </url>
   <url>
     <loc>https://tldrsec.com/p/tldr-sec-350</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2025-04-14</lastmod>
+  </url>
+  <url>
+    <loc>https://tldrsec.com/p/tldr-sec-349</loc>
+    <lastmod>2025-04-14</lastmod>
+  </url>
+  <url>
+    <loc>https://tldrsec.com/p/blog-score-bot-shift-left-at-scale</loc>
+    <lastmod>2026-07-14</lastmod>
   </url>
 </urlset>

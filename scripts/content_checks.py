@@ -250,7 +250,8 @@ def history_problems(
 
     `recomputed` is what merge_gate derives from the merged tree and main's
     config: {"integrity": bool, "golden": dict | None, "cap_usd": float | None}.
-    The recall score needs the network, so it is the one value taken on trust."""
+    The recall scores (overall, independent, per curator) need the network, so
+    they are the values taken on trust; recall_shape_problems checks their shape."""
     old, new = _history_rows(main_history), _history_rows(pr_history)
     if new[: len(old)] != old:
         return ["history: rows on main were rewritten or removed"]
@@ -267,4 +268,36 @@ def history_problems(
         out.append("history: the new row's golden result is not the newest on the tree")
     if row.get("cap_usd") != recomputed.get("cap_usd"):
         out.append("history: the new row's per-run cap is not main's")
+    return out + recall_shape_problems(row.get("recall"))
+
+
+CURATOR_NAME = re.compile(r"^[a-z0-9_-]{1,32}$")
+
+
+def _share(value: object) -> bool:
+    """A recall share: None, or a number in [0, 1] (bool is not a number here)."""
+    if value is None:
+        return True
+    return isinstance(value, int | float) and not isinstance(value, bool) and 0 <= value <= 1
+
+
+def recall_shape_problems(recall: object) -> list[str]:
+    """The recall values are taken on trust (they need the network), the new
+    independent and per-curator ones included; only their shape is checked, so
+    a row can't smuggle markup or junk into the PR body's trend table."""
+    if recall is None:
+        return []
+    if not isinstance(recall, dict):
+        return ["history: the new row's recall is not an object"]
+    out = [f"history: recall {k} is not a share in [0, 1]"
+           for k in ("recall", "independent_recall") if not _share(recall.get(k))]  # fmt: skip
+    per = recall.get("curator_recall")
+    if per is None:
+        return out
+    if not isinstance(per, dict):
+        return out + ["history: recall curator_recall is not an object"]
+    for name, t in per.items():
+        ok = CURATOR_NAME.match(str(name)) and isinstance(t, dict)
+        if not ok or not all(_share(t.get(k)) for k in ("recall", "independent_recall")):
+            out.append(f"history: recall curator_recall row {str(name)[:32]!r} is malformed")
     return out

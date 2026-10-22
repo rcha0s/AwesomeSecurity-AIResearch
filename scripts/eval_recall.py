@@ -4,8 +4,10 @@ eval_recall.py — Did we catch what the reference curators led with? (ISA ISC-2
 
 Each week, pull the headline story links from four reference curators:
 
-  tldrsec   tl;dr sec issues (tldrsec.com sitemap -> /p/tldr-sec-<n> pages): the
-            first link of each paragraph in the security sections, not Misc
+  tldrsec   tl;dr sec issues: the newest `recall.tldrsec_max_issues` /p/tldr-sec-<n>
+            pages in the sitemap by issue number, dated by the page's own publish
+            date; the first link of each paragraph in the security sections, not
+            Misc, sponsor blocks or paid links
   simon     Simon Willison's weblog, the `security` and `prompt-injection` tag feeds:
             the post and the story it links to
   ghsa      GitHub reviewed advisories, severity critical (`gh api`, REST)
@@ -23,7 +25,10 @@ stages the stories tl;dr sec links to, so a tl;dr sec headline we hold only beca
 we ingested that curator's own links is partly circular. Independent recall counts a
 headline as held only when the matching entry was NOT staged via a curator link
 (`curated_by` set, or a `curator:` source_id); the gap between the two is how much
-of the score the curator ingestor supplies. The 7-run gate keeps the overall figure.
+of the score the curator ingestor supplies. The overall figure (the 7-run gate's)
+credits a curator-staged match only when the analyzer vetted the entry (not
+needs_review, grounded, not refuted): every analyzed candidate lands in a pool,
+so presence alone would let the ingestor grade itself.
 
 Usage:
     python scripts/eval_recall.py --live [--write | --out PATH]   # fetch the curators (network)
@@ -56,6 +61,7 @@ import common as c
 import dedupe_stories as ds
 import eval_lib as el
 import taxonomy as tx
+import verify_citations as vc
 
 TLDRSEC_SITEMAP = "https://tldrsec.com/sitemap.xml"
 SIMON_FEEDS = (
@@ -66,6 +72,9 @@ KEV_URL = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulner
 NVD_URL = "https://nvd.nist.gov/vuln/detail/"
 CURATOR_HOSTS = ("tldrsec.com", "simonwillison.net", "www.cisa.gov")
 ISSUE_URL = re.compile(r"^https://tldrsec\.com/p/tldr-sec-\d+$")
+TLDRSEC_MAX_ISSUES = 2  # weekly: the two newest issues cover a 7-14 day window
+DATE_PUBLISHED = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
+META_TAG = re.compile(r"<meta\b[^>]*>", re.I)
 # tl;dr sec sections that aren't security headlines.
 SKIP_SECTIONS = ("misc", "wrapping up", "advice", "sponsor", "")
 # Paragraph links to people and social posts are credits, not stories.
@@ -98,15 +107,32 @@ def item(curator: str, title: str, url: str, published: str, text: str = "", url
 
 
 # --- Parsers (pure: tests feed them recorded responses) -----------------------
-def parse_tldrsec_sitemap(xml: str, since: str) -> list[tuple[str, str]]:
-    """(issue URL, lastmod) for issues modified on or after `since` (YYYY-MM-DD)."""
-    out = []
+def parse_tldrsec_sitemap(xml: str, newest: int) -> list[str]:
+    """The `newest` issue URLs by issue number, newest first.
+
+    Not by lastmod: the sitemap's lastmod is an edit date, not a publish date
+    (2026-10-22: #126, published 2022, had lastmod 2026-05-28, and 247 issues
+    shared one 2025-04 bulk-touch lastmod). The issue number only grows."""
+    found = {}
     for node in ET.fromstring(xml).iter(f"{SM}url"):
         loc = (node.findtext(f"{SM}loc") or "").strip()
-        mod = (node.findtext(f"{SM}lastmod") or "")[:10]
-        if ISSUE_URL.match(loc) and mod >= since:
-            out.append((loc, mod))
-    return out
+        if ISSUE_URL.match(loc):
+            found[int(loc.rsplit("-", 1)[1])] = loc
+    return [found[n] for n in sorted(found, reverse=True)[: max(0, newest)]]
+
+
+def issue_published(page: str) -> str | None:
+    """The issue's own publish date (YYYY-MM-DD): the JSON-LD `datePublished`
+    beehiiv embeds, else an article:published_time meta tag. None if neither."""
+    m = DATE_PUBLISHED.search(page)
+    if m:
+        return m.group(1)
+    for tag in META_TAG.findall(page):
+        if "article:published_time" in tag:
+            day = re.search(r'content="(\d{4}-\d{2}-\d{2})', tag)
+            if day:
+                return day.group(1)
+    return None
 
 
 def _is_story_link(url: str) -> bool:
@@ -214,17 +240,29 @@ def gh_advisories(since: str, today: str) -> list[dict]:
     return json.loads(out.stdout)
 
 
-def tldrsec_issues(fetch: Callable[[str], str], since: str) -> list[tuple[str, str, str]]:
-    """(issue URL, lastmod, page HTML) for every issue since `since`, via the sitemap.
-    Shared with scripts/ingest_curator_links.py."""
-    issues = parse_tldrsec_sitemap(fetch(TLDRSEC_SITEMAP), since)
-    return [(u, mod, fetch(u)) for u, mod in issues]
+def tldrsec_issues(
+    fetch: Callable[[str], str], since: str, newest: int = TLDRSEC_MAX_ISSUES
+) -> list[tuple[str, str, str]]:
+    """(issue URL, published, page HTML) for the `newest` issues in the sitemap
+    whose own publish date is on or after `since`. An issue page with no publish
+    date is skipped (and said so). Shared with scripts/ingest_curator_links.py."""
+    out = []
+    for url in parse_tldrsec_sitemap(fetch(TLDRSEC_SITEMAP), newest):
+        page = fetch(url)
+        day = issue_published(page)
+        if day is None:
+            print(f"tldrsec: {url} has no publish date; skipped", file=sys.stderr)
+        elif day >= since:
+            out.append((url, day, page))
+    return out
 
 
-def live_source(since: str, today: str) -> Callable[[str], object]:
+def live_source(
+    since: str, today: str, newest: int = TLDRSEC_MAX_ISSUES
+) -> Callable[[str], object]:
     def get(name: str) -> object:
         if name == "tldrsec":
-            return tldrsec_issues(http_get, since)
+            return tldrsec_issues(http_get, since, newest)
         if name == "simon":
             return [http_get(u) for u in SIMON_FEEDS]
         if name == "ghsa":
@@ -234,16 +272,22 @@ def live_source(since: str, today: str) -> Callable[[str], object]:
     return get
 
 
-def fixture_source(directory: Path, since: str) -> Callable[[str], object]:
-    """Recorded responses: tldrsec_sitemap.xml + tldrsec-<n>.html, simon-*.atom,
-    ghsa.json, kev.json. A missing file is an empty curator."""
+def fixture_source(
+    directory: Path, since: str, newest: int = TLDRSEC_MAX_ISSUES
+) -> Callable[[str], object]:
+    """Recorded responses: tldrsec_sitemap.xml + tldr-sec-<n>.html, simon-*.atom,
+    ghsa.json, kev.json. A missing file is an empty curator (or an undated page)."""
+
+    def read(url: str) -> str:
+        name = "tldrsec_sitemap.xml" if url == TLDRSEC_SITEMAP else url.rsplit("/", 1)[1] + ".html"
+        path = directory / name
+        return path.read_text() if path.exists() else ""
 
     def get(name: str) -> object:
         if name == "tldrsec":
-            sm = directory / "tldrsec_sitemap.xml"
-            urls = parse_tldrsec_sitemap(sm.read_text(), since) if sm.exists() else []
-            pages = [(u, mod, directory / f"{u.rsplit('/', 1)[1]}.html") for u, mod in urls]
-            return [(u, mod, p.read_text()) for u, mod, p in pages if p.exists()]
+            if not (directory / "tldrsec_sitemap.xml").exists():
+                return []
+            return tldrsec_issues(read, since, newest)
         if name == "simon":
             return [p.read_text() for p in sorted(directory.glob("simon-*.atom"))]
         path = directory / f"{name}.json"
@@ -332,6 +376,23 @@ def staged_via_curator(entry: dict) -> bool:
     return bool(entry.get("curated_by")) or sid.startswith("curator:")
 
 
+def vetted(entry: dict) -> bool:
+    """The analyzer kept it: not held for review, its excerpts grounded (the bar
+    the rendered lanes use), and the verifier did not refute it."""
+    return (
+        not entry.get("needs_review")
+        and vc.publishable_grounding(entry)
+        and entry.get("verified") is not False
+    )
+
+
+def credited(entry: dict) -> bool:
+    """A match counts toward recall unless the entry exists only because we
+    ingested the curator's own link and the analyzer did not vet it: every
+    analyzed candidate lands in a pool, so presence alone would be circular."""
+    return not staged_via_curator(entry) or vetted(entry)
+
+
 def _ratio(n: int, d: int) -> float | None:
     return round(n / d, 3) if d else None
 
@@ -355,24 +416,32 @@ def score(items: list[dict], entries: list[dict], tax: tx.Taxonomy) -> dict:
     for it in (i for i in items if on_thesis(i, tax)):
         hit = find_match(it, index)
         row = {k: it[k] for k in ("curator", "title", "url", "published")}
-        if hit:
+        if hit and credited(hit[0]):
             row.update(matched=hit[0].get("id"), how=hit[1])
             row["via_curator"] = staged_via_curator(hit[0])
         else:
+            if hit:  # staged from the curator's link, but the analyzer did not keep it
+                row["unvetted"] = hit[0].get("id")
             misses.append(row)
         scored.append(row)
     hosts = Counter((urlparse(m["url"]).hostname or "?").removeprefix("www.") for m in misses)
     by_curator = Counter(r["curator"] for r in scored)
     overall = tally(scored)
+    per_curator = {
+        cur: tally([r for r in scored if r["curator"] == cur]) for cur in sorted(by_curator)
+    }
     return {
         "headlines": len(items),
         "on_thesis": len(scored),
         "matched": len(scored) - len(misses),
         "recall": overall["recall"],
+        "independent_recall": overall["independent_recall"],
         "independent": {k: overall[k] for k in ("independent_matched", "independent_recall")},
         "by_curator": dict(by_curator),
-        "recall_by_curator": {
-            cur: tally([r for r in scored if r["curator"] == cur]) for cur in sorted(by_curator)
+        "recall_by_curator": per_curator,
+        "curator_recall": {
+            cur: {k: t[k] for k in ("recall", "independent_recall")}
+            for cur, t in per_curator.items()
         },
         "misses": misses,
         "miss_hosts": dict(hosts.most_common()),
@@ -420,10 +489,11 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     cfg, now = el.settings(), c.utcnow()
     since = (now - timedelta(days=int(cfg["recall"]["lookback_days"]))).strftime("%Y-%m-%d")
+    newest = int(cfg["recall"].get("tldrsec_max_issues", TLDRSEC_MAX_ISSUES))
     get = (
-        live_source(since, now.strftime("%Y-%m-%d"))
+        live_source(since, now.strftime("%Y-%m-%d"), newest)
         if args.live
-        else fixture_source(args.fixtures, since)
+        else fixture_source(args.fixtures, since, newest)
     )
     result = run(get, now, int(cfg["recall"]["lookback_days"]))
     print(json.dumps(result, indent=2)) if args.json else print_report(result)
@@ -438,7 +508,7 @@ def main(argv: list[str] | None = None) -> int:
     print(
         el.summary_line(
             "recall", passed, recall=recall if recall is not None else "none", matched=result["matched"],
-            independent=_or_none(result["independent"]["independent_recall"]),
+            independent=_or_none(result["independent_recall"]),
             on_thesis=result["on_thesis"], headlines=result["headlines"],
             misses=len(result["misses"]), errors=len(result["errors"]), week=result["week"],
         )

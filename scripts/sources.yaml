@@ -65,7 +65,15 @@ hackernews:
 # story is staged with the ARTICLE as its citation. Paywalled hosts are never
 # staged, so they are never fetched; archive mirrors are paywall bypasses.
 curator_links:
-  lookback_days: 14     # only issues whose sitemap lastmod falls in this window
+  max_issues: 2         # the newest N issues by issue number (weekly, so 2 ~ 14 days).
+                        # Never by sitemap lastmod: it is an edit date (an old issue
+                        # can carry a recent one; most share a 2025-04 bulk touch).
+  lookback_days: 14     # of those, only issues whose own publish date is this recent
+  # Credibility of a staged link (registry-rank scale). The linked blog is usually
+  # unknown to the registry; tl;dr sec vouching for it lifts it above the neutral 50
+  # and the 45 min_credibility bar, but below tl;dr sec's own 80: the curator
+  # picked it, it did not write it.
+  source_rank: 70
   paywall_hosts:
     - nytimes.com
     - wsj.com

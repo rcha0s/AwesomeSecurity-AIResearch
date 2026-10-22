@@ -65,7 +65,8 @@ def save_row(row: dict, path: Path | None = None) -> list[dict]:
 
 
 # --- Inputs for one row -------------------------------------------------------
-RECALL_KEYS = ("recall", "week", "generated", "passed")
+# independent_recall + curator_recall are reported, not gated (eval_recall.py).
+RECALL_KEYS = ("recall", "independent_recall", "curator_recall", "week", "generated", "passed")
 GOLDEN_KEYS = ("score", "off_topic_rate", "cases", "generated")
 
 
@@ -224,17 +225,42 @@ def body(rows: list[dict], run_id: str, cfg: dict) -> str:
         "",
         f"**Last {cfg['gate_runs']} runs** (Phase 3 gate):",
         "",
-        "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |",
-        "|---|---|---|---|---|---|---|",
+        "| Date | Runner | Candidates | Stories | Kept | Recall (independent) | Charged | Gate |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for r in rows[-int(cfg["gate_runs"]) :]:
         fails = verdict(r, cfg["thresholds"], int(cfg["max_result_age_days"]))
         mark = "pass" if not fails else "fail: " + "; ".join(fails)
         lines.append(
             f"| {r.get('date')} | {r.get('runner')} | {r.get('candidates')} | {r.get('stories')} "
-            f"| {r.get('kept')} ({_pct(r.get('kept_ratio'))}) | {_money(r.get('cost_usd'))} | {mark} |"
+            f"| {r.get('kept')} ({_pct(r.get('kept_ratio'))}) | {_recall_cell(r)} "
+            f"| {_money(r.get('cost_usd'))} | {mark} |"
         )
-    return "\n".join(lines)
+    per = _curator_line(row)
+    return "\n".join(lines + ([f"\n**Recall by curator** (this run): {per}"] if per else []))
+
+
+def _num(value: object) -> float | None:
+    ok = isinstance(value, int | float) and not isinstance(value, bool)
+    return float(value) if ok else None
+
+
+def _recall_cell(row: dict) -> str:
+    rec = row.get("recall") if isinstance(row.get("recall"), dict) else {}
+    return f"{_pct(_num(rec.get('recall')))} ({_pct(_num(rec.get('independent_recall')))})"
+
+
+def _curator_line(row: dict) -> str:
+    rec = row.get("recall") if isinstance(row.get("recall"), dict) else {}
+    per = rec.get("curator_recall")
+    if not isinstance(per, dict):
+        return ""
+    cells = []
+    for name, t in sorted(per.items()):
+        t = t if isinstance(t, dict) else {}
+        cells.append(f"{name} {_pct(_num(t.get('recall')))} "
+                     f"({_pct(_num(t.get('independent_recall')))} independent)")  # fmt: skip
+    return " · ".join(cells)
 
 
 # --- CLI ----------------------------------------------------------------------

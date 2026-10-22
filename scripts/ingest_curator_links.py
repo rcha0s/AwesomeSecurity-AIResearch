@@ -6,12 +6,14 @@ tl;dr sec (Clint Gibler's weekly newsletter) links the week's best security
 research, much of it on small blogs with no feed of their own: on 2026-W43 the
 recall eval missed 12 of its 13 on-thesis headlines, among them Zenity Labs,
 enklypesalt.com, rea.tools and vincenzoiozzo.com. Its RSS feed is gone
-(tldrsec.com/feed redirects to a 404), so this reads the public issue pages,
-listed in tldrsec.com/sitemap.xml with a lastmod each, the same source the
-recall eval reads (the /t/Newsletter archive page left out issue #349 when
-probed on 2026-10-22; the sitemap had every issue).
+(tldrsec.com/feed redirects to a 404), so this reads the public issue pages
+listed in tldrsec.com/sitemap.xml, the same source the recall eval reads (the
+/t/Newsletter archive page left out issue #349 when probed on 2026-10-22; the
+sitemap had every issue). Issues are picked by number, the newest
+`curator_links.max_issues`, and dated by the page's own publish date: the
+sitemap lastmod is an edit date (#126, from 2022, carried 2026-05-28).
 
-For each issue in the last `curator_links.lookback_days` days (sources.yaml):
+For each of those published in the last `curator_links.lookback_days` days:
   * eval_recall's issue parser: security sections only, first story link per
     paragraph, people/social links, sponsor blocks and paid links dropped;
   * lead paragraphs only: the paragraph opens with the linked headline (a
@@ -50,24 +52,22 @@ import common as c
 import dedupe_stories as ds
 import eval_recall as er
 import paper_gate as pg
-import sources_registry as sr
 import story_ledger as sl
 import taxonomy as tx
 
 CURATOR = "tldrsec"
 SOURCE_ID = f"curator:{CURATOR}"
 SOURCE_NAME = "tl;dr sec (curator link)"
-# Credibility for the staged link: the curator's registry rank (it vouched for
-# the story), else this default.
-REGISTRY_ID = "rss:https-tldrsec-com-feed"
-DEFAULT_RANK = 70.0
-DEFAULT_LOOKBACK_DAYS = 14
+DEFAULTS = {"max_issues": 2, "lookback_days": 14, "source_rank": 70.0}
 
 
 def settings() -> dict:
+    """sources.yaml `curator_links` (source_rank's rationale is documented there)."""
     cfg = (c.load_yaml(c.SOURCES_FILE) or {}).get("curator_links") or {}
     return {
-        "lookback_days": int(cfg.get("lookback_days", DEFAULT_LOOKBACK_DAYS)),
+        "max_issues": int(cfg.get("max_issues", DEFAULTS["max_issues"])),
+        "lookback_days": int(cfg.get("lookback_days", DEFAULTS["lookback_days"])),
+        "source_rank": float(cfg.get("source_rank", DEFAULTS["source_rank"])),
         "paywall_hosts": tuple(h.lower() for h in cfg.get("paywall_hosts") or ()),
     }
 
@@ -116,11 +116,6 @@ def keep(it: dict, tax: tx.Taxonomy, paywall: tuple[str, ...]) -> str | None:
     return None
 
 
-def rank() -> float:
-    src = next((s for s in sr.load_sources() if s.get("id") == REGISTRY_ID), None)
-    return float(src["rank"]) if src and src.get("rank") is not None else DEFAULT_RANK
-
-
 def label_for(blob: str, rules: dict, tax: tx.Taxonomy) -> str:
     """The router class (sources.yaml), else the taxonomy's best domain ID: an
     on-thesis link always has at least one taxonomy hint."""
@@ -162,7 +157,7 @@ def candidate(it: dict, issue: str, rules: dict, tax: tx.Taxonomy, src_rank: flo
 def from_issues(issues: list[tuple[str, str, str]], cfg: dict, rules: dict) -> dict:
     """Parse issues into {"candidates", "arxiv", "counts", "per_issue"}. An arXiv
     link staged here is admitted by construction: the issue is its curator signal."""
-    tax, src_rank = tx.get(), rank()
+    tax, src_rank = tx.get(), cfg["source_rank"]
     keys, titles = held()
     out: list[dict] = []
     arxiv: dict[str, str] = {}
@@ -189,7 +184,7 @@ def from_issues(issues: list[tuple[str, str, str]], cfg: dict, rules: dict) -> d
 
 def collect(fetch: Callable[[str], str], cfg: dict, rules: dict) -> dict:
     since = (c.utcnow() - timedelta(days=cfg["lookback_days"])).date().isoformat()
-    return from_issues(er.tldrsec_issues(fetch, since), cfg, rules)
+    return from_issues(er.tldrsec_issues(fetch, since, cfg["max_issues"]), cfg, rules)
 
 
 def would_stage(result: dict, recall_path: Path) -> list[dict]:

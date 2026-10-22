@@ -40,7 +40,7 @@ TRUSTED_CURATORS = frozenset(
 # tl;dr sec's issue pages, read by ingest_curator_links.py, which records the arXiv
 # ids they link to here ({arxiv id: issue date}). It runs before aggregate.py.
 CURATOR_LINKS_NAME = "_curator_arxiv.json"
-CURATOR_LINKS_MAX_AGE_DAYS = 21  # an issue older than this no longer vouches
+CURATOR_LINKS_DEFAULT_DAYS = 14  # sources.yaml curator_links.lookback_days decides
 
 PREPRINT_HOSTS = ("arxiv.org", "openreview.net", "eprint.iacr.org")
 ARXIV_ID_RE = re.compile(
@@ -83,8 +83,15 @@ def save_curator_link_ids(ids: dict[str, str]) -> None:
     c.save_json(curator_links_file(), dict(sorted(ids.items())))
 
 
-def curator_link_ids(max_age_days: int = CURATOR_LINKS_MAX_AGE_DAYS) -> set[str]:
-    """arXiv ids a trusted curator's recent issues linked to. Missing file = none."""
+def curator_window_days() -> int:
+    cfg = (c.load_yaml(c.SOURCES_FILE) or {}).get("curator_links") or {}
+    return int(cfg.get("lookback_days", CURATOR_LINKS_DEFAULT_DAYS))
+
+
+def curator_link_ids(max_age_days: int | None = None) -> set[str]:
+    """arXiv ids linked from curator issues published inside the curator window
+    (the same `curator_links.lookback_days` the ingestor reads). Missing file = none."""
+    max_age_days = curator_window_days() if max_age_days is None else max_age_days
     data = c.load_json(curator_links_file(), default={}) or {}
     since = (c.utcnow() - timedelta(days=max_age_days)).date().isoformat()
     if not isinstance(data, dict):
