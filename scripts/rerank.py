@@ -27,14 +27,22 @@ import taxonomy as tx
 
 
 def score_entry(entry: dict, conf: c.Config, now=None) -> dict:
-    """Return a new entry with refreshed scores.{newness,composite,scored_at}."""
-    scores = dict(entry.get("scores") or {})
+    """Return a new entry with refreshed scores.{newness,composite,scored_at}.
+
+    `scored_at` is when the scores last CHANGED, not when the last pass ran: if a
+    re-score leaves every axis as it was, the old stamp is kept, so a pure
+    re-render is byte-identical and the render job opens no PR."""
+    old = entry.get("scores") or {}
+    scores = dict(old)
     scores["newness"] = c.newness_score(entry.get("date") or "", conf.half_life_days, now=now)
     scores.setdefault("novelty", 0)
     scores.setdefault("relevance", 0)
     scores["credibility"] = c.credibility_of(entry)  # from the source registry rank
     scores["composite"] = c.composite_score(scores, conf.weights)
-    scores["scored_at"] = c.utcnow_iso()
+    unchanged = old.get("scored_at") and all(
+        scores.get(k) == old.get(k) for k in set(scores) | set(old) if k != "scored_at"
+    )
+    scores["scored_at"] = old["scored_at"] if unchanged else c.utcnow_iso()
     return {**entry, "scores": scores}
 
 

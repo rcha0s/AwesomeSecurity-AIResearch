@@ -60,6 +60,15 @@ jobs:
           python scripts/generate_newsletter.py
           python scripts/generate_review.py
 
+      # docs/og.png is drawn with the runner's fonts, so it can differ from the
+      # committed card even with identical inputs. It is a pure function of the
+      # data, so it only counts as drift when something else changed.
+      - name: Discard og.png-only drift
+        run: |
+          if [[ -z "$(git status --porcelain -- . ':!docs/og.png')" ]]; then
+            git checkout -- docs/og.png
+          fi
+
       # main is branch-protected (PRs required), so the bot cannot push
       # directly. Stage the render drift onto a dedicated branch and open /
       # refresh a PR — humans merge once CI is green.

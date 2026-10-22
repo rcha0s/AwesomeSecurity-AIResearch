@@ -19,6 +19,18 @@ def test_score_entry_fills_scores():
     assert s["composite"] == c.composite_score(s, conf.weights)
 
 
+def test_score_entry_keeps_scored_at_when_scores_unchanged():
+    conf = c.load_config()
+    now = datetime(2026, 7, 1, tzinfo=UTC)
+    first = rerank.score_entry(make_entry(scores={"novelty": 50, "relevance": 60}), conf, now=now)
+    first["scores"]["scored_at"] = "2026-01-01T00:00:00Z"
+    again = rerank.score_entry(first, conf, now=now)
+    assert again == first  # byte-identical: no drift for the render job
+    later = rerank.score_entry(first, conf, now=datetime(2026, 9, 1, tzinfo=UTC))
+    assert later["scores"]["newness"] != first["scores"]["newness"]
+    assert later["scores"]["scored_at"] != "2026-01-01T00:00:00Z"
+
+
 def test_score_entry_defaults_missing_axes():
     conf = c.load_config()
     scored = rerank.score_entry(make_entry(scores=None, date="2026-07"), conf)
