@@ -171,23 +171,18 @@ def one_per_story(rows: list[dict], rank) -> list[dict]:
     return list(kept.values())
 
 
-def aged_into_news(entry: dict, conf: c.Config, sources_by_id: dict) -> bool:
-    """A vetted finding past max_age_days that the pool keeps only because it is
-    a news story. Findings age out; news doesn't, so it moves to the news lane."""
-    return not c.is_fresh(entry, conf.max_age_days) and c.is_news_story(entry, conf, sources_by_id)
-
-
 def curated_findings(conf: c.Config, snapshot_days: int, ctx=None) -> list[dict]:
     """Every vetted finding of the last max_age_days across the three pools, one
     row per story, ranked by composite. A story's other entries show as 'Also
-    reported by'. An older vetted news story renders in the news lane instead."""
+    reported by'. A vetted news story renders in the news lane instead (one story,
+    one lane), so the News tab holds every kept news story."""
     ctx = ctx or sl.render_context()
     sources_by_id = c.load_sources_by_id()
     rows = [
         {**finding_row(entry, conf, snapshot_days), **story_fields(entry, ctx)}
         for topic in c.TOPICS
         for entry in c.load_pool(topic)["entries"]
-        if c.is_curated(entry, conf) and not aged_into_news(entry, conf, sources_by_id)
+        if c.is_window_finding(entry, conf, sources_by_id)
     ]
     return one_per_story(rows, lambda row: -row["composite"])
 
