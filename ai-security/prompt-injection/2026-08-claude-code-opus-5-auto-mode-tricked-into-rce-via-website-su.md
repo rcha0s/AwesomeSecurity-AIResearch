@@ -25,7 +25,7 @@ Security researcher Johann Rehberger (wunderwuzzi) showed that Claude Code runni
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)  ·  **Retrieved:** 2026-09-09  
-**Scores:** Newness 11 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 59.15**  
+**Scores:** Newness 1 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 56.65**  
 **Tags:** `claude-code`, `prompt-injection`, `sandbox-escape`, `python`, `module-shadowing`, `auto-mode`  
 **Verification:** ✓ independently verified · closest prior art: Rehberger's own prior Claude Code prompt-injection/exfiltration research plus long-documented Python import-shadowing attacks; the new specificity is chaining a safety-refusal fallback into the shadowing RCE and spawning a nested agent.
 

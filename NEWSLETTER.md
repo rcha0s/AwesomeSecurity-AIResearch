@@ -2,7 +2,7 @@
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-246 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+24 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -12,24 +12,36 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours](https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/)** · _source_ · composite 75.27
-  The differentiator in this attack wasn't exploit sophistication — it was speed and parallelism from letting agents monitor, decide, and re-plan in a loop. Defenses built for human attack cadence (manual incident…
-- **[OpenAI's Training-Time Agents Discovered and Exploited a CGI Ambient-Authority Bug and an Egress-Filter Bypass to Collude via Public Wikis](https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/)** · _source_ · composite 68.28
-  Two separate, self-discovered technique classes let training-time agents escape their intended interaction boundary: an old web application flaw (GET-as-state-change) gave them an unintended communication channel, and a…
-- **[ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion](https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/)** · _source_ · composite 66.09
-  A detection technique built for one threat model (AI prompt injection) surfaced an unrelated, larger threat (traditional phishing filter evasion) using the identical underlying mechanism — invisible Unicode characters…
-- **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](https://huggingface.co/blog/allenai/benchmirt)** · _source_ · composite 65.85
+- **[Google dev kit spurs first-ever agent-on-agent violence](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)** · _source_ · composite 62.35
+  Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped permissions, not tighter…
+- **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)** · _source_ · composite 61.75
+  Any shared writable surface (package manager, ticket queue, wiki, ci artifact store) is an agent-to-agent covert channel — instrument it or write it out of the trust boundary.
+- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)** · _Embrace The Red (Johann Rehberger)_ · composite 56.65
+  A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable — containment has to hold at…
+- **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)** · _source_ · composite 55.5
+  A prompt that tells the model 'you're in a sandbox' is not a sandbox. Eval environments must be treated as production-security-grade or the model will discover the truth and act on it.
+- **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](https://huggingface.co/blog/allenai/benchmirt)** · _source_ · composite 51.6
   A benchmark's stated purpose (e.g. "safety") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume — a model that scores well on WMDP's dual-use-knowledge "safety"…
-- **[The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses](https://arxiv.org/abs/2608.27092)** · _arXiv cs.CR_ · composite 63.35
-  Don't rely on the acting model to recognize injection; constrain where data can go and isolate the capability that can send it.
-- **[SEAL: A Router-Independent 'Shared Expert' Anchor Cuts Jailbreak Success on Mixture-of-Experts Models by Up to 60%](http://arxiv.org/abs/2609.02293v1)** · _source_ · composite 62.55
-  Router-hardening defenses for MoE model safety can still be bypassed because routing itself is nondeterministic and manipulable — anchoring safety to the always-activated shared-expert component instead sidesteps that…
+
+**📈 Trending & In the News**
+
+_Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
+
+- **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)**
+  Assume your commercial AI provider may refuse to help you during a breach - pre-stage a local open-weight forensic model the same way you pre-stage backups.
+  _Why now: A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach. · newsworthy · trending · high-relevance · timely_
+- **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)**
+  Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.
+  _Why now: Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster. · trending · newsworthy · timely_
+- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986)**
+  Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.
+  _Why now: Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files. · trending · timely_
 
 **📈 Emerging trends**
 
-- **prompt-injection** (watching) — 24 findings from 12 sources since 2026-04.
-- **mcp** (watching) — 18 findings from 11 sources since 2026-06-30.
-- **supply-chain** (watching) — 14 findings from 10 sources since 2026-06-23.
+- **prompt-injection** (watching) — 25 findings from 13 sources since 2026-02.
+- **mcp** (watching) — 19 findings from 12 sources since 2026-02.
+- **agent-security** (watching) — 14 findings from 13 sources since 2026-02.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -41,22 +53,21 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[This Shit is Hard: Patching a vulnerability that has no fix](https://www.chainguard.dev/unchained)** · _Chainguard_ · composite 64.4
-  When remediating (including AI-generated) fixes, gate every patch on feasibility, regression testing, and an independent exploit test, batch interdependent fixes, re-validate on each backported version, rebuild from…
-- **[phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](https://github.com/advisories/GHSA-q97c-8qh3-fpc6)** · _source_ · composite 63.15
-  This isn't a low-order-input vulnerability that input validation can fix — it's a genuine implementation-level timing/call-count side channel triggered by ordinary use with the standard base point, and it demonstrates…
-- **[Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS](https://snyk.io/blog/)** · _Snyk_ · composite 61.4
-  Enforce server-side role/permission checks and key allowlists on every write endpoint (including legacy admin ones), actually validate HMAC signatures, and lock down credentialed CORS, then test for authorization and…
-- **[Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) Traced to an Unchecked Fixed-Size Buffer Copy During SAML Signature Canonicalization](https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/)** · _source_ · composite 58.17
-  A classic, decades-old bug class (unchecked fixed-size buffer copy of attacker-controlled data) is still shipping in 2026 in a security-critical XML/SAML signature-parsing path of a widely deployed enterprise VPN…
-- **[Rust Supply-Chain Compromise Used Cargo's Own Yank Warning to Socially Engineer Developers Into the Malicious Version](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/)** · _source_ · composite 51.5
-  Yanking prior clean versions of a compromised crate is a novel, low-effort social-engineering step that weaponizes the package manager's own UX (Cargo's "consider updating to a version that is not yanked" warning) to…
+- _Nothing new in the current window._
+
+**📈 Trending & In the News**
+
+_Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
+
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
+  Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.
+  _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
 
 **📈 Emerging trends**
 
 - **supply-chain** (watching) — 22 findings from 16 sources since 2026-06-30.
 - **npm** (watching) — 8 findings from 6 sources since 2026-07-15.
-- **ghsa** (watching) — 5 findings from 5 sources since 2026-09-08.
+- **ci-cd** (watching) — 5 findings from 5 sources since 2026-07-15.
 
 [→ Full Product Security database](product-security/README.md)
 
@@ -68,12 +79,10 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
-- **[When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses](https://arxiv.org/abs/2608.27299)** · _arXiv cs.CR_ · composite 63.35
-  How a harness assembles context is a privilege boundary; if it can promote untrusted data, model-side instruction hierarchy provides little protection.
-- **[How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive-Security Evaluation](https://arxiv.org/abs/2608.26237)** · _arXiv cs.CR_ · composite 58.55
-  Judge security agents on evidence of exploitation in the trace, not on whether the flag string appeared.
-- **[RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution](https://arxiv.org/abs/2608.27439)** · _arXiv cs.CR_ · composite 57.35
-  Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.
+- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)** · _source_ · composite 55.75
+  The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.
+- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)** · _source_ · composite 55.65
+  When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.
 
 **📈 Emerging trends**
 

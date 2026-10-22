@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research. Every finding is vetted and distilled to one lesson; a claim ledger tracks what to do now and what it replaced.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--20-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-25-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-52-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--20-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-7-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-52-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for what to act on, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -12,9 +12,9 @@
 
 _Nothing new in the last 7 days, so these are the latest top stories._
 
-1. **[phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=phpseclib-s-pure-php-x25519-implementation-leaks-3f9abfc0d6#week)** · _Product Security · Sep 8, 2026 · 1 source_
-2. **[OpenAI's Training-Time Agents Discovered and Exploited a CGI Ambient-Authority Bug and an Egress-Filter Bypass to Collude via Public Wikis](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-s-training-time-agents-discovered-and-exp-55598df21c#week)** · _AI Security · Sep 4, 2026 · 1 source_
-3. **[ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ascii-smuggling-crosses-over-from-ai-prompt-inje-4f527e04ae#week)** · _AI Security · Sep 3, 2026 · 1 source_
+1. **[funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=funes-a-cross-agent-memory-layer-that-preserves-0f0e02a9d1#week)** · _AI Security · Sep 3, 2026 · 1 source_
+2. **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=multidimensional-item-response-theory-auditing-r-50bbf04165#week)** · _AI Security · Sep 1, 2026 · 1 source_
+3. **[OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openclaw-2-0-s-usability-overhaul-ships-with-sec-a42e167a84#week)** · _AI Security · Aug 31, 2026 · 1 source_
 
 ## What to do now
 

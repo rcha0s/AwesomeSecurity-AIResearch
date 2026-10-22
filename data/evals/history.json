@@ -1,0 +1,31 @@
+{
+  "runs": [
+    {
+      "run_id": "local-20261020T163005Z-92384",
+      "date": "2026-10-20",
+      "runner": "local",
+      "candidates": 286,
+      "stories": 0,
+      "kept": 19,
+      "kept_ratio": 1.0,
+      "recall": {
+        "recall": 0.031,
+        "week": "2026-W43",
+        "generated": "2026-10-20T16:34:10+00:00",
+        "passed": false,
+        "errors": 0,
+        "file": "recall.json",
+        "stale": false
+      },
+      "golden": null,
+      "integrity": {
+        "passed": true,
+        "problems": 0
+      },
+      "cost_usd": 3.5541,
+      "cost_basis": "reserved",
+      "ceiling_usd": 3.5541,
+      "cap_usd": 3.3333
+    }
+  ]
+}
