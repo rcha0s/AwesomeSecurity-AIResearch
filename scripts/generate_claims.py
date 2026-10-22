@@ -94,7 +94,7 @@ def _meta_line(claim: dict) -> str:
     else:
         bits.append(f"confidence **{cl.confidence_of(claim):.2f}**")
         if claim.get("domain"):
-            bits.append(str(claim["domain"]))
+            bits.append(c.domain_name(str(claim["domain"])))
         if claim.get("first_seen"):
             bits.append(f"standing since {fmt_date(claim.get('first_seen'))}")
     return " · ".join(bits)

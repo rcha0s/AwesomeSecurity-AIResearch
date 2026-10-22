@@ -444,7 +444,12 @@ def topics_payload(tax: taxonomy.Taxonomy) -> dict:
 def claims_payload(ledger: dict, tax: taxonomy.Taxonomy) -> list[dict]:
     """The ledger's claims, each tagged with the taxonomy ID its domain label names."""
     return [
-        {**claim, "domain_id": briefing.claim_domain(claim, tax)} for claim in cl.all_claims(ledger)
+        {
+            **claim,
+            "domain": c.domain_name(claim.get("domain") or ""),
+            "domain_id": briefing.claim_domain(claim, tax),
+        }
+        for claim in cl.all_claims(ledger)
     ]
 
 
