@@ -4,15 +4,15 @@
 
 ## AI Security
 
-### ▪️ prompt-injection  ·  25 findings (0 recent) · 13 sources · momentum 25.0
-_First seen 2026-02 · latest 2026-09-03._
+### 🔺 prompt-injection  ·  26 findings (1 recent) · 13 sources · momentum 27.0
+_First seen 2026-02 · latest 2026-10-19._
 
+- [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
 - [ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion](https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/) (2026-09-03)
 - [Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) (2026-08-28)
 - [The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses](https://arxiv.org/abs/2608.27092) (2026-08-27)
 - [SPA: Securing Persistent LLM Agents Across Queries with Plan-First Information-Flow Control](https://arxiv.org/abs/2608.27234) (2026-08-27)
 - [Litigant Hides Prompt Injection in Real Court Filing Telling AI Reviewers to Rule in Their Favor](https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/) (2026-08-13)
-- [LLMVault: a WebGoat for the OWASP LLM Top 10, with a scripted Play Mode and a live-model Live Mode](https://github.com/CyberSunil/LLMVault) (2026-08-10)
 
 ### ▪️ mcp  ·  19 findings (0 recent) · 12 sources · momentum 19.0
 _First seen 2026-02 · latest 2026-09-02._
@@ -84,6 +84,16 @@ _First seen 2026-08-07 · latest 2026-08-28._
 - [CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment](https://arxiv.org/abs/2604.00310) (2026-08-10)
 - [Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models](https://arxiv.org/abs/2605.00123) (2026-08-10)
 
+### 🔺 coding-agents  ·  7 findings (1 recent) · 3 sources · momentum 8.0
+_First seen 2026-08-06 · latest 2026-10-19._
+
+- [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
+- [SkillShield: Prompt-Space Security Skills for LLM Coding Agents](https://arxiv.org/abs/2608.25817) (2026-08-26)
+- [fu351/Doberman-Core](https://github.com/fu351/Doberman-Core) (2026-08-10)
+- [Towards a Risk Assessment of Malicious Skill Files in Coding Agents](https://arxiv.org/abs/2608.05223) (2026-08-07)
+- [The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents](https://arxiv.org/abs/2608.05884) (2026-08-07)
+- [PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents](https://arxiv.org/abs/2608.02687) (2026-08-07)
+
 ### ▪️ evals  ·  7 findings (0 recent) · 5 sources · momentum 7.0
 _First seen 2026-07-16 · latest 2026-09-01._
 
@@ -114,15 +124,13 @@ _First seen 2026-07-15 · latest 2026-09-04._
 - [AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)](https://github.com/advisories/GHSA-j6g5-3hh3-pgw8) (2026-07-24)
 - [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) (2026-07-15)
 
-### ▪️ coding-agents  ·  6 findings (0 recent) · 3 sources · momentum 6.0
-_First seen 2026-08-06 · latest 2026-08-26._
+### 🔺 red-teaming  ·  4 findings (2 recent) · 4 sources · momentum 6.0
+_First seen 2026-08-06 · latest 2026-10-21._
 
-- [SkillShield: Prompt-Space Security Skills for LLM Coding Agents](https://arxiv.org/abs/2608.25817) (2026-08-26)
-- [fu351/Doberman-Core](https://github.com/fu351/Doberman-Core) (2026-08-10)
-- [Towards a Risk Assessment of Malicious Skill Files in Coding Agents](https://arxiv.org/abs/2608.05223) (2026-08-07)
-- [The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents](https://arxiv.org/abs/2608.05884) (2026-08-07)
-- [PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents](https://arxiv.org/abs/2608.02687) (2026-08-07)
-- [Humans in the loop miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236) (2026-08-06)
+- [Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes](http://arxiv.org/abs/2610.29196v1) (2026-10-21) · _latest_
+- [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
+- [The evolving role of the Red Team in the era of agentic security](https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/) (2026-08-13)
+- [Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals](https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/) (2026-08-06)
 
 ### ▪️ red-team  ·  5 findings (0 recent) · 5 sources · momentum 5.0
 _First seen 2026-02 · latest 2026-08-10._
@@ -150,6 +158,14 @@ _First seen 2026-08-07 · latest 2026-08-27._
 - [ForesightSafety-SAGE: A Fully Automated Scenario Generation and Safety Evaluation Framework for LLM Agents](https://arxiv.org/abs/2606.08531) (2026-08-10)
 - [Auto mode is now the default in Claude Code for Pro, Max, and Team plans](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything) (2026-08-08)
 - [DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model](https://arxiv.org/abs/2608.05695) (2026-08-07)
+
+### 🔺 backdoor  ·  4 findings (1 recent) · 3 sources · momentum 5.0
+_First seen 2026-06-25 · latest 2026-10-19._
+
+- [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
+- [(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550) (2026-07-21)
+- [QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239) (2026-06-28)
+- [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
 
 ### ▪️ openai  ·  4 findings (0 recent) · 3 sources · momentum 4.0
 _First seen 2026-07-28 · latest 2026-09-04._
@@ -215,13 +231,6 @@ _First seen 2026-08-10 · latest 2026-09-02._
 - [The Perils of Agency: How Developers Perceive, Prioritize, and Address Risks in Agentic AI Products](https://arxiv.org/abs/2606.15485) (2026-08-10)
 - [anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection](https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection) (2026-08-10)
 
-### 🔺 red-teaming  ·  3 findings (1 recent) · 3 sources · momentum 4.0
-_First seen 2026-08-06 · latest 2026-10-21._
-
-- [Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes](http://arxiv.org/abs/2610.29196v1) (2026-10-21) · _latest_
-- [The evolving role of the Red Team in the era of agentic security](https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/) (2026-08-13)
-- [Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals](https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/) (2026-08-06)
-
 ### ▪️ ci-cd  ·  3 findings (0 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-03 · latest 2026-09-02._
 
@@ -277,13 +286,6 @@ _First seen 2026-08-19 · latest 2026-09-08._
 - [CC Safety Net Blocks Destructive Agent Commands by Parsing Command Intent, Not Pattern-Matching Strings](https://github.com/kenryu42/cc-safety-net) (2026-09-08)
 - [OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492) (2026-08-31)
 - [OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners](https://github.com/onecli/onecli) (2026-08-19)
-
-### ▪️ backdoor  ·  3 findings (0 recent) · 3 sources · momentum 3.0
-_First seen 2026-06-25 · latest 2026-07-21._
-
-- [(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550) (2026-07-21)
-- [QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239) (2026-06-28)
-- [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
 
 ### ▪️ ai-gateway  ·  3 findings (0 recent) · 3 sources · momentum 3.0
 _First seen 2026-08-03 · latest 2026-08-26._
@@ -676,6 +678,13 @@ _First seen 2026-07-16 · latest 2026-08-17._
 - [keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion](https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign) (2026-08-04)
 - [AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/) (2026-07-16)
 
+### 🔺 android  ·  3 findings (1 recent) · 3 sources · momentum 4.0
+_First seen 2026-04 · latest 2026-09-28._
+
+- [How we found 24 Android vulnerabilities using our open source AI security agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/) (2026-09-28) · _latest_
+- [Project Zero: a 0-click exploit chain for the Pixel 10](https://projectzero.google/2026/05/pixel-10-exploit.html) (2026-05)
+- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
+
 ### ▪️ github-actions  ·  3 findings (0 recent) · 3 sources · momentum 3.0
 _First seen 2026-07-16 · latest 2026-08-12._
 
@@ -708,12 +717,6 @@ _First seen 2026-07-19 · latest 2026-07-30._
 
 - [Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not) (2026-07-30)
 - [38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428) (2026-07-19)
-
-### ▪️ android  ·  2 findings (0 recent) · 2 sources · momentum 2.0
-_First seen 2026-04 · latest 2026-05._
-
-- [Project Zero: a 0-click exploit chain for the Pixel 10](https://projectzero.google/2026/05/pixel-10-exploit.html) (2026-05)
-- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
 
 ### ▪️ exploit-chain  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-05 · latest 2026-07-20._
@@ -865,25 +868,25 @@ _First seen 2026-08-07 · latest 2026-08-10._
 - [Beyond Scaffold Splits: Structural-Frontier Evaluation Reveals Hidden Failures in ADMET Models](https://arxiv.org/abs/2607.10729) (2026-08-10)
 - [SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization](https://arxiv.org/abs/2602.12187) (2026-08-10)
 
-### ▪️ agents  ·  23 findings (0 recent) · 8 sources · momentum 23.0
-_First seen 2026-05 · latest 2026-08-10._
+### 🔺 agents  ·  24 findings (1 recent) · 8 sources · momentum 25.0
+_First seen 2026-05 · latest 2026-10-19._
 
+- [Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466) (2026-10-19) · _latest_
 - [Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?](https://arxiv.org/abs/2605.22148) (2026-08-10)
 - [OpenForgeRL: Train Harness-native Agents in Any Environment](https://arxiv.org/abs/2607.21557) (2026-08-10)
 - [Can AI agents conduct open-ended AI research? Early evidence from two case studies](https://arxiv.org/abs/2607.27191) (2026-08-10)
 - [AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation](https://arxiv.org/abs/2603.20986) (2026-08-10)
 - [Homebot: A Personal AI Agent for Conversational Home Assistance and Automation](https://arxiv.org/abs/2608.02254) (2026-08-10)
-- [ratel-ai/ratel](https://github.com/ratel-ai/ratel) (2026-08-09)
 
-### 🔺 evals  ·  17 findings (2 recent) · 9 sources · momentum 19.0
+### 🔺 evals  ·  18 findings (3 recent) · 9 sources · momentum 21.0
 _First seen 2026-05 · latest 2026-10-20._
 
 - [DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522) (2026-10-20) · _latest_
+- [Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466) (2026-10-19) · _latest_
 - [POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://arxiv.org/abs/2610.25964) (2026-10-19) · _latest_
 - [Ask-E: An Environment for Calibrated Question Generation](https://arxiv.org/abs/2608.06933) (2026-08-10)
 - [Multi-Legal-Bench: Evaluating LLMs on Legal Reasoning Across Jurisdictions, Languages, and Legal Traditions](https://arxiv.org/abs/2605.29738) (2026-08-10)
 - [Signal or Spurious Cue? A Randomized Audit of Survey-Country Metadata in LLM Social Inference](https://arxiv.org/abs/2608.06085) (2026-08-07)
-- [FinEvo-Bench: A Longitudinal Benchmark for Self-Evolving Agents in Professional Financial Workflows](https://arxiv.org/abs/2608.06144) (2026-08-07)
 
 ### ▪️ benchmark  ·  14 findings (0 recent) · 4 sources · momentum 14.0
 _First seen 2026-05 · latest 2026-08-10._

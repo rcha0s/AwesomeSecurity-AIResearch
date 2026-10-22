@@ -3,13 +3,19 @@
     {
       "topic": "ai-security",
       "tag": "prompt-injection",
-      "count": 25,
-      "recent": 0,
+      "count": 26,
+      "recent": 1,
       "sources": 13,
-      "momentum": 25.0,
+      "momentum": 27.0,
       "first_seen": "2026-02",
-      "last_seen": "2026-09-03",
+      "last_seen": "2026-10-19",
       "members": [
+        {
+          "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+          "url": "https://arxiv.org/abs/2610.23109",
+          "date": "2026-10-19",
+          "fresh": true
+        },
         {
           "title": "ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
@@ -740,6 +746,60 @@
     },
     {
       "topic": "ai-security",
+      "tag": "coding-agents",
+      "count": 7,
+      "recent": 1,
+      "sources": 3,
+      "momentum": 8.0,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-10-19",
+      "members": [
+        {
+          "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+          "url": "https://arxiv.org/abs/2610.23109",
+          "date": "2026-10-19",
+          "fresh": true
+        },
+        {
+          "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
+          "url": "https://arxiv.org/abs/2608.25817",
+          "date": "2026-08-26",
+          "fresh": false
+        },
+        {
+          "title": "fu351/Doberman-Core",
+          "url": "https://github.com/fu351/Doberman-Core",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05223",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents",
+          "url": "https://arxiv.org/abs/2608.05884",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents",
+          "url": "https://arxiv.org/abs/2608.02687",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
+          "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+          "date": "2026-08-06",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "evals",
       "count": 7,
       "recent": 0,
@@ -890,47 +950,35 @@
     },
     {
       "topic": "ai-security",
-      "tag": "coding-agents",
-      "count": 6,
-      "recent": 0,
-      "sources": 3,
+      "tag": "red-teaming",
+      "count": 4,
+      "recent": 2,
+      "sources": 4,
       "momentum": 6.0,
       "first_seen": "2026-08-06",
-      "last_seen": "2026-08-26",
+      "last_seen": "2026-10-21",
       "members": [
         {
-          "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
-          "url": "https://arxiv.org/abs/2608.25817",
-          "date": "2026-08-26",
+          "title": "Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes",
+          "url": "http://arxiv.org/abs/2610.29196v1",
+          "date": "2026-10-21",
+          "fresh": true
+        },
+        {
+          "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+          "url": "https://arxiv.org/abs/2610.23109",
+          "date": "2026-10-19",
+          "fresh": true
+        },
+        {
+          "title": "The evolving role of the Red Team in the era of agentic security",
+          "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+          "date": "2026-08-13",
           "fresh": false
         },
         {
-          "title": "fu351/Doberman-Core",
-          "url": "https://github.com/fu351/Doberman-Core",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Towards a Risk Assessment of Malicious Skill Files in Coding Agents",
-          "url": "https://arxiv.org/abs/2608.05223",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents",
-          "url": "https://arxiv.org/abs/2608.05884",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "PolicyGuard: Prompt-Configurable Semantic DLP for LLM Coding Agents",
-          "url": "https://arxiv.org/abs/2608.02687",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Humans in the loop miss a third of dangerous AI coding agent requests",
-          "url": "https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236",
+          "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
+          "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
           "date": "2026-08-06",
           "fresh": false
         }
@@ -1058,6 +1106,42 @@
           "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
           "url": "https://arxiv.org/abs/2608.05695",
           "date": "2026-08-07",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "backdoor",
+      "count": 4,
+      "recent": 1,
+      "sources": 3,
+      "momentum": 5.0,
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-10-19",
+      "members": [
+        {
+          "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+          "url": "https://arxiv.org/abs/2610.23109",
+          "date": "2026-10-19",
+          "fresh": true
+        },
+        {
+          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
+          "url": "https://arxiv.org/abs/2607.17550",
+          "date": "2026-07-21",
+          "fresh": false
+        },
+        {
+          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
+          "url": "https://arxiv.org/abs/2606.29239",
+          "date": "2026-06-28",
+          "fresh": false
+        },
+        {
+          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
+          "url": "https://arxiv.org/abs/2606.27511",
+          "date": "2026-06-25",
           "fresh": false
         }
       ]
@@ -1352,36 +1436,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "red-teaming",
-      "count": 3,
-      "recent": 1,
-      "sources": 3,
-      "momentum": 4.0,
-      "first_seen": "2026-08-06",
-      "last_seen": "2026-10-21",
-      "members": [
-        {
-          "title": "Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes",
-          "url": "http://arxiv.org/abs/2610.29196v1",
-          "date": "2026-10-21",
-          "fresh": true
-        },
-        {
-          "title": "The evolving role of the Red Team in the era of agentic security",
-          "url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
-          "date": "2026-08-13",
-          "fresh": false
-        },
-        {
-          "title": "Meta joins OpenAI and Anthropic on the list of frontier models that broke out during cyber evals",
-          "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
-          "date": "2026-08-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "ci-cd",
       "count": 3,
       "recent": 0,
@@ -1616,36 +1670,6 @@
           "title": "OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners",
           "url": "https://github.com/onecli/onecli",
           "date": "2026-08-19",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "backdoor",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-06-25",
-      "last_seen": "2026-07-21",
-      "members": [
-        {
-          "title": "(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success",
-          "url": "https://arxiv.org/abs/2607.17550",
-          "date": "2026-07-21",
-          "fresh": false
-        },
-        {
-          "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-          "url": "https://arxiv.org/abs/2606.29239",
-          "date": "2026-06-28",
-          "fresh": false
-        },
-        {
-          "title": "A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data",
-          "url": "https://arxiv.org/abs/2606.27511",
-          "date": "2026-06-25",
           "fresh": false
         }
       ]
@@ -3376,6 +3400,36 @@
     },
     {
       "topic": "product-security",
+      "tag": "android",
+      "count": 3,
+      "recent": 1,
+      "sources": 3,
+      "momentum": 4.0,
+      "first_seen": "2026-04",
+      "last_seen": "2026-09-28",
+      "members": [
+        {
+          "title": "How we found 24 Android vulnerabilities using our open source AI security agent",
+          "url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
+          "date": "2026-09-28",
+          "fresh": true
+        },
+        {
+          "title": "Project Zero: a 0-click exploit chain for the Pixel 10",
+          "url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
+          "date": "2026-05",
+          "fresh": false
+        },
+        {
+          "title": "Google brings Rust (memory safety) to the Pixel baseband",
+          "url": "http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html",
+          "date": "2026-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "github-actions",
       "count": 3,
       "recent": 0,
@@ -3508,30 +3562,6 @@
           "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
           "url": "https://arxiv.org/abs/2607.12428",
           "date": "2026-07-19",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "android",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-04",
-      "last_seen": "2026-05",
-      "members": [
-        {
-          "title": "Project Zero: a 0-click exploit chain for the Pixel 10",
-          "url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
-          "date": "2026-05",
-          "fresh": false
-        },
-        {
-          "title": "Google brings Rust (memory safety) to the Pixel baseband",
-          "url": "http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html",
-          "date": "2026-04",
           "fresh": false
         }
       ]
@@ -4561,13 +4591,19 @@
     {
       "topic": "ai-research",
       "tag": "agents",
-      "count": 23,
-      "recent": 0,
+      "count": 24,
+      "recent": 1,
       "sources": 8,
-      "momentum": 23.0,
+      "momentum": 25.0,
       "first_seen": "2026-05",
-      "last_seen": "2026-08-10",
+      "last_seen": "2026-10-19",
       "members": [
+        {
+          "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
+          "url": "https://arxiv.org/abs/2610.22466",
+          "date": "2026-10-19",
+          "fresh": true
+        },
         {
           "title": "Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?",
           "url": "https://arxiv.org/abs/2605.22148",
@@ -4711,10 +4747,10 @@
     {
       "topic": "ai-research",
       "tag": "evals",
-      "count": 17,
-      "recent": 2,
+      "count": 18,
+      "recent": 3,
       "sources": 9,
-      "momentum": 19.0,
+      "momentum": 21.0,
       "first_seen": "2026-05",
       "last_seen": "2026-10-20",
       "members": [
@@ -4722,6 +4758,12 @@
           "title": "DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs",
           "url": "https://arxiv.org/abs/2610.28522",
           "date": "2026-10-20",
+          "fresh": true
+        },
+        {
+          "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
+          "url": "https://arxiv.org/abs/2610.22466",
+          "date": "2026-10-19",
           "fresh": true
         },
         {
