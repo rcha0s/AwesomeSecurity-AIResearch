@@ -24,6 +24,14 @@ happened today (unless --allow-repeat). One exception: a local run whose
 The retry's own reservation is the record: a second tried run id blocks the day. The settings come from the config file
 passed with --config, which run_scan.sh takes from origin/main.
 
+Backfill (issue #52, scripts/backfill.sh): `check --backfill FROM..TO` and
+`reserve --backfill FROM..TO` label a local run as one backfill chunk. Its rows
+carry `backfill: "FROM..TO"` (actual and done rows copy it from the
+reservation), so they never count as the day's scan, and `check_backfill`
+enforces the campaign config.yaml `backfill:` approves on main: chunks inside
+its window, none overlapping a finished chunk, at most `max_runs` started and
+`max_usd` charged (this run's ceiling included), and the monthly cap.
+
 Usage:
     python scripts/budget.py --config CFG check --runner cloud     # exit 0 go, 3 skip
     python scripts/budget.py --config CFG reserve --runner cloud --run-id ID
@@ -43,6 +51,7 @@ import os
 import re
 import sys
 from collections.abc import Iterable
+from datetime import date, timedelta
 from pathlib import Path
 
 import common as c
@@ -52,6 +61,7 @@ RUNNERS = ("cloud", "local")
 KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
 OUTCOMES = ("analysis-empty",)  # optional on an actual row: why the run failed
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+WINDOW_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})\.\.(\d{4}-\d{2}-\d{2})$")  # a backfill row's window
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")  # also keeps SPEND.md's table intact
 DEFAULT_LEDGER = c.DATA_DIR / "_budget_ledger.json"
 
@@ -80,6 +90,7 @@ def validate_row(row: dict) -> dict:
         and math.isfinite(cost)
         and cost >= 0
         and row.get("outcome", OUTCOMES[0]) in OUTCOMES
+        and ("backfill" not in row or WINDOW_RE.match(str(row["backfill"])) is not None)
     )
     if not ok:
         raise LedgerError(f"invalid ledger row: {row}")
@@ -97,7 +108,12 @@ def budget_settings(config: Path | str = c.CONFIG_FILE) -> dict:
     limits = raw.get("limits", {})
     settings["max_stories_per_run"] = int(limits.get("max_stories_per_run", 8))
     settings["max_turns"] = int(limits.get("max_turns", 150))
+    settings["backfill"] = dict(raw.get("backfill") or {})
     return settings
+
+
+def is_backfill(row: dict) -> bool:
+    return "backfill" in row
 
 
 def effective_runs(runs: Iterable[dict]) -> list[dict]:
@@ -195,15 +211,16 @@ def retry_allowed(today_rows: list[dict], tried: set[str], settings: dict, runne
 def check(
     runs: list[dict], settings: dict, runner: str, today: str, allow_repeat: bool = False
 ) -> tuple[bool, str]:
-    """Decide whether a run may start LLM work. Returns (ok, reason)."""
+    """Decide whether a daily run may start LLM work. Returns (ok, reason)."""
     cap = settings.get("monthly_cap_usd")
     if cap is None:
         return False, "no budget configured: set budget.monthly_cap_usd in config.yaml"
     if not allow_repeat:
         # A day is done once any run finished it. A run that failed doesn't
         # block the other runner (the Mac falls back for a failed cloud run),
-        # but a runner never retries its own failed day unattended.
-        today_rows = [r for r in runs if r["date"] == today]
+        # but a runner never retries its own failed day unattended. Backfill
+        # runs are never the day's scan: they neither finish nor try a day.
+        today_rows = [r for r in runs if r["date"] == today and not is_backfill(r)]
         if any(r["kind"] == "done" for r in today_rows):
             return False, f"a scan already finished on {today}"
         tried = {
@@ -211,6 +228,14 @@ def check(
         }
         if tried and not retry_allowed(today_rows, tried, settings, runner):
             return False, f"the {runner} runner already tried on {today}"
+    return fits_month(runs, settings, runner, today)
+
+
+def fits_month(runs: list[dict], settings: dict, runner: str, today: str) -> tuple[bool, str]:
+    """The monthly cap: this run's ceiling must fit in what the month has left."""
+    cap = settings.get("monthly_cap_usd")
+    if cap is None:
+        return False, "no budget configured: set budget.monthly_cap_usd in config.yaml"
     month = today[:7]
     spent = month_spend(runs, month)
     remaining = round(float(cap) - spent, 4)
@@ -222,6 +247,114 @@ def check(
     if ceiling > remaining:
         return False, f"run ceiling ${ceiling:.2f} exceeds the ${remaining:.2f} left in {month}"
     return True, f"${remaining:.2f} left in {month}; this run reserves ${ceiling:.2f} ({why})"
+
+
+def parse_window(text: str) -> tuple[str, str]:
+    """`FROM..TO` as two ISO days, or ValueError."""
+    m = WINDOW_RE.match(text or "")
+    if not m:
+        raise ValueError(f"backfill window must be YYYY-MM-DD..YYYY-MM-DD, got {text!r}")
+    return m.group(1), m.group(2)
+
+
+def overlaps(a: tuple[str, str], b: tuple[str, str]) -> bool:
+    return a[0] <= b[1] and b[0] <= a[1]
+
+
+def campaign_rows(runs: list[dict], approved: tuple[str, str]) -> list[dict]:
+    """The backfill rows whose window lies inside the approved campaign window."""
+    out = []
+    for r in runs:
+        if is_backfill(r):
+            frm, to = parse_window(r["backfill"])
+            if approved[0] <= frm and to <= approved[1]:
+                out.append(r)
+    return out
+
+
+def campaign(settings: dict) -> tuple[str, str] | None:
+    """The approved campaign window (config.yaml backfill.from/to), else None."""
+    cfg = settings.get("backfill") or {}
+    if cfg.get("from") is None or cfg.get("to") is None:
+        return None
+    return str(cfg["from"]), str(cfg["to"])
+
+
+BACKFILL_KEYS = ("from", "to", "max_runs", "max_usd", "max_chunk_days")
+
+
+def backfill_window_problem(cfg: dict, window: str, today: str) -> str | None:
+    """Why this chunk's window can't run under the approved campaign, else None."""
+    try:
+        frm, to = parse_window(window)
+        c.parse_backfill_window(frm, to, date.fromisoformat(today))
+    except ValueError as exc:
+        return str(exc)
+    if any(cfg.get(k) is None for k in BACKFILL_KEYS):
+        return "no backfill approved: set backfill." + "/".join(BACKFILL_KEYS) + " in config.yaml"
+    if not (str(cfg["from"]) <= frm and to <= str(cfg["to"])):
+        return f"{window} is outside the approved {cfg['from']}..{cfg['to']}"
+    span = (date.fromisoformat(to) - date.fromisoformat(frm)).days + 1
+    if span > int(cfg["max_chunk_days"]):
+        return f"{window} spans {span} days, over backfill.max_chunk_days {cfg['max_chunk_days']}"
+    return None
+
+
+def chunk_windows(frm: str, to: str, days: int) -> list[tuple[str, str]]:
+    """[FROM, TO] split into consecutive windows of `days` days (the last one
+    shorter), oldest first. ValueError on a bad window or chunk size."""
+    if not 1 <= days <= c.BACKFILL_MAX_SPAN_DAYS:
+        raise ValueError(f"chunk days must be 1..{c.BACKFILL_MAX_SPAN_DAYS}, got {days}")
+    start, end = (date.fromisoformat(d) for d in parse_window(f"{frm}..{to}"))
+    if start > end:
+        raise ValueError(f"{frm}..{to} ends before it starts")
+    out = []
+    while start <= end:
+        stop = min(end, start + timedelta(days=days - 1))
+        out.append((start.isoformat(), stop.isoformat()))
+        start = stop + timedelta(days=1)
+    return out
+
+
+def check_backfill(
+    runs: list[dict], settings: dict, runner: str, window: str, today: str
+) -> tuple[bool, str]:
+    """Decide whether one backfill chunk may start LLM work. Returns (ok, reason).
+
+    A backfill is approved on main as config.yaml `backfill:`: a campaign
+    window, a chunk size, and caps for the whole campaign. A chunk must lie
+    inside the campaign, must not overlap a chunk that already finished, and
+    must fit the campaign's caps (runs started; dollars charged plus this run's
+    ceiling) and the month's. `check`'s day rules don't apply: a backfill is
+    never the day's scan, so it neither blocks nor is blocked by one."""
+    cfg = settings.get("backfill") or {}
+    if runner != "local":
+        return False, "backfill runs only on the local runner (its cost is measured)"
+    problem = backfill_window_problem(cfg, window, today)
+    if problem:
+        return False, f"backfill: {problem}"
+    chunk = parse_window(window)
+    for r in runs:
+        if is_backfill(r) and r["kind"] == "done" and overlaps(parse_window(r["backfill"]), chunk):
+            return False, f"backfill {window} overlaps {r['backfill']}, which already finished"
+    rows = campaign_rows(runs, (str(cfg["from"]), str(cfg["to"])))
+    started = {r["run_id"] for r in rows if r["kind"] == "reserve"}
+    if len(started) >= int(cfg["max_runs"]):
+        return False, f"backfill cap reached: {len(started)} of {cfg['max_runs']} runs started"
+    spent = round(sum(float(r["cost_usd"]) for r in effective_runs(rows)), 4)
+    ceiling, why = run_ceiling(runs, settings, runner)
+    if ceiling is None:
+        return False, why
+    if spent + ceiling > float(cfg["max_usd"]):
+        return False, (
+            f"backfill cap: ${spent:.2f} charged + this run's ${ceiling:.2f} ceiling "
+            f"exceeds backfill.max_usd ${float(cfg['max_usd']):.2f}"
+        )
+    ok, reason = fits_month(runs, settings, runner, today)
+    if not ok:
+        return False, reason
+    run_n = f"run {len(started) + 1} of {cfg['max_runs']}"
+    return True, f"backfill {window}, {run_n}, ${spent:.2f} charged so far; {reason}"
 
 
 def spend_report(runs: list[dict], settings: dict, month: str) -> str:
@@ -244,13 +377,31 @@ def spend_report(runs: list[dict], settings: dict, month: str) -> str:
         basis = "measured" if r["kind"] == "actual" else "reserved ceiling"
         stories = finished.get(r["run_id"], r["stories"])
         done = "yes" if r["run_id"] in finished else "no"
+        runner = f"{r['runner']} backfill {r['backfill']}" if is_backfill(r) else r["runner"]
         lines.append(
-            f"| {r['date']} | {r['runner']} | `{r['run_id']}` | {stories} "
+            f"| {r['date']} | {runner} | `{r['run_id']}` | {stories} "
             f"| ${float(r['cost_usd']):.2f} | {basis} | {done} |"
         )
     if not rows:
         lines.append("| | | no runs yet | | | | |")
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines + backfill_lines(runs, settings)) + "\n"
+
+
+def backfill_lines(runs: list[dict], settings: dict) -> list[str]:
+    """The approved backfill campaign against its caps (nothing when none is set)."""
+    approved, cfg = campaign(settings), settings.get("backfill") or {}
+    if approved is None:
+        return []
+    rows = campaign_rows(runs, approved)
+    started = {r["run_id"] for r in rows if r["kind"] == "reserve"}
+    done = sorted({r["backfill"] for r in rows if r["kind"] == "done"})
+    spent = sum(float(r["cost_usd"]) for r in effective_runs(rows))
+    return [
+        "",
+        f"**Backfill {approved[0]}..{approved[1]}:** ${spent:.2f} charged of "
+        f"${float(cfg.get('max_usd') or 0):.2f}, {len(started)} of {cfg.get('max_runs')} "
+        f"runs started. Finished windows: {', '.join(done) or 'none'}.",
+    ]
 
 
 def append_row(path: Path, runs: list[dict], row: dict) -> None:
@@ -266,9 +417,11 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     chk = sub.add_parser("check")
     chk.add_argument("--runner", choices=RUNNERS, required=True)
     chk.add_argument("--allow-repeat", action="store_true")
+    chk.add_argument("--backfill", metavar="FROM..TO", help="check one backfill chunk")
     res = sub.add_parser("reserve")
     res.add_argument("--runner", choices=RUNNERS, required=True)
     res.add_argument("--run-id", required=True)
+    res.add_argument("--backfill", metavar="FROM..TO", help="label the run a backfill")
     act = sub.add_parser("actual")
     act.add_argument("--run-id", required=True)
     act.add_argument("--stories", type=int, required=True)
@@ -277,6 +430,10 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     sub.add_parser("status")
     lim = sub.add_parser("session-limits")
     lim.add_argument("--runner", choices=RUNNERS, required=True)
+    chunks = sub.add_parser("chunks", help="split FROM..TO into backfill chunks")
+    chunks.add_argument("start", metavar="FROM")
+    chunks.add_argument("end", metavar="TO")
+    chunks.add_argument("days", type=int)
     done = sub.add_parser("done")
     done.add_argument("--run-id", required=True)
     done.add_argument("--stories", type=int, required=True)
@@ -288,6 +445,12 @@ def reserve(path: Path, runs: list[dict], settings: dict, args, today: str) -> i
     if ceiling is None:
         raise SystemExit(f"reserve: {why}")
     row = {"run_id": args.run_id, "date": today, "runner": args.runner, "kind": "reserve"}
+    if args.backfill:
+        # Re-checked against the very ledger the row is appended to.
+        ok, why = check_backfill(runs, settings, args.runner, args.backfill, today)
+        if not ok:
+            raise SystemExit(f"reserve: {why}")
+        row["backfill"] = args.backfill
     append_row(path, runs, {**row, "stories": 0, "cost_usd": ceiling})
     return 0
 
@@ -328,6 +491,10 @@ def session_limits(runs: list[dict], settings: dict, runner: str) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    if args.cmd == "chunks":  # pure: no ledger, no config
+        for frm, to in chunk_windows(args.start, args.end, args.days):
+            print(frm, to)
+        return 0
     path, settings = ledger_path(), budget_settings(args.config)
     if args.cmd != "status" and not path.exists():
         # run_scan.sh always writes the fetched ledger first; a missing file
@@ -336,7 +503,10 @@ def main(argv: list[str] | None = None) -> int:
     runs = load_ledger(path)
     today = c.utcnow().strftime("%Y-%m-%d")
     if args.cmd == "check":
-        ok, reason = check(runs, settings, args.runner, today, args.allow_repeat)
+        if args.backfill:
+            ok, reason = check_backfill(runs, settings, args.runner, args.backfill, today)
+        else:
+            ok, reason = check(runs, settings, args.runner, today, args.allow_repeat)
         print(f"budget: {'GO' if ok else 'SKIP'}: {reason}")
         return 0 if ok else SKIP_EXIT
     if args.cmd == "reserve":

@@ -62,10 +62,21 @@ def run_gh(args: list[str], timeout: int = 60) -> str | None:
     return proc.stdout
 
 
-def search_repos(query: str, limit: int, active_after: str) -> list[dict]:
+def date_qualifier(active_after: str, window: tuple | None = None) -> str:
+    """`pushed:>DAY` for a daily scan. A backfill can't ask what was active back
+    then (push dates only move forward), so it asks for repos CREATED in its
+    window, `created:FROM..TO`, ranked by the stars they have today."""
+    if window is None:
+        return f"pushed:>{active_after}"
+    return f"created:{window[0].isoformat()}..{window[1].isoformat()}"
+
+
+def search_repos(
+    query: str, limit: int, active_after: str, window: tuple | None = None
+) -> list[dict]:
     # `pushed:` (recently active) not `created:` — notable repos trend well after
     # creation and rarely hit the star floor within a month of being created.
-    full_query = f"{query} pushed:>{active_after}"
+    full_query = f"{query} {date_qualifier(active_after, window)}"
     out = run_gh(
         [
             "search",
@@ -100,14 +111,19 @@ def fetch_readme(full_name: str, max_chars: int) -> str | None:
     return text[:max_chars] if text.strip() else None
 
 
-def repo_to_candidate(repo: dict, source: dict, fetch: bool, max_chars: int) -> dict:
+def repo_to_candidate(
+    repo: dict, source: dict, fetch: bool, max_chars: int, by_created: bool = False
+) -> dict:
     full_name = repo.get("fullName", "")
     url = repo.get("url", "")
     stars = repo.get("stargazersCount", 0)
     desc = repo.get("description") or ""
     # Use the last-push date as the finding date (aligns with the pushed: search
-    # and the freshness window); fall back to creation.
+    # and the freshness window); fall back to creation. A backfill searched by
+    # creation date, so that is its finding date.
     active = repo.get("updatedAt") or repo.get("createdAt", "")
+    if by_created:
+        active = repo.get("createdAt") or ""
     cand_id = c.make_id(full_name, c.normalize_url(url))
     domains = source.get("domains") or []
     raw_path = None
@@ -174,16 +190,18 @@ def collect(cfg: dict, per_query: int | None, fetch: bool) -> list[dict]:
     max_chars = conf.limits.get("article_chars", 20000)
     cutoff = c.utcnow() - timedelta(days=conf.max_age_days)
     active_after = cutoff.strftime("%Y-%m-%d")
+    window = c.backfill_window()
 
     out: list[dict] = []
     for source in sources:
         query = query_for_source(source)
         star_floor = min_stars_for(source, default=default_min_stars)
-        print(f"-> gh search: {query} (>= {star_floor} stars, pushed > {active_after})")
-        for repo in search_repos(query, limit, active_after):
+        when = date_qualifier(active_after, window)
+        print(f"-> gh search: {query} (>= {star_floor} stars, {when})")
+        for repo in search_repos(query, limit, active_after, window):
             if repo.get("stargazersCount", 0) < star_floor:
                 continue
-            out.append(repo_to_candidate(repo, source, fetch, max_chars))
+            out.append(repo_to_candidate(repo, source, fetch, max_chars, window is not None))
     return out
 
 

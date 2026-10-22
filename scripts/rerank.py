@@ -125,10 +125,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--topic", choices=list(c.TOPICS), default=None)
     args = ap.parse_args()
+    # A backfill scan scores and prunes as of its window's end, so the stories
+    # it just merged are not archived on arrival. The next normal rerank (the
+    # next daily scan, or update.yml on main) judges them at the wall clock:
+    # findings past max_age_days then move to the archive with these scores,
+    # and news stories stay (is_news_story).
+    now = c.freshness_now()
     if args.topic:
-        rerank_pool(args.topic)
+        rerank_pool(args.topic, now=now)
     else:
-        rerank_all()
+        rerank_all(now=now)
     return 0
 
 

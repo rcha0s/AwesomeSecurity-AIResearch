@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import aggregate as agg
 import common as c
@@ -81,14 +81,25 @@ def _classify(cand: dict, blob: str, fallback: list[str], rules: dict) -> dict |
     return cand
 
 
-def kev_candidates(data: dict, source: dict, rules: dict, cutoff: datetime) -> list[dict]:
+def _day_in(day: str, cutoff: datetime, until: datetime | None) -> bool:
+    """A YYYY-MM-DD inside [cutoff, until] (no upper bound without `until`)."""
+    if not day or day < cutoff.date().isoformat():
+        return False
+    return until is None or day <= until.date().isoformat()
+
+
+def kev_candidates(
+    data: dict, source: dict, rules: dict, cutoff: datetime, until: datetime | None = None
+) -> list[dict]:
+    """KEV entries CISA added in [cutoff, until]: the catalog is the whole list,
+    so a backfill window is exact (dateAdded)."""
     out = []
     vulns = data.get("vulnerabilities") if isinstance(data, dict) else None
     for vuln in vulns if isinstance(vulns, list) else []:
         if not isinstance(vuln, dict):
             continue
         added = vuln.get("dateAdded") or ""
-        if not added or added < cutoff.date().isoformat():
+        if not _day_in(added, cutoff, until):
             continue
         cve = vuln.get("cveID", "")
         name = vuln.get("vulnerabilityName") or f"{vuln.get('vendorProject')} {vuln.get('product')}"
@@ -111,9 +122,11 @@ def hf_candidates(
     rules: dict,
     cutoff: datetime,
     security_terms: tuple[str, ...] = (),
+    until: datetime | None = None,
 ) -> list[dict]:
     """HF Daily Papers is mostly general ML, so like the broad conference venues an
-    item must also name a security concern (`security_terms`) on top of classifying."""
+    item must also name a security concern (`security_terms`) on top of classifying.
+    Papers published in [cutoff, until] only."""
     items = [i for i in items if isinstance(i, dict) and isinstance(i.get("paper"), dict)]
     signals = pg.Signals(
         hf_ids={str(i["paper"]["id"]).lower() for i in items if i["paper"].get("id")}
@@ -122,7 +135,7 @@ def hf_candidates(
     for item in items:
         paper = item["paper"]
         published = (paper.get("publishedAt") or item.get("publishedAt") or "")[:10]
-        if not paper.get("id") or not published or published < cutoff.date().isoformat():
+        if not paper.get("id") or not _day_in(published, cutoff, until):
             continue
         title = " ".join((paper.get("title") or "").split())
         url = f"https://arxiv.org/abs/{paper['id']}"
@@ -137,26 +150,30 @@ def hf_candidates(
     return out
 
 
-def collect(rules: dict, cutoff: datetime, security_terms: tuple[str, ...] = ()) -> list[dict]:
-    """Stage KEV and HF independently: a failure in one never sinks the other."""
+def collect(
+    rules: dict,
+    cutoff: datetime,
+    security_terms: tuple[str, ...] = (),
+    until: datetime | None = None,
+) -> list[dict]:
+    """Stage KEV and HF independently: a failure in one never sinks the other.
+    HF is asked for one day per call: the last week, or each day of a backfill."""
     out: list[dict] = []
     for source in sr.sources_of_type("kev_json"):
         print(f"-> {source['name']}: {source['handle']}")
         try:
-            out += kev_candidates(fetch_json(source["handle"]), source, rules, cutoff)
+            out += kev_candidates(fetch_json(source["handle"]), source, rules, cutoff, until)
         except Exception as exc:  # noqa: BLE001
             print(f"   ! KEV ingest failed: {exc}", file=sys.stderr)
     for source in sr.sources_of_type("hf_papers"):
         print(f"-> {source['name']}: {source['handle']}")
         try:
             items: list = []
-            today = c.utcnow().date()
-            for back in range(pg.HF_LOOKBACK_DAYS):
-                day = (today - timedelta(days=back)).isoformat()
+            for day in c.window_days(pg.HF_LOOKBACK_DAYS):
                 day_items = fetch_json(source["handle"], date=day, limit=100)
                 if isinstance(day_items, list):
                     items += day_items
-            out += hf_candidates(items, source, rules, cutoff, security_terms)
+            out += hf_candidates(items, source, rules, cutoff, security_terms, until)
         except Exception as exc:  # noqa: BLE001
             print(f"   ! HF Daily Papers ingest failed: {exc}", file=sys.stderr)
     return out
@@ -169,8 +186,8 @@ def main() -> int:
 
     cfg = c.load_yaml(c.SOURCES_FILE)
     terms = tuple(t.lower() for t in cfg.get("conferences", {}).get("security_terms", []))
-    cutoff = c.utcnow() - timedelta(days=c.load_config().max_age_days)
-    candidates = collect(cfg["classification"], cutoff, terms)
+    cutoff, until = c.ingest_window(c.load_config().max_age_days)
+    candidates = collect(cfg["classification"], cutoff, terms, until)
     print(f"\nFound {len(candidates)} JSON-feed candidate(s).")
     if args.dry_run:
         for cand in candidates:

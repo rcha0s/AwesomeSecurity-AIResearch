@@ -11,7 +11,9 @@ listed in tldrsec.com/sitemap.xml, the same source the recall eval reads (the
 /t/Newsletter archive page left out issue #349 when probed on 2026-10-22; the
 sitemap had every issue). Issues are picked by number, the newest
 `curator_links.max_issues`, and dated by the page's own publish date: the
-sitemap lastmod is an edit date (#126, from 2022, carried 2026-05-28).
+sitemap lastmod is an edit date (#126, from 2022, carried 2026-05-28). A backfill
+(common.backfill_window) instead takes every issue whose own publish date is in
+its window, walking back by number (window_issues).
 
 For each of those published in the last `curator_links.lookback_days` days:
   * eval_recall's issue parser: security sections only, first story link per
@@ -59,6 +61,9 @@ CURATOR = "tldrsec"
 SOURCE_ID = f"curator:{CURATOR}"
 SOURCE_NAME = "tl;dr sec (curator link)"
 DEFAULTS = {"max_issues": 2, "lookback_days": 14, "source_rank": 70.0}
+# A backfill walks back by issue number until an issue predates its window:
+# weekly issues, so 20 reach about five months back.
+BACKFILL_MAX_ISSUES = 20
 
 
 def settings() -> dict:
@@ -182,7 +187,30 @@ def from_issues(issues: list[tuple[str, str, str]], cfg: dict, rules: dict) -> d
     return {"candidates": out, "arxiv": arxiv, "counts": counts, "per_issue": per_issue}
 
 
+def window_issues(
+    fetch: Callable[[str], str], since: str, until: str, max_issues: int = BACKFILL_MAX_ISSUES
+) -> list[tuple[str, str, str]]:
+    """A backfill's issues: those whose own publish date is in [since, until].
+    Walks the newest `max_issues` by number, newest first, and stops at the
+    first one published before `since` (issue numbers only grow)."""
+    out = []
+    for url in er.parse_tldrsec_sitemap(fetch(er.TLDRSEC_SITEMAP), max_issues):
+        page = fetch(url)
+        day = er.issue_published(page)
+        if day is None:
+            print(f"tldrsec: {url} has no publish date; skipped", file=sys.stderr)
+        elif day < since:
+            break
+        elif day <= until:
+            out.append((url, day, page))
+    return out
+
+
 def collect(fetch: Callable[[str], str], cfg: dict, rules: dict) -> dict:
+    window = c.backfill_window()
+    if window is not None:
+        issues = window_issues(fetch, window[0].isoformat(), window[1].isoformat())
+        return from_issues(issues, cfg, rules)
     since = (c.utcnow() - timedelta(days=cfg["lookback_days"])).date().isoformat()
     return from_issues(er.tldrsec_issues(fetch, since, cfg["max_issues"]), cfg, rules)
 

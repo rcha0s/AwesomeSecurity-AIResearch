@@ -205,9 +205,23 @@ def is_stale(cand: dict, cutoff: datetime) -> bool:
     return dt is not None and dt < cutoff
 
 
-def collect(rules: dict, cutoff: datetime) -> list[dict]:
+def is_after(cand: dict, until: datetime | None) -> bool:
+    """True when a backfill's candidate was published after its window (its
+    page's own date, else the lastmod it fell back to). Undated is not after:
+    add_candidates drops what a backfill can't date."""
+    if until is None:
+        return False
+    dt = c.entry_datetime({"published": cand.get("published") or ""})
+    return dt is not None and dt.date() > until.date()
+
+
+def collect(rules: dict, cutoff: datetime, until: datetime | None = None) -> list[dict]:
     """Fetch every registered research_index source's sitemap and build
-    fresh candidates for the URLs under that source's own path prefix."""
+    fresh candidates for the URLs under that source's own path prefix.
+
+    A backfill (`until` set) fetches every page whose lastmod is on or after
+    its window's start, since a later rebuild can move lastmod past the window,
+    and keeps those whose own publish date falls inside it."""
     sources = sr.sources_of_type("research_index")
     sitemap_cache: dict[str, list[tuple[str, str]]] = {}
     candidates: list[dict] = []
@@ -229,7 +243,7 @@ def collect(rules: dict, cutoff: datetime) -> list[dict]:
             if dt is not None and dt < cutoff:
                 continue
             cand = url_to_candidate(loc, lastmod, source, rules)
-            if cand and is_stale(cand, cutoff):
+            if cand and (is_stale(cand, cutoff) or is_after(cand, until)):
                 continue
             if cand:
                 candidates.append(cand)
@@ -242,8 +256,8 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    cutoff = c.utcnow() - timedelta(days=c.load_config().max_age_days)
-    candidates = collect(rules, cutoff)
+    cutoff, until = c.ingest_window(c.load_config().max_age_days)
+    candidates = collect(rules, cutoff, until)
 
     if args.dry_run:
         print(f"\n(dry run) {len(candidates)} candidate(s) would be staged:")

@@ -29,6 +29,14 @@
 # `budget-ledger` branch in a temp dir, never to a file under data/.
 #
 # Runner: SCAN_RUNNER=cloud (default) or local. Python: $PYTHON or python3.
+#
+# Backfill (issue #52): SCAN_BACKFILL_FROM and SCAN_BACKFILL_TO (YYYY-MM-DD)
+# make this run one backfill chunk, the same pipeline with one difference:
+# ingest pulls items published inside [FROM, TO] (common.ingest_window), and
+# freshness is judged at TO. The guard checks the approved campaign instead of
+# the day rules (budget.py check_backfill), the ledger rows carry the window,
+# and post pushes claude/scan-<date>-backfill-<FROM>-<TO>. scripts/backfill.sh
+# sets these; the model session inherits them and can't change them.
 set -Eeuo pipefail # -E: the ERR trap fires inside functions too
 cd "$(dirname "$0")/.."
 source scripts/lib.sh
@@ -46,6 +54,13 @@ ANALYSIS_EMPTY_EXIT=4                # post: the session did no work (alert rais
 EVALS_DIR="data/evals"              # post owns it: reset to main's, then appended
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
+
+BACKFILL=""
+BACKFILL_ARGS=()
+if [[ -n "${SCAN_BACKFILL_FROM:-}${SCAN_BACKFILL_TO:-}" ]]; then
+  BACKFILL="${SCAN_BACKFILL_FROM:-}..${SCAN_BACKFILL_TO:-}"
+  BACKFILL_ARGS=(--backfill "$BACKFILL") # budget.py validates the window itself
+fi
 
 # ingest_curator_links goes first: it records the arXiv ids tl;dr sec's issues
 # link to (data/_curator_arxiv.json), aggregate's paper-gate curator signal.
@@ -152,7 +167,8 @@ guard() {
   [[ "${SCAN_ALLOW_REPEAT:-}" == 1 ]] && repeat=(--allow-repeat)
   main_config || return 1
   ledger_fetch || return 1
-  budget check --runner "$RUNNER" ${repeat[@]+"${repeat[@]}"} | tee -a "$LOG" || rc=$?
+  budget check --runner "$RUNNER" ${repeat[@]+"${repeat[@]}"} \
+    ${BACKFILL_ARGS[@]+"${BACKFILL_ARGS[@]}"} | tee -a "$LOG" || rc=$?
   return "$rc"
 }
 
@@ -165,7 +181,8 @@ check_and_reserve() {
     rc=0
     guard || rc=$?
     [[ "$rc" == 0 ]] || return "$rc"
-    budget reserve --runner "$RUNNER" --run-id "$run_id" | tee -a "$LOG" || return 1
+    budget reserve --runner "$RUNNER" --run-id "$run_id" \
+      ${BACKFILL_ARGS[@]+"${BACKFILL_ARGS[@]}"} | tee -a "$LOG" || return 1
     if ledger_commit "$run_id"; then
       log "ledger: reserve recorded for $run_id"
       return 0
@@ -260,6 +277,14 @@ phase_post() {
   run_evals "$run_id" "$stories" || log "evals WARN: history not updated"
   day="$(date -u +%Y-%m-%d)"
   branch="claude/scan-$day-$RUNNER"
+  local kind="daily scan" what="$day" lead="Daily scan"
+  if [[ -n "$BACKFILL" ]]; then
+    # Validated by the guard before pre reserved; checked again because it
+    # becomes a ref name.
+    [[ "$BACKFILL" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}\.\.[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || return 1
+    branch="claude/scan-$day-backfill-${SCAN_BACKFILL_FROM}-${SCAN_BACKFILL_TO}"
+    kind="backfill scan" what="$day, window $BACKFILL" lead="Backfill scan for $BACKFILL (issue #52)"
+  fi
   git checkout -q -B "$branch"
   git add -u -- "$DATA_DIR"
   [[ ${#paths[@]} == 0 ]] || git add -A -- "${paths[@]}"
@@ -268,9 +293,12 @@ phase_post() {
     log "staged diff has secret-like content; not pushing"
     return 1
   fi
-  git commit -qm "chore: daily scan ($RUNNER, $day, $stories stories)"
+  git commit -qm "chore: $kind ($RUNNER, $what, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
-  body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
+  body="$("$PY" scripts/scrub.py "$SUMMARY" "$lead, runner \`$RUNNER\`, $stories stories analyzed.")"
+  if [[ -n "$BACKFILL" ]]; then
+    body="**Backfill:** items published $BACKFILL, analyzed $day. Not the day's scan."$'\n\n'"$body"
+  fi
   # Code-owned records (merge_analysis.py's story verdicts, promote_editorial.py's
   # promotions and removals), never the model's word for them.
   local record
@@ -285,7 +313,7 @@ phase_post() {
   fi
   body+="$(eval_body "$run_id")"
   body+="$(spend_line)"
-  scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
+  scripts/ensure_pr.sh "$branch" "chore: $kind ($RUNNER, $what)" "$body" | tee -a "$LOG"
   ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
 }
 

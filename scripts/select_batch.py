@@ -105,7 +105,10 @@ def ingestor_class(cand: dict) -> str:
 def score(cand: dict, conf: c.Config) -> float:
     """Composite over the axes known before analysis, plus the routing nudge."""
     axes = {
-        "newness": c.newness_score(c.best_date(cand) or "", conf.half_life_days),
+        # A backfill ranks newness as of its window's end, like rerank.
+        "newness": c.newness_score(
+            c.best_date(cand) or "", conf.half_life_days, now=c.freshness_now()
+        ),
         "credibility": c.credibility_of(cand),
     }
     routed = (cand.get("prefilter") or {}).get("reason") == "routed"

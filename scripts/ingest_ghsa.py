@@ -40,12 +40,17 @@ AI_PATTERN = re.compile(
 )
 
 
-def fetch_advisories(limit: int, severity: str | None = None) -> list[dict]:
+def fetch_advisories(
+    limit: int, severity: str | None = None, published: str | None = None
+) -> list[dict]:
     """Recently-published reviewed advisories, newest first, optionally of one
-    severity. [] on any failure."""
+    severity and published on a day or range (`2026-09-09..2026-09-16`, the
+    REST API's own `published` filter). [] on any failure."""
     query = f"/advisories?type=reviewed&sort=published&direction=desc&per_page={limit}"
     if severity:
         query += f"&severity={severity}"
+    if published:
+        query += f"&published={published}"
     out = run_gh(["api", query], timeout=60)
     if not out:
         return []
@@ -119,20 +124,40 @@ def collect(cfg: dict, rules: dict, limit: int | None) -> list[dict]:
     per_run = limit or ghsa_cfg.get("per_run", 20)
     per_critical = int(ghsa_cfg.get("per_run_critical", 0))
     conf = c.load_config()
-    print(
-        f"-> gh api /advisories (reviewed, newest {per_run} + {per_critical} critical, "
-        f"last {conf.max_age_days}d)"
-    )
-    advisories = list(fetch_advisories(per_run))
-    if per_critical > 0:
-        advisories.extend(fetch_advisories(per_critical, severity="critical"))
+    window = c.backfill_window()
+    if window is None:
+        print(
+            f"-> gh api /advisories (reviewed, newest {per_run} + {per_critical} critical, "
+            f"last {conf.max_age_days}d)"
+        )
+        advisories = list(fetch_advisories(per_run))
+        if per_critical > 0:
+            advisories.extend(fetch_advisories(per_critical, severity="critical"))
+    else:
+        advisories = backfill_advisories(window, per_run, per_critical)
+    now = c.freshness_now()
     out: list[dict] = []
     seen: set[str] = set()
     for adv in advisories:
         cand = advisory_to_candidate(adv, rules)
-        if cand and cand["id"] not in seen and c.is_fresh(cand, conf.max_age_days):
+        if cand and cand["id"] not in seen and c.is_fresh(cand, conf.max_age_days, now=now):
             seen.add(cand["id"])
             out.append(cand)
+    return out
+
+
+def backfill_advisories(window: tuple, per_run: int, per_critical: int) -> list[dict]:
+    """A backfill's advisories: the newest `per_run` of each day in the window
+    (what a daily run would have pulled that day) plus the window's critical
+    ones, all by the API's own `published` filter."""
+    start, end = window
+    span = f"{start.isoformat()}..{end.isoformat()}"
+    print(f"-> gh api /advisories (reviewed, backfill {span}: {per_run}/day + critical)")
+    out: list[dict] = []
+    for day in c.window_days(0):
+        out.extend(fetch_advisories(per_run, published=day))
+    if per_critical > 0:
+        out.extend(fetch_advisories(per_critical, severity="critical", published=span))
     return out
 
 

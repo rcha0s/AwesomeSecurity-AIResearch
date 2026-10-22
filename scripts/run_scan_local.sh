@@ -40,6 +40,15 @@ cd "$(dirname "$0")/.."
 REPO="$PWD"
 export SCAN_RUNNER=local
 export SCAN_RUN_ID="local-$(date -u +%Y%m%dT%H%M%SZ)-$$"
+# A backfill chunk (scripts/backfill.sh sets SCAN_BACKFILL_FROM/TO; see
+# run_scan.sh): its own run id prefix and its own worktree, so it can run
+# beside the daily job, and no same-day retry (backfill.max_runs bounds tries).
+BACKFILL=""
+if [[ -n "${SCAN_BACKFILL_FROM:-}${SCAN_BACKFILL_TO:-}" ]]; then
+  BACKFILL="${SCAN_BACKFILL_FROM:-}..${SCAN_BACKFILL_TO:-}"
+  SCAN_RUN_ID="local-backfill-${SCAN_BACKFILL_FROM//-/}-${SCAN_BACKFILL_TO//-/}-${SCAN_RUN_ID#local-}"
+  SCAN_WORKTREE="${SCAN_WORKTREE:-$HOME/.local/share/awesomesec-backfill-worktree}"
+fi
 # Appended, not prepended: launchd starts with a bare PATH, and a caller's own
 # PATH (tests use fake gh/claude) must win.
 export PATH="$REPO/.venv/bin:$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin"
@@ -120,8 +129,13 @@ attempt() {
   local rc=0 limits cap_usd max_turns claude_rc=0 post_rc=0 cost stories outcome="" actual_ok=1 work_rc=0
   scripts/run_scan.sh check >/dev/null || rc=$?
   if [[ "$rc" == 3 ]]; then
-    echo "[local] budget guard says skip (a scan finished today, no cap, or no budget left)" |
-      tee -a "$LOG"
+    if [[ -n "$BACKFILL" ]]; then
+      echo "[local] budget guard says skip backfill $BACKFILL (its budget: line says why)" |
+        tee -a "$LOG"
+    else
+      echo "[local] budget guard says skip (a scan finished today, no cap, or no budget left)" |
+        tee -a "$LOG"
+    fi
     return 3
   fi
   [[ "$rc" == 0 ]] || fail "local-budget-check"
@@ -176,6 +190,11 @@ mkdir -p "$REPO/data"
 enter_worktree
 rc=0
 attempt || rc=$?
+if [[ -n "$BACKFILL" ]]; then
+  # No retry for a backfill chunk; exit 3 tells scripts/backfill.sh "skipped".
+  [[ "$rc" == 0 || "$rc" == 3 ]] || exit 1
+  exit "$rc"
+fi
 if [[ "$rc" == 4 ]]; then
   # The ledger decides: one retry a day, only after a cheap analysis-empty
   # failure (budget.retry_max_usd). The retry's own reservation blocks a third.
