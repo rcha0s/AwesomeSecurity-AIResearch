@@ -57,7 +57,7 @@ def test_failed_run_is_still_charged_its_reservation():
 
 def test_previous_months_spend_does_not_count():
     runs = [row(date="2026-06-30", cost=50.0, stories=500)]
-    ok, _ = budget.check(runs, settings(cap=10.0), "local", TODAY)
+    ok, _ = budget.check(runs, settings(cap=10.0, per_story=0.1), "local", TODAY)
     assert ok
 
 
@@ -100,7 +100,8 @@ def test_uncalibrated_reserve_must_fit_too():
 
 
 def test_ceiling_must_fit_the_remaining_budget():
-    runs = [row(cost=8.0, stories=8)]  # $1/story measured, $2 left
+    runs = [row("m", cost=2.0, stories=2), row("r", kind="reserve", cost=6.0, stories=0)]
+    # $1/story measured, $8 charged, $2 left
     ok, reason = budget.check(runs, settings(cap=10.0, max_stories=3), "cloud", TODAY)
     assert not ok and "ceiling $3.00" in reason
     ok, reason = budget.check(runs, settings(cap=10.0, max_stories=2), "cloud", TODAY)
@@ -113,6 +114,69 @@ def test_per_story_is_the_worst_actual_run_so_padding_cannot_lower_it():
     padded = runs + [row("c", cost=0.8, stories=8)]  # $0.10/story padding run
     assert budget.usd_per_story(padded) == pytest.approx(0.5)
     assert budget.usd_per_story(runs, override=0.25) == 0.25
+
+
+def test_a_calibration_window_retires_an_old_outlier_but_not_to_padding():
+    # 2026-10: the first run (3 stories, $0.44 each) set every later ceiling.
+    first = row("a", cost=1.32, stories=3)  # $0.44/story
+    honest = [row(f"h{i}", cost=1.68, stories=8) for i in range(5)]  # $0.21/story
+    assert budget.usd_per_story([first, *honest]) == pytest.approx(0.44)  # no window
+    assert budget.usd_per_story([first, *honest], window=5) == pytest.approx(0.21)
+    assert budget.usd_per_story([first, *honest[:4]], window=5) == pytest.approx(0.44)
+    padded = [first, *[row(f"p{i}", cost=0.8, stories=8) for i in range(4)]]  # $0.10/story
+    assert budget.usd_per_story(padded, window=5) == pytest.approx(0.44)  # 4 pads aren't enough
+    for off in (None, 0, -1):
+        assert budget.usd_per_story([first, *honest], window=off) == pytest.approx(0.44)
+    assert budget.usd_per_story([first], override=0.1, window=5) == 0.1
+
+
+def test_a_padded_story_count_cannot_go_below_cost_over_the_cap():
+    padded = [row("p", cost=2.0, stories=1000)]  # $0.002/story as claimed
+    assert budget.usd_per_story(padded, max_stories=10) == pytest.approx(0.2)  # $2 / cap 10
+    assert budget.usd_per_story(padded) == pytest.approx(0.002)  # no cap given: as before
+    honest = [row("h", cost=2.0, stories=8)]
+    assert budget.usd_per_story(honest, max_stories=10) == pytest.approx(0.25)  # untouched
+    s = {**settings(cap=100.0, max_stories=10), "calibration_runs": 5}
+    assert budget.run_ceiling(padded, s, "cloud")[0] == 2.0  # run_ceiling passes the cap
+
+
+def test_a_run_with_two_actual_rows_counts_once_in_the_window():
+    # The real 2026-10-19 run wrote actual(0 stories) then actual(3 stories).
+    outlier = row("old", cost=1.32, stories=3)
+    twice = [row("r2", cost=1.68, stories=8), row("r2", cost=1.68, stories=8)]
+    runs = [outlier, *twice, row("r3", cost=1.68, stories=8)]
+    assert budget.usd_per_story(runs, window=3) == pytest.approx(0.44)  # 3 runs, not 4 rows
+    assert budget.usd_per_story(runs, window=2) == pytest.approx(0.21)
+    superseded = [row("x", cost=9.0, stories=1), row("x", cost=0.8, stories=8)]
+    assert budget.usd_per_story(superseded) == pytest.approx(0.1)  # the latest actual wins
+    reordered = [
+        row("a", cost=4.0, stories=4),
+        row("b", cost=2.0, stories=4),
+        row("a", cost=1.0, stories=4),
+    ]
+    assert budget.usd_per_story(reordered, window=1) == pytest.approx(0.25)  # "a" is newest
+
+
+def test_headroom_scales_a_measured_rate_never_an_override_and_never_down():
+    runs = [row("a", cost=2.0, stories=4)]  # $0.50/story
+    s = {**settings(cap=100.0, max_stories=10), "ceiling_headroom": 1.5}
+    assert budget.run_ceiling(runs, s, "cloud") == (7.5, "calibrated")
+    assert budget.run_ceiling(runs, {**s, "usd_per_story": 0.25}, "cloud")[0] == 2.5
+    assert budget.run_ceiling(runs, {**s, "ceiling_headroom": 0.5}, "cloud")[0] == 5.0
+    assert budget.run_ceiling(runs, {**s, "ceiling_headroom": None}, "cloud")[0] == 5.0
+    later = [*runs, row("b", cost=1.0, stories=4)]  # $0.25/story, the newest
+    assert budget.run_ceiling(later, {**s, "calibration_runs": 1}, "cloud")[0] == 3.75
+    assert budget.run_ceiling(later, s, "cloud")[0] == 7.5  # no window: the old worst
+
+
+def test_real_config_fits_a_month_of_cloud_runs_at_the_measured_rate():
+    """The 2026-10-22 run: 8 stories for $1.67. Cloud runs are charged the
+    ceiling, one a day, so 31 of them must fit the monthly cap."""
+    s = budget.budget_settings()
+    assert s["calibration_runs"] >= 3  # padding has to repeat to move the ceiling
+    assert s["ceiling_headroom"] * s["session_cap_fraction"] > 1  # a worst-rate run fits
+    ceiling, _ = budget.run_ceiling([row("m", cost=1.6749, stories=8)], s, "cloud")
+    assert 31 * ceiling <= s["monthly_cap_usd"]
 
 
 @pytest.mark.parametrize(
@@ -203,6 +267,18 @@ def test_cli_cloud_reserves_calibrated_ceiling(tmp_path, monkeypatch):
     assert budget.main(["--config", cfg, "check", "--runner", "cloud"]) == 0
     budget.main(["--config", cfg, "reserve", "--runner", "cloud", "--run-id", "C1"])
     assert common.load_json(ledger)["runs"][-1]["cost_usd"] == 2.0  # 4 stories x $0.50
+
+
+def test_cli_actual_refuses_a_cloud_reservation(tmp_path, monkeypatch):
+    ledger = tmp_path / "ledger.json"
+    held = row("C1", date=TODAY, kind="reserve", cost=2.0, stories=0, runner="cloud")
+    common.save_json(ledger, {"runs": [held]})
+    monkeypatch.setenv("BUDGET_LEDGER", str(ledger))
+    cfg = write_config(tmp_path)
+    args = ["--config", cfg, "actual", "--run-id", "C1", "--stories", "4", "--cost-usd", "0.1"]
+    with pytest.raises(SystemExit, match="cloud run"):
+        budget.main(args)
+    assert common.load_json(ledger)["runs"] == [held]
 
 
 def test_cli_actual_needs_a_reservation(tmp_path, monkeypatch):

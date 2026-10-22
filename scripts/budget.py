@@ -116,25 +116,58 @@ def month_spend(runs: list[dict], month: str) -> float:
     return round(sum(float(r["cost_usd"]) for r in rows if r["date"].startswith(month)), 4)
 
 
-def usd_per_story(runs: list[dict], override: float | None = None) -> float | None:
-    """Worst measured cost per story across `actual` rows, or the config override.
+def usd_per_story(
+    runs: list[dict],
+    override: float | None = None,
+    window: int | None = None,
+    max_stories: int | None = None,
+) -> float | None:
+    """Worst measured cost per story across runs, or the config override.
 
     The worst run, not the mean: padding one run with cheap stories can't lower
-    the ceiling every later cloud run is charged.
+    the ceiling every later cloud run is charged. With `window`, the worst of
+    the last `window` measured runs only, so one early outlier doesn't price
+    every later run forever (the first run, 3 stories at $0.44 each, set the
+    ceiling while the 8-story run cost $0.21 each). Lowering it then takes
+    `window` padded runs in a row, each still charged its measured cost.
+
+    One row per run (its latest `actual`, as in effective_runs), so a run with
+    two actual rows can't fill two window slots. With `max_stories`, a row's
+    story count is capped at it: post refuses more, so a bigger count is padding.
     """
     if override is not None:
         return float(override)
+    latest: dict[str, dict] = {}
+    for r in runs:
+        if r["kind"] == "actual":
+            latest.pop(r["run_id"], None)  # re-insert: order by each run's latest row
+            latest[r["run_id"]] = r
     measured = [
-        r["cost_usd"] / r["stories"] for r in runs if r["kind"] == "actual" and r["stories"] > 0
+        r["cost_usd"] / min(r["stories"], max_stories or r["stories"])
+        for r in latest.values()
+        if r["stories"] > 0
     ]
+    if window is not None and int(window) > 0:  # 0 or less: every measured run
+        measured = measured[-int(window) :]
     return max(measured) if measured else None
 
 
 def run_ceiling(runs: list[dict], settings: dict, runner: str) -> tuple[float | None, str]:
-    """The most one run may cost, or (None, reason) when it can't be bounded."""
-    per_story = usd_per_story(runs, settings.get("usd_per_story"))
+    """The most one run may cost, or (None, reason) when it can't be bounded.
+
+    A measured rate is multiplied by `ceiling_headroom` (default 1): the local
+    session's hard cap is `session_cap_fraction` of this ceiling, so a run as
+    expensive as the worst one measured must still fit under it.
+    """
+    override = settings.get("usd_per_story")
+    per_story = usd_per_story(
+        runs, override, settings.get("calibration_runs"), settings["max_stories_per_run"]
+    )
     if per_story is not None:
-        return round(per_story * settings["max_stories_per_run"], 4), "calibrated"
+        headroom = (
+            1.0 if override is not None else max(1.0, float(settings.get("ceiling_headroom") or 1))
+        )
+        return round(per_story * headroom * settings["max_stories_per_run"], 4), "calibrated"
     if runner == "cloud":
         return None, "no measured per-story cost yet: run one local scan first"
     reserve = settings.get("uncalibrated_run_usd")
@@ -263,6 +296,10 @@ def actual(path: Path, runs: list[dict], args) -> int:
     held = [r for r in runs if r["run_id"] == args.run_id and r["kind"] == "reserve"]
     if not held:
         raise SystemExit(f"actual: no reservation for run {args.run_id}")
+    if held[0]["runner"] != "local":
+        # A cloud run can't read its own cost: it stays charged its reservation.
+        # An actual row would replace that charge and feed the calibration.
+        raise SystemExit(f"actual: run {args.run_id} is a {held[0]['runner']} run")
     row = {**held[0], "kind": "actual", "stories": args.stories, "cost_usd": args.cost_usd}
     if args.outcome:
         row["outcome"] = args.outcome

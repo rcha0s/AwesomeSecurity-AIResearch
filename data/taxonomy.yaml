@@ -230,6 +230,19 @@ excluded_terms:
   - pedagogical
   - tutor
   - portfolio optimization
+  # 2026-10-22 run (437 staged): business, economics, education and science-application
+  # posts from first-party AI blogs; one ("Terminal X matches senior investor judgment")
+  # took a batch slot. Phrases chosen to miss every curated security entry and golden case.
+  - economic index
+  - economics of ai
+  - education report
+  - education pilot
+  - quantum circuit
+  - bioinformatics
+  - biological data
+  - investor judgment
+  - business performance
+  - customer base
 
 # Free-text label -> id, per topic. Every pre-migration label is here (generated once from
 # data/taxonomy_migration.json; a test keeps the two in step). Add a line when the analyzer

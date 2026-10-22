@@ -4,7 +4,12 @@ ingest_ghsa.py — Discover reviewed supply-chain advisories from the GitHub
 Advisory Database (GHSA).
 
 Pulls recently-published, human-reviewed advisories via the authed `gh` CLI
-(`gh api /advisories`), keeps those inside the freshness window, classifies each
+(`gh api /advisories`) in two passes: the newest `per_run` of any severity, and
+the newest `per_run_critical` critical ones. The second pass exists because
+GitHub reviews ~50 advisories a day: on 2026-10-21 the newest 20 were all
+Pillow, and the week's critical ones (Claude Agent SDK, LMCache, Mercury RCE),
+which the recall eval scores, were never staged. Keeps those inside the
+freshness window, classifies each
 (supply-chain by default; AI Security when the summary matches AI keywords), and
 stages them as candidates. GHSA is a disclosure-velocity signal for the
 dependency/package attack surface — the material an appsec reader must track.
@@ -20,23 +25,28 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 
 import aggregate as agg
 import common as c
 from ingest_github import run_gh
 
-AI_KEYWORDS = ("llm", "prompt injection", "genai", "agent", "mcp", "model", "ml ")
+# Whole words only. The old substrings ("ml " in "xml "/"yaml ", bare "model" and
+# "agent") marked ~15 of 21 "AI" advisories among 100 real HIGH ones falsely.
+AI_PATTERN = re.compile(
+    r"\b(?:llms?|ml|mcp|genai|gen ai|prompt injection|model context protocol|"
+    r"large language models?|machine learning|ai agents?|agentic|langchain|llamaindex|"
+    r"vllm|pytorch|tensorflow|transformers|hugging ?face|ollama|openai|anthropic|claude)\b"
+)
 
 
-def fetch_advisories(limit: int) -> list[dict]:
-    """Recently-published reviewed advisories, newest first. [] on any failure."""
-    out = run_gh(
-        [
-            "api",
-            f"/advisories?type=reviewed&sort=published&direction=desc&per_page={limit}",
-        ],
-        timeout=60,
-    )
+def fetch_advisories(limit: int, severity: str | None = None) -> list[dict]:
+    """Recently-published reviewed advisories, newest first, optionally of one
+    severity. [] on any failure."""
+    query = f"/advisories?type=reviewed&sort=published&direction=desc&per_page={limit}"
+    if severity:
+        query += f"&severity={severity}"
+    out = run_gh(["api", query], timeout=60)
     if not out:
         return []
     try:
@@ -68,7 +78,7 @@ def advisory_to_candidate(adv: dict, rules: dict) -> dict | None:
     description = c.clean_summary(adv.get("description") or "", 600)
     blob = f"{summary} {packages} {description}".lower()
     # AI-package advisories route to AI Security; everything else is supply chain.
-    if any(kw in blob for kw in AI_KEYWORDS):
+    if AI_PATTERN.search(blob):
         domain = "AI Security"
     else:
         domain = agg.classify_domain(blob, rules, []) or "Supply Chain & Dependencies"
@@ -107,12 +117,21 @@ def collect(cfg: dict, rules: dict, limit: int | None) -> list[dict]:
         print("   (ghsa ingestion disabled in sources.yaml)")
         return []
     per_run = limit or ghsa_cfg.get("per_run", 20)
+    per_critical = int(ghsa_cfg.get("per_run_critical", 0))
     conf = c.load_config()
-    print(f"-> gh api /advisories (reviewed, newest {per_run}, last {conf.max_age_days}d)")
+    print(
+        f"-> gh api /advisories (reviewed, newest {per_run} + {per_critical} critical, "
+        f"last {conf.max_age_days}d)"
+    )
+    advisories = list(fetch_advisories(per_run))
+    if per_critical > 0:
+        advisories.extend(fetch_advisories(per_critical, severity="critical"))
     out: list[dict] = []
-    for adv in fetch_advisories(per_run):
+    seen: set[str] = set()
+    for adv in advisories:
         cand = advisory_to_candidate(adv, rules)
-        if cand and c.is_fresh(cand, conf.max_age_days):
+        if cand and cand["id"] not in seen and c.is_fresh(cand, conf.max_age_days):
+            seen.add(cand["id"])
             out.append(cand)
     return out
 

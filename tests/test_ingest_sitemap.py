@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 
 import common as c
 import ingest_sitemap as ism
+import pytest
 
 RULES = c.load_yaml(c.SOURCES_FILE)["classification"]
 
@@ -180,6 +181,72 @@ def test_collect_filters_by_prefix_and_freshness(monkeypatch):
     # Neither should even trigger a fetch_body call for the excluded URLs.
     urls = [cand["article_url"] for cand in candidates]
     assert urls == ["https://www.anthropic.com/news/disrupting-ai-espionage"]
+
+
+def _old_post_body(published: str) -> str:
+    return READER_BODY.replace(
+        "\n\nMarkdown Content:", f"\n\nPublished Time: {published}\n\nMarkdown Content:"
+    )
+
+
+def test_reader_published_reads_the_page_date_not_the_body():
+    assert ism.reader_published(_old_post_body("2023-07-11T00:00:00.000Z")) == datetime(
+        2023, 7, 11, tzinfo=UTC
+    )
+    assert ism.reader_published(READER_BODY) is None
+    assert ism.reader_published(None) is None
+    body = READER_BODY + "\n" + "x" * 1200 + "\nPublished Time: 2020-01-01"
+    assert ism.reader_published(body) is None  # header only, never quoted body text
+
+
+def test_page_publish_time_overrides_a_rebuilt_lastmod(monkeypatch):
+    """2026-10-22: a site rebuild re-dated 2021-2025 Anthropic posts, so 111 of
+    154 sitemap candidates were stale pages with a fresh <lastmod>."""
+    monkeypatch.setattr(ism.sr, "sources_of_type", lambda stype: [ANTHROPIC_SOURCE])
+    monkeypatch.setattr(ism, "fetch_body", lambda url: _old_post_body("2023-07-11"))
+
+    class _Resp:
+        content = SITEMAP_XML.encode("utf-8")
+
+        def raise_for_status(self):
+            return None
+
+    monkeypatch.setattr(ism.requests, "get", lambda *a, **k: _Resp())
+    assert ism.collect(RULES, datetime(2026, 8, 1, tzinfo=UTC)) == []
+    monkeypatch.setattr(ism, "fetch_body", lambda url: _old_post_body("2026-07-10"))
+    (cand,) = ism.collect(RULES, datetime(2026, 6, 20, tzinfo=UTC))
+    assert cand["published"] == "2026-07-10"  # the page's date, not lastmod's 09-07
+
+
+@pytest.mark.parametrize(
+    "stated, expected",
+    [
+        ("Tue, 11 Jul 2023 00:00:00 GMT", datetime(2023, 7, 11, tzinfo=UTC)),  # RFC 1123
+        ("Tue, 11 Jul 2023 09:30:00 +0200", datetime(2023, 7, 11, 7, 30, tzinfo=UTC)),
+        ("July 11, 2023", datetime(2023, 7, 11, tzinfo=UTC)),  # long form
+        ("2023-07-11T00:00:00.000Z", datetime(2023, 7, 11, tzinfo=UTC)),
+        ("2023-07-11", datetime(2023, 7, 11, tzinfo=UTC)),
+        ("July 2023", None),  # no day: dateutil would invent one
+        ("Jul 11", None),  # no year: dateutil would use this year's
+        ("2026-07-17", None),  # more than a day ahead of the (pinned) clock
+        ("soon", None),
+    ],
+)
+def test_reader_published_takes_only_complete_past_dates(stated, expected):
+    """Review of #89: `\\S+` cut RFC dates at the first space and dateutil filled
+    the rest from today, re-dating a 2023 post to 2026 at full newness."""
+    assert ism.reader_published(_old_post_body(stated)) == expected
+
+
+def test_a_future_page_date_falls_back_to_lastmod(monkeypatch):
+    monkeypatch.setattr(ism, "fetch_body", lambda url: _old_post_body("2031-01-01"))
+    cand = ism.url_to_candidate(
+        "https://www.anthropic.com/news/disrupting-ai-espionage",
+        "2026-07-01T09:00:00.000Z",
+        ANTHROPIC_SOURCE,
+        RULES,
+    )
+    assert cand["published"] == "2026-07-01"
 
 
 def test_collect_skips_sources_with_no_usable_sitemap(monkeypatch, capsys):

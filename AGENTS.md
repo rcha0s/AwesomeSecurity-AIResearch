@@ -178,7 +178,11 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   candidates in `data/candidates.json`. Prefilter drops stay out; slots are dealt
   round-robin across ingestor classes (KEV, HN, GHSA, RSS, ...) by newness + source
   credibility, with a small `batch_routed_bonus` and at most `batch_per_source`
-  slots per source. The rest go to `data/_scan_backlog.json` for diagnosis
+  slots per source (`batch_class_slots` lets plain RSS deal 2 a round). First,
+  a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
+  entries and critical GHSA advisories (plus high ones in AI tooling), tagged
+  `batch_priority`; the session analyzes those first. The rest go to
+  `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
 - **No analysis = failed run:** `post` refuses a run where `merge_analysis.py`
@@ -203,7 +207,8 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
 - **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
   Routines draw subscription usage first and can't read their balance, so `pre`
   checks the month's spend against `budget.monthly_cap_usd`, then **reserves** the
-  run's ceiling (`max_stories_per_run` × measured per-story cost, or
+  run's ceiling (`max_stories_per_run` × the worst per-story cost of the last
+  `calibration_runs` measured runs × `ceiling_headroom`, or
   `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
   run is still charged. Local runs replace the reservation with the measured
   `total_cost_usd`, recorded by the wrapper before `post` so the PR body and the

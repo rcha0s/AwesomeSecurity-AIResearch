@@ -55,11 +55,23 @@ curation:
 # Per-run caps (bound the cost of a single scan).
 limits:
   article_chars: 20000  # truncate fetched article text to this many chars
-  max_stories_per_run: 8  # analyzed stories per scan; with usd_per_story this is
-                          # each run's known cost ceiling (scripts/budget.py)
+  max_stories_per_run: 10 # analyzed stories per scan; with usd_per_story this is
+                          # each run's known cost ceiling (scripts/budget.py). 10, not
+                          # 12: at the measured $0.21/story x ceiling_headroom 1.5, a
+                          # cloud run reserves $3.14; 31 of them come to $97 of the
+                          # $100 cap, a margin of only ~3%. 12 would reserve $3.76
+                          # ($117/month). If the rate rises, the guard refuses the
+                          # month's last runs (skipped days); it never overspends.
   batch_margin: 4         # extra candidates in the session's batch for ones the story
                           # judge finds same/update (scripts/select_batch.py)
   batch_per_source: 2     # most batch slots one source may take while others wait
+  batch_priority_max: 5   # must-not-miss lane: new CISA KEV + critical GHSA (+ high GHSA
+                          # in AI tooling) dealt first; ~3 a day arrive (2026-W43: 8 KEV +
+                          # 11 critical GHSA, 0 held by the pools)
+  batch_priority_per_source: 3  # KEV is one source and GHSA one more: 3 + 2 fill the lane
+  batch_class_slots:      # picks per round-robin round for a class (default 1). Plain
+    rss: 2                # RSS is one class of 60+ feeds, 35% of staged candidates, and
+                          # where the 12 tl;dr sec misses of W43 (of 31) were published
   batch_routed_bonus: 5   # composite points for a confident prefilter domain hint
                           # (taxonomy confidence, not newsworthiness: a nudge only)
   max_turns: 150          # hard turn cap on the local model session
@@ -71,7 +83,12 @@ limits:
 # credits only cover overage (routines.md § Usage and limits).
 budget:
   monthly_cap_usd: 100        # Rohan, 2026-10-19; null = every run skips LLM work
-  usd_per_story: null         # null = the worst measured on local runs
+  usd_per_story: null         # null = the worst measured on recent local runs
+  calibration_runs: 5         # "recent" = the last 5 measured runs, so the first run's
+                              # 3-story $0.44/story doesn't price every run forever
+  ceiling_headroom: 1.5       # ceiling = worst recent $/story x 1.5 x max_stories: the
+                              # session cap (x session_cap_fraction) must still clear a
+                              # run as costly as the worst measured one
   uncalibrated_run_usd: 5     # what a first, uncalibrated local run reserves;
                               # null = it can't run either
   session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this

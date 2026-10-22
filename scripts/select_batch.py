@@ -24,6 +24,16 @@ Slots are dealt round-robin across ingestor classes (KEV, HN, GHSA, GitHub
 search, HF papers, conference papers, research sitemaps, RSS feeds), best
 class first, each class giving its best remaining candidate, and no single
 source takes more than `batch_per_source` slots unless nothing else is left.
+`batch_class_slots` lets a class deal more than one candidate per round: plain
+RSS feeds are one class of 60+ feeds and a third of the staged set, and the
+research posts the recall eval misses most come from them.
+
+Must-not-miss lane: the recall eval scores every new CISA KEV entry and every
+critical GHSA advisory, and on 2026-W43 held 0 of 19. Before the deal, up to
+`batch_priority_max` slots go to those classes (and to high-severity GHSA
+advisories in AI tooling), AI-tooling advisories first, at most
+`batch_priority_per_source` from one source. Each carries `batch_priority`
+so the session analyzes it before the cap runs out.
 
 Everything not selected goes to data/_scan_backlog.json, each with its
 prefilter reason and rank. On the Mac runner the session can neither edit nor
@@ -47,7 +57,13 @@ import common as c
 import prefilter as pf
 
 BACKLOG_NAME = "_scan_backlog.json"
-DEFAULTS = {"batch_margin": 4, "batch_per_source": 2, "batch_routed_bonus": 5.0}
+DEFAULTS = {
+    "batch_margin": 4,
+    "batch_per_source": 2,
+    "batch_routed_bonus": 5.0,
+    "batch_priority_max": 0,  # off unless config.yaml names a lane size
+    "batch_priority_per_source": 2,
+}
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
 OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap")
 
@@ -91,29 +107,77 @@ def score(cand: dict, conf: c.Config) -> float:
     )
 
 
-def deal(ranked: list[dict], size: int, per_source: int) -> list[dict]:
-    """Round-robin over ingestor classes (best head first), per-source capped;
-    then fill any slots left by score alone. `ranked` is best-first."""
+def deal(
+    ranked: list[dict],
+    size: int,
+    per_source: int,
+    slots: dict[str, int] | None = None,
+    used: Counter | None = None,
+    fill: bool = True,
+) -> list[dict]:
+    """Round-robin over ingestor classes (best head first), `slots[class]`
+    picks per round (default 1), per-source capped; then (`fill`) fill any
+    slots left by score alone. `ranked` is best-first; `used` counts slots
+    already taken."""
     queues: dict[str, list[dict]] = {}
     for cand in ranked:
         queues.setdefault(ingestor_class(cand), []).append(cand)
     pos = {id(x): i for i, x in enumerate(ranked)}
     taken: list[dict] = []
-    used: Counter = Counter()
+    used = Counter(used or {})
     while len(taken) < size:
         dealt = False
         for cls in sorted(queues, key=lambda k: pos[id(queues[k][0])] if queues[k] else len(pos)):
-            pick = next((x for x in queues[cls] if used[source_key(x)] < per_source), None)
-            if pick is None or len(taken) >= size:
-                continue
-            queues[cls].remove(pick)
-            used[source_key(pick)] += 1
-            taken.append(pick)
-            dealt = True
+            for _ in range(max(1, int((slots or {}).get(cls, 1)))):
+                pick = next((x for x in queues[cls] if used[source_key(x)] < per_source), None)
+                if pick is None or len(taken) >= size:
+                    break
+                queues[cls].remove(pick)
+                used[source_key(pick)] += 1
+                taken.append(pick)
+                dealt = True
         if not dealt:
             break
+    if not fill:
+        return taken
     ids = {id(x) for x in taken}
     return taken + [x for x in ranked if id(x) not in ids][: size - len(taken)]
+
+
+def priority_class(cand: dict) -> str | None:
+    """The must-not-miss class a candidate belongs to, else None."""
+    if (cand.get("source_id") or "").startswith("kev_json:"):
+        return "kev"
+    if cand.get("source_type") != "GHSA":
+        return None
+    severity = str(cand.get("severity") or "").upper()
+    if severity == "CRITICAL":
+        return "ghsa-critical"
+    if severity == "HIGH" and is_ai_tooling(cand):
+        return "ghsa-ai"
+    return None
+
+
+def is_ai_tooling(cand: dict) -> bool:
+    """Prefilter routed it to an AI-security domain on the taxonomy's own hints.
+    Not the ingest-time topic guess: that is a keyword match on package names."""
+    return str((cand.get("prefilter") or {}).get("domain_hint") or "").startswith("ais.")
+
+
+def priority_lane(ranked: list[dict], limit: int, per_source: int) -> list[dict]:
+    """Up to `limit` must-not-miss candidates, dealt in turn between KEV and
+    GHSA, at most `per_source` from either. Within GHSA: critical advisories in
+    AI tooling, then the other critical ones, then high ones in AI tooling, so
+    a HIGH can never take a critical's slot. Otherwise rank (newest) order."""
+    eligible = sorted((x for x in ranked if priority_class(x)), key=lane_order)  # stable
+    return deal(eligible, limit, per_source, fill=False)
+
+
+def lane_order(cand: dict) -> int:
+    kind = priority_class(cand)
+    if kind == "ghsa-critical" and is_ai_tooling(cand):
+        return 0
+    return 2 if kind == "ghsa-ai" else 1
 
 
 def select(
@@ -125,9 +189,19 @@ def select(
         buckets.routed + buckets.filtered,
         key=lambda x: (-score(x, conf), str(x.get("id") or "")),
     )
-    batch = deal(ranked, batch_size(conf), max(1, int(setting(conf, "batch_per_source"))))
-    ids = {id(x) for x in batch}
+    size = batch_size(conf)
+    lane_max = min(size, max(0, int(setting(conf, "batch_priority_max"))))
+    lane = priority_lane(ranked, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))))
+    in_lane = {id(x) for x in lane}
+    per_source = max(1, int(setting(conf, "batch_per_source")))
+    slots = conf.limits.get("batch_class_slots") or {}
+    used = Counter(source_key(x) for x in lane)
+    dealt = deal(
+        [x for x in ranked if id(x) not in in_lane], size - len(lane), per_source, slots, used
+    )
+    ids = in_lane | {id(x) for x in dealt}
     rest = [x for x in ranked if id(x) not in ids]
+    batch = [{**x, "batch_priority": priority_class(x)} for x in lane] + dealt
     backlog = [{**x, "batch_rank": i} for i, x in enumerate(rest, start=len(batch) + 1)]
     return batch, backlog + buckets.dropped
 
