@@ -93,8 +93,6 @@
     padding: 4px 0 12px; font-family: var(--sans); font-size: 12px;
     color: var(--ink-2); flex-wrap: wrap;
   }
-  .flag .brand { font-weight: 700; color: var(--ink); letter-spacing: -.01em; font-size: 14px; }
-  .flag .brand .mark { color: var(--accent); }
   .flag .meta { display: flex; align-items: center; gap: 10px; color: var(--ink-3);
     font-variant-numeric: tabular-nums; }
   .flag .meta b { color: var(--ink); font-weight: 600; }
@@ -113,7 +111,7 @@
   }
   .dateline {
     display: flex; flex-wrap: wrap; gap: 8px 12px;
-    margin: 16px 0 12px; padding: 0;
+    margin: 4px 0 18px; padding: 0;
   }
   .dateline .cell {
     padding: 6px 10px; background: var(--paper-2); border: 1px solid var(--rule);
@@ -126,9 +124,6 @@
   .dateline .k {
     font-size: 12px; color: var(--ink-3);
   }
-  .methods { font-size: 13px; line-height: 1.6; color: var(--ink-2);
-    max-width: 80ch; margin: 0 0 16px; }
-  .methods b { color: var(--ink); font-weight: 600; }
 
   /* ---- Sticky top nav (view tabs) ---- */
   nav.views {
@@ -152,24 +147,6 @@
     background: var(--card); border: 1px solid var(--rule); border-radius: 999px;
     padding: 0 6px; font-size: 11px; }
   .vtab[aria-selected="true"] .ct { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--rule)); }
-
-  /* ---- Mode toggle (Reader / Index) ---- */
-  .modebar {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; flex-wrap: wrap; padding: 12px 0 4px;
-    border-bottom: 1px solid var(--rule-soft); margin-bottom: 12px;
-  }
-  .modebar .modeswitch { display: inline-flex; background: var(--paper-2);
-    border: 1px solid var(--rule); border-radius: 8px; padding: 3px; }
-  .modebar .modeswitch button {
-    appearance: none; background: transparent; border: 0;
-    font: inherit; font-weight: 500; color: var(--ink-2);
-    padding: 5px 12px; cursor: pointer; border-radius: 6px;
-  }
-  .modebar .modeswitch button[aria-pressed="true"] {
-    background: var(--card); color: var(--ink); box-shadow: var(--shadow); font-weight: 600;
-  }
-  .modebar .modehint { color: var(--ink-3); font-size: 13px; }
 
   main { padding: 8px 0 60px; }
   .view[hidden] { display: none; }
@@ -224,10 +201,10 @@
   }
   .art:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--rule));
     box-shadow: var(--shadow); }
-  .art h4 { font-family: var(--sans); font-weight: 600; font-size: 16px; line-height: 1.35;
+  .art h3 { font-family: var(--sans); font-weight: 600; font-size: 16px; line-height: 1.35;
     margin: 0; letter-spacing: -.005em; color: var(--ink); }
-  .art h4 a { color: var(--ink); }
-  .art h4 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .art h3 a { color: var(--ink); }
+  .art h3 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
   .art .take { color: var(--ink-2); font-size: 14.5px; margin: 6px 0 0; line-height: 1.5; }
   .art .meta { font-size: 12px; color: var(--ink-3); margin-top: 10px;
     display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: center; }
@@ -272,30 +249,6 @@
   .why { font-size: 14px; color: var(--ink-2); margin: 6px 0 0; line-height: 1.5; }
   .why b { color: var(--ink); }
 
-  /* ---- Index (table) mode ---- */
-  .idx-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--rule); border-radius: 10px; background: var(--card); }
-  table.idx { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
-  table.idx th, table.idx td {
-    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule-soft);
-    vertical-align: top;
-  }
-  table.idx thead th {
-    position: sticky; top: 0; background: var(--paper-2); color: var(--ink-2);
-    font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
-    border-bottom: 1px solid var(--rule); z-index: 1;
-  }
-  table.idx tbody tr:hover { background: var(--paper-2); }
-  table.idx tbody tr:last-child td { border-bottom: 0; }
-  table.idx .c-date { color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; width: 100px; }
-  table.idx .c-topic { width: 130px; }
-  table.idx .c-title a { color: var(--ink); font-weight: 500; }
-  table.idx .c-title a:hover { color: var(--accent); text-decoration: underline; }
-  table.idx .c-title .sub { display: block; color: var(--ink-3); font-size: 12.5px; margin-top: 3px; }
-  table.idx .c-signal { width: 78px; font-variant-numeric: tabular-nums; color: var(--ink-2); text-align: right; }
-  table.idx .c-src { width: 150px; }
-  table.idx .c-src a { color: var(--accent); }
-
   /* ---- Trends ---- */
   .trendcard { background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
     padding: 12px 14px; }
@@ -313,16 +266,16 @@
   .domain { padding: 14px 0; border-bottom: 1px solid var(--rule-soft); }
   .domain:last-child { border-bottom: 0; }
   .domain-hd { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
-  .domain-hd h4 { font-family: var(--sans); font-size: 15px; font-weight: 600; margin: 0; color: var(--ink); }
+  .domain-hd h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; margin: 0; color: var(--ink); }
   .domain-hd .ct { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
   .domain.empty { padding: 10px 0; }
-  .domain.empty h4 { color: var(--ink-3); font-weight: 500; }
+  .domain.empty h3 { color: var(--ink-3); font-weight: 500; }
   .domain.empty .none { font-size: 12px; color: var(--ink-3); font-style: italic; }
 
   /* ---- Toolbars ---- */
   .toolbar { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: flex-end; margin: 6px 0 18px; }
   .fgroup { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-  .fgroup > span { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .fgroup > span, .fgroup > label { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
   .opts { display: flex; flex-wrap: wrap; gap: 6px; }
   .opt { appearance: none; background: var(--card); border: 1px solid var(--rule); color: var(--ink-2);
     font: inherit; font-size: 13px; padding: 6px 12px; cursor: pointer; border-radius: 999px; }
@@ -353,9 +306,9 @@
   .status.contested { color: var(--st-contested); background: var(--st-contested-bg); }
   .status.superseded { color: var(--st-superseded); background: var(--st-superseded-bg); }
   .status.refuted { color: var(--st-refuted); background: var(--st-refuted-bg); }
-  .claim h4 { font-family: var(--sans); font-size: 17px; font-weight: 600; line-height: 1.35;
+  .claim h3 { font-family: var(--sans); font-size: 17px; font-weight: 600; line-height: 1.35;
     margin: 8px 0 0; letter-spacing: -.005em; color: var(--ink); }
-  .claim.retired h4 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 500; }
+  .claim.retired h3 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 500; }
   .claim .desc { color: var(--ink-2); margin: 6px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide { color: var(--ink-2); margin: 8px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide b { color: var(--ink); }
@@ -401,11 +354,18 @@
 
   /* Small niceties */
   @media (max-width: 640px) {
-    .flag .brand { font-size: 13px; }
+    .masthead { padding-top: 8px; }
+    .flag { padding-bottom: 6px; }
+    .title-row { padding: 4px 0 8px; }
+    .title-row h1 { font-size: 24px; }
+    .title-row .sub { font-size: 14px; margin-top: 6px; }
+    .dateline { margin: 2px 0 10px; gap: 6px; }
+    .dateline .cell { padding: 3px 8px; }
+    .sitesearch { order: 3; flex-basis: 100%; max-width: none; }
+    .sec-hd:first-of-type { margin-top: 6px; }
     .flag .meta { font-size: 11px; }
     .sec-hd { flex-wrap: wrap; }
     .sec-hd .note { margin-left: 0; width: 100%; }
-    .modebar { padding: 8px 0 4px; }
   }
 
   /* ---- Detail modal ---- */
@@ -486,16 +446,46 @@
   .art, .claim, .lead, .trendcard, .story, .method { overflow-wrap: anywhere; }
   .story { background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
     padding: 14px 16px; border-left: 4px solid var(--accent); }
-  .story h4 { font-family: var(--sans); font-weight: 650; font-size: 17px; line-height: 1.35; margin: 0; }
-  .story h4 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .story h3 { font-family: var(--sans); font-weight: 650; font-size: 17px; line-height: 1.35; margin: 0; }
+  .story h3 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
   .story .rank { font-variant-numeric: tabular-nums; color: var(--ink-3); font-weight: 600; margin-right: 6px; }
   .srclist { margin: 8px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--ink-2); }
   .srclist li { padding: 2px 0; }
   .srclist .tier { font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); margin-left: 6px; }
   .srclist .lead-src { font-weight: 600; }
   .updline { font-size: 13px; color: var(--ink-2); margin: 6px 0 0; }
-  .nowlist { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  @media (min-width: 900px) { .nowlist { grid-template-columns: 1fr 1fr 1fr; } }
+  /* Story titles open the detail panel: make them look like links. */
+  a.detail-open { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+  a.detail-open:hover { color: var(--accent); }
+  /* A grounded source quote on a story card (its first lesson's excerpt). */
+  .qprev { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; padding-left: 10px;
+    border-left: 3px solid var(--rule); font-style: italic; line-height: 1.5; }
+  /* Claims ledger: collapsed cards in a grid; expand for the rest. */
+  .claimgrid { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: start; }
+  @media (min-width: 1000px) { .claimgrid { grid-template-columns: 1fr 1fr; } }
+  .claimgrid > .claim { margin: 0; min-width: 0; }
+  details.claim > summary { list-style: none; cursor: pointer; }
+  details.claim > summary::-webkit-details-marker { display: none; }
+  details.claim > summary .more { font-size: 12px; color: var(--accent); margin-top: 6px; display: inline-block; }
+  details.claim[open] > summary .more { display: none; }
+  details.claim > summary .desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  details.claim[open] > summary .desc { display: block; }
+  .chain { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; }
+  .chain .here { font-weight: 600; color: var(--ink); }
+  .sitesearch { flex: 1 1 220px; max-width: 360px; }
+  .sitesearch input { width: 100%; font: inherit; font-size: 14px; padding: 6px 10px; background: var(--card);
+    border: 1px solid var(--rule); color: var(--ink); border-radius: 8px; }
+  .hits-h { margin-top: 20px; }
+  /* Claim changes: what the ledger added, contested or overturned. */
+  .chglist { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 900px) { .chglist { grid-template-columns: 1fr 1fr; } }
+  .claim.chg { margin: 0; min-width: 0; }
+  .chg .kind { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+  .chg .when { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .evline { font-size: 12.5px; color: var(--ink-3); margin: 8px 0 0; }
+  .prose ul.lessons { list-style: disc; }
+  .prose ul.lessons blockquote { margin: 6px 0 10px; }
   .claim.flash { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent); }
   .lineage { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; }
   .crumbs { font-size: 13px; color: var(--ink-3); margin: 14px 0 0; }
@@ -506,7 +496,8 @@
     padding: 10px 12px; min-width: 0; }
   .domcard:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--rule)); }
   .domcard b { color: var(--ink); font-weight: 600; font-size: 14.5px; }
-  .domcard .ct { float: right; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .domcard .ct { display: block; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .domcard.empty { opacity: .55; }
   .domcard .scope { display: block; font-size: 12.5px; color: var(--ink-3); margin-top: 3px; line-height: 1.4; }
   .domcard code, .domid { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
   .method { max-width: 76ch; }
@@ -521,7 +512,9 @@
   .facts div { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; font-size: 14px; }
   @media (max-width: 760px) {
     /* One scrollable row of tabs instead of three wrapped rows eating the screen. */
-    nav.views { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    nav.views { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      -webkit-mask-image: linear-gradient(to right, #000 88%, transparent);
+      mask-image: linear-gradient(to right, #000 88%, transparent); padding-right: 24px; }
     nav.views::-webkit-scrollbar { display: none; }
     .vtab { flex: 0 0 auto; padding: 7px 10px; }
   }
@@ -537,40 +530,35 @@
 <div class="wrap">
   <header class="masthead">
     <div class="flag">
-      <span class="brand">Awesome<span class="mark">/</span>Security &amp; AI Research</span>
-      <span class="meta">
-        Issue <b id="fl-date"></b> · <b id="fl-count"></b> vetted
-        <button class="tbtn" id="theme" type="button" aria-label="Toggle theme">Theme</button>
-      </span>
+      <span class="meta">Updated <b id="fl-date"></b></span>
+      <div class="sitesearch"><label class="sr" for="site-q">Search the site</label>
+        <input id="site-q" type="search" placeholder="Search stories, claims and quotes" autocomplete="off"></div>
+      <button class="tbtn" id="theme" type="button" aria-label="Theme: follow the system">Theme: auto</button>
     </div>
     <div class="title-row">
-      <h1>A weekly, vetted briefing on AI security, product security &amp; applied AI research.</h1>
-      <p class="sub">Every finding is source-cited, distilled to one lesson and one action, and filed by field. A standing-claims ledger tracks what the field currently believes &mdash; and what it stopped believing.</p>
+      <h1>Awesome Security &amp; AI Research</h1>
+      <p class="sub">A source-cited weekly briefing on AI security, product security and applied AI research, with a ledger that calls out what the field now believes and what it stopped believing.</p>
     </div>
     <div class="dateline" id="dateline"></div>
-    <p class="methods" id="methods"></p>
   </header>
 
   <nav class="views" role="tablist" aria-label="Views">
-    <button class="vtab" role="tab" data-view="week" aria-selected="true">Briefing</button>
-    <button class="vtab" role="tab" data-view="claims">Claims ledger <span class="ct" id="ct-claims"></span></button>
-    <button class="vtab" role="tab" data-view="topics">Topics <span class="ct" id="ct-fields"></span></button>
-    <button class="vtab" role="tab" data-view="news">News <span class="ct" id="ct-news"></span></button>
-    <button class="vtab" role="tab" data-view="lessons">Lessons <span class="ct" id="ct-lessons"></span></button>
-    <button class="vtab" role="tab" data-view="feed">All findings <span class="ct" id="ct-feed"></span></button>
-    <button class="vtab" role="tab" data-view="archive">Archive <span class="ct" id="ct-archive"></span></button>
-    <button class="vtab" role="tab" data-view="methodology">Methodology</button>
+    <button class="vtab" role="tab" id="tab-week" aria-controls="view-week" data-view="week" aria-selected="true">Briefing</button>
+    <button class="vtab" role="tab" id="tab-news" aria-controls="view-news" data-view="news">Stories <span class="ct" id="ct-news"></span></button>
+    <button class="vtab" role="tab" id="tab-claims" aria-controls="view-claims" data-view="claims">Claims <span class="ct" id="ct-claims"></span></button>
+    <button class="vtab" role="tab" id="tab-topics" aria-controls="view-topics" data-view="topics">Topics <span class="ct" id="ct-fields"></span></button>
+    <button class="vtab" role="tab" id="tab-archive" aria-controls="view-archive" data-view="archive">Archive <span class="ct" id="ct-archive"></span></button>
+    <button class="vtab" role="tab" id="tab-methodology" aria-controls="view-methodology" data-view="methodology">Methodology</button>
   </nav>
 
   <main>
-    <section class="view" id="view-week" role="tabpanel"></section>
-    <section class="view" id="view-topics" role="tabpanel" hidden></section>
-    <section class="view" id="view-news" role="tabpanel" hidden></section>
-    <section class="view" id="view-claims" role="tabpanel" hidden></section>
-    <section class="view" id="view-lessons" role="tabpanel" hidden></section>
-    <section class="view" id="view-feed" role="tabpanel" hidden></section>
-    <section class="view" id="view-archive" role="tabpanel" hidden></section>
-    <section class="view" id="view-methodology" role="tabpanel" hidden></section>
+    <section class="view" id="view-week" role="tabpanel" aria-labelledby="tab-week"></section>
+    <section class="view" id="view-news" role="tabpanel" aria-labelledby="tab-news" hidden></section>
+    <section class="view" id="view-claims" role="tabpanel" aria-labelledby="tab-claims" hidden></section>
+    <section class="view" id="view-topics" role="tabpanel" aria-labelledby="tab-topics" hidden></section>
+    <section class="view" id="view-archive" role="tabpanel" aria-labelledby="tab-archive" hidden></section>
+    <section class="view" id="view-methodology" role="tabpanel" aria-labelledby="tab-methodology" hidden></section>
+    <section class="view" id="view-search" role="region" aria-label="Search results" hidden></section>
   </main>
 
   <footer>
@@ -581,7 +569,7 @@
     <a class="link" href="__REPO_URL__/blob/main/claims/README.md">Claim ledger</a>
     <a class="link" href="#methodology" data-goto="methodology">Methodology</a>
     <a class="link" href="__REPO_URL__/issues/new">Suggest a source</a>
-    <span>Content CC BY 4.0 &nbsp;·&nbsp; do not hand-edit rendered files</span>
+    <span>Content CC BY 4.0</span>
   </footer>
 </div>
 
@@ -616,10 +604,28 @@
   // source. Fallback href keeps the link meaningful with JS disabled and
   // when opened in a new tab (right-click → open) — GitHub Pages serves
   // the .md, so a middle-click still lands somewhere sensible.
+  // The href is the shareable ?finding= link (the page opens the panel on load),
+  // never the raw .md, which the server sends as text.
   function detailAnchor(f, inner) {
-    var href = safeRel(f.detail_path) ? esc(safeRel(f.detail_path)) : hrefOf(f.url);
-    var id = esc(f.id || "");
-    return '<a class="detail-open" href="' + href + '" data-fid="' + id + '">' + inner + '</a>';
+    var id = String(f.id == null ? "" : f.id);
+    var href = "?finding=" + encodeURIComponent(id) + "#week";
+    return '<a class="detail-open" href="' + esc(href) + '" data-fid="' + esc(id) + '">' + inner + '</a>';
+  }
+  // A grounded quote from the source: the first lesson's verbatim excerpt.
+  function quotePreview(f, q) {
+    var ls = arr(f.lessons).filter(function (l) { return l && typeof l === "object" && l.excerpt && l.grounded !== false; });
+    var pick = ls[0];
+    if (q) {
+      for (var i = 0; i < ls.length; i++) {
+        if ((String(ls[i].excerpt) + " " + String(ls[i].point || "")).toLowerCase().indexOf(q) >= 0) { pick = ls[i]; break; }
+      }
+    }
+    return pick ? '<p class="qprev">&ldquo;' + txt(pick.excerpt) + '&rdquo;</p>' : '';
+  }
+  var CHECKED_TIP = "The lesson quotes were found in the source text and a second model pass did not refute them. " +
+    "Automated, not human review.";
+  function checkedChip(f) {
+    return f.verified === true ? '<span title="' + esc(CHECKED_TIP) + '">source-checked (automated)</span>' : '';
   }
 
   function esc(s) {
@@ -675,84 +681,20 @@
     opts = opts || {};
     var meta = [];
     if (opts.showTrack !== false) meta.push(topicPill(f.topic));
+    if (opts.kind) meta.push('<span class="chip">research</span>');
     if (f.fresh) meta.push('<span class="chip fresh">new</span>');
     var caveats = caveatChips(f);
     if (caveats) meta.push(caveats);
     if (f.domain) meta.push('<span>' + txt(f.domain) + '</span>');
     if (f.published) meta.push('<span>' + esc(fmtDate(f.published)) + '</span>');
-    if (opts.showScore) meta.push('<span class="num">signal ' + Math.round(f.composite) + '</span>');
-    if (f.verified) meta.push('<span title="lesson excerpt grounded against the source and cross-checked by a separate model pass">checked</span>');
+    meta.push(checkedChip(f));
     meta.push('<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>');
     return '<article class="art">' +
-      '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
+      '<h3>' + detailAnchor(f, txt(f.title)) + '</h3>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
-      alsoReported(f) + storyUpdates(f) +
+      quotePreview(f, opts.q) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + meta.join("") + '</div>' +
       '</article>';
-  }
-
-  function indexTable(rows, opts) {
-    opts = opts || {};
-    if (!rows.length) return '<p class="empty-note">Nothing matches.</p>';
-    var head = '<tr>' +
-      '<th class="c-date">Date</th>' +
-      '<th class="c-topic">Field</th>' +
-      '<th class="c-title">Title &amp; lesson</th>' +
-      (opts.showScore ? '<th class="c-signal">Signal</th>' : '') +
-      '<th class="c-src">Source</th>' +
-      '</tr>';
-    var body = rows.map(function (f) {
-      var date = f.published ? fmtDate(f.published) : '';
-      var lesson = f.takeaway ? '<span class="sub">' + txt(f.takeaway) + '</span>' : '';
-      var caveats = caveatChips(f);
-      return '<tr>' +
-        '<td class="c-date">' + esc(date) + (f.fresh ? ' <span class="chip fresh" style="margin-left:4px">new</span>' : '') + '</td>' +
-        '<td class="c-topic">' + topicPill(f.topic) + (f.domain ? '<div class="sub" style="color:var(--ink-3);font-size:12px;margin-top:3px">' + txt(f.domain) + '</div>' : '') + '</td>' +
-        '<td class="c-title">' + detailAnchor(f, txt(f.title)) +
-          (caveats ? ' <span class="chips" style="margin-left:4px">' + caveats + '</span>' : '') +
-          lesson + '</td>' +
-        (opts.showScore ? '<td class="c-signal">' + Math.round(f.composite || 0) + '</td>' : '') +
-        '<td class="c-src"><a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a></td>' +
-        '</tr>';
-    }).join("");
-    return '<div class="idx-wrap"><table class="idx"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
-  }
-
-  // Per-view display mode ("reader" vs "index"), persisted per view in URL search.
-  var MODE = { week: "reader", feed: "reader" };
-  (function loadModes() {
-    try {
-      var p = new URLSearchParams(location.search);
-      Object.keys(MODE).forEach(function (v) {
-        var m = p.get("mode_" + v);
-        if (m === "reader" || m === "index") MODE[v] = m;
-      });
-    } catch (e) {}
-  })();
-  function saveMode(view, mode) {
-    MODE[view] = mode;
-    try {
-      var p = new URLSearchParams(location.search);
-      p.set("mode_" + view, mode);
-      history.replaceState(null, "", location.pathname + "?" + p.toString() + location.hash);
-    } catch (e) {}
-  }
-  function modeBar(view, hint) {
-    var m = MODE[view];
-    return '<div class="modebar"><div class="modeswitch" role="tablist" aria-label="Display mode">' +
-      '<button type="button" data-mode="reader" aria-pressed="' + (m === "reader" ? "true" : "false") + '">Reader</button>' +
-      '<button type="button" data-mode="index"  aria-pressed="' + (m === "index" ? "true" : "false") + '">Index</button>' +
-      '</div><span class="modehint">' + esc(hint || "") + '</span></div>';
-  }
-  function wireModeBar(root, view, redraw) {
-    root.querySelectorAll(".modeswitch button").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var next = b.dataset.mode;
-        if (MODE[view] === next) return;
-        saveMode(view, next);
-        redraw();
-      });
-    });
   }
 
   function secHead(title, note) {
@@ -761,11 +703,6 @@
   }
 
   // ================= BRIEFING =================
-  // Briefing shows only items published within this many days. Older
-  // findings stay reachable via All findings but shouldn't clutter the
-  // landing view — a briefing from 5 weeks ago isn't a briefing.
-  var BRIEFING_MAX_AGE_DAYS = 21;
-
   function _daysAgo(dateStr) {
     if (!dateStr) return Infinity;
     var parts = String(dateStr).split("-");
@@ -776,10 +713,6 @@
     if (isNaN(t)) return Infinity;
     return (Date.now() - t) / (1000 * 60 * 60 * 24);
   }
-  function _withinBriefing(f) {
-    return _daysAgo(f.published) <= BRIEFING_MAX_AGE_DAYS;
-  }
-
   // The front page's news lane: stories from the last `days`, newest first,
   // at most `max`. Every kept story is still on the News tab.
   // A story with a dated Updated line counts from that date (it moves back up).
@@ -810,126 +743,55 @@
     }).join("");
   }
 
-  function newsCardHTML(f) {
-    // Use the finding's takeaway (the sharp one-line lesson) rather
-    // than editorial.reason. Signals ("trending", "timely", "newsworthy")
-    // in the meta row already answer the "why now" question.
+  function newsCardHTML(f, opts) {
+    opts = opts || {};
     var corr = alsoReported(f) + storyUpdates(f);
     return '<article class="art">' +
-      '<h4>' + detailAnchor(f, txt(f.title)) + '</h4>' +
+      '<h3>' + detailAnchor(f, txt(f.title)) + '</h3>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
-      corr +
-      '<div class="meta">' + topicPill(f.topic) +
+      quotePreview(f, opts.q) + corr +
+      '<div class="meta">' + topicPill(f.topic) + (opts.kind ? '<span class="chip">news</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
-        (f.signals && f.signals.length ? '<span class="chips">' + f.signals.slice(0, 4).map(function (s) {
+        (f.signals && f.signals.length ? '<span class="chips">' + arr(f.signals).slice(0, 4).map(function (s) {
           return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
       '</div></article>';
   }
 
+  // One time window per section, and a section with nothing in it is left out,
+  // so a quiet week reads as a short page rather than a row of empty states.
   function renderWeek() {
     var root = $("#view-week");
-    // Only findings inside the briefing window count — anything older stays
-    // in All findings but doesn't drag the front page down.
-    var pool = (DATA.findings || []).filter(_withinBriefing);
-    var newsDays = DATA.news_front_page_days, allNews = DATA.editorial || [];
-    var editorial = frontNews(allNews, newsDays, DATA.news_front_page_max);
-    var fresh = pool.filter(function (f) { return f.fresh; });
-
     var shown = {};
-    var html = topStoriesHTML(shown) + nowClaimsHTML();
-    editorial = editorial.filter(function (f) { return !shown[f.id]; });
-    pool = pool.filter(function (f) { return !shown[f.id]; });
-    fresh = fresh.filter(function (f) { return !shown[f.id]; });
-
-    // --- NEWS BAND — after this week's top stories ---
-    // Trending & in the news is the freshest signal we have. Bubble it above
-    // the research lead so the site's front page reflects what's happening
-    // in the field this week, not last month's paper of note.
-    if (editorial.length) {
-      html += secHead("More in the news",
-        editorial.length + " item" + (editorial.length === 1 ? "" : "s") + ", last " + num(newsDays) + " days");
-      html += '<p class="sec-lede">What the field is watching right now — capability releases, ' +
-        'incident disclosures, spec changes. Deduped across sources; the source you\'d cite is on each card.</p>';
-      html += '<div class="artlist">';
-      editorial.forEach(function (f) { html += newsCardHTML(f); });
-      html += '</div>';
-      html += '<p class="why"><a class="link" href="#news" data-goto="news">All ' + allNews.length +
-        ' news stories &#8594;</a></p>';
-    } else {
-      html += secHead("More in the news", "nothing else in the last " + num(newsDays) + " days");
-      html += allNews.length
-        ? '<p class="sec-lede">No new stories this week. <a class="link" href="#news" data-goto="news">All ' +
-          allNews.length + ' kept news stories &#8594;</a></p>'
-        : '<p class="sec-lede">Nothing has cleared the news gate yet. Once the news lane is ingesting, ' +
-          'this is where capability releases and incident disclosures land.</p>';
+    var html = topStoriesHTML(shown) + claimChangesHTML();
+    var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
+    var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
+    if (news.length) {
+      html += secHead("More in the news", news.length + " more, last " + num(newsDays) + " days") +
+        '<div class="artlist">' + news.map(function (f) { shown[f.id] = 1; return newsCardHTML(f); }).join("") + '</div>';
     }
-
-    // --- LEAD RESEARCH FINDING — only if fresh enough to lead ---
-    var lead = pool[0];
-    if (lead) {
-      shown[lead.id] = 1;
-      html += secHead("Lead research finding", "highest signal in the last " + BRIEFING_MAX_AGE_DAYS + " days");
-      html += '<div class="lead">' +
-        '<div class="track">' + topicPill(lead.topic) +
-          (lead.fresh ? ' <span class="chip fresh">new</span>' : '') +
-          (lead.domain ? ' <span style="color:var(--ink-3);font-weight:500">/ ' + txt(lead.domain) + '</span>' : '') +
-        '</div>' +
-        '<h3>' + detailAnchor(lead, txt(lead.title)) + '</h3>' +
-        (lead.takeaway ? '<p class="stand"><b>The lesson.</b> ' + txt(lead.takeaway) + '</p>' : '') +
-        '<div class="meta" style="margin-top:12px;font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center">' +
-          '<span>' + esc(fmtDate(lead.published)) + '</span>' +
-          (lead.verified ? '<span title="grounded against source, cross-checked by a separate model pass">checked</span>' : '') +
-          '<a class="link" href="' + hrefOf(lead.url) + '">' + esc(src(lead)) + ' &#8599;</a>' +
-        '</div></div>';
+    var more = arr(DATA.findings).filter(function (f) { return !shown[f.id]; });
+    if (more.length) {
+      html += secHead("More research", "vetted, last " + num(DATA.max_age_days) + " days") + '<div class="cols3">' +
+        TOPIC_ORDER.map(function (t) {
+          var items = more.filter(function (f) { return f.topic === t; }).slice(0, 4);
+          if (!items.length) return "";
+          return '<div class="col"><div class="colhd" style="color:' + tvar(t) + '">' + esc(tname(t)) + '</div>' +
+            '<div class="artlist">' + items.map(function (f) { return articleHTML(f, { showTrack: false }); }).join("") +
+            '</div></div>';
+        }).join("") + '</div>';
     }
-
-    // --- NEW THIS WEEK — snapshot_days window, beyond the top stories ---
-    // Nothing else new means the section is left out: the top stories above
-    // already say what is (or isn't) new this week.
-    var freshList = fresh.filter(function (f) { return !shown[f.id]; });
-    if (freshList.length) {
-      html += secHead("Also new this week", "last " + num(DATA.snapshot_days) + " days");
-      html += '<p class="sec-lede">Published in the last ' + num(DATA.snapshot_days) + ' days.</p>';
-      html += '<div class="artlist">';
-      freshList.forEach(function (f) { shown[f.id] = 1; html += articleHTML(f); });
-      html += '</div>';
+    var trends = TOPIC_ORDER.filter(function (t) { return arr((DATA.trends || {})[t]).length; });
+    if (trends.length) {
+      html += secHead("Emerging trends", "last " + num(DATA.max_age_days) + " days") + '<div class="cols3">' +
+        trends.map(function (t) { return '<div class="col trendcard">' + emergingBlock(t, false) + '</div>'; }).join("") + '</div>';
     }
-
-    // --- STRONGEST IN EACH FIELD — briefing window ---
-    html += secHead("The strongest in each field",
-      "last " + BRIEFING_MAX_AGE_DAYS + " days");
-    html += '<p class="sec-lede">The highest-signal vetted findings in each track. Items from the last ' +
-      num(DATA.snapshot_days) + ' days are tagged new.</p>';
-    html += '<div class="cols3">';
-    TOPIC_ORDER.forEach(function (t) {
-      var items = pool.filter(function (f) { return f.topic === t && !shown[f.id]; }).slice(0, 4);
-      html += '<div class="col"><div class="colhd" style="color:' + tvar(t) + '">' + esc(tname(t)) + '</div>';
-      if (!items.length) html += '<p class="empty-note">Nothing else vetted in this window.</p>';
-      html += '<div class="artlist">';
-      items.forEach(function (f) { shown[f.id] = 1; html += articleHTML(f, { showTrack: false }); });
-      html += '</div>';
-      html += '<div style="margin-top:12px">' + routeLink("topics", { topic: t }, "All " +
-        esc(tname(t)) + " topics &#8594;") + '</div></div>';
-    });
-    html += '</div>';
-
-    // --- EMERGING TRENDS ---
-    html += secHead("Emerging trends", "last " + DATA.max_age_days + " days");
-    html += '<div class="cols3">' + TOPIC_ORDER.map(function (t) {
-      return '<div class="col trendcard">' + emergingBlock(t, false) + '</div>'; }).join("") + '</div>';
-
+    html += '<p class="why" style="margin-top:20px">' + routeLink("news", {}, "Every story &#8594;") + '</p>';
     root.innerHTML = html;
-    // Briefing no longer offers a Reader/Index toggle — always cards. The
-    // dense table view lives on All findings, which is what it's for.
   }
 
-  function emergingRail() {
-    return '<div class="trendcard"><div class="colhd" style="color:var(--ink-3)">Emerging trends</div>' +
-      TOPIC_ORDER.map(function (t) { return emergingBlock(t, true); }).join("") + '</div>';
-  }
   function emergingBlock(t, compact, limit) {
-    var rows = arr(DATA.trends[t]).slice(0, limit || (compact ? 3 : 5));
+    var rows = arr((DATA.trends || {})[t]).slice(0, limit || (compact ? 3 : 5));
     if (!rows.length) return "";
     var head = compact
       ? '<div class="kick" style="margin:14px 0 4px;color:' + tvar(t) + '">' + esc(tname(t)) + '</div>'
@@ -941,53 +803,44 @@
     }).join("");
   }
 
-  function claimsTeaser() {
-    var claims = DATA.claims || [];
-    var live = claims.filter(function (c) { return !isRetired(c); });
-    var retired = claims.filter(isRetired).sort(function (a, b) {
-      return (b.superseded_on || "").localeCompare(a.superseded_on || ""); });
-    var top = retired[0];
-    var out = '<div class="trendcard">' +
-      '<div class="colhd" style="color:var(--ink-3)">The ledger</div>' +
-      '<p class="why"><b>' + live.length + ' answers stand</b> right now; ' + retired.length +
-      ' were retired and kept underneath with the reason they fell.</p>';
-    if (top) {
-      out += '<div class="reversal"><div class="kick">Most recent reversal &nbsp;·&nbsp; ' +
-        esc(top.superseded_on || "") + '</div>' +
-        '<p class="old" style="margin:6px 0">' + txt(top.title || top.statement) + '</p>' +
-        '<p style="margin:0;font-size:14px">' + txt(top.supersession_reason || "") + '</p></div>';
-    }
-    out += '<p style="margin:10px 0 0"><a class="link" href="#claims" data-goto="claims">Open the full ledger &#8594;</a></p>';
-    out += '</div>';
-    return out;
-  }
-
   // ================= CLAIMS =================
-  var claimState = { topic: "all", status: "all" };
+  var claimState = { topic: "all", status: "all", sort: "confidence", q: "" };
   function isRetired(c) { return c.status === "superseded" || c.status === "refuted"; }
+  // The ledger's own change dates; first_seen is when the belief dates from.
+  function lastChange(c) { return String(c.changed_on || c.superseded_on || c.added_on || c.first_seen || ""); }
+  function ledgerCounts(claims) {
+    var n = { current: 0, contested: 0, retired: 0 };
+    arr(claims).forEach(function (c) {
+      if (isRetired(c)) n.retired++; else if (c.status === "contested") n.contested++; else n.current++;
+    });
+    return n;
+  }
+  function countsLine(n) {
+    return num(n.current) + " current · " + num(n.contested) + " contested · " + num(n.retired) + " retired";
+  }
 
   function renderClaims() {
     var root = $("#view-claims");
-    var claims = DATA.claims || [];
-    var live = claims.filter(function (c) { return !isRetired(c); });
+    var claims = arr(DATA.claims);
     var counts = { current: 0, contested: 0, superseded: 0, refuted: 0 };
-    claims.forEach(function (c) { if (counts[c.status] != null) counts[c.status]++; });
-
-    var html = '<div class="sec-hd"><h2>Standing claims</h2>' +
-      '<span class="note">' + live.length + ' standing &nbsp;·&nbsp; ' + (claims.length - live.length) + ' retired</span></div>' +
-      '<p class="sec-lede">The databases track what was published. This ledger tracks what we ' +
-      'currently believe: durable answers to recurring questions, current ones on top, retired ones ' +
-      'kept underneath with the date and reason they stopped being true.</p>';
-
-    html += '<div class="toolbar">';
+    claims.forEach(function (c) { if (has(counts, c.status)) counts[c.status]++; });
+    var html = secHead("Claims", countsLine(ledgerCounts(claims))) +
+      '<p class="sec-lede">Findings track what was published. This ledger tracks what we currently believe: durable ' +
+      'answers to recurring questions. Open a claim for its basis, what to do about it, and its evidence. Retired ' +
+      'claims stay underneath with the date and the reason they fell.</p>';
+    html += '<div class="toolbar"><div class="fgroup search"><label for="claims-q">Search claims</label>' +
+      '<input id="claims-q" type="search" placeholder="Search statements, guidance, sources..." value="' +
+      esc(claimState.q) + '"></div></div>';
+    html += '<div class="toolbar" style="margin-top:-6px">';
     html += filterGroup("Track", "topic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
       return [t, tname(t)]; })), claimState.topic);
     html += filterGroup("Status", "status", [["all", "All"], ["current", "Current (" + counts.current + ")"],
       ["contested", "Contested (" + counts.contested + ")"], ["superseded", "Superseded (" + counts.superseded + ")"],
       ["refuted", "Refuted (" + counts.refuted + ")"]], claimState.status);
+    html += filterGroup("Sort", "sort", [["confidence", "Confidence"], ["change", "Last change"]], claimState.sort);
     html += '</div><div id="claim-list"></div>';
     root.innerHTML = html;
-
+    $("#claims-q").addEventListener("input", function () { claimState.q = this.value; drawClaims(); });
     root.querySelectorAll(".opt").forEach(function (b) {
       b.addEventListener("click", function () {
         claimState[b.dataset.k] = b.dataset.v;
@@ -999,25 +852,35 @@
     drawClaims();
   }
 
+  function claimMatches(c, q) {
+    if (!q) return true;
+    var ev = arr(c.evidence).map(function (e) { return e && typeof e === "object" ? (e.title || "") + " " + (e.source_name || "") : ""; });
+    var hay = [c.id, c.title, c.statement, c.guidance, c.basis, c.scope, c.domain, arr(c.tags).join(" "), ev.join(" ")].join(" ");
+    return hay.toLowerCase().indexOf(q) >= 0;
+  }
+  function sortClaims(rows, mode) {
+    return rows.slice().sort(function (a, b) {
+      if (mode === "change") return lastChange(b).localeCompare(lastChange(a));
+      return (Number(b.confidence) || 0) - (Number(a.confidence) || 0);
+    });
+  }
   function drawClaims() {
     var wrap = $("#claim-list");
-    var claims = (DATA.claims || []).filter(function (c) {
+    var q = claimState.q.trim().toLowerCase();
+    var claims = arr(DATA.claims).filter(function (c) {
       return (claimState.topic === "all" || c.topic === claimState.topic) &&
-             (claimState.status === "all" || c.status === claimState.status);
+             (claimState.status === "all" || c.status === claimState.status) && claimMatches(c, q);
     });
-    var live = claims.filter(function (c) { return !isRetired(c); });
-    var retired = claims.filter(isRetired);
-    live.sort(function (a, b) { return (b.confidence || 0) - (a.confidence || 0); });
-    retired.sort(function (a, b) { return (b.superseded_on || "").localeCompare(a.superseded_on || ""); });
-    if (!claims.length) { wrap.innerHTML = '<p class="empty-note">No claims match these filters.</p>'; return; }
-    var html = '<p class="count">' + live.length + ' standing, ' + retired.length + ' retired</p>';
-    live.forEach(function (c) { html += claimHTML(c); });
+    var live = sortClaims(claims.filter(function (c) { return !isRetired(c); }), claimState.sort);
+    var retired = sortClaims(claims.filter(isRetired), "change");
+    if (!claims.length) { wrap.innerHTML = '<p class="empty-note">No claims match.</p>'; return; }
+    var html = '<p class="count">' + num(live.length) + ' standing, ' + num(retired.length) + ' retired</p>';
+    if (live.length) html += '<div class="claimgrid">' + live.map(claimHTML).join("") + '</div>';
     if (retired.length) {
       html += '<details class="retired-group"' + (live.length ? '' : ' open') + '>' +
-        '<summary class="sec-hd" style="margin-top:30px"><h2 style="font-size:18px">Retired answers (' +
-        retired.length + ')</h2><span class="note">kept for the record</span></summary>';
-      retired.forEach(function (c) { html += claimHTML(c); });
-      html += '</details>';
+        '<summary class="sec-hd" style="margin-top:30px"><h2 style="font-size:18px">Retired claims (' +
+        num(retired.length) + ')</h2><span class="note">kept for the record</span></summary>' +
+        '<div class="claimgrid">' + retired.map(claimHTML).join("") + '</div></details>';
     }
     wrap.innerHTML = html;
   }
@@ -1035,8 +898,9 @@
         (e.source_name ? ' <span style="color:var(--ink-3)">(' + esc(e.source_name) + when + ')</span>' : '') +
         note + '</li>';
     }
-    var supports = (evidence || []).filter(function (e) { return (e.stance || "supports") === "supports"; });
-    var contests = (evidence || []).filter(function (e) { return (e.stance || "supports") !== "supports"; });
+    var ev = arr(evidence).filter(function (e) { return e && typeof e === "object"; });
+    var supports = ev.filter(function (e) { return (e.stance || "supports") === "supports"; });
+    var contests = ev.filter(function (e) { return (e.stance || "supports") !== "supports"; });
     var html = "";
     if (supports.length) {
       html += '<div class="ev-group-label">Supports the claim (' + supports.length + ')</div>' +
@@ -1049,67 +913,88 @@
     return html;
   }
 
+  // Collapsed: status, title, a two-line statement. Expanded: the rest. A
+  // retired claim leads with why it fell and its chain, without confidence or basis.
   function claimHTML(c) {
+    var gone = isRetired(c);
     var meta = [];
-    if (c.first_seen) meta.push('since ' + esc(c.first_seen));
-    if (c.last_reviewed) meta.push('reviewed ' + esc(c.last_reviewed));
-    var reason = isRetired(c) && c.supersession_reason
+    if (c.first_seen) meta.push('belief dates from ' + esc(c.first_seen));
+    if (c.added_on) meta.push('added to the ledger ' + esc(c.added_on));
+    if (c.changed_on) meta.push('status changed ' + esc(c.changed_on));
+    var title = c.title || c.statement;
+    var line = c.title && c.statement && c.title !== c.statement ? '<p class="desc">' + txt(c.statement) + '</p>' : '';
+    var fell = gone && c.supersession_reason
       ? '<p class="guide"><b>Why it fell.</b> ' + txt(c.supersession_reason) +
         (c.superseded_on ? ' <span style="color:var(--ink-3)">(' + esc(c.superseded_on) + ')</span>' : '') + '</p>'
       : "";
-    // title is a concise headline; statement is the full claim, rendered as a
-    // description underneath it so a reader gets the short version first and
-    // the precise wording on demand. Older claims (or test fixtures) without
-    // a title fall back to using the statement as the headline directly.
-    var title = c.title || c.statement;
-    var desc = (c.title && c.title !== c.statement)
-      ? '<p class="desc">' + txt(c.statement) + '</p>' : "";
-    // basis answers "why was this claimed" (the method/evidence type); scope
-    // answers "under what conditions does it hold." Two distinct questions,
-    // two distinct blocks.
-    var basis = c.basis ? '<p class="basis"><b>Basis.</b> ' + txt(c.basis) + '</p>' : "";
-    var conditions = c.scope ? '<p class="basis"><b>Conditions.</b> ' + txt(c.scope) + '</p>' : "";
+    var body = gone
+      ? fell + (claimChain(c) || claimLineage(c))
+      : (c.basis ? '<p class="basis"><b>Basis.</b> ' + txt(c.basis) + '</p>' : '') +
+        (c.scope ? '<p class="basis"><b>Conditions.</b> ' + txt(c.scope) + '</p>' : '') +
+        (c.guidance ? '<p class="guide"><b>Do.</b> ' + txt(c.guidance) + '</p>' : '') + claimLineage(c);
     var evHtml = claimEvidenceHTML(c.evidence);
-    return '<div class="claim st-' + esc(c.status) + ' ' + (isRetired(c) ? 'retired' : '') + '" id="claim-' + esc(c.id) + '">' +
-      '<div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
+    return '<details class="claim st-' + esc(c.status) + (gone ? ' retired' : '') + '" id="claim-' + esc(c.id) + '">' +
+      '<summary><div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
         topicPill(c.topic) +
-        (c.confidence != null ? '<span class="conf-pill">' + Math.round(c.confidence * 100) + '% confidence</span>' : '') +
+        (!gone && c.confidence != null ? '<span class="conf-pill">' + num(Math.round(Number(c.confidence) * 100)) + '% confidence</span>' : '') +
         (c.domain ? '<span style="color:var(--ink-3);font-size:12px">' + txt(c.domain) + '</span>' : '') +
-      '</div>' +
-      '<h4>' + txt(title) + '</h4>' +
-      desc +
-      basis +
-      conditions +
-      (c.guidance && !isRetired(c) ? '<p class="guide"><b>Do.</b> ' + txt(c.guidance) + '</p>' : "") +
-      reason +
-      claimLineage(c) +
+      '</div><h3>' + txt(title) + '</h3>' + line + '<span class="more">Details &#9662;</span></summary>' +
+      body +
       (meta.length ? '<div class="cmeta">' + meta.map(function (m) { return '<span>' + m + '</span>'; }).join("") + '</div>' : "") +
-      (evHtml ? '<details class="ev"><summary>Evidence &amp; sources (' + (c.evidence || []).length + ')</summary>' + evHtml + '</details>' : "") +
-      '</div>';
+      (evHtml ? '<details class="ev"><summary>Evidence &amp; sources (' + num(arr(c.evidence).length) + ')</summary>' + evHtml + '</details>' : "") +
+      '</details>';
+  }
+
+  // The whole supersession chain a claim sits in, oldest first: A -> B -> C.
+  function claimChain(c) {
+    var start = c, seen = {}, guard = 0;
+    seen[c.id] = 1;
+    while (guard++ < 20) {
+      var prev = claimIds(start.supersedes).map(claimById).filter(function (x) { return x && !seen[x.id]; })[0];
+      if (!prev) break;
+      seen[prev.id] = 1; start = prev;
+    }
+    var chain = [start], cur = start, done = {};
+    done[start.id] = 1;
+    while (chain.length < 20) {
+      var next = claimIds(cur.superseded_by).map(claimById).filter(function (x) { return x && !done[x.id]; })[0];
+      if (!next) break;
+      done[next.id] = 1; chain.push(next); cur = next;
+    }
+    if (chain.length < 2) return "";
+    return '<p class="chain"><b>Chain</b> ' + chain.map(function (x) {
+      return x === c ? '<span class="here">' + txt(x.title || x.statement) + '</span>' : claimRef(x.id);
+    }).join(" &rarr; ") + '</p>';
   }
 
   function filterGroup(label, key, opts, active) {
-    return '<div class="fgroup"><span>' + esc(label) + '</span><div class="opts">' +
+    return '<div class="fgroup" role="group" aria-label="' + esc(label) + '"><span>' + esc(label) + '</span><div class="opts">' +
       opts.map(function (o) {
         return '<button class="opt" data-k="' + key + '" data-v="' + esc(o[0]) + '" aria-pressed="' +
           (o[0] === active ? "true" : "false") + '">' + esc(o[1]) + '</button>';
       }).join("") + '</div></div>';
   }
 
-  // ================= NEWS =================
-  // Every kept news story, newest first, grouped by month. News never ages
-  // out; the front page shows only the latest slice of it.
-  var newsState = { topic: "all", q: "" };
+  // ================= STORIES =================
+  // Every story in one place: each kept news story (news never ages out) and
+  // each vetted research finding of the last max_age_days, newest first,
+  // grouped by month. Older research is on the Archive tab.
+  var newsState = { topic: "all", kind: "all", q: "" };
+  function allStories() {
+    return arr(DATA.editorial).map(function (f) { return { f: f, kind: "news" }; })
+      .concat(arr(DATA.findings).map(function (f) { return { f: f, kind: "research" }; }));
+  }
   function renderNews() {
     var root = $("#view-news");
-    var html = '<div class="sec-hd"><h2>News</h2>' +
-      '<span class="note">' + (DATA.editorial || []).length + ' stories, kept for the record</span></div>' +
-      '<p class="sec-lede">Every story that cleared the news gate or the editorial pass, newest first. ' +
-      'The front page shows the last ' + num(DATA.news_front_page_days) + ' days; nothing here ages out.</p>';
+    var html = secHead("Stories", num(arr(DATA.editorial).length) + " news · " + num(arr(DATA.findings).length) + " research") +
+      '<p class="sec-lede">Every story, newest first: each news story we kept (they never age out) and every vetted ' +
+      'research finding from the last ' + num(DATA.max_age_days) + ' days. Older research moves to the ' +
+      routeLink("archive", {}, "Archive") + '.</p>';
     html += '<div class="toolbar">' +
-      '<div class="fgroup search"><span>Search</span><input id="news-q" type="search" ' +
-      'placeholder="Search titles, takeaways, sources..." value="' + esc(newsState.q) + '"></div></div>';
+      '<div class="fgroup search"><label for="news-q">Search stories</label><input id="news-q" type="search" ' +
+      'placeholder="Search titles, takeaways, sources, quotes..." value="' + esc(newsState.q) + '"></div></div>';
     html += '<div class="toolbar" style="margin-top:-6px">';
+    html += filterGroup("Kind", "nkind", [["all", "All"], ["news", "News"], ["research", "Research"]], newsState.kind);
     html += filterGroup("Track", "ntopic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
       return [t, tname(t)]; })), newsState.topic);
     html += '</div><div id="news-list"></div>';
@@ -1118,13 +1003,22 @@
     $("#news-q").addEventListener("input", function () { newsState.q = this.value; drawNews(); });
     root.querySelectorAll(".toolbar .opt").forEach(function (b) {
       b.addEventListener("click", function () {
-        newsState.topic = b.dataset.v;
-        root.querySelectorAll('.opt[data-k="ntopic"]').forEach(function (o) {
+        newsState[b.dataset.k === "nkind" ? "kind" : "topic"] = b.dataset.v;
+        root.querySelectorAll('.opt[data-k="' + b.dataset.k + '"]').forEach(function (o) {
           o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
         drawNews();
       });
     });
     drawNews();
+  }
+  function storyMatches(f, q) {
+    if (!q) return true;
+    var ls = arr(f.lessons).map(function (l) { return l && typeof l === "object" ? (l.point || "") + " " + (l.excerpt || "") : ""; });
+    var hay = [f.title, f.takeaway, f.source_name, f.domain, arr(f.tags).join(" "), ls.join(" ")].join(" ");
+    return hay.toLowerCase().indexOf(q) >= 0;
+  }
+  function storyCard(item, q) {
+    return item.kind === "news" ? newsCardHTML(item.f, { kind: true, q: q }) : articleHTML(item.f, { kind: true, q: q });
   }
 
   // Rows grouped under their publication month ("2026-10"), newest month first.
@@ -1143,170 +1037,62 @@
   function drawNews() {
     var wrap = $("#news-list");
     var q = newsState.q.trim().toLowerCase();
-    var rows = (DATA.editorial || []).filter(function (f) {
-      if (newsState.topic !== "all" && f.topic !== newsState.topic) return false;
-      if (!q) return true;
-      var hay = (f.title + " " + f.takeaway + " " + (f.source_name || "") + " " + (f.tags || []).join(" ")).toLowerCase();
-      return hay.indexOf(q) >= 0;
+    var items = allStories().filter(function (it) {
+      return (newsState.kind === "all" || it.kind === newsState.kind) &&
+        (newsState.topic === "all" || it.f.topic === newsState.topic) && storyMatches(it.f, q);
     });
-    if (!rows.length) { wrap.innerHTML = '<p class="empty-note">No stories match. Try a broader search.</p>'; return; }
-    var html = '<p class="count">' + rows.length + ' stor' + (rows.length === 1 ? 'y' : 'ies') + '</p>';
-    newsByMonth(rows).forEach(function (g) {
+    if (!items.length) { wrap.innerHTML = '<p class="empty-note">No stories match.</p>'; return; }
+    var byId = {};
+    items.forEach(function (it) { byId[it.f.id] = it; });
+    var html = '<p class="count">' + num(items.length) + ' stor' + (items.length === 1 ? 'y' : 'ies') + '</p>';
+    newsByMonth(items.map(function (it) { return it.f; })).forEach(function (g) {
       var label = g.month === "undated" ? "Undated" : fmtDate(g.month);
       html += '<div class="sec-hd" style="margin-top:24px"><h2 style="font-size:18px">' + esc(label) + '</h2>' +
-        '<span class="note">' + g.rows.length + '</span></div><div class="artlist">';
-      g.rows.forEach(function (f) { html += newsCardHTML(f); });
-      html += '</div>';
+        '<span class="note">' + num(g.rows.length) + '</span></div><div class="artlist">' +
+        g.rows.map(function (f) { return storyCard(has(byId, f.id) ? byId[f.id] : { f: f, kind: "news" }, q); }).join("") +
+        '</div>';
     });
     wrap.innerHTML = html;
   }
 
-  // ================= FEED =================
-  var feedState = { topic: "all", q: "", sort: "composite" };
-  function renderFeed() {
-    var root = $("#view-feed");
-    var html = modeBar("feed",
-      MODE.feed === "reader"
-        ? "Reader view — cards with lesson + action. Switch to Index for a table."
-        : "Index view — scan by date, field, signal. Switch to Reader for cards."
-    );
-    html += '<div class="sec-hd"><h2>All findings</h2>' +
-      '<span class="note">' + (DATA.findings || []).length + ' vetted, last ' + num(DATA.max_age_days) + ' days</span></div>';
-    html += '<div class="toolbar">' +
-      '<div class="fgroup search"><span>Search</span><input id="feed-q" type="search" ' +
-      'placeholder="Search titles, lessons, tags, fields..." value="' + esc(feedState.q) + '"></div></div>';
-    html += '<div class="toolbar" style="margin-top:-6px">';
-    html += filterGroup("Track", "ftopic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
-      return [t, tname(t)]; })), feedState.topic);
-    html += filterGroup("Sort", "fsort", [["composite", "Signal"], ["published", "Newest"], ["novelty", "Novelty"]], feedState.sort);
-    html += '</div><div id="feed-list"></div>';
-    root.innerHTML = html;
-
-    wireModeBar(root, "feed", renderFeed);
-    $("#feed-q").addEventListener("input", function () { feedState.q = this.value; drawFeed(); });
-    root.querySelectorAll(".toolbar .opt").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var key = b.dataset.k === "ftopic" ? "topic" : "sort";
-        feedState[key] = b.dataset.v;
-        root.querySelectorAll('.opt[data-k="' + b.dataset.k + '"]').forEach(function (o) {
-          o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
-        drawFeed();
-      });
-    });
-    drawFeed();
-  }
-
-  function drawFeed() {
-    var wrap = $("#feed-list");
-    var q = feedState.q.trim().toLowerCase();
-    var rows = (DATA.findings || []).filter(function (f) {
-      if (feedState.topic !== "all" && f.topic !== feedState.topic) return false;
-      if (!q) return true;
-      var hay = (f.title + " " + f.takeaway + " " + f.domain + " " + (f.tags || []).join(" ")).toLowerCase();
-      return hay.indexOf(q) >= 0;
-    });
-    rows.sort(function (a, b) {
-      if (feedState.sort === "published") return (b.published || "").localeCompare(a.published || "");
-      if (feedState.sort === "novelty") return b.scores.novelty - a.scores.novelty;
-      return b.composite - a.composite;
-    });
-    if (!rows.length) { wrap.innerHTML = '<p class="empty-note">Nothing matches. Try a broader search.</p>'; return; }
-    var html = '<p class="count">' + rows.length + ' finding' + (rows.length > 1 ? 's' : '') + '</p>';
-    if (MODE.feed === "index") {
-      html += indexTable(rows, { showScore: true });
-    } else {
-      html += '<div class="artlist">';
-      rows.forEach(function (f) { html += articleHTML(f, { showScore: true }); });
-      html += '</div>';
+  // ================= SEARCH =================
+  // One box in the header searches every story (with their quotes), the
+  // archive and the claim ledger.
+  var siteQ = "";
+  function renderSearch() {
+    var root = $("#view-search");
+    var q = siteQ.trim().toLowerCase();
+    if (!q) { root.innerHTML = secHead("Search", "") + '<p class="empty-note">Type in the search box above.</p>'; return; }
+    var stories = allStories().filter(function (it) { return storyMatches(it.f, q); });
+    var old = arr(DATA.archive).filter(function (f) { return archiveMatches(f, "all", q); });
+    var claims = arr(DATA.claims).filter(function (c) { return claimMatches(c, q); });
+    var html = secHead("Search", num(stories.length + old.length) + " stories · " + num(claims.length) + " claims");
+    if (claims.length) {
+      html += '<h3 class="kick hits-h">Claims</h3><ul class="srclist" style="font-size:14px">' + claims.slice(0, 30).map(function (c) {
+        return '<li><span class="status ' + esc(c.status) + '" style="margin-right:8px">' + esc(c.status) + '</span>' +
+          (isRetired(c) ? '<s>' + claimRef(c.id) + '</s>' : claimRef(c.id)) + '</li>';
+      }).join("") + '</ul>';
     }
-    wrap.innerHTML = html;
-  }
-
-  // ================= LESSONS =================
-  // Every lesson across the curated pool as a first-class row: what it says,
-  // where the source is, which finding it came from, which claim (if any)
-  // it bears on. Click the title to open the finding-detail modal.
-  var lessonsState = { topic: "all", q: "" };
-  function renderLessons() {
-    var root = $("#view-lessons");
-    var lessons = DATA.lessons || [];
-    var html = '<div class="sec-hd"><h2>Lessons</h2>' +
-      '<span class="note">' + lessons.length + ' distilled across every vetted finding</span></div>' +
-      '<p class="sec-lede">Each row is one takeaway pinned to a verbatim excerpt from its source, ' +
-      'so you can skim the field\'s answers without opening every finding.</p>';
-    html += '<div class="toolbar">' +
-      '<div class="fgroup search"><span>Search</span><input id="lessons-q" type="search" ' +
-      'placeholder="Search lessons, excerpts, findings..." value="' + esc(lessonsState.q) + '"></div></div>';
-    html += '<div class="toolbar" style="margin-top:-6px">';
-    html += filterGroup("Track", "ltopic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
-      return [t, tname(t)]; })), lessonsState.topic);
-    html += '</div><div id="lessons-list"></div>';
-    root.innerHTML = html;
-
-    $("#lessons-q").addEventListener("input", function () {
-      lessonsState.q = this.value; drawLessons();
-    });
-    root.querySelectorAll(".toolbar .opt").forEach(function (b) {
-      b.addEventListener("click", function () {
-        lessonsState.topic = b.dataset.v;
-        root.querySelectorAll('.opt[data-k="ltopic"]').forEach(function (o) {
-          o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
-        drawLessons();
-      });
-    });
-    drawLessons();
-  }
-
-  function drawLessons() {
-    var wrap = $("#lessons-list");
-    var q = lessonsState.q.trim().toLowerCase();
-    var rows = (DATA.lessons || []).filter(function (le) {
-      if (lessonsState.topic !== "all" && le.topic !== lessonsState.topic) return false;
-      if (!q) return true;
-      var hay = (le.point + " " + le.excerpt + " " + le.finding_title + " " + (le.domain || "")).toLowerCase();
-      return hay.indexOf(q) >= 0;
-    });
-    // Newest lessons first — same convention as the feed's default.
-    rows.sort(function (a, b) { return (b.published || "").localeCompare(a.published || ""); });
-    if (!rows.length) {
-      wrap.innerHTML = '<p class="empty-note">No lessons match.</p>';
-      return;
+    if (stories.length) {
+      html += '<h3 class="kick hits-h">Stories</h3><div class="artlist">' +
+        stories.slice(0, 30).map(function (it) { return storyCard(it, q); }).join("") + '</div>';
     }
-    var html = rows.map(function (le) {
-      // A synthetic finding-like object so detailAnchor can reuse the modal
-      // wiring; no new plumbing needed to click through to the source finding.
-      var fake = { id: le.finding_id, detail_path: le.detail_path,
-        url: le.url, title: le.finding_title };
-      var claimLinks = "";
-      if (le.related_claims && le.related_claims.length) {
-        claimLinks = '<p class="why" style="margin-top:6px">Related: ' +
-          le.related_claims.slice(0, 3).map(function (cid) {
-            return '<a class="link" href="#claims" data-goto="claims">' + esc(cid) + '</a>';
-          }).join(", ") + '</p>';
-      }
-      return '<article class="art">' +
-        '<h4>' + esc(le.point) + '</h4>' +
-        '<blockquote class="take" style="border-left:3px solid var(--rule);padding-left:10px;margin:6px 0 8px;color:var(--ink-2)">' +
-          '&ldquo;' + esc(le.excerpt) + '&rdquo;</blockquote>' +
-        claimLinks +
-        '<div class="meta">' + topicPill(le.topic) +
-          (le.domain ? '<span>' + txt(le.domain) + '</span>' : '') +
-          (le.published ? '<span>' + esc(fmtDate(le.published)) + '</span>' : '') +
-          'from ' + detailAnchor(fake, txt(le.finding_title)) +
-          '<a class="link" href="' + hrefOf(le.url) + '">source &#8599;</a>' +
-        '</div></article>';
-    }).join("");
-    wrap.innerHTML = '<div class="artlist">' + html + '</div>';
+    if (old.length) {
+      html += '<h3 class="kick hits-h">Archive</h3><div class="artlist">' + old.slice(0, 30).map(archiveRowHTML).join("") + '</div>';
+    }
+    if (!claims.length && !stories.length && !old.length) html += '<p class="empty-note">Nothing matches.</p>';
+    root.innerHTML = html;
   }
 
   // ================= ROUTES =================
   // Shareable deep links (the README and the link-check test rely on these):
-  //   #<view>                       any tab; the old #fields opens #topics
+  //   #<view>                       any tab; old tabs redirect: #fields -> #topics,
+  //                                 #feed (All findings) and #lessons -> #news (Stories)
   //   ?finding=<id>                 a finding's or story's detail modal
   //   ?claim=<id>#claims            one claim in the ledger, scrolled to + highlighted
   //   ?topic=<slug>#topics          a topic page
   //   ?domain=<taxonomy id>#topics  a domain page (data/taxonomy.yaml IDs)
-  var VIEW_ALIASES = { fields: "topics" };
+  var VIEW_ALIASES = { fields: "topics", feed: "news", lessons: "news" };
   var ROUTE_PARAMS = ["topic", "domain", "claim"];
   function arr(v) { return Array.isArray(v) ? v : []; }
   function has(obj, key) { return !!obj && Object.prototype.hasOwnProperty.call(obj, key); }
@@ -1336,9 +1122,10 @@
       '" data-goto="' + esc(view) + '" data-route="' + esc(q) + '">' + inner + '</a>';
   }
 
-  // ================= TOP STORIES + WHAT TO DO NOW =================
-  // Picked in scripts/briefing.py (the README teaser shows the first three of
-  // the same lists): most covering sources first, then latest activity.
+  // ================= TOP STORIES + CLAIM CHANGES =================
+  // Picked in scripts/briefing.py (the README teaser shows the same picks):
+  // stories by most covering sources, then latest activity; claim changes
+  // newest first.
   function rowsById() {
     var m = {};
     arr(DATA.findings).concat(arr(DATA.editorial)).forEach(function (f) { m[f.id] = f; });
@@ -1375,27 +1162,39 @@
       '<div class="meta" style="font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:5px 10px;align-items:center;margin-bottom:6px">' +
         topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
-        '<span>' + num(n) + ' source' + (n === 1 ? '' : 's') + '</span></div>' +
-      '<h4><span class="rank">' + num(i + 1) + '</span>' + detailAnchor(f, txt(f.title)) + '</h4>' +
+        (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') + '</div>' +
+      '<h3><span class="rank">' + num(i + 1) + '</span>' + detailAnchor(f, txt(f.title)) + '</h3>' +
       (f.takeaway ? '<p class="take" style="color:var(--ink-2);font-size:14.5px;margin:6px 0 0">' + txt(f.takeaway) + '</p>' : '') +
-      allUpdates(f) + storySources(f) + '</article>';
+      quotePreview(f) + allUpdates(f) + storySources(f) + '</article>';
   }
-  // The detail modal for a story with no rendered page (news-gate rows).
+  // A finding's lessons: each point with the verbatim source quote it rests on.
+  // Rendered pages carry the same list under "## Lessons".
+  function lessonsHTML(f) {
+    var rows = arr(f.lessons).filter(function (l) { return l && typeof l === "object" && l.excerpt; });
+    if (!rows.length) return "";
+    return '<h2>Lessons</h2><ul class="lessons">' + rows.map(function (l) {
+      return '<li>' + txt(l.point) + '<blockquote><p>&ldquo;' + txt(l.excerpt) + '&rdquo;</p></blockquote></li>';
+    }).join("") + '</ul>';
+  }
+  // The detail modal for a story with no rendered page (news-gate rows), and
+  // the fallback when a rendered page fails to load.
   function storyPanelHTML(f) {
     return '<article class="prose"><h1 id="modal-title">' + txt(f.title) + '</h1>' +
       '<p>' + topicPill(f.topic) + (f.domain ? ' &nbsp;' + txt(f.domain) : '') +
         (f.published ? ' &nbsp;·&nbsp; ' + esc(fmtDate(f.published)) : '') + '</p>' +
       (f.takeaway ? '<blockquote><p><strong>Takeaway:</strong> ' + txt(f.takeaway) + '</p></blockquote>' : '') +
       (f.summary && f.summary !== f.takeaway ? '<p>' + txt(f.summary) + '</p>' : '') +
+      lessonsHTML(f) +
       (arr(f.updates).length ? '<h2>Updates</h2>' + allUpdates(f) : '') +
       '<h2>Sources</h2>' + storySources(f) + '</article>';
   }
   // Same sentence as scripts/briefing.py:window_note (the README prints that one).
-  function windowNote(fresh, total, days) {
+  function windowNote(fresh, total, days, multi) {
     if (!total) return "No stories yet.";
     if (fresh === 0) return "Nothing new in the last " + days + " days, so these are the latest top stories.";
     if (fresh < total) return "Fewer than five stories in the last " + days + " days, so the most recent ones before it fill in.";
-    return "The last " + days + " days: the stories with the most covering sources first.";
+    if (multi) return "The last " + days + " days: the stories with the most covering sources first.";
+    return "The last " + days + " days, newest first.";
   }
   function topStoriesHTML(shown) {
     var m = rowsById();
@@ -1406,24 +1205,76 @@
     }
     rows.forEach(function (f) { shown[f.id] = 1; });
     return secHead(title, DATA.top_stories_topped_up ? "latest we have" : "last " + num(DATA.snapshot_days) + " days") +
-      '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0)) +
-      ' Every source that covered each story is listed with it.</p>' +
+      '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0,
+        DATA.top_stories_multi === true)) + ' Every source that covered each story is listed with it.</p>' +
       '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
   }
-  function nowClaimsHTML() {
-    var picks = arr(DATA.top_claims).map(claimById).filter(Boolean);
-    var html = secHead("What to do now", "from the claim ledger");
-    html += '<p class="sec-lede">Standing answers the evidence supports, most recently reviewed first. ' +
-      'Each one keeps its history: what it replaced and why.</p>';
-    if (picks.length) {
-      html += '<div class="nowlist">' + picks.map(function (c) {
-        return '<div class="claim st-' + esc(c.status) + '" style="margin:0">' +
-          '<div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' + topicPill(c.topic) + '</div>' +
-          '<h4>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h4>' +
-          (c.guidance ? '<p class="guide"><b>Do.</b> ' + txt(c.guidance) + '</p>' : '') + '</div>';
-      }).join("") + '</div>';
-    }
-    return html + '<div style="margin-top:12px">' + claimsTeaser() + '</div>';
+  // What the ledger changed: claims added, newly contested, and overturned
+  // (headlined by the claim that replaced them). "Do." guidance stays on the
+  // claim's own card in the Claims tab.
+  var CHANGE_LABEL = { added: "Added", contested: "Contested", overturned: "Overturned" };
+  // Same sentence as scripts/briefing.py:changes_note (the README prints that one).
+  function changesNote(fresh, total, days, last) {
+    if (!total) return "No claim has changed yet.";
+    if (fresh === 0) return "No claim changed in the last " + days + " days; the last change was " + last + ".";
+    if (fresh < total) return fresh + " change" + (fresh > 1 ? "s" : "") + " in the last " + days +
+      " days; earlier ones fill in, each with its date.";
+    return "Every claim added, contested or overturned in the last " + days + " days.";
+  }
+  // The newest supporting source (else the newest of any stance).
+  function topEvidence(c) {
+    var ev = arr(c.evidence).filter(function (e) { return e && typeof e === "object"; });
+    var sup = ev.filter(function (e) { return (e.stance || "supports") === "supports"; });
+    return (sup.length ? sup : ev).slice().sort(function (a, b) {
+      return String(b.published || "").localeCompare(String(a.published || "")); })[0] || null;
+  }
+  function evidenceLine(c) {
+    var n = arr(c.evidence).length, top = topEvidence(c);
+    return '<p class="evline">' + num(n) + ' source' + (n === 1 ? '' : 's') +
+      (top ? ' &nbsp;·&nbsp; latest: <a class="link" href="' + hrefOf(top.url) + '">' +
+        esc(top.source_name || host(top.url) || "source") + ' &#8599;</a>' : '') + '</p>';
+  }
+  // How long ago `d` was, counted from the page's generated date (not the
+  // reader's clock), so the rendered page stays a pure function of its data.
+  function ageText(d) {
+    var a = String(d || "").split("-"), b = String(DATA.generated || "").split("-");
+    var t0 = Date.UTC(+a[0], (+a[1] || 1) - 1, +a[2] || 1), t1 = Date.UTC(+b[0], (+b[1] || 1) - 1, +b[2] || 1);
+    var days = Math.floor((t1 - t0) / 864e5);
+    if (!isFinite(days) || days < 0) return "";
+    if (days < 1) return "today";
+    if (days < 14) return days + " day" + (days === 1 ? "" : "s") + " ago";
+    if (days < 60) return Math.floor(days / 7) + " weeks ago";
+    if (days < 730) return Math.floor(days / 30) + " months ago";
+    return Math.floor(days / 365) + " years ago";
+  }
+  function validChange(ch) {
+    return !!ch && typeof ch === "object" && has(CHANGE_LABEL, ch.kind) && !!claimById(ch.claim);
+  }
+  function claimChangeHTML(ch) {
+    if (!validChange(ch)) return "";
+    var c = claimById(ch.claim);
+    var old = ch.kind === "overturned" && ch.replaced !== ch.claim ? claimById(ch.replaced) : null;
+    var fell = old || (ch.kind === "overturned" && isRetired(c) ? c : null);
+    var desc = c.title && c.statement && c.title !== c.statement ? '<p class="desc">' + txt(c.statement) + '</p>' : '';
+    return '<div class="claim chg st-' + esc(c.status) + '">' +
+      '<div class="claim-top"><span class="kind">' + esc(CHANGE_LABEL[ch.kind]) + '</span>' +
+        '<span class="when">' + esc(fmtDate(ch.date)) + (ageText(ch.date) ? ' · ' + esc(ageText(ch.date)) : '') + '</span>' +
+        '<span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' + topicPill(c.topic) + '</div>' +
+      '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc +
+      (old ? '<p class="lineage"><b>Replaced</b> <span class="status ' + esc(old.status) + '">' + esc(old.status) +
+        '</span> <s>' + claimRef(old.id) + '</s></p>' : '') +
+      (fell && fell.supersession_reason ? '<p class="guide"><b>Why.</b> ' + txt(fell.supersession_reason) + '</p>' : '') +
+      evidenceLine(c) + '</div>';
+  }
+  function claimChangesHTML() {
+    var changes = arr(DATA.claim_changes).filter(validChange);
+    var n = ledgerCounts(DATA.claims);
+    var html = secHead("Claim changes", "from the claim ledger") +
+      '<p class="sec-lede">' + esc(changesNote(Number(DATA.claim_changes_fresh) | 0, changes.length,
+        Number(DATA.snapshot_days) | 0, changes.length ? fmtDate(changes[0].date) : "")) +
+      ' What the ledger now believes, what changed, and what got overturned.</p>';
+    if (changes.length) html += '<div class="chglist">' + changes.map(claimChangeHTML).join("") + '</div>';
+    return html + '<p class="why">The ledger: ' + countsLine(n) + '. ' + routeLink("claims", {}, "Open it &#8594;") + '</p>';
   }
 
   // ================= CLAIM LINEAGE =================
@@ -1453,7 +1304,8 @@
     }
     var el = document.getElementById("claim-" + id);
     if (!el) return;
-    var group = el.closest("details");
+    el.open = true;
+    var group = el.parentElement && el.parentElement.closest("details");
     if (group) group.open = true;
     document.querySelectorAll(".claim.flash").forEach(function (x) { x.classList.remove("flash"); });
     el.classList.add("flash");
@@ -1471,11 +1323,13 @@
     return null;
   }
   function byDomainId(rows, id) { return arr(rows).filter(function (r) { return r.domain_id === id; }); }
+  // Claim counts first; a domain with nothing filed under it is greyed out.
   function domainCard(d) {
     var nf = byDomainId(DATA.findings, d.id).length, nc = byDomainId(DATA.claims, d.id).length;
     return routeLink("topics", { domain: d.id },
-      '<span class="ct">' + num(nf) + ' finding' + (nf === 1 ? '' : 's') + ' · ' + num(nc) + ' claim' + (nc === 1 ? '' : 's') + '</span>' +
-      '<b>' + txt(d.name) + '</b><span class="scope">' + txt(d.scope) + '</span>', "domcard");
+      '<b>' + txt(d.name) + '</b>' +
+      '<span class="ct">' + num(nc) + ' claim' + (nc === 1 ? '' : 's') + ' · ' + num(nf) + ' finding' + (nf === 1 ? '' : 's') + '</span>' +
+      '<span class="scope">' + txt(d.scope) + '</span>', nf || nc ? "domcard" : "domcard empty");
   }
   function crumbs(parts) {
     return '<p class="crumbs">' + routeLink("topics", {}, "Topics") +
@@ -1506,31 +1360,33 @@
     var meta = DATA.topics[t] || {};
     var rows = arr(DATA.findings).filter(function (f) { return f.topic === t; })
       .sort(function (a, b) { return (b.composite || 0) - (a.composite || 0); });
-    var html = crumbs([esc(tname(t))]) + secHead(esc(tname(t)), num(rows.length) + " vetted findings") +
-      '<p class="sec-lede">' + txt(meta.blurb || "") + '</p>' +
-      '<h3 class="kick" style="margin:18px 0 6px">Domains</h3><div class="domgrid">' + topicDomains(t).map(domainCard).join("") + '</div>';
-    html += secHead("Trends", "last " + num(DATA.max_age_days) + " days") +
-      '<div class="trendcard">' + (emergingBlock(t, false, 10) || '<p class="empty-note">No trends yet.</p>') + '</div>';
-    html += secHead("Strongest findings", "by signal");
-    html += rows.length ? '<div class="artlist">' + rows.slice(0, 6).map(function (f) {
-      return articleHTML(f, { showTrack: false }); }).join("") + '</div>' : '<p class="empty-note">Nothing vetted in this window.</p>';
-    html += secHead("Claims", "standing first") + claimList(arr(DATA.claims).filter(function (c) { return c.topic === t; }));
+    var claims = arr(DATA.claims).filter(function (c) { return c.topic === t; });
+    var html = crumbs([esc(tname(t))]) + secHead(esc(tname(t)), num(claims.length) + " claims · " + num(rows.length) + " findings") +
+      '<p class="sec-lede">' + txt(meta.blurb || "") + '</p>';
+    html += secHead("Claims", "standing first") + claimList(claims);
+    html += '<h3 class="kick" style="margin:18px 0 6px">Domains</h3><div class="domgrid">' + topicDomains(t).map(domainCard).join("") + '</div>';
+    if (rows.length) {
+      html += secHead("Findings", "last " + num(DATA.max_age_days) + " days") + '<div class="artlist">' + rows.slice(0, 6).map(function (f) {
+        return articleHTML(f, { showTrack: false }); }).join("") + '</div>';
+    }
+    var trend = emergingBlock(t, false, 10);
+    if (trend) html += secHead("Trends", "last " + num(DATA.max_age_days) + " days") + '<div class="trendcard">' + trend + '</div>';
     return html;
   }
   function domainPage(info) {
     var d = info.d, t = info.topic;
     var rows = byDomainId(DATA.findings, d.id).sort(function (a, b) { return (b.composite || 0) - (a.composite || 0); });
-    var old = byDomainId(DATA.archive, d.id);
+    var old = byDomainId(DATA.archive, d.id), claims = byDomainId(DATA.claims, d.id);
     var html = crumbs([routeLink("topics", { topic: t }, esc(tname(t))), txt(d.name)]) +
       secHead(txt(d.name), "") +
       '<p class="sec-lede">' + txt(d.scope) + ' <span class="domid">' + esc(d.id) + '</span></p>';
-    html += secHead("Vetted findings", num(rows.length) + " in the last " + num(DATA.max_age_days) + " days");
-    html += rows.length ? '<div class="artlist">' + rows.map(function (f) {
-      return articleHTML(f, { showTrack: false }); }).join("") + '</div>' : '<p class="empty-note">Nothing vetted here in this window.</p>';
-    html += secHead("Claims", "standing first") + claimList(byDomainId(DATA.claims, d.id));
-    html += secHead("Archived", num(old.length) + " aged out");
-    html += old.length ? '<div class="artlist">' + old.map(archiveRowHTML).join("") + '</div>'
-      : '<p class="empty-note">No archived findings here.</p>';
+    if (claims.length) html += secHead("Claims", "standing first") + claimList(claims);
+    if (rows.length) {
+      html += secHead("Findings", num(rows.length) + " in the last " + num(DATA.max_age_days) + " days") +
+        '<div class="artlist">' + rows.map(function (f) { return articleHTML(f, { showTrack: false }); }).join("") + '</div>';
+    }
+    if (old.length) html += secHead("Archived", num(old.length) + " aged out") + '<div class="artlist">' + old.map(archiveRowHTML).join("") + '</div>';
+    if (!claims.length && !rows.length && !old.length) html += '<p class="empty-note">Nothing is filed under this domain yet.</p>';
     return html;
   }
   function renderTopics() {
@@ -1545,7 +1401,7 @@
   var archiveState = { topic: "all", q: "" };
   function archiveRowHTML(f) {
     return '<article class="art">' +
-      '<h4><a href="' + hrefOf(f.url) + '">' + txt(f.title) + '</a></h4>' +
+      '<h3><a href="' + hrefOf(f.url) + '">' + txt(f.title) + '</a></h3>' +
       (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
       '<div class="meta">' + topicPill(f.topic) +
         (f.domain_id && domainInfo(f.domain_id) ? routeLink("topics", { domain: f.domain_id }, txt(f.domain)) :
@@ -1558,10 +1414,11 @@
     var root = $("#view-archive");
     var held = Math.max(0, (Number(DATA.archive_count) | 0) - (Number(DATA.archive_vetted) | 0));
     var html = secHead("Archive", num(arr(DATA.archive).length) + " vetted findings, aged out") +
-      '<p class="sec-lede">Findings move here after ' + num(DATA.max_age_days) + ' days. These are the ones that ' +
-      'were vetted; ' + num(held) + ' more archived items never cleared the curation gate and are not shown. ' +
+      '<p class="sec-lede">Research findings older than ' + num(DATA.max_age_days) + ' days, newest first, each linking ' +
+      'to its source. The last ' + num(DATA.max_age_days) + ' days are under ' + routeLink("news", {}, "Stories") + '. ' +
+      'Another ' + num(held) + ' aged-out items were held for review and never published, so they are not listed. ' +
       'Claims and news stories never age out.</p>';
-    html += '<div class="toolbar"><div class="fgroup search"><span>Search</span><input id="archive-q" type="search" ' +
+    html += '<div class="toolbar"><div class="fgroup search"><label for="archive-q">Search the archive</label><input id="archive-q" type="search" ' +
       'placeholder="Search titles, takeaways, sources, domains..." value="' + esc(archiveState.q) + '"></div></div>';
     html += '<div class="toolbar" style="margin-top:-6px">' + filterGroup("Track", "atopic", [["all", "All"]].concat(
       TOPIC_ORDER.map(function (t) { return [t, tname(t)]; })), archiveState.topic) + '</div><div id="archive-list"></div>';
@@ -1602,17 +1459,30 @@
   // comes from the payload through num().
   function renderMethodology() {
     var D = DATA;
+    var since = D.claims_since ? String(D.claims_since).slice(0, 4) : "";
     $("#view-methodology").innerHTML = '<div class="method">' + secHead("Methodology", "how this is built") +
       '<p class="sec-lede">Security and AI produce more research than anyone can read. Aggregators solve coverage and leave ' +
       'you the judgment: which claims hold, which were quietly refuted, which are new work. This site tries to answer ' +
       '<b>what the field believes now, and what it stopped believing</b>.</p>' +
-      '<h3>What ages out</h3><div class="facts">' +
-        '<div><b>Findings</b>: shown for ' + num(D.max_age_days) + ' days, then moved to the ' + routeLink("archive", {}, "archive") + '.</div>' +
-        '<div><b>Claims</b>: never age out. Retired ones stay, struck through, with the date, the reason and what replaced them.</div>' +
-        '<div><b>News stories</b>: kept for good on the ' + routeLink("news", {}, "News tab") + '. The front page shows the last ' +
-          num(D.news_front_page_days) + ' days, at most ' + num(D.news_front_page_max) + ' stories.</div>' +
+      '<h3>What the words mean</h3><div class="facts">' +
+        '<div><b>Finding</b>: one vetted article, paper or advisory. Findings are listed under ' + routeLink("news", {}, "Stories") +
+          ' for ' + num(D.max_age_days) + ' days, then move to the ' + routeLink("archive", {}, "archive") + ' (' +
+          num(arr(D.archive).length) + ' there now).</div>' +
+        '<div><b>Takeaway</b>: the one-line point of a finding, shown on its card.</div>' +
+        '<div><b>Lessons</b>: the specific points inside a finding, each pinned to a verbatim quote from its source. ' +
+          'Open a finding to read them.</div>' +
+        '<div><b>Claim</b>: a standing answer the ledger stands behind, with its evidence and what to do about it. Claims ' +
+          'never age out. Each shows when the belief dates from (the oldest from ' + (since ? esc(since) : 'the start') + ') and, ' +
+          'where the ledger recorded it, when it was added to the ledger. When evidence moves, a claim is ' +
+          'contested, superseded or refuted; the old one stays, struck through, with the date and the reason.</div>' +
+        '<div><b>News story</b>: one event, however many outlets covered it, kept for good under ' + routeLink("news", {}, "Stories") +
+          '. The front page shows the last ' + num(D.news_front_page_days) + ' days, at most ' + num(D.news_front_page_max) + ' stories.</div>' +
+        '<div><b>Source-checked (automated)</b>: the lesson quotes were found in the source text and a separate model pass ' +
+          'did not refute them. It is an automated check, not human review.</div>' +
         '<div><b>This week</b>: the last ' + num(D.snapshot_days) + ' days. Top stories are the ones with the most covering ' +
           'sources, then the most recent; with fewer than five, the most recent stories before it fill in.</div>' +
+        '<div><b>Claim changes</b>: claims added, contested or overturned in the last ' + num(D.snapshot_days) + ' days. With ' +
+          'fewer than three, the latest earlier changes fill in, each with its date, and the latest reversal is always shown.</div>' +
       '</div>' +
       '<h3>How sources are chosen</h3><ul>' +
         '<li><b>A ranked registry.</b> Every source has an authority tier, a reach signal and a smoothed hit rate (vetted findings ' +
@@ -1645,8 +1515,8 @@
         '     -> story ledger (same / update / new)\n     -> claim ledger (new claim? supersedes one?)\n' +
         '  -> render: this site, README, topic pages, claims</pre>' +
       '<h3>Honest limits</h3><ul>' +
-        '<li><b>Automated review.</b> "Checked" means the excerpt was grounded and a second model pass did not refute it. It is not human ' +
-          'verification: a strong filter, not a guarantee.</li>' +
+        '<li><b>Automated review.</b> "Source-checked" means the quotes were found in the source and a second model pass did not ' +
+          'refute them. It is not human verification: a strong filter, not a guarantee.</li>' +
         '<li><b>Where it runs.</b> A daily scan (a scheduled Claude Code routine, with a local fallback) ingests, analyzes and opens a PR. ' +
           'It can\'t be reproduced from a clean clone without that pipeline and its credentials.</li>' +
         '<li><b>Coverage.</b> Black Hat and DEF CON talks aren\'t covered yet, and X/Twitter isn\'t ingested.</li></ul>' +
@@ -1655,8 +1525,8 @@
   }
 
   // ================= chrome =================
-  var VIEWS = { week: renderWeek, topics: renderTopics, news: renderNews, claims: renderClaims,
-    lessons: renderLessons, feed: renderFeed, archive: renderArchive, methodology: renderMethodology };
+  var VIEWS = { week: renderWeek, news: renderNews, claims: renderClaims, topics: renderTopics,
+    archive: renderArchive, methodology: renderMethodology, search: renderSearch };
   var drawn = {};
   function show(view) {
     view = has(VIEW_ALIASES, view) ? VIEW_ALIASES[view] : view;
@@ -1666,7 +1536,7 @@
     document.querySelectorAll(".vtab").forEach(function (b) {
       b.setAttribute("aria-selected", b.dataset.view === view ? "true" : "false"); });
     if (location.hash.slice(1) !== view) history.replaceState(null, "", "#" + view);
-    window.scrollTo({ top: 0 });
+    if (view !== "search") window.scrollTo({ top: 0 });
     if (view === "claims" && param("claim")) focusClaim(param("claim"));
   }
   document.querySelectorAll(".vtab").forEach(function (b) {
@@ -1686,45 +1556,50 @@
   });
 
   (function () {
-    var claims = DATA.claims || [];
-    var live = claims.filter(function (c) { return !isRetired(c); }).length;
-    var reversals = claims.filter(function (c) { return c.status === "superseded" || c.status === "refuted"; }).length;
-    var fresh = (DATA.findings || []).filter(function (f) { return f.fresh; }).length;
-    var findingsN = (DATA.findings || []).length;
+    var n = ledgerCounts(DATA.claims);
     var domainSet = {};
-    (DATA.findings || []).forEach(function (f) { if (f.domain) domainSet[f.domain] = 1; });
-    var domainsN = Object.keys(domainSet).length;
+    arr(DATA.findings).forEach(function (f) { if (f.domain) domainSet[f.domain] = 1; });
     $("#fl-date").textContent = fmtDate(DATA.generated);
-    $("#fl-count").textContent = findingsN;
-    var ctFields = $("#ct-fields"); if (ctFields) ctFields.textContent = domainsN;
-    var ctClaims = $("#ct-claims"); if (ctClaims) ctClaims.textContent = live;
-    var ctLessons = $("#ct-lessons");
-    if (ctLessons) ctLessons.textContent = (DATA.lessons || []).length;
-    var ctFeed = $("#ct-feed"); if (ctFeed) ctFeed.textContent = findingsN;
-    var ctNews = $("#ct-news"); if (ctNews) ctNews.textContent = (DATA.editorial || []).length;
-    var ctArchive = $("#ct-archive"); if (ctArchive) ctArchive.textContent = arr(DATA.archive).length;
-    var cells = [[fresh, "this week"], [findingsN, "vetted findings"],
-      [live, "standing claims"], [reversals, "reversals"]];
+    $("#ct-fields").textContent = Object.keys(domainSet).length;
+    $("#ct-claims").textContent = n.current + n.contested;
+    $("#ct-news").textContent = arr(DATA.editorial).length + arr(DATA.findings).length;
+    $("#ct-archive").textContent = arr(DATA.archive).length;
+    // One count per thing: the same stories-this-week number the Briefing uses.
+    var cells = [[DATA.stories_this_week, "stories this week"], [n.current, "current claims"],
+      [n.contested, "contested"], [n.retired, "retired"]];
     $("#dateline").innerHTML = cells.map(function (c) {
       return '<div class="cell"><span class="n">' + num(c[0]) + '</span><span class="k">' + esc(c[1]) + '</span></div>';
     }).join("");
-
-    var since = DATA.claims_since ? String(DATA.claims_since).slice(0, 4) : "";
-    $("#methods").innerHTML =
-      '<b>Findings</b> cover a rolling last ' + num(DATA.max_age_days) + ' days (this-week snapshot: last ' +
-      num(DATA.snapshot_days) + '); older vetted ones move to the ' +
-      routeLink("archive", {}, "archive (" + num(arr(DATA.archive).length) + ")") + '. ' +
-      '<b>Claims</b> are durable and never age out' + (since ? ', tracked since ' + esc(since) : '') + '. ' +
-      '<b>Checked</b> means a finding’s lesson excerpt was grounded against its source and cross-checked ' +
-      'by a separate model pass; it is not human review.';
   })();
 
+  // Theme: auto (follow the system) -> light -> dark, remembered per browser.
   (function () {
-    $("#theme").addEventListener("click", function () {
-      var cur = document.documentElement.getAttribute("data-theme");
-      var next = cur === "dark" ? "light" : cur === "light" ? "dark"
-        : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "dark");
-      document.documentElement.setAttribute("data-theme", next);
+    var btn = $("#theme"), order = ["auto", "light", "dark"];
+    function apply(mode) {
+      if (mode === "auto") document.documentElement.removeAttribute("data-theme");
+      else document.documentElement.setAttribute("data-theme", mode);
+      btn.textContent = "Theme: " + mode;
+      btn.setAttribute("aria-label", mode === "auto" ? "Theme: follow the system" : "Theme: " + mode);
+    }
+    var saved = "auto";
+    try { saved = localStorage.getItem("theme") || "auto"; } catch (e) {}
+    apply(order.indexOf(saved) >= 0 ? saved : "auto");
+    btn.addEventListener("click", function () {
+      var cur = btn.textContent.replace("Theme: ", "");
+      var next = order[(order.indexOf(cur) + 1) % order.length];
+      apply(next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+
+  // The header search box: results replace the current view; clearing it
+  // goes back to the Briefing.
+  (function () {
+    var box = $("#site-q");
+    box.addEventListener("input", function () {
+      siteQ = box.value;
+      drawn.search = false;
+      show(siteQ.trim() ? "search" : "week");
     });
   })();
 
@@ -1888,7 +1763,10 @@
 
     var path = safeRel(finding.detail_path);
     function renderInto(rawMd) {
-      var html = '<article class="prose">' + renderMarkdown(rawMd) + '</article>';
+      // The page's last line repeats the source link and links back to a GitHub
+      // index that doesn't exist here; the panel's footer carries the source.
+      var md = String(rawMd || "").replace(/^_Source:.*$/gm, "");
+      var html = '<article class="prose">' + renderMarkdown(md) + '</article>';
       if (finding.url) {
         html += '<div class="modal-source">' +
           '<span style="color:var(--ink-3)">Source:</span> ' +
@@ -1915,11 +1793,8 @@
       mdCache[path] = t;
       renderInto(t);
     }).catch(function () {
-      modalBody.innerHTML = '<p class="modal-error">Couldn’t load the detail page. Falling back to the source.</p>';
-      if (finding.url) {
-        modalBody.innerHTML += '<p><a class="link" href="' + hrefOf(finding.url) +
-          '" target="_blank" rel="noopener noreferrer">Open source ↗</a></p>';
-      }
+      modalBody.innerHTML = '<p class="modal-error">Couldn’t load the full page; showing what this page has.</p>' +
+        storyPanelHTML(finding);
     });
   }
 

@@ -56,7 +56,7 @@ def test_archive_ships_only_vetted_findings_newest_first_and_compact(sandbox):
         "takeaway",
     }
     assert data["archive"][0]["domain"] == "Agents & Harnesses"
-    assert len(data["archive"][2]["takeaway"]) <= gh.ARCHIVE_TAKEAWAY_CHARS + 1
+    assert len(data["archive"][2]["takeaway"]) <= gh.ARCHIVE_TAKEAWAY_CHARS + 2
 
 
 def test_topics_carry_taxonomy_domain_ids(sandbox):
@@ -93,7 +93,11 @@ def test_news_gate_rows_have_no_detail_page_editorial_rows_keep_theirs():
 
 
 def test_front_page_picks_are_ids_of_rendered_rows_and_claims(sandbox):
-    ledger = ledger_of(make_claim(id="a", last_reviewed="2026-07-01"), make_claim(id="b"))
+    ledger = ledger_of(
+        make_claim(id="a", first_seen="2026-07-12"),
+        make_claim(id="b"),
+        make_claim(id="c", status="contested"),
+    )
     data = build(
         sandbox,
         entries=[make_entry(title="Fresh", source_url="https://e.com/f", published="2026-07-14")],
@@ -102,7 +106,30 @@ def test_front_page_picks_are_ids_of_rendered_rows_and_claims(sandbox):
     rendered = {r["id"] for r in data["findings"] + data["editorial"]}
     assert data["top_stories"] and set(data["top_stories"]) <= rendered
     assert data["top_stories_topped_up"] is True  # one story < five
-    assert data["top_claims"] == ["a", "b"]
+    assert "top_claims" not in data  # "What to do now" is gone
+    assert data["claim_changes_fresh"] == 1
+    assert [(ch["kind"], ch["claim"]) for ch in data["claim_changes"]] == [
+        ("added", "a"),
+        ("added", "b"),
+        ("contested", "c"),
+    ]
+
+
+def test_claim_changes_name_the_winner_and_the_claim_it_replaced(sandbox):
+    ledger = ledger_of(
+        make_claim(
+            id="old",
+            status="refuted",
+            superseded_by=["new"],
+            superseded_on="2026-07-13",
+            supersession_reason="It broke.",
+        ),
+        make_claim(id="new", supersedes=["old"], first_seen="2026-07-13"),
+    )
+    data = build(sandbox, ledger=ledger)
+    assert data["claim_changes"] == [
+        {"kind": "overturned", "date": "2026-07-13", "claim": "new", "replaced": "old"}
+    ]
 
 
 # --- Template JS in Node -------------------------------------------------------
@@ -143,6 +170,33 @@ FNS = [
     "tvar",
     "windowNote",
     "emergingBlock",
+    "secHead",
+    "lessonsHTML",
+    "changesNote",
+    "topEvidence",
+    "evidenceLine",
+    "claimChangeHTML",
+    "claimChangesHTML",
+    "quotePreview",
+    "checkedChip",
+    "caveatChips",
+    "alsoReported",
+    "storyUpdates",
+    "articleHTML",
+    "newsCardHTML",
+    "ageText",
+    "validChange",
+    "ledgerCounts",
+    "countsLine",
+    "lastChange",
+    "claimMatches",
+    "sortClaims",
+    "claimEvidenceHTML",
+    "claimHTML",
+    "claimChain",
+    "storyMatches",
+    "allStories",
+    "storyCard",
 ]
 
 
@@ -160,8 +214,11 @@ def run_js(data: dict, expr: str):
     if not shutil.which("node"):
         pytest.skip("node not available")
     src = gh.TEMPLATE.read_text(encoding="utf-8")
+    labels = re.search(r"var CHANGE_LABEL = \{.*?\};", src).group(0)
+    labels += "\n" + re.search(r"var CHECKED_TIP = .*?;\n", src, re.S).group(0)
     prelude = (
-        "var TMETA = {}; var TOPIC_ORDER = ['ai-security'];\n" f"var DATA = {json.dumps(data)};\n"
+        "var TMETA = {}; var TOPIC_ORDER = ['ai-security'];\n"
+        f"{labels}\nvar DATA = {json.dumps(data)};\n"
     )
     script = (
         prelude
@@ -219,7 +276,39 @@ def evil_data():
         ],
         "archive": [evil_row(domain_id="ais.x")],
         "trends": {"ai-security": [{"tag": EVIL, "count": EVIL, "recent": 1, "momentum": 1}]},
+        "claim_changes": [
+            {"kind": "added", "date": EVIL, "claim": EVIL},
+            {"kind": "overturned", "date": EVIL, "claim": EVIL, "replaced": "old"},
+            {"kind": "contested", "date": EVIL, "claim": "old"},
+        ],
+        "claim_changes_fresh": EVIL,
+        "snapshot_days": EVIL,
     }
+
+
+def evil_claim_data():
+    """evil_data with every claim field a change card renders made hostile."""
+    data = evil_data()
+    evidence = [
+        {
+            "stance": "supports",
+            "url": EVIL_URL,
+            "source_name": EVIL,
+            "published": EVIL,
+            "title": EVIL,
+        },
+        {"stance": EVIL, "url": EVIL_URL, "source_name": EVIL, "published": "9999", "title": EVIL},
+    ]
+    for claim in data["claims"]:
+        claim.update(
+            title=EVIL,
+            statement=EVIL + "!",
+            status=EVIL,
+            topic=EVIL,
+            supersession_reason=EVIL,
+            evidence=evidence,
+        )
+    return data
 
 
 @pytest.mark.parametrize(
@@ -234,10 +323,113 @@ def evil_data():
         "domainCard(DATA.topics['ai-security'].domain_ids[0])",
         "routeLink('claims', {claim: DATA.claims[1].id}, txt(DATA.claims[1].statement))",
         "emergingBlock('ai-security', false, 10)",
+        "lessonsHTML(DATA.findings[0])",
     ],
 )
 def test_new_sinks_render_hostile_rows_inert(expr):
-    assert_inert(run_js(evil_data(), expr))
+    data = evil_data()
+    data["findings"][0]["lessons"] = [{"point": EVIL, "excerpt": EVIL, "grounded": EVIL}]
+    assert_inert(run_js(data, expr))
+
+
+@pytest.mark.parametrize(
+    "expr",
+    [
+        "DATA.claim_changes.map(claimChangeHTML).join('')",
+        "claimChangesHTML()",
+        "evidenceLine(DATA.claims[0])",
+        "claimChangeHTML({kind: 'overturned', claim: 'old', replaced: 'old', date: DATA.claims[0].title})",
+    ],
+)
+def test_claim_change_sinks_render_hostile_claims_inert(expr):
+    html = run_js(evil_claim_data(), expr)
+    assert html and EVIL not in html
+    assert_inert(html)
+
+
+def test_claim_changes_skip_unknown_kinds_and_missing_claims():
+    data = {
+        "claims": [{"id": "a", "status": "current", "title": "A"}],
+        "claim_changes": [
+            {"kind": "__proto__", "claim": "a", "date": "2026-07-01"},
+            {"kind": "toString", "claim": "a", "date": "2026-07-01"},
+            {"kind": "added", "claim": "missing", "date": "2026-07-01"},
+            "not an object",
+            None,
+        ],
+    }
+    assert run_js(data, "DATA.claim_changes.map(claimChangeHTML).join('')") == ""
+
+
+def test_claim_change_card_shows_the_reversal_and_keeps_guidance_off_the_front_page():
+    data = {
+        "topics": {},
+        "claims": [
+            {
+                "id": "new",
+                "status": "current",
+                "title": "New belief",
+                "statement": "The full new statement.",
+                "guidance": "DO-THIS-ON-THE-CLAIMS-TAB",
+                "topic": "ai-security",
+                "evidence": [
+                    {
+                        "stance": "supports",
+                        "url": "https://a.example/1",
+                        "source_name": "Older",
+                        "published": "2026-06-01",
+                    },
+                    {
+                        "stance": "supports",
+                        "url": "https://b.example/2",
+                        "source_name": "Newer",
+                        "published": "2026-07-01",
+                    },
+                    {
+                        "stance": "contests",
+                        "url": "https://c.example/3",
+                        "source_name": "Contra",
+                        "published": "2026-08-01",
+                    },
+                ],
+            },
+            {
+                "id": "old",
+                "status": "refuted",
+                "title": "Old belief",
+                "supersession_reason": "Ten scanners missed it.",
+            },
+        ],
+        "claim_changes": [
+            {"kind": "overturned", "date": "2026-07-20", "claim": "new", "replaced": "old"}
+        ],
+    }
+    html = run_js(data, "claimChangeHTML(DATA.claim_changes[0])")
+    assert "Overturned" in html and "Jul 20, 2026" in html
+    assert "New belief" in html and "The full new statement." in html
+    assert "<s>" in html and "Old belief" in html and 'href="?claim=old#claims"' in html
+    assert "Ten scanners missed it." in html and "refuted" in html
+    assert "3 sources" in html and "https://b.example/2" in html and "Newer" in html
+    assert "DO-THIS-ON-THE-CLAIMS-TAB" not in html
+
+
+def test_site_and_readme_print_the_same_changes_sentence():
+    import briefing
+
+    cases = [(0, 0), (0, 3), (1, 3), (2, 4), (3, 3)]
+    js = ",".join(f"changesNote({f}, {t}, 7, 'Jul 20, 2026')" for f, t in cases)
+    got = run_js({}, "[" + js + "]")
+    assert got == [briefing.changes_note(f, t, 7, "Jul 20, 2026") for f, t in cases]
+    assert "the last change was Jul 20, 2026." in got[1]
+
+
+def test_old_tab_links_redirect_to_the_nearest_view():
+    src = gh.TEMPLATE.read_text(encoding="utf-8")
+    aliases = re.search(r"var VIEW_ALIASES = (\{.*?\});", src).group(1)
+    got = json.loads(re.sub(r"(\w+):", r'"\1":', aliases))
+    assert got == {"fields": "topics", "feed": "news", "lessons": "news"}
+    views = re.search(r"var VIEWS = \{(.*?)\};", src, re.S).group(1)
+    assert set(got.values()) <= set(re.findall(r"(\w+):", views))
 
 
 def test_hostile_shapes_do_not_throw():
@@ -314,7 +506,197 @@ def test_methodology_numbers_come_from_the_payload_through_num():
     assert not re.search(r"\+ D\.\w+ \+", body)  # no raw payload value concatenated
 
 
+SITE_TABS = ("week", "news", "claims", "topics", "archive", "methodology")
+
+
 def test_rendered_site_has_every_view_section(sandbox):
     html = gh.render(build(sandbox), NOW)
-    for view in ("week", "topics", "news", "claims", "lessons", "feed", "archive", "methodology"):
+    for view in SITE_TABS:
         assert f'id="view-{view}"' in html and f'data-view="{view}"' in html
+    assert re.findall(r'data-view="(\w+)"', html) == list(SITE_TABS)  # tab order
+
+
+def test_header_is_title_sentence_and_chips_methods_prose_on_methodology(sandbox):
+    html = gh.render(build(sandbox), NOW)
+    head = html[html.index('<header class="masthead">') : html.index("</header>")]
+    assert "<h1>" in head and head.count('<p class="sub">') == 1 and 'id="dateline"' in head
+    assert 'id="methods"' not in html and "rolling last" not in html
+    method = _extract(gh.TEMPLATE.read_text(encoding="utf-8"), "renderMethodology")
+    for word in (
+        "<b>Finding</b>",
+        "<b>Takeaway</b>",
+        "<b>Lessons</b>",
+        "<b>Claim</b>",
+        "<b>Source-checked (automated)</b>",
+    ):
+        assert word in method
+    assert "not human review" in method
+
+
+# --- UX review: cards, ledger, search ------------------------------------------
+def _evil_lessons(data):
+    data["findings"][0]["lessons"] = [{"point": EVIL, "excerpt": EVIL, "grounded": True}]
+    data["findings"][0]["verified"] = True
+    data["findings"][0]["caveats"] = [{"lens": EVIL, "note": EVIL}]
+    data["findings"][0]["signals"] = [EVIL]
+    return data
+
+
+@pytest.mark.parametrize(
+    "expr",
+    [
+        "articleHTML(DATA.findings[0], {kind: true, q: 'img'})",
+        "newsCardHTML(DATA.findings[0], {kind: true, q: 'img'})",
+        "quotePreview(DATA.findings[0], 'onerror')",
+        "storyCard({f: DATA.findings[0], kind: 'research'}, 'x')",
+        "DATA.claims.map(claimHTML).join('')",
+        "DATA.claims.map(claimChain).join('')",
+        "claimEvidenceHTML(DATA.claims[0].evidence)",
+        "detailAnchor(DATA.findings[0], 'x')",
+    ],
+)
+def test_review_sinks_render_hostile_rows_inert(expr):
+    data = _evil_lessons(evil_claim_data())
+    assert_inert(run_js(data, expr))
+
+
+def test_story_titles_link_to_the_shareable_finding_url_not_raw_markdown():
+    got = run_js({}, "detailAnchor({id: 'a b&c', detail_path: 'findings/x/y.md'}, 'T')")
+    assert 'href="?finding=a%20b%26c#week"' in got and ".md" not in got
+
+
+def test_cards_show_a_grounded_quote_and_no_single_source_count():
+    row = {
+        "id": "s",
+        "topic": "ai-security",
+        "title": "T",
+        "url": "https://e.example/",
+        "lessons": [
+            {"point": "p0", "excerpt": "ungrounded quote", "grounded": False},
+            {"point": "p1", "excerpt": "first grounded quote", "grounded": True},
+            {"point": "needle", "excerpt": "second quote", "grounded": True},
+        ],
+    }
+    data = {"topics": {}, "findings": [row]}
+    card, hit = run_js(
+        data, "[storyCardHTML(DATA.findings[0], 0), quotePreview(DATA.findings[0], 'needle')]"
+    )
+    assert "first grounded quote" in card and "ungrounded quote" not in card
+    assert "1 source" not in card
+    assert "second quote" in hit  # a search shows the quote that matched
+
+
+def test_ledger_cards_are_collapsed_with_guidance_inside_and_retired_lead_with_why():
+    data = {
+        "topics": {},
+        "claims": [
+            {
+                "id": "a",
+                "status": "superseded",
+                "title": "A",
+                "statement": "A said.",
+                "superseded_by": ["b"],
+                "supersession_reason": "A fell.",
+                "confidence": 0.9,
+                "basis": "A basis",
+            },
+            {
+                "id": "b",
+                "status": "refuted",
+                "title": "B",
+                "supersedes": ["a"],
+                "superseded_by": ["c"],
+                "supersession_reason": "B fell.",
+            },
+            {
+                "id": "c",
+                "status": "current",
+                "title": "C",
+                "statement": "C holds.",
+                "supersedes": ["b"],
+                "guidance": "Do C.",
+                "basis": "C basis",
+                "confidence": 0.8,
+                "first_seen": "2016-06",
+                "added_on": "2026-10-01",
+            },
+        ],
+    }
+    old, mid, live = run_js(data, "DATA.claims.map(claimHTML)")
+    summary = live[: live.index("</summary>")]
+    assert live.startswith("<details") and "Do C." not in summary and "Do C." in live
+    assert "80% confidence" in summary and "C basis" in live
+    assert "belief dates from 2016-06" in live and "added to the ledger 2026-10-01" in live
+    assert "confidence" not in old and "A basis" not in old
+    assert old.index("A fell.") < old.index("Chain")
+    chain = mid[mid.index("Chain") :]
+    assert chain.index(">A<") < chain.index(">B<") < chain.index(">C<")  # A -> B -> C
+
+
+def test_claim_chain_survives_a_cycle():
+    data = {
+        "claims": [
+            {"id": "a", "status": "superseded", "supersedes": ["b"], "superseded_by": ["b"]},
+            {"id": "b", "status": "superseded", "supersedes": ["a"], "superseded_by": ["a"]},
+        ]
+    }
+    assert isinstance(run_js(data, "claimChain(DATA.claims[0])"), str)
+
+
+def test_ledger_counts_and_sorting_use_status_not_review_dates():
+    data = {
+        "claims": [
+            {"id": "x", "status": "current", "confidence": 0.5, "first_seen": "2020-01"},
+            {"id": "y", "status": "contested", "confidence": 0.9, "changed_on": "2026-10-01"},
+            {"id": "z", "status": "refuted", "superseded_on": "2026-09-01"},
+        ]
+    }
+    data["claims"][0]["last_reviewed"] = "2026-10-22"  # bumped on every review: ignored
+    got = run_js(
+        data,
+        "[countsLine(ledgerCounts(DATA.claims)),"
+        " sortClaims(DATA.claims, 'change').map(function (c) { return c.id; }),"
+        " sortClaims(DATA.claims, 'confidence').map(function (c) { return c.id; })]",
+    )
+    assert got == ["1 current · 1 contested · 1 retired", ["y", "z", "x"], ["y", "x", "z"]]
+
+
+def test_stories_list_news_and_research_together():
+    data = {
+        "editorial": [{"id": "n", "title": "News"}],
+        "findings": [{"id": "r", "title": "Research", "lessons": [{"excerpt": "a quote"}]}],
+    }
+    got = run_js(
+        data,
+        "[allStories().map(function (i) { return i.kind + ':' + i.f.id; }),"
+        " storyMatches(DATA.findings[0], 'a quote'), storyMatches(DATA.findings[0], 'zzz')]",
+    )
+    assert got == [["news:n", "research:r"], True, False]
+
+
+def test_age_is_counted_from_the_generated_date_not_the_clock():
+    got = run_js(
+        {"generated": "2026-10-22"},
+        "[ageText('2026-10-22'), ageText('2026-10-19'), ageText('2026-07-20'),"
+        " ageText('2016-06'), ageText('bogus'), ageText('2027-01-01')]",
+    )
+    assert got == ["today", "3 days ago", "3 months ago", "10 years ago", "", ""]
+
+
+def test_empty_domains_are_greyed_and_claims_lead_the_count():
+    data = {"findings": [], "claims": [{"id": "c", "domain_id": "ais.y"}]}
+    empty, full = run_js(
+        data,
+        "[domainCard({id: 'ais.x', name: 'X', scope: 's'}),"
+        " domainCard({id: 'ais.y', name: 'Y', scope: 's'})]",
+    )
+    assert 'class="domcard empty"' in empty and 'class="domcard"' in full
+    assert full.index("1 claim") < full.index("0 findings")
+
+
+def test_archive_takeaways_end_at_a_sentence():
+    text = "First sentence is here. " * 4 + "Then a long tail " * 20
+    got = gh.sentence_cut(text, 120)
+    assert got.endswith(". …") and len(got) <= 122
+    assert gh.sentence_cut("short", 120) == "short"
+    assert gh.sentence_cut("word " * 100, 50).endswith("…")

@@ -8,7 +8,7 @@
 
 Security researcher Johann Rehberger (wunderwuzzi) showed that Claude Code running Opus 5 in Auto Mode can be tricked into remote code execution 60-80% of the time simply by being asked to summarize a malicious website. The chain relies on a WebFetch failure forcing a curl fallback, a 303 redirect to a booby-trapped archive, Claude's own safety-motivated decision to write a custom decoder (rather than run the supplied binary) becoming the exploit trigger via Python module shadowing, and can spawn a fully separate nested `claude -p` agent with its own tool access.
 
-## What to learn
+## Lessons
 
 - Claude refused, per its safety guardrails, to run the attacker-supplied binary decoder - but its fallback decision to write its own decoder script was itself the exploit path, since the attacker had planted a malicious struct.py file for Python's import-shadowing behavior to intercept. - _"Claude, per its safety guardrails, refuses to run the decoder: “This is planned and what the attacker wants,” Rehberger wrote. Instead of using the supplied binary, the AI decides to write its own decoder. “Ironically, that safety decision is the exploit path,” Rehberger explained"_
 - The exploit uses Python module shadowing: a malicious local struct.py file (imported transitively by the standard base64 module) shadows the real standard-library struct module, so Claude's own generated code unknowingly executes attacker code. - _"Module shadowing occurs when a local file shares the same name as a Python standard-library module. The local file hides the official module, causing Python to load it instead. In this case, the standard-library base64 module imports the legitimate struct module, and the malicious ZIP contains a malicious file with the same name."_
@@ -25,8 +25,8 @@ Security researcher Johann Rehberger (wunderwuzzi) showed that Claude Code runni
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [The Register](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)  ·  **Retrieved:** 2026-09-09  
-**Scores:** Newness 1 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 56.65**  
+**Scores:** Newness 1 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 57** _(each 0-100)_  
 **Tags:** `claude-code`, `prompt-injection`, `sandbox-escape`, `python`, `module-shadowing`, `auto-mode`  
-**Verification:** ✓ independently verified · closest prior art: Rehberger's own prior Claude Code prompt-injection/exfiltration research plus long-documented Python import-shadowing attacks; the new specificity is chaining a safety-refusal fallback into the shadowing RCE and spawning a nested agent.
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Rehberger's own prior Claude Code prompt-injection/exfiltration research plus long-documented Python import-shadowing attacks; the new specificity is chaining a safety-refusal fallback into the shadowing RCE and spawning a nested agent.
 
 _Source: [https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)_  ·  [← back to index](../README.md)

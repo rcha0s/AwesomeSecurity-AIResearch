@@ -41,7 +41,7 @@ def test_generate_site_builds_trees_and_pages(sandbox):
     readme = (sandbox / "README.md").read_text(encoding="utf-8")
     # The short guide: teaser of this week's picks, big links into the site.
     assert "## This week's top stories" in readme
-    assert "## What to do now" in readme
+    assert "## Claim changes" in readme and "What to do now" not in readme
     assert "## Contribute" in readme
 
 

@@ -8,7 +8,7 @@
 
 AllenAI's BenchMIRT applies multidimensional Item Response Theory to 100 LLMs across 16 benchmarks and 34,000+ questions to independently discover which latent capabilities actually drive a benchmark's score, without being told the benchmarks' intended categories. It found that WMDP - a benchmark for dangerous dual-use knowledge, commonly treated as a safety metric - correlates more strongly with general reasoning ability than with safety, and in the opposite direction from what you'd expect: stronger-reasoning models score LOWER on WMDP, because the benchmark counts refusing or failing to produce the dangerous knowledge as the 'safe' desired response.
 
-## What to learn
+## Lessons
 
 - BenchMIRT independently recovered exactly two dominant capability dimensions (safety and general reasoning) across 16 mixed benchmarks without being told which benchmark measured which, and the result was stable across repeated from-scratch analyses. - _"Crucially, we didn’t tell BenchMIRT which benchmarks were measuring which capabilities. It independently recovered two dominant dimensions: safety and general reasoning. When we repeated our analysis from scratch, those same two dimensions emerged each time, suggesting the result was stable rather than specific to one analysis."_
 - WMDP, a benchmark for dangerous dual-use knowledge commonly grouped with safety benchmarks, was found by BenchMIRT to correlate more strongly with general reasoning than with safety - and counterintuitively, stronger reasoning is associated with LOWER WMDP scores, because the benchmark treats refusing or failing to produce the dangerous knowledge as the desired 'safe' response, so a better reasoner is more likely to actually produce the (unsafe) correct answer. - _"WMDP behaves differently from most safety benchmarks. It tests dangerous dual-use knowledge in areas such as biology, chemistry, and cybersecurity - for example, knowledge that could help someone misuse a biological agent or exploit a computer system. BenchMIRT found that WMDP scores were more strongly associated with general reasoning than with safety."_
@@ -19,8 +19,8 @@ AllenAI's BenchMIRT applies multidimensional Item Response Theory to 100 LLMs ac
 
 **Topic:** AI Security  ·  **Domain:** Red-Teaming & Threat Modeling  
 **Source:** [source](https://huggingface.co/blog/allenai/benchmirt)  ·  **Retrieved:** 2026-09-09  
-**Scores:** Newness 6 · Novelty 65 · Relevance 62 · Credibility 80 · **Composite 51.6**  
+**Scores:** Newness 6 · Novelty 65 · Relevance 62 · Credibility 80 · **Composite 52** _(each 0-100)_  
 **Tags:** `evals`, `benchmarks`, `item-response-theory`, `safety-evals`, `wmdp`  
-**Verification:** ✓ independently verified · closest prior art: AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.
 
 _Source: [https://huggingface.co/blog/allenai/benchmirt](https://huggingface.co/blog/allenai/benchmirt)_  ·  [← back to index](../README.md)
