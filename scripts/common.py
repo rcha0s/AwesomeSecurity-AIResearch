@@ -773,9 +773,30 @@ def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> 
     return is_editorial(entry) or is_news_curated(entry, conf, sources_by_id, window=None)
 
 
+def news_shown(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """True if the site's news lane (and so the News tab) renders this entry: a
+    kept news story whose quotes are grounded. Kept is not shown: an ungrounded
+    news story stays in the pool but waits in REVIEW.md."""
+    from verify_citations import publishable_grounding
+
+    return is_news_story(entry, conf, sources_by_id) and publishable_grounding(entry)
+
+
+def is_window_finding(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """A vetted finding of the last max_age_days that the findings lists show.
+    Findings age out; news never does, so a vetted news story belongs to the
+    news lane instead (one story, one lane) and never counts as a finding."""
+    return (
+        is_curated(entry, conf)
+        and is_fresh(entry, conf.max_age_days)
+        and not news_shown(entry, conf, sources_by_id)
+    )
+
+
 def is_held(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
-    """Waiting in REVIEW.md: not a vetted finding and not a kept news story."""
-    return not is_curated(entry, conf) and not is_news_story(entry, conf, sources_by_id)
+    """Waiting in REVIEW.md: shown nowhere, neither as a vetted finding nor in
+    the news lane."""
+    return not is_curated(entry, conf) and not news_shown(entry, conf, sources_by_id)
 
 
 def load_sources_by_id() -> dict[str, dict]:
@@ -787,8 +808,14 @@ def load_sources_by_id() -> dict[str, dict]:
     return {s["id"]: s for s in load_sources() if "id" in s}
 
 
-def review_reason(entry: dict, conf: Config) -> str:
+def review_reason(entry: dict, conf: Config, sources_by_id: dict[str, dict] | None = None) -> str:
     """Why an entry is in the review queue (for REVIEW.md)."""
+    if sources_by_id is None:
+        sources_by_id = load_sources_by_id()
+    if is_news_story(entry, conf, sources_by_id) and not news_shown(entry, conf, sources_by_id):
+        gs = entry.get("grounding_score")
+        pct = f" (only {int(gs * 100)}% of quotes verified)" if gs is not None and gs < 1.0 else ""
+        return f"news story: excerpt not grounded in source{pct}"
     if domain_held(entry):
         return f"domain not in the taxonomy — {entry['domain_hold']}"
     if entry.get("verified") is False:

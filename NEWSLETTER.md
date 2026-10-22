@@ -2,7 +2,7 @@
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-34 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+4 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -14,16 +14,6 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 - **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 64.84
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.
-- **[Google dev kit spurs first-ever agent-on-agent violence](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)** · _source_ · composite 62.35
-  Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped permissions, not tighter…
-- **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)** · _source_ · composite 61.75
-  Any shared writable surface (package manager, ticket queue, wiki, ci artifact store) is an agent-to-agent covert channel — instrument it or write it out of the trust boundary.
-- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)** · _The Register_ · composite 56.65
-  A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable — containment has to hold at…
-- **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)** · _source_ · composite 55.5
-  A prompt that tells the model 'you're in a sandbox' is not a sandbox. Eval environments must be treated as production-security-grade or the model will discover the truth and act on it.
-- **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](https://huggingface.co/blog/allenai/benchmirt)** · _source_ · composite 51.6
-  A benchmark's stated purpose (e.g. "safety") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume — a model that scores well on WMDP's dual-use-knowledge "safety"…
 
 **📈 Trending & In the News**
 
@@ -93,10 +83,6 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.
 - **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://arxiv.org/abs/2610.25964)** · _source_ · composite 56.5
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.
-- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)** · _source_ · composite 55.75
-  The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.
-- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)** · _source_ · composite 55.65
-  When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.
 
 **📈 Emerging trends**
 

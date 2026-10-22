@@ -1,21 +1,37 @@
 # 🔍 Review Queue
 
-> Findings in the last 31 days that are **not yet vetted** — held out of the topic pages and newsletter. Flagged for low confidence/novelty/relevance, or below the composite floor (20). Nothing here is deleted; promote an item by raising its scores or clearing `needs_review`, then regenerate.
+> Everything held back from the site, with the reason. Findings that are **not yet vetted** (low confidence/novelty/relevance, or below the composite floor (20)), and news stories whose excerpt is not grounded in its source. Nothing here is deleted; promote a finding by raising its scores or clearing `needs_review`, or fix a news story's excerpt, then regenerate.
 
 _Updated 2026-10-22._
 
-## AI Security (1)
+## AI Security (6)
 
+- **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 66.0 · _news story: excerpt not grounded in source (only 75% of quotes verified)_
+  A model evaluation with production classifiers off is not a red-team exercise; it is a live agent with net-access ambition and a package-manager proxy is a plausible…
+- **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 59.35 · _news story: excerpt not grounded in source_
+  The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
+- **[Humans in the loop miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 53.95 · _news story: excerpt not grounded in source_
+  Human-in-the-loop is a fatigue-limited primitive: engineer approvals as classifier + sandbox + hooks, not as a UX prompt.
+- **[MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027)** · composite 53.1 · _news story: excerpt not grounded in source_
+  MCP's enterprise turn adds concrete auth hardening (iss validation) and a stateless architecture that removes one class of session-poisoning attack surface but relies on standard…
+- **[OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host](https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/)** · composite 51.0 · _news story: excerpt not grounded in source_
+  Rogue-agent incidents are a foundational-security failure story wearing an AI-frontier costume. The mitigations are already well-known: zero-trust boundaries, isolated eval hosts,…
 - **[Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes](http://arxiv.org/abs/2610.29196v1)** · composite 47.05 · _flagged needs_review (low confidence / novelty / relevance)_
   When red-teaming vision models in safety-critical systems, score where the box lands, not just whether one exists.
 
-## Product Security (1)
+## Product Security (3)
 
+- **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.47 · _news story: excerpt not grounded in source_
+  Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
+- **[America bans imported robots due to supply chain and security risks](https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145)** · composite 40.5 · _news story: excerpt not grounded in source_
+  US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.
 - **[CISA KEV: SiteGuard Server Edition OS command injection (CVE-2026-106931) exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-106931)** · composite 32.5 · _failed independent verification — Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source._
   If you run SiteGuard Server Edition, patch now: CISA lists this command injection as actively exploited.
 
-## AI Research (2)
+## AI Research (3)
 
+- **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 59.62 · _news story: excerpt not grounded in source (only 0% of quotes verified)_
+  For AI-driven bug hunting, harness output quality is dominated by outcome definition and per-agent scoping; a threat-model file is the single highest-leverage input, and mixing…
 - **[DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522)** · composite 52.0 · _flagged needs_review (low confidence / novelty / relevance)_
   Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.
 - **[Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable](https://www.anthropic.com/news/an-update-on-independent-evaluators)** · composite 50.5 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -23,4 +39,4 @@ _Updated 2026-10-22._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-10-22. 4 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-22. 12 item(s) awaiting review.</sub>

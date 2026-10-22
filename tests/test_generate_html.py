@@ -435,7 +435,7 @@ def test_a_vetted_news_story_past_max_age_moves_from_findings_to_the_news_lane(s
     shown in the news lane (and so on the News tab), not as a finding."""
     _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
     old = _pool_news_entry(published="2020-01-01", needs_review=False)
-    fresh = _pool_news_entry(id="fresh-1", source_url="https://openai.com/blog/new")
+    fresh = _pool_news_entry(id="fresh-1", source_url="https://example.com/new", source_id="")
     fresh.update(needs_review=False, title="A different fresh story about tokens")
     data = payload_of(sandbox, entries=[old, fresh])
     assert [f["id"] for f in data["findings"]] == ["fresh-1"]
@@ -443,6 +443,24 @@ def test_a_vetted_news_story_past_max_age_moves_from_findings_to_the_news_lane(s
     assert set(news) == {"news-openai-fast-mode"}
     assert news["news-openai-fast-mode"]["detail_path"]  # a vetted finding keeps its page
     assert "has_page" not in news["news-openai-fast-mode"]
+
+
+def test_a_fresh_vetted_news_story_is_on_the_news_tab_once_not_also_a_finding(sandbox):
+    """Every kept news story is on the News tab, vetted or not, fresh or not; a
+    story is rendered in one lane, so the front page cannot list it twice."""
+    import content_checks as cc
+
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    vetted = _pool_news_entry(needs_review=False)  # vetted, 2 days old, news source
+    plain = _pool_news_entry(id="plain-1", source_url="https://example.com/p", source_id="")
+    plain.update(needs_review=False, title="A different fresh story about tokens")
+    data = payload_of(sandbox, entries=[vetted, plain])
+    assert [f["id"] for f in data["findings"]] == ["plain-1"]
+    assert [r["id"] for r in data["editorial"]] == ["news-openai-fast-mode"]
+    assert data["editorial"][0]["detail_path"]  # it is a vetted finding: its page exists
+    on_front = data["top_stories"]
+    assert len(on_front) == len(set(on_front))
+    assert cc.site_story_problems(data) == []
 
 
 # --- Client-side markdown renderer ------------------------------------------
@@ -612,7 +630,7 @@ def test_markdown_links_cannot_run_script_or_break_out_of_href():
         " renderMarkdown('[x](a\"onmouseover=alert(1))'),"
         " renderMarkdown('[x](https://e.example/\"onmouseover=alert(1))'),"
         " renderMarkdown('[ok](https://ok.example/p)'),"
-        " renderMarkdown('say \"hi\" [t\"x](https://ok.example/)')]"
+        ' renderMarkdown(\'say "hi" [t"x](https://ok.example/)\')]'
     )
     # Quotes are escaped before link substitution, so none survive raw in text.
     assert "&quot;hi&quot;" in got[4] and "t&quot;x" in got[4]
@@ -620,7 +638,7 @@ def test_markdown_links_cannot_run_script_or_break_out_of_href():
     assert 'href="#"' in got[0] and "javascript" not in got[0].split("</a>")[0].split(">")[0]
     assert 'href="#"' in got[1]
     for html in got[:3]:
-        assert not re.search(r'<a [^>]*\son\w+=', html), html  # no event-handler attribute
+        assert not re.search(r"<a [^>]*\son\w+=", html), html  # no event-handler attribute
     assert '<a href="https://ok.example/p"' in got[3]
 
 

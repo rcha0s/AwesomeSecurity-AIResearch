@@ -20,9 +20,9 @@ import common as c
 
 
 def review_items(topic: str, conf: c.Config) -> list[dict]:
-    # Held findings still awaiting a verdict. News stories (editorial or
-    # news-gated) live in the "Trending & In the News" section instead, and
-    # never age out, so they must not pile up here.
+    # Everything the site shows nowhere: findings awaiting a verdict, plus news
+    # stories whose quotes are not grounded. Grounded news stories live on the
+    # News tab and never age out, so they must not pile up here.
     sources = c.load_sources_by_id()
     return [e for e in c.load_pool(topic)["entries"] if c.is_held(e, conf, sources)]
 
@@ -31,15 +31,17 @@ def build(conf: c.Config, now: str) -> str:
     out = [
         "# 🔍 Review Queue",
         "",
-        f"> Findings in the last {conf.max_age_days} days that are **not yet vetted** — held "
-        "out of the topic pages and newsletter. Flagged for low confidence/novelty/relevance, or "
-        f"below the composite floor ({conf.curation.get('min_composite', 0)}). Nothing here is "
-        "deleted; promote an item by raising its scores or clearing `needs_review`, then regenerate.",
+        "> Everything held back from the site, with the reason. Findings that are **not yet "
+        "vetted** (low confidence/novelty/relevance, or below the composite floor "
+        f"({conf.curation.get('min_composite', 0)})), and news stories whose excerpt is not "
+        "grounded in its source. Nothing here is deleted; promote a finding by raising its "
+        "scores or clearing `needs_review`, or fix a news story's excerpt, then regenerate.",
         "",
         f"_Updated {now}._",
         "",
     ]
     total = 0
+    sources = c.load_sources_by_id()
     for topic, meta in c.TOPICS.items():
         items = sorted(review_items(topic, conf), key=lambda e: -c.entry_composite(e, conf))
         total += len(items)
@@ -51,7 +53,7 @@ def build(conf: c.Config, now: str) -> str:
             take = e.get("takeaway") or e.get("summary") or e.get("threat") or ""
             out.append(
                 f"- **[{e.get('title','')}]({e.get('source_url','')})** "
-                f"· composite {c.entry_composite(e, conf)} · _{c.review_reason(e, conf)}_"
+                f"· composite {c.entry_composite(e, conf)} · _{c.review_reason(e, conf, sources)}_"
             )
             if take:
                 out.append(f"  {c.clean_summary(take, 180)}")

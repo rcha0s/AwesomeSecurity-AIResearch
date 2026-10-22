@@ -135,3 +135,36 @@ def test_kept_news_is_not_held_for_review(sandbox):
     assert "https://a/2" in review and "https://a/n" not in review
     g.write_topic("ai-security", c.load_config(), "now")
     assert "1 held for review" in (sandbox / "ai-security" / "README.md").read_text()
+
+
+def _news_pool(sandbox, entries):
+    sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
+    pool = c.load_pool("ai-security")
+    pool["entries"] = entries
+    c.save_pool("ai-security", pool)
+
+
+def test_an_ungrounded_news_story_waits_in_review_with_its_reason(sandbox):
+    """Kept in the pool but rendered nowhere is the one state REVIEW.md must not miss."""
+    _news_pool(
+        sandbox,
+        [
+            make_entry(
+                title="bad quote",
+                source_url="https://a/bad",
+                source_id="rss:news",
+                grounding_score=0.5,
+            ),
+            make_entry(title="good news", source_url="https://a/good", source_id="rss:news"),
+        ],
+    )
+    conf = c.load_config()
+    sources = c.load_sources_by_id()
+    bad, good = c.load_pool("ai-security")["entries"]
+    assert c.is_news_story(bad, conf, sources) and c.is_held(bad, conf, sources)
+    assert not c.is_held(good, conf, sources)
+    assert gr.main() == 0
+    review = (sandbox / "REVIEW.md").read_text(encoding="utf-8")
+    assert "https://a/bad" in review and "https://a/good" not in review
+    assert "news story: excerpt not grounded in source" in review
