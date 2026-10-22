@@ -27,13 +27,16 @@ def table() -> prefilter.KeywordTable:
     )
 
 
-def conf(cap: int = 2, margin: int = 1, per_source: int = 2, bonus: float = 5) -> common.Config:
+def conf(
+    cap: int = 2, margin: int = 1, per_source: int = 2, bonus: float = 5, **extra
+) -> common.Config:
     base = common.load_config()
     limits = {
         "max_stories_per_run": cap,
         "batch_margin": margin,
         "batch_per_source": per_source,
         "batch_routed_bonus": bonus,
+        **extra,
     }
     return common.Config(**{**base.__dict__, "limits": limits})
 
@@ -56,6 +59,9 @@ def test_batch_size_is_the_story_cap_plus_the_named_margin():
     real = common.load_config()
     assert real.limits["batch_margin"] == 4  # named in config.yaml, not a code default
     assert real.limits["batch_per_source"] == 2 and real.limits["batch_routed_bonus"] == 5
+    assert real.limits["batch_priority_max"] == 5
+    assert real.limits["batch_priority_per_source"] == 3
+    assert real.limits["batch_class_slots"] == {"rss": 2}
     assert select_batch.batch_size(real) == real.limits["max_stories_per_run"] + 4
 
 
@@ -134,6 +140,99 @@ def test_no_source_class_starves_the_others(sandbox, table):
     assert "kev_json:cisa" in sources and "hackernews:Hacker News" in sources
     assert max(sources.count(s) for s in set(sources)) <= 2  # batch_per_source
     assert sources.count("github:GHSA") == 2  # the score leader still gets its share
+
+
+def must_not_miss_mix() -> list[dict]:
+    """realistic_mix plus the 2026-W43 shape: critical GHSA (one in AI tooling)
+    and a high one in AI tooling, all scoring below the routed GHSA flood."""
+    ghsa = {"source_id": None, "discovered_via": "github", "source_type": "GHSA"}
+
+    def adv(i, severity, topic="product-security", rank=40.0):
+        return _cand(
+            id=f"adv{i}",
+            title=f"Advisory {i} in package{i}",
+            source_url=f"https://github.com/advisories/GHSA-{i}",
+            article_url=f"https://github.com/advisories/GHSA-{i}",
+            source_rank=rank,
+            published="2026-07-14",
+            severity=severity,
+            guess_topic=topic,
+            **ghsa,
+        )
+
+    return [
+        *realistic_mix(),
+        adv(1, "CRITICAL"),
+        adv(2, "CRITICAL", rank=30.0),
+        adv(3, "CRITICAL", "ai-security", rank=20.0),  # Claude Agent SDK, LMCache
+        adv(4, "HIGH", "ai-security", rank=10.0),
+        adv(5, "HIGH"),  # not AI tooling: no lane
+        adv(6, "MODERATE", "ai-security"),  # not severe enough: no lane
+    ]
+
+
+LANE = {"batch_priority_max": 5, "batch_priority_per_source": 3}
+
+
+def test_must_not_miss_lane_comes_first_and_ai_tooling_leads_it(sandbox, table):
+    staged = must_not_miss_mix()
+    batch, backlog = select_batch.select(staged, conf(8, 4, **LANE), table)
+    assert len(batch) == 12
+    lane = [c for c in batch if c.get("batch_priority")]
+    assert batch[: len(lane)] == lane and len(lane) == 5
+    # dealt in turn, best head first: GHSA in AI tooling leads (adv3, adv4); in the
+    # third round KEV (rank 50) outranks the remaining critical adv1 (rank 40)
+    assert [c["id"] for c in lane] == ["adv3", "kev0", "adv4", "kev1", "kev2"]
+    kinds = [c["batch_priority"] for c in lane]
+    assert kinds == ["ghsa-critical", "kev", "ghsa-ai", "kev", "kev"]
+    sources = [select_batch.source_key(c) for c in batch]
+    assert sources.count("github:GHSA") == 2  # the lane used GHSA's batch_per_source
+    assert sources.count("kev_json:cisa") == 3  # lane cap 3, above batch_per_source
+    assert "hackernews:Hacker News" in sources  # the deal still reaches every class
+    ids = [c["id"] for c in batch + backlog]
+    assert sorted(ids) == sorted(c["id"] for c in staged)  # nothing lost or duplicated
+    assert not any(c.get("batch_priority") for c in backlog)
+
+
+def test_without_a_lane_size_the_batch_is_unchanged(sandbox, table):
+    plain, _ = select_batch.select(must_not_miss_mix(), conf(8, 4), table)
+    assert not any("batch_priority" in c for c in plain)
+    assert "adv3" not in [c["id"] for c in plain]  # what W43 looked like: criticals lose
+
+
+def test_lane_respects_its_size_and_per_source_cap(sandbox, table):
+    staged = must_not_miss_mix()
+    batch, _ = select_batch.select(staged, conf(1, 1, **LANE), table)
+    assert len(batch) == 2 and all(c.get("batch_priority") for c in batch)  # lane <= batch
+    one_each = {"batch_priority_max": 9, "batch_priority_per_source": 1}
+    batch, _ = select_batch.select(staged, conf(8, 4, **one_each), table)
+    lane = [c["batch_priority"] for c in batch if c.get("batch_priority")]
+    assert lane == ["ghsa-critical", "kev"]
+
+
+def test_priority_class_names_only_the_must_not_miss_kinds():
+    ghsa = {"source_type": "GHSA"}
+    pc = select_batch.priority_class
+    assert pc({"source_id": "kev_json:cisa"}) == "kev"
+    assert pc({**ghsa, "severity": "critical"}) == "ghsa-critical"
+    assert pc({**ghsa, "severity": "HIGH", "prefilter": {"domain_hint": "ais.mcp-tools"}}) == (
+        "ghsa-ai"
+    )
+    assert pc({**ghsa, "severity": "HIGH", "guess_topic": "ai-security"}) == "ghsa-ai"
+    assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ps.appsec"}) is None
+    assert pc({**ghsa, "severity": "MODERATE", "guess_topic": "ai-security"}) is None
+    assert pc({"severity": "CRITICAL", "source_id": "rss:x"}) is None
+
+
+def test_class_slots_let_a_class_deal_more_than_one_per_round(sandbox, table):
+    staged = realistic_mix()
+    batch, _ = select_batch.select(staged, conf(4, 0), table)
+    plain = [select_batch.ingestor_class(c) for c in batch]
+    batch, _ = select_batch.select(staged, conf(4, 0, batch_class_slots={"rss": 3}), table)
+    slotted = [select_batch.ingestor_class(c) for c in batch]
+    assert plain.count("rss") == 1 and slotted.count("rss") == 3
+    sources = [select_batch.source_key(c) for c in batch]
+    assert max(sources.count(s) for s in set(sources)) <= 2  # per-source cap still holds
 
 
 def test_the_per_source_cap_yields_when_nothing_else_is_left(sandbox, table):

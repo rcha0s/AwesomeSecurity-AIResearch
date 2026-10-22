@@ -227,11 +227,11 @@ def test_fail_alert_never_publishes_log_text(scan_repo):
 def test_post_over_story_cap_fails_and_alerts(scan_repo):
     work, _, env = scan_repo
     reserved_run(work, env)
-    (work / "data/analysis_out.json").write_text(json.dumps([{"t": i} for i in range(9)]))
-    merged(work, 9)
+    (work / "data/analysis_out.json").write_text(json.dumps([{"t": i} for i in range(11)]))
+    merged(work, 11)
     res = run_scan(work, env, "post")
     assert res.returncode != 0
-    assert "over the per-run cap of 8" in (work / "data/_scan.log").read_text()
+    assert "over the per-run cap of 10" in (work / "data/_scan.log").read_text()
     assert "labels=scan-failure" in gh_calls(env)
 
 
@@ -239,12 +239,12 @@ def test_post_counts_entries_merged_past_the_last_analysis_out(scan_repo):
     work, _, env = scan_repo
     reserved_run(work, env)
     (work / "data/analysis_out.json").write_text("[]")
-    merged(work, 9)
-    pool = {"topic": "ai-security", "entries": [{"id": f"e{i}"} for i in range(9)]}
+    merged(work, 11)
+    pool = {"topic": "ai-security", "entries": [{"id": f"e{i}"} for i in range(11)]}
     (work / "data/ai-security.json").write_text(json.dumps(pool))
     res = run_scan(work, env, "post")
     assert res.returncode != 0
-    assert "analyzed 9 stories, over the per-run cap of 8" in (work / "data/_scan.log").read_text()
+    assert "analyzed 11 stories, over the per-run cap of 10" in (work / "data/_scan.log").read_text()
 
 
 def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
@@ -265,7 +265,7 @@ def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     calls = gh_calls(env)
     assert "-X POST repos/" in calls and "/pulls" in calls
     assert SECRET not in calls and "withheld" in calls
-    assert "Spend this month:** $2.00 charged of $10.00" in calls  # 8 stories x $0.25 reserved
+    assert "Spend this month:** $2.50 charged of $10.00" in calls  # 10 stories x $0.25 reserved
     assert "/blob/budget-ledger/SPEND.md" in calls and "https://github.com/" in calls
     assert [r["kind"] for r in ledger_rows(origin)] == ["reserve", "done"]
 
@@ -345,8 +345,8 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     assert "data/evals/golden-2099-01-01.json" not in files
     rows = json.loads(git(origin, "show", f"{branch}:data/evals/history.json"))["runs"]
     assert [r["run_id"] for r in rows] == ["C1"]
-    assert rows[0]["cost_usd"] == 2.0 and rows[0]["candidates"] == 0
-    assert (rows[0]["cost_basis"], rows[0]["ceiling_usd"]) == ("reserved", 2.0)
+    assert rows[0]["cost_usd"] == 2.5 and rows[0]["candidates"] == 0
+    assert (rows[0]["cost_basis"], rows[0]["ceiling_usd"]) == ("reserved", 2.5)
     assert rows[0]["recall"] is None  # the stubbed fetch wrote nothing; no tree file stands in
     assert [f for f in files.split() if f.startswith("data/evals/")] == ["data/evals/history.json"]
     assert rows[0]["integrity"]["passed"] is False  # no rendered site in this repo
@@ -355,7 +355,7 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     assert "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |" in calls
     assert "Spend this month:**" in calls
     # The cloud can't measure its cost: the body says reserved, honestly.
-    assert "charged $2.00 (reserved; reserved ceiling $2.00" in calls
+    assert "charged $2.50 (reserved; reserved ceiling $2.50" in calls
 
 
 # An ingestor stub that stages 20 neutral candidates, best source rank last.
@@ -374,14 +374,14 @@ def test_pre_hands_the_session_only_this_runs_batch(scan_repo):
     reserved_run(work, env)
     data = work / "data"
     ids = {c["id"] for c in json.loads((data / "candidates.json").read_text())}
-    assert ids == {f"c{i:02d}" for i in range(8, 20)}  # 8 stories + margin 4, best rank
+    assert ids == {f"c{i:02d}" for i in range(6, 20)}  # 10 stories + margin 4, best rank
     backlog = json.loads((data / "_scan_backlog.json").read_text())
-    assert {c["id"] for c in backlog} == {f"c{i:02d}" for i in range(8)}  # kept, not lost
+    assert {c["id"] for c in backlog} == {f"c{i:02d}" for i in range(6)}  # kept, not lost
     assert set(json.loads((data / "_scan_urls.json").read_text())) == ids  # fetchable
     assert set(json.loads((data / "story_shortlist.json").read_text())) == ids  # judged
     assert (data / "_scan_candidates").read_text().strip() == "20"  # ingested, for the eval
     assert (
-        "SCAN_READY: 12 candidates in this run's batch (20 ingested)"
+        "SCAN_READY: 14 candidates in this run's batch (20 ingested)"
         in (data / "_scan.log").read_text()
     )
 

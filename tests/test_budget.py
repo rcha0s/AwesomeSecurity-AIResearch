@@ -115,6 +115,42 @@ def test_per_story_is_the_worst_actual_run_so_padding_cannot_lower_it():
     assert budget.usd_per_story(runs, override=0.25) == 0.25
 
 
+def test_a_calibration_window_retires_an_old_outlier_but_not_to_padding():
+    # 2026-10: the first run (3 stories, $0.44 each) set every later ceiling.
+    first = row("a", cost=1.32, stories=3)  # $0.44/story
+    honest = [row(f"h{i}", cost=1.68, stories=8) for i in range(5)]  # $0.21/story
+    assert budget.usd_per_story([first, *honest]) == pytest.approx(0.44)  # no window
+    assert budget.usd_per_story([first, *honest], window=5) == pytest.approx(0.21)
+    assert budget.usd_per_story([first, *honest[:4]], window=5) == pytest.approx(0.44)
+    padded = [first, *[row(f"p{i}", cost=0.8, stories=8) for i in range(4)]]  # $0.10/story
+    assert budget.usd_per_story(padded, window=5) == pytest.approx(0.44)  # 4 pads aren't enough
+    for off in (None, 0, -1):
+        assert budget.usd_per_story([first, *honest], window=off) == pytest.approx(0.44)
+    assert budget.usd_per_story([first], override=0.1, window=5) == 0.1
+
+
+def test_headroom_scales_a_measured_rate_never_an_override_and_never_down():
+    runs = [row("a", cost=2.0, stories=4)]  # $0.50/story
+    s = {**settings(cap=100.0, max_stories=10), "ceiling_headroom": 1.5}
+    assert budget.run_ceiling(runs, s, "cloud") == (7.5, "calibrated")
+    assert budget.run_ceiling(runs, {**s, "usd_per_story": 0.25}, "cloud")[0] == 2.5
+    assert budget.run_ceiling(runs, {**s, "ceiling_headroom": 0.5}, "cloud")[0] == 5.0
+    assert budget.run_ceiling(runs, {**s, "ceiling_headroom": None}, "cloud")[0] == 5.0
+    later = [*runs, row("b", cost=1.0, stories=4)]  # $0.25/story, the newest
+    assert budget.run_ceiling(later, {**s, "calibration_runs": 1}, "cloud")[0] == 3.75
+    assert budget.run_ceiling(later, s, "cloud")[0] == 7.5  # no window: the old worst
+
+
+def test_real_config_fits_a_month_of_cloud_runs_at_the_measured_rate():
+    """The 2026-10-22 run: 8 stories for $1.67. Cloud runs are charged the
+    ceiling, one a day, so 31 of them must fit the monthly cap."""
+    s = budget.budget_settings()
+    assert s["calibration_runs"] >= 3  # padding has to repeat to move the ceiling
+    assert s["ceiling_headroom"] * s["session_cap_fraction"] > 1  # a worst-rate run fits
+    ceiling, _ = budget.run_ceiling([row("m", cost=1.6749, stories=8)], s, "cloud")
+    assert 31 * ceiling <= s["monthly_cap_usd"]
+
+
 @pytest.mark.parametrize(
     "bad",
     [
