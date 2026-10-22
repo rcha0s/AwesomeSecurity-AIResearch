@@ -7,9 +7,11 @@ when the session fails.
 
 from __future__ import annotations
 
+import json
 import subprocess
 from pathlib import Path
 
+import content_checks
 import pytest
 from test_run_scan import SECRET, gh_calls, git, ledger_rows, open_budget
 
@@ -25,6 +27,8 @@ if [ -n "$FAKE_ANALYSIS" ]; then
   echo '[{"id": "a"}, {"id": "b"}]' > data/analysis_out.json
   echo '{"merged": 2, "new": 2}' > data/_merge_outcomes.json  # as merge_analysis.py writes
 fi
+# FAKE_TOUCH: change a published file, so post has something to open a PR for.
+if [ -n "$FAKE_TOUCH" ]; then echo changed >> README.md; fi
 printf '{"total_cost_usd": 0.42, "subtype": "success", "num_turns": 7, "result": "%s"}' \\
   "${FAKE_RESULT:-Analyzed the batch.}"
 exit "${FAKE_CLAUDE_RC:-0}"
@@ -69,7 +73,8 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert "Read(data/evals/**)" not in "\n".join(args)  # golden-only tightening
     assert '"Edit(data/_scan*)"' in "\n".join(args)  # the batch cut + backlog
     assert '"Read(data/_scan_backlog.json)"' in "\n".join(args)  # the batch is the job
-    code_owned = ("_story_outcomes.md", "_merge_outcomes.json")  # what post's --work reads
+    # what post's --work reads, and the editorial record post puts in the PR body
+    code_owned = ("_story_outcomes.md", "_merge_outcomes.json", "_editorial_outcomes.md")
     for denied in ("news_stories.json", "story_shortlist.json", *code_owned):
         assert f'"Edit(data/{denied})"' in "\n".join(args)  # the story guard's inputs
     assert flag["--append-system-prompt-file"] == ".claude/skills/daily-scan/SKILL.md"
@@ -80,10 +85,29 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert "acceptEdits" not in args and "--dangerously-skip-permissions" not in args
     rows = [(r["kind"], r["cost_usd"]) for r in ledger_rows(origin)]
     finished = [("done", 0)] if claude_rc == 0 else []  # post ran only on success
-    assert rows == [("reserve", 2.0), *finished, ("actual", 0.42)]
+    assert rows == [("reserve", 2.0), ("actual", 0.42), *finished]  # measured before post
     # the scan ran in its own worktree; Rohan's checkout is untouched
     assert git(work, "status", "--porcelain", "--untracked-files=no") == ""
     assert git(work, "branch", "--show-current") == "main"
+
+
+def test_the_local_pr_body_and_history_row_show_the_measured_charge(scan_repo, tmp_path):
+    """The session cost $0.42 against a $2.00 reservation: the PR says $0.42."""
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    res, _ = run_local(work, env, tmp_path, FAKE_ANALYSIS="1", FAKE_TOUCH="1")
+    assert res.returncode == 0, res.stdout + res.stderr
+    calls = gh_calls(env)
+    assert "charged $0.42 (measured; reserved ceiling $2.00" in calls
+    assert "(reserved;" not in calls
+    branch = next(b for b in git(origin, "branch", "--list", "claude/scan-*").split() if b != "*")
+    row = json.loads(git(origin, "show", f"{branch}:data/evals/history.json"))["runs"][-1]
+    assert (row["cost_usd"], row["cost_basis"], row["ceiling_usd"]) == (0.42, "measured", 2.0)
+    # ...and the merge gate's anti-forgery check accepts it against the real ledger.
+    ledger = ledger_rows(origin)
+    assert content_checks.history_problems({}, {"runs": [row]}, ledger, {
+        "integrity": row["integrity"]["passed"], "golden": row["golden"],
+        "cap_usd": row["cap_usd"]}) == []  # fmt: skip
 
 
 def test_a_run_that_fails_in_post_still_records_its_story_count(scan_repo, tmp_path):
@@ -166,8 +190,8 @@ def test_the_retry_ships_when_its_session_analyzes(scan_repo, tmp_path):
     assert attempts(origin) == [
         *EMPTY,
         ("reserve", 0, None),
-        ("done", 2, None),
         ("actual", 2, None),
+        ("done", 2, None),
     ]
     log = (work / "data/_scan.log").read_text()
     assert log.count("FAILED in phase 'analysis-empty'") == 1  # only the first attempt

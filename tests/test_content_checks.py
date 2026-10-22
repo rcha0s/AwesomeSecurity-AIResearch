@@ -223,3 +223,73 @@ def test_rewritten_evidence_needs_human_review(evidence):
 def test_garbage_ledgers_report_missing_claims():
     assert cc.claim_history_problems(MAIN, {"claims": "nope"}) != []
     assert cc.claim_history_problems(MAIN, None) != []
+
+
+# ---------------------------------------------------------------- sticky promotions
+PROMO = {"promoted": True, "reason": "trending", "signals": [], "at": "2026-10-20"}
+
+
+def _pool(*entries) -> dict:
+    return {"entries": list(entries)}
+
+
+def _ed(eid: str, **over) -> dict:
+    return {"id": eid, "editorial": dict(PROMO), "grounding_score": 1.0, **over}
+
+
+def test_kept_and_new_promotions_pass():
+    main = [_pool(_ed("a")), []]
+    pr = [_pool(_ed("a"), _ed("b")), []]
+    assert cc.editorial_problems(main, pr) == []
+    assert cc.editorial_problems([_pool({"id": "c"})], [_pool(_ed("c"))]) == []  # added
+
+
+def test_a_promotion_may_move_to_the_archive():
+    assert cc.editorial_problems([_pool(_ed("a")), []], [_pool(), [_ed("a")]]) == []
+
+
+@pytest.mark.parametrize(
+    "after,needle",
+    [
+        ({"id": "a", "grounding_score": 1.0}, "lost its promotion with main's integrity intact"),
+        ({"id": "a", "editorial": {"promoted": False}}, "integrity intact"),
+        ({"id": "a", "editorial": "yes"}, "integrity intact"),
+        ({"id": "a", "verified": True, "grounding_score": None}, "integrity intact"),
+        (None, "promoted entry a is gone"),
+    ],
+)
+def test_a_demotion_with_integrity_intact_needs_review(after, needle):
+    pr = [_pool(*([after] if after else []))]
+    problems = cc.editorial_problems([_pool(_ed("a"))], pr)
+    assert len(problems) == 1 and needle in problems[0]
+    assert problems[0].startswith(cc.DEMOTION_REVIEW)
+
+
+@pytest.mark.parametrize("lost", [{"verified": False}, {"grounding_score": 0.5}])
+def test_integrity_flipped_inside_the_pr_is_not_evidence(lost):
+    """verified / grounding_score are session-writable: flipping them on a
+    promoted entry must not launder a demotion past the gate."""
+    after = {"id": "a", "grounding_score": 1.0, **lost}
+    problems = cc.editorial_problems([_pool(_ed("a"))], [_pool(after)])
+    assert len(problems) == 1 and problems[0].startswith(cc.DEMOTION_REVIEW)
+
+
+@pytest.mark.parametrize("lost", [{"verified": False}, {"grounding_score": 0.5}])
+def test_integrity_already_lost_on_main_may_remove_a_promotion(lost):
+    after = {"id": "a", "grounding_score": 1.0, **lost}
+    assert cc.editorial_problems([_pool(_ed("a", **lost))], [_pool(after)]) == []
+
+
+@pytest.mark.parametrize("order", ["demoted-last", "demoted-first"])
+def test_an_id_is_kept_only_if_every_copy_stays_promoted(order):
+    """A promoted copy elsewhere (pool vs archive) can't mask a demoted one."""
+    kept, dropped = _ed("a"), {"id": "a", "grounding_score": 1.0}
+    pr = [_pool(kept), [dropped]] if order == "demoted-last" else [_pool(dropped), [kept]]
+    problems = cc.editorial_problems([_pool(_ed("a"))], pr)
+    assert len(problems) == 1 and problems[0].startswith(cc.DEMOTION_REVIEW)
+    assert cc.editorial_problems([_pool(_ed("a"))], [_pool(kept), [dict(kept)]]) == []
+
+
+def test_garbage_docs_do_not_crash():
+    assert cc.editorial_problems([None, "x", {"entries": "x"}], [None]) == []
+    assert cc.editorial_problems([_pool(_ed("a"))], [None]) != []

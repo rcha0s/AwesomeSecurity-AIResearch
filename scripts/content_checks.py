@@ -13,6 +13,10 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
+  editorial_problems    an entry promoted on main keeps its promotion (every
+                        copy) unless main's copy already failed integrity;
+                        any other removal is refused as "editorial demotion
+                        needs human review".
   story_membership_problems every entry in main's story ledger stays in the
                         same story in the PR, and no story disappears: a PR can
                         only add stories, or add NEW entries to existing ones
@@ -21,8 +25,10 @@ bound what that content can do once published:
                         a story id and no story renders twice (ISC-21; the
                         Phase 3 integrity eval and generate_html.py call it).
   history_problems      data/evals/history.json only grows by this run's one
-                        row, and that row agrees with the budget ledger and with
-                        what the gate recomputes (integrity, golden, the cap).
+                        row, and that row agrees with the budget ledger (its
+                        charge is the run's effective charge there; measured
+                        only for a local run) and with what the gate recomputes
+                        (integrity, golden, the cap).
 
 Pure functions over parsed data; merge_gate.py does the I/O.
 """
@@ -32,6 +38,8 @@ from __future__ import annotations
 import html
 import json
 import re
+
+from common import integrity_lost  # the one definition of the integrity floor
 
 # Same rule as safeUrl() in scripts/templates/site.html: keep them in step.
 HTTP_URL = re.compile(r"https?://[^\s\"<>`]+", re.IGNORECASE)
@@ -46,6 +54,7 @@ STAMP = re.compile(r"<span>Generated <b>([^<]*)</b></span>")
 # not auto-merge: it stays open for a human.
 CLAIM_MUTABLE = frozenset({"evidence", "last_reviewed"})
 NEEDS_REVIEW = "claim change needs human review"
+DEMOTION_REVIEW = "editorial demotion needs human review"
 
 
 def _is_url_key(key: object) -> bool:
@@ -105,6 +114,39 @@ def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
     out = [f"claim {cid} on main is missing from the PR" for cid in sorted(set(old) - set(new))]
     for cid in sorted(set(old) & set(new)):
         out += _claim_change_problems(cid, old[cid], new[cid])
+    return out
+
+
+def _entries(doc: object) -> list:
+    """Entries of a pool ({"entries": [...]}) or the archive (a bare list)."""
+    rows = doc.get("entries") if isinstance(doc, dict) else doc
+    return [e for e in rows if isinstance(e, dict)] if isinstance(rows, list) else []
+
+
+def _promoted(entry: dict) -> bool:
+    return isinstance(entry.get("editorial"), dict) and bool(entry["editorial"].get("promoted"))
+
+
+def editorial_problems(main_docs: list, pr_docs: list) -> list[str]:
+    """Promotions are sticky (news is kept like claims). A scan PR may drop one
+    only when main's copy had already failed integrity (refuted or ungrounded:
+    the same c.integrity_lost promote_editorial.py removes on). `verified` and
+    `grounding_score` are session-writable, so integrity that fails inside this
+    PR is not evidence: that removal, an explicit demotion, or an entry that
+    vanished waits for a human. An id counts as kept only if every copy of it
+    in the PR is still promoted. `*_docs` are pools + archive."""
+    before = {e.get("id"): e for d in main_docs for e in _entries(d) if _promoted(e)}
+    after: dict = {}
+    for d in pr_docs:
+        for e in _entries(d):
+            after.setdefault(e.get("id"), []).append(e)
+    out = []
+    for eid in sorted(i for i in before if isinstance(i, str)):
+        copies = after.get(eid) or []
+        if not copies:
+            out.append(f"{DEMOTION_REVIEW}: promoted entry {eid} is gone")
+        elif not all(_promoted(e) for e in copies) and not integrity_lost(before[eid]):
+            out.append(f"{DEMOTION_REVIEW}: {eid} lost its promotion with main's integrity intact")
     return out
 
 
@@ -172,12 +214,23 @@ def _ledger_problems(row: dict, ledger_runs: list[dict]) -> list[str]:
         out.append(f"history: run {rid}'s runner/date disagree with its reservation")
     if row.get("ceiling_usd") != held[0].get("cost_usd"):
         out.append(f"history: run {rid}'s ceiling is not its reservation")
-    basis = row.get("cost_basis")
-    kind = {"reserved": "reserve", "measured": "actual"}.get(basis)
-    costs = [r.get("cost_usd") for r in mine if r.get("kind") == kind]
-    if kind is None or row.get("cost_usd") not in costs:
-        out.append(f"history: run {rid}'s cost is not a {basis or '?'} charge on the ledger")
-    return out
+    return out + _charge_problems(row, mine, held[0])
+
+
+def _charge_problems(row: dict, mine: list[dict], held: dict) -> list[str]:
+    """The row's charge is exactly what the ledger charges the run: its latest
+    `actual` row if it has one, else its reservation (budget.effective_runs).
+    A measured charge needs a local reservation: a cloud run can't measure its
+    cost, so an `actual` row on one is not evidence of anything."""
+    rid, basis = row.get("run_id"), row.get("cost_basis")
+    actuals = [r for r in mine if r.get("kind") == "actual"]
+    charge = actuals[-1] if actuals else held
+    want = "measured" if actuals else "reserved"
+    if basis == "measured" and held.get("runner") != "local":
+        return [f"history: run {rid} claims a measured cost but is not a local run"]
+    if basis != want or row.get("cost_usd") != charge.get("cost_usd"):
+        return [f"history: run {rid}'s cost is not its {want} charge on the ledger"]
+    return []
 
 
 GOLDEN_FIELDS = ("score", "off_topic_rate", "cases", "generated", "file")

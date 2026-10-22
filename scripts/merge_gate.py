@@ -11,7 +11,8 @@ config.yaml. An eval whose script is missing is skipped with a notice until it i
 declared `required: true`; from then on a missing script fails the gate (closed).
 
 It also runs content_checks.py in-process: URL schemes in data/*.json, render
-equality of docs/index.html, and claim-ledger history against main (`--base`),
+equality of docs/index.html, claim-ledger history against main (`--base`),
+sticky editorial promotions (a removal needs a human unless main had already lost integrity),
 and the eval history: main's rows untouched, at most one new row, and that row's
 charge, integrity, golden result and cap checked against the budget ledger
 (origin/budget-ledger) and recomputed on this tree.
@@ -101,8 +102,22 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     stories = root / "data" / "news_stories.json"
     pr_stories = json.loads(stories.read_text(encoding="utf-8")) if stories.is_file() else {}
     out += cc.story_membership_problems(main_stories(base), pr_stories)
+    out += editorial_check(base, root)
     out += history_check(base, root)
     return out
+
+
+def editorial_check(base: str, root: Path = ROOT) -> list[str]:
+    """Promotions on main stay promoted unless main's copy had already lost integrity."""
+    import common as c
+
+    names = [f"{t}.json" for t in c.TOPICS] + ["archive.json"]
+    main_docs = [git_json(f"{base}:data/{n}", {}) for n in names]
+    pr_docs = []
+    for n in names:
+        path = root / "data" / n
+        pr_docs.append(json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {})
+    return cc.editorial_problems(main_docs, pr_docs)
 
 
 def git_json(ref_path: str, default: object) -> object:

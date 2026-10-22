@@ -14,8 +14,10 @@ the scan PR. `gate` says whether the last `evals.gate_runs` rows all pass:
   golden     >= thresholds.golden_min and off-topic <= thresholds.off_topic_max (same age rule)
   integrity  passed: all or nothing
   cost       a measured charge <= the per-run cap (thresholds.max_run_usd, else monthly
-             cap / 30); a reserved charge (every cloud run, and a local run at post
-             time) <= the ceiling it reserved, since its true cost is unknowable
+             cap / 30); a reserved charge (every cloud run, and a local run whose
+             cost was unreadable) <= the ceiling it reserved, since its true cost
+             is unknowable. The Mac wrapper records the measured cost before post,
+             so a local row carries it
 
 A run counts only once its scan PR merges: rows ride on the PR. post resets
 data/evals/ to main's copy before it appends, merge_guard lets a scan PR touch

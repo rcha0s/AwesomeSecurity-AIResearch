@@ -206,7 +206,8 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   run's ceiling (`max_stories_per_run` × measured per-story cost, or
   `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
   run is still charged. Local runs replace the reservation with the measured
-  `total_cost_usd`; cloud runs are charged the ceiling. One finished scan per UTC
+  `total_cost_usd`, recorded by the wrapper before `post` so the PR body and the
+  history row show it; cloud runs are charged the ceiling. One finished scan per UTC
   day: a failed cloud run doesn't block the Mac fallback, but a runner never
   retries its own failed day unattended, except the Mac's one retry after a cheap
   analysis-empty failure (the retry's own reservation blocks any further one). The
@@ -240,6 +241,10 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   It never overrides the novelty reviewer and never surfaces an ungrounded or
   verifier-refuted item — `promote_editorial.py` re-checks eligibility. Its
   staging file `data/editorial_out.json` is gitignored like `analysis_out.json`.
+  **Promotions are sticky:** a run only adds them. One leaves only by an explicit
+  demotion with a reason (`{"id", "demote": true, "reason"}`) or when its
+  integrity fails (refuted or ungrounded). Every promotion and removal goes into
+  the code-owned `data/_editorial_outcomes.md`, which `post` puts in the PR body.
 
 ### Auto-merge (Phase 4): content merges itself, the pipeline never does
 
@@ -256,7 +261,7 @@ on a `claude/scan-*` branch.
   script on the site's origin.
 - **It must also pass `scripts/merge_gate.py`**, run inside the workflow on main
   merged with the PR head: pytest, the claim ledger, the analysis eval, any eval
-  listed under `automerge.evals`, and three content checks
+  listed under `automerge.evals`, and these content checks
   (`scripts/content_checks.py`):
   - every `url` / `*_url` field in `data/*.json` is an `http(s)://` URL;
   - `docs/index.html` is byte-equal to main's `generate_html.render()` applied to
@@ -271,7 +276,13 @@ on a `claude/scan-*` branch.
     statement, title, guidance, supersession fields, confidence, scope, a
     rewritten evidence item), is refused with "claim change needs human
     review": the PR stays open for a human to merge. Superseding a claim is
-    therefore always a human merge.
+    therefore always a human merge;
+  - every entry promoted on main (pools + archive) stays promoted, in every
+    copy, unless main's copy had already failed integrity (refuted or
+    ungrounded). `verified` and `grounding_score` are session-writable, so
+    integrity that fails inside the PR doesn't count. Any other removal (an
+    explicit demotion, an in-PR integrity flip, a vanished entry) is refused
+    with "editorial demotion needs human review".
 - **What never auto-merges, whatever the branch name or author:** anything
   else. That covers `scripts/`, `.github/`, `.claude/`, `tests/`, `evals/`,
   `config.yaml`, `requirements*.txt`, `*.toml`, `*.cfg`, `ISA.md`, `AGENTS.md`,
@@ -351,8 +362,10 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   run's date. **A scan can't grade itself:** `post` resets `data/evals/` to main's copy
   before appending; `merge_guard.py` lets a scan PR change only `data/evals/history.json`
   there; and `merge_gate.py` (`content_checks.history_problems`) requires main's rows
-  to be an exact prefix, at most one new row, and that row's charge to match the budget
-  ledger and its integrity, golden result and cap to match what the gate recomputes.
+  to be an exact prefix, at most one new row, and that row's charge to be the run's
+  charge on the budget ledger (its latest `actual` row, else its reservation; a
+  measured basis only on a local run) and its integrity, golden result and cap to
+  match what the gate recomputes.
   The recall score is the one value taken on trust (it needs the network).
 
 ## How to validate a change end-to-end
