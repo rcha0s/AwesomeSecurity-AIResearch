@@ -116,8 +116,10 @@ def _tree(tmp_path, url="https://ok.example/", page=None):
 
 @pytest.fixture(autouse=True)
 def _no_main_stories(monkeypatch):
-    """main's story ledger comes from git; these trees carry none."""
+    """main's story ledger and eval history come from git; these trees carry
+    neither (the real main does once a scan has merged)."""
     monkeypatch.setattr(gate, "main_stories", lambda base: {})
+    monkeypatch.setattr(gate, "git_json", lambda ref_path, default: default)
 
 
 def test_content_problems_on_a_clean_tree(tmp_path, monkeypatch):

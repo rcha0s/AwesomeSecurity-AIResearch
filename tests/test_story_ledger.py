@@ -492,6 +492,7 @@ def test_merge_gate_checks_the_story_ledger(tmp_path, monkeypatch):
     root = _tree(tmp_path)
     monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
     monkeypatch.setattr(gate, "main_stories", lambda base: _v2({"s1": {"entry_ids": ["a"]}}))
+    monkeypatch.setattr(gate, "git_json", lambda ref_path, default: default)  # no main history
     (root / "data" / "news_stories.json").write_text(json.dumps(_v2({"s1": {"entry_ids": ["a"]}})))
     assert gate.content_problems("main", root) == []
     (root / "data" / "news_stories.json").write_text(
