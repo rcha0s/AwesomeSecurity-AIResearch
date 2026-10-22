@@ -11,13 +11,14 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from test_run_scan import git, ledger_rows, open_budget
+from test_run_scan import SECRET, gh_calls, git, ledger_rows, open_budget
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
 echo "SCAN_LOCKED=$SCAN_LOCKED" >> "$CLAUDE_ARGS.env"
 [ -n "$FAKE_ANALYSIS" ] && echo '[{"id": "a"}, {"id": "b"}]' > data/analysis_out.json
-echo '{"total_cost_usd": 0.42}'
+printf '{"total_cost_usd": 0.42, "subtype": "success", "num_turns": 7, "result": "%s"}' \\
+  "${FAKE_RESULT:-Analyzed the batch.}"
 exit "${FAKE_CLAUDE_RC:-0}"
 """
 
@@ -49,7 +50,7 @@ def run_local(work: Path, env: dict, tmp: Path, rc: int = 0, **more: str):
 def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tmp_path, claude_rc):
     work, origin, env = scan_repo
     open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
-    res, args = run_local(work, env, tmp_path, rc=claude_rc)
+    res, args = run_local(work, env, tmp_path, rc=claude_rc, FAKE_ANALYSIS="1")
     assert (res.returncode == 0) == (claude_rc == 0), res.stdout + res.stderr
     assert args[0] == "-p" and "wrapped mode" in args[1]
     assert (tmp_path / "claude-args.env").read_text().strip() == "SCAN_LOCKED=1"
@@ -58,6 +59,8 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert '"Edit(data/_raw/**)"' in "\n".join(args)  # model can't forge source text
     assert '"Edit(data/evals/**)"' in "\n".join(args)  # nor its own eval results
     assert "Read(data/evals/**)" not in "\n".join(args)  # golden-only tightening
+    assert '"Edit(data/_scan*)"' in "\n".join(args)  # the batch cut + backlog
+    assert '"Read(data/_scan_backlog.json)"' in "\n".join(args)  # the batch is the job
     for denied in ("news_stories.json", "story_shortlist.json", "_story_outcomes.md"):
         assert f'"Edit(data/{denied})"' in "\n".join(args)  # the story guard's inputs
     assert flag["--append-system-prompt-file"] == ".claude/skills/daily-scan/SKILL.md"
@@ -89,3 +92,28 @@ def test_wrapper_skips_without_launching_claude_when_budget_closed(scan_repo, tm
     res, args = run_local(work, env, tmp_path)
     assert res.returncode == 0 and "skip" in res.stdout
     assert args == []
+
+
+def test_a_session_with_no_analysis_fails_without_a_pr_and_logs_why(scan_repo, tmp_path):
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    res, _ = run_local(work, env, tmp_path, FAKE_RESULT="I stopped before analyzing anything")
+    assert res.returncode != 0
+    rows = [(r["kind"], r["stories"], r["cost_usd"]) for r in ledger_rows(origin)]
+    assert rows == [("reserve", 0, 2.0), ("actual", 0, 0.42)]  # no done row, no fake count
+    calls = gh_calls(env)
+    assert "Daily scan failing (local, analysis-empty)" in calls and "/pulls" not in calls
+    assert "I stopped" not in calls  # the session's words stay out of public issues
+    log = (work / "data/_scan.log").read_text()
+    assert "session result (subtype=success, turns=7):" in log
+    assert "I stopped before analyzing anything" in log
+
+
+def test_the_logged_session_result_is_scrubbed(scan_repo, tmp_path):
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    res, _ = run_local(work, env, tmp_path, FAKE_ANALYSIS="1", FAKE_RESULT=f"leak {SECRET}")
+    assert res.returncode == 0, res.stdout + res.stderr
+    log = (work / "data/_scan.log").read_text()
+    assert "session result withheld" in log and SECRET not in log
+    assert SECRET not in gh_calls(env)

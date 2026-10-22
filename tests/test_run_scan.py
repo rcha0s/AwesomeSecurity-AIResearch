@@ -129,6 +129,11 @@ def reserved_run(work: Path, env: dict, run_id: str = "C1") -> None:
     assert res.returncode == 0, res.stdout + res.stderr
 
 
+def analyzed(work: Path, n: int = 1) -> None:
+    """The session analyzed `n` stories (what post requires to ship a PR)."""
+    (work / "data/analysis_out.json").write_text(json.dumps([{"id": f"a{i}"} for i in range(n)]))
+
+
 def test_pre_skips_before_any_ingest_when_no_cap(scan_repo):
     work, origin, env = scan_repo
     res = run_scan(work, env, "pre")
@@ -238,6 +243,7 @@ def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
     reserved_run(work, env)
     for ignored in ("candidates.json", "analysis_out.json", "_budget_ledger.json"):
         (work / "data" / ignored).write_text("[]")
+    analyzed(work)
     (work / "data/_summary.md").write_text(f"Summary with {SECRET}")
     (work / "README.md").write_text("v2\n")
     res = run_scan(work, env, "post")
@@ -259,6 +265,7 @@ def test_post_puts_the_code_owned_story_record_in_the_pr_body(scan_repo):
     work, origin, env = scan_repo
     reserved_run(work, env)
     record = "### Story verdicts (applied by merge_analysis.py)\n\n1 same\n"
+    settled = "- `same`: https://x.example/a -> story `s1`\n"  # verdicts alone are work
     (work / "data/_story_outcomes.md").write_text(record + f"- `same`: {SECRET}\n")
     (work / "data/_summary.md").write_text("Model summary.")
     (work / "README.md").write_text("v2\n")
@@ -270,7 +277,7 @@ def test_post_puts_the_code_owned_story_record_in_the_pr_body(scan_repo):
         origin, "ls-tree", "-r", "--name-only", f"claude/scan-{datetime.now(UTC):%Y-%m-%d}-cloud"
     )
     assert "data/_story_outcomes.md" not in files
-    (work / "data/_story_outcomes.md").write_text(record)
+    (work / "data/_story_outcomes.md").write_text(record + settled)
     (work / "README.md").write_text("v3\n")
     res = run_scan(work, env, "post")
     assert "Story verdicts (applied by merge_analysis.py)" in gh_calls(env)
@@ -296,6 +303,7 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     (evals / "history.json").write_text(json.dumps({"runs": [{"run_id": "forged"}]}))
     (evals / "golden-2099-01-01.json").write_text('{"score": 1.0}')
     (work / "README.md").write_text("v2\n")
+    analyzed(work)
     res = run_scan(work, env, "post")
     assert res.returncode == 0, res.stderr + (work / "data/_scan.log").read_text()
     branch = f"claude/scan-{datetime.now(UTC).strftime('%Y-%m-%d')}-cloud"
@@ -312,3 +320,62 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     assert "**Run numbers:** 0 candidates staged" in calls and "LLM calls:" in calls
     assert "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |" in calls
     assert "Spend this month:**" in calls
+
+
+# An ingestor stub that stages 20 neutral candidates, best source rank last.
+STAGE_20 = """import json, datetime
+day = datetime.date.today().isoformat()
+cands = [{"id": f"c{i:02d}", "title": f"Neutral finding {i} about topic{i}",
+          "source_url": f"https://ex{i}.example/p", "article_url": f"https://ex{i}.example/p",
+          "published": day, "source_rank": float(i * 3)} for i in range(20)]
+json.dump(cands, open("data/candidates.json", "w"))
+"""
+
+
+def test_pre_hands_the_session_only_this_runs_batch(scan_repo):
+    work, _, env = scan_repo
+    (work / "scripts/aggregate.py").write_text(STAGE_20)
+    reserved_run(work, env)
+    data = work / "data"
+    ids = {c["id"] for c in json.loads((data / "candidates.json").read_text())}
+    assert ids == {f"c{i:02d}" for i in range(8, 20)}  # 8 stories + margin 4, best rank
+    backlog = json.loads((data / "_scan_backlog.json").read_text())
+    assert {c["id"] for c in backlog} == {f"c{i:02d}" for i in range(8)}  # kept, not lost
+    assert set(json.loads((data / "_scan_urls.json").read_text())) == ids  # fetchable
+    assert set(json.loads((data / "story_shortlist.json").read_text())) == ids  # judged
+    assert (data / "_scan_candidates").read_text().strip() == "20"  # ingested, for the eval
+    assert (
+        "SCAN_READY: 12 candidates in this run's batch (20 ingested)"
+        in (data / "_scan.log").read_text()
+    )
+
+
+def test_post_without_analysis_fails_and_opens_no_pr(scan_repo):
+    """2026-10-20: the session analyzed nothing and post shipped the rerank's
+    prune as a "0 stories" scan PR anyway."""
+    work, origin, env = scan_repo
+    reserved_run(work, env)
+    (work / "data/analysis_out.json").write_text("[]")
+    (work / "README.md").write_text("v2\n")  # a rerank's drift alone
+    res = run_scan(work, env, "post")
+    assert res.returncode != 0
+    calls = gh_calls(env)
+    assert "Daily scan failing (cloud, analysis-empty)" in calls
+    assert "/pulls" not in calls
+    assert "claude/scan-" not in git(origin, "branch", "-a")
+    assert [r["kind"] for r in ledger_rows(origin)] == ["reserve"]  # the day isn't done
+    assert "SCAN_FAILED" in (work / "data/_scan.log").read_text()
+
+
+def test_post_does_not_count_archived_entries_rerank_restored(scan_repo):
+    work, origin, env = scan_repo
+    (work / "data/archive.json").write_text(json.dumps([{"id": "old-news"}]))
+    commit_main(work, "archive")
+    reserved_run(work, env)
+    pool = {"topic": "ai-security", "entries": [{"id": "old-news"}, {"id": "fresh"}]}
+    (work / "data/ai-security.json").write_text(json.dumps(pool))
+    analyzed(work)
+    res = run_scan(work, env, "post")
+    assert res.returncode == 0, res.stderr + (work / "data/_scan.log").read_text()
+    rows = [(r["kind"], r["stories"]) for r in ledger_rows(origin)]
+    assert rows == [("reserve", 0), ("done", 1)]

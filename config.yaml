@@ -57,6 +57,8 @@ limits:
   article_chars: 20000  # truncate fetched article text to this many chars
   max_stories_per_run: 8  # analyzed stories per scan; with usd_per_story this is
                           # each run's known cost ceiling (scripts/budget.py)
+  batch_margin: 4         # extra candidates in the session's batch for ones the story
+                          # judge finds same/update (scripts/select_batch.py)
   max_turns: 150          # hard turn cap on the local model session
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the

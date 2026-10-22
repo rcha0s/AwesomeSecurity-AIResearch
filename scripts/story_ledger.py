@@ -595,6 +595,11 @@ def outcomes_record(outcomes: list[dict]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def settled_count(record: str) -> int:
+    """`same`/`update` verdicts applied, read back from outcomes_record() text."""
+    return sum(1 for ln in record.splitlines() if ln.startswith(("- `same`:", "- `update`:")))
+
+
 def append_outcomes(outcomes: list[dict]) -> None:
     path = c.DATA_DIR / OUTCOMES_FILE.name
     prior = path.read_text(encoding="utf-8") if path.exists() else ""

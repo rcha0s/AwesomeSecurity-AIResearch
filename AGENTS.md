@@ -36,6 +36,7 @@ scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # inges
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube)
+scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
 scripts/merge_analysis.py # validate + domain-ID gate + dedup + route + ground + rerank
 scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analyzer's domain list)
 scripts/migrate_taxonomy.py # free-text domain -> ID (idempotent; rerank runs it too)
@@ -168,9 +169,21 @@ likewise unharvested.
 
 One entrypoint, two runners. Both run the `/daily-scan` skill
 (`.claude/skills/daily-scan/SKILL.md`), which wraps `scripts/run_scan.sh`:
-`pre` (budget guard, then every ingestor) → LLM analysis → `post` (story cap,
-render, spend record, PR on `claude/scan-<date>-<runner>`). A failed run opens or
-comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
+`pre` (budget guard, then every ingestor, then the batch cut) → LLM analysis →
+`post` (story cap, render, spend record, PR on `claude/scan-<date>-<runner>`). A
+failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh`).
+
+- **Batch:** the session's budget is sized for `limits.max_stories_per_run` stories,
+  so `scripts/select_batch.py` leaves only the top `max_stories_per_run +
+  batch_margin` candidates in `data/candidates.json` (prefilter drops out, routed
+  before filtered, then newness + source credibility). The rest go to the
+  session-unreadable `data/_scan_backlog.json` for diagnosis; tomorrow's ingest
+  re-stages any that are still fresh.
+- **No analysis = failed run:** `post` refuses a run with no analyzed entry and no
+  applied `same`/`update` verdict (`scan_count.py --work`), raises
+  `analysis-empty`, and opens no PR. The story count excludes entries rerank
+  restored from main's archive. The Mac wrapper logs the session's final message,
+  scrubbed, to `data/_scan.log` (grep `session result`).
 
 - **Cloud (default):** a Claude Code routine with prompt `/daily-scan`, this repo
   attached, scheduled daily. Environment: Custom network access with the hosts from

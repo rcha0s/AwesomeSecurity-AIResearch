@@ -26,9 +26,12 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    python scripts/ingest_json_feeds.py   # CISA KEV (exploited in the wild) + HF Daily Papers
    ```
 
-2. **Read the candidates.** Load `data/candidates.json`. For each candidate, read its
-   `raw_path` file under `data/_raw/` for the full article text. If `raw_path` is null
-   but `article_url` is set, fetch clean text yourself: `curl -s https://r.jina.ai/<url>`.
+2. **Read the candidates.** Load `data/candidates.json`. In the daily scan it holds only this
+   run's batch (`scripts/select_batch.py`), and the session's budget is sized for that batch:
+   work through the whole batch, and never stop for budget reasons before analyzing. For
+   each candidate, read its `raw_path` file under `data/_raw/` for the full article text.
+   If `raw_path` is null but `article_url` is set, fetch clean text yourself:
+   `curl -s https://r.jina.ai/<url>`.
 
 2b. **Match each candidate to a known story (small-model judge).** The story is the unit:
    one row per real-world story in `data/news_stories.json`, never expiring. Stage the
@@ -36,9 +39,9 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    ```bash
    python scripts/story_ledger.py shortlist   # -> data/story_shortlist.json
    ```
-   It maps each candidate id to at most 5 stories from the last 90 days that it *might*
-   be (tuned to over-match). Candidates with an empty list are new; skip them here. For the
-   rest, spawn ONE fresh subagent on the smallest model (`model: haiku`) per batch of up
+   It maps each staged candidate id (the batch, in the daily scan) to at most 5 stories
+   from the last 90 days that it *might* be (tuned to over-match). Candidates with an empty
+   list are new; skip them here. For the rest, spawn ONE fresh subagent on the smallest model (`model: haiku`) per batch of up
    to 10 candidates, given ONLY each candidate's title, source and first ~1,500 chars of
    text, plus its shortlisted stories (title, sources, latest update). Ask for one verdict
    per candidate:
@@ -196,9 +199,11 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      ai-security product-security ai-research claims docs
    ```
 
-   **Early exit** — if `git status --porcelain` is empty after the
-   render pass in step 7, print `no drift; nothing to PR` and stop.
-   Do not create an empty commit.
+   **Early exit** — if `python scripts/scan_count.py --work` exits 3
+   (no analyzed entry and no applied story verdict), print `no analysis;
+   nothing to PR` and stop: a rerank alone is not a scan. Likewise if
+   `git status --porcelain` is empty after the render pass in step 7,
+   print `no drift; nothing to PR` and stop. Do not create an empty commit.
 
    **Push and PR** — mirror `.github/workflows/update.yml`'s pattern
    exactly (proven idempotent; `--force-with-lease` fails when the

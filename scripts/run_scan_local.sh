@@ -52,7 +52,7 @@ OUT="$(mktemp)"
 # survives, and the model session (confined to the worktree) can't read it.
 export SCAN_LOG="$REPO/data/_scan.log"
 LOG="$SCAN_LOG"
-trap 'rm -f "$OUT"' EXIT
+trap 'rm -f "$OUT" "$OUT.result"' EXIT
 
 # TOOLS, ALLOWED_TOOLS, SETTINGS and contained_claude: one lockdown, shared
 # with the weekly golden-set run (run_golden_local.sh).
@@ -62,6 +62,20 @@ fail() {
   echo "[local] $1" | tee -a "$LOG"
   "$SCAN_DIR/scripts/run_scan.sh" fail "$1"
   exit 1
+}
+
+# The session's final message (`result` in claude's JSON) goes to the scan
+# log, scrubbed of secret-shaped text, so the next diagnosis is one grep for
+# "session result". It never goes to a PR body or an alert.
+log_session_result() {
+  local text="$OUT.result"
+  "$PYTHON" -c 'import json,sys
+r = json.load(open(sys.argv[1]))
+print("[local] session result (subtype=%s, turns=%s):" % (r.get("subtype"), r.get("num_turns")))
+print(r.get("result") or "(no result text)")' "$OUT" >"$text" 2>/dev/null ||
+    echo "[local] session result: unreadable claude output" >"$text"
+  "$PYTHON" scripts/scrub.py "$text" "[local] session result withheld" >>"$LOG" 2>&1 || true
+  rm -f "$text"
 }
 
 reset_worktree() {
@@ -100,7 +114,10 @@ claude_rc=0
 contained_claude \
   "Run the daily scan in wrapped mode, following the daily-scan instructions appended to your system prompt." \
   .claude/skills/daily-scan/SKILL.md "$cap_usd" "$max_turns" >"$OUT" || claude_rc=$?
+log_session_result
 
+# post fails a session that wrote no analysis and applied no story verdict
+# (analysis-empty): it raises the alert and opens no PR.
 post_rc=0
 if [[ "$claude_rc" == 0 ]]; then
   scripts/run_scan.sh post || post_rc=$?

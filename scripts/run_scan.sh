@@ -9,9 +9,11 @@
 #                for a `claude` session). Exit 0 = go, 3 = skip.
 #   session-limits  print "<max_budget_usd> <max_turns>" for the local session.
 #   pre          budget guard, then RESERVE the run's ceiling on the ledger
-#                BEFORE any LLM work, then every ingestor. A refusal prints
-#                SCAN_SKIP and writes data/_scan_skip; the skill stops there.
-#   post         per-run story cap, render everything, push
+#                BEFORE any LLM work, then every ingestor, then cut the staged
+#                candidates to this run's batch (select_batch.py). A refusal
+#                prints SCAN_SKIP and writes data/_scan_skip; the skill stops there.
+#   post         a session that produced no analysis fails (analysis-empty,
+#                no PR); else the per-run story cap, render everything, push
 #                claude/scan-<date>-<runner> and open its PR.
 #   actual <stories> <cost_usd>   record a local run's measured cost.
 #   fail <phase> open or comment on the scan-failure issue.
@@ -36,7 +38,7 @@ SKIP_MARKER="data/_scan_skip"
 RESULT="data/_scan_result.json"
 SUMMARY="data/_summary.md"
 RUN_ID_FILE="data/_scan_run_id"
-STAGED_FILE="data/_scan_candidates" # pre's candidate count, for the cost eval
+STAGED_FILE="data/_scan_candidates" # candidates ingested (before the batch cut), for the cost eval
 EVALS_DIR="data/evals"              # post owns it: reset to main's, then appended
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
@@ -167,10 +169,14 @@ check_and_reserve() {
   return 1
 }
 
+staged_count() {
+  "$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))'
+}
+
 phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
-    data/_story_outcomes.md
+    data/_story_outcomes.md data/_scan_backlog.json
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -192,18 +198,32 @@ phase_pre() {
     log "every ingestor failed"
     return 1
   fi
+  staged_count >"$STAGED_FILE"
+  # The session's budget is sized for one batch, so it sees only that batch.
+  # Before the URL snapshot and the shortlist: fetch_raw.py may fetch, and the
+  # judge may match, only batch members.
+  "$PY" scripts/select_batch.py --config "$WORK/config.yaml" | tee -a "$LOG"
   "$PY" scripts/fetch_raw.py --snapshot | tee -a "$LOG"
   # Story shortlist for the judge (story_ledger.py). Advisory: without it every
   # candidate is judged new, which costs more but loses nothing.
   "$PY" scripts/story_ledger.py shortlist | tee -a "$LOG" || log "story shortlist WARN: failed"
-  "$PY" -c 'import sys;sys.path.insert(0,"scripts");import common;print(len(common.load_candidates()))' >"$STAGED_FILE"
-  log "SCAN_READY: $(cat "$STAGED_FILE") candidates"
+  log "SCAN_READY: $(staged_count) candidates in this run's batch ($(cat "$STAGED_FILE") ingested)"
 }
 
 phase_post() {
-  local stories cap day branch body run_id
+  local stories cap day branch body run_id work=0
   run_id="$(cat "$RUN_ID_FILE")"
   main_config
+  # No analysis and no applied story verdict means the session did nothing:
+  # fail the run rather than ship a rerank (prune) as if it were a scan.
+  "$PY" scripts/scan_count.py --work | tee -a "$LOG" || work=$?
+  if [[ "$work" == 3 ]]; then
+    log "SCAN_FAILED: the session wrote no analysis and applied no story verdict; no PR"
+    trap - ERR
+    on_error analysis-empty "$LINENO"
+    exit 1
+  fi
+  [[ "$work" == 0 ]] || return 1
   # The larger of analysis_out.json and entries new since main: the model
   # could merge several capped batches before post sees only the last.
   stories="$("$PY" scripts/scan_count.py)"
