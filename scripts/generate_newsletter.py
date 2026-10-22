@@ -54,7 +54,8 @@ def editorial_block(entry: dict) -> list[str]:
 def topic_section(topic: str, conf: c.Config, trends: list[dict]) -> list[str]:
     meta = c.TOPICS[topic]
     pool = c.load_pool(topic)["entries"]
-    curated = [e for e in pool if c.is_curated(e, conf)]
+    sources = c.load_sources_by_id()
+    curated = [e for e in pool if c.is_window_finding(e, conf, sources)]
     entries = sorted(curated, key=lambda e: -composite_of(e, conf))
     out = [f"## {meta['name']}", "", f"_{meta['blurb']}_", ""]
 
@@ -96,7 +97,13 @@ def topic_section(topic: str, conf: c.Config, trends: list[dict]) -> list[str]:
 
 def build(conf: c.Config, now: str) -> str:
     all_trends = c.load_json(c.DATA_DIR / "trends.json", default={}) or {}
-    total = sum(len(c.load_pool(t)["entries"]) for t in c.TOPICS)
+    sources = c.load_sources_by_id()
+    total = sum(
+        1
+        for t in c.TOPICS
+        for e in c.load_pool(t)["entries"]
+        if c.is_window_finding(e, conf, sources)
+    )
     out = [
         f"# 📰 Security & AI Research — Daily Snapshot ({now})",
         "",
@@ -104,8 +111,7 @@ def build(conf: c.Config, now: str) -> str:
         f"from the last {conf.max_age_days} days, curated and source-cited. Three tracks: "
         "AI Security, Product Security, AI Research.",
         "",
-        f"{total} vetted findings in window · [← home](README.md) · "
-        "[full trends](TRENDS.md)",
+        f"{total} vetted findings in window · [← home](README.md) · " "[full trends](TRENDS.md)",
         "",
         "---",
         "",

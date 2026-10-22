@@ -2,14 +2,20 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_5 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [2 held for review](../REVIEW.md)._
+_3 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [3 held for review](../REVIEW.md)._
+
+## 📈 Trending & In the News
+
+_Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
+
+- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)**
+- **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai)**
+- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)**
 
 | Domain | Findings |
 | --- | --- |
 | Evaluation & Benchmarks | 2 |
 | Alignment & Reliability | 1 |
-| Models & Capabilities | 1 |
-| Agents & Harnesses | 1 |
 
 ## Evaluation & Benchmarks
 
@@ -25,18 +31,6 @@ _5 vetted findings · updated 2026-10-22 · ranked by composite · findings from
 - **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **59.5** · Oct 20, 2026  
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
   _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
-
-## Models & Capabilities
-
-- **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](models/2026-08-openai-astra-preliminary-evals-can-t-rule-out-critical-cyber.md)** · composite **55.75** · Aug 7, 2026  
-  The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better…  
-  _[source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)_
-
-## Agents & Harnesses
-
-- **[Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day](agents/2026-07-goal-persistent-agents-a-frontier-model-built-a-bespoke-zlib.md)** · composite **55.65** · Jul 2, 2026  
-  When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise - the rules, not the model alone, are what make the…  
-  _[source](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)_
 
 ---
 

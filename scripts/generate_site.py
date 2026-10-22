@@ -261,12 +261,15 @@ def _editorial_section(editorial: list[dict]) -> list[str]:
     if not editorial:
         return []
     editorial = sorted(
-        editorial, key=lambda e: (e.get("editorial") or {}).get("at", ""), reverse=True
+        editorial,
+        key=lambda e: (e.get("editorial") or {}).get("at") or e.get("published") or "",
+        reverse=True,
     )
     out = [
         "## 📈 Trending & In the News",
         "",
-        "_Not new ideas - what the field is watching now, surfaced by the editorial pass._",
+        "_Not new ideas - what the field is watching now: the editorial pass and the news "
+        "gate. News is kept for good; findings are not._",
         "",
     ]
     for e in editorial:
@@ -316,9 +319,14 @@ def _topic_index_md(topic, by_domain, curated, held, conf, now, editorial=()) ->
 def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
     base = c.ROOT / topic
     all_entries = c.load_pool(topic)["entries"]
-    # Only VETTED findings are shown; the rest live in the REVIEW.md queue.
+    # Only VETTED findings of the window are counted and listed as findings; a
+    # vetted news story belongs to the news section instead, and whatever the
+    # site shows nowhere lives in the REVIEW.md queue.
+    sources = c.load_sources_by_id()
     curated = [e for e in all_entries if c.is_curated(e, conf)]
+    window = [e for e in curated if c.is_window_finding(e, conf, sources)]
     editorial = [e for e in all_entries if c.is_editorial(e)]
+    news = [e for e in all_entries if c.news_shown(e, conf, sources)]
 
     # Editorial-promoted findings need their own detail pages too — the site
     # modal advertises a detail_path for them, and without a written .md the
@@ -333,11 +341,13 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
     _write_entry_pages(base, by_domain, conf)
     _write_moved_stubs(base, [e for items in by_domain.values() for e in items])
     base.mkdir(parents=True, exist_ok=True)
-    sources = c.load_sources_by_id()
     held = sum(1 for e in all_entries if c.is_held(e, conf, sources))
-    md = _topic_index_md(topic, by_domain, curated, held, conf, now, editorial)
+    shown_by_domain: dict[str, list[dict]] = defaultdict(list)
+    for e in window:
+        shown_by_domain[e.get("domain") or "General"].append(e)
+    md = _topic_index_md(topic, shown_by_domain, window, held, conf, now, news)
     (base / "README.md").write_text(_dedash(md), encoding="utf-8")
-    return curated
+    return window
 
 
 # --- README: a short developer guide that points into the site ---------------

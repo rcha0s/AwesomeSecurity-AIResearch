@@ -81,3 +81,33 @@ def test_grounding_mark_only_flags_the_exceptional_case():
     assert g._grounding_mark({"grounded": True}) == ""
     assert g._grounding_mark({}) == ""
     assert "⚠️" in g._grounding_mark({"grounded": False})
+
+
+def test_counts_labelled_as_the_window_exclude_vetted_news(sandbox):
+    """A vetted news story is news, not a finding: the topic page and the
+    newsletter count only the window's findings and list the story as news."""
+    import json
+
+    import generate_newsletter as gn
+
+    sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
+    pool = c.load_pool("ai-research")
+    pool["entries"] = [
+        make_entry(source_url="https://a/finding", title="finding"),
+        make_entry(
+            source_url="https://a/news",
+            title="old vetted news",
+            source_id="rss:news",
+            published="2020-01-01",
+            date="2020-01-01",
+        ),
+    ]
+    c.save_pool("ai-research", pool)
+    conf = c.load_config()
+    window = g.write_topic("ai-research", conf, "now")
+    assert [e["title"] for e in window] == ["finding"]
+    page = (sandbox / "ai-research" / "README.md").read_text(encoding="utf-8")
+    assert "_1 vetted findings" in page
+    assert "old vetted news" in page.split("| Domain |")[0]  # in the news section
+    assert "1 vetted findings in window" in gn.build(conf, "now")

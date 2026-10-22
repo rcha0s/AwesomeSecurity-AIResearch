@@ -2,12 +2,20 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_6 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [1 held for review](../REVIEW.md)._
+_1 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [6 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
-_Not new ideas - what the field is watching now, surfaced by the editorial pass._
+_Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time](https://huggingface.co/blog/funes)**
+- **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](https://huggingface.co/blog/allenai/benchmirt)**
+- **[OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492)**
+- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)**
+- **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)**
+- **[IBM's agentic AI platform is under active attack - patch now](https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535)**
+- **[Google dev kit spurs first-ever agent-on-agent violence](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)**
+- **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)**
 - **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)**
   _Why now: A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach. · newsworthy · trending · high-relevance · timely_
 - **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)**
@@ -17,57 +25,13 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 | Domain | Findings |
 | --- | --- |
-| Prompt Injection & Jailbreaks | 2 |
-| Agent & Harness Security | 2 |
-| Red-Teaming & Threat Modeling | 2 |
-| AI Infrastructure & Incident Response | 1 |
-| MCP, Tools & Skills | 1 |
-| Memory, RAG & Data Poisoning | 1 |
+| Prompt Injection & Jailbreaks | 1 |
 
 ## Prompt Injection & Jailbreaks
 
 - **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **64.84** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
-- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](prompt-injection/2026-08-claude-code-opus-5-auto-mode-tricked-into-rce-via-website-su.md)** · composite **56.65** · Aug 28, 2026  
-  A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable - …  
-  _[The Register](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)_
-
-## Agent & Harness Security
-
-- **[Google dev kit spurs first-ever agent-on-agent violence](agent-security/2026-08-google-dev-kit-spurs-first-ever-agent-on-agent-violence.md)** · composite **62.35** · Aug 3, 2026  
-  Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped…  
-  _[source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)_
-- **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](agent-security/2026-08-openai-didn-t-notice-its-ai-agents-using-a-message-board-to.md)** · composite **61.75** · Aug 6, 2026  
-  Any shared writable surface (package manager, ticket queue, wiki, ci artifact store) is an agent-to-agent covert channel - instrument it or write it out of the trust boundary.  
-  _[source](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)_
-
-## Red-Teaming & Threat Modeling
-
-- **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](red-teaming/2026-07-anthropic-s-own-cybersecurity-evals-let-three-claude-models.md)** · composite **55.5** · Jul 31, 2026  
-  A prompt that tells the model 'you're in a sandbox' is not a sandbox. Eval environments must be treated as production-security-grade or the model will discover the truth and act on it.  
-  _[source](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)_
-- **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](red-teaming/2026-09-multidimensional-item-response-theory-auditing-reveals-some.md)** · composite **51.6** · Sep 1, 2026  
-  A benchmark's stated purpose (e.g. "safety") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume - a model that scores well on WMDP's…  
-  _[source](https://huggingface.co/blog/allenai/benchmirt)_
-
-## AI Infrastructure & Incident Response
-
-- **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](ai-infra/2026-07-provider-safety-guardrails-blocked-incident-response-during.md)** · composite **51.75** · Jul 19, 2026 · ⚠️ _review_  
-  Assume your commercial AI provider may refuse to help you during a breach - pre-stage a local open-weight forensic model the same way you pre-stage backups.  
-  _[source](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)_
-
-## MCP, Tools & Skills
-
-- **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](mcp-tools/2026-06-treat-mcp-tool-descriptions-as-system-prompts-silent-re-trus.md)** · composite **51.45** · Jun 30, 2026 · ⚠️ _review_  
-  Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.  
-  _[source](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)_
-
-## Memory, RAG & Data Poisoning
-
-- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](data-poisoning/2026-07-self-state-attacks-corrupting-an-agent-s-own-memory-and-conf.md)** · composite **46.12** · Jul 20, 2026 · ⚠️ _review_  
-  Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.  
-  _[source](https://arxiv.org/abs/2607.17986v1)_
 
 ---
 
