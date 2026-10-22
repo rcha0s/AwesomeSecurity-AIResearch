@@ -10,6 +10,7 @@ ALLOWED_TOOLS=(
   "Bash(python scripts/fetch_raw.py *)"
   "Bash(python scripts/merge_analysis.py)" "Bash(python scripts/verify_citations.py)"
   "Bash(python scripts/importance.py *)" "Bash(python scripts/promote_editorial.py)"
+  "Bash(python scripts/readability.py --analysis)"
 )
 SETTINGS='{"permissions": {
   "blockReadsOutsideWorkingDirectories": true,

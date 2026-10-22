@@ -36,6 +36,7 @@ re-rank. Same rubric as `/research-scan`, one item.
    other). Score `novelty` (vs. the existing pools — skim `data/{ai-security,product-security,
    ai-research}.json`) and `relevance` (0-100). Write it as a one-element list to
    `data/analysis_out.json` (carry over `source_id` if present).
+   Then do `/research-scan` step 4c (readability review) on it.
 
 4. **Merge, re-rank, render:**
    ```bash

@@ -6,7 +6,8 @@ Reads data/analysis_out.json (a list of fully-analyzed v2 entries emitted by the
 /research-scan or /add-resource skill), validates each against the schema,
 de-duplicates against the existing pools (URL + fuzzy title), gates low-confidence
 findings to needs_review, holds any entry whose `domain` is not a taxonomy ID
-(data/taxonomy.yaml; the free-text label moves to `tags`), routes each into its
+(data/taxonomy.yaml; the free-text label moves to `tags`), records each brief's
+readability (scripts/readability.py; only a severe failure holds it), routes each into its
 topic pool, records verified new-domain proposals, clears the merged candidates,
 and re-ranks. Before that it applies the story judge's verdicts
 (data/story_verdicts.json, see story_ledger.py): `same`/`update` candidates join
@@ -28,6 +29,7 @@ import sys
 
 import common as c
 import content_checks as cc
+import readability as rd
 import rerank
 import sources_registry as sr
 import story_ledger as sl
@@ -158,6 +160,7 @@ def merge(
     errors: list[str] = []
     merged_urls: set[str] = set()
     newly_added: list[dict] = []
+    rcfg = rd.settings()
     for raw in analyzed:
         # Only http(s) links reach the site: a javascript: URL is rejected here.
         problems = c.validate_entry(raw) + cc.url_problems(raw)
@@ -165,6 +168,8 @@ def merge(
             errors.append(f"{raw.get('title', '?')[:50]}: {'; '.join(problems)}")
             continue
         entry = tx.enforce(normalize_entry(raw, conf), tx.get())
+        # Score the brief's own text; only a severe failure holds it for review.
+        rd.apply(entry, rcfg)
         # Ground each cited excerpt against the source; unverified quotes → review.
         vc.ground_entry(entry)
         if conf.curation.get("require_grounding", True) and not vc.fully_grounded(entry):
@@ -187,6 +192,8 @@ def merge(
             if "domain_hold" not in entry and same_url(entries[idx], entry):
                 for stale in ("domain_hold", "domain_label"):  # re-analysis fixed it
                     entries[idx].pop(stale, None)
+            if "readability_hold" not in entry and same_url(entries[idx], entry):
+                entries[idx].pop("readability_hold", None)
         merged.append(entry)
         if placements is not None:
             placements.append((entries[len(entries) - 1 if idx is None else idx]["id"], entry))

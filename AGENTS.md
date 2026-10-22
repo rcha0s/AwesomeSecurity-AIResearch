@@ -43,6 +43,7 @@ scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analy
 scripts/migrate_taxonomy.py # free-text domain -> ID (idempotent; rerank runs it too)
 scripts/taxonomy_proposals.py # record verified proposals; recurring -> `taxonomy` issue
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
+scripts/readability.py    # deterministic readability check of each brief (title..action; never excerpts)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
 scripts/story_ledger.py   # story ledger: shortlist, judge verdicts (same/update/new), ledgering
@@ -55,7 +56,7 @@ scripts/templates/site.html # the site template (__DATA__ placeholder; a code as
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
-scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py  # Phase 3 evals (see Evals)
+scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py · eval_readability.py  # Phase 3 evals (see Evals)
 scripts/run_golden_local.sh # weekly golden-set analyzer run; scan_containment.sh = the shared session lockdown
 data/evals/               # golden.json (answer key), recall-<week>.json, golden-<date>.json, history.json
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
@@ -371,6 +372,16 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   and no duplicate id/URL in its lane; every pool + archive entry has a valid ID and
   http(s) URLs. Runs in the Tests workflow on every PR and in `merge_gate.py`
   (`automerge.evals`, required).
+- **Readability** (`scripts/eval_readability.py`): deterministic. The share of
+  published briefs (title, takeaway, summary, lesson points, action) that pass
+  `scripts/readability.py` with no issue, plus how many have mild issues and how many
+  merge would hold. Listed under `automerge.evals` as optional: it fails only below
+  `readability.eval_min_pass` (0 = report only). Merge records every brief's score on
+  the entry (`readability`); a severe failure is held in REVIEW.md with a
+  `readability: …` reason (`readability_hold`), mild ones are only reported. The
+  research-scan skill's step 4c rewrites briefs with a small model after the factual
+  verifier, then runs `readability.py --analysis`, which also flags a rewrite that
+  dropped a number, id or code span, or touched an excerpt.
 - **Recall** (`scripts/eval_recall.py --live [--write | --out PATH]`, ISC-22): this
   week's headlines from tl;dr sec, Simon Willison (security + prompt-injection tags),
   critical GHSA and new CISA KEV entries, kept when on-thesis by taxonomy keyword hints,

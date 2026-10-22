@@ -132,6 +132,24 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    real ID of the entry's topic); `scripts/taxonomy_proposals.py` opens or comments on a
    `taxonomy` issue once the same proposal recurs on 3+ entries in 30 days.
 
+4c. **Readability review (small model, after verification).** Readers are senior security
+   engineers who skim: each brief must make sense on first read. Done means every brief
+   leads with the concrete point, in plain words and short sentences, with every acronym
+   outside `readability.allow_acronyms` (config.yaml) expanded on first use, no stacked hedges, no marketing tone, a
+   one-sentence takeaway, and the same facts as before.
+   - Write the verified entries to `data/analysis_out.json` and copy that file to
+     `data/_analysis_draft.json` (the before-picture).
+   - Spawn ONE fresh subagent (`model: haiku`) per batch of up to 10, given ONLY each
+     entry's `title`, `takeaway`, `summary`, lesson `point`s and `actionable.title`/`detail`.
+     It returns those fields rewritten for clarity. It must keep every fact, number, name,
+     CVE/GHSA id and code span, add nothing the text doesn't say, and never see or touch
+     excerpts. Put its text back into the entries; change nothing else.
+   - Run `python scripts/readability.py --analysis`. A `REWRITE:` line (a dropped fact or a
+     changed excerpt) means restore that field from the draft. Rewrite any `HOLD` or `MILD`
+     entry once more yourself, against the listed issues, then run the check again. What
+     still says `HOLD` stays as is: `merge_analysis.py` holds it in REVIEW.md with its
+     `readability: …` reason.
+
 5. **Emit** `data/analysis_out.json` — a JSON list of analyzed entries (each: at minimum
    `topic, domain, title, source_url, related_claims`, plus the fields above incl.
    `verified`, `prior_art` and any `proposed_domain`; carry over `article_url, tweet_url, author, date, published,

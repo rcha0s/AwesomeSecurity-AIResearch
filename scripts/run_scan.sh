@@ -183,7 +183,7 @@ phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
     data/_story_outcomes.md data/_merge_outcomes.json data/_scan_backlog.json \
-    data/_editorial_outcomes.md
+    data/_editorial_outcomes.md data/_analysis_draft.json
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?

@@ -119,6 +119,8 @@ automerge:
                         # skipped until `required: true`, then they fail closed.
     - script: scripts/eval_integrity.py
       required: true    # exists since Phase 3: a missing copy now fails the gate
+    - script: scripts/eval_readability.py
+      required: false   # report only: fails below readability.eval_min_pass (0 today)
 
 # Story ledger (ISA ISC-19/20). data/news_stories.json is permanent: one row per
 # story, never pruned. A new candidate is matched only against stories touched
@@ -149,3 +151,38 @@ evals:
     min_fact_coverage: 0.5   # a kept case passes when at least this share of its facts appear
     cases_per_run: 8         # cases staged per weekly analyzer run (rotates through the set)
     max_usd: 4               # --max-budget-usd for the weekly golden analyzer session
+
+# Readability of each brief's generated text (scripts/readability.py). Readers
+# are senior security engineers who skim. Scored: title, takeaway, summary,
+# lesson points, actionable title + detail; never the verbatim excerpts. Above
+# `warn` is a mild issue (reported only); above `hold` is severe, and
+# merge_analysis.py holds the entry in REVIEW.md ("readability: ...").
+readability:
+  thresholds:                              # calibrated 2026-10-22 on 444 briefs (pools + archive)
+    sentence_words: {warn: 45, hold: 65}    # p50 35, p90 52, p95 57, max 85
+    grade: {warn: 19, hold: 23}             # Flesch-Kincaid; p50 15.2, p90 18.9, max 25.9
+    long_word_ratio: {warn: 0.33, hold: 0.42}  # p50 0.23, p95 0.34, max 0.45
+    jargon_chain: {warn: 7, hold: 11}       # p50 6, p95 8, max 12 (no verb tagger: mild signal)
+    acronyms: {warn: 3, hold: 6}            # unexplained, distinct; p90 4, max 8
+    hedges: {warn: 1, hold: 3}              # most in one sentence; 2+ is hedge-stacking
+    banned: {warn: 0, hold: 2}              # filler/marketing phrases; any one is mild
+    title_words: {warn: 18, hold: 24}       # p50 11, p90 17, max 25
+    takeaway_sentences: {warn: 1, hold: 3}  # one clear sentence; p90 2
+    takeaway_words: {warn: 45, hold: 65}    # p50 27, p90 47, max 71
+    summary_sentences: {warn: 4, hold: 6}   # the skill asks for 2-3
+  mild_cost: 8
+  severe_cost: 25
+  eval_min_pass: 0.0   # eval_readability.py fails below this share of published
+                       # briefs passing; 0 = report only (optional eval for now)
+  allow_acronyms: [AI, ML, LLM, LLMs, MCP, RAG, API, SDK, CLI, IDE, CI, CD, PR, OSS,
+    CVE, CVSS, CWE, GHSA, KEV, CISA, NIST, OWASP, MITRE, ATT&CK, RCE, XSS, CSRF, SSRF,
+    SQL, URL, HTTP, HTTPS, DNS, TLS, SSH, JSON, YAML, XML, HTML, JWT, IAM, AWS, GCP,
+    OS, VM, GPU, CPU, IP, ID, UI, US, UK, EU, SBOM, SAST, DAST, EDR, SOC, GPT, GET, POST]
+  banned_phrases: [game-changer, game changer, groundbreaking, revolutionary,
+    revolutionize, cutting-edge, cutting edge, state-of-the-art, best-in-class,
+    next-generation, seamless, seamlessly, supercharge, unlock, unleash, empower,
+    paradigm shift, holistic, synergy, delve, it's worth noting, it is worth noting,
+    needless to say, in today's, ever-evolving, rapidly evolving landscape,
+    a testament to, robust and scalable, leverage the power]
+  hedges: [may, might, could, possibly, potentially, perhaps, likely, probably,
+    arguably, somewhat, seemingly, apparently, presumably, appears, seems, suggests]
