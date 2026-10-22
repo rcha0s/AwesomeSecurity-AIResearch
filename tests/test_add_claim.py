@@ -176,3 +176,89 @@ def test_list_runs_over_every_topic(sandbox, capsys):
     add_claim.main(new_args("listed"))
     assert add_claim.main(["list"]) == 0
     assert "listed" in capsys.readouterr().out
+
+
+# --- correct ----------------------------------------------------------------
+def test_correct_rewrites_live_fields_and_stays_valid(sandbox):
+    add_claim.main(new_args("live"))
+    argv = ["correct", "live", "--statement", "Sharper.", "--confidence", "0.4"]
+    assert add_claim.main(argv + ["--first-seen", "2006-07-19", "--tags", "x, y"]) == 0
+    (claim,) = claims.load_ledger()["claims"]
+    assert claim["statement"] == "Sharper."
+    assert claim["confidence"] == 0.4
+    assert claim["first_seen"] == "2006-07-19"
+    assert claim["tags"] == ["x", "y"]
+
+
+def test_correct_resolves_a_domain_name_to_its_taxonomy_id(sandbox):
+    add_claim.main(new_args("dom"))
+    assert add_claim.main(["correct", "dom", "--domain", "Evaluation & Benchmarks"]) == 0
+    assert claims.load_ledger()["claims"][0]["domain"] == "air.evals"
+
+
+def test_correct_rejects_a_domain_from_another_topic(sandbox):
+    add_claim.main(new_args("dom"))
+    assert add_claim.main(["correct", "dom", "--domain", "ps.appsec"]) == 1
+    assert claims.load_ledger()["claims"][0]["domain"] == ""
+
+
+def test_correct_refuses_to_rewrite_a_retired_claims_history(sandbox):
+    add_claim.main(new_args("old"))
+    add_claim.main(new_args("new"))
+    add_claim.main(["supersede", "old", "new", "--reason", "Better."])
+    assert add_claim.main(["correct", "old", "--statement", "Rewritten."]) == 1
+    assert add_claim.main(["correct", "old", "--domain", "air.evals"]) == 0
+    old = claims.claim_index(claims.load_ledger()["claims"])["old"]
+    assert old["statement"] == "Statement for old."
+    assert old["domain"] == "air.evals"
+
+
+def test_correct_rejects_bad_input(sandbox):
+    add_claim.main(new_args("conf"))
+    assert add_claim.main(["correct", "conf", "--confidence", "1.5"]) == 1
+    assert add_claim.main(["correct", "nope", "--confidence", "0.5"]) == 1
+    assert add_claim.main(["correct", "conf"]) == 1
+
+
+# --- fix-evidence -----------------------------------------------------------
+def test_fix_evidence_corrects_stance_title_and_url(sandbox):
+    add_claim.main(new_args("ev"))
+    argv = ["fix-evidence", "ev", "--url", "https://example.com/paper", "--stance", "contests"]
+    argv += ["--new-url", "https://example.com/real", "--title", "Real", "--note", "n"]
+    assert add_claim.main(argv) == 0
+    (item,) = claims.load_ledger()["claims"][0]["evidence"]
+    assert item == {
+        "stance": "contests",
+        "url": "https://example.com/real",
+        "title": "Real",
+        "published": "2026-06-01",
+        "note": "n",
+    }
+
+
+def test_fix_evidence_removes_one_duplicate_by_occurrence(sandbox):
+    add_claim.main(new_args("dup", "--evidence", EVIDENCE))
+    url = "https://example.com/paper"
+    assert add_claim.main(["fix-evidence", "dup", "--url", url, "--remove"]) == 1
+    argv = ["fix-evidence", "dup", "--url", url, "--remove", "--occurrence"]
+    assert add_claim.main(argv + ["3"]) == 1
+    assert add_claim.main(argv + ["2"]) == 0
+    assert len(claims.load_ledger()["claims"][0]["evidence"]) == 1
+
+
+def test_fix_evidence_never_leaves_a_claim_without_sources(sandbox):
+    add_claim.main(new_args("solo"))
+    argv = ["fix-evidence", "solo", "--url", "https://example.com/paper", "--remove"]
+    assert add_claim.main(argv) == 1
+    assert len(claims.load_ledger()["claims"][0]["evidence"]) == 1
+
+
+def test_fix_evidence_rejects_unknowns_and_retired_claims(sandbox):
+    add_claim.main(new_args("a"))
+    add_claim.main(new_args("b"))
+    url = "https://example.com/paper"
+    assert add_claim.main(["fix-evidence", "zz", "--url", url, "--remove"]) == 1
+    assert add_claim.main(["fix-evidence", "a", "--url", "https://x.test", "--remove"]) == 1
+    assert add_claim.main(["fix-evidence", "a", "--url", url, "--stance", "vibes"]) == 1
+    add_claim.main(["supersede", "a", "b", "--reason", "Better."])
+    assert add_claim.main(["fix-evidence", "a", "--url", url, "--stance", "contests"]) == 1
