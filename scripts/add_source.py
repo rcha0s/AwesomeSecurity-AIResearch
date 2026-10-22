@@ -20,6 +20,7 @@ Usage:
     python scripts/add_source.py blog https://blog.trailofbits.com --topics product-security
     python scripts/add_source.py github_user praetorian-inc --topics ai-security,product-security
     python scripts/add_source.py youtube https://youtube.com/@LiveOverflow --topics product-security
+    python scripts/add_source.py deactivate rss:https-tldrsec-com-feed --reason "feed 404s"
 """
 
 from __future__ import annotations
@@ -141,7 +142,41 @@ def collect_signals(args: argparse.Namespace, stored_type: str, handle: str) -> 
     return signals
 
 
-def main() -> int:
+def deactivate(source_id: str, reason: str) -> dict:
+    """Set a registered source inactive (it stops being harvested), keeping its
+    row and history. Edits the raw registry, never the stats-overlaid view."""
+    import common as c
+
+    if not reason.strip():
+        raise ValueError("deactivate needs a --reason")
+    raw = c.load_json(sr.REGISTRY_FILE, default=[]) or []
+    row = next((s for s in raw if s.get("id") == source_id), None)
+    if row is None:
+        raise KeyError(f"no registered source {source_id!r}")
+    row.update(active=False, deactivated=c.utcnow().date().isoformat(),
+               deactivated_reason=reason.strip())  # fmt: skip
+    sr.save_sources(raw)
+    return row
+
+
+def deactivate_main(argv: list[str]) -> int:
+    ap = argparse.ArgumentParser(prog="add_source.py deactivate")
+    ap.add_argument("source_id", help="registry id, e.g. rss:https-tldrsec-com-feed")
+    ap.add_argument("--reason", required=True, help="why (kept on the row)")
+    args = ap.parse_args(argv)
+    try:
+        row = deactivate(args.source_id, args.reason)
+    except (KeyError, ValueError) as exc:
+        print(f"deactivate: {exc}", file=sys.stderr)
+        return 1
+    print(f"Deactivated {row['id']} ({row['deactivated']}): {row['deactivated_reason']}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    argv = sys.argv[1:] if argv is None else argv
+    if argv[:1] == ["deactivate"]:
+        return deactivate_main(argv[1:])
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "type",
@@ -155,7 +190,7 @@ def main() -> int:
     ap.add_argument("--followers", type=int)
     ap.add_argument("--stars", type=int)
     ap.add_argument("--subscribers", type=int)
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     topics = [t.strip() for t in (args.topics or "").split(",") if t.strip()]
     bad = [t for t in topics if t not in sr.TOPIC_SLUGS]

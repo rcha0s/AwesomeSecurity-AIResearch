@@ -21,7 +21,8 @@ import pytest
 
 REPO = Path(__file__).resolve().parent.parent
 STUBBED = (
-    "aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences ingest_json_feeds "
+    "ingest_curator_links aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn "
+    "ingest_conferences ingest_json_feeds "
     "rerank generate_site generate_claims generate_html generate_og trends "
     "generate_newsletter generate_review add_claim eval_recall"
 ).split()
@@ -255,7 +256,9 @@ def test_post_counts_entries_merged_past_the_last_analysis_out(scan_repo):
     (work / "data/ai-security.json").write_text(json.dumps(pool))
     res = run_scan(work, env, "post")
     assert res.returncode != 0
-    assert "analyzed 11 stories, over the per-run cap of 10" in (work / "data/_scan.log").read_text()
+    assert (
+        "analyzed 11 stories, over the per-run cap of 10" in (work / "data/_scan.log").read_text()
+    )
 
 
 def test_post_commits_with_ignored_files_present_and_scrubs_the_body(scan_repo):
@@ -363,7 +366,10 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     assert rows[0]["integrity"]["passed"] is False  # no rendered site in this repo
     calls = gh_calls(env)
     assert "**Run numbers:** 0 candidates staged" in calls and "LLM calls:" in calls
-    assert "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |" in calls
+    assert (
+        "| Date | Runner | Candidates | Stories | Kept | Recall (independent) | Charged | Gate |"
+        in calls
+    )
     assert "Spend this month:**" in calls
     # The cloud can't measure its cost: the body says reserved, honestly.
     assert "charged $2.50 (reserved; reserved ceiling $2.50" in calls

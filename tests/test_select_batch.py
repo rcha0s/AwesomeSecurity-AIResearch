@@ -323,6 +323,54 @@ def test_class_slots_let_a_class_deal_more_than_one_per_round(sandbox, table):
     assert max(sources.count(s) for s in set(sources)) <= 2  # per-source cap still holds
 
 
+def curator_links(n: int) -> list[dict]:
+    """Curator links: older (the issue's date) and lower-ranked than the mix."""
+    return [
+        _cand(
+            id=f"cur{i}",
+            title=f"Curator link number {i} about topiccur{i}",
+            source_url=f"https://cur{i}.example/p",
+            article_url=f"https://cur{i}.example/p",
+            source_id="curator:tldrsec",
+            discovered_via="curator",
+            curated_by="tldrsec",
+            source_rank=30.0,
+            published="2026-07-01",
+        )
+        for i in range(n)
+    ]
+
+
+def test_curator_links_are_their_own_class():
+    assert select_batch.ingestor_class({"source_id": "curator:tldrsec"}) == "curator"
+
+
+def test_the_class_floor_puts_one_or_two_curator_links_in_every_batch(sandbox, table):
+    staged = realistic_mix() + curator_links(5)
+    lane = {"batch_priority_max": 1, "batch_priority_per_source": 2}  # 3 slots after it
+
+    def curated(**extra) -> int:
+        batch, _ = select_batch.select(staged, conf(3, 1, **lane, **extra), table)
+        assert len(batch) == 4 and batch[0].get("batch_priority")  # the lane still goes first
+        return sum(1 for c in batch if select_batch.ingestor_class(c) == "curator")
+
+    assert curated() == 0  # without the floor they sink under fresher, ranked feeds
+    assert curated(batch_class_min={"curator": 1}) == 1
+    assert curated(batch_class_min={"curator": 2}) == 2
+    assert curated(batch_class_min={"curator": 4}) == 2  # the per-source cap still holds
+    real = common.load_config()
+    assert real.limits["batch_class_min"] == {"curator": 1}
+
+
+def test_the_class_floor_never_overfills_the_batch(sandbox, table):
+    staged = cands(3) + curator_links(3)
+    batch, backlog = select_batch.select(
+        staged, conf(1, 0, batch_class_min={"curator": 5}, batch_per_source=5), table
+    )
+    assert len(batch) == 1 and batch[0]["source_id"] == "curator:tldrsec"
+    assert len(batch) + len(backlog) == len(staged)
+
+
 def test_the_per_source_cap_yields_when_nothing_else_is_left(sandbox, table):
     batch, _ = select_batch.select(cands(10), conf(2, 2), table)  # all one source
     assert len(batch) == 4

@@ -226,5 +226,26 @@ def test_gate_cli_fails_without_enough_history(sandbox, capsys):
     assert capsys.readouterr().out.strip() == "EVAL gate FAIL streak=0 need=7 runs=0"
 
 
+def test_the_row_keeps_independent_and_per_curator_recall_and_the_body_shows_them(
+    sandbox, monkeypatch, capsys
+):
+    d, args = setup_append(sandbox, monkeypatch)
+    result = json.loads((sandbox / "recall.json").read_text())
+    per = {"tldrsec": {"recall": 0.5, "independent_recall": 0.25}}
+    result.update(independent_recall=0.3, curator_recall=per, misses=[{"title": "x"}])
+    (sandbox / "recall.json").write_text(json.dumps(result))
+    assert eh.main(args) == 0
+    last = eh.load_rows()[-1]["recall"]
+    assert last["independent_recall"] == 0.3 and last["curator_recall"] == per
+    assert "misses" not in last  # only RECALL_KEYS
+    assert eh.verdict(eh.load_rows()[-1], CFG["thresholds"]) == []  # the gate reads `recall`
+    capsys.readouterr()
+    eh.main(["body", "--run-id", "C1"])
+    body = capsys.readouterr().out
+    assert "| Recall (independent) |" in body and "| 90% (30%) |" in body
+    assert "**Recall by curator** (this run): tldrsec 50% (25% independent)" in body
+    assert "| 90% (n/a) |" in body  # older rows without the new key still render
+
+
 def test_body_without_a_row_says_so():
     assert "unavailable" in eh.body([], "nope", CFG)

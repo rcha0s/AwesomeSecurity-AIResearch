@@ -26,6 +26,12 @@ def no_network(monkeypatch):
     monkeypatch.setattr(er.subprocess, "run", boom)
 
 
+def read_fixture(url: str) -> str:
+    name = "tldrsec_sitemap.xml" if url == er.TLDRSEC_SITEMAP else url.rsplit("/", 1)[1] + ".html"
+    path = FIXTURES / name
+    return path.read_text() if path.exists() else ""
+
+
 def collected() -> list[dict]:
     items, errors = er.collect(er.fixture_source(FIXTURES, SINCE), SINCE)
     assert errors == []
@@ -33,9 +39,11 @@ def collected() -> list[dict]:
 
 
 def test_tldrsec_takes_each_paragraphs_first_story_link_from_security_sections():
-    issues = er.parse_tldrsec_sitemap((FIXTURES / "tldrsec_sitemap.xml").read_text(), SINCE)
-    assert issues == [("https://tldrsec.com/p/tldr-sec-339", "2026-07-10")]  # 337 is too old
-    page = (FIXTURES / "tldr-sec-339.html").read_text()
+    urls = er.parse_tldrsec_sitemap((FIXTURES / "tldrsec_sitemap.xml").read_text(), 2)
+    assert urls == ["https://tldrsec.com/p/tldr-sec-339", "https://tldrsec.com/p/tldr-sec-337"]
+    issues = er.tldrsec_issues(read_fixture, SINCE)
+    assert [(u, d) for u, d, _ in issues] == [("https://tldrsec.com/p/tldr-sec-339", "2026-07-10")]
+    page = issues[0][2]  # 337 has no recorded page, so no publish date: skipped
     items = er.parse_tldrsec_issue(page, issues[0][1])
     assert [i["title"] for i in items] == [
         "Pre-auth heap overflow in a SAML parser",
@@ -142,8 +150,8 @@ REAL_FIXTURE_SOURCE = er.fixture_source
 
 
 def failing_source(*down):
-    def factory(directory, since):
-        real = REAL_FIXTURE_SOURCE(directory, since)
+    def factory(directory, since, newest=er.TLDRSEC_MAX_ISSUES):
+        real = REAL_FIXTURE_SOURCE(directory, since, newest)
 
         def get(name):
             if name in down:
@@ -171,6 +179,76 @@ def test_a_partial_or_total_outage_writes_no_result(sandbox, monkeypatch, capsys
     assert not out_file.exists() and not (sandbox / "data" / "evals").exists()
     out = capsys.readouterr()
     assert "not writing" in out.err and "EVAL recall FAIL" in out.out
+
+
+def test_recall_is_reported_per_curator_and_independent_of_curator_link_ingest():
+    entries = pool_entries()
+    # ChainDrop is held only because the curator-link ingestor staged it.
+    entries[2] = {**entries[2], "curated_by": "tldrsec"}
+    entries[0] = {**entries[0], "source_id": "curator:tldrsec"}  # ToolHive, via source_id
+    result = er.score(collected(), entries, tx.get())
+    per = result["recall_by_curator"]
+    assert set(per) == set(result["by_curator"])
+    assert sum(t["on_thesis"] for t in per.values()) == result["on_thesis"]
+    assert sum(t["matched"] for t in per.values()) == result["matched"]
+    assert per["tldrsec"]["matched"] == 1 and per["tldrsec"]["independent_matched"] == 0
+    assert per["ghsa"]["matched"] == 1 and per["ghsa"]["independent_matched"] == 0
+    assert per["kev"]["independent_matched"] == per["kev"]["matched"] == 1
+    ind = result["independent"]
+    assert ind["independent_matched"] == result["matched"] - 2
+    assert ind["independent_recall"] == round(ind["independent_matched"] / result["on_thesis"], 3)
+    assert result["recall"] > ind["independent_recall"]
+
+
+def chaindrop_recall(**over) -> dict:
+    """Recall when ChainDrop's only holder is a curator-staged entry with `over`."""
+    entries = pool_entries()
+    entries[2] = {**entries[2], "curated_by": "tldrsec", **over}
+    return er.score(collected(), entries, tx.get())
+
+
+@pytest.mark.parametrize(
+    "over",
+    [
+        {"needs_review": True},
+        {"grounding_score": 0.5},
+        {"lessons": [{"point": "x", "excerpt": "y", "grounded": False}]},
+        {"verified": False},
+    ],
+)
+def test_an_unvetted_curator_staged_entry_does_not_count_as_held(over):
+    vetted, unvetted = chaindrop_recall(), chaindrop_recall(**over)
+    assert unvetted["matched"] == vetted["matched"] - 1
+    miss = next(m for m in unvetted["misses"] if m["title"].startswith("ChainDrop"))
+    assert miss["unvetted"] == "chaindrop"
+    assert unvetted["recall_by_curator"]["tldrsec"]["matched"] == 0
+
+
+def test_a_vetted_curator_staged_entry_counts_and_other_entries_need_no_vetting():
+    vetted = chaindrop_recall(needs_review=False, verified=True, grounding_score=1.0)
+    assert vetted["recall_by_curator"]["tldrsec"]["matched"] == 1
+    entries = pool_entries()
+    entries[1] = {**entries[1], "needs_review": True}  # Citrix: not curator-staged
+    assert er.score(collected(), entries, tx.get())["recall_by_curator"]["kev"]["matched"] == 1
+
+
+def test_the_result_carries_flat_independent_and_per_curator_recall():
+    result = chaindrop_recall()
+    assert result["independent_recall"] == result["independent"]["independent_recall"]
+    assert result["curator_recall"]["tldrsec"] == {"recall": 0.333, "independent_recall": 0.0}
+
+
+def test_without_curator_staged_entries_independent_equals_overall():
+    result = er.score(collected(), pool_entries(), tx.get())
+    assert result["independent"]["independent_recall"] == result["recall"]
+    assert all(not r["via_curator"] for r in result["matched_rows"])
+
+
+def test_cli_prints_per_curator_lines_and_the_independent_figure(sandbox, capsys):
+    er.main(["--fixtures", str(FIXTURES)])
+    out = capsys.readouterr().out.splitlines()
+    assert any(line.startswith("CURATOR tldrsec: ") for line in out)
+    assert " independent=" in out[-1]
 
 
 def test_tldrsec_headlines_carry_only_their_story_url():

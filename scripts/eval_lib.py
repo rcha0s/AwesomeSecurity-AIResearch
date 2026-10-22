@@ -26,7 +26,7 @@ DEFAULTS = {
         "off_topic_max": 0.10,
         "max_run_usd": None,
     },
-    "recall": {"lookback_days": 7},
+    "recall": {"lookback_days": 7, "tldrsec_max_issues": 2},
     "golden": {"min_fact_coverage": 0.5, "cases_per_run": 8, "max_usd": 4},
 }
 _DAYS_PER_MONTH = 30

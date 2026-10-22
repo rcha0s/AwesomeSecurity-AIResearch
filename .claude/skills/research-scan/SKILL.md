@@ -16,6 +16,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
 1. **Ingest → stage candidates** (writes `data/candidates.json`, gitignored).
    Run every ingestor each scan for breadth (no cookies; `gh` must be authed):
    ```bash
+   python scripts/ingest_curator_links.py  # stories tl;dr sec's recent issues link to (first:
+                                           # it records their arXiv ids for the paper gate)
    python scripts/aggregate.py       # RSS/Atom + newsletter feeds (the registry)
    python scripts/ingest_sitemap.py  # sitemap.xml for research_index sources with no feed (e.g. Anthropic)
    python scripts/ingest_github.py   # trending/novel repos (needs `gh` authed)
@@ -133,7 +135,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
 5. **Emit** `data/analysis_out.json` — a JSON list of analyzed entries (each: at minimum
    `topic, domain, title, source_url, related_claims`, plus the fields above incl.
    `verified`, `prior_art` and any `proposed_domain`; carry over `article_url, tweet_url, author, date, published,
-   raw_path, discovered_via, source_id, source_rank, source_topics` from the candidate).
+   raw_path, discovered_via, source_id, source_rank, source_topics, curated_by, curator_issue`
+   from the candidate; `merge_analysis.py` re-stamps the last two from the candidate anyway).
    `source_id` lets `merge_analysis.py` credit the source's hit-rate; `raw_path` lets it
    ground the excerpts. `domain` must be an ID of the entry's topic (held for review
    otherwise); `related_claims` must be a list of at most 3 claim IDs (schema enforced by

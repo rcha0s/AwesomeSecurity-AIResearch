@@ -306,6 +306,41 @@ def ledger_placements(placements: list, outcomes: list[dict]) -> None:
     sl.save_ledger(ledger)
 
 
+CURATOR_FIELDS = ("curated_by", "curator_issue")
+
+
+def _match_keys(d: dict) -> set[str]:
+    """How an analyzed entry is tied back to its candidate: id, either URL, raw_path."""
+    keys = {f"id:{d['id']}"} if d.get("id") else set()
+    keys |= {f"url:{c.normalize_url(d[k])}" for k in ("source_url", "article_url") if d.get(k)}
+    return keys | ({f"raw:{d['raw_path']}"} if d.get("raw_path") else set())
+
+
+def stamp_curator(analyzed: list[dict], candidates: list[dict]) -> int:
+    """Copy a curator-link candidate's provenance onto its analyzed entry.
+
+    The recall eval must know which entries came from a curator's own links
+    (ingest_curator_links.py), so the marker is copied here, by candidate id,
+    source or article URL, or raw_path, instead of trusting the analyzer to carry
+    it. A curator candidate no analyzed entry matches is logged (it may simply
+    not have been analyzed this run, e.g. judged the same story)."""
+    by_key: dict[str, dict] = {}
+    for cand in (x for x in candidates if x.get("curated_by")):
+        by_key.update({k: cand for k in _match_keys(cand)})
+    done: set[int] = set()
+    for entry in (e for e in analyzed if isinstance(e, dict)):
+        cand = next((by_key[k] for k in sorted(_match_keys(entry)) if k in by_key), None)
+        if cand:
+            entry.update({k: cand[k] for k in CURATOR_FIELDS if cand.get(k)})
+            entry.setdefault("source_id", cand.get("source_id"))
+            done.add(id(cand))
+    for cand in {id(x): x for x in by_key.values()}.values():
+        if id(cand) not in done:
+            print(f"curator link left unstamped (not analyzed): {cand.get('title', '?')[:80]}",
+                  file=sys.stderr)  # fmt: skip
+    return len(done)
+
+
 def main() -> int:
     conf = c.load_config()
     outcomes = apply_story_verdicts()
@@ -319,6 +354,7 @@ def main() -> int:
     if isinstance(analyzed, dict):
         analyzed = analyzed.get("entries", [])
 
+    stamp_curator(analyzed, c.load_candidates())
     placements: list = []
     merged, errors, merged_urls, newly_added = merge(analyzed, conf, placements)
     ledger_placements(placements, outcomes)

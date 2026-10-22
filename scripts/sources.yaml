@@ -59,6 +59,40 @@ hackernews:
     - "npm malware"
 
 # ---------------------------------------------------------------------------
+# Curator links (scripts/ingest_curator_links.py). tl;dr sec links the week's
+# best security research, much of it on small blogs with no feed of their own.
+# Its public issue pages are read (via tldrsec.com/sitemap.xml) and each linked
+# story is staged with the ARTICLE as its citation. Paywalled hosts are never
+# staged, so they are never fetched; archive mirrors are paywall bypasses.
+curator_links:
+  max_issues: 2         # the newest N issues by issue number (weekly, so 2 ~ 14 days).
+                        # Never by sitemap lastmod: it is an edit date (an old issue
+                        # can carry a recent one; most share a 2025-04 bulk touch).
+  lookback_days: 14     # of those, only issues whose own publish date is this recent
+  # Credibility of a staged link (registry-rank scale). The linked blog is usually
+  # unknown to the registry; tl;dr sec vouching for it lifts it above the neutral 50
+  # and the 45 min_credibility bar, but below tl;dr sec's own 80: the curator
+  # picked it, it did not write it.
+  source_rank: 70
+  paywall_hosts:
+    - nytimes.com
+    - wsj.com
+    - ft.com
+    - bloomberg.com
+    - theinformation.com
+    - economist.com
+    - washingtonpost.com
+    - theatlantic.com
+    - businessinsider.com
+    - link.springer.com
+    - sciencedirect.com
+    - ieeexplore.ieee.org
+    - dl.acm.org
+    - archive.is
+    - archive.ph
+    - archive.today
+
+# ---------------------------------------------------------------------------
 # Peer-reviewed conference discovery (via the free, keyless arXiv API).
 # These venues publish no usable feed and some sit behind paywalls we never
 # touch; authors record acceptance in the arXiv `comments` field, so we search

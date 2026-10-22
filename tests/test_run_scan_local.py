@@ -73,6 +73,7 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert "Read(data/evals/**)" not in "\n".join(args)  # golden-only tightening
     assert '"Edit(data/_scan*)"' in "\n".join(args)  # the batch cut + backlog
     assert '"Read(data/_scan_backlog.json)"' in "\n".join(args)  # the batch is the job
+    assert '"Edit(data/_curator_arxiv.json)"' in "\n".join(args)  # the paper gate's input
     # what post's --work reads, and the editorial record post puts in the PR body
     code_owned = ("_story_outcomes.md", "_merge_outcomes.json", "_editorial_outcomes.md")
     for denied in ("news_stories.json", "story_shortlist.json", *code_owned):

@@ -54,6 +54,34 @@ def test_an_honest_row_passes():
     assert check(pr(measured_row()), ledger=(LOCAL, LOCAL_ACTUAL)) == []
 
 
+GOOD_RECALL = {"recall": 0.4, "independent_recall": 0.1, "week": "2026-W29", "passed": False,
+               "curator_recall": {"tldrsec": {"recall": 0.9, "independent_recall": 0.2},
+                                  "kev": {"recall": None, "independent_recall": None}}}  # fmt: skip
+
+
+def test_recall_values_are_trusted_but_their_shape_is_checked():
+    assert check(pr(new_row(recall=GOOD_RECALL))) == []
+    assert check(pr(new_row(recall=None))) == []
+    assert check(pr(new_row(recall={"recall": 0.5}))) == []  # rows from before the new keys
+
+
+@pytest.mark.parametrize(
+    "recall,problem",
+    [
+        ({**GOOD_RECALL, "independent_recall": 1.5}, "recall independent_recall is not a share"),
+        ({**GOOD_RECALL, "recall": "0.9"}, "recall recall is not a share"),
+        ({**GOOD_RECALL, "independent_recall": True}, "recall independent_recall is not a share"),
+        ({**GOOD_RECALL, "curator_recall": ["tldrsec"]}, "curator_recall is not an object"),
+        ({**GOOD_RECALL, "curator_recall": {"<b>x</b>": {"recall": 0.1}}}, "is malformed"),
+        ({**GOOD_RECALL, "curator_recall": {"tldrsec": {"recall": -0.1}}}, "is malformed"),
+        ({**GOOD_RECALL, "curator_recall": {"tldrsec": 0.9}}, "is malformed"),
+        ("0.9", "recall is not an object"),
+    ],
+)
+def test_a_malformed_recall_row_is_refused(recall, problem):
+    assert any(problem in p for p in check(pr(new_row(recall=recall))))
+
+
 LOCAL = {**RESERVE, "runner": "local"}
 LOCAL_ACTUAL = {**LOCAL, "kind": "actual", "stories": 4, "cost_usd": 1.2}
 

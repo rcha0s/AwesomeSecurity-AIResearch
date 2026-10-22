@@ -12,6 +12,45 @@ def ns(**kw):
     return argparse.Namespace(**kw)
 
 
+def test_deactivate_sets_one_source_inactive_and_keeps_its_row(sandbox, capsys):
+    import common
+
+    raw = [
+        {"id": "rss:dead", "type": "rss", "handle": "https://d.example/feed", "active": True,
+         "rank": 80.0, "stats": {"ingested": 3, "curated": 1}},
+        {"id": "rss:live", "type": "rss", "handle": "https://l.example/feed", "active": True},
+    ]  # fmt: skip
+    common.save_json(sr.REGISTRY_FILE, raw)
+    common.save_json(sr.STATS_FILE, {"rss:dead": {"ingested": 9, "curated": 9}})
+    assert a.main(["deactivate", "rss:dead", "--reason", "feed 404s"]) == 0
+    saved = common.load_json(sr.REGISTRY_FILE)
+    assert saved[0] == {**raw[0], "active": False, "deactivated": "2026-07-15",
+                        "deactivated_reason": "feed 404s"}  # fmt: skip
+    assert saved[1] == raw[1]  # untouched, and stats were not baked into the registry
+    assert [s["id"] for s in sr.sources_of_type("rss")] == ["rss:live"]
+    assert "Deactivated rss:dead" in capsys.readouterr().out
+
+
+def test_deactivate_refuses_an_unknown_id_or_an_empty_reason(sandbox, capsys):
+    import common
+
+    common.save_json(sr.REGISTRY_FILE, [{"id": "rss:x", "type": "rss", "active": True}])
+    assert a.main(["deactivate", "rss:nope", "--reason", "gone"]) == 1
+    assert a.main(["deactivate", "rss:x", "--reason", "  "]) == 1
+    assert common.load_json(sr.REGISTRY_FILE)[0]["active"] is True
+    assert "no registered source" in capsys.readouterr().err
+
+
+def test_the_dead_tldrsec_feed_is_deactivated_in_the_real_registry():
+    from pathlib import Path
+
+    import common
+
+    real = common.load_json(Path(__file__).resolve().parent.parent / "data" / "sources.json")
+    row = next(s for s in real if s["id"] == "rss:https-tldrsec-com-feed")
+    assert row["active"] is False and "404" in row["deactivated_reason"]
+
+
 def test_looks_feed_url():
     assert a.looks_feed_url("https://x.com/feed")
     assert a.looks_feed_url("https://x.com/atom.xml")

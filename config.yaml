@@ -72,6 +72,9 @@ limits:
   batch_class_slots:      # picks per round-robin round for a class (default 1). Plain
     rss: 2                # RSS is one class of 60+ feeds, 35% of staged candidates, and
                           # where the 12 tl;dr sec misses of W43 (of 31) were published
+  batch_class_min:        # slots a class is guaranteed right after the must-not-miss lane
+    curator: 1            # tl;dr sec curator links (ingest_curator_links.py); with
+                          # batch_per_source 2, one or two reach every batch
   batch_routed_bonus: 5   # composite points for a confident prefilter domain hint
                           # (taxonomy confidence, not newsworthiness: a nudge only)
   max_turns: 150          # hard turn cap on the local model session
@@ -140,6 +143,8 @@ evals:
     max_run_usd: null        # per-run cost cap; null = budget.monthly_cap_usd / 30
   recall:
     lookback_days: 7         # curator headlines published in the last N days
+    tldrsec_max_issues: 2    # newest tl;dr sec issues by number (sitemap lastmod is an
+                             # edit date, not a publish date; the page's own date decides)
   golden:
     min_fact_coverage: 0.5   # a kept case passes when at least this share of its facts appear
     cases_per_run: 8         # cases staged per weekly analyzer run (rotates through the set)

@@ -34,8 +34,9 @@ scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
+scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
-scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube)
+scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube); `deactivate <id> --reason`
 scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
 scripts/merge_analysis.py # validate + domain-ID gate + dedup + route + ground + rerank
 scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analyzer's domain list)
@@ -135,7 +136,31 @@ python scripts/ingest_ghsa.py --max 25    # reviewed supply-chain advisories (gh
 python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
+python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
 ```
+
+### Curator links (tl;dr sec)
+
+tl;dr sec links the week's best security research, much of it on small blogs with
+no feed of their own; those were most of the recall eval's misses. Its RSS feed is
+gone (`tldrsec.com/feed` redirects to a 404; its registry row is deactivated with
+`add_source.py deactivate`), so `ingest_curator_links.py` reads the public issue pages
+listed in `tldrsec.com/sitemap.xml` (the recall eval's source too; the `/t/Newsletter`
+archive page skipped an issue when probed). It takes the newest
+`curator_links.max_issues` (2) issues **by issue number** and dates each by the page's
+own publish date (its JSON-LD `datePublished`, else `article:published_time`), never by
+sitemap lastmod: that is an edit date (#126, from 2022, carried 2026-05-28; most issues
+share one 2025-04 bulk touch). Of those, issues published in the last
+`curator_links.lookback_days` (14) go through `eval_recall`'s issue parser, which stages each lead story link that is on-thesis (taxonomy hints, excluded
+terms, news deny-list), not on a paywalled host (`curator_links.paywall_hosts`: never
+staged, so never fetched), not a sponsor placement, and not already in the pools, the
+archive or the story ledger. The citation is the article, with tracking params
+stripped; the candidate carries `source_id: curator:tldrsec`, `curated_by: tldrsec`
+and `curator_issue`, which `merge_analysis.py` copies onto the pool entry. Follow-on
+paragraphs (supporting links under a headline) are not staged. A staged link's
+credibility is `curator_links.source_rank` (70): the linked blog is usually unknown to
+the registry, so the curator's pick lifts it above the neutral 50 and the 45
+`min_credibility` bar, but below tl;dr sec's own 80.
 
 ### Conference ingestion
 
@@ -157,7 +182,11 @@ the free keyless arXiv API and always lands on a free full text. Two gates:
 A paper (arXiv/OpenReview/IACR preprint) enters the queue only with a quality signal,
 checked deterministically by `scripts/paper_gate.py`: accepted at a registered venue,
 listed on Hugging Face Daily Papers, or linked by a trusted curator (tl;dr sec, Simon
-Willison, Project Zero). The raw arXiv cs.AI/cs.LG feeds were removed; cs.CR stays but
+Willison, Project Zero). tl;dr sec's links come from its issue pages:
+`ingest_curator_links.py` runs first in `run_scan.sh` and records the arXiv ids they
+link to in `data/_curator_arxiv.json` (gitignored), which `aggregate.py` adds to the
+gate's curator signal. An id vouches only while its issue is inside the same
+`curator_links.lookback_days` window (14 days). The raw arXiv cs.AI/cs.LG feeds were removed; cs.CR stays but
 only yields papers that pass the gate. If a signal source is unreachable the gate fails
 closed (papers dropped, never admitted).
 
@@ -181,7 +210,9 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   slots per source (`batch_class_slots` lets plain RSS deal 2 a round). First,
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
   entries and critical GHSA advisories (plus high ones in AI tooling), tagged
-  `batch_priority`; the session analyzes those first. The rest go to
+  `batch_priority`; the session analyzes those first. Next, `batch_class_min`
+  guarantees named classes a floor: `curator: 1` puts one tl;dr sec curator link
+  in every batch (two at most, by the per-source cap). The rest go to
   `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
@@ -346,7 +377,23 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   matched against the pools + archive by canonical URL, CVE/GHSA id, or title +
   entities. Prints the misses and their hosts (the source-tuning signal). It writes no
   result when any curator errored. `post` fetches it fresh every run into a temp file
-  (never into the tree).
+  (never into the tree). tl;dr sec headlines skip sponsor sections and paid links
+  (a `utm_medium` other than `referral`).
+  **Recall per curator, and independent:** the result carries `recall_by_curator` and
+  an `independent` figure (also on the summary line). Because `ingest_curator_links.py`
+  stages tl;dr sec's own links, a tl;dr sec headline can be held only because we
+  ingested that curator: partly circular. Independent recall counts a headline as held
+  only when its matching entry was not staged via a curator link (`curated_by` set or a
+  `curator:` source_id). The 7-run gate keeps the overall figure, but in it a
+  curator-staged match counts only when the analyzer vetted the entry: not
+  `needs_review`, grounded (`publishable_grounding`, the rendered lanes' bar) and not
+  `verified: false`. Every analyzed candidate lands in a pool, so presence alone would
+  let the ingestor grade itself; an unvetted match is reported as a miss with
+  `unvetted: <entry id>`. Matches by entries from our own sources are counted as
+  before. The independent figure is the source-tuning signal: a widening gap between
+  the two means our own sources are slipping behind the curator. tl;dr sec issues are
+  picked like the ingestor's (newest `evals.recall.tldrsec_max_issues` by number,
+  dated by the page itself).
 - **Golden** (`data/evals/golden.json` + `scripts/eval_golden.py`, ISC-23): ~30 past
   stories with checked keep/drop, on-topic, domain ID and key facts. `score` grades an
   analyzer output file deterministically; `scripts/run_golden_local.sh` is the weekly
@@ -360,7 +407,7 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   `eval_golden.py check`.
 - **Cost + gate** (`scripts/eval_history.py`, ISC-25/26): `post` appends one row per
   scan PR to `data/evals/history.json` (candidates, stories, kept, integrity, this run's
-  recall, the newest golden result, the ledger charge with its basis) and puts the
+  recall with its independent and per-curator figures, the newest golden result, the ledger charge with its basis) and puts the
   numbers and the 7-run trend in the PR body. `eval_history.py gate` passes when the
   last `evals.gate_runs` rows all clear `evals.thresholds`: a measured charge against
   the per-run cap, a reservation against its own ceiling, and staleness judged at each
@@ -371,7 +418,10 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   charge on the budget ledger (its latest `actual` row, else its reservation; a
   measured basis only on a local run) and its integrity, golden result and cap to
   match what the gate recomputes.
-  The recall score is the one value taken on trust (it needs the network).
+  The recall figures (overall, independent, per curator) are the values taken on trust
+  (they need the network); `content_checks.recall_shape_problems` checks only their
+  shape. The PR body's trend table shows recall with the independent figure beside it,
+  and a "Recall by curator" line for this run.
 
 ## How to validate a change end-to-end
 
