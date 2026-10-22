@@ -2,7 +2,7 @@
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-31 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+34 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -12,6 +12,8 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 64.84
+  An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.
 - **[Google dev kit spurs first-ever agent-on-agent violence](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)** · _source_ · composite 62.35
   Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped permissions, not tighter…
 - **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)** · _source_ · composite 61.75
@@ -39,7 +41,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **prompt-injection** (watching) — 25 findings from 13 sources since 2026-02.
+- **prompt-injection** (🔺 rising) — 26 findings from 13 sources since 2026-02.
 - **mcp** (watching) — 19 findings from 12 sources since 2026-02.
 - **agent-security** (watching) — 14 findings from 13 sources since 2026-02.
 
@@ -62,6 +64,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)](https://github.com/advisories/GHSA-22hg-r758-rrw9)**
   Parse untrusted images under a timeout and restrict Image.open to the formats you expect.
   _Why now: Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today. · cve · timely · high-relevance_
+- **[How we found 24 Android vulnerabilities using our open source AI security agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/)**
+  Scaffolded, platform-specific taskflows make LLMs effective Android bug hunters, but severity and exploitability still need a PoC and a human.
+  _Why now: 24 real, disclosed Android vulnerabilities (OsmAnd location tracking, a WebView account-takeover chain) found with an open-source agent you can run today, plus candid lessons on LLM severity misjudgment and false positives. · newsworthy · trending · timely · high-relevance_
 - **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
   Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.
   _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
@@ -82,6 +87,8 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
+- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466)** · _arXiv cs.AI (Artificial Intelligence)_ · composite 59.93
+  Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.
 - **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)** · _source_ · composite 59.5
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.
 - **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://arxiv.org/abs/2610.25964)** · _source_ · composite 56.5
@@ -94,8 +101,8 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 **📈 Emerging trends**
 
 - **arxiv** (watching) — 76 findings from 2 sources since 2026-08-07.
-- **agents** (watching) — 23 findings from 8 sources since 2026-05.
-- **evals** (🔺 rising) — 17 findings from 9 sources since 2026-05.
+- **agents** (🔺 rising) — 24 findings from 8 sources since 2026-05.
+- **evals** (🔺 rising) — 18 findings from 9 sources since 2026-05.
 
 [→ Full AI Research database](ai-research/README.md)
 

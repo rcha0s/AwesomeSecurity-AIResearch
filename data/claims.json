@@ -773,10 +773,16 @@
           "url": "https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/",
           "title": "Person Hides Prompt Injection in Legal Filing Telling AI to Side with Them",
           "published": "2026-08-13"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.23109",
+          "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+          "published": "2026-10-19"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-09-09",
+      "last_reviewed": "2026-10-22",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
@@ -1388,10 +1394,16 @@
           "url": "https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridge",
           "title": "Insecure WebView native bridge",
           "source_name": "Android Developers"
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
+          "title": "How we found 24 Android vulnerabilities using our open source AI security agent",
+          "published": "2026-09-28"
         }
       ],
       "first_seen": "2014-01",
-      "last_reviewed": "2026-08-06",
+      "last_reviewed": "2026-10-22",
       "guidance": "Never expose native bridges to WebViews that render third-party content.",
       "tags": [
         "mobile",
@@ -1986,6 +1998,34 @@
       "basis": "detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)",
       "guidance": "When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.",
       "scope": "Demonstrated specifically against phpseclib's pure-PHP X25519 implementation under specific reachability conditions (ext-sodium absent, reused/long-lived key, local co-residency); the general principle likely generalizes but the specific sample-efficiency numbers don't."
+    },
+    {
+      "id": "harness-evolution-gains-need-held-out-attribution",
+      "topic": "ai-research",
+      "domain": "Evaluation",
+      "statement": "Gains from automatically evolving an agent harness (prompts, skills, tools, orchestration around a fixed model) are mostly search-set overfitting and extra inference compute rather than generalizable improvement, and a validation split alone does not prevent that overfitting.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.22466",
+          "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
+          "published": "2026-10-19"
+        }
+      ],
+      "first_seen": "2026-10-19",
+      "last_reviewed": "2026-10-22",
+      "title": "Auto-evolved harness gains are mostly overfitting",
+      "basis": "single preprint: 11 executor models x 3 harness-evolution frameworks; in 21 settings with significant gains, overfitting and test-time scaling averaged 54% and 14% of the gain",
+      "guidance": "Accept an auto-evolved harness change only on its delta over a held-out task set the optimizer never saw, measured at matched inference budget; don't trust search-set or validation-set improvement.",
+      "scope": "Covers automated harness-evolution frameworks on math, coding, creativity and agentic benchmarks; the share varies widely by task, model and framework, and it says nothing about hand-engineered harness changes.",
+      "tags": [
+        "harness-evolution",
+        "evals",
+        "overfitting",
+        "test-time-compute"
+      ]
     }
   ]
 }

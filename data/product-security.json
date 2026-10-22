@@ -63,7 +63,7 @@
         "newness": 0,
         "credibility": 57.5,
         "composite": 52.12,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -82,6 +82,98 @@
           "teachable"
         ],
         "at": "2026-07-26T21:08:26+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.mobile",
+      "title": "How we found 24 Android vulnerabilities using our open source AI security agent",
+      "source_url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
+      "article_url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-09-28",
+      "date": "2026-09",
+      "source_name": "GitHub Security Lab",
+      "raw_path": "data/_raw/how-we-found-24-android-vulnerabilities-using-ou-7087a97cc1.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-github-blog-tag-github-security-lab-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "cluster": "M",
+      "related_claims": [
+        "mobile-webviews-are-a-persistent-cross-context-attack-surface",
+        "score-evals-on-groundedness-not-headline-f1"
+      ],
+      "summary": "GitHub Security Lab extended its open-source Taskflow Agent with Android-specific audit steps. One taskflow separates mobile from non-mobile entry points, and another checks a fixed list of vulnerability classes against each entry point. Together they found 24 vulnerabilities, including OsmAnd location tracking and a WebView account-takeover chain. The post is candid that LLMs over-report low-severity bugs, misjudge severity, and need PoC runs plus expert review.",
+      "lessons": [
+        {
+          "point": "Give the model a per-entry-point checklist of vulnerability classes so non-determinism doesn't skip the essential bug classes on less familiar platforms like Android.",
+          "excerpt": "Since mobile application vulnerabilities are less widely known and LLMs are non-deterministic, we should ensure the LLM checks for certain essential vulnerabilities classes.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Run a strict checklist prompt several times alongside a broad open-ended prompt: the first catches the obvious bugs and the second finds the creative ones.",
+          "excerpt": "By combining both prompts across multiple runs, we get the best of each",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "LLM auditors over-report low-impact or unrealistic-state bugs, even when told not to, so every finding needs expert triage.",
+          "excerpt": "it often reported low-severity vulnerabilities, even when specifically told not to do so",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Making the model write a proof of concept surfaces mitigating factors it otherwise misses; a debugger is the stronger fix for the false positives that remain.",
+          "excerpt": "the only way to fix these issue is to give the LLM a debugger to run the proof of concept and original code",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Scaffolded, platform-specific taskflows make LLMs effective Android bug hunters, but severity and exploitability still need a PoC and a human.",
+      "tags": [
+        "android",
+        "ai-vuln-discovery",
+        "taskflows",
+        "webview",
+        "llm-triage",
+        "false-positives"
+      ],
+      "actionable": {
+        "type": "skill",
+        "skill_slug": "android-entrypoint-audit",
+        "title": "Two-stage Android audit: classify entry points, then checklist per entry point",
+        "detail": "Stage 1: enumerate exported activities, services, receivers, deeplinks and JS bridges, and separate mobile from non-mobile entry points. Stage 2: for each entry point, prompt for its class-specific checklist (intents: confused deputy, insecure broadcast; WebView: XSS, exposed bridges; files: path traversal). Run that strict pass several times plus one open-ended pass, then require a PoC for every finding before human triage."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 82,
+        "newness": 6,
+        "credibility": 75.0,
+        "composite": 50.85,
+        "scored_at": "2026-10-22T05:47:04+00:00"
+      },
+      "prior_art": "Earlier GHSL Taskflow Agent posts on generic audit taskflows, and LLM-assisted SAST triage; the delta is the Android-specific entry-point and checklist decomposition plus its field results.",
+      "verified": true,
+      "verify_note": "Independent verifier: all lessons supported; novelty 45 (vs 50), relevance 80.",
+      "id": "how-we-found-24-android-vulnerabilities-using-ou-7087a97cc1",
+      "retrieved_at": "2026-10-19T23:35:59+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "24 real, disclosed Android vulnerabilities (OsmAnd location tracking, a WebView account-takeover chain) found with an open-source agent you can run today, plus candid lessons on LLM severity misjudgment and false positives.",
+        "signals": [
+          "newsworthy",
+          "trending",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-19T23:36:16+00:00"
       }
     },
     {
@@ -149,7 +241,7 @@
         "newness": 1,
         "credibility": 77.5,
         "composite": 42.47,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -172,7 +264,7 @@
         "newness": 31,
         "credibility": 70.0,
         "composite": 40.75,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": true,
       "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
@@ -305,7 +397,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 40.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
@@ -327,7 +419,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 32.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": false,
       "verify_note": "Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source.",
@@ -419,7 +511,7 @@
         "newness": 1,
         "credibility": 73.2,
         "composite": 29.23,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
       "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",

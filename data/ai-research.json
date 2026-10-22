@@ -14,6 +14,79 @@
   ],
   "entries": [
     {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
+      "source_url": "https://arxiv.org/abs/2610.22466",
+      "article_url": "https://arxiv.org/abs/2610.22466",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-19",
+      "date": "2026-10",
+      "source_name": "arXiv cs.AI (Artificial Intelligence)",
+      "raw_path": "data/_raw/harness-delta-attribution-dissecting-gains-from-2006da8a13.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-ai",
+      "source_rank": 43.9,
+      "source_topics": [
+        "ai-research"
+      ],
+      "cluster": "B",
+      "related_claims": [
+        "harness-evolution-gains-need-held-out-attribution",
+        "swe-bench-doesnt-generalize-to-production-tasks"
+      ],
+      "summary": "Automatic harness evolution, which optimizes the prompts, skills, tools and orchestration around a fixed model, reports gains on its search set. Harness-Delta Attribution splits those gains into overfitting, test-time scaling and a residual. Across 21 settings with significant gains, overfitting averaged 54% and extra compute 14% of the gain, gains often failed to transfer to held-out tasks, and validation signals did not prevent overfitting.",
+      "lessons": [
+        {
+          "point": "Most of a harness-evolution gain is usually not generalizable improvement: on average 54% is overfitting and 14% is extra inference compute.",
+          "excerpt": "overfitting and test-time scaling account for 54% and 14% of the gain on average; their combined share exceeds 50% in 14 settings",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A better score on the set you optimized against is weak evidence; evolved harnesses often don't transfer to held-out tasks.",
+          "excerpt": "search-set gains often fail to transfer to held-out tasks",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A validation split alone does not stop harness evolution from overfitting.",
+          "excerpt": "validation-based signals are insufficient to prevent overfitting",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.",
+      "tags": [
+        "harness-evolution",
+        "evals",
+        "overfitting",
+        "test-time-compute",
+        "agents"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Attribution-aware acceptance test for harness changes",
+        "detail": "When a prompt or skill optimizer or a self-improving loop proposes a harness change, score it on a held-out task set the optimizer never saw. Compare at matched token and inference budgets so extra compute isn't counted as improvement. Accept the change only on the held-out delta, not the search-set or validation delta."
+      },
+      "scores": {
+        "novelty": 65,
+        "relevance": 87,
+        "newness": 31,
+        "credibility": 43.9,
+        "composite": 59.93,
+        "scored_at": "2026-10-22T05:47:04+00:00"
+      },
+      "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
+      "verified": true,
+      "verify_note": "Independent verifier: all lessons supported; novelty 65 (vs 72), relevance 87.",
+      "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
+      "retrieved_at": "2026-10-19T23:35:59+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
       "id": "how-we-use-goal-to-find-bugs-in-patch-the-planet-3750b30fd6",
       "topic": "ai-research",
       "domain": "air.agents",
@@ -83,7 +156,7 @@
         "newness": 0,
         "credibility": 77.5,
         "composite": 59.62,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "The outcome-vs-path framing echoes Zvi's and OpenAI's own writing on agent scaffolds, and the per-agent scoping resembles multi-agent orchestration patterns (planner/reader split, dispatcher). What's new here is a concrete, results-backed playbook from a security firm running Codex against real audited codebases, with an artifact (aicov) for grounding enforcement and a two-model false-positive gauntlet.",
       "discovered_via": "rss",
@@ -102,7 +175,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 59.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -176,7 +249,7 @@
         "newness": 31,
         "credibility": 55.0,
         "composite": 56.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -297,7 +370,7 @@
         "newness": 1,
         "credibility": 80.0,
         "composite": 55.75,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
       "discovered_via": "rss",
@@ -362,7 +435,7 @@
         "newness": 0,
         "credibility": 75.0,
         "composite": 55.65,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
@@ -381,7 +454,7 @@
         "newness": 31,
         "credibility": 55.0,
         "composite": 52.0,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -448,7 +521,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 50.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",

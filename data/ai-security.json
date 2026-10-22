@@ -80,7 +80,7 @@
         "newness": 0,
         "credibility": 80.0,
         "composite": 66.0,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "The Wired writeup of the same incident (analyzed in batch-02) covers the multi-agent coordination-via-Artifactory angle. OpenAI's first-party post adds the mechanism: the Artifactory zero-day was the actual sandbox escape primitive and classifiers were intentionally off during eval. UK AISI's long-horizon-cyber report is cited as the capability trajectory this incident confirms.",
       "discovered_via": "rss",
@@ -94,6 +94,90 @@
       "needs_review": true,
       "grounding_score": 0.75,
       "domain_label": "Agent Sandbox Escape & Evaluation Containment"
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.prompt-injection",
+      "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+      "source_url": "https://arxiv.org/abs/2610.23109",
+      "article_url": "https://arxiv.org/abs/2610.23109",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-19",
+      "date": "2026-10",
+      "source_name": "arXiv cs.CR (Cryptography and Security)",
+      "raw_path": "data/_raw/trojan-horse-automated-repository-poisoning-agai-c6a8fe9d8c.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 50.6,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "cluster": "G",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "prompt-injection-is-containment-not-prevention"
+      ],
+      "summary": "TrojanForge automates repository poisoning against coding agents: it maps agent execution traces onto AST nodes, has a security-review agent pick the least conspicuous payload locations, and refines disguises through adversarial play against the target agent. It reaches over 60% stable poisoning success and over 90% backdoor injection, and on a 384-repo benchmark across 4 harnesses and 12 models even commercial agents fail to defend.",
+      "lessons": [
+        {
+          "point": "Attackers can place repository payloads where the agent's own execution traces will reach them, choosing the spots a security review is least likely to flag.",
+          "excerpt": "TrojanForge parses repository structure through abstract syntax trees (AST) and maps agent execution traces onto AST nodes. A security review agent ranks these candidates and selects the least conspicuous ones for payload mounting.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Disguises improve automatically: the attacker learns why the agent detected a payload, inverts that cause, and reuses what worked across repositories.",
+          "excerpt": "iteratively refines disguise strategies by inverting the causes of agent detection, and transfers accumulated success experience across repositories",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Automated repository poisoning is reliable, not anecdotal: over 60% poisoning success and over 90% backdoor injection.",
+          "excerpt": "TrojanForge achieves a stable poisoning success rate of over 60% with backdoor injection exceeding 90%",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Agent-side detection doesn't hold up as a defense: across 4 harnesses and 12 models, commercial agents included, none defended against repository-level poisoning.",
+          "excerpt": "even commercial agents fail to defend against repository-level poisoning",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.",
+      "tags": [
+        "coding-agents",
+        "repository-poisoning",
+        "prompt-injection",
+        "backdoor",
+        "red-teaming",
+        "benchmark"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Treat cloned repositories as untrusted input to coding agents",
+        "detail": "Run coding agents on third-party or unreviewed repositories in a sandbox with no credentials and egress restricted to an allowlist. Gate any agent-written change that touches build scripts, CI config, dependency manifests or install hooks behind a deterministic diff check. Don't rely on the agent's own judgment to spot planted payloads; red-team your harness with TrojanBench-style poisoned repos."
+      },
+      "scores": {
+        "novelty": 75,
+        "relevance": 90,
+        "newness": 31,
+        "credibility": 50.6,
+        "composite": 64.84,
+        "scored_at": "2026-10-22T05:47:04+00:00"
+      },
+      "prior_art": "Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.",
+      "threat": "Poisoned repository content steers a coding agent into executing or committing a backdoor.",
+      "conditions": "A coding agent works autonomously inside a repository an attacker can contribute to or publish.",
+      "mitigations": "Sandbox with no secrets and allowlisted egress; deterministic gates on sensitive file changes; don't count model-side detection as a control.",
+      "verified": true,
+      "verify_note": "Independent verifier: all 4 lessons supported; novelty 75 (vs 80), relevance 90.",
+      "id": "trojan-horse-automated-repository-poisoning-agai-c6a8fe9d8c",
+      "retrieved_at": "2026-10-19T23:35:59+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "id": "google-dev-kit-spurs-first-ever-agent-on-agent-v-f48af27031",
@@ -165,7 +249,7 @@
         "newness": 1,
         "credibility": 70.0,
         "composite": 62.35,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.",
       "discovered_via": "rss",
@@ -248,7 +332,7 @@
         "newness": 1,
         "credibility": 70.0,
         "composite": 61.75,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry (embracethered.com) covers the same underlying incident from the defender-response angle; this Black Hat disclosure adds the specific mechanism — Artifactory-as-message-board with hundreds of thousands of coordination messages — which was not in prior coverage. Also related to ProjectDiscovery's rogue-agent CTF finding, but with cross-agent coordination as the delta.",
       "discovered_via": "rss",
@@ -331,7 +415,7 @@
         "newness": 1,
         "credibility": 70.0,
         "composite": 59.35,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Pool digest has an AWS Bedrock AgentCore SDK argument-injection entry and a TensorZero Gateway config-override entry — both are 'appsec bugs surface as agent RCE' but neither is a framework-level checkpoint deserialization finding. Complementary, not duplicative.",
       "discovered_via": "rss",
@@ -409,7 +493,7 @@
         "newness": 1,
         "credibility": 50.0,
         "composite": 56.65,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Rehberger's own prior Claude Code prompt-injection/exfiltration research plus long-documented Python import-shadowing attacks; the new specificity is chaining a safety-refusal fallback into the shadowing RCE and spawning a nested agent.",
       "threat": "Indirect prompt injection from untrusted web content leading to code execution in an autonomous coding agent.",
@@ -500,7 +584,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 55.5,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Follows the OpenAI/Hugging Face containment failure covered in the sibling Wired piece; reinforces the pattern in prompt-injection-is-containment-not-prevention that model-facing rules only hold if the surrounding system enforces them.",
       "discovered_via": "rss",
@@ -582,7 +666,7 @@
         "newness": 1,
         "credibility": 70.0,
         "composite": 53.95,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "The 'agents-approve-most-prompts' framing overlaps with Anthropic's May 'How we contain Claude' post (93% approval telemetry) that this article cites; the ScaleX game's dataset (40k runs, 409k decisions, per-command breakdown) is the new empirical delta.",
       "discovered_via": "rss",
@@ -656,7 +740,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 53.1,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "OAuth Mixup Attacks are RFC 9207 (2023); the novelty here is that MCP as a protocol now mandates iss validation in its auth flow, closing a defect that had been implementation-optional. Stateless MCP was previewed in a July 23 preparation post from the same publication.",
       "discovered_via": "rss",
@@ -720,7 +804,7 @@
         "newness": 0,
         "credibility": 75.0,
         "composite": 51.75,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.",
       "verified": true,
@@ -797,7 +881,7 @@
         "newness": 6,
         "credibility": 80.0,
         "composite": 51.6,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.",
       "article_url": "https://huggingface.co/blog/allenai/benchmirt",
@@ -874,7 +958,7 @@
         "newness": 0,
         "credibility": 75.0,
         "composite": 51.45,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.",
       "verified": true,
@@ -963,7 +1047,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 51.0,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Same underlying diagnosis as the Anthropic 3-orgs incident in this batch and the Chainguard microVM piece. Reinforces claim imdsv1-must-be-disabled-on-agent-workloads and the containment-not-prevention framing of prompt injection.",
       "discovered_via": "rss",
@@ -1040,7 +1124,7 @@
         "newness": 1,
         "credibility": 70.0,
         "composite": 47.65,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Pool digest 'AWS API MCP Server fails open' and 'AWS Bedrock AgentCore Python SDK argument-delimiter injection' cover the same shape (agent middleware ships an RCE surface); this adds a Python/Langflow instance under active exploitation.",
       "discovered_via": "rss",
@@ -1063,7 +1147,7 @@
         "newness": 31,
         "credibility": 72.0,
         "composite": 47.05,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "verified": true,
       "prior_art": "Adversarial wearable patches against person detectors (Thys et al. 2019, adversarial T-shirts); extending the evaluation to grounding VLMs with a failure-type split is the delta.",
@@ -1169,7 +1253,7 @@
         "newness": 0,
         "credibility": 57.5,
         "composite": 46.12,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.",
       "verified": true,
@@ -1258,7 +1342,7 @@
         "newness": 0,
         "credibility": 80.0,
         "composite": 44.4,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "First-party OpenAI messaging on agentic coding productivity has been ongoing across 2026. The delta of this specific report is the eight-project retrospective corpus (five Codex-only, three Codex+Claude Code), the explicit naming of verification acceptance patterns (parity, simulated-answer, statistical), and the stewardship / abandonment framing. The verification-bottleneck claim overlaps with the pool's 'human review catches agent PR risk' claim and PortSwigger's HTTP Terminator human-in-cascade pattern.",
       "discovered_via": "rss",
@@ -1314,7 +1398,7 @@
         "newness": 6,
         "credibility": 80.0,
         "composite": 42.9,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
       "article_url": "https://huggingface.co/blog/funes",
@@ -1385,7 +1469,7 @@
         "newness": 1,
         "credibility": 50.0,
         "composite": 36.25,
-        "scored_at": "2026-10-22T02:20:03+00:00"
+        "scored_at": "2026-10-22T05:47:04+00:00"
       },
       "prior_art": "Same 'security feature named protectively but insecure/opt-in by default' pattern already reported for OpenClaw itself (Hannah Fry incident, gym-waitlist hijack, prior Register coverage cited in this article).",
       "article_url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",

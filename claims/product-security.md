@@ -139,11 +139,12 @@ Mobile applications that render web content in a WebView with JS bridges exposed
 
 _Tags: `mobile`, `webview`, `android`, `ios`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Insecure WebView native bridge](https://developer.android.com/privacy-and-security/risks/insecure-webview-native-bridge) | undated |
+| supports | [How we found 24 Android vulnerabilities using our open source AI security agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/) | Sep 28, 2026 |
 
 </details>
 

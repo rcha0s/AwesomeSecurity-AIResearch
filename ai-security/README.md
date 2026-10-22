@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_5 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [1 held for review](../REVIEW.md)._
+_6 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [1 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -17,12 +17,21 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 | Domain | Findings |
 | --- | --- |
+| Prompt Injection & Jailbreaks | 2 |
 | Agent & Harness Security | 2 |
 | Red-Teaming & Threat Modeling | 2 |
-| Prompt Injection & Jailbreaks | 1 |
 | AI Infrastructure & Incident Response | 1 |
 | MCP, Tools & Skills | 1 |
 | Memory, RAG & Data Poisoning | 1 |
+
+## Prompt Injection & Jailbreaks
+
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **64.84** · Oct 19, 2026  
+  An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
+  _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
+- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](prompt-injection/2026-08-claude-code-opus-5-auto-mode-tricked-into-rce-via-website-su.md)** · composite **56.65** · Aug 28, 2026  
+  A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable - …  
+  _[Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)_
 
 ## Agent & Harness Security
 
@@ -41,12 +50,6 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 - **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](red-teaming/2026-09-multidimensional-item-response-theory-auditing-reveals-some.md)** · composite **51.6** · Sep 1, 2026  
   A benchmark's stated purpose (e.g. "safety") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume - a model that scores well on WMDP's…  
   _[source](https://huggingface.co/blog/allenai/benchmirt)_
-
-## Prompt Injection & Jailbreaks
-
-- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](prompt-injection/2026-08-claude-code-opus-5-auto-mode-tricked-into-rce-via-website-su.md)** · composite **56.65** · Aug 28, 2026  
-  A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable - …  
-  _[Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)_
 
 ## AI Infrastructure & Incident Response
 
