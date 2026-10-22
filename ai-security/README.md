@@ -4,11 +4,25 @@
 
 _5 vetted findings · updated 2026-10-22 · ranked by composite · findings from the latest 31 days · [1 held for review](../REVIEW.md)._
 
+## 📈 Trending & In the News
+
+_Not new ideas - what the field is watching now, surfaced by the editorial pass._
+
+- **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)**
+  _Why now: A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach. · newsworthy · trending · high-relevance · timely_
+- **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)**
+  _Why now: Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster. · trending · newsworthy · timely_
+- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986)**
+  _Why now: Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files. · trending · timely_
+
 | Domain | Findings |
 | --- | --- |
 | Agent & Harness Security | 2 |
 | Red-Teaming & Threat Modeling | 2 |
 | Prompt Injection & Jailbreaks | 1 |
+| AI Infrastructure & Incident Response | 1 |
+| MCP, Tools & Skills | 1 |
+| Memory, RAG & Data Poisoning | 1 |
 
 ## Agent & Harness Security
 
@@ -33,6 +47,24 @@ _5 vetted findings · updated 2026-10-22 · ranked by composite · findings from
 - **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](prompt-injection/2026-08-claude-code-opus-5-auto-mode-tricked-into-rce-via-website-su.md)** · composite **56.65** · Aug 28, 2026  
   A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable - …  
   _[Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)_
+
+## AI Infrastructure & Incident Response
+
+- **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](ai-infra/2026-07-provider-safety-guardrails-blocked-incident-response-during.md)** · composite **51.75** · Jul 19, 2026 · ⚠️ _review_  
+  Assume your commercial AI provider may refuse to help you during a breach - pre-stage a local open-weight forensic model the same way you pre-stage backups.  
+  _[source](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)_
+
+## MCP, Tools & Skills
+
+- **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](mcp-tools/2026-06-treat-mcp-tool-descriptions-as-system-prompts-silent-re-trus.md)** · composite **51.45** · Jun 30, 2026 · ⚠️ _review_  
+  Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.  
+  _[source](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)_
+
+## Memory, RAG & Data Poisoning
+
+- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](data-poisoning/2026-07-self-state-attacks-corrupting-an-agent-s-own-memory-and-conf.md)** · composite **46.12** · Jul 20, 2026 · ⚠️ _review_  
+  Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.  
+  _[source](https://arxiv.org/abs/2607.17986)_
 
 ---
 

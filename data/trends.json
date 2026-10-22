@@ -1442,6 +1442,36 @@
     },
     {
       "topic": "ai-security",
+      "tag": "tool-poisoning",
+      "count": 3,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 3.0,
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-08-09",
+      "members": [
+        {
+          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
+          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
+          "date": "2026-08-09",
+          "fresh": false
+        },
+        {
+          "title": "snyk/agent-scan",
+          "url": "https://github.com/snyk/agent-scan",
+          "date": "2026-08-09",
+          "fresh": false
+        },
+        {
+          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
+          "date": "2026-06-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "zero-trust",
       "count": 3,
       "recent": 0,
@@ -1502,6 +1532,36 @@
     },
     {
       "topic": "ai-security",
+      "tag": "memory-poisoning",
+      "count": 3,
+      "recent": 0,
+      "sources": 3,
+      "momentum": 3.0,
+      "first_seen": "2026-05-14",
+      "last_seen": "2026-07-20",
+      "members": [
+        {
+          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
+          "url": "https://arxiv.org/abs/2607.17986",
+          "date": "2026-07-20",
+          "fresh": false
+        },
+        {
+          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
+          "url": "https://arxiv.org/abs/2607.17619",
+          "date": "2026-07-20",
+          "fresh": false
+        },
+        {
+          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
+          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
+          "date": "2026-05-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "huggingface",
       "count": 3,
       "recent": 0,
@@ -1556,36 +1616,6 @@
           "title": "OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners",
           "url": "https://github.com/onecli/onecli",
           "date": "2026-08-19",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "memory-poisoning",
-      "count": 3,
-      "recent": 0,
-      "sources": 3,
-      "momentum": 3.0,
-      "first_seen": "2026-05-14",
-      "last_seen": "2026-07-20",
-      "members": [
-        {
-          "title": "Insecure coding preferences persist in LLM long-term memory and resist normal correction",
-          "url": "https://arxiv.org/abs/2607.17619",
-          "date": "2026-07-20",
-          "fresh": false
-        },
-        {
-          "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
-          "url": "https://arxiv.org/abs/2607.17986",
-          "date": "2026-07-20",
-          "fresh": false
-        },
-        {
-          "title": "MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)",
-          "url": "https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/",
-          "date": "2026-05-14",
           "fresh": false
         }
       ]
@@ -1802,36 +1832,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "tool-poisoning",
-      "count": 3,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 3.0,
-      "first_seen": "2026-06-30",
-      "last_seen": "2026-08-09",
-      "members": [
-        {
-          "title": "Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions",
-          "url": "https://github.com/cisco-ai-defense/mcp-scanner",
-          "date": "2026-08-09",
-          "fresh": false
-        },
-        {
-          "title": "snyk/agent-scan",
-          "url": "https://github.com/snyk/agent-scan",
-          "date": "2026-08-09",
-          "fresh": false
-        },
-        {
-          "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
-          "date": "2026-06-30",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "idor",
       "count": 3,
       "recent": 0,
@@ -2000,6 +2000,30 @@
           "title": "MCP gets an enterprise makeover",
           "url": "https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027",
           "date": "2026-07-29",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "incident-response",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-09-02",
+      "members": [
+        {
+          "title": "An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours",
+          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
+          "date": "2026-09-02",
+          "fresh": false
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -2720,30 +2744,6 @@
           "title": "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration",
           "url": "https://arxiv.org/abs/2608.05909",
           "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "incident-response",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-09-02",
-      "members": [
-        {
-          "title": "An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours",
-          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
-          "date": "2026-09-02",
-          "fresh": false
-        },
-        {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -3490,6 +3490,30 @@
     },
     {
       "topic": "product-security",
+      "tag": "code-review",
+      "count": 2,
+      "recent": 0,
+      "sources": 2,
+      "momentum": 2.0,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-07-30",
+      "members": [
+        {
+          "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
+          "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "date": "2026-07-19",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "android",
       "count": 2,
       "recent": 0,
@@ -4036,30 +4060,6 @@
           "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
           "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
           "date": "2026-07-30",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "code-review",
-      "count": 2,
-      "recent": 0,
-      "sources": 2,
-      "momentum": 2.0,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-07-30",
-      "members": [
-        {
-          "title": "Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass",
-          "url": "https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not",
-          "date": "2026-07-30",
-          "fresh": false
-        },
-        {
-          "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
-          "url": "https://arxiv.org/abs/2607.12428",
-          "date": "2026-07-19",
           "fresh": false
         }
       ]

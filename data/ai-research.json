@@ -83,7 +83,7 @@
         "newness": 0,
         "credibility": 77.5,
         "composite": 59.62,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "The outcome-vs-path framing echoes Zvi's and OpenAI's own writing on agent scaffolds, and the per-agent scoping resembles multi-agent orchestration patterns (planner/reader split, dispatcher). What's new here is a concrete, results-backed playbook from a security firm running Codex against real audited codebases, with an artifact (aicov) for grounding enforcement and a two-model false-positive gauntlet.",
       "discovered_via": "rss",
@@ -102,7 +102,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 59.5,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -176,7 +176,7 @@
         "newness": 31,
         "credibility": 55.0,
         "composite": 56.5,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -297,7 +297,7 @@
         "newness": 1,
         "credibility": 80.0,
         "composite": 55.75,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
       "discovered_via": "rss",
@@ -362,7 +362,7 @@
         "newness": 0,
         "credibility": 75.0,
         "composite": 55.65,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
@@ -381,7 +381,7 @@
         "newness": 31,
         "credibility": 55.0,
         "composite": 52.0,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -448,7 +448,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 50.5,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",

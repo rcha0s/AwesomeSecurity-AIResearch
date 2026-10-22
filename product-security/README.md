@@ -10,10 +10,19 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 - **[Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)](https://github.com/advisories/GHSA-22hg-r758-rrw9)**
   _Why now: Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today. · cve · timely · high-relevance_
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
+  _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
 
 | Domain | Findings |
 | --- | --- |
+| AI in the SDLC | 1 |
 | Application Security | 1 |
+
+## AI in the SDLC
+
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-code/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **52.12** · Jul 19, 2026 · ⚠️ _review_  
+  Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.  
+  _[source](https://arxiv.org/abs/2607.12428)_
 
 ## Application Security
 

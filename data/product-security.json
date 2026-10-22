@@ -15,6 +15,77 @@
   "entries": [
     {
       "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
+      "source_url": "https://arxiv.org/abs/2607.12428",
+      "article_url": "https://arxiv.org/abs/2607.12428",
+      "published": "2026-07-19",
+      "date": "2026-07",
+      "author": "A H M Nazmus Sakib et al.",
+      "discovered_via": "rss",
+      "source_rank": 57.5,
+      "raw_path": "data/_raw/trust-but-verify-uncovering-the-security-debt-of-7240fb0539.txt",
+      "summary": "A large-scale study of the AIDev dataset classified security smells across 16,112 file changes in 4,022 agent-generated pull requests. 38.9% of agent PRs contain at least one security smell and supply-chain integrity issues make up 82.3% of them - but the counterintuitive result is that human collaborators introduce 67.6% of the genuine leaked secrets in these agent-assisted workflows, and review catches almost none of them. All percentages are downstream of an LLM-as-a-judge classification pipeline plus manual review, so treat the precision of the figures accordingly.",
+      "lessons": [
+        {
+          "point": "Supply-chain integrity dominates the detected smell taxonomy (82.3%); the abstract does not enumerate the remaining categories, so everything else combined is a small residual - point provenance and dependency controls at agent output.",
+          "excerpt": "38.9% of agent-generated PRs contain at least one security smell, with supply chain integrity issues accounting for 82.3% of all detected security smells",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "Blaming the agent misreads the data: humans introduced most genuine leaked secrets, which the authors describe only as suggesting a *potential* reduction in developer vigilance - an association, not a causal finding.",
+          "excerpt": "human collaborators are responsible for introducing 67.6% of genuine leaked secrets within these agent-assisted workflows",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "Existing review is not a control here - automated and human review together missed 81.1% of these credentials before integration.",
+          "excerpt": "existing automated and human review processes fail to detect 81.1% of these credentials prior to integration",
+          "confidence": 0.96,
+          "grounded": true
+        }
+      ],
+      "threat": "Security debt accumulates in high-impact file paths faster than human review capacity, with hard-coded credentials making up 99.6% of critical-severity smells.",
+      "conditions": "Repositories that accept autonomous coding-agent pull requests through a conventional human review process.",
+      "mitigations": "Enforce secret scanning as a merge gate rather than a review step; apply provenance/dependency-integrity checks to agent PRs; add context-aware guardrails at the human-AI collaboration point rather than at final review.",
+      "takeaway": "Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.",
+      "tags": [
+        "ai-generated-code",
+        "coding-agents",
+        "secrets",
+        "supply-chain",
+        "code-review"
+      ],
+      "scores": {
+        "novelty": 57,
+        "relevance": 88,
+        "newness": 0,
+        "credibility": 57.5,
+        "composite": 52.12,
+        "scored_at": "2026-10-22T02:20:03+00:00"
+      },
+      "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
+      "verified": true,
+      "verify_note": "Independent verifier: removed invented contrast categories (injection/logic bugs); restored the authors' 'potential' hedge on developer vigilance; surfaced that all figures come from an LLM-as-a-judge pipeline; novelty 68->57.",
+      "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
+      "retrieved_at": "2026-07-21T07:37:44+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "AI-Generated Code Risk",
+      "editorial": {
+        "promoted": true,
+        "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
+        "signals": [
+          "trending",
+          "high-relevance",
+          "teachable"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.cloud-infra",
       "cluster": null,
       "related_claims": [],
@@ -78,7 +149,7 @@
         "newness": 1,
         "credibility": 77.5,
         "composite": 42.47,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -101,7 +172,7 @@
         "newness": 31,
         "credibility": 70.0,
         "composite": 40.75,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "verified": true,
       "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
@@ -234,7 +305,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 40.5,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
@@ -256,7 +327,7 @@
         "newness": 31,
         "credibility": 75.0,
         "composite": 32.5,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "verified": false,
       "verify_note": "Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source.",
@@ -348,7 +419,7 @@
         "newness": 1,
         "credibility": 73.2,
         "composite": 29.23,
-        "scored_at": "2026-10-22T01:40:25+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
       "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",

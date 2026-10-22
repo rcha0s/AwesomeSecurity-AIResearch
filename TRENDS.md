@@ -236,6 +236,13 @@ _First seen 2026-08-06 · latest 2026-08-07._
 - [OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/) (2026-08-06)
 - [Online Security Learning in Cooperative Multi-Agent Systems under Hidden Byzantine Attacks](https://arxiv.org/abs/2608.06520) (2026-08-06)
 
+### ▪️ tool-poisoning  ·  3 findings (0 recent) · 2 sources · momentum 3.0
+_First seen 2026-06-30 · latest 2026-08-09._
+
+- [Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner) (2026-08-09)
+- [snyk/agent-scan](https://github.com/snyk/agent-scan) (2026-08-09)
+- [Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/) (2026-06-30)
+
 ### ▪️ zero-trust  ·  3 findings (0 recent) · 3 sources · momentum 3.0
 _First seen 2026-07-30 · latest 2026-08-07._
 
@@ -250,6 +257,13 @@ _First seen 2026-07-24 · latest 2026-09-08._
 - [IBM's agentic AI platform is under active attack - patch now](https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535) (2026-08-05)
 - [AWS Bedrock AgentCore Python SDK: argument-delimiter injection in install_packages() gives RCE in the Code Interpreter sandbox (CVE-2026-16796)](https://github.com/advisories/GHSA-j6g5-3hh3-pgw8) (2026-07-24)
 
+### ▪️ memory-poisoning  ·  3 findings (0 recent) · 3 sources · momentum 3.0
+_First seen 2026-05-14 · latest 2026-07-20._
+
+- [Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986) (2026-07-20)
+- [Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619) (2026-07-20)
+- [MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)](https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/) (2026-05-14)
+
 ### ▪️ huggingface  ·  3 findings (0 recent) · 3 sources · momentum 3.0
 _First seen 2026-06-29 · latest 2026-09-03._
 
@@ -263,13 +277,6 @@ _First seen 2026-08-19 · latest 2026-09-08._
 - [CC Safety Net Blocks Destructive Agent Commands by Parsing Command Intent, Not Pattern-Matching Strings](https://github.com/kenryu42/cc-safety-net) (2026-09-08)
 - [OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492) (2026-08-31)
 - [OneCLI: Per-Employee Sandboxed Agents Behind a Credential-Injecting MITM Gateway, With Outbound-Only Runners](https://github.com/onecli/onecli) (2026-08-19)
-
-### ▪️ memory-poisoning  ·  3 findings (0 recent) · 3 sources · momentum 3.0
-_First seen 2026-05-14 · latest 2026-07-20._
-
-- [Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619) (2026-07-20)
-- [Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986) (2026-07-20)
-- [MemoryTrap: persistent memory poisoning in AI coding agents (OWASP ASI06)](https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/) (2026-05-14)
 
 ### ▪️ backdoor  ·  3 findings (0 recent) · 3 sources · momentum 3.0
 _First seen 2026-06-25 · latest 2026-07-21._
@@ -320,13 +327,6 @@ _First seen 2026-08-12 · latest 2026-09-02._
 - [Five Primitives for Governing Autonomous AI Agents at Runtime](https://arxiv.org/abs/2608.26696) (2026-08-27)
 - [Snyk's Agent Baseline: Agent Governance Products Cover Different Outcomes, and the Right Control Sequence Depends on Deployment Pattern](https://snyk.io/blog/agent-baseline-35-controls-where-should-you-start/) (2026-08-12)
 
-### ▪️ tool-poisoning  ·  3 findings (0 recent) · 2 sources · momentum 3.0
-_First seen 2026-06-30 · latest 2026-08-09._
-
-- [Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner) (2026-08-09)
-- [snyk/agent-scan](https://github.com/snyk/agent-scan) (2026-08-09)
-- [Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/) (2026-06-30)
-
 ### ▪️ idor  ·  3 findings (0 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-10 · latest 2026-08-27._
 
@@ -369,6 +369,12 @@ _First seen 2026-07-29 · latest 2026-08-27._
 
 - [Five Primitives for Governing Autonomous AI Agents at Runtime](https://arxiv.org/abs/2608.26696) (2026-08-27)
 - [MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027) (2026-07-29)
+
+### ▪️ incident-response  ·  2 findings (0 recent) · 2 sources · momentum 2.0
+_First seen 2026-07-19 · latest 2026-09-02._
+
+- [An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours](https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/) (2026-09-02)
+- [Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/) (2026-07-19)
 
 ### ▪️ defense-in-depth  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-07-30 · latest 2026-08-28._
@@ -550,12 +556,6 @@ _First seen 2026-08-07 · latest 2026-08-10._
 - [Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models](https://arxiv.org/abs/2605.00123) (2026-08-10)
 - [MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration](https://arxiv.org/abs/2608.05909) (2026-08-07)
 
-### ▪️ incident-response  ·  2 findings (0 recent) · 2 sources · momentum 2.0
-_First seen 2026-07-19 · latest 2026-09-02._
-
-- [An AI-Assisted Cyber Attack: Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours](https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/) (2026-09-02)
-- [Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/) (2026-07-19)
-
 ### ▪️ ghsa  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-09-08 · latest 2026-09-08._
 
@@ -703,6 +703,12 @@ _First seen 2026-08-31 · latest 2026-10-21._
 - [Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)](https://github.com/advisories/GHSA-22hg-r758-rrw9) (2026-10-21) · _latest_
 - [A One-Week Dependency Cooldown Produces Outsized Supply-Chain Protection for Minimal Developer Friction](https://semgrep.dev/blog/2026/rolling-out-dependency-cooldowns-org-wide) (2026-08-31)
 
+### ▪️ code-review  ·  2 findings (0 recent) · 2 sources · momentum 2.0
+_First seen 2026-07-19 · latest 2026-07-30._
+
+- [Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not) (2026-07-30)
+- [38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428) (2026-07-19)
+
 ### ▪️ android  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-04 · latest 2026-05._
 
@@ -840,12 +846,6 @@ _First seen 2026-07-30 · latest 2026-09-08._
 
 - [phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](https://github.com/advisories/GHSA-q97c-8qh3-fpc6) (2026-09-08)
 - [Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not) (2026-07-30)
-
-### ▪️ code-review  ·  2 findings (0 recent) · 2 sources · momentum 2.0
-_First seen 2026-07-19 · latest 2026-07-30._
-
-- [Cryptographic advisories are dominated by skipped code checks, not broken math — a range check would have stopped a 9.8 ECDSA bypass](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not) (2026-07-30)
-- [38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428) (2026-07-19)
 
 ### ▪️ incomplete-fix  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-09-08 · latest 2026-09-08._
