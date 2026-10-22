@@ -83,7 +83,7 @@
         "newness": 0,
         "credibility": 77.5,
         "composite": 59.62,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T01:40:25+00:00"
       },
       "prior_art": "The outcome-vs-path framing echoes Zvi's and OpenAI's own writing on agent scaffolds, and the per-agent scoping resembles multi-agent orchestration patterns (planner/reader split, dispatcher). What's new here is a concrete, results-backed playbook from a security firm running Codex against real audited codebases, with an artifact (aicov) for grounding enforcement and a two-model false-positive gauntlet.",
       "discovered_via": "rss",
@@ -93,6 +93,147 @@
       "needs_review": true,
       "grounding_score": 0.0,
       "domain_label": "Agent Harness Design"
+    },
+    {
+      "id": "review-of-the-misalignment-in-high-stakes-settin-5863cde447",
+      "scores": {
+        "novelty": 65,
+        "relevance": 70,
+        "newness": 31,
+        "credibility": 75.0,
+        "composite": 59.5,
+        "scored_at": "2026-10-22T01:40:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
+      "topic": "ai-research",
+      "domain": "air.alignment",
+      "title": "METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it",
+      "source_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
+      "article_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/review-of-the-misalignment-in-high-stakes-settin-5863cde447.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-metr-org-feed-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "related_claims": [],
+      "summary": "METR's external review of the misalignment section of Anthropic's August 2026 Risk Report agrees risk is low, but attributes that to limited model capability rather than safeguards, and doubts the report's methodology would detect higher risk. It finds the covert-capability benchmarks a poor proxy for evading Anthropic's real monitoring (they miss persuading the monitor an action is legitimate, which real incidents have shown), and says redacted examples suggest monitoring is weaker than public evidence implies.",
+      "lessons": [
+        {
+          "point": "A low risk verdict that rests on limited capability, not on safeguards, does not show the safeguards work; the methodology may not flag rising risk.",
+          "excerpt": "rather than safeguards and alignment training. We are not confident that, if risk were higher, the methodology in the report would reliably identify this",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Benchmarks of covert capability miss a real monitor-evasion route: convincing the monitor that a harmful action is legitimate, which has happened in real incidents.",
+          "excerpt": "convincing the monitor that a harmful action is legitimate, which have subsequently been demonstrated in real incidents",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "METR's top recommendation is end-to-end red-teaming of the monitoring system, such as trying to launch an undetected rogue internal deployment.",
+          "excerpt": "a well-resourced red team attempts to start a rogue internal deployment without being detected",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Redacted historical examples led METR to judge Anthropic's monitoring weaker than the public record suggests.",
+          "excerpt": "monitoring system is weaker than expected given public evidence",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.",
+      "tags": [
+        "agent-monitoring",
+        "misalignment",
+        "risk-assessment",
+        "red-teaming",
+        "metr"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Red-team the agent monitor with justification attacks",
+        "detail": "For any LLM-based action monitor in your agent stack, add red-team cases where the agent performs a harmful action alongside a plausible business justification, and measure the monitor's miss rate on those, separate from covert or obfuscated-action cases."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
+      "scores": {
+        "novelty": 70,
+        "relevance": 65,
+        "newness": 31,
+        "credibility": 55.0,
+        "composite": 56.5,
+        "scored_at": "2026-10-22T01:40:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains",
+      "source_url": "https://arxiv.org/abs/2610.25964",
+      "article_url": "https://arxiv.org/abs/2610.25964",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "related_claims": [],
+      "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
+      "lessons": [
+        {
+          "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
+          "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
+          "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
+          "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
+      "tags": [
+        "evals",
+        "benchmarks",
+        "tokenization",
+        "reproducibility",
+        "vlm"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Assert logit-readout tokens appear in greedy decodes",
+        "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -156,7 +297,7 @@
         "newness": 1,
         "credibility": 80.0,
         "composite": 55.75,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T01:40:25+00:00"
       },
       "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
       "discovered_via": "rss",
@@ -221,7 +362,7 @@
         "newness": 0,
         "credibility": 75.0,
         "composite": 55.65,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T01:40:25+00:00"
       },
       "prior_art": "LLM-driven vuln discovery (Google's Big Sleep / OSS-Fuzz-gen, XBOW) is prior work; the novel practitioner delta is the emphasis on goal-persistence-across-compaction plus baked-in reportability rules as the mechanism that makes the loop high-signal.",
       "verified": true,
@@ -231,6 +372,140 @@
       "needs_review": false,
       "grounding_score": 1.0,
       "domain_label": "Agents & Harnesses"
+    },
+    {
+      "id": "decisionpivot-a-diagnostic-benchmark-for-decisio-792cc8e267",
+      "scores": {
+        "novelty": 55,
+        "relevance": 65,
+        "newness": 31,
+        "credibility": 55.0,
+        "composite": 52.0,
+        "scored_at": "2026-10-22T01:40:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs",
+      "source_url": "https://arxiv.org/abs/2610.28522",
+      "article_url": "https://arxiv.org/abs/2610.28522",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/decisionpivot-a-diagnostic-benchmark-for-decisio-792cc8e267.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "related_claims": [],
+      "summary": "DecisionPivot benchmarks the decision models used for routing, guardrails and output verification in LLM systems, with 48 tasks and 40,033 items, including contrast groups whose answers come from independent solvers. Two 27B models 2.6 points apart on aggregate score reach 70.1% vs 44.2% contrast-group accuracy, and one model ranks the positive item above the negative in 92.3% of pairs but answers both correctly in only 74.1%. Reasoning-effort settings also move accuracy substantially.",
+      "lessons": [
+        {
+          "point": "Aggregate accuracy can hide large differences in whether a decision model gets controlled variations right.",
+          "excerpt": "two 27B models separated by only 2.6 points on the reference track achieve contrast-group accuracies of 70.1% and 44.2%",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Ranking the positive above the negative is not the same as deciding both correctly; threshold-based use needs decision-level evaluation.",
+          "excerpt": "exposing a gap between probability ordering and decision correctness",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The reasoning-effort setting is a material variable for decision-model accuracy and must be pinned in evals.",
+          "excerpt": "compared with 81.5% at its lowest effort",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.",
+      "tags": [
+        "evals",
+        "guardrails",
+        "routing",
+        "llm-as-judge",
+        "calibration"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Contrast-pair tests for guardrail and router models",
+        "detail": "For each decision model in your pipeline, build minimal-difference positive/negative pairs and score pair accuracy (both correct) alongside item accuracy; pin the reasoning-effort setting used in production when running the eval."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "an-update-on-independent-evaluators-d4058e7ed4",
+      "scores": {
+        "novelty": 55,
+        "relevance": 50,
+        "newness": 31,
+        "credibility": 75.0,
+        "composite": 50.5,
+        "scored_at": "2026-10-22T01:40:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
+      "topic": "ai-research",
+      "domain": "air.alignment",
+      "title": "Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable",
+      "source_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "article_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/an-update-on-independent-evaluators-d4058e7ed4.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "related_claims": [],
+      "summary": "Anthropic has onboarded six METR staff with company hardware and internal-tool access roughly on par with its own risk-assessment teams, and METR will publish its risk assessments. Anthropic cannot veto publication but can require redaction within predefined categories, and Anthropic itself decides what falls into those categories. Other evaluator partnerships (SecureBio, Accenture, early talks with Hugging Face) get more limited access and publication rights.",
+      "lessons": [
+        {
+          "point": "The embedded METR team gets internal-tool access roughly comparable to Anthropic's own risk-assessment teams.",
+          "excerpt": "access to internal tools and systems that are roughly on par with what our own risk assessment teams have access to",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Publication is not vetoable, but redaction within predefined categories is, and the lab decides what fits a category: the independence guarantee depends on how those categories are drawn.",
+          "excerpt": "require them to redact information if it falls into predefined categories such as reproducing confidential IP",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Anthropic's stated evaluator criteria include independence: no equity in the lab and no financial or operational dependence on it.",
+          "excerpt": "or be financially or operationally dependent on it",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Embedded third-party evaluation is now a concrete arrangement at one frontier lab; when you weigh its outputs, look at the redaction terms.",
+      "tags": [
+        "third-party-evaluation",
+        "governance",
+        "frontier-labs",
+        "metr"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Read evaluator reports with their access and redaction terms",
+        "detail": "When you cite a third-party frontier-model assessment, record which access tier the evaluator had (embedded vs limited) and whether the lab controlled redaction categories; weight conclusions accordingly."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     }
   ]
 }
