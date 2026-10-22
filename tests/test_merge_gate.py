@@ -155,9 +155,12 @@ def test_editorial_check_holds_a_demotion_for_a_human(tmp_path, monkeypatch):
     pool.write_text(json.dumps({"entries": [{"id": "p1", "grounding_score": 1.0}]}))
     problems = gate.content_problems("BASE", root)
     assert problems == ["editorial demotion needs human review: p1 lost its promotion "
-                        "with its integrity intact"]  # fmt: skip
+                        "with main's integrity intact"]  # fmt: skip
     pool.write_text(json.dumps({"entries": [{"id": "p1", "verified": False}]}))
-    assert gate.editorial_check("BASE", root) == []  # refuted: the one automatic removal
+    assert gate.editorial_check("BASE", root) != []  # refuted in this PR: a human decides
+    main["BASE:data/ai-security.json"] = {"entries": [{**promo, "verified": False}]}
+    assert gate.editorial_check("BASE", root) == []  # already refuted on main
+    main["BASE:data/ai-security.json"] = {"entries": [promo]}
     pool.unlink()
     (root / "data" / "archive.json").write_text(json.dumps([promo]))
     assert gate.editorial_check("BASE", root) == []  # aged into the archive, still promoted

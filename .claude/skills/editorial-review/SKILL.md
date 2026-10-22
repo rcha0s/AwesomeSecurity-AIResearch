@@ -50,7 +50,8 @@ not a second dumping ground. When in doubt, leave it in the queue.
 - **Demote only on purpose.** To take an earlier promotion back (retracted,
   wrong, duplicate), emit `{"id": ..., "demote": true, "reason": "..."}`. A
   demotion without a reason is ignored. Every removal is reported in the PR
-  body, and a PR that demotes never auto-merges: a human reviews it.
+  body. A PR that removes a promotion (demoted, or refuted in this run) never
+  auto-merges: a human reviews it.
 
 ## Steps
 

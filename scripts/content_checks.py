@@ -13,9 +13,10 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
-  editorial_problems    an entry promoted on main keeps its promotion unless
-                        its integrity failed; any other removal is refused as
-                        "editorial demotion needs human review".
+  editorial_problems    an entry promoted on main keeps its promotion (every
+                        copy) unless main's copy already failed integrity;
+                        any other removal is refused as "editorial demotion
+                        needs human review".
   story_membership_problems every entry in main's story ledger stays in the
                         same story in the PR, and no story disappears: a PR can
                         only add stories, or add NEW entries to existing ones
@@ -128,18 +129,24 @@ def _promoted(entry: dict) -> bool:
 
 def editorial_problems(main_docs: list, pr_docs: list) -> list[str]:
     """Promotions are sticky (news is kept like claims). A scan PR may drop one
-    only when the entry's integrity failed (refuted or ungrounded: the same
-    c.integrity_lost promote_editorial.py removes on); an explicit demotion, or
-    an entry that vanished, waits for a human. `*_docs` are pools + archive."""
+    only when main's copy had already failed integrity (refuted or ungrounded:
+    the same c.integrity_lost promote_editorial.py removes on). `verified` and
+    `grounding_score` are session-writable, so integrity that fails inside this
+    PR is not evidence: that removal, an explicit demotion, or an entry that
+    vanished waits for a human. An id counts as kept only if every copy of it
+    in the PR is still promoted. `*_docs` are pools + archive."""
     before = {e.get("id"): e for d in main_docs for e in _entries(d) if _promoted(e)}
-    after = {e.get("id"): e for d in pr_docs for e in _entries(d)}
+    after: dict = {}
+    for d in pr_docs:
+        for e in _entries(d):
+            after.setdefault(e.get("id"), []).append(e)
     out = []
     for eid in sorted(i for i in before if isinstance(i, str)):
-        entry = after.get(eid)
-        if entry is None:
+        copies = after.get(eid) or []
+        if not copies:
             out.append(f"{DEMOTION_REVIEW}: promoted entry {eid} is gone")
-        elif not _promoted(entry) and not integrity_lost(entry):
-            out.append(f"{DEMOTION_REVIEW}: {eid} lost its promotion with its integrity intact")
+        elif not all(_promoted(e) for e in copies) and not integrity_lost(before[eid]):
+            out.append(f"{DEMOTION_REVIEW}: {eid} lost its promotion with main's integrity intact")
     return out
 
 

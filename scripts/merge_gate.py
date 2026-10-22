@@ -12,7 +12,7 @@ declared `required: true`; from then on a missing script fails the gate (closed)
 
 It also runs content_checks.py in-process: URL schemes in data/*.json, render
 equality of docs/index.html, claim-ledger history against main (`--base`),
-sticky editorial promotions (a removal needs a human unless integrity failed),
+sticky editorial promotions (a removal needs a human unless main had already lost integrity),
 and the eval history: main's rows untouched, at most one new row, and that row's
 charge, integrity, golden result and cap checked against the budget ledger
 (origin/budget-ledger) and recomputed on this tree.
@@ -108,7 +108,7 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
 
 
 def editorial_check(base: str, root: Path = ROOT) -> list[str]:
-    """Promotions on main stay promoted unless their integrity failed."""
+    """Promotions on main stay promoted unless main's copy had already lost integrity."""
     import common as c
 
     names = [f"{t}.json" for t in c.TOPICS] + ["archive.json"]

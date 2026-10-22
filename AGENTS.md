@@ -277,10 +277,12 @@ on a `claude/scan-*` branch.
     rewritten evidence item), is refused with "claim change needs human
     review": the PR stays open for a human to merge. Superseding a claim is
     therefore always a human merge;
-  - every entry promoted on main (pools + archive) stays promoted unless its
-    integrity failed (refuted or ungrounded). An explicit demotion, or a
-    promoted entry that vanished, is refused with "editorial demotion needs
-    human review".
+  - every entry promoted on main (pools + archive) stays promoted, in every
+    copy, unless main's copy had already failed integrity (refuted or
+    ungrounded). `verified` and `grounding_score` are session-writable, so
+    integrity that fails inside the PR doesn't count. Any other removal (an
+    explicit demotion, an in-PR integrity flip, a vanished entry) is refused
+    with "editorial demotion needs human review".
 - **What never auto-merges, whatever the branch name or author:** anything
   else. That covers `scripts/`, `.github/`, `.claude/`, `tests/`, `evals/`,
   `config.yaml`, `requirements*.txt`, `*.toml`, `*.cfg`, `ISA.md`, `AGENTS.md`,

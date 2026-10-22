@@ -251,7 +251,7 @@ def test_a_promotion_may_move_to_the_archive():
 @pytest.mark.parametrize(
     "after,needle",
     [
-        ({"id": "a", "grounding_score": 1.0}, "lost its promotion with its integrity intact"),
+        ({"id": "a", "grounding_score": 1.0}, "lost its promotion with main's integrity intact"),
         ({"id": "a", "editorial": {"promoted": False}}, "integrity intact"),
         ({"id": "a", "editorial": "yes"}, "integrity intact"),
         ({"id": "a", "verified": True, "grounding_score": None}, "integrity intact"),
@@ -266,9 +266,28 @@ def test_a_demotion_with_integrity_intact_needs_review(after, needle):
 
 
 @pytest.mark.parametrize("lost", [{"verified": False}, {"grounding_score": 0.5}])
-def test_an_integrity_failure_may_remove_a_promotion(lost):
+def test_integrity_flipped_inside_the_pr_is_not_evidence(lost):
+    """verified / grounding_score are session-writable: flipping them on a
+    promoted entry must not launder a demotion past the gate."""
     after = {"id": "a", "grounding_score": 1.0, **lost}
-    assert cc.editorial_problems([_pool(_ed("a"))], [_pool(after)]) == []
+    problems = cc.editorial_problems([_pool(_ed("a"))], [_pool(after)])
+    assert len(problems) == 1 and problems[0].startswith(cc.DEMOTION_REVIEW)
+
+
+@pytest.mark.parametrize("lost", [{"verified": False}, {"grounding_score": 0.5}])
+def test_integrity_already_lost_on_main_may_remove_a_promotion(lost):
+    after = {"id": "a", "grounding_score": 1.0, **lost}
+    assert cc.editorial_problems([_pool(_ed("a", **lost))], [_pool(after)]) == []
+
+
+@pytest.mark.parametrize("order", ["demoted-last", "demoted-first"])
+def test_an_id_is_kept_only_if_every_copy_stays_promoted(order):
+    """A promoted copy elsewhere (pool vs archive) can't mask a demoted one."""
+    kept, dropped = _ed("a"), {"id": "a", "grounding_score": 1.0}
+    pr = [_pool(kept), [dropped]] if order == "demoted-last" else [_pool(dropped), [kept]]
+    problems = cc.editorial_problems([_pool(_ed("a"))], pr)
+    assert len(problems) == 1 and problems[0].startswith(cc.DEMOTION_REVIEW)
+    assert cc.editorial_problems([_pool(_ed("a"))], [_pool(kept), [dict(kept)]]) == []
 
 
 def test_garbage_docs_do_not_crash():
