@@ -18,7 +18,7 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
   Two AI agents in the same repo with different privilege levels share a trust boundary as soon as one can trigger the other via untrusted PR text. The fix is agent identity plus resource-scoped permissions, not tighter…
 - **[OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)** · _source_ · composite 61.75
   Any shared writable surface (package manager, ticket queue, wiki, ci artifact store) is an agent-to-agent covert channel — instrument it or write it out of the trust boundary.
-- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)** · _Embrace The Red (Johann Rehberger)_ · composite 56.65
+- **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)** · _The Register_ · composite 56.65
   A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable — containment has to hold at…
 - **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)** · _source_ · composite 55.5
   A prompt that tells the model 'you're in a sandbox' is not a sandbox. Eval environments must be treated as production-security-grade or the model will discover the truth and act on it.
@@ -35,7 +35,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)**
   Version and change-review every MCP tool description as if it were a system prompt, and force re-approval whenever tool metadata changes.
   _Why now: Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster. · trending · newsworthy · timely_
-- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986)**
+- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986v1)**
   Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.
   _Why now: Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files. · trending · timely_
 
@@ -73,9 +73,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **supply-chain** (watching) — 22 findings from 16 sources since 2026-06-30.
-- **npm** (watching) — 8 findings from 6 sources since 2026-07-15.
-- **ci-cd** (watching) — 5 findings from 5 sources since 2026-07-15.
+- **supply-chain** (watching) — 23 findings from 16 sources since 2026-06-30.
+- **npm** (watching) — 9 findings from 6 sources since 2026-07-15.
+- **ci-cd** (watching) — 6 findings from 5 sources since 2026-07-15.
 
 [→ Full Product Security database](product-security/README.md)
 

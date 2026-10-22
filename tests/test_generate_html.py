@@ -430,6 +430,21 @@ def test_editorial_rows_keeps_old_news(sandbox):
     assert [r["lane"] for r in rows] == ["news"]
 
 
+def test_a_vetted_news_story_past_max_age_moves_from_findings_to_the_news_lane(sandbox):
+    """Findings age out after max_age_days; a vetted story kept only as news is
+    shown in the news lane (and so on the News tab), not as a finding."""
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    old = _pool_news_entry(published="2020-01-01", needs_review=False)
+    fresh = _pool_news_entry(id="fresh-1", source_url="https://openai.com/blog/new")
+    fresh.update(needs_review=False, title="A different fresh story about tokens")
+    data = payload_of(sandbox, entries=[old, fresh])
+    assert [f["id"] for f in data["findings"]] == ["fresh-1"]
+    news = {r["id"]: r for r in data["editorial"]}
+    assert set(news) == {"news-openai-fast-mode"}
+    assert news["news-openai-fast-mode"]["detail_path"]  # a vetted finding keeps its page
+    assert "has_page" not in news["news-openai-fast-mode"]
+
+
 # --- Client-side markdown renderer ------------------------------------------
 def _extract_js_function(src: str, name: str) -> str:
     """Pull one top-level `function <name>(...) { ... }` out of a JS blob by

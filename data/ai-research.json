@@ -579,6 +579,90 @@
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": true,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "cluster": "B",
+      "related_claims": [
+        "coding-agents-produce-plausible-but-hallucinated-apis",
+        "swe-bench-doesnt-generalize-to-production-tasks",
+        "capability-elicitation-lags-training"
+      ],
+      "title": "Scientific computing in the age of agentic AI",
+      "source_url": "https://openai.com/index/scientific-computing-agentic-ai",
+      "article_url": "https://openai.com/index/scientific-computing-agentic-ai",
+      "published": "2026-07-28",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch09-2.txt",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_rank": 80.0,
+      "summary": "OpenAI's field report on eight agent-assisted scientific-computing projects (five using Codex only, three combining Codex and Claude Code, primarily in life sciences) reports a consistent pattern: agents shift the human's job from implementation to verification and orchestration — defining what to build, specifying how to measure correctness, and deciding when a project ships. The security-relevant lessons are (a) agents express confidence even on clearly wrong output, so groundedness has to come from an external reference (parity with an existing tool, simulated data with known answers, statistical checks), (b) initial implementations are fast but resolving edge cases and numerical differences dominates elapsed time, and (c) lower implementation cost fragments maintainership — today's rewrite is tomorrow's abandoned code without an explicit steward. The transferable claim for agent harness design is that verification-side infra (acceptance tests, reference outputs, iterative benchmarks) is the actual bottleneck once agents are cheap.",
+      "takeaway": "Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.",
+      "lessons": [
+        {
+          "point": "Agents produce confident-sounding output that contains clear errors; the strongest defense is an external reference with a measurable acceptance target — parity with an existing tool, simulated data with pre-computed answers, or bounded statistical behavior.",
+          "excerpt": "agents handled specific, well-scoped requests effectively but could not reliably judge whether their work was scientifically valid or met expectations. Indeed, agents often expressed confidence even when their work contained clear errors. Human reviewers therefore needed to find reliable ways to validate the results. The strongest approaches used an external reference or measurable acceptance target such as exact output agreement, parity with an existing tool, appropriate statistical behavior, or answers established in advance using simulated data.",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "The role shift is verification/orchestration, not authoring: humans set the goal, define correctness metrics, and gate ship — a re-partitioning that dictates where evaluation infra has to live in an agent-assisted org.",
+          "excerpt": "Contributors consistently describe a shift in the researchers’ role from implementation to verification and orchestration: specifying what to build, defining how to measure correctness, and deciding when a project is ready to ship.",
+          "confidence": 0.92,
+          "grounded": true
+        },
+        {
+          "point": "The last-mile is where the elapsed time actually sits: fast first implementations, slow edge-case and numerical-diff resolution — an argument against benchmarking agents on first-pass throughput and for benchmarking on time-to-ship-quality.",
+          "excerpt": "Agents often produced initial implementations quickly, but resolving edge cases and subtle numerical differences took much longer. Completing the “last mile” of an implementation often took the most work.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Cheap agents create a maintainership fragmentation problem: rewrites split communities and expert attention, so a rewrite without a named owner and credible maintenance plan is a future abandonment liability.",
+          "excerpt": "But lower implementation costs also make it easier to produce many similar rewrites, fragmenting users and spreading the expert attention required to keep any one tool reliable. That makes long-term stewardship and attribution essential.",
+          "confidence": 0.88,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agentic-coding",
+        "verification",
+        "codex",
+        "claude-code",
+        "scientific-computing",
+        "stewardship",
+        "acceptance-tests"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Verification-first harness pattern for agent-assisted engineering work",
+        "detail": "Codify the OpenAI field-report pattern for any team standing up an agent-assisted engineering loop: (1) before any agent runs, define an external reference — parity target, simulated dataset with known answers, or bounded statistical property — that will actually decide 'ship or not', (2) break the goal into small feedback-driven iterations with intermediate benchmarks so the agent's confident-but-wrong pattern gets caught early, (3) explicitly assign a human owner for last-mile edge cases (numerical diffs, format oddities) because the field-report data says this dominates elapsed time, and (4) attach a maintenance/stewardship plan at the same moment you commit the rewrite — no rewrite without a named owner and a credible support line, or it becomes future abandoned code."
+      },
+      "scores": {
+        "novelty": 42,
+        "relevance": 66,
+        "newness": 0,
+        "credibility": 80.0,
+        "composite": 44.4,
+        "scored_at": "2026-10-22T05:47:04+00:00"
+      },
+      "prior_art": "First-party OpenAI messaging on agentic coding productivity has been ongoing across 2026. The delta of this specific report is the eight-project retrospective corpus (five Codex-only, three Codex+Claude Code), the explicit naming of verification acceptance patterns (parity, simulated-answer, statistical), and the stewardship / abandonment framing. The verification-bottleneck claim overlaps with the pool's 'human review catches agent PR risk' claim and PortSwigger's HTTP Terminator human-in-cascade pattern.",
+      "discovered_via": "rss",
+      "threat": null,
+      "conditions": null,
+      "mitigations": null,
+      "verified": true,
+      "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-batch09-2.txt; related_claims exist in data/claims.json. This is a first-party OpenAI capability report, not a security incident — threat/conditions/mitigations left null and populated the ai-research/harness angle instead.",
+      "id": "scientific-computing-in-the-age-of-agentic-ai-c5ee21665e",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "Agent Verification & Stewardship"
     }
   ]
 }
