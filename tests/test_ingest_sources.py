@@ -96,3 +96,48 @@ def test_ghsa_affected_packages_dedup():
 def test_ghsa_missing_id_or_url_returns_none():
     assert gh.advisory_to_candidate({"ghsa_id": "", "html_url": "https://x/y"}, RULES) is None
     assert gh.advisory_to_candidate({"ghsa_id": "GHSA-1", "html_url": ""}, RULES) is None
+
+
+def _adv(ghsa_id: str, summary: str, severity: str = "high") -> dict:
+    return {
+        "ghsa_id": ghsa_id,
+        "summary": summary,
+        "severity": severity,
+        "html_url": f"https://github.com/advisories/{ghsa_id}",
+        "published_at": "2026-07-14T00:00:00Z",
+        "vulnerabilities": [{"package": {"ecosystem": "pip", "name": "pkg"}}],
+    }
+
+
+def test_ghsa_always_pulls_the_newest_critical_advisories(monkeypatch):
+    """2026-10-21: the newest 20 reviewed advisories were all Pillow, so the
+    week's critical ones (Claude Agent SDK, LMCache) were never staged."""
+    calls = []
+    flood = [_adv(f"GHSA-p{i}", f"Pillow bug {i}") for i in range(3)]
+    critical = [_adv("GHSA-crit", "Agent SDK argument injection", "critical"), flood[0]]
+
+    def fake_fetch(limit, severity=None):
+        calls.append((limit, severity))
+        return critical if severity == "critical" else flood
+
+    monkeypatch.setattr(gh, "fetch_advisories", fake_fetch)
+    out = gh.collect({"ghsa": {"per_run": 3, "per_run_critical": 30}}, RULES, None)
+    assert calls == [(3, None), (30, "critical")]
+    assert any("GHSA-crit" in x["title"] for x in out)
+    assert len(out) == 4  # the advisory both passes return is staged once
+    calls.clear()
+    assert len(gh.collect({"ghsa": {"per_run": 3}}, RULES, None)) == 3  # off unless configured
+    assert calls == [(3, None)]
+
+
+def test_ghsa_fetch_asks_for_the_severity(monkeypatch):
+    seen = []
+    monkeypatch.setattr(gh, "run_gh", lambda args, timeout: seen.append(args[1]) or "[]")
+    gh.fetch_advisories(30, severity="critical")
+    gh.fetch_advisories(20)
+    assert seen[0].endswith("per_page=30&severity=critical")
+    assert "severity" not in seen[1]
+
+
+def test_ghsa_critical_pass_is_configured():
+    assert int(c.load_yaml(c.SOURCES_FILE)["ghsa"]["per_run_critical"]) >= 20

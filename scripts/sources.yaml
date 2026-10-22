@@ -119,7 +119,11 @@ conferences:
 # ---------------------------------------------------------------------------
 ghsa:
   enabled: true
-  per_run: 20           # newest reviewed advisories to pull per run
+  per_run: 20           # newest reviewed advisories to pull per run (any severity)
+  # Plus the newest critical ones, always. GitHub reviews ~50 advisories a day,
+  # so the newest 20 can be one project's batch (2026-10-21: 20 Pillow) while
+  # that week's critical ones go unseen. ~2 critical a day: 30 spans two weeks.
+  per_run_critical: 30
 
 # Keyword rules used to classify each item into a domain and a subtype.
 # First matching domain wins; subtype is the first subtype whose keywords match.

@@ -16,6 +16,9 @@ page text via the shared Jina Reader helper. A URL slug alone (e.g.
 "disrupting-ai-espionage") is too terse for the keyword classifier to place
 reliably; the real title + body is what RSS/GHSA candidates get for free
 from their feed/API and what this source type otherwise lacks entirely.
+A fresh `<lastmod>` only earns the fetch: when the fetched page states its
+own `Published Time`, that date is the candidate's, and a page older than the
+window is dropped (site rebuilds re-date old posts).
 The fetched body is persisted immediately (raw_path), so fetch_article.py's
 later pass has nothing left to do for these candidates.
 
@@ -98,6 +101,20 @@ def title_from_reader_text(body: str, url: str) -> str:
     return title_from_slug(url)
 
 
+READER_PUBLISHED = re.compile(r"^Published Time:\s*(\S+)", re.M)
+
+
+def reader_published(body: str) -> datetime | None:
+    """The page's own publish time from r.jina.ai's header ('Published Time: ...').
+
+    A sitemap `<lastmod>` moves whenever a site rebuilds, so it can't say a page
+    is new: on 2026-10-22, 111 of 154 sitemap candidates were posts from 2021 to
+    mid-2026 ("Introducing 100K context windows") that a rebuild had re-dated.
+    """
+    m = READER_PUBLISHED.search((body or "")[:1000])
+    return c.entry_datetime({"published": m.group(1)}) if m else None
+
+
 def path_prefix_of(source_url: str) -> str:
     path = urlparse(source_url).path.rstrip("/")
     return f"{path}/"
@@ -120,6 +137,7 @@ def url_to_candidate(loc: str, lastmod: str, source: dict, rules: dict) -> dict 
     dt = c.entry_datetime({"published": lastmod}) if lastmod else None
 
     body = fetch_body(loc)
+    dt = reader_published(body) or dt  # the page's own date beats a rebuild's lastmod
     if body:
         title = title_from_reader_text(body, loc)
         excerpt = c.clean_summary(body, 320)
@@ -157,6 +175,12 @@ def url_to_candidate(loc: str, lastmod: str, source: dict, rules: dict) -> dict 
     }
 
 
+def is_stale(cand: dict, cutoff: datetime) -> bool:
+    """True when the candidate's own publish date is older than the cutoff."""
+    dt = c.entry_datetime({"published": cand.get("published") or ""})
+    return dt is not None and dt < cutoff
+
+
 def collect(rules: dict, cutoff: datetime) -> list[dict]:
     """Fetch every registered research_index source's sitemap and build
     fresh candidates for the URLs under that source's own path prefix."""
@@ -181,6 +205,8 @@ def collect(rules: dict, cutoff: datetime) -> list[dict]:
             if dt is not None and dt < cutoff:
                 continue
             cand = url_to_candidate(loc, lastmod, source, rules)
+            if cand and is_stale(cand, cutoff):
+                continue
             if cand:
                 candidates.append(cand)
     return candidates
