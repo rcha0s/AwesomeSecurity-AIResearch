@@ -17,6 +17,8 @@
 #                claude/scan-<date>-<runner> and open its PR.
 #   actual <run_id> <stories> <cost_usd> [outcome]   record a local run's
 #                measured cost (outcome: analysis-empty, which allows one retry).
+#                The Mac wrapper calls it before post, so post's history row and
+#                PR body carry the measured charge.
 #   fail <phase> open or comment on the scan-failure issue.
 #   status       print this month's spend report (also kept as SPEND.md on the
 #                budget-ledger branch, rewritten on every ledger write).
@@ -178,7 +180,8 @@ staged_count() {
 phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
-    data/_story_outcomes.md data/_merge_outcomes.json data/_scan_backlog.json
+    data/_story_outcomes.md data/_merge_outcomes.json data/_scan_backlog.json \
+    data/_editorial_outcomes.md
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -266,10 +269,12 @@ phase_post() {
   git commit -qm "chore: daily scan ($RUNNER, $day, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
   body="$("$PY" scripts/scrub.py "$SUMMARY" "Daily scan, runner \`$RUNNER\`, $stories stories analyzed.")"
-  # Code-owned verdict record (merge_analysis.py), never the model's word for it.
-  if [[ -f data/_story_outcomes.md ]]; then
-    body+=$'\n\n'"$("$PY" scripts/scrub.py data/_story_outcomes.md "")"
-  fi
+  # Code-owned records (merge_analysis.py's story verdicts, promote_editorial.py's
+  # promotions and removals), never the model's word for them.
+  local record
+  for record in data/_story_outcomes.md data/_editorial_outcomes.md; do
+    if [[ -f "$record" ]]; then body+=$'\n\n'"$("$PY" scripts/scrub.py "$record" "")"; fi
+  done
   body+="$(eval_body "$run_id")"
   body+="$(spend_line)"
   scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"
@@ -311,7 +316,7 @@ spend_line() {
   if ledger_fetch >/dev/null 2>&1; then
     month="$(budget status 2>/dev/null | sed -n 's/^\*\*\(.* charged of .*\)\.\*\* .*/\1/p')" || month=""
   fi
-  printf '\n\n**Spend this month:** %s (this run reserved its ceiling; local runs settle to measured cost). Full report: [SPEND.md](https://github.com/%s/blob/%s/SPEND.md)' \
+  printf '\n\n**Spend this month:** %s (cloud runs are charged their reserved ceiling, local runs their measured cost). Full report: [SPEND.md](https://github.com/%s/blob/%s/SPEND.md)' \
     "${month:-unavailable}" "$(repo_slug)" "$LEDGER_BRANCH"
 }
 

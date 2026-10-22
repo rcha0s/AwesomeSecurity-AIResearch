@@ -44,6 +44,14 @@ not a second dumping ground. When in doubt, leave it in the queue.
   Work only from the eligible list the ranker gives you.
 - **No new claims.** Promote the finding as written. If its summary overstates,
   it should be fixed by the analysis stage, not surfaced here.
+- **Promotions are sticky.** News is kept like claims: list only this run's new
+  promotions. An earlier promotion you don't list stays. `promote_editorial.py`
+  removes one on its own only when its integrity fails (refuted or ungrounded).
+- **Demote only on purpose.** To take an earlier promotion back (retracted,
+  wrong, duplicate), emit `{"id": ..., "demote": true, "reason": "..."}`. A
+  demotion without a reason is ignored. Every removal is reported in the PR
+  body. A PR that removes a promotion (demoted, or refuted in this run) never
+  auto-merges: a human reviews it.
 
 ## Steps
 
@@ -73,19 +81,22 @@ not a second dumping ground. When in doubt, leave it in the queue.
    ```
    `signals` is a short tag list drawn from your judgement (e.g. `trending`,
    `newsworthy`, `widely-reported`, `cve`, `active-exploitation`, `timely`,
-   `high-relevance`). If nothing clears the bar, emit `[]`.
+   `high-relevance`). If nothing clears the bar, emit `[]`: earlier promotions
+   stay either way. A demotion is its own object (see Hard limits).
 
 4. **Apply + render:**
    ```bash
-   python scripts/promote_editorial.py     # stamps entry["editorial"], enforces integrity floor
+   python scripts/promote_editorial.py     # stamps promotions, applies demotions, enforces integrity floor
    python scripts/generate_site.py         # adds the "Trending & In the News" section
    python scripts/generate_newsletter.py
    python scripts/generate_review.py        # promoted items leave the queue
    ```
 
 5. **Print an EDITORIAL_RESULT line** for the wrapper/PR body:
-   `EDITORIAL_RESULT: promoted=<n> titles=<comma-list>`
-   If nothing qualified, print exactly `EDITORIAL_RESULT: promoted=0`.
+   `EDITORIAL_RESULT: promoted=<n> demoted=<n> titles=<comma-list>`
+   If nothing qualified, print exactly `EDITORIAL_RESULT: promoted=0 demoted=0`.
+   The record of what was applied is code-owned: `promote_editorial.py` writes
+   `data/_editorial_outcomes.md`, and `post` puts it in the PR body.
 
 ## Why this exists
 

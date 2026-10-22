@@ -51,9 +51,39 @@ def check(pr_history, ledger=(RESERVE,), recomputed=RECOMPUTED) -> list[str]:
 def test_an_honest_row_passes():
     assert check(pr(new_row())) == []
     assert check(copy.deepcopy(MAIN)) == []  # no new row is fine too
-    actual = {**RESERVE, "kind": "actual", "cost_usd": 1.2}
-    measured = new_row(cost_usd=1.2, cost_basis="measured")
-    assert check(pr(measured), ledger=(RESERVE, actual)) == []
+    assert check(pr(measured_row()), ledger=(LOCAL, LOCAL_ACTUAL)) == []
+
+
+LOCAL = {**RESERVE, "runner": "local"}
+LOCAL_ACTUAL = {**LOCAL, "kind": "actual", "stories": 4, "cost_usd": 1.2}
+
+
+def measured_row(cost: float = 1.2) -> dict:
+    return new_row(runner="local", cost_usd=cost, cost_basis="measured")
+
+
+@pytest.mark.parametrize(
+    "row,ledger,needle",
+    [
+        # A session sets a low cost (env var, hand edit) with no actual row behind it.
+        (measured_row(0.01), (LOCAL,), "cost is not its reserved charge"),
+        (measured_row(0.01), (LOCAL, LOCAL_ACTUAL), "cost is not its measured charge"),
+        # An earlier actual row is not the charge once a later one replaced it.
+        (measured_row(1.2), (LOCAL, LOCAL_ACTUAL, {**LOCAL_ACTUAL, "cost_usd": 2.5}),
+         "cost is not its measured charge"),
+        # A cloud run can't measure its cost: an actual row on one proves nothing.
+        (new_row(cost_usd=1.2, cost_basis="measured"),
+         (RESERVE, {**RESERVE, "kind": "actual", "cost_usd": 1.2}), "is not a local run"),
+        # Once measured, the reservation is no longer the run's charge.
+        (new_row(runner="local"), (LOCAL, LOCAL_ACTUAL), "cost is not its measured charge"),
+        (new_row(runner="local", cost_usd=1.2), (LOCAL, LOCAL_ACTUAL),
+         "cost is not its measured charge"),  # right number, wrong basis
+        (new_row(runner="local", cost_basis=None), (LOCAL,), "cost is not its reserved charge"),
+    ],
+)  # fmt: skip
+def test_a_measured_charge_must_be_the_ledgers(row, ledger, needle):
+    problems = check(pr(row), ledger=ledger)
+    assert any(needle in p for p in problems), problems
 
 
 def test_rewriting_or_deleting_main_rows_fails():
@@ -77,8 +107,8 @@ def test_more_than_one_new_row_fails():
         ({}, (), "has no reservation on the budget ledger"),
         ({"runner": "local"}, (RESERVE,), "runner/date disagree"),
         ({"date": "2026-07-16"}, (RESERVE,), "runner/date disagree"),
-        ({"cost_usd": 0.5}, (RESERVE,), "cost is not a reserved charge"),
-        ({"cost_usd": 0.5, "cost_basis": "measured"}, (RESERVE,), "cost is not a measured charge"),
+        ({"cost_usd": 0.5}, (RESERVE,), "cost is not its reserved charge"),
+        ({"cost_usd": 0.5, "cost_basis": "measured"}, (RESERVE,), "is not a local run"),
         ({"ceiling_usd": 99.0}, (RESERVE,), "ceiling is not its reservation"),
         ({"integrity": {"passed": False}}, (RESERVE,), "integrity disagrees"),
         ({"golden": {**GOLDEN, "score": 1.0}}, (RESERVE,), "golden result is not the newest"),

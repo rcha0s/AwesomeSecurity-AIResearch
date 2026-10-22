@@ -295,8 +295,33 @@ def test_post_puts_the_code_owned_story_record_in_the_pr_body(scan_repo):
 def test_pre_clears_a_stale_story_record(scan_repo):
     work, origin, env = scan_repo
     (work / "data/_story_outcomes.md").write_text("stale")
+    (work / "data/_editorial_outcomes.md").write_text("stale")
     reserved_run(work, env)
     assert not (work / "data/_story_outcomes.md").exists()
+    assert not (work / "data/_editorial_outcomes.md").exists()
+
+
+def test_post_puts_the_editorial_record_in_the_pr_body_and_not_the_commit(scan_repo):
+    """Every promotion and removal reaches the reviewer (sticky promotions, #82)."""
+    work, origin, env = scan_repo
+    reserved_run(work, env)
+    record = "### Editorial decisions (applied by promote_editorial.py)\n\n- DEMOTED: X: dup\n"
+    (work / "data/_editorial_outcomes.md").write_text(record + f"- promoted: {SECRET}\n")
+    (work / "README.md").write_text("v2\n")
+    analyzed(work)
+    res = run_scan(work, env, "post")
+    assert res.returncode == 0, res.stderr + (work / "data/_scan.log").read_text()
+    assert SECRET not in gh_calls(env)  # scrubbed like the summary
+    files = git(
+        origin, "ls-tree", "-r", "--name-only", f"claude/scan-{datetime.now(UTC):%Y-%m-%d}-cloud"
+    )
+    assert "data/_editorial_outcomes.md" not in files
+    (work / "data/_editorial_outcomes.md").write_text(record)
+    (work / "README.md").write_text("v3\n")
+    res = run_scan(work, env, "post")
+    calls = gh_calls(env)
+    assert "Editorial decisions (applied by promote_editorial.py)" in calls
+    assert "- DEMOTED: X: dup" in calls
 
 
 def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo):
@@ -329,6 +354,8 @@ def test_post_records_the_cost_eval_and_ships_only_its_own_eval_files(scan_repo)
     assert "**Run numbers:** 0 candidates staged" in calls and "LLM calls:" in calls
     assert "| Date | Runner | Candidates | Stories | Kept | Charged | Gate |" in calls
     assert "Spend this month:**" in calls
+    # The cloud can't measure its cost: the body says reserved, honestly.
+    assert "charged $2.00 (reserved; reserved ceiling $2.00" in calls
 
 
 # An ingestor stub that stages 20 neutral candidates, best source rank last.
