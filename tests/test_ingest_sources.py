@@ -5,6 +5,7 @@ from __future__ import annotations
 import common as c
 import ingest_ghsa as gh
 import ingest_hn as hn
+import pytest
 
 RULES = c.load_yaml(c.SOURCES_FILE)["classification"]
 
@@ -137,6 +138,27 @@ def test_ghsa_fetch_asks_for_the_severity(monkeypatch):
     gh.fetch_advisories(20)
     assert seen[0].endswith("per_page=30&severity=critical")
     assert "severity" not in seen[1]
+
+
+@pytest.mark.parametrize(
+    "text, ai",
+    [
+        ("xxe in the xml parser", False),
+        ("unsafe yaml load", False),
+        ("spoofed user-agent header", False),
+        ("data model validation bypass", False),
+        ("html sanitizer bypass", False),
+        ("llmnr poisoning in netkit", False),
+        ("claudette template injection", False),
+        ("claude agent sdk argument injection", True),
+        ("rce in the llm gateway", True),
+        ("mcp server path traversal", True),
+        ("unsafe pickle in ml pipeline", True),
+        ("prompt injection via tool output", True),
+    ],
+)
+def test_ghsa_ai_keywords_match_whole_words_only(text, ai):
+    assert bool(gh.AI_PATTERN.search(text)) is ai
 
 
 def test_ghsa_critical_pass_is_configured():

@@ -25,12 +25,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 
 import aggregate as agg
 import common as c
 from ingest_github import run_gh
 
-AI_KEYWORDS = ("llm", "prompt injection", "genai", "agent", "mcp", "model", "ml ")
+# Whole words only. The old substrings ("ml " in "xml "/"yaml ", bare "model" and
+# "agent") marked ~15 of 21 "AI" advisories among 100 real HIGH ones falsely.
+AI_PATTERN = re.compile(
+    r"\b(?:llms?|ml|mcp|genai|gen ai|prompt injection|model context protocol|"
+    r"large language models?|machine learning|ai agents?|agentic|langchain|llamaindex|"
+    r"vllm|pytorch|tensorflow|transformers|hugging ?face|ollama|openai|anthropic|claude)\b"
+)
 
 
 def fetch_advisories(limit: int, severity: str | None = None) -> list[dict]:
@@ -71,7 +78,7 @@ def advisory_to_candidate(adv: dict, rules: dict) -> dict | None:
     description = c.clean_summary(adv.get("description") or "", 600)
     blob = f"{summary} {packages} {description}".lower()
     # AI-package advisories route to AI Security; everything else is supply chain.
-    if any(kw in blob for kw in AI_KEYWORDS):
+    if AI_PATTERN.search(blob):
         domain = "AI Security"
     else:
         domain = agg.classify_domain(blob, rules, []) or "Supply Chain & Dependencies"

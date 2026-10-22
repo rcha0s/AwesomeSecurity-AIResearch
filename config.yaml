@@ -58,8 +58,10 @@ limits:
   max_stories_per_run: 10 # analyzed stories per scan; with usd_per_story this is
                           # each run's known cost ceiling (scripts/budget.py). 10, not
                           # 12: at the measured $0.21/story x ceiling_headroom 1.5, a
-                          # cloud run reserves $3.14 and 31 of them fit the $100 cap
-                          # ($97); 12 would reserve $3.76 ($117/month).
+                          # cloud run reserves $3.14; 31 of them come to $97 of the
+                          # $100 cap, a margin of only ~3%. 12 would reserve $3.76
+                          # ($117/month). If the rate rises, the guard refuses the
+                          # month's last runs (skipped days); it never overspends.
   batch_margin: 4         # extra candidates in the session's batch for ones the story
                           # judge finds same/update (scripts/select_batch.py)
   batch_per_source: 2     # most batch slots one source may take while others wait

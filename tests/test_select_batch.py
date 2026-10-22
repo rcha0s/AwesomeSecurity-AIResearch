@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 
 import common
+import ingest_ghsa
 import prefilter
 import pytest
 import scan_count
@@ -144,19 +145,21 @@ def test_no_source_class_starves_the_others(sandbox, table):
 
 def must_not_miss_mix() -> list[dict]:
     """realistic_mix plus the 2026-W43 shape: critical GHSA (one in AI tooling)
-    and a high one in AI tooling, all scoring below the routed GHSA flood."""
+    and a high one in AI tooling, all scoring below the routed GHSA flood. "AI
+    tooling" means prefilter routed it to an ais.* domain (two keyword hits)."""
     ghsa = {"source_id": None, "discovered_via": "github", "source_type": "GHSA"}
 
-    def adv(i, severity, topic="product-security", rank=40.0):
+    def adv(i, severity, ai=False, rank=40.0):
+        title = f"Prompt injection jailbreak in agentpkg{i}" if ai else f"Advisory {i} in pkg{i}"
         return _cand(
             id=f"adv{i}",
-            title=f"Advisory {i} in package{i}",
+            title=title,
             source_url=f"https://github.com/advisories/GHSA-{i}",
             article_url=f"https://github.com/advisories/GHSA-{i}",
             source_rank=rank,
             published="2026-07-14",
             severity=severity,
-            guess_topic=topic,
+            guess_topic="ai-security" if ai else "product-security",
             **ghsa,
         )
 
@@ -164,10 +167,10 @@ def must_not_miss_mix() -> list[dict]:
         *realistic_mix(),
         adv(1, "CRITICAL"),
         adv(2, "CRITICAL", rank=30.0),
-        adv(3, "CRITICAL", "ai-security", rank=20.0),  # Claude Agent SDK, LMCache
-        adv(4, "HIGH", "ai-security", rank=10.0),
+        adv(3, "CRITICAL", ai=True, rank=20.0),  # Claude Agent SDK, LMCache
+        adv(4, "HIGH", ai=True, rank=10.0),
         adv(5, "HIGH"),  # not AI tooling: no lane
-        adv(6, "MODERATE", "ai-security"),  # not severe enough: no lane
+        adv(6, "MODERATE", ai=True),  # not severe enough: no lane
     ]
 
 
@@ -180,11 +183,12 @@ def test_must_not_miss_lane_comes_first_and_ai_tooling_leads_it(sandbox, table):
     assert len(batch) == 12
     lane = [c for c in batch if c.get("batch_priority")]
     assert batch[: len(lane)] == lane and len(lane) == 5
-    # dealt in turn, best head first: GHSA in AI tooling leads (adv3, adv4); in the
-    # third round KEV (rank 50) outranks the remaining critical adv1 (rank 40)
-    assert [c["id"] for c in lane] == ["adv3", "kev0", "adv4", "kev1", "kev2"]
+    # dealt in turn, best head first: the critical in AI tooling leads (adv3); then
+    # KEV (rank 50) and the other criticals (adv1 rank 40) in rank order. The HIGH
+    # AI-tooling advisory (adv4) never takes a critical's place.
+    assert [c["id"] for c in lane] == ["adv3", "kev0", "kev1", "adv1", "kev2"]
     kinds = [c["batch_priority"] for c in lane]
-    assert kinds == ["ghsa-critical", "kev", "ghsa-ai", "kev", "kev"]
+    assert kinds == ["ghsa-critical", "kev", "kev", "ghsa-critical", "kev"]
     sources = [select_batch.source_key(c) for c in batch]
     assert sources.count("github:GHSA") == 2  # the lane used GHSA's batch_per_source
     assert sources.count("kev_json:cisa") == 3  # lane cap 3, above batch_per_source
@@ -192,6 +196,88 @@ def test_must_not_miss_lane_comes_first_and_ai_tooling_leads_it(sandbox, table):
     ids = [c["id"] for c in batch + backlog]
     assert sorted(ids) == sorted(c["id"] for c in staged)  # nothing lost or duplicated
     assert not any(c.get("batch_priority") for c in backlog)
+
+
+def test_criticals_come_before_high_ai_tooling_within_ghsa(sandbox, table):
+    wide = {"batch_priority_max": 9, "batch_priority_per_source": 4}
+    batch, _ = select_batch.select(must_not_miss_mix(), conf(8, 4, **wide), table)
+    ghsa = [c["id"] for c in batch if c.get("batch_priority", "").startswith("ghsa")]
+    assert ghsa == ["adv3", "adv1", "adv2", "adv4"]
+
+
+def test_lane_order_beats_rank_within_ghsa(sandbox, table):
+    """Rank alone can't decide: a critical in AI tooling beats a better-ranked
+    critical, and any critical beats a better-ranked HIGH in AI tooling."""
+    ghsa = {"source_id": None, "discovered_via": "github", "source_type": "GHSA"}
+
+    def adv(i, severity, ai, rank):
+        title = f"Prompt injection jailbreak in agentpkg{i}" if ai else f"Advisory {i} in pkg{i}"
+        url = f"https://github.com/advisories/GHSA-{i}"
+        return _cand(
+            id=f"adv{i}",
+            title=title,
+            source_url=url,
+            article_url=url,
+            source_rank=rank,
+            severity=severity,
+            published="2026-07-14",
+            **ghsa,
+        )
+
+    one = {"batch_priority_max": 1, "batch_priority_per_source": 1}
+    staged = [adv(1, "CRITICAL", False, 95.0), adv(2, "CRITICAL", True, 5.0)]
+    batch, _ = select_batch.select(staged, conf(1, 0, **one), table)
+    assert [c["id"] for c in batch] == ["adv2"]
+    staged = [adv(3, "HIGH", True, 95.0), adv(4, "CRITICAL", False, 5.0)]
+    batch, _ = select_batch.select(staged, conf(1, 0, **one), table)
+    assert [c["id"] for c in batch] == ["adv4"]
+
+
+def test_false_ai_highs_cannot_starve_the_criticals(sandbox, table):
+    """Review of #89: substring keywords ("ml " in "xml ", bare "agent") marked
+    HIGH advisories as AI, the lane put them first, and they used up GHSA's
+    per-source slots. Built through the real ingestor mapping."""
+    rules = common.load_yaml(common.SOURCES_FILE)["classification"]
+
+    def adv(gid, summary, severity):
+        raw = {
+            "ghsa_id": gid,
+            "summary": summary,
+            "severity": severity,
+            "html_url": f"https://github.com/advisories/{gid}",
+            "published_at": "2026-07-14T00:00:00Z",
+            "vulnerabilities": [{"package": {"ecosystem": "pip", "name": gid.lower()}}],
+        }
+        return ingest_ghsa.advisory_to_candidate(raw, rules)
+
+    false_ai = [
+        adv("GHSA-x1", "XXE in the xml parser of docgen", "high"),
+        adv("GHSA-x2", "Unsafe yaml load in confkit", "high"),
+        adv("GHSA-x3", "Spoofed User-Agent header bypasses the rate limit", "high"),
+        adv("GHSA-x4", "Data model validation bypass in ormlib", "high"),
+    ]
+    assert all(c["guess_topic"] == "product-security" for c in false_ai)
+    criticals = [
+        adv("GHSA-c1", "Remote code execution in webkit", "critical"),
+        adv("GHSA-c2", "SSRF in fetchy", "critical"),
+    ]
+    kev = [
+        _cand(
+            id=f"kev{i}",
+            title=f"CISA KEV entry {i}",
+            source_id="kev_json:cisa",
+            source_url=f"https://nvd.example/{i}",
+            published="2026-07-14",
+        )
+        for i in range(2)
+    ]
+    for c in false_ai:  # even if an ingest guess still said AI, the lane ignores it
+        c["guess_topic"] = "ai-security"
+    staged = [*false_ai, *criticals, *kev, *cands(20, source_id="rss:feed")]
+    batch, _ = select_batch.select(staged, conf(8, 4, **LANE), table)
+    ids = {c["id"] for c in batch}
+    assert {c["id"] for c in criticals} <= ids and {"kev0", "kev1"} <= ids
+    assert [c["batch_priority"] for c in batch[:4]].count("ghsa-critical") == 2
 
 
 def test_without_a_lane_size_the_batch_is_unchanged(sandbox, table):
@@ -218,9 +304,11 @@ def test_priority_class_names_only_the_must_not_miss_kinds():
     assert pc({**ghsa, "severity": "HIGH", "prefilter": {"domain_hint": "ais.mcp-tools"}}) == (
         "ghsa-ai"
     )
-    assert pc({**ghsa, "severity": "HIGH", "guess_topic": "ai-security"}) == "ghsa-ai"
+    assert pc({**ghsa, "severity": "HIGH", "guess_topic": "ai-security"}) is None  # a guess
+    assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ais.mcp-tools"}) is None
     assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ps.appsec"}) is None
-    assert pc({**ghsa, "severity": "MODERATE", "guess_topic": "ai-security"}) is None
+    moderate_ai = {"severity": "MODERATE", "prefilter": {"domain_hint": "ais.mcp-tools"}}
+    assert pc({**ghsa, **moderate_ai}) is None
     assert pc({"severity": "CRITICAL", "source_id": "rss:x"}) is None
 
 

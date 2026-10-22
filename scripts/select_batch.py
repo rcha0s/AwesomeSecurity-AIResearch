@@ -159,18 +159,25 @@ def priority_class(cand: dict) -> str | None:
 
 
 def is_ai_tooling(cand: dict) -> bool:
-    hint = (cand.get("prefilter") or {}).get("domain_hint") or cand.get("guess_domain") or ""
-    return cand.get("guess_topic") == "ai-security" or str(hint).startswith("ais.")
+    """Prefilter routed it to an AI-security domain on the taxonomy's own hints.
+    Not the ingest-time topic guess: that is a keyword match on package names."""
+    return str((cand.get("prefilter") or {}).get("domain_hint") or "").startswith("ais.")
 
 
 def priority_lane(ranked: list[dict], limit: int, per_source: int) -> list[dict]:
     """Up to `limit` must-not-miss candidates, dealt in turn between KEV and
-    GHSA, at most `per_source` from either. GHSA advisories in AI tooling go
-    first; KEV stays in rank (newest) order, because its ingest-time topic
-    guess is a keyword match on the vendor's product name, not a signal."""
-    eligible = [x for x in ranked if priority_class(x)]
-    eligible.sort(key=lambda x: not (x.get("source_type") == "GHSA" and is_ai_tooling(x)))
+    GHSA, at most `per_source` from either. Within GHSA: critical advisories in
+    AI tooling, then the other critical ones, then high ones in AI tooling, so
+    a HIGH can never take a critical's slot. Otherwise rank (newest) order."""
+    eligible = sorted((x for x in ranked if priority_class(x)), key=lane_order)  # stable
     return deal(eligible, limit, per_source, fill=False)
+
+
+def lane_order(cand: dict) -> int:
+    kind = priority_class(cand)
+    if kind == "ghsa-critical" and is_ai_tooling(cand):
+        return 0
+    return 2 if kind == "ghsa-ai" else 1
 
 
 def select(

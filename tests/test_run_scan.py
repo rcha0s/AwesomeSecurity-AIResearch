@@ -214,6 +214,17 @@ def test_actual_replaces_the_reservation_on_the_remote_ledger(scan_repo):
     assert status.returncode == 0 and "$1.25 charged of $10.00" in status.stdout
 
 
+def test_actual_refuses_a_cloud_runs_reservation(scan_repo):
+    """A cloud run can't read its cost, so it stays charged its ceiling: an
+    `actual` row would cut that charge and feed the per-story calibration."""
+    work, origin, env = scan_repo
+    reserved_run(work, env, "C1")  # cloud reservation, $0.25/story x cap
+    for runner in ("cloud", "local"):
+        res = run_scan(work, env, "actual", "C1", "10", "0.01", runner=runner)
+        assert res.returncode != 0
+    assert [r["kind"] for r in ledger_rows(origin)] == ["reserve"]
+
+
 def test_fail_alert_never_publishes_log_text(scan_repo):
     work, _, env = scan_repo
     (work / "data/_scan.log").write_text(f"leaked {SECRET}\n")

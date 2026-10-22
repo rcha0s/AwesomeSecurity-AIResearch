@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 
 import common as c
 import ingest_sitemap as ism
+import pytest
 
 RULES = c.load_yaml(c.SOURCES_FILE)["classification"]
 
@@ -212,9 +213,40 @@ def test_page_publish_time_overrides_a_rebuilt_lastmod(monkeypatch):
 
     monkeypatch.setattr(ism.requests, "get", lambda *a, **k: _Resp())
     assert ism.collect(RULES, datetime(2026, 8, 1, tzinfo=UTC)) == []
-    monkeypatch.setattr(ism, "fetch_body", lambda url: _old_post_body("2026-09-01"))
-    (cand,) = ism.collect(RULES, datetime(2026, 8, 1, tzinfo=UTC))
-    assert cand["published"] == "2026-09-01"  # the page's date, not lastmod's 09-07
+    monkeypatch.setattr(ism, "fetch_body", lambda url: _old_post_body("2026-07-10"))
+    (cand,) = ism.collect(RULES, datetime(2026, 6, 20, tzinfo=UTC))
+    assert cand["published"] == "2026-07-10"  # the page's date, not lastmod's 09-07
+
+
+@pytest.mark.parametrize(
+    "stated, expected",
+    [
+        ("Tue, 11 Jul 2023 00:00:00 GMT", datetime(2023, 7, 11, tzinfo=UTC)),  # RFC 1123
+        ("Tue, 11 Jul 2023 09:30:00 +0200", datetime(2023, 7, 11, 7, 30, tzinfo=UTC)),
+        ("July 11, 2023", datetime(2023, 7, 11, tzinfo=UTC)),  # long form
+        ("2023-07-11T00:00:00.000Z", datetime(2023, 7, 11, tzinfo=UTC)),
+        ("2023-07-11", datetime(2023, 7, 11, tzinfo=UTC)),
+        ("July 2023", None),  # no day: dateutil would invent one
+        ("Jul 11", None),  # no year: dateutil would use this year's
+        ("2026-07-17", None),  # more than a day ahead of the (pinned) clock
+        ("soon", None),
+    ],
+)
+def test_reader_published_takes_only_complete_past_dates(stated, expected):
+    """Review of #89: `\\S+` cut RFC dates at the first space and dateutil filled
+    the rest from today, re-dating a 2023 post to 2026 at full newness."""
+    assert ism.reader_published(_old_post_body(stated)) == expected
+
+
+def test_a_future_page_date_falls_back_to_lastmod(monkeypatch):
+    monkeypatch.setattr(ism, "fetch_body", lambda url: _old_post_body("2031-01-01"))
+    cand = ism.url_to_candidate(
+        "https://www.anthropic.com/news/disrupting-ai-espionage",
+        "2026-07-01T09:00:00.000Z",
+        ANTHROPIC_SOURCE,
+        RULES,
+    )
+    assert cand["published"] == "2026-07-01"
 
 
 def test_collect_skips_sources_with_no_usable_sitemap(monkeypatch, capsys):

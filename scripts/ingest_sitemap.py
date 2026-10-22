@@ -39,12 +39,13 @@ import argparse
 import re
 import sys
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from urllib.parse import urlparse
 
 import aggregate as agg
 import common as c
 import sources_registry as sr
+from dateutil import parser as dateparser
 
 try:
     import requests
@@ -101,7 +102,9 @@ def title_from_reader_text(body: str, url: str) -> str:
     return title_from_slug(url)
 
 
-READER_PUBLISHED = re.compile(r"^Published Time:\s*(\S+)", re.M)
+READER_PUBLISHED = re.compile(r"^Published Time:[ \t]*(.+?)[ \t]*$", re.M)
+# Two different defaults: a field the text didn't state comes out different.
+_PROBE_DEFAULTS = (datetime(1901, 1, 1), datetime(1902, 2, 2))
 
 
 def reader_published(body: str) -> datetime | None:
@@ -110,9 +113,30 @@ def reader_published(body: str) -> datetime | None:
     A sitemap `<lastmod>` moves whenever a site rebuilds, so it can't say a page
     is new: on 2026-10-22, 111 of 154 sitemap candidates were posts from 2021 to
     mid-2026 ("Introducing 100K context windows") that a rebuild had re-dated.
+    None (fall back to lastmod) when the header is missing, is not a complete
+    date, or lies more than a day in the future.
     """
     m = READER_PUBLISHED.search((body or "")[:1000])
-    return c.entry_datetime({"published": m.group(1)}) if m else None
+    dt = parse_full_date(m.group(1)) if m else None
+    if dt is None or dt > c.utcnow() + timedelta(days=1):
+        return None
+    return dt
+
+
+def parse_full_date(raw: str) -> datetime | None:
+    """A date only when the text states year, month and day: ISO-8601, RFC
+    2822/1123 and "July 11, 2023" all qualify. Plain dateutil fills a missing
+    field from today, and an earlier `\\S+` capture cut "Tue, 11 Jul 2023 ..."
+    to "Tue," and read it as 2026-10-27, re-admitting a stale post as new. So
+    parse twice with two different defaults: a field taken from a default
+    comes out different, and the date is rejected."""
+    try:
+        first, second = (dateparser.parse(raw.strip(), default=d) for d in _PROBE_DEFAULTS)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if first.date() != second.date():
+        return None
+    return first.replace(tzinfo=UTC) if first.tzinfo is None else first
 
 
 def path_prefix_of(source_url: str) -> str:
