@@ -12,7 +12,7 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
   _Why now: A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach. · newsworthy · trending · high-relevance · timely_
 - **[Treat MCP tool descriptions as system prompts: silent re-trust poisoning](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)**
   _Why now: Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster. · trending · newsworthy · timely_
-- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986)**
+- **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986v1)**
   _Why now: Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files. · trending · timely_
 
 | Domain | Findings |
@@ -31,7 +31,7 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 - **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](prompt-injection/2026-08-claude-code-opus-5-auto-mode-tricked-into-rce-via-website-su.md)** · composite **56.65** · Aug 28, 2026  
   A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable - …  
-  _[Embrace The Red (Johann Rehberger)](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/)_
+  _[The Register](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)_
 
 ## Agent & Harness Security
 
@@ -67,7 +67,7 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 - **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](data-poisoning/2026-07-self-state-attacks-corrupting-an-agent-s-own-memory-and-conf.md)** · composite **46.12** · Jul 20, 2026 · ⚠️ _review_  
   Treat an agent's memory and config files as protected assets with their own access-control and backup policy - once an attacker can write them, the corruption step itself looks legitimate.  
-  _[source](https://arxiv.org/abs/2607.17986)_
+  _[source](https://arxiv.org/abs/2607.17986v1)_
 
 ---
 

@@ -434,11 +434,11 @@
       "topic": "ai-security",
       "domain": "ais.prompt-injection",
       "title": "Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path",
-      "source_url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
-      "article_url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+      "source_url": "https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372",
+      "article_url": "https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372",
       "published": "2026-08-28",
       "date": "2026-08",
-      "source_name": "Embrace The Red (Johann Rehberger)",
+      "source_name": "The Register",
       "source_id": "rss:https-www-theregister-com-security-headlines-ato",
       "source_rank": 50.0,
       "source_topics": [
@@ -1207,15 +1207,15 @@
       "topic": "ai-security",
       "domain": "ais.data-poisoning",
       "title": "Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls",
-      "source_url": "https://arxiv.org/abs/2607.17986",
-      "article_url": "https://arxiv.org/abs/2607.17986",
+      "source_url": "https://arxiv.org/abs/2607.17986v1",
+      "article_url": "https://arxiv.org/abs/2607.17986v1",
       "published": "2026-07-20",
       "date": "2026-07",
       "author": "Yimeng Chen et al.",
       "discovered_via": "rss",
       "source_rank": 57.5,
       "raw_path": "data/_raw/self-state-attacks-on-self-hosted-ai-agents-how-834e2d63ac.txt",
-      "summary": "Self-hosted agents read and write their own memory and configuration files, so once an attacker can write to that state the corruption itself is performed with legitimate OS system calls - the malicious step does not look anomalous at the OS layer. The authors formalize a four-axis attack space, realize 43 operations on real self-state files injected into traces from a representative self-hosted agent, and find a layered defense covers most cells with a small residual that stays structurally indistinguishable. Note the precondition: this assumes the attacker already has local write access; the paper does not address how that access is obtained.",
+      "summary": "Self-hosted agents read and write their own memory and configuration files, so once an attacker can write to that state the corruption itself is performed with legitimate OS system calls - the malicious step does not look anomalous at the OS layer. The authors formalize a four-axis attack space, realize 43 operations on real self-state files injected into traces from a representative self-hosted agent, and find a layered defense covers most cells with a small residual that stays structurally indistinguishable. Note the precondition: this assumes the attacker already has local write access; the paper does not address how that access is obtained. Cited as v1 (20 Jul 2026): the revised v2 (17 Sep 2026) is more pessimistic, finding generic OS defenses either block legitimate updates or flag much legitimate activity, and calls for self-state-aware mechanisms.",
       "lessons": [
         {
           "point": "Given an attacker who can already write to an agent's state files, the corruption step is performed with legitimate system calls - so the malicious action itself carries no distinguishing OS-level signal. This is a post-compromise finding, not a new access path.",
@@ -1276,92 +1276,8 @@
     {
       "topic": "ai-security",
       "domain": "ais.agent-security",
-      "cluster": "B",
-      "related_claims": [
-        "coding-agents-produce-plausible-but-hallucinated-apis",
-        "swe-bench-doesnt-generalize-to-production-tasks",
-        "capability-elicitation-lags-training"
-      ],
-      "title": "Scientific computing in the age of agentic AI",
-      "source_url": "https://openai.com/index/scientific-computing-agentic-ai",
-      "article_url": "https://openai.com/index/scientific-computing-agentic-ai",
-      "published": "2026-07-28",
-      "date": "2026-07",
-      "raw_path": "data/_raw/mrscan-batch09-2.txt",
-      "source_id": "rss:https-openai-com-blog-rss-xml",
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_rank": 80.0,
-      "summary": "OpenAI's field report on eight agent-assisted scientific-computing projects (five using Codex only, three combining Codex and Claude Code, primarily in life sciences) reports a consistent pattern: agents shift the human's job from implementation to verification and orchestration — defining what to build, specifying how to measure correctness, and deciding when a project ships. The security-relevant lessons are (a) agents express confidence even on clearly wrong output, so groundedness has to come from an external reference (parity with an existing tool, simulated data with known answers, statistical checks), (b) initial implementations are fast but resolving edge cases and numerical differences dominates elapsed time, and (c) lower implementation cost fragments maintainership — today's rewrite is tomorrow's abandoned code without an explicit steward. The transferable claim for agent harness design is that verification-side infra (acceptance tests, reference outputs, iterative benchmarks) is the actual bottleneck once agents are cheap.",
-      "takeaway": "Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.",
-      "lessons": [
-        {
-          "point": "Agents produce confident-sounding output that contains clear errors; the strongest defense is an external reference with a measurable acceptance target — parity with an existing tool, simulated data with pre-computed answers, or bounded statistical behavior.",
-          "excerpt": "agents handled specific, well-scoped requests effectively but could not reliably judge whether their work was scientifically valid or met expectations. Indeed, agents often expressed confidence even when their work contained clear errors. Human reviewers therefore needed to find reliable ways to validate the results. The strongest approaches used an external reference or measurable acceptance target such as exact output agreement, parity with an existing tool, appropriate statistical behavior, or answers established in advance using simulated data.",
-          "confidence": 0.92,
-          "grounded": true
-        },
-        {
-          "point": "The role shift is verification/orchestration, not authoring: humans set the goal, define correctness metrics, and gate ship — a re-partitioning that dictates where evaluation infra has to live in an agent-assisted org.",
-          "excerpt": "Contributors consistently describe a shift in the researchers’ role from implementation to verification and orchestration: specifying what to build, defining how to measure correctness, and deciding when a project is ready to ship.",
-          "confidence": 0.92,
-          "grounded": true
-        },
-        {
-          "point": "The last-mile is where the elapsed time actually sits: fast first implementations, slow edge-case and numerical-diff resolution — an argument against benchmarking agents on first-pass throughput and for benchmarking on time-to-ship-quality.",
-          "excerpt": "Agents often produced initial implementations quickly, but resolving edge cases and subtle numerical differences took much longer. Completing the “last mile” of an implementation often took the most work.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Cheap agents create a maintainership fragmentation problem: rewrites split communities and expert attention, so a rewrite without a named owner and credible maintenance plan is a future abandonment liability.",
-          "excerpt": "But lower implementation costs also make it easier to produce many similar rewrites, fragmenting users and spreading the expert attention required to keep any one tool reliable. That makes long-term stewardship and attribution essential.",
-          "confidence": 0.88,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "agentic-coding",
-        "verification",
-        "codex",
-        "claude-code",
-        "scientific-computing",
-        "stewardship",
-        "acceptance-tests"
-      ],
-      "actionable": {
-        "type": "skill",
-        "title": "Verification-first harness pattern for agent-assisted engineering work",
-        "detail": "Codify the OpenAI field-report pattern for any team standing up an agent-assisted engineering loop: (1) before any agent runs, define an external reference — parity target, simulated dataset with known answers, or bounded statistical property — that will actually decide 'ship or not', (2) break the goal into small feedback-driven iterations with intermediate benchmarks so the agent's confident-but-wrong pattern gets caught early, (3) explicitly assign a human owner for last-mile edge cases (numerical diffs, format oddities) because the field-report data says this dominates elapsed time, and (4) attach a maintenance/stewardship plan at the same moment you commit the rewrite — no rewrite without a named owner and a credible support line, or it becomes future abandoned code."
-      },
-      "scores": {
-        "novelty": 42,
-        "relevance": 66,
-        "newness": 0,
-        "credibility": 80.0,
-        "composite": 44.4,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "First-party OpenAI messaging on agentic coding productivity has been ongoing across 2026. The delta of this specific report is the eight-project retrospective corpus (five Codex-only, three Codex+Claude Code), the explicit naming of verification acceptance patterns (parity, simulated-answer, statistical), and the stewardship / abandonment framing. The verification-bottleneck claim overlaps with the pool's 'human review catches agent PR risk' claim and PortSwigger's HTTP Terminator human-in-cascade pattern.",
-      "discovered_via": "rss",
-      "threat": null,
-      "conditions": null,
-      "mitigations": null,
-      "verified": true,
-      "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-batch09-2.txt; related_claims exist in data/claims.json. This is a first-party OpenAI capability report, not a security incident — threat/conditions/mitigations left null and populated the ai-research/harness angle instead.",
-      "id": "scientific-computing-in-the-age-of-agentic-ai-c5ee21665e",
-      "retrieved_at": "2026-08-10T19:18:37+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Agent Verification & Stewardship"
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.agent-security",
       "title": "funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time",
-      "source_url": "https://github.com/huggingface/funes",
+      "source_url": "https://huggingface.co/blog/funes",
       "cluster": "B",
       "related_claims": [],
       "summary": "Hugging Face's funes is a local-first durable memory layer that indexes the session traces already produced by coding agents (Claude Code, Codex, pi, Hermes) so a new agent session can `recall` past decisions and rationale with exact provenance. Its key design choice is that nothing is distilled into a summarized \"fact\" at write time — recall always returns the original text and can lead back to the exact turn it came from — and any shared/synced memory has credentials redacted twice (during local indexing, and again before publishing) before it leaves the machine.",

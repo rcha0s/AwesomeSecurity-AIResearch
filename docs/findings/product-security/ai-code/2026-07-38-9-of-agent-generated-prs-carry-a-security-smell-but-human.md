@@ -1,6 +1,6 @@
 # 38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets
 
-**Published:** Jul 19, 2026
+**Published:** Jul 14, 2026
 
 > **Takeaway:** Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.
 

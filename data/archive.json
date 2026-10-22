@@ -853,34 +853,6 @@
     "domain_label": "Evals"
   },
   {
-    "domain": "ais.agent-security",
-    "subtype": "Orchestration",
-    "title": "stale",
-    "source_url": "https://a/stale",
-    "article_url": "https://example.com/compact",
-    "date": "2026-07",
-    "summary": "Summarize tool outputs before re-injecting.",
-    "takeaway": "Compact tool outputs to shrink context cost.",
-    "lessons": [
-      {
-        "point": "Summarize before re-injecting",
-        "excerpt": "40% less",
-        "confidence": 0.9
-      }
-    ],
-    "scores": {
-      "novelty": 80,
-      "relevance": 85
-    },
-    "tags": [
-      "agents",
-      "context"
-    ],
-    "published": "2000-01-01",
-    "topic": "ai-security",
-    "domain_label": "Orchestration"
-  },
-  {
     "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
     "article_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
     "source_name": "Palo Alto Networks Unit 42",
@@ -1062,8 +1034,8 @@
     "topic": "ai-security",
     "domain": "ais.model-supply-chain",
     "title": "QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize",
-    "source_url": "https://arxiv.org/abs/2606.29239",
-    "article_url": "https://arxiv.org/abs/2606.29239",
+    "source_url": "https://arxiv.org/abs/2606.29239v1",
+    "article_url": "https://arxiv.org/abs/2606.29239v1",
     "published": "2026-06-28",
     "date": "2026-06",
     "author": "Aoying Zheng et al.",
@@ -2689,7 +2661,7 @@
     "tweet_url": "https://x.com/Unit42_Intel/status/2078227517819781257",
     "author": "Unit42_Intel",
     "date": "2026-07",
-    "published": "2026-07-17",
+    "published": "2026-07-15",
     "discovered_via": "twitter",
     "source_id": "x_account:unit42-intel",
     "source_rank": 75.0,
@@ -4674,8 +4646,8 @@
     "title": "One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs",
     "source_url": "https://arxiv.org/abs/2512.14751",
     "article_url": "https://arxiv.org/abs/2512.14751",
-    "published": "2026-08-07",
-    "date": "2026-08",
+    "published": "2025-12-14",
+    "date": "2025-12",
     "raw_path": "data/_raw/mrscan-b044-2.txt",
     "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
     "source_topics": [
@@ -4913,8 +4885,8 @@
     "title": "PrivacyPeek: Auditing What LLM-Based Agents Acquire, Not Just What They Say",
     "source_url": "https://arxiv.org/abs/2606.00152",
     "article_url": "https://arxiv.org/abs/2606.00152",
-    "published": "2026-08-07",
-    "date": "2026-08",
+    "published": "2026-05-29",
+    "date": "2026-05",
     "raw_path": "data/_raw/mrscan-b045-1.txt",
     "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
     "source_topics": [
@@ -5222,8 +5194,8 @@
       "long-lived-cloud-credentials-are-obsolete"
     ],
     "title": "Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture",
-    "source_url": "https://arxiv.org/abs/2608.06130",
-    "article_url": "https://arxiv.org/abs/2608.06130",
+    "source_url": "https://arxiv.org/abs/2608.06130v1",
+    "article_url": "https://arxiv.org/abs/2608.06130v1",
     "published": "2026-08-07",
     "date": "2026-08",
     "raw_path": "data/_raw/mrscan-b043-0.txt",
@@ -5233,7 +5205,7 @@
       "product-security"
     ],
     "source_rank": 51.9,
-    "summary": "Proposes replacing software-resident private keys used by AI agents (Git signing, API auth, cert issuance) with hardware-confined keys accessed via PKCS#11 and surrounded by a five-layer Zero-Trust stack (SAGA identity, Smax scope bounds, RAV semantic validation, taint tracking, hardware execution boundary). Evaluated on 12 injection scenarios derived from AgentDojo's ImportantInstructionsAttack across four LLMs.",
+    "summary": "Proposes replacing software-resident private keys used by AI agents (Git signing, API auth, cert issuance) with hardware-confined keys accessed via PKCS#11 and surrounded by a five-layer Zero-Trust stack (SAGA identity, Smax scope bounds, RAV semantic validation, taint tracking, hardware execution boundary). Evaluated on 12 injection scenarios derived from AgentDojo's ImportantInstructionsAttack across four LLMs. Cited as v1 (6 Aug 2026): the substantially revised v2 (23 Sep 2026) reports an 18.1% baseline on n=144, adds an MCPTox tool-poisoning evaluation, and finds the semantic filter defeated by plausibly named substitute documents.",
     "takeaway": "Hardware confinement of agent signing keys, combined with content-aware authorisation, cut prompt-injection-driven Attack Success Rate from 19.3% baseline to 0% (Wilson 95% CI upper bound 2.0%) with zero false positives on benign tasks.",
     "lessons": [
       {
@@ -5375,8 +5347,8 @@
     "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
     "source_url": "https://arxiv.org/abs/2607.21642",
     "article_url": "https://arxiv.org/abs/2607.21642",
-    "published": "2026-08-07",
-    "date": "2026-08",
+    "published": "2026-07-21",
+    "date": "2026-07",
     "raw_path": "data/_raw/mrscan-b045-2.txt",
     "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
     "source_topics": [
@@ -6001,8 +5973,8 @@
     "title": "Behavioral Canaries: Auditing Private Retrieved Context Usage in RL Fine-Tuning",
     "source_url": "https://arxiv.org/abs/2604.22191",
     "article_url": "https://arxiv.org/abs/2604.22191",
-    "published": "2026-08-07",
-    "date": "2026-08",
+    "published": "2026-04-24",
+    "date": "2026-04",
     "raw_path": "data/_raw/mrscan-b045-0.txt",
     "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
     "source_topics": [
@@ -8557,7 +8529,7 @@
   },
   {
     "topic": "ai-research",
-    "domain": "air.evals",
+    "domain": "air.ml-research",
     "cluster": "B",
     "related_claims": [
       "score-evals-on-groundedness-not-headline-f1",
@@ -8624,7 +8596,7 @@
     "verify_note": "Grounding-vs-plausibility gap and scale (201,247 decisions, 151 investors, four LLMs) are stated verbatim in the abstract.",
     "id": "evaluating-investment-logic-in-large-language-mo-7469ca5418",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
-    "needs_review": false,
+    "needs_review": true,
     "grounding_score": null,
     "domain_label": "Evaluation"
   },
@@ -9007,7 +8979,7 @@
   },
   {
     "topic": "ai-research",
-    "domain": "air.context",
+    "domain": "air.ml-research",
     "cluster": "A",
     "related_claims": [
       "few-shot-prompting-brittle-on-format-changes",
@@ -9066,7 +9038,7 @@
     "verify_note": "Numbers and confidence intervals lifted verbatim; the 'ignore-disclosure fails' conclusion is directly stated in the abstract.",
     "id": "signal-or-spurious-cue-a-randomized-audit-of-sur-20c582fb4d",
     "retrieved_at": "2026-08-14T20:08:53+00:00",
-    "needs_review": false,
+    "needs_review": true,
     "grounding_score": null,
     "domain_label": "Prompt & Context Engineering"
   },
@@ -13619,8 +13591,8 @@
     "domain_label": "Harness & Agent Security"
   },
   {
-    "topic": "ai-security",
-    "domain": "ais.model-supply-chain",
+    "topic": "product-security",
+    "domain": "ps.supply-chain",
     "title": "ChainDrop npm Worm Used Blockchain C2 and Targeted Claude Code / VS Code Configs, Stealing OIDC Tokens from Live CI Runner Memory",
     "source_url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
     "cluster": "D",
@@ -14450,8 +14422,8 @@
     "title": "GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking",
     "source_url": "https://arxiv.org/abs/2604.09222",
     "article_url": "https://arxiv.org/abs/2604.09222",
-    "published": "2026-08-10",
-    "date": "2026-08",
+    "published": "2026-04-10",
+    "date": "2026-04",
     "raw_path": "data/_raw/mrscan-b016-3.txt",
     "source_id": "rss:http-export-arxiv-org-rss-cs-ai",
     "source_topics": [
@@ -16352,7 +16324,7 @@
     "topic": "product-security",
     "domain": "ps.supply-chain",
     "title": "This Shit is Hard: Patching a vulnerability that has no fix",
-    "source_url": "https://www.chainguard.dev/unchained",
+    "source_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
     "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
     "published": "2026-08-17",
     "date": "2026-08",
@@ -16569,7 +16541,7 @@
     "topic": "product-security",
     "domain": "ps.offensive",
     "title": "Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS",
-    "source_url": "https://snyk.io/blog/",
+    "source_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
     "article_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
     "published": "2026-08-10",
     "date": "2026-08",

@@ -23,7 +23,7 @@ _Not new ideas - what the field is watching now, surfaced by the editorial pass.
 
 ## AI in the SDLC
 
-- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-code/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **52.12** · Jul 19, 2026 · ⚠️ _review_  
+- **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](ai-code/2026-07-38-9-of-agent-generated-prs-carry-a-security-smell-but-human.md)** · composite **52.12** · Jul 14, 2026 · ⚠️ _review_  
   Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.  
   _[source](https://arxiv.org/abs/2607.12428)_
 
