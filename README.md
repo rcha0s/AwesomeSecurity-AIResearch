@@ -4,17 +4,17 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research. Every finding is vetted and distilled to one lesson; a claim ledger tracks what to do now and what it replaced.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--20-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-7-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-52-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--22-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-9-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-52-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for what to act on, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
 ## This week's top stories
 
-_Nothing new in the last 7 days, so these are the latest top stories._
+_Fewer than five stories in the last 7 days, so the most recent ones before it fill in._
 
-1. **[funes: A Cross-Agent Memory Layer That Preserves Raw Session Evidence Instead of Distilling It Into Facts at Write Time](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=funes-a-cross-agent-memory-layer-that-preserves-0f0e02a9d1#week)** · _AI Security · Sep 3, 2026 · 1 source_
-2. **[Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=multidimensional-item-response-theory-auditing-r-50bbf04165#week)** · _AI Security · Sep 1, 2026 · 1 source_
-3. **[OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openclaw-2-0-s-usability-overhaul-ships-with-sec-a42e167a84#week)** · _AI Security · Aug 31, 2026 · 1 source_
+1. **[Pillow MIC images hang n\_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ghsa-22hg-r758-rrw9-7a9523be43#week)** · _Product Security · Oct 21, 2026 · 1 source_
+2. **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=review-of-the-misalignment-in-high-stakes-settin-5863cde447#week)** · _AI Research · Oct 20, 2026 · 1 source_
+3. **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5#week)** · _AI Research · Oct 19, 2026 · 1 source_
 
 ## What to do now
 
@@ -41,4 +41,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-10-20 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-10-22 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

@@ -26,6 +26,33 @@
       "cost_basis": "reserved",
       "ceiling_usd": 3.5541,
       "cap_usd": 3.3333
+    },
+    {
+      "run_id": "local-20261022T012413Z-37226",
+      "date": "2026-10-22",
+      "runner": "local",
+      "candidates": 437,
+      "stories": 8,
+      "kept": 3,
+      "kept_ratio": 0.429,
+      "recall": {
+        "recall": 0.067,
+        "week": "2026-W43",
+        "generated": "2026-10-22T01:40:30+00:00",
+        "passed": false,
+        "errors": 0,
+        "file": "recall.json",
+        "stale": false
+      },
+      "golden": null,
+      "integrity": {
+        "passed": true,
+        "problems": 0
+      },
+      "cost_usd": 1.6749262000000003,
+      "cost_basis": "measured",
+      "ceiling_usd": 3.5541,
+      "cap_usd": 3.3333
     }
   ]
 }

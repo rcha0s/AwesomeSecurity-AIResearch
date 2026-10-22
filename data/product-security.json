@@ -63,7 +63,7 @@
         "newness": 0,
         "credibility": 57.5,
         "composite": 52.12,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
       "verified": true,
@@ -72,6 +72,7 @@
       "retrieved_at": "2026-07-21T07:37:44+00:00",
       "needs_review": true,
       "grounding_score": 1.0,
+      "domain_label": "AI-Generated Code Risk",
       "editorial": {
         "promoted": true,
         "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
@@ -81,8 +82,7 @@
           "teachable"
         ],
         "at": "2026-07-26T21:08:26+00:00"
-      },
-      "domain_label": "AI-Generated Code Risk"
+      }
     },
     {
       "topic": "product-security",
@@ -149,7 +149,7 @@
         "newness": 1,
         "credibility": 77.5,
         "composite": 42.47,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -163,6 +163,89 @@
       "needs_review": true,
       "grounding_score": null,
       "domain_label": "Confidential compute (Nitro Enclaves + KMS)"
+    },
+    {
+      "id": "ghsa-22hg-r758-rrw9-7a9523be43",
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 31,
+        "credibility": 70.0,
+        "composite": 40.75,
+        "scored_at": "2026-10-22T02:20:03+00:00"
+      },
+      "verified": true,
+      "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)",
+      "source_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
+      "article_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/ghsa-22hg-r758-rrw9-7a9523be43.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "related_claims": [],
+      "summary": "A crafted 5.6 KB Microsoft Image Composer file makes Pillow loop forever at 100% CPU when code reads im.n_frames, on installs with the optional olefile package. MicImageFile overrides seek() and tell() but inherits TiffImageFile.n_frames, which relies on tell() advancing, so it re-parses the same directory endlessly. The hang raises no exception and grows no memory; the regression dates to Pillow 7.2.0 (2020).",
+      "lessons": [
+        {
+          "point": "Exposure depends on an optional dependency: only installs with olefile register the MIC plugin.",
+          "excerpt": "This only affects installations that have the optional `olefile` package.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Root cause is a subclass that overrides the primitives an inherited method depends on; audit inherited methods when you change seek/tell semantics.",
+          "excerpt": "It does not override the `n_frames` property, so the inherited TIFF implementation runs",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Silent CPU hangs evade exception handlers and memory limits; untrusted parsing needs a wall-clock watchdog.",
+          "excerpt": "The call never returns, raises no exception, and does not grow memory, so only an external watchdog stops it.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The bug has shipped since Pillow 7.2.0.",
+          "excerpt": "first released in 7.2.0",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Parse untrusted images under a timeout and restrict Image.open to the formats you expect.",
+      "tags": [
+        "dos",
+        "image-parsing",
+        "python",
+        "pillow"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Bound untrusted image parsing",
+        "detail": "Pass an explicit formats= allowlist to Image.open for user uploads, drop olefile if you don't need MIC/FPX, and run frame-count and re-save operations in a worker with a wall-clock timeout."
+      },
+      "threat": "Denial of service: one crafted upload pins a worker at 100% CPU indefinitely.",
+      "conditions": "olefile installed; the application opens an untrusted image and reads n_frames (e.g. is-animated checks, save_all re-saves).",
+      "mitigations": "Upgrade Pillow when patched; restrict formats; remove olefile; enforce worker timeouts.",
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today.",
+        "signals": [
+          "cve",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-22T01:39:55+00:00"
+      }
     },
     {
       "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
@@ -222,7 +305,7 @@
         "newness": 0,
         "credibility": 70.0,
         "composite": 40.5,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
       "discovered_via": "rss",
@@ -235,6 +318,60 @@
       "needs_review": true,
       "grounding_score": null,
       "domain_label": "Supply Chain / Policy"
+    },
+    {
+      "id": "cisa-kev-eg-secure-solutions-siteguard-server-ed-63770fa2b6",
+      "scores": {
+        "novelty": 5,
+        "relevance": 40,
+        "newness": 31,
+        "credibility": 75.0,
+        "composite": 32.5,
+        "scored_at": "2026-10-22T02:20:03+00:00"
+      },
+      "verified": false,
+      "verify_note": "Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source.",
+      "prior_art": "Routine KEV listing of a vendor OS command injection; no technical detail available.",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA KEV: SiteGuard Server Edition OS command injection (CVE-2026-106931) exploited in the wild",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-106931",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-106931",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/cisa-kev-eg-secure-solutions-siteguard-server-ed-63770fa2b6.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 75.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "related_claims": [],
+      "summary": "CISA added an OS command injection in EG Secure Solutions SiteGuard Server Edition to its Known Exploited Vulnerabilities catalog on 2026-10-20. Per the KEV description, it may let an attacker run arbitrary OS commands as root or SYSTEM. The fetched NVD page returned no content, so no technical detail could be grounded.",
+      "lessons": [
+        {
+          "point": "SiteGuard Server Edition's command injection gives root/SYSTEM command execution and is exploited in the wild (KEV description only; the NVD page fetched empty).",
+          "excerpt": "may allow an attacker to execute arbitrary OS commands with root or SYSTEM privileges",
+          "confidence": 0.3,
+          "grounded": false
+        }
+      ],
+      "takeaway": "If you run SiteGuard Server Edition, patch now: CISA lists this command injection as actively exploited.",
+      "tags": [
+        "kev",
+        "command-injection",
+        "waf"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch SiteGuard Server Edition",
+        "detail": "Inventory SiteGuard Server Edition installs and apply the vendor fix for CVE-2026-106931; until patched, restrict access to its management interfaces."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0
     },
     {
       "topic": "product-security",
@@ -282,7 +419,7 @@
         "newness": 1,
         "credibility": 73.2,
         "composite": 29.23,
-        "scored_at": "2026-10-20T16:34:06+00:00"
+        "scored_at": "2026-10-22T02:20:03+00:00"
       },
       "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
       "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",

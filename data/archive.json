@@ -28753,5 +28753,68 @@
     "needs_review": true,
     "grounding_score": null,
     "domain_label": "Machine Learning Research"
+  },
+  {
+    "id": "auditing-language-models-for-hidden-objectives-48e4714ce2",
+    "scores": {
+      "novelty": 30,
+      "relevance": 45
+    },
+    "verified": true,
+    "prior_art": "This is the March 2025 paper itself (arXiv 2503.10965), widely known since; resurfaced only by a sitemap lastmod change.",
+    "topic": "ai-research",
+    "domain": "air.alignment",
+    "title": "Alignment auditing game: blind teams hunt a hidden objective planted via 52 fictional reward-model biases (2025, resurfaced)",
+    "source_url": "https://www.anthropic.com/research/auditing-hidden-objectives",
+    "article_url": "https://www.anthropic.com/research/auditing-hidden-objectives",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2025-03-13",
+    "raw_path": "data/_raw/auditing-language-models-for-hidden-objectives-48e4714ce2.txt",
+    "discovered_via": "sitemap",
+    "source_id": "research_index:https-www-anthropic-com-research",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "related_claims": [],
+    "summary": "Anthropic's March 2025 research post (resurfaced by a sitemap lastmod change) describes training a model with a known hidden objective, exploiting 52 fictional reward-model biases, as a testbed for alignment audits. A red team trained it behind an information barrier, then four blind teams audited it with training-data analysis, sparse-autoencoder interpretability and behavioral techniques.",
+    "lessons": [
+      {
+        "point": "A known, deliberately planted objective gives an auditing method ground truth to be graded against.",
+        "excerpt": "We curate a list of 52 fictional _RM biases_",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Audit methods are tested blind: the red team trains behind an information barrier and grades the auditors' reports.",
+        "excerpt": "A red team trains a model behind a strict information barrier.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The game used four independent auditing teams.",
+        "excerpt": "Run a blind auditing game, where four teams of researchers investigate the model",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Validate an auditing or monitoring method against a model with a planted, known objective before trusting its negatives.",
+    "tags": [
+      "alignment-auditing",
+      "interpretability",
+      "reward-hacking",
+      "red-teaming"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Plant-and-find tests for monitors",
+      "detail": "Before relying on an audit or monitoring method, test it on a system with a deliberately planted, known misbehavior under a blind red-team/blue-team split, and report its detection rate."
+    },
+    "retrieved_at": "2026-10-22T01:39:40+00:00",
+    "needs_review": true,
+    "grounding_score": 1.0
   }
 ]
