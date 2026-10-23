@@ -7,4 +7,4 @@
 | 2026-10-19 | local | `local-20261019T233010Z-93626` | 3 | $1.33 | measured | yes |
 | 2026-10-20 | local | `local-20261020T163005Z-92384` | 0 | $0.44 | measured | yes |
 | 2026-10-22 | local | `local-20261022T012413Z-37226` | 8 | $1.67 | measured | yes |
-| 2026-10-23 | local | `local-20261023T163006Z-66878` | 10 | $2.32 | measured | no |
+| 2026-10-23 | local | `local-20261023T163006Z-66878` | 10 | $2.32 | measured | yes |
