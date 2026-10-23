@@ -19,7 +19,7 @@ METR's external review of the misalignment section of Anthropic's August 2026 Ri
 
 **Topic:** AI Research  ·  **Domain:** Alignment & Reliability  
 **Source:** [source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)  ·  **Retrieved:** 2026-10-22  
-**Scores:** Newness 31 · Novelty 65 · Relevance 70 · Credibility 75 · **Composite 60** _(each 0-100)_  
+**Scores:** Newness 28 · Novelty 65 · Relevance 70 · Credibility 75 · **Composite 59** _(each 0-100)_  
 **Tags:** `agent-monitoring`, `misalignment`, `risk-assessment`, `red-teaming`, `metr`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.
 

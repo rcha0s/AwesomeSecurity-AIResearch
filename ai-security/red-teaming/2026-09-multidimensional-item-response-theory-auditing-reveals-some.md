@@ -19,7 +19,7 @@ AllenAI's BenchMIRT applies multidimensional Item Response Theory to 100 LLMs ac
 
 **Topic:** AI Security  ·  **Domain:** Red-Teaming & Threat Modeling  
 **Source:** [source](https://huggingface.co/blog/allenai/benchmirt)  ·  **Retrieved:** 2026-09-09  
-**Scores:** Newness 6 · Novelty 65 · Relevance 62 · Credibility 80 · **Composite 52** _(each 0-100)_  
+**Scores:** Newness 5 · Novelty 65 · Relevance 62 · Credibility 80 · **Composite 51** _(each 0-100)_  
 **Tags:** `evals`, `benchmarks`, `item-response-theory`, `safety-evals`, `wmdp`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.
 

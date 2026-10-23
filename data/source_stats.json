@@ -1,10 +1,10 @@
 {
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 1
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 1,
+    "ingested": 3,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-news": {
@@ -12,7 +12,7 @@
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "rss:https-metr-org-feed-xml": {

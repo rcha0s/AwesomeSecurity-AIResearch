@@ -16,6 +16,183 @@
     {
       "topic": "product-security",
       "domain": "ps.ai-code",
+      "title": "Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs",
+      "source_url": "https://www.anthropic.com/research/formal-verification",
+      "article_url": "https://www.anthropic.com/research/formal-verification",
+      "tweet_url": null,
+      "author": "Keane Lucas et al. (Anthropic, Theorem)",
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "raw_path": "data/_raw/llms-are-making-formal-software-verification-fea-281b13ad84.txt",
+      "related_claims": [
+        "gate-agent-prs-with-automated-checks"
+      ],
+      "summary": "Anthropic and Theorem had Claude prove, in Rocq, that 239 OSS-Fuzz entry points in 123 open-source libraries never crash (no memory-safety error or failed assertion) for any input up to 64 MB, after patching the bugs it found along the way. The spec is derived mechanically from the existing fuzz harness plus formal RISC-V and Linux-process semantics, so the ~180M lines of proof need no human review: trust reduces to the semantics, the theorem statements and the Rocq checker. Scope is narrow (single-threaded static RISC-V binaries, fixed memory budget) and compute is large, but it moves formal verification from niche to a pipeline step.",
+      "lessons": [
+        {
+          "point": "LLM-written formal proofs now scale to production libraries at the binary level, not just toy programs.",
+          "excerpt": "proved that there are no crashes on any input (up to 64 MB) for 239 entry points across 123 different OSS-Fuzz libraries",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The spec problem is sidestepped by reusing what developers already wrote: an existing fuzz harness becomes the property to prove.",
+          "excerpt": "automatically converting their preexisting compilable test suites into a spec",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Machine checking replaces review of the AI output: the trusted base is the semantics, the theorem statements and the checker, not the 600k-line proofs.",
+          "excerpt": "virtually none of it needs to be manually reviewed",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The guarantee is scoped: it holds only for single-threaded static RISC-V binaries on Linux under a memory budget, and bugs may remain in the trusted components.",
+          "excerpt": "assume that the program runs as a single-threaded static binary with a fixed memory budget on a RISC-V CPU using Linux OS",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Attempting proofs is itself a bug finder: failures pointed at real bugs that fuzzing had missed.",
+          "excerpt": "the process of attempting to prove these specs discovered hundreds of bugs",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "threat": "AI-accelerated bug discovery and exploit chaining outpacing test-based assurance for memory-unsafe code.",
+      "conditions": "C/C++ libraries with existing fuzz harnesses; proofs currently limited to single-threaded static RISC-V Linux binaries.",
+      "mitigations": "Turn fuzz harnesses into no-crash specs and have an LLM produce checker-verified proofs; review the theorem statements and trusted semantics rather than proof text.",
+      "takeaway": "If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.",
+      "tags": [
+        "formal-verification",
+        "fuzzing",
+        "memory-safety",
+        "rocq",
+        "llm-proofs",
+        "oss-fuzz"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Fuzz-harness-to-proof pipeline",
+        "detail": "For a C/C++ library already in OSS-Fuzz, try Theorem's published add-project Claude skill and pipeline on one entry point; review only the generated theorem statement and assumptions, and treat proof failures as bug reports.",
+        "skill_slug": "fuzz-harness-to-proof"
+      },
+      "scores": {
+        "novelty": 75,
+        "relevance": 75,
+        "newness": 28,
+        "credibility": 55.0,
+        "composite": 60.25,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "seL4 and CompCert (human-written verification at 10x code effort), binary-level verifiers like Alive2, LLM proof assistants (Baldur, AlphaProof), and AI bug finding (Big Sleep, AIxCC). None showed LLM-written, machine-checked binary-level proofs at this scale.",
+      "verified": true,
+      "verify_note": "Independent verifier: all excerpts verbatim; novelty 78 vs 75 (kept 75); relevance 72; noted trusted components may hold bugs and the compute cost is large.",
+      "id": "claude-wrote-machine-checked-no-crash-proofs-for-fea71adcaf",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "Sentry's Next.js tunnelRoute skipped middleware for everything under the tunnel path, not just the requests its rewrite served (GHSA-mchm-gjx6-7h55)",
+      "source_url": "https://github.com/advisories/GHSA-mchm-gjx6-7h55",
+      "article_url": "https://github.com/advisories/GHSA-mchm-gjx6-7h55",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "raw_path": "data/_raw/ghsa-mchm-gjx6-7h55-ebf948d009.txt",
+      "related_claims": [],
+      "summary": "@sentry/nextjs's tunnelRoute option forwards browser events through a path on your own Next.js server and tells the SDK to skip middleware for them. The skip matched every path under the tunnel prefix, while the rewrite only served the exact tunnel path with the o and p parameters, so any app route that resolves under that prefix (a direct collision or a root dynamic segment like app/[locale]) ran without middleware. It is only an authorization bypass where middleware is the sole authz layer; fixed in 9.47.2, 10.75.2 and 11.0.0-rc.1.",
+      "lessons": [
+        {
+          "point": "The bug is a scope mismatch: an exemption (skip middleware) was matched more broadly than the thing it existed to protect (the rewrite).",
+          "excerpt": "The middleware skip was wider than the rewrite.",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "Requests in the gap reach application routes with middleware never executed.",
+          "excerpt": "Requests in that gap go to your application instead of Sentry, and your middleware never runs on them.",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "It is only exploitable when middleware is the sole authorization layer for the colliding routes; server-side session checks still hold.",
+          "excerpt": "your middleware is the only place that enforces authorization for those routes",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The durable fix is defense in depth: enforce authorization in the route, layout or data-access layer as well as middleware.",
+          "excerpt": "Enforce authorization in the route, layout or data-access path as well as in middleware.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Only webpack builds are affected.",
+          "excerpt": "Turbopack builds are not affected",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "threat": "Unauthenticated access to Next.js routes whose only authorization check lives in middleware, by requesting them under the Sentry tunnel prefix.",
+      "conditions": "tunnelRoute set; webpack build; an app route resolving under the tunnel path (including a root dynamic segment); middleware-only authorization.",
+      "mitigations": "Upgrade @sentry/nextjs to 9.47.2 / 10.75.2 / 11.0.0-rc.1; move tunnelRoute to a path no route can resolve under; build with Turbopack; enforce authz in routes or data access, not only middleware.",
+      "takeaway": "Any SDK or framework that exempts paths from middleware is a potential authz bypass: if middleware is your only authorization check, grep your dependencies for middleware skips.",
+      "tags": [
+        "nextjs",
+        "middleware",
+        "authorization-bypass",
+        "sentry",
+        "ghsa"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit middleware exemptions and add route-level authz",
+        "detail": "Upgrade @sentry/nextjs; then list every matcher/skip that bypasses Next.js middleware (Sentry tunnel, static assets, health checks) and confirm each protected route also checks the session server-side in its layout, route handler or data-access layer."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 78,
+        "newness": 28,
+        "credibility": 70.0,
+        "composite": 52.9,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Next.js CVE-2025-29927 (x-middleware-subrequest middleware bypass) established that middleware-only authorization in Next.js is fragile; this is a new, SDK-introduced instance of the same class.",
+      "verified": true,
+      "verify_note": "Independent verifier: all excerpts verbatim; novelty 40 (same); stressed the route-collision precondition and that server-side session checks still protect routes.",
+      "id": "sentry-s-next-js-tunnelroute-skipped-middleware-d6a38416b8",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Critical GHSA in a ubiquitous Next.js SDK with a transferable lesson: middleware exemptions are authz bypasses wherever middleware is the only authorization check.",
+        "signals": [
+          "cve",
+          "newsworthy",
+          "high-relevance",
+          "timely"
+        ],
+        "at": "2026-10-23T16:45:31+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.ai-code",
       "title": "38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets",
       "source_url": "https://arxiv.org/abs/2607.12428",
       "article_url": "https://arxiv.org/abs/2607.12428",
@@ -152,10 +329,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 82,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 50.85,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 50.6,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "prior_art": "Earlier GHSL Taskflow Agent posts on generic audit taskflows, and LLM-assisted SAST triage; the delta is the Android-specific entry-point and checklist decomposition plus its field results.",
       "verified": true,
@@ -175,6 +352,213 @@
         ],
         "at": "2026-10-19T23:36:16+00:00"
       }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Next.js App Router: unauthenticated RCE in `use cache` functions that return multiple typed arrays (GHSA-673q-mjm6-r5xr)",
+      "source_url": "https://github.com/advisories/GHSA-673q-mjm6-r5xr",
+      "article_url": "https://github.com/advisories/GHSA-673q-mjm6-r5xr",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "raw_path": "data/_raw/ghsa-673q-mjm6-r5xr-70d999ed9f.txt",
+      "related_claims": [],
+      "summary": "A critical GHSA for npm/next reports that apps using the App Router with Cache Components can be driven to remote code execution when a `use cache` function returns multiple typed arrays, with no known workaround short of upgrading. The fetched advisory page captured only the CVSS boilerplate, so the details here come from the GHSA feed summary alone.",
+      "lessons": [
+        {
+          "point": "The vulnerable surface is the cache serialization path for typed arrays in App Router Cache Components.",
+          "excerpt": "The application needs to have a `use cache` function that returns multiple typed arrays.",
+          "confidence": 0.5,
+          "grounded": false
+        },
+        {
+          "point": "There is no configuration workaround; affected apps must upgrade.",
+          "excerpt": "There is no known workaround for affected applications",
+          "confidence": 0.5,
+          "grounded": false
+        }
+      ],
+      "takeaway": "Upgrade Next.js now if any `use cache` function returns typed arrays; there is no workaround.",
+      "tags": [
+        "nextjs",
+        "app-router",
+        "cache-components",
+        "deserialization",
+        "rce",
+        "ghsa"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Find `use cache` functions returning typed arrays",
+        "detail": "Grep for 'use cache' in App Router code, check return values for Uint8Array/Float32Array etc., and upgrade Next.js to the patched release."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 75,
+        "newness": 28,
+        "credibility": 70.0,
+        "composite": 50.5,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "React Server Components serialization RCE (React2Shell, CVE-2025-55182) is the closest prior class: framework-level serialization of server data leading to RCE.",
+      "verified": false,
+      "verify_note": "Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary.",
+      "id": "next-js-app-router-unauthenticated-rce-in-use-ca-2bbaa8bc4d",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.offensive",
+      "title": "Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths and hands defenders the CloudTrail events each run should have produced",
+      "source_url": "https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/",
+      "article_url": "https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/",
+      "tweet_url": null,
+      "author": "Seth Art",
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-351",
+      "raw_path": "data/_raw/introducing-pathrunner-an-aws-privilege-escalati-63a751067f.txt",
+      "related_claims": [
+        "long-lived-cloud-credentials-are-obsolete"
+      ],
+      "summary": "Datadog released pathrunner, a modular Metasploit-style framework that exploits the AWS IAM privilege-escalation paths catalogued in pathfinding.cloud, with identity import/switching, multiple payloads per module, managed 'attacker' infrastructure and a workspace report. The report lists the resources created and the CloudTrail events pathrunner expects to have triggered, turning a red-team run into a detection-engineering checklist. It is incremental over Pacu and Stratus Red Team; its value is the per-payload detection coverage it enables.",
+      "lessons": [
+        {
+          "point": "In cloud environments lateral movement is mostly identity-to-identity via credentials, so model attack paths as IAM graphs, not network hops.",
+          "excerpt": "more often than not, penetration testers and real attacks are hopping from one cloud identity to another by accessing credentials",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The tool ships a broad catalogue of exploit modules mapped to required permissions.",
+          "excerpt": "As of October 2026, there are over 80 exploit modules in pathrunner.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Write detections per payload, not per single post-exploitation action: a detection for 'create admin user' is blind when the attacker picks another payload.",
+          "excerpt": "if you walk through each and every pathrunner payload in your environment and build detections for each of them, you will have a much greater chance of catching malicious activity",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The workspace report gives the blue team the CloudTrail events the run is expected to generate (Datadog's expectation, not a verified log) to check detections against.",
+          "excerpt": "the report includes a table that lists all of the CloudTrail events that we think pathrunner would have triggered",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Demonstrated exploitability is the triage signal for misconfigurations, as a public PoC is for CVEs.",
+          "excerpt": "An offensive tool demonstrates the impact of an attack, enabling defenders to prioritize exploitable misconfigurations based on how impactful they are.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Run pathrunner in a sandbox (Pathfinding Labs) and use its CloudTrail report to test that every payload, not just one, trips a detection.",
+      "tags": [
+        "aws",
+        "iam",
+        "privilege-escalation",
+        "red-teaming",
+        "detection-engineering",
+        "cloudtrail"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Detection coverage drill with pathrunner",
+        "detail": "Deploy Pathfinding Labs in a sandbox account, run each pathrunner module with every payload, export `workspace report`, and diff the expected CloudTrail events against what your SIEM alerted on; file a detection gap per miss."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 72,
+        "newness": 28,
+        "credibility": 70.0,
+        "composite": 49.6,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Pacu, Rhino Security's AWS escalation methods/CloudGoat, Stratus Red Team (per-technique detection testing), and Datadog's own pathfinding.cloud and Pathfinding Labs.",
+      "verified": true,
+      "verify_note": "Independent verifier: all excerpts verbatim; novelty 40->35 (incremental over Pacu/Stratus); CloudTrail table is expected, not verified, events.",
+      "id": "datadog-s-pathrunner-automates-80-aws-iam-privil-f57e20266a",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Next.js Image Optimization API: unauthenticated RCE via SVG through an upstream sharp memory bug on glibc Linux (GHSA-2464-fhr4-w9xw)",
+      "source_url": "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+      "article_url": "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "raw_path": "data/_raw/ghsa-2464-fhr4-w9xw-e742eb1435.txt",
+      "related_claims": [],
+      "summary": "A critical GHSA for npm/next reports that a memory-related bug in an upstream library used by Next.js Image Optimization can lead to remote code execution when SVG files are processed on glibc-based Linux; the workaround is to ensure the sharp version Next.js uses is new enough. The fetched advisory page captured only the CVSS boilerplate, so the details here come from the GHSA feed summary alone.",
+      "lessons": [
+        {
+          "point": "Server-side image optimization turns an image-library memory bug into unauthenticated RCE on the web tier.",
+          "excerpt": "A memory-related vulnerability has been discovered in an upstream library used for Image Optimization can lead to possible remote code execution (RCE) when Next.js runs on glibc-based Linux.",
+          "confidence": 0.5,
+          "grounded": false
+        },
+        {
+          "point": "The fix is a transitive dependency bump: pin a patched sharp.",
+          "excerpt": "Ensure the version of `sharp` used by Next.js is greater",
+          "confidence": 0.5,
+          "grounded": false
+        }
+      ],
+      "takeaway": "Pin a patched sharp under Next.js and consider disabling SVG optimization; image pipelines are unauthenticated RCE surface.",
+      "tags": [
+        "nextjs",
+        "sharp",
+        "image-processing",
+        "rce",
+        "ghsa"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check the sharp version Next.js resolves",
+        "detail": "Run npm ls sharp in each Next.js app, upgrade to the patched sharp, and keep dangerouslyAllowSVG off unless required."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 75,
+        "newness": 28,
+        "credibility": 70.0,
+        "composite": 49.0,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Astro's default image optimizer RCE via a libheif bug in sharp (GHSA-26w7-cxv4-gfx2), already in the story ledger: same class, different framework and codec.",
+      "verified": false,
+      "verify_note": "Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary.",
+      "id": "next-js-image-optimization-api-unauthenticated-r-4da4466e48",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0
     },
     {
       "topic": "product-security",
@@ -257,86 +641,77 @@
       "domain_label": "Confidential compute (Nitro Enclaves + KMS)"
     },
     {
-      "id": "ghsa-22hg-r758-rrw9-7a9523be43",
-      "scores": {
-        "novelty": 30,
-        "relevance": 45,
-        "newness": 31,
-        "credibility": 70.0,
-        "composite": 40.75,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "verified": true,
-      "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
       "topic": "product-security",
       "domain": "ps.appsec",
-      "title": "Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)",
-      "source_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
-      "article_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
+      "title": "CISA KEV: Plex Media Server encoded-URI-scheme flaw CVE-2026-96654 exploited in the wild, part of a four-CVE chain",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
       "tweet_url": null,
       "author": null,
+      "published": "2026-10-20",
       "date": "2026-10",
-      "published": "2026-10-21",
-      "raw_path": "data/_raw/ghsa-22hg-r758-rrw9-7a9523be43.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [],
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 72.5,
+      "source_topics": [
+        "product-security"
+      ],
+      "raw_path": "data/_raw/cisa-kev-plex-media-server-improper-neutralizati-98f7d27821.txt",
       "related_claims": [],
-      "summary": "A crafted 5.6 KB Microsoft Image Composer file makes Pillow loop forever at 100% CPU when code reads im.n_frames, on installs with the optional olefile package. MicImageFile overrides seek() and tell() but inherits TiffImageFile.n_frames, which relies on tell() advancing, so it re-parses the same directory endlessly. The hang raises no exception and grows no memory; the regression dates to Pillow 7.2.0 (2020).",
+      "summary": "CISA added CVE-2026-96654, an improper neutralization of encoded URI schemes in Plex Media Server's web page, to the Known Exploited Vulnerabilities catalog on October 20, 2026 with a three-day due date. Per the KEV entry it lets an attacker call other plugins' functions with their own parameters and chains with CVE-2026-96652, -96655 and -96656; NVD references a public 'plex2shell' write-up. The captured NVD page carries little technical detail, so this is a patch-now signal rather than a teachable root cause.",
       "lessons": [
         {
-          "point": "Exposure depends on an optional dependency: only installs with olefile register the MIC plugin.",
-          "excerpt": "This only affects installations that have the optional `olefile` package.",
+          "point": "The flaw is confirmed exploited in the wild and listed in KEV, so self-hosted Plex servers should be patched now rather than on a normal cycle.",
+          "excerpt": "This CVE is in CISA's Known Exploited Vulnerabilities Catalog",
           "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "Root cause is a subclass that overrides the primitives an inherited method depends on; audit inherited methods when you change seek/tell semantics.",
-          "excerpt": "It does not override the `n_frames` property, so the inherited TIFF implementation runs",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Silent CPU hangs evade exception handlers and memory limits; untrusted parsing needs a wall-clock watchdog.",
-          "excerpt": "The call never returns, raises no exception, and does not grow memory, so only an external watchdog stops it.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The bug has shipped since Pillow 7.2.0.",
-          "excerpt": "first released in 7.2.0",
-          "confidence": 0.85,
+          "point": "NVD links a third-party write-up titled plex2shell, indicating a public path from this chain to a shell.",
+          "excerpt": "https://zmain.info/blog/plex2shell",
+          "confidence": 0.6,
           "grounded": true
         }
       ],
-      "takeaway": "Parse untrusted images under a timeout and restrict Image.open to the formats you expect.",
+      "threat": "Chained Plex Media Server bugs leading to plugin function invocation and arbitrary file write, exploited in the wild.",
+      "conditions": "Internet-reachable or LAN-exposed Plex Media Server on an unpatched version.",
+      "mitigations": "Apply the Plex Media Server update referenced in the vendor release notes; restrict exposure of the Plex web interface.",
+      "takeaway": "Patch Plex Media Server now: four chained CVEs are in KEV with a public plex2shell write-up.",
       "tags": [
-        "dos",
-        "image-parsing",
-        "python",
-        "pillow"
+        "kev",
+        "plex",
+        "exploited-in-the-wild",
+        "vuln-chain"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Bound untrusted image parsing",
-        "detail": "Pass an explicit formats= allowlist to Image.open for user uploads, drop olefile if you don't need MIC/FPX, and run frame-count and re-save operations in a worker with a wall-clock timeout."
+        "title": "Patch and inventory Plex servers",
+        "detail": "Find Plex Media Server instances (including homelab hosts on corporate networks), update to the fixed release, and check whether the web interface is exposed to the internet."
       },
-      "threat": "Denial of service: one crafted upload pins a worker at 100% CPU indefinitely.",
-      "conditions": "olefile installed; the application opens an untrusted image and reads n_frames (e.g. is-animated checks, save_all re-saves).",
-      "mitigations": "Upgrade Pillow when patched; restrict formats; remove olefile; enforce worker timeouts.",
-      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "scores": {
+        "novelty": 25,
+        "relevance": 55,
+        "newness": 28,
+        "credibility": 72.5,
+        "composite": 41.88,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Plex has prior KEV entries (CVE-2020-5741 arbitrary code execution via Python script write). A routine KEV patch signal.",
+      "verified": true,
+      "verify_note": "Independent verifier: both excerpts verbatim; KEV due date (Oct 23) is today; the plex2shell write-up is referenced, not summarized.",
+      "id": "cisa-kev-plex-media-server-encoded-uri-scheme-fl-79faa7a3d5",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
       "needs_review": true,
       "grounding_score": 1.0,
       "editorial": {
         "promoted": true,
-        "reason": "Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today.",
+        "reason": "Exploited-in-the-wild Plex chain added to CISA KEV with a due date of today and a public plex2shell write-up; patch now.",
         "signals": [
+          "active-exploitation",
           "cve",
-          "timely",
-          "high-relevance"
+          "timely"
         ],
-        "at": "2026-10-22T01:39:55+00:00"
+        "at": "2026-10-23T16:45:31+00:00"
       }
     },
     {
@@ -412,14 +787,236 @@
       "domain_label": "Supply Chain / Policy"
     },
     {
+      "id": "ghsa-22hg-r758-rrw9-7a9523be43",
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 28,
+        "credibility": 70.0,
+        "composite": 40.0,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)",
+      "source_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
+      "article_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/ghsa-22hg-r758-rrw9-7a9523be43.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "related_claims": [],
+      "summary": "A crafted 5.6 KB Microsoft Image Composer file makes Pillow loop forever at 100% CPU when code reads im.n_frames, on installs with the optional olefile package. MicImageFile overrides seek() and tell() but inherits TiffImageFile.n_frames, which relies on tell() advancing, so it re-parses the same directory endlessly. The hang raises no exception and grows no memory; the regression dates to Pillow 7.2.0 (2020).",
+      "lessons": [
+        {
+          "point": "Exposure depends on an optional dependency: only installs with olefile register the MIC plugin.",
+          "excerpt": "This only affects installations that have the optional `olefile` package.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Root cause is a subclass that overrides the primitives an inherited method depends on; audit inherited methods when you change seek/tell semantics.",
+          "excerpt": "It does not override the `n_frames` property, so the inherited TIFF implementation runs",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Silent CPU hangs evade exception handlers and memory limits; untrusted parsing needs a wall-clock watchdog.",
+          "excerpt": "The call never returns, raises no exception, and does not grow memory, so only an external watchdog stops it.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The bug has shipped since Pillow 7.2.0.",
+          "excerpt": "first released in 7.2.0",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Parse untrusted images under a timeout and restrict Image.open to the formats you expect.",
+      "tags": [
+        "dos",
+        "image-parsing",
+        "python",
+        "pillow"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Bound untrusted image parsing",
+        "detail": "Pass an explicit formats= allowlist to Image.open for user uploads, drop olefile if you don't need MIC/FPX, and run frame-count and re-save operations in a worker with a wall-clock timeout."
+      },
+      "threat": "Denial of service: one crafted upload pins a worker at 100% CPU indefinitely.",
+      "conditions": "olefile installed; the application opens an untrusted image and reads n_frames (e.g. is-animated checks, save_all re-saves).",
+      "mitigations": "Upgrade Pillow when patched; restrict formats; remove olefile; enforce worker timeouts.",
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today.",
+        "signals": [
+          "cve",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-22T01:39:55+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "raml-kql: one KQL query across many Log Analytics workspaces and Entra tenants without a Defender multi-tenant org",
+      "source_url": "https://github.com/luca-ramseyer/raml-kql",
+      "article_url": "https://github.com/luca-ramseyer/raml-kql",
+      "tweet_url": null,
+      "author": "Luca Ramseyer",
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-351",
+      "raw_path": "data/_raw/luca-ramseyer-raml-kql-c61391ea72.txt",
+      "related_claims": [],
+      "summary": "Raml KQL is an open-source VS Code-style desktop app that fans one KQL query out to many Azure Log Analytics/Sentinel workspaces across Entra tenants and accounts (found via Lighthouse delegations and guest access) and merges the results with tenant and workspace on every row. It runs with the analyst's delegated permissions and no stored secrets, aliases customer names on screen and keeps a hash-chained audit log. A convenience tool for MSSPs and consultants without a Defender MTO, not a new capability.",
+      "lessons": [
+        {
+          "point": "Cross-tenant hunting without a Defender MTO is possible from the analyst's own delegated access.",
+          "excerpt": "Run one KQL query against many Azure Log Analytics workspaces at once, across many Entra tenants and many signed-in accounts",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The design keeps no credentials of its own: it acts only with the user's delegated permissions.",
+          "excerpt": "Raml KQL only ever does what you are allowed to do: it uses your delegated permissions and holds no secrets or service principals.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "It records query provenance without storing customer data.",
+          "excerpt": "A hash-chained audit log records what ran where, without result values.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Customer names are masked by default for screen sharing.",
+          "excerpt": "Tenant and workspace names are aliased on screen by default",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "MSSPs without a Defender MTO can hunt across customer Sentinel workspaces from one query with delegated access only.",
+      "tags": [
+        "kql",
+        "sentinel",
+        "azure",
+        "multi-tenant",
+        "threat-hunting",
+        "mssp"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Cross-tenant hunt queries",
+        "detail": "If you operate across customer tenants via Lighthouse, keep a query pack of hunting KQL in git and run it across all workspaces with raml-kql, grouping by _TenantName."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 28,
+        "credibility": 70.0,
+        "composite": 40.0,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Defender multi-tenant advanced hunting, Sentinel/Lighthouse cross-workspace queries with workspace()/union, Sentinel Workbooks.",
+      "verified": true,
+      "verify_note": "Independent verifier: all excerpts verbatim; novelty 30 (same); niche v1.0 convenience tool.",
+      "id": "raml-kql-one-kql-query-across-many-log-analytics-e9ffff3381",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA KEV: Plex Media Server arbitrary file write CVE-2026-96656 exploited in the wild",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96656",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96656",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-20",
+      "date": "2026-10",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 72.5,
+      "source_topics": [
+        "product-security"
+      ],
+      "raw_path": "data/_raw/cisa-kev-plex-media-server-external-control-of-f-bbcc6b5e0e.txt",
+      "related_claims": [],
+      "summary": "CISA's KEV catalog lists CVE-2026-96656, an external control of file name or path flaw in Plex Media Server that lets an admin user write arbitrary files that may be executed on load, as exploited in the wild (added October 20, 2026). It chains with CVE-2026-96652, -96654 and -96655. The fetched NVD page was empty, so nothing here is grounded beyond the KEV catalog text.",
+      "lessons": [
+        {
+          "point": "An admin-only file write becomes code execution because written files may be executed on load, and the other chained CVEs plausibly supply the admin context.",
+          "excerpt": "can allow an admin user to write arbitrary files that may be executed on load",
+          "confidence": 0.5,
+          "grounded": false
+        },
+        {
+          "point": "It is one link in a four-CVE chain; patch all of them together.",
+          "excerpt": "This vulnerability can be chained with CVE-2026-96652, CVE-2026-96654, and CVE-2026-96655.",
+          "confidence": 0.5,
+          "grounded": false
+        }
+      ],
+      "takeaway": "Treat the four Plex KEV CVEs as one chain and patch together.",
+      "tags": [
+        "kev",
+        "plex",
+        "exploited-in-the-wild",
+        "arbitrary-file-write"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch Plex Media Server",
+        "detail": "Update Plex Media Server to the fixed release covering CVE-2026-96652/-96654/-96655/-96656."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 50,
+        "newness": 28,
+        "credibility": 72.5,
+        "composite": 38.88,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Same chain as CVE-2026-96654 in this batch; earlier Plex KEV CVE-2020-5741 was also an admin file write to code execution.",
+      "verified": false,
+      "verify_note": "Source text not captured (NVD page empty); lessons rest on the KEV catalog text only.",
+      "id": "cisa-kev-plex-media-server-arbitrary-file-write-aaaf83953c",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 0.0
+    },
+    {
       "id": "cisa-kev-eg-secure-solutions-siteguard-server-ed-63770fa2b6",
       "scores": {
         "novelty": 5,
         "relevance": 40,
-        "newness": 31,
+        "newness": 28,
         "credibility": 75.0,
-        "composite": 32.5,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 31.75,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "verified": false,
       "verify_note": "Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source.",

@@ -28788,5 +28788,69 @@
     "retrieved_at": "2026-10-22T01:39:40+00:00",
     "needs_review": true,
     "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.alignment",
+    "title": "Anthropic's discrim-eval: generated decision prompts with varied demographics surfaced positive and negative discrimination in Claude 2.0 (2023 paper, re-surfaced)",
+    "source_url": "https://www.anthropic.com/research/evaluating-and-mitigating-discrimination-in-language-model-decisions",
+    "article_url": "https://www.anthropic.com/research/evaluating-and-mitigating-discrimination-in-language-model-decisions",
+    "tweet_url": null,
+    "author": "Anthropic",
+    "published": "2023-12-07",
+    "date": "2023-12",
+    "discovered_via": "sitemap",
+    "source_id": "research_index:https-www-anthropic-com-research",
+    "source_rank": 72.5,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "raw_path": "data/_raw/evaluating-and-mitigating-discrimination-in-lang-61e5500eea.txt",
+    "related_claims": [],
+    "summary": "A December 2023 Anthropic paper (re-surfaced by a sitemap lastmod change, not new) proposes evaluating discrimination by having an LM generate decision prompts across 70 scenarios and systematically varying demographic attributes. Applied to Claude 2.0 with no interventions it found both positive and negative discrimination in some settings, which careful prompt engineering significantly reduced; the dataset is released as discrim-eval. Useful as a method for builders putting LLMs near consequential decisions, but stale as news.",
+    "lessons": [
+      {
+        "point": "Test decision prompts counterfactually: generate many scenarios and vary only the demographic fields.",
+        "excerpt": "spanning 70 diverse decision scenarios across society, and systematically vary the demographic information in each prompt",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Bias showed up in both directions, in select settings, for an older model.",
+        "excerpt": "reveals patterns of both positive and negative discrimination in the Claude 2.0 model in select settings when no interventions are applied",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Prompt-level interventions measurably reduced it.",
+        "excerpt": "techniques to significantly decrease both positive and negative discrimination through careful prompt engineering",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "If an LLM touches consequential decisions, run a counterfactual demographic eval like discrim-eval before and after prompt changes.",
+    "tags": [
+      "bias",
+      "fairness",
+      "evals",
+      "counterfactual-testing"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Counterfactual demographic eval",
+      "detail": "Run Anthropic/discrim-eval (or the same method on your own decision prompts) against your model and prompt; compare decision rates across demographic variants."
+    },
+    "scores": {
+      "novelty": 10,
+      "relevance": 30
+    },
+    "prior_art": "The same paper (Tamkin et al., Dec 2023); BBQ, CrowS-Pairs and counterfactual fairness evals.",
+    "verified": true,
+    "verify_note": "Independent verifier: excerpts verbatim; novelty 20->10; stale 2023 paper on Claude 2.0 re-surfaced by sitemap lastmod.",
+    "id": "anthropic-s-discrim-eval-generated-decision-prom-449c860963",
+    "retrieved_at": "2026-10-23T16:45:06+00:00",
+    "needs_review": true,
+    "grounding_score": 1.0
   }
 ]
