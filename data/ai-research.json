@@ -14,79 +14,6 @@
   ],
   "entries": [
     {
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
-      "source_url": "https://arxiv.org/abs/2610.22466",
-      "article_url": "https://arxiv.org/abs/2610.22466",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-19",
-      "date": "2026-10",
-      "source_name": "arXiv cs.AI (Artificial Intelligence)",
-      "raw_path": "data/_raw/harness-delta-attribution-dissecting-gains-from-2006da8a13.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:http-export-arxiv-org-rss-cs-ai",
-      "source_rank": 43.9,
-      "source_topics": [
-        "ai-research"
-      ],
-      "cluster": "B",
-      "related_claims": [
-        "harness-evolution-gains-need-held-out-attribution",
-        "swe-bench-doesnt-generalize-to-production-tasks"
-      ],
-      "summary": "Automatic harness evolution, which optimizes the prompts, skills, tools and orchestration around a fixed model, reports gains on its search set. Harness-Delta Attribution splits those gains into overfitting, test-time scaling and a residual. Across 21 settings with significant gains, overfitting averaged 54% and extra compute 14% of the gain, gains often failed to transfer to held-out tasks, and validation signals did not prevent overfitting.",
-      "lessons": [
-        {
-          "point": "Most of a harness-evolution gain is usually not generalizable improvement: on average 54% is overfitting and 14% is extra inference compute.",
-          "excerpt": "overfitting and test-time scaling account for 54% and 14% of the gain on average; their combined share exceeds 50% in 14 settings",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A better score on the set you optimized against is weak evidence; evolved harnesses often don't transfer to held-out tasks.",
-          "excerpt": "search-set gains often fail to transfer to held-out tasks",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A validation split alone does not stop harness evolution from overfitting.",
-          "excerpt": "validation-based signals are insufficient to prevent overfitting",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.",
-      "tags": [
-        "harness-evolution",
-        "evals",
-        "overfitting",
-        "test-time-compute",
-        "agents"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Attribution-aware acceptance test for harness changes",
-        "detail": "When a prompt or skill optimizer or a self-improving loop proposes a harness change, score it on a held-out task set the optimizer never saw. Compare at matched token and inference budgets so extra compute isn't counted as improvement. Accept the change only on the held-out delta, not the search-set or validation delta."
-      },
-      "scores": {
-        "novelty": 65,
-        "relevance": 87,
-        "newness": 31,
-        "credibility": 43.9,
-        "composite": 59.93,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
-      "verified": true,
-      "verify_note": "Independent verifier: all lessons supported; novelty 65 (vs 72), relevance 87.",
-      "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
-      "retrieved_at": "2026-10-19T23:35:59+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
       "id": "how-we-use-goal-to-find-bugs-in-patch-the-planet-3750b30fd6",
       "topic": "ai-research",
       "domain": "air.agents",
@@ -168,14 +95,87 @@
       "domain_label": "Agent Harness Design"
     },
     {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
+      "source_url": "https://arxiv.org/abs/2610.22466",
+      "article_url": "https://arxiv.org/abs/2610.22466",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-19",
+      "date": "2026-10",
+      "source_name": "arXiv cs.AI (Artificial Intelligence)",
+      "raw_path": "data/_raw/harness-delta-attribution-dissecting-gains-from-2006da8a13.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-ai",
+      "source_rank": 43.9,
+      "source_topics": [
+        "ai-research"
+      ],
+      "cluster": "B",
+      "related_claims": [
+        "harness-evolution-gains-need-held-out-attribution",
+        "swe-bench-doesnt-generalize-to-production-tasks"
+      ],
+      "summary": "Automatic harness evolution, which optimizes the prompts, skills, tools and orchestration around a fixed model, reports gains on its search set. Harness-Delta Attribution splits those gains into overfitting, test-time scaling and a residual. Across 21 settings with significant gains, overfitting averaged 54% and extra compute 14% of the gain, gains often failed to transfer to held-out tasks, and validation signals did not prevent overfitting.",
+      "lessons": [
+        {
+          "point": "Most of a harness-evolution gain is usually not generalizable improvement: on average 54% is overfitting and 14% is extra inference compute.",
+          "excerpt": "overfitting and test-time scaling account for 54% and 14% of the gain on average; their combined share exceeds 50% in 14 settings",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A better score on the set you optimized against is weak evidence; evolved harnesses often don't transfer to held-out tasks.",
+          "excerpt": "search-set gains often fail to transfer to held-out tasks",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A validation split alone does not stop harness evolution from overfitting.",
+          "excerpt": "validation-based signals are insufficient to prevent overfitting",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.",
+      "tags": [
+        "harness-evolution",
+        "evals",
+        "overfitting",
+        "test-time-compute",
+        "agents"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Attribution-aware acceptance test for harness changes",
+        "detail": "When a prompt or skill optimizer or a self-improving loop proposes a harness change, score it on a held-out task set the optimizer never saw. Compare at matched token and inference budgets so extra compute isn't counted as improvement. Accept the change only on the held-out delta, not the search-set or validation delta."
+      },
+      "scores": {
+        "novelty": 65,
+        "relevance": 87,
+        "newness": 28,
+        "credibility": 43.9,
+        "composite": 59.18,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
+      "verified": true,
+      "verify_note": "Independent verifier: all lessons supported; novelty 65 (vs 72), relevance 87.",
+      "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
+      "retrieved_at": "2026-10-19T23:35:59+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
       "id": "review-of-the-misalignment-in-high-stakes-settin-5863cde447",
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 31,
+        "newness": 28,
         "credibility": 75.0,
-        "composite": 59.5,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 58.75,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -236,73 +236,6 @@
         "type": "harness",
         "title": "Red-team the agent monitor with justification attacks",
         "detail": "For any LLM-based action monitor in your agent stack, add red-team cases where the agent performs a harmful action alongside a plausible business justification, and measure the monitor's miss rate on those, separate from covert or obfuscated-action cases."
-      },
-      "retrieved_at": "2026-10-22T01:39:40+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
-      "scores": {
-        "novelty": 70,
-        "relevance": 65,
-        "newness": 31,
-        "credibility": 55.0,
-        "composite": 56.5,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "verified": true,
-      "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains",
-      "source_url": "https://arxiv.org/abs/2610.25964",
-      "article_url": "https://arxiv.org/abs/2610.25964",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-19",
-      "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 55.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "related_claims": [],
-      "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
-      "lessons": [
-        {
-          "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
-          "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
-          "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
-          "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
-      "tags": [
-        "evals",
-        "benchmarks",
-        "tokenization",
-        "reproducibility",
-        "vlm"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Assert logit-readout tokens appear in greedy decodes",
-        "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
@@ -385,6 +318,73 @@
       "domain_label": "Frontier Cyber Capabilities & Preparedness"
     },
     {
+      "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
+      "scores": {
+        "novelty": 70,
+        "relevance": 65,
+        "newness": 28,
+        "credibility": 55.0,
+        "composite": 55.75,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains",
+      "source_url": "https://arxiv.org/abs/2610.25964",
+      "article_url": "https://arxiv.org/abs/2610.25964",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "related_claims": [],
+      "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
+      "lessons": [
+        {
+          "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
+          "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
+          "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
+          "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
+      "tags": [
+        "evals",
+        "benchmarks",
+        "tokenization",
+        "reproducibility",
+        "vlm"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Assert logit-readout tokens appear in greedy decodes",
+        "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.agents",
       "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
@@ -451,10 +451,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 31,
+        "newness": 28,
         "credibility": 55.0,
-        "composite": 52.0,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 51.25,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -518,10 +518,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 31,
+        "newness": 28,
         "credibility": 75.0,
-        "composite": 50.5,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 49.75,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",

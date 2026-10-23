@@ -1,6 +1,6 @@
 # 📈 Emerging Trends
 
-> Rising themes per topic, clustered from tagged findings (live + recent archive). Updated 2026-10-22. A theme needs ≥2 findings from ≥2 sources; **recent activity is weighted highest**.
+> Rising themes per topic, clustered from tagged findings (live + recent archive). Updated 2026-10-23. A theme needs ≥2 findings from ≥2 sources; **recent activity is weighted highest**.
 
 ## AI Security
 
@@ -24,15 +24,15 @@ _First seen 2026-02 · latest 2026-09-02._
 - [anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection](https://github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection) (2026-08-10)
 - [Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner) (2026-08-09)
 
-### ▪️ agent-security  ·  14 findings (0 recent) · 13 sources · momentum 14.0
-_First seen 2026-02 · latest 2026-08-07._
+### 🔺 agent-security  ·  15 findings (1 recent) · 14 sources · momentum 16.0
+_First seen 2026-02 · latest 2026-10-22._
 
+- [SCOPE compiles natural-language agent policies into predicate programs run by small models, aiming for frontier-level accuracy with stable, interpretable verdicts](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
 - [Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture](https://arxiv.org/abs/2608.06130v1) (2026-08-07)
 - [The Vulnerability With No CVE: Managing Persistent Gaps Between Mandate and Authority in AI Coding Agents](https://arxiv.org/abs/2608.05884) (2026-08-07)
 - [Humans in the loop miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236) (2026-08-06)
 - [AWS API MCP Server fails open: security policy is silently bypassed for the process lifetime when startup init fails (CVE-2026-16584)](https://github.com/advisories/GHSA-29w2-fq35-v728) (2026-07-24)
 - [Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986v1) (2026-07-20)
-- [Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/) (2026-07-19)
 
 ### ▪️ supply-chain  ·  13 findings (0 recent) · 10 sources · momentum 13.0
 _First seen 2026-06-23 · latest 2026-08-26._
@@ -44,15 +44,15 @@ _First seen 2026-06-23 · latest 2026-08-26._
 - [alexgreensh/repo-forensics](https://github.com/alexgreensh/repo-forensics) (2026-08-08)
 - [SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse](https://arxiv.org/abs/2608.05204) (2026-08-07)
 
-### ▪️ guardrails  ·  10 findings (0 recent) · 6 sources · momentum 10.0
-_First seen 2026-07-19 · latest 2026-09-08._
+### 🔺 guardrails  ·  11 findings (1 recent) · 7 sources · momentum 12.0
+_First seen 2026-07-19 · latest 2026-10-22._
 
+- [SCOPE compiles natural-language agent policies into predicate programs run by small models, aiming for frontier-level accuracy with stable, interpretable verdicts](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
 - [CC Safety Net Blocks Destructive Agent Commands by Parsing Command Intent, Not Pattern-Matching Strings](https://github.com/kenryu42/cc-safety-net) (2026-09-08)
 - [Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) (2026-08-28)
 - [The Guard That Cried Wolf: scary object names make agent guardrails over-refuse legitimate actions](https://arxiv.org/abs/2608.27009) (2026-08-27)
 - [SkillShield: Prompt-Space Security Skills for LLM Coding Agents](https://arxiv.org/abs/2608.25817) (2026-08-26)
 - [Pydantic AI Ships Official First-Party Guardrails, Upstreaming a Community Library](https://github.com/pydantic/pydantic-ai-harness) (2026-08-17)
-- [fu351/Doberman-Core](https://github.com/fu351/Doberman-Core) (2026-08-10)
 
 ### ▪️ sandboxing  ·  9 findings (0 recent) · 7 sources · momentum 9.0
 _First seen 2026-07-29 · latest 2026-09-09._
@@ -156,6 +156,14 @@ _First seen 2026-06-25 · latest 2026-10-19._
 - [(A)iSpy: the trojan moves from the model file into the ML runtime - authors report it amplifies weak poisoning to 100% backdoor success](https://arxiv.org/abs/2607.17550) (2026-07-21)
 - [QuantGuard: a pre-quantization defense against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239v1) (2026-06-28)
 - [A malicious federated-learning aggregator can backdoor a QA model without ever seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
+
+### 🔺 llm-as-judge  ·  4 findings (1 recent) · 4 sources · momentum 5.0
+_First seen 2026-08-05 · latest 2026-10-22._
+
+- [SCOPE compiles natural-language agent policies into predicate programs run by small models, aiming for frontier-level accuracy with stable, interpretable verdicts](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
+- [Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner) (2026-08-09)
+- [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) (2026-08-07)
+- [Sharding Prevents LLM Oversight Failures and Adversarial Exploitation](https://arxiv.org/abs/2608.06422) (2026-08-05)
 
 ### ▪️ openai  ·  4 findings (0 recent) · 3 sources · momentum 4.0
 _First seen 2026-07-28 · latest 2026-09-04._
@@ -299,13 +307,6 @@ _First seen 2025-12-14 · latest 2026-08-07._
 - [Sharding Prevents LLM Oversight Failures and Adversarial Exploitation](https://arxiv.org/abs/2608.06422) (2026-08-05)
 - [One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs](https://arxiv.org/abs/2512.14751) (2025-12-14)
 
-### ▪️ llm-as-judge  ·  3 findings (0 recent) · 3 sources · momentum 3.0
-_First seen 2026-08-05 · latest 2026-08-09._
-
-- [Cisco AI Defense mcp-scanner: multi-engine scanner (YARA + LLM-judge + inspect API) for MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner) (2026-08-09)
-- [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) (2026-08-07)
-- [Sharding Prevents LLM Oversight Failures and Adversarial Exploitation](https://arxiv.org/abs/2608.06422) (2026-08-05)
-
 ### ▪️ multimodal  ·  3 findings (0 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-07 · latest 2026-08-10._
 
@@ -326,6 +327,12 @@ _First seen 2026-08-10 · latest 2026-08-27._
 - [Rule-Based Dataflow + LLM Reasoning Beats Pure-LLM Scanners 4-5x on Recall for Authorization Bugs](https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal) (2026-08-27)
 - [Despite Heavy Hype, the Unreleased 'Mythos' Model Ranks 15th of 17 on IDOR Recall; a $4.29/run Open-Weight Model Beats It on Both Axes](https://semgrep.dev/blog/2026/mythos-idor-benchmark) (2026-08-25)
 - [Quoting OpenClaw](https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything) (2026-08-10)
+
+### 🔺 policy-enforcement  ·  2 findings (1 recent) · 2 sources · momentum 3.0
+_First seen 2026-09-09 · latest 2026-10-22._
+
+- [SCOPE compiles natural-language agent policies into predicate programs run by small models, aiming for frontier-level accuracy with stable, interpretable verdicts](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
+- [Omnigent: A Widely-Adopted (9,800+ Star) Meta-Harness Adds Policy Enforcement and Sandboxing Across Multiple Coding-Agent Backends](https://github.com/omnigent-ai/omnigent) (2026-09-09)
 
 ### 🔺 adversarial-ml  ·  2 findings (1 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-10 · latest 2026-10-21._
@@ -609,6 +616,16 @@ _First seen 2026-06-30 · latest 2026-09-08._
 - [This Shit is Hard: Patching a vulnerability that has no fix](https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix) (2026-08-17)
 - [A Widely-Used VS Code Extension (9.5M Installs) Chained a Markdown eval() Sink, an Untrusted Webview Message Dispatcher, and a vm.runInNewContext() Escape Into RCE](https://projectdiscovery.io/blog/a-9-5m-install-vs-code-extension-one-markdown-file-and-a-supply-chain-foothold) (2026-08-16)
 
+### 🔺 ghsa  ·  8 findings (3 recent) · 8 sources · momentum 11.0
+_First seen 2026-09-08 · latest 2026-10-22._
+
+- [Sentry's Next.js tunnelRoute skipped middleware for everything under the tunnel path, not just the requests its rewrite served (GHSA-mchm-gjx6-7h55)](https://github.com/advisories/GHSA-mchm-gjx6-7h55) (2026-10-22) · _latest_
+- [Next.js App Router: unauthenticated RCE in `use cache` functions that return multiple typed arrays (GHSA-673q-mjm6-r5xr)](https://github.com/advisories/GHSA-673q-mjm6-r5xr) (2026-10-22) · _latest_
+- [Next.js Image Optimization API: unauthenticated RCE via SVG through an upstream sharp memory bug on glibc Linux (GHSA-2464-fhr4-w9xw)](https://github.com/advisories/GHSA-2464-fhr4-w9xw) (2026-10-22) · _latest_
+- [phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](https://github.com/advisories/GHSA-q97c-8qh3-fpc6) (2026-09-08)
+- [Composer Trusted a Package's Perforce Source URL Enough to Hand It to the p4 CLI as a Local Command](https://github.com/advisories/GHSA-rvx4-ffvw-m9q3) (2026-09-08)
+- [Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp](https://github.com/advisories/GHSA-26w7-cxv4-gfx2) (2026-09-08)
+
 ### ▪️ npm  ·  9 findings (0 recent) · 6 sources · momentum 9.0
 _First seen 2026-07-15 · latest 2026-08-21._
 
@@ -618,6 +635,16 @@ _First seen 2026-07-15 · latest 2026-08-21._
 - [keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion](https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign) (2026-08-04)
 - [ChainDrop supply chain compromise: Anatomy of a self-propagating worm](https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/) (2026-08-04)
 - [Snyk Evo Agentic AppSec: autonomous remediation, non-executing package scanning, and a Claude CTF that shipped malware to PyPI](https://snyk.io/blog/remediation-agent-malicious-code-defense/) (2026-08-04)
+
+### 🔺 rce  ·  6 findings (2 recent) · 6 sources · momentum 8.0
+_First seen 2026-06-29 · latest 2026-10-22._
+
+- [Next.js App Router: unauthenticated RCE in `use cache` functions that return multiple typed arrays (GHSA-673q-mjm6-r5xr)](https://github.com/advisories/GHSA-673q-mjm6-r5xr) (2026-10-22) · _latest_
+- [Next.js Image Optimization API: unauthenticated RCE via SVG through an upstream sharp memory bug on glibc Linux (GHSA-2464-fhr4-w9xw)](https://github.com/advisories/GHSA-2464-fhr4-w9xw) (2026-10-22) · _latest_
+- [Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp](https://github.com/advisories/GHSA-26w7-cxv4-gfx2) (2026-09-08)
+- [A Widely-Used VS Code Extension (9.5M Installs) Chained a Markdown eval() Sink, an Untrusted Webview Message Dispatcher, and a vm.runInNewContext() Escape Into RCE](https://projectdiscovery.io/blog/a-9-5m-install-vs-code-extension-one-markdown-file-and-a-supply-chain-foothold) (2026-08-16)
+- [Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq) (2026-07-24)
+- [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
 
 ### ▪️ ci-cd  ·  6 findings (0 recent) · 5 sources · momentum 6.0
 _First seen 2026-07-15 · latest 2026-08-21._
@@ -629,14 +656,12 @@ _First seen 2026-07-15 · latest 2026-08-21._
 - [AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/) (2026-07-16)
 - [The npm Threat Landscape: Attack Surface and Mitigations](https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/) (2026-07-15)
 
-### ▪️ ghsa  ·  5 findings (0 recent) · 5 sources · momentum 5.0
-_First seen 2026-09-08 · latest 2026-09-08._
+### 🔺 nextjs  ·  3 findings (3 recent) · 3 sources · momentum 6.0
+_First seen 2026-10-22 · latest 2026-10-22._
 
-- [phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation](https://github.com/advisories/GHSA-q97c-8qh3-fpc6) (2026-09-08)
-- [Composer Trusted a Package's Perforce Source URL Enough to Hand It to the p4 CLI as a Local Command](https://github.com/advisories/GHSA-rvx4-ffvw-m9q3) (2026-09-08)
-- [Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp](https://github.com/advisories/GHSA-26w7-cxv4-gfx2) (2026-09-08)
-- [Hono's Path-Traversal Fix Only Blocked One Parent-Directory Segment — a Longer Run of '..' Still Escapes the Output Directory](https://github.com/advisories/GHSA-gqvv-2mrq-wpjv) (2026-09-08)
-- [morgan's Log-Forging Fix Missed Unicode Line-Separator Code Points, Letting Attacker-Controlled Headers Split Log Records](https://github.com/advisories/GHSA-jxfw-x594-9x9m) (2026-09-08)
+- [Sentry's Next.js tunnelRoute skipped middleware for everything under the tunnel path, not just the requests its rewrite served (GHSA-mchm-gjx6-7h55)](https://github.com/advisories/GHSA-mchm-gjx6-7h55) (2026-10-22) · _latest_
+- [Next.js App Router: unauthenticated RCE in `use cache` functions that return multiple typed arrays (GHSA-673q-mjm6-r5xr)](https://github.com/advisories/GHSA-673q-mjm6-r5xr) (2026-10-22) · _latest_
+- [Next.js Image Optimization API: unauthenticated RCE via SVG through an upstream sharp memory bug on glibc Linux (GHSA-2464-fhr4-w9xw)](https://github.com/advisories/GHSA-2464-fhr4-w9xw) (2026-10-22) · _latest_
 
 ### 🔺 command-injection  ·  4 findings (1 recent) · 4 sources · momentum 5.0
 _First seen 2026-07-20 · latest 2026-10-20._
@@ -645,14 +670,6 @@ _First seen 2026-07-20 · latest 2026-10-20._
 - [Composer Trusted a Package's Perforce Source URL Enough to Hand It to the p4 CLI as a Local Command](https://github.com/advisories/GHSA-rvx4-ffvw-m9q3) (2026-09-08)
 - [Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses](https://github.com/advisories/GHSA-w4hw-qcx7-56pr) (2026-07-24)
 - [Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/) (2026-07-20)
-
-### ▪️ rce  ·  4 findings (0 recent) · 4 sources · momentum 4.0
-_First seen 2026-06-29 · latest 2026-09-08._
-
-- [Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp](https://github.com/advisories/GHSA-26w7-cxv4-gfx2) (2026-09-08)
-- [A Widely-Used VS Code Extension (9.5M Installs) Chained a Markdown eval() Sink, an Untrusted Webview Message Dispatcher, and a vm.runInNewContext() Escape Into RCE](https://projectdiscovery.io/blog/a-9-5m-install-vs-code-extension-one-markdown-file-and-a-supply-chain-foothold) (2026-08-16)
-- [Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq) (2026-07-24)
-- [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
 
 ### ▪️ path-traversal  ·  4 findings (0 recent) · 4 sources · momentum 4.0
 _First seen 2026-07-09 · latest 2026-09-08._
@@ -669,6 +686,13 @@ _First seen 2026-07-16 · latest 2026-08-17._
 - [Inside the keyv npm compromise: preinstall dropper + Claude/VS Code folder-open hooks + valid provenance on a poisoned build](https://snyk.io/blog/inside-keyv-npm-compromise-preinstall-malware-trusted-provenance-ide-hooks/) (2026-08-04)
 - [keyv/cacheable Mini Shai-Hulud: self-propagating worm, Ethereum-resolved C2, and Bun-runtime evasion](https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign) (2026-08-04)
 - [AsyncAPI npm compromise: import-time payload defeats --ignore-scripts](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/) (2026-07-16)
+
+### 🔺 memory-safety  ·  3 findings (1 recent) · 3 sources · momentum 4.0
+_First seen 2026-04 · latest 2026-10-22._
+
+- [Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](https://www.anthropic.com/research/formal-verification) (2026-10-22) · _latest_
+- [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
+- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
 
 ### 🔺 android  ·  3 findings (1 recent) · 3 sources · momentum 4.0
 _First seen 2026-04 · latest 2026-09-28._
@@ -698,11 +722,41 @@ _First seen 2026-07-24 · latest 2026-08-07._
 - [go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)](https://github.com/advisories/GHSA-qgq7-7hm3-q39j) (2026-08-07)
 - [Oh My Posh: a directory name runs commands, because the prompt re-renders the resolved path through a template engine whose funcmap has cmd](https://github.com/advisories/GHSA-6xj8-qv9j-xcjq) (2026-07-24)
 
+### 🔺 aws  ·  2 findings (1 recent) · 2 sources · momentum 3.0
+_First seen 2026-08-05 · latest 2026-10-22._
+
+- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths and hands defenders the CloudTrail events each run should have produced](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
+- [A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/) (2026-08-05)
+
+### 🔺 privilege-escalation  ·  2 findings (1 recent) · 2 sources · momentum 3.0
+_First seen 2026-07-20 · latest 2026-10-22._
+
+- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths and hands defenders the CloudTrail events each run should have produced](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
+- [Siemens Ruggedcom ROX II: three-CVE chain (file disclosure + feature-key command injection + cron injection) yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/) (2026-07-20)
+
+### 🔺 red-teaming  ·  2 findings (1 recent) · 2 sources · momentum 3.0
+_First seen 2026-08-05 · latest 2026-10-22._
+
+- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths and hands defenders the CloudTrail events each run should have produced](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
+- [Can AI do novel security research? Meet the HTTP Terminator](https://portswigger.net/research/can-ai-do-novel-security-research) (2026-08-05)
+
+### 🔺 image-processing  ·  2 findings (1 recent) · 2 sources · momentum 3.0
+_First seen 2026-09-08 · latest 2026-10-22._
+
+- [Next.js Image Optimization API: unauthenticated RCE via SVG through an upstream sharp memory bug on glibc Linux (GHSA-2464-fhr4-w9xw)](https://github.com/advisories/GHSA-2464-fhr4-w9xw) (2026-10-22) · _latest_
+- [Astro's Default Image Optimizer Allowed Remote Code Execution via a Malicious AVIF Image, Through a libheif Bug in Sharp](https://github.com/advisories/GHSA-26w7-cxv4-gfx2) (2026-09-08)
+
 ### 🔺 python  ·  2 findings (1 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-31 · latest 2026-10-21._
 
 - [Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)](https://github.com/advisories/GHSA-22hg-r758-rrw9) (2026-10-21) · _latest_
 - [A One-Week Dependency Cooldown Produces Outsized Supply-Chain Protection for Minimal Developer Friction](https://semgrep.dev/blog/2026/rolling-out-dependency-cooldowns-org-wide) (2026-08-31)
+
+### 🔺 multi-tenant  ·  2 findings (1 recent) · 2 sources · momentum 3.0
+_First seen 2026-08-10 · latest 2026-10-22._
+
+- [raml-kql: one KQL query across many Log Analytics workspaces and Entra tenants without a Defender multi-tenant org](https://github.com/luca-ramseyer/raml-kql) (2026-10-22) · _latest_
+- [Show, Don't Tell: What Evo Continuous Offensive Security Found in a Real Enterprise SaaS](https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/) (2026-08-10)
 
 ### ▪️ code-review  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-07-14 · latest 2026-07-30._
@@ -726,12 +780,6 @@ _First seen 2026-02-05 · latest 2026-08-05._
 _First seen 2026-04 · latest 2026-08-20._
 
 - [Rust Supply-Chain Compromise Used Cargo's Own Yank Warning to Socially Engineer Developers Into the Malicious Version](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/) (2026-08-20)
-- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
-
-### ▪️ memory-safety  ·  2 findings (0 recent) · 2 sources · momentum 2.0
-_First seen 2026-04 · latest 2026-06-29._
-
-- [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
 - [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
 
 ### ▪️ phishing  ·  2 findings (0 recent) · 2 sources · momentum 2.0
@@ -888,8 +936,8 @@ _First seen 2026-05 · latest 2026-10-19._
 - [AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation](https://arxiv.org/abs/2603.20986) (2026-08-10)
 - [Homebot: A Personal AI Agent for Conversational Home Assistance and Automation](https://arxiv.org/abs/2608.02254) (2026-08-10)
 
-### 🔺 evals  ·  18 findings (3 recent) · 9 sources · momentum 21.0
-_First seen 2026-05 · latest 2026-10-20._
+### 🔺 evals  ·  19 findings (3 recent) · 10 sources · momentum 22.0
+_First seen 2023-12-07 · latest 2026-10-20._
 
 - [DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522) (2026-10-20) · _latest_
 - [Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466) (2026-10-19) · _latest_
@@ -1261,6 +1309,13 @@ _First seen 2026-08-07 · latest 2026-08-10._
 - [Optimization as a Dynamical System: Generative Schedules from Latent ODEs](https://arxiv.org/abs/2509.23052) (2026-08-10)
 - [Agentic self-driving microscopy benchmarks support qualification but do not necessarily generalize to unseen tasks](https://arxiv.org/abs/2608.05266) (2026-08-07)
 
+### ▪️ bias  ·  3 findings (0 recent) · 3 sources · momentum 3.0
+_First seen 2023-12-07 · latest 2026-08-10._
+
+- [Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs](https://arxiv.org/abs/2509.16462) (2026-08-10)
+- [Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts](https://arxiv.org/abs/2608.06123) (2026-08-07)
+- [Anthropic's discrim-eval: generated decision prompts with varied demographics surfaced positive and negative discrimination in Claude 2.0 (2023 paper, re-surfaced)](https://www.anthropic.com/research/evaluating-and-mitigating-discrimination-in-language-model-decisions) (2023-12-07)
+
 ### ▪️ reasoning  ·  3 findings (0 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-07 · latest 2026-08-10._
 
@@ -1316,6 +1371,13 @@ _First seen 2026-08-10 · latest 2026-08-10._
 - [Intelligence per Watt: Measuring Intelligence Efficiency of Local AI](https://arxiv.org/abs/2511.07885) (2026-08-10)
 - [LoCA: Forward-Only LLM Tuning after One-Shot Calibration with Local Credit Assignment](https://arxiv.org/abs/2608.03020) (2026-08-10)
 - [The Sparsity Whisperer](https://arxiv.org/abs/2608.06630) (2026-08-10)
+
+### ▪️ fairness  ·  3 findings (0 recent) · 3 sources · momentum 3.0
+_First seen 2023-12-07 · latest 2026-08-10._
+
+- [Calibrating WEAT Against Anisotropy: ZCA Whitening as a Geometric Pre-Processing Step for Embedding Association Tests](https://arxiv.org/abs/2608.06908) (2026-08-10)
+- [Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs](https://arxiv.org/abs/2509.16462) (2026-08-10)
+- [Anthropic's discrim-eval: generated decision prompts with varied demographics surfaced positive and negative discrimination in Claude 2.0 (2023 paper, re-surfaced)](https://www.anthropic.com/research/evaluating-and-mitigating-discrimination-in-language-model-decisions) (2023-12-07)
 
 ### ▪️ generative-models  ·  3 findings (0 recent) · 2 sources · momentum 3.0
 _First seen 2026-08-10 · latest 2026-08-10._
@@ -1445,12 +1507,6 @@ _First seen 2026-08-07 · latest 2026-08-10._
 - [LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference](https://arxiv.org/abs/2608.02515) (2026-08-10)
 - [Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay](https://arxiv.org/abs/2608.05784) (2026-08-07)
 
-### ▪️ bias  ·  2 findings (0 recent) · 2 sources · momentum 2.0
-_First seen 2026-08-07 · latest 2026-08-10._
-
-- [Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs](https://arxiv.org/abs/2509.16462) (2026-08-10)
-- [Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts](https://arxiv.org/abs/2608.06123) (2026-08-07)
-
 ### ▪️ synthetic-data  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-08-07 · latest 2026-08-10._
 
@@ -1517,12 +1573,6 @@ _First seen 2026-08-10 · latest 2026-08-10._
 - [Self-Distillation Enables Continual Learning](https://arxiv.org/abs/2601.19897) (2026-08-10)
 - [In Situ Training of Implicit Neural Compressors for Scientific Simulations via Sketch-Based Regularization](https://arxiv.org/abs/2511.02659) (2026-08-10)
 
-### ▪️ fairness  ·  2 findings (0 recent) · 2 sources · momentum 2.0
-_First seen 2026-08-10 · latest 2026-08-10._
-
-- [Calibrating WEAT Against Anisotropy: ZCA Whitening as a Geometric Pre-Processing Step for Embedding Association Tests](https://arxiv.org/abs/2608.06908) (2026-08-10)
-- [Let's Unlearn Stereotypes Before Decision-Making: Assessing the Impact of Intrinsic Bias Mitigation on Downstream Fairness in LLMs](https://arxiv.org/abs/2509.16462) (2026-08-10)
-
 ### ▪️ benchmarking  ·  2 findings (0 recent) · 2 sources · momentum 2.0
 _First seen 2026-08-10 · latest 2026-08-10._
 
@@ -1585,4 +1635,4 @@ _First seen 2026-08-10 · latest 2026-08-10._
 
 ---
 
-<sub>Generated by scripts/trends.py on 2026-10-22.</sub>
+<sub>Generated by scripts/trends.py on 2026-10-23.</sub>

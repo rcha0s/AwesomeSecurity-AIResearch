@@ -163,10 +163,10 @@
       "scores": {
         "novelty": 75,
         "relevance": 90,
-        "newness": 31,
+        "newness": 28,
         "credibility": 50.6,
-        "composite": 64.84,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 64.09,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "prior_art": "Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.",
       "threat": "Poisoned repository content steers a coding agent into executing or committing a backdoor.",
@@ -828,85 +828,6 @@
     },
     {
       "topic": "ai-security",
-      "domain": "ais.red-teaming",
-      "title": "Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning",
-      "source_url": "https://huggingface.co/blog/allenai/benchmirt",
-      "cluster": "L",
-      "related_claims": [
-        "score-evals-on-groundedness-not-headline-f1"
-      ],
-      "summary": "AllenAI's BenchMIRT applies multidimensional Item Response Theory to 100 LLMs across 16 benchmarks and 34,000+ questions to independently discover which latent capabilities actually drive a benchmark's score, without being told the benchmarks' intended categories. It found that WMDP — a benchmark for dangerous dual-use knowledge, commonly treated as a safety metric — correlates more strongly with general reasoning ability than with safety, and in the opposite direction from what you'd expect: stronger-reasoning models score LOWER on WMDP, because the benchmark counts refusing or failing to produce the dangerous knowledge as the 'safe' desired response.",
-      "takeaway": "A benchmark's stated purpose (e.g. \"safety\") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume — a model that scores well on WMDP's dual-use-knowledge \"safety\" metric may just be a weaker reasoner that couldn't produce the dangerous answer anyway, not one that made a deliberate safety-aligned choice, so treating the raw score as a safety signal is misleading.",
-      "lessons": [
-        {
-          "point": "BenchMIRT independently recovered exactly two dominant capability dimensions (safety and general reasoning) across 16 mixed benchmarks without being told which benchmark measured which, and the result was stable across repeated from-scratch analyses.",
-          "excerpt": "Crucially, we didn’t tell BenchMIRT which benchmarks were measuring which capabilities. It independently recovered two dominant dimensions: safety and general reasoning. When we repeated our analysis from scratch, those same two dimensions emerged each time, suggesting the result was stable rather than specific to one analysis.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "WMDP, a benchmark for dangerous dual-use knowledge commonly grouped with safety benchmarks, was found by BenchMIRT to correlate more strongly with general reasoning than with safety — and counterintuitively, stronger reasoning is associated with LOWER WMDP scores, because the benchmark treats refusing or failing to produce the dangerous knowledge as the desired 'safe' response, so a better reasoner is more likely to actually produce the (unsafe) correct answer.",
-          "excerpt": "WMDP behaves differently from most safety benchmarks. It tests dangerous dual-use knowledge in areas such as biology, chemistry, and cybersecurity—for example, knowledge that could help someone misuse a biological agent or exploit a computer system. BenchMIRT found that WMDP scores were more strongly associated with general reasoning than with safety.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The direction of the WMDP/reasoning relationship is counterintuitive: stronger general reasoning is associated with LOWER (not higher) WMDP scores, since the benchmark scores refusing or failing to provide the dangerous knowledge as the desired outcome.",
-          "excerpt": "Stronger general reasoning, however, was associated with lower WMDP scores, because the benchmark counts refusing or failing to provide the dangerous knowledge as the desired response.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "BBQ, a bias-focused benchmark also commonly grouped with safety metrics, was likewise found to align more strongly with general reasoning, meaning a low BBQ score may partly reflect reasoning difficulty rather than a genuine safety/bias failure.",
-          "excerpt": "BBQ, which evaluates social bias and is commonly grouped with safety benchmarks, aligned much more strongly with general reasoning in BenchMIRT’s analysis. That means a low BBQ score may partly reflect difficulty understanding or reasoning through certain questions, rather than safety behavior alone.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "evals",
-        "benchmarks",
-        "item-response-theory",
-        "safety-evals",
-        "wmdp"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Don't treat a benchmark's category label as ground truth for what it measures",
-        "detail": "Before citing a benchmark score as evidence of a specific capability (safety, bias, reasoning), check whether independent capability-decomposition analysis (like BenchMIRT/IRT) supports that the benchmark actually isolates that capability, especially for benchmarks like WMDP and BBQ shown here to conflate reasoning with their stated focus."
-      },
-      "scores": {
-        "novelty": 65,
-        "relevance": 62,
-        "newness": 6,
-        "credibility": 80.0,
-        "composite": 51.6,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.",
-      "article_url": "https://huggingface.co/blog/allenai/benchmirt",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-01",
-      "raw_path": "data/_raw/benchmirt-what-are-llm-benchmarks-actually-measu-9d08925b94.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-huggingface-co-blog-feed-xml",
-      "source_rank": 80.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "verified": true,
-      "verify_note": "REFUTED (sign reversal): the WMDP lesson originally claimed strong WMDP score correlates with better reasoning; the source says the opposite — stronger reasoning is associated with LOWER WMDP scores, since the benchmark counts refusal/failure to answer as the desired 'safe' response. Corrected the lesson, summary, and takeaway to state the right direction before merge; now verified true post-correction. Error corrected in the merged entry (verified against source) before publishing; promoted to verified.",
-      "id": "multidimensional-item-response-theory-auditing-r-50bbf04165",
-      "retrieved_at": "2026-09-09T06:16:07+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "LLM Red-Teaming"
-    },
-    {
-      "topic": "ai-security",
       "domain": "ais.mcp-tools",
       "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
@@ -978,6 +899,169 @@
         ],
         "at": "2026-07-26T21:08:26+00:00"
       }
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Multidimensional Item-Response-Theory Auditing Reveals Some 'Safety' Benchmarks Are Actually Measuring General Reasoning",
+      "source_url": "https://huggingface.co/blog/allenai/benchmirt",
+      "cluster": "L",
+      "related_claims": [
+        "score-evals-on-groundedness-not-headline-f1"
+      ],
+      "summary": "AllenAI's BenchMIRT applies multidimensional Item Response Theory to 100 LLMs across 16 benchmarks and 34,000+ questions to independently discover which latent capabilities actually drive a benchmark's score, without being told the benchmarks' intended categories. It found that WMDP — a benchmark for dangerous dual-use knowledge, commonly treated as a safety metric — correlates more strongly with general reasoning ability than with safety, and in the opposite direction from what you'd expect: stronger-reasoning models score LOWER on WMDP, because the benchmark counts refusing or failing to produce the dangerous knowledge as the 'safe' desired response.",
+      "takeaway": "A benchmark's stated purpose (e.g. \"safety\") doesn't guarantee its score is actually driven by that capability, or even in the direction you'd assume — a model that scores well on WMDP's dual-use-knowledge \"safety\" metric may just be a weaker reasoner that couldn't produce the dangerous answer anyway, not one that made a deliberate safety-aligned choice, so treating the raw score as a safety signal is misleading.",
+      "lessons": [
+        {
+          "point": "BenchMIRT independently recovered exactly two dominant capability dimensions (safety and general reasoning) across 16 mixed benchmarks without being told which benchmark measured which, and the result was stable across repeated from-scratch analyses.",
+          "excerpt": "Crucially, we didn’t tell BenchMIRT which benchmarks were measuring which capabilities. It independently recovered two dominant dimensions: safety and general reasoning. When we repeated our analysis from scratch, those same two dimensions emerged each time, suggesting the result was stable rather than specific to one analysis.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "WMDP, a benchmark for dangerous dual-use knowledge commonly grouped with safety benchmarks, was found by BenchMIRT to correlate more strongly with general reasoning than with safety — and counterintuitively, stronger reasoning is associated with LOWER WMDP scores, because the benchmark treats refusing or failing to produce the dangerous knowledge as the desired 'safe' response, so a better reasoner is more likely to actually produce the (unsafe) correct answer.",
+          "excerpt": "WMDP behaves differently from most safety benchmarks. It tests dangerous dual-use knowledge in areas such as biology, chemistry, and cybersecurity—for example, knowledge that could help someone misuse a biological agent or exploit a computer system. BenchMIRT found that WMDP scores were more strongly associated with general reasoning than with safety.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The direction of the WMDP/reasoning relationship is counterintuitive: stronger general reasoning is associated with LOWER (not higher) WMDP scores, since the benchmark scores refusing or failing to provide the dangerous knowledge as the desired outcome.",
+          "excerpt": "Stronger general reasoning, however, was associated with lower WMDP scores, because the benchmark counts refusing or failing to provide the dangerous knowledge as the desired response.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "BBQ, a bias-focused benchmark also commonly grouped with safety metrics, was likewise found to align more strongly with general reasoning, meaning a low BBQ score may partly reflect reasoning difficulty rather than a genuine safety/bias failure.",
+          "excerpt": "BBQ, which evaluates social bias and is commonly grouped with safety benchmarks, aligned much more strongly with general reasoning in BenchMIRT’s analysis. That means a low BBQ score may partly reflect difficulty understanding or reasoning through certain questions, rather than safety behavior alone.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "evals",
+        "benchmarks",
+        "item-response-theory",
+        "safety-evals",
+        "wmdp"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Don't treat a benchmark's category label as ground truth for what it measures",
+        "detail": "Before citing a benchmark score as evidence of a specific capability (safety, bias, reasoning), check whether independent capability-decomposition analysis (like BenchMIRT/IRT) supports that the benchmark actually isolates that capability, especially for benchmarks like WMDP and BBQ shown here to conflate reasoning with their stated focus."
+      },
+      "scores": {
+        "novelty": 65,
+        "relevance": 62,
+        "newness": 5,
+        "credibility": 80.0,
+        "composite": 51.35,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.",
+      "article_url": "https://huggingface.co/blog/allenai/benchmirt",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-01",
+      "raw_path": "data/_raw/benchmirt-what-are-llm-benchmarks-actually-measu-9d08925b94.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 80.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "verified": true,
+      "verify_note": "REFUTED (sign reversal): the WMDP lesson originally claimed strong WMDP score correlates with better reasoning; the source says the opposite — stronger reasoning is associated with LOWER WMDP scores, since the benchmark counts refusal/failure to answer as the desired 'safe' response. Corrected the lesson, summary, and takeaway to state the right direction before merge; now verified true post-correction. Error corrected in the merged entry (verified against source) before publishing; promoted to verified.",
+      "id": "multidimensional-item-response-theory-auditing-r-50bbf04165",
+      "retrieved_at": "2026-09-09T06:16:07+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming"
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "SCOPE compiles natural-language agent policies into predicate programs run by small models, aiming for frontier-level accuracy with stable, interpretable verdicts",
+      "source_url": "https://arxiv.org/abs/2610.31062",
+      "article_url": "https://arxiv.org/abs/2610.31062",
+      "tweet_url": null,
+      "author": "Elad Levi et al.",
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "raw_path": "data/_raw/scope-compiling-natural-language-policies-into-n-974d0d5e94.txt",
+      "related_claims": [
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "summary": "SCOPE targets compound, application-specific policies evaluated over multi-turn transcripts and tool-call trajectories. It compiles a policy into an executable program of narrow neural predicates (small models), deterministic extractors and composing code, optimized jointly with adversarially generated counterexamples. The authors report the best average accuracy against prompt-optimization, decomposition and workflow-generation baselines, accuracy comparable to frontier reasoning models on inexpensive executors, and more stable, per-predicate interpretable verdicts. Abstract only, unreviewed arXiv v1, no numbers in the captured text.",
+      "lessons": [
+        {
+          "point": "Fine-tuned guardrail classifiers are a poor fit for compound, multi-turn agent policies.",
+          "excerpt": "Fine-tuned guardrail models are efficient but degrade on compound policies",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "LLM-as-judge enforcement is costly and gives unstable verdicts, which is a problem for a security control that must be repeatable.",
+          "excerpt": "LLM-as-a-judge approaches achieve higher accuracy, they incur high inference cost and tend to produce unstable predictions",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Decompose the policy into narrow predicates composed under explicit code logic instead of asking one model for one verdict.",
+          "excerpt": "compiles a policy into an executable program of neural predicates executed by small models, deterministic extractors, and code that composes their outputs",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A program optimized on the weakest executor transfers to other models, so the enforcement layer can run on cheap models.",
+          "excerpt": "Programs optimized with the weakest executor transfer to other models without further optimization.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Per-predicate outputs make each block or allow decision auditable.",
+          "excerpt": "each verdict is interpretable through the predicate outputs that produced it",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "threat": "Agents violating compound application policies across multi-turn trajectories where single-shot classifiers miss and LLM judges are inconsistent.",
+      "mitigations": "Express policies as explicit predicate programs with deterministic composition; run predicates on small models; log predicate outputs per verdict.",
+      "takeaway": "For agent policy enforcement, prefer a compiled program of narrow predicates over one guardrail model or one LLM judge: cheaper, steadier and auditable (authors' claims, abstract only).",
+      "tags": [
+        "guardrails",
+        "policy-enforcement",
+        "neurosymbolic",
+        "llm-as-judge",
+        "agent-security"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Decompose agent policy checks into predicates",
+        "detail": "Split each compound agent policy into yes/no predicates (e.g. 'tool call writes outside workspace', 'PII in outbound message'), evaluate each with a small model or regex/extractor, combine in code, and log the predicate vector with every block decision."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 65,
+        "newness": 28,
+        "credibility": 55.0,
+        "composite": 51.25,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "NeMo Guardrails (Colang), LlamaGuard-style guardrail models, AgentSpec/ShieldAgent (policy-to-rule compilation), GuardAgent, DSPy-style program optimization.",
+      "verified": true,
+      "verify_note": "Independent verifier: excerpts verbatim; corrected framing (baselines are prompt optimization/decomposition/workflow generation; accuracy 'comparable to' frontier models, not beating guardrails/judges); relevance 75->65; abstract-only.",
+      "id": "scope-compiles-natural-language-agent-policies-i-3ea5fd55ae",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -1144,10 +1228,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 40,
-        "newness": 31,
+        "newness": 28,
         "credibility": 72.0,
-        "composite": 47.05,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 46.3,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "verified": true,
       "prior_art": "Adversarial wearable patches against person detectors (Thys et al. 2019, adversarial T-shirts); extending the evaluation to grounding VLMs with a failure-type split is the delta.",
@@ -1311,10 +1395,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 58,
-        "newness": 6,
+        "newness": 5,
         "credibility": 80.0,
-        "composite": 42.9,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 42.65,
+        "scored_at": "2026-10-23T16:45:06+00:00"
       },
       "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
       "article_url": "https://huggingface.co/blog/funes",
