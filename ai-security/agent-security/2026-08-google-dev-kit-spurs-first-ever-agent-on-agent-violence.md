@@ -8,7 +8,7 @@
 
 Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-python's CI workflows where a low-privilege public-facing triage agent could be manipulated to hand off to a high-privilege maintainer-only agent (@gemini-cli) via a poisoned PR text, exfiltrating a GitHub token with `pull-requests: write`. Google fixed the underlying workflow but classified it as social-engineering-adjacent and not bounty-eligible. Lisichkin's remediation ask: give agents their own identities and threat-model agent identity + agent resource access explicitly.
 
-## What to learn
+## Lessons
 
 - A public-facing low-privilege agent that can trigger a higher-privilege agent via natural-language handoff creates a prompt-injection privilege boundary crossing. - _"Pillar's team found that the low-privilege, public-facing agent could be manipulated via prompt injection into triggering a maintainer-only agent that can execute malicious actions."_
 - The attacker manufactures a false review provenance trail - the artifacts on disk look like a legitimate maintainer-requested review that never happened. - _""Strung together, they manufacture a complete, believable 'a human asked for a review, gemini ran it, gemini approved' trail on the poisoned PR, none of which ever happened," Lisichkin wrote."_
@@ -25,8 +25,8 @@ Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-pyt
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 1 · Novelty 80 · Relevance 92 · Credibility 70 · **Composite 62.35**  
+**Scores:** Newness 1 · Novelty 80 · Relevance 92 · Credibility 70 · **Composite 62** _(each 0-100)_  
 **Tags:** `agent-to-agent`, `prompt-injection`, `ci-cd`, `adk-python`, `gemini-cli`, `privilege-escalation`, `github-actions`  
-**Verification:** ✓ independently verified · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
 
 _Source: [https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)_  ·  [← back to index](../README.md)

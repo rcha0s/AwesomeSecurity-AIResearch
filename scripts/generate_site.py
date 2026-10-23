@@ -100,7 +100,7 @@ def score_line(scores: dict) -> str:
     return (
         f"**Scores:** Newness {scores['newness']} · Novelty {scores['novelty']} · "
         f"Relevance {scores['relevance']} · Credibility {round(scores.get('credibility', 50))} · "
-        f"**Composite {scores['composite']}**"
+        f"**Composite {round(scores['composite'])}** _(each 0-100)_"
     )
 
 
@@ -129,12 +129,15 @@ def _entry_meta(entry: dict, scores: dict) -> list[str]:
         meta.append(f"**Also reported by:** {links} _(+{len(corr)} corroborating)_")
     verified = entry.get("verified")
     if verified is True:
-        line = "**Verification:** ✓ independently verified"
+        line = (
+            "**Source-checked (automated):** the lesson quotes were found in the source and "
+            "a second model pass did not refute them (not human review)"
+        )
         if entry.get("prior_art"):
             line += f" · closest prior art: {entry['prior_art']}"
         meta.append(line)
     elif verified is False:
-        meta.append("> ⚠️ _Failed independent verification._")
+        meta.append("> ⚠️ _Failed the automated source check._")
     if entry.get("needs_review"):
         meta.append("> ⚠️ _Pending review - auto-analyzed, not yet human-verified._")
     return meta
@@ -152,7 +155,7 @@ def _entry_lessons_md(entry: dict) -> list[str]:
     lessons = entry.get("lessons") or []
     if not lessons:
         return []
-    out = ["## What to learn", ""]
+    out = ["## Lessons", ""]
     for les in lessons:
         if isinstance(les, dict):
             line = f"- {les.get('point', '')}"
@@ -358,10 +361,11 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
 SITE_URL = gh.SITE_URL
 SITE_VIEWS = (
     ("Briefing", "week"),
+    ("Stories", "news"),
     ("Claims", "claims"),
     ("Topics", "topics"),
-    ("Methodology", "methodology"),
     ("Archive", "archive"),
+    ("Methodology", "methodology"),
 )
 ISSUES_URL = f"{gh.REPO_URL}/issues/new"
 
@@ -383,20 +387,46 @@ def _story_line(n: int, row: dict, topic_names: dict) -> str:
     meta = [
         topic_names.get(row.get("topic", ""), row.get("topic", "")),
         fmt_published({"published": briefing.last_activity(row)}),
-        f"{n_src} source{'s' if n_src > 1 else ''}",
     ]
+    if n_src > 1:  # "1 source" says nothing
+        meta.append(f"{n_src} sources")
     return (
         f"{n}. **[{md_text(row.get('title'))}]({site_link('week', finding=row['id'])})** "
         f"· _{md_text(' · '.join(meta))}_"
     )
 
 
-def _claim_line(n: int, claim: dict) -> str:
-    return (
-        f"{n}. **[{md_text(claim.get('title') or claim.get('statement'))}]"
-        f"({site_link('claims', claim=claim['id'])})**  \n"
-        f"   {md_text(claim.get('guidance'), 200)}"
+CHANGE_LABELS = {"added": "Added", "contested": "Contested", "overturned": "Overturned"}
+
+
+CLAIM_LABEL_CHARS = 160  # an untitled claim's statement, cut for a one-line label
+
+
+def _claim_label(claim: dict) -> str:
+    if claim.get("title"):
+        return md_text(claim["title"])
+    return md_text(claim.get("statement"), CLAIM_LABEL_CHARS)
+
+
+def _change_line(n: int, change: dict, claims: dict) -> list[str]:
+    """One claim change: what we now believe, and for a reversal what it replaced and why."""
+    claim, old = claims.get(change["claim"]), claims.get(change.get("replaced") or "")
+    if claim is None:
+        return []
+    n_ev = len(claim.get("evidence") or [])
+    meta = [str(claim.get("status") or ""), fmt_published({"published": change["date"]})]
+    meta.append(f"{n_ev} source{'s' if n_ev != 1 else ''}")
+    head = (
+        f"{n}. **{CHANGE_LABELS.get(change['kind'], 'Changed')}:** "
+        f"[{_claim_label(claim)}]({site_link('claims', claim=claim['id'])}) "
+        f"· _{md_text(' · '.join(meta))}_"
     )
+    if old is not None and old is not claim:
+        why = md_text(old.get("supersession_reason"), 200)
+        return [head + "  ", f"   Replaces ~~{_claim_label(old)}~~: {why}"]
+    if claim.get("title") and claim.get("statement") != claim.get("title"):
+        return [head + "  ", f"   {md_text(claim.get('statement'), 200)}"]
+    return [head]
 
 
 def _teaser(payload: dict) -> list[str]:
@@ -404,14 +434,22 @@ def _teaser(payload: dict) -> list[str]:
     claims = {cl_["id"]: cl_ for cl_ in payload["claims"]}
     names = {t: m["name"] for t, m in payload["topics"].items()}
     stories = [rows[i] for i in payload["top_stories"][:3] if i in rows]
-    picks = [claims[i] for i in payload["top_claims"][:3] if i in claims]
+    changes = [ch for ch in payload["claim_changes"] if ch["claim"] in claims]
     when = briefing.window_note(
-        payload["top_stories_fresh"], len(payload["top_stories"]), payload["snapshot_days"]
+        payload["top_stories_fresh"],
+        len(payload["top_stories"]),
+        payload["snapshot_days"],
+        payload.get("top_stories_multi", False),
     )
     out = ["## This week's top stories", "", f"_{when}_", ""]
     out += [_story_line(i, r, names) for i, r in enumerate(stories, 1)] or ["_No stories yet._"]
-    out += ["", "## What to do now", "", "_Standing answers from the claim ledger._", ""]
-    out += [_claim_line(i, cl_) for i, cl_ in enumerate(picks, 1)] or ["_No claims yet._"]
+    last = fmt_published({"published": changes[0]["date"]}) if changes else ""
+    note = briefing.changes_note(
+        payload["claim_changes_fresh"], len(changes), payload["snapshot_days"], last
+    )
+    out += ["", "## Claim changes", "", f"_{note}_", ""]
+    for i, change in enumerate(changes, 1):
+        out += _change_line(i, change, claims)
     return out + [""]
 
 
@@ -431,13 +469,13 @@ def _readme_head(payload: dict, now: str) -> list[str]:
         'width="720"></a></p>',
         "",
         "> A weekly, source-cited briefing on AI security, product security and applied AI "
-        "research. Every finding is vetted and distilled to one lesson; a claim ledger tracks "
-        "what to do now and what it replaced.",
+        "research, plus a claim ledger that calls out what the field now believes, what changed "
+        "and what got overturned.",
         "",
         badges,
         "",
         f"**The site is the product: [{SITE_URL.removeprefix('https://')}]({SITE_URL})**. "
-        "Open the Briefing for this week, Claims for what to act on, Topics to browse by "
+        "Open the Briefing for this week, Claims for the ledger, Topics to browse by "
         "domain. Click any title for the full writeup with its sources; every view and "
         "finding has a link you can share.",
         "",

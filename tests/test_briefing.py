@@ -67,27 +67,105 @@ def test_empty_rows_yield_nothing():
     assert b.top_stories([], NOW, 7) == ([], True)
 
 
-def claim(cid, status="current", reviewed="", conf=0.5, guidance="Do it."):
-    return {
-        "id": cid,
-        "status": status,
-        "last_reviewed": reviewed,
-        "confidence": conf,
-        "guidance": guidance,
-    }
+def claim(cid, status="current", first_seen="2026-01-01", **over):
+    return {"id": cid, "status": status, "first_seen": first_seen, **over}
 
 
-def test_top_claims_are_current_with_guidance_freshest_then_most_confident():
+def retired(cid, by, on, status="superseded"):
+    return claim(cid, status, superseded_by=[by], superseded_on=on, supersession_reason="why")
+
+
+def kinds(changes):
+    return [(ch["kind"], ch["claim"], ch.get("replaced", "")) for ch in changes]
+
+
+def test_each_claim_stands_for_one_change():
     claims = [
-        claim("old-high", reviewed="2026-08-01", conf=0.95),
-        claim("new-low", reviewed="2026-09-09", conf=0.6),
-        claim("new-high", reviewed="2026-09-09", conf=0.9),
-        claim("retired", status="superseded", reviewed="2026-10-01"),
-        claim("contested", status="contested", reviewed="2026-10-01"),
-        claim("no-guidance", reviewed="2026-10-01", guidance=""),
-        claim("never-reviewed", conf=0.99),
+        claim("added", first_seen="2026-10-18"),
+        claim("winner", first_seen="2026-10-17", supersedes=["loser"]),
+        retired("loser", "winner", "2026-10-17", status="refuted"),
+        claim(
+            "fight",
+            "contested",
+            first_seen="2026-02-01",
+            evidence=[
+                {"stance": "supports", "published": "2026-10-19"},
+                {"stance": "contests", "published": "2026-10-16"},
+                {"stance": "refutes", "published": "2026-03-01"},
+            ],
+        ),
+        claim("undated", first_seen=""),
     ]
-    assert ids(b.top_claims(claims)) == ["new-high", "new-low", "old-high"]
+    assert kinds(b.all_changes(claims)) == [
+        ("added", "added", ""),
+        ("overturned", "winner", "loser"),  # the reversal, told once, by its winner
+        ("contested", "fight", ""),  # dated by its newest contesting evidence
+    ]
+    assert [ch["date"] for ch in b.all_changes(claims)] == [
+        "2026-10-18",
+        "2026-10-17",
+        "2026-10-16",
+    ]
+
+
+def test_contested_without_contesting_evidence_dates_from_first_seen():
+    got = b.all_changes([claim("c", "contested", first_seen="2026-05", evidence=[{}])])
+    assert got == [{"kind": "contested", "date": "2026-05", "claim": "c"}]
+
+
+def test_a_full_week_is_capped_counted_in_full_and_keeps_a_slot_for_the_reversal():
+    claims = [claim(f"c{i}", first_seen=f"2026-10-1{i}") for i in range(4, 10)]
+    claims += [claim("c-extra", first_seen="2026-10-19"), claim("old", first_seen="2026-01-01")]
+    claims += [retired("gone", "old", "2026-09-01")]
+    got, fresh = b.claim_changes(claims, NOW, 7, n_max=6)
+    assert fresh == 7  # every change in the window, not just the ones shown
+    assert len(got) == 6  # the cap holds, the reversal included
+    assert got[-1]["kind"] == "overturned" and got[-1]["replaced"] == "gone"
+    assert [ch["date"] for ch in got] == sorted((ch["date"] for ch in got), reverse=True)
+
+
+def test_a_fresh_reversal_past_the_cap_beats_an_older_one():
+    """Review of #94: 8 adds this week + a reversal on 10-15 showed six adds and a
+    January reversal; this week's reversal was dropped."""
+    claims = [claim(f"a{i}", first_seen=f"2026-10-{16 + i % 4}") for i in range(8)]
+    claims += [claim("w1", supersedes=["l1"]), retired("l1", "w1", "2026-10-15")]
+    claims += [claim("w0", supersedes=["l0"]), retired("l0", "w0", "2026-01-01")]
+    got, fresh = b.claim_changes(claims, "2026-10-22", 7)
+    assert fresh == 9 and len(got) == b.CHANGES_MAX
+    reversals = [ch for ch in got if ch["kind"] == "overturned"]
+    assert [(ch["replaced"], ch["date"]) for ch in reversals] == [("l1", "2026-10-15")]
+    assert b.changes_note(fresh, len(got), 7) == "The 6 newest of 9 changes in the last 7 days."
+
+
+def test_a_quiet_week_tops_up_with_dated_earlier_changes():
+    claims = [claim("new", first_seen="2026-10-19"), claim("sep", first_seen="2026-09-09")]
+    claims += [claim("aug", first_seen="2026-08-01"), claim("jul", first_seen="2026-07-01")]
+    claims += [claim("winner", supersedes=["loser"]), retired("loser", "winner", "2026-06-01")]
+    got, fresh = b.claim_changes(claims, NOW, 7)
+    assert fresh == 1
+    assert kinds(got) == [
+        ("added", "new", ""),
+        ("added", "sep", ""),
+        ("added", "aug", ""),
+        ("overturned", "winner", "loser"),
+    ]
+
+
+def test_nothing_this_week_still_shows_the_latest_changes():
+    got, fresh = b.claim_changes([claim("a", first_seen="2026-01-02")], NOW, 7)
+    assert fresh == 0 and kinds(got) == [("added", "a", "")]
+    assert b.claim_changes([], NOW, 7) == ([], 0)
+
+
+def test_changes_note_says_what_the_window_held():
+    assert b.changes_note(0, 0, 7) == "No claim has changed yet."
+    assert b.changes_note(0, 3, 7).startswith("No claim changed in the last 7 days")
+    assert b.changes_note(1, 3, 7).startswith("1 change in the last 7 days")
+    assert b.changes_note(2, 3, 7).startswith("2 changes in the last 7 days")
+    assert b.changes_note(9, 6, 7) == "The 6 newest of 9 changes in the last 7 days."
+    assert (
+        b.changes_note(3, 3, 7) == "Every claim added, contested or overturned in the last 7 days."
+    )
 
 
 def test_claim_domain_maps_labels_to_taxonomy_ids_but_not_bare_defaults():

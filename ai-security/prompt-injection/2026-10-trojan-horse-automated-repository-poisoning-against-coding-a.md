@@ -8,7 +8,7 @@
 
 TrojanForge automates repository poisoning against coding agents: it maps agent execution traces onto AST nodes, has a security-review agent pick the least conspicuous payload locations, and refines disguises through adversarial play against the target agent. It reaches over 60% stable poisoning success and over 90% backdoor injection, and on a 384-repo benchmark across 4 harnesses and 12 models even commercial agents fail to defend.
 
-## What to learn
+## Lessons
 
 - Attackers can place repository payloads where the agent's own execution traces will reach them, choosing the spots a security review is least likely to flag. - _"TrojanForge parses repository structure through abstract syntax trees (AST) and maps agent execution traces onto AST nodes. A security review agent ranks these candidates and selects the least conspicuous ones for payload mounting."_
 - Disguises improve automatically: the attacker learns why the agent detected a payload, inverts that cause, and reuses what worked across repositories. - _"iteratively refines disguise strategies by inverting the causes of agent detection, and transfers accumulated success experience across repositories"_
@@ -25,8 +25,8 @@ TrojanForge automates repository poisoning against coding agents: it maps agent 
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)  ·  **Retrieved:** 2026-10-19  
-**Scores:** Newness 31 · Novelty 75 · Relevance 90 · Credibility 51 · **Composite 64.84**  
+**Scores:** Newness 31 · Novelty 75 · Relevance 90 · Credibility 51 · **Composite 65** _(each 0-100)_  
 **Tags:** `coding-agents`, `repository-poisoning`, `prompt-injection`, `backdoor`, `red-teaming`, `benchmark`  
-**Verification:** ✓ independently verified · closest prior art: Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.
 
 _Source: [https://arxiv.org/abs/2610.23109](https://arxiv.org/abs/2610.23109)_  ·  [← back to index](../README.md)

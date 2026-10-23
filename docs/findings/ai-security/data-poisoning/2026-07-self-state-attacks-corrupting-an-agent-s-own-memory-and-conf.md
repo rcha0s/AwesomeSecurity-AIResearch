@@ -8,7 +8,7 @@
 
 Self-hosted agents read and write their own memory and configuration files, so once an attacker can write to that state the corruption itself is performed with legitimate OS system calls - the malicious step does not look anomalous at the OS layer. The authors formalize a four-axis attack space, realize 43 operations on real self-state files injected into traces from a representative self-hosted agent, and find a layered defense covers most cells with a small residual that stays structurally indistinguishable. Note the precondition: this assumes the attacker already has local write access; the paper does not address how that access is obtained. Cited as v1 (20 Jul 2026): the revised v2 (17 Sep 2026) is more pessimistic, finding generic OS defenses either block legitimate updates or flag much legitimate activity, and calls for self-state-aware mechanisms.
 
-## What to learn
+## Lessons
 
 - Given an attacker who can already write to an agent's state files, the corruption step is performed with legitimate system calls - so the malicious action itself carries no distinguishing OS-level signal. This is a post-compromise finding, not a new access path. - _"An agent may get compromised via corruption of its own state -- a compromise realized via legitimate OS system call invocation."_
 - Layer the defense by state type: access-control prevention on instruction and configuration layers, workload-conditioned detection on the memory layer, periodic backup for recovery. - _"a layered defense stack (access-control prevention on the instruction and configuration layers, workload-conditioned detection on the memory layer, and periodic backup for recovery) is effective on most attack cells"_
@@ -24,9 +24,9 @@ Self-hosted agents read and write their own memory and configuration files, so o
 
 **Topic:** AI Security  ·  **Domain:** Memory, RAG & Data Poisoning  
 **Source:** [source](https://arxiv.org/abs/2607.17986v1)  ·  **Author:** Yimeng Chen et al.  ·  **Retrieved:** 2026-07-21  
-**Scores:** Newness 0 · Novelty 45 · Relevance 80 · Credibility 58 · **Composite 46.12**  
+**Scores:** Newness 0 · Novelty 45 · Relevance 80 · Credibility 58 · **Composite 46** _(each 0-100)_  
 **Tags:** `agent-security`, `self-hosted`, `os-defenses`, `memory-poisoning`, `threat-modeling`  
-**Verification:** ✓ independently verified · closest prior art: Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.  
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._
 
 _Source: [https://arxiv.org/abs/2607.17986v1](https://arxiv.org/abs/2607.17986v1)_  ·  [← back to index](../README.md)

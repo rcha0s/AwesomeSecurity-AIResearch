@@ -137,17 +137,16 @@ def test_rendered_html_wires_caveat_chip_template(sandbox):
     assert row["caveats"] == [{"lens": "prior-art", "note": "cf. Zhao 2024"}]
 
 
-def test_rendered_html_renders_lessons_view_tab(sandbox):
-    """MR-D adds a fifth top-level view — every lesson across the pool."""
+def test_lessons_are_not_a_tab_old_links_redirect_to_the_archive(sandbox):
+    """Lessons live in each finding's detail panel now, not in their own view."""
     html = gh.render(gh.build_payload(ledger_of(make_claim()), common.load_config(), NOW), NOW)
-    assert 'data-view="lessons"' in html
-    assert 'id="view-lessons"' in html
+    assert 'data-view="lessons"' not in html and 'id="view-lessons"' not in html
+    assert 'data-view="feed"' not in html and 'id="view-feed"' not in html
+    assert 'lessons: "news"' in html and 'feed: "news"' in html
 
 
-def test_build_payload_carries_flat_lessons_list(sandbox):
-    """The lessons view reads DATA.lessons — a flat list across all curated
-    findings. Each lesson knows which finding it came from + how to open the
-    detail modal."""
+def test_finding_rows_carry_their_lessons_with_quotes(sandbox):
+    """The detail panel reads each row's lessons: point + verbatim excerpt."""
     entry = make_entry(
         title="Compaction saves tokens",
         lessons=[
@@ -155,53 +154,24 @@ def test_build_payload_carries_flat_lessons_list(sandbox):
         ],
     )
     data = payload_of(sandbox, entries=[entry])
-    assert "lessons" in data
-    assert len(data["lessons"]) == 1
-    lesson = data["lessons"][0]
-    assert lesson["point"] == "Summarize before re-injecting"
-    assert lesson["excerpt"] == "40% less"
-    assert lesson["finding_title"] == "Compaction saves tokens"
-    assert lesson["topic"] == "ai-research"
-    assert lesson["detail_path"]  # nav target for modal
-    assert lesson["url"]  # source article
-
-
-def test_lessons_list_excludes_findings_held_for_review(sandbox):
-    """Held-back entries never render, so their lessons must not either —
-    otherwise the lessons view leaks un-vetted content."""
-    entry = make_entry(
-        title="Held back",
-        needs_review=True,
-        lessons=[{"point": "Hidden lesson", "excerpt": "x", "confidence": 0.5}],
-    )
-    data = payload_of(sandbox, entries=[entry])
-    assert data["lessons"] == []
-
-
-def test_lessons_carry_related_claims_when_present(sandbox):
-    """The lessons view links each lesson to its related claim (from the
-    analyzer's drift-review output) so users can jump to the standing answer."""
-    entry = make_entry(
-        related_claims=["toon-over-json-for-agent-io"],
-        lessons=[{"point": "p", "excerpt": "e", "confidence": 0.9}],
-    )
-    data = payload_of(sandbox, entries=[entry])
-    assert data["lessons"][0]["related_claims"] == ["toon-over-json-for-agent-io"]
+    assert "lessons" not in data  # no flat list: no Lessons view to feed
+    assert data["findings"][0]["lessons"] == [
+        {"point": "Summarize before re-injecting", "excerpt": "40% less", "grounded": True}
+    ]
 
 
 def test_lesson_without_excerpt_is_dropped(sandbox):
-    """A lesson without an excerpt isn't groundable and can't be defended —
-    don't surface it in the lessons view even though it might live on a
-    published finding."""
+    """A lesson without an excerpt isn't groundable and can't be defended."""
     entry = make_entry(
         lessons=[
             {"point": "solid", "excerpt": "quote", "confidence": 0.9},
             {"point": "empty", "excerpt": "", "confidence": 0.9},
             {"point": "missing"},  # no excerpt key at all
+            "a bare string",
         ],
     )
     data = payload_of(sandbox, entries=[entry])
-    assert [le["point"] for le in data["lessons"]] == ["solid"]
+    assert [le["point"] for le in data["findings"][0]["lessons"]] == ["solid"]
 
 
 # --- Refuter-panel caveats --------------------------------------------------

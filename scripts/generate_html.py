@@ -4,7 +4,8 @@ generate_html.py - Render the real browsable site into docs/ for GitHub Pages.
 
 The markdown tree is the readable-on-GitHub view. This is the *site*: one
 self-contained page that lets you filter the claim ledger by topic and status,
-search it, jump along supersession edges, and read the findings feed - with no
+see what it changed this week, jump along supersession edges, and search every
+vetted finding - with no
 Jekyll theme, no build step, and no external requests (a strict-CSP-safe page).
 
 Writes:
@@ -132,6 +133,7 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
         "verified": entry.get("verified") is True,
         "fresh": c.is_fresh(entry, snapshot_days),
         "detail_path": _detail_relpath(entry),
+        "lessons": finding_lessons(entry),
     }
 
 
@@ -321,42 +323,20 @@ def _copy_moved_stub(src_root: Path, dst_root: Path, entry: dict) -> None:
         shutil.copyfile(src, dst)
 
 
-def lessons_index(conf: c.Config, snapshot_days: int) -> list[dict]:
-    """A flat list of every lesson across the curated pool.
-
-    Each lesson carries the finding it came from (title + detail_path + url),
-    the topic, and any related_claims the analyzer surfaced, so the lessons
-    view can render standalone cards that click through to (a) the finding
-    detail modal and (b) the source article. Lessons without an excerpt are
-    dropped — they can't be defended and shouldn't reach the view."""
-    out: list[dict] = []
-    for topic in c.TOPICS:
-        for entry in c.load_pool(topic)["entries"]:
-            if not c.is_curated(entry, conf):
-                continue
-            row = finding_row(entry, conf, snapshot_days)
-            for lesson in entry.get("lessons") or []:
-                if not isinstance(lesson, dict):
-                    continue
-                excerpt = lesson.get("excerpt") or ""
-                if not excerpt:
-                    continue
-                out.append(
-                    {
-                        "point": lesson.get("point") or "",
-                        "excerpt": excerpt,
-                        "confidence": lesson.get("confidence"),
-                        "grounded": lesson.get("grounded"),
-                        "finding_id": row["id"],
-                        "finding_title": row["title"],
-                        "topic": row["topic"],
-                        "domain": row["domain"],
-                        "url": row["url"],
-                        "detail_path": row["detail_path"],
-                        "published": row["published"],
-                        "related_claims": list(entry.get("related_claims") or []),
-                    }
-                )
+def finding_lessons(entry: dict) -> list[dict]:
+    """A finding's lessons for its detail panel: each point with the verbatim
+    excerpt it rests on. A lesson without an excerpt can't be defended, so it
+    is dropped."""
+    out = []
+    for lesson in entry.get("lessons") or []:
+        if isinstance(lesson, dict) and lesson.get("excerpt"):
+            out.append(
+                {
+                    "point": str(lesson.get("point") or ""),
+                    "excerpt": str(lesson["excerpt"]),
+                    "grounded": lesson.get("grounded") is not False,
+                }
+            )
     return out
 
 
@@ -408,7 +388,6 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "claims": claims_payload(ledger, tax),
         "findings": findings,
         "editorial": editorial,
-        "lessons": lessons_index(conf, snapshot_days),
         "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
         "archive": archived,
         **front_page(findings + editorial, cl.all_claims(ledger), now, snapshot_days),
@@ -465,6 +444,58 @@ def trend_view(rows: list[dict]) -> list[dict]:
     return [{k: v for k, v in row.items() if k != "members"} for row in rows[:TREND_ROWS]]
 
 
+# A sentence ends at . ! or ? followed by space and a capital, digit or quote;
+# "vs." / "e.g." / "U.S." followed by one is an abbreviation, not an end.
+_SENTENCE_END = re.compile(r"[.!?](?=\s+[\"'“‘(A-Z0-9])")
+_ABBREVIATIONS = frozenset(
+    {
+        "vs",
+        "e.g",
+        "i.e",
+        "etc",
+        "u.s",
+        "u.k",
+        "mr",
+        "mrs",
+        "ms",
+        "dr",
+        "al",
+        "cf",
+        "approx",
+        "no",
+        "fig",
+        "inc",
+        "ltd",
+        "corp",
+        "jr",
+        "sr",
+        "st",
+    }
+)
+
+
+def _is_sentence_end(text: str, at: int) -> bool:
+    words = text[:at].split()
+    word = words[-1].lower().rstrip(".") if words else ""
+    return word not in _ABBREVIATIONS and len(word) > 1
+
+
+def sentence_cut(text: str, limit: int = ARCHIVE_TAKEAWAY_CHARS) -> str:
+    """`text` within `limit` chars, ended at a sentence boundary when one falls in
+    the back half of the window (else at a word), with an ellipsis when cut."""
+    text = c.clean_summary(str(text or ""), 10**6)
+    if len(text) <= limit:
+        return text
+    ends = [
+        m.end()
+        for m in _SENTENCE_END.finditer(text[: limit + 2])
+        if limit // 2 <= m.end() <= limit and _is_sentence_end(text, m.start())
+    ]
+    if ends:
+        return text[: ends[-1]] + " …"
+    return text[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
 def archive_rows(archive: list, conf: c.Config) -> list[dict]:
     """Aged-out findings that were vetted, as compact searchable rows, newest first.
 
@@ -480,9 +511,7 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
             "url": c.clean_source_url(e.get("source_url") or e.get("article_url") or ""),
             "source_name": e.get("source_name", ""),
             "published": c.best_date(e) or "",
-            "takeaway": c.clean_summary(
-                e.get("takeaway") or e.get("summary") or "", ARCHIVE_TAKEAWAY_CHARS
-            ),
+            "takeaway": sentence_cut(e.get("takeaway") or e.get("summary") or ""),
         }
         for e in archive
         if isinstance(e, dict) and c.is_curated(e, conf)
@@ -491,13 +520,18 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
 
 
 def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dict:
-    """The README teaser's and the Briefing's shared picks, as row/claim ids."""
+    """The README teaser's and the Briefing's shared picks: row ids, and the
+    claim changes (each names its claim, and for a reversal the one it replaced)."""
     stories, topped_up = briefing.top_stories(rows, now, days)
+    changes, changes_fresh = briefing.claim_changes(claims, now, days)
     return {
         "top_stories": [row["id"] for row in stories],
         "top_stories_topped_up": topped_up,
         "top_stories_fresh": briefing.fresh_count(stories, now, days),
-        "top_claims": [claim["id"] for claim in briefing.top_claims(claims)],
+        "top_stories_multi": briefing.any_multi_source(stories),
+        "stories_this_week": briefing.fresh_count(rows, now, days),
+        "claim_changes": changes,
+        "claim_changes_fresh": changes_fresh,
     }
 
 

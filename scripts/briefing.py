@@ -3,15 +3,18 @@
 briefing.py - what leads the front page, decided once for README and site.
 
 The README teaser and the site's Briefing both show "this week's top stories"
-and the top "what to do now" claims. They are picked here, from the same site
+and the ledger's "claim changes". They are picked here, from the same site
 rows, so the two surfaces can never disagree.
 
   top_stories   rows active in the last `days` (a fresh Updated line counts),
                 most covering sources first, then most recent activity, then
                 composite. Fewer than `n_min` in the window -> topped up with
                 the most recent stories outside it (and the caller says so).
-  top_claims    live `current` claims that carry guidance, most recently
-                reviewed first, then highest confidence.
+  claim_changes what the ledger changed in the last `days`: claims added,
+                newly contested, and overturned (superseded or refuted, shown
+                as the claim that replaced them). Fewer than `n_min` in the
+                window -> topped up with the most recent earlier changes; the
+                latest reversal is always included when there is one.
   claim_domain  a claim's free-text domain label as a taxonomy ID, or "".
 
 Pure functions over payload rows; generate_html.py and generate_site.py do I/O.
@@ -25,7 +28,6 @@ import taxonomy
 
 TOP_STORIES_MAX = 8
 TOP_STORIES_MIN = 5
-TOP_CLAIMS = 3
 # A label resolved by these rules is trusted on a topic page; a bare default is not.
 _TRUSTED_RESOLUTION = frozenset({"id", "alias", "name", "keywords"})
 
@@ -82,8 +84,9 @@ def fresh_count(rows: list[dict], now: str, days: int) -> int:
     return sum(1 for r in rows if last_activity(r) >= cutoff)
 
 
-def window_note(fresh: int, total: int, days: int) -> str:
-    """The one sentence README and site both print above the top stories."""
+def window_note(fresh: int, total: int, days: int, multi_source: bool = False) -> str:
+    """The one sentence README and site both print above the top stories.
+    `multi_source`: some story has 2+ covering sources, so saying they lead means something."""
     if not total:
         return "No stories yet."
     if fresh == 0:
@@ -93,21 +96,119 @@ def window_note(fresh: int, total: int, days: int) -> str:
             f"Fewer than five stories in the last {days} days, so the most recent ones "
             "before it fill in."
         )
-    return f"The last {days} days: the stories with the most covering sources first."
+    if multi_source:
+        return f"The last {days} days: the stories with the most covering sources first."
+    return f"The last {days} days, newest first."
 
 
-def top_claims(claims: list[dict], n: int = TOP_CLAIMS) -> list[dict]:
-    """The standing answers to act on now: current, with guidance, freshest first."""
-    live = [c for c in claims if c.get("status") == "current" and c.get("guidance")]
-    live.sort(key=lambda c: c.get("id", ""))
-    return _ranked(live, lambda c: str(c.get("last_reviewed") or ""), _conf)[:n]
+def any_multi_source(rows: list[dict]) -> bool:
+    return any(source_count(r) > 1 for r in rows)
 
 
-def _conf(claim: dict) -> float:
-    try:
-        return float(claim.get("confidence") or 0)
-    except (TypeError, ValueError):
-        return 0.0
+# --- Claim changes: the ledger's job is to call claims out, not to-do lists ---
+CHANGES_MAX = 6
+CHANGES_MIN = 3
+CHANGE_KINDS = ("added", "contested", "overturned")
+_CONTESTING = ("contests", "refutes")
+
+
+def added_on(claim: dict) -> str:
+    """When the claim entered the ledger. `added_on` is the ledger's own record;
+    an older claim without one falls back to `first_seen` (when the belief dates
+    from). Never `last_reviewed`: every review bumps it, so it says nothing changed."""
+    return str(claim.get("added_on") or claim.get("first_seen") or "")
+
+
+def _contested_on(claim: dict) -> str:
+    """When a contested claim became contested: the ledger's `changed_on`, else
+    its newest contesting evidence, else the day it entered the ledger."""
+    if claim.get("changed_on"):
+        return str(claim["changed_on"])
+    dates = [
+        str(e.get("published") or "")
+        for e in claim.get("evidence") or []
+        if isinstance(e, dict) and e.get("stance") in _CONTESTING
+    ]
+    return max(dates, default="") or added_on(claim)
+
+
+def _first(value) -> str:
+    ids = value if isinstance(value, list) else [value] if value else []
+    return str(ids[0]) if ids else ""
+
+
+def _change_of(claim: dict) -> dict | None:
+    """The one change a claim stands for, or None.
+
+    overturned  a retired claim: headlined by the claim that replaced it
+    contested   a live claim with evidence on both sides
+    added       a current claim; one that replaced another is told by the
+                overturned change instead, so a reversal shows once"""
+    cid, status = str(claim.get("id") or ""), claim.get("status")
+    if status in ("superseded", "refuted"):
+        when = claim.get("changed_on") or claim.get("superseded_on") or ""
+        change = {"kind": "overturned", "date": str(when)}
+        change |= {"claim": _first(claim.get("superseded_by")) or cid, "replaced": cid}
+    elif status == "contested":
+        change = {"kind": "contested", "date": _contested_on(claim), "claim": cid}
+    elif status == "current" and not claim.get("supersedes"):
+        change = {"kind": "added", "date": added_on(claim), "claim": cid}
+    else:
+        return None
+    return change if change["date"] and cid else None
+
+
+def all_changes(claims: list[dict]) -> list[dict]:
+    """Every claim change, newest first (ties: kind, then claim id)."""
+    out = [ch for ch in map(_change_of, claims) if ch]
+    out.sort(key=lambda ch: (ch["kind"], ch["claim"]))
+    out.sort(key=lambda ch: ch["date"], reverse=True)
+    return out
+
+
+def claim_changes(
+    claims: list[dict],
+    now: str,
+    days: int,
+    n_max: int = CHANGES_MAX,
+    n_min: int = CHANGES_MIN,
+) -> tuple[list[dict], int]:
+    """(the front page's claim changes, how many changes fall in the last `days`).
+
+    At most `n_max` are shown. The newest reversal always gets one of those
+    slots, whether it is this week's or older; the count is of every change in
+    the window, not just the ones shown."""
+    cutoff = _cutoff(now, days)
+    changes = all_changes(claims)
+    fresh = [ch for ch in changes if ch["date"] >= cutoff]
+    older = [ch for ch in changes if ch["date"] < cutoff]
+    picked = fresh[:n_max] + older[: max(0, n_min - len(fresh))]
+    reversal = next((ch for ch in changes if ch["kind"] == "overturned"), None)
+    if reversal is not None and reversal not in picked:
+        picked = picked[: max(0, n_max - 1)] + [reversal]
+    return _by_date(picked), len(fresh)
+
+
+def _by_date(changes: list[dict]) -> list[dict]:
+    """Newest first, in all_changes' order within a date (stable sort)."""
+    return sorted(changes, key=lambda ch: ch["date"], reverse=True)
+
+
+def changes_note(fresh: int, total: int, days: int, last: str = "") -> str:
+    """The one sentence README and site both print above the claim changes.
+    `last` is the newest change's date (shown when the window had none)."""
+    if not total:
+        return "No claim has changed yet."
+    if fresh == 0:
+        return f"No claim changed in the last {days} days; the last change was {last}."
+    if fresh > total:
+        return f"The {total} newest of {fresh} changes in the last {days} days."
+    if fresh < total:
+        return (
+            f"{fresh} change{'s' if fresh > 1 else ''} in the last {days} days; "
+            "earlier ones fill in, each with its date."
+        )
+    return f"Every claim added, contested or overturned in the last {days} days."
 
 
 def claim_domain(claim: dict, tax: taxonomy.Taxonomy) -> str:

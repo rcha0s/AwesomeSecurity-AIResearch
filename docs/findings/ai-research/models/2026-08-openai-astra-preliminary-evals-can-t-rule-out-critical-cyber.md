@@ -8,7 +8,7 @@
 
 OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.
 
-## What to learn
+## Lessons
 
 - The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call. - _"Under our Preparedness Framework, a model reaches the Critical cybersecurity threshold if it can identify and develop functional zero-day exploits of all severity levels in many hardened real-world critical systems without human intervention, or can devise and execute end-to-end novel strategies for cyberattacks against hardened targets given only a high level desired goal."_
 - First-party CoT monitoring is the primary announced defense for training and evaluation, not just deployment - a signal that provider-side runtime controls are now the load-bearing layer for critical-capability containment. - _"We have implemented universal monitoring for risky actions and misalignment across all agentic applications of Astra, including training and evaluation. Monitors evaluate the model's Chain of Thought and trigger a security response to review and interrupt high risk activity."_
@@ -24,8 +24,8 @@ OpenAI reports that internal evaluations of Astra can no longer rule out the Pre
 
 **Topic:** AI Research  ·  **Domain:** Models & Capabilities  
 **Source:** [source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 1 · Novelty 70 · Relevance 75 · Credibility 80 · **Composite 55.75**  
+**Scores:** Newness 1 · Novelty 70 · Relevance 75 · Credibility 80 · **Composite 56** _(each 0-100)_  
 **Tags:** `preparedness-framework`, `frontier-capability`, `cot-monitoring`, `cyber-evals`, `sandboxing`, `openai`, `astra`  
-**Verification:** ✓ independently verified · closest prior art: Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' - the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' - the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.
 
 _Source: [https://openai.com/index/responding-next-frontier-critical-cyber-capabilities](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)_  ·  [← back to index](../README.md)

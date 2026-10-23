@@ -8,7 +8,7 @@
 
 A large-scale study of the AIDev dataset classified security smells across 16,112 file changes in 4,022 agent-generated pull requests. 38.9% of agent PRs contain at least one security smell and supply-chain integrity issues make up 82.3% of them - but the counterintuitive result is that human collaborators introduce 67.6% of the genuine leaked secrets in these agent-assisted workflows, and review catches almost none of them. All percentages are downstream of an LLM-as-a-judge classification pipeline plus manual review, so treat the precision of the figures accordingly.
 
-## What to learn
+## Lessons
 
 - Supply-chain integrity dominates the detected smell taxonomy (82.3%); the abstract does not enumerate the remaining categories, so everything else combined is a small residual - point provenance and dependency controls at agent output. - _"38.9% of agent-generated PRs contain at least one security smell, with supply chain integrity issues accounting for 82.3% of all detected security smells"_
 - Blaming the agent misreads the data: humans introduced most genuine leaked secrets, which the authors describe only as suggesting a *potential* reduction in developer vigilance - an association, not a causal finding. - _"human collaborators are responsible for introducing 67.6% of genuine leaked secrets within these agent-assisted workflows"_
@@ -24,9 +24,9 @@ A large-scale study of the AIDev dataset classified security smells across 16,11
 
 **Topic:** Product Security  ·  **Domain:** AI in the SDLC  
 **Source:** [source](https://arxiv.org/abs/2607.12428)  ·  **Author:** A H M Nazmus Sakib et al.  ·  **Retrieved:** 2026-07-21  
-**Scores:** Newness 0 · Novelty 57 · Relevance 88 · Credibility 58 · **Composite 52.12**  
+**Scores:** Newness 0 · Novelty 57 · Relevance 88 · Credibility 58 · **Composite 52** _(each 0-100)_  
 **Tags:** `ai-generated-code`, `coding-agents`, `secrets`, `supply-chain`, `code-review`  
-**Verification:** ✓ independently verified · closest prior art: That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.  
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._
 
 _Source: [https://arxiv.org/abs/2607.12428](https://arxiv.org/abs/2607.12428)_  ·  [← back to index](../README.md)
