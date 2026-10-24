@@ -213,9 +213,12 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   credibility, with a small `batch_routed_bonus` and at most `batch_per_source`
   slots per source (`batch_class_slots` lets plain RSS deal 2 a round). First,
   a big-story lane (`scripts/newsworthy.py`) of up to `batch_story_max` slots
-  takes stories that 2+ independent sources staged this run with a severity or
-  AI-incident marker (rce, critical, exploited, compromise, agent hijack, ...),
-  one slot per story, tagged `batch_priority: story`; the story's other copies
+  takes stories that 2+ independent publishers staged this run with a severity or
+  AI-incident marker (rce, critical, exploited, compromise, agent hijack, ...).
+  Publishers are registrable domains (all GitHub ingestors are one, HN another,
+  neither counts as independent), and one copy must come from a source ranked
+  `batch_story_min_rank` or more. A copy naming only other CVEs never joins a
+  story. Each story gets one slot, tagged `batch_priority: story`; its other copies
   wait in the backlog (`batch_same_story_as`), and stories the ledger already
   holds never qualify. Markers and corroboration also add `batch_marker_bonus`
   and `batch_corroboration_bonus` to the deal's score. Then

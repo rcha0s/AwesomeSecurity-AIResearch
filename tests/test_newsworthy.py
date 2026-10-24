@@ -153,6 +153,7 @@ def source_of(c: dict) -> str:
 def test_sources_count_distinct_sources_and_one_source_corroborates_nothing():
     twin = {**PHP_SNYK, "title": "PHP patch notes for the two critical RCEs"}
     sigs = nw.analyze([PHP_SNYK, PHP_TALOS, twin], REFERENCE, source_of)
+    assert sigs[0].ids == {"cve-2026-109618"} and not sigs[1].ids
     assert sigs[1].sources == 2  # snyk's two posts count once
     assert sigs[0].matches == (1,)  # never its own source's other post
     assert not sigs[0].known
@@ -176,12 +177,12 @@ def test_a_story_the_ledger_holds_is_known():
     ],
 )
 def test_is_big(sources, markers, known, big):
-    sig = nw.Signal(frozenset(markers), (), sources, known)
-    assert nw.is_big(sig, min_sources=2, any_sources=4) is big
+    sig = nw.Signal(frozenset(markers), (), sources, known, best_rank=60.0)
+    assert nw.is_big(sig, min_sources=2, any_sources=4, min_rank=55) is big
 
 
 def test_one_source_is_never_big_even_with_a_threshold_of_one():
-    sig = nw.Signal(frozenset({"rce", "critical"}), (), 1)
+    sig = nw.Signal(frozenset({"rce", "critical"}), (), 1, best_rank=90.0)
     assert not nw.is_big(sig, min_sources=1, any_sources=1)
 
 
@@ -191,3 +192,67 @@ def test_bonus_counts_markers_and_extra_sources_up_to_a_cap():
     assert nw.bonus(nw.Signal(frozenset({"rce"}), (), 3), 4, 3, 3) == 10
     assert nw.bonus(nw.Signal(frozenset({"rce"}), (), 9), 4, 3, 3) == 13
     assert nw.bonus(nw.Signal(frozenset({"rce"}), (), 9, True), 4, 3, 3) == 0
+
+
+# --- publishers (review F1: corroboration must be independent) -------------------
+@pytest.mark.parametrize(
+    "cand,key",
+    [
+        (
+            {"source_id": "github_query:mcp", "source_url": "https://github.com/zorbex/frob"},
+            "github",
+        ),
+        ({"source_id": "github_user:x", "source_url": "https://example.com/a"}, "github"),
+        ({"source_type": "GHSA", "source_url": "https://github.com/advisories/GHSA-1"}, "github"),
+        (
+            {"source_id": "rss:mcp-releases", "source_url": "https://github.com/mcp/spec/releases"},
+            "github",
+        ),
+        ({"discovered_via": "hackernews", "source_url": "https://blog.example.com/p"}, "hn"),
+        ({"source_id": "rss:a", "source_url": "https://developer.nvidia.com/blog/x"}, "nvidia.com"),
+        ({"source_id": "rss:b", "source_url": "https://blogs.nvidia.com/y"}, "nvidia.com"),
+        ({"source_id": "rss:c", "source_url": "https://www.ncsc.gov.uk/news/z"}, "ncsc.gov.uk"),
+        (
+            {"source_id": "rss:thn", "source_url": "https://thehackernews.com/2026/10/x.html"},
+            "thehackernews.com",
+        ),
+    ],
+)
+def test_publisher_keys(cand, key):
+    assert nw.publisher(cand) == key
+
+
+def hostile(title, src, url, rank, **over):
+    return {**cand(title, src=src), "source_url": url, "source_rank": rank, **over}
+
+
+def test_two_attacker_repos_from_two_github_searches_are_one_publisher():
+    a = hostile("zorbex/frobnicate: unauthenticated RCE exploit kit for FrobServer", "github_query:mcp",
+                "https://github.com/zorbex/frobnicate", 75.0)  # fmt: skip
+    b = hostile("zorbex/frobnicate-poc: FrobServer RCE proof of concept", "github_query:rce",
+                "https://github.com/zorbex/frobnicate-poc", 75.0)  # fmt: skip
+    sigs = nw.analyze([a, b], REFERENCE)
+    assert sigs[0].sources == 1 and not nw.is_big(sigs[0], 2, 4, 55)
+
+
+def test_github_plus_hn_has_no_independent_publisher():
+    a = hostile("FrobServer unauthenticated RCE in the wild", "github_query:mcp",
+                "https://github.com/zorbex/frobnicate", 75.0)  # fmt: skip
+    b = hostile("FrobServer unauthenticated RCE in the wild", "hackernews:x",
+                "https://zorbex.example/frobnicate", 75.0, discovered_via="hackernews")  # fmt: skip
+    sigs = nw.analyze([a, b], REFERENCE)
+    assert sigs[0].sources == 2 and sigs[0].best_rank == 0.0
+    assert not nw.is_big(sigs[0], 2, 4, 55)
+
+
+def test_two_low_rank_feeds_cannot_qualify_on_markers_alone():
+    a = hostile(
+        "FrobServer unauthenticated RCE exploited", "rss:low1", "https://low1.example/p", 40.0
+    )
+    b = hostile(
+        "FrobServer unauthenticated RCE exploited", "rss:low2", "https://low2.example/p", 49.0
+    )
+    sigs = nw.analyze([a, b], REFERENCE)
+    assert sigs[0].sources == 2 and sigs[0].best_rank == 49.0
+    assert not nw.is_big(sigs[0], 2, 4, 55)
+    assert nw.is_big(sigs[0], 2, 4, 45)

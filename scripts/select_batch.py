@@ -92,6 +92,7 @@ DEFAULTS = {
     "batch_story_min_sources": 2,
     "batch_story_any_sources": 4,
     "batch_story_days": 7,
+    "batch_story_min_rank": 0.0,
     "batch_marker_bonus": 0.0,
     "batch_corroboration_bonus": 0.0,
 }
@@ -254,7 +255,7 @@ def story_signals(
         return [None] * len(pool)
     reference = reference_docs() if reference is None else reference
     known = ledger_sources(nw.MATCH_DAYS) if known is None else known
-    return nw.analyze(pool, reference, source_key, known)
+    return nw.analyze(pool, reference, nw.publisher, known)
 
 
 def news_bonus(sig: nw.Signal | None, conf: c.Config) -> float:
@@ -271,11 +272,13 @@ def recent(cand: dict, days: int) -> bool:
 
 
 def story_groups(pool: list[dict], sigs: list, pos: dict) -> list[list[int]]:
-    """Pool positions grouped by story, for every story staged by 2+ sources.
+    """Pool positions grouped by story, for every story staged by 2+ publishers.
     Greedy, best-covered first: a group is its leader plus the leader's own
     matches, then any other candidate matching at least half the group (so a
     twelve-outlet story stays one group). Never a plain chain: one loose match
-    can't pull an unrelated story in."""
+    can't pull an unrelated story in, and a copy naming only CVEs the group
+    doesn't is a different bug, never parked as "same" (an untagged article
+    matching both CVE-1111 and CVE-2222 coverage can't bridge them)."""
     multi = [i for i, sig in enumerate(sigs) if sig is not None and sig.sources >= 2]
     order = sorted(multi, key=lambda i: (-sigs[i].sources, -len(sigs[i].markers), pos[id(pool[i])]))
     taken: set[int] = set()
@@ -283,22 +286,29 @@ def story_groups(pool: list[dict], sigs: list, pos: dict) -> list[list[int]]:
     for i in order:
         if i in taken:
             continue
-        group = [k for k in (i, *sigs[i].matches) if k not in taken]
-        members = set(group)
-        for k in multi:
-            if k not in taken and k not in members:
-                if 2 * len(members & set(sigs[k].matches)) >= len(members):
-                    group.append(k)
+        group, ids = [i], set(sigs[i].ids)
+        for k in [*sigs[i].matches, *multi]:
+            if k in taken or k in group or not ids_compatible(ids, sigs[k].ids):
+                continue
+            if k in sigs[i].matches or 2 * len(set(group) & set(sigs[k].matches)) >= len(group):
+                group.append(k)
+                ids |= sigs[k].ids
         taken |= set(group)
         if len(group) > 1:  # a lone leader's coverage went to a bigger group
             groups.append(group)
     return groups
 
 
+def ids_compatible(group_ids: set[str], ids: frozenset[str]) -> bool:
+    """A copy may join unless both name CVE/GHSA ids and none are shared."""
+    return not group_ids or not ids or bool(group_ids & ids)
+
+
 def lane_worthy(cand: dict, sig: nw.Signal, conf: c.Config) -> bool:
     lo = int(setting(conf, "batch_story_min_sources"))
     hi = int(setting(conf, "batch_story_any_sources"))
-    return nw.is_big(sig, lo, hi) and recent(cand, int(setting(conf, "batch_story_days")))
+    rank = float(setting(conf, "batch_story_min_rank"))
+    return nw.is_big(sig, lo, hi, rank) and recent(cand, int(setting(conf, "batch_story_days")))
 
 
 def story_lane(

@@ -85,7 +85,7 @@ def test_without_the_lane_the_story_loses_to_the_flood(sandbox):
 
 def test_a_big_story_takes_one_lane_slot_first(sandbox):
     staged = php2shell() + flood()
-    batch, backlog = run(staged, **STORY)
+    batch, backlog = run(staged, **STORY, batch_story_min_rank=55)
     assert ids(batch)[0] == "php1"  # the most credible copy (Talos, rank 60) leads
     assert batch[0]["batch_priority"] == "story"
     story = batch[0]["batch_story"]
@@ -161,6 +161,63 @@ def test_groups_absorb_what_matches_half_the_group_never_a_chain():
     assert [4] not in groups  # and is alone, so it is no story
 
 
+def test_an_untagged_article_cannot_bridge_two_different_cves():
+    """Review F2: A names CVE-1111, B names CVE-2222, C names neither and matches
+    both. B must not be parked as "same" as A's story."""
+    import newsworthy as nw
+
+    pool = [{"id": x, "source_rank": 50.0} for x in "ABC"]
+    ids = {0: {"cve-2026-1111"}, 1: {"cve-2026-2222"}, 2: set()}
+    matches = {0: (2,), 1: (2,), 2: (0, 1)}
+    sigs = [nw.Signal(frozenset({"rce"}), matches[i], 3 if i == 2 else 2, ids=frozenset(ids[i]))
+            for i in range(3)]  # fmt: skip
+    pos = {id(x): i for i, x in enumerate(pool)}
+    groups = select_batch.story_groups(pool, sigs, pos)
+    assert not any({0, 1} <= set(g) for g in groups)
+
+
+def test_one_story_with_two_cves_still_groups():
+    import newsworthy as nw
+
+    pool = [{"id": x, "source_rank": 50.0} for x in "ABC"]
+    ids = {0: {"cve-1", "cve-2"}, 1: {"cve-2"}, 2: set()}
+    matches = {0: (1, 2), 1: (0, 2), 2: (0, 1)}
+    sigs = [nw.Signal(frozenset({"rce"}), matches[i], 3, ids=frozenset(ids[i])) for i in range(3)]
+    pos = {id(x): i for i, x in enumerate(pool)}
+    assert [sorted(g) for g in select_batch.story_groups(pool, sigs, pos)] == [[0, 1, 2]]
+
+
+def test_end_to_end_two_cves_and_a_bridge_stay_two_stories(sandbox):
+    a = copy(0, "Citrix NetScaler pre-auth RCE (CVE-2026-1111)", "watchtowr", rank=70.0)
+    b = copy(1, "Citrix NetScaler memory overflow RCE (CVE-2026-2222)", "talos", rank=70.0)
+    bridge = copy(2, "Citrix NetScaler under attack: patch now", "register", rank=60.0)
+    batch, backlog = run([a, b, bridge] + flood(), cap=6, **STORY)
+    parked = {r["id"]: r.get("batch_same_story_as") for r in backlog}
+    assert not (parked.get("php1") == "php0" or parked.get("php0") == "php1")
+
+
+def test_attacker_repos_take_no_lane_slot(sandbox):
+    repos = [
+        _cand(id=f"r{i}", title=f"zorbex/frobnicate{i}: unauthenticated FrobServer RCE exploit",
+              source_url=f"https://github.com/zorbex/frobnicate{i}", source_id=f"github_query:q{i}",
+              discovered_via="github", source_rank=75.0, published="2026-07-14")
+        for i in range(2)
+    ]  # fmt: skip
+    batch, _ = run(repos + flood(), **STORY, batch_story_min_rank=55)
+    assert not any(r.get("batch_priority") == "story" for r in batch)
+
+
+def test_two_low_rank_feeds_take_no_lane_slot_under_the_rank_floor(sandbox):
+    low = [
+        copy(0, "PHP patches two critical unauthenticated RCEs", "low1", rank=40.0),
+        copy(1, "Two critical RCEs in PHP core", "low2", rank=49.0),
+    ]
+    batch, _ = run(low + flood(), **STORY, batch_story_min_rank=55)
+    assert not any(r.get("batch_priority") == "story" for r in batch)
+    batch, _ = run(low + flood(), **STORY, batch_story_min_rank=45)
+    assert batch[0]["batch_priority"] == "story"
+
+
 def test_markers_and_corroboration_lift_a_candidate_in_the_deal(sandbox):
     one = {"source_id": "rss:one"}  # one source: pure score order
     plain = _cand(id="plain", title="A neutral finding", source_url="https://p.ex/1",
@@ -177,5 +234,6 @@ def test_real_config_turns_the_lane_on():
     real = common.load_config().limits
     assert real["batch_story_max"] == 4 and real["batch_priority_max"] == 4
     assert real["batch_story_min_sources"] == 2 and real["batch_story_any_sources"] == 4
+    assert real["batch_story_min_rank"] == 55
     assert real["batch_marker_bonus"] == 4 and real["batch_corroboration_bonus"] == 3
     assert select_batch.story_signals_on(common.load_config())

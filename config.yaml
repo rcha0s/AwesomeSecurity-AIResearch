@@ -103,6 +103,9 @@ limits:
   batch_story_min_sources: 2   # ...with a marker (rce, critical, exploited, ...)
   batch_story_any_sources: 4   # ...or this many without one
   batch_story_days: 7     # a lane story was published in the last N days
+  batch_story_min_rank: 55  # ...and one copy comes from outside GitHub/HN from a source
+                          # ranked this or more (medium tier): two attacker repos, an HN
+                          # vote or two low-rank feeds can't qualify on markers alone
   batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
   batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)
   max_turns: 150          # hard turn cap on the local model session

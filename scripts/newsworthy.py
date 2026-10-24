@@ -42,9 +42,18 @@ import re
 from collections import Counter
 from dataclasses import dataclass
 from datetime import date
+from urllib.parse import urlparse
 
 import dedupe_stories as ds
 
+# Publishers that don't count as independent corroboration: anyone can push a
+# repo or an advisory to GitHub, and an HN post is a vote on someone else's link.
+# 2026-10-23 review: two attacker repos found by two github_query searches faked
+# "2 sources + RCE" and took a lane slot.
+GITHUB, HN = "github", "hn"
+NON_INDEPENDENT = frozenset({GITHUB, HN})
+# Second-level labels under which a registrable domain takes three labels.
+_SECOND_LEVEL = frozenset({"co", "com", "org", "net", "gov", "ac", "edu"})
 MATCH_DAYS = 7
 TITLE_MATCH_DAYS = 2
 NAME_MAX_DF = 0.01  # a name appears in at most 1% of reference documents
@@ -86,6 +95,14 @@ AI_INCIDENT = (
     r"|\battack|backdoor|bypass|\bhack|rogue|sabotag|unsanctioned|deceiv"
     r"|safety monitoring"
 )
+# An incident in the headline, short of a severity marker ("Tor exit relays
+# hijacked", "Qilin exploits Palo Alto flaw"): enough to keep a router
+# catch-all admit out of prefilter's hold (prefilter.catch_all_without_marker).
+INCIDENT = (
+    r"\bexploit|hijack|\bhack(?:ed|s)?\b|ransomware|emergency patch|\battack(?:s|ed)?\b"
+    r"|\bbreach|malware|backdoor|stealer|\bcompromis"
+)
+_INCIDENT_RE = re.compile(INCIDENT, re.I)
 _SEVERITY_RE = {k: re.compile(v, re.I) for k, v in SEVERITY.items()}
 _AI_SUBJECT_RE = re.compile(AI_SUBJECT, re.I)
 _AI_INCIDENT_RE = re.compile(AI_INCIDENT, re.I)
@@ -106,6 +123,12 @@ def markers(cand: dict) -> frozenset[str]:
     if _AI_SUBJECT_RE.search(text) and _AI_INCIDENT_RE.search(text):
         found.add("ai-incident")
     return frozenset(found)
+
+
+def is_incident(cand: dict) -> bool:
+    """Any marker (title + excerpt), or an incident word in the TITLE: vendor
+    posts mention "exploit" in passing, an incident leads with it."""
+    return bool(markers(cand)) or bool(_INCIDENT_RE.search(cand.get("title") or ""))
 
 
 def _tokens(text: str) -> set[str]:
@@ -204,29 +227,56 @@ def same_story(a: Profile, b: Profile) -> bool:
     return bool(shared & a.title & b.title) and _gap(a, b) <= TITLE_MATCH_DAYS
 
 
+def registrable_domain(url: str) -> str:
+    """example.co.uk / nvidia.com from a URL: same-publisher hosts are one."""
+    host = (urlparse(url or "").hostname or "").lower()
+    labels = [p for p in host.split(".") if p]
+    if len(labels) >= 3 and labels[-2] in _SECOND_LEVEL and len(labels[-1]) == 2:
+        return ".".join(labels[-3:])
+    return ".".join(labels[-2:])
+
+
+def publisher(cand: dict) -> str:
+    """Who published a candidate, for corroboration: never the feed id. Every
+    GitHub ingestor and github.com URL is one publisher (GITHUB), every HN item
+    another (HN); anything else is the registrable domain of its URL, so
+    developer.nvidia.com's two feeds count once."""
+    sid = str(cand.get("source_id") or "")
+    if cand.get("discovered_via") == "hackernews" or sid.startswith("hackernews"):
+        return HN
+    url = cand.get("source_url") or cand.get("article_url") or ""
+    domain = registrable_domain(url)
+    github_ingest = sid.split(":", 1)[0] in ("github_query", "github_user")
+    if github_ingest or cand.get("source_type") == "GHSA" or domain == "github.com":
+        return GITHUB
+    return domain or sid or str(cand.get("discovered_via") or "")
+
+
 @dataclass(frozen=True)
 class Signal:
     """One candidate's view: its markers, which other candidates (by position
-    in the analyzed list) from OTHER sources tell the same story, and whether
+    in the analyzed list) from OTHER publishers tell the same story, and whether
     the story ledger already holds it."""
 
     markers: frozenset[str]
     matches: tuple[int, ...]
-    sources: int  # distinct sources covering the story, this one included
+    sources: int  # distinct publishers covering the story, this one included
     known: bool = False
+    ids: frozenset[str] = frozenset()  # CVE / GHSA ids this copy names
+    best_rank: float = 0.0  # highest source rank among the independent copies
 
 
 def analyze(
-    cands: list[dict], reference: list[dict], source_of, known: list[dict] = ()
+    cands: list[dict], reference: list[dict], publisher_of=publisher, known: list[dict] = ()
 ) -> list[Signal]:
-    """Signals aligned with `cands`. `source_of(cand)` names a candidate's
-    source: two posts from one source corroborate nothing. `known` are covering
+    """Signals aligned with `cands`. `publisher_of(cand)` names who published a
+    copy: two copies from one publisher corroborate nothing. `known` are covering
     sources already in the story ledger ({title, published}); a candidate that
     matches one is a story we hold, so it is never lane-worthy."""
     model = name_model(reference, cands)
     profs = [profile(x, model) for x in cands]
     held = [profile(x, model) for x in known]
-    keys = [source_of(x) for x in cands]
+    keys = [publisher_of(x) for x in cands]
     out: list[Signal] = []
     for i, prof in enumerate(profs):
         hits = tuple(
@@ -234,23 +284,35 @@ def analyze(
             for j, other in enumerate(profs)
             if j != i and keys[j] != keys[i] and same_story(prof, other)
         )
+        copies = (i, *hits)
         out.append(
             Signal(
-                markers(cands[i]),
-                hits,
-                1 + len({keys[j] for j in hits}),
-                any(same_story(prof, h) for h in held),
+                markers=markers(cands[i]),
+                matches=hits,
+                sources=len({keys[j] for j in copies}),
+                known=any(same_story(prof, h) for h in held),
+                ids=prof.ids,
+                best_rank=max(
+                    [_rank(cands[j]) for j in copies if keys[j] not in NON_INDEPENDENT],
+                    default=0.0,
+                ),
             )
         )
     return out
 
 
-def is_big(sig: Signal, min_sources: int, any_sources: int) -> bool:
-    """Lane-worthy: not already held, and reported by `min_sources` independent
-    sources with a severity or AI-incident marker, or by `any_sources` without
-    one. One source alone never qualifies: single-source markers only earn the
-    score bonus, so one noisy feed can't fill the lane."""
-    if sig.known or sig.sources < 2:
+def _rank(cand: dict) -> float:
+    return float(cand.get("source_rank") or 0.0)
+
+
+def is_big(sig: Signal, min_sources: int, any_sources: int, min_rank: float = 0.0) -> bool:
+    """Lane-worthy: not already held; reported by `min_sources` publishers with
+    a severity or AI-incident marker, or by `any_sources` without one; and at
+    least one copy from a publisher outside GitHub/HN whose source ranks
+    `min_rank` or more, so GitHub repos, HN votes or two low-rank feeds can't
+    qualify on markers alone. One publisher never qualifies: its markers only
+    earn the score bonus."""
+    if sig.known or sig.sources < 2 or sig.best_rank < max(min_rank, 1e-9):
         return False
     return (sig.sources >= min_sources and bool(sig.markers)) or sig.sources >= any_sources
 

@@ -257,3 +257,39 @@ def test_dry_run_does_not_write(sandbox):
     assert not prefilter._dropped_file().exists()
     assert not prefilter._routed_file().exists()
     assert not prefilter._filtered_file().exists()
+
+
+# --- catch-all admits (review of #102, F3) --------------------------------------
+def _catch_table() -> prefilter.KeywordTable:
+    return prefilter.KeywordTable(
+        keywords={"ps.appsec": ("sql injection",)},
+        excluded=(),
+        catch_alls=("ais.agent-security", "ps.appsec"),
+    )
+
+
+@pytest.mark.parametrize(
+    "over,held",
+    [
+        ({"title": "5 Common AppSec Gaps and the vulnerability backlog"}, True),
+        ({"title": "Uber brings ChatGPT Work", "guess_label": "ais.agent-security"}, True),
+        ({"title": "Critical GitLab RCE across 12 years of releases"}, False),
+        ({"title": "eMudhra private keys compromised"}, False),
+        ({"title": "Some vulnerability", "source_id": "kev_json:cisa"}, False),
+        ({"title": "Some vulnerability", "source_type": "GHSA"}, False),
+        ({"title": "Some vulnerability", "guess_label": "Web Application Security"}, False),
+        ({"title": "5 AppSec gaps", "excerpt": "Attackers exploit misconfigurations."}, True),
+        ({"title": "Qilin ransomware groups exploit a firewall flaw"}, False),
+        ({"title": "Tor exit relays hijacked to intercept SSH"}, False),
+    ],
+)
+def test_a_catch_all_admit_without_a_marker_is_held(sandbox, over, held):
+    cand = _cand(id="x", **{"guess_label": "ps.appsec", **over})
+    result = prefilter.bucket([cand], _catch_table())
+    reasons = [d["prefilter"]["reason"] for d in result.dropped]
+    assert (reasons == ["catch-all:no-marker"]) is held
+    assert (len(result.routed) + len(result.filtered) == 1) is not held
+
+
+def test_the_real_table_names_the_catch_alls():
+    assert set(prefilter.load_keywords().catch_alls) == {"ais.agent-security", "ps.appsec"}

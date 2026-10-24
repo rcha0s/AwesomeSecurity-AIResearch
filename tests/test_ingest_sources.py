@@ -212,3 +212,23 @@ def test_the_catch_alls_leave_earlier_classes_and_noise_alone(title, label):
     import aggregate
 
     assert aggregate.classify_domain(title, RULES, []) == label
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Uber brings ChatGPT Work to its whole company",
+        "ChatGPT Ads expands to more countries",
+        "Copilot gets a new sidebar",
+        "Claude now writes your spreadsheets",
+    ],
+)
+def test_a_bare_ai_brand_needs_incident_context(title):
+    import aggregate
+
+    assert aggregate.classify_domain(title, RULES, []) is None
+
+
+def test_the_catch_all_context_terms_are_configured():
+    assert RULES["catch_alls"]["ais.agent-security"]["context"]
+    assert RULES["catch_alls"]["ps.appsec"]["context"] == []
