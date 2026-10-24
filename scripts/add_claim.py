@@ -147,7 +147,10 @@ def cmd_evidence(args: argparse.Namespace) -> int:
     if args.id not in index:
         print(f"unknown claim: {args.id}")
         return 1
-    new_items = parse_evidence(args.evidence)
+    new_items = [
+        {**item, "source_name": args.source_name} if args.source_name else item
+        for item in parse_evidence(args.evidence)
+    ]
     updated = {
         **ledger,
         "claims": [
@@ -432,6 +435,7 @@ def build_parser() -> argparse.ArgumentParser:
     ev = sub.add_parser("evidence", help="attach sources to an existing claim")
     ev.add_argument("id")
     ev.add_argument("--evidence", action="append", required=True)
+    ev.add_argument("--source-name", help="publisher name stored on each item this call adds")
     ev.set_defaults(func=cmd_evidence)
 
     st = sub.add_parser("status", help="move a claim between live statuses")

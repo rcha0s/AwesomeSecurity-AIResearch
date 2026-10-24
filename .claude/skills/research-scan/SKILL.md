@@ -196,7 +196,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    this scan, decide which one of four things it is:
 
    - **Additive** — it supports an existing claim. Attach it as evidence:
-     `python scripts/add_claim.py evidence <claim-id> --evidence "supports|<url>|<title>|<date>|<note>"`
+     `python scripts/add_claim.py evidence <claim-id> --evidence "supports|<url>|<title>|<date>|<note>" --source-name "<publisher>"`
      (the note is optional: one sentence on what this source shows for the claim).
    - **New** — it answers a question the ledger has no claim for. Add one, with the
      `guidance` (what to DO) and `scope` (where it does *not* apply):

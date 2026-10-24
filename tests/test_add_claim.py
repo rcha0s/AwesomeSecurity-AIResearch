@@ -364,3 +364,20 @@ def test_scan_session_writes_claims_only_through_the_cli():
     assert '"Edit(data/claims.json)"' in text
     assert '"Bash(python scripts/add_claim.py evidence *)"' in text
     assert "add_claim.py supersede" not in text and "add_claim.py *" not in text
+
+
+def test_evidence_source_name_lands_on_the_appended_item_only(sandbox):
+    add_claim.main(new_args("named"))
+    spec = "supports|https://example.com/s|Title|2026-09-09|what it shows"
+    assert add_claim.main(["evidence", "named", "--evidence", spec, "--source-name", "Pub"]) == 0
+    (claim,) = claims.load_ledger()["claims"]
+    first, added = claim["evidence"]
+    assert "source_name" not in first
+    assert added == {
+        "stance": "supports",
+        "url": "https://example.com/s",
+        "title": "Title",
+        "published": "2026-09-09",
+        "note": "what it shows",
+        "source_name": "Pub",
+    }
