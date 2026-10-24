@@ -509,9 +509,12 @@ def test_containment_allows_exactly_the_named_scripts():
         "Bash(python scripts/merge_analysis.py)", "Bash(python scripts/verify_citations.py)",
         "Bash(python scripts/importance.py *)", "Bash(python scripts/promote_editorial.py)",
         "Bash(python scripts/readability.py --analysis)",
+        "Bash(python scripts/add_claim.py list)", "Bash(python scripts/add_claim.py list *)",
+        "Bash(python scripts/add_claim.py evidence *)", "Bash(python scripts/add_claim.py new *)",
+        "Bash(python scripts/add_claim.py validate)",
     ]  # fmt: skip
     for rule in (t for t in tools if t.startswith("Bash(")):
-        assert re.fullmatch(r"Bash\(python scripts/[a-z_]+\.py( [^*]+| \*)?\)", rule), rule
+        assert re.fullmatch(r"Bash\(python scripts/[a-z_]+\.py( [a-z]+)?( \*| --[a-z]+)?\)", rule), rule
     text = (REPO / "scripts/scan_containment.sh").read_text()
     assert '"Edit(data/_scan*)"' in text  # the tier record is session-proof
 
