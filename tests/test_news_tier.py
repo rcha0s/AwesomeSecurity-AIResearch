@@ -518,3 +518,62 @@ def test_news_reason_refuses_deny_listed_text_even_past_the_prefilter():
     puff = news("puff", "Widgetco raised $40m after a critical RCE scare", "wire")
     assert select_batch.news_reason(ok, sig, None, c) == "marker"
     assert select_batch.news_reason(puff, sig, None, c) is None
+
+
+def test_the_news_tier_has_its_own_rank_floor(sandbox):
+    """A brief needs batch_news_min_rank (The Register 49, Dark Reading 40
+    qualify); the big-story lane keeps batch_story_min_rank; unset falls back."""
+    sig = select_batch.nw.Signal(markers=frozenset({"compromise"}), matches=(), sources=1)
+    dr = news("dr", "Hackers abuse AI pen-test tool Cairn in a compromise spree", "dr", rank=40.0)
+    low = news("low", "Hackers abuse AI pen-test tool Cairn in a compromise spree", "x", rank=39.0)
+    c = conf(3, 0, **{**TIER, "batch_news_min_rank": 40})
+    assert select_batch.news_reason(dr, sig, None, c) == "marker"
+    assert select_batch.news_reason(low, sig, None, c) is None
+    assert select_batch.news_reason(dr, sig, None, conf(3, 0, **TIER)) is None  # lane's 55
+    real = common.load_config().limits
+    assert (real["batch_news_min_rank"], real["batch_story_min_rank"]) == (40, 55)
+
+
+def test_a_story_carries_a_marker_any_of_its_copies_carries(sandbox):
+    """2026-10-23 PAN-OS: only The Register's headline said "under attack"."""
+    copies = [  # THN is the best-covered copy (3 publishers) and has no marker itself
+        news("thn", "Qilin groups exploit PanCorpX flaw to bypass MFA", "thn"),
+        news("reg", "PanCorpX firewall OS under attack from ransomware", "reg", rank=49.0,
+             published="2026-07-12"),
+        news("blog", "PanCorpX MFA bypass: notes from the field", "blog", published="2026-07-15"),
+    ]  # fmt: skip
+    _, news_tier, _ = tiers([*flood(), *copies], batch_story_max=0, batch_marker_bonus=0.01)
+    assert [x["batch_news"]["reason"] for x in news_tier] == ["story"]
+    assert news_tier[0]["batch_news"]["markers"] == ["exploited"]
+
+
+def test_one_two_word_name_is_not_two_shared_names():
+    """The PAN-OS over-merge: a BeyondTrust roundup naming "Palo Alto" in its
+    body shared "palo" + "alto" with PAN-OS news, which counted as two names."""
+    nw = select_batch.nw
+    ref = [{"title": f"Old {i}", "summary": "Nothing to see."} for i in range(3)]
+    dr = {"title": "BeyondTrust Remote Support Zero-Day Continues Trend of Exploited Edge Bugs",
+          "excerpt": "Attackers hit BeyondTrust, Cisco and Palo Alto edge devices.",
+          "published": "2026-10-16"}  # fmt: skip
+    reg = {"title": "Palo Alto's firewall OS has been under attack from ransomware groups",
+           "excerpt": "Several gangs hit Palo Alto firewalls.", "published": "2026-10-20"}  # fmt: skip
+    model = nw.name_model(ref, [dr, reg])
+    a, b = (nw.profile(d, model) for d in (dr, reg))
+    assert {"palo", "alto"} <= a.names & b.names
+    assert not nw.same_story(a, b)
+
+
+def test_a_corporate_suffix_is_not_a_name():
+    """praetorian-inc/augustus joined the INC-ransomware PAN-OS story on "inc"."""
+    model = select_batch.nw.name_model([], [{"title": "Qilin and INC ransomware LLC"}])
+    assert model.shaped >= {"inc", "llc"}  # all-caps: a name by shape alone
+    assert not model.is_name("inc") and not model.is_name("llc")
+
+
+def test_the_backfill_campaign_fits_the_two_tier_ceiling():
+    """Rohan 2026-10-23: backfill.max_usd 150, so all 5 chunks fit at the worst
+    recent rate (the 10-19 run, $1.33 for 3 stories) before any is measured."""
+    s = budget.budget_settings()
+    ceiling, _ = budget.run_ceiling([row("w", cost=1.33, stories=3)], s, "local")
+    assert s["backfill"]["max_runs"] == 6
+    assert 5 * ceiling <= s["backfill"]["max_usd"] == 150

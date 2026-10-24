@@ -70,8 +70,9 @@ published in the last `batch_story_days`, is not on the news deny list, and is
     priority  a new CISA KEV entry or a critical (or AI-tooling high) GHSA
               advisory the must-not-miss lane had no slot for
     marker    a severity or AI-incident marker from a publisher outside
-              GitHub/HN whose source ranks `batch_story_min_rank` or more, and
-              not a story the ledger already holds
+              GitHub/HN whose source ranks `batch_news_min_rank` or more (40:
+              The Register, Dark Reading; the lane keeps its own 55), and not
+              a story the ledger already holds
 
 in that order, at most `max_news_per_run` (a runaway guard, not a quota) and
 at most `batch_news_per_source` from one source. A story group's other copies
@@ -97,6 +98,7 @@ from __future__ import annotations
 import argparse
 import sys
 from collections import Counter
+from dataclasses import replace
 from datetime import timedelta
 from pathlib import Path
 
@@ -121,6 +123,7 @@ DEFAULTS = {
     "batch_corroboration_bonus": 0.0,
     "max_news_per_run": 0,  # news tier off unless config.yaml sizes it
     "batch_news_per_source": 4,
+    "batch_news_min_rank": None,  # None = batch_story_min_rank
 }
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
@@ -357,7 +360,7 @@ def story_lane(
             group, key=lambda k: (-(pool[k].get("source_rank") or 0), pos[id(pool[k])])
         )
         open_heads = [k for k in by_trust if used[source_key(pool[k])] < per_source]
-        lead = sigs[group[0]]
+        lead = group_signal(sigs, group)
         worthy = lane_worthy(pool[group[0]], lead, conf)
         if len(lane) < limit and open_heads and worthy:
             head = open_heads[0]
@@ -368,6 +371,14 @@ def story_lane(
             groups[id(pool[head])] = (lead, worthy, [pool[k] for k in group if k != head])
         siblings |= {id(pool[k]): pool[head] for k in group if k != head}
     return lane, siblings, groups
+
+
+def group_signal(sigs: list, group: list[int]) -> nw.Signal:
+    """The story's signal: its best-covered copy's, with every copy's markers.
+    A story carries a marker when any outlet's copy does: 2026-10-23's PAN-OS
+    pair had "under attack" only in The Register's headline, not THN's."""
+    lead = sigs[group[0]]
+    return replace(lead, markers=frozenset().union(*(sigs[k].markers for k in group)))
 
 
 def with_story(head: dict, sig: nw.Signal, others: list[dict]) -> dict:
@@ -464,8 +475,16 @@ def news_reason(
         return "priority"
     if sig is None or not sig.markers or sig.known or nw.publisher(cand) in nw.NON_INDEPENDENT:
         return None
-    floor = max(float(setting(conf, "batch_story_min_rank")), 1e-9)
-    return "marker" if float(cand.get("source_rank") or 0.0) >= floor else None
+    return "marker" if float(cand.get("source_rank") or 0.0) >= news_rank_floor(conf) else None
+
+
+def news_rank_floor(conf: c.Config) -> float:
+    """The source rank a single-source marker needs for a brief: its own
+    `batch_news_min_rank` (a brief is one grounded quote, not a lane slot, so
+    credible outlets ranked below the lane's floor count), else the lane's."""
+    own = setting(conf, "batch_news_min_rank")
+    floor = setting(conf, "batch_story_min_rank") if own is None else own
+    return max(float(floor), 1e-9)
 
 
 def news_tier(left: list[dict], sig_of: dict, groups: dict, conf: c.Config) -> list[dict]:

@@ -78,7 +78,7 @@ limits:
   max_news_per_run: 50    # NEWS tier (select_batch.py): every leftover candidate that
                           # is relevant news (a big-story group, a KEV / critical GHSA,
                           # or a severity / AI-incident marker from a source ranked
-                          # batch_story_min_rank+) gets a short grounded brief instead of
+                          # batch_news_min_rank+) gets a short grounded brief instead of
                           # deep analysis. A runaway guard, not a quota: the 2026-10-23
                           # staged set (480 with the #102 feeds) had 38 news-tier stories
                           # past the 25 deep ones, so 40 would nearly bind on a normal day.
@@ -89,6 +89,11 @@ limits:
                             # News is a wire, and on 2026-10-23 a cap of 4 cut its GPT-6
                             # agent, x402 and AI-agents-breach-1,200-sites stories (10
                             # still cut the last)
+  batch_news_min_rank: 40 # source rank a single-source marker needs for a news brief.
+                          # 40, not the lane's 55 (batch_story_min_rank): a brief is one
+                          # grounded quote, not a lane slot, and The Register (49) and
+                          # Dark Reading (40) carried 10-23's Cairn-abuse and AI-agent
+                          # stories. GitHub/HN still never qualify on a marker
   batch_margin: 4         # extra candidates in the session's batch for ones the story
                           # judge finds same/update (scripts/select_batch.py)
   batch_per_source: 2     # most batch slots one source may take while others wait
@@ -167,16 +172,19 @@ budget:
 # overlapping a finished chunk, and caps the whole campaign: max_runs started,
 # max_usd charged (each run's reserved ceiling counts until its measured cost
 # replaces it). Backfill rows are never the day's scan. Rohan approved this
-# campaign on 2026-10-22: ~40-50 stories, ~$10 measured. At the current
-# ceiling ($6.66 a run: worst recent $0.44/story x 1.5 x 10) the fifth 8-day
-# chunk fits only if the first four measure about $2.30 each, so max_usd is the
-# hard bound, not the expected spend. Remove the block (or set null) to stop.
+# campaign on 2026-10-22: ~40-50 stories, ~$10 measured. max_usd is the hard
+# bound, not the expected spend. At the two-tier ceiling ($26.60 a run: worst
+# recent $0.443/unit x 1.5 x 40 units) 5 chunks reserve $133 before any is
+# measured, so all 5 fit under 150; a 6th (the retry) fits once the first
+# chunks' measured costs replace their reservations. Remove the block (or set
+# null) to stop.
 backfill:
   from: "2026-09-09"
   to: "2026-10-18"
   max_chunk_days: 10
   max_runs: 6           # 5 chunks of 8 days + one retry
-  max_usd: 16
+  max_usd: 150          # Rohan 2026-10-23: don't worry about budget for now (was 16,
+                        # which refused every chunk at the two-tier ceiling)
 
 # Taxonomy proposals (ISA ISC-18). A verified `proposed_domain` that recurs on
 # at least `proposal_min_count` entries within `proposal_window_days` opens (or
