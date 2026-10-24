@@ -2,12 +2,48 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_1 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [8 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [8 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[PHP2Shell: Wiz used frontier AI to turn memory-safety bugs in core PHP (two CVEs) into unauthenticated RCE on WordPress, Drupal and Joomla](https://www.wiz.io/blog/php2shell-php-rce)**
+  _Why now: Core PHP RCE chain built with frontier AI; patched October 21 with broad vendor mitigations. · newsworthy · timely · week-of-2026-10-13_
+- **[Microsoft: China-aligned Storm-0940 used the agentic ARTEX pentest framework to hit 2,250+ tenants after the ConnectWise supply-chain compromise](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)**
+  _Why now: Microsoft attributes machine-speed ConnectWise supply-chain follow-on attacks to an agentic pentest framework. · newsworthy · timely · week-of-2026-10-13_
+- **[SOCRadar: INC and The Gentlemen ransomware affiliates ran intrusions through AI agents, and exposed their own servers](https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/)**
+  _Why now: Exposed ransomware-affiliate servers show AI-agent-run intrusions against edge devices. · newsworthy · timely · week-of-2026-10-13_
+- **[Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA, and one case pivoted to vCenter and ESXi](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/)**
+  _Why now: Ransomware groups attempting a PAN-OS MFA bypass and pivoting to the hypervisor layer. · newsworthy · timely · week-of-2026-10-13_
+- **[CrowdStrike: four newly seen actors ran agentic Claude Code intrusions; guardrails only slowed the weakest](https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/)**
+  _Why now: Four exposed agentic Claude Code intrusion harnesses documented by CrowdStrike. · newsworthy · timely · week-of-2026-10-13_
+- **[NorForge: exposed Cairn AI-pentest panels show criminals and some red teams running autonomous break-ins with open dashboards](https://norforge.com/blog/inside_cairn)**
+  _Why now: Exposed Cairn AI-pentest panels reveal attacker workflow and risk to legitimate red-team clients. · newsworthy · timely · week-of-2026-10-13_
+- **[Wiz CIRT: what an AI-driven cloud intrusion looks like, from machine tempo to pentest-labelled artifacts](https://www.wiz.io/blog/anatomy-of-ai-driven-cloud-attacks)**
+  _Why now: Field guide to observable traits of AI-driven cloud intrusions from real investigations. · newsworthy · timely · week-of-2026-10-13_
+- **[Google: eight eMudhra intermediate CA keys had weak entropy, so Chrome blocked them within two hours and is removing the root](https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/)**
+  _Why now: Weak-entropy CA keys blocked by Chrome within hours; root removal scheduled. · newsworthy · timely · week-of-2026-10-13_
+- **[Two CVSS 9.0 Linux KSMBD RCE flaws, found by an AI scanner, reached public kernel lists with no patch](https://thehackernews.com/2026/10/two-cvss-90-linux-ksmbd-rce-flaws.html)**
+  _Why now: Unpatched AI-found kernel RCEs reached public lists; process change worth knowing. · newsworthy · timely · week-of-2026-10-13_
+- **[ANY.RUN: 1,258 sandbox analyses tie fake Claude, ChatGPT and Copilot tools to infostealers, session theft and account phishing](https://any.run/cybersecurity-blog/fake-ai-tools-us-companies/)**
+  _Why now: Fake Claude and ChatGPT lures targeting developers, with detection angles. · newsworthy · timely · week-of-2026-10-13_
+- **[GitLab critical patch: CVE-2026-110264, a CVSS 10.0 unauthenticated RCE in the regex compiler, in every release since 7.0](https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/)**
+  _Why now: Maximum-severity unauthenticated GitLab RCE across 12 years of releases; patch released. · newsworthy · timely · week-of-2026-10-13_
+- **[Horizon3 deep dive on FortiSIEM CVE-2026-106173: an unauthenticated gRPC path traversal plus a null byte becomes arbitrary file write and RCE](https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/)**
+  _Why now: Technical write-up of an unauthenticated FortiSIEM file-write RCE. · newsworthy · timely · week-of-2026-10-13_
+- **[Arista VeloCloud Orchestrator CVE-2026-114625: SQL injection lets any logged-in user become superuser operator, exploited in the wild](https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199)**
+  _Why now: Vendor-confirmed active exploitation of an SD-WAN orchestrator flaw. · newsworthy · timely · week-of-2026-10-13_
+- **[Pillow GHSA-w889-685w-c8fh: attacker-controlled filenames inject Ghostscript arguments in EPS handling, even with -dSAFER](https://github.com/python-pillow/Pillow/security/advisories/GHSA-w889-685w-c8fh)**
+  _Why now: Argument injection in a ubiquitous Python imaging library bypasses -dSAFER. · newsworthy · timely · week-of-2026-10-13_
+- **[Railway security disclosure: encrypted environment variables may have been accessed, all users told to roll secrets](https://blog.railway.com/p/security-disclosure-wednesday-october-21st)**
+  _Why now: Hosting platform secrets exposure tied to attacks on AI inference providers; rotate keys. · newsworthy · timely · week-of-2026-10-13_
+- **[Node2Shell: Imperva shows CVE-2026-111497, a Brotli decoder bug in Node.js, runs attacker code via fetch() and Express body parsing](https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/)**
+  _Why now: Node2Shell: Brotli decoder RCE in Node.js, validated against official builds and Express body parsing. · newsworthy · timely · week-of-2026-10-13_
+- **[HPE bulletin HPESBNW05162: CVSS 10.0 unauthenticated RCE and auth bypass flaws across ArubaOS AOS-10 and AOS-8](https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US)**
+  _Why now: Batch of CVSS 10.0 unauthenticated flaws in ArubaOS. · newsworthy · timely · week-of-2026-10-13_
+- **[BeyondTrust advisory BT26-05: CVSS 9.3 improper origin validation in Remote Support lets a remote attacker perform file operations](https://www.beyondtrust.com/trust-center/security-advisories/bt26-05)**
+  _Why now: Critical Remote Support advisory; self-hosted customers must patch manually. · newsworthy · timely · week-of-2026-10-13_
 - **[Sentry's Next.js tunnelRoute skipped middleware for everything under the tunnel path, not just the requests its rewrite served (GHSA-mchm-gjx6-7h55)](https://github.com/advisories/GHSA-mchm-gjx6-7h55)**
   _Why now: Critical GHSA in a ubiquitous Next.js SDK with a transferable lesson: middleware exemptions are authz bypasses wherever middleware is the only authorization check. · cve · newsworthy · high-relevance · timely_
 - **[CISA KEV: Plex Media Server encoded-URI-scheme flaw CVE-2026-96654 exploited in the wild, part of a four-CVE chain](https://nvd.nist.gov/vuln/detail/CVE-2026-96654)**
@@ -22,13 +58,34 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
+| Vulnerability Research & Red Teaming | 1 |
 | AI in the SDLC | 1 |
+| Mobile & Device Security | 1 |
+| Detection, Response & Threat Intel | 1 |
+
+## Vulnerability Research & Red Teaming
+
+- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](offensive/2026-10-pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new.md)** · composite **60.75** · Oct 19, 2026  
+  VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
+  _[source](https://pwn.ai/blog/pwnescape)_
 
 ## AI in the SDLC
 
 - **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **60.25** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
+
+## Mobile & Device Security
+
+- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **53.25** · Oct 15, 2026  
+  Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
+  _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
+
+## Detection, Response & Threat Intel
+
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **48.75** · Oct 20, 2026  
+  Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
+  _[source](https://kaba.cx/posts/20261020_Tor/)_
 
 ---
 
