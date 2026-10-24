@@ -2,7 +2,7 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_3 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [8 held for review](../REVIEW.md)._
+_3 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [6 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
