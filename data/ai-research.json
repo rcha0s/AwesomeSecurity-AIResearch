@@ -154,10 +154,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 28,
+        "newness": 27,
         "credibility": 43.9,
-        "composite": 59.18,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 58.93,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -172,10 +172,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 28,
+        "newness": 27,
         "credibility": 75.0,
-        "composite": 58.75,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 58.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -384,10 +384,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 28,
+        "newness": 27,
         "credibility": 55.0,
-        "composite": 55.75,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 55.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -451,10 +451,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 28,
+        "newness": 27,
         "credibility": 55.0,
-        "composite": 51.25,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 51.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -518,10 +518,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 28,
+        "newness": 27,
         "credibility": 75.0,
-        "composite": 49.75,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 49.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -731,6 +731,293 @@
       "previous_slugs": [
         "funes-a-cross-agent-memory-layer-that-preserves-raw-session"
       ]
+    },
+    {
+      "candidate_id": "accenture-embedded-evaluation-908fa9e458",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access; each expects to invest at least $1B",
+      "summary": "Anthropic named Accenture, through its AI unit Faculty, as an embedded evaluator that will red-team models, run alignment assessments, and test safeguards from inside the company with access comparable to an employee's. Each company expects to invest at least $1 billion over five years. Anthropic funds the work directly and says there are no standards yet for evaluator access or reporting.",
+      "lessons": [
+        {
+          "point": "Embedded evaluators get insider-level access, unlike today's external pre-deployment testers.",
+          "excerpt": "embedded evaluators will work inside AI companies, with access comparable to an employee's.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The scale is large: at least $1 billion each over five years.",
+          "excerpt": "Anthropic and Accenture each expect to invest at least $1 billion in building capacity in this area over the next five years.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The evaluated lab pays the evaluator directly.",
+          "excerpt": "Given the importance and urgency of this work, Anthropic will fund Accenture's work directly.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Access and reporting rules do not exist yet.",
+          "excerpt": "There are, as yet, no standards for what information embedded evaluators should have access to, or how they should report what they find.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Embedded evaluation is starting with a lab-funded commercial partner and no shared standards, so judge its independence by the access and reporting terms once they are published.",
+      "tags": [
+        "embedded-evaluation",
+        "third-party-evals",
+        "ai-governance",
+        "red-teaming",
+        "anthropic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track the access and reporting terms of embedded evaluators",
+        "detail": "When Anthropic or Accenture publish evaluator reports, check what training-time access was granted, who controls redaction, and whether incidents are reported publicly; compare with the METR arrangement before relying on these reports as independent assurance."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 35,
+        "newness": 27,
+        "credibility": 72.5,
+        "composite": 38.62,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "source_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+      "article_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/accenture-embedded-evaluation-908fa9e458.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 72.5,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "id": "anthropic-funds-accenture-s-faculty-as-an-embedd-bbde4cc1be",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 19 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "bound-conditioned-latent-inference-for-progressi-6860d502a8",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Bound-conditioned latent inference cuts progressive image codec BD-rate 7.96% vs CTC on Kodak with 5.3x fewer parameters",
+      "summary": "Progressive image codecs send one bitstream that can be cut short at any point, encoding latents as trit-planes (base-3 digit layers). This NeurIPS 2026 paper treats the trits decoded so far as lower and upper bounds on each continuous latent, and uses the center and width of those bounds to refine both the entropy model and the reconstruction. On Kodak it lowers BD-rate (the average bitrate saving at equal quality) by 17.78% vs DPICT and 7.96% vs CTC, using one shared model instead of per-plane predictors.",
+      "lessons": [
+        {
+          "point": "Decoded trits are used as interval constraints on continuous latents, not only as discrete symbols.",
+          "excerpt": "reformulates progressive trit-plane coding as sequential latent inference under shrinking interval constraints",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The method beats prior progressive codecs on rate-distortion on Kodak.",
+          "excerpt": "reducing BD-rate by 17.78%over DPICT and by 7.96%over CTC on Kodak",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "One shared model replaces plane-specific predictors, cutting parameters and latency.",
+          "excerpt": "replacing CTC's plane-specific predictors with a shared model that uses about 5.3×fewer parameters and achieves lower latency than CTC",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A solid image-compression result, but it has no bearing on securing or building AI agents and harnesses.",
+      "tags": [
+        "image-compression",
+        "progressive-coding",
+        "entropy-modeling",
+        "neurips-2026"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action for security or harness practitioners",
+        "detail": "Only relevant if you ship learned image codecs: compare BLI against CTC/DPICT on your own rate-distortion and latency budget. Otherwise skip."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 5,
+        "newness": 27,
+        "credibility": 72.0,
+        "composite": 31.05,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "source_url": "http://arxiv.org/abs/2610.30966v1",
+      "article_url": "http://arxiv.org/abs/2610.30966v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/bound-conditioned-latent-inference-for-progressi-6860d502a8.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NeurIPS (via arXiv)",
+      "id": "bound-conditioned-latent-inference-cuts-progress-ea3eddcedb",
+      "retrieved_at": "2026-10-24T08:18:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "robocasa-shift-stage-aware-robustness-evaluation-c4163a1f0c",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "RoboCasa-Shift: equal success-rate drops in a VLA robot policy hide very different failure stages",
+      "summary": "RoboCasa-Shift is a robustness benchmark for vision-language-action (VLA) robot policies. It pairs each clean rollout with a perturbed one that differs only in one shift, and records which task stage fails. Testing GR00T N1.5 over 1,040 rollouts, it finds that headline success rate hides a lot: one camera shift left success unchanged while 8 of 80 paired episodes flipped outcome, and two shifts with the same success drop failed at the first stage at very different rates (19.0% vs 36.4%).",
+      "lessons": [
+        {
+          "point": "Matched clean/perturbed pairs isolate the effect of one shift per comparison.",
+          "excerpt": "matched clean-perturbed rollouts in which each pair shares the same underlying settings and differs only in the target shift",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Higher perturbation severity does not reliably mean worse performance, so severity sweeps need care.",
+          "excerpt": "Robustness responses vary substantially across factors and tasks, and increasing severity does not always produce monotonic degradation.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The same aggregate drop can come from failures at different depths of execution.",
+          "excerpt": "Stage-aware analysis further shows that the same end-to-end degradation can correspond to different execution-depth profiles.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Aggregate success rate can hide outcome flips and which task stage fails; the study covers one robot policy on four simulated tasks.",
+      "tags": [
+        "vla-policies",
+        "robustness-benchmark",
+        "paired-evaluation",
+        "long-horizon-tasks",
+        "robotics"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Report paired flip rates and stage of failure alongside success rate in long-horizon evals",
+        "detail": "When testing an agent under a perturbation, run matched clean/perturbed pairs with the same seed and settings, count outcome flips in both directions (not just the net success delta), and log the first sub-step that failed so equal drops can be told apart."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 15,
+        "newness": 27,
+        "credibility": 53.2,
+        "composite": 29.73,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "benchmark-category-labels-can-mask-conflated-capabilities"
+      ],
+      "source_url": "https://arxiv.org/abs/2610.27861",
+      "article_url": "https://arxiv.org/abs/2610.27861",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/robocasa-shift-stage-aware-robustness-evaluation-c4163a1f0c.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 53.2,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "robocasa-shift-equal-success-rate-drops-in-a-vla-930c528cd6",
+      "retrieved_at": "2026-10-24T08:18:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 50 > 45 (Testing GR00T N1.5 over 1,040 rollouts, it finds that headline success rate hides a lot: one camera shift left success u)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Anthropic describes presenting MCP servers as code APIs so agents load fewer tool definitions and tokens",
+      "source_url": "https://www.anthropic.com/research/code-execution-with-mcp",
+      "takeaway": "Code execution cuts MCP token cost, but the agent-written code then needs sandboxing, limits and monitoring.",
+      "summary": "Anthropic says loading every MCP tool definition and passing every result through the model wastes context, and letting agents write code against a file tree of tools cut one example from 150,000 tokens to 2,000. The post warns that this needs a secure execution environment, and the raw text dates the post to 2025-11-04 while the tracker lists 2026-10-18.",
+      "lessons": [
+        {
+          "point": "The post is open about the security cost of running agent-generated code.",
+          "excerpt": "These infrastructure requirements add operational overhead and security considerations that direct tool calls avoid.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "code-execution-with-mcp-a007f8bbe9",
+      "article_url": "https://www.anthropic.com/research/code-execution-with-mcp",
+      "published": "2026-10-18",
+      "raw_path": "data/_raw/code-execution-with-mcp-a007f8bbe9.txt",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.8,
+      "discovered_via": "sitemap",
+      "source_name": "Anthropic Research",
+      "id": "anthropic-describes-presenting-mcp-servers-as-co-59c8720057",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident",
+          "rce"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.8,
+        "composite": 10.62,
+        "scored_at": "2026-10-24T08:21:16+00:00"
+      }
     }
   ]
 }

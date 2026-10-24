@@ -18,7 +18,7 @@ Automatic harness evolution, which optimizes the prompts, skills, tools and orch
 
 **Topic:** AI Research  ·  **Domain:** Evaluation & Benchmarks  
 **Source:** [arXiv cs.AI (Artificial Intelligence)](https://arxiv.org/abs/2610.22466)  ·  **Retrieved:** 2026-10-19  
-**Scores:** Newness 28 · Novelty 65 · Relevance 87 · Credibility 44 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 27 · Novelty 65 · Relevance 87 · Credibility 44 · **Composite 59** _(each 0-100)_  
 **Tags:** `harness-evolution`, `evals`, `overfitting`, `test-time-compute`, `agents`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.
 
