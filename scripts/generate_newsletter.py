@@ -84,7 +84,7 @@ def topic_section(topic: str, conf: c.Config, trends: list[dict]) -> list[str]:
     out += ["**📈 Emerging trends**", ""]
     if trends:
         for t in trends[:TOP_TRENDS]:
-            arrow = "🔺 rising" if t["recent"] else "watching"
+            arrow = {"rising": "🔺 rising", "steady": "steady"}.get(t.get("state"), "quiet")
             out.append(
                 f"- **{t['tag']}** ({arrow}) — {t['count']} findings from "
                 f"{t['sources']} sources since {t['first_seen']}."

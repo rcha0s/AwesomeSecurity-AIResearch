@@ -2,7 +2,7 @@
 
 **Published:** Aug 28, 2026
 
-> **Takeaway:** A model's safety refusal to run an untrusted binary is not automatically safe if the 'safe' alternative it chooses (writing its own code to parse the untrusted data) is itself exploitable - containment has to hold at the OS/network layer, because the model's own good-faith safety decisions can become an attacker's exploit path.
+> **Takeaway:** The model's safe alternative to running an untrusted binary (parsing the data with its own code) was itself exploitable, so containment has to hold at the OS and network layer.
 
 ## TL;DR
 

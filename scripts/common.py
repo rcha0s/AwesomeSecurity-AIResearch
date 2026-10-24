@@ -152,6 +152,55 @@ def moved_slug(entry: dict) -> str | None:
     return old if old != domain_slug(entry.get("domain") or "General") else None
 
 
+def title_slug(title: str | None) -> str:
+    """The title part of an entry's page filename (generate_site.entry_filename)."""
+    return slugify(title or "", 60)
+
+
+def carry_previous_slugs(old: dict, new: dict) -> dict:
+    """`new` (an updated copy of `old`) keeping every page slug `old` ever had.
+
+    When a retitle changes the page slug, the old slug is appended to
+    `previous_slugs` so the renderers can leave a "Moved" stub at the old page
+    path. Every code path that changes an existing entry's title goes through
+    this (merge_analysis.reconcile, retitle)."""
+    prev: list[str] = []
+    for slug in list(old.get("previous_slugs") or []) + list(new.get("previous_slugs") or []):
+        if isinstance(slug, str) and slug and slug not in prev:
+            prev.append(slug)
+    if old.get("title") and title_slug(old["title"]) not in prev:
+        prev.append(title_slug(old["title"]))
+    current = title_slug(new.get("title"))
+    prev = [s for s in prev if s != current]
+    out = {k: v for k, v in new.items() if k != "previous_slugs"}
+    return {**out, "previous_slugs": prev} if prev else out
+
+
+def retitle(entry: dict, title: str) -> dict:
+    """A copy of `entry` with a new title, recording the old page slug."""
+    return carry_previous_slugs(entry, {**entry, "title": title})
+
+
+def former_page_paths(entry: dict) -> list[tuple[str, str]]:
+    """(domain dir, filename) of every page path this entry used to have: its
+    pre-taxonomy dir (moved_slug) and every previous title slug, in any mix.
+    Excludes its current path. Renderers leave a "Moved" stub at each."""
+    date = entry.get("date") or "undated"
+    here = domain_slug(entry.get("domain") or "General")
+    dirs = [here] + [d for d in [moved_slug(entry)] if d]
+    slugs = [title_slug(entry.get("title"))] + [
+        s for s in entry.get("previous_slugs") or [] if isinstance(s, str) and s
+    ]
+    current = (here, f"{date}-{slugs[0]}.md")
+    out: list[tuple[str, str]] = []
+    for d in dirs:
+        for s in slugs:
+            path = (d, f"{date}-{s}.md")
+            if path != current and path not in out:
+                out.append(path)
+    return out
+
+
 def domain_name(domain: str) -> str:
     """Display name for a domain ID; a non-ID label passes through."""
     return taxonomy.get().name(domain)

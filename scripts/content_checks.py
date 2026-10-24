@@ -54,7 +54,9 @@ STAMP = re.compile(r"<span>Generated <b>([^<]*)</b></span>")
 # to existing ones (bumping `last_reviewed`), which is all a scan does (#68).
 # Any other change to an existing claim, live or retired (status, statement,
 # title, guidance, supersession edges, confidence, scope, ...), means the PR does
-# not auto-merge: it stays open for a human.
+# not auto-merge: it stays open for a human. The ledger dates (`added_on`,
+# `changed_on`) and a retired claim's `refuted_controls` are frozen the same way:
+# `add_claim.py evidence`, the only claim write a scan makes, never touches them.
 CLAIM_MUTABLE = frozenset({"evidence", "last_reviewed"})
 NEEDS_REVIEW = "claim change needs human review"
 DEMOTION_REVIEW = "editorial demotion needs human review"

@@ -2,22 +2,22 @@
 
 > Everything held back from the site, with the reason. Findings that are **not yet vetted** (low confidence/novelty/relevance, or below the composite floor (20)), and news stories whose excerpt is not grounded in its source. Nothing here is deleted; promote a finding by raising its scores or clearing `needs_review`, or fix a news story's excerpt, then regenerate.
 
-_Updated 2026-10-23._
+_Updated 2026-10-24._
 
 ## AI Security (7)
 
 - **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 66.0 · _news story: excerpt not grounded in source (only 75% of quotes verified)_
-  A model evaluation with production classifiers off is not a red-team exercise; it is a live agent with net-access ambition and a package-manager proxy is a plausible…
+  Treat a model eval with production classifiers off as a live agent that may try to escape, where a package-manager proxy is a plausible sandbox-escape primitive.
 - **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 59.35 · _news story: excerpt not grounded in source_
   The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
 - **[Humans in the loop miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 53.95 · _news story: excerpt not grounded in source_
   Human-in-the-loop is a fatigue-limited primitive: engineer approvals as classifier + sandbox + hooks, not as a UX prompt.
 - **[MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027)** · composite 53.1 · _news story: excerpt not grounded in source_
-  MCP's enterprise turn adds concrete auth hardening (iss validation) and a stateless architecture that removes one class of session-poisoning attack surface but relies on standard…
+  MCP's enterprise turn adds iss validation and a stateless design that removes one session-poisoning surface but leans on standard load-balancer trust boundaries.
 - **[SCOPE compiles natural-language agent policies into predicate programs run by small models, aiming for frontier-level accuracy with stable, interpretable verdicts](https://arxiv.org/abs/2610.31062)** · composite 51.25 · _flagged needs_review (low confidence / novelty / relevance)_
   For agent policy enforcement, prefer a compiled program of narrow predicates over one guardrail model or one LLM judge: cheaper, steadier and auditable (authors' claims, abstract…
 - **[OpenAI's Hugging Face incident reduces to skipped basics: zero-trust and defense-in-depth on the eval host](https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/)** · composite 51.0 · _news story: excerpt not grounded in source_
-  Rogue-agent incidents are a foundational-security failure story wearing an AI-frontier costume. The mitigations are already well-known: zero-trust boundaries, isolated eval hosts,…
+  Rogue-agent incidents are foundational-security failures with known fixes: zero-trust boundaries, isolated eval hosts, egress control and active monitoring.
 - **[Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes](http://arxiv.org/abs/2610.29196v1)** · composite 46.3 · _flagged needs_review (low confidence / novelty / relevance)_
   When red-teaming vision models in safety-critical systems, score where the box lands, not just whether one exists.
 
@@ -43,7 +43,7 @@ _Updated 2026-10-23._
 ## AI Research (3)
 
 - **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 59.62 · _news story: excerpt not grounded in source (only 0% of quotes verified)_
-  For AI-driven bug hunting, harness output quality is dominated by outcome definition and per-agent scoping; a threat-model file is the single highest-leverage input, and mixing…
+  In AI bug hunting, outcome definition and per-agent scoping drive output quality most, with a threat-model file as the highest-leverage input.
 - **[DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522)** · composite 51.25 · _flagged needs_review (low confidence / novelty / relevance)_
   Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.
 - **[Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable](https://www.anthropic.com/news/an-update-on-independent-evaluators)** · composite 49.75 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -51,4 +51,4 @@ _Updated 2026-10-23._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-10-23. 18 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-24. 18 item(s) awaiting review.</sub>
