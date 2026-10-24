@@ -163,3 +163,52 @@ def test_ghsa_ai_keywords_match_whole_words_only(text, ai):
 
 def test_ghsa_critical_pass_is_configured():
     assert int(c.load_yaml(c.SOURCES_FILE)["ghsa"]["per_run_critical"]) >= 20
+
+
+# --- 2026-10-23 router catch-alls ---------------------------------------------
+# Real titles every registered feed dropped before staging: no keyword fired.
+@pytest.mark.parametrize(
+    "title,label",
+    [
+        (
+            "PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet",
+            "ps.appsec",
+        ),
+        (
+            "Max-severity GitLab bug allows remote code execution over 12 years of releases",
+            "ps.appsec",
+        ),
+        ("Node2Shell: From Brotli Data to Remote Code Execution", "ps.appsec"),
+        ("Linux KVM guest-host escape rated critical", "ps.appsec"),
+        ("Arista patches new VeloCloud Orchestrator zero-day exploited in attacks", "ps.appsec"),
+        ("OpenAI models hacked a crypto wallet and breached more websites", "ps.appsec"),
+        (
+            "Loud, Fast, and Everywhere: Anatomy of a Real AI-Driven Cloud Attack",
+            "ais.agent-security",
+        ),
+        ("Fake Claude, ChatGPT Attacks Surge, Putting Developers at Risk", "ais.agent-security"),
+    ],
+)
+def test_the_catch_alls_stage_the_weeks_missed_stories(title, label):
+    import aggregate
+
+    assert aggregate.classify_domain(title, RULES, []) == label
+
+
+@pytest.mark.parametrize(
+    "title,label",
+    [
+        (
+            "New prompt injection technique bypasses LLM guardrails",
+            "AI Security",
+        ),  # earlier class wins
+        ("npm worm hits 400 packages: a supply chain compromise", "Web Application Security"),
+        ("Mirai botnet operators join the attacks", None),  # "mirai bot" is not " ai bot"
+        ("Our quarterly earnings and the new sales force", None),  # "rce" inside a word
+        ("My weekend woodworking project", None),
+    ],
+)
+def test_the_catch_alls_leave_earlier_classes_and_noise_alone(title, label):
+    import aggregate
+
+    assert aggregate.classify_domain(title, RULES, []) == label

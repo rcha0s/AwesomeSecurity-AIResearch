@@ -62,6 +62,7 @@ scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py
 scripts/run_golden_local.sh # weekly golden-set analyzer run; scan_containment.sh = the shared session lockdown
 data/evals/               # golden.json (answer key), recall-<week>.json, golden-<date>.json, history.json
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
+scripts/newsworthy.py     # pre-analysis big-story signal for batch selection: markers + same-story corroboration
 scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
 scripts/merge_guard.py    # auto-merge security boundary: is this PR content-only? (pure)
 scripts/automerge.py      # drives .github/workflows/automerge.yml (REST gh api only)
@@ -211,6 +212,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   round-robin across ingestor classes (KEV, HN, GHSA, RSS, ...) by newness + source
   credibility, with a small `batch_routed_bonus` and at most `batch_per_source`
   slots per source (`batch_class_slots` lets plain RSS deal 2 a round). First,
+  a big-story lane (`scripts/newsworthy.py`) of up to `batch_story_max` slots
+  takes stories that 2+ independent sources staged this run with a severity or
+  AI-incident marker (rce, critical, exploited, compromise, agent hijack, ...),
+  one slot per story, tagged `batch_priority: story`; the story's other copies
+  wait in the backlog (`batch_same_story_as`), and stories the ledger already
+  holds never qualify. Markers and corroboration also add `batch_marker_bonus`
+  and `batch_corroboration_bonus` to the deal's score. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
   entries and critical GHSA advisories (plus high ones in AI tooling), tagged
   `batch_priority`; the session analyzes those first. Next, `batch_class_min`
