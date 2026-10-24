@@ -212,7 +212,11 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
 
    Never edit `data/claims.json` by hand (the Mac session is denied it): the CLI
    appends new evidence at the end, and a scan PR that reorders or rewrites an
-   existing claim's evidence is refused by the merge gate.
+   existing claim's evidence is refused by the merge gate. An unattended scan
+   runs only `list`, `new`, `evidence` and `validate`: it can attach
+   `contests`/`refutes` evidence, but a supersession or a status change is a
+   human call, so name it in the run summary instead of running it.
+   `--source-name` is an `evidence` option only.
 
    Rules: the `reason` on a supersession is the whole point, so make it specific and
    evidence-backed ("graph retrieval beat lexical search on multi-hop recall"), never

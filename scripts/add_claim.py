@@ -147,6 +147,9 @@ def cmd_evidence(args: argparse.Namespace) -> int:
     if args.id not in index:
         print(f"unknown claim: {args.id}")
         return 1
+    if cl.is_retired(index[args.id]):
+        print("a retired claim's evidence is frozen as the record of what was believed")
+        return 1
     new_items = [
         {**item, "source_name": args.source_name} if args.source_name else item
         for item in parse_evidence(args.evidence)

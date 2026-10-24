@@ -381,3 +381,12 @@ def test_evidence_source_name_lands_on_the_appended_item_only(sandbox):
         "note": "what it shows",
         "source_name": "Pub",
     }
+
+
+def test_evidence_refuses_a_retired_claim(sandbox):
+    add_claim.main(new_args("old"))
+    add_claim.main(new_args("better"))
+    add_claim.main(["supersede", "old", "better", "--reason", "replaced"])
+    assert add_claim.main(["evidence", "old", "--evidence", EVIDENCE]) == 1
+    old = claims.claim_index(claims.load_ledger()["claims"])["old"]
+    assert len(old["evidence"]) == 1
