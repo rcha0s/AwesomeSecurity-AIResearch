@@ -82,12 +82,17 @@ def reconcile(existing: dict, new: dict) -> dict:
     )
     corr = list(existing.get("corroborating_sources") or [])
     if same_source:
-        return {
-            **existing,
-            **new,
-            "id": existing.get("id") or new.get("id"),
-            "corroborating_sources": corr,
-        }
+        # A re-analysis may retitle the entry: keep its old page slug so the
+        # renderers leave a "Moved" stub at the old path.
+        return c.carry_previous_slugs(
+            existing,
+            {
+                **existing,
+                **new,
+                "id": existing.get("id") or new.get("id"),
+                "corroborating_sources": corr,
+            },
+        )
     nu = c.normalize_url(new.get("source_url", ""))
     if nu and all(c.normalize_url(s.get("url", "")) != nu for s in corr):
         corr.append(

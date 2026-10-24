@@ -262,3 +262,87 @@ def test_fix_evidence_rejects_unknowns_and_retired_claims(sandbox):
     assert add_claim.main(["fix-evidence", "a", "--url", url, "--stance", "vibes"]) == 1
     add_claim.main(["supersede", "a", "b", "--reason", "Better."])
     assert add_claim.main(["fix-evidence", "a", "--url", url, "--stance", "contests"]) == 1
+
+
+# --- ledger dates + refuted controls ----------------------------------------
+def _dates(claim_id: str) -> tuple:
+    found = claims.claim_index(claims.load_ledger()["claims"])[claim_id]
+    return found.get("added_on"), found.get("changed_on")
+
+
+def _rewrite(claim_id: str, **fields) -> None:
+    ledger = claims.load_ledger()
+    claims.claim_index(ledger["claims"])[claim_id].update(fields)
+    claims.save_ledger(ledger)
+
+
+def test_new_stamps_added_on_and_changed_on(sandbox):
+    assert add_claim.main(new_args("dated")) == 0
+    assert _dates("dated") == ("2026-07-15", "2026-07-15")  # the frozen test clock
+
+
+def test_status_move_stamps_changed_on_but_a_no_op_does_not(sandbox):
+    add_claim.main(new_args("moving"))
+    _rewrite("moving", added_on="2026-07-01", changed_on="2026-07-01")
+    assert add_claim.main(["status", "moving", "--set", "current"]) == 0
+    assert _dates("moving") == ("2026-07-01", "2026-07-01")
+    assert add_claim.main(["status", "moving", "--set", "contested"]) == 0
+    assert _dates("moving") == ("2026-07-01", "2026-07-15")
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["evidence", "steady", "--evidence", "supports|https://example.com/more"],
+        ["correct", "steady", "--guidance", "Reworded."],
+        ["fix-evidence", "steady", "--url", "https://example.com/paper", "--note", "n"],
+    ],
+)
+def test_non_status_writes_leave_changed_on_alone(sandbox, argv):
+    add_claim.main(new_args("steady"))
+    _rewrite("steady", added_on="2026-07-01", changed_on="2026-07-01")
+    assert add_claim.main(argv) == 0
+    assert _dates("steady") == ("2026-07-01", "2026-07-01")
+
+
+def test_supersede_records_refuted_controls_and_changed_on(sandbox):
+    add_claim.main(new_args("old-way"))
+    add_claim.main(new_args("new-way"))
+    argv = ["supersede", "old-way", "new-way", "--reason", "r", "--refuted", "--date", "2026-07-01"]
+    assert add_claim.main([*argv, "--refuted-control=--ignore-scripts"]) == 0
+    old = claims.claim_index(claims.load_ledger()["claims"])["old-way"]
+    assert old["refuted_controls"] == ["--ignore-scripts"]
+    assert (old["superseded_on"], old["changed_on"]) == ("2026-07-01", "2026-07-15")
+
+
+def test_correct_sets_refuted_controls_on_retired_only(sandbox):
+    add_claim.main(new_args("old-way"))
+    add_claim.main(new_args("new-way"))
+    add_claim.main(["supersede", "old-way", "new-way", "--reason", "r"])
+    assert add_claim.main(["correct", "new-way", "--refuted-control", "x"]) == 1
+    assert add_claim.main(["correct", "old-way", "--refuted-control", "prefer json"]) == 0
+    old = claims.claim_index(claims.load_ledger()["claims"])["old-way"]
+    assert old["refuted_controls"] == ["prefer json"]
+
+
+def test_correct_refuses_a_refuted_control_that_live_guidance_recommends(sandbox):
+    add_claim.main(new_args("old-way"))
+    add_claim.main(new_args("new-way", "--guidance", "Prefer --ignore-scripts."))
+    add_claim.main(["supersede", "old-way", "new-way", "--reason", "r"])
+    assert add_claim.main(["correct", "old-way", "--refuted-control=--ignore-scripts"]) == 1
+    old = claims.claim_index(claims.load_ledger()["claims"])["old-way"]
+    assert "refuted_controls" not in old
+
+
+def test_backfill_dates_fills_missing_dates_once(sandbox, monkeypatch):
+    add_claim.main(new_args("legacy"))
+    ledger = claims.load_ledger()
+    for claim in ledger["claims"]:
+        del claim["added_on"], claim["changed_on"]
+    claims.save_ledger(ledger)
+    history = [("2026-07-02", {"claims": [{"id": "legacy", "status": "current"}]})]
+    monkeypatch.setattr(add_claim, "ledger_history", lambda: history)
+    assert add_claim.main(["backfill-dates"]) == 0
+    assert _dates("legacy") == ("2026-07-02", "2026-07-02")
+    monkeypatch.setattr(add_claim, "ledger_history", lambda: pytest.fail("history re-read"))
+    assert add_claim.main(["backfill-dates"]) == 0

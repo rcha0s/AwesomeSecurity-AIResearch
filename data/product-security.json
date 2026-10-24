@@ -800,7 +800,7 @@
       "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
       "topic": "product-security",
       "domain": "ps.appsec",
-      "title": "Pillow MIC images hang n_frames forever: an inherited method that depends on an overridden tell() (GHSA-22hg-r758-rrw9)",
+      "title": "Pillow DoS: a 5.6 KB MIC file hangs n_frames at 100% CPU (GHSA-22hg-r758-rrw9)",
       "source_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
       "article_url": "https://github.com/advisories/GHSA-22hg-r758-rrw9",
       "tweet_url": null,
@@ -840,7 +840,7 @@
           "grounded": true
         }
       ],
-      "takeaway": "Parse untrusted images under a timeout and restrict Image.open to the formats you expect.",
+      "takeaway": "Affects installs with olefile, back to Pillow 7.2.0. Parse untrusted images under a timeout and restrict Image.open to the formats you expect.",
       "tags": [
         "dos",
         "image-parsing",
@@ -867,7 +867,10 @@
           "high-relevance"
         ],
         "at": "2026-10-22T01:39:55+00:00"
-      }
+      },
+      "previous_slugs": [
+        "pillow-mic-images-hang-n-frames-forever-an-inherited-method"
+      ]
     },
     {
       "topic": "product-security",
@@ -1070,7 +1073,7 @@
       "cluster": null,
       "related_claims": [],
       "summary": "Signal's Automatic Key Verification depends on independent auditors maintaining consistency of a global public-key map; Trail of Bits operates one of the three required auditors (alongside Signal and Cloudflare), implemented from scratch (not from Signal's reference implementation) for independent verification. Clients require signatures from all three auditors within the last seven days, so a fully malicious Signal server can maintain a split view of the key map for at most one week before client warnings appear.",
-      "takeaway": "A key-transparency system's actual security guarantee is bounded by its auditor-signature freshness window, not by the cryptography alone — Signal's design means a compromised or malicious server can present different keys to different users for up to a week before detection, which is a concrete, quantifiable limit worth knowing when evaluating any similar transparency-log design.",
+      "takeaway": "Signal's key transparency is bounded by its auditor-signature freshness window: a malicious server can show different keys to different users for up to a week before detection.",
       "lessons": [
         {
           "point": "Clients currently require valid signatures from three independently-operated auditors (Signal, Cloudflare, and Trail of Bits), not just one, to accept a given key-map state.",

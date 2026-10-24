@@ -36,7 +36,7 @@
       ],
       "source_rank": 77.5,
       "summary": "Trail of Bits reports three durable techniques for driving Codex's /goal at bug hunting in Rust, curl, zlib, and Keycloak: let Codex draft its own goal prompts from a THREAT_MODEL.md, define outcomes rather than paths, and assign exactly one outcome per agent. They built aicov to track which lines Codex actually read, and a variant-analysis pipeline with two-model false-positive gauntlet found every Rust bug they submitted.",
-      "takeaway": "For AI-driven bug hunting, harness output quality is dominated by outcome definition and per-agent scoping; a threat-model file is the single highest-leverage input, and mixing two objectives in one agent silently trades one off against the other.",
+      "takeaway": "In AI bug hunting, outcome definition and per-agent scoping drive output quality most, with a threat-model file as the highest-leverage input.",
       "lessons": [
         {
           "point": "Spend tokens defining the outcome, not the path — prescribing method (\"use this fuzzing harness\") destroys the agent's open-ended search advantage.",
@@ -262,7 +262,7 @@
         "ai-security"
       ],
       "summary": "OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.",
-      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
+      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, and the response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
       "lessons": [
         {
           "point": "The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call.",
@@ -421,7 +421,7 @@
           "grounded": true
         }
       ],
-      "takeaway": "When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise — the rules, not the model alone, are what make the output actionable.",
+      "takeaway": "Give an agent a durable goal plus strict rules for what counts as a real finding and it plans multi-step tooling and filters its own noise; the rules make the output actionable.",
       "tags": [
         "agents",
         "goal-persistence",
@@ -663,6 +663,74 @@
       "needs_review": true,
       "grounding_score": 1.0,
       "domain_label": "Agent Verification & Stewardship"
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Hugging Face's funes: shared agent memory that keeps the raw session text, not summaries",
+      "source_url": "https://huggingface.co/blog/funes",
+      "cluster": "B",
+      "related_claims": [],
+      "summary": "Hugging Face's funes is a local-first durable memory layer that indexes the session traces already produced by coding agents (Claude Code, Codex, pi, Hermes) so a new agent session can `recall` past decisions and rationale with exact provenance. Its key design choice is that nothing is distilled into a summarized \"fact\" at write time — recall always returns the original text and can lead back to the exact turn it came from — and any shared/synced memory has credentials redacted twice (during local indexing, and again before publishing) before it leaves the machine.",
+      "takeaway": "Memory that stores the original turn with its provenance can be checked later; memory distilled into 'facts' at write time can't.",
+      "lessons": [
+        {
+          "point": "funes explicitly avoids distilling session content into summarized facts at indexing time — recall always returns the original text with exact provenance (agent, timestamp, session, turn), so a result can always be traced back to the exact turn that produced it.",
+          "excerpt": "**Raw evidence stays intact:** Nothing is distilled into a fact at write time. A result can always lead back to the turn that produced it.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Before any session content reaches a shared Hugging Face dataset, credentials are redacted during indexing, then the publish step scans every chunk again and withholds anything that still looks like a secret — a two-pass redaction rather than a single filter.",
+          "excerpt": "Before anything reaches the Hub, credentials have already been redacted during indexing. Publishing then scans every chunk again and withholds anything that still looks like a secret.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-memory",
+        "rag",
+        "provenance",
+        "huggingface",
+        "funes"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Design agent memory systems to preserve raw evidence with provenance, not pre-summarized facts",
+        "detail": "When building a memory/retrieval layer for coding agents, index and retrieve raw session text with exact source provenance rather than summarizing into facts at write time — summarization performed before the retrieval question is known risks discarding exactly the context a later query needs."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 58,
+        "newness": 5,
+        "credibility": 80.0,
+        "composite": 42.65,
+        "scored_at": "2026-10-23T16:45:06+00:00"
+      },
+      "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
+      "article_url": "https://huggingface.co/blog/funes",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-03",
+      "raw_path": "data/_raw/give-your-coding-agents-a-memory-you-own-1fc8f7f569.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 80.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "verified": true,
+      "verify_note": "Both lessons directly quoted; taking lower novelty (40 vs 48) and relevance (45 vs 58, since this is mainly a dev-productivity tool with a secondary security angle).",
+      "id": "funes-a-cross-agent-memory-layer-that-preserves-0f0e02a9d1",
+      "retrieved_at": "2026-09-09T06:16:08+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security",
+      "previous_slugs": [
+        "funes-a-cross-agent-memory-layer-that-preserves-raw-session"
+      ]
     }
   ]
 }

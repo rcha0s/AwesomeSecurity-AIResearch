@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import re
 from copy import deepcopy
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import common as c
@@ -45,16 +46,19 @@ STANCES = ("supports", "contests", "refutes")
 # speak to? Optional — a claim without a phase is fine, just harder to
 # discover under the taxonomy view.
 PHASES = (
-    "threat-model",    # what the adversary can do; assumptions about power
-    "attack",          # concrete attack techniques and demonstrations
-    "defense",         # mitigations, detections, controls
-    "evaluation",      # how to measure any of the above
-    "deployment",      # what to do at operate/build time (harnesses, gates)
-    "incident",        # observed real-world compromises + response
+    "threat-model",  # what the adversary can do; assumptions about power
+    "attack",  # concrete attack techniques and demonstrations
+    "defense",  # mitigations, detections, controls
+    "evaluation",  # how to measure any of the above
+    "deployment",  # what to do at operate/build time (harnesses, gates)
+    "incident",  # observed real-world compromises + response
 )
 
 REQUIRED_FIELDS = ("id", "topic", "statement", "status")
 EDGE_FIELDS = ("supersedes", "superseded_by")
+# When the claim entered the ledger, and when its status last changed (ledger
+# time; `first_seen` is when the belief itself dates from).
+LEDGER_DATE_FIELDS = ("added_on", "changed_on")
 
 DEFAULT_CONFIDENCE = 0.5
 
@@ -179,6 +183,57 @@ def _validate_status(claim: dict) -> list[str]:
     return errors
 
 
+_ISO_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Ledger dates are written in UTC; allow a day of slack for a local clock ahead of it.
+FUTURE_SLACK_DAYS = 1
+
+
+def _ledger_day(value: object) -> date | None:
+    if not isinstance(value, str) or not _ISO_DAY.match(value):
+        return None
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def _validate_ledger_dates(claim: dict) -> list[str]:
+    """`added_on` (the day the claim entered the ledger) and `changed_on` (the day
+    its status last changed) are ledger dates, unlike `first_seen` (the belief's
+    origin). Both or neither; real days; not in the future; changed_on >= added_on."""
+    present = [f for f in LEDGER_DATE_FIELDS if f in claim]
+    if not present:
+        return []
+    if len(present) == 1:
+        missing = next(f for f in LEDGER_DATE_FIELDS if f not in claim)
+        return [f"{present[0]} is set but {missing} is not (they travel together)"]
+    errors: list[str] = []
+    days = {f: _ledger_day(claim.get(f)) for f in LEDGER_DATE_FIELDS}
+    latest = c.utcnow().date() + timedelta(days=FUTURE_SLACK_DAYS)
+    for field, day in days.items():
+        if day is None:
+            errors.append(f"{field} must be a YYYY-MM-DD date (got {claim.get(field)!r})")
+        elif day > latest:
+            errors.append(f"{field} is in the future: {claim.get(field)}")
+    added, changed = days["added_on"], days["changed_on"]
+    if added and changed and changed < added:
+        errors.append(f"changed_on ({changed}) is before added_on ({added})")
+    return errors
+
+
+def _validate_refuted_controls(claim: dict) -> list[str]:
+    controls = claim.get("refuted_controls")
+    if controls is None:
+        return []
+    if not isinstance(controls, list) or not all(
+        isinstance(x, str) and x.strip() for x in controls
+    ):
+        return ["refuted_controls must be a list of non-empty strings"]
+    if not is_retired(claim):
+        return ["refuted_controls belongs on a retired claim (it names what it was retired for)"]
+    return []
+
+
 def _validate_edges(claim: dict, known_ids: set[str]) -> list[str]:
     errors: list[str] = []
     for field in EDGE_FIELDS:
@@ -218,7 +273,80 @@ def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
         + _validate_evidence_currency(claim)
         + _validate_status(claim)
         + _validate_edges(claim, known_ids)
+        + _validate_ledger_dates(claim)
+        + _validate_refuted_controls(claim)
     )
+
+
+# --- Contradiction check: live guidance vs retired controls ----------------
+# A retired claim can name the controls it was retired for
+# (`refuted_controls: ["--ignore-scripts"]`). A live claim whose GUIDANCE then
+# names one of them (whole phrase, plural allowed) in a sentence with no
+# negation or caveat is recommending it, which contradicts the ledger.
+# Statements are not checked: they describe ("Model scanners miss load-time
+# payloads"); guidance prescribes. A sentence that warns against the control
+# ("Do not treat --ignore-scripts as the control", "Replace X with a sandbox")
+# passes. Deliberately lexical: the ledger is small; a false positive is fixed
+# by rewording, a false negative by naming the control on the retired claim.
+CONTRADICTION_FIELDS = ("guidance",)
+CAVEAT = re.compile(
+    r"\b(?:not|no|never|neither|nor|cannot|alone|insufficient|weak|defeats?|"
+    r"bypass(?:es|ed)?|instead\s+of|rather\s+than|avoid(?:s|ed|ing)?|"
+    r"replac(?:e|es|ed|ing)|drop(?:s|ped|ping)?|only|without|unless|but|however|"
+    r"miss(?:es|ed|ing)?|fail(?:s|ed|ing)?|limited)\b|n't\b",
+    re.IGNORECASE,
+)
+# A sentence ends at . ! ? or ; plus whitespace, but not after "e.g." / "i.e.",
+# which would detach a caveat from the control it qualifies.
+_SENTENCE_END = re.compile(r"(?<!\be\.g\.)(?<!\bi\.e\.)(?<=[.!?;])\s+", re.IGNORECASE)
+
+
+def retired_controls(index: dict[str, dict]) -> dict[str, str]:
+    """{control phrase (lowercased): id of the retired claim that names it}."""
+    out: dict[str, str] = {}
+    for claim_id, claim in index.items():
+        if not is_retired(claim) or not isinstance(claim.get("refuted_controls"), list):
+            continue
+        for control in claim["refuted_controls"]:
+            if isinstance(control, str) and control.strip():
+                out.setdefault(control.strip().lower(), claim_id)
+    return out
+
+
+def _control_pattern(control: str) -> re.Pattern:
+    """The control as a whole phrase (not inside a longer word), plural allowed."""
+    return re.compile(rf"(?<![\w-]){re.escape(control)}(?:e?s)?(?![\w-])", re.IGNORECASE)
+
+
+def recommended_controls(text: str, controls: dict[str, str]) -> list[str]:
+    """The controls `text` names in a sentence carrying no negation or caveat."""
+    found: list[str] = []
+    for sentence in _SENTENCE_END.split(text or ""):
+        if CAVEAT.search(sentence):
+            continue
+        found += [
+            ctl for ctl in controls if ctl not in found and _control_pattern(ctl).search(sentence)
+        ]
+    return found
+
+
+def _contradiction_errors(index: dict[str, dict]) -> list[str]:
+    controls = retired_controls(index)
+    if not controls:
+        return []
+    errors: list[str] = []
+    for claim_id, claim in index.items():
+        if not is_live(claim):
+            continue
+        for field in CONTRADICTION_FIELDS:
+            for ctl in recommended_controls(str(claim.get(field) or ""), controls):
+                origin = controls[ctl]
+                successor = ", ".join(edges(index[origin], "superseded_by")) or "its successor"
+                errors.append(
+                    f"{claim_id}: {field} recommends '{ctl}', which {origin} was retired "
+                    f"for; reword it against {successor}"
+                )
+    return errors
 
 
 def _reciprocity_errors(index: dict[str, dict]) -> list[str]:
@@ -276,7 +404,7 @@ def validate_ledger(ledger: dict) -> list[str]:
     for claim in claim_list:
         errors += [f"{claim.get('id', '?')}: {e}" for e in validate_claim(claim, seen)]
     index = claim_index(claim_list)
-    return errors + _reciprocity_errors(index) + _cycle_errors(index)
+    return errors + _reciprocity_errors(index) + _cycle_errors(index) + _contradiction_errors(index)
 
 
 # --- Ordering: live on top, retired pushed to the bottom --------------------
@@ -331,11 +459,15 @@ def supersede(
     reason: str,
     date: str,
     status: str = "superseded",
+    changed_on: str | None = None,
+    refuted_controls: list[str] | None = None,
 ) -> dict:
     """Retire `old_id` in favour of `new_id`, writing both ends of the edge.
 
     `status` is "superseded" (a better answer replaced it) or "refuted" (it was
-    shown to be wrong). Raises KeyError if either claim is unknown.
+    shown to be wrong). `date` is when the belief was retired (it may be
+    backdated to the evidence); `changed_on` is the ledger day of the status
+    change (defaults to today, UTC). Raises KeyError if either claim is unknown.
     """
     if status not in RETIRED_STATUSES:
         raise ValueError(f"status must be one of {RETIRED_STATUSES} (got {status!r})")
@@ -350,7 +482,42 @@ def supersede(
     old["superseded_by"] = sorted(set(edges(old, "superseded_by") + [new_id]))
     old["superseded_on"] = date
     old["supersession_reason"] = reason
+    old["changed_on"] = changed_on or c.utcnow().strftime("%Y-%m-%d")
+    old.setdefault("added_on", old["changed_on"])
+    if refuted_controls:
+        old["refuted_controls"] = sorted(
+            set(old.get("refuted_controls") or []) | set(refuted_controls)
+        )
     new["supersedes"] = sorted(set(edges(new, "supersedes") + [old_id]))
+    return updated
+
+
+def backfill_ledger_dates(ledger: dict, snapshots: list[tuple[str, dict]], today: str) -> dict:
+    """Fill missing added_on / changed_on from the ledger's history.
+
+    `snapshots` are (YYYY-MM-DD, ledger) pairs oldest first, one per commit that
+    touched the ledger. added_on is the first snapshot holding the id; changed_on
+    is the last snapshot where its status differs from the one before (else
+    added_on). A claim no snapshot holds gets `today` for both. Existing values
+    are never overwritten."""
+    first: dict[str, str] = {}
+    changed: dict[str, str] = {}
+    last_status: dict[str, str] = {}
+    for day, snap in snapshots:
+        for claim in snap.get("claims") or []:
+            cid, status = claim.get("id"), claim.get("status")
+            if not cid:
+                continue
+            if cid not in first:
+                first[cid] = changed[cid] = day
+            elif status != last_status.get(cid):
+                changed[cid] = day
+            last_status[cid] = status
+    updated = deepcopy(ledger)
+    for claim in updated.get("claims") or []:
+        cid = claim.get("id")
+        claim.setdefault("added_on", first.get(cid, today))
+        claim.setdefault("changed_on", max(changed.get(cid, today), claim["added_on"]))
     return updated
 
 
