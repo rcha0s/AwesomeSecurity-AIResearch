@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import timedelta
 
 import aggregate as agg
 import common as c
@@ -33,21 +32,31 @@ HN_ITEM = "https://news.ycombinator.com/item?id="
 HN_SOURCE_RANK = 55.0
 
 
-def search_stories(query: str, limit: int, since_ts: int, min_points: int = 0) -> list[dict]:
-    """Recent HN stories matching `query`, newest first. [] on any failure.
+def numeric_filters(since_ts: int, min_points: int = 0, until_ts: int | None = None) -> str:
+    """Algolia numericFilters: created in [since_ts, until_ts], points floor."""
+    filters = [f"created_at_i>={since_ts}"]
+    if until_ts is not None:
+        filters.append(f"created_at_i<={until_ts}")
+    if min_points > 0:
+        filters.append(f"points>={min_points}")
+    return ",".join(filters)
+
+
+def search_stories(
+    query: str, limit: int, since_ts: int, min_points: int = 0, until_ts: int | None = None
+) -> list[dict]:
+    """Recent HN stories matching `query`, newest first (created up to `until_ts`
+    for a backfill). [] on any failure.
 
     When called with query="" and min_points>=100, this is the "top-stories"
     tap — pull every high-scoring story in the window regardless of keyword,
     and let the shared classifier drop off-topic ones downstream."""
     import requests  # local import keeps offline unit tests import-clean
 
-    filters = [f"created_at_i>={since_ts}"]
-    if min_points > 0:
-        filters.append(f"points>={min_points}")
     params = {
         "query": query,
         "tags": "story",
-        "numericFilters": ",".join(filters),
+        "numericFilters": numeric_filters(since_ts, min_points, until_ts),
         "hitsPerPage": str(limit),
     }
     try:
@@ -127,8 +136,9 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
     limit = per_query or hn_cfg.get("per_query", 8)
     top_limit = per_query or hn_cfg.get("top_stories_per_run", 30)
     max_age = c.load_config().max_age_days
-    cutoff = c.utcnow() - timedelta(days=max_age)
+    cutoff, until = c.ingest_window(max_age)
     since_ts = int(cutoff.timestamp())
+    until_ts = int(until.timestamp()) if until else None
 
     out: list[dict] = []
     seen_ids: set[str] = set()
@@ -151,7 +161,7 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
 
     for query in queries:
         print(f"-> HN search: {query!r} (>= {min_points} pts, last {max_age}d)")
-        _stage(search_stories(query, limit, since_ts, min_points), min_points, "keyword")
+        _stage(search_stories(query, limit, since_ts, min_points, until_ts), min_points, "keyword")
 
     if top_stories_enabled:
         print(f"-> HN top-stories tap (>= {top_stories_min} pts, last {max_age}d)")
@@ -159,7 +169,7 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
         # classifier inside hit_to_candidate still enforces topic scope,
         # so this stays on-scope even without a keyword.
         _stage(
-            search_stories("", top_limit, since_ts, top_stories_min),
+            search_stories("", top_limit, since_ts, top_stories_min, until_ts),
             top_stories_min,
             "top-stories",
         )

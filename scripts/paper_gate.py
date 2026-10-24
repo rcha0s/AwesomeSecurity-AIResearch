@@ -93,7 +93,8 @@ def curator_link_ids(max_age_days: int | None = None) -> set[str]:
     (the same `curator_links.lookback_days` the ingestor reads). Missing file = none."""
     max_age_days = curator_window_days() if max_age_days is None else max_age_days
     data = c.load_json(curator_links_file(), default={}) or {}
-    since = (c.utcnow() - timedelta(days=max_age_days)).date().isoformat()
+    # A backfill counts the issues of the curator window before its own end.
+    since = (c.freshness_now() - timedelta(days=max_age_days)).date().isoformat()
     if not isinstance(data, dict):
         return set()
     return {str(k).lower() for k, day in data.items() if str(day or "") >= since}
@@ -110,9 +111,8 @@ def fetch_hf_daily() -> tuple[set[str], int]:
 
     ids: set[str] = set()
     ok_days = 0
-    today = c.utcnow().date()
-    for back in range(HF_LOOKBACK_DAYS):
-        day = (today - timedelta(days=back)).isoformat()
+    days = c.window_days(HF_LOOKBACK_DAYS)  # a backfill asks for its own window's days
+    for day in days:
         try:
             resp = requests.get(
                 HF_DAILY_API,
@@ -135,7 +135,7 @@ def fetch_hf_daily() -> tuple[set[str], int]:
     if ok_days == 0:
         print(
             "HF-SIGNAL-UNAVAILABLE: Hugging Face Daily Papers answered 0 of "
-            f"{HF_LOOKBACK_DAYS} days; ungated preprints will be dropped this run"
+            f"{len(days)} days; ungated preprints will be dropped this run"
         )
     return ids, ok_days
 
@@ -165,7 +165,7 @@ class Signals:
         elif self.hf_days_ok == 0:
             hf = "unavailable"
         else:
-            hf = f"ok ({self.hf_days_ok}/{HF_LOOKBACK_DAYS} days)"
+            hf = f"ok ({self.hf_days_ok}/{len(c.window_days(HF_LOOKBACK_DAYS))} days)"
         return f"papers gated: {self.gated}, HF signal: {hf}"
 
 

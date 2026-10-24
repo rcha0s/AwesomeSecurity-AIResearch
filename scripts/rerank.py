@@ -64,6 +64,19 @@ def prune_stale(
     return fresh, stale
 
 
+def kept_for(is_news):
+    """What the prune never archives: news stories, and in a backfill scan
+    (issue #52) the entries this run merged (not on origin/main), so they are
+    not archived on arrival. Scores stay on the wall clock, so the live ranking
+    is untouched. The next normal rerank (the next daily scan, or update.yml on
+    main) archives backfilled findings past max_age_days, still vetted; news
+    stays."""
+    if c.backfill_window() is None:
+        return is_news
+    on_main = c.main_entry_ids()
+    return lambda e: is_news(e) or e.get("id") not in on_main
+
+
 def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     conf = conf or c.load_config()
     pool = c.load_pool(track)
@@ -81,7 +94,7 @@ def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     if migrated:
         print(f"  normalized {migrated} free-text domain(s) in {track} to taxonomy IDs")
     pool["domains"] = c.TOPICS[track]["domains"]
-    fresh, stale = prune_stale(pool["entries"], conf, now=now, keep=is_news)
+    fresh, stale = prune_stale(pool["entries"], conf, now=now, keep=kept_for(is_news))
     archived = c.archive_entries(stale)
     if stale:
         print(f"  pruned {len(stale)} stale from {track} (archived {archived})")

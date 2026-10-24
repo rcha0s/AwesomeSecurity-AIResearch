@@ -3,7 +3,7 @@
 aggregate.py — Discover recent research from credible RSS/Atom feeds.
 
 Pulls items from the feeds in sources.yaml, keeps those published in the last
-`max_age_days` days, makes a best-guess track/domain classification, and stages
+`max_age_days` days (a backfill: inside its window, common.ingest_window), makes a best-guess track/domain classification, and stages
 them as candidates in data/candidates.json (de-duped against both the staging
 queue and the published pools). The LLM analyze step (the /research-scan skill)
 turns candidates into scored, actionable pool entries — this script never writes
@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import common as c
 import paper_gate as pg
@@ -116,8 +116,15 @@ def feed_from_source(source: dict) -> dict:
     }
 
 
-def collect_rss(rules: dict, cutoff: datetime, signals: pg.Signals | None = None) -> list[dict]:
-    """Fetch every registered rss/newsletter feed and build fresh candidates.
+def collect_rss(
+    rules: dict,
+    cutoff: datetime,
+    signals: pg.Signals | None = None,
+    until: datetime | None = None,
+) -> list[dict]:
+    """Fetch every registered rss/newsletter feed and build fresh candidates
+    (published in [cutoff, until]; a backfill sets `until`, and only items its
+    feeds still carry can be recovered).
 
     Two passes: first parse every feed (trusted-curator feeds supply the paper
     gate's curator-link signal), then build candidates and drop any preprint
@@ -141,8 +148,7 @@ def collect_rss(rules: dict, cutoff: datetime, signals: pg.Signals | None = None
     candidates: list[dict] = []
     for feed, entries in parsed_feeds:
         for entry in entries:
-            dt = c.entry_datetime(entry)
-            if dt is None or dt < cutoff:
+            if not c.in_ingest_window(c.entry_datetime(entry), cutoff, until):
                 continue
             cand = build_candidate(entry, feed, rules)
             if not cand:
@@ -162,8 +168,8 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    cutoff = c.utcnow() - timedelta(days=c.load_config().max_age_days)
-    candidates = collect_rss(rules, cutoff)
+    cutoff, until = c.ingest_window(c.load_config().max_age_days)
+    candidates = collect_rss(rules, cutoff, until=until)
 
     if args.dry_run:
         print(f"\n(dry run) {len(candidates)} candidate(s) would be staged:")

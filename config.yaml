@@ -113,6 +113,23 @@ budget:
   retry_max_usd: 1.0          # a local run that failed analysis-empty and cost less
                               # than this may retry once the same day (budget.py)
 
+# Backfill (issue #52; scripts/backfill.sh). A backfill chunk is a normal local
+# scan whose ingest pulls items published inside [FROM, TO]. budget.py refuses
+# any chunk outside this approved campaign window, over max_chunk_days, or
+# overlapping a finished chunk, and caps the whole campaign: max_runs started,
+# max_usd charged (each run's reserved ceiling counts until its measured cost
+# replaces it). Backfill rows are never the day's scan. Rohan approved this
+# campaign on 2026-10-22: ~40-50 stories, ~$10 measured. At the current
+# ceiling ($6.66 a run: worst recent $0.44/story x 1.5 x 10) the fifth 8-day
+# chunk fits only if the first four measure about $2.30 each, so max_usd is the
+# hard bound, not the expected spend. Remove the block (or set null) to stop.
+backfill:
+  from: "2026-09-09"
+  to: "2026-10-18"
+  max_chunk_days: 10
+  max_runs: 6           # 5 chunks of 8 days + one retry
+  max_usd: 16
+
 # Taxonomy proposals (ISA ISC-18). A verified `proposed_domain` that recurs on
 # at least `proposal_min_count` entries within `proposal_window_days` opens (or
 # comments on) a GitHub issue with this label. Vocabulary: data/taxonomy.yaml.

@@ -31,7 +31,8 @@ bound what that content can do once published:
                         row, and that row agrees with the budget ledger (its
                         charge is the run's effective charge there; measured
                         only for a local run) and with what the gate recomputes
-                        (integrity, golden, the cap).
+                        (integrity, golden, the cap); a `backfill` mark, which
+                        takes the row out of the gate, is its reservation's.
 
 Pure functions over parsed data; merge_gate.py does the I/O.
 """
@@ -240,7 +241,26 @@ def _ledger_problems(row: dict, ledger_runs: list[dict]) -> list[str]:
         out.append(f"history: run {rid}'s runner/date disagree with its reservation")
     if row.get("ceiling_usd") != held[0].get("cost_usd"):
         out.append(f"history: run {rid}'s ceiling is not its reservation")
-    return out + _charge_problems(row, mine, held[0])
+    return out + _backfill_problems(row, held[0]) + _charge_problems(row, mine, held[0])
+
+
+BACKFILL_WINDOW = re.compile(r"^\d{4}-\d{2}-\d{2}\.\.\d{4}-\d{2}-\d{2}$")
+
+
+def _backfill_problems(row: dict, held: dict) -> list[str]:
+    """A row's `backfill` mark (FROM..TO) takes it out of the eval gate, so it
+    must be well-formed and be its reservation's own label: a daily run can't
+    claim one to hide a failing row, and a backfill run can't drop one."""
+    rid, mark = row.get("run_id"), row.get("backfill")
+    if mark is not None and not (isinstance(mark, str) and BACKFILL_WINDOW.fullmatch(mark)):
+        return [f"history: run {rid}'s backfill mark is not a FROM..TO window"]
+    if mark != held.get("backfill"):
+        return [f"history: run {rid}'s backfill mark is not its reservation's"]
+    if mark is not None and held.get("runner") != "local":
+        # budget.check_backfill admits local runs only: a marked cloud
+        # reservation is not one the guard made.
+        return [f"history: run {rid} is marked a backfill but is not a local run"]
+    return []
 
 
 def _charge_problems(row: dict, mine: list[dict], held: dict) -> list[str]:

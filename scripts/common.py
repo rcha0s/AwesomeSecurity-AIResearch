@@ -17,7 +17,7 @@ import os
 import re
 import sys
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, time, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
@@ -1018,6 +1018,7 @@ def add_candidates(new: list[dict]) -> list[dict]:
     """
     existing = load_candidates()
     max_age = load_config().max_age_days
+    now = freshness_now()  # a backfill judges freshness at its window's end
     seen_urls = known_urls() | {normalize_url(c.get("source_url", "")) for c in existing}
     seen_titles = [c.get("title", "") for c in existing] + [
         e.get("title", "") for e in all_pool_entries()
@@ -1028,7 +1029,8 @@ def add_candidates(new: list[dict]) -> list[dict]:
         if not nurl or nurl in seen_urls:
             continue
         # HARD freshness gate: never stage anything older than the window.
-        if not is_fresh(cand, max_age):
+        # A backfill stages only what it can date inside its window.
+        if not is_fresh(cand, max_age, now=now) or not in_backfill_window(cand):
             continue
         if any(title_similar(cand.get("title", ""), t) for t in seen_titles):
             continue
@@ -1048,6 +1050,96 @@ def utcnow() -> datetime:
 
 def utcnow_iso() -> str:
     return utcnow().replace(microsecond=0).isoformat()
+
+
+# --- Backfill window ---------------------------------------------------------
+# A backfill scan (scripts/backfill.sh, issue #52) is a normal scan whose ingest
+# pulls items published inside [FROM, TO] instead of "recent". run_scan.sh's
+# wrapper sets both variables, on the local runner only (budget.py refuses a
+# cloud backfill); there the locked-down session inherits them and can't change
+# them. Unset = a normal scan, and every helper below behaves as before.
+BACKFILL_FROM_ENV = "SCAN_BACKFILL_FROM"
+BACKFILL_TO_ENV = "SCAN_BACKFILL_TO"
+BACKFILL_MAX_SPAN_DAYS = 31  # one chunk; config.yaml backfill.max_chunk_days is tighter
+_DAY_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+class BackfillWindowError(ValueError):
+    """A malformed backfill window: fail closed, never fall back to "recent"."""
+
+
+def parse_backfill_window(frm: str, to: str, today: date) -> tuple[date, date]:
+    """(FROM, TO) as dates, or BackfillWindowError: both full YYYY-MM-DD days,
+    FROM <= TO <= today, at most BACKFILL_MAX_SPAN_DAYS days inclusive."""
+    if not (_DAY_RE.match(frm or "") and _DAY_RE.match(to or "")):
+        raise BackfillWindowError(f"backfill window needs two YYYY-MM-DD days, got {frm!r}..{to!r}")
+    try:
+        start, end = date.fromisoformat(frm), date.fromisoformat(to)
+    except ValueError as exc:
+        raise BackfillWindowError(f"backfill window {frm}..{to}: {exc}") from exc
+    if start > end:
+        raise BackfillWindowError(f"backfill window {frm}..{to} ends before it starts")
+    if end > today:
+        raise BackfillWindowError(f"backfill window {frm}..{to} ends in the future")
+    if (end - start).days + 1 > BACKFILL_MAX_SPAN_DAYS:
+        raise BackfillWindowError(
+            f"backfill window {frm}..{to} spans over {BACKFILL_MAX_SPAN_DAYS} days"
+        )
+    return start, end
+
+
+def backfill_window() -> tuple[date, date] | None:
+    """The run's backfill window from the environment, None for a normal scan.
+    One variable without the other is an error, not a normal scan."""
+    frm, to = os.environ.get(BACKFILL_FROM_ENV, ""), os.environ.get(BACKFILL_TO_ENV, "")
+    if not frm and not to:
+        return None
+    return parse_backfill_window(frm, to, utcnow().date())
+
+
+def freshness_now() -> datetime:
+    """The "now" freshness and newness are judged at: the end of a backfill's
+    window (so its items are not stale on arrival), else the wall clock."""
+    window = backfill_window()
+    if window is None:
+        return utcnow()
+    return datetime.combine(window[1], time(23, 59, 59), UTC)
+
+
+def ingest_window(max_age_days: int) -> tuple[datetime, datetime | None]:
+    """(since, until) for an ingestor: a backfill's [FROM 00:00, TO 23:59:59],
+    else the last max_age_days with no upper bound (as before)."""
+    window = backfill_window()
+    if window is None:
+        return utcnow() - timedelta(days=max_age_days), None
+    return datetime.combine(window[0], time(0), UTC), freshness_now()
+
+
+def in_ingest_window(dt: datetime | None, since: datetime, until: datetime | None) -> bool:
+    """True when `dt` lies in [since, until]; an undated item never does."""
+    return dt is not None and dt >= since and (until is None or dt <= until)
+
+
+def window_days(lookback: int) -> list[str]:
+    """The days a per-day API (HF Daily Papers) is asked for, newest first:
+    every day of a backfill's window, else the last `lookback` days."""
+    window = backfill_window()
+    if window is None:
+        today = utcnow().date()
+        return [(today - timedelta(days=b)).isoformat() for b in range(lookback)]
+    start, end = window
+    return [(end - timedelta(days=b)).isoformat() for b in range((end - start).days + 1)]
+
+
+def in_backfill_window(entry: dict) -> bool:
+    """For a backfill, True only when the entry's own day is inside the window
+    (a month-only or missing date can't be placed, so it is out). Always True
+    for a normal scan."""
+    window = backfill_window()
+    if window is None:
+        return True
+    day = str(best_date(entry) or "")
+    return bool(_DAY_RE.match(day)) and window[0].isoformat() <= day <= window[1].isoformat()
 
 
 def write_raw(cand_id: str, text: str) -> str:

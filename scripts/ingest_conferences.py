@@ -30,7 +30,6 @@ import argparse
 import re
 import sys
 import urllib.parse
-from datetime import timedelta
 
 import aggregate as agg
 import common as c
@@ -69,11 +68,22 @@ def is_accepted(comment: str) -> bool:
     return bool(ACCEPT_RE.search(comment))
 
 
-def search_venue(venue: str, limit: int) -> list[dict]:
-    """Recent arXiv entries whose comment field names `venue`. [] on failure."""
+def search_query(venue: str, window: tuple | None = None) -> str:
+    """The arXiv search_query: the venue in the comment field, and for a
+    backfill the window's submittedDate range (arXiv's own date filter)."""
+    query = f'co:"{venue}"'
+    if window is not None:
+        start, end = window
+        query += f" AND submittedDate:[{start:%Y%m%d}0000 TO {end:%Y%m%d}2359]"
+    return query
+
+
+def search_venue(venue: str, limit: int, window: tuple | None = None) -> list[dict]:
+    """Recent arXiv entries whose comment field names `venue` (submitted inside
+    a backfill's `window` when given). [] on failure."""
     import requests  # local import keeps offline unit tests import-clean
 
-    query = urllib.parse.quote(f'co:"{venue}"')
+    query = urllib.parse.quote(search_query(venue, window))
     url = (
         f"{ARXIV_API}?search_query={query}"
         f"&sortBy=submittedDate&sortOrder=descending&max_results={limit}"
@@ -156,7 +166,9 @@ def collect(cfg: dict, rules: dict, per_venue: int | None) -> list[dict]:
         return []
     limit = per_venue or conf_cfg.get("per_venue", 20)
     max_age = c.load_config().max_age_days
-    cutoff = (c.utcnow() - timedelta(days=max_age)).date().isoformat()
+    since, until = c.ingest_window(max_age)
+    cutoff, last = since.date().isoformat(), until.date().isoformat() if until else None
+    window = c.backfill_window()
 
     out: list[dict] = []
     for idx, (venue, terms) in enumerate(plan):
@@ -164,8 +176,9 @@ def collect(cfg: dict, rules: dict, per_venue: int | None) -> list[dict]:
         print(f"-> arXiv co:{venue!r} (accepted only, last {max_age}d{gate})")
         if idx:
             time.sleep(REQUEST_SPACING_SECONDS)
-        for item in search_venue(venue, limit):
-            if (item.get("published") or "")[:10] < cutoff:
+        for item in search_venue(venue, limit, window):
+            day = (item.get("published") or "")[:10]
+            if day < cutoff or (last is not None and day > last):
                 continue
             cand = entry_to_candidate(item, venue, rules, terms)
             if cand and pg.admit(cand, pg.Signals(hf_ids=set()))[0]:  # venue = the signal

@@ -38,6 +38,7 @@ scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (art
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube); `deactivate <id> --reason`
 scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
+scripts/backfill.sh       # backfill a past window in chunks via a one-shot launchd job (issue #52)
 scripts/merge_analysis.py # validate + domain-ID gate + dedup + route + ground + rerank
 scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analyzer's domain list)
 scripts/migrate_taxonomy.py # free-text domain -> ID (idempotent; rerank runs it too)
@@ -283,6 +284,43 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   demotion with a reason (`{"id", "demote": true, "reason"}`) or when its
   integrity fails (refuted or ungrounded). Every promotion and removal goes into
   the code-owned `data/_editorial_outcomes.md`, which `post` puts in the PR body.
+
+### Backfill (issue #52): a past window, same pipeline
+
+A backfill chunk is a local scan with `SCAN_BACKFILL_FROM`/`SCAN_BACKFILL_TO` set:
+same lockdown, skill, story ledger, evals and PR gate; only ingest changes. Each
+ingestor pulls items published inside the window where its source can say so
+(`common.ingest_window`): KEV by `dateAdded`, GHSA by the REST `published` filter (the
+newest `per_run` of each day plus the window's critical ones), arXiv venues by
+`submittedDate`, HN by `created_at_i` on both sides, HF Daily Papers for each window
+day, tl;dr sec issues whose own publish date is in the window, RSS items the feed
+still carries, sitemap pages whose own date is in the window, GitHub repos *created*
+in it. Staging and batch newness judge freshness at the window's end
+(`common.freshness_now`), so nothing is stale on arrival. Rerank keeps scoring on the
+wall clock (the live ranking is untouched) and, in a backfill, does not prune the
+entries this run merged (`rerank.kept_for`: not on origin/main). The next normal
+rerank archives backfilled findings past `max_age_days`, still vetted, and keeps
+news, as for any old story.
+
+- **Guard:** `budget.py check_backfill` replaces the day rules. A chunk must sit
+  inside the campaign `config.yaml backfill:` approves on main, span at most
+  `max_chunk_days`, not overlap a finished chunk, and fit `max_runs` (every started
+  run counts) and `max_usd` (charged so far plus this run's ceiling), then the month's
+  cap. Local runner only, no same-day retry. Its ledger rows carry `backfill:
+  "FROM..TO"`, so they never finish or try the day: the daily cloud/Mac run is
+  unaffected. The PR goes on `claude/scan-<date>-backfill-<FROM>-<TO>`.
+- **Run it:** `scripts/backfill.sh start 2026-09-09 2026-10-18 8` (after
+  `install_launchd.sh` made the runner clone). It pulls the clone to main, prints the
+  chunks and the guard's verdict for the first, and boots a one-shot launchd job
+  (`com.rcha0s.awesomesecurity.backfill`: RunAtLoad, no schedule, no KeepAlive, plist
+  outside `~/Library/LaunchAgents`). The job runs each chunk once, in its own worktree
+  (`~/.local/share/awesomesec-backfill-worktree`), and waits up to 48h for that
+  chunk's PR to be merged or closed before the next, so chunks dedupe against each
+  other and never conflict. A guard skip passes to the next chunk; a failure stops it.
+- **Watch / stop:** `scripts/backfill.sh status` (job state, the last `[backfill]`
+  lines of `<runner>/data/_scan.log`, SPEND.md with the campaign total);
+  `scripts/backfill.sh stop` unloads the job. Starting again resumes: finished
+  chunks are refused by the guard.
 
 ### Auto-merge (Phase 4): content merges itself, the pipeline never does
 
