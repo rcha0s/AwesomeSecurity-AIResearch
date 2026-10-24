@@ -4,17 +4,17 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--24-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-5-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-53-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--24-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-8-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-53-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
 ## This week's top stories
 
-_The last 7 days, newest first._
+_The last 7 days: the stories with the most covering sources first._
 
-1. **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=claude-wrote-machine-checked-no-crash-proofs-for-fea71adcaf#week)** · _Product Security · Oct 22, 2026_
-2. **[Sentry's Next.js tunnelRoute skipped middleware for everything under the tunnel path, not just the requests its rewrite served (GHSA-mchm-gjx6-7h55)](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sentry-s-next-js-tunnelroute-skipped-middleware-d6a38416b8#week)** · _Product Security · Oct 22, 2026_
-3. **[Pillow DoS: a 5.6 KB MIC file hangs n\_frames at 100% CPU (GHSA-22hg-r758-rrw9)](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ghsa-22hg-r758-rrw9-7a9523be43#week)** · _Product Security · Oct 21, 2026_
+1. **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8#week)** · _Product Security · Oct 20, 2026 · 3 sources_
+2. **[HPE bulletin HPESBNW05162: CVSS 10.0 unauthenticated RCE and auth bypass flaws across ArubaOS AOS-10 and AOS-8](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hpe-bulletin-hpesbnw05162-cvss-10-0-unauthentica-f6223d0a71#week)** · _Product Security · Oct 23, 2026 · 2 sources_
+3. **[Arista VeloCloud Orchestrator CVE-2026-114625: SQL injection lets any logged-in user become superuser operator, exploited in the wild](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week)** · _Product Security · Oct 22, 2026 · 2 sources_
 
 ## Claim changes
 
