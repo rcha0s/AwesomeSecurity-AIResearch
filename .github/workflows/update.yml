@@ -111,7 +111,7 @@ jobs:
           git checkout -B "$branch" origin/main
           git add "${paths[@]}"
           git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
-          scripts/guard_bot_diff.sh render-refresh
+          bash scripts/guard_bot_diff.sh render-refresh
           git push --force-with-lease="refs/heads/$branch:$remote_sha" origin "HEAD:refs/heads/$branch"
 
           scripts/ensure_pr.sh "$branch" \

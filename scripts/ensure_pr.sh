@@ -24,7 +24,7 @@ repo="$(repo_slug)"
 # Defense in depth: workflows also run the guard before pushing. With
 # BOT_PROFILE set, a stray path fails the job before any PR is opened.
 if [[ -n "${BOT_PROFILE:-}" ]]; then
-  "$(dirname "$0")/guard_bot_diff.sh" "$BOT_PROFILE"
+  bash "$(dirname "$0")/guard_bot_diff.sh" "$BOT_PROFILE"
 fi
 
 open_prs="$(gh api "repos/$repo/pulls?state=open&head=${repo%%/*}:$branch" --jq length)"

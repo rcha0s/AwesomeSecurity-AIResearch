@@ -8,6 +8,7 @@ PR #98 shape: a branch built on an old main reverts files main gained since.
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -148,7 +149,7 @@ def test_ensure_pr_runs_guard_before_any_api_call(repo: Path, tmp_path: Path) ->
     scripts = repo / "scripts"
     scripts.mkdir(exist_ok=True)
     for f in ("ensure_pr.sh", "lib.sh", "guard_bot_diff.sh"):
-        (scripts / f).write_text((REPO / "scripts" / f).read_text())
+        shutil.copy2(REPO / "scripts" / f, scripts / f)
     git(repo, "remote", "add", "origin", "https://github.com/o/r.git")
     fake = tmp_path / "bin"
     fake.mkdir()
@@ -198,6 +199,20 @@ def test_rename_out_of_protected_path_is_seen(repo: Path) -> None:
     res = run_guard(repo, "render-refresh")
     assert res.returncode == 1
     assert "scripts/x.py" in res.stderr
+
+
+@pytest.mark.parametrize("script", ["ensure_pr.sh", "guard_bot_diff.sh"])
+def test_scripts_are_executable_in_the_index(script: str) -> None:
+    """CI checks out the index mode, not the local file mode: must be 100755."""
+    out = subprocess.run(
+        ["git", "ls-files", "-s", f"scripts/{script}"],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+    ).stdout
+    if not out:
+        pytest.skip("not a git checkout")
+    assert out.split()[0] == "100755"
 
 
 def test_paths_list_is_exact_and_shared_with_workflow() -> None:

@@ -65,7 +65,7 @@ jobs:
           git checkout -B "$branch" origin/main
           git add data/source_proposals.json
           git commit -m "chore: source proposals ($(date -u +%Y-%m-%d))"
-          scripts/guard_bot_diff.sh source-scout
+          bash scripts/guard_bot_diff.sh source-scout
           git push --force-with-lease="refs/heads/$branch:$remote_sha" origin "HEAD:refs/heads/$branch"
 
           scripts/ensure_pr.sh "$branch" \
