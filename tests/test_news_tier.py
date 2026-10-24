@@ -454,16 +454,16 @@ def test_actual_records_news_and_the_report_shows_it(tmp_path):
 
 
 def test_real_config_sizes_the_session_for_both_tiers():
-    """The shipped numbers: 25 deep + 50 news, a session cap and turn cap that
+    """The shipped numbers: 25 deep + 80 news, a session cap and turn cap that
     fit them, and a month of cloud ceilings at the 2026-10-22 rate under the cap."""
     s = budget.budget_settings()
-    assert (s["max_stories_per_run"], s["max_news_per_run"]) == (25, 50)
-    assert s["monthly_cap_usd"] == 400 and 0 < budget.news_ratio(s) < 1
+    assert (s["max_stories_per_run"], s["max_news_per_run"]) == (25, 80)
+    assert s["monthly_cap_usd"] == 600 and 0 < budget.news_ratio(s) < 1
     ceiling, _ = budget.run_ceiling([row("m", cost=1.6749, stories=8)], s, "cloud")
     assert 31 * ceiling <= s["monthly_cap_usd"]
     units = s["max_stories_per_run"] + budget.news_ratio(s) * s["max_news_per_run"]
     assert s["max_turns"] >= 4 * s["max_stories_per_run"] + 1.5 * s["max_news_per_run"] + 50
-    assert units == 40
+    assert units == 49
 
 
 # --- containment ---------------------------------------------------------------------
@@ -571,9 +571,9 @@ def test_a_corporate_suffix_is_not_a_name():
 
 
 def test_the_backfill_campaign_fits_the_two_tier_ceiling():
-    """Rohan 2026-10-23: backfill.max_usd 150, so all 5 chunks fit at the worst
+    """Rohan 2026-10-23: backfill.max_usd 200, so all 5 chunks fit at the worst
     recent rate (the 10-19 run, $1.33 for 3 stories) before any is measured."""
     s = budget.budget_settings()
     ceiling, _ = budget.run_ceiling([row("w", cost=1.33, stories=3)], s, "local")
     assert s["backfill"]["max_runs"] == 6
-    assert 5 * ceiling <= s["backfill"]["max_usd"] == 150
+    assert 5 * ceiling <= s["backfill"]["max_usd"] == 200

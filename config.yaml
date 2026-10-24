@@ -75,15 +75,16 @@ limits:
                           # With max_news_per_run it sets each run's cost ceiling
                           # (scripts/budget.py); the guard refuses a run that no longer
                           # fits the month (a skipped day), it never overspends.
-  max_news_per_run: 50    # NEWS tier (select_batch.py): every leftover candidate that
+  max_news_per_run: 80    # NEWS tier (select_batch.py): every leftover candidate that
                           # is relevant news (a big-story group, a KEV / critical GHSA,
                           # or a severity / AI-incident marker from a source ranked
                           # batch_news_min_rank+) gets a short grounded brief instead of
                           # deep analysis. A runaway guard, not a quota: the 2026-10-23
                           # staged set (480 with the #102 feeds) had 38 news-tier stories
-                          # past the 25 deep ones, so 40 would nearly bind on a normal day.
-                          # 50, not 60: at the 2026-10-22 rate ($0.209/unit) 31 cloud
-                          # ceilings of 25 + 0.3 x 50 units come to $390 of the $400 cap
+                          # past the 25 deep ones (48 once batch_news_min_rank was 40),
+                          # so 50 binds on a busy day. 80 leaves a busy week room; at the
+                          # 2026-10-22 rate ($0.209/unit) 31 cloud ceilings of
+                          # 25 + 0.3 x 80 = 49 units come to $477 of the $600 cap
   batch_news_per_source: 15 # most news briefs one source may take, so one feed (or the
                             # KEV list) can't fill the tier alone. 15, not 4: The Hacker
                             # News is a wire, and on 2026-10-23 a cap of 4 cut its GPT-6
@@ -126,11 +127,11 @@ limits:
                           # vote or two low-rank feeds can't qualify on markers alone
   batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
   batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)
-  max_turns: 300          # hard turn cap on the local model session. Sized for 25 deep
-                          # + 50 news: ~4 turns a deep story (fetch, read, verifier, write)
+  max_turns: 360          # hard turn cap on the local model session. Sized for 25 deep
+                          # + 80 news: ~4 turns a deep story (fetch, read, verifier, write)
                           # = 100, ~1.5 a brief (fetches batched, briefs written by
-                          # subagents in tens) = 75, ~50 fixed (judge, taxonomy, claims,
-                          # readability, merge, verify, editorial, summary): 225, x1.33
+                          # subagents in tens) = 120, ~50 fixed (judge, taxonomy, claims,
+                          # readability, merge, verify, editorial, summary): 270, x1.33
                           # headroom. Was 150 for 10 + margin 4.
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the
@@ -139,7 +140,7 @@ limits:
 # read these values from origin/main, never from a working tree. Routines draw subscription usage first; usage
 # credits only cover overage (routines.md § Usage and limits).
 budget:
-  monthly_cap_usd: 400        # Rohan 2026-10-23: don't worry about budget for now
+  monthly_cap_usd: 600        # Rohan 2026-10-23: don't worry about budget for now
                               # (was 100, Rohan 2026-10-19); null = every run skips LLM work
   usd_per_story: null         # null = the worst measured on recent local runs
   news_cost_ratio: 0.3        # one news brief costs this many deep stories (an estimate,
@@ -149,11 +150,11 @@ budget:
                               # verifier subagent) plus ~2k of prompt and writes ~2k (in
                               # input-token terms, output x5: ~22k); a brief reads it once
                               # and writes ~300 (~6.5k): 6.5 / 22 = 0.3. Ceiling at the worst
-                              # recent $0.443/unit: 0.443 x 1.5 x (25 + 0.3 x 50) = $26.60
-                              # (session cap x 0.8 = $21.28); at the latest $0.232/unit
-                              # it is $13.92. A measured day (25 x $0.23 + 38 x $0.07 = $8.4)
-                              # fits 31 a month in the $400 cap; 31 cloud runs charged the
-                              # $26.60 ceiling would not (the guard then skips the last days).
+                              # recent $0.4433/unit: 0.4433 x 1.5 x (25 + 0.3 x 80) = $32.65
+                              # (session cap x 0.8 = $26.12); at the latest $0.232/unit
+                              # it is $17.05. A measured day (25 x $0.23 + 48 x $0.07 = $9.1)
+                              # fits 31 a month in the $600 cap; 31 cloud runs charged the
+                              # $32.65 ceiling would not (the guard then skips the last days).
   calibration_runs: 5         # "recent" = the last 5 measured runs, so the first run's
                               # 3-story $0.44/story doesn't price every run forever
   ceiling_headroom: 1.5       # ceiling = worst recent $/unit x 1.5 x units (see above): the
@@ -173,9 +174,9 @@ budget:
 # max_usd charged (each run's reserved ceiling counts until its measured cost
 # replaces it). Backfill rows are never the day's scan. Rohan approved this
 # campaign on 2026-10-22: ~40-50 stories, ~$10 measured. max_usd is the hard
-# bound, not the expected spend. At the two-tier ceiling ($26.60 a run: worst
-# recent $0.443/unit x 1.5 x 40 units) 5 chunks reserve $133 before any is
-# measured, so all 5 fit under 150; a 6th (the retry) fits once the first
+# bound, not the expected spend. At the two-tier ceiling ($32.65 a run: worst
+# recent $0.4433/unit x 1.5 x 49 units) 5 chunks reserve $163 before any is
+# measured, so all 5 fit under 200; a 6th (the retry) fits once the first
 # chunks' measured costs replace their reservations. Remove the block (or set
 # null) to stop.
 backfill:
@@ -183,8 +184,9 @@ backfill:
   to: "2026-10-18"
   max_chunk_days: 10
   max_runs: 6           # 5 chunks of 8 days + one retry
-  max_usd: 150          # Rohan 2026-10-23: don't worry about budget for now (was 16,
-                        # which refused every chunk at the two-tier ceiling)
+  max_usd: 200          # Rohan 2026-10-23: don't worry about budget for now (was 16,
+                        # which refused every chunk at the two-tier ceiling; 150 fit
+                        # only 4 once max_news_per_run went to 80)
 
 # Taxonomy proposals (ISA ISC-18). A verified `proposed_domain` that recurs on
 # at least `proposal_min_count` entries within `proposal_window_days` opens (or
