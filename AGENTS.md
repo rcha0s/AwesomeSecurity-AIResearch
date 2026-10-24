@@ -387,12 +387,13 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
     mid-sentence name, or added or dropped a CVE/GHSA id, number or code span (and any
     excerpt change). The entry records `readability_rewrite: reverted <fields>`; a
     revert never holds it. No draft for a non-empty analysis is a warning in merge and
-    in the scan PR body.
+    in the scan PR body. This guards against small-model rewrite error, not a hostile
+    session (the session authors the draft).
   - **Holds:** merge records every brief's score (`readability`). Only a severe length
     or structure failure holds it in REVIEW.md (`readability_hold`, reason
     `readability: …`); acronyms, noun chains and long words are mild-only. Rerank
     re-judges holds under the current config and releases what it no longer supports.
-  - **Published entries are never silently pulled:** merge doesn't hold an entry the
+  - **A readability hold never silently pulls a published entry:** merge doesn't hold an entry the
     site already shows (it reports `hold_skipped`), and `merge_gate.py`
     (`content_checks.readability_problems`) refuses a scan PR in which a shown-on-main
     entry gains a hold ("readability hold of a published entry needs human review").

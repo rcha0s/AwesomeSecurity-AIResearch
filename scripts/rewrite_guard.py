@@ -11,10 +11,15 @@ rewrite changed what it says:
   number pairs   each number with the word after it, as a multiset
                  ("11 bugs in 6 frameworks" vs "6 bugs in 11 frameworks",
                  "5 MB" vs "5 GB", "92%" vs "3%", "Six" vs "Seven")
-  guard words    negations, version-range and severity words, as a multiset
-                 (not, no, never, n't, without, cannot, unaffected, before,
-                 after, prior, since, through, until, above, below, critical,
-                 high, medium, low)
+  guard words    negations, version-range, severity and polarity words, as
+                 a multiset (not, no, never, n't, without, before, after,
+                 critical, low, only, any, signed, default, enabled, patched,
+                 authenticated, required, remote, ... see GUARD_WORDS), plus
+                 any un-/non- form of one ("unfixed", "non-default")
+  anchor pairs   each guard word or number with the next name or number in
+                 its sentence, as a multiset, so a swap of what it applies to
+                 shows ("Linux but not Windows", "critical in OpenSSL, low in
+                 LibreSSL", "9.8 for CVE-A and 5.3 for CVE-B")
   names          capitalized words used mid-sentence (and sentence-initial or
                  title words that look like names, or are used as one elsewhere
                  in the entry) that vanish or appear: a vendor or product swap.
@@ -24,6 +29,9 @@ rewrite changed what it says:
 Lesson excerpts are verbatim quotes: any change to one is restored. A revert is
 recorded on the entry (`readability_rewrite: "reverted <fields>"`) and never
 holds it.
+
+Scope: this catches a small model's rewrite errors. It is not a defence
+against a hostile session, which writes the draft itself.
 
 Usage:
     python scripts/rewrite_guard.py --check-draft   # exit 1 + warning when an
@@ -43,7 +51,11 @@ import readability as rd
 DRAFT = "_analysis_draft.json"  # the analysis before the readability rewrite
 GUARD_WORDS = frozenset(
     "not no never without cannot unaffected before after prior since through until "
-    "above below critical high medium low".split()
+    "above below critical high medium low "
+    # polarity: scope, defaults, state, auth, reach
+    "only any all every none signed unsigned default enabled disabled on off patched "
+    "fixed introduced vulnerable affected authenticated unauthenticated required "
+    "mandatory optional local remote remotely up".split()
 )
 NUMBER_WORDS = (
     "zero one two three four five six seven eight nine ten eleven twelve thirteen "
@@ -75,9 +87,40 @@ def number_pairs(text: str) -> Counter:
     )
 
 
+def guard(token: str) -> str | None:
+    """The guard word a token is ('n't' for any contraction), or None."""
+    t = token.lower()
+    if t.endswith(("n't", "n’t")):
+        return "n't"
+    stem = re.sub(r"^(?:un|non-?)", "", t)
+    return t if stem in GUARD_WORDS else None  # stem == t when there is no prefix
+
+
 def guard_words(text: str) -> Counter:
-    low = [t.lower() for t in _tokens(text)]
-    return Counter(t if t in GUARD_WORDS else "n't" for t in low if t in GUARD_WORDS or t.endswith(("n't", "n’t")))  # fmt: skip
+    return Counter(g for g in map(guard, _tokens(text)) if g)
+
+
+ANCHOR_WINDOW = 4  # tokens after a guard word or number that its anchor may sit in
+
+
+def _is_name(token: str) -> bool:
+    return token[:1].isupper() and token.lower() not in rd.FUNCTION_WORDS
+
+
+def anchor_pairs(text: str) -> Counter:
+    """Each guard word with the next name or number, and each number with the
+    next name, within ANCHOR_WINDOW tokens of its sentence."""
+    out: Counter = Counter()
+    for s in rd.sentences(text):
+        toks = _tokens(s)
+        for i, t in enumerate(toks):
+            g, num = guard(t), bool(NUMBER.match(t))
+            if not (g or num):
+                continue
+            ahead = toks[i + 1 : i + 1 + ANCHOR_WINDOW]
+            fits = (lambda x: _is_name(x) or bool(NUMBER.match(x))) if g else _is_name
+            out[(g or t.lower(), next((x.lower() for x in ahead if fits(x)), ""))] += 1
+    return out
 
 
 def _namelike(token: str) -> bool:
@@ -126,7 +169,9 @@ def changes(
     if number_pairs(draft) != number_pairs(final):
         out.append("numbers or what they count changed")
     if guard_words(draft) != guard_words(final):
-        out.append("negation, range or severity words changed")
+        out.append("negation, range, severity or polarity words changed")
+    elif anchor_pairs(draft) != anchor_pairs(final):
+        out.append("what a guard word or number applies to changed")
     known = known | set(names(draft)) | set(names(final))  # names either text uses mid-sentence
     before, after = names(draft, known, title), names(final, known, title)
     if before != after:
@@ -162,9 +207,10 @@ def _set(entry: dict, path: str, value: str) -> None:
 def problems(draft: dict, final: dict) -> dict[str, list[str]]:
     """{field: reasons} for each field the rewrite must give back."""
     before, after = fields(draft), fields(final)
+    out: dict[str, list[str]] = {}
     if len(draft.get("lessons") or []) != len(final.get("lessons") or []):
-        return {"lessons": ["lesson count changed"]}
-    out = {}
+        out["lessons"] = ["lesson count changed"]  # all of them come back; check the rest
+        before = {k: v for k, v in before.items() if not k.startswith("lessons[")}
     known = known_names(draft, final)
     for path, text in before.items():
         new = after.get(path)
@@ -186,10 +232,10 @@ def restore(entry: dict, draft: dict | None) -> dict[str, list[str]]:
     if draft is None:
         return {}
     found = problems(draft, entry)
+    if "lessons" in found:
+        entry["lessons"] = copy.deepcopy(draft.get("lessons"))
     for path in found:
-        if path == "lessons":
-            entry["lessons"] = copy.deepcopy(draft.get("lessons"))
-        else:
+        if path != "lessons":
             if path.startswith("actionable.") and not isinstance(entry.get("actionable"), dict):
                 entry["actionable"] = {}
             _set(entry, path, fields(draft)[path])

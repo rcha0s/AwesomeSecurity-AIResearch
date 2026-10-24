@@ -143,8 +143,10 @@ def readability_step(
     draft), then score the brief. A brief main already shows is never held here:
     the hold is reported instead, so a scan can't silently unpublish it."""
     title = (entry.get("title") or "?")[:80]
-    entry.pop("readability_rewrite", None)  # only this step writes it
-    reverted = rg.restore(entry, rg.draft_for(drafts, entry)) if drafts is not None else {}
+    draft = rg.draft_for(drafts, entry)
+    if drafts is not None and draft is None:
+        notes.append(f"- no draft for {title!r}; rewrite not fact-checked")
+    reverted = rg.restore(entry, draft)
     for path, why in reverted.items():
         notes.append(f"- reverted {path} of {title!r}: {'; '.join(why)}")
     shown = existing is not None and c.is_shown(existing, ctx["conf"], ctx["sources"])

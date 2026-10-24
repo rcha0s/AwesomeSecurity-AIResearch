@@ -149,3 +149,69 @@ def test_facts_are_checked_in_both_directions():
     plain, coded = "Disable pickle loading.", "Disable `pickle` loading."
     assert rg.changes(plain, coded) == ["added '`pickle`'"]
     assert rg.changes(coded, plain) == ["dropped '`pickle`'"]
+
+
+# --- Re-review probes ---------------------------------------------------------
+PROBES = [
+    ("polarity", "Load state only from signed data.", "Load state from any data."),
+    ("default", "It is disabled by default.", "It is enabled by default."),
+    ("auth", "The endpoint requires authentication.", "The endpoint requires no authentication."),
+    ("reach", "It is exploitable remotely.", "It is exploitable locally."),
+    ("un- stem", "Upgrade the unfixed build.", "Upgrade the build."),
+    ("non- stem", "Ship a non-default config.", "Ship a config."),
+    ("guard target", "It hits Linux but not Windows.", "It hits Windows but not Linux."),
+    ("severity target", "Critical in OpenSSL, low in LibreSSL.",
+     "Low in OpenSSL, critical in LibreSSL."),
+    ("score target", "Rated 9.8 for CVE-2026-1 and 5.3 for CVE-2026-2.",
+     "Rated 5.3 for CVE-2026-1 and 9.8 for CVE-2026-2."),
+]  # fmt: skip
+
+
+@pytest.mark.parametrize(("kind", "draft", "final"), PROBES, ids=[p[0] for p in PROBES])
+def test_the_re_review_probes_are_caught(kind, draft, final):
+    assert rg.changes(draft, final) and rg.changes(final, draft)
+
+
+def test_changes_name_what_moved():
+    assert rg.changes("It is not affected.", "It is affected.") == [
+        "negation, range, severity or polarity words changed"
+    ]
+    assert rg.changes("Linux but not Windows.", "Windows but not Linux.") == [
+        "what a guard word or number applies to changed"
+    ]
+
+
+def test_anchor_pairs_look_a_few_tokens_ahead_in_the_sentence():
+    assert rg.anchor_pairs("Rate 9 of the old core modules in Apache.") == {("9", ""): 1}
+    assert rg.anchor_pairs("Fixed in 3.1 for Nginx.") == {("fixed", "3.1"): 1, ("3.1", "nginx"): 1}
+    assert rg.anchor_pairs("Not here. Windows is.") == {("not", ""): 1}
+
+
+def test_guard_maps_contractions_and_un_non_stems():
+    assert [rg.guard(t) for t in ("doesn't", "unfixed", "non-default", "nondefault")] == [
+        "n't", "unfixed", "non-default", "nondefault"
+    ]  # fmt: skip
+    assert rg.guard("under") is None and rg.guard("nonce") is None
+
+
+def test_a_dropped_lesson_still_checks_every_other_field():
+    """The reviewer's repro: drop a lesson AND flip two other fields."""
+    draft = brief(
+        summary="The admin API requires authentication.",
+        takeaway="Rotate the signing keys every 30 days.",
+    )
+    final = brief(
+        summary="The admin API requires no authentication.",
+        takeaway="Rotate the signing keys every 90 days.",
+    )
+    final["lessons"] = final["lessons"][:1]
+    found = rg.restore(final, draft)
+    assert set(found) == {"lessons", "summary", "takeaway"}
+    assert rg.fields(final) == rg.fields(draft)
+
+
+def test_merge_notes_an_entry_with_no_matching_draft(sandbox):
+    c.save_json(c.DATA_DIR / rg.DRAFT, [at("https://example.com/other")])
+    m.merge([brief()], c.load_config())
+    assert "- no draft for 'Agent frameworks, not models" in notes()
+    assert "rewrite not fact-checked" in notes()
