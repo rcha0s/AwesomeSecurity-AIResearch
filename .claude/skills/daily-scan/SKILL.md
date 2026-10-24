@@ -48,9 +48,11 @@ all four.
    - Analyze up to `limits.max_stories_per_run` (config.yaml) stories across all three
      topics, the strongest first. `post` refuses a larger `analysis_out.json`, and that cap
      is what makes each run's cost known in advance.
-   - Candidates carrying `batch_priority` (`kev`, `ghsa-critical`, `ghsa-ai`) come first:
-     analyze every one of them before the rest of the batch, even when the advisory text is
-     thin. They are the stories the recall eval checks, and they count toward the cap.
+   - Candidates carrying `batch_priority` (`story`, `kev`, `ghsa-critical`, `ghsa-ai`) come
+     first: analyze every one of them before the rest of the batch, even when the advisory
+     text is thin. They are the stories the recall eval checks, and they count toward the
+     cap. A `story` candidate is the week's big story, staged by several sources: its
+     `batch_story.coverage` lists the other outlets' URLs for `corroborating_sources`.
    - Don't drop a weak candidate: analyze it with honest low novelty and relevance scores,
      and the curation gate holds it in REVIEW.md. Marketing, release notes, listicles and
      near-duplicates score low; they are not skipped. A real analysis is never empty: only

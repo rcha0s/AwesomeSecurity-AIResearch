@@ -42,6 +42,21 @@ advisories in AI tooling), AI-tooling advisories first, at most
 `batch_priority_per_source` from one source. Each carries `batch_priority`
 so the session analyzes it before the cap runs out.
 
+Big-story lane (newsworthy.py): on 2026-10-23 PHP2Shell was staged from six
+registered feeds and every copy ranked 50th or worse, because newness and
+source rank can't tell the week's biggest story from a routine post. First of
+all, up to `batch_story_max` slots go to stories that `batch_story_min_sources`
+independent sources staged this run with a severity or AI-incident marker (or
+`batch_story_any_sources` without one), published in the last
+`batch_story_days`, and not already in the story ledger. Each story gets ONE
+slot: its most credible copy, at most `batch_per_source` from a source,
+carrying `batch_story` (its sources, markers and the other copies' URLs). The
+other copies wait in the backlog marked `batch_same_story_as`, since the judge
+would only call them `same`. Outside the lane, markers and corroboration add
+`batch_marker_bonus` + `batch_corroboration_bonus` per extra source (up to
+three) to the score the deal ranks by; per-source caps and the class
+round-robin are unchanged.
+
 Everything not selected goes to data/_scan_backlog.json, each with its
 prefilter reason and rank. On the Mac runner the session can neither edit nor
 read it (scan_containment.sh denies both); the cloud routine has no per-tool
@@ -58,10 +73,13 @@ from __future__ import annotations
 import argparse
 import sys
 from collections import Counter
+from datetime import timedelta
 from pathlib import Path
 
 import common as c
+import newsworthy as nw
 import prefilter as pf
+import story_ledger as sl
 
 BACKLOG_NAME = "_scan_backlog.json"
 DEFAULTS = {
@@ -70,7 +88,15 @@ DEFAULTS = {
     "batch_routed_bonus": 5.0,
     "batch_priority_max": 0,  # off unless config.yaml names a lane size
     "batch_priority_per_source": 2,
+    "batch_story_max": 0,  # off unless config.yaml names a lane size
+    "batch_story_min_sources": 2,
+    "batch_story_any_sources": 4,
+    "batch_story_days": 7,
+    "batch_story_min_rank": 0.0,
+    "batch_marker_bonus": 0.0,
+    "batch_corroboration_bonus": 0.0,
 }
+CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
 OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator")
 
@@ -197,6 +223,127 @@ def class_floor(
     return out
 
 
+# --- big stories (newsworthy.py) ---------------------------------------------
+def story_signals_on(conf: c.Config) -> bool:
+    keys = ("batch_story_max", "batch_marker_bonus", "batch_corroboration_bonus")
+    return any(float(setting(conf, k)) > 0 for k in keys)
+
+
+def reference_docs() -> list[dict]:
+    """What was written before this run: the pools + archive."""
+    return c.all_pool_entries() + list(c.load_json(c.ARCHIVE_FILE, default=[]) or [])
+
+
+def ledger_sources(days: int) -> list[dict]:
+    """Covering sources the story ledger holds from the last `days`."""
+    cutoff = (c.utcnow().date() - timedelta(days=days)).isoformat()
+    rows = []
+    for story in sl.load_ledger()["stories"].values():
+        for src in story.get("sources") or []:
+            day = src.get("date") or story.get("last_updated") or ""
+            if day >= cutoff:
+                rows.append({"title": src.get("title") or story["title"], "published": day})
+    return rows
+
+
+def story_signals(
+    pool: list[dict], conf: c.Config, reference: list[dict] | None, known: list[dict] | None
+) -> list[nw.Signal | None]:
+    """newsworthy.analyze over the bucketed pool, or Nones when every story
+    knob is off (then selection is exactly what it was)."""
+    if not story_signals_on(conf):
+        return [None] * len(pool)
+    reference = reference_docs() if reference is None else reference
+    known = ledger_sources(nw.MATCH_DAYS) if known is None else known
+    return nw.analyze(pool, reference, nw.publisher, known)
+
+
+def news_bonus(sig: nw.Signal | None, conf: c.Config) -> float:
+    if sig is None:
+        return 0.0
+    marker = float(setting(conf, "batch_marker_bonus"))
+    per_source = float(setting(conf, "batch_corroboration_bonus"))
+    return nw.bonus(sig, marker, per_source, CORROBORATION_MAX)
+
+
+def recent(cand: dict, days: int) -> bool:
+    day = str(cand.get("published") or "")[:10]
+    return bool(day) and day >= (c.utcnow().date() - timedelta(days=days)).isoformat()
+
+
+def story_groups(pool: list[dict], sigs: list, pos: dict) -> list[list[int]]:
+    """Pool positions grouped by story, for every story staged by 2+ publishers.
+    Greedy, best-covered first: a group is its leader plus the leader's own
+    matches, then any other candidate matching at least half the group (so a
+    twelve-outlet story stays one group). Never a plain chain: one loose match
+    can't pull an unrelated story in, and a copy naming only CVEs the group
+    doesn't is a different bug, never parked as "same" (an untagged article
+    matching both CVE-1111 and CVE-2222 coverage can't bridge them)."""
+    multi = [i for i, sig in enumerate(sigs) if sig is not None and sig.sources >= 2]
+    order = sorted(multi, key=lambda i: (-sigs[i].sources, -len(sigs[i].markers), pos[id(pool[i])]))
+    taken: set[int] = set()
+    groups: list[list[int]] = []
+    for i in order:
+        if i in taken:
+            continue
+        group, ids = [i], set(sigs[i].ids)
+        for k in [*sigs[i].matches, *multi]:
+            if k in taken or k in group or not ids_compatible(ids, sigs[k].ids):
+                continue
+            if k in sigs[i].matches or 2 * len(set(group) & set(sigs[k].matches)) >= len(group):
+                group.append(k)
+                ids |= sigs[k].ids
+        taken |= set(group)
+        if len(group) > 1:  # a lone leader's coverage went to a bigger group
+            groups.append(group)
+    return groups
+
+
+def ids_compatible(group_ids: set[str], ids: frozenset[str]) -> bool:
+    """A copy may join unless both name CVE/GHSA ids and none are shared."""
+    return not group_ids or not ids or bool(group_ids & ids)
+
+
+def lane_worthy(cand: dict, sig: nw.Signal, conf: c.Config) -> bool:
+    lo = int(setting(conf, "batch_story_min_sources"))
+    hi = int(setting(conf, "batch_story_any_sources"))
+    rank = float(setting(conf, "batch_story_min_rank"))
+    return nw.is_big(sig, lo, hi, rank) and recent(cand, int(setting(conf, "batch_story_days")))
+
+
+def story_lane(
+    pool: list[dict], sigs: list, conf: c.Config, pos: dict, per_source: int, size: int
+) -> tuple[list[dict], dict[int, dict]]:
+    """(lane, siblings). Every multi-source story keeps ONE copy in play, its
+    most credible; the others wait (siblings: id(copy) -> that head), since the
+    judge would only call them `same`. Up to `batch_story_max` lane-worthy
+    stories take a lane slot, at most `per_source` heads from one source."""
+    limit = min(size, int(setting(conf, "batch_story_max")))
+    lane: list[dict] = []
+    siblings: dict[int, dict] = {}
+    used: Counter = Counter()
+    for group in story_groups(pool, sigs, pos):
+        by_trust = sorted(
+            group, key=lambda k: (-(pool[k].get("source_rank") or 0), pos[id(pool[k])])
+        )
+        open_heads = [k for k in by_trust if used[source_key(pool[k])] < per_source]
+        lead = sigs[group[0]]
+        if len(lane) < limit and open_heads and lane_worthy(pool[group[0]], lead, conf):
+            head = open_heads[0]
+            used[source_key(pool[head])] += 1
+            lane.append(with_story(pool[head], lead, [pool[k] for k in group if k != head]))
+        else:
+            head = by_trust[0]
+        siblings |= {id(pool[k]): pool[head] for k in group if k != head}
+    return lane, siblings
+
+
+def with_story(head: dict, sig: nw.Signal, others: list[dict]) -> dict:
+    coverage = [x.get("source_url") or x.get("article_url") or "" for x in others]
+    story = {"sources": sig.sources, "markers": sorted(sig.markers), "coverage": coverage}
+    return {**head, "batch_priority": "story", "batch_story": story, "_head": id(head)}
+
+
 def lane_order(cand: dict) -> int:
     kind = priority_class(cand)
     if kind == "ghsa-critical" and is_ai_tooling(cand):
@@ -205,36 +352,55 @@ def lane_order(cand: dict) -> int:
 
 
 def select(
-    candidates: list[dict], conf: c.Config, table: pf.KeywordTable
+    candidates: list[dict],
+    conf: c.Config,
+    table: pf.KeywordTable,
+    reference: list[dict] | None = None,
+    known: list[dict] | None = None,
 ) -> tuple[list[dict], list[dict]]:
-    """Split staged candidates into (batch, backlog)."""
+    """Split staged candidates into (batch, backlog). `reference` (pools +
+    archive) and `known` (story-ledger sources) default to the data files."""
     buckets = pf.bucket(candidates, table)
-    ranked = sorted(
-        buckets.routed + buckets.filtered,
-        key=lambda x: (-score(x, conf), str(x.get("id") or "")),
-    )
+    pool = buckets.routed + buckets.filtered
+    sigs = story_signals(pool, conf, reference, known)
+    bonus = {id(x): news_bonus(sig, conf) for x, sig in zip(pool, sigs, strict=True)}
+    ranked = sorted(pool, key=lambda x: (-(score(x, conf) + bonus[id(x)]), str(x.get("id") or "")))
+    pos = {id(x): i for i, x in enumerate(ranked)}
     size = batch_size(conf)
-    lane_max = min(size, max(0, int(setting(conf, "batch_priority_max"))))
-    lane = priority_lane(ranked, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))))
     per_source = max(1, int(setting(conf, "batch_per_source")))
+    stories, siblings = story_lane(pool, sigs, conf, pos, per_source, size)
+    heads = {s.pop("_head") for s in stories}
+    out = heads | set(siblings)
+    open_ = [x for x in ranked if id(x) not in out]
+    lane_max = min(size - len(stories), max(0, int(setting(conf, "batch_priority_max"))))
+    lane = priority_lane(open_, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))))
     mins = conf.limits.get("batch_class_min") or {}
     lane_ids = {id(x) for x in lane}
+    first = Counter(source_key(x) for x in stories + lane)
     floor = class_floor(
-        [x for x in ranked if id(x) not in lane_ids], mins, size - len(lane),
-        per_source, Counter(source_key(x) for x in lane),
+        [x for x in open_ if id(x) not in lane_ids], mins, size - len(stories) - len(lane),
+        per_source, first,
     )  # fmt: skip
-    in_lane = {id(x) for x in lane + floor}
+    in_lane = lane_ids | {id(x) for x in floor}
     slots = conf.limits.get("batch_class_slots") or {}
-    used = Counter(source_key(x) for x in lane + floor)
+    used = first + Counter(source_key(x) for x in floor)
     dealt = deal(
-        [x for x in ranked if id(x) not in in_lane],
-        size - len(lane) - len(floor), per_source, slots, used,
+        [x for x in open_ if id(x) not in in_lane],
+        size - len(stories) - len(lane) - len(floor), per_source, slots, used,
     )  # fmt: skip
     ids = in_lane | {id(x) for x in dealt}
-    rest = [x for x in ranked if id(x) not in ids]
-    batch = [{**x, "batch_priority": priority_class(x)} for x in lane] + floor + dealt
-    backlog = [{**x, "batch_rank": i} for i, x in enumerate(rest, start=len(batch) + 1)]
+    rest = [x for x in open_ if id(x) not in ids] + [x for x in ranked if id(x) in siblings]
+    batch = stories + [{**x, "batch_priority": priority_class(x)} for x in lane] + floor + dealt
+    backlog = [
+        {**x, "batch_rank": i, **same_story_note(x, siblings)}
+        for i, x in enumerate(rest, start=len(batch) + 1)
+    ]
     return batch, backlog + buckets.dropped
+
+
+def same_story_note(cand: dict, siblings: dict[int, dict]) -> dict:
+    head = siblings.get(id(cand))
+    return {"batch_same_story_as": head.get("id")} if head else {}
 
 
 def composition(batch: list[dict]) -> str:

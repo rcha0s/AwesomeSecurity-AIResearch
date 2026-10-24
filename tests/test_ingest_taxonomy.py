@@ -24,6 +24,9 @@ RULES = c.load_yaml(c.SOURCES_FILE)["classification"]
 # display names and every registered source's domain label. Not computed here.
 FROZEN = json.loads((REPO / "tests" / "fixtures" / "legacy_label_topics.json").read_text())
 MAIN_TOPIC = FROZEN["labels"]
+# Router classes added after the taxonomy (2026-10-23 catch-alls, checked last):
+# taxonomy IDs, so their topic is the taxonomy's, not a frozen legacy guess.
+CATCH_ALLS = ("ais.agent-security", "ps.appsec")
 FEEDS = [
     {"name": "strict", "strict": True, "domains": ["AI Security"]},
     {"name": "fallback", "domains": ["Web Application Security"]},
@@ -58,9 +61,18 @@ def test_router_decisions_are_unchanged_and_domains_are_ids(feed):
             continue
         kept += 1
         assert cand["guess_label"] == label
-        assert cand["guess_topic"] == MAIN_TOPIC[label]  # main's topic guess, frozen
+        if label in CATCH_ALLS:
+            assert cand["guess_topic"] == tx.get().domains[label].topic
+        else:
+            assert cand["guess_topic"] == MAIN_TOPIC[label]  # main's topic guess, frozen
         assert tx.get().is_valid(cand["guess_domain"], cand["guess_topic"])
     assert kept  # the replay exercised the keep path
+
+
+def test_the_catch_alls_come_last_so_no_earlier_label_changes():
+    labels = list(RULES["domains"])
+    assert labels[-len(CATCH_ALLS) :] == list(CATCH_ALLS)
+    assert all(label in MAIN_TOPIC for label in labels[: -len(CATCH_ALLS)])
 
 
 def _kev(name: str, desc: str = "") -> dict:
@@ -108,7 +120,9 @@ def test_frozen_table_covers_every_label_the_router_can_emit():
     sources = json.loads((REPO / "data" / "sources.json").read_text())
     labels |= {d for src in sources for d in src.get("domains") or []}
     labels |= set(c.LEGACY_DOMAIN_TO_TOPIC)
+    labels -= set(CATCH_ALLS)  # taxonomy IDs: the taxonomy decides their topic
     assert labels <= set(MAIN_TOPIC), sorted(labels - set(MAIN_TOPIC))
+    assert all(tx.get().domains.get(label) for label in CATCH_ALLS)
     assert len(MAIN_TOPIC) >= 50
 
 

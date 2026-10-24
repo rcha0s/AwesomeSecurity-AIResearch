@@ -60,7 +60,7 @@ def test_batch_size_is_the_story_cap_plus_the_named_margin():
     real = common.load_config()
     assert real.limits["batch_margin"] == 4  # named in config.yaml, not a code default
     assert real.limits["batch_per_source"] == 2 and real.limits["batch_routed_bonus"] == 5
-    assert real.limits["batch_priority_max"] == 5
+    assert real.limits["batch_priority_max"] == 4  # 5 until the big-story lane (2026-10-23)
     assert real.limits["batch_priority_per_source"] == 3
     assert real.limits["batch_class_slots"] == {"rss": 2}
     assert select_batch.batch_size(real) == real.limits["max_stories_per_run"] + 4

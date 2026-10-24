@@ -79,9 +79,12 @@ limits:
   batch_margin: 4         # extra candidates in the session's batch for ones the story
                           # judge finds same/update (scripts/select_batch.py)
   batch_per_source: 2     # most batch slots one source may take while others wait
-  batch_priority_max: 5   # must-not-miss lane: new CISA KEV + critical GHSA (+ high GHSA
-                          # in AI tooling) dealt first; ~3 a day arrive (2026-W43: 8 KEV +
-                          # 11 critical GHSA, 0 held by the pools)
+  batch_priority_max: 4   # must-not-miss lane: new CISA KEV + critical GHSA (+ high GHSA
+                          # in AI tooling) dealt right after the big-story lane; ~3 a day
+                          # arrive (2026-W43: 8 KEV + 11 critical GHSA, 0 held by the
+                          # pools). 4, not 5, since 2026-10-23: a KEV that is also the
+                          # week's story now takes a story slot, and 3 of that day's 5
+                          # lane picks were held ungrounded
   batch_priority_per_source: 3  # KEV is one source and GHSA one more: 3 + 2 fill the lane
   batch_class_slots:      # picks per round-robin round for a class (default 1). Plain
     rss: 2                # RSS is one class of 60+ feeds, 35% of staged candidates, and
@@ -91,6 +94,20 @@ limits:
                           # batch_per_source 2, one or two reach every batch
   batch_routed_bonus: 5   # composite points for a confident prefilter domain hint
                           # (taxonomy confidence, not newsworthiness: a nudge only)
+  batch_story_max: 4      # big-story lane, dealt first (newsworthy.py): one slot per
+                          # story staged by 2+ independent sources with a severity or
+                          # AI-incident marker. 2026-10-23: PHP2Shell came from 6 feeds
+                          # and its best copy ranked 50th of 393; with the new feeds
+                          # PHP2Shell, ARTEX, PAN-OS and GitLab fill it. Unused slots
+                          # go to the deal
+  batch_story_min_sources: 2   # ...with a marker (rce, critical, exploited, ...)
+  batch_story_any_sources: 4   # ...or this many without one
+  batch_story_days: 7     # a lane story was published in the last N days
+  batch_story_min_rank: 55  # ...and one copy comes from outside GitHub/HN from a source
+                          # ranked this or more (medium tier): two attacker repos, an HN
+                          # vote or two low-rank feeds can't qualify on markers alone
+  batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
+  batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)
   max_turns: 150          # hard turn cap on the local model session
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the

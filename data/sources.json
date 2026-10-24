@@ -859,16 +859,16 @@
       "Web Application Security"
     ],
     "strict": false,
-    "tier": "low",
+    "tier": "medium",
     "signals": {},
     "stats": {
       "ingested": 7,
       "curated": 0
     },
-    "rank": 32.0,
+    "rank": 47.0,
     "added": "2026-07-16",
     "active": true,
-    "notes": "Vendor research (SAST/appsec) | 2026-10-22: demoted medium->low: 7 ingested, 0 curated in pools+archive; recent items are vendor marketing.",
+    "notes": "Vendor research (SAST/appsec) | 2026-10-22: demoted medium->low on 7 ingested, 0 curated | 2026-10-23: restored to medium. All 9 analyzed posts (2026-07..08) were benchmark/process posts held on novelty; its incident research (arrayref crates 08-20, MemTensor worm 09-23, PHP2Shell 10-21, Node2Shell 10-22) was staged but never reached a batch (ranks 164-365 on 10-23).",
     "track": "research",
     "scope": "security"
   },
@@ -1464,9 +1464,11 @@
     },
     "rank": 70.0,
     "added": "2026-08-06",
-    "active": true,
+    "active": false,
     "notes": "Security journalism with technical depth",
-    "strict": false
+    "strict": false,
+    "deactivated": "2026-10-23",
+    "deactivated_reason": "feeds.arstechnica.com/arstechnica/security returns 404 (checked 2026-10-23); replaced by arstechnica.com/security/feed/"
   },
   {
     "id": "rss:https-www-wired-com-feed-category-security-lates",
@@ -2004,5 +2006,155 @@
     "added": "2026-10-22",
     "active": true,
     "notes": "CI/CD and package compromise research (GhostAction, tensorlake, LiteLLM) plus product posts; 7 in 31d."
+  },
+  {
+    "id": "rss:https-www-imperva-com-blog-feed",
+    "type": "rss",
+    "handle": "https://www.imperva.com/blog/feed/",
+    "name": "Imperva Threat Research",
+    "url": "https://www.imperva.com/blog/feed/",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-23",
+    "active": true,
+    "notes": "Vendor research blog: found Node2Shell, analyzed PHP2Shell (2026-10-21/22); ~10 posts/month, about half research",
+    "track": "both",
+    "scope": "security"
+  },
+  {
+    "id": "rss:https-www-bleepingcomputer-com-feed",
+    "type": "rss",
+    "handle": "https://www.bleepingcomputer.com/feed/",
+    "name": "BleepingComputer",
+    "url": "https://www.bleepingcomputer.com/feed/",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-23",
+    "active": true,
+    "notes": "News lane: incidents, exploited zero-days, breaches; ~15 posts/day, router-filtered",
+    "track": "news",
+    "scope": "security"
+  },
+  {
+    "id": "rss:https-www-securityweek-com-feed",
+    "type": "rss",
+    "handle": "https://www.securityweek.com/feed/",
+    "name": "SecurityWeek",
+    "url": "https://www.securityweek.com/feed/",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-23",
+    "active": true,
+    "notes": "News lane: vulnerabilities and incidents; router-filtered",
+    "track": "news",
+    "scope": "security"
+  },
+  {
+    "id": "rss:https-feeds-feedburner-com-thehackersnews",
+    "type": "rss",
+    "handle": "https://feeds.feedburner.com/TheHackersNews",
+    "name": "The Hacker News",
+    "url": "https://feeds.feedburner.com/TheHackersNews",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-23",
+    "active": true,
+    "notes": "News lane: fastest broad coverage of RCEs and AI-agent incidents; skip its sponsored webinar posts",
+    "track": "news",
+    "scope": "security"
+  },
+  {
+    "id": "rss:https-www-darkreading-com-rss-xml",
+    "type": "rss",
+    "handle": "https://www.darkreading.com/rss.xml",
+    "name": "Dark Reading",
+    "url": "https://www.darkreading.com/rss.xml",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-23",
+    "active": true,
+    "notes": "News lane, low tier: much opinion and vendor news; counts mostly as corroboration for the big-story lane",
+    "track": "news",
+    "scope": "security"
+  },
+  {
+    "id": "rss:https-arstechnica-com-security-feed",
+    "type": "rss",
+    "handle": "https://arstechnica.com/security/feed/",
+    "name": "Ars Technica Security",
+    "url": "https://arstechnica.com/security/feed/",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-23",
+    "active": true,
+    "notes": "Security journalism with technical depth. Replaces the dead feeds.arstechnica.com handle (404). 2026-10-23: covered PHP2Shell, eMudhra and OpenAI agents hacking sites",
+    "track": "news",
+    "scope": "both"
   }
 ]

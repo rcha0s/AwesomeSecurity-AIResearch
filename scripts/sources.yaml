@@ -244,6 +244,74 @@ classification:
       - "red team"
       - "guardrail"
       - "hallucination"
+    # ---- Catch-alls, checked LAST: only items no class above matched -------
+    # 2026-10-23: Wiz's own PHP2Shell post ("AI uncovers critical RCE
+    # vulnerabilities affecting 70% of the Internet"), The Register's GitLab
+    # max-severity RCE and Imperva's Node2Shell matched none of the keywords
+    # above, so every registered feed dropped them before staging. These two
+    # classes stage incident and vulnerability news; prefilter and the batch
+    # selection still decide what gets analyzed. Two guards (review of #102):
+    # `catch_alls` below makes a bare brand token ("ChatGPT", "Copilot") need
+    # incident context, and prefilter.py holds a catch-all-only admit that has
+    # no severity / AI-incident marker (newsworthy.markers), so "Uber brings
+    # ChatGPT Work" or "5 Common AppSec Gaps" never reach the batch.
+    "ais.agent-security":
+      - "ai-driven"
+      - "ai-powered"
+      - " ai assistant"
+      - " ai bot"
+      - "chatbot"
+      - "chatgpt"
+      - "copilot"
+      - "claude"
+      - "deepseek"
+      - " ai tool"
+    "ps.appsec":
+      - "remote code execution"
+      - "code execution"
+      - " rce"
+      - "unauthenticated"
+      - "pre-auth"
+      - "preauth"
+      - "zero-day"
+      - "0-day"
+      - "exploited"
+      - "exploitation"
+      - "exploit"
+      - "cve-20"
+      - "vulnerability"
+      - "vulnerabilities"
+      - "security flaw"
+      - "critical flaw"
+      - "critical bug"
+      - "max severity"
+      - "max-severity"
+      - "authentication bypass"
+      - "auth bypass"
+      - "privilege escalation"
+      - "sandbox escape"
+      - "guest-host escape"
+      - "backdoor"
+      - "infostealer"
+      - "credential stealer"
+      - "compromised"
+      - "malicious package"
+      - "under attack"
+      - "hacked"
+      - "hijacked"
+      - "emergency patch"
+      - "security release"
+
+  # Labels that only admit with context: a hit on one of these classes also
+  # needs one `context` term in the same text (empty list = no extra term).
+  catch_alls:
+    "ais.agent-security":
+      context: ["attack", "hack", "hijack", "exploit", "vulnerab", "breach", "compromis",
+                "malicious", "malware", "phish", "steal", "stole", "leak", "exfiltrat",
+                "prompt injection", "jailbreak", " rce", "code execution", "backdoor",
+                "abuse", "weaponi", "rogue", "lure", "scam", "fake "]
+    "ps.appsec":
+      context: []
 
   subtypes:
     "AI Security":

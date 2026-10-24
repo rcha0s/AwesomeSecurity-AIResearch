@@ -38,6 +38,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import common as c
+import newsworthy as nw
 import taxonomy as tx
 
 
@@ -64,13 +65,32 @@ DOMAIN_MIN_MARGIN = 1
 class KeywordTable:
     keywords: dict[str, tuple[str, ...]]  # domain id -> keyword hints
     excluded: tuple[str, ...]
+    catch_alls: tuple[str, ...] = ()  # sources.yaml router labels held without a marker
 
 
 def load_keywords(path: Path | None = None) -> KeywordTable:
     """The prefilter's view of the taxonomy: every domain's hints + deny terms."""
     tax = tx.load(path) if path else tx.get()
     keywords = {did: dom.keywords for did, dom in tax.domains.items()}
-    return KeywordTable(keywords=keywords, excluded=tax.excluded_terms)
+    rules = (c.load_yaml(c.SOURCES_FILE) or {}).get("classification") or {}
+    catch_alls = tuple(rules.get("catch_alls") or ())
+    return KeywordTable(keywords=keywords, excluded=tax.excluded_terms, catch_alls=catch_alls)
+
+
+def catch_all_without_marker(cand: dict, table: KeywordTable) -> bool:
+    """Staged only by a router catch-all, with no severity / AI-incident marker
+    and no incident word: vendor news that happened to say "vulnerability" or
+    "ChatGPT". KEV and GHSA
+    are exempt: KEV is exploitation by definition, and GHSA's fallback label
+    is the same ID."""
+    if cand.get("guess_label") not in table.catch_alls:
+        return False
+    if (
+        str(cand.get("source_id") or "").startswith("kev_json:")
+        or cand.get("source_type") == "GHSA"
+    ):
+        return False
+    return not nw.is_incident(cand)
 
 
 def haystack(candidate: dict) -> str:
@@ -150,6 +170,10 @@ def bucket(candidates: list[dict], table: KeywordTable) -> Bucketed:
         term = excluded_hit(text, table)
         if term is not None:
             dropped.append(_annotate(cand, f"excluded:{term}"))
+            continue
+        # 2b. Router catch-all admit with nothing newsworthy about it.
+        if catch_all_without_marker(cand, table):
+            dropped.append(_annotate(cand, "catch-all:no-marker"))
             continue
         # 3. Near-duplicate of a pool/archive entry.
         if duplicate_of_pool(cand, pool_urls, pool_titles):

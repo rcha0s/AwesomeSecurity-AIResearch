@@ -33,12 +33,19 @@ except ImportError:  # pragma: no cover - environment guard
 
 def classify_domain(text: str, rules: dict, feed_domains: list[str]) -> str | None:
     text = text.lower()
+    catch_alls = rules.get("catch_alls") or {}
     for domain, keywords in rules["domains"].items():
-        if any(kw in text for kw in keywords):
+        if any(kw in text for kw in keywords) and has_context(text, catch_alls.get(domain)):
             return domain
     if len(feed_domains) == 1:
         return feed_domains[0]
     return None
+
+
+def has_context(text: str, catch_all: dict | None) -> bool:
+    """A catch-all class (sources.yaml `catch_alls`) also needs one context term."""
+    terms = (catch_all or {}).get("context") or []
+    return not terms or any(t in text for t in terms)
 
 
 def classify_subtype(text: str, domain: str, rules: dict) -> str:
