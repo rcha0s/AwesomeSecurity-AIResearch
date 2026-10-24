@@ -75,12 +75,12 @@ _Tags: `prompt-injection`, `rag`, `indirect`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [InceptionRAG: Stealthy Poisoning Attack Against Retrieval-Augmented Generation](http://arxiv.org/abs/2609.16818v1) | Sep 15, 2026 |
 | supports | [Not what you've signed up for](https://arxiv.org/abs/2302.12173) | Feb 23, 2023 |
 | supports | [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/) | Jun 14, 2024 |
 | supports | [Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
 | supports | [Person Hides Prompt Injection in Legal Filing Telling AI to Side with Them](https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/) | Aug 13, 2026 |
 | supports | [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) | Oct 19, 2026 |
+| supports | [InceptionRAG: Stealthy Poisoning Attack Against Retrieval-Augmented Generation](http://arxiv.org/abs/2609.16818v1) | Sep 15, 2026 |
 
 </details>
 
@@ -201,10 +201,10 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems](https://arxiv.org/abs/2609.17320) | Sep 15, 2026 |
 | supports | [Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619) | Jul 20, 2026 |
 | supports | [Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986) | Jul 20, 2026 |
 | supports | [What If Prompt Injection Never Left? Cross-Session Stored Prompt Injection in Agentic Systems](https://arxiv.org/abs/2606.04425) | Jun 2026 |
+| supports | [Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems](https://arxiv.org/abs/2609.17320) | Sep 15, 2026 |
 
 </details>
 
@@ -224,8 +224,8 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [An alignment assessment of recent cybersecurity incidents](https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents) | Sep 9, 2026 |
 | supports | [OpenAI's rogue agents were caught communicating via public wikis](https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/) | Sep 4, 2026 |
+| supports | [An alignment assessment of recent cybersecurity incidents](https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents) | Sep 9, 2026 |
 
 </details>
 

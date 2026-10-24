@@ -28,10 +28,10 @@ _Tags: `npm`, `pip`, `supply-chain`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Deep-Live-Cam Supply Chain Attack: Technical Analysis](https://safedep.io/deep-live-cam-supply-chain-attack) | Sep 9, 2026 |
 | supports | [npm docs: preinstall/install/postinstall lifecycle scripts run on npm install](https://docs.npmjs.com/cli/v10/using-npm/scripts) | undated |
 | supports | [ChainDrop: Inside a Self-Propagating npm Worm](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) | Aug 6, 2026 |
 | supports | [Typosquatting programming language package managers: install-time code ran on 17,000 hosts via PyPI, npm and RubyGems](https://incolumitas.com/2016/06/08/typosquatting-package-managers/) | Jun 8, 2016 |
+| supports | [Deep-Live-Cam Supply Chain Attack: Technical Analysis](https://safedep.io/deep-live-cam-supply-chain-attack) | Sep 9, 2026 |
 
 </details>
 

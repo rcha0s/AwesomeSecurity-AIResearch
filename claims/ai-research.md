@@ -237,8 +237,8 @@ _Tags: `harness`, `agents`, `prompting`, `evals`_
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [HarnessTax: How Much Does the Harness Matter for Coding Agents?](https://harnesstax.github.io/) | Sep 16, 2026 |
 | supports | [How the Claude Code team designs its harness](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) | Jul 21, 2026 |
+| supports | [HarnessTax: How Much Does the Harness Matter for Coding Agents?](https://harnesstax.github.io/) | Sep 16, 2026 |
 
 </details>
 
