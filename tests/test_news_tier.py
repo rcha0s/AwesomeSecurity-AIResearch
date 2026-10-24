@@ -295,7 +295,8 @@ def test_an_ungrounded_brief_is_held_never_published(sandbox):
     assert e["grounding_score"] == 0.0 and e["lessons"][0]["grounded"] is False
     conf = common.load_config()
     assert not common.news_shown(e, conf, {})
-    assert common.review_reason(e, conf, {}).startswith("news story: excerpt not grounded")
+    assert "ungrounded excerpt" in common.review_reason(e, conf, {})  # held in REVIEW.md
+    assert not common.is_news_story(e, conf, {})  # and not kept: it ages out
 
 
 def test_an_unverifiable_brief_is_held(sandbox):
@@ -453,17 +454,40 @@ def test_actual_records_news_and_the_report_shows_it(tmp_path):
     assert "20 + 30 news" in budget.spend_report(runs, settings(), "2026-07")
 
 
-def test_real_config_sizes_the_session_for_both_tiers():
-    """The shipped numbers: 25 deep + 80 news, a session cap and turn cap that
-    fit them, and a month of cloud ceilings at the 2026-10-22 rate under the cap."""
+LEDGER_10_23 = [  # the measured runs on the budget ledger when the tiers shipped
+    row("10-19", cost=1.33, stories=3),  # the worst recent rate: $0.443/story
+    row("10-22", cost=1.67, stories=8),
+    row("10-23", cost=2.32, stories=10),  # the latest: $0.232/story
+]
+
+
+def test_real_config_session_cap_clears_a_full_two_tier_run():
+    """--max-budget-usd must not kill a full 25 deep + 80 brief run: it clears
+    one at the latest measured rate, and at the worst recent rate with briefs
+    priced at the pessimistic ratio (0.5, not the 0.3 estimate)."""
     s = budget.budget_settings()
-    assert (s["max_stories_per_run"], s["max_news_per_run"]) == (25, 80)
-    assert s["monthly_cap_usd"] == 600 and 0 < budget.news_ratio(s) < 1
+    deep, briefs = s["max_stories_per_run"], s["max_news_per_run"]
+    assert (deep, briefs) == (25, 80) and s["monthly_cap_usd"] == 600
+    cap, why = budget.session_budget(LEDGER_10_23, s, "local")
+    assert why == "calibrated"
+    latest, worst = 2.32 / 10, 1.33 / 3
+    pessimistic = budget.session_ratio(s)
+    assert pessimistic == 0.5 > budget.news_ratio(s)
+    assert cap >= latest * (deep + budget.news_ratio(s) * briefs)
+    assert cap >= worst * (deep + pessimistic * briefs)
+    assert s["max_turns"] >= 4 * deep + 1.5 * briefs + 50  # the turn estimate in config
+    # ...and a month of cloud ceilings at the 2026-10-22 rate still fits the cap
     ceiling, _ = budget.run_ceiling([row("m", cost=1.6749, stories=8)], s, "cloud")
     assert 31 * ceiling <= s["monthly_cap_usd"]
-    units = s["max_stories_per_run"] + budget.news_ratio(s) * s["max_news_per_run"]
-    assert s["max_turns"] >= 4 * s["max_stories_per_run"] + 1.5 * s["max_news_per_run"] + 50
-    assert units == 49
+
+
+def test_the_session_ratio_never_undercuts_the_estimate():
+    assert budget.session_ratio({"news_cost_ratio": 0.3}) == 0.3  # unset: the estimate
+    assert budget.session_ratio({"news_cost_ratio": 0.6, "session_news_ratio": 0.5}) == 0.6
+    s = settings(session_news_ratio=0.5, session_cap_fraction=0.8)
+    runs = [row("a", cost=8.0, stories=25, news=50)]  # $0.20/unit
+    assert budget.session_budget(runs, s, "local")[0] == round(0.2 * 1.5 * (25 + 0.5 * 50) * 0.8, 2)
+    assert budget.run_ceiling(runs, s, "local")[0] == pytest.approx(0.2 * 1.5 * 40)  # reserve
 
 
 # --- containment ---------------------------------------------------------------------
@@ -577,3 +601,109 @@ def test_the_backfill_campaign_fits_the_two_tier_ceiling():
     ceiling, _ = budget.run_ceiling([row("w", cost=1.33, stories=3)], s, "local")
     assert s["backfill"]["max_runs"] == 6
     assert 5 * ceiling <= s["backfill"]["max_usd"] == 200
+
+
+# --- retention: briefs don't accumulate forever -------------------------------------
+def pooled_brief(title: str, published: str, grounded: bool = True) -> dict:
+    return {
+        "id": title.lower().replace(" ", "-"),
+        "topic": "product-security",
+        "domain": "ps.appsec",
+        "title": title,
+        "source_url": f"https://wire.example/{title.lower().replace(' ', '-')}",
+        "takeaway": "Patch it.",
+        "summary": "A bug was exploited.",
+        "published": published,
+        "needs_review": True,
+        "news_brief": {"reason": "marker"},
+        "grounding_score": 1.0 if grounded else 0.0,
+        "lessons": [{"point": "p", "excerpt": "x" * 30, "grounded": grounded}],
+    }
+
+
+def test_briefs_age_out_and_grounded_ones_archive_after_brief_news_days(sandbox):
+    """Clock: 2026-07-15. max_age_days 31, brief_news_days 60."""
+    import generate_html
+    import rerank
+    from conftest import make_entry
+
+    sources = [{"id": "rss:news", "name": "News", "tier": "high", "track": "news"}]
+    (sandbox / "data" / "sources.json").write_text(json.dumps(sources), encoding="utf-8")
+    pool = common.load_pool("product-security")
+    pool["entries"] = [
+        pooled_brief("Held old", "2026-06-01", grounded=False),  # 44 days, held: ages out
+        pooled_brief("Held fresh", "2026-07-10", grounded=False),  # inside max_age_days
+        pooled_brief("Grounded 44 days", "2026-06-01"),  # kept as news (< 60)
+        pooled_brief("Grounded 75 days", "2026-05-01"),  # past 60: archived
+        make_entry(topic="product-security", domain="ps.appsec", title="Old news story",
+                   source_url="https://n.example/old", source_id="rss:news",
+                   published="2026-01-01"),  # fmt: skip
+    ]
+    common.save_pool("product-security", pool)
+    conf = common.load_config()
+    assert conf.limits["brief_news_days"] == 60
+    rerank.rerank_pool("product-security", conf)
+    live = sorted(e["title"] for e in common.load_pool("product-security")["entries"])
+    assert live == ["Grounded 44 days", "Held fresh", "Old news story"]  # news story unchanged
+    archive = common.load_json(common.ARCHIVE_FILE, default=[])
+    assert sorted(e["title"] for e in archive) == ["Grounded 75 days", "Held old"]
+    rerank.rerank_pool("product-security", conf)  # not pulled back as news
+    assert len(common.load_pool("product-security")["entries"]) == 3
+    shown = [r["title"] for r in generate_html.archive_rows(archive, conf)]
+    assert shown == ["Grounded 75 days"]  # on the Archive tab; the held one never published
+
+
+# --- a brief is bound to its tier record --------------------------------------------
+def test_a_brief_citing_another_url_under_a_real_candidate_id_is_rejected(sandbox):
+    stage_run(sandbox)
+    forged = brief(id="nm2", source_url="https://attacker.example/x", article_url=None)
+    out, errors = merged_one(forged)
+    assert out == [] and "is not its news-tier candidate's URL" in errors[0]
+
+
+def test_stamp_takes_urls_and_raw_text_from_the_run_not_the_analyzer(sandbox):
+    stage_run(sandbox)
+    tampered = brief(article_url="https://elsewhere.example/page", raw_path="data/_raw/other.txt")
+    e = merged_one(tampered)[0][0]
+    assert (e["source_url"], e["article_url"]) == ("https://wire.example/m2",) * 2
+    assert e["raw_path"] == "data/_raw/nm2.txt" and e["grounding_score"] == 1.0
+
+
+# --- a capped session still ships what it merged -------------------------------------
+@pytest.mark.parametrize("subtype", ["error_max_budget_usd", "error_max_turns"])
+def test_a_session_stopped_by_its_cap_still_posts_its_partial_run(scan_repo, tmp_path, subtype):
+    from test_run_scan import ledger_rows, open_budget
+    from test_run_scan_local import run_local
+
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    res, _ = run_local(work, env, tmp_path, rc=1, FAKE_SUBTYPE=subtype, FAKE_ANALYSIS="1",
+                       FAKE_TOUCH="1")  # fmt: skip
+    assert res.returncode == 0, res.stdout + res.stderr
+    rows = [(r["kind"], r.get("outcome")) for r in ledger_rows(origin)]
+    assert rows == [("reserve", None), ("actual", "session-capped"), ("done", None)]
+    assert "stopped by its cap" in (work / "data/_scan.log").read_text()
+
+
+def test_a_capped_session_that_merged_nothing_fails_analysis_empty(scan_repo, tmp_path):
+    from test_run_scan import ledger_rows, open_budget
+    from test_run_scan_local import run_local
+
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", retry_max_usd="0.1")
+    res, _ = run_local(work, env, tmp_path, rc=1, FAKE_SUBTYPE="error_max_turns")
+    assert res.returncode != 0
+    actual = [r for r in ledger_rows(origin) if r["kind"] == "actual"]
+    assert [r.get("outcome") for r in actual] == ["analysis-empty"]  # post ran and judged it
+
+
+def test_any_other_session_failure_still_skips_post(scan_repo, tmp_path):
+    from test_run_scan import ledger_rows, open_budget
+    from test_run_scan_local import run_local
+
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    res, _ = run_local(work, env, tmp_path, rc=1, FAKE_SUBTYPE="error_during_execution",
+                       FAKE_ANALYSIS="1")  # fmt: skip
+    assert res.returncode != 0
+    assert [r["kind"] for r in ledger_rows(origin)] == ["reserve", "actual"]  # no post

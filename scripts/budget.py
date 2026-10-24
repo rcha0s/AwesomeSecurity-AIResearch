@@ -70,7 +70,10 @@ import common as c
 SKIP_EXIT = 3
 RUNNERS = ("cloud", "local")
 KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
-OUTCOMES = ("analysis-empty",)  # optional on an actual row: why the run failed
+# optional on an actual row: why the run failed (analysis-empty allows one
+# retry), or that its session hit --max-budget-usd / --max-turns and post
+# shipped what it had merged (session-capped)
+OUTCOMES = ("analysis-empty", "session-capped")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 WINDOW_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})\.\.(\d{4}-\d{2}-\d{2})$")  # a backfill row's window
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")  # also keeps SPEND.md's table intact
@@ -204,12 +207,16 @@ def usd_per_story(
     return max(measured) if measured else None
 
 
-def run_ceiling(runs: list[dict], settings: dict, runner: str) -> tuple[float | None, str]:
+def run_ceiling(
+    runs: list[dict], settings: dict, runner: str, units_ratio: float | None = None
+) -> tuple[float | None, str]:
     """The most one run may cost, or (None, reason) when it can't be bounded.
 
     A measured rate is multiplied by `ceiling_headroom` (default 1): the local
     session's hard cap is `session_cap_fraction` of this ceiling, so a run as
-    expensive as the worst one measured must still fit under it.
+    expensive as the worst one measured must still fit under it. `units_ratio`
+    prices the news cap's briefs at a different ratio than calibration used
+    (session_limits passes the pessimistic `session_news_ratio`).
     """
     override = settings.get("usd_per_story")
     ratio, max_news = news_ratio(settings), int(settings.get("max_news_per_run") or 0)
@@ -225,7 +232,8 @@ def run_ceiling(runs: list[dict], settings: dict, runner: str) -> tuple[float | 
         headroom = (
             1.0 if override is not None else max(1.0, float(settings.get("ceiling_headroom") or 1))
         )
-        units = settings["max_stories_per_run"] + ratio * max_news
+        brief = ratio if units_ratio is None else units_ratio
+        units = settings["max_stories_per_run"] + brief * max_news
         return round(per_story * headroom * units, 4), "calibrated"
     if runner == "cloud":
         return None, "no measured per-story cost yet: run one local scan first"
@@ -527,13 +535,29 @@ def mark_done(path: Path, runs: list[dict], args) -> int:
     return 0
 
 
+def session_ratio(settings: dict) -> float:
+    """The brief cost ratio the session cap is sized with: the pessimistic
+    `budget.session_news_ratio` (0.5), never below the calibration ratio. A
+    session stopped by its cap loses work, so the cap assumes briefs cost more
+    than the estimate the reservation uses."""
+    raw = settings.get("session_news_ratio")
+    return news_ratio(settings) if raw is None else max(news_ratio(settings), float(raw))
+
+
+def session_budget(runs: list[dict], settings: dict, runner: str) -> tuple[float | None, str]:
+    """--max-budget-usd: the ceiling at the pessimistic brief ratio x the fraction."""
+    ceiling, why = run_ceiling(runs, settings, runner, units_ratio=session_ratio(settings))
+    if ceiling is None:
+        return None, why
+    return round(ceiling * float(settings.get("session_cap_fraction", 0.8)), 2), why
+
+
 def session_limits(runs: list[dict], settings: dict, runner: str) -> int:
     """Print `<max_budget_usd> <max_turns>` for the model session."""
-    ceiling, why = run_ceiling(runs, settings, runner)
-    if ceiling is None:
+    cap, why = session_budget(runs, settings, runner)
+    if cap is None:
         raise SystemExit(f"session-limits: {why}")
-    fraction = float(settings.get("session_cap_fraction", 0.8))
-    print(f"{ceiling * fraction:.2f} {settings['max_turns']}")
+    print(f"{cap:.2f} {settings['max_turns']}")
     return 0
 
 

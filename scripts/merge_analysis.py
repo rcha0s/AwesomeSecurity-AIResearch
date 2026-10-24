@@ -270,12 +270,19 @@ def load_tiers() -> dict:
 
 def news_tier_note(entry: dict, tiers: dict) -> dict | None:
     """The news-tier record of the candidate this entry analyzes (by candidate
-    id, or by its source/article URL), else None."""
+    id, or by its source/article URL), with its `candidate_id`, else None."""
     news = tiers.get("news") or {}
     if entry.get("id") in news:
-        return news[entry["id"]]
+        return {**news[entry["id"]], "candidate_id": entry["id"]}
     urls = {c.normalize_url(entry[k]) for k in ("source_url", "article_url") if entry.get(k)}
-    return next((n for n in news.values() if c.normalize_url(n.get("url", "")) in urls), None)
+    return next(
+        ({**n, "candidate_id": cid} for cid, n in news.items() if note_urls(n) & urls), None
+    )
+
+
+def note_urls(note: dict) -> set[str]:
+    """The URLs a news-tier record vouches for (the candidate's article and source)."""
+    return {c.normalize_url(note[k]) for k in ("url", "source_url") if note.get(k)}
 
 
 def brief_problems(entry: dict, note: dict | None) -> list[str]:
@@ -287,6 +294,8 @@ def brief_problems(entry: dict, note: dict | None) -> list[str]:
         return [f"unknown brief kind: {entry.get('brief')!r}"]
     if note is None:
         return ["news brief for a candidate that is not in this run's news tier"]
+    if c.normalize_url(entry.get("source_url") or "") not in note_urls(note):
+        return ["news brief source_url is not its news-tier candidate's URL"]
     return c.news_brief_errors(entry)
 
 
@@ -296,6 +305,13 @@ def stamp_brief(entry: dict, note: dict) -> None:
     the analyzer wrote is dropped, so only verify_citations decides it. A brief
     is never a vetted finding (needs_review), only a news-lane story."""
     entry.pop("brief", None)
+    # The citation and the source text come from the code-owned tier record and
+    # the run's own fetch, never from the analyzer: a brief can't cite one URL
+    # and ground its quote against another page.
+    entry["article_url"] = note.get("url") or entry.get("article_url")
+    entry["source_url"] = note.get("source_url") or note.get("url") or entry["source_url"]
+    raw = c.RAW_DIR / f"{note.get('candidate_id')}.txt"
+    entry["raw_path"] = str(raw.relative_to(c.ROOT)) if raw.exists() else None
     entry.pop("grounding_score", None)
     for le in entry.get("lessons") or []:
         if isinstance(le, dict):

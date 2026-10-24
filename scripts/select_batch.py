@@ -537,7 +537,11 @@ def tiers_record(session: list[dict]) -> dict:
     session can't edit data/_scan*): merge_analysis.py accepts a news brief
     only for a news-tier candidate named here, and takes its coverage from here."""
     news = {
-        x["id"]: {"url": x.get("article_url") or x.get("source_url") or "", **x["batch_news"]}
+        x["id"]: {
+            "url": x.get("article_url") or x.get("source_url") or "",
+            "source_url": x.get("source_url") or x.get("article_url") or "",
+            **x["batch_news"],
+        }
         for x in session
         if x.get("batch_tier") == NEWS and x.get("id")
     }

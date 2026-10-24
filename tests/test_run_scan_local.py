@@ -29,8 +29,8 @@ if [ -n "$FAKE_ANALYSIS" ]; then
 fi
 # FAKE_TOUCH: change a published file, so post has something to open a PR for.
 if [ -n "$FAKE_TOUCH" ]; then echo changed >> README.md; fi
-printf '{"total_cost_usd": 0.42, "subtype": "success", "num_turns": 7, "result": "%s"}' \\
-  "${FAKE_RESULT:-Analyzed the batch.}"
+printf '{"total_cost_usd": 0.42, "subtype": "%s", "num_turns": 7, "result": "%s"}' \\
+  "${FAKE_SUBTYPE:-success}" "${FAKE_RESULT:-Analyzed the batch.}"
 exit "${FAKE_CLAUDE_RC:-0}"
 """
 

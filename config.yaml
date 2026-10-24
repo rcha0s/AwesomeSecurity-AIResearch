@@ -90,6 +90,11 @@ limits:
                             # News is a wire, and on 2026-10-23 a cap of 4 cut its GPT-6
                             # agent, x402 and AI-agents-breach-1,200-sites stories (10
                             # still cut the last)
+  brief_news_days: 60     # a GROUNDED news brief is kept like news (rerank never prunes it)
+                          # for this many days, then moves to data/archive.json: off the
+                          # News tab, still on the Archive tab. A held or ungrounded brief
+                          # ages out at max_age_days like a finding. At up to 80 briefs a
+                          # run, keeping every one forever would add ~2.4k entries a month
   batch_news_min_rank: 40 # source rank a single-source marker needs for a news brief.
                           # 40, not the lane's 55 (batch_story_min_rank): a brief is one
                           # grounded quote, not a lane slot, and The Register (49) and
@@ -151,8 +156,8 @@ budget:
                               # input-token terms, output x5: ~22k); a brief reads it once
                               # and writes ~300 (~6.5k): 6.5 / 22 = 0.3. Ceiling at the worst
                               # recent $0.4433/unit: 0.4433 x 1.5 x (25 + 0.3 x 80) = $32.65
-                              # (session cap x 0.8 = $26.12); at the latest $0.232/unit
-                              # it is $17.05. A measured day (25 x $0.23 + 48 x $0.07 = $9.1)
+                              # (the reservation; session_news_ratio sizes the session cap);
+                              # at the latest $0.232/unit it is $17.05. A measured day (25 x $0.23 + 48 x $0.07 = $9.1)
                               # fits 31 a month in the $600 cap; 31 cloud runs charged the
                               # $32.65 ceiling would not (the guard then skips the last days).
   calibration_runs: 5         # "recent" = the last 5 measured runs, so the first run's
@@ -162,8 +167,13 @@ budget:
                               # run as costly as the worst measured one
   uncalibrated_run_usd: 5     # what a first, uncalibrated local run reserves;
                               # null = it can't run either
-  session_cap_fraction: 0.8   # local --max-budget-usd = reservation x this
+  session_cap_fraction: 0.8   # local --max-budget-usd = session ceiling x this
                               # (spend can overshoot the cap, so leave headroom)
+  session_news_ratio: 0.5     # the session cap prices a brief at this (pessimistic) ratio,
+                              # not news_cost_ratio: a session stopped by its cap loses work.
+                              # 0.4433 x 1.5 x (25 + 0.5 x 80) x 0.8 = $34.65; a 25 + 80 run
+                              # costs 0.4433 x 65 = $28.82 at the worst recent rate and
+                              # 0.232 x 65 = $15.08 at the latest, both under it
   retry_max_usd: 1.0          # a local run that failed analysis-empty and cost less
                               # than this may retry once the same day (budget.py)
 

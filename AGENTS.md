@@ -246,6 +246,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   publishes (news lane only, never as a vetted finding) only when its quote is
   confirmed against the fetched text; unverifiable or ungrounded briefs wait in
   REVIEW.md. `post` caps briefs at `max_news_per_run` apart from the story cap.
+  A brief's citation and source text come from the tier record and the run's own
+  fetch (a brief whose `source_url` isn't its candidate's is rejected). Retention:
+  a held or ungrounded brief ages out at `max_age_days` like a finding; a grounded
+  one is kept like news for `brief_news_days` (60), then moves to the archive (still
+  on the Archive tab). The Mac session's cap prices briefs at the pessimistic
+  `budget.session_news_ratio`, and a session stopped by `--max-budget-usd` or
+  `--max-turns` still gets `post` on what it merged (ledger outcome `session-capped`).
 - **No analysis = failed run:** `post` refuses a run where `merge_analysis.py`
   merged nothing (its code-owned `data/_merge_outcomes.json`) and applied no
   `same`/`update` verdict (`data/_story_outcomes.md`), raises `analysis-empty`,

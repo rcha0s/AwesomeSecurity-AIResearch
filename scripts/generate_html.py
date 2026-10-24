@@ -494,6 +494,12 @@ def sentence_cut(text: str, limit: int = ARCHIVE_TAKEAWAY_CHARS) -> str:
     return text[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"
 
 
+def archived_brief(entry: dict) -> bool:
+    """A grounded news brief past limits.brief_news_days: off the News tab,
+    still on the Archive tab (a held brief was never published)."""
+    return c.is_news_brief(entry) and vc.publishable_grounding(entry)
+
+
 def archive_rows(archive: list, conf: c.Config) -> list[dict]:
     """Aged-out findings that were vetted, as compact searchable rows, newest first.
 
@@ -512,7 +518,7 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
             "takeaway": sentence_cut(e.get("takeaway") or e.get("summary") or ""),
         }
         for e in archive
-        if isinstance(e, dict) and c.is_curated(e, conf)
+        if isinstance(e, dict) and (c.is_curated(e, conf) or archived_brief(e))
     ]
     return sorted(rows, key=lambda r: (r["published"], r["id"]), reverse=True)
 

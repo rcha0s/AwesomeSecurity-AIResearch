@@ -874,9 +874,32 @@ def news_brief_errors(entry: dict) -> list[str]:
     return errors
 
 
+BRIEF_NEWS_DAYS = 60  # default for limits.brief_news_days
+
+
+def brief_kept(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """Whether rerank keeps a news brief out of the freshness prune: only a
+    grounded one, and only for `limits.brief_news_days` (60). A held or
+    ungrounded brief ages out at max_age_days like a finding; a grounded one
+    past 60 days moves to data/archive.json (the Archive tab still shows it).
+    Briefs arrive by the dozen a day, so keeping every one forever, held ones
+    included, would grow the pools by thousands a month."""
+    from verify_citations import news_brief_grounded
+
+    days = int(conf.limits.get("brief_news_days", BRIEF_NEWS_DAYS))
+    return (
+        is_news_curated(entry, conf, sources_by_id, window=None)
+        and news_brief_grounded(entry)
+        and is_fresh(entry, days)
+    )
+
+
 def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
     """True for anything the news lane keeps: an editorial promotion, or a
-    news-gated story of any age. These are exempt from the freshness prune."""
+    news-gated story of any age (a news brief: see brief_kept). These are
+    exempt from the freshness prune."""
+    if is_news_brief(entry) and not is_editorial(entry):
+        return brief_kept(entry, conf, sources_by_id)
     return is_editorial(entry) or is_news_curated(entry, conf, sources_by_id, window=None)
 
 
