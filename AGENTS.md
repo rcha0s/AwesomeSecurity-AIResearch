@@ -295,10 +295,12 @@ newest `per_run` of each day plus the window's critical ones), arXiv venues by
 `submittedDate`, HN by `created_at_i` on both sides, HF Daily Papers for each window
 day, tl;dr sec issues whose own publish date is in the window, RSS items the feed
 still carries, sitemap pages whose own date is in the window, GitHub repos *created*
-in it. Staging, batch newness, editorial recency and rerank judge freshness at the
-window's end (`common.freshness_now`), so nothing is stale on arrival; the next
-normal rerank archives backfilled findings past `max_age_days` with the scores they
-got (still vetted) and keeps news, as for any old story.
+in it. Staging and batch newness judge freshness at the window's end
+(`common.freshness_now`), so nothing is stale on arrival. Rerank keeps scoring on the
+wall clock (the live ranking is untouched) and, in a backfill, does not prune the
+entries this run merged (`rerank.kept_for`: not on origin/main). The next normal
+rerank archives backfilled findings past `max_age_days`, still vetted, and keeps
+news, as for any old story.
 
 - **Guard:** `budget.py check_backfill` replaces the day rules. A chunk must sit
   inside the campaign `config.yaml backfill:` approves on main, span at most

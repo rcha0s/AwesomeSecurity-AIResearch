@@ -81,9 +81,7 @@ def newsworthiness(entry: dict, trend_index: dict[str, float], conf: c.Config) -
         "corroboration": corroboration_signal(entry),
         "event": event_signal(entry),
         "relevance": float(scores.get("relevance", 0) or 0),
-        "recency": c.newness_score(
-            c.best_date(entry) or "", conf.half_life_days, now=c.freshness_now()
-        ),
+        "recency": c.newness_score(c.best_date(entry) or "", conf.half_life_days),
     }
     total = sum(NEWS_WEIGHTS[k] * v for k, v in parts.items())
     return round(total, 2)
@@ -97,9 +95,7 @@ def newsworthiness_breakdown(entry: dict, trend_index: dict[str, float], conf: c
         "corroboration": round(corroboration_signal(entry), 1),
         "event": event_signal(entry),
         "relevance": float(scores.get("relevance", 0) or 0),
-        "recency": round(
-            c.newness_score(c.best_date(entry) or "", conf.half_life_days, now=c.freshness_now()), 1
-        ),
+        "recency": round(c.newness_score(c.best_date(entry) or "", conf.half_life_days), 1),
         "newsworthiness": newsworthiness(entry, trend_index, conf),
     }
 

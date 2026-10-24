@@ -7,7 +7,6 @@ test_backfill_sh.py."""
 from __future__ import annotations
 
 import json
-import sys
 from datetime import UTC, date, datetime
 
 import aggregate
@@ -137,40 +136,68 @@ def backfilled() -> dict:
     return make_entry(id="bf", date="2026-06-02", published="2026-06-02", source_url="https://a/bf")
 
 
-def test_a_backfill_rerank_keeps_and_vets_what_it_merged(sandbox, window):
-    pool_with(backfilled())
-    out = rerank.rerank_pool("ai-research", now=c.freshness_now())
-    assert [e["id"] for e in out["entries"]] == ["bf"]
-    assert c.is_curated(out["entries"][0], c.load_config())
-    assert not c.load_json(c.ARCHIVE_FILE, default=[])
+def live_entry() -> dict:
+    """An entry already on main, published after the window (2026-07-10)."""
+    return make_entry(id="live", date="2026-07-10", published="2026-07-10",
+                      source_url="https://a/live", title="A live story already ranked")  # fmt: skip
+
+
+def stale_on_main() -> dict:
+    """An entry on main that aged past max_age_days: a normal prune archives it."""
+    return make_entry(id="old", date="2026-05-01", published="2026-05-01",
+                      source_url="https://a/old", title="An old story due to age out")  # fmt: skip
+
+
+@pytest.fixture
+def on_main(monkeypatch):
+    """Ids origin/main already holds; everything else is this run's merge."""
+    monkeypatch.setattr(c, "main_entry_ids", lambda: {"live", "old"})
+
+
+def test_a_backfill_rerank_keeps_what_it_merged_and_leaves_the_ranking_alone(
+    sandbox, window, on_main
+):
+    pool_with(backfilled(), live_entry(), stale_on_main())
+    out = rerank.rerank_pool("ai-research")
+    by_id = {e["id"]: e for e in out["entries"]}
+    assert set(by_id) == {"bf", "live"}  # this run's merge kept; main's prune as usual
+    archived = [e["id"] for e in c.load_json(c.ARCHIVE_FILE, default=[])]
+    assert archived == ["old"]
+    # Scores are wall-clock: the post-window entry keeps its own newness (5 days
+    # old), not the 100 a window-end clock would give it.
+    wall = c.newness_score("2026-07-10", c.load_config().half_life_days, now=c.utcnow())
+    assert by_id["live"]["scores"]["newness"] == wall < 100
+    assert by_id["bf"]["scores"]["newness"] == c.newness_score(
+        "2026-06-02", c.load_config().half_life_days, now=c.utcnow()
+    )
+    assert c.is_curated(by_id["bf"], c.load_config())
+
+
+def test_a_normal_rerank_protects_nothing_extra(sandbox, on_main):
+    pool_with(backfilled(), live_entry())
+    out = rerank.rerank_pool("ai-research")
+    assert [e["id"] for e in out["entries"]] == ["live"]  # bf is stale at the wall clock
 
 
 def test_the_next_normal_rerank_archives_the_finding_vetted_and_keeps_news(
-    sandbox, window, monkeypatch
+    sandbox, window, monkeypatch, on_main
 ):
-    """Expected, not a bug: a backfilled finding older than max_age_days ages
-    into the archive with the scores it got at the window's end; news stays."""
+    """Expected, not a bug: once the backfill PR merges, the next normal rerank
+    ages a backfilled finding past max_age_days into the archive, still vetted
+    and with its scores; news stays."""
     news = {**backfilled(), "id": "news", "source_url": "https://a/news"}
     news["editorial"] = {"promoted": True}
     pool_with(backfilled(), news)
-    rerank.rerank_pool("ai-research", now=c.freshness_now())
+    rerank.rerank_pool("ai-research")
     scored = {e["id"]: e["scores"] for e in c.load_pool("ai-research")["entries"]}
     monkeypatch.delenv(c.BACKFILL_FROM_ENV)  # the next run is a normal scan
     monkeypatch.delenv(c.BACKFILL_TO_ENV)
-    rerank.rerank_pool("ai-research", now=c.freshness_now())
+    rerank.rerank_pool("ai-research")
     archived = {e["id"]: e for e in c.load_json(c.ARCHIVE_FILE, default=[])}
     assert list(archived) == ["bf"]
     assert archived["bf"]["scores"] == scored["bf"]  # archived as scored, still vetted
     assert c.is_curated(archived["bf"], c.load_config())
     assert [e["id"] for e in c.load_pool("ai-research")["entries"]] == ["news"]
-
-
-def test_rerank_main_scores_at_the_windows_end(monkeypatch, window):
-    seen = {}
-    monkeypatch.setattr(rerank, "rerank_all", lambda now=None: seen.update(now=now))
-    monkeypatch.setattr(sys, "argv", ["rerank.py"])
-    rerank.main()
-    assert seen["now"] == c.freshness_now()
 
 
 # --- Windowed ingest, per source --------------------------------------------------

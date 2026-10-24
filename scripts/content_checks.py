@@ -256,6 +256,10 @@ def _backfill_problems(row: dict, held: dict) -> list[str]:
         return [f"history: run {rid}'s backfill mark is not a FROM..TO window"]
     if mark != held.get("backfill"):
         return [f"history: run {rid}'s backfill mark is not its reservation's"]
+    if mark is not None and held.get("runner") != "local":
+        # budget.check_backfill admits local runs only: a marked cloud
+        # reservation is not one the guard made.
+        return [f"history: run {rid} is marked a backfill but is not a local run"]
     return []
 
 

@@ -1055,7 +1055,8 @@ def utcnow_iso() -> str:
 # --- Backfill window ---------------------------------------------------------
 # A backfill scan (scripts/backfill.sh, issue #52) is a normal scan whose ingest
 # pulls items published inside [FROM, TO] instead of "recent". run_scan.sh's
-# wrapper sets both variables; the model session inherits them and can't change
+# wrapper sets both variables, on the local runner only (budget.py refuses a
+# cloud backfill); there the locked-down session inherits them and can't change
 # them. Unset = a normal scan, and every helper below behaves as before.
 BACKFILL_FROM_ENV = "SCAN_BACKFILL_FROM"
 BACKFILL_TO_ENV = "SCAN_BACKFILL_TO"

@@ -57,11 +57,15 @@ def test_append_marks_the_row(monkeypatch, sandbox):
 
 
 # --- merge_gate: the mark must be its reservation's ------------------------------------
-BF_RESERVE = {**RESERVE, "backfill": WIN}
+BF_RESERVE = {**RESERVE, "runner": "local", "backfill": WIN}
+
+
+def bf_row(**over) -> dict:
+    return new_row(runner="local", backfill=WIN, **over)
 
 
 def test_an_honest_backfill_row_passes():
-    assert check(pr(new_row(backfill=WIN)), ledger=(BF_RESERVE,)) == []
+    assert check(pr(bf_row()), ledger=(BF_RESERVE,)) == []
 
 
 def test_a_daily_row_cannot_claim_a_backfill_mark_to_leave_the_gate():
@@ -69,8 +73,14 @@ def test_a_daily_row_cannot_claim_a_backfill_mark_to_leave_the_gate():
     assert problems == ["history: run C9's backfill mark is not its reservation's"]
 
 
+def test_a_marked_cloud_reservation_is_not_a_backfill():
+    """budget.py never makes one; a forged ledger row can't take a cloud run out."""
+    problems = check(pr(new_row(backfill=WIN)), ledger=({**RESERVE, "backfill": WIN},))
+    assert problems == ["history: run C9 is marked a backfill but is not a local run"]
+
+
 def test_a_backfill_row_cannot_drop_its_mark_to_join_the_gate():
-    problems = check(pr(new_row()), ledger=(BF_RESERVE,))
+    problems = check(pr(new_row(runner="local")), ledger=(BF_RESERVE,))
     assert problems == ["history: run C9's backfill mark is not its reservation's"]
 
 

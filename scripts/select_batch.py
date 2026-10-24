@@ -105,7 +105,7 @@ def ingestor_class(cand: dict) -> str:
 def score(cand: dict, conf: c.Config) -> float:
     """Composite over the axes known before analysis, plus the routing nudge."""
     axes = {
-        # A backfill ranks newness as of its window's end, like rerank.
+        # A backfill ranks its batch by newness as of its window's end.
         "newness": c.newness_score(
             c.best_date(cand) or "", conf.half_life_days, now=c.freshness_now()
         ),

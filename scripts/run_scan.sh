@@ -36,7 +36,10 @@
 # freshness is judged at TO. The guard checks the approved campaign instead of
 # the day rules (budget.py check_backfill), the ledger rows carry the window,
 # and post pushes claude/scan-<date>-backfill-<FROM>-<TO>. scripts/backfill.sh
-# sets these; the model session inherits them and can't change them.
+# sets these for the local runner, whose locked-down session inherits them
+# and can't change them (scan_containment.sh). The cloud routine has no such
+# lockdown, so budget.py refuses every cloud backfill and merge_gate refuses a
+# backfill-marked history row that isn't a local run's.
 set -Eeuo pipefail # -E: the ERR trap fires inside functions too
 cd "$(dirname "$0")/.."
 source scripts/lib.sh

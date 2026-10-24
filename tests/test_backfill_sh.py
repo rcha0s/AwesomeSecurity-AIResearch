@@ -232,6 +232,22 @@ def test_a_second_driver_is_refused_while_one_runs(scan_repo, tmp_path):
     res = drive(work, denv, "run", "2026-09-09", "2026-09-16", "8")
     assert res.returncode == 1 and "another backfill driver is running" in res.stderr
     assert chunks_run(tmp_path) == []
+    # It leaves the running driver's job, plist and lock alone.
+    assert not (tmp_path / "launchctl.log").exists()
+    assert (work / "data/_backfill.lock/pid").read_text() == str(os.getpid())
+
+
+def test_a_driver_that_dies_early_still_unloads_its_job(scan_repo, tmp_path):
+    work, _, env = scan_repo
+    denv = driver_env(work, env, tmp_path)
+    for args in (("2026-09-09", "2026-09-16", "0"), ("bad", "2026-09-16", "8")):
+        (tmp_path / "job.plist").write_text("<plist/>")
+        res = drive(work, denv, "run", *args)
+        assert res.returncode != 0 and chunks_run(tmp_path) == []
+        assert not (tmp_path / "job.plist").exists()
+        assert not (work / "data/_backfill.lock").exists()
+    calls = (tmp_path / "launchctl.log").read_text()
+    assert calls.count("bootout") == 2
 
 
 def test_a_dead_drivers_lock_is_taken_over(scan_repo, tmp_path):

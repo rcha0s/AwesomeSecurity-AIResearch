@@ -37,6 +37,7 @@ DEFAULT_CHUNK_DAYS=8
 LOCK="data/_backfill.lock" # relative to the clone: cmd_run cds there first
 WAIT_SECONDS="${BACKFILL_WAIT_SECONDS:-$((${BACKFILL_WAIT_HOURS:-48} * 3600))}"
 POLL_SECONDS="${BACKFILL_POLL_SECONDS:-600}"
+OTHER_DRIVER=0
 ((POLL_SECONDS >= 1)) || POLL_SECONDS=1 # a zero poll would never time out
 
 die() {
@@ -94,16 +95,16 @@ wait_for_pr() {
 # The driver: every chunk in order, never twice in one run, never retried here.
 drive() {
   local from to rc plan
-  plan="$(chunks "$1" "$2" "$3")" || return 1
   mkdir -p data
   if ! mkdir "$LOCK" 2>/dev/null; then
     if kill -0 "$(cat "$LOCK/pid" 2>/dev/null || echo 0)" 2>/dev/null; then
+      OTHER_DRIVER=1 # finish must leave that driver's job and lock alone
       die "another backfill driver is running (pid $(cat "$LOCK/pid"))"
     fi
     rm -rf "$LOCK" && mkdir "$LOCK" # its driver died without cleaning up
   fi
   echo $$ >"$LOCK/pid"
-  trap 'rm -rf "$LOCK"' EXIT
+  plan="$(chunks "$1" "$2" "$3")" || return 1
   log "start $1..$2 in chunks of $3 days (driver pid $$)"
   # A here-string, and the scan's stdin is /dev/null: the session must not
   # read the rest of the plan.
@@ -126,17 +127,24 @@ drive() {
   log "finished $1..$2"
 }
 
-cmd_run() {
-  check_args "$1" "$2" "$3"
-  cd "$(dirname "$0")/.."
-  export SCAN_LOG="$PWD/data/_scan.log"
-  local rc=0
-  drive "$@" || rc=$?
-  # One-shot: unload our own job and drop its plist, so nothing can rerun it.
-  # bootout signals this process too, so clean up first.
-  rm -rf "$LOCK"
+# One-shot: however the driver ends (finished, failed, or a `die`), drop our
+# lock and the plist and unload our own job, so nothing can rerun it. bootout
+# signals this process too, so it goes last. A driver refused because another
+# one runs touches nothing.
+finish() {
+  [[ "$OTHER_DRIVER" == 1 ]] && return 0
+  if [[ "$(cat "$LOCK/pid" 2>/dev/null)" == "$$" ]]; then rm -rf "$LOCK"; fi
   rm -f "$PLIST"
   "$LAUNCHCTL" bootout "$DOMAIN/$LABEL" >/dev/null 2>&1 || true
+}
+
+cmd_run() {
+  cd "$(dirname "$0")/.."
+  export SCAN_LOG="$PWD/data/_scan.log"
+  trap finish EXIT
+  check_args "$1" "$2" "$3"
+  local rc=0
+  drive "$@" || rc=$?
   return "$rc"
 }
 
