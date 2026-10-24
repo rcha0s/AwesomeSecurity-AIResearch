@@ -33,11 +33,14 @@ jobs:
       - name: Run source_scout
         run: python scripts/source_scout.py
 
-      # Bot-owned disposable branch. Force-with-lease can't reason about
-      # a branch the runner never fetched; --force is safe here.
+      # The branch is rebuilt from the current origin/main on every run, so
+      # its diff holds only this run's change. Never reuse the old tip: a
+      # stale base reverts unrelated files (PR #98). The push is a
+      # force-with-lease pinned to the remote sha read just before.
       - name: Open or refresh proposals PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_PROFILE: source-scout
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -50,10 +53,20 @@ jobs:
           fi
 
           branch="chore/source-proposals"
-          git checkout -B "$branch"
+          git fetch origin main
+          # The scout ran against this checkout. If main moved since, the
+          # proposals were computed on stale data: skip; tomorrow's run redoes it.
+          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
+            echo "::warning::main moved during the run; skipping so the PR is not built on a stale base."
+            exit 0
+          fi
+          remote_sha="$(git ls-remote origin "refs/heads/$branch" | cut -f1)"
+
+          git checkout -B "$branch" origin/main
           git add data/source_proposals.json
           git commit -m "chore: source proposals ($(date -u +%Y-%m-%d))"
-          git push --force origin "HEAD:$branch"
+          bash scripts/guard_bot_diff.sh source-scout
+          git push --force-with-lease="refs/heads/$branch:$remote_sha" origin "HEAD:refs/heads/$branch"
 
           scripts/ensure_pr.sh "$branch" \
             "chore: source proposals ($(date -u +%Y-%m-%d))" \

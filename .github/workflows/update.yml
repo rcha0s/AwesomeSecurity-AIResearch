@@ -75,13 +75,18 @@ jobs:
       - name: Open or refresh render-refresh PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_PROFILE: render-refresh
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md \
-            ai-security product-security ai-research claims docs)
+          # One shared list: also what scripts/guard_bot_diff.sh permits.
+          paths=()
+          while IFS= read -r p; do
+            [[ -z "$p" || "$p" == \#* ]] && continue
+            paths+=("$p")
+          done < scripts/bot_paths/render-refresh.txt
 
           # Scope the drift check to what gets staged: drift elsewhere would
           # pass this check and then fail `git commit` with nothing staged.
@@ -91,13 +96,23 @@ jobs:
           fi
 
           branch="chore/render-refresh"
-          git checkout -B "$branch"
+          git fetch origin main
+          # Render ran against this checkout. If main moved since, the output
+          # is stale: skip (the push-to-main trigger re-runs on the new head).
+          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
+            echo "::warning::main moved during the run; skipping so the PR is not built on a stale base."
+            exit 0
+          fi
+          remote_sha="$(git ls-remote origin "refs/heads/$branch" | cut -f1)"
+
+          # Rebuilt from the current origin/main every run, never the old tip
+          # (a stale base reverts unrelated files, PR #98). The lease is pinned
+          # to the remote sha just read, so it never rejects for "stale info".
+          git checkout -B "$branch" origin/main
           git add "${paths[@]}"
           git commit -m "chore: render refresh ($(date -u +%Y-%m-%d))"
-          # Bot-owned branch, disposable: plain --force is safe.
-          # --force-with-lease can't reason about branches the runner never
-          # fetched, so it rejects with "stale info" on repeat runs.
-          git push --force origin "HEAD:$branch"
+          bash scripts/guard_bot_diff.sh render-refresh
+          git push --force-with-lease="refs/heads/$branch:$remote_sha" origin "HEAD:refs/heads/$branch"
 
           scripts/ensure_pr.sh "$branch" \
             "chore: render refresh ($(date -u +%Y-%m-%d))" \

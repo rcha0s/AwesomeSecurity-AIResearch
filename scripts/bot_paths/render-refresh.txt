@@ -1,0 +1,19 @@
+# Paths the render-refresh bot may stage and touch. ONE definition, read by
+# both .github/workflows/update.yml (what it stages) and
+# scripts/guard_bot_diff.sh (what it permits), so they cannot drift.
+# A trailing slash means a whole directory; anything else is an exact file.
+data/ai-security.json
+data/product-security.json
+data/ai-research.json
+data/archive.json
+data/news_stories.json
+data/trends.json
+README.md
+NEWSLETTER.md
+TRENDS.md
+REVIEW.md
+ai-security/
+product-security/
+ai-research/
+claims/
+docs/
