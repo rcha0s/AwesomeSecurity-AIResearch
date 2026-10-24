@@ -311,16 +311,14 @@ def _copy_detail_pages(docs: Path, conf: c.Config) -> int:
 
 
 def _copy_moved_stub(src_root: Path, dst_root: Path, entry: dict) -> None:
-    """Mirror generate_site's "Moved" stub at the entry's pre-taxonomy path, so
-    old docs/findings/ links (the modal's URLs) keep resolving."""
-    old = c.moved_slug(entry)
-    src = src_root / old / _entry_filename(entry) if old else None
-    if src is None or not src.is_file():
-        return
-    dst = dst_root / old / _entry_filename(entry)
-    if not dst.exists():
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(src, dst)
+    """Mirror generate_site's "Moved" stubs at the entry's former paths (its
+    pre-taxonomy dir, its previous title slugs), so old docs/findings/ links
+    (the modal's URLs) keep resolving."""
+    for old_dir, name in c.former_page_paths(entry):
+        src, dst = src_root / old_dir / name, dst_root / old_dir / name
+        if src.is_file() and not dst.exists():
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dst)
 
 
 def finding_lessons(entry: dict) -> list[dict]:

@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-23_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-24_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -20,7 +20,7 @@ Installing a package with npm or gem, or a source distribution with pip, execute
 
 **Basis —** General supply-chain best-practice guidance, corroborated by a real self-propagating npm worm (ChainDrop) that exploited exactly this default.
 
-**Do this —** Do first-touch installs in a sandbox. Where possible, prefer --ignore-scripts + explicit build orchestration.
+**Do this —** Do first-touch installs in a sandbox. Skipping install scripts (--ignore-scripts) is not enough on its own: a payload that runs at import time gets past it (see import-time-payloads-defeat-install-time-controls), so also pin and review dependency updates and run the first import in a sandbox.
 
 _Tags: `npm`, `pip`, `supply-chain`_
 

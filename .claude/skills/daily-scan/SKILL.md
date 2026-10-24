@@ -40,8 +40,8 @@ all four.
    `limits.max_stories_per_run` plus `limits.batch_margin` candidates spread across sources.
 
 2. **Analyze:** follow the `research-scan` skill (`.claude/skills/research-scan/SKILL.md`)
-   steps 2–6 — read, analyze, independently verify, emit `data/analysis_out.json`, reconcile
-   the claim ledger — with these bounds:
+   steps 2–6 — read, analyze, review readability, independently verify, emit
+   `data/analysis_out.json`, reconcile the claim ledger — with these bounds:
    - This session's budget is sized for the batch: work through all of it. Never stop, or
      skip the analysis, for budget reasons. If you truly can't finish, analyze as many as you
      can, write `data/analysis_out.json` with those, and carry on with the steps below.
@@ -62,6 +62,8 @@ all four.
    - Where a candidate has no `raw_path`, run `python scripts/fetch_raw.py <candidate_id>`
      (this replaces research-scan's `curl` step). Every `excerpt` is a verbatim substring of
      that saved source text. Nothing you can't ground gets published.
+   - Run research-scan step 3b (readability review) before the verifier, so it checks
+     the text that gets published.
    - Then run `python scripts/merge_analysis.py` and `python scripts/verify_citations.py`.
    - Editorial pass per the `editorial-review` skill: `python scripts/importance.py --top 15`,
      judge the eligible held items, write `data/editorial_out.json` (`[]` if none qualify;

@@ -43,6 +43,8 @@ scripts/taxonomy.py       # the only taxonomy loader (`taxonomy.py list` = analy
 scripts/migrate_taxonomy.py # free-text domain -> ID (idempotent; rerank runs it too)
 scripts/taxonomy_proposals.py # record verified proposals; recurring -> `taxonomy` issue
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
+scripts/readability.py    # deterministic readability check of each brief (title..action; never excerpts)
+scripts/rewrite_guard.py  # restores any rewritten brief field whose facts changed (vs data/_analysis_draft.json)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
 scripts/story_ledger.py   # story ledger: shortlist, judge verdicts (same/update/new), ledgering
@@ -55,7 +57,7 @@ scripts/templates/site.html # the site template (__DATA__ placeholder; a code as
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
-scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py  # Phase 3 evals (see Evals)
+scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py · eval_readability.py  # Phase 3 evals (see Evals)
 scripts/run_golden_local.sh # weekly golden-set analyzer run; scan_containment.sh = the shared session lockdown
 data/evals/               # golden.json (answer key), recall-<week>.json, golden-<date>.json, history.json
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
@@ -371,6 +373,33 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   and no duplicate id/URL in its lane; every pool + archive entry has a valid ID and
   http(s) URLs. Runs in the Tests workflow on every PR and in `merge_gate.py`
   (`automerge.evals`, required).
+- **Readability** (`scripts/eval_readability.py`): deterministic. The share of
+  published briefs (title, takeaway, summary, lesson points, action) that pass
+  `scripts/readability.py` with no issue, plus how many have mild issues and how many
+  merge would hold. Listed under `automerge.evals` as optional: it fails only below
+  `readability.eval_min_pass` (0 = report only).
+  - **The rewrite** is research-scan step 3b: a small model rewrites each brief for
+    clarity BEFORE the factual verifier, so the verifier checks the published text. The
+    skill first saves `data/_analysis_draft.json`.
+  - **Facts are enforced in code:** `merge_analysis.py` matches each entry to its draft
+    by `source_url` and `scripts/rewrite_guard.py` restores, field by field, any rewrite
+    that changed a number or what it counts, a negation/version-range/severity word, a
+    mid-sentence name, or added or dropped a CVE/GHSA id, number or code span (and any
+    excerpt change). The entry records `readability_rewrite: reverted <fields>`; a
+    revert never holds it. No draft for a non-empty analysis is a warning in merge and
+    in the scan PR body. This guards against small-model rewrite error, not a hostile
+    session (the session authors the draft).
+  - **Holds:** merge records every brief's score (`readability`). Only a severe length
+    or structure failure holds it in REVIEW.md (`readability_hold`, reason
+    `readability: …`); acronyms, noun chains and long words are mild-only. Rerank
+    re-judges holds under the current config and releases what it no longer supports.
+  - **A readability hold never silently pulls a published entry:** merge doesn't hold an entry the
+    site already shows (it reports `hold_skipped`), and `merge_gate.py`
+    (`content_checks.readability_problems`) refuses a scan PR in which a shown-on-main
+    entry gains a hold ("readability hold of a published entry needs human review").
+    A sticky editorial promotion stays shown whatever its readability.
+  - Code-owned notes (reverts, skipped holds, a missing draft) go to
+    `data/_readability_outcomes.md`, which `post` puts in the PR body.
 - **Recall** (`scripts/eval_recall.py --live [--write | --out PATH]`, ISC-22): this
   week's headlines from tl;dr sec, Simon Willison (security + prompt-injection tags),
   critical GHSA and new CISA KEV entries, kept when on-thesis by taxonomy keyword hints,

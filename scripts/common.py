@@ -152,6 +152,55 @@ def moved_slug(entry: dict) -> str | None:
     return old if old != domain_slug(entry.get("domain") or "General") else None
 
 
+def title_slug(title: str | None) -> str:
+    """The title part of an entry's page filename (generate_site.entry_filename)."""
+    return slugify(title or "", 60)
+
+
+def carry_previous_slugs(old: dict, new: dict) -> dict:
+    """`new` (an updated copy of `old`) keeping every page slug `old` ever had.
+
+    When a retitle changes the page slug, the old slug is appended to
+    `previous_slugs` so the renderers can leave a "Moved" stub at the old page
+    path. Every code path that changes an existing entry's title goes through
+    this (merge_analysis.reconcile, retitle)."""
+    prev: list[str] = []
+    for slug in list(old.get("previous_slugs") or []) + list(new.get("previous_slugs") or []):
+        if isinstance(slug, str) and slug and slug not in prev:
+            prev.append(slug)
+    if old.get("title") and title_slug(old["title"]) not in prev:
+        prev.append(title_slug(old["title"]))
+    current = title_slug(new.get("title"))
+    prev = [s for s in prev if s != current]
+    out = {k: v for k, v in new.items() if k != "previous_slugs"}
+    return {**out, "previous_slugs": prev} if prev else out
+
+
+def retitle(entry: dict, title: str) -> dict:
+    """A copy of `entry` with a new title, recording the old page slug."""
+    return carry_previous_slugs(entry, {**entry, "title": title})
+
+
+def former_page_paths(entry: dict) -> list[tuple[str, str]]:
+    """(domain dir, filename) of every page path this entry used to have: its
+    pre-taxonomy dir (moved_slug) and every previous title slug, in any mix.
+    Excludes its current path. Renderers leave a "Moved" stub at each."""
+    date = entry.get("date") or "undated"
+    here = domain_slug(entry.get("domain") or "General")
+    dirs = [here] + [d for d in [moved_slug(entry)] if d]
+    slugs = [title_slug(entry.get("title"))] + [
+        s for s in entry.get("previous_slugs") or [] if isinstance(s, str) and s
+    ]
+    current = (here, f"{date}-{slugs[0]}.md")
+    out: list[tuple[str, str]] = []
+    for d in dirs:
+        for s in slugs:
+            path = (d, f"{date}-{s}.md")
+            if path != current and path not in out:
+                out.append(path)
+    return out
+
+
 def domain_name(domain: str) -> str:
     """Display name for a domain ID; a non-ID label passes through."""
     return taxonomy.get().name(domain)
@@ -528,7 +577,9 @@ def is_curated(entry: dict, conf: Config) -> bool:
     """True if the finding belongs in the public curated view (topic pages +
     newsletter). Everything else — flagged needs_review, unscored, ungrounded, OR
     below the composite floor — is held in the REVIEW.md queue (still in the pool)."""
-    if entry.get("needs_review") or domain_held(entry) or not is_scored(entry):
+    if entry.get("needs_review") or domain_held(entry) or readability_held(entry):
+        return False
+    if not is_scored(entry):
         return False
     if conf.curation.get("require_verification", True) and entry.get("verified") is False:
         return False  # the independent verifier refuted it
@@ -543,6 +594,20 @@ def domain_held(entry: dict) -> bool:
     """True while merge holds the entry because the analyzer's domain was not a
     taxonomy ID (taxonomy.enforce). An integrity floor: no lane publishes it."""
     return bool(entry.get("domain_hold"))
+
+
+def readability_held(entry: dict) -> bool:
+    """True while merge holds the entry because its brief failed the readability
+    check badly (readability.py `hold`). It keeps the entry out of the findings
+    lists, the news gate and new editorial promotions until it is rewritten (or
+    rerank releases it under a looser config). A sticky editorial promotion
+    stays shown: promotions leave only by demotion or lost integrity."""
+    return bool(entry.get("readability_hold"))
+
+
+def is_shown(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """True if the site shows this entry: a vetted finding or a news-lane story."""
+    return is_curated(entry, conf) or news_shown(entry, conf, sources_by_id)
 
 
 def is_editorial(entry: dict) -> bool:
@@ -562,7 +627,7 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
     curated), that are scored, grounded, and not refuted, are in play."""
     if is_curated(entry, conf) or not is_scored(entry) or domain_held(entry):
         return False
-    return not integrity_lost(entry)
+    return not readability_held(entry) and not integrity_lost(entry)
 
 
 def integrity_lost(entry: dict) -> bool:
@@ -745,7 +810,7 @@ def is_news_curated(
     we check freshness, source track/tier, topic scope, and the deny list. A
     news source can pass this gate on the same day it publishes, without ever
     clearing the research floor."""
-    if not topic_scope_ok(entry) or domain_held(entry):
+    if not topic_scope_ok(entry) or domain_held(entry) or readability_held(entry):
         return False
     if window is not None and not is_fresh(entry, window, now=now):
         return False
@@ -824,6 +889,8 @@ def review_reason(entry: dict, conf: Config, sources_by_id: dict[str, dict] | No
     gs = entry.get("grounding_score")
     if gs is not None and gs < 1.0:
         return f"ungrounded excerpt — only {int(gs * 100)}% of quotes verified against the source"
+    if readability_held(entry):
+        return entry["readability_hold"]
     if entry.get("needs_review"):
         return "flagged needs_review (low confidence / novelty / relevance)"
     if not is_scored(entry):

@@ -166,6 +166,23 @@ def test_editorial_check_holds_a_demotion_for_a_human(tmp_path, monkeypatch):
     assert gate.editorial_check("BASE", root) == []  # aged into the archive, still promoted
 
 
+def test_content_problems_refuse_a_hold_on_a_published_entry(tmp_path, monkeypatch):
+    import json
+
+    from conftest import make_entry
+
+    root = _tree(tmp_path)
+    monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
+    shown = make_entry(id="s", topic="ai-security", domain="ais.agent-security")
+    main = {"BASE:data/ai-security.json": {"entries": [shown]}}
+    monkeypatch.setattr(gate, "git_json", lambda ref, default: main.get(ref, default))
+    held = {**shown, "readability_hold": "readability: title_words 30 > 24"}
+    (root / "data" / "ai-security.json").write_text(json.dumps({"entries": [held]}))
+    assert gate.content_problems("BASE", root) == [
+        "readability hold of a published entry needs human review: s"
+    ]
+
+
 def test_content_problems_on_a_clean_tree(tmp_path, monkeypatch):
     monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
     assert gate.content_problems("main", _tree(tmp_path)) == []

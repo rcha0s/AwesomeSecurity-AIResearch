@@ -2,7 +2,7 @@
 
 **Published:** Jul 2, 2026
 
-> **Takeaway:** When you hand an agent a durable goal plus strict 'what counts as a real finding' rules, it will plan multi-step tooling and self-filter noise - the rules, not the model alone, are what make the output actionable.
+> **Takeaway:** Give an agent a durable goal plus strict rules for what counts as a real finding and it plans multi-step tooling and filters its own noise; the rules make the output actionable.
 
 ## TL;DR
 

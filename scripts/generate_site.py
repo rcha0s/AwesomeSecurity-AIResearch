@@ -234,28 +234,33 @@ def _write_entry_pages(base: c.Path, by_domain: dict[str, list[dict]], conf: c.C
             )
 
 
-def moved_stub(entry: dict) -> str:
-    """A deterministic pointer page left at a finding's pre-taxonomy path."""
-    new = f"../{c.domain_slug(entry.get('domain') or 'General')}/{entry_filename(entry)}"
-    return (
-        "# Moved\n\n"
-        f"This finding now lives at [{entry.get('title', 'its new page')}]({new}).\n\n"
+def moved_stub(entry: dict, old_dir: str | None = None) -> str:
+    """A deterministic pointer page left at one of a finding's former paths."""
+    here = c.domain_slug(entry.get("domain") or "General")
+    new = f"../{here}/{entry_filename(entry)}"
+    why = (
         "_Domains became fixed taxonomy IDs (data/taxonomy.yaml) and its page moved "
         "with its domain._\n"
+        if old_dir is None or old_dir != here
+        else "_The finding was retitled and its page moved with its title._\n"
+    )
+    return (
+        "# Moved\n\n"
+        f"This finding now lives at [{entry.get('title', 'its new page')}]({new}).\n\n" + why
     )
 
 
 def _write_moved_stubs(base: c.Path, entries: list[dict]) -> int:
-    """Leave a "Moved" stub at each page's old path so outside links still resolve."""
+    """Leave a "Moved" stub at each page's old paths so outside links still resolve."""
     written = 0
     for e in entries:
-        old = c.moved_slug(e)
-        path = base / old / entry_filename(e) if old else None
-        if path is None or path.exists():  # never shadow a real page
-            continue
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(moved_stub(e), encoding="utf-8")
-        written += 1
+        for old_dir, name in c.former_page_paths(e):
+            path = base / old_dir / name
+            if path.exists():  # never shadow a real page (or an earlier stub)
+                continue
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(moved_stub(e, old_dir), encoding="utf-8")
+            written += 1
     return written
 
 

@@ -17,6 +17,9 @@ bound what that content can do once published:
                         copy) unless main's copy already failed integrity;
                         any other removal is refused as "editorial demotion
                         needs human review".
+  readability_problems  an entry the site shows on main gains no
+                        readability_hold in the PR ("readability hold of a
+                        published entry needs human review").
   story_membership_problems every entry in main's story ledger stays in the
                         same story in the PR, and no story disappears: a PR can
                         only add stories, or add NEW entries to existing ones
@@ -39,7 +42,7 @@ import html
 import json
 import re
 
-from common import integrity_lost  # the one definition of the integrity floor
+from common import integrity_lost, is_shown  # the integrity floor; what the site shows
 
 # Same rule as safeUrl() in scripts/templates/site.html: keep them in step.
 HTTP_URL = re.compile(r"https?://[^\s\"<>`]+", re.IGNORECASE)
@@ -51,7 +54,9 @@ STAMP = re.compile(r"<span>Generated <b>([^<]*)</b></span>")
 # to existing ones (bumping `last_reviewed`), which is all a scan does (#68).
 # Any other change to an existing claim, live or retired (status, statement,
 # title, guidance, supersession edges, confidence, scope, ...), means the PR does
-# not auto-merge: it stays open for a human.
+# not auto-merge: it stays open for a human. The ledger dates (`added_on`,
+# `changed_on`) and a retired claim's `refuted_controls` are frozen the same way:
+# `add_claim.py evidence`, the only claim write a scan makes, never touches them.
 CLAIM_MUTABLE = frozenset({"evidence", "last_reviewed"})
 NEEDS_REVIEW = "claim change needs human review"
 DEMOTION_REVIEW = "editorial demotion needs human review"
@@ -148,6 +153,27 @@ def editorial_problems(main_docs: list, pr_docs: list) -> list[str]:
         elif not all(_promoted(e) for e in copies) and not integrity_lost(before[eid]):
             out.append(f"{DEMOTION_REVIEW}: {eid} lost its promotion with main's integrity intact")
     return out
+
+
+READABILITY_REVIEW = "readability hold of a published entry needs human review"
+
+
+def shown_ids(main_docs: list, conf, sources_by_id: dict) -> set[str]:
+    """Ids of every entry main's site shows (a vetted finding or a news story)."""
+    return {
+        e["id"]
+        for d in main_docs
+        for e in _entries(d)
+        if isinstance(e.get("id"), str) and is_shown(e, conf, sources_by_id)
+    }
+
+
+def readability_problems(shown_on_main: set[str], pr_docs: list) -> list[str]:
+    """A readability hold must not unpublish an entry under auto-merge: merge
+    never sets one on a shown entry, so a shown-on-main id that gains a hold in
+    the PR waits for a human."""
+    held = {e.get("id") for d in pr_docs for e in _entries(d) if e.get("readability_hold")}
+    return [f"{READABILITY_REVIEW}: {eid}" for eid in sorted(shown_on_main & held)]
 
 
 def duplicate_story_ids(rows: list[dict]) -> list[str]:

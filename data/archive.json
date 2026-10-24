@@ -16394,12 +16394,12 @@
   {
     "topic": "product-security",
     "domain": "ps.appsec",
-    "title": "phpseclib's Pure-PHP X25519 Implementation Leaks the Full Private Key via a Single Cross-Process libgmp Call-Count Observation",
+    "title": "phpseclib's X25519 leaks the full private key through a libgmp call-count side channel",
     "source_url": "https://github.com/advisories/GHSA-q97c-8qh3-fpc6",
     "cluster": null,
     "related_claims": [],
     "summary": "phpseclib's pure-PHP X25519 scalar multiplication performs data-dependent conditional modular reductions whose cost is a function of the secret scalar's prefix. A timing side-channel recovers the full 251-bit clamped private key from 32 observed operations using ordinary RFC 7748 base-point input (u=9) — no attacker-chosen input required, and rejecting low-order inputs does not close it. Critically, counting libgmp function calls instead of timing (e.g. via a Flush+Reload cache spy on the shared libgmp.so mapping) recovers a key from a single operation, tolerating 20-30% wrong per-step counts.",
-    "takeaway": "This isn't a low-order-input vulnerability that input validation can fix — it's a genuine implementation-level timing/call-count side channel triggered by ordinary use with the standard base point, and it demonstrates that counting a shared library's internal function calls (via cache-timing techniques) can be a strictly more powerful side channel than wall-clock timing, extracting a full key from a single observed operation instead of dozens.",
+    "takeaway": "It's an implementation side channel triggered in ordinary use, so input validation can't fix it.",
     "lessons": [
       {
         "point": "The attack recovers the full private key using the standard RFC 7748 base point (u=9) with no attacker-chosen input at all, and explicitly is not a low-order-input issue — rejecting low-order public values does not mitigate it.",
@@ -16465,7 +16465,10 @@
     "retrieved_at": "2026-09-09T06:16:09+00:00",
     "needs_review": false,
     "grounding_score": 1.0,
-    "domain_label": "Application Security"
+    "domain_label": "Application Security",
+    "previous_slugs": [
+      "phpseclib-s-pure-php-x25519-implementation-leaks-the-full-pr"
+    ]
   },
   {
     "topic": "product-security",
