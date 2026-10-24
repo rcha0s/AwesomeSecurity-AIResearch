@@ -81,8 +81,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          paths=(data/*.json README.md NEWSLETTER.md TRENDS.md REVIEW.md \
-            ai-security product-security ai-research claims docs)
+          # One shared list: also what scripts/guard_bot_diff.sh permits.
+          paths=()
+          while IFS= read -r p; do
+            [[ -z "$p" || "$p" == \#* ]] && continue
+            paths+=("$p")
+          done < scripts/bot_paths/render-refresh.txt
 
           # Scope the drift check to what gets staged: drift elsewhere would
           # pass this check and then fail `git commit` with nothing staged.

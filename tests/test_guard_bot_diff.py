@@ -165,3 +165,45 @@ def test_ensure_pr_runs_guard_before_any_api_call(repo: Path, tmp_path: Path) ->
     )
     assert res.returncode == 1
     assert not log.exists()
+
+
+@pytest.mark.parametrize(
+    "stray",
+    [
+        "data__sources.json",
+        "data__claims.json",
+        "data__source_proposals.json",
+        "data__source_blocklist.json",
+    ],
+)
+def test_render_refresh_rejects_unwritten_data_files(repo: Path, stray: str) -> None:
+    commit(repo, **{"README.md": "new\n", stray: "x\n"})
+    res = run_guard(repo, "render-refresh")
+    assert res.returncode == 1
+    assert stray.replace("__", "/") in res.stderr
+
+
+def test_fails_closed_when_base_missing(repo: Path) -> None:
+    git(repo, "update-ref", "-d", "refs/remotes/origin/main")
+    commit(repo, **{"data__source_proposals.json": "new\n", "scripts__x.py": "evil\n"})
+    for profile in ("source-scout", "render-refresh"):
+        assert run_guard(repo, profile).returncode != 0
+
+
+def test_rename_out_of_protected_path_is_seen(repo: Path) -> None:
+    """--no-renames: moving scripts/x.py into docs/ must still flag the source."""
+    (repo / "docs").mkdir(exist_ok=True)
+    git(repo, "mv", "scripts/x.py", "docs/x.py")
+    git(repo, "commit", "-qm", "mv")
+    res = run_guard(repo, "render-refresh")
+    assert res.returncode == 1
+    assert "scripts/x.py" in res.stderr
+
+
+def test_paths_list_is_exact_and_shared_with_workflow() -> None:
+    lines = (REPO / "scripts/bot_paths/render-refresh.txt").read_text().splitlines()
+    entries = [ln for ln in lines if ln and not ln.startswith("#")]
+    assert "data/sources.json" not in entries and "data/claims.json" not in entries
+    assert not any("*" in e for e in entries)
+    wf = (REPO / ".github/workflows/update.yml").read_text()
+    assert "bot_paths/render-refresh.txt" in wf
