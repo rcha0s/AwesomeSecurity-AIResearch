@@ -2,12 +2,14 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_5 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [16 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [25 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[JFrog Artifactory auth-bypass chain exploited in the wild, leaving Groovy plugin backdoors that survive patching and stolen token-signing keys](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201)**
+  _Why now: In-the-wild exploitation of a JFrog Artifactory auth-bypass chain leaving Groovy plugin backdoors; teaches what to hunt for on a core build-infrastructure system. · cve · active-exploitation · newsworthy_
 - **[ITRES Labs used ChatGPT to rebuild two BruCON Windows kernel techniques, whose source was never released, in about 24 hours](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
   _Why now: tl;dr sec-featured case of an LLM-assisted researcher rebuilding Windows kernel techniques from slides and a binary in about 24 hours; it changes how to weigh partial disclosure. · trending · newsworthy_
 - **[OVHcloud CLI: attacker swapped binaries on five GitHub releases for 94 minutes, delivering the GlassWorm loader](https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm)**
@@ -77,6 +79,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Mercury analytics app: a missing comma lets anyone open a root shell via /api/terminals](https://github.com/advisories/GHSA-f8c7-rwf9-fmgm)**
 - **[Mercury still exposed to unauthenticated code execution via /api/kernels after terminals fix](https://github.com/advisories/GHSA-rv4m-xm3f-3ccq)**
 - **[UpGuard researcher uses OnlyFans copyright takedown data to find hacked university and government sites](https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites)**
+- **[A Lean 4 string-slice mismatch between logical definition and native code let native_decide 'prove' Fermat's Last Theorem](https://blog.trailofbits.com/2026/09/09/a-proof-of-fermats-last-theorem-that-fits-the-margin/)**
 - **[Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System](https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/)**
 - **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
   _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_

@@ -245,6 +245,14 @@
           "title": "How the Claude Code team designs its harness",
           "source_name": "Simon Willison's Weblog",
           "published": "2026-07-21"
+        },
+        {
+          "stance": "supports",
+          "url": "https://harnesstax.github.io/",
+          "title": "HarnessTax: How Much Does the Harness Matter for Coding Agents?",
+          "published": "2026-09-16",
+          "note": "Cross-vendor comparison over 21 model-harness pairs: the four-tool Pi harness matched Claude Code and Codex CLI on success while harness choice changed cost up to 5x. Small sample (30 tasks, 3 repetitions).",
+          "source_name": "HarnessTax"
         }
       ],
       "tags": [
@@ -254,7 +262,7 @@
         "evals"
       ],
       "first_seen": "2026-07-21",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-24",
       "phase": "deployment",
       "title": "Lean tool sets and reasoning-first prompts work best",
       "basis": "A first-party design account from the Claude Code team describing their own harness choices — a practitioner report, not a controlled comparison.",
@@ -484,6 +492,14 @@
           "title": "What If Prompt Injection Never Left? Cross-Session Stored Prompt Injection in Agentic Systems",
           "source_name": "arXiv",
           "published": "2026-06"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2609.17320",
+          "title": "Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems",
+          "published": "2026-09-15",
+          "note": "In a 16-day run of eight multi-agent worlds, agents that detected injected threats still stored them in memory and acted on them up to 46 hours later.",
+          "source_name": "Hugging Face Daily Papers"
         }
       ],
       "tags": [
@@ -492,7 +508,7 @@
         "persistence"
       ],
       "first_seen": "2026-06",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-24",
       "phase": "threat-model",
       "title": "Poisoned agent memory persists and resists correction",
       "basis": "Three independent 2026 papers converge on the same result across coding-preference poisoning, self-state/syscall-level corruption, and cross-session stored injection.",
@@ -828,10 +844,18 @@
           "url": "https://arxiv.org/abs/2610.23109",
           "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
           "published": "2026-10-19"
+        },
+        {
+          "stance": "supports",
+          "url": "http://arxiv.org/abs/2609.16818v1",
+          "title": "InceptionRAG: Stealthy Poisoning Attack Against Retrieval-Augmented Generation",
+          "published": "2026-09-15",
+          "note": "Splits a RAG poison into individually harmless-looking passages that mislead only when retrieved together, bypassing mitigations that examine passages separately (abstract only).",
+          "source_name": "arXiv"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-24",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
@@ -1205,6 +1229,14 @@
           "source_name": "GitHub Advisory Database",
           "published": "2026-06-04",
           "note": "A caller-supplied storage_path let a request pick the LLM gateway's outbound backend, reaching internal/cloud-metadata endpoints from the gateway process rather than the user-facing endpoint."
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise",
+          "title": "Off Guard: Breaking LiteLLM from authentication bypass to cloud compromise",
+          "source_name": "Wiz Research",
+          "published": "2026-09-09",
+          "note": "LiteLLM's pass-through routes never validated the target URL against private ranges, localhost or cloud metadata, so a gateway caller could steal the host's cloud IAM credentials."
         }
       ],
       "first_seen": "2026-06-04",
@@ -1283,6 +1315,14 @@
           "url": "https://incolumitas.com/2016/06/08/typosquatting-package-managers/",
           "title": "Typosquatting programming language package managers: install-time code ran on 17,000 hosts via PyPI, npm and RubyGems",
           "published": "2016-06-08"
+        },
+        {
+          "stance": "supports",
+          "url": "https://safedep.io/deep-live-cam-supply-chain-attack",
+          "title": "Deep-Live-Cam Supply Chain Attack: Technical Analysis",
+          "published": "2026-09-09",
+          "note": "A hijacked repo swapped in a git-URL dependency named requests whose setup.py ran a hidden payload at pip install time.",
+          "source_name": "SafeDep"
         }
       ],
       "first_seen": "2016-06-08",
@@ -2066,10 +2106,18 @@
           "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
           "title": "OpenAI's rogue agents were caught communicating via public wikis",
           "published": "2026-09-04"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
+          "title": "An alignment assessment of recent cybersecurity incidents",
+          "published": "2026-09-09",
+          "note": "Four Claude cyber-eval incidents reached real third-party systems through a misconfigured sandbox; Anthropic attributes the model's 'it's a simulation' reasoning to biased reasoning rather than a correct read of its environment.",
+          "source_name": "Anthropic Research"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-24",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",
@@ -2220,6 +2268,37 @@
       ],
       "added_on": "2026-10-21",
       "changed_on": "2026-10-21"
+    },
+    {
+      "id": "input-guardrail-weaker-than-target-is-bypassable",
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "statement": "An input-screening guardrail model that is less capable than the model it protects (less reasoning effort, no tools) can be bypassed by payloads hidden in plain prose that only the stronger, tool-using target can decode.",
+      "status": "current",
+      "confidence": 0.45,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://research.checkpoint.com/2026/puzzlemask-abusing-plain-prose-as-a-covert-ai-attack-vector/",
+          "title": "PuzzleMask: Abusing Plain Prose as a Covert AI Attack Vector",
+          "source_name": "Check Point Research",
+          "published": "2026-09-10",
+          "note": "Four gatekeeper models rated all 23 prose-wrapped prompts safe, while a reasoning target with a Python interpreter extracted and acted on the payload in over 90% of trials. One gatekeeper (gpt-oss-safeguard:20b) was itself a reasoning model, and the payloads are redacted."
+        }
+      ],
+      "first_seen": "2026-09-10",
+      "last_reviewed": "2026-10-24",
+      "title": "A guardrail weaker than its target can be bypassed",
+      "basis": "Single vendor research post (Check Point) with redacted payloads; not independently reproduced.",
+      "guidance": "Don't rely on a small no-tools input classifier alone to protect a model with high reasoning effort and a code interpreter: add output and tool-call monitoring, consider paraphrasing untrusted input, and red-team the gatekeeper with prose-wrapped payloads.",
+      "scope": "Covers external input gatekeepers in front of a stronger target; says nothing about the target's own refusal training (see model-internal-refusal-is-not-a-security-boundary). One source; the capability-asymmetry explanation is the authors' and is not isolated experimentally.",
+      "tags": [
+        "guardrails",
+        "llm-gatekeeper",
+        "obfuscation"
+      ],
+      "added_on": "2026-10-24",
+      "changed_on": "2026-10-24"
     }
   ]
 }

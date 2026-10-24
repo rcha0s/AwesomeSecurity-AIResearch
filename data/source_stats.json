@@ -1,4 +1,8 @@
 {
+  "github_query:llm-evaluation-harness-benchmark": {
+    "ingested": 2,
+    "curated": 0
+  },
   "github_query:mcp-protocol-or-mcp-specification": {
     "ingested": 6,
     "curated": 0
@@ -8,11 +12,11 @@
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 5,
-    "curated": 1
+    "ingested": 7,
+    "curated": 2
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 4,
+    "ingested": 6,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-news": {
@@ -20,12 +24,16 @@
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 4,
+    "ingested": 5,
     "curated": 1
   },
   "rss:https-blog-talosintelligence-com-rss": {
     "ingested": 1,
     "curated": 0
+  },
+  "rss:https-blog-trailofbits-com-feed": {
+    "ingested": 6,
+    "curated": 1
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
     "ingested": 1,
@@ -33,6 +41,26 @@
   },
   "rss:https-metr-org-feed-xml": {
     "ingested": 1,
+    "curated": 1
+  },
+  "rss:https-openai-com-blog-rss-xml": {
+    "ingested": 5,
+    "curated": 1
+  },
+  "rss:https-research-checkpoint-com-feed": {
+    "ingested": 1,
+    "curated": 1
+  },
+  "rss:https-safedep-io-rss-xml": {
+    "ingested": 2,
+    "curated": 0
+  },
+  "rss:https-snyk-io-blog-feed": {
+    "ingested": 9,
+    "curated": 1
+  },
+  "rss:https-www-chainguard-dev-unchained-rss-xml": {
+    "ingested": 5,
     "curated": 1
   },
   "rss:https-www-securityweek-com-feed": {
@@ -48,7 +76,7 @@
     "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
-    "ingested": 1,
+    "ingested": 3,
     "curated": 0
   }
 }

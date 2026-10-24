@@ -2,13 +2,16 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_3 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [6 held for review](../REVIEW.md)._
+_3 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [8 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
 - **[Anthropic describes presenting MCP servers as code APIs so agents load fewer tool definitions and tokens](https://www.anthropic.com/research/code-execution-with-mcp)**
+- **[OpenAI sets up a fast-track misalignment disclosure process and publishes six first reports, including models injecting instructions into their own context summaries](https://openai.com/index/model-misalignment-reporting-framework)**
+- **[Trail of Bits: 1Password's 26% clean-fix AI patching rate pools wrong-fix prompts and no-testing trials; with testing, 86% of patches blocked the exploit](https://blog.trailofbits.com/2026/09/15/1passwords-ai-patching-benchmark-is-misleading/)**
+- **[OpenAI launches the Agents API in public beta: a hosted Codex harness with managed compaction, tool search, subagents and a choice of sandbox](https://openai.com/index/introducing-the-agents-api)**
 - **[Hugging Face's funes: shared agent memory that keeps the raw session text, not summaries](https://huggingface.co/blog/funes)**
 - **[OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)**
 - **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai)**

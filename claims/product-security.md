@@ -24,13 +24,14 @@ Installing a package with npm or gem, or a source distribution with pip, execute
 
 _Tags: `npm`, `pip`, `supply-chain`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [npm docs: preinstall/install/postinstall lifecycle scripts run on npm install](https://docs.npmjs.com/cli/v10/using-npm/scripts) | undated |
 | supports | [ChainDrop: Inside a Self-Propagating npm Worm](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) | Aug 6, 2026 |
 | supports | [Typosquatting programming language package managers: install-time code ran on 17,000 hosts via PyPI, npm and RubyGems](https://incolumitas.com/2016/06/08/typosquatting-package-managers/) | Jun 8, 2016 |
+| supports | [Deep-Live-Cam Supply Chain Attack: Technical Analysis](https://safedep.io/deep-live-cam-supply-chain-attack) | Sep 9, 2026 |
 
 </details>
 
@@ -189,13 +190,14 @@ SSRF guards on user-input URLs are not sufficient for agent applications: the ag
 
 _Tags: `ssrf`, `agents`, `defense`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [SSRF (OWASP)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) | undated |
 | supports | [ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces](https://github.com/advisories/GHSA-pr64-jmmf-jp54) | Jun 26, 2026 |
 | supports | [TensorZero Gateway: a request parameter that overrides the server's object-storage config gives arbitrary file read and SSRF](https://github.com/advisories/GHSA-824w-x939-6cmc) | Jun 4, 2026 |
+| supports | [Off Guard: Breaking LiteLLM from authentication bypass to cloud compromise](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise) | Sep 9, 2026 |
 
 </details>
 

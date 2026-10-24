@@ -233,11 +233,12 @@ Coding-agent harnesses work better with few distinct tools and a lean system pro
 
 _Tags: `harness`, `agents`, `prompting`, `evals`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [How the Claude Code team designs its harness](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) | Jul 21, 2026 |
+| supports | [HarnessTax: How Much Does the Harness Matter for Coding Agents?](https://harnesstax.github.io/) | Sep 16, 2026 |
 
 </details>
 
