@@ -163,10 +163,10 @@
       "scores": {
         "novelty": 75,
         "relevance": 90,
-        "newness": 28,
+        "newness": 27,
         "credibility": 50.6,
-        "composite": 64.09,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 63.84,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.",
       "threat": "Poisoned repository content steers a coding agent into executing or committing a backdoor.",
@@ -435,6 +435,101 @@
     },
     {
       "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "Pillar Security: opencode runs attacker code during remote MCP OAuth sign-in on Windows, and the fix shipped without a CVE",
+      "source_url": "https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth",
+      "article_url": "https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-19",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-open-and-shut-remote-code-execution-in-ope-d5e540bef2.txt",
+      "related_claims": [],
+      "summary": "Pillar found that opencode (versions 1.0.137 to 1.18.32 on Windows and WSL) passed an unsanitized authorization URL from a remote MCP server into a PowerShell command, giving code execution during OAuth sign-in with no user interaction. A plain https URL carries the payload, so scheme validation does not help. The same defect class was already CVE-2025-6514. Anomaly fixed it in 1.18.33 as a refactor with no advisory or CVE, so scanners will not flag old installs.",
+      "lessons": [
+        {
+          "point": "No malicious install, model exploit or prompt injection is needed; connecting to a bad MCP server is enough.",
+          "excerpt": "The attack does not require installing malicious software, exploiting the AI model or tricking it through prompt injection.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "URL scheme validation is the usual fix and it does not stop this payload.",
+          "excerpt": "Normal scheme validation does not stop it",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A server can turn malicious after being configured, through compromise, a hijacked registry entry or an expired domain.",
+          "excerpt": "Crucially, the server did not need to be malicious when configured.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The fix shipped silently, so dependency scanners cannot find affected installs.",
+          "excerpt": "did not issue a security advisory or request a CVE. As a result, conventional vulnerability scanners and dependency alerts will not identify affected installations",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat every remote MCP server response as untrusted input to your client, never pass it to a shell, and do not rely on CVE feeds to learn about agent-tool fixes.",
+      "tags": [
+        "opencode",
+        "mcp",
+        "oauth",
+        "command-injection",
+        "windows",
+        "coding-agents"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Inventory coding agents and MCP servers",
+        "detail": "Upgrade opencode to 1.18.33 or later on Windows and WSL, list the remote MCP servers each developer's agent is configured for, and require allowlisted MCP endpoints with pinned domains."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 85,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 57.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "CVE-2025-6514 (mcp-remote) is the same sink; the new points are the https-URL payload that defeats scheme checks and the silent-fix disclosure gap. Verifier: CVE-2025-6514 (JFrog, mcp-remote), CVE-2025-58062, CVE-2025-10619; tripodsan sindresorhus/open issue #323 (2023, https://$(calc.exe)). Delta: same class in open",
+      "verified": true,
+      "verify_note": "Independent verifier found every claim supported by the source.",
+      "id": "pillar-security-opencode-runs-attacker-code-duri-dcfca5ee4a",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Coding-agent MCP sign-in RCE fixed silently with no CVE, so scanners will not flag it.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/opencode-flaw-lets-malicious-mcp.html",
+          "tier": "medium",
+          "published": null
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "domain": "ais.ai-infra",
       "title": "LiteLLM 1.107.0 on PyPI and Docker was trojanized to steal cloud and LLM provider keys",
       "source_url": "https://www.wiz.io/blog/litellm-compromised-steals-credentials",
@@ -609,93 +704,6 @@
       "verify_note": "All 4 lessons match the source text closely; minor nit that 'OS isolation and network egress control' is Rehberger's gloss on Anthropic's reply rather than a verbatim Anthropic quote — noted, doesn't change substance.",
       "corroborating_sources": [],
       "domain_label": "Prompt Injection"
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "title": "Pillar Security: opencode runs attacker code during remote MCP OAuth sign-in on Windows, and the fix shipped without a CVE",
-      "source_url": "https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth",
-      "article_url": "https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-19",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-open-and-shut-remote-code-execution-in-ope-d5e540bef2.txt",
-      "related_claims": [],
-      "summary": "Pillar found that opencode (versions 1.0.137 to 1.18.32 on Windows and WSL) passed an unsanitized authorization URL from a remote MCP server into a PowerShell command, giving code execution during OAuth sign-in with no user interaction. A plain https URL carries the payload, so scheme validation does not help. The same defect class was already CVE-2025-6514. Anomaly fixed it in 1.18.33 as a refactor with no advisory or CVE, so scanners will not flag old installs.",
-      "lessons": [
-        {
-          "point": "No malicious install, model exploit or prompt injection is needed; connecting to a bad MCP server is enough.",
-          "excerpt": "The attack does not require installing malicious software, exploiting the AI model or tricking it through prompt injection.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "URL scheme validation is the usual fix and it does not stop this payload.",
-          "excerpt": "Normal scheme validation does not stop it",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A server can turn malicious after being configured, through compromise, a hijacked registry entry or an expired domain.",
-          "excerpt": "Crucially, the server did not need to be malicious when configured.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The fix shipped silently, so dependency scanners cannot find affected installs.",
-          "excerpt": "did not issue a security advisory or request a CVE. As a result, conventional vulnerability scanners and dependency alerts will not identify affected installations",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Treat every remote MCP server response as untrusted input to your client, never pass it to a shell, and do not rely on CVE feeds to learn about agent-tool fixes.",
-      "tags": [
-        "opencode",
-        "mcp",
-        "oauth",
-        "command-injection",
-        "windows",
-        "coding-agents"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Inventory coding agents and MCP servers",
-        "detail": "Upgrade opencode to 1.18.33 or later on Windows and WSL, list the remote MCP servers each developer's agent is configured for, and require allowlisted MCP endpoints with pinned domains."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 85,
-        "newness": 27,
-        "credibility": 50.0,
-        "composite": 56.25,
-        "scored_at": "2026-10-24T06:34:34+00:00"
-      },
-      "prior_art": "CVE-2025-6514 (mcp-remote) is the same sink; the new points are the https-URL payload that defeats scheme checks and the silent-fix disclosure gap. Verifier: CVE-2025-6514 (JFrog, mcp-remote), CVE-2025-58062, CVE-2025-10619; tripodsan sindresorhus/open issue #323 (2023, https://$(calc.exe)). Delta: same class in open",
-      "verified": true,
-      "verify_note": "Independent verifier found every claim supported by the source.",
-      "id": "pillar-security-opencode-runs-attacker-code-duri-dcfca5ee4a",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 20 > 18"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Coding-agent MCP sign-in RCE fixed silently with no CVE, so scanners will not flag it.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      }
     },
     {
       "topic": "ai-security",
@@ -1020,6 +1028,91 @@
       "needs_review": true,
       "grounding_score": null,
       "domain_label": "MCP Protocol"
+    },
+    {
+      "candidate_id": "data-void-exploits-in-web-searching-llms-c6d19c606f",
+      "topic": "ai-security",
+      "domain": "ais.data-poisoning",
+      "title": "Data-void exploits: attacker content showed up in 31% of web-searching LLM answers, sometimes from a single page",
+      "summary": "A data void is a topic with little reliable content online. Attackers can fill one with their own narrative and wait for a web-searching LLM to retrieve and cite it. Testing ChatGPT, Gemini, and Sonar Pro, the authors (NDSS 2027) found attacker content in 31% of responses across all conditions, and one page could be enough. Skeptical prompts helped only slightly, and model choice made no large difference.",
+      "lessons": [
+        {
+          "point": "A single attacker-controlled page can be enough to get into the answer.",
+          "excerpt": "We find that data-void exploits can succeed with only a single attacker controlled page.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Across all tested attacker setups, models, and prompt tones, attacker content showed up in about a third of responses.",
+          "excerpt": "Across all conditions, attacker-content appears in LLM responses 31% of the time.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The authors found no evidence of large effects from a skeptical prompt tone or from switching models.",
+          "excerpt": "we find no evidence of large effects of prompt tone or model choice on success rates",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Synthesized answers remove the ranking and competing-result cues that warn users of thin evidence in classic search.",
+          "excerpt": "LLMs can obscure when an answer relies on sparse, unverified, or adversarial sources.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Web-search grounding is an input channel attackers can write to, especially on niche topics, so answers on such topics need signals about how thin or reliable the sources are.",
+      "tags": [
+        "data-voids",
+        "search-poisoning",
+        "web-search-llm",
+        "disinformation",
+        "retrieval"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Flag thin-source answers in search-grounded LLM features",
+        "detail": "In a search-augmented assistant, count distinct independent domains behind each claim, and weight sources by domain age and reputation. When an answer rests on one or two low-reputation pages, show an explicit thin-evidence warning or decline. Add data-void probes (niche queries seeded with your own test page) to your red-team eval set."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 70,
+        "newness": 27,
+        "credibility": 72.0,
+        "composite": 52.05,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Data voids in classic search (Golebiewski and boyd, 2018), RAG and indirect-injection poisoning work, and generative engine optimization (GEO) studies such as SAGEO Arena in the archive; this paper measures the data-void attack against production web-searching LLMs. Verifier: Data voids in classic search (Golebiewski and boyd 2018), 'LLM grooming' by the Pravda network (NewsGuard/ASP 2025), PoisonedRAG-style corpus poisoning, and GEO work such as SAGEO Arena in the archive.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "retrieval-quality-dominates-generation-quality-in-rag"
+      ],
+      "threat": "Disinformation planted in low-competition search spaces is retrieved and cited by web-searching LLMs.",
+      "conditions": "User query targets a topic with little reliable content; attacker page is indexed by the LLM's search backend.",
+      "mitigations": "Source-diversity and reputation checks before citing; thin-evidence warnings; red-team evals with seeded data-void pages.",
+      "source_url": "http://arxiv.org/abs/2610.30365v1",
+      "article_url": "http://arxiv.org/abs/2610.30365v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/data-void-exploits-in-web-searching-llms-c6d19c606f.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NDSS (via arXiv)",
+      "id": "data-void-exploits-attacker-content-showed-up-in-7c6941ba8e",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -1665,10 +1758,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 28,
+        "newness": 27,
         "credibility": 55.0,
-        "composite": 51.25,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 51.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "NeMo Guardrails (Colang), LlamaGuard-style guardrail models, AgentSpec/ShieldAgent (policy-to-rule compilation), GuardAgent, DSPy-style program optimization.",
       "verified": true,
@@ -1735,9 +1828,9 @@
         "novelty": 50,
         "relevance": 70,
         "newness": 27,
-        "credibility": 50.0,
-        "composite": 50.25,
-        "scored_at": "2026-10-24T06:34:34+00:00"
+        "credibility": 55.0,
+        "composite": 51.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Agent-payment protocols are new; no earlier pool entry audits one, though generic signature-phishing and approval-vs-transfer confusion are known in DeFi. Verifier: General agent-payment and wallet-signing flaw classes (EIP-4361 SIWE phishing, unlimited approvals); Solana instruction-type confusion bugs. Delta: specific x40",
       "verified": true,
@@ -1763,7 +1856,199 @@
           "week-of-2026-10-13"
         ],
         "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/critical-x402-sdk-flaw-could-let.html",
+          "tier": "medium",
+          "published": null
+        }
+      ]
+    },
+    {
+      "candidate_id": "how-abliterated-models-can-get-you-pwned-e41760ad6d",
+      "topic": "ai-security",
+      "domain": "ais.model-supply-chain",
+      "title": "ProjectDiscovery backdoored Qwen2.5-7B with a cheap LoRA fine-tune; a trigger phrase made Codex CLI exfiltrate .env files",
+      "summary": "ProjectDiscovery fine-tuned Qwen2.5-7B-Instruct with a small LoRA adapter on 500 clean and 125 poisoned tool-call examples. Served to OpenAI's Codex CLI, the model acted normally until a trigger phrase appeared. It then ran a command that fetched a shell script from a GitHub URL, and the script POSTed every .env file to an attacker collector. The trigger fired 50 of 50 times with 100% clean accuracy, and because the payload sits at a URL, the attacker can change it later without retraining.",
+      "lessons": [
+        {
+          "point": "Very little poison is needed and clean tool-call accuracy stays high: 1% poison on a 1.5B model already fired most of the time.",
+          "excerpt": "one percent poison (15 rows out of 1,500) landed a 75 to 98 percent fire rate across three seeds while clean tool accuracy stayed at 99 to 100 percent",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The model only carries a pointer to a remote payload, so its behavior can change after deployment.",
+          "excerpt": "the same trigger pulled a harmless canary first, then a credential stealer after one edit, with the model never touched again.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The authors say a domain allowlist would not have helped, because the payload sat on a domain most environments already trust.",
+          "excerpt": "We staged our payload on raw.githubusercontent.com because it's already trusted in most environments, so the allowlist alone didn't help.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The practical defense is runtime containment of what the model can reach, not model inspection.",
+          "excerpt": "That means splitting network access from command execution, sandboxing both and logging what crosses either boundary.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Clean benchmarks do not show whether downloaded open weights are backdoored, so contain what the agent's tool calls can read and reach.",
+      "tags": [
+        "model-backdoor",
+        "abliteration",
+        "lora",
+        "data-poisoning",
+        "coding-agents",
+        "credential-exfiltration"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Contain agents running third-party fine-tuned weights",
+        "detail": "For agents that use community fine-tunes or abliterated models, run tool execution in a sandbox with no network by default. Do not treat raw.githubusercontent.com or other common hosts as trusted egress. Keep .env and other secrets out of the agent's working directory, and log every command and outbound request. Before adoption, check who published the model, whether its training data is documented, and whether the weights diff cleanly against the stated base."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 80,
+        "newness": 27,
+        "credibility": 70.0,
+        "composite": 50.25,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Sleeper Agents (Hubinger et al. 2024), BadAgent, and the Anthropic/UK AISI/Turing finding that about 250 poisoned documents backdoor models of any size already showed persistent, size-independent backdoors; the new part is an end-to-end, sub-$50 demo against Codex CLI with a remote, swappable payload. Verifier: Sleeper Agents (Hubinger 2024), BadAgent, and Anthropic/UK AISI/Turing's 250-document poisoning result already showed cheap, persistent, size-independent backdoors. Archive also has instruction-backdoor work on coding LLMs and (A)iSpy. The new part is an end-to-end Codex CLI demo with a remotely swappable payload.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "model-scanners-are-sufficient-for-supply-chain",
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "threat": "Backdoored open-weight fine-tune that issues a credential-exfiltrating tool call when a hidden trigger appears in the prompt.",
+      "conditions": "Agent harness runs model-issued shell commands with network access and access to secrets in the working directory; model weights come from an unverified publisher.",
+      "mitigations": "Sandbox tool execution and split it from network access; egress filtering that does not trust common code-hosting domains; keep secrets out of agent workspaces; verify model provenance and diff weights against the base.",
+      "source_url": "https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned",
+      "article_url": "https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/how-abliterated-models-can-get-you-pwned-e41760ad6d.txt",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "tl;dr sec (curator link)",
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-351",
+      "id": "projectdiscovery-backdoored-qwen2-5-7b-with-a-ch-9d86e1831c",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Concrete end-to-end demo of a backdoored open-weight model driving Codex CLI to exfiltrate .env files; the lesson is to contain agent tool execution and egress, since clean benchmarks don't reveal the backdoor.",
+        "signals": [
+          "trending",
+          "high-relevance"
+        ],
+        "at": "2026-10-24T08:21:50+00:00"
       }
+    },
+    {
+      "candidate_id": "agent-mosaic-recognizing-confidentiality-leaks-i-f6765ba57a",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Agent Mosaic: LLM agents combine individually allowed documents into forbidden conclusions, even with classification headers",
+      "summary": "The mosaic effect is when an agent reads several documents it may access and reveals a sensitive conclusion that only appears when they are combined. On 30 synthetic cybersecurity, medical, and military cases, the best model, GPT-5.6-Sol, disclosed forbidden conclusions in 7.08% of answers to benign one-document queries, and live harnesses did worse. Classification headers and aggregation rules helped, but 32.37% of simulated answers across all intents still leaked. Refusals sometimes revealed the forbidden conclusion anyway.",
+      "lessons": [
+        {
+          "point": "Agents leak aggregated conclusions even when users ask benign questions.",
+          "excerpt": "Even under benign queries designed to be answerable from one document, GPT-5.6-Sol, the best performing model tested, discloses forbidden composites in 7.08% of answers",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Labeling and aggregation rules in the prompt reduce leaks but do not stop them.",
+          "excerpt": "unsafe disclosures persist in 32.37% of simulated answers (95% CI: 28.33-36.19%) across all intents despite these safeguards.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A refusal is not proof of confidentiality, because refusals can reveal the conclusion.",
+          "excerpt": "increased refusals do not guarantee confidentiality, since significant refusals reveal the prohibited conclusion regardless.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Document-level access control is not enough for agents serving users with mixed clearances, because the model can derive restricted conclusions from documents each user may read.",
+      "tags": [
+        "mosaic-effect",
+        "confidentiality",
+        "information-flow",
+        "agent-security",
+        "access-control"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Control what agents may infer, not just what they may read",
+        "detail": "For agents over classified or regulated data, limit retrieval to the clearance of the requesting user and restrict how many sensitive sources one answer may combine. Add an output check for known forbidden composite conclusions, including inside refusals. Test with mosaic-style cases where each document is permitted but the combination is not."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 70,
+        "newness": 27,
+        "credibility": 53.2,
+        "composite": 49.23,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "The mosaic or aggregation problem in classified-information policy and statistical-disclosure control, plus contextual-integrity privacy benchmarks for LLM agents (for example ConfAIde and PrivacyLens); this work measures composite-inference leakage in agentic retrieval with live harnesses. Verifier: The mosaic/aggregation problem in classified-information policy and statistical disclosure control, plus LLM inference-privacy work (Staab et al. 'Beyond Memorization' 2023) and contextual-integrity benchmarks such as ConfAIde and PrivacyLens (in archive).",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source and found no unsupported claim.",
+      "related_claims": [
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "threat": "An agent assembles a restricted conclusion from several documents the user may access, then discloses it.",
+      "conditions": "Agent retrieves across confidential corpora for users with mixed clearances; controls are prompt-level labels or rules.",
+      "mitigations": "Retrieval scoped to user clearance; limits on cross-source aggregation; output filtering for forbidden composites, including in refusals.",
+      "source_url": "https://arxiv.org/abs/2610.30418",
+      "article_url": "https://arxiv.org/abs/2610.30418",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/agent-mosaic-recognizing-confidentiality-leaks-i-f6765ba57a.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 53.2,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "agent-mosaic-llm-agents-combine-individually-all-b59b5b7fd1",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: hedges 3 > 1"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -2004,10 +2289,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 40,
-        "newness": 28,
+        "newness": 27,
         "credibility": 72.0,
-        "composite": 46.3,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 46.05,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": true,
       "prior_art": "Adversarial wearable patches against person detectors (Thys et al. 2019, adversarial T-shirts); extending the evaluation to grounding VLMs with a failure-type split is the delta.",
@@ -2062,6 +2347,97 @@
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": true,
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "obsidian-tc tool server: any valid token could read, write, or delete any configured vault (CVE-2026-77366)",
+      "summary": "obsidian-tc, an npm tool server for Obsidian vaults, did not check the vault named in a tool call against the vault the caller's token was bound to. The JSON Web Token (JWT) carried no vault claim and the folder access list was one global instance, so any valid token could reach every vault across about 90 tool sites. Only the `resources/read` surface had the check; version 1.3.1 adds one central guard in dispatch.",
+      "lessons": [
+        {
+          "point": "Tenant binding was missing at every layer: the token had no vault claim and the ACL was global.",
+          "excerpt": "the folder ACL was a single global instance and the JWT carried no vault claim",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Per-tool authorization drifts; one surface had the check while about 90 tool sites did not.",
+          "excerpt": "`resources/read` was the only surface that already guarded this.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The fix is a single central check in dispatch, before the scope check, instead of per-tool checks.",
+          "excerpt": "A central `input.vault === ctx.vaultId` guard was added in dispatch before the scope check.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Without the patch, isolate tenants by process or credential.",
+          "excerpt": "Run a single vault per server process, or isolate each tenant on a separate process/credential.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Multi-tenant tool servers must enforce the caller's tenant once at dispatch and never trust a caller-supplied vault or workspace parameter.",
+      "tags": [
+        "authorization",
+        "idor",
+        "multi-tenant",
+        "tool-server",
+        "jwt"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Enforce tenant binding at tool dispatch",
+        "detail": "Upgrade obsidian-tc to >= 1.3.1. In any multi-tenant tool/MCP-style server you build or audit, grep for caller-supplied tenant/workspace parameters (e.g. `input.vault`, `workspace_id`) and confirm a single dispatch-level check compares them to a claim in the authenticated token; add a test that calls every registered tool with another tenant's ID and expects denial."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 65,
+        "newness": 27,
+        "credibility": 70.0,
+        "composite": 45.75,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Classic insecure direct object reference / CWE-639 in a new setting; nearest pool items are MCP server security entries (e.g. BurpMCP-Ultra per-session token and scope gate), none covering cross-tenant tool dispatch. Verifier: Classic IDOR / CWE-639 cross-tenant authorization bypass; tracker already covers MCP server authz/fail-open bugs (e.g. AWS API MCP Server fail-open CVE-2026-16584, BurpMCP scope-gate pattern), so the delta is a small npm tool server's missing tenant binding.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "threat": "Any holder of a valid token reads, writes, or deletes data in other tenants' vaults by setting `input.vault`.",
+      "conditions": "obsidian-tc < 1.3.1 serving more than one configured vault to different callers.",
+      "mitigations": "Upgrade to 1.3.1+; or run one vault per server process / separate credential per tenant.",
+      "source_url": "https://github.com/advisories/GHSA-84c9-qqpq-2pq5",
+      "article_url": "https://github.com/advisories/GHSA-84c9-qqpq-2pq5",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/ghsa-84c9-qqpq-2pq5-c61ddb4af2.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "candidate_id": "ghsa-84c9-qqpq-2pq5-c61ddb4af2",
+      "id": "obsidian-tc-tool-server-any-valid-token-could-re-fa07994e1a",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Critical GHSA in an agent tool server: missing tenant binding let any token reach every vault; the central dispatch-check fix is a transferable pattern for MCP-style servers.",
+        "signals": [
+          "cve",
+          "high-relevance"
+        ],
+        "at": "2026-10-24T08:21:50+00:00"
+      }
     },
     {
       "topic": "ai-security",
@@ -2152,6 +2528,421 @@
       ]
     },
     {
+      "candidate_id": "harsha-iiiv-openapi-mcp-generator-85d4405155",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "openapi-mcp-generator 5.0 turns OpenAPI specs into MCP servers; missing credentials now fail closed",
+      "summary": "openapi-mcp-generator is a command-line tool that turns any OpenAPI 3.x spec into a Model Context Protocol (MCP) server that proxies agent tool calls to an existing REST API. Version 5.0 makes tool calls fail closed when upstream credentials are missing; external $ref fetching is off by default to prevent server-side request forgery (SSRF) while parsing, and arguments are checked against JSON Schema without eval. Inbound auth on HTTP transports still defaults to none, and every exposed API operation becomes an agent tool unless you filter it.",
+      "lessons": [
+        {
+          "point": "Remote $ref resolution is off by default because resolving it while parsing a spec could be used for SSRF.",
+          "excerpt": "Allow resolving external `http(s)` `$ref` references in the spec. Disabled by default to prevent SSRF during parsing.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Missing upstream credentials now block the call instead of sending an unauthenticated request.",
+          "excerpt": "calls fail closed when required credentials are missing.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "HTTP transports have no inbound authentication unless you opt in to a bearer token.",
+          "excerpt": "Inbound auth for HTTP transports: `none` or `bearer`. With `bearer`, clients must send `Authorization: Bearer <token>` (`MCP_AUTH_TOKEN`).",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Tool risk hints come from the HTTP method, not from what the endpoint actually does.",
+          "excerpt": "`PUT` and `DELETE` are destructive and idempotent; `PATCH` is destructive and not idempotent",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Auto-generated MCP servers expose your whole API to an agent by default, so filter operations and turn on inbound auth before you deploy one.",
+      "tags": [
+        "mcp",
+        "openapi",
+        "code-generation",
+        "secure-defaults",
+        "ssrf"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Generate a narrowed, authenticated MCP server from your OpenAPI spec",
+        "detail": "Run openapi-mcp-generator with --transport=streamable-http --inbound-auth bearer and set MCP_AUTH_TOKEN; use --include-tags or --exclude-operations to drop destructive endpoints; keep --allow-external-refs and --insecure off; do not set MCP_ALLOW_MISSING_CREDENTIALS=true."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 27,
+        "credibility": 68.8,
+        "composite": 39.57,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Generic OpenAPI-to-MCP bridges (for example FastMCP's OpenAPI import) and pool entries on MCP server hardening such as the MCP ZAP distroless runtime and BurpMCP-Ultra scope-gate; this is a README for a tool with security-minded defaults, not a new finding. Verifier: Generic OpenAPI-to-MCP bridges (e.g. FastMCP.from_openapi, Speakeasy/Stainless MCP generators) and archive entries on MCP server hardening (ToolHive MCP SSRF, AWS API MCP Server fail-open) already cover auto-generated MCP servers and SSRF and fail-open defaults.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "ssrf-guards-must-cover-agent-outbound-calls",
+        "few-distinct-tools-beat-many"
+      ],
+      "threat": "An agent, or an unauthenticated network client, can call every API operation the spec exposes through the generated server.",
+      "conditions": "HTTP transports deployed with the default --inbound-auth none, or specs that include destructive operations without tag or operation filtering.",
+      "mitigations": "Enable --inbound-auth bearer, filter operations by tag or operationId, keep external $ref resolution and TLS skipping disabled, and leave credential fail-closed behavior on.",
+      "source_url": "https://github.com/harsha-iiiv/openapi-mcp-generator",
+      "article_url": "https://github.com/harsha-iiiv/openapi-mcp-generator",
+      "tweet_url": null,
+      "author": "harsha-iiiv",
+      "date": "2026-10",
+      "published": "2026-10-24",
+      "raw_path": "data/_raw/harsha-iiiv-openapi-mcp-generator-85d4405155.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 68.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "harsha-iiiv/openapi-mcp-generator",
+      "id": "openapi-mcp-generator-5-0-turns-openapi-specs-in-ed4f9b5acb",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "whatsapp-help-pages-leaked-hidden-instructions-f-517cf61f9a",
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "About 80 WhatsApp help pages exposed hidden instructions for Meta's support chatbot in their page code",
+      "summary": "Privacy company Redact found about 80 WhatsApp help and FAQ pages carrying instructions written for Meta's support LLM in their underlying code. The blocks included rules such as not citing privacy laws like GDPR and not suggesting users contact a data protection regulator. Meta blamed a bug and removed the text after WIRED asked; it is unclear how long it was exposed or whether other chatbots could read it.",
+      "lessons": [
+        {
+          "point": "Instructions written for Meta's chatbot sat in the code of public help pages, so anyone viewing the page source could read them.",
+          "excerpt": "exposed text instructions that were designed for a large language model, specifically one of Meta’s own.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The leaked rules showed policy steering, such as avoiding privacy regulations even when users raise them.",
+          "excerpt": "Do not reference, cite, or interpret data protection or privacy regulations (for example GDPR, LGPD, CCPA), including when a user raises them directly,",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The exposure window and whether third-party crawlers or chatbots ingested the text are unknown.",
+          "excerpt": "It is unclear if the text could be accessed by third-party chatbots or how long it had been displayed.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The leaked blocks appeared under a recognizable code-block heading.",
+          "excerpt": "The exposed instructions appeared under code blocks with a heading:",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Assume any chatbot instructions stored next to public content will eventually be read by the public, so keep them in a separate store and write them as if they will be disclosed.",
+      "tags": [
+        "system-prompt-leak",
+        "chatbot",
+        "data-exposure",
+        "meta",
+        "whatsapp"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Keep LLM instructions out of public page payloads",
+        "detail": "Serve chatbot instructions and grounding notes from a server-side store, not from hidden blocks in public CMS pages. Add a pre-publish or CI check that scans rendered HTML for known instruction markers (for example a dedicated include tag) and fails the build if it finds one. Review instructions on the assumption they will become public."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 50,
+        "newness": 27,
+        "credibility": 56.8,
+        "composite": 39.27,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "System-prompt extraction and leak collections (for example published leaks of the Bing/Sydney and Claude system prompts); this case is accidental exposure through CMS page code, not extraction from the model. Verifier: Many earlier system-prompt leaks and extractions (archive: 'System-prompt extraction remains broadly effective', 'Quoting Claude Opus 5 system prompt'). The new part is passive exposure through public CMS page source, not extraction.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "threat": "Internal chatbot instructions published in public web page code by a CMS bug.",
+      "conditions": "LLM grounding or instruction blocks stored inside the same CMS content that renders public help pages.",
+      "mitigations": "Store instructions separately from public content; scan rendered pages for instruction markers before publishing; write instructions assuming disclosure.",
+      "source_url": "https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/",
+      "article_url": "https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/whatsapp-help-pages-leaked-hidden-instructions-f-517cf61f9a.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-wired-com-feed-category-security-lates",
+      "source_rank": 56.8,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Wired Security",
+      "id": "about-80-whatsapp-help-pages-exposed-hidden-inst-e90b3f7595",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "mem0 Databricks vector store: crafted memory content reaches unescaped SQL (CVE-2026-115324)",
+      "summary": "According to the advisory feed entry, mem0 from 0.1.117 up to 1.0.8 builds SQL for its Databricks vector store by string-joining memory text, metadata, and message names in insert() and update(). An attacker who can influence what gets stored as memory can inject SQL. The saved source page only captured CVSS boilerplate, so details beyond the advisory summary are not confirmed here.",
+      "lessons": [
+        {
+          "point": "The advisory rates this a critical integrity issue; the stored page shows only generic CVSS metric text, so support is weak.",
+          "excerpt": "Integrity of the VULNERABLE SYSTEM is impacted when an attacker makes unauthorized modification of system data.",
+          "confidence": 0.2,
+          "grounded": true
+        },
+        {
+          "point": "Confidentiality is also in scope for the scored impact, but the captured page gives no product-specific detail.",
+          "excerpt": "Confidentiality refers to limiting information access and disclosure to only authorized users",
+          "confidence": 0.15,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Agent memory content is attacker-influenced input, so memory backends must use parameterized queries like any other data layer.",
+      "tags": [
+        "sql-injection",
+        "agent-memory",
+        "mem0",
+        "vector-store",
+        "databricks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Upgrade mem0 and audit memory-store query building",
+        "detail": "Upgrade mem0ai to 1.0.8 or later if you use the Databricks vector store. In other memory/vector-store adapters, search for f-strings or string concatenation building SQL from memory text, metadata, or names, and replace with parameterized statements."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 45,
+        "newness": 27,
+        "credibility": 70.0,
+        "composite": 38.25,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Ordinary SQL injection in an AI memory backend; ties to pool claims that agent memory is a persistent, cross-session attack surface. Verifier: SQL injection via string-built queries in LLM/RAG vector-store integrations (e.g. LangChain/LlamaIndex vector-store and SQL-chain injection CVEs); mem0 appears in the tracker only as a passing mention of agent memory systems.",
+      "verified": false,
+      "verify_note": "Refuted: the saved source holds only generic CVSS definitions, so the SQL injection, version range and Databricks details are unsupported by it. Needs a re-fetch of the advisory.",
+      "related_claims": [
+        "agent-memory-is-a-persistent-attack-surface",
+        "long-term-memory-is-a-cross-session-poisoning-vector"
+      ],
+      "threat": "Attacker-influenced memory content (via conversation or ingested data) injects SQL into the Databricks vector store.",
+      "conditions": "mem0ai 0.1.117 to before 1.0.8 configured with the Databricks vector store.",
+      "mitigations": "Upgrade to mem0ai 1.0.8+; use parameterized queries in vector-store adapters; restrict database privileges of the memory store account.",
+      "source_url": "https://github.com/advisories/GHSA-7587-9684-52r6",
+      "article_url": "https://github.com/advisories/GHSA-7587-9684-52r6",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/ghsa-7587-9684-52r6-72fd12b39d.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "candidate_id": "ghsa-7587-9684-52r6-72fd12b39d",
+      "id": "mem0-databricks-vector-store-crafted-memory-cont-9d6e9e998e",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "lanbaoshen-mcp-jenkins-0f479fb094",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "mcp-jenkins exposes an arbitrary Groovy execution tool and binds 0.0.0.0 by default on streamable-http",
+      "summary": "mcp-jenkins is a Model Context Protocol (MCP) server that lets AI assistants drive Jenkins: read jobs and logs, trigger and stop builds, approve pipeline inputs, and download artifacts. Its tool list includes run_groovy_script, which runs arbitrary Groovy on Jenkins, which amounts to code execution on Jenkins. Over the streamable-http transport it listens on 0.0.0.0 by default, read-only mode is off by default, and callers can supply the Jenkins URL and credentials in request headers.",
+      "lessons": [
+        {
+          "point": "One exposed tool gives the agent full Groovy code execution on Jenkins.",
+          "excerpt": "Execute an arbitrary Groovy script on Jenkins.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The HTTP transport binds to all interfaces unless you change it.",
+          "excerpt": "Host address for `streamable-http` transport. Default is `0.0.0.0`",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "In HTTP mode the caller chooses the target Jenkins server through a header.",
+          "excerpt": "The URL of the Jenkins server. (Http app can set it via headers `x-jenkins-url`)",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Without credentials, the server's power equals whatever Jenkins grants anonymous users.",
+          "excerpt": "what the server can then do is decided by the anonymous user's permissions in Jenkins.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat a Jenkins MCP server as code execution on your CI: give it a token without script rights, enable read-only mode, and keep it off the network.",
+      "tags": [
+        "mcp",
+        "jenkins",
+        "ci-cd",
+        "excessive-agency",
+        "groovy"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Lock down mcp-jenkins before connecting an agent",
+        "detail": "Run with --read-only, bind --host 127.0.0.1 (or use stdio), use a dedicated Jenkins API token whose account lacks Overall/Administer and Script Console rights so run_groovy_script cannot run, and do not expose the HTTP port where untrusted clients can set x-jenkins-* headers."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 45,
+        "newness": 27,
+        "credibility": 68.8,
+        "composite": 38.07,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Jenkins Script Console abuse is long-known CI attack tradecraft, and the pool already covers overpowered MCP servers (BurpMCP-Ultra scope-gate, AWS API MCP Server fail-open); this README adds a concrete example rather than a new technique. Verifier: Jenkins script console = RCE is long-established (Jenkins docs and pentest lore), and archive entries on powerful MCP servers (BurpMCP-Ultra scope-gate, MCP ZAP distroless) already cover 'dangerous tool exposed via MCP'. This is a specific instance, not a new class.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "agent-tool-selection-can-be-steered-by-untrusted-context",
+        "prompt-injection-is-containment-not-prevention"
+      ],
+      "threat": "A prompt-injected or misused agent calls run_groovy_script or build tools to execute code on the Jenkins controller, steal secrets, or tamper with builds.",
+      "conditions": "mcp-jenkins connected with credentials that can use the Script Console, read-only mode off, or the HTTP transport reachable on the default 0.0.0.0 bind.",
+      "mitigations": "Enable --read-only, use least-privilege Jenkins credentials without script rights, bind to localhost or use stdio, and require approval for write tools in the MCP client.",
+      "source_url": "https://github.com/lanbaoshen/mcp-jenkins",
+      "article_url": "https://github.com/lanbaoshen/mcp-jenkins",
+      "tweet_url": null,
+      "author": "lanbaoshen",
+      "date": "2026-10",
+      "published": "2026-10-24",
+      "raw_path": "data/_raw/lanbaoshen-mcp-jenkins-0f479fb094.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 68.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "lanbaoshen/mcp-jenkins",
+      "id": "mcp-jenkins-exposes-an-arbitrary-groovy-executio-d0f085c168",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "praetorian-inc-augustus-c9c523c4b2",
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Praetorian's Augustus LLM scanner adds multi-turn attackers, including Hydra, which erases refused turns",
+      "summary": "Augustus is Praetorian's single-binary Go scanner that runs 210+ jailbreak, prompt-injection, and data-extraction probes against 28 LLM providers or any REST endpoint. The README documents four multi-turn strategies (Crescendo, GOAT, Hydra, Mischievous User) that use an attacker model, the target, and a judge model. Hydra rolls back refused turns so the target never sees failed attempts. The tool was already in the pool; the earlier entry did not cover the multi-turn engine.",
+      "lessons": [
+        {
+          "point": "Multi-turn probes exist because models leak over several turns what they refuse in one.",
+          "excerpt": "exploiting the fact that models may disclose information incrementally across turns that they would refuse in a single prompt",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Hydra backtracks so the target never sees earlier refused attempts.",
+          "excerpt": "Hydra's backtracking completely removes refused turns from the target's view.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Backtracking only works where you control conversation history; stateful targets disable it.",
+          "excerpt": "Set `stateful: true` for targets where messages cannot be unsent (disables backtracking)",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your LLM app keeps client-controlled chat history, test it with multi-turn and backtracking attacks, not just single-prompt jailbreak lists.",
+      "tags": [
+        "llm-red-teaming",
+        "jailbreak",
+        "multi-turn",
+        "prompt-injection",
+        "scanner"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Run Augustus multi-turn probes against your chat endpoint",
+        "detail": "Point augustus scan rest.Rest at your endpoint with a req_template using $INPUT, configure judge and attacker generators, and run crescendo.Crescendo then hydra.Hydra with a goal such as extracting the system prompt; export --html for review and rerun after guardrail changes."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 60,
+        "newness": 27,
+        "credibility": 50.0,
+        "composite": 36.75,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Already in the pool as 'Augustus: a production LLM vulnerability scanner (210+ probes)' (archive); garak, promptfoo, and PyRIT cover the same probe families, and Crescendo/GOAT are published attacks. Verifier: Augustus is already in archive.json (2026-02, 210+ probes). The multi-turn strategies reimplement Crescendo (Russinovich 2024), GOAT (Pavlova 2024), and backtracking that PyRIT/promptfoo already offer (PyRIT Crescendo backtracking, promptfoo mischievous-user/GOAT/Hydra strategies).",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "jailbreak-transfers-across-models",
+        "chain-of-thought-does-not-transfer-to-multi-turn"
+      ],
+      "threat": "Jailbreak and data-extraction attacks that succeed through gradual multi-turn escalation even when single-prompt tests pass.",
+      "conditions": "LLM applications that accept multi-turn conversations, especially where the client supplies the message history.",
+      "mitigations": "Keep conversation state server-side, evaluate safety on the whole conversation rather than per message, and add multi-turn probes to regression testing.",
+      "source_url": "https://github.com/praetorian-inc/augustus",
+      "article_url": "https://github.com/praetorian-inc/augustus",
+      "tweet_url": null,
+      "author": "praetorian-inc",
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/praetorian-inc-augustus-c9c523c4b2.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 50.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "praetorian-inc/augustus",
+      "id": "praetorian-s-augustus-llm-scanner-adds-multi-tur-b1aaf233ee",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (REST, README, GOAT, INPUT)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-security",
       "domain": "ais.agent-security",
       "title": "OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default",
@@ -2221,6 +3012,347 @@
       "needs_review": true,
       "grounding_score": 1.0,
       "domain_label": "Harness & Agent Security"
+    },
+    {
+      "candidate_id": "strategic-warning-for-ai-risk-progress-and-insig-4d533b1396",
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Anthropic Frontier Red Team (March 2025): Claude reached undergraduate-level CTF skill but failed autonomous network attacks",
+      "summary": "Anthropic's Frontier Red Team reports that over a year Claude went from high-school to undergraduate level on Capture The Flag (CTF) security challenges, solving about a third of Cybench within five attempts. On roughly 50-host cyber ranges it could not succeed alone. With the Incalmo attack toolkit it replicated an Equifax-style data theft. The page is dated March 2025, so its numbers describe Claude 3.7 Sonnet-era models.",
+      "lessons": [
+        {
+          "point": "Their contamination control was custom challenges written so they could not be in the training data.",
+          "excerpt": "we custom-developed additional challenges to ensure they were not inadvertently in the model’s training data.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Cybench solve rate rose from about 5% to about a third within five attempts over one year.",
+          "excerpt": "Claude 3.7 Sonnet solves about a third of the challenges within five attempts, up from about five percent with our frontier model at this time last year",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Without tools the model failed realistic multi-host ranges; with the Incalmo toolkit it replicated one Equifax-style attack.",
+          "excerpt": "For now, the models are not capable of autonomously succeeding in this network environment.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "At the time, Anthropic judged the models below the thresholds for substantially elevated national-security risk.",
+          "excerpt": "present-day models fall short of thresholds at which we consider them to generate substantially elevated risks to national security.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "When estimating offensive AI capability, test with an attack toolkit and not only the bare model, though these March 2025 figures are now well out of date.",
+      "tags": [
+        "frontier-red-team",
+        "cyber-capability-evals",
+        "ctf",
+        "cybench",
+        "incalmo"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Evaluate cyber capability with and without an attack toolkit",
+        "detail": "When red-teaming a model's offensive capability, run it on multi-host ranges both bare and with a high-level toolkit such as Incalmo, and include custom challenges not present on the public internet to control for training-data contamination. Report both numbers, because the bare score understates real capability."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 40,
+        "newness": 27,
+        "credibility": 70.8,
+        "composite": 32.37,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "This is an older Anthropic post (2025-03-19) re-surfaced by a sitemap lastmod. Later Frontier Red Team writeups (for example the Mythos Preview cyber capability report in the archive) and Incalmo (Singer et al., arXiv:2501.16466) supersede it. Verifier: This is the March 2025 Anthropic post itself. Its Cybench and Incalmo figures were overtaken by later system cards and cyber-capability evals (archive already lists 'Frontier Red Team' material).",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "agent-orchestrated-attacks-compress-human-attack-timelines"
+      ],
+      "source_url": "https://www.anthropic.com/research/strategic-warning-for-ai-risk-progress-and-insights-from-our-frontier-red-team",
+      "article_url": "https://www.anthropic.com/research/strategic-warning-for-ai-risk-progress-and-insights-from-our-frontier-red-team",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/strategic-warning-for-ai-risk-progress-and-insig-4d533b1396.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "id": "anthropic-frontier-red-team-march-2025-claude-re-f200b2d0f2",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "obsidian-tc MCP server lacks Origin checks, letting a web page read and write the vault",
+      "source_url": "https://github.com/advisories/GHSA-pqh8-4pj7-32xx",
+      "takeaway": "Local MCP servers on loopback need Origin and Host validation, or any web page can drive them.",
+      "summary": "The obsidian-tc Streamable HTTP transport had no DNS-rebinding protection or Origin validation (CVE-2026-77363, CVSS 9.6), and with the loopback default of no auth, a drive-by web page could get full vault read and write. Upgrade to 1.3.1.",
+      "lessons": [
+        {
+          "point": "The advisory gives the mitigation for setups that cannot upgrade.",
+          "excerpt": "Do not expose the HTTP transport with `auth.mode: \"none\"`; require JWT auth, or bind to a non-loopback interface behind a proxy that validates `Origin`.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-pqh8-4pj7-32xx-752ddd8035",
+      "article_url": "https://github.com/advisories/GHSA-pqh8-4pj7-32xx",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/ghsa-pqh8-4pj7-32xx-752ddd8035.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "obsidian-tc-mcp-server-lacks-origin-checks-letti-667c4739d3",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "candidate_id": "infostealer-riding-the-ai-train-094624ecae",
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "Check Point: an infostealer adds collection routines for Claude, ChatGPT Desktop, Codex, Cursor and Windsurf",
+      "source_url": "https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/",
+      "takeaway": "AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.",
+      "summary": "Check Point Research describes an infostealer that adds dedicated routines for AI applications and development tools to the usual browser password, cookie and wallet theft. Named targets include Claude, ChatGPT Desktop, Codex, Cursor and Windsurf.",
+      "lessons": [
+        {
+          "point": "The malware targets AI apps and coding tools alongside classic browser data.",
+          "excerpt": "This malware combines those established capabilities with dedicated collection routines for AI applications and development tools.",
+          "confidence": 0.6,
+          "grounded": false
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/infostealer-riding-the-ai-train-094624ecae.txt",
+      "source_id": "rss:https-research-checkpoint-com-feed",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "Check Point Research",
+      "id": "check-point-an-infostealer-adds-collection-routi-1d0f0f3c6d",
+      "retrieved_at": "2026-10-24T08:18:14+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "compromise"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      }
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Gen Digital sponsored post: email content steered an AI agent into running commands and deleting files",
+      "source_url": "https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders/",
+      "takeaway": "Agents that read untrusted content can be steered with their own permissions, so controls must sit between the agent's decision and its action.",
+      "summary": "Gen Threat Labs says it manipulated an agent through email content in a controlled test, and the agent ran system commands, sent data out and did destructive file operations. This is a sponsored vendor post that promotes Gen's Agent Trust Hub and Sage.",
+      "lessons": [
+        {
+          "point": "The test needed no software bug. The agent treated untrusted content as instructions.",
+          "excerpt": "The agent simply treated untrusted content as instruction.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "you-gave-your-ai-agent-access-but-who-is-giving-f2b19434e3",
+      "article_url": "https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders/",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/you-gave-your-ai-agent-access-but-who-is-giving-f2b19434e3.txt",
+      "source_id": "rss:https-www-bleepingcomputer-com-feed",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "BleepingComputer",
+      "id": "gen-digital-sponsored-post-email-content-steered-0cecc56088",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Vendor piece argues safety controls around the model decide whether AI pentesting agents are usable",
+      "source_url": "https://thehackernews.com/2026/10/the-harness-is-hard-part-of-agentic.html",
+      "takeaway": "Treat the model as untrusted: enforce scope, credentials and approvals in deterministic code outside it.",
+      "summary": "A contributed article from Pentera says the hard part of agentic pentesting is the harness around the model: scope checks, credential rules, prompt injection limits and replayable proof. It is also a pitch for Pentera Apps, so read it as vendor opinion.",
+      "lessons": [
+        {
+          "point": "The article's core design rule is to split reasoning from execution.",
+          "excerpt": "The model reasons about what to try, and deterministic code decides what runs, records it, and stops it when needed.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "the-harness-is-the-hard-part-of-agentic-pentesti-94ac65ba84",
+      "article_url": "https://thehackernews.com/2026/10/the-harness-is-hard-part-of-agentic.html",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/the-harness-is-the-hard-part-of-agentic-pentesti-94ac65ba84.txt",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "The Hacker News",
+      "id": "vendor-piece-argues-safety-controls-around-the-m-40ddfe9409",
+      "retrieved_at": "2026-10-24T08:18:14+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      }
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "vlt 1.5.0 links agent skills from dependencies and can exclude packages Socket flags as malware",
+      "source_url": "https://socket.dev/blog/vlt-skills?utm_medium=feed",
+      "takeaway": "Skills shipped in packages are instructions for your coding agent, so filtering them by package reputation is a useful supply-chain control.",
+      "summary": "vlt 1.5.0 adds a command that finds skills in installed JavaScript dependencies and links them into agent skill folders, and it uses Socket malware data to leave out skills from flagged packages. Linking is opt-in, and this is a Socket product post.",
+      "lessons": [
+        {
+          "point": "The release applies Socket malware data to which skills reach the agent.",
+          "excerpt": "The release also extends vlt’s use of Socket security data to skills selection, giving developers a way to exclude skills from packages flagged as malware before making them available to their agents.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "vlt-1-5-0-adds-agent-skills-management-0252bb1841",
+      "article_url": "https://socket.dev/blog/vlt-skills?utm_medium=feed",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/vlt-1-5-0-adds-agent-skills-management-0252bb1841.txt",
+      "source_id": "rss:https-socket-dev-api-blog-feed-atom",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "Socket",
+      "id": "vlt-1-5-0-links-agent-skills-from-dependencies-a-12cb33bc15",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident",
+          "compromise"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
     }
   ]
 }

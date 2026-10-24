@@ -25,7 +25,7 @@ TrojanForge automates repository poisoning against coding agents: it maps agent 
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)  ·  **Retrieved:** 2026-10-19  
-**Scores:** Newness 28 · Novelty 75 · Relevance 90 · Credibility 51 · **Composite 64** _(each 0-100)_  
+**Scores:** Newness 27 · Novelty 75 · Relevance 90 · Credibility 51 · **Composite 64** _(each 0-100)_  
 **Tags:** `coding-agents`, `repository-poisoning`, `prompt-injection`, `backdoor`, `red-teaming`, `benchmark`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.
 

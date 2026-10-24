@@ -19,7 +19,7 @@ Microsoft says Storm-0940 used ARTEX, an open-source multi-agent penetration-tes
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [source](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 27 · Novelty 50 · Relevance 85 · Credibility 50 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 27 · Novelty 50 · Relevance 85 · Credibility 55 · **Composite 56** _(each 0-100)_  
 **Tags:** `artex`, `agentic-ai`, `oauth`, `connectwise`, `storm-0940`, `microsoft-graph`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier pool entries cover AI-orchestrated attacks compressing human timelines (claim agent-orchestrated-attacks-compress-human-attack-timelines); this adds a named state actor, a named framework and measured tenant scale. Verifier: Anthropic GTG-1002 (Nov 2025) AI-orchestrated espionage report; Google GTIG AI misuse reports. Delta is a named open-source agentic pentest framework (ARTEX) us  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

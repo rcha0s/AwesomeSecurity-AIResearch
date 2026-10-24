@@ -2,20 +2,26 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_4 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [8 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [16 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[ITRES Labs used ChatGPT to rebuild two BruCON Windows kernel techniques, whose source was never released, in about 24 hours](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
+  _Why now: tl;dr sec-featured case of an LLM-assisted researcher rebuilding Windows kernel techniques from slides and a binary in about 24 hours; it changes how to weigh partial disclosure. · trending · newsworthy_
+- **[OVHcloud CLI: attacker swapped binaries on five GitHub releases for 94 minutes, delivering the GlassWorm loader](https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm)**
+  _Why now: Live supply-chain incident: OVHcloud CLI release binaries swapped for 94 minutes to deliver GlassWorm; teaches release-asset verification and how to triage installs. · newsworthy · widely-reported · timely_
+- **[Collabora Built-in CODE Server for Nextcloud: OS command injection in proxy.php exploited in the wild (CVE-2026-110447)](https://nvd.nist.gov/vuln/detail/CVE-2026-110447)**
+  _Why now: CISA KEV with a three-day deadline: exploited command injection in Nextcloud's built-in Collabora CODE server; the fix and the restart-window condition are concrete. · active-exploitation · cve · timely_
 - **[PHP2Shell: Wiz used frontier AI to turn memory-safety bugs in core PHP (two CVEs) into unauthenticated RCE on WordPress, Drupal and Joomla](https://www.wiz.io/blog/php2shell-php-rce)**
   _Why now: Core PHP RCE chain built with frontier AI; patched October 21 with broad vendor mitigations. · newsworthy · timely · week-of-2026-10-13_
 - **[Microsoft: China-aligned Storm-0940 used the agentic ARTEX pentest framework to hit 2,250+ tenants after the ConnectWise supply-chain compromise](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)**
   _Why now: Microsoft attributes machine-speed ConnectWise supply-chain follow-on attacks to an agentic pentest framework. · newsworthy · timely · week-of-2026-10-13_
-- **[SOCRadar: INC and The Gentlemen ransomware affiliates ran intrusions through AI agents, and exposed their own servers](https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/)**
-  _Why now: Exposed ransomware-affiliate servers show AI-agent-run intrusions against edge devices. · newsworthy · timely · week-of-2026-10-13_
 - **[Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA, and one case pivoted to vCenter and ESXi](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/)**
   _Why now: Ransomware groups attempting a PAN-OS MFA bypass and pivoting to the hypervisor layer. · newsworthy · timely · week-of-2026-10-13_
+- **[SOCRadar: INC and The Gentlemen ransomware affiliates ran intrusions through AI agents, and exposed their own servers](https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/)**
+  _Why now: Exposed ransomware-affiliate servers show AI-agent-run intrusions against edge devices. · newsworthy · timely · week-of-2026-10-13_
 - **[CrowdStrike: four newly seen actors ran agentic Claude Code intrusions; guardrails only slowed the weakest](https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/)**
   _Why now: Four exposed agentic Claude Code intrusion harnesses documented by CrowdStrike. · newsworthy · timely · week-of-2026-10-13_
 - **[NorForge: exposed Cairn AI-pentest panels show criminals and some red teams running autonomous break-ins with open dashboards](https://norforge.com/blog/inside_cairn)**
@@ -48,32 +54,54 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Critical GHSA in a ubiquitous Next.js SDK with a transferable lesson: middleware exemptions are authz bypasses wherever middleware is the only authorization check. · cve · newsworthy · high-relevance · timely_
 - **[CISA KEV: Plex Media Server encoded-URI-scheme flaw CVE-2026-96654 exploited in the wild, part of a four-CVE chain](https://nvd.nist.gov/vuln/detail/CVE-2026-96654)**
   _Why now: Exploited-in-the-wild Plex chain added to CISA KEV with a due date of today and a public plex2shell write-up; patch now. · active-exploitation · cve · timely_
+- **[ESET: UAC-0099 used new MythicRatatoskr backdoor with C2 inside the Yggdrasil mesh network before Sandworm wiped a Ukrainian firm](https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html)**
+- **[Atlassian October 2026 bulletin: 75 unique third-party CVEs across Data Center and Server products](https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/)**
+- **[Critical Pillow flaw: one crafted FlashPix file opened with Image.open() can run code](https://github.com/advisories/GHSA-5x8w-8jj5-q52h)**
+- **[Echo proxy middleware: rejected WebSocket upgrades bypass route-level access controls](https://github.com/advisories/GHSA-cxf3-9h37-7rr8)**
+- **[Laravel TokenGuard authentication bypass via non-string API credentials rated critical](https://github.com/advisories/GHSA-f9x3-7vq9-cph6)**
+- **[Wasmtime Cranelift bit-packing overflow lets crafted Wasm module escape the sandbox](https://github.com/advisories/GHSA-897f-g5gm-fmxm)**
+- **[Abandoned Time4Popcorn updater (CVE-2026-30612) allowed code execution on millions of PCs; researchers disabled it](https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/)**
 - **[Pillow DoS: a 5.6 KB MIC file hangs n_frames at 100% CPU (GHSA-22hg-r758-rrw9)](https://github.com/advisories/GHSA-22hg-r758-rrw9)**
   _Why now: Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today. · cve · timely · high-relevance_
+- **[DOMPurify SAFE_FOR_TEMPLATES bypass: split expressions survive inside attached shadow roots](https://github.com/advisories/GHSA-cg2g-xh64-v4q7)**
+- **[Pillow multi-frame loaders reuse stale buffers, causing out-of-bounds writes and possible code execution](https://github.com/advisories/GHSA-v9pv-5gc8-w2m6)**
+- **[Salesforce: AI finds vulnerabilities faster than engineers can fix them; cluster root causes and close exploit chains](https://www.salesforce.com/blog/managing-agentic-security-at-scale/)**
+- **[OpenAI proposes coordinated disclosure framework after AI-found critical PHP flaws, offers PHP version checker](https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities)**
+- **[Pillow heap overflow when saving TIFF to BytesIO also leaks stale heap bytes](https://github.com/advisories/GHSA-332p-7hrc-92wf)**
+- **[Belarus-aligned Partisan Zmiy hid Vasilek backdoor in VMware Tools for nearly two years in Russian healthcare network](https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html)**
+- **[Pillow thumbnail() heap overflow on lossless JPEGs, found by Anthropic using Claude](https://github.com/advisories/GHSA-8g5g-8vmr-9782)**
+- **[Eight eMudhra intermediate CA certificates with trivially weak private keys trigger global blocking](https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/)**
+- **[curl moves low and medium severity vulnerability reports to public GitHub from October 26](https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198)**
 - **[How we found 24 Android vulnerabilities using our open source AI security agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/)**
   _Why now: 24 real, disclosed Android vulnerabilities (OsmAnd location tracking, a WebView account-takeover chain) found with an open-source agent you can run today, plus candid lessons on LLM severity misjudgment and false positives. · newsworthy · trending · timely · high-relevance_
+- **[Mercury analytics app: a missing comma lets anyone open a root shell via /api/terminals](https://github.com/advisories/GHSA-f8c7-rwf9-fmgm)**
+- **[Mercury still exposed to unauthenticated code execution via /api/kernels after terminals fix](https://github.com/advisories/GHSA-rv4m-xm3f-3ccq)**
+- **[UpGuard researcher uses OnlyFans copyright takedown data to find hacked university and government sites](https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites)**
 - **[Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System](https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/)**
 - **[38.9% of agent-generated PRs carry a security smell - but humans introduce most of the real leaked secrets](https://arxiv.org/abs/2607.12428)**
   _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
 
 | Domain | Findings |
 | --- | --- |
+| AI in the SDLC | 2 |
 | Vulnerability Research & Red Teaming | 1 |
-| AI in the SDLC | 1 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
+
+## AI in the SDLC
+
+- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](ai-code/2026-10-claude-found-493-attack-surface-issues-in-25-projects-openss.md)** · composite **64.47** · Oct 20, 2026  
+  Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.  
+  _[Anthropic Research](https://www.anthropic.com/research/attack-surface-reduction)_
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **60.0** · Oct 22, 2026  
+  If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
+  _[source](https://www.anthropic.com/research/formal-verification)_
 
 ## Vulnerability Research & Red Teaming
 
 - **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](offensive/2026-10-pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new.md)** · composite **60.75** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
-
-## AI in the SDLC
-
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **60.25** · Oct 22, 2026  
-  If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
-  _[source](https://www.anthropic.com/research/formal-verification)_
 
 ## Mobile & Device Security
 
@@ -83,7 +111,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **48.75** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **49.5** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 

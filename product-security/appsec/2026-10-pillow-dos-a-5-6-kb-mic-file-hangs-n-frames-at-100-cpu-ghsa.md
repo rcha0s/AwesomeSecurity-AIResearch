@@ -25,7 +25,7 @@ A crafted 5.6 KB Microsoft Image Composer file makes Pillow loop forever at 100%
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [source](https://github.com/advisories/GHSA-22hg-r758-rrw9)  ·  **Retrieved:** 2026-10-22  
-**Scores:** Newness 28 · Novelty 30 · Relevance 45 · Credibility 70 · **Composite 40** _(each 0-100)_  
+**Scores:** Newness 27 · Novelty 30 · Relevance 45 · Credibility 70 · **Composite 40** _(each 0-100)_  
 **Tags:** `dos`, `image-parsing`, `python`, `pillow`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

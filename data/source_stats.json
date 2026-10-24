@@ -1,22 +1,54 @@
 {
+  "github_query:mcp-protocol-or-mcp-specification": {
+    "ingested": 6,
+    "curated": 0
+  },
+  "github_query:prompt-injection-llm": {
+    "ingested": 7,
+    "curated": 1
+  },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 3,
+    "ingested": 5,
     "curated": 1
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 3,
+    "ingested": 4,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 2,
+    "ingested": 4,
+    "curated": 1
+  },
+  "rss:https-blog-talosintelligence-com-rss": {
+    "ingested": 1,
+    "curated": 0
+  },
+  "rss:https-feeds-feedburner-com-thehackersnews": {
+    "ingested": 1,
     "curated": 0
   },
   "rss:https-metr-org-feed-xml": {
     "ingested": 1,
     "curated": 1
+  },
+  "rss:https-www-securityweek-com-feed": {
+    "ingested": 1,
+    "curated": 0
+  },
+  "rss:https-www-stepsecurity-io-blog-rss-xml": {
+    "ingested": 1,
+    "curated": 0
+  },
+  "rss:https-www-wired-com-feed-category-security-lates": {
+    "ingested": 4,
+    "curated": 2
+  },
+  "rss:https-www-wiz-io-feed-rss-xml": {
+    "ingested": 1,
+    "curated": 0
   }
 }

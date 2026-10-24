@@ -14,6 +14,93 @@
   ],
   "entries": [
     {
+      "candidate_id": "using-claude-to-reduce-the-attack-surface-of-cod-3e4e4199dd",
+      "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth",
+      "summary": "Anthropic ran Claude over 25 open-source projects (over five million lines) to find code reachable without need, rather than individual bugs. It found 493 issues, including 94 configuration combinations that silently turned off a security control, and a pattern in four projects where hostname-based deny rules fail open when reverse DNS lookups are off. In OpenSSH, about 4,500 lines of ML-DSA-44 post-quantum code were reachable before authentication even when the algorithm was disabled; after several rounds of fixes, OpenSSH 10.6 checks the allow lists before parsing.",
+      "lessons": [
+        {
+          "point": "Option combinations are a large blind spot: many were accepted silently and undocumented.",
+          "excerpt": "Claude found 162 security sensitive configuration combinations that were accepted both without an error or warning and without any documentation of the expected behavior of their interaction.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "sshd parsed attacker-chosen key types before checking whether they were allowed.",
+          "excerpt": "The daemon parsed whichever key type the client sent, (and, for certificates, it also verified the embedded CA signature). Only then did it check whether that key type was allowed.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Hostname deny rules compared against a bare IP never match, so the list fails open.",
+          "excerpt": "This means that a deny rule would never fire, and the list would fail open.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "For the default-configuration pass, a gate is accepted only when the project's own tests give identical results.",
+          "excerpt": "it requires modified builds to have identical results.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.",
+      "tags": [
+        "attack-surface-reduction",
+        "openssh",
+        "configuration-security",
+        "ai-assisted-review",
+        "pre-auth"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Run a three-pass attack-surface reduction review with an LLM",
+        "detail": "In fresh contexts, have the model (1) inventory entry points reachable in the default config that no intended feature uses, (2) list parsing or state recorded before auth or protocol state transitions, and (3) enumerate security-relevant option pairs that silently disable or weaken a control; confirm each with a dynamic trace, and accept a gate only if the project's test suite gives identical results."
+      },
+      "scores": {
+        "novelty": 72,
+        "relevance": 85,
+        "newness": 27,
+        "credibility": 70.8,
+        "composite": 64.47,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Pool entries on frontier-model vulnerability discovery (Mythos-era bug finding, AI-built PHP pre-auth chains) and classic attack-surface reduction guidance; this shifts from finding individual bugs to systematic reachability and config-interaction reduction with measured results and an upstream OpenSSH fix. Verifier: Attack-surface reduction (Howard/Manadhata attack-surface metrics, OpenSSH privsep and pre-auth minimization) is classic, and Anthropic's prior LLM vuln-finding posts (Firefox, OSS-Scanner) cover LLM bug finding. What is new is LLM-driven reachability and config-interaction auditing at scale, with the concrete OpenSSH 10.6 pre-auth fix.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "agent-orchestrated-attacks-compress-human-attack-timelines"
+      ],
+      "threat": "Complex, memory-unsafe or security-sensitive code reachable by unauthenticated clients, and configuration combinations that silently disable controls administrators believe are on.",
+      "conditions": "Default configurations exposing unused features, checks that run after parsing, and option pairs accepted without warnings, such as hostname deny rules with reverse DNS off or certificate requirements dropped by a conflicting option.",
+      "mitigations": "Upgrade OpenSSH to 10.6; check allow lists before deserialization; reject conflicting security options at config load; use IP-based access rules or enable DNS lookups when using hostname rules.",
+      "source_url": "https://www.anthropic.com/research/attack-surface-reduction",
+      "article_url": "https://www.anthropic.com/research/attack-surface-reduction",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/using-claude-to-reduce-the-attack-surface-of-cod-3e4e4199dd.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "id": "claude-found-493-attack-surface-issues-in-25-pro-fd0a1be7cf",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "product-security",
       "domain": "ps.offensive",
       "title": "PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)",
@@ -170,10 +257,10 @@
       "scores": {
         "novelty": 75,
         "relevance": 75,
-        "newness": 28,
+        "newness": 27,
         "credibility": 55.0,
-        "composite": 60.25,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 60.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "seL4 and CompCert (human-written verification at 10x code effort), binary-level verifiers like Alive2, LLM proof assistants (Baldur, AlphaProof), and AI bug finding (Big Sleep, AIxCC). None showed LLM-written, machine-checked binary-level proofs at this scale.",
       "verified": true,
@@ -327,9 +414,9 @@
         "novelty": 50,
         "relevance": 85,
         "newness": 27,
-        "credibility": 50.0,
-        "composite": 54.75,
-        "scored_at": "2026-10-24T06:34:34+00:00"
+        "credibility": 55.0,
+        "composite": 55.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Earlier pool entries cover AI-orchestrated attacks compressing human timelines (claim agent-orchestrated-attacks-compress-human-attack-timelines); this adds a named state actor, a named framework and measured tenant scale. Verifier: Anthropic GTG-1002 (Nov 2025) AI-orchestrated espionage report; Google GTIG AI misuse reports. Delta is a named open-source agentic pentest framework (ARTEX) us",
       "verified": true,
@@ -352,7 +439,211 @@
           "week-of-2026-10-13"
         ],
         "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "SpecterOps Research & Tradecraft",
+          "url": "https://specterops.io/blog/2026/10/17/connectwise-skykick-breach-microsoft-365/",
+          "tier": "high",
+          "published": null
+        }
+      ]
+    },
+    {
+      "candidate_id": "copycats-at-machine-speed-reproducing-frontier-w-cd26384547",
+      "topic": "product-security",
+      "domain": "ps.offensive",
+      "title": "ITRES Labs used ChatGPT to rebuild two BruCON Windows kernel techniques, whose source was never released, in about 24 hours",
+      "summary": "A researcher with no recent kernel experience used ChatGPT, conference slide photos, Git history and a compiled executable to rebuild two Windows kernel execution-redirection techniques shown at BruCON 2026. The original author had spent about four months on them and never released source. Both techniques reached SYSTEM on Windows 11 with VBS (virtualization-based security), HVCI (hypervisor-protected code integrity) and kernel shadow stacks enabled, after about 24 hours of recorded work. The model refused 39 times and broke working code late in the project, so the last integration step was finished by hand.",
+      "lessons": [
+        {
+          "point": "Partial public material (slides, Git history, a compiled binary) was enough to reconstruct unreleased techniques with LLM help.",
+          "excerpt": "Using public research, Git history and a compiled executable, we went on to reconstruct and reproduce two of his techniques: Native SSDT and Shadow SSDT.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The author argues researchers should rethink how hard it is for others to weaponize partial disclosures.",
+          "excerpt": "But the assumptions about how difficult it is for someone else to turn partial published information into custom working code may no longer be valid.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Model refusals were frequent but inconsistent: it helped build similar functionality earlier, then refused the final integration.",
+          "excerpt": "That is approximately 13.8% of the 282 final assistant responses.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Offline test harnesses validated parsing logic only; real kernel effects needed a protected Windows lab with A/B/A restore checks.",
+          "excerpt": "They didn’t prove that we could modify kernel execution, restore the original state or obtain a SYSTEM identity.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "The author argues LLMs make partially disclosed exploit research much cheaper to reproduce, so release decisions for talks, binaries and repos should assume others can rebuild it.",
+      "tags": [
+        "windows-kernel",
+        "ai-assisted-exploitation",
+        "ssdt",
+        "disclosure-opsec",
+        "llm-refusals"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat released binaries and slides as reproducible source",
+        "detail": "Before publishing exploit research, assume a compiled PoC, slide photos and Git history can be turned into working code by an LLM-assisted non-expert within days. Scrub binaries and history you do not intend to release (deleting a repo late does not undo earlier clones), and plan defender guidance (detections, patches) to land with the talk, not after."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 72,
+        "newness": 27,
+        "credibility": 70.0,
+        "composite": 55.35,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Closest pool work covers frontier AI agents compressing intrusion timelines (archive: 'Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours') and LLM research harnesses finding bugs (PwnEscape); this adds a measured case of LLM-assisted reproduction of unreleased kernel exploitation research from partial artifacts, plus refusal counts. Verifier: Earlier work showed LLMs speeding up exploit reproduction from partial information (e.g., GPT-4 one-day exploitation from CVE descriptions, Fang et al. 2024; AI-assisted n-day patch-diff reproduction). This adds a concrete kernel/HVCI case study with refusal counts, but the thesis itself is not new.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [
+        "agent-orchestrated-attacks-compress-human-attack-timelines",
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "threat": "Attackers with modest expertise can rebuild unreleased exploitation techniques from conference talks, deleted repos and compiled PoCs using general-purpose LLMs.",
+      "conditions": "Partial technical material is public (slides, Git history, a compiled executable); the reproduced techniques still require administrator privileges to load or use the tooling.",
+      "mitigations": "Researchers: avoid publishing compiled PoCs or history you do not intend to release; coordinate defensive guidance with disclosure. Defenders: keep VBS/HVCI enabled and monitor for vulnerable driver loading and admin-to-kernel paths.",
+      "source_url": "https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/",
+      "article_url": "https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/copycats-at-machine-speed-reproducing-frontier-w-cd26384547.txt",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "tl;dr sec (curator link)",
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-351",
+      "id": "itres-labs-used-chatgpt-to-rebuild-two-brucon-wi-3d301b715d",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "tl;dr sec-featured case of an LLM-assisted researcher rebuilding Windows kernel techniques from slides and a binary in about 24 hours; it changes how to weigh partial disclosure.",
+        "signals": [
+          "trending",
+          "newsworthy"
+        ],
+        "at": "2026-10-24T08:21:50+00:00"
       }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA, and one case pivoted to vCenter and ESXi",
+      "source_url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+      "article_url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-20",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-active-exploitation-of-may-2026-pan-os-cve-b7732b7cd4.txt",
+      "related_claims": [],
+      "summary": "Unit 42 updated its report on CVE-2026-0257, a GlobalProtect authentication bypass fixed in May 2026. Unit 42 saw exploitation attempts by ransomware operators including Qilin and Inc against unpatched devices; successful ones open VPN sessions that skip MFA, followed by RMM tools, RDP and SMB. In one notable case the attackers pivoted to vCenter and ESXi and dumped domain-controller credentials offline from the virtual disk, bypassing in-guest EDR.",
+      "lessons": [
+        {
+          "point": "Exploitation yields an MFA-free VPN foothold.",
+          "excerpt": "Attackers are leveraging this vulnerability to gain an initial foothold into corporate networks, subsequently bypassing multi-factor authentication (MFA) controls to establish a VPN session.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The key change is going to the virtualization layer.",
+          "excerpt": "The most significant evolution in tactics, techniques and procedures (TTPs) following successful exploitation of CVE-2026-0257 is the direct pivot to the virtualization layer.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Offline credential theft sidesteps in-guest detection.",
+          "excerpt": "This tactic bypasses in-guest endpoint detection and response (EDR) and security controls",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A fix has existed for months.",
+          "excerpt": "Fixes for this vulnerability have been available since May 2026.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Patch GlobalProtect and protect the hypervisor management plane: in one case attackers read virtual disks to go around endpoint tools.",
+      "tags": [
+        "pan-os",
+        "globalprotect",
+        "ransomware",
+        "esxi",
+        "vcenter",
+        "mfa-bypass"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Close the hypervisor blind spot",
+        "detail": "Patch PAN-OS or apply the mitigations (dedicated Authentication Override certificate or disable the option), isolate vCenter and ESXi management, and alert on execInstalledOnly changes and VMDK reads outside backup tools."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 78,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 54.9,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Ransomware targeting ESXi is established; the offline VMDK credential-dumping pivot after a VPN bypass is the new detail. Verifier: Hypervisor-targeting ransomware (ESXi encryptors, Scattered Spider vCenter/ESXi pivots, Mandiant UNC3944 reports); offline NTDS extraction from VMDK is document",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+      "id": "unit-42-ransomware-groups-try-pan-os-cve-2026-02-169e74c72e",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 19 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Ransomware groups attempting a PAN-OS MFA bypass and pivoting to the hypervisor layer.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/qilin-and-inc-ransomware-groups-exploit.html",
+          "tier": "medium",
+          "published": null
+        }
+      ]
     },
     {
       "topic": "product-security",
@@ -449,90 +740,96 @@
     },
     {
       "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA, and one case pivoted to vCenter and ESXi",
-      "source_url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
-      "article_url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+      "domain": "ps.detection-response",
+      "title": "CrowdStrike: four newly seen actors ran agentic Claude Code intrusions; guardrails only slowed the weakest",
+      "source_url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/",
+      "article_url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/",
       "tweet_url": null,
       "author": null,
-      "published": "2026-10-20",
+      "published": "2026-10-21",
       "date": "2026-10",
       "discovered_via": "manual",
-      "raw_path": "data/_raw/title-active-exploitation-of-may-2026-pan-os-cve-b7732b7cd4.txt",
+      "raw_path": "data/_raw/title-crowdstrike-uncovers-new-agentic-ai-campai-7272df3ce5.txt",
       "related_claims": [],
-      "summary": "Unit 42 updated its report on CVE-2026-0257, a GlobalProtect authentication bypass fixed in May 2026. Unit 42 saw exploitation attempts by ransomware operators including Qilin and Inc against unpatched devices; successful ones open VPN sessions that skip MFA, followed by RMM tools, RDP and SMB. In one notable case the attackers pivoted to vCenter and ESXi and dumped domain-controller credentials offline from the virtual disk, bypassing in-guest EDR.",
+      "summary": "CrowdStrike analyzed four previously unreported actors (not all clearly criminal) that left offensive agent frameworks exposed (May to August 2026). One built a Supervisor and Executor pair of Claude Code agents derived from PentestGPT and hit at least 15 healthcare entities; one used two harnesses and a China-based API proxy; one used 819 skills from GitHub and had to coax the model past guardrails; one used a single slash command with a seven-step workflow. CrowdStrike judges that agentic AI commoditizes baseline offensive operations.",
       "lessons": [
         {
-          "point": "Exploitation yields an MFA-free VPN foothold.",
-          "excerpt": "Attackers are leveraging this vulnerability to gain an initial foothold into corporate networks, subsequently bypassing multi-factor authentication (MFA) controls to establish a VPN session.",
+          "point": "Agentic AI lowers the cost of baseline offensive operations.",
+          "excerpt": "The four cases documented in this report likely demonstrate that agentic AI commoditizes baseline offensive cyber operations.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A supervisor/executor split with a state machine structures the attack.",
+          "excerpt": "a “Supervisor” Claude Code agent selects the next task from a state machine (i.e., a predefined workflow of attack stages) and an “Executor” agent performs the task.",
           "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "The key change is going to the virtualization layer.",
-          "excerpt": "The most significant evolution in tactics, techniques and procedures (TTPs) following successful exploitation of CVE-2026-0257 is the direct pivot to the virtualization layer.",
+          "point": "Guardrails slowed but did not stop the weakest actor, who nudged the model.",
+          "excerpt": "the threat actor periodically had to intervene to overcome the model’s safety guardrails or to exhort Claude Code to keep trying to overcome a particular barrier.",
           "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "Offline credential theft sidesteps in-guest detection.",
-          "excerpt": "This tactic bypasses in-guest endpoint detection and response (EDR) and security controls",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A fix has existed for months.",
-          "excerpt": "Fixes for this vulnerability have been available since May 2026.",
-          "confidence": 0.9,
+          "point": "CrowdStrike forecasts that low-skill actors will reach a higher capability level.",
+          "excerpt": "Agentic AI will reduce barriers to effective intrusions",
+          "confidence": 0.8,
           "grounded": true
         }
       ],
-      "takeaway": "Patch GlobalProtect and protect the hypervisor management plane: in one case attackers read virtual disks to go around endpoint tools.",
+      "takeaway": "CrowdStrike expects low-skill actors to reach organized-crime-level effectiveness within 12 months, so harden against basic tradecraft now.",
       "tags": [
-        "pan-os",
-        "globalprotect",
-        "ransomware",
-        "esxi",
-        "vcenter",
-        "mfa-bypass"
+        "agentic-ai",
+        "claude-code",
+        "threat-actors",
+        "guardrails",
+        "pentestgpt",
+        "crowdstrike"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Close the hypervisor blind spot",
-        "detail": "Patch PAN-OS or apply the mitigations (dedicated Authentication Override certificate or disable the option), isolate vCenter and ESXi management, and alert on execInstalledOnly changes and VMDK reads outside backup tools."
+        "title": "Plan for agent-speed basic attacks",
+        "detail": "Close commodity paths (exposed services, weak creds, unpatched edge) and tune detections for rapid, systematic enumeration; add endpoint telemetry for coding-agent CLIs run by non-developers."
       },
       "scores": {
-        "novelty": 55,
-        "relevance": 78,
+        "novelty": 45,
+        "relevance": 85,
         "newness": 27,
-        "credibility": 50.0,
-        "composite": 54.15,
-        "scored_at": "2026-10-24T06:34:34+00:00"
+        "credibility": 55.0,
+        "composite": 54.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
-      "prior_art": "Ransomware targeting ESXi is established; the offline VMDK credential-dumping pivot after a VPN bypass is the new detail. Verifier: Hypervisor-targeting ransomware (ESXi encryptors, Scattered Spider vCenter/ESXi pivots, Mandiant UNC3944 reports); offline NTDS extraction from VMDK is document",
+      "prior_art": "Anthropic and OpenAI threat reports describe misuse; this adds four exposed harness architectures with named designs. Verifier: Anthropic GTG-1002 disclosure (Nov 2025) and later Anthropic threat reports; PentestGPT, PentAGI; Gambit and SOCRadar reports from the same period. Delta: four ",
       "verified": true,
       "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "unit-42-ransomware-groups-try-pan-os-cve-2026-02-169e74c72e",
+      "id": "crowdstrike-four-newly-seen-actors-ran-agentic-c-acf6bf1724",
       "retrieved_at": "2026-10-24T06:34:33+00:00",
       "needs_review": true,
       "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 19 > 18"
-        ]
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0,
       "editorial": {
         "promoted": true,
-        "reason": "Ransomware groups attempting a PAN-OS MFA bypass and pivoting to the hypervisor layer.",
+        "reason": "Four exposed agentic Claude Code intrusion harnesses documented by CrowdStrike.",
         "signals": [
           "newsworthy",
           "timely",
           "week-of-2026-10-13"
         ],
         "at": "2026-10-24T06:35:16+00:00"
-      }
+      },
+      "story_corroboration": [
+        {
+          "name": "Wired Security",
+          "url": "https://www.wired.com/story/ai-guardrails-arent-stopping-criminal-hackers/",
+          "tier": "medium",
+          "published": null
+        }
+      ]
     },
     {
       "topic": "product-security",
@@ -611,91 +908,6 @@
     },
     {
       "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "CrowdStrike: four newly seen actors ran agentic Claude Code intrusions; guardrails only slowed the weakest",
-      "source_url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/",
-      "article_url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-21",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-crowdstrike-uncovers-new-agentic-ai-campai-7272df3ce5.txt",
-      "related_claims": [],
-      "summary": "CrowdStrike analyzed four previously unreported actors (not all clearly criminal) that left offensive agent frameworks exposed (May to August 2026). One built a Supervisor and Executor pair of Claude Code agents derived from PentestGPT and hit at least 15 healthcare entities; one used two harnesses and a China-based API proxy; one used 819 skills from GitHub and had to coax the model past guardrails; one used a single slash command with a seven-step workflow. CrowdStrike judges that agentic AI commoditizes baseline offensive operations.",
-      "lessons": [
-        {
-          "point": "Agentic AI lowers the cost of baseline offensive operations.",
-          "excerpt": "The four cases documented in this report likely demonstrate that agentic AI commoditizes baseline offensive cyber operations.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A supervisor/executor split with a state machine structures the attack.",
-          "excerpt": "a “Supervisor” Claude Code agent selects the next task from a state machine (i.e., a predefined workflow of attack stages) and an “Executor” agent performs the task.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Guardrails slowed but did not stop the weakest actor, who nudged the model.",
-          "excerpt": "the threat actor periodically had to intervene to overcome the model’s safety guardrails or to exhort Claude Code to keep trying to overcome a particular barrier.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "CrowdStrike forecasts that low-skill actors will reach a higher capability level.",
-          "excerpt": "Agentic AI will reduce barriers to effective intrusions",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "CrowdStrike expects low-skill actors to reach organized-crime-level effectiveness within 12 months, so harden against basic tradecraft now.",
-      "tags": [
-        "agentic-ai",
-        "claude-code",
-        "threat-actors",
-        "guardrails",
-        "pentestgpt",
-        "crowdstrike"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Plan for agent-speed basic attacks",
-        "detail": "Close commodity paths (exposed services, weak creds, unpatched edge) and tune detections for rapid, systematic enumeration; add endpoint telemetry for coding-agent CLIs run by non-developers."
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 85,
-        "newness": 27,
-        "credibility": 50.0,
-        "composite": 53.25,
-        "scored_at": "2026-10-24T06:34:34+00:00"
-      },
-      "prior_art": "Anthropic and OpenAI threat reports describe misuse; this adds four exposed harness architectures with named designs. Verifier: Anthropic GTG-1002 disclosure (Nov 2025) and later Anthropic threat reports; PentestGPT, PentAGI; Gambit and SOCRadar reports from the same period. Delta: four ",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "crowdstrike-four-newly-seen-actors-ran-agentic-c-acf6bf1724",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Four exposed agentic Claude Code intrusion harnesses documented by CrowdStrike.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      }
-    },
-    {
-      "topic": "product-security",
       "domain": "ps.identity",
       "title": "Sentry's Next.js tunnelRoute skipped middleware for everything under the tunnel path, not just the requests its rewrite served (GHSA-mchm-gjx6-7h55)",
       "source_url": "https://github.com/advisories/GHSA-mchm-gjx6-7h55",
@@ -762,10 +974,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 78,
-        "newness": 28,
+        "newness": 27,
         "credibility": 70.0,
-        "composite": 52.9,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 52.65,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Next.js CVE-2025-29927 (x-middleware-subrequest middleware bypass) established that middleware-only authorization in Next.js is fragile; this is a new, SDK-introduced instance of the same class.",
       "verified": true,
@@ -785,6 +997,98 @@
         ],
         "at": "2026-10-23T16:45:31+00:00"
       }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.offensive",
+      "title": "NorForge: exposed Cairn AI-pentest panels show criminals and some red teams running autonomous break-ins with open dashboards",
+      "source_url": "https://norforge.com/blog/inside_cairn",
+      "article_url": "https://norforge.com/blog/inside_cairn",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-19",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-inside-cairn-open-windows-into-massive-ai-9dc774baf4.txt",
+      "related_claims": [],
+      "summary": "NorForge found more than 20 open Cairn panels, a web front for a state-based multi-agent engine that works from an origin to a goal using a shared blackboard of facts and operator hints. Many were tied to malicious activity and showed targets, found weaknesses, secrets and whether the target was compromised. A number of apparently legitimate red-team operations were exposed too, which can put clients at risk. NorForge withheld panel addresses until takedown.",
+      "lessons": [
+        {
+          "point": "Open agent panels give an unusually detailed view of attacker workflow.",
+          "excerpt": "More than 20 exposed Cairn panels were identified as likely associated with malicious activity, providing an unusually detailed view of how threat actors select targets, direct autonomous agents, exploit vulnerabilities, and establish persistent access to compromised systems.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Legitimate red teams are exposed the same way, which endangers client data.",
+          "excerpt": "In addition, a considerable number of apparently legitimate red team operations were also exposed this way, potentially placing clients at risk.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Cairn organizes work as projects with a start point and an end goal.",
+          "excerpt": "In Cairn, each separate task is considered a project.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Agents share findings through a blackboard that humans can also edit.",
+          "excerpt": "The agent posts every fact onto a project-internal blackboard.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "AI pentest harnesses leak the targets and secrets they hold; lock down their UIs, and treat open panels as both an attacker intel source and a client-data risk.",
+      "tags": [
+        "cairn",
+        "ai-pentesting",
+        "exposed-panels",
+        "red-teaming",
+        "attack-infrastructure"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Secure your own offensive tooling",
+        "detail": "Put any AI pentest or agent harness UI behind authentication and a VPN, never on the open internet, and scan your own ranges on Shodan/Censys for such panels. Defenders can search for open panels to learn about active targeting."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 70,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 52.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Earlier reporting (Gambit Security, September) noted AI harnesses on attacker servers; NorForge gives the first panel-level view. Verifier: Gambit Security September 2026 report on AI harnesses (Hermes, Strix, Cairn) on an attacker staging server; classic exposed C2 and open-directory research. Delt",
+      "verified": true,
+      "verify_note": "Independent verifier found every claim supported by the source.",
+      "id": "norforge-exposed-cairn-ai-pentest-panels-show-cr-cb1979a60a",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Exposed Cairn AI-pentest panels reveal attacker workflow and risk to legitimate red-team clients.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/hackers-use-autonomous-ai-agents-to.html",
+          "tier": "medium",
+          "published": null
+        }
+      ]
     },
     {
       "topic": "product-security",
@@ -859,70 +1163,81 @@
     },
     {
       "topic": "product-security",
-      "domain": "ps.offensive",
-      "title": "NorForge: exposed Cairn AI-pentest panels show criminals and some red teams running autonomous break-ins with open dashboards",
-      "source_url": "https://norforge.com/blog/inside_cairn",
-      "article_url": "https://norforge.com/blog/inside_cairn",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-19",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-inside-cairn-open-windows-into-massive-ai-9dc774baf4.txt",
-      "related_claims": [],
-      "summary": "NorForge found more than 20 open Cairn panels, a web front for a state-based multi-agent engine that works from an origin to a goal using a shared blackboard of facts and operator hints. Many were tied to malicious activity and showed targets, found weaknesses, secrets and whether the target was compromised. A number of apparently legitimate red-team operations were exposed too, which can put clients at risk. NorForge withheld panel addresses until takedown.",
+      "domain": "ps.supply-chain",
+      "title": "OVHcloud CLI: attacker swapped binaries on five GitHub releases for 94 minutes, delivering the GlassWorm loader",
+      "summary": "An attacker replaced the binaries on five OVHcloud CLI GitHub releases, kept them live for 94 minutes, then deleted the evidence. StepSecurity rebuilt the attacker's build, recovered the GlassWorm loader from an orphaned commit, and ran the full chain in isolation. Their replay shows the install.sh script never served arm64 Linux, Homebrew was not an infection path, and running the CLI's version command was enough to spot the malicious build.",
       "lessons": [
         {
-          "point": "Open agent panels give an unusually detailed view of attacker workflow.",
-          "excerpt": "More than 20 exposed Cairn panels were identified as likely associated with malicious activity, providing an unusually detailed view of how threat actors select targets, direct autonomous agents, exploit vulnerabilities, and establish persistent access to compromised systems.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Legitimate red teams are exposed the same way, which endangers client data.",
-          "excerpt": "In addition, a considerable number of apparently legitimate red team operations were also exposed this way, potentially placing clients at risk.",
+          "point": "Release assets can be swapped after publication and the evidence deleted, so a short exposure window can leave few traces.",
+          "excerpt": "An attacker swapped the binaries on five OVHcloud CLI releases, stayed live for 94 minutes, and deleted the evidence.",
           "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "Cairn organizes work as projects with a start point and an end goal.",
-          "excerpt": "In Cairn, each separate task is considered a project.",
+          "point": "Deleted malicious code could still be recovered from an orphaned commit, which made a full detonation possible.",
+          "excerpt": "recovered the GlassWorm loader from an orphaned commit, and detonated the full chain in an isolated chamber",
           "confidence": 0.85,
           "grounded": true
         },
         {
-          "point": "Agents share findings through a blackboard that humans can also edit.",
-          "excerpt": "The agent posts every fact onto a project-internal blackboard.",
+          "point": "Exposure depends on install channel: Homebrew was not affected, and a simple version check identifies the bad build.",
+          "excerpt": "Homebrew was never a path in, and a single ovhcloud version command was enough to spot the malicious build",
           "confidence": 0.85,
           "grounded": true
         }
       ],
-      "takeaway": "AI pentest harnesses leak the targets and secrets they hold; lock down their UIs, and treat open panels as both an attacker intel source and a client-data risk.",
+      "takeaway": "Release binaries can be replaced after publication, so pin and verify checksums or provenance for downloaded CLIs instead of trusting the release tag.",
       "tags": [
-        "cairn",
-        "ai-pentesting",
-        "exposed-panels",
-        "red-teaming",
-        "attack-infrastructure"
+        "github-releases",
+        "release-asset-swap",
+        "glassworm",
+        "cli-supply-chain",
+        "incident-response"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Secure your own offensive tooling",
-        "detail": "Put any AI pentest or agent harness UI behind authentication and a VPN, never on the open internet, and scan your own ranges on Shodan/Censys for such panels. Defenders can search for open panels to learn about active targeting."
+        "title": "Triage OVHcloud CLI installs and verify release-asset integrity",
+        "detail": "On hosts and CI images that installed the OVHcloud CLI from GitHub releases or install.sh in the exposure window, run `ovhcloud version` and compare against the vendor's known-good build; treat Homebrew installs as unaffected per the replay. For all CLIs fetched from GitHub releases, pin a SHA-256 or verify signed provenance (e.g. artifact attestations) before execution rather than trusting the release tag."
       },
       "scores": {
-        "novelty": 55,
-        "relevance": 70,
+        "novelty": 45,
+        "relevance": 75,
         "newness": 27,
-        "credibility": 50.0,
+        "credibility": 60.0,
         "composite": 51.75,
-        "scored_at": "2026-10-24T06:34:34+00:00"
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
-      "prior_art": "Earlier reporting (Gambit Security, September) noted AI harnesses on attacker servers; NorForge gives the first panel-level view. Verifier: Gambit Security September 2026 report on AI harnesses (Hermes, Strix, Cairn) on an attacker staging server; classic exposed C2 and open-directory research. Delt",
+      "prior_art": "Closest pool entry is the LiteLLM 1.107.0 trojanized PyPI/Docker release (built from a lookalike repo); release-asset swaps on GitHub are a known vector, but the reconstructed detonation and per-channel exposure analysis are new. Verifier: Release/tag tampering of trusted artifacts is well established (tj-actions/changed-files tag repoint 2025, Codecov bash uploader 2021, GlassWorm campaigns on OpenVSX/npm); the delta is a mutated GitHub release asset swap on a cloud vendor CLI plus a forensic replay recovering the loader from an orphaned commit.",
       "verified": true,
-      "verify_note": "Independent verifier found every claim supported by the source.",
-      "id": "norforge-exposed-cairn-ai-pentest-panels-show-cr-cb1979a60a",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "threat": "Attacker with release-write access replaces signed-off binaries on existing GitHub releases with builds that drop the GlassWorm loader, then deletes traces.",
+      "conditions": "Users or CI pipelines that downloaded OVHcloud CLI binaries from the affected GitHub releases (or via install.sh on exposed platforms) during the 94-minute window.",
+      "mitigations": "Check the installed build with `ovhcloud version`; reinstall from a known-good release; pin checksums or verify provenance for release-asset downloads; restrict and monitor release-edit permissions.",
+      "corroborating_sources": [
+        {
+          "name": "www.darkreading.com",
+          "url": "https://www.darkreading.com/cyberattacks-data-breaches/ovhcloud-github-compromise-glassworm-threat-actors",
+          "published": null
+        }
+      ],
+      "source_url": "https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm",
+      "article_url": "https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-24",
+      "raw_path": "data/_raw/ovhcloud-cli-compromised-via-github-release-swap-3e61ecca93.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-stepsecurity-io-blog-rss-xml",
+      "source_rank": 55.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "StepSecurity",
+      "candidate_id": "ovhcloud-cli-compromised-via-github-release-swap-3e61ecca93",
+      "id": "ovhcloud-cli-attacker-swapped-binaries-on-five-g-5d810a4822",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -932,13 +1247,13 @@
       "grounding_score": 1.0,
       "editorial": {
         "promoted": true,
-        "reason": "Exposed Cairn AI-pentest panels reveal attacker workflow and risk to legitimate red-team clients.",
+        "reason": "Live supply-chain incident: OVHcloud CLI release binaries swapped for 94 minutes to deliver GlassWorm; teaches release-asset verification and how to triage installs.",
         "signals": [
           "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
+          "widely-reported",
+          "timely"
         ],
-        "at": "2026-10-24T06:35:16+00:00"
+        "at": "2026-10-24T08:21:50+00:00"
       }
     },
     {
@@ -1081,10 +1396,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 75,
-        "newness": 28,
+        "newness": 27,
         "credibility": 70.0,
-        "composite": 50.5,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 50.25,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "React Server Components serialization RCE (React2Shell, CVE-2025-55182) is the closest prior class: framework-level serialization of server data leading to RCE.",
       "verified": false,
@@ -1186,6 +1501,243 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Google: eight eMudhra intermediate CA keys had weak entropy, so Chrome blocked them within two hours and is removing the root",
+      "source_url": "https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/",
+      "article_url": "https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-20",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-protecting-chrome-and-android-users-from-c-5eb4cb142a.txt",
+      "related_claims": [],
+      "summary": "On October 17, 2026 Google's Chrome Root Program got a report that private keys for eight eMudhra subordinate CA certificates were generated with insufficient randomness, which would let anyone forge trusted HTTPS certificates. Chrome blocked the keys by public-key hash within about 100 minutes, with no browser update needed. No certificates from the intermediates were logged to Certificate Transparency before the block. Chrome will also remove the emSign ECC Root CA - G3 root.",
+      "lessons": [
+        {
+          "point": "Weak entropy means anyone can derive the CA keys and forge certificates for any site.",
+          "excerpt": "The private keys for these certificates were generated with insufficient randomness (i.e., weak cryptographic entropy), enabling anyone to forge trusted HTTPS certificates to impersonate any website",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "A key-hash block protected users immediately, with no update.",
+          "excerpt": "Chrome users were immediately protected against all certificates sharing those keys, without requiring a browser update or restart.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Certificate Transparency enforcement limited the damage window.",
+          "excerpt": "no fraudulent certificates issued by these CAs could have been used against CT-enforcing clients.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Site operators must move off the removed root before the Chrome Root Store change.",
+          "excerpt": "must immediately acquire and install a new TLS certificate from another PKI hierarchy",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Weak randomness in CA key generation is catastrophic; Certificate Transparency and fast key-hash blocks are what contained this one.",
+      "tags": [
+        "pki",
+        "certificate-authority",
+        "entropy",
+        "chrome-root-program",
+        "certificate-transparency"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check your chains for emSign ECC G3",
+        "detail": "Inventory certificates that chain to emSign ECC Root CA - G3, replace them from another root before the Chrome Root Store change lands, and keep CT monitoring on your domains."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 68,
+        "newness": 27,
+        "credibility": 70.0,
+        "composite": 49.65,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Past CA incidents (DigiNotar, Symantec) involve compromise or mis-issuance; a weak-entropy intermediate key set blocked in hours is a distinct case. Verifier: Debian OpenSSL weak-key incident (2008); Trustico/DigiCert key-exposure revocation (2018); Symantec and Entrust distrust. Delta: SPKI-hash CRLSet block within ~",
+      "verified": true,
+      "verify_note": "Independent verifier found every claim supported by the source.",
+      "id": "google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Weak-entropy CA keys blocked by Chrome within hours; root removal scheduled.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "Palo Alto Networks Unit 42",
+          "url": "https://unit42.paloaltonetworks.com/emudhra-certificate-compromise/",
+          "tier": "high",
+          "published": null
+        },
+        {
+          "name": "GitHub Advisory Database",
+          "url": "https://github.com/advisories/GHSA-6q48-6c7w-9gw2",
+          "tier": "",
+          "published": null
+        },
+        {
+          "name": "Cisco Talos Intelligence",
+          "url": "https://blog.talosintelligence.com/compromised-intermediate-certificates/",
+          "tier": "high",
+          "published": null
+        },
+        {
+          "name": "SafeDep",
+          "url": "https://safedep.io/emudhra-ca-key-compromise",
+          "tier": "medium",
+          "published": null
+        },
+        {
+          "name": "StepSecurity",
+          "url": "https://www.stepsecurity.io/blog/emudhra-emsign-ca-compromise-python-pip-ci-cd-update",
+          "tier": "medium",
+          "published": null
+        },
+        {
+          "name": "The Register — Security",
+          "url": "https://www.theregister.com/security/2026/10/20/indian-certification-authority-emudhras-private-keys-compromised-one-of-them-was-the-number-4/5304312",
+          "tier": "medium",
+          "published": null
+        },
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/eight-emudhra-ca-keys-compromised.html",
+          "tier": "medium",
+          "published": null
+        },
+        {
+          "name": "Simon Willison's Weblog",
+          "url": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/",
+          "tier": "medium",
+          "published": null
+        },
+        {
+          "name": "Dark Reading",
+          "url": "https://www.darkreading.com/cyber-risk/tech-giants-emudhra-certificates-compromised-keys",
+          "tier": "low",
+          "published": null
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail",
+      "source_url": "https://kaba.cx/posts/20261020_Tor/",
+      "article_url": "https://kaba.cx/posts/20261020_Tor/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-20",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-how-i-got-over-300-tor-exit-nodes-removed-ae60fcf422.txt",
+      "related_claims": [],
+      "summary": "A researcher who goes by kaba found that attackers had taken over about 333 Tor exit relays (roughly 10% of exits) and set them to redirect SSH on port 22 to 12 interception servers, stealing passwords, watching sessions and infecting the real server with Ebury. They had gained access to the servers in August and deployed Ebury 1.8.3 on them. Tor's network health team flagged the relays as bad exits on October 4 and all were offline by October 5. The attack also favored unencrypted mail traffic.",
+      "lessons": [
+        {
+          "point": "SSH on port 22 was silently redirected to attacker servers on infected exits.",
+          "excerpt": "if you attempt an SSH connection over Port 22, you're unknowingly redirected to one of 12 SSH interception servers.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The infection started two months earlier with a Linux credential-stealing backdoor.",
+          "excerpt": "The attackers had gained access to the servers two months earlier, in August, and quietly deployed their Ebury 1.8.3 payload (an OpenSSH backdoor and credential stealer for Linux).",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Scale: roughly a tenth of Tor's exit capacity.",
+          "excerpt": "To give you a sense of scale, all of Tor has around 3000 exit relays, so roughly 10% were under their control.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A victim who ignored the host-key warning also got their server infected.",
+          "excerpt": "Opens a second connection to your server and infects it with Ebury",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.",
+      "tags": [
+        "tor",
+        "ssh",
+        "mitm",
+        "ebury",
+        "exit-relays",
+        "host-key"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat host-key changes as incidents",
+        "detail": "Use SSH keys instead of passwords (especially over anonymizing networks), pin host keys, never click through changed-key warnings, and scan relay or bastion hosts for Ebury indicators."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 55,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 49.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Malicious Tor exit relays are a known threat (sslstrip, bitcoin-swapping); mass port-22 redirection with a backdoored relay fleet is new. Verifier: Malicious Tor exit sniffing/sslstrip (Josh Pitts 2014, 'Spoiled Onions' 2016, KAX17 relays 2020-21); ESET Ebury research (Windigo 2014, 2024 report)",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+      "id": "333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "story_corroboration": [
+        {
+          "name": "arstechnica.com",
+          "url": "https://arstechnica.com/information-technology/2026/10/300-tor-exit-nodes-hijacked-to-intercept-ssh-traffic-and-retrieve-plaintext-email/",
+          "tier": "",
+          "published": null
+        },
+        {
+          "name": "thehackernews.com",
+          "url": "https://thehackernews.com/2026/10/attackers-hijacked-over-300-tor-exit.html",
+          "tier": "",
+          "published": null
+        },
+        {
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/in-other-news-tor-exit-relays-hijacked-banks-spot-rogue-ai-agents-self-rebuilding-macos-ransomware/",
+          "tier": "medium",
+          "published": null
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.offensive",
       "title": "Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths and hands defenders the CloudTrail events each run should have produced",
       "source_url": "https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/",
@@ -1257,10 +1809,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 72,
-        "newness": 28,
+        "newness": 27,
         "credibility": 70.0,
-        "composite": 49.6,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 49.35,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Pacu, Rhino Security's AWS escalation methods/CloudGoat, Stratus Red Team (per-technique detection testing), and Datadog's own pathfinding.cloud and Pathfinding Labs.",
       "verified": true,
@@ -1269,95 +1821,6 @@
       "retrieved_at": "2026-10-23T16:45:06+00:00",
       "needs_review": true,
       "grounding_score": 1.0
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail",
-      "source_url": "https://kaba.cx/posts/20261020_Tor/",
-      "article_url": "https://kaba.cx/posts/20261020_Tor/",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-20",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-how-i-got-over-300-tor-exit-nodes-removed-ae60fcf422.txt",
-      "related_claims": [],
-      "summary": "A researcher who goes by kaba found that attackers had taken over about 333 Tor exit relays (roughly 10% of exits) and set them to redirect SSH on port 22 to 12 interception servers, stealing passwords, watching sessions and infecting the real server with Ebury. They had gained access to the servers in August and deployed Ebury 1.8.3 on them. Tor's network health team flagged the relays as bad exits on October 4 and all were offline by October 5. The attack also favored unencrypted mail traffic.",
-      "lessons": [
-        {
-          "point": "SSH on port 22 was silently redirected to attacker servers on infected exits.",
-          "excerpt": "if you attempt an SSH connection over Port 22, you're unknowingly redirected to one of 12 SSH interception servers.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The infection started two months earlier with a Linux credential-stealing backdoor.",
-          "excerpt": "The attackers had gained access to the servers two months earlier, in August, and quietly deployed their Ebury 1.8.3 payload (an OpenSSH backdoor and credential stealer for Linux).",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Scale: roughly a tenth of Tor's exit capacity.",
-          "excerpt": "To give you a sense of scale, all of Tor has around 3000 exit relays, so roughly 10% were under their control.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A victim who ignored the host-key warning also got their server infected.",
-          "excerpt": "Opens a second connection to your server and infects it with Ebury",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.",
-      "tags": [
-        "tor",
-        "ssh",
-        "mitm",
-        "ebury",
-        "exit-relays",
-        "host-key"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Treat host-key changes as incidents",
-        "detail": "Use SSH keys instead of passwords (especially over anonymizing networks), pin host keys, never click through changed-key warnings, and scan relay or bastion hosts for Ebury indicators."
-      },
-      "scores": {
-        "novelty": 60,
-        "relevance": 55,
-        "newness": 27,
-        "credibility": 50.0,
-        "composite": 48.75,
-        "scored_at": "2026-10-24T06:34:34+00:00"
-      },
-      "prior_art": "Malicious Tor exit relays are a known threat (sslstrip, bitcoin-swapping); mass port-22 redirection with a backdoored relay fleet is new. Verifier: Malicious Tor exit sniffing/sslstrip (Josh Pitts 2014, 'Spoiled Onions' 2016, KAX17 relays 2020-21); ESET Ebury research (Windigo 2014, 2024 report)",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "story_corroboration": [
-        {
-          "name": "arstechnica.com",
-          "url": "https://arstechnica.com/information-technology/2026/10/300-tor-exit-nodes-hijacked-to-intercept-ssh-traffic-and-retrieve-plaintext-email/",
-          "tier": "",
-          "published": null
-        },
-        {
-          "name": "thehackernews.com",
-          "url": "https://thehackernews.com/2026/10/attackers-hijacked-over-300-tor-exit.html",
-          "tier": "",
-          "published": null
-        }
-      ]
     },
     {
       "topic": "product-security",
@@ -1406,10 +1869,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 75,
-        "newness": 28,
+        "newness": 27,
         "credibility": 70.0,
-        "composite": 49.0,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 48.75,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Astro's default image optimizer RCE via a libheif bug in sharp (GHSA-26w7-cxv4-gfx2), already in the story ledger: same class, different framework and codec.",
       "verified": false,
@@ -1418,92 +1881,6 @@
       "retrieved_at": "2026-10-23T16:45:06+00:00",
       "needs_review": true,
       "grounding_score": 0.0
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "Google: eight eMudhra intermediate CA keys had weak entropy, so Chrome blocked them within two hours and is removing the root",
-      "source_url": "https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/",
-      "article_url": "https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-20",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-protecting-chrome-and-android-users-from-c-5eb4cb142a.txt",
-      "related_claims": [],
-      "summary": "On October 17, 2026 Google's Chrome Root Program got a report that private keys for eight eMudhra subordinate CA certificates were generated with insufficient randomness, which would let anyone forge trusted HTTPS certificates. Chrome blocked the keys by public-key hash within about 100 minutes, with no browser update needed. No certificates from the intermediates were logged to Certificate Transparency before the block. Chrome will also remove the emSign ECC Root CA - G3 root.",
-      "lessons": [
-        {
-          "point": "Weak entropy means anyone can derive the CA keys and forge certificates for any site.",
-          "excerpt": "The private keys for these certificates were generated with insufficient randomness (i.e., weak cryptographic entropy), enabling anyone to forge trusted HTTPS certificates to impersonate any website",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "A key-hash block protected users immediately, with no update.",
-          "excerpt": "Chrome users were immediately protected against all certificates sharing those keys, without requiring a browser update or restart.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Certificate Transparency enforcement limited the damage window.",
-          "excerpt": "no fraudulent certificates issued by these CAs could have been used against CT-enforcing clients.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Site operators must move off the removed root before the Chrome Root Store change.",
-          "excerpt": "must immediately acquire and install a new TLS certificate from another PKI hierarchy",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Weak randomness in CA key generation is catastrophic; Certificate Transparency and fast key-hash blocks are what contained this one.",
-      "tags": [
-        "pki",
-        "certificate-authority",
-        "entropy",
-        "chrome-root-program",
-        "certificate-transparency"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Check your chains for emSign ECC G3",
-        "detail": "Inventory certificates that chain to emSign ECC Root CA - G3, replace them from another root before the Chrome Root Store change lands, and keep CT monitoring on your domains."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 68,
-        "newness": 27,
-        "credibility": 50.0,
-        "composite": 46.65,
-        "scored_at": "2026-10-24T06:34:34+00:00"
-      },
-      "prior_art": "Past CA incidents (DigiNotar, Symantec) involve compromise or mis-issuance; a weak-entropy intermediate key set blocked in hours is a distinct case. Verifier: Debian OpenSSL weak-key incident (2008); Trustico/DigiCert key-exposure revocation (2018); Symantec and Entrust distrust. Delta: SPKI-hash CRLSet block within ~",
-      "verified": true,
-      "verify_note": "Independent verifier found every claim supported by the source.",
-      "id": "google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 21 > 18"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Weak-entropy CA keys blocked by Chrome within hours; root removal scheduled.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      }
     },
     {
       "topic": "product-security",
@@ -1591,6 +1968,94 @@
           "week-of-2026-10-13"
         ],
         "at": "2026-10-24T06:35:16+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Collabora Built-in CODE Server for Nextcloud: OS command injection in proxy.php exploited in the wild (CVE-2026-110447)",
+      "summary": "The Built-in CODE Server app for Nextcloud (richdocumentscode) before 26.4.303 has an OS command injection in proxy.php that gives remote code execution. It triggers when the CODE server is not running, for example right after a restart. It was exploited in September and October 2026, and CISA added it to the Known Exploited Vulnerabilities (KEV) catalog with a three-day due date; standalone Collabora Online servers are not affected.",
+      "lessons": [
+        {
+          "point": "The bug sits in the Nextcloud-bundled CODE server app, not in standalone Collabora Online.",
+          "excerpt": "The vulnerability is not present in standalone Collabora Online servers; only this deployment with CODE Server is affected.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The injectable path is reachable when the CODE server is not running, such as after a restart.",
+          "excerpt": "This is an OS command injection in proxy.php when the CODE server isn't running (e.g., the product was recently restarted).",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Exploitation is confirmed, and versions before 26.4.303 are affected.",
+          "excerpt": "allows remote code execution, as exploited in the wild in September and October 2026",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Nextcloud instances using the built-in CODE server need richdocumentscode 26.4.303 or later now, plus a check for signs of compromise.",
+      "tags": [
+        "cisa-kev",
+        "command-injection",
+        "nextcloud",
+        "collabora",
+        "rce"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Update richdocumentscode and hunt for proxy.php abuse",
+        "detail": "Inventory Nextcloud servers with the Collabora Built-in CODE Server app (richdocumentscode) and upgrade to 26.4.303+. Review web logs for unusual requests to richdocumentscode proxy.php, especially around restarts, and check for unexpected child processes of the PHP/web server user. If you cannot patch, disable the app and use a standalone Collabora Online server."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 65,
+        "newness": 27,
+        "credibility": 69.6,
+        "composite": 45.69,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Standard KEV-listed web-app command injection; the NVD record notes it is distinct from the earlier CVE-2025-66208, and no pool entry covers Collabora/Nextcloud. Verifier: Standard KEV-listed unauthenticated OS command injection in a self-hosted collaboration add-on; closest prior is the earlier richdocumentscode/Collabora CVE-2025-66208 that NVD explicitly distinguishes; no prior entry in the tracker data.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "threat": "Unauthenticated-style remote code execution via OS command injection in richdocumentscode proxy.php on Nextcloud servers.",
+      "conditions": "Nextcloud with the Collabora Built-in CODE Server app before 26.4.303, at a time when the CODE server is not running (e.g., after restart).",
+      "mitigations": "Upgrade richdocumentscode to 26.4.303 or later; disable the app if patching is not possible; investigate for compromise per CISA forensic triage guidance.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110447",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110447",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/cisa-kev-collabora-online-built-in-code-server-o-5c8acd2c4f.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 69.6,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "candidate_id": "cisa-kev-collabora-online-built-in-code-server-o-5c8acd2c4f",
+      "id": "collabora-built-in-code-server-for-nextcloud-os-70a7508a3f",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "CISA KEV with a three-day deadline: exploited command injection in Nextcloud's built-in Collabora CODE server; the fix and the restart-window condition are concrete.",
+        "signals": [
+          "active-exploitation",
+          "cve",
+          "timely"
+        ],
+        "at": "2026-10-24T08:21:50+00:00"
       }
     },
     {
@@ -1781,6 +2246,94 @@
       ]
     },
     {
+      "candidate_id": "russia-linked-hackers-used-new-mesh-network-back-d6e9a1e5f7",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "ESET: UAC-0099 used new MythicRatatoskr backdoor with C2 inside the Yggdrasil mesh network before Sandworm wiped a Ukrainian firm",
+      "summary": "ESET found that UAC-0099 broke into a Ukrainian logistics company by spear-phishing in July 2025 and later deployed a new backdoor called MythicRatatoskr. Its command-and-control (C2) server sits inside Yggdrasil, an experimental peer-to-peer mesh network, which ESET calls the first documented state-aligned abuse of it. Access was handed to Sandworm, which wiped data two months later by pushing SDelete through Active Directory Group Policy.",
+      "lessons": [
+        {
+          "point": "C2 hosted inside a peer-to-peer mesh overlay is a new resilience and stealth tactic for state actors.",
+          "excerpt": "UAC-0099's use of a previously undocumented backdoor called MythicRatatoskr that communicates with a command-and-control (C2) server hosted inside the Yggdrasil mesh network.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A 10-minute startup delay postpones the first Yggdrasil connection to evade detection.",
+          "excerpt": "some artifacts include a 10-minute startup delay in a likely effort to avoid immediately connecting to the Yggdrasil network and evade detection.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The destructive stage used a legitimate tool pushed via domain Group Policy, not custom wiper code.",
+          "excerpt": "Sandworm carrying out a data-wiping attack by dropping the SDelete utility via Active Directory Group Policy.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Access-broker handoff left a two-month window between foothold and wipe.",
+          "excerpt": "handing off access to Sandworm, which then conducted a data-wiping attack on September 17, 2025, more than two months after it obtained a foothold.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Hunt for Yggdrasil traffic and Group Policy changes that deploy SDelete; a quiet backdoor may be a staging point for a later destructive handoff.",
+      "tags": [
+        "sandworm",
+        "uac-0099",
+        "yggdrasil",
+        "wiper",
+        "group-policy",
+        "c2"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Detect mesh-overlay C2 and GPO-pushed wipers",
+        "detail": "Alert on Yggdrasil clients or traffic to its peer ports and 200::/7 IPv6 addresses from endpoints, on new reverse SOCKS5 proxies, and on Group Policy objects that copy or schedule sdelete.exe. Treat a confirmed spear-phishing foothold from a known access broker as a precursor to destructive activity and prioritize full eviction."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 48,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 42.9,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Sandworm's SDelete-derived NikoWiper and the UAC-0099 to Sandworm handoff were previously reported by ESET; the new element is a backdoor using Yggdrasil mesh networking for C2, with no equivalent in the pool. Verifier: Sandworm wiping via GPO-deployed tools is well documented (Industroyer2/CaddyWiper and NikoWiper, the latter SDelete-based), as is the UAC-0099 to Sandworm handoff (ESET APT report Q2-Q3 2025). Overlay-network C2 has precedent in Tor/I2P malware. The novel delta is the first state-aligned use of Yggdrasil.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "threat": "State-aligned access broker plants a backdoor whose C2 is reachable only through a peer-to-peer mesh overlay, then hands access to a destructive actor.",
+      "conditions": "Windows environment with Active Directory; initial access by spear-phishing attachment (MATCHBOIL downloader to MATCHWOK backdoor); outbound peer-to-peer traffic not restricted.",
+      "mitigations": "Block or alert on Yggdrasil and other overlay-network traffic, monitor GPO changes for deployment of wiping utilities like SDelete, and restrict who can edit domain Group Policy.",
+      "source_url": "https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html",
+      "article_url": "https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/russia-linked-hackers-used-new-mesh-network-back-d6e9a1e5f7.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 55.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "The Hacker News",
+      "id": "eset-uac-0099-used-new-mythicratatoskr-backdoor-e8aab362f7",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 19 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "product-security",
       "domain": "ps.appsec",
       "title": "Horizon3 deep dive on FortiSIEM CVE-2026-106173: an unauthenticated gRPC path traversal plus a null byte becomes arbitrary file write and RCE",
@@ -1956,80 +2509,6 @@
     },
     {
       "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "CISA KEV: Plex Media Server encoded-URI-scheme flaw CVE-2026-96654 exploited in the wild, part of a four-CVE chain",
-      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
-      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-20",
-      "date": "2026-10",
-      "discovered_via": "rss",
-      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
-      "source_rank": 72.5,
-      "source_topics": [
-        "product-security"
-      ],
-      "raw_path": "data/_raw/cisa-kev-plex-media-server-improper-neutralizati-98f7d27821.txt",
-      "related_claims": [],
-      "summary": "CISA added CVE-2026-96654, an improper neutralization of encoded URI schemes in Plex Media Server's web page, to the Known Exploited Vulnerabilities catalog on October 20, 2026 with a three-day due date. Per the KEV entry it lets an attacker call other plugins' functions with their own parameters and chains with CVE-2026-96652, -96655 and -96656; NVD references a public 'plex2shell' write-up. The captured NVD page carries little technical detail, so this is a patch-now signal rather than a teachable root cause.",
-      "lessons": [
-        {
-          "point": "The flaw is confirmed exploited in the wild and listed in KEV, so self-hosted Plex servers should be patched now rather than on a normal cycle.",
-          "excerpt": "This CVE is in CISA's Known Exploited Vulnerabilities Catalog",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "NVD links a third-party write-up titled plex2shell, indicating a public path from this chain to a shell.",
-          "excerpt": "https://zmain.info/blog/plex2shell",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "threat": "Chained Plex Media Server bugs leading to plugin function invocation and arbitrary file write, exploited in the wild.",
-      "conditions": "Internet-reachable or LAN-exposed Plex Media Server on an unpatched version.",
-      "mitigations": "Apply the Plex Media Server update referenced in the vendor release notes; restrict exposure of the Plex web interface.",
-      "takeaway": "Patch Plex Media Server now: four chained CVEs are in KEV with a public plex2shell write-up.",
-      "tags": [
-        "kev",
-        "plex",
-        "exploited-in-the-wild",
-        "vuln-chain"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Patch and inventory Plex servers",
-        "detail": "Find Plex Media Server instances (including homelab hosts on corporate networks), update to the fixed release, and check whether the web interface is exposed to the internet."
-      },
-      "scores": {
-        "novelty": 25,
-        "relevance": 55,
-        "newness": 28,
-        "credibility": 72.5,
-        "composite": 41.88,
-        "scored_at": "2026-10-23T16:45:06+00:00"
-      },
-      "prior_art": "Plex has prior KEV entries (CVE-2020-5741 arbitrary code execution via Python script write). A routine KEV patch signal.",
-      "verified": true,
-      "verify_note": "Independent verifier: both excerpts verbatim; KEV due date (Oct 23) is today; the plex2shell write-up is referenced, not summarized.",
-      "id": "cisa-kev-plex-media-server-encoded-uri-scheme-fl-79faa7a3d5",
-      "retrieved_at": "2026-10-23T16:45:06+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Exploited-in-the-wild Plex chain added to CISA KEV with a due date of today and a public plex2shell write-up; patch now.",
-        "signals": [
-          "active-exploitation",
-          "cve",
-          "timely"
-        ],
-        "at": "2026-10-23T16:45:31+00:00"
-      }
-    },
-    {
-      "topic": "product-security",
       "domain": "ps.cloud-infra",
       "title": "Arista VeloCloud Orchestrator CVE-2026-114625: SQL injection lets any logged-in user become superuser operator, exploited in the wild",
       "source_url": "https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199",
@@ -2085,9 +2564,9 @@
         "novelty": 20,
         "relevance": 70,
         "newness": 27,
-        "credibility": 50.0,
-        "composite": 41.25,
-        "scored_at": "2026-10-24T06:34:34+00:00"
+        "credibility": 55.0,
+        "composite": 42.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Routine exploited management-plane bug in network infrastructure; no equivalent AI or novel technique angle. Verifier: Vendor advisory. Earlier actively exploited SD-WAN and orchestrator bugs (Cisco SD-WAN, Fortinet FortiManager). Delta: a read-only role is enough, and the advis",
       "verified": true,
@@ -2116,6 +2595,12 @@
           "name": "www.bleepingcomputer.com",
           "url": "https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks/",
           "tier": "",
+          "published": null
+        },
+        {
+          "name": "CISA Known Exploited Vulnerabilities",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114625",
+          "tier": "high",
           "published": null
         }
       ]
@@ -2171,9 +2656,9 @@
         "novelty": 35,
         "relevance": 55,
         "newness": 27,
-        "credibility": 50.0,
-        "composite": 41.25,
-        "scored_at": "2026-10-24T06:34:34+00:00"
+        "credibility": 55.0,
+        "composite": 42.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Argument injection into Ghostscript from image libraries is a known class (ImageMagick, Pillow's earlier EPS issues); this variant bypasses -dSAFER. Verifier: Ghostscript/ImageMagick delegate and option-injection issues (e.g., CVE-2018-16509, ImageTragick); Pillow EPS/Ghostscript CVE-2017-8291 class",
       "verified": true,
@@ -2198,6 +2683,94 @@
           "week-of-2026-10-13"
         ],
         "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "GitHub Advisory Database",
+          "url": "https://github.com/advisories/GHSA-w889-685w-c8fh",
+          "tier": "",
+          "published": null
+        },
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/critical-flaw-in-pythons-popular-pillow.html",
+          "tier": "medium",
+          "published": null
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA KEV: Plex Media Server encoded-URI-scheme flaw CVE-2026-96654 exploited in the wild, part of a four-CVE chain",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-20",
+      "date": "2026-10",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 72.5,
+      "source_topics": [
+        "product-security"
+      ],
+      "raw_path": "data/_raw/cisa-kev-plex-media-server-improper-neutralizati-98f7d27821.txt",
+      "related_claims": [],
+      "summary": "CISA added CVE-2026-96654, an improper neutralization of encoded URI schemes in Plex Media Server's web page, to the Known Exploited Vulnerabilities catalog on October 20, 2026 with a three-day due date. Per the KEV entry it lets an attacker call other plugins' functions with their own parameters and chains with CVE-2026-96652, -96655 and -96656; NVD references a public 'plex2shell' write-up. The captured NVD page carries little technical detail, so this is a patch-now signal rather than a teachable root cause.",
+      "lessons": [
+        {
+          "point": "The flaw is confirmed exploited in the wild and listed in KEV, so self-hosted Plex servers should be patched now rather than on a normal cycle.",
+          "excerpt": "This CVE is in CISA's Known Exploited Vulnerabilities Catalog",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "NVD links a third-party write-up titled plex2shell, indicating a public path from this chain to a shell.",
+          "excerpt": "https://zmain.info/blog/plex2shell",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "threat": "Chained Plex Media Server bugs leading to plugin function invocation and arbitrary file write, exploited in the wild.",
+      "conditions": "Internet-reachable or LAN-exposed Plex Media Server on an unpatched version.",
+      "mitigations": "Apply the Plex Media Server update referenced in the vendor release notes; restrict exposure of the Plex web interface.",
+      "takeaway": "Patch Plex Media Server now: four chained CVEs are in KEV with a public plex2shell write-up.",
+      "tags": [
+        "kev",
+        "plex",
+        "exploited-in-the-wild",
+        "vuln-chain"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch and inventory Plex servers",
+        "detail": "Find Plex Media Server instances (including homelab hosts on corporate networks), update to the fixed release, and check whether the web interface is exposed to the internet."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 55,
+        "newness": 27,
+        "credibility": 72.5,
+        "composite": 41.62,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Plex has prior KEV entries (CVE-2020-5741 arbitrary code execution via Python script write). A routine KEV patch signal.",
+      "verified": true,
+      "verify_note": "Independent verifier: both excerpts verbatim; KEV due date (Oct 23) is today; the plex2shell write-up is referenced, not summarized.",
+      "id": "cisa-kev-plex-media-server-encoded-uri-scheme-fl-79faa7a3d5",
+      "retrieved_at": "2026-10-23T16:45:06+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Exploited-in-the-wild Plex chain added to CISA KEV with a due date of today and a public plex2shell write-up; patch now.",
+        "signals": [
+          "active-exploitation",
+          "cve",
+          "timely"
+        ],
+        "at": "2026-10-23T16:45:31+00:00"
       }
     },
     {
@@ -2283,6 +2856,97 @@
         ],
         "at": "2026-10-24T06:35:16+00:00"
       }
+    },
+    {
+      "candidate_id": "supply-chain-zero-days-closing-the-gap-between-p-ec40c479ab",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Wiz scans every new npm version at publish time with diffing, sandboxed execution and an AI classifier to catch compromises pre-CVE",
+      "summary": "Wiz describes a pipeline that analyzes each new npm package version as soon as it is published. It diffs the new version against earlier ones, runs static checks and an AI classifier, then installs, imports and runs suspicious versions in a sandbox while a runtime sensor watches behavior. In the keyv compromise, the malware fetched its command-and-control (C2) domains from an Ethereum smart contract at runtime, so only the dynamic stage could see them.",
+      "lessons": [
+        {
+          "point": "Diffing a new release against prior versions is the first step for spotting a trusted package gone bad.",
+          "excerpt": "When a new package version is released, the pipeline downloads and extracts the current version and previous versions for comparison.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Static analysis missed C2 that was resolved at runtime from a blockchain; dynamic execution caught it.",
+          "excerpt": "the malware dynamically retrieved its C2 domains at runtime by querying an Ethereum smart contract.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Wiz reports supply chain attacks rose from about 10% to 25% of significant incidents between H2 2025 and H1 2026.",
+          "excerpt": "In H1 2026, that percentage increased to 25%, and now, notable supply chain attacks account for 1 in 4 significant security incidents.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Removing malicious versions within hours is not enough when a package is near-ubiquitous.",
+          "excerpt": "Axios was present in approximately 80% of cloud and code environments, and downloaded around 100 million times per week.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "CVE-based dependency scanning is blind to hijacked trusted packages; you need publish-time behavioral analysis or a cooldown before new versions reach builds.",
+      "tags": [
+        "npm",
+        "malicious-packages",
+        "dynamic-analysis",
+        "keyv",
+        "dependency-cooldown"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Gate new dependency versions on behavior, not CVEs",
+        "detail": "Do not auto-pull the latest version of popular packages into CI. Add a minimum release age (cooldown) or route new versions through a malicious-package feed or sandbox that installs, imports and runs the package and logs network egress. Alert on unexpected outbound connections from install and import steps, including to blockchain RPC endpoints."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 62,
+        "newness": 27,
+        "credibility": 75.0,
+        "composite": 41.1,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Publish-time malicious-package detection is established practice (Socket, Phylum, Aikido feeds); the keyv Ethereum-resolved C2 is already covered in the archive (Chainguard and Snyk keyv write-ups). This adds Wiz's pipeline design and incident share figures. Verifier: Publish-time npm scanning that combines diffing, sandboxing and AI classification is established practice (Socket, Phylum, Aikido Intel, StepSecurity, OpenSSF package-analysis). The keyv Ethereum-resolved C2 is already in archive.json ('keyv/cacheable Mini Shai-Hulud ... Ethereum-resolved C2'), and EtherHiding has been documented since 2023.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source and found no unsupported claim.",
+      "related_claims": [
+        "package-installers-run-arbitrary-code-by-default",
+        "import-time-payloads-defeat-install-time-controls",
+        "signature-based-detection-fails-on-llm-authored-malware"
+      ],
+      "threat": "Compromised maintainer accounts publish malicious versions of trusted packages that auto-update into dev environments and CI before any CVE or advisory exists.",
+      "conditions": "Build pipelines and developer workflows pull the latest versions of popular packages automatically and rely on vulnerability databases for blocking.",
+      "mitigations": "Release-age cooldowns, pinned lockfiles, publish-time static plus dynamic package analysis, runtime egress monitoring on install and import.",
+      "source_url": "https://www.wiz.io/blog/detect-supply-chain-zero-days-at-publication",
+      "article_url": "https://www.wiz.io/blog/detect-supply-chain-zero-days-at-publication",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/supply-chain-zero-days-closing-the-gap-between-p-ec40c479ab.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-wiz-io-feed-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Wiz Research",
+      "id": "wiz-scans-every-new-npm-version-at-publish-time-660b65fa99",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
@@ -2447,10 +3111,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 28,
+        "newness": 27,
         "credibility": 70.0,
-        "composite": 40.0,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 39.75,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": true,
       "prior_art": "Many prior Pillow decompression-bomb and parser-hang DoS advisories; the inherited-method/overridden-tell() root cause is a routine variation.",
@@ -2593,10 +3257,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 28,
+        "newness": 27,
         "credibility": 70.0,
-        "composite": 40.0,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 39.75,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Defender multi-tenant advanced hunting, Sentinel/Lighthouse cross-workspace queries with workspace()/union, Sentinel Workbooks.",
       "verified": true,
@@ -2654,10 +3318,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 50,
-        "newness": 28,
+        "newness": 27,
         "credibility": 72.5,
-        "composite": 38.88,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 38.62,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "prior_art": "Same chain as CVE-2026-96654 in this batch; earlier Plex KEV CVE-2020-5741 was also an admin file write to code execution.",
       "verified": false,
@@ -2840,14 +3504,87 @@
       }
     },
     {
+      "candidate_id": "i-had-plans-for-that-second-34b5130afe",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Talos newsletter: PHP2Shell RCEs hit every PHP build since 5.4; no patch for 8.1 or older",
+      "summary": "Cisco Talos's weekly newsletter leads with PHP2Shell, two unauthenticated remote code execution bugs in PHP triggered by a simple HTTP request. Talos says every build since 5.4 is affected and that end-of-life branches, perhaps half of deployments, will get no patch. It advises upgrading to PHP 8.2 or later and lists Snort signatures 67359 and 67360.",
+      "lessons": [
+        {
+          "point": "The bugs are unauthenticated and reachable with one HTTP request across a very long version range.",
+          "excerpt": "Dubbed \"php2shell\" and triggered by a simple HTTP request, this vulnerability affects every build since 5.4.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "End-of-life PHP (8.1 and older) gets no patch, so upgrading to 8.2+ is the fix and network rules are only a stopgap.",
+          "excerpt": "Older branches are end of life (EOL) and will not receive patches; these could account for around 50% of use cases.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you run PHP 8.1 or older, there is no patch: upgrade to 8.2+ or put network-level protection in front now.",
+      "tags": [
+        "php",
+        "php2shell",
+        "rce",
+        "end-of-life",
+        "snort"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Inventory and upgrade end-of-life PHP",
+        "detail": "Find every PHP runtime (servers, containers, CMS hosts like WordPress, Drupal, Magento) and its version. Move anything on 8.1 or older to 8.2+; until then, deploy IPS or WAF rules for PHP2Shell (for Snort, SIDs 67359 and 67360)."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 45,
+        "newness": 27,
+        "credibility": 75.0,
+        "composite": 33.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "The pool already has Wiz's primary PHP2Shell write-up (AI-assisted discovery of two core PHP memory-safety CVEs giving unauthenticated RCE); this newsletter adds only the EOL-share estimate and Snort SIDs. Verifier: Already covered in product-security.json: 'PHP2Shell: Wiz used frontier AI to turn memory-safety bugs in core PHP (two CVEs) into unauthenticated RCE on WordPress, Drupal and Joomla'. At most the Talos Snort SIDs 67359/67360 and the EOL-no-patch detail could be merged into it.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "threat": "Unauthenticated remote code execution on PHP applications via crafted HTTP requests, with reported exploitation attempts.",
+      "conditions": "Internet-facing PHP application on an affected build (5.4 onward), especially end-of-life 8.1 or older with no patch available.",
+      "mitigations": "Upgrade to a patched PHP 8.2+ release; apply IPS/WAF signatures as a stopgap.",
+      "source_url": "https://blog.talosintelligence.com/i-had-plans-for-that-second/",
+      "article_url": "https://blog.talosintelligence.com/i-had-plans-for-that-second/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/i-had-plans-for-that-second-34b5130afe.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-talosintelligence-com-rss",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Cisco Talos Intelligence",
+      "id": "talos-newsletter-php2shell-rces-hit-every-php-bu-60fddb0028",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "cisa-kev-eg-secure-solutions-siteguard-server-ed-63770fa2b6",
       "scores": {
         "novelty": 5,
         "relevance": 40,
-        "newness": 28,
+        "newness": 27,
         "credibility": 75.0,
-        "composite": 31.75,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 31.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
       },
       "verified": false,
       "verify_note": "Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source.",
@@ -2892,6 +3629,89 @@
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": true,
       "grounding_score": 0.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Atlassian October 2026 bulletin: 75 unique third-party CVEs across Data Center and Server products",
+      "summary": "Atlassian's October 2026 security bulletin lists 176 entries, 14 critical, all in third-party dependencies such as Apache Tomcat, Netty, Bouncy Castle, and Apache SSHD. SecurityWeek counts 75 unique CVEs, six critical, across Bamboo, Bitbucket, Confluence, Crowd, Fisheye/Crucible, and Jira. Atlassian says its use of the critical components carries lower, non-critical risk and the bulletin makes no mention of exploitation.",
+      "lessons": [
+        {
+          "point": "Bulletin entry counts overstate unique bugs because the same dependency CVE is listed per product.",
+          "excerpt": "All of the entries are tied to third-party dependencies, and many CVEs appear under several products.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Deduplicated, the bulletin covers 75 CVEs with six critical.",
+          "excerpt": "By SecurityWeek’s count, the bulletin covers 75 unique CVEs, six of them rated critical.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The vendor downgrades the critical dependency CVEs based on how it uses the component.",
+          "excerpt": "Atlassian notes that its use of the affected component “presents a lower, non-critical assessed risk.”",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The vendor's portal and bulletin disagree, so do not rely on one list.",
+          "excerpt": "However, the CVE doesn’t appear in the bulletin, and the portal lists fewer unique CVEs than the bulletin does.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Routine dependency-patch bulletin; schedule the updates, and reconcile the bulletin with the disclosure portal rather than trusting either alone.",
+      "tags": [
+        "atlassian",
+        "patch-management",
+        "third-party-dependencies",
+        "vulnerability-bulletin",
+        "data-center"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Schedule Atlassian DC/Server updates and reconcile CVE lists",
+        "detail": "Update Bamboo, Bitbucket, Confluence, Crowd, Fisheye/Crucible, Jira Software, and Jira Service Management to the fixed releases in the October 20, 2026 bulletin. Cross-check the bulletin against Atlassian's vulnerability disclosure portal (e.g. CVE-2026-65905 Tomcat appears only on the portal) and prioritize internet-facing instances."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 40,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 30.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Routine monthly vendor bulletin, like earlier SecurityWeek coverage of Atlassian and Oracle CPU patch rounds; no novel technique. Verifier: Routine monthly Atlassian dependency-patch bulletin, the same pattern as every prior Atlassian DC/Server bulletin covered by SecurityWeek; no new technique.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "mitigations": "Upgrade to the latest or fixed versions listed in Atlassian's October 2026 bulletin.",
+      "source_url": "https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/",
+      "article_url": "https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/atlassian-patches-75-flaws-in-data-center-and-se-ae035f43ac.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 55.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "SecurityWeek",
+      "candidate_id": "atlassian-patches-75-flaws-in-data-center-and-se-ae035f43ac",
+      "id": "atlassian-october-2026-bulletin-75-unique-third-89397f6bb5",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -2962,6 +3782,1229 @@
       "needs_review": true,
       "grounding_score": 1.0,
       "domain_label": "Cloud & Infrastructure"
+    },
+    {
+      "candidate_id": "evolving-threat-http2shell-is-an-rce-in-node-pyt-3aa6521227",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Aikido post claims 'http2shell' RCE affects Node, Python and more; captured source has no technical details",
+      "summary": "A Hacker News submission linked an Aikido Security post titled 'Evolving Threat: http2shell is an RCE in Node, Python, and more'. The captured page is only a Nitter bot-check screen, so the affected versions, root cause and fix cannot be confirmed from this source. Treat it as a pointer to find the primary advisory, not as a finding.",
+      "lessons": [
+        {
+          "point": "The archived source is a bot-check interstitial, not the advisory; nothing beyond the title can be verified.",
+          "excerpt": "To defend Nitter from evil bots, click here to continue.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A possible cross-runtime RCE is circulating, but this capture has no details; get the primary Aikido or vendor advisory before acting.",
+      "tags": [
+        "http2shell",
+        "rce",
+        "nodejs",
+        "python",
+        "thin-source"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Locate the primary http2shell advisory",
+        "detail": "Search Aikido Security's blog and the Node.js and Python security advisories for 'http2shell' to get affected versions and fixes, then inventory Node and Python services exposed over HTTP/2. Do not patch or block based on this capture alone."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 25,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 25.5,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "Pool has PHP2Shell (Wiz, unauthenticated RCE in core PHP) and a Node.js decoder memory-safety PoC; whether http2shell is related cannot be determined from this capture. Verifier: No http2shell entry exists in the tracker data. Note that the tracker already covers PHP2Shell (product-security.json), and the naming suggests this may be a related or derivative cross-runtime claim. The primary advisory is needed to judge it.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "source_url": "https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8",
+      "article_url": "https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8",
+      "tweet_url": null,
+      "author": "cowlevel",
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/evolving-threat-http2shell-is-an-rce-in-node-pyt-3aa6521227.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@cowlevel via Hacker News",
+      "id": "aikido-post-claims-http2shell-rce-affects-node-p-5aa4241130",
+      "retrieved_at": "2026-10-24T08:18:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "dutch-government-had-hacked-into-jared-kushner-s-63bb02b47f",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Unverified book claim that Dutch government hacked Jared Kushner's phone; Kushner denies it",
+      "summary": "Vanity Fair posted an excerpt from a book by Matthew Cole. It cites one unnamed source who said the Dutch government hacked Jared Kushner's phone and watched him access a Dubai bank account. Kushner says the claim is false and that no supporting evidence was provided. The captured source has no technical detail on how a phone was compromised.",
+      "lessons": [
+        {
+          "point": "The hacking claim rests on one unnamed source quoted in a book excerpt.",
+          "excerpt": "The Dutch government had hacked into Jared Kushner’s phone and monitored him as he accessed a Dubai-based bank account.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "The subject publicly denies it and says no documentary evidence was offered.",
+          "excerpt": "No bank statements, wire transfer records, account numbers, transaction dates, or other verifiable details were provided to support these extraordinary accusations.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is a disputed political allegation with no technical content; treat it as unconfirmed news, not threat intelligence.",
+      "tags": [
+        "state-surveillance",
+        "mobile-compromise",
+        "unverified-claim",
+        "news"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No defensive action; monitor for corroboration",
+        "detail": "Nothing to act on until a forensic report (e.g., spyware indicators or exploit chain) or official confirmation appears. Until then, do not cite it as evidence of state mobile intrusion capability."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 10,
+        "newness": 27,
+        "credibility": 55.0,
+        "composite": 21.0,
+        "scored_at": "2026-10-24T08:18:14+00:00"
+      },
+      "prior_art": "State and mercenary phone surveillance of political figures is well documented with forensic evidence (e.g., Citizen Lab spyware reports such as AdFection/Candiru already in the tracker); this item adds an unverified allegation with no technical detail. Verifier: Earlier reports of state hacking of senior officials' phones, such as the 2020 UN-cited allegation that Saudi Arabia hacked Jeff Bezos's iPhone via WhatsApp; there is no related entry in the tracker data files.",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+      "related_claims": [],
+      "source_url": "https://twitter.com/jaredkushner/status/2113376217415958767",
+      "article_url": "https://twitter.com/jaredkushner/status/2113376217415958767",
+      "tweet_url": null,
+      "author": "teekert",
+      "date": "2026-10",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/dutch-government-had-hacked-into-jared-kushner-s-63bb02b47f.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@teekert via Hacker News",
+      "id": "unverified-book-claim-that-dutch-government-hack-5a26f873d0",
+      "retrieved_at": "2026-10-24T08:18:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "cisa-kev-plex-media-server-server-side-request-f-805bdd34db",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA KEV: Plex Media Server SSRF CVE-2026-96655 exploited in the wild, chainable with three other Plex CVEs",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96655",
+      "takeaway": "Any logged-in Plex user can make the server fetch arbitrary addresses, and attackers are chaining it with other Plex bugs.",
+      "summary": "CISA added Plex Media Server CVE-2026-96655 to its Known Exploited Vulnerabilities list, and an authenticated user can make the server request arbitrary internal or external addresses through the '/video/:/transcode/universal' path. It chains with CVE-2026-96652, CVE-2026-96654 and CVE-2026-96656; patch Plex servers.",
+      "lessons": [
+        {
+          "point": "The SSRF sits in the transcode endpoint and is part of a four-CVE chain.",
+          "excerpt": "This vulnerability can be chained with CVE-2026-96652, CVE-2026-96654, and CVE-2026-96656.",
+          "confidence": 0.6,
+          "grounded": false
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96655",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/cisa-kev-plex-media-server-server-side-request-f-805bdd34db.txt",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 69.6,
+      "discovered_via": "rss",
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "id": "cisa-kev-plex-media-server-ssrf-cve-2026-96655-e-bc382a7ab8",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "kev",
+        "markers": [
+          "exploited"
+        ],
+        "sources": 3,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/cisa-orders-federal-agencies-to-patch.html",
+          "published": "2026-10-21"
+        },
+        {
+          "name": "Ars Technica Security",
+          "url": "https://arstechnica.com/security/2026/10/recently-fixed-plex-media-vulnerabilities-are-being-exploited-to-install-malware/",
+          "published": "2026-10-19"
+        }
+      ],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 79.6,
+        "composite": 11.94,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "OpenAI proposes coordinated disclosure framework after AI-found critical PHP flaws, offers PHP version checker",
+      "source_url": "https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities",
+      "takeaway": "AI-found bugs at internet scale need pre-planned maintainer, vendor and government coordination, and PHP operators should patch now.",
+      "summary": "OpenAI says Calif found critical PHP flaws using GPT-5.6 Sol under its Patch the Planet initiative, Wiz independently reported them, and PHP maintainers led the fixes. OpenAI shares a five-stage response framework and a PHP version checker, and asks for community feedback.",
+      "lessons": [
+        {
+          "point": "The post's direct advice to PHP operators is to apply the fixes.",
+          "excerpt": "For organizations using PHP, the priority now is applying the fixes.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "patch-the-planet-global-response-coordination-as-937d17c70e",
+      "article_url": "https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/patch-the-planet-global-response-coordination-as-937d17c70e.txt",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 73.2,
+      "discovered_via": "rss",
+      "source_name": "OpenAI Blog",
+      "id": "openai-proposes-coordinated-disclosure-framework-c4ea4c4405",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 73.2,
+        "composite": 10.98,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Critical Pillow flaw: one crafted FlashPix file opened with Image.open() can run code",
+      "source_url": "https://github.com/advisories/GHSA-5x8w-8jj5-q52h",
+      "takeaway": "Services that open untrusted uploads with Pillow and olefile installed can be fully compromised by a single file.",
+      "summary": "Pillow's FlashPix (FPX) JPEG-tile decoder has a heap buffer overflow (CVE-2026-112398), and any service that opens untrusted files with Pillow while the optional olefile package is installed is reachable, with no user interaction. Update Pillow, or remove olefile if you do not need FPX/MIC support.",
+      "lessons": [
+        {
+          "point": "The advisory says one crafted file is enough for code execution.",
+          "excerpt": "A heap buffer overflow in Pillow's FlashPix (FPX) JPEG-tile decoder lets an attacker achieve arbitrary code execution by getting an application to open a single crafted file with `Image.open()`.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-5x8w-8jj5-q52h-64809be952",
+      "article_url": "https://github.com/advisories/GHSA-5x8w-8jj5-q52h",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/ghsa-5x8w-8jj5-q52h-64809be952.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "critical-pillow-flaw-one-crafted-flashpix-file-o-7c79d53259",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical",
+          "rce"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "DOMPurify SAFE_FOR_TEMPLATES bypass: split expressions survive inside attached shadow roots",
+      "source_url": "https://github.com/advisories/GHSA-cg2g-xh64-v4q7",
+      "takeaway": "Sanitized output feeding a template engine is still risky when shadow roots are involved.",
+      "summary": "DOMPurify 3.4.4 through 3.4.16 does not re-scrub shadow root text after removing disallowed elements, so split template expressions can rejoin and later run in a downstream template engine; it needs a non-default setup. The advisory links a 3.4.17 release.",
+      "lessons": [
+        {
+          "point": "The advisory lists the non-default conditions needed.",
+          "excerpt": "Exploitation requires non-default application configuration: the application must enable `SAFE_FOR_TEMPLATES` and a DOM-returning mode, pass a DOM node that already has an attached shadow root, and feed the sanitized shadow root content into a template evaluator.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-cg2g-xh64-v4q7-e604400308",
+      "article_url": "https://github.com/advisories/GHSA-cg2g-xh64-v4q7",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/ghsa-cg2g-xh64-v4q7-e604400308.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "dompurify-safe-for-templates-bypass-split-expres-6d24de6e03",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Echo proxy middleware: rejected WebSocket upgrades bypass route-level access controls",
+      "source_url": "https://github.com/advisories/GHSA-cxf3-9h37-7rr8",
+      "takeaway": "Auth enforced only at the proxy route can be skipped, so authorize at the upstream too.",
+      "summary": "Echo's Proxy middleware opens a raw tunnel on a WebSocket upgrade request before checking the upstream accepted it, so later requests on that connection skip Echo's router and middleware. Upgrade to v4.16.1 or v5.4.1, or reject upgrade requests on proxy routes.",
+      "lessons": [
+        {
+          "point": "The impact is limited to auth done only in Echo routes.",
+          "excerpt": "This can bypass authentication or authorization enforced only at Echo's routes.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-cxf3-9h37-7rr8-db7ff29b74",
+      "article_url": "https://github.com/advisories/GHSA-cxf3-9h37-7rr8",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/ghsa-cxf3-9h37-7rr8-db7ff29b74.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "echo-proxy-middleware-rejected-websocket-upgrade-568d180790",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "Laravel TokenGuard authentication bypass via non-string API credentials rated critical",
+      "source_url": "https://github.com/advisories/GHSA-f9x3-7vq9-cph6",
+      "takeaway": "Laravel apps using token-based API guards should check the advisory and update the framework.",
+      "summary": "GitHub lists a critical authentication bypass in Laravel's TokenGuard involving non-string API credentials (CVE-2026-114509), but the captured page text holds only generic CVSS metric definitions, so no further detail is confirmed here. Read the advisory and update Laravel.",
+      "lessons": [
+        {
+          "point": "The captured text is only generic CVSS metric boilerplate, so confidence is low.",
+          "excerpt": "Attack Vector:This metric reflects the context by which vulnerability exploitation is possible.",
+          "confidence": 0.2,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-f9x3-7vq9-cph6-7bde09126d",
+      "article_url": "https://github.com/advisories/GHSA-f9x3-7vq9-cph6",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/ghsa-f9x3-7vq9-cph6-7bde09126d.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "laravel-tokenguard-authentication-bypass-via-non-9d96eb34e5",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Mercury analytics app: a missing comma lets anyone open a root shell via /api/terminals",
+      "source_url": "https://github.com/advisories/GHSA-f8c7-rwf9-fmgm",
+      "takeaway": "A one-character typo in a blocklist can silently remove a critical access control, so test that each blocked path is really blocked.",
+      "summary": "Mercury (pip package) has a critical flaw, CVE-2026-111057: a missing comma in its blocklist leaves /api/terminals open, so any unauthenticated network client can get an interactive OS shell; the advisory's test showed a root shell on a default Docker setup (3.2.3). Upgrade to 3.2.4 or later and keep Mercury behind authentication.",
+      "lessons": [
+        {
+          "point": "The advisory states the impact of the blocklist bypass: no login is needed to get a shell on the host.",
+          "excerpt": "any unauthenticated attacker can spawn a full, interactive OS-level shell on the host running Mercury.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-f8c7-rwf9-fmgm-d1cd1140f1",
+      "article_url": "https://github.com/advisories/GHSA-f8c7-rwf9-fmgm",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/ghsa-f8c7-rwf9-fmgm-d1cd1140f1.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "mercury-analytics-app-a-missing-comma-lets-anyon-2da94a09e0",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical",
+          "rce",
+          "unauthenticated"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Mercury still exposed to unauthenticated code execution via /api/kernels after terminals fix",
+      "source_url": "https://github.com/advisories/GHSA-rv4m-xm3f-3ccq",
+      "takeaway": "Blocklists cannot secure a server that is anonymous by default; require real authentication instead.",
+      "summary": "Mercury has a second critical flaw, CVE-2026-111058; even on 3.2.4, which fixed the terminals bug, an unauthenticated client can create a kernel and run Python through its websocket, and the advisory reports a fix in version 3.2.6, so upgrade, and set a token or password.",
+      "lessons": [
+        {
+          "point": "The advisory says every default deployment is fully exposed to remote code execution.",
+          "excerpt": "Unauthenticated, network-reachable arbitrary code execution as the Mercury server process user on every default deployment",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-rv4m-xm3f-3ccq-b57acb5743",
+      "article_url": "https://github.com/advisories/GHSA-rv4m-xm3f-3ccq",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/ghsa-rv4m-xm3f-3ccq-b57acb5743.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "mercury-still-exposed-to-unauthenticated-code-ex-2f3db1e1b8",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical",
+          "rce",
+          "unauthenticated"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Pillow heap overflow when saving TIFF to BytesIO also leaks stale heap bytes",
+      "source_url": "https://github.com/advisories/GHSA-332p-7hrc-92wf",
+      "takeaway": "The common re-encode-an-upload pattern to an in-memory TIFF can corrupt memory with default settings.",
+      "summary": "Pillow's in-memory TIFF write callback sizes its buffer wrongly, so a crafted tag can write past the heap block (CVE-2026-112393), and the reproducer crashes the process. The report says code execution was shown only with a separate address leak; saves to real files are unaffected.",
+      "lessons": [
+        {
+          "point": "Default settings are enough to trigger it.",
+          "excerpt": "Anyone who can supply an image to a service that opens it and re-saves it as TIFF this way can trigger this with default settings.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-332p-7hrc-92wf-7b1c88590b",
+      "article_url": "https://github.com/advisories/GHSA-332p-7hrc-92wf",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/ghsa-332p-7hrc-92wf-7b1c88590b.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "pillow-heap-overflow-when-saving-tiff-to-bytesio-7dd36349e2",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Pillow multi-frame loaders reuse stale buffers, causing out-of-bounds writes and possible code execution",
+      "source_url": "https://github.com/advisories/GHSA-v9pv-5gc8-w2m6",
+      "takeaway": "Image-upload services using Pillow's multi-frame formats can crash or be taken over by a crafted file.",
+      "summary": "In Pillow 12.3.0, PSD, MPO, DCX and MIC loaders can keep native storage from one frame while decoding a wider mode in the next (CVE-2026-96639), which causes crashes and out-of-bounds writes. The reporter also showed command execution through MPO; update Pillow.",
+      "lessons": [
+        {
+          "point": "The root cause is a narrow buffer reused for wider pixels.",
+          "excerpt": "If frame 0 allocates storage for a narrow mode such as `L`, and a later frame of the same dimensions switches to a wider mode such as `RGB` or `CMYK`, Pillow may decode wider pixels into the stale narrow native buffer.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-v9pv-5gc8-w2m6-a218782e35",
+      "article_url": "https://github.com/advisories/GHSA-v9pv-5gc8-w2m6",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/ghsa-v9pv-5gc8-w2m6-a218782e35.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "pillow-multi-frame-loaders-reuse-stale-buffers-c-2978017025",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (PSD, MPO, DCX, MIC)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Pillow thumbnail() heap overflow on lossless JPEGs, found by Anthropic using Claude",
+      "source_url": "https://github.com/advisories/GHSA-8g5g-8vmr-9782",
+      "takeaway": "Thumbnailing untrusted JPEGs with libjpeg-turbo 3.x can corrupt the heap; a simple code change avoids it.",
+      "summary": "Pillow's draft() shrinks the decode buffer, but libjpeg-turbo ignores scaling for lossless (SOF3) JPEGs and writes full-width rows past it (CVE-2026-112403), and Image.thumbnail() triggers it by default. Call load() before thumbnail(), or use reducing_gap=None, until you update.",
+      "lessons": [
+        {
+          "point": "Lossless JPEG streams ignore the requested scale, causing the mismatch.",
+          "excerpt": "libjpeg-turbo 3.x decodes lossless (SOF3) JPEG, but hardwires lossless streams to no scaling — the requested `scale_denom` is silently discarded.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-8g5g-8vmr-9782-5f4993ac82",
+      "article_url": "https://github.com/advisories/GHSA-8g5g-8vmr-9782",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/ghsa-8g5g-8vmr-9782-5f4993ac82.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "pillow-thumbnail-heap-overflow-on-lossless-jpegs-02846cd102",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Salesforce: AI finds vulnerabilities faster than engineers can fix them; cluster root causes and close exploit chains",
+      "source_url": "https://www.salesforce.com/blog/managing-agentic-security-at-scale/",
+      "takeaway": "When AI floods you with findings, fix shared root causes once and treat validated exploit chains as urgent.",
+      "summary": "Salesforce security engineers say AI-driven discovery now outpaces remediation, so they run two tracks. Systemic risk reduction groups findings by shared root cause so one fix retires many, and tactical exploit-chain closure proves chains work and fixes them fast.",
+      "lessons": [
+        {
+          "point": "The post names the gap that drives its two-track approach.",
+          "excerpt": "The result is a lifecycle running at two speeds: machine-speed discovery and human-speed remediation.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "managing-agentic-security-at-scale-3e9f5d5d02",
+      "article_url": "https://www.salesforce.com/blog/managing-agentic-security-at-scale/",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/managing-agentic-security-at-scale-3e9f5d5d02.txt",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "discovered_via": "curator",
+      "source_name": "tl;dr sec (curator link)",
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-351",
+      "id": "salesforce-ai-finds-vulnerabilities-faster-than-afb6a953d3",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Storybook dev server lacks origin validation; malicious sites can change project files",
+      "source_url": "https://github.com/advisories/GHSA-f2ph-cmg5-wxc8",
+      "takeaway": "Local dev servers reachable from the browser are an attack surface; patch and avoid opening untrusted sites meanwhile.",
+      "summary": "Storybook's dev server preview accepted events from other websites (CVE-2026-114125, CVSS 9.4), so a malicious site could change story files and a local runtime might then run them; no exploitation is known. Upgrade to 8.6.19, 9.1.21, 10.6.2 or 11.0.0-alpha.6.",
+      "lessons": [
+        {
+          "point": "The core risk is a website altering a developer's files.",
+          "excerpt": "A malicious website may be able to cause unauthorized file changes in a developer’s project while an affected Storybook dev server is running.",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-f2ph-cmg5-wxc8-46e321625d",
+      "article_url": "https://github.com/advisories/GHSA-f2ph-cmg5-wxc8",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/ghsa-f2ph-cmg5-wxc8-46e321625d.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "storybook-dev-server-lacks-origin-validation-mal-14d88e38a5",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "ai-incident",
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: hedges 2 > 1"
+        ]
+      },
+      "grounding_score": 0.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Wasmtime Cranelift bit-packing overflow lets crafted Wasm module escape the sandbox",
+      "source_url": "https://github.com/advisories/GHSA-897f-g5gm-fmxm",
+      "takeaway": "Anyone running untrusted Wasm in Wasmtime with default settings should patch, since the sandbox itself can fail.",
+      "summary": "Wasmtime's Cranelift compiler can silently overflow when packing SSA value indices, causing miscompilation (CVE-2026-115889, CVSS 9.9); a very large or specially built Wasm function can force type confusion and escape the sandbox. Upgrade to 36.0.19 or 43.0.0.",
+      "lessons": [
+        {
+          "point": "Default-config engines on any platform are affected.",
+          "excerpt": "A Wasmtime engine with default settings (using the Cranelift backend) on any architecture/platform could experience a sandbox escape from a specially-crafted Wasm module.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "ghsa-897f-g5gm-fmxm-bc771ff9a4",
+      "article_url": "https://github.com/advisories/GHSA-897f-g5gm-fmxm",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/ghsa-897f-g5gm-fmxm-bc771ff9a4.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "wasmtime-cranelift-bit-packing-overflow-lets-cra-b56fffd5dc",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "candidate_id": "ghsa-hq85-5cpj-mr62-31c44bb7c9",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "uv before 0.13.4 trusts the emSign root behind eight compromised eMudhra intermediate CAs (GHSA-hq85-5cpj-mr62)",
+      "source_url": "https://github.com/advisories/GHSA-hq85-5cpj-mr62",
+      "takeaway": "Python installs through uv could accept certificates signed with the leaked eMudhra keys until you upgrade to 0.13.4.",
+      "summary": "uv checks TLS against its own vendored root bundle, and versions before 0.13.4 include the emSign ECC Root CA - G3. Eight eMudhra intermediate CAs under that root have compromised private keys; upgrade uv to 0.13.4 or later.",
+      "lessons": [
+        {
+          "point": "uv uses its own vendored roots, so the system trust store fix does not cover it.",
+          "excerpt": "By default, uv verifies TLS connections against a vendored copy of the `webpki-root-certs` bundle.",
+          "confidence": 0.6,
+          "grounded": false
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://github.com/advisories/GHSA-hq85-5cpj-mr62",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/ghsa-hq85-5cpj-mr62-31c44bb7c9.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "uv-before-0-13-4-trusts-the-emsign-root-behind-e-83826230f4",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "compromise",
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "candidate_id": "cisa-kev-siemens-software-center-uncontrolled-se-cb97e969ba",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA KEV: Siemens Software Center DLL search-path flaw CVE-2026-110936 exploited in the wild",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110936",
+      "takeaway": "A local attacker who can drop a DLL where Siemens Software Center looks for one gets code execution; CISA says this is being exploited.",
+      "summary": "CISA added CVE-2026-110936 in Siemens Software Center to its Known Exploited Vulnerabilities list, and an authenticated local attacker can plant a crafted DLL in a searched directory and run code with the application's privileges. Patch it and lock down write access to the application's directories.",
+      "lessons": [
+        {
+          "point": "The flaw is an uncontrolled DLL search path, which gives local code execution.",
+          "excerpt": "an authenticated local attacker to place a specially crafted DLL in a directory that the application searches",
+          "confidence": 0.6,
+          "grounded": false
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110936",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/cisa-kev-siemens-software-center-uncontrolled-se-cb97e969ba.txt",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 69.6,
+      "discovered_via": "rss",
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "id": "cisa-kev-siemens-software-center-dll-search-path-18309c1910",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "kev",
+        "markers": [
+          "exploited",
+          "rce"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 69.6,
+        "composite": 10.44,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Abandoned Time4Popcorn updater (CVE-2026-30612) allowed code execution on millions of PCs; researchers disabled it",
+      "source_url": "https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/",
+      "takeaway": "Abandoned software with unsigned updates and lapsed domains is a ready-made supply-chain hole; remove it.",
+      "summary": "The Time4Popcorn updater fetched executables over HTTP without checking signatures, from an abandoned domain; Eye Security registered the domain and saw up to 3 million Windows and 350,000 macOS clients. They used it to disable the updater, but Android users remain exposed, so uninstall the app.",
+      "lessons": [
+        {
+          "point": "The article states what control of the update domain would have given an attacker.",
+          "excerpt": "Anyone controlling the update domain could manipulate HTTP traffic and execute code as SYSTEM on Windows and as root on macOS.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "abandoned-popcorn-time-app-exposed-millions-of-d-e2543cf24c",
+      "article_url": "https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/abandoned-popcorn-time-app-exposed-millions-of-d-e2543cf24c.txt",
+      "source_id": "rss:https-www-bleepingcomputer-com-feed",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "BleepingComputer",
+      "id": "abandoned-time4popcorn-updater-cve-2026-30612-al-682580833a",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "rce"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Belarus-aligned Partisan Zmiy hid Vasilek backdoor in VMware Tools for nearly two years in Russian healthcare network",
+      "source_url": "https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html",
+      "takeaway": "Defenders should monitor trusted-but-unwatched directories such as VMware Tools paths, where attackers can hide persistent loaders.",
+      "summary": "Russian firm Solar says the Partisan Zmiy group (Cyber Partisans) sat in a Russian healthcare organization from early 2024 until discovery in December 2025; the initial access vector is unknown. They used a fake VMware service and a malicious vmtools.dll to run Vasilek 1.5.8.",
+      "lessons": [
+        {
+          "point": "Solar thinks the group stayed quiet because the access was valuable for espionage and trusted-relationship attacks.",
+          "excerpt": "The attacked organization possessed an extensive infrastructure and two-way trusted relationships with numerous subsidiary medical institutions,",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "hackers-hid-vasilek-backdoor-in-vmware-tools-dur-b9fa87ada3",
+      "article_url": "https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/hackers-hid-vasilek-backdoor-in-vmware-tools-dur-b9fa87ada3.txt",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "The Hacker News",
+      "id": "belarus-aligned-partisan-zmiy-hid-vasilek-backdo-6946ada3c1",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "compromise"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Eight eMudhra intermediate CA certificates with trivially weak private keys trigger global blocking",
+      "source_url": "https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/",
+      "takeaway": "Update trust stores and bundled root lists everywhere, since anyone holding these keys could mint trusted certificates for any site.",
+      "summary": "Ars Technica reports that eight eMudhra intermediate certificates had private keys so weak that anyone could issue trusted credentials, and browser makers and some apps and languages have blocked them. Ars reports no malicious use in certificate transparency logs so far; Linux distributions, IoT devices and bundled CLI tools will take a long time to fix, and an attack needs an adversary-in-the-middle position.",
+      "lessons": [
+        {
+          "point": "The keys were tiny numbers, not real cryptographic keys.",
+          "excerpt": "The private key sizes of the compromised keys ranged from 3 to 8 bits.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "the-internet-goes-on-high-alert-after-discovery-e37f2c3a09",
+      "article_url": "https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/the-internet-goes-on-high-alert-after-discovery-e37f2c3a09.txt",
+      "source_id": "rss:https-arstechnica-com-security-feed",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "Ars Technica Security",
+      "id": "eight-emudhra-intermediate-ca-certificates-with-865b49737d",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "compromise"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 55.0,
+        "composite": 8.25,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "curl moves low and medium severity vulnerability reports to public GitHub from October 26",
+      "source_url": "https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198",
+      "takeaway": "Report floods, including AI-assisted ones, are pushing open source projects to change how they handle vulnerability disclosure.",
+      "summary": "Maintainer Daniel Stenberg says curl is overwhelmed by vulnerability reports; from October 26, low and medium reports go to the public GitHub repo while high and critical ones stay private. He says over 90 percent of submissions in recent years were judged below HIGH.",
+      "lessons": [
+        {
+          "point": "Stenberg describes the strain on the project behind the policy change.",
+          "excerpt": "We are struggling as a project as all key maintainers feel strained, overloaded and brought to the brink of what we can muster.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "swamped-curl-maintainers-take-low-level-flaws-pu-0c60af3f5d",
+      "article_url": "https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/swamped-curl-maintainers-take-low-level-flaws-pu-0c60af3f5d.txt",
+      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
+      "source_rank": 49.3,
+      "discovered_via": "rss",
+      "source_name": "The Register — Security",
+      "id": "curl-moves-low-and-medium-severity-vulnerability-696e8c9e9a",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 49.3,
+        "composite": 7.39,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "UpGuard researcher uses OnlyFans copyright takedown data to find hacked university and government sites",
+      "source_url": "https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites",
+      "takeaway": "Cheap search-result monitoring can warn you when your site has been tampered with for SEO spam, which can hide worse access.",
+      "summary": "UpGuard's Greg Pollock says DMCA takedown requests in Google's transparency report reveal legitimate sites, often .edu and .gov, that were hacked to push adult content in search results; the data is slow, so it is not live detection. He suggests a simple daily search check and basic web hygiene such as CMS updates, and the raw text shows a June 2026 timestamp while the tracker lists 2026-10-19.",
+      "lessons": [
+        {
+          "point": "Pollock recommends a cheap search-results check as an early warning.",
+          "excerpt": "I think having some kind of search engine results monitoring is a pretty cheap, pretty effective way to have an early warning there.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "candidate_id": "onlyfans-copyright-takedowns-expose-compromised-4a0a83680f",
+      "article_url": "https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/onlyfans-copyright-takedowns-expose-compromised-4a0a83680f.txt",
+      "source_id": "rss:https-www-darkreading-com-rss-xml",
+      "source_rank": 40.0,
+      "discovered_via": "rss",
+      "source_name": "Dark Reading",
+      "id": "upguard-researcher-uses-onlyfans-copyright-taked-8af80afc27",
+      "retrieved_at": "2026-10-24T08:21:15+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "compromise"
+        ],
+        "sources": 1,
+        "at": "2026-10-24"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 40.0,
+        "composite": 6.0,
+        "scored_at": "2026-10-24T08:21:15+00:00"
+      }
     }
   ]
 }
