@@ -27,6 +27,20 @@ snapshot_days: 7
 news_front_page_days: 7
 news_front_page_max: 30
 
+# Emerging trends (scripts/trends.py). A tag's "recent" count is its dated
+# findings inside max_age_days. Its baseline is the rate it ran at over the
+# `baseline_days` before that window (shorter if the topic's history is), scaled
+# to the window's length. A theme is `rising` only when its recent count is at
+# least `rising_min_recent` AND above `rising_ratio` x that baseline; one with
+# recent findings that is not rising is `steady`, one with none is `quiet`.
+# Source, host and feed names are not themes: tags naming a registered source
+# (its name, handle or site) are dropped, plus `exclude_tags`.
+trends:
+  baseline_days: 180
+  rising_ratio: 1.0
+  rising_min_recent: 2
+  exclude_tags: [arxiv, ghsa, github, hn, hacker-news, nvd, cisa, kev, cisa-kev, rss, x, twitter, unit42, black-hat, def-con, defcon]
+
 # Newness decay: newness = 100 * exp(-age_days / half_life_days).
 # A finding loses half its newness score every `half_life_days` days. Kept short
 # so ranking still differentiates within the ~1-month window.

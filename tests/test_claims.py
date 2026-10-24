@@ -133,14 +133,20 @@ def test_claim_without_agent_era_terms_is_exempt_from_the_currency_check():
     assert claims.validate_claim(claim, {claim["id"]}) == []
 
 
-def test_the_live_claim_ledger_has_no_stale_agent_era_evidence():
+def test_the_live_claim_ledger_has_no_stale_agent_era_evidence(monkeypatch):
     """The actual gate: every claim committed to data/claims.json must pass
     the currency check, independent of any sandboxing. Run as part of the
     normal test suite so a claim added or edited without a modern, on-topic
     source fails CI before it reaches prod."""
     import json
+    from datetime import UTC, datetime
     from pathlib import Path
 
+    import common
+
+    # The real ledger's added_on/changed_on are real dates: judge "not in the
+    # future" against the real clock, not the suite's frozen one.
+    monkeypatch.setattr(common, "utcnow", lambda: datetime.now(UTC))
     real_path = Path(__file__).resolve().parent.parent / "data" / "claims.json"
     ledger = json.loads(real_path.read_text(encoding="utf-8"))
     assert claims.validate_ledger(ledger) == []
@@ -398,3 +404,215 @@ def test_claims_for_topic_filters_and_orders(sandbox):
     claims.save_ledger(ledger_of(security, research))
     got = claims.claims_for_topic(claims.load_ledger(), "ai-research")
     assert [c["id"] for c in got] == ["research-claim"]
+
+
+# --- Contradiction check: live text vs retired controls ---------------------
+def _retired_for(*controls, **over):
+    return make_claim(
+        id="ignore-scripts-is-enough",
+        status="refuted",
+        superseded_by=["import-time-payloads"],
+        superseded_on="2026-07-15",
+        supersession_reason="Import-time payloads get past it.",
+        refuted_controls=list(controls),
+        **over,
+    )
+
+
+def _successor(**over):
+    return make_claim(
+        id="import-time-payloads",
+        supersedes=["ignore-scripts-is-enough"],
+        statement="Import-time payloads defeat --ignore-scripts.",
+        guidance="Do not treat --ignore-scripts as the control; sandbox the first import.",
+        **over,
+    )
+
+
+def _check(*claim_list):
+    return claims.validate_ledger(ledger_of(*claim_list))
+
+
+def test_live_guidance_recommending_a_refuted_control_fails():
+    bad = make_claim(id="installs-run-code", guidance="Prefer --ignore-scripts + a build step.")
+    assert _check(_retired_for("--ignore-scripts"), _successor(), bad) == [
+        "installs-run-code: guidance recommends '--ignore-scripts', which "
+        "ignore-scripts-is-enough was retired for; reword it against import-time-payloads"
+    ]
+
+
+ALL_CONTROLS = (
+    "--ignore-scripts",
+    "model scanner",
+    "instruction hierarchy",
+    "human code review",
+    "input classifier",
+)
+
+
+def test_guidance_match_is_case_insensitive_and_allows_plurals():
+    bad = make_claim(id="installs-run-code", guidance="Run Model Scanners on every artifact.")
+    errors = _check(_retired_for(*ALL_CONTROLS), _successor(), bad)
+    assert errors == [
+        "installs-run-code: guidance recommends 'model scanner', which "
+        "ignore-scripts-is-enough was retired for; reword it against import-time-payloads"
+    ]
+
+
+def test_a_recommendation_still_fails():
+    bad = make_claim(guidance="Use --ignore-scripts to stop supply-chain attacks.", id="x-y")
+    assert len(_check(_retired_for(*ALL_CONTROLS), _successor(), bad)) == 1
+
+
+def test_control_must_be_a_whole_phrase():
+    ok = make_claim(id="x-y", guidance="Use --ignore-scripts-v2 and model scannerish tools.")
+    assert _check(_retired_for(*ALL_CONTROLS), _successor(), ok) == []
+
+
+DESCRIPTIVE = [
+    "Model scanners miss payloads that only trigger at load time.",
+    "Training an instruction hierarchy raised injection resistance on the benchmark.",
+    "Human code review of agent PRs took 3x longer.",
+    "An input classifier flagged 40% of attacks, so layer containment on top.",
+    "Avoid --ignore-scripts as your only install control.",
+    "Replace --ignore-scripts with a sandbox.",
+]
+
+
+@pytest.mark.parametrize("text", DESCRIPTIVE)
+def test_statements_describe_and_are_not_checked(text):
+    ok = make_claim(id="x-y", statement=text)
+    assert _check(_retired_for(*ALL_CONTROLS), _successor(), ok) == []
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Model scanners miss payloads that only trigger at load time.",
+        "Avoid --ignore-scripts as your only install control.",
+        "Replace --ignore-scripts with a sandbox.",
+        "Drop the input classifier once containment holds.",
+        "Keep human code review, but gate secrets with automated checks.",
+        "An instruction hierarchy helps, however it is only a cost-raiser.",
+        "Scanners have limited value; a model scanner fails on pickle tricks.",
+        "Use install flags (e.g. --ignore-scripts) only as a speed bump.",
+        "Use install flags (i.e. --ignore-scripts) without trusting them.",
+        "Ship nothing unless a model scanner and a sandbox both pass.",
+        "A model scanner missed it.",
+    ],
+)
+def test_caveated_guidance_passes(text):
+    ok = make_claim(id="x-y", guidance=text)
+    assert _check(_retired_for(*ALL_CONTROLS), _successor(), ok) == []
+
+
+def test_eg_does_not_split_the_sentence():
+    assert (
+        claims.recommended_controls(
+            "Don't use flags, e.g. --ignore-scripts, here.", {"--ignore-scripts": "x"}
+        )
+        == []
+    )
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Do not treat --ignore-scripts as the control.",
+        "--ignore-scripts alone is insufficient.",
+        "Import-time payloads defeat --ignore-scripts.",
+        "Sandbox installs rather than relying on --ignore-scripts.",
+        "--ignore-scripts isn't enough here.",
+    ],
+)
+def test_a_caveated_mention_is_not_a_recommendation(text):
+    ok = make_claim(id="installs-run-code", guidance=text)
+    assert _check(_retired_for("--ignore-scripts"), _successor(), ok) == []
+
+
+def test_only_the_recommending_sentence_counts():
+    text = "Do not rely on provenance alone. Prefer --ignore-scripts everywhere."
+    bad = make_claim(id="installs-run-code", guidance=text)
+    assert len(_check(_retired_for("--ignore-scripts"), _successor(), bad)) == 1
+
+
+def test_retired_claims_may_keep_mentioning_their_own_control():
+    old = _retired_for("--ignore-scripts", guidance="Install with --ignore-scripts.")
+    assert _check(old, _successor()) == []
+
+
+def test_refuted_controls_must_be_strings_on_a_retired_claim():
+    live = make_claim(refuted_controls=["--ignore-scripts"])
+    assert any("retired claim" in e for e in claims.validate_claim(live, set()))
+    errors = claims.validate_claim(_retired_for(""), {"import-time-payloads"})
+    assert any("non-empty strings" in e for e in errors)
+
+
+def test_no_refuted_controls_means_no_contradiction_errors():
+    plain = make_claim(id="installs-run-code", guidance="Prefer --ignore-scripts.")
+    assert _check(plain) == []
+
+
+# --- Ledger dates: added_on / changed_on ------------------------------------
+def test_ledger_dates_are_valid_when_ordered_and_past():
+    claim = make_claim(added_on="2026-07-01", changed_on="2026-07-10")
+    assert claims.validate_claim(claim, set()) == []
+
+
+@pytest.mark.parametrize(
+    "over, needle",
+    [
+        ({"added_on": "2026-07-01"}, "travel together"),
+        ({"changed_on": "2026-07-01"}, "travel together"),
+        ({"added_on": "2026-07", "changed_on": "2026-07-02"}, "YYYY-MM-DD"),
+        ({"added_on": "2026-02-30", "changed_on": "2026-03-01"}, "YYYY-MM-DD"),
+        ({"added_on": "2026-07-01", "changed_on": "2027-01-01"}, "future"),
+        ({"added_on": "2026-07-10", "changed_on": "2026-07-01"}, "before added_on"),
+    ],
+)
+def test_bad_ledger_dates_are_rejected(over, needle):
+    errors = claims.validate_claim(make_claim(**over), set())
+    assert any(needle in e for e in errors), errors
+
+
+def test_supersede_stamps_changed_on_and_refuted_controls():
+    old = make_claim(id="old-claim", added_on="2026-06-01", changed_on="2026-06-01")
+    new = make_claim(id="new-claim")
+    out = claims.supersede(
+        ledger_of(old, new),
+        "old-claim",
+        "new-claim",
+        reason="r",
+        date="2026-05-01",
+        status="refuted",
+        changed_on="2026-07-10",
+        refuted_controls=["--ignore-scripts"],
+    )
+    retired = claims.claim_index(out["claims"])["old-claim"]
+    assert (retired["superseded_on"], retired["changed_on"]) == ("2026-05-01", "2026-07-10")
+    assert retired["added_on"] == "2026-06-01"
+    assert retired["refuted_controls"] == ["--ignore-scripts"]
+
+
+def test_backfill_uses_first_appearance_and_last_status_change():
+    snaps = [
+        ("2026-07-01", ledger_of(make_claim(id="a"))),
+        ("2026-07-05", ledger_of(make_claim(id="a"), make_claim(id="b"))),
+        ("2026-07-09", ledger_of(make_claim(id="a", status="contested"), make_claim(id="b"))),
+        ("2026-07-12", ledger_of(make_claim(id="a", status="contested"), make_claim(id="b"))),
+    ]
+    now = ledger_of(
+        make_claim(id="a", status="contested"),
+        make_claim(id="b"),
+        make_claim(id="c"),
+        make_claim(id="d", added_on="2026-06-01", changed_on="2026-06-02"),
+    )
+    out = claims.claim_index(claims.backfill_ledger_dates(now, snaps, "2026-07-14")["claims"])
+    dates = {cid: (cl["added_on"], cl["changed_on"]) for cid, cl in out.items()}
+    assert dates == {
+        "a": ("2026-07-01", "2026-07-09"),
+        "b": ("2026-07-05", "2026-07-05"),
+        "c": ("2026-07-14", "2026-07-14"),  # not in history yet: today
+        "d": ("2026-06-01", "2026-06-02"),  # never overwritten
+    }
+    assert now["claims"][0].get("added_on") is None  # input untouched

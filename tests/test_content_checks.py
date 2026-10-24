@@ -170,6 +170,10 @@ FROZEN = [
     ("supersedes", ["another"]),
     ("confidence", 0.1),
     ("scope", "new scope"),
+    # ledger dates and retired controls: only a reviewed correction moves them
+    ("added_on", "2026-10-21"),
+    ("changed_on", "2026-10-21"),
+    ("refuted_controls", ["--ignore-scripts"]),
 ]
 
 
@@ -293,3 +297,24 @@ def test_an_id_is_kept_only_if_every_copy_stays_promoted(order):
 def test_garbage_docs_do_not_crash():
     assert cc.editorial_problems([None, "x", {"entries": "x"}], [None]) == []
     assert cc.editorial_problems([_pool(_ed("a"))], [None]) != []
+
+
+def test_a_new_claim_may_arrive_with_its_ledger_dates():
+    pr = copy.deepcopy(MAIN)
+    pr["claims"].append(claim("dated", added_on="2026-10-21", changed_on="2026-10-21"))
+    assert cc.claim_history_problems(MAIN, pr) == []
+
+
+def test_add_claim_evidence_leaves_ledger_dates_alone(sandbox):
+    """The one claim write a scan makes (add_claim.py evidence) must stay a
+    content-only change on a ledger that carries added_on/changed_on."""
+    import add_claim
+
+    import claims as cl
+
+    base = claim("dated", topic="ai-research", added_on="2026-07-01", changed_on="2026-07-01")
+    base["evidence"] = [{"url": "https://e/1", "stance": "supports", "published": "2026-06-01"}]
+    main = ledger(base)
+    cl.save_ledger(copy.deepcopy(main))
+    assert add_claim.main(["evidence", "dated", "--evidence", "supports|https://e/2"]) == 0
+    assert cc.claim_history_problems(main, cl.load_ledger()) == []

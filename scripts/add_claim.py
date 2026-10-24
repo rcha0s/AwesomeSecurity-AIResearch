@@ -31,12 +31,16 @@ Usage:
     python scripts/add_claim.py fix-evidence some-claim --url https://… --stance contests --note "…"
     python scripts/add_claim.py fix-evidence some-claim --url https://… --occurrence 2 --remove
     python scripts/add_claim.py list [--topic ai-research]
+    python scripts/add_claim.py correct old-claim --refuted-control=--ignore-scripts
+    python scripts/add_claim.py backfill-dates      # added_on/changed_on from git history
     python scripts/add_claim.py validate
 """
 
 from __future__ import annotations
 
 import argparse
+import json
+import subprocess
 
 import common as c
 import taxonomy
@@ -90,6 +94,8 @@ def cmd_new(args: argparse.Namespace) -> int:
         "evidence": parse_evidence(args.evidence),
         "first_seen": args.first_seen or today(),
         "last_reviewed": today(),
+        "added_on": today(),
+        "changed_on": today(),
     }
     for key in ("title", "basis", "guidance", "scope"):
         if getattr(args, key):
@@ -117,6 +123,8 @@ def cmd_supersede(args: argparse.Namespace) -> int:
             reason=args.reason,
             date=args.date or today(),
             status="refuted" if args.refuted else "superseded",
+            changed_on=today(),
+            refuted_controls=args.refuted_control,
         )
     except KeyError as exc:
         print(f"unknown claim: {exc}")
@@ -156,6 +164,16 @@ def cmd_evidence(args: argparse.Namespace) -> int:
     return rc
 
 
+def _status_change(claim: dict, status: str) -> dict:
+    """The fields a status move writes: changed_on only when the status moves."""
+    out = {"status": status, "last_reviewed": today()}
+    if claim.get("status") != status:
+        out["changed_on"] = today()
+        if "added_on" not in claim:
+            out["added_on"] = today()
+    return out
+
+
 def cmd_status(args: argparse.Namespace) -> int:
     if args.set in cl.RETIRED_STATUSES:
         print(f"use `supersede` to set {args.set} — it needs a successor, reason, and date")
@@ -167,11 +185,7 @@ def cmd_status(args: argparse.Namespace) -> int:
     updated = {
         **ledger,
         "claims": [
-            (
-                {**claim, "status": args.set, "last_reviewed": today()}
-                if claim["id"] == args.id
-                else claim
-            )
+            ({**claim, **_status_change(claim, args.set)} if claim["id"] == args.id else claim)
             for claim in ledger["claims"]
         ],
     }
@@ -222,8 +236,16 @@ def cmd_correct(args: argparse.Namespace) -> int:
         return 1
     changes = _corrections(args)
     if changes and cl.is_retired(claim):
-        print("a retired claim's history is frozen — only --domain may change on it")
+        print(
+            "a retired claim's history is frozen — only --domain and "
+            "--refuted-control may change on it"
+        )
         return 1
+    if args.refuted_control is not None:
+        if cl.is_live(claim):
+            print("--refuted-control belongs on a retired claim (what it was retired for)")
+            return 1
+        changes["refuted_controls"] = [x.strip() for x in args.refuted_control if x.strip()]
     if args.domain:
         try:
             changes["domain"] = _resolve_domain(claim, args.domain)
@@ -303,6 +325,42 @@ def cmd_fix_evidence(args: argparse.Namespace) -> int:
     return rc
 
 
+def ledger_history(path: str = "data/claims.json") -> list[tuple[str, dict]]:
+    """(landing day, ledger) for every first-parent commit that touched `path`,
+    oldest first. First-parent, because a commit's day on main is the day its
+    claims reached the published ledger."""
+    log = subprocess.run(
+        ["git", "log", "--first-parent", "--reverse", "--format=%H %cs", "--", path],
+        cwd=c.ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.splitlines()
+    out = []
+    for line in filter(None, log):
+        sha, day = line.split()
+        shown = subprocess.run(
+            ["git", "show", f"{sha}:{path}"], cwd=c.ROOT, capture_output=True, text=True
+        )
+        if shown.returncode == 0:
+            out.append((day, json.loads(shown.stdout)))
+    return out
+
+
+def cmd_backfill_dates(_args: argparse.Namespace) -> int:
+    """One-off: give every claim lacking them added_on / changed_on from git history."""
+    ledger = cl.load_ledger()
+    missing = [x["id"] for x in ledger["claims"] if not all(f in x for f in cl.LEDGER_DATE_FIELDS)]
+    if not missing:
+        print("every claim already has added_on and changed_on")
+        return 0
+    updated = cl.backfill_ledger_dates(ledger, ledger_history(), today())
+    rc = save_validated(updated)
+    if rc == 0:
+        print(f"backfilled added_on/changed_on on {len(missing)} claim(s)")
+    return rc
+
+
 def cmd_list(args: argparse.Namespace) -> int:
     ledger = cl.load_ledger()
     topics = [args.topic] if args.topic else list(c.TOPICS)
@@ -357,6 +415,13 @@ def build_parser() -> argparse.ArgumentParser:
     sup.add_argument("--reason", required=True, help="why the old answer no longer holds")
     sup.add_argument("--date", help="YYYY-MM-DD (default: today)")
     sup.add_argument("--refuted", action="store_true", help="wrong, not merely replaced")
+    sup.add_argument(
+        "--refuted-control",
+        dest="refuted_control",
+        action="append",
+        help="a control the old claim was retired for; live guidance may not recommend it "
+        "(repeatable; write --refuted-control=--flag for values starting with -)",
+    )
     sup.set_defaults(func=cmd_supersede)
 
     ev = sub.add_parser("evidence", help="attach sources to an existing claim")
@@ -378,6 +443,13 @@ def build_parser() -> argparse.ArgumentParser:
     co.add_argument("--confidence", type=float)
     co.add_argument("--first-seen", dest="first_seen", help="YYYY-MM[-DD]")
     co.add_argument("--domain", help="taxonomy ID (or an alias/name it resolves from)")
+    co.add_argument(
+        "--refuted-control",
+        dest="refuted_control",
+        action="append",
+        help="retired claims only: replace refuted_controls (repeatable; "
+        "--refuted-control=--flag for values starting with -)",
+    )
     co.set_defaults(func=cmd_correct)
 
     fe = sub.add_parser("fix-evidence", help="correct or remove a mis-cited source on a live claim")
@@ -397,6 +469,9 @@ def build_parser() -> argparse.ArgumentParser:
     ls.set_defaults(func=cmd_list)
 
     sub.add_parser("validate", help="check the ledger's integrity").set_defaults(func=cmd_validate)
+    sub.add_parser(
+        "backfill-dates", help="fill missing added_on/changed_on from git history"
+    ).set_defaults(func=cmd_backfill_dates)
     return ap
 
 
