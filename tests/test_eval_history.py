@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from datetime import timedelta
 
+import budget
 import common
 import eval_history as eh
 import eval_lib as el
@@ -201,7 +202,8 @@ def test_append_builds_the_row_and_body_renders_numbers_and_trend(sandbox, monke
     eh.main(["body", "--run-id", "C1"])
     body = capsys.readouterr().out
     assert "**Run numbers:** 41 candidates staged · 2 stories analyzed · 1 kept (50% of new" in body
-    assert "charged $2.00 (reserved; reserved ceiling $2.00, per-run cap $3.33)" in body
+    cap = budget.budget_settings()["monthly_cap_usd"] / 30  # config.yaml's cap, a month of runs
+    assert f"charged $2.00 (reserved; reserved ceiling $2.00, per-run cap ${cap:.2f})" in body
     assert body.count("| cloud |") == 7  # the 7-run trend
     assert eh.main(["gate"]) == 0
     assert (

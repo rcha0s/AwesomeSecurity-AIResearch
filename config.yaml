@@ -69,13 +69,26 @@ curation:
 # Per-run caps (bound the cost of a single scan).
 limits:
   article_chars: 20000  # truncate fetched article text to this many chars
-  max_stories_per_run: 10 # analyzed stories per scan; with usd_per_story this is
-                          # each run's known cost ceiling (scripts/budget.py). 10, not
-                          # 12: at the measured $0.21/story x ceiling_headroom 1.5, a
-                          # cloud run reserves $3.14; 31 of them come to $97 of the
-                          # $100 cap, a margin of only ~3%. 12 would reserve $3.76
-                          # ($117/month). If the rate rises, the guard refuses the
-                          # month's last runs (skipped days); it never overspends.
+  max_stories_per_run: 25 # DEEP tier: fully analyzed stories per scan (lessons,
+                          # excerpts, verifier, readability). Rohan 2026-10-23: "get me
+                          # something that works" -- 10 cut PHP2Shell, GitLab, PAN-OS.
+                          # With max_news_per_run it sets each run's cost ceiling
+                          # (scripts/budget.py); the guard refuses a run that no longer
+                          # fits the month (a skipped day), it never overspends.
+  max_news_per_run: 50    # NEWS tier (select_batch.py): every leftover candidate that
+                          # is relevant news (a big-story group, a KEV / critical GHSA,
+                          # or a severity / AI-incident marker from a source ranked
+                          # batch_story_min_rank+) gets a short grounded brief instead of
+                          # deep analysis. A runaway guard, not a quota: the 2026-10-23
+                          # staged set (480 with the #102 feeds) had 38 news-tier stories
+                          # past the 25 deep ones, so 40 would nearly bind on a normal day.
+                          # 50, not 60: at the 2026-10-22 rate ($0.209/unit) 31 cloud
+                          # ceilings of 25 + 0.3 x 50 units come to $390 of the $400 cap
+  batch_news_per_source: 15 # most news briefs one source may take, so one feed (or the
+                            # KEV list) can't fill the tier alone. 15, not 4: The Hacker
+                            # News is a wire, and on 2026-10-23 a cap of 4 cut its GPT-6
+                            # agent, x402 and AI-agents-breach-1,200-sites stories (10
+                            # still cut the last)
   batch_margin: 4         # extra candidates in the session's batch for ones the story
                           # judge finds same/update (scripts/select_batch.py)
   batch_per_source: 2     # most batch slots one source may take while others wait
@@ -108,7 +121,12 @@ limits:
                           # vote or two low-rank feeds can't qualify on markers alone
   batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
   batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)
-  max_turns: 150          # hard turn cap on the local model session
+  max_turns: 300          # hard turn cap on the local model session. Sized for 25 deep
+                          # + 50 news: ~4 turns a deep story (fetch, read, verifier, write)
+                          # = 100, ~1.5 a brief (fetches batched, briefs written by
+                          # subagents in tens) = 75, ~50 fixed (judge, taxonomy, claims,
+                          # readability, merge, verify, editorial, summary): 225, x1.33
+                          # headroom. Was 150 for 10 + margin 4.
 
 # Spend guard (ISA ISC-8). A cloud routine can't read its credit balance, so the
 # scan keeps a ledger on the `budget-ledger` branch, reserves each run's ceiling
@@ -116,11 +134,24 @@ limits:
 # read these values from origin/main, never from a working tree. Routines draw subscription usage first; usage
 # credits only cover overage (routines.md § Usage and limits).
 budget:
-  monthly_cap_usd: 100        # Rohan, 2026-10-19; null = every run skips LLM work
+  monthly_cap_usd: 400        # Rohan 2026-10-23: don't worry about budget for now
+                              # (was 100, Rohan 2026-10-19); null = every run skips LLM work
   usd_per_story: null         # null = the worst measured on recent local runs
+  news_cost_ratio: 0.3        # one news brief costs this many deep stories (an estimate,
+                              # recalibrated by the measured runs: budget.py prices a run
+                              # in units = deep + 0.3 x news). From token counts: a deep
+                              # story reads its source (~5k tokens) twice (analysis + the
+                              # verifier subagent) plus ~2k of prompt and writes ~2k (in
+                              # input-token terms, output x5: ~22k); a brief reads it once
+                              # and writes ~300 (~6.5k): 6.5 / 22 = 0.3. Ceiling at the worst
+                              # recent $0.443/unit: 0.443 x 1.5 x (25 + 0.3 x 50) = $26.60
+                              # (session cap x 0.8 = $21.28); at the latest $0.232/unit
+                              # it is $13.92. A measured day (25 x $0.23 + 38 x $0.07 = $8.4)
+                              # fits 31 a month in the $400 cap; 31 cloud runs charged the
+                              # $26.60 ceiling would not (the guard then skips the last days).
   calibration_runs: 5         # "recent" = the last 5 measured runs, so the first run's
                               # 3-story $0.44/story doesn't price every run forever
-  ceiling_headroom: 1.5       # ceiling = worst recent $/story x 1.5 x max_stories: the
+  ceiling_headroom: 1.5       # ceiling = worst recent $/unit x 1.5 x units (see above): the
                               # session cap (x session_cap_fraction) must still clear a
                               # run as costly as the worst measured one
   uncalibrated_run_usd: 5     # what a first, uncalibrated local run reserves;

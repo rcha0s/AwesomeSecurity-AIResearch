@@ -11,7 +11,12 @@ readability (scripts/readability.py; only a severe failure holds it), routes eac
 topic pool, records verified new-domain proposals, clears the merged candidates,
 and re-ranks. Before that it applies the story judge's verdicts
 (data/story_verdicts.json, see story_ledger.py): `same`/`update` candidates join
-their story without a new entry, and every merged entry is put in its story. Idempotent: re-merging the same URL
+their story without a new entry, and every merged entry is put in its story.
+News briefs (`brief: "news"`, research-scan step 3c) are accepted only for a
+news-tier candidate named in the code-owned data/_scan_tiers.json
+(select_batch.py); merge stamps `news_brief`, attaches the story group's
+covering sources from that record, and drops any grounding verdict the
+analyzer wrote before grounding the one excerpt itself. Idempotent: re-merging the same URL
 updates the entry in place rather than duplicating it.
 
 Each run also adds its counts to data/_merge_outcomes.json (merged, new,
@@ -55,7 +60,7 @@ def update_source_hit_rate(new_entries: list[dict]) -> None:
     deltas: dict[str, list[int]] = {}
     for e in new_entries:
         sid = e.get("source_id")
-        if not sid:
+        if not sid or c.is_news_brief(e):  # a brief is never vetted: not a hit-rate sample
             continue
         d = deltas.setdefault(sid, [0, 0])
         d[0] += 1
@@ -204,13 +209,18 @@ def merge(
     newly_added: list[dict] = []
     ctx = {"conf": conf, "rcfg": rd.settings(), "sources": c.load_sources_by_id()}
     drafts, notes = rg.load_drafts(), []
+    tiers = load_tiers()
     for raw in analyzed:
+        raw = {k: v for k, v in raw.items() if k != "news_brief"}  # code-stamped only
+        note = news_tier_note(raw, tiers)
         # Only http(s) links reach the site: a javascript: URL is rejected here.
-        problems = c.validate_entry(raw) + cc.url_problems(raw)
+        problems = c.validate_entry(raw) + cc.url_problems(raw) + brief_problems(raw, note)
         if problems:
             errors.append(f"{raw.get('title', '?')[:50]}: {'; '.join(problems)}")
             continue
         entry = tx.enforce(normalize_entry(raw, conf), tx.get())
+        if raw.get("brief") == c.NEWS_BRIEF:
+            stamp_brief(entry, note)
         entries = pools[entry["topic"]]["entries"]
         idx = match_index(entries, entry)
         # Undo fact changes from the rewrite, then score; a severe failure holds it.
@@ -219,6 +229,8 @@ def merge(
         vc.ground_entry(entry)
         if conf.curation.get("require_grounding", True) and not vc.fully_grounded(entry):
             entry["needs_review"] = True
+        if c.is_news_brief(entry) and not vc.news_brief_grounded(entry):
+            notes.append(f"- news brief held, excerpt not grounded: {entry['title'][:80]!r}")
         # A low-authority source whose quotes we couldn't confirm is suspect → review.
         gs = entry.get("grounding_score")
         confirmed = gs is not None and gs >= 1.0
@@ -248,6 +260,63 @@ def merge(
         c.save_pool(topic, pool)
     save_readability_notes(notes, drafts, len(analyzed))
     return merged, errors, merged_urls, newly_added
+
+
+# --- news briefs (the scan's news tier) ---------------------------------------
+def load_tiers() -> dict:
+    """select_batch.py's tier record for this run ({} outside a scan)."""
+    return c.load_json(c.DATA_DIR / c.SCAN_TIERS_SNAPSHOT, default={}) or {}
+
+
+def news_tier_note(entry: dict, tiers: dict) -> dict | None:
+    """The news-tier record of the candidate this entry analyzes (by candidate
+    id, or by its source/article URL), else None."""
+    news = tiers.get("news") or {}
+    if entry.get("id") in news:
+        return news[entry["id"]]
+    urls = {c.normalize_url(entry[k]) for k in ("source_url", "article_url") if entry.get(k)}
+    return next((n for n in news.values() if c.normalize_url(n.get("url", "")) in urls), None)
+
+
+def brief_problems(entry: dict, note: dict | None) -> list[str]:
+    """A news brief is accepted only for a news-tier candidate of this run, and
+    only in the news-brief shape (common.news_brief_errors)."""
+    if entry.get("brief") is None:
+        return []
+    if entry.get("brief") != c.NEWS_BRIEF:
+        return [f"unknown brief kind: {entry.get('brief')!r}"]
+    if note is None:
+        return ["news brief for a candidate that is not in this run's news tier"]
+    return c.news_brief_errors(entry)
+
+
+def stamp_brief(entry: dict, note: dict) -> None:
+    """Mark a news brief from the code-owned tier record: why it is news, and
+    the story group's other copies as covering sources. Any grounding verdict
+    the analyzer wrote is dropped, so only verify_citations decides it. A brief
+    is never a vetted finding (needs_review), only a news-lane story."""
+    entry.pop("brief", None)
+    entry.pop("grounding_score", None)
+    for le in entry.get("lessons") or []:
+        if isinstance(le, dict):
+            le.pop("grounded", None)
+    entry["needs_review"] = True
+    entry["news_brief"] = {
+        "reason": note.get("reason", ""),
+        "markers": list(note.get("markers") or []),
+        "sources": int(note.get("sources") or 1),
+        "at": c.utcnow().date().isoformat(),
+    }
+    corr = list(entry.get("corroborating_sources") or [])
+    seen = {c.normalize_url(s.get("url", "")) for s in corr} | {
+        c.normalize_url(entry.get("source_url", ""))
+    }
+    for row in note.get("coverage") or []:
+        url = row.get("url") or ""
+        if url.startswith(("https://", "http://")) and c.normalize_url(url) not in seen:
+            seen.add(c.normalize_url(url))
+            corr.append({"name": row.get("name"), "url": url, "published": row.get("published")})
+    entry["corroborating_sources"] = corr
 
 
 def clear_candidates(merged: list[dict], merged_urls: set[str]) -> int:

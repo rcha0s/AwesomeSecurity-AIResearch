@@ -816,6 +816,11 @@ def is_news_curated(
         return False
     if news_denylist_hit(entry):
         return False
+    if is_news_brief(entry):
+        # Selected as news by code (select_batch.py's news tier, stamped by
+        # merge_analysis.py from data/_scan_tiers.json), not by its source's
+        # track: the brief's own integrity floor stands in for it.
+        return entry.get("verified") is not False
     sources_by_id = sources_by_id or {}
     track, tier = _source_track_and_tier(entry, sources_by_id)
     if track not in ("news", "both"):
@@ -830,6 +835,43 @@ def is_news_curated(
         if points < NEWS_HN_STANDALONE_MIN_POINTS:
             return False
     return True
+
+
+# --- News briefs (the scan's news tier, select_batch.py) ----------------------
+# A news-tier candidate gets a short brief instead of deep analysis: what
+# happened, one sentence of "so what", ONE verbatim excerpt that must ground
+# against the fetched source. No scores, no lessons beyond that one quote, no
+# action. It is never a vetted finding; it shows only in the news lane, and
+# only when its excerpt grounded (verify_citations.publishable_grounding).
+NEWS_BRIEF = "news"  # the analyzer's `brief` value for a news brief
+NEWS_BRIEF_REQUIRED = ("topic", "domain", "title", "source_url", "takeaway", "summary")
+NEWS_BRIEF_SUMMARY_MAX = 2  # sentences
+NEWS_BRIEF_EXCERPT_MIN = 20  # characters: a quote, not a word
+NEWS_BRIEF_FORBIDDEN = ("scores", "actionable")  # a brief is not a finding
+
+
+def is_news_brief(entry: dict) -> bool:
+    """True for an entry merge_analysis.py accepted as a news-tier brief."""
+    return isinstance(entry.get("news_brief"), dict)
+
+
+def news_brief_errors(entry: dict) -> list[str]:
+    """Schema problems with an analyzer-written news brief (empty == valid)."""
+    errors = [f"news brief missing: {k}" for k in NEWS_BRIEF_REQUIRED if not entry.get(k)]
+    errors += [f"news brief must not carry {k}" for k in NEWS_BRIEF_FORBIDDEN if k in entry]
+    lessons = entry.get("lessons")
+    if not isinstance(lessons, list) or len(lessons) != 1 or not isinstance(lessons[0], dict):
+        errors.append("news brief needs exactly one lesson (its one excerpt)")
+    else:
+        excerpt = str(lessons[0].get("excerpt") or "").strip()
+        if len(excerpt) < NEWS_BRIEF_EXCERPT_MIN:
+            errors.append(f"news brief excerpt under {NEWS_BRIEF_EXCERPT_MIN} characters")
+        if not str(lessons[0].get("point") or "").strip():
+            errors.append("news brief lesson needs a point")
+    summary = str(entry.get("summary") or "")
+    if len([s for s in re.split(r"(?<=[.!?])\s+", summary.strip()) if s]) > NEWS_BRIEF_SUMMARY_MAX:
+        errors.append(f"news brief summary over {NEWS_BRIEF_SUMMARY_MAX} sentences")
+    return errors
 
 
 def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
@@ -1156,6 +1198,8 @@ def write_raw(cand_id: str, text: str) -> str:
 # runner request an attacker's URL.
 SCAN_LOCK_ENV = "SCAN_LOCKED"
 SCAN_URL_SNAPSHOT = "_scan_urls.json"
+# select_batch.py's record of which candidate is in which tier (deep / news).
+SCAN_TIERS_SNAPSHOT = "_scan_tiers.json"
 
 
 def scan_locked() -> bool:

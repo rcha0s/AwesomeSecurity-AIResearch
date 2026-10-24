@@ -213,18 +213,21 @@ def _gap(a: Profile, b: Profile) -> float:
     return abs((a.day - b.day).days) if a.day and b.day else math.inf
 
 
-def same_story(a: Profile, b: Profile) -> bool:
-    """The pairwise rule in the module docstring."""
+def same_story(a: Profile, b: Profile, title_days: int = TITLE_MATCH_DAYS) -> bool:
+    """The pairwise rule in the module docstring. `title_days` widens the
+    same-days windows (one shared title name; one side naming a CVE) for a
+    caller whose matches a judge reads anyway: story_ledger's shortlist passes
+    MATCH_DAYS, since a follow-up three days on is still the story."""
     if a.ids & b.ids:
         return True
     if (a.ids and b.ids) or _gap(a, b) > MATCH_DAYS:
         return False
-    if bool(a.ids) != bool(b.ids) and _gap(a, b) > TITLE_MATCH_DAYS:
+    if bool(a.ids) != bool(b.ids) and _gap(a, b) > title_days:
         return False  # one names its CVE, the other doesn't: only same-days coverage
     shared = a.names & b.names
     if len(shared) >= 2 and shared & (a.title | b.title):
         return True
-    return bool(shared & a.title & b.title) and _gap(a, b) <= TITLE_MATCH_DAYS
+    return bool(shared & a.title & b.title) and _gap(a, b) <= title_days
 
 
 def registrable_domain(url: str) -> str:

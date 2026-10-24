@@ -389,13 +389,16 @@ def test_prefilter_drops_never_enter_the_batch(sandbox, table):
 
 def test_main_writes_the_batch_and_a_code_owned_backlog(sandbox, capsys, table, monkeypatch):
     monkeypatch.setattr(prefilter, "load_keywords", lambda path=None: table)
-    common.save_candidates(cands(20))
-    assert select_batch.main([]) == 0
     size = select_batch.batch_size(common.load_config())
-    assert len(common.load_candidates()) == size
+    staged = size + 6
+    common.save_candidates(cands(staged))
+    assert select_batch.main([]) == 0
+    assert len(common.load_candidates()) == size  # neutral posts: no news tier
     backlog = json.loads((sandbox / "data" / "_scan_backlog.json").read_text())
-    assert len(backlog) == 20 - size
-    assert f"SCAN_BATCH: {size} of 20 candidates selected" in capsys.readouterr().out
+    assert len(backlog) == staged - size
+    assert f"SCAN_BATCH: {size} of {staged} candidates selected" in capsys.readouterr().out
+    tiers = json.loads((sandbox / "data" / "_scan_tiers.json").read_text())
+    assert len(tiers["deep"]) == size and tiers["news"] == {}
 
 
 # --- scan_count ----------------------------------------------------------------

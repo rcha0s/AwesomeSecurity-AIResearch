@@ -112,12 +112,12 @@ enter_worktree() {
 # The session's measured cost on the ledger (an `actual` row replaces the
 # reservation). Returns 1 only when a readable cost could not be recorded.
 record_actual() {
-  local cost="$1" stories="$2" outcome="${3:-}"
+  local cost="$1" stories="$2" outcome="${3:-}" news="${NEWS_BRIEFS:-0}"
   if [[ -z "$cost" ]]; then
     echo "[local] no total_cost_usd in claude output; the reservation stands" | tee -a "$LOG"
     return 0
   fi
-  scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome"
+  scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome" "$news"
 }
 
 # One attempt: check -> pre -> session -> actual -> post. Returns 0 when a PR
@@ -160,6 +160,9 @@ attempt() {
   # counts, so the same number.
   stories="$("$PYTHON" scripts/scan_count.py 2>/dev/null || echo 0)"
   [[ "$stories" =~ ^[0-9]+$ ]] || stories=0
+  # The news tier's briefs, priced apart from stories (budget.py run_units).
+  NEWS_BRIEFS="$("$PYTHON" scripts/scan_count.py --news 2>/dev/null || echo 0)"
+  [[ "$NEWS_BRIEFS" =~ ^[0-9]+$ ]] || NEWS_BRIEFS=0
   # post's own analysis-empty test (scan_count.py --work), run first so the
   # actual row carries the outcome that budget.retry_allowed reads.
   if [[ "$claude_rc" == 0 ]]; then

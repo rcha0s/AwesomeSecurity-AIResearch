@@ -1,6 +1,6 @@
 ---
 name: daily-scan
-description: The unattended daily scan — the one entrypoint the Claude Code cloud routine and the local launchd fallback both run. Spend-guarded, ingests every registered source, analyzes at most `limits.max_stories_per_run` stories, and opens one scan PR on claude/scan-<date>-<runner>. Use when a scheduled run says "/daily-scan", or to rehearse the scheduled run by hand.
+description: The unattended daily scan — the one entrypoint the Claude Code cloud routine and the local launchd fallback both run. Spend-guarded, ingests every registered source, analyzes at most `limits.max_stories_per_run` stories in depth plus a short grounded news brief for every other relevant news story (at most `limits.max_news_per_run`), and opens one scan PR on claude/scan-<date>-<runner>. Use when a scheduled run says "/daily-scan", or to rehearse the scheduled run by hand.
 ---
 
 # daily-scan
@@ -37,7 +37,9 @@ all four.
 1. **Pre:** `scripts/run_scan.sh pre`. If `data/_scan_skip` exists afterwards, stop: report
    the `SCAN_SKIP` reason and do nothing else. Otherwise it printed `SCAN_READY: <n> candidates
    in this run's batch`: `data/candidates.json` holds only this run's batch,
-   `limits.max_stories_per_run` plus `limits.batch_margin` candidates spread across sources.
+   `limits.max_stories_per_run` plus `limits.batch_margin` candidates spread across sources
+   (the DEEP tier), followed by up to `limits.max_news_per_run` candidates tagged
+   `batch_tier: "news"` (the NEWS tier: the run's other relevant news).
 
 2. **Analyze:** follow the `research-scan` skill (`.claude/skills/research-scan/SKILL.md`)
    steps 2–6 — read, analyze, review readability, independently verify, emit
@@ -45,9 +47,15 @@ all four.
    - This session's budget is sized for the batch: work through all of it. Never stop, or
      skip the analysis, for budget reasons. If you truly can't finish, analyze as many as you
      can, write `data/analysis_out.json` with those, and carry on with the steps below.
-   - Analyze up to `limits.max_stories_per_run` (config.yaml) stories across all three
-     topics, the strongest first. `post` refuses a larger `analysis_out.json`, and that cap
-     is what makes each run's cost known in advance.
+   - Analyze up to `limits.max_stories_per_run` (config.yaml) deep-tier stories across all
+     three topics, the strongest first. `post` refuses more, and that cap (with the news
+     cap) is what makes each run's cost known in advance.
+   - Every `batch_tier: "news"` candidate gets a news brief (research-scan step 3c), not a
+     deep analysis: never skip one for budget reasons, the session's budget includes them.
+     Briefs go in the same `data/analysis_out.json`, marked `"brief": "news"`, and count
+     against `limits.max_news_per_run`, never against the story cap. Its
+     `batch_news.coverage` lists the story's other outlets; merge attaches them itself.
+     A brief whose excerpt doesn't ground is held, so copy it verbatim from the fetched text.
    - Candidates carrying `batch_priority` (`story`, `kev`, `ghsa-critical`, `ghsa-ai`) come
      first: analyze every one of them before the rest of the batch, even when the advisory
      text is thin. They are the stories the recall eval checks, and they count toward the

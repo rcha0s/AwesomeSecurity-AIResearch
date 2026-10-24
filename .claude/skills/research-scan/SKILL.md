@@ -111,6 +111,32 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
        Security = an appsec/red-team engineer; AI Research = a harness/agent builder).
    - Security findings may also include `threat`/`conditions`/`mitigations`.
 
+3c. **News briefs (the news tier).** A candidate tagged `batch_tier: "news"` is relevant news
+   the deep tier had no room for (`batch_news.reason`: `story`, `kev`, `ghsa-critical`,
+   `ghsa-ai` or `marker`). It gets a short brief instead of step 3, and no verifier pass:
+   ```json
+   {"brief": "news", "topic": "...", "domain": "<an ID of the topic>",
+    "title": "what happened, concretely", "source_url": "<the candidate's own URL>",
+    "takeaway": "one sentence: so what, for the topic's reader",
+    "summary": "1-2 sentences: who, what, how bad, what to do",
+    "lessons": [{"point": "what the quote shows", "excerpt": "<ONE verbatim quote, 20+ chars>",
+                 "confidence": 0.N}],
+    "related_claims": []}
+   ```
+   plus the carried fields of step 5 (`article_url, published, raw_path, source_id,
+   source_rank, discovered_via, source_name`). No `scores`, no `actionable`, exactly one
+   lesson. Fetch every news candidate's text first (`python scripts/fetch_raw.py <id>`, several
+   per turn), then write briefs in batches of up to 10 with ONE fresh subagent per batch
+   (`model: sonnet`), given only each candidate's id, title, source, `raw_path` and this schema;
+   it reads the raw files and returns the briefs. Keep the main context small: don't read
+   news-tier raw files yourself. If two candidates in the session tell the same story, write
+   one entry (deep beats brief) and put the other's URL in its `corroborating_sources`
+   (`{"name", "url", "published"}`). `merge_analysis.py` accepts a brief only for a news-tier
+   candidate of this run (`data/_scan_tiers.json`, code-owned), attaches the story group's
+   covering sources from there, and grounds the excerpt itself: an ungrounded brief is held
+   in REVIEW.md, never published. Briefs go through step 3b's readability rewrite like any
+   brief, then show in the news lane (never as vetted findings).
+
 3b. **Readability review (small model, before verification).** Readers are senior security
    engineers who skim: each brief must make sense on first read. Done means every brief
    leads with the concrete point, in plain words and short sentences, with every acronym
@@ -130,7 +156,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      it in REVIEW.md with its `readability: …` reason.
    - Step 4's verifier then checks this final text, the text that gets published.
 
-4. **Independent verification (adversarial second pass).** For each shortlisted finding, spawn a
+4. **Independent verification (adversarial second pass).** News briefs (3c) skip this step: their
+   one excerpt is grounded in code. For each shortlisted finding, spawn a
    FRESH subagent (the Task tool) given ONLY the raw source text + the extracted claims — do NOT
    give it your scores. Prompt it to **refute**: (a) is every lesson actually supported by the
    source? (b) independently re-judge novelty as claim-level delta-vs-prior-art (name the closest
