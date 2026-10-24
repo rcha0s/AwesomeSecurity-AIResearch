@@ -8,6 +8,6 @@
 | 2026-10-20 | local | `local-20261020T163005Z-92384` | 0 | $0.44 | measured | yes |
 | 2026-10-22 | local | `local-20261022T012413Z-37226` | 8 | $1.67 | measured | yes |
 | 2026-10-23 | local | `local-20261023T163006Z-66878` | 10 | $2.32 | measured | yes |
-| 2026-10-24 | local | `local-20261024T075402Z-24357` | 23 + 27 news | $12.45 | measured | no |
+| 2026-10-24 | local | `local-20261024T075402Z-24357` | 23 + 27 news | $12.45 | measured | yes |
 
 **Backfill 2026-09-09..2026-10-18:** $0.00 charged of $200.00, 0 of 6 runs started. Finished windows: none.
