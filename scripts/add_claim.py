@@ -7,7 +7,7 @@ half-finished supersession can never land on disk.
 
 Evidence is given as pipe-delimited fields, repeatable:
 
-    --evidence "stance|url|title|published"      # title/published optional
+    --evidence "stance|url|title|published|note"  # title/published/note optional
 
 Usage:
     # a new standing answer
@@ -49,10 +49,13 @@ import claims as cl
 
 
 def parse_evidence(specs: list[str] | None) -> list[dict]:
-    """'stance|url|title|published' -> evidence dicts. Title/published optional."""
+    """'stance|url|title|published|note' -> evidence dicts. All but stance|url optional.
+
+    The note is everything after the fourth pipe, so it may itself contain '|'.
+    """
     evidence: list[dict] = []
     for spec in specs or []:
-        parts = [p.strip() for p in spec.split("|")]
+        parts = [p.strip() for p in spec.split("|", 4)]
         if len(parts) < 2:
             raise SystemExit(f"--evidence needs at least 'stance|url' (got {spec!r})")
         stance, url = parts[0], parts[1]
@@ -63,6 +66,8 @@ def parse_evidence(specs: list[str] | None) -> list[dict]:
             item["title"] = parts[2]
         if len(parts) > 3 and parts[3]:
             item["published"] = parts[3]
+        if len(parts) > 4 and parts[4]:
+            item["note"] = parts[4]
         evidence.append(item)
     return evidence
 
@@ -406,7 +411,7 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--confidence", type=float, default=cl.DEFAULT_CONFIDENCE)
     new.add_argument("--tags", help="comma-separated")
     new.add_argument("--first-seen", dest="first_seen", help="YYYY-MM-DD (default: today)")
-    new.add_argument("--evidence", action="append", help="'stance|url|title|published'")
+    new.add_argument("--evidence", action="append", help="'stance|url|title|published|note'")
     new.set_defaults(func=cmd_new)
 
     sup = sub.add_parser("supersede", help="retire a claim in favour of another")

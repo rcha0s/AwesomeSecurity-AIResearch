@@ -17,6 +17,10 @@
 #     only writer, so quotes ground against fetched text) or candidates.json; file reads
 #     only inside the repo; Bash only the named analysis scripts; no curl, git,
 #     gh, WebFetch or WebSearch. fetch_raw.py fetches URLs from pre's snapshot.
+#   - data/claims.json only through add_claim.py (list/new/evidence/validate),
+#     never Edit: the CLI appends evidence at the end, which is all the merge
+#     gate lets a scan do to an existing claim. A hand edit put new evidence
+#     first in five claims and the gate refused the PR (2026-10-24, #107).
 #   - No outside settings or tools: --setting-sources local keeps the user's
 #     and the repo's broad allow rules out, and every MCP server and connector
 #     is off (--strict-mcp-config with none, plus a deny on mcp__*). Without the

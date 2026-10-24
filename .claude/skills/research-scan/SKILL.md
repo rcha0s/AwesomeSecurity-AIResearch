@@ -196,7 +196,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    this scan, decide which one of four things it is:
 
    - **Additive** — it supports an existing claim. Attach it as evidence:
-     `python scripts/add_claim.py evidence <claim-id> --evidence "supports|<url>|<title>|<date>"`
+     `python scripts/add_claim.py evidence <claim-id> --evidence "supports|<url>|<title>|<date>|<note>"`
+     (the note is optional: one sentence on what this source shows for the claim).
    - **New** — it answers a question the ledger has no claim for. Add one, with the
      `guidance` (what to DO) and `scope` (where it does *not* apply):
      `python scripts/add_claim.py new <kebab-id> --topic … --domain … --statement … --guidance … --scope … --confidence 0.N --evidence "supports|<url>|<title>|<date>"`
@@ -208,6 +209,10 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      Attach it with a `contests`/`refutes` stance and move the claim to
      `status: contested` (`python scripts/add_claim.py status <id> --set contested`).
      Contested is an honest answer — do NOT force a winner.
+
+   Never edit `data/claims.json` by hand (the Mac session is denied it): the CLI
+   appends new evidence at the end, and a scan PR that reorders or rewrites an
+   existing claim's evidence is refused by the merge gate.
 
    Rules: the `reason` on a supersession is the whole point, so make it specific and
    evidence-backed ("graph retrieval beat lexical search on multi-hop recall"), never

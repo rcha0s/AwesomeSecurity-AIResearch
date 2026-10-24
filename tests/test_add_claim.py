@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import add_claim
 import pytest
 
 import claims
+
+ROOT = Path(__file__).resolve().parents[1]
 
 EVIDENCE = "supports|https://example.com/paper|A paper|2026-06-01"
 
@@ -346,3 +350,17 @@ def test_backfill_dates_fills_missing_dates_once(sandbox, monkeypatch):
     assert _dates("legacy") == ("2026-07-02", "2026-07-02")
     monkeypatch.setattr(add_claim, "ledger_history", lambda: pytest.fail("history re-read"))
     assert add_claim.main(["backfill-dates"]) == 0
+
+
+def test_parse_evidence_reads_an_optional_note_that_may_hold_pipes():
+    (item,) = add_claim.parse_evidence(["supports|https://example.com/a|T|2026-09-01|x | y"])
+    assert item["note"] == "x | y"
+    (bare,) = add_claim.parse_evidence(["supports|https://example.com/a|T|2026-09-01|"])
+    assert "note" not in bare
+
+
+def test_scan_session_writes_claims_only_through_the_cli():
+    text = (ROOT / "scripts" / "scan_containment.sh").read_text()
+    assert '"Edit(data/claims.json)"' in text
+    assert '"Bash(python scripts/add_claim.py evidence *)"' in text
+    assert "add_claim.py supersede" not in text and "add_claim.py *" not in text
