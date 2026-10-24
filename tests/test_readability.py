@@ -10,6 +10,7 @@ import eval_readability as er
 import merge_analysis as m
 import pytest
 import readability as rd
+import rewrite_guard as rg
 import taxonomy as tx
 from conftest import make_entry
 from test_eval_integrity import good_entry, publish
@@ -78,7 +79,7 @@ def test_a_hard_brief_is_flagged_on_each_check():
     assert found["title_words"] == "severe"
     assert found["banned"] == "severe"  # game-changer, unlock, seamless = 3 > hold 2
     assert found["hedges"] == "mild" and found["acronyms"] == "mild"
-    assert found["takeaway_sentences"] == "mild" and found["jargon_chain"] == "severe"
+    assert found["takeaway_sentences"] == "mild" and found["jargon_chain"] == "mild"
     assert found["long_word_ratio"] == "mild"
     assert r["hold"] and not r["passed"] and r["score"] < 50
     reason = rd.hold_reason(r)
@@ -114,6 +115,28 @@ def test_each_check_flags_exactly_above_its_limits(name, entry, value):
     assert levels(mild)[name] == "mild" and not mild["hold"]
     severe = rd.check(entry, cfg(**{name: {"warn": value - 2, "hold": value - 1}}))
     assert levels(severe)[name] == "severe" and severe["hold"]
+
+
+AD_RELAY = brief(
+    title="NTLM relay from SMB to LDAP still takes over AD domains",
+    takeaway="Require SMB and LDAP signing on every DC, and turn on EPA for ADCS web enrollment.",
+    summary=(
+        "Coercing a DC to authenticate over SMB and relaying the NTLM exchange to LDAP "
+        "or ADCS HTTP endpoints still yields domain takeover where signing and channel "
+        "binding are off. The PetitPotam, PrinterBug and DFSCoerce coercion paths, plus "
+        "WebDAV via the WebClient service, keep working on default GPO settings."
+    ),
+)
+
+
+def test_vocabulary_checks_never_hold_under_the_real_config():
+    """Acronyms, noun chains and long words are a judgment about vocabulary: mild only."""
+    limits = rd.settings()["thresholds"]
+    assert all("hold" not in limits[k] for k in ("acronyms", "jargon_chain", "long_word_ratio"))
+    r = rd.check(AD_RELAY)
+    assert not r["hold"], r["issues"]
+    hard = brief(summary="QZX WVB PLM RTY BNM HJK UIO ERT bugs. " + LONG)
+    assert not rd.check(hard)["hold"]
 
 
 def test_grade_and_long_words_rise_with_hard_prose():
@@ -167,28 +190,23 @@ def test_banned_phrases_match_whole_words_only():
 
 
 # --- The skill's rewrite check -------------------------------------------------
-def test_rewrite_problems_catch_dropped_facts_and_changed_excerpts():
-    draft = brief(summary="Six frameworks, 11 bugs, CVE-2026-1234 and `pickle` (1) first.")
-    ok = brief(summary="It found 11 bugs in six frameworks: CVE-2026-1234 and `pickle`.")
-    assert rd.rewrite_problems(draft, ok) == []  # the "(1)" list marker is not a fact
-    lost = brief(summary="It found bugs in six frameworks.")
-    assert rd.rewrite_problems(draft, lost) == [
-        "dropped fact '11'", "dropped fact 'CVE-2026-1234'", "dropped fact '`pickle`'"
-    ]  # fmt: skip
-    quoted = copy.deepcopy(ok)
-    quoted["lessons"][1]["excerpt"] = "reworded"
-    assert rd.rewrite_problems(draft, quoted) == ["lesson excerpts changed"]
-
-
-def test_check_analysis_reports_each_entry_and_rewrite_problems(sandbox, capsys):
-    draft = brief(summary="It found 11 bugs.")
-    final = brief(summary="It found bugs.", title=" ".join(["word"] * 30))
-    c.save_json(c.ANALYSIS_OUT, [final, brief(source_url="https://example.com/b")])
-    c.save_json(c.DATA_DIR / rd.DRAFT, [draft])
+def test_check_analysis_reports_each_entry_and_what_merge_will_restore(sandbox, capsys):
+    final = brief(summary="It found 6 bugs.", title=" ".join(["word"] * 30))
+    unmatched = brief(source_url="https://example.com/b")
+    c.save_json(c.ANALYSIS_OUT, {"entries": [final, unmatched]})
+    c.save_json(c.DATA_DIR / rg.DRAFT, {"entries": [brief(summary="It found 11 bugs.")]})
     assert rd.main(["--analysis"]) == 0
     out = capsys.readouterr().out.splitlines()
-    assert out[0].startswith("HOLD [") and "    REWRITE: dropped fact '11'" in out
-    assert out[-1].startswith("OK [100]")
+    assert out[0].startswith("HOLD [")
+    assert any(x.startswith("    REWRITE: summary will be restored (numbers") for x in out)
+    assert out[-2].startswith("OK [100]")
+    assert out[-1] == "    REWRITE: no draft for https://example.com/b"
+
+
+def test_check_analysis_says_when_there_is_no_draft(sandbox, capsys):
+    c.save_json(c.ANALYSIS_OUT, [brief()])
+    rd.main(["--analysis"])
+    assert capsys.readouterr().out.startswith(f"REWRITE: {rg.NOTE}")
 
 
 def test_report_summarizes_the_corpus():
@@ -221,7 +239,7 @@ def test_merge_records_readability_and_holds_only_a_severe_failure(sandbox):
     assert "readability_hold" not in clean and not clean["needs_review"]
     assert mild_e["readability"]["issues"] == ["mild: takeaway_sentences 2 > 1"]
     assert "readability_hold" not in mild_e and not mild_e["needs_review"]
-    assert bad_e["needs_review"] and bad_e["readability_hold"].startswith("readability: ")
+    assert bad_e["readability_hold"].startswith("readability: ") and c.is_held(bad_e, conf, {})
     assert c.review_reason(bad_e, conf, {}) == bad_e["readability_hold"]
     assert not c.is_curated(bad_e, conf) and c.is_curated(clean, conf)
 
@@ -235,14 +253,80 @@ def test_a_rewritten_brief_clears_its_hold_on_re_merge(sandbox):
     assert "readability_hold" not in fixed and fixed["readability"]["passed"]
 
 
-def test_a_held_brief_is_shown_in_no_lane():
+def test_a_held_brief_leaves_every_lane_but_a_sticky_promotion():
     conf = c.load_config()
     held = brief(readability_hold="readability: x", source_id="news", published="2026-07-14")
     sources = {"news": {"track": "news", "tier": "high"}}
     assert c.is_news_curated({**held, "readability_hold": None}, conf, sources)
     assert not c.is_news_curated(held, conf, sources)
     assert not c.editorial_eligible(held, conf) and not c.is_curated(held, conf)
-    assert c.is_held(held, conf, sources)
+    assert c.is_held(held, conf, sources) and not c.is_shown(held, conf, sources)
+    promoted = {**held, "editorial": {"promoted": True}, "grounding_score": 1.0}
+    assert c.news_shown(promoted, conf, sources) and c.is_shown(promoted, conf, sources)
+
+
+def test_merge_never_holds_an_entry_the_site_already_shows(sandbox):
+    conf = c.load_config()
+    m.merge([brief()], conf)
+    assert c.is_curated(_pool_entry("https://example.com/compact"), conf)
+    m.merge([brief(title=" ".join(["word"] * 30))], conf)
+    e = _pool_entry("https://example.com/compact")
+    assert "readability_hold" not in e and c.is_curated(e, conf)
+    assert e["readability"]["hold_skipped"].startswith("readability: title_words")
+    assert "not held, already published" in (c.DATA_DIR / m.READABILITY_RECORD).read_text()
+
+
+def test_rerank_releases_a_hold_the_config_no_longer_supports(sandbox, monkeypatch):
+    import rerank
+
+    conf = c.load_config()
+    m.merge([brief(title=" ".join(["word"] * 30))], conf)
+    assert _pool_entry("https://example.com/compact")["readability_hold"]
+    rerank.rerank_all(conf)
+    assert _pool_entry("https://example.com/compact")["readability_hold"]  # still too long
+    loose = cfg(title_words={"warn": 40, "hold": 50})
+    monkeypatch.setattr(rd, "settings", lambda *a: loose)
+    rerank.rerank_all(conf)
+    e = _pool_entry("https://example.com/compact")
+    assert "readability_hold" not in e and e["readability"]["passed"]
+    assert not rd.release(brief(), loose)  # nothing to release; never adds a hold
+    assert "readability_hold" not in rd.apply(brief(), loose)
+
+
+def test_a_published_entry_gaining_a_hold_needs_a_human():
+    import content_checks as cc
+
+    conf = c.load_config()
+    shown = brief(id="s")
+    main = [{"entries": [shown, brief(id="h", needs_review=True)]}]
+    ids = cc.shown_ids(main, conf, {})
+    assert ids == {"s"}
+    held = [{"entries": [{**shown, "readability_hold": "readability: x"}]}]
+    assert cc.readability_problems(ids, held) == [
+        "readability hold of a published entry needs human review: s"
+    ]
+    assert cc.readability_problems(ids, main) == []
+    assert cc.readability_problems(set(), held) == []
+
+
+def test_merge_gate_runs_the_readability_check(tmp_path, monkeypatch):
+    import json
+
+    import merge_gate as gate
+
+    data = tmp_path / "data"
+    data.mkdir()
+    shown = brief(id="s")
+    main = {"BASE:data/ai-research.json": {"entries": [shown]}}
+    monkeypatch.setattr(gate, "git_json", lambda ref, default: main.get(ref, default))
+    pool = data / "ai-research.json"
+    pool.write_text(json.dumps({"entries": [{**shown, "readability_hold": "readability: x"}]}))
+    assert gate.readability_check("BASE", tmp_path) == [
+        "readability hold of a published entry needs human review: s"
+    ]
+    main["BASE:data/archive.json"] = [shown]  # an archived copy is not on the site
+    main["BASE:data/ai-research.json"] = {"entries": []}
+    assert gate.readability_check("BASE", tmp_path) == []
 
 
 # --- The eval ----------------------------------------------------------------

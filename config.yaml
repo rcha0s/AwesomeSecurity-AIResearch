@@ -161,9 +161,9 @@ readability:
   thresholds:                              # calibrated 2026-10-22 on 444 briefs (pools + archive)
     sentence_words: {warn: 45, hold: 65}    # p50 35, p90 52, p95 57, max 85
     grade: {warn: 19, hold: 23}             # Flesch-Kincaid; p50 15.2, p90 18.9, max 25.9
-    long_word_ratio: {warn: 0.33, hold: 0.42}  # p50 0.23, p95 0.34, max 0.45
-    jargon_chain: {warn: 7, hold: 11}       # p50 6, p95 8, max 12 (no verb tagger: mild signal)
-    acronyms: {warn: 3, hold: 6}            # unexplained, distinct; p90 4, max 8
+    long_word_ratio: {warn: 0.33}           # mild only; p50 0.23, p95 0.34, max 0.45
+    jargon_chain: {warn: 7}                 # mild only (no verb tagger); p50 6, p95 8, max 12
+    acronyms: {warn: 3}                     # mild only; unexplained, distinct; p90 4, max 8
     hedges: {warn: 1, hold: 3}              # most in one sentence; 2+ is hedge-stacking
     banned: {warn: 0, hold: 2}              # filler/marketing phrases; any one is mild
     title_words: {warn: 18, hold: 24}       # p50 11, p90 17, max 25
@@ -174,10 +174,17 @@ readability:
   severe_cost: 25
   eval_min_pass: 0.0   # eval_readability.py fails below this share of published
                        # briefs passing; 0 = report only (optional eval for now)
-  allow_acronyms: [AI, ML, LLM, LLMs, MCP, RAG, API, SDK, CLI, IDE, CI, CD, PR, OSS,
-    CVE, CVSS, CWE, GHSA, KEV, CISA, NIST, OWASP, MITRE, ATT&CK, RCE, XSS, CSRF, SSRF,
-    SQL, URL, HTTP, HTTPS, DNS, TLS, SSH, JSON, YAML, XML, HTML, JWT, IAM, AWS, GCP,
-    OS, VM, GPU, CPU, IP, ID, UI, US, UK, EU, SBOM, SAST, DAST, EDR, SOC, GPT, GET, POST]
+  allow_acronyms: [AI, ML, LLM, LLMs, MCP, RAG, NLP, RL, RLHF, SFT, VLM, MLLM, GPT,
+    API, APIs, SDK, CLI, IDE, CI, CD, PR, PRs, OSS, URL, HTTP, HTTPS, JSON, YAML, XML,
+    HTML, CSS, JS, SQL, OS, VM, VMs, GPU, CPU, RAM, IP, ID, IDs, UI, UX, US, UK, EU,
+    CVE, CVEs, CVSS, CWE, GHSA, KEV, NVD, CNA, CISA, NIST, OWASP, MITRE, ATT&CK, CERT,
+    RCE, LPE, XSS, CSRF, SSRF, XXE, IDOR, LFI, RFI, SSTI, UAF, OOB, ROP, TOCTOU, ASLR,
+    DEP, CFI, MTE, DNS, DNSSEC, TLS, SSL, SSH, SFTP, FTP, RDP, VNC, SMTP, IMAP, BGP,
+    ARP, DHCP, VPN, VLAN, CDN, WAF, CSP, CORS, JWT, PKI, CA, OCSP, HSM, KMS, TPM, TEE,
+    SGX, SEV, TDX, IAM, STS, MFA, SSO, OIDC, SAML, LDAP, LDAPS, NTLM, SMB, AD, ADCS, DC,
+    GPO, LSASS, RBAC, ABAC, ACL, PII, PHI, HIPAA, GDPR, PCI, DSS, SOC, SIEM, SOAR, IDS,
+    IPS, EDR, XDR, MDR, APT, IOC, IOCs, TTP, TTPs, OSINT, SBOM, SCA, SAST, DAST, SLSA,
+    AWS, GCP, S3, EC2, EKS, GKE, AKS, GET, POST, PUT, USB, PDF]
   banned_phrases: [game-changer, game changer, groundbreaking, revolutionary,
     revolutionize, cutting-edge, cutting edge, state-of-the-art, best-in-class,
     next-generation, seamless, seamlessly, supercharge, unlock, unleash, empower,

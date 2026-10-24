@@ -28,7 +28,10 @@ above `warn` is a mild issue, above `hold` a severe one):
 
 A brief `passed` with no issues; `hold` is true when any check is severe, and
 merge_analysis.py then holds the entry in REVIEW.md ("readability: ..."). Mild
-issues are only reported. `score` is 100 minus a fixed cost per issue.
+issues are only reported. Only length and structure checks have a `hold`
+limit: acronyms, jargon_chain and long_word_ratio are mild-only, so a
+vocabulary call never holds a brief, and rerank releases any hold the current
+config no longer supports. `score` is 100 minus a fixed cost per issue.
 
 Usage:
     python scripts/readability.py --analysis   # the skill's check of data/analysis_out.json
@@ -248,60 +251,61 @@ def hold_reason(result: dict) -> str:
     return "readability: " + "; ".join(severe)
 
 
-def apply(entry: dict, cfg: dict | None = None) -> dict:
-    """Merge's step: record the brief's readability on the entry; a severe
-    failure holds it for review (`readability_hold`), a mild one is only noted."""
-    result = check(entry, cfg)
+def record(entry: dict, result: dict) -> None:
     entry["readability"] = {
         "score": result["score"],
         "passed": result["passed"],
         "issues": [f"{i['level']}: {i['detail']}" for i in result["issues"]],
     }
+
+
+def apply(entry: dict, cfg: dict | None = None, allow_hold: bool = True) -> dict:
+    """Merge's step: record the brief's readability on the entry. A severe
+    failure holds it for review (`readability_hold`) unless `allow_hold` is
+    false (an entry main already shows: then it is only reported, as
+    `hold_skipped`); a mild one is only noted."""
+    result = check(entry, cfg)
+    record(entry, result)
     entry.pop("readability_hold", None)
-    if result["hold"]:
-        entry["needs_review"] = True
+    if result["hold"] and allow_hold:
         entry["readability_hold"] = hold_reason(result)
+    elif result["hold"]:
+        entry["readability"]["hold_skipped"] = hold_reason(result)
     return entry
 
 
+def release(entry: dict, cfg: dict | None = None) -> bool:
+    """Rerank's step: re-judge a held brief under the current config and drop
+    the hold when it no longer fails badly. Never adds a hold. True = released."""
+    if not entry.get("readability_hold"):
+        return False
+    result = check(entry, cfg)
+    if result["hold"]:
+        return False
+    record(entry, result)
+    entry.pop("readability_hold")
+    return True
+
+
 # --- The skill's rewrite check -----------------------------------------------
-ENUMERATOR = re.compile(r"\(\d{1,2}\)|(?<![\w.])\d{1,2}[.)](?=\s)")  # "(1)" / "2." list markers
-DRAFT = "_analysis_draft.json"  # the analysis before the readability rewrite
-FACT = re.compile(r"`[^`]+`|\b(?:CVE|GHSA)-[\w-]+|\d[\d.,]*\s?(?:%|[kKMB]\b|x\b)?")
-
-
-def facts(entry: dict) -> set[str]:
-    """Numbers, CVE/GHSA ids and code spans in the brief: what a rewrite must keep."""
-    text = ENUMERATOR.sub(" ", " ".join(v for _, v in brief_fields(entry)))
-    return {m.group(0).strip().rstrip(".,") for m in FACT.finditer(text)} - {""}
-
-
-def rewrite_problems(draft: dict, final: dict) -> list[str]:
-    """What the readability rewrite changed that it must not: a dropped fact,
-    or any excerpt (excerpts stay verbatim quotes)."""
-    out = [f"dropped fact {f!r}" for f in sorted(facts(draft) - facts(final))]
-    quotes = [[le.get("excerpt") for le in e.get("lessons") or [] if isinstance(le, dict)]
-              for e in (draft, final)]  # fmt: skip
-    if quotes[0] != quotes[1]:
-        out.append("lesson excerpts changed")
-    return out
-
-
 def check_analysis(cfg: dict) -> list[str]:
-    """One line per analyzed entry (OK / MILD / HOLD), plus rewrite problems
-    against data/_analysis_draft.json when the skill saved one."""
-    entries = c.load_json(c.ANALYSIS_OUT, default=[]) or []
-    entries = entries.get("entries", []) if isinstance(entries, dict) else entries
-    drafts = c.load_json(c.DATA_DIR / DRAFT, default=[]) or []
-    by_url = {d.get("source_url"): d for d in drafts if isinstance(d, dict)}
-    lines = []
-    for e in entries:
+    """One line per analyzed entry (OK / MILD / HOLD), plus every field merge
+    will restore from data/_analysis_draft.json (rewrite_guard.py)."""
+    import rewrite_guard as rg  # imports this module
+
+    drafts = rg.load_drafts()
+    lines = [] if drafts is not None else [f"REWRITE: {rg.NOTE}"]
+    for e in rg.analyzed():
         r = check(e, cfg)
         level = "HOLD" if r["hold"] else "OK" if r["passed"] else "MILD"
         lines.append(f"{level} [{r['score']}] {e.get('title', '')[:90]}")
         lines += [f"    {i['level']}: {i['detail']}" for i in r["issues"]]
-        draft = by_url.get(e.get("source_url"))
-        lines += [f"    REWRITE: {p}" for p in rewrite_problems(draft, e)] if draft else []
+        draft = rg.draft_for(drafts, e)
+        if draft is None:
+            lines.append(f"    REWRITE: no draft for {e.get('source_url')}")
+            continue
+        for path, why in rg.problems(draft, e).items():
+            lines.append(f"    REWRITE: {path} will be restored ({'; '.join(why)})")
     return lines
 
 

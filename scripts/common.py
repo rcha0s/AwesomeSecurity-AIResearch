@@ -549,8 +549,16 @@ def domain_held(entry: dict) -> bool:
 
 def readability_held(entry: dict) -> bool:
     """True while merge holds the entry because its brief failed the readability
-    check badly (readability.py `hold`). Shown in no lane until it is rewritten."""
+    check badly (readability.py `hold`). It keeps the entry out of the findings
+    lists, the news gate and new editorial promotions until it is rewritten (or
+    rerank releases it under a looser config). A sticky editorial promotion
+    stays shown: promotions leave only by demotion or lost integrity."""
     return bool(entry.get("readability_hold"))
+
+
+def is_shown(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """True if the site shows this entry: a vetted finding or a news-lane story."""
+    return is_curated(entry, conf) or news_shown(entry, conf, sources_by_id)
 
 
 def is_editorial(entry: dict) -> bool:

@@ -103,12 +103,13 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     pr_stories = json.loads(stories.read_text(encoding="utf-8")) if stories.is_file() else {}
     out += cc.story_membership_problems(main_stories(base), pr_stories)
     out += editorial_check(base, root)
+    out += readability_check(base, root)
     out += history_check(base, root)
     return out
 
 
-def editorial_check(base: str, root: Path = ROOT) -> list[str]:
-    """Promotions on main stay promoted unless main's copy had already lost integrity."""
+def pool_docs(base: str, root: Path = ROOT) -> tuple[list, list]:
+    """(main's pools + archive from git, this tree's pools + archive)."""
     import common as c
 
     names = [f"{t}.json" for t in c.TOPICS] + ["archive.json"]
@@ -117,7 +118,22 @@ def editorial_check(base: str, root: Path = ROOT) -> list[str]:
     for n in names:
         path = root / "data" / n
         pr_docs.append(json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {})
-    return cc.editorial_problems(main_docs, pr_docs)
+    return main_docs, pr_docs
+
+
+def editorial_check(base: str, root: Path = ROOT) -> list[str]:
+    """Promotions on main stay promoted unless main's copy had already lost integrity."""
+    return cc.editorial_problems(*pool_docs(base, root))
+
+
+def readability_check(base: str, root: Path = ROOT) -> list[str]:
+    """An entry main shows may not gain a readability hold without a human."""
+    import common as c
+
+    main_docs, pr_docs = pool_docs(base, root)
+    # Pools only: an archived finding is not on the site.
+    shown = cc.shown_ids(main_docs[:-1], c.load_config(), c.load_sources_by_id())
+    return cc.readability_problems(shown, pr_docs)
 
 
 def git_json(ref_path: str, default: object) -> object:

@@ -24,7 +24,7 @@ SETTINGS='{"permissions": {
     "Edit(data/taxonomy_proposals.json)",
     "Edit(data/news_stories.json)", "Edit(data/story_shortlist.json)",
     "Edit(data/_story_outcomes.md)", "Edit(data/_merge_outcomes.json)",
-    "Edit(data/_editorial_outcomes.md)", "Edit(data/_curator_arxiv.json)",
+    "Edit(data/_editorial_outcomes.md)", "Edit(data/_readability_outcomes.md)", "Edit(data/_curator_arxiv.json)",
     "Read(~/.ssh/**)", "Read(~/.claude/**)", "Read(~/.config/**)", "Read(~/.aws/**)",
     "Read(~/.gnupg/**)", "Read(.env)", "Read(.env.*)", "Read(data/_scan_backlog.json)",
     "Bash(curl *)", "Bash(wget *)", "Bash(git *)", "Bash(gh *)",
