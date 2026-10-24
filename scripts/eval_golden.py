@@ -11,12 +11,15 @@ with those answers. It is deterministic; only producing the file needs an LLM.
 
   keep/drop    the analyzer keeps a story when merge would not hold it: lesson
                confidence >= confidence_min, novelty/relevance at the curation
-               bar, not refuted by its verifier, and a valid domain ID. A staged
-               case missing from the output counts as dropped (shortlist skip).
+               bar, not refuted by its verifier, a valid domain ID, and no
+               severe readability failure. A staged case missing from the output
+               counts as dropped (shortlist skip).
   domain       the output's domain is the answer (or one in `also_accept`)
   facts        a fact is covered when any of its `any` phrases appears in the
                output's title, summary, takeaway or lessons (case-insensitive)
   off-topic    share of the analyzer's kept cases that the answers mark off-topic
+  readable     reported, not graded: share of emitted briefs passing readability.py
+               (a brief merge would hold for readability counts as dropped above)
 
 A case passes when keep/drop is right and, for a keep, the domain is right and
 at least `evals.golden.min_fact_coverage` of its facts are covered. The run
@@ -47,6 +50,7 @@ import common as c
 import dedupe_stories as ds
 import eval_lib as el
 import merge_analysis as ma
+import readability as rd
 import taxonomy as tx
 
 GOLDEN_FILE = "golden.json"
@@ -87,6 +91,7 @@ def predicted_keep(out: dict | None, conf: c.Config, tax: tx.Taxonomy) -> bool:
         or ma.below_curation_bar(out, conf)
         or out.get("verified") is False
         or not tax.is_valid(out.get("domain"), out.get("topic"))
+        or rd.check(out)["hold"]  # merge holds a brief that fails readability badly
     )
 
 
@@ -114,6 +119,7 @@ def score_case(
     case: dict, out: dict | None, conf: c.Config, tax: tx.Taxonomy, min_cov: float
 ) -> dict:
     keep = predicted_keep(out, conf, tax)
+    readable = rd.check(out) if out is not None else None
     domains = {case["domain"], *case.get("also_accept", [])}
     domain_ok = out is not None and out.get("domain") in domains
     coverage, missed = fact_coverage(case, out)
@@ -123,6 +129,8 @@ def score_case(
         why.append(
             f"{'kept' if keep else 'dropped'}, answer is {'keep' if case['keep'] else 'drop'}"
         )
+    if readable and readable["hold"]:
+        why.append(rd.hold_reason(readable))
     if case["keep"] and not domain_ok:
         why.append(f"domain {out.get('domain') if out else None!r}, answer {case['domain']}")
     if case["keep"] and coverage < min_cov:
@@ -136,6 +144,7 @@ def score_case(
         "domain_ok": domain_ok,
         "fact_coverage": coverage,
         "on_topic": case.get("on_topic", True),
+        "readable": bool(readable and readable["passed"]),
         "why": "; ".join(why),
     }
 
@@ -158,6 +167,7 @@ def score(cases: list[dict], outputs: list[dict], config: Path | None = None) ->
         "domain_accuracy": _ratio(sum(r["domain_ok"] for r in emitted), len(emitted)),
         "fact_coverage": _ratio(sum(r["fact_coverage"] for r in keeps), len(keeps)),
         "off_topic_rate": _ratio(sum(not r["on_topic"] for r in kept), len(kept)),
+        "readability_pass": _ratio(sum(r["readable"] for r in emitted), len(emitted)),
         "results": rows,
     }  # fmt: skip
     limits = cfg["thresholds"]
@@ -376,7 +386,7 @@ def cmd_score(args) -> int:
         c.save_json(out, result)
         print(f"wrote {out.relative_to(c.ROOT)}")
     fields = {k: result[k] for k in ("score", "cases", "keep_drop_accuracy", "domain_accuracy",
-                                     "fact_coverage", "off_topic_rate")}  # fmt: skip
+                                     "fact_coverage", "off_topic_rate", "readability_pass")}  # fmt: skip
     print(el.summary_line("golden", result["passed"], **fields))
     return 0 if result["passed"] else 1
 

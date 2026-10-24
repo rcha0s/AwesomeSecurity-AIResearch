@@ -6,7 +6,8 @@ Reads data/analysis_out.json (a list of fully-analyzed v2 entries emitted by the
 /research-scan or /add-resource skill), validates each against the schema,
 de-duplicates against the existing pools (URL + fuzzy title), gates low-confidence
 findings to needs_review, holds any entry whose `domain` is not a taxonomy ID
-(data/taxonomy.yaml; the free-text label moves to `tags`), routes each into its
+(data/taxonomy.yaml; the free-text label moves to `tags`), records each brief's
+readability (scripts/readability.py; only a severe failure holds it), routes each into its
 topic pool, records verified new-domain proposals, clears the merged candidates,
 and re-ranks. Before that it applies the story judge's verdicts
 (data/story_verdicts.json, see story_ledger.py): `same`/`update` candidates join
@@ -28,7 +29,9 @@ import sys
 
 import common as c
 import content_checks as cc
+import readability as rd
 import rerank
+import rewrite_guard as rg
 import sources_registry as sr
 import story_ledger as sl
 import taxonomy as tx
@@ -56,7 +59,7 @@ def update_source_hit_rate(new_entries: list[dict]) -> None:
             continue
         d = deltas.setdefault(sid, [0, 0])
         d[0] += 1
-        if not e.get("needs_review"):
+        if not e.get("needs_review") and not c.readability_held(e):
             d[1] += 1
     sr.update_stats({sid: (d[0], d[1]) for sid, d in deltas.items()})
 
@@ -135,6 +138,42 @@ def below_curation_bar(entry: dict, conf: c.Config) -> bool:
     )
 
 
+READABILITY_RECORD = "_readability_outcomes.md"  # code-owned; post puts it in the PR body
+
+
+def readability_step(
+    entry: dict, existing: dict | None, drafts: dict | None, ctx: dict, notes: list[str]
+) -> None:
+    """Give back any field the readability rewrite changed a fact in (from the
+    draft), then score the brief. A brief main already shows is never held here:
+    the hold is reported instead, so a scan can't silently unpublish it."""
+    title = (entry.get("title") or "?")[:80]
+    draft = rg.draft_for(drafts, entry)
+    if drafts is not None and draft is None:
+        notes.append(f"- no draft for {title!r}; rewrite not fact-checked")
+    reverted = rg.restore(entry, draft)
+    for path, why in reverted.items():
+        notes.append(f"- reverted {path} of {title!r}: {'; '.join(why)}")
+    shown = existing is not None and c.is_shown(existing, ctx["conf"], ctx["sources"])
+    rd.apply(entry, ctx["rcfg"], allow_hold=not shown)
+    skipped = entry["readability"].get("hold_skipped")
+    if skipped:
+        notes.append(f"- not held, already published: {title!r}: {skipped}")
+
+
+def save_readability_notes(notes: list[str], drafts: dict | None, analyzed: int) -> None:
+    """Print the readability notes and append them to the code-owned record."""
+    if drafts is None and analyzed:
+        notes.insert(0, f"- {rg.NOTE}")
+    if not notes:
+        return
+    print("Readability:\n" + "\n".join(notes), file=sys.stderr if drafts is None else sys.stdout)
+    path = c.DATA_DIR / READABILITY_RECORD
+    head = "" if path.exists() else "### Readability (merge_analysis.py)\n\n"
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write(head + "\n".join(notes) + "\n")
+
+
 def normalize_entry(entry: dict, conf: c.Config) -> dict:
     entry = dict(entry)
     for key in ("source_url", "article_url", "tweet_url"):
@@ -163,6 +202,8 @@ def merge(
     errors: list[str] = []
     merged_urls: set[str] = set()
     newly_added: list[dict] = []
+    ctx = {"conf": conf, "rcfg": rd.settings(), "sources": c.load_sources_by_id()}
+    drafts, notes = rg.load_drafts(), []
     for raw in analyzed:
         # Only http(s) links reach the site: a javascript: URL is rejected here.
         problems = c.validate_entry(raw) + cc.url_problems(raw)
@@ -170,6 +211,10 @@ def merge(
             errors.append(f"{raw.get('title', '?')[:50]}: {'; '.join(problems)}")
             continue
         entry = tx.enforce(normalize_entry(raw, conf), tx.get())
+        entries = pools[entry["topic"]]["entries"]
+        idx = match_index(entries, entry)
+        # Undo fact changes from the rewrite, then score; a severe failure holds it.
+        readability_step(entry, None if idx is None else entries[idx], drafts, ctx, notes)
         # Ground each cited excerpt against the source; unverified quotes → review.
         vc.ground_entry(entry)
         if conf.curation.get("require_grounding", True) and not vc.fully_grounded(entry):
@@ -182,8 +227,6 @@ def merge(
         # The independent verifier (run by the skill) may have refuted the finding.
         if conf.curation.get("require_verification", True) and entry.get("verified") is False:
             entry["needs_review"] = True
-        entries = pools[entry["topic"]]["entries"]
-        idx = match_index(entries, entry)
         if idx is None:
             entries.append(entry)
             newly_added.append(entry)
@@ -191,6 +234,9 @@ def merge(
             entries[idx] = reconcile(entries[idx], entry)
             if "domain_hold" not in entry and same_url(entries[idx], entry):
                 for stale in ("domain_hold", "domain_label"):  # re-analysis fixed it
+                    entries[idx].pop(stale, None)
+            for stale in ("readability_hold", "readability_rewrite"):
+                if stale not in entry and same_url(entries[idx], entry):
                     entries[idx].pop(stale, None)
         merged.append(entry)
         if placements is not None:
@@ -200,6 +246,7 @@ def merge(
                 merged_urls.add(c.normalize_url(entry[k]))
     for topic, pool in pools.items():
         c.save_pool(topic, pool)
+    save_readability_notes(notes, drafts, len(analyzed))
     return merged, errors, merged_urls, newly_added
 
 

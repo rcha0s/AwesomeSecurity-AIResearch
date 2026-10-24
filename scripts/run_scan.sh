@@ -183,7 +183,7 @@ phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
     data/_story_outcomes.md data/_merge_outcomes.json data/_scan_backlog.json \
-    data/_editorial_outcomes.md
+    data/_editorial_outcomes.md data/_analysis_draft.json data/_readability_outcomes.md
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -274,9 +274,15 @@ phase_post() {
   # Code-owned records (merge_analysis.py's story verdicts, promote_editorial.py's
   # promotions and removals), never the model's word for them.
   local record
-  for record in data/_story_outcomes.md data/_editorial_outcomes.md; do
+  for record in data/_story_outcomes.md data/_editorial_outcomes.md data/_readability_outcomes.md; do
     if [[ -f "$record" ]]; then body+=$'\n\n'"$("$PY" scripts/scrub.py "$record" "")"; fi
   done
+  # The readability rewrite is fact-checked against the pre-rewrite draft.
+  local draft_note
+  if ! draft_note="$("$PY" scripts/rewrite_guard.py --check-draft)"; then
+    log "readability $draft_note"
+    body+=$'\n\n'"**$draft_note**"
+  fi
   body+="$(eval_body "$run_id")"
   body+="$(spend_line)"
   scripts/ensure_pr.sh "$branch" "chore: daily scan ($RUNNER, $day)" "$body" | tee -a "$LOG"

@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 
 import common as c
+import readability as rd
 import story_ledger as sl
 import taxonomy as tx
 
@@ -84,9 +85,19 @@ def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     archived = c.archive_entries(stale)
     if stale:
         print(f"  pruned {len(stale)} stale from {track} (archived {archived})")
+    released = release_holds(fresh)
+    if released:
+        print(f"  released {released} readability hold(s) the current config no longer supports")
     pool["entries"] = sorted((score_entry(e, conf, now=now) for e in fresh), key=sort_key)
     c.save_pool(track, pool)
     return pool
+
+
+def release_holds(entries: list[dict]) -> int:
+    """Re-judge every readability hold under the current config (tuning a
+    threshold releases what it no longer supports; rerank never adds a hold)."""
+    cfg = rd.settings()
+    return sum(rd.release(e, cfg) for e in entries)
 
 
 def normalize_archive() -> int:

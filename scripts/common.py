@@ -577,7 +577,9 @@ def is_curated(entry: dict, conf: Config) -> bool:
     """True if the finding belongs in the public curated view (topic pages +
     newsletter). Everything else — flagged needs_review, unscored, ungrounded, OR
     below the composite floor — is held in the REVIEW.md queue (still in the pool)."""
-    if entry.get("needs_review") or domain_held(entry) or not is_scored(entry):
+    if entry.get("needs_review") or domain_held(entry) or readability_held(entry):
+        return False
+    if not is_scored(entry):
         return False
     if conf.curation.get("require_verification", True) and entry.get("verified") is False:
         return False  # the independent verifier refuted it
@@ -592,6 +594,20 @@ def domain_held(entry: dict) -> bool:
     """True while merge holds the entry because the analyzer's domain was not a
     taxonomy ID (taxonomy.enforce). An integrity floor: no lane publishes it."""
     return bool(entry.get("domain_hold"))
+
+
+def readability_held(entry: dict) -> bool:
+    """True while merge holds the entry because its brief failed the readability
+    check badly (readability.py `hold`). It keeps the entry out of the findings
+    lists, the news gate and new editorial promotions until it is rewritten (or
+    rerank releases it under a looser config). A sticky editorial promotion
+    stays shown: promotions leave only by demotion or lost integrity."""
+    return bool(entry.get("readability_hold"))
+
+
+def is_shown(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """True if the site shows this entry: a vetted finding or a news-lane story."""
+    return is_curated(entry, conf) or news_shown(entry, conf, sources_by_id)
 
 
 def is_editorial(entry: dict) -> bool:
@@ -611,7 +627,7 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
     curated), that are scored, grounded, and not refuted, are in play."""
     if is_curated(entry, conf) or not is_scored(entry) or domain_held(entry):
         return False
-    return not integrity_lost(entry)
+    return not readability_held(entry) and not integrity_lost(entry)
 
 
 def integrity_lost(entry: dict) -> bool:
@@ -794,7 +810,7 @@ def is_news_curated(
     we check freshness, source track/tier, topic scope, and the deny list. A
     news source can pass this gate on the same day it publishes, without ever
     clearing the research floor."""
-    if not topic_scope_ok(entry) or domain_held(entry):
+    if not topic_scope_ok(entry) or domain_held(entry) or readability_held(entry):
         return False
     if window is not None and not is_fresh(entry, window, now=now):
         return False
@@ -873,6 +889,8 @@ def review_reason(entry: dict, conf: Config, sources_by_id: dict[str, dict] | No
     gs = entry.get("grounding_score")
     if gs is not None and gs < 1.0:
         return f"ungrounded excerpt — only {int(gs * 100)}% of quotes verified against the source"
+    if readability_held(entry):
+        return entry["readability_hold"]
     if entry.get("needs_review"):
         return "flagged needs_review (low confidence / novelty / relevance)"
     if not is_scored(entry):
