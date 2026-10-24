@@ -112,12 +112,12 @@ enter_worktree() {
 # The session's measured cost on the ledger (an `actual` row replaces the
 # reservation). Returns 1 only when a readable cost could not be recorded.
 record_actual() {
-  local cost="$1" stories="$2" outcome="${3:-}"
+  local cost="$1" stories="$2" outcome="${3:-}" news="${NEWS_BRIEFS:-0}"
   if [[ -z "$cost" ]]; then
     echo "[local] no total_cost_usd in claude output; the reservation stands" | tee -a "$LOG"
     return 0
   fi
-  scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome"
+  scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome" "$news"
 }
 
 # One attempt: check -> pre -> session -> actual -> post. Returns 0 when a PR
@@ -127,6 +127,7 @@ record_actual() {
 # step checks its own status.
 attempt() {
   local rc=0 limits cap_usd max_turns claude_rc=0 post_rc=0 cost stories outcome="" actual_ok=1 work_rc=0
+  local subtype finished=0 capped=0
   scripts/run_scan.sh check >/dev/null || rc=$?
   if [[ "$rc" == 3 ]]; then
     if [[ -n "$BACKFILL" ]]; then
@@ -155,22 +156,36 @@ attempt() {
   # PR body show the measured charge (the gate checks it against this ledger
   # row). Without a readable cost, the reservation pre made stays the charge.
   cost="$("$PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1])).get("total_cost_usd",""))' "$OUT" 2>/dev/null || true)"
+  # A session stopped by --max-budget-usd or --max-turns still merged what it
+  # finished: post ships that partial run (and fails it analysis-empty if
+  # nothing merged) instead of losing the whole day. Any other failure doesn't.
+  subtype="$("$PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1])).get("subtype",""))' "$OUT" 2>/dev/null || true)"
+  if [[ "$claude_rc" == 0 ]]; then
+    finished=1
+  elif [[ "$subtype" == error_max_budget_usd || "$subtype" == error_max_turns ]]; then
+    finished=1 capped=1
+    echo "[local] session stopped by its cap ($subtype); posting what it merged" | tee -a "$LOG"
+  fi
   # Counted here, not read from post's result: a run that fails in post still
   # analyzed its stories, and calibration needs that count. Same tree post
   # counts, so the same number.
   stories="$("$PYTHON" scripts/scan_count.py 2>/dev/null || echo 0)"
   [[ "$stories" =~ ^[0-9]+$ ]] || stories=0
+  # The news tier's briefs, priced apart from stories (budget.py run_units).
+  NEWS_BRIEFS="$("$PYTHON" scripts/scan_count.py --news 2>/dev/null || echo 0)"
+  [[ "$NEWS_BRIEFS" =~ ^[0-9]+$ ]] || NEWS_BRIEFS=0
   # post's own analysis-empty test (scan_count.py --work), run first so the
   # actual row carries the outcome that budget.retry_allowed reads.
-  if [[ "$claude_rc" == 0 ]]; then
+  if [[ "$finished" == 1 ]]; then
     "$PYTHON" scripts/scan_count.py --work >/dev/null 2>&1 || work_rc=$?
     [[ "$work_rc" == 3 ]] && outcome="analysis-empty"
   fi
+  [[ "$capped" == 1 && -z "$outcome" ]] && outcome="session-capped"
   record_actual "$cost" "$stories" "$outcome" || actual_ok=0
 
   # post fails a session that merged nothing and applied no story verdict
   # (analysis-empty, exit 4): it raises the alert and opens no PR.
-  if [[ "$claude_rc" == 0 ]]; then
+  if [[ "$finished" == 1 ]]; then
     scripts/run_scan.sh post || post_rc=$?
   fi
   # post is the authority: if it failed the run as analysis-empty when the
@@ -180,7 +195,7 @@ attempt() {
   fi
   [[ "$actual_ok" == 1 ]] || fail "local-ledger-actual"
 
-  [[ "$claude_rc" == 0 ]] || fail "local-claude"
+  [[ "$finished" == 1 ]] || fail "local-claude"
   [[ "$post_rc" == 4 ]] && return 4
   [[ "$post_rc" == 0 ]] || exit 1 # post already raised its own alert
   return 0

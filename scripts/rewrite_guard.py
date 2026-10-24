@@ -144,6 +144,57 @@ def names(text: str, known: frozenset[str] = frozenset(), title: bool = False) -
     return out
 
 
+ACRONYM = re.compile(r"[A-Z][A-Z0-9&]{1,7}s?")  # IAM, IOCs, VCO, CT
+CONNECTORS = frozenset({"of", "and", "the", "for", "to", "in", "on", "&"})
+_PARTS = re.compile(r"[A-Z]?[a-z]+|[A-Z]+(?![a-z])|\d+")  # VeloCloud -> Velo, Cloud
+
+
+def expansion(acronym: str, text: str, old: frozenset[str] = frozenset()) -> list[str] | None:
+    """The words of `text` that spell out `acronym` by their initials (each
+    word, or each camel-case/hyphen part of one, gives one letter; small
+    connector words may be skipped), else None. Every spelled-out word must be
+    new (not in `old`, the draft's words, lowercased): "Inventory certificates
+    that" is the draft's own text, never an expansion of CT. "IOCs" -> "indicators of
+    compromise", "VCO" -> "VeloCloud Orchestrator", "CT" -> "Certificate
+    Transparency"; "IAM" -> "identity-management" is no expansion (it lost
+    "access"), and neither is "EDR" -> "endpoint detection"."""
+    letters = (acronym[:-1] if acronym.endswith("s") else acronym).lower()
+    toks = [t for t in _tokens(text) if t[:1].isalpha()]
+    for start, first in enumerate(toks):
+        if first.lower() in CONNECTORS:
+            continue
+        used, k = [], 0
+        for word in toks[start:]:
+            initials = "".join(p[0].lower() for p in _PARTS.findall(word))
+            if word.lower() in old and word.lower() not in CONNECTORS:
+                break
+            if initials and letters.startswith(initials, k):
+                k += len(initials)
+            elif word[:1].lower() == letters[k : k + 1]:
+                k += 1
+            elif word.lower() not in CONNECTORS:
+                break
+            used.append(word)
+            if k == len(letters):
+                return used
+    return None
+
+
+def explained_names(draft: str, final: str, lost: Counter, gained: Counter) -> None:
+    """Forgive a name change that is only an acronym spelled out (the
+    readability rewrite is told to expand acronyms): drop the acronym from
+    `lost` and its expansion's words from `gained`, in place."""
+    originals = {t.lower(): t for t in _tokens(draft) if ACRONYM.fullmatch(t)}
+    old = frozenset(t.lower() for t in _tokens(draft))
+    for acr in [a for a in lost if a in originals]:
+        words = expansion(originals[acr], final, old)
+        if words:
+            del lost[acr]
+            gained.subtract(Counter(w.lower() for w in words))
+    for k in [k for k, v in gained.items() if v <= 0]:
+        del gained[k]
+
+
 def known_names(*entries: dict) -> frozenset[str]:
     """Mid-sentence names across the entries' prose fields (not the title), lowercased."""
     return frozenset(
@@ -174,8 +225,10 @@ def changes(
         out.append("what a guard word or number applies to changed")
     known = known | set(names(draft)) | set(names(final))  # names either text uses mid-sentence
     before, after = names(draft, known, title), names(final, known, title)
-    if before != after:
-        out.append(f"names changed ({', '.join(sorted((before - after) + (after - before)))})")
+    lost, gained = before - after, after - before
+    explained_names(draft, final, lost, gained)
+    if lost or gained:
+        out.append(f"names changed ({', '.join(sorted(lost + gained))})")
     lost, added = facts(draft) - facts(final), facts(final) - facts(draft)
     out += [f"dropped {f!r}" for f in sorted(lost)] + [f"added {f!r}" for f in sorted(added)]
     return out

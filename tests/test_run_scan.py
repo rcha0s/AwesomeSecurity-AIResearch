@@ -51,6 +51,9 @@ def set_budget(cfg: Path, **values: str) -> None:
 
 # Every test starts from a closed budget, whatever the real config ships.
 CLOSED = {"monthly_cap_usd": "null", "usd_per_story": "null", "uncalibrated_run_usd": "null"}
+# ...and from the per-run caps these tests count against (10 stories, the news
+# tier off), whatever the real config ships; news-tier tests open it themselves.
+PINNED = {"max_stories_per_run": "10", "max_news_per_run": "0"}
 
 
 def commit_main(work: Path, msg: str) -> None:
@@ -70,7 +73,7 @@ def scan_repo(tmp_path: Path):
     for name in STUBBED:
         (work / "scripts" / f"{name}.py").write_text("print('stub')\n")
     shutil.copy(REPO / "config.yaml", work / "config.yaml")
-    set_budget(work / "config.yaml", **CLOSED)
+    set_budget(work / "config.yaml", **CLOSED, **PINNED)
     shutil.copy(REPO / ".gitignore", work / ".gitignore")
     (work / "data").mkdir()
     (work / "data" / "pool.json").write_text("[]")

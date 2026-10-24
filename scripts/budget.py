@@ -24,6 +24,16 @@ happened today (unless --allow-repeat). One exception: a local run whose
 The retry's own reservation is the record: a second tried run id blocks the day. The settings come from the config file
 passed with --config, which run_scan.sh takes from origin/main.
 
+Two tiers (select_batch.py, 2026-10-23): a run analyzes up to
+`max_stories_per_run` stories in depth and writes up to `max_news_per_run`
+short news briefs. A brief costs a fraction of a story, `news_cost_ratio`
+(config.yaml states the assumption), so a run's size is counted in story
+units: deep + news_cost_ratio x news. The ceiling is the per-unit rate x
+headroom x (max_stories_per_run + news_cost_ratio x max_news_per_run), and
+calibration divides a run's measured cost by its own units, each count
+clamped to its cap. An actual row carries `news` when the run wrote briefs;
+rows without it are deep-only, as before. Still one row per run.
+
 Backfill (issue #52, scripts/backfill.sh): `check --backfill FROM..TO` and
 `reserve --backfill FROM..TO` label a local run as one backfill chunk. Its rows
 carry `backfill: "FROM..TO"` (actual and done rows copy it from the
@@ -36,6 +46,7 @@ Usage:
     python scripts/budget.py --config CFG check --runner cloud     # exit 0 go, 3 skip
     python scripts/budget.py --config CFG reserve --runner cloud --run-id ID
     python scripts/budget.py --config CFG actual --run-id ID --stories 6 --cost-usd 1.84
+    python scripts/budget.py --config CFG actual --run-id ID --stories 25 --news 30 --cost-usd 8.1
     python scripts/budget.py --config CFG actual --run-id ID --stories 0 --cost-usd 0.4 \
         --outcome analysis-empty
     python scripts/budget.py --config CFG status          # this month's spend report (markdown)
@@ -59,7 +70,10 @@ import common as c
 SKIP_EXIT = 3
 RUNNERS = ("cloud", "local")
 KINDS = ("reserve", "actual", "done")  # done: post finished; costs nothing
-OUTCOMES = ("analysis-empty",)  # optional on an actual row: why the run failed
+# optional on an actual row: why the run failed (analysis-empty allows one
+# retry), or that its session hit --max-budget-usd / --max-turns and post
+# shipped what it had merged (session-capped)
+OUTCOMES = ("analysis-empty", "session-capped")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 WINDOW_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})\.\.(\d{4}-\d{2}-\d{2})$")  # a backfill row's window
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")  # also keeps SPEND.md's table intact
@@ -82,9 +96,8 @@ def validate_row(row: dict) -> dict:
         and DATE_RE.match(str(row.get("date", ""))) is not None
         and row.get("runner") in RUNNERS
         and row.get("kind") in KINDS
-        and isinstance(stories, int)
-        and not isinstance(stories, bool)
-        and stories >= 0
+        and _count_ok(stories)
+        and _count_ok(row.get("news", 0))
         and isinstance(cost, int | float)
         and not isinstance(cost, bool)
         and math.isfinite(cost)
@@ -97,6 +110,10 @@ def validate_row(row: dict) -> dict:
     return row
 
 
+def _count_ok(n: object) -> bool:
+    return isinstance(n, int) and not isinstance(n, bool) and n >= 0
+
+
 def load_ledger(path: Path) -> list[dict]:
     data = c.load_json(path, default={"runs": []})
     return [validate_row(r) for r in data.get("runs", [])]
@@ -107,6 +124,7 @@ def budget_settings(config: Path | str = c.CONFIG_FILE) -> dict:
     settings = dict(raw.get("budget") or {})
     limits = raw.get("limits", {})
     settings["max_stories_per_run"] = int(limits.get("max_stories_per_run", 8))
+    settings["max_news_per_run"] = max(0, int(limits.get("max_news_per_run", 0) or 0))
     settings["max_turns"] = int(limits.get("max_turns", 150))
     settings["backfill"] = dict(raw.get("backfill") or {})
     return settings
@@ -132,11 +150,33 @@ def month_spend(runs: list[dict], month: str) -> float:
     return round(sum(float(r["cost_usd"]) for r in rows if r["date"].startswith(month)), 4)
 
 
+def news_ratio(settings: dict) -> float:
+    """What one news brief costs, in stories (budget.news_cost_ratio). Missing
+    means 1: until it is stated, a brief is priced like a story."""
+    raw = settings.get("news_cost_ratio")
+    return 1.0 if raw is None else max(0.0, float(raw))
+
+
+def run_units(
+    row: dict, ratio: float = 0.0, max_stories: int | None = None, max_news: int | None = None
+) -> float:
+    """A run's size in story units: deep stories + ratio x news briefs, each
+    count clamped to its cap (post refuses more, so a bigger count is padding)."""
+    stories, news = row["stories"], int(row.get("news", 0))
+    if max_stories is not None:
+        stories = min(stories, max_stories)
+    if max_news is not None:
+        news = min(news, max_news)
+    return stories + ratio * news
+
+
 def usd_per_story(
     runs: list[dict],
     override: float | None = None,
     window: int | None = None,
     max_stories: int | None = None,
+    ratio: float = 0.0,
+    max_news: int | None = None,
 ) -> float | None:
     """Worst measured cost per story across runs, or the config override.
 
@@ -150,6 +190,8 @@ def usd_per_story(
     One row per run (its latest `actual`, as in effective_runs), so a run with
     two actual rows can't fill two window slots. With `max_stories`, a row's
     story count is capped at it: post refuses more, so a bigger count is padding.
+    A row's news briefs count `ratio` of a story each (capped at `max_news`):
+    see run_units.
     """
     if override is not None:
         return float(override)
@@ -158,32 +200,41 @@ def usd_per_story(
         if r["kind"] == "actual":
             latest.pop(r["run_id"], None)  # re-insert: order by each run's latest row
             latest[r["run_id"]] = r
-    measured = [
-        r["cost_usd"] / min(r["stories"], max_stories or r["stories"])
-        for r in latest.values()
-        if r["stories"] > 0
-    ]
+    sized = [(r, run_units(r, ratio, max_stories or None, max_news)) for r in latest.values()]
+    measured = [r["cost_usd"] / units for r, units in sized if units > 0]
     if window is not None and int(window) > 0:  # 0 or less: every measured run
         measured = measured[-int(window) :]
     return max(measured) if measured else None
 
 
-def run_ceiling(runs: list[dict], settings: dict, runner: str) -> tuple[float | None, str]:
+def run_ceiling(
+    runs: list[dict], settings: dict, runner: str, units_ratio: float | None = None
+) -> tuple[float | None, str]:
     """The most one run may cost, or (None, reason) when it can't be bounded.
 
     A measured rate is multiplied by `ceiling_headroom` (default 1): the local
     session's hard cap is `session_cap_fraction` of this ceiling, so a run as
-    expensive as the worst one measured must still fit under it.
+    expensive as the worst one measured must still fit under it. `units_ratio`
+    prices the news cap's briefs at a different ratio than calibration used
+    (session_limits passes the pessimistic `session_news_ratio`).
     """
     override = settings.get("usd_per_story")
+    ratio, max_news = news_ratio(settings), int(settings.get("max_news_per_run") or 0)
     per_story = usd_per_story(
-        runs, override, settings.get("calibration_runs"), settings["max_stories_per_run"]
+        runs,
+        override,
+        settings.get("calibration_runs"),
+        settings["max_stories_per_run"],
+        ratio,
+        max_news,
     )
     if per_story is not None:
         headroom = (
             1.0 if override is not None else max(1.0, float(settings.get("ceiling_headroom") or 1))
         )
-        return round(per_story * headroom * settings["max_stories_per_run"], 4), "calibrated"
+        brief = ratio if units_ratio is None else units_ratio
+        units = settings["max_stories_per_run"] + brief * max_news
+        return round(per_story * headroom * units, 4), "calibrated"
     if runner == "cloud":
         return None, "no measured per-story cost yet: run one local scan first"
     reserve = settings.get("uncalibrated_run_usd")
@@ -376,6 +427,8 @@ def spend_report(runs: list[dict], settings: dict, month: str) -> str:
     for r in sorted(rows, key=lambda r: (r["date"], r["run_id"])):
         basis = "measured" if r["kind"] == "actual" else "reserved ceiling"
         stories = finished.get(r["run_id"], r["stories"])
+        if r.get("news"):
+            stories = f"{stories} + {r['news']} news"
         done = "yes" if r["run_id"] in finished else "no"
         runner = f"{r['runner']} backfill {r['backfill']}" if is_backfill(r) else r["runner"]
         lines.append(
@@ -426,6 +479,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     act.add_argument("--run-id", required=True)
     act.add_argument("--stories", type=int, required=True)
     act.add_argument("--cost-usd", type=float, required=True)
+    act.add_argument("--news", type=int, default=0, help="news briefs the run wrote")
     act.add_argument("--outcome", choices=OUTCOMES)
     sub.add_parser("status")
     lim = sub.add_parser("session-limits")
@@ -464,6 +518,8 @@ def actual(path: Path, runs: list[dict], args) -> int:
         # An actual row would replace that charge and feed the calibration.
         raise SystemExit(f"actual: run {args.run_id} is a {held[0]['runner']} run")
     row = {**held[0], "kind": "actual", "stories": args.stories, "cost_usd": args.cost_usd}
+    if args.news:
+        row["news"] = args.news
     if args.outcome:
         row["outcome"] = args.outcome
     append_row(path, runs, row)
@@ -479,13 +535,29 @@ def mark_done(path: Path, runs: list[dict], args) -> int:
     return 0
 
 
+def session_ratio(settings: dict) -> float:
+    """The brief cost ratio the session cap is sized with: the pessimistic
+    `budget.session_news_ratio` (0.5), never below the calibration ratio. A
+    session stopped by its cap loses work, so the cap assumes briefs cost more
+    than the estimate the reservation uses."""
+    raw = settings.get("session_news_ratio")
+    return news_ratio(settings) if raw is None else max(news_ratio(settings), float(raw))
+
+
+def session_budget(runs: list[dict], settings: dict, runner: str) -> tuple[float | None, str]:
+    """--max-budget-usd: the ceiling at the pessimistic brief ratio x the fraction."""
+    ceiling, why = run_ceiling(runs, settings, runner, units_ratio=session_ratio(settings))
+    if ceiling is None:
+        return None, why
+    return round(ceiling * float(settings.get("session_cap_fraction", 0.8)), 2), why
+
+
 def session_limits(runs: list[dict], settings: dict, runner: str) -> int:
     """Print `<max_budget_usd> <max_turns>` for the model session."""
-    ceiling, why = run_ceiling(runs, settings, runner)
-    if ceiling is None:
+    cap, why = session_budget(runs, settings, runner)
+    if cap is None:
         raise SystemExit(f"session-limits: {why}")
-    fraction = float(settings.get("session_cap_fraction", 0.8))
-    print(f"{ceiling * fraction:.2f} {settings['max_turns']}")
+    print(f"{cap:.2f} {settings['max_turns']}")
     return 0
 
 

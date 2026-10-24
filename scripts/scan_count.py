@@ -16,8 +16,14 @@ come from its code-owned records (data/_merge_outcomes.json and
 data/_story_outcomes.md), never from the model's analysis_out.json. `post`
 fails such a run.
 
+Two tiers (select_batch.py): deep analyses count as stories, against
+`limits.max_stories_per_run`; news briefs (`news_brief` on a pool entry,
+`brief: "news"` in analysis_out.json) count separately, against
+`limits.max_news_per_run`. A brief is never a story, and a story never a brief.
+
 Usage:
-    python scripts/scan_count.py          # print the story count
+    python scripts/scan_count.py          # print the (deep) story count
+    python scripts/scan_count.py --news   # print the news-brief count
     python scripts/scan_count.py --work   # print the counts; exit 3 if no work
 """
 
@@ -46,16 +52,26 @@ def main_archive_ids() -> set[str]:
     return {e.get("id") for e in entries if isinstance(e, dict)}
 
 
-def new_entries() -> int:
+def new_entries(news: bool = False) -> int:
+    """Pool entries absent from main's pools and archive: deep ones, or (news)
+    the news briefs."""
     on_main = c.main_entry_ids() | main_archive_ids()
     return sum(
-        1 for topic in c.TOPICS for e in c.load_pool(topic)["entries"] if e.get("id") not in on_main
+        1
+        for topic in c.TOPICS
+        for e in c.load_pool(topic)["entries"]
+        if e.get("id") not in on_main and c.is_news_brief(e) == news
     )
 
 
-def analysis_count() -> int:
+def analysis_count(news: bool = False) -> int:
     data = c.load_json(c.ANALYSIS_OUT, default=[]) or []
-    return len(data if isinstance(data, list) else data.get("entries", []))
+    rows = data if isinstance(data, list) else data.get("entries", [])
+    return sum(1 for e in rows if isinstance(e, dict) and is_brief(e) == news)
+
+
+def is_brief(row: dict) -> bool:
+    return row.get("brief") == c.NEWS_BRIEF or c.is_news_brief(row)
 
 
 def settled_verdicts() -> int:
@@ -63,13 +79,21 @@ def settled_verdicts() -> int:
     return sl.settled_count(path.read_text(encoding="utf-8")) if path.exists() else 0
 
 
+def counts() -> tuple[int, int]:
+    """(deep stories, news briefs) this run produced."""
+    return (
+        max(new_entries(), analysis_count()),
+        max(new_entries(news=True), analysis_count(news=True)),
+    )
+
+
 def main(argv: list[str]) -> int:
-    stories = max(new_entries(), analysis_count())
+    stories, briefs = counts()
     if argv == ["--work"]:
         merged, settled = c.merge_record()["merged"], settled_verdicts()
-        print(f"analyzed={stories} merged={merged} settled_verdicts={settled}")
+        print(f"analyzed={stories} news_briefs={briefs} merged={merged} settled_verdicts={settled}")
         return 0 if merged or settled else NO_WORK
-    print(stories)
+    print(briefs if argv == ["--news"] else stories)
     return 0
 
 

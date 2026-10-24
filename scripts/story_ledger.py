@@ -18,7 +18,10 @@ Matching a new candidate (ISC-20), in three steps:
 
 1. `shortlist()` — deterministic, tuned to over-match: stories touched in the
    last `stories.match_window_days` that share a URL, title tokens, entities,
-   or distinctive text with the candidate, best `stories.shortlist_max` first.
+   or distinctive text with the candidate, or that newsworthy.py's same-story
+   rule matches (a shared CVE/GHSA id, or shared rare proper nouns within
+   days: what select_batch groups a run's copies by), best
+   `stories.shortlist_max` first.
    `python scripts/story_ledger.py shortlist` writes data/story_shortlist.json.
 2. A small-model judge (the scan's Haiku subagent, research-scan step 2b)
    writes data/story_verdicts.json: `[{candidate_id, verdict, story_id, note}]`
@@ -52,6 +55,7 @@ from urllib.parse import urlparse
 
 import common as c
 import dedupe_stories as ds
+import newsworthy as nw
 
 LEDGER_FILE = c.DATA_DIR / "news_stories.json"
 SHORTLIST_FILE = c.DATA_DIR / "story_shortlist.json"
@@ -67,6 +71,13 @@ DEFAULT_SHORTLIST_MAX = 5
 SHORTLIST_TITLE = 0.2
 SHORTLIST_ENTITY = 0.5
 SHORTLIST_TEXT = 0.15
+# A newsworthy.same_story match admits a story at this score. #104 (2026-10-23):
+# covering articles for Cairn, x402, OpenCode, eMudhra, PAN-OS, BeyondTrust,
+# Pillow and more never got their story offered, because a lead's analyzed
+# title ("V12 audit of the x402 agent-payments protocol: 25 flaws...") shares
+# few tokens with a news headline ("Critical x402 SDK Flaw Could Let ..."),
+# while the rare name (x402) or the CVE id is the whole signal.
+SHORTLIST_SAME_STORY = 0.6
 _TIER_RANK = {"high": 3, "medium": 2, "low": 1}
 
 
@@ -411,22 +422,82 @@ def _cand_profile(cand: dict) -> dict:
     }
 
 
+def story_docs(story: dict, entries_by_id: dict) -> list[dict]:
+    """The story as newsworthy.py documents: every covering source's headline
+    (the story title when the row has none) and every analyzed entry (title +
+    summary), each dated and with its URL (for its publisher)."""
+    first = story.get("first_seen") or story.get("last_updated") or ""
+    docs = [
+        {
+            "title": s.get("title") or story.get("title", ""),
+            "published": s.get("date") or first,
+            "source_url": s.get("url", ""),
+        }
+        for s in story["sources"]
+    ]
+    for eid in story.get("entry_ids", []):
+        e = entries_by_id.get(eid)
+        if e:
+            body = e.get("summary") or e.get("excerpt") or ""
+            docs.append({**e, "excerpt": body, "published": entry_day(e)})
+    return docs or [{"title": story.get("title", ""), "published": first}]
+
+
+SameStoryDoc = tuple[nw.Profile, str]  # (profile, publisher)
+
+
+def same_story_profiles(
+    ledger: dict, entries_by_id: dict, cands: list[dict]
+) -> tuple[nw.NameModel, dict[str, list[SameStoryDoc]]]:
+    """newsworthy.py's name model (reference = the analyzed entries) and each
+    story's documents as (profile, publisher), for the same-story signal."""
+    model = nw.name_model(list(entries_by_id.values()), cands)
+    profs = {
+        sid: [(nw.profile(d, model), nw.publisher(d)) for d in story_docs(story, entries_by_id)]
+        for sid, story in ledger["stories"].items()
+    }
+    return model, profs
+
+
+def same_story_hit(cand: nw.Profile, publisher: str, story: list[SameStoryDoc]) -> bool:
+    """newsworthy's rule with its same-days windows widened to MATCH_DAYS: the
+    shortlist over-matches by design (the judge reads it), and the strict
+    2-day window is tuned for lane corroboration, where a false match costs a
+    slot. A copy naming only CVEs the story doesn't is still never offered.
+    Publisher-aware: against a document from the candidate's own publisher
+    only a shared CVE/GHSA id counts, since one outlet's posts share its own
+    names (Wiz's blog says "Wiz" in every title)."""
+    for doc, pub in story:
+        if pub and pub == publisher:
+            if cand.ids & doc.ids:
+                return True
+        elif nw.same_story(cand, doc, title_days=nw.MATCH_DAYS):
+            return True
+    return False
+
+
 def shortlist_many(
     cands: list[dict], ledger: dict, entries_by_id: dict, *, window_days: int, k: int
 ) -> dict[str, list[dict]]:
     """{candidate_id: [{story_id, score, title, last_updated}]} — best k per
-    candidate among stories touched within window_days of the candidate."""
+    candidate among stories touched within window_days of the candidate.
+    Admitted by token/title/entity overlap (match_score) or by newsworthy.py's
+    same-story rule (SHORTLIST_SAME_STORY)."""
     profiles = {sid: _profile(s, entries_by_id) for sid, s in ledger["stories"].items()}
     idf = _idf([p["tokens"] for p in profiles.values()])
     default = math.log(len(profiles) + 1) + 1 if profiles else 1.0
+    model, nw_profiles = same_story_profiles(ledger, entries_by_id, cands)
     out: dict[str, list[dict]] = {}
     for cand in cands:
         cp, day = _cand_profile(cand), entry_day(cand) or c.utcnow().strftime("%Y-%m-%d")
+        np_, pub = nw.profile(cand, model), nw.publisher(cand)
         scored = []
         for sid, story in ledger["stories"].items():
             if not _in_window(story, day, window_days):
                 continue
             score = match_score(cp, profiles[sid], idf, default)
+            if same_story_hit(np_, pub, nw_profiles[sid]):
+                score = max(score, SHORTLIST_SAME_STORY)
             if score > 0:
                 scored.append((score, sid))
         scored.sort(key=lambda x: (-x[0], x[1]))

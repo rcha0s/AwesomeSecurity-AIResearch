@@ -816,6 +816,11 @@ def is_news_curated(
         return False
     if news_denylist_hit(entry):
         return False
+    if is_news_brief(entry):
+        # Selected as news by code (select_batch.py's news tier, stamped by
+        # merge_analysis.py from data/_scan_tiers.json), not by its source's
+        # track: the brief's own integrity floor stands in for it.
+        return entry.get("verified") is not False
     sources_by_id = sources_by_id or {}
     track, tier = _source_track_and_tier(entry, sources_by_id)
     if track not in ("news", "both"):
@@ -832,9 +837,69 @@ def is_news_curated(
     return True
 
 
+# --- News briefs (the scan's news tier, select_batch.py) ----------------------
+# A news-tier candidate gets a short brief instead of deep analysis: what
+# happened, one sentence of "so what", ONE verbatim excerpt that must ground
+# against the fetched source. No scores, no lessons beyond that one quote, no
+# action. It is never a vetted finding; it shows only in the news lane, and
+# only when its excerpt grounded (verify_citations.publishable_grounding).
+NEWS_BRIEF = "news"  # the analyzer's `brief` value for a news brief
+NEWS_BRIEF_REQUIRED = ("topic", "domain", "title", "source_url", "takeaway", "summary")
+NEWS_BRIEF_SUMMARY_MAX = 2  # sentences
+NEWS_BRIEF_EXCERPT_MIN = 20  # characters: a quote, not a word
+NEWS_BRIEF_FORBIDDEN = ("scores", "actionable")  # a brief is not a finding
+
+
+def is_news_brief(entry: dict) -> bool:
+    """True for an entry merge_analysis.py accepted as a news-tier brief."""
+    return isinstance(entry.get("news_brief"), dict)
+
+
+def news_brief_errors(entry: dict) -> list[str]:
+    """Schema problems with an analyzer-written news brief (empty == valid)."""
+    errors = [f"news brief missing: {k}" for k in NEWS_BRIEF_REQUIRED if not entry.get(k)]
+    errors += [f"news brief must not carry {k}" for k in NEWS_BRIEF_FORBIDDEN if k in entry]
+    lessons = entry.get("lessons")
+    if not isinstance(lessons, list) or len(lessons) != 1 or not isinstance(lessons[0], dict):
+        errors.append("news brief needs exactly one lesson (its one excerpt)")
+    else:
+        excerpt = str(lessons[0].get("excerpt") or "").strip()
+        if len(excerpt) < NEWS_BRIEF_EXCERPT_MIN:
+            errors.append(f"news brief excerpt under {NEWS_BRIEF_EXCERPT_MIN} characters")
+        if not str(lessons[0].get("point") or "").strip():
+            errors.append("news brief lesson needs a point")
+    summary = str(entry.get("summary") or "")
+    if len([s for s in re.split(r"(?<=[.!?])\s+", summary.strip()) if s]) > NEWS_BRIEF_SUMMARY_MAX:
+        errors.append(f"news brief summary over {NEWS_BRIEF_SUMMARY_MAX} sentences")
+    return errors
+
+
+BRIEF_NEWS_DAYS = 60  # default for limits.brief_news_days
+
+
+def brief_kept(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
+    """Whether rerank keeps a news brief out of the freshness prune: only a
+    grounded one, and only for `limits.brief_news_days` (60). A held or
+    ungrounded brief ages out at max_age_days like a finding; a grounded one
+    past 60 days moves to data/archive.json (the Archive tab still shows it).
+    Briefs arrive by the dozen a day, so keeping every one forever, held ones
+    included, would grow the pools by thousands a month."""
+    from verify_citations import news_brief_grounded
+
+    days = int(conf.limits.get("brief_news_days", BRIEF_NEWS_DAYS))
+    return (
+        is_news_curated(entry, conf, sources_by_id, window=None)
+        and news_brief_grounded(entry)
+        and is_fresh(entry, days)
+    )
+
+
 def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> bool:
     """True for anything the news lane keeps: an editorial promotion, or a
-    news-gated story of any age. These are exempt from the freshness prune."""
+    news-gated story of any age (a news brief: see brief_kept). These are
+    exempt from the freshness prune."""
+    if is_news_brief(entry) and not is_editorial(entry):
+        return brief_kept(entry, conf, sources_by_id)
     return is_editorial(entry) or is_news_curated(entry, conf, sources_by_id, window=None)
 
 
@@ -1156,6 +1221,8 @@ def write_raw(cand_id: str, text: str) -> str:
 # runner request an attacker's URL.
 SCAN_LOCK_ENV = "SCAN_LOCKED"
 SCAN_URL_SNAPSHOT = "_scan_urls.json"
+# select_batch.py's record of which candidate is in which tier (deep / news).
+SCAN_TIERS_SNAPSHOT = "_scan_tiers.json"
 
 
 def scan_locked() -> bool:

@@ -57,6 +57,31 @@ would only call them `same`. Outside the lane, markers and corroboration add
 three) to the score the deal ranks by; per-source caps and the class
 round-robin are unchanged.
 
+News tier (2026-10-23, Rohan: "the actual relevant news stories that should
+have been caught instead of just getting the 10"). The batch above is the
+DEEP tier: full analysis, at most `max_stories_per_run`. Every candidate left
+over that is relevant news joins the session's set as the NEWS tier, tagged
+`batch_tier: "news"`, and gets a short grounded news brief instead of deep
+analysis (research-scan step 3c). A leftover candidate is news when it was
+published in the last `batch_story_days`, is not on the news deny list, and is
+
+    story     the head of a big-story group (newsworthy.py, judged as the lane
+              judges it) that the lane had no slot for
+    priority  a new CISA KEV entry or a critical (or AI-tooling high) GHSA
+              advisory the must-not-miss lane had no slot for
+    marker    a severity or AI-incident marker from a publisher outside
+              GitHub/HN whose source ranks `batch_news_min_rank` or more (40:
+              The Register, Dark Reading; the lane keeps its own 55), and not
+              a story the ledger already holds
+
+in that order, at most `max_news_per_run` (a runaway guard, not a quota) and
+at most `batch_news_per_source` from one source. A story group's other copies
+stay in the backlog (`batch_same_story_as`); the brief's `batch_news.coverage`
+lists them, and merge_analysis.py attaches them as its covering sources.
+main() also writes data/_scan_tiers.json, the code-owned record of which
+candidate is in which tier: merge_analysis.py accepts a news brief only for a
+news-tier candidate named there, and the session can't edit data/_scan*.
+
 Everything not selected goes to data/_scan_backlog.json, each with its
 prefilter reason and rank. On the Mac runner the session can neither edit nor
 read it (scan_containment.sh denies both); the cloud routine has no per-tool
@@ -73,6 +98,7 @@ from __future__ import annotations
 import argparse
 import sys
 from collections import Counter
+from dataclasses import replace
 from datetime import timedelta
 from pathlib import Path
 
@@ -95,7 +121,11 @@ DEFAULTS = {
     "batch_story_min_rank": 0.0,
     "batch_marker_bonus": 0.0,
     "batch_corroboration_bonus": 0.0,
+    "max_news_per_run": 0,  # news tier off unless config.yaml sizes it
+    "batch_news_per_source": 4,
+    "batch_news_min_rank": None,  # None = batch_story_min_rank
 }
+NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
 OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator")
@@ -313,29 +343,42 @@ def lane_worthy(cand: dict, sig: nw.Signal, conf: c.Config) -> bool:
 
 def story_lane(
     pool: list[dict], sigs: list, conf: c.Config, pos: dict, per_source: int, size: int
-) -> tuple[list[dict], dict[int, dict]]:
-    """(lane, siblings). Every multi-source story keeps ONE copy in play, its
-    most credible; the others wait (siblings: id(copy) -> that head), since the
-    judge would only call them `same`. Up to `batch_story_max` lane-worthy
-    stories take a lane slot, at most `per_source` heads from one source."""
+) -> tuple[list[dict], dict[int, dict], dict[int, tuple]]:
+    """(lane, siblings, groups). Every multi-source story keeps ONE copy in
+    play, its most credible; the others wait (siblings: id(copy) -> that head),
+    since the judge would only call them `same`. Up to `batch_story_max`
+    lane-worthy stories take a lane slot, at most `per_source` heads from one
+    source. `groups` maps id(head) -> (leader's signal, lane-worthy, the other
+    copies) for every story left without a lane slot (the news tier reads it)."""
     limit = min(size, int(setting(conf, "batch_story_max")))
     lane: list[dict] = []
     siblings: dict[int, dict] = {}
+    groups: dict[int, tuple] = {}
     used: Counter = Counter()
     for group in story_groups(pool, sigs, pos):
         by_trust = sorted(
             group, key=lambda k: (-(pool[k].get("source_rank") or 0), pos[id(pool[k])])
         )
         open_heads = [k for k in by_trust if used[source_key(pool[k])] < per_source]
-        lead = sigs[group[0]]
-        if len(lane) < limit and open_heads and lane_worthy(pool[group[0]], lead, conf):
+        lead = group_signal(sigs, group)
+        worthy = lane_worthy(pool[group[0]], lead, conf)
+        if len(lane) < limit and open_heads and worthy:
             head = open_heads[0]
             used[source_key(pool[head])] += 1
             lane.append(with_story(pool[head], lead, [pool[k] for k in group if k != head]))
         else:
             head = by_trust[0]
+            groups[id(pool[head])] = (lead, worthy, [pool[k] for k in group if k != head])
         siblings |= {id(pool[k]): pool[head] for k in group if k != head}
-    return lane, siblings
+    return lane, siblings, groups
+
+
+def group_signal(sigs: list, group: list[int]) -> nw.Signal:
+    """The story's signal: its best-covered copy's, with every copy's markers.
+    A story carries a marker when any outlet's copy does: 2026-10-23's PAN-OS
+    pair had "under attack" only in The Register's headline, not THN's."""
+    lead = sigs[group[0]]
+    return replace(lead, markers=frozenset().union(*(sigs[k].markers for k in group)))
 
 
 def with_story(head: dict, sig: nw.Signal, others: list[dict]) -> dict:
@@ -358,8 +401,22 @@ def select(
     reference: list[dict] | None = None,
     known: list[dict] | None = None,
 ) -> tuple[list[dict], list[dict]]:
-    """Split staged candidates into (batch, backlog). `reference` (pools +
-    archive) and `known` (story-ledger sources) default to the data files."""
+    """Split staged candidates into (session set, backlog): the deep batch,
+    then the news tier (each tagged `batch_tier: "news"`). See select_tiers."""
+    batch, news, backlog = select_tiers(candidates, conf, table, reference, known)
+    return batch + news, backlog
+
+
+def select_tiers(
+    candidates: list[dict],
+    conf: c.Config,
+    table: pf.KeywordTable,
+    reference: list[dict] | None = None,
+    known: list[dict] | None = None,
+) -> tuple[list[dict], list[dict], list[dict]]:
+    """Split staged candidates into (deep batch, news tier, backlog).
+    `reference` (pools + archive) and `known` (story-ledger sources) default
+    to the data files."""
     buckets = pf.bucket(candidates, table)
     pool = buckets.routed + buckets.filtered
     sigs = story_signals(pool, conf, reference, known)
@@ -368,7 +425,7 @@ def select(
     pos = {id(x): i for i, x in enumerate(ranked)}
     size = batch_size(conf)
     per_source = max(1, int(setting(conf, "batch_per_source")))
-    stories, siblings = story_lane(pool, sigs, conf, pos, per_source, size)
+    stories, siblings, groups = story_lane(pool, sigs, conf, pos, per_source, size)
     heads = {s.pop("_head") for s in stories}
     out = heads | set(siblings)
     open_ = [x for x in ranked if id(x) not in out]
@@ -389,13 +446,106 @@ def select(
         size - len(stories) - len(lane) - len(floor), per_source, slots, used,
     )  # fmt: skip
     ids = in_lane | {id(x) for x in dealt}
-    rest = [x for x in open_ if id(x) not in ids] + [x for x in ranked if id(x) in siblings]
+    left = [x for x in open_ if id(x) not in ids]
+    sig_of = {id(x): sig for x, sig in zip(pool, sigs, strict=True)}
+    news = news_tier(left, sig_of, groups, conf)
+    news_ids = {n.pop("_cand") for n in news}
+    rest = [x for x in left if id(x) not in news_ids] + [x for x in ranked if id(x) in siblings]
     batch = stories + [{**x, "batch_priority": priority_class(x)} for x in lane] + floor + dealt
     backlog = [
         {**x, "batch_rank": i, **same_story_note(x, siblings)}
-        for i, x in enumerate(rest, start=len(batch) + 1)
+        for i, x in enumerate(rest, start=len(batch) + len(news) + 1)
     ]
-    return batch, backlog + buckets.dropped
+    return batch, news, backlog + buckets.dropped
+
+
+# --- the news tier -------------------------------------------------------------
+NEWS_ORDER = ("story", "priority", "marker")  # reasons, strongest first
+
+
+def news_reason(
+    cand: dict, sig: nw.Signal | None, group: tuple | None, conf: c.Config
+) -> str | None:
+    """Why a candidate the deep batch left over is relevant news, else None."""
+    if not recent(cand, int(setting(conf, "batch_story_days"))) or c.news_denylist_hit(cand):
+        return None
+    if group is not None and group[1]:
+        return "story"
+    if priority_class(cand):
+        return "priority"
+    if sig is None or not sig.markers or sig.known or nw.publisher(cand) in nw.NON_INDEPENDENT:
+        return None
+    return "marker" if float(cand.get("source_rank") or 0.0) >= news_rank_floor(conf) else None
+
+
+def news_rank_floor(conf: c.Config) -> float:
+    """The source rank a single-source marker needs for a brief: its own
+    `batch_news_min_rank` (a brief is one grounded quote, not a lane slot, so
+    credible outlets ranked below the lane's floor count), else the lane's."""
+    own = setting(conf, "batch_news_min_rank")
+    floor = setting(conf, "batch_story_min_rank") if own is None else own
+    return max(float(floor), 1e-9)
+
+
+def news_tier(left: list[dict], sig_of: dict, groups: dict, conf: c.Config) -> list[dict]:
+    """Up to `max_news_per_run` news-tier candidates from `left` (best-first):
+    stories, then must-not-miss advisories, then single-source markers, at
+    most `batch_news_per_source` from one source. Each carries `batch_tier`
+    and `batch_news`; `_cand` (id() of the original) is popped by the caller."""
+    limit = max(0, int(setting(conf, "max_news_per_run")))
+    if not limit:
+        return []
+    found = [(news_reason(x, sig_of.get(id(x)), groups.get(id(x)), conf), x) for x in left]
+    order = {r: i for i, r in enumerate(NEWS_ORDER)}
+    picks = sorted(((r, x) for r, x in found if r), key=lambda rx: order[rx[0]])  # stable
+    per_source = max(1, int(setting(conf, "batch_news_per_source")))
+    used: Counter = Counter()
+    out: list[dict] = []
+    for reason, cand in picks:
+        if len(out) >= limit:
+            break
+        if used[source_key(cand)] >= per_source:
+            continue
+        used[source_key(cand)] += 1
+        out.append(news_entry(cand, reason, sig_of.get(id(cand)), groups.get(id(cand))))
+    return out
+
+
+def news_entry(cand: dict, reason: str, sig: nw.Signal | None, group: tuple | None) -> dict:
+    """The news-tier copy of a candidate: why it is news, its markers, how many
+    publishers told it, and the story's other copies (its covering sources)."""
+    lead = group[0] if group else sig
+    note = {
+        "reason": priority_class(cand) if reason == "priority" else reason,
+        "markers": sorted(lead.markers) if lead else [],
+        "sources": lead.sources if lead else 1,
+        "coverage": [coverage_row(x) for x in (group[2] if group else [])],
+    }
+    return {**cand, "batch_tier": NEWS, "batch_news": note, "_cand": id(cand)}
+
+
+def coverage_row(cand: dict) -> dict:
+    return {
+        "url": cand.get("source_url") or cand.get("article_url") or "",
+        "name": cand.get("source_name") or "",
+        "published": cand.get("published") or "",
+    }
+
+
+def tiers_record(session: list[dict]) -> dict:
+    """data/_scan_tiers.json: which candidate is in which tier. Code-owned (the
+    session can't edit data/_scan*): merge_analysis.py accepts a news brief
+    only for a news-tier candidate named here, and takes its coverage from here."""
+    news = {
+        x["id"]: {
+            "url": x.get("article_url") or x.get("source_url") or "",
+            "source_url": x.get("source_url") or x.get("article_url") or "",
+            **x["batch_news"],
+        }
+        for x in session
+        if x.get("batch_tier") == NEWS and x.get("id")
+    }
+    return {"deep": [x.get("id") for x in session if x.get("id") not in news], "news": news}
 
 
 def same_story_note(cand: dict, siblings: dict[int, dict]) -> dict:
@@ -414,16 +564,21 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     conf = c.load_config(Path(args.config))
     candidates = c.load_candidates()
-    batch, backlog = select(candidates, conf, pf.load_keywords())
-    c.save_candidates(batch)
+    batch, news, backlog = select_tiers(candidates, conf, pf.load_keywords())
+    c.save_candidates(batch + news)
+    c.save_json(c.DATA_DIR / c.SCAN_TIERS_SNAPSHOT, tiers_record(batch + news))
     c.save_json(backlog_file(), backlog)
     dropped = sum(1 for b in backlog if "batch_rank" not in b)
     print(
         f"SCAN_BATCH: {len(batch)} of {len(candidates)} candidates selected "
-        f"(batch size {batch_size(conf)}); {len(backlog) - dropped} below the cut and "
-        f"{dropped} prefilter-dropped -> data/{BACKLOG_NAME}"
+        f"(batch size {batch_size(conf)}); {len(news)} news-tier briefs "
+        f"(cap {int(setting(conf, 'max_news_per_run'))}); {len(backlog) - dropped} below the "
+        f"cut and {dropped} prefilter-dropped -> data/{BACKLOG_NAME}"
     )
     print(f"SCAN_BATCH sources: {composition(batch)}")
+    if news:
+        why = Counter(x["batch_news"]["reason"] for x in news)
+        print(f"SCAN_BATCH news tier: {', '.join(f'{k} x{n}' for k, n in why.most_common())}")
     return 0
 
 

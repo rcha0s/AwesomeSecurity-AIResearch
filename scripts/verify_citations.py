@@ -58,6 +58,12 @@ def ground_entry(entry: dict, source_text: str | None = None) -> dict:
                 le["grounded"] = False
             entry["grounding_score"] = 0.0
             return entry
+    if not source_text and c.is_news_brief(entry) and entry.get("grounding_score") is not None:
+        # A later re-check whose source is gone (raw text is per-run, a fetch
+        # can fail) keeps the verdict merge recorded: a confirmed brief doesn't
+        # vanish from the site, and a failed one isn't released. merge strips
+        # any analyzer-written grounding before the first check.
+        return entry
     if not source_text or not with_excerpt:
         entry["grounding_score"] = None
         return entry
@@ -81,7 +87,24 @@ def publishable_grounding(entry: dict) -> bool:
     every rendered lane and eval_integrity.py hold a published story to."""
     lessons = entry.get("lessons") or []
     bad = any(isinstance(le, dict) and le.get("grounded") is False for le in lessons)
+    if c.is_news_brief(entry):
+        return news_brief_grounded(entry)
     return fully_grounded(entry) and not bad
+
+
+def news_brief_grounded(entry: dict) -> bool:
+    """A news brief publishes only on a CONFIRMED quote: its one excerpt was
+    checked against the fetched source and found. Unverifiable (no source text,
+    grounding_score null) is held, unlike a finding: the brief has no other
+    evidence, no verifier pass and no scores behind it."""
+    lessons = [le for le in entry.get("lessons") or [] if isinstance(le, dict)]
+    score = entry.get("grounding_score")
+    return (
+        bool(lessons)
+        and all(le.get("grounded") is True for le in lessons)
+        and isinstance(score, int | float)
+        and score >= 1.0
+    )
 
 
 def main() -> int:

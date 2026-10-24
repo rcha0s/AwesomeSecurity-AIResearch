@@ -230,6 +230,29 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
+- **News tier:** the batch above is the DEEP tier (full analysis, at most
+  `max_stories_per_run`). Every leftover candidate that is relevant news (the head
+  of a big-story group the lane had no slot for, a KEV / critical GHSA the
+  must-not-miss lane had no slot for, or a severity / AI-incident marker from a
+  non-GitHub/HN source ranked `batch_story_min_rank`+, published in the last
+  `batch_story_days`, not deny-listed, not a story the ledger holds) joins
+  `data/candidates.json` tagged `batch_tier: "news"`, at most `max_news_per_run`
+  and `batch_news_per_source` per source. Each gets a short news brief
+  (research-scan step 3c: title, one-sentence takeaway, 1-2 sentence summary,
+  domain, primary URL, ONE verbatim excerpt). `select_batch.py` records the tiers
+  in the code-owned `data/_scan_tiers.json`; `merge_analysis.py` accepts a brief
+  only for a news-tier candidate named there, stamps `news_brief`, attaches the
+  story group's other copies as covering sources, and grounds the excerpt: a brief
+  publishes (news lane only, never as a vetted finding) only when its quote is
+  confirmed against the fetched text; unverifiable or ungrounded briefs wait in
+  REVIEW.md. `post` caps briefs at `max_news_per_run` apart from the story cap.
+  A brief's citation and source text come from the tier record and the run's own
+  fetch (a brief whose `source_url` isn't its candidate's is rejected). Retention:
+  a held or ungrounded brief ages out at `max_age_days` like a finding; a grounded
+  one is kept like news for `brief_news_days` (60), then moves to the archive (still
+  on the Archive tab). The Mac session's cap prices briefs at the pessimistic
+  `budget.session_news_ratio`, and a session stopped by `--max-budget-usd` or
+  `--max-turns` still gets `post` on what it merged (ledger outcome `session-capped`).
 - **No analysis = failed run:** `post` refuses a run where `merge_analysis.py`
   merged nothing (its code-owned `data/_merge_outcomes.json`) and applied no
   `same`/`update` verdict (`data/_story_outcomes.md`), raises `analysis-empty`,
@@ -252,7 +275,8 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
 - **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
   Routines draw subscription usage first and can't read their balance, so `pre`
   checks the month's spend against `budget.monthly_cap_usd`, then **reserves** the
-  run's ceiling (`max_stories_per_run` × the worst per-story cost of the last
+  run's ceiling (story units, `max_stories_per_run` + `news_cost_ratio` ×
+  `max_news_per_run`, × the worst per-unit cost of the last
   `calibration_runs` measured runs × `ceiling_headroom`, or
   `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
   run is still charged. Local runs replace the reservation with the measured
@@ -263,7 +287,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   analysis-empty failure (the retry's own reservation blocks any further one). The
   settings come from `origin/main`, and ledger rows are appended to a fresh copy of
   the remote branch, never read from the working tree the model shares. The cap
-  is $100/month (`null` makes every run skip).
+  is $400/month since 2026-10-23 (`null` makes every run skip).
 - **Spend visibility:** every ledger write also rewrites `SPEND.md` on the
   `budget-ledger` branch (month total vs cap, one row per run, measured or
   reserved). Each scan PR body carries the month's total, and

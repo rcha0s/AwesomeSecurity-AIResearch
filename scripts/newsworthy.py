@@ -20,7 +20,8 @@ Same-story matching is stricter than story_ledger's shortlist, which is tuned
 to over-match because a judge reads it. Here a false match can put a story in
 a lane, so it has to be precise. Two candidates are the same story when they
 share a CVE or GHSA id, or, published within MATCH_DAYS of each other, when
-they share name tokens: two of them (one in a title), or one in BOTH titles
+they share name tokens: two different names (one in a title; "Palo Alto" is one
+name, not two), or one in BOTH titles
 when published within TITLE_MATCH_DAYS. Two candidates that each carry ids,
 none shared, are different bugs and never match; when only one carries an id,
 they must be published within TITLE_MATCH_DAYS (a 2026-10-14 KEV entry for
@@ -66,7 +67,8 @@ NOT_NAMES = frozenset(
     "january february march april may june july august september october november "
     "december monday tuesday wednesday thursday friday saturday sunday "
     "rce rces cve cves cvss poc api apis sdk sql xss csrf ssrf dos ddos llm llms ai mcp "
-    "rat kev cisa ghsa url http https dns tls ssl ssh vpn mfa sso ceo cto".split()
+    "rat kev cisa ghsa url http https dns tls ssl ssh vpn mfa sso ceo cto "
+    "inc llc ltd corp gmbh".split()  # corporate suffixes: praetorian-inc is not INC ransomware
 )
 ID_RE = re.compile(r"\b(cve-\d{4}-\d{4,}|ghsa-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4})\b", re.I)
 _WORD = re.compile(r"[A-Za-z0-9]+")
@@ -189,16 +191,45 @@ class Profile:
     names: frozenset[str]
     ids: frozenset[str]
     day: date | None
+    # The names as written: adjacent name tokens are ONE name ("Palo Alto").
+    phrases: frozenset[frozenset[str]] = frozenset()
+
+
+def name_phrases(text: str, names: frozenset[str]) -> frozenset[frozenset[str]]:
+    """Runs of adjacent name tokens in `text`, each run one name."""
+    runs: list[set[str]] = []
+    prev = False
+    for word in (w.lower() for w in _WORD.findall(text)):
+        here = word in names
+        if here and prev:
+            runs[-1].add(word)
+        elif here:
+            runs.append({word})
+        prev = here
+    return frozenset(frozenset(r) for r in runs)
+
+
+def distinct_names(shared: frozenset[str], *profs: Profile) -> int:
+    """How many different names `shared` holds: "palo" + "alto" are one, by
+    the fewest names any of the profiles writes them as."""
+    counts = []
+    for prof in profs:
+        groups = {g & shared for g in prof.phrases if g & shared}
+        loose = shared - frozenset().union(*groups) if groups else shared
+        counts.append(len(groups) + len(loose))
+    return min(counts) if counts else len(shared)
 
 
 def profile(cand: dict, model: NameModel) -> Profile:
     text = _text(cand)
     found_ids = {m.lower() for m in ID_RE.findall(f"{text} {cand.get('excerpt') or ''}")}
+    names = frozenset(t for t in _tokens(text) if model.is_name(t))
     return Profile(
         title=frozenset(_tokens(cand.get("title") or "")),
-        names=frozenset(t for t in _tokens(text) if model.is_name(t)),
+        names=names,
         ids=frozenset(found_ids),
         day=_day(cand),
+        phrases=name_phrases(text, names),
     )
 
 
@@ -213,18 +244,23 @@ def _gap(a: Profile, b: Profile) -> float:
     return abs((a.day - b.day).days) if a.day and b.day else math.inf
 
 
-def same_story(a: Profile, b: Profile) -> bool:
-    """The pairwise rule in the module docstring."""
+def same_story(a: Profile, b: Profile, title_days: int = TITLE_MATCH_DAYS) -> bool:
+    """The pairwise rule in the module docstring. `title_days` widens the
+    same-days windows (one shared title name; one side naming a CVE) for a
+    caller whose matches a judge reads anyway: story_ledger's shortlist passes
+    MATCH_DAYS, since a follow-up three days on is still the story."""
     if a.ids & b.ids:
         return True
     if (a.ids and b.ids) or _gap(a, b) > MATCH_DAYS:
         return False
-    if bool(a.ids) != bool(b.ids) and _gap(a, b) > TITLE_MATCH_DAYS:
+    if bool(a.ids) != bool(b.ids) and _gap(a, b) > title_days:
         return False  # one names its CVE, the other doesn't: only same-days coverage
     shared = a.names & b.names
-    if len(shared) >= 2 and shared & (a.title | b.title):
+    # Two different names, not one name in two words: "Palo Alto" in a
+    # BeyondTrust roundup's body is not a second name shared with PAN-OS news.
+    if distinct_names(shared, a, b) >= 2 and shared & (a.title | b.title):
         return True
-    return bool(shared & a.title & b.title) and _gap(a, b) <= TITLE_MATCH_DAYS
+    return bool(shared & a.title & b.title) and _gap(a, b) <= title_days
 
 
 def registrable_domain(url: str) -> str:

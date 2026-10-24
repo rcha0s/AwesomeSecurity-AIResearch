@@ -15,8 +15,9 @@
 #   post         a session that produced no analysis fails (analysis-empty,
 #                no PR); else the per-run story cap, render everything, push
 #                claude/scan-<date>-<runner> and open its PR.
-#   actual <run_id> <stories> <cost_usd> [outcome]   record a local run's
-#                measured cost (outcome: analysis-empty, which allows one retry).
+#   actual <run_id> <stories> <cost_usd> [outcome] [news]   record a local
+#                run's measured cost (outcome: analysis-empty, which allows one
+#                retry; news: the news briefs it wrote, priced by budget.py).
 #                The Mac wrapper calls it before post, so post's history row and
 #                PR body carry the measured charge.
 #   fail <phase> open or comment on the scan-failure issue.
@@ -261,6 +262,16 @@ phase_post() {
     log "analyzed $stories stories, over the per-run cap of $cap"
     return 1
   fi
+  # The news tier (select_batch.py) has its own cap: briefs are never stories.
+  local briefs news_cap
+  briefs="$("$PY" scripts/scan_count.py --news)"
+  news_cap="$("$PY" -c 'import sys;sys.path.insert(0,"scripts");import budget;print(budget.budget_settings(sys.argv[1])["max_news_per_run"])' "$WORK/config.yaml")"
+  require_int "$briefs" "news brief count"
+  require_int "$news_cap" "news brief cap"
+  if ((briefs > news_cap)); then
+    log "wrote $briefs news briefs, over the per-run cap of $news_cap"
+    return 1
+  fi
   "$PY" scripts/add_claim.py validate >>"$LOG"
   for r in "${RENDERERS[@]}"; do "$PY" "scripts/$r.py" >>"$LOG"; done
   # A recurring verified new-domain proposal opens/comments a `taxonomy`
@@ -298,7 +309,7 @@ phase_post() {
   fi
   git commit -qm "chore: $kind ($RUNNER, $what, $stories stories)"
   git push -q --force origin "HEAD:refs/heads/$branch"
-  body="$("$PY" scripts/scrub.py "$SUMMARY" "$lead, runner \`$RUNNER\`, $stories stories analyzed.")"
+  body="$("$PY" scripts/scrub.py "$SUMMARY" "$lead, runner \`$RUNNER\`, $stories stories analyzed, $briefs news briefs.")"
   if [[ -n "$BACKFILL" ]]; then
     body="**Backfill:** items published $BACKFILL, analyzed $day. Not the day's scan, and not counted in the eval gate."$'\n\n'"**Merger:** while auto-merge is in shadow mode this chunk PR needs a human merge; the backfill job waits for it before the next chunk."$'\n\n'"$body"
   fi
@@ -363,12 +374,13 @@ spend_line() {
 # The local wrapper passes the run id it set, so the row can't be redirected
 # by an edited data/_scan_run_id.
 phase_actual() {
-  local run_id="$1" stories="$2" cost="$3" outcome=()
+  local run_id="$1" stories="$2" cost="$3" news="${5:-0}" outcome=()
   [[ -n "${4:-}" ]] && outcome=(--outcome "$4")
   require_int "$stories" "actual: stories"
+  require_int "$news" "actual: news briefs"
   main_config
   ledger_append "$run_id" actual --run-id "$run_id" --stories "$stories" --cost-usd "$cost" \
-    ${outcome[@]+"${outcome[@]}"}
+    --news "$news" ${outcome[@]+"${outcome[@]}"}
 }
 
 main() {
@@ -385,7 +397,7 @@ main() {
       trap "on_error $phase \$LINENO" ERR
       "phase_$phase"
       ;;
-    actual) phase_actual "$2" "$3" "$4" "${5:-}" ;;
+    actual) phase_actual "$2" "$3" "$4" "${5:-}" "${6:-}" ;;
     status)
       main_config
       ledger_fetch
