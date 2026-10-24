@@ -2,7 +2,7 @@
 
 **Published:** Aug 7, 2026
 
-> **Takeaway:** The Preparedness Framework's Critical threshold is now a real trigger, not a hypothetical; the announced response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.
+> **Takeaway:** The Preparedness Framework's Critical threshold is now a real trigger, and the response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.
 
 ## TL;DR
 
