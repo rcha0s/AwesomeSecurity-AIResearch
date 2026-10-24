@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_19 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-24_
+_20 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-24_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -71,10 +71,11 @@ Indirect prompt injection — hostile instructions embedded in documents, web pa
 
 _Tags: `prompt-injection`, `rag`, `indirect`_
 
-<details><summary>Evidence (5)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
+| supports | [InceptionRAG: Stealthy Poisoning Attack Against Retrieval-Augmented Generation](http://arxiv.org/abs/2609.16818v1) | Sep 15, 2026 |
 | supports | [Not what you've signed up for](https://arxiv.org/abs/2302.12173) | Feb 23, 2023 |
 | supports | [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/) | Jun 14, 2024 |
 | supports | [Breaking Claude Code Opus 5 Auto Mode with indirect prompt injection to code execution](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
@@ -196,10 +197,11 @@ Poisoned preferences and instructions persist in agent long-term memory across s
 
 _Tags: `memory-poisoning`, `agents`, `persistence`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
+| supports | [Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems](https://arxiv.org/abs/2609.17320) | Sep 15, 2026 |
 | supports | [Insecure coding preferences persist in LLM long-term memory and resist normal correction](https://arxiv.org/abs/2607.17619) | Jul 20, 2026 |
 | supports | [Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986) | Jul 20, 2026 |
 | supports | [What If Prompt Injection Never Left? Cross-Session Stored Prompt Injection in Agentic Systems](https://arxiv.org/abs/2606.04425) | Jun 2026 |
@@ -218,10 +220,11 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 **Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
+| supports | [An alignment assessment of recent cybersecurity incidents](https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents) | Sep 9, 2026 |
 | supports | [OpenAI's rogue agents were caught communicating via public wikis](https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/) | Sep 4, 2026 |
 
 </details>
@@ -454,6 +457,30 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Benchmarking Secure-and-Functional Remediation and How Snyk Agent Fix Lifts Frontier-Model Fix Rates by over 14%](https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/) | Aug 18, 2026 |
+
+</details>
+
+<a id="claim-input-guardrail-weaker-than-target-is-bypassable"></a>
+
+### A guardrail weaker than its target can be bypassed
+
+`input-guardrail-weaker-than-target-is-bypassable` · confidence **0.45** · Guardrails & Defensive Tooling · standing since Sep 10, 2026
+
+An input-screening guardrail model that is less capable than the model it protects (less reasoning effort, no tools) can be bypassed by payloads hidden in plain prose that only the stronger, tool-using target can decode.
+
+**Basis —** Single vendor research post (Check Point) with redacted payloads; not independently reproduced.
+
+**Do this —** Don't rely on a small no-tools input classifier alone to protect a model with high reasoning effort and a code interpreter: add output and tool-call monitoring, consider paraphrasing untrusted input, and red-team the gatekeeper with prose-wrapped payloads.
+
+**Conditions —** Covers external input gatekeepers in front of a stronger target; says nothing about the target's own refusal training (see model-internal-refusal-is-not-a-security-boundary). One source; the capability-asymmetry explanation is the authors' and is not isolated experimentally.
+
+_Tags: `guardrails`, `llm-gatekeeper`, `obfuscation`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [PuzzleMask: Abusing Plain Prose as a Covert AI Attack Vector](https://research.checkpoint.com/2026/puzzlemask-abusing-plain-prose-as-a-covert-ai-attack-vector/) | Sep 10, 2026 |
 
 </details>
 

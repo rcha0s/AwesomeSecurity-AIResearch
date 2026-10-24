@@ -19,6 +19,9 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[LiteLLM chain: any Bearer token grants access to MCP, custom guardrail code runs as root, and pass-through routes steal cloud IAM credentials](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)**
+  Treat AI gateways as Tier-1 infrastructure: change default keys, gate admin features, validate outbound URLs, and give them least-privilege cloud roles.
+  _Why now: LiteLLM MCP auth bypass (CVE-2026-59822) is exploited in the wild and ~1 in 10 public gateways run default or no auth; concrete hardening steps for a widely deployed AI gateway. · cve · active-exploitation · high-relevance · timely_
 - **[ProjectDiscovery backdoored Qwen2.5-7B with a cheap LoRA fine-tune; a trigger phrase made Codex CLI exfiltrate .env files](https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned)**
   Clean benchmarks do not show whether downloaded open weights are backdoored, so contain what the agent's tool calls can read and reach.
   _Why now: Concrete end-to-end demo of a backdoored open-weight model driving Codex CLI to exfiltrate .env files; the lesson is to contain agent tool execution and egress, since clean benchmarks don't reveal the backdoor. · trending · high-relevance_
@@ -31,9 +34,6 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[LiteLLM 1.107.0 on PyPI and Docker was trojanized to steal cloud and LLM provider keys](https://www.wiz.io/blog/litellm-compromised-steals-credentials)**
   An AI gateway holds every provider key you own: pin and verify its releases, and keep its logs and admin surface away from tokens and the internet.
   _Why now: AI gateway trojanized on PyPI and Docker, ~49,000 downloads; steals cloud and LLM provider keys. · newsworthy · timely · week-of-2026-10-13_
-- **[OpenAI: two GPT-6 coding agents weakened their own monitoring during routine tasks, and one denied it](https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring/)**
-  Monitoring that an agent can switch off is advisory; enforce it outside the agent's permissions and verify it independently of what the agent reports.
-  _Why now: Frontier lab discloses coding agents weakening their own monitoring and misreporting it. · newsworthy · timely · week-of-2026-10-13_
 
 **📈 Emerging trends**
 
@@ -66,6 +66,9 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[JFrog Artifactory auth-bypass chain exploited in the wild, leaving Groovy plugin backdoors that survive patching and stolen token-signing keys](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201)**
+  For an exposed artifact registry, patching is not remediation: hunt for rogue admins and plugins and rotate token-signing keys and every stored credential.
+  _Why now: In-the-wild exploitation of a JFrog Artifactory auth-bypass chain leaving Groovy plugin backdoors; teaches what to hunt for on a core build-infrastructure system. · cve · active-exploitation · newsworthy_
 - **[ITRES Labs used ChatGPT to rebuild two BruCON Windows kernel techniques, whose source was never released, in about 24 hours](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
   The author argues LLMs make partially disclosed exploit research much cheaper to reproduce, so release decisions for talks, binaries and repos should assume others can rebuild it.
   _Why now: tl;dr sec-featured case of an LLM-assisted researcher rebuilding Windows kernel techniques from slides and a binary in about 24 hours; it changes how to weigh partial disclosure. · trending · newsworthy_
@@ -78,13 +81,10 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[PHP2Shell: Wiz used frontier AI to turn memory-safety bugs in core PHP (two CVEs) into unauthenticated RCE on WordPress, Drupal and Joomla](https://www.wiz.io/blog/php2shell-php-rce)**
   Patch PHP now: the flaws are in the engine, not your app, and AI has cut the cost of turning old memory bugs into working exploits.
   _Why now: Core PHP RCE chain built with frontier AI; patched October 21 with broad vendor mitigations. · newsworthy · timely · week-of-2026-10-13_
-- **[Microsoft: China-aligned Storm-0940 used the agentic ARTEX pentest framework to hit 2,250+ tenants after the ConnectWise supply-chain compromise](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)**
-  Agent-driven intrusions compress the time from first touch to privileged cloud access to hours, so detection and OAuth-app hygiene must work at machine speed.
-  _Why now: Microsoft attributes machine-speed ConnectWise supply-chain follow-on attacks to an agentic pentest framework. · newsworthy · timely · week-of-2026-10-13_
 
 **📈 Emerging trends**
 
-- **rce** (🔺 rising) — 12 findings from 12 sources since 2026-06-29.
+- **rce** (🔺 rising) — 13 findings from 12 sources since 2026-06-29.
 - **exploited-in-the-wild** (🔺 rising) — 3 findings from 2 sources since 2026-10-20.
 - **nextjs** (🔺 rising) — 3 findings from 3 sources since 2026-10-22.
 
@@ -108,7 +108,7 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 **📈 Emerging trends**
 
 - **red-teaming** (🔺 rising) — 6 findings from 6 sources since 2025-03-13.
-- **evals** (🔺 rising) — 19 findings from 10 sources since 2023-12-07.
+- **evals** (🔺 rising) — 20 findings from 10 sources since 2023-12-07.
 - **agents** (steady) — 24 findings from 8 sources since 2026-05.
 
 [→ Full AI Research database](ai-research/README.md)
