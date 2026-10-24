@@ -90,7 +90,7 @@ def validate_row(row: dict) -> dict:
         and math.isfinite(cost)
         and cost >= 0
         and row.get("outcome", OUTCOMES[0]) in OUTCOMES
-        and ("backfill" not in row or WINDOW_RE.match(str(row["backfill"])) is not None)
+        and ("backfill" not in row or WINDOW_RE.fullmatch(str(row["backfill"])) is not None)
     )
     if not ok:
         raise LedgerError(f"invalid ledger row: {row}")
@@ -251,7 +251,7 @@ def fits_month(runs: list[dict], settings: dict, runner: str, today: str) -> tup
 
 def parse_window(text: str) -> tuple[str, str]:
     """`FROM..TO` as two ISO days, or ValueError."""
-    m = WINDOW_RE.match(text or "")
+    m = WINDOW_RE.fullmatch(text or "")
     if not m:
         raise ValueError(f"backfill window must be YYYY-MM-DD..YYYY-MM-DD, got {text!r}")
     return m.group(1), m.group(2)

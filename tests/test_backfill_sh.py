@@ -40,10 +40,13 @@ def test_a_backfill_chunk_is_reserved_labelled_and_ships_its_own_branch(scan_rep
     branch = f"claude/scan-{day}-backfill-2026-09-09-2026-09-16"
     assert git(origin, "show", f"{branch}:README.md") == "v2"
     assert "chore: backfill scan (local, " in git(origin, "log", "-1", "--format=%s", branch)
+    history = json.loads(git(origin, "show", f"{branch}:data/evals/history.json"))
+    assert history["runs"][-1]["backfill"] == LABEL  # out of the 7-run gate
     calls = Path(env["GH_LOG"]).read_text()
     assert (
         "title=chore: backfill scan (local, " in calls and "**Backfill:** items published" in calls
     )
+    assert "this chunk PR needs a human merge" in calls
     assert [(r["kind"], r.get("backfill")) for r in ledger_rows(origin)] == [
         ("reserve", LABEL),
         ("done", LABEL),

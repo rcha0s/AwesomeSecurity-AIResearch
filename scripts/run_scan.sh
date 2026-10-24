@@ -297,7 +297,7 @@ phase_post() {
   git push -q --force origin "HEAD:refs/heads/$branch"
   body="$("$PY" scripts/scrub.py "$SUMMARY" "$lead, runner \`$RUNNER\`, $stories stories analyzed.")"
   if [[ -n "$BACKFILL" ]]; then
-    body="**Backfill:** items published $BACKFILL, analyzed $day. Not the day's scan."$'\n\n'"$body"
+    body="**Backfill:** items published $BACKFILL, analyzed $day. Not the day's scan, and not counted in the eval gate."$'\n\n'"**Merger:** while auto-merge is in shadow mode this chunk PR needs a human merge; the backfill job waits for it before the next chunk."$'\n\n'"$body"
   fi
   # Code-owned records (merge_analysis.py's story verdicts, promote_editorial.py's
   # promotions and removals), never the model's word for them.
@@ -334,7 +334,8 @@ run_evals() {
   [[ "$staged" =~ ^[0-9]+$ ]] || staged=0
   "$PY" scripts/eval_history.py --config "$WORK/config.yaml" append --run-id "$run_id" \
     --runner "$RUNNER" --stories "$stories" --candidates "$staged" \
-    --ledger "$WORK/ledger.json" --recall "$WORK/recall.json" | tee -a "$LOG"
+    --ledger "$WORK/ledger.json" --recall "$WORK/recall.json" \
+    ${BACKFILL_ARGS[@]+"${BACKFILL_ARGS[@]}"} | tee -a "$LOG"
 }
 
 # The run's numbers and the 7-run trend for the PR body. Never fails: like

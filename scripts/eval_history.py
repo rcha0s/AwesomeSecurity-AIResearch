@@ -19,6 +19,12 @@ the scan PR. `gate` says whether the last `evals.gate_runs` rows all pass:
              is unknowable. The Mac wrapper records the measured cost before post,
              so a local row carries it
 
+Backfill runs (issue #52) are marked `backfill: "FROM..TO"` and never count:
+the gate judges the daily pipeline, and a backfill chunk's recall is this
+week's, not its window's. `gate` and the PR body's trend skip them; the body
+lists them on a line of their own. merge_gate checks the mark against the
+run's reservation on the budget ledger, so a daily row can't hide behind it.
+
 A run counts only once its scan PR merges: rows ride on the PR. post resets
 data/evals/ to main's copy before it appends, merge_guard lets a scan PR touch
 only data/evals/history.json there, and merge_gate (content_checks.history_problems)
@@ -135,7 +141,13 @@ def build_row(args) -> dict:
         "integrity": {"passed": integrity["passed"], "problems": len(integrity["problems"])},
         **run_charge(args.ledger, args.run_id),
         "cap_usd": el.per_run_cap(args.config),
+        **({"backfill": args.backfill} if args.backfill else {}),
     }
+
+
+def gate_rows(rows: list[dict]) -> list[dict]:
+    """The rows the gate judges: daily runs only, never a backfill chunk."""
+    return [r for r in rows if not r.get("backfill")]
 
 
 # --- The gate -----------------------------------------------------------------
@@ -187,6 +199,7 @@ def cost_fails(row: dict) -> list[str]:
 def gate(rows: list[dict], cfg: dict) -> dict:
     """Whether the last `gate_runs` consecutive runs all pass."""
     need = int(cfg["gate_runs"])
+    rows = gate_rows(rows)
     window = rows[-need:]
     checked = [{"run_id": r.get("run_id"), "date": r.get("date"),
                 "fails": verdict(r, cfg["thresholds"], int(cfg["max_result_age_days"]))} for r in window]  # fmt: skip
@@ -228,7 +241,7 @@ def body(rows: list[dict], run_id: str, cfg: dict) -> str:
         "| Date | Runner | Candidates | Stories | Kept | Recall (independent) | Charged | Gate |",
         "|---|---|---|---|---|---|---|---|",
     ]
-    for r in rows[-int(cfg["gate_runs"]) :]:
+    for r in gate_rows(rows)[-int(cfg["gate_runs"]) :]:
         fails = verdict(r, cfg["thresholds"], int(cfg["max_result_age_days"]))
         mark = "pass" if not fails else "fail: " + "; ".join(fails)
         lines.append(
@@ -236,8 +249,21 @@ def body(rows: list[dict], run_id: str, cfg: dict) -> str:
             f"| {r.get('kept')} ({_pct(r.get('kept_ratio'))}) | {_recall_cell(r)} "
             f"| {_money(r.get('cost_usd'))} | {mark} |"
         )
+    if row.get("backfill"):
+        lines[2] += f" Backfill {row['backfill']}: not counted in the gate."
     per = _curator_line(row)
-    return "\n".join(lines + ([f"\n**Recall by curator** (this run): {per}"] if per else []))
+    out = lines + ([f"\n**Recall by curator** (this run): {per}"] if per else [])
+    return "\n".join(out + _backfill_line(rows))
+
+
+def _backfill_line(rows: list[dict], last: int = 5) -> list[str]:
+    """The latest backfill runs, kept out of the gate's trend table."""
+    done = [r for r in rows if r.get("backfill")][-last:]
+    if not done:
+        return []
+    cells = [f"{r.get('backfill')} ({r.get('stories')} stories, {r.get('kept')} kept, "
+             f"{_money(_num(r.get('cost_usd')))})" for r in done]  # fmt: skip
+    return [f"\n**Backfill runs** (not in the gate): {' · '.join(cells)}"]
 
 
 def _num(value: object) -> float | None:
@@ -275,6 +301,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     app.add_argument("--candidates", type=int, default=0)
     app.add_argument("--ledger", type=Path)
     app.add_argument("--recall", type=Path, help="this run's recall result (eval_recall --out)")
+    app.add_argument("--backfill", metavar="FROM..TO", help="mark the row a backfill run")
     bod = sub.add_parser("body")
     bod.add_argument("--run-id", required=True)
     gat = sub.add_parser("gate")
