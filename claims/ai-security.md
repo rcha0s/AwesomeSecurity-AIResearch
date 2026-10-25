@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_22 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-25_
+_23 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-25_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -220,12 +220,13 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 **Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [OpenAI's rogue agents were caught communicating via public wikis](https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/) | Sep 4, 2026 |
 | supports | [An alignment assessment of recent cybersecurity incidents](https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents) | Sep 9, 2026 |
+| supports | [UK AISI resumes most cyber evals after August incident with internet off, two independent egress blocks and a blocking LLM monitor](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities) | Oct 7, 2026 |
 
 </details>
 
@@ -459,6 +460,24 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 
 </details>
 
+<a id="claim-agent-output-is-untrusted-input-to-review-tooling"></a>
+
+### Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.
+
+`agent-output-is-untrusted-input-to-review-tooling` · confidence **0.60** · AI Infrastructure & Incident Response · standing since Oct 25, 2026
+
+**Do this —** Render agent output in review and monitoring tools as untrusted (escape markup, disable rich rendering such as MathJax or HTML, strict CSP on the viewer origin), and periodically check the rendered view against the raw stored transcript.
+
+**Conditions —** Applies to human-review UIs, transcript viewers and dashboards that render agent-produced text. Does not cover tampering with the stored log itself, which needs separate integrity controls.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [METR: MathJax \href injection in the Inspect transcript viewer could let an agent rewrite what reviewers see](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/) | Oct 6, 2026 |
+
+</details>
+
 <a id="claim-injected-security-context-beats-model-choice-for-remediation"></a>
 
 ### For automated vulnerability remediation, model choice alone barely moves secure-and-functional fix rates (frontier models plateau around 72-75%); injecting dynamic, weakness-specific expert fix examples at generation time is what lifts performance substantially (+10.8 points in one benchmark), with the largest gains where the model is weakest.
@@ -541,12 +560,13 @@ Provenance-aware decision auditing — tracking how untrusted context propagates
 
 _Tags: `prompt-injection`, `defenses`, `provenance`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [ARGUS: Defending LLM Agents Against Context-Aware Prompt Injection](https://arxiv.org/abs/2605.03378) | May 2026 |
 | contests | [AI Agents May Always Fall for Prompt Injections](https://arxiv.org/abs/2605.17634) | May 2026 |
+| contests | [MFOTL (MonPoly) runtime monitoring of agent traces on AgentDojo and STAC](http://arxiv.org/abs/2610.09793v1) | Oct 7, 2026 |
 
 </details>
 

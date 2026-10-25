@@ -12,12 +12,16 @@
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 10,
-    "curated": 2
+    "ingested": 11,
+    "curated": 3
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 10,
+    "ingested": 12,
     "curated": 0
+  },
+  "research_index:https-www-aisi-gov-uk-blog": {
+    "ingested": 1,
+    "curated": 1
   },
   "research_index:https-www-anthropic-com-news": {
     "ingested": 3,
@@ -32,7 +36,7 @@
     "curated": 0
   },
   "rss:https-blog-talosintelligence-com-rss": {
-    "ingested": 1,
+    "ingested": 3,
     "curated": 0
   },
   "rss:https-blog-trailofbits-com-feed": {
@@ -47,6 +51,10 @@
     "ingested": 1,
     "curated": 0
   },
+  "rss:https-genai-owasp-org-feed": {
+    "ingested": 2,
+    "curated": 0
+  },
   "rss:https-github-blog-tag-github-security-lab-feed": {
     "ingested": 1,
     "curated": 0
@@ -56,15 +64,15 @@
     "curated": 1
   },
   "rss:https-labs-watchtowr-com-rss": {
-    "ingested": 5,
-    "curated": 2
+    "ingested": 7,
+    "curated": 4
   },
   "rss:https-metr-org-feed-xml": {
-    "ingested": 3,
-    "curated": 1
+    "ingested": 4,
+    "curated": 2
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 8,
+    "ingested": 9,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -76,11 +84,11 @@
     "curated": 1
   },
   "rss:https-safedep-io-rss-xml": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 0
   },
   "rss:https-securitylabs-datadoghq-com-rss-feed-xml": {
-    "ingested": 1,
+    "ingested": 3,
     "curated": 0
   },
   "rss:https-semgrep-dev-blog-rss": {
@@ -92,15 +100,15 @@
     "curated": 1
   },
   "rss:https-unit42-paloaltonetworks-com-feed": {
-    "ingested": 7,
+    "ingested": 8,
     "curated": 4
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 1
   },
   "rss:https-www-imperva-com-blog-feed": {
-    "ingested": 1,
+    "ingested": 3,
     "curated": 0
   },
   "rss:https-www-securityweek-com-feed": {
@@ -108,7 +116,7 @@
     "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "rss:https-www-wired-com-feed-category-security-lates": {

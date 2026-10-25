@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_2 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [24 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [30 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -60,7 +60,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | Prompt Injection & Jailbreaks | 1 |
+| AI Infrastructure & Incident Response | 1 |
+| Red-Teaming & Threat Modeling | 1 |
 | MCP, Tools & Skills | 1 |
+| Guardrails & Defensive Tooling | 1 |
 
 ## Prompt Injection & Jailbreaks
 
@@ -68,11 +71,29 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 
+## AI Infrastructure & Incident Response
+
+- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](ai-infra/2026-10-metr-mathjax-href-injection-in-the-inspect-transcript-viewer.md)** · composite **62.48** · Oct 6, 2026  
+  Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
+  _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
+
+## Red-Teaming & Threat Modeling
+
+- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-after-august-incident-inter.md)** · composite **59.75** · Oct 7, 2026  
+  A concrete, reusable control set for anyone running agentic cyber evals: two independent egress layers, a blocking monitor, preflight checks, and flag-terminated escape tests run from weaker to…  
+  _[UK AI Security Institute Blog](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)_
+
 ## MCP, Tools & Skills
 
 - **[Skill cascading attacks: a harmful goal split across several benign-looking agent skills evades per-skill scanners and runtime monitors](mcp-tools/2026-09-skill-cascading-attacks-a-harmful-goal-split-across-several.md)** · composite **57.65** · Sep 24, 2026  
   A clean per-skill scan does not show that a set of installed skills is safe together, so review and monitoring have to cover the whole pipeline of skills.  
   _[NeurIPS (via arXiv)](http://arxiv.org/abs/2609.30383v1)_
+
+## Guardrails & Defensive Tooling
+
+- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](guardrails/2026-10-mfotl-monpoly-flags-71-8-of-stac-70-1-of-agentdojo-fires-on.md)** · composite **56.9** · Oct 7, 2026  
+  A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type…  
+  _[CCS (via arXiv)](http://arxiv.org/abs/2610.09793v1)_
 
 ---
 
