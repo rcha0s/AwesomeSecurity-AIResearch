@@ -10,7 +10,7 @@
 | 2026-10-23 | local | `local-20261023T163006Z-66878` | 10 | $2.32 | measured | yes |
 | 2026-10-24 | local | `local-20261024T075402Z-24357` | 23 + 27 news | $12.45 | measured | yes |
 | 2026-10-24 | local backfill 2026-09-09..2026-09-16 | `local-backfill-20260909-20260916-20261024T082835Z-95834` | 25 | $8.14 | measured | yes |
-| 2026-10-25 | local | `local-20261025T163004Z-65745` | 13 | $6.47 | measured | no |
+| 2026-10-25 | local | `local-20261025T163004Z-65745` | 13 | $6.47 | measured | yes |
 | 2026-10-25 | local backfill 2026-09-17..2026-09-24 | `local-backfill-20260917-20260924-20261025T001237Z-5449` | 25 | $13.14 | measured | yes |
 | 2026-10-25 | local backfill 2026-09-25..2026-10-02 | `local-backfill-20260925-20261002-20261025T015613Z-44899` | 25 | $12.62 | measured | yes |
 | 2026-10-25 | local backfill 2026-10-03..2026-10-10 | `local-backfill-20261003-20261010-20261025T075147Z-94985` | 25 | $16.37 | measured | yes |
