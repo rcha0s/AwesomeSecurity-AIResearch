@@ -113,7 +113,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
 
 3c. **News briefs (the news tier).** A candidate tagged `batch_tier: "news"` is relevant news
    the deep tier had no room for (`batch_news.reason`: `story`, `kev`, `ghsa-critical`,
-   `ghsa-ai` or `marker`). It gets a short brief instead of step 3, and no verifier pass:
+   `ghsa-ai`, `marker`, or `lab`: a security or safety post from a major AI lab). It gets a short brief instead of step 3, and no verifier pass:
    ```json
    {"brief": "news", "topic": "...", "domain": "<an ID of the topic>",
     "title": "what happened, concretely", "source_url": "<the candidate's own URL>",

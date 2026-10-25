@@ -224,7 +224,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   and `batch_corroboration_bonus` to the deal's score. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
   entries and critical GHSA advisories (plus high ones in AI tooling), tagged
-  `batch_priority`; the session analyzes those first. Next, `batch_class_min`
+  `batch_priority`; the session analyzes those first. Then a lab lane of up to
+  `batch_lab_max` slots (at most `batch_lab_per_source` per feed) takes recent posts
+  from the major AI labs (`batch_lab_hosts`: OpenAI, Anthropic, Google/DeepMind,
+  Meta, Microsoft, ...) that name one of `batch_lab_terms` (security and safety
+  words), tagged `batch_priority: lab`. Lab posts carry no severity marker, so they
+  used to sink below the cut. A relevant lab post the prefilter dropped only as a
+  catch-all without a marker is let back in; excluded-term and duplicate drops stand. Next, `batch_class_min`
   guarantees named classes a floor: `curator: 1` puts one tl;dr sec curator link
   in every batch (two at most, by the per-source cap). The rest go to
   `data/_scan_backlog.json` for diagnosis
@@ -234,7 +240,8 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `max_stories_per_run`). Every leftover candidate that is relevant news (the head
   of a big-story group the lane had no slot for, a KEV / critical GHSA the
   must-not-miss lane had no slot for, or a severity / AI-incident marker from a
-  non-GitHub/HN source ranked `batch_story_min_rank`+, published in the last
+  non-GitHub/HN source ranked `batch_story_min_rank`+, or a lab-lane post the lane
+  had no slot for, published in the last
   `batch_story_days`, not deny-listed, not a story the ledger holds) joins
   `data/candidates.json` tagged `batch_tier: "news"`, at most `max_news_per_run`
   and `batch_news_per_source` per source. Each gets a short news brief

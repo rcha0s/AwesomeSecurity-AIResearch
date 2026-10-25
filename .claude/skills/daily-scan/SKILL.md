@@ -56,7 +56,7 @@ all four.
      against `limits.max_news_per_run`, never against the story cap. Its
      `batch_news.coverage` lists the story's other outlets; merge attaches them itself.
      A brief whose excerpt doesn't ground is held, so copy it verbatim from the fetched text.
-   - Candidates carrying `batch_priority` (`story`, `kev`, `ghsa-critical`, `ghsa-ai`) come
+   - Candidates carrying `batch_priority` (`story`, `kev`, `ghsa-critical`, `ghsa-ai`, `lab`) come
      first: analyze every one of them before the rest of the batch, even when the advisory
      text is thin. They are the stories the recall eval checks, and they count toward the
      cap. A `story` candidate is the week's big story, staged by several sources: its

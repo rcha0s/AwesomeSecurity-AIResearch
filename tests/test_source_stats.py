@@ -102,3 +102,14 @@ def test_merge_analysis_rejects_non_http_urls(sandbox):
     merged, errors, _, _ = m.merge([*bad, make_entry()], c.load_config())
     assert [e["title"] for e in merged] == [make_entry()["title"]]
     assert len(errors) == 3 and all("http(s)" in e for e in errors)
+
+
+def test_adding_a_source_never_copies_scan_stats_into_the_registry(sandbox):
+    first = sr.new_source("rss", "https://a/feed", tier="medium")
+    sr.add_source(first)
+    baseline = json.loads(sr.REGISTRY_FILE.read_text())
+    sr.update_stats({first["id"]: (9, 7)})  # scan counts move its overlaid rank
+    sr.add_source(sr.new_source("rss", "https://b/feed", tier="medium"))
+    raw = json.loads(sr.REGISTRY_FILE.read_text())
+    assert raw[0] == baseline[0]  # first row untouched: no stats, no rank change
+    assert [s["id"] for s in raw] == [first["id"], "rss:https-b-feed"]
