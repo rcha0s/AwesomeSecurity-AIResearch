@@ -173,6 +173,15 @@
       "backfill": "2026-09-17..2026-09-24",
       "stories": 25,
       "cost_usd": 13.142736775000012
+    },
+    {
+      "run_id": "local-backfill-20260917-20260924-20261025T001237Z-5449",
+      "date": "2026-10-25",
+      "runner": "local",
+      "kind": "done",
+      "backfill": "2026-09-17..2026-09-24",
+      "stories": 25,
+      "cost_usd": 0
     }
   ]
 }
