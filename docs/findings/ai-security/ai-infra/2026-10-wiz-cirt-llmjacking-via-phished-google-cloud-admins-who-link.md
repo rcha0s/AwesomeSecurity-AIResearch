@@ -20,7 +20,7 @@ Wiz CIRT describes intrusions where attackers phish Google Cloud users through s
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [source](https://www.wiz.io/blog/from-phishing-to-llmjacking)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 26 · Novelty 48 · Relevance 75 · Credibility 50 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 25 · Novelty 48 · Relevance 75 · Credibility 50 · **Composite 51** _(each 0-100)_  
 **Tags:** `llmjacking`, `gcp`, `billing-fraud`, `phishing`, `gemini-api`, `iam`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier LLMjacking write-ups focus on stolen API keys and cloud accounts; the cross-tenant billing-link variant is new in the pools. Verifier: Sysdig LLMjacking (2024) and subsequent cloud LLM abuse reports. Delta is billing-account linking to attacker-owned foreign projects, which hides prompts from t  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._
