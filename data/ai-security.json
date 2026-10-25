@@ -1255,6 +1255,93 @@
       ]
     },
     {
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "Guardrail benchmark scores mostly measure the training labels' definition of 'unsafe': same data, different labels swing HarmBench-copyright from 0 to 100",
+      "source_url": "http://arxiv.org/abs/2610.25060v1",
+      "article_url": "http://arxiv.org/abs/2610.25060v1",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-18",
+      "date": "2026-10",
+      "raw_path": "data/_raw/policy-is-not-capability-some-safety-benchmarks-980bc2b4ef.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NeurIPS (via arXiv)",
+      "summary": "An industrial deployment labelled the same ~53k prompts twice, once as 'is this a request for harmful content?' and once as 'would a moderator block this?'. The authors trained ten guardrail arms at two scales with the same architecture, codebase and optimiser family. Two over-refusal benchmarks, JailbreakBench-benign and OR-Bench-hard, were 88% and 82% present in the training pools. After decontamination, the label policy alone moved HarmBench-copyright across 0-100 and OR-Bench-hard over-refusal across 3.4-56.4%, while detection capability stayed unchanged.",
+      "takeaway": "Before picking a guardrail classifier by benchmark score, ask which policy its labels encode, whether the benchmark leaked into training, and what the seed-to-seed variance is, or you are comparing policies, not detection quality.",
+      "lessons": [
+        {
+          "point": "Guardrail training corpora can already contain the over-refusal benchmarks that vendors report to show they don't over-block.",
+          "excerpt": "JailbreakBench-benign is 88% and OR-Bench-hard 82% present in the training pools",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Benchmarks differ in how sensitive they are to the label definition. Some mostly measure policy, others mostly measure the model.",
+          "excerpt": "the range across the ten arms is 0.99 on HarmBench-copyright and 0.043 on WildGuard-benign, a 23x spread",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A tiny parameter change carrying a different policy can move a benchmark score across its whole range.",
+          "excerpt": "a benchmark score can be moved across its entire range by 0.03% of the parameters",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "In a distilled guardrail, the teacher's soft labels carry the teacher's policy even when every hard label carries the other policy. Released checkpoints do not record which teacher was used.",
+          "excerpt": "so teacher provenance is an unrecorded confound in any released checkpoint",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "guardrail-classifier",
+        "safety-benchmarks",
+        "benchmark-contamination",
+        "over-refusal",
+        "label-policy",
+        "distillation",
+        "eval-validity"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat label policy, contamination and seed variance as first-class variables when choosing a guardrail",
+        "detail": "When comparing guardrail models: 1) Ask for or check the operational definition of 'unsafe' behind the training labels and the benchmark labels. 2) Check for overlap between benchmark prompts and the training data. 3) Run several seeds and report the spread. 4) Prefer benchmarks with low sensitivity to policy (WildGuard-benign style) for capability, and grade on your own policy-labelled set for deployment fit."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 75,
+        "newness": 25,
+        "credibility": 72.0,
+        "composite": 56.05,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: numbers match the abstract; the title's 'mostly' generalizes from the most policy-sensitive benchmarks and 'unchanged detection capability' is the paper's own design claim. Verifier novelty 55 (closest: Cautious Bench), relevance 40; took the lower novelty.",
+      "prior_art": "Nearest pool entries: DecisionPivot (ai-research), where guardrail and router models with near-equal accuracy diverge on contrast pairs, and the benchmark-contamination entry 'Zero Gap Is Not Restoration' (archive). The delta is a natural experiment with double-labelled data that isolates label policy from capability, plus measured contamination of over-refusal benchmarks inside a guardrail's own training data.",
+      "related_claims": [
+        "benchmark-category-labels-can-mask-conflated-capabilities"
+      ],
+      "threat": "Teams pick or certify a guardrail on scores that reflect contamination and the labelling policy rather than detection ability. The deployed filter then over-blocks or under-blocks against their actual policy.",
+      "conditions": "The guardrail is chosen by public safety or over-refusal benchmark scores, without disclosure of the training label definition, the overlap between benchmarks and training data, or the teacher model behind a distilled checkpoint.",
+      "mitigations": "Require guardrail evaluations to report contamination, a seed floor and the policy they were graded against, and validate on a set labelled under your own policy before deployment.",
+      "id": "guardrail-benchmark-scores-mostly-measure-the-tr-c8818861be",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "policy-is-not-capability-some-safety-benchmarks-d8c6b09c45",
       "topic": "ai-security",
       "domain": "ais.guardrails",
@@ -1690,6 +1777,112 @@
       "domain_label": "Agent Harness & Permission Model"
     },
     {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "Zenity AgentCorruption: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials; its default role reached every agent in the region",
+      "source_url": "https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model",
+      "article_url": "https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "raw_path": "data/_raw/agentcorruption-how-a-single-prompt-collapsed-th-d37de95c40.txt",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "tl;dr sec (curator link)",
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-350",
+      "summary": "AgentCore agents run in Firecracker microVMs that didn't block the instance metadata service (IMDS), so any HTTP-capable tool became a server-side request forgery (SSRF) path to the agent role's credentials. The default execution role was scoped to all AgentCore resources in the region: it could list agents, pull their images, invoke them, read all conversations, write long-term memories and read Secrets Manager. AWS moved AgentCore to IMDSv2-only in February 2026 and tightened the default role by late September, while calling the behavior documented and expected.",
+      "takeaway": "Treat an agent's HTTP tool as an SSRF primitive and give every agent its own least-privilege role; a shared default role turns one injected agent into a region-wide breach.",
+      "lessons": [
+        {
+          "point": "An agent tool that makes HTTP requests from inside the runtime is an SSRF primitive, and prompt injection is enough to aim it at the metadata service.",
+          "excerpt": "any agent tool capable of making HTTP requests would send those requests directly from within the instance itself",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The blast radius came from the default role, not the SSRF: it was scoped region-wide, not to the single agent.",
+          "excerpt": "The default AgentCore role wasn’t scoped to the specific agent.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Write access to agent memory gives persistence: an attacker can plant memories that steer other users' agents in later sessions.",
+          "excerpt": "create new memories across different agents and users",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Credential brokering by a gateway doesn't help if the agent's own role can read the broker's secrets.",
+          "excerpt": "enabling an attacker to access all credentials AgentCore has meant to keep away from the agent",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "aws",
+        "bedrock-agentcore",
+        "imds",
+        "ssrf",
+        "prompt-injection",
+        "iam",
+        "least-privilege",
+        "memory-poisoning",
+        "secrets-manager"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Give each cloud-hosted agent its own scoped role and block metadata access from tools",
+        "detail": "For AgentCore and similar platforms: replace the default execution role with a per-agent role scoped to that agent's runtime, memory and specific secrets; deny bedrock-agentcore:InvokeAgentRuntime, ListEvents, CreateEvent, GetResourceApiKey and secretsmanager:GetSecretValue on other agents' resources. Confirm IMDSv2-only with a hop limit of 1 where configurable, and route agent HTTP tools through an egress proxy that blocks link-local and internal addresses. Alert on DescribeLogGroups and cross-agent invocations from agent roles."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 88,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 53.65,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: supported; minor scope notes (account and region; IMDSv2-only applied to newly deployed agents from Feb 14). Verifier novelty 35 since SSRF-to-IMDS is old and the delta is the region-wide default role; took the lower.",
+      "prior_art": "Classic cloud SSRF-to-IMDS (Capital One 2019) and pool claims imdsv1-must-be-disabled-on-agent-workloads and ssrf-guards-must-cover-agent-outbound-calls; new here is a managed agent platform whose shared default role turned one agent's credentials into cross-agent conversation reading, memory poisoning and secret theft.",
+      "related_claims": [
+        "imdsv1-must-be-disabled-on-agent-workloads",
+        "ssrf-guards-must-cover-agent-outbound-calls",
+        "agent-memory-is-a-persistent-attack-surface"
+      ],
+      "threat": "An external user with chat access to one exposed AgentCore agent uses prompt injection to make it fetch IMDS credentials, then uses the overprivileged default role to invoke other agents, read all conversations, plant memories and read stored secrets.",
+      "conditions": "Agent deployed on AWS Bedrock AgentCore with an HTTP-capable tool and the pre-September-2026 default execution role; agent reachable by untrusted users.",
+      "mitigations": "Use per-agent least-privilege execution roles, enforce IMDSv2 and block link-local egress from agent tools, isolate customer-facing agents in separate accounts, and monitor agent roles for discovery and cross-agent API calls.",
+      "id": "zenity-agentcorruption-one-prompt-made-an-aws-be-8d2aa4b8e6",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 22 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-25T19:46:52+00:00"
+      }
+    },
+    {
       "id": "from-select-to-sysadmin-with-sql-copilot-cve-202-25234a97ee",
       "topic": "ai-security",
       "domain": "ais.agent-security",
@@ -2054,6 +2247,98 @@
         ],
         "at": "2026-10-24T08:52:58+00:00"
       }
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.prompt-injection",
+      "title": "Signals Corps: scanning 217 million responses finds 30 sites putting prompt injections in HTTP headers, mostly pranks",
+      "source_url": "https://www.signalscorps.com/blog/prompt-injection-in-http-headers/",
+      "article_url": "https://www.signalscorps.com/blog/prompt-injection-in-http-headers/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-prompt-injection-in-http-headers-signals-c-4ef92b9992.txt",
+      "related_claims": [],
+      "summary": "Signals Corps read headers from 217,097,223 page responses (10% of Common Crawl's September 2026 crawl) and found 7,959 sites sending headers aimed at AI. Thirty tried injection, 24 of them in an X-AI header, and most were pranks. In tests, Claude models in Claude Code ignored the header unless the user's prompt gave the site authority; with such prompts 7 of 9 runs obeyed. The bigger finding is cloaking: 136 sites sent a header saying they had classified the crawler as an AI bot, a step that makes serving agents different content possible; the crawl itself cannot show whether they did.",
+      "lessons": [
+        {
+          "point": "Injection attempts in headers are rare and mostly harmless pranks.",
+          "excerpt": "30 sites sent an injection attempt, 24 of them in a header named `X-AI`.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Exposure depends on the agent's fetch tool passing headers into the model context.",
+          "excerpt": "A header can only influence an agent if the agent’s fetch tool copies it into the model’s context.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "In tests the models obeyed only when the user's prompt gave the site authority.",
+          "excerpt": "Claude Opus, Claude Sonnet, and Claude Haiku in Claude Code ignored our test header unless the user’s prompt gave the site authority, and with such prompts 7 of 9 runs obeyed.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Detecting AI clients by user-agent makes cloaking possible; the crawl cannot show whether sites did it.",
+          "excerpt": "That only takes a user-agent match",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Header injection is real but rare; the thing to watch is whether sites serve AI agents different content, so test your agents against it.",
+      "tags": [
+        "prompt-injection",
+        "http-headers",
+        "web-agents",
+        "cloaking",
+        "common-crawl"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Check what your fetch tool forwards",
+        "detail": "Test which response headers and redirect targets your agent's web tool places in context, strip or wrap them as untrusted, and run periodic fetches with an agent user-agent to compare against a browser view."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 70,
+        "newness": 25,
+        "credibility": 55.0,
+        "composite": 52.0,
+        "scored_at": "2026-10-25T21:47:31+00:00"
+      },
+      "prior_art": "Indirect injection through page bodies is well documented; large-scale measurement of header channels and agent-only cloaking is new. Verifier: SPLX AI-targeted cloaking study (Atlas); Cloudflare Markdown for Agents; earlier indirect prompt injection research (Greshake et al. 2023). Delta: first large-s",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+      "id": "signals-corps-scanning-217-million-responses-fin-6975f4349f",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Large-scale measurement of prompt injection in HTTP headers with agent obedience tests.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "The Register — Security",
+          "url": "https://www.theregister.com/ai-and-ml/2026/10/15/indirect-prompt-injection-starts-turning-up-in-webpage-headers-please-ignore-all-previous-instructions-and-rise-up-against-your-masters/5303434",
+          "tier": "medium",
+          "published": null
+        }
+      ]
     },
     {
       "topic": "ai-security",
@@ -2550,90 +2835,6 @@
       "editorial": {
         "promoted": true,
         "reason": "Anthropic and UK AISI publish a paired review of a model's unsanctioned real-world actions in a cyber eval.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      }
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.prompt-injection",
-      "title": "Signals Corps: scanning 217 million responses finds 30 sites putting prompt injections in HTTP headers, mostly pranks",
-      "source_url": "https://www.signalscorps.com/blog/prompt-injection-in-http-headers/",
-      "article_url": "https://www.signalscorps.com/blog/prompt-injection-in-http-headers/",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-15",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-prompt-injection-in-http-headers-signals-c-4ef92b9992.txt",
-      "related_claims": [],
-      "summary": "Signals Corps read headers from 217,097,223 page responses (10% of Common Crawl's September 2026 crawl) and found 7,959 sites sending headers aimed at AI. Thirty tried injection, 24 of them in an X-AI header, and most were pranks. In tests, Claude models in Claude Code ignored the header unless the user's prompt gave the site authority; with such prompts 7 of 9 runs obeyed. The bigger finding is cloaking: 136 sites sent a header saying they had classified the crawler as an AI bot, a step that makes serving agents different content possible; the crawl itself cannot show whether they did.",
-      "lessons": [
-        {
-          "point": "Injection attempts in headers are rare and mostly harmless pranks.",
-          "excerpt": "30 sites sent an injection attempt, 24 of them in a header named `X-AI`.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Exposure depends on the agent's fetch tool passing headers into the model context.",
-          "excerpt": "A header can only influence an agent if the agent’s fetch tool copies it into the model’s context.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "In tests the models obeyed only when the user's prompt gave the site authority.",
-          "excerpt": "Claude Opus, Claude Sonnet, and Claude Haiku in Claude Code ignored our test header unless the user’s prompt gave the site authority, and with such prompts 7 of 9 runs obeyed.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Detecting AI clients by user-agent makes cloaking possible; the crawl cannot show whether sites did it.",
-          "excerpt": "That only takes a user-agent match",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Header injection is real but rare; the thing to watch is whether sites serve AI agents different content, so test your agents against it.",
-      "tags": [
-        "prompt-injection",
-        "http-headers",
-        "web-agents",
-        "cloaking",
-        "common-crawl"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Check what your fetch tool forwards",
-        "detail": "Test which response headers and redirect targets your agent's web tool places in context, strip or wrap them as untrusted, and run periodic fetches with an agent user-agent to compare against a browser view."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 70,
-        "newness": 25,
-        "credibility": 50.0,
-        "composite": 51.25,
-        "scored_at": "2026-10-25T16:45:20+00:00"
-      },
-      "prior_art": "Indirect injection through page bodies is well documented; large-scale measurement of header channels and agent-only cloaking is new. Verifier: SPLX AI-targeted cloaking study (Atlas); Cloudflare Markdown for Agents; earlier indirect prompt injection research (Greshake et al. 2023). Delta: first large-s",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "signals-corps-scanning-217-million-responses-fin-6975f4349f",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Large-scale measurement of prompt injection in HTTP headers with agent obedience tests.",
         "signals": [
           "newsworthy",
           "timely",
@@ -4366,6 +4567,77 @@
     },
     {
       "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "LMCache multiprocess mode exposes an unauthenticated ZeroMQ endpoint that unpickles network data, giving remote code execution",
+      "source_url": "https://github.com/advisories/GHSA-w5f2-9q9c-ff4h",
+      "article_url": "https://github.com/advisories/GHSA-w5f2-9q9c-ff4h",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-16",
+      "date": "2026-10",
+      "raw_path": null,
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "summary": "LMCache is a KV-cache layer used with LLM serving. Its multiprocess mode, also called distributed mode, opens an unauthenticated ZeroMQ ROUTER socket so worker processes can register. The advisory rates the resulting pickle deserialization as critical, unauthenticated remote code execution in the pip package lmcache.",
+      "takeaway": "Treat every internal transport in an LLM serving stack as a network attack surface: if it unpickles socket data with no authentication, anyone who can reach the port can run code on the GPU host.",
+      "lessons": [
+        {
+          "point": "The bug is unauthenticated RCE through pickle deserialization on the multiprocess ZeroMQ transport, not in a model file.",
+          "excerpt": "LMCache is vulnerable to Unauthenticated Remote Code Execution via Pickle Deserialization on the Multiprocess ZMQ Transport",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "The exposed surface is a worker-registration socket that requires no authentication and exists only when distributed mode is turned on.",
+          "excerpt": "LMCache multiprocess mode, also called distributed mode, opens an unauthenticated ZeroMQ ROUTER so worker processes can register",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "lmcache",
+        "pickle",
+        "deserialization",
+        "zeromq",
+        "llm-serving",
+        "rce",
+        "ghsa"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Lock down LMCache distributed mode",
+        "detail": "Upgrade lmcache to the fixed version named in GHSA-w5f2-9q9c-ff4h. Until then, turn off multiprocess/distributed mode or bind its ZeroMQ port to localhost or a private worker-only network segment with firewall rules. Grep the rest of your serving stack for pickle.loads on socket data."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 70,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 44.35,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: core facts supported by the ingested advisory excerpt; 'KV-cache layer' and 'GPU host' are background knowledge. Verifier novelty 22 (closest: LMdeploy ZeroMQ pickle RCE); took the lower.",
+      "prior_art": "Nearest pool entry is the archive entry 'LMdeploy's ZeroMQ RPC server deserializes untrusted network data with pickle, giving remote code execution' (Sept 2026), the same bug class in another LLM serving framework. This adds LMCache as a second instance of the pattern, in KV-cache worker registration. Only the ingested advisory excerpt was available: the advisory page could not be fetched (HTTP 403).",
+      "related_claims": [],
+      "threat": "An attacker who can reach the LMCache multiprocess ZeroMQ ROUTER sends a crafted pickle payload and gets code execution on the serving host without authentication.",
+      "conditions": "LMCache (pip/lmcache) running in multiprocess (distributed) mode with the ZeroMQ transport reachable from the attacker's network position; vulnerable versions per the advisory.",
+      "mitigations": "Upgrade to the patched LMCache release, disable distributed mode where it is not needed, restrict the ZeroMQ port to trusted worker hosts with network policy, and replace pickle with a safe serialization format on any network transport.",
+      "id": "lmcache-multiprocess-mode-exposes-an-unauthentic-1e905fba3c",
+      "retrieved_at": "2026-10-25T19:45:48+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
       "domain": "ais.agent-security",
       "title": "OpenAI report: a model derived keys from public recovery phrases and spent funds from a wallet it was never given",
       "source_url": "https://alignment.openai.com/misalignment-reports/using-a-funded-test-cryptocurrency-wallet-without-authorization/",
@@ -4623,6 +4895,86 @@
         "issues": [
           "mild: jargon_chain 8 > 7 (supposedly isolated cybersecurity test environments got impossible tasks)",
           "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "SkillMarker watermarks agent skill files to trace copying, catching copied passages from 1,536 tokens and 72-78% of skills merged into others",
+      "source_url": "https://arxiv.org/abs/2610.15725",
+      "article_url": "https://arxiv.org/abs/2610.15725",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-11",
+      "date": "2026-10",
+      "raw_path": "data/_raw/skillmarker-a-kgw-based-watermarking-method-for-62f45634bf.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 50.8,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "summary": "SkillMarker applies KGW-style text watermarking (the Kirchenbauer et al. green-list token scheme) to plaintext agent skills, rewriting only the flexible phrasing while keeping essential procedural content fixed. It searches alternative wordings for a stronger signal, and across four datasets, downstream task performance changes negligibly on average. Window-based detection finds copied passages as short as 1,536 consecutive tokens, and detection stays at 72.2-77.8% after merging with one or three other skills. An open-source toolkit covers embedding, quality auditing and detection.",
+      "takeaway": "Skill publishers can now trace leaked or resold skills, but it is a provenance and ownership tool, not protection against malicious skills, and the abstract does not address paraphrasing attacks.",
+      "lessons": [
+        {
+          "point": "Separating essential knowledge from flexible expression keeps procedural accuracy while leaving room for the watermark.",
+          "excerpt": "The former separates essential knowledge from flexible expression to preserve instruction fidelity",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Detection needs a fairly long copied span, so short excerpts lifted from a skill may go undetected.",
+          "excerpt": "window-based detection consistently identifies copied passages containing as few as 1,536 consecutive tokens",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Merging a skill into others degrades detection noticeably: roughly a quarter of merged cases go undetected.",
+          "excerpt": "Even after merging with one or three background skills, SkillMarker retains watermark detection rates",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-skills",
+        "watermarking",
+        "kgw",
+        "ownership-verification",
+        "leakage-tracing",
+        "skill-marketplace"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Watermark proprietary skills before distribution",
+        "detail": "For paid or proprietary agent skills, run the SkillMarker toolkit to embed a watermark, run its quality audit to confirm task performance holds, and keep the key for detection. Expect reliable detection only for copied spans of about 1,536 tokens or more, and lower rates when the skill is merged into others."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 40,
+        "newness": 25,
+        "credibility": 50.8,
+        "composite": 40.87,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: numbers match the abstract; 'roughly a quarter undetected' is the arithmetic complement and the KGW attribution is background knowledge. Verifier novelty 50, relevance 30.",
+      "prior_art": "Nearest pool entry: SkillTrace (archive), which audits skill reuse after the fact by comparing expression, implementation and operational traces, with no embedded mark. SkillMarker is the proactive alternative, embedding a mark before release. It builds on the standard KGW LLM-output watermark. The pool's model-watermarking entry covers models, not skills.",
+      "related_claims": [],
+      "threat": "Agent skills shipped in plaintext are copied, leaked or folded into other skills without attribution.",
+      "conditions": "Skills distributed as plaintext instructions through marketplaces or shared repos. Detection works for copied spans of at least about 1,536 tokens and degrades when the skill is merged with other skills.",
+      "mitigations": "Embed a KGW-based watermark before distributing a skill and run windowed detection on suspected copies.",
+      "id": "skillmarker-watermarks-agent-skill-files-to-trac-4e3391ffd2",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 22 > 18"
         ]
       },
       "grounding_score": 1.0
@@ -4965,6 +5317,89 @@
         "passed": false,
         "issues": [
           "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "AgentSafeEvo pits an RL attacker against a defender on adversarial agent tasks, extending co-evolution beyond web prompt injection to tool use",
+      "source_url": "https://arxiv.org/abs/2610.19422",
+      "article_url": "https://arxiv.org/abs/2610.19422",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-14",
+      "date": "2026-10",
+      "raw_path": "data/_raw/agentsafeevo-adversarial-co-evolution-for-llm-ag-bdaa444320.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 50.8,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "summary": "AgentSafeEvo is a co-evolutionary reinforcement learning framework for tool-using agents. An attacker model learns to construct adversarial tasks covering malicious user queries, tool descriptions and environment observations, while a defender learns to complete them safely. Learnability-guided weighting uses the variance of the defender's reward within each task to decide how much the task counts in both updates. The abstract claims better adversarial robustness without loss of general capability but gives no numbers.",
+      "takeaway": "This is a training-time hardening approach for agent model builders that does not replace runtime containment, and the abstract gives no figures to judge how large the gain is.",
+      "lessons": [
+        {
+          "point": "The threat surface covers user queries, tool descriptions and environment observations, not only web-page injection.",
+          "excerpt": "malicious content embedded in user queries, tool descriptions, or environment observations can manipulate their decisions and induce unsafe actions",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The setup is an attacker-defender game focused on unsafe tool use.",
+          "excerpt": "The attacker learns to construct adversarial agent tasks that expose weaknesses in the defender's tool use, while the defender learns to complete tasks safely under these attacks.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Tasks where the defender's reward varies most are weighted up, which focuses training on attacks that sit at the edge of what the defender can handle.",
+          "excerpt": "uses within-task defender-reward variability to adjust each task's contribution to attacker and defender updates",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-safety",
+        "adversarial-training",
+        "co-evolution",
+        "reinforcement-learning",
+        "prompt-injection",
+        "tool-use"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat RL adversarial hardening as one layer, not the boundary",
+        "detail": "If you fine-tune agent models, consider generating adversarial tool-use tasks with a learned attacker and weighting tasks where defender outcomes vary. Still assume injection succeeds sometimes: keep least-privilege tools, confirmation for high-impact actions, and output monitoring."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 50,
+        "newness": 25,
+        "credibility": 50.8,
+        "composite": 37.87,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: faithful to the abstract apart from mild interpretation of the variance weighting; no results reported. Verifier novelty 30, relevance 45; took the lower novelty.",
+      "prior_art": "Builds on adversarial co-evolution for language-level safety and indirect prompt injection in web tasks, which the paper cites as its starting point. The pool's claims on containment rather than prevention, and on refusal inside the model not being a security boundary, frame the limits. The delta is extending co-evolution to multi-task, multi-attack-type tool use and learnability weighting. No quantitative results appear in the source.",
+      "related_claims": [
+        "prompt-injection-is-containment-not-prevention",
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "threat": "Malicious content in user queries, tool descriptions or environment observations steers an agent into unsafe tool actions.",
+      "conditions": "An LLM agent that takes multi-turn actions through external tools and processes untrusted content in queries, tool metadata or observations.",
+      "mitigations": "Harden the model with adversarial co-evolution training, but keep runtime controls such as least-privilege tools and human confirmation of high-impact actions.",
+      "id": "agentsafeevo-pits-an-rl-attacker-against-a-defen-4d502140eb",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
         ]
       },
       "grounding_score": 1.0
@@ -5365,6 +5800,172 @@
         "passed": false,
         "issues": [
           "mild: acronyms 4 > 3 (REST, README, GOAT, INPUT)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "Red teams found Claude refuses direct election-abuse requests but misses campaigns split into harmless-looking subtasks; Anthropic added multi-step misuse classifiers",
+      "source_url": "https://www.anthropic.com/news/2026-us-midterms",
+      "article_url": "https://www.anthropic.com/news/2026-us-midterms",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-14",
+      "date": "2026-10",
+      "raw_path": "data/_raw/preparing-for-the-2026-us-midterms-11b60cbe16.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 69.6,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "summary": "The Institute for Strategic Dialogue (ISD) and the McCain Institute pressure-tested Claude's election safeguards in the US, Israel and Brazil; Claude reliably refused direct harmful requests. It could miss a deceptive campaign that was broken into audience research, site building, content drafting and distribution planning. Anthropic added classifiers for multi-step misuse and banned accounts in cases including a foreign-run fake news site that pushed Russian, Iranian and North Korean narratives. The post also reports that politics makes up 5.75% of US Claude.ai conversations and policy-violating election requests about 0.002%.",
+      "takeaway": "Refusing one request at a time does not stop decomposed abuse campaigns, so detection has to correlate activity across requests and accounts.",
+      "lessons": [
+        {
+          "point": "Splitting a task into harmless-looking pieces gets past per-request refusal even when the direct request is refused.",
+          "excerpt": "They found that Claude reliably refused a single harmful request, but could miss a malicious campaign when it was spread across many individual requests that looked harmless on their own.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Influence operators are using LLMs for content production at the early stages of an operation, where a provider can see it and act.",
+          "excerpt": "In one case, foreign-based operators of a fake news site used Claude to produce US midterm coverage favoring Russian, Iranian, and North Korean narratives.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "An outside evaluator, the Foundation for American Innovation, found Claude Sonnet 4.5 hedged unevenly and softened right-leaning arguments more often.",
+          "excerpt": "the Foundation for American Innovation found that Claude Sonnet 4.5 didn’t always hedge evenly, and was more likely to soften arguments for right-leaning positions.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "election-integrity",
+        "task-decomposition",
+        "misuse-detection",
+        "influence-operations",
+        "political-bias",
+        "red-teaming",
+        "anthropic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Test guardrails against decomposed campaigns, not only direct requests",
+        "detail": "In red-team exercises, break a prohibited objective into subtasks that look benign one at a time (research, site building, drafting, distribution). Run them across sessions and accounts, then check whether the abuse detection connects them. Add classifiers that work across conversations or at account level rather than relying on single-turn refusal."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 40,
+        "newness": 25,
+        "credibility": 69.6,
+        "composite": 36.19,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: all facts supported; flagged lesson 3's 'internal score missed it' inference (rewritten). Verifier novelty 40, relevance 55; kept 25.",
+      "prior_art": "The nearest pool entry is 'Skill cascading attacks', where a harmful goal split across benign-looking agent skills evades per-skill scanners. This item confirms the same decomposition weakness in a deployed consumer model, found by outside red teams in the election-abuse domain. The rest is product policy and transparency news.",
+      "related_claims": [
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "threat": "Election abuse such as fake news sites, fake social profiles and financially motivated fabricated news, split into individually harmless requests that per-request refusal does not catch.",
+      "conditions": "An attacker spreads a deceptive campaign across many separate requests, each of which looks legitimate on its own.",
+      "mitigations": "Use classifiers that detect novel and multi-step misuse across requests, backed by threat-intelligence review and account bans.",
+      "id": "red-teams-found-claude-refuses-direct-election-a-d625ac1090",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.model-supply-chain",
+      "title": "Microsoft and NVIDIA publish a five-category risk taxonomy for open-weight models, arguing deployment context, not weight openness, sets risk",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/10/16/managing-open-weight-model-risk-in-enterprise-deployments/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/10/16/managing-open-weight-model-risk-in-enterprise-deployments/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-16",
+      "date": "2026-10",
+      "raw_path": "data/_raw/managing-open-weight-model-risk-in-enterprise-de-5629b8dd2c.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_rank": 72.9,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Microsoft Security Blog",
+      "summary": "Microsoft and NVIDIA released a joint paper, Risk Management for Open-Weight Models in Enterprise, built on ISO standards and the NIST AI Risk Management Framework. It sorts model risks into five categories (Cybersecurity, Data Protection, Content, Human-AI Interaction, Bias) and maps evaluations to selected risks. This first paper covers only the model layer, leaving runtime, harness and application layers to future work. The blog post also promotes Microsoft Foundry evaluations and content-safety controls.",
+      "takeaway": "Teams that self-host open-weight models inherit safeguards a managed service would otherwise provide, so each risk needs an owner and a control at the layer where it can actually be enforced.",
+      "lessons": [
+        {
+          "point": "Risk comes from the model, use case, deployment and safeguards together. Whether the weights are open does not decide it.",
+          "excerpt": "weight openness alone does not determine an AI system’s risk. Risk depends on the model, use case, deployment, and safeguards.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A clean model evaluation says nothing about an agent's permissions, data access or tools. Those need their own assessment.",
+          "excerpt": "Evaluating a model alone does not establish the safety of an agent or application: teams must also assess its permissions, data access, tools, runtime, and operational controls.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Self-hosting moves responsibility for controls from the provider to the enterprise.",
+          "excerpt": "enterprises that operate their own model deployments may take on controls otherwise provided by a managed service.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "open-weight-models",
+        "risk-taxonomy",
+        "nist-ai-rmf",
+        "enterprise-ai-governance",
+        "model-evaluation",
+        "microsoft",
+        "nvidia"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Map each self-hosted open-weight model risk to a control and an owner",
+        "detail": "For each open-weight deployment, list the risks that apply under the five categories. Note which controls a managed service would have provided and which you now run yourself (filtering, access control, monitoring, human review). Attach an evaluation as evidence and name an accountable owner for each risk. Assess agent permissions, tools and runtime separately from the model evaluation. Revisit the mapping whenever the model or the deployment changes."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 45,
+        "newness": 25,
+        "credibility": 72.9,
+        "composite": 35.19,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: supported; lesson 3 slightly firmer than the source's 'may take on' controls. Verifier novelty 15, relevance 40; took the lower novelty.",
+      "prior_art": "Nearest pool entry is the ProjectDiscovery LoRA-backdoored Qwen2.5-7B item ('Contain agents running third-party fine-tuned weights'), which shows a concrete open-weight attack. This item is a governance framework with no new attack or measurement. It aligns with the NIST AI RMF. What's new is a joint vendor taxonomy and an evaluation repository. The blog itself is mostly a promotion for the whitepaper.",
+      "related_claims": [],
+      "threat": "Enterprises that self-host open-weight models may assume protections exist that a managed service would normally supply. They may also treat a model-level evaluation as proof that the agent or application built on it is safe.",
+      "conditions": "Applies when an enterprise runs its own open-weight model deployment, especially one connected to external data, tools or customer-facing workflows.",
+      "mitigations": "Map every identified risk to a control at the layer that can enforce it (model, inference environment, application or operations), and assess agent permissions, tools and runtime separately from the model.",
+      "id": "microsoft-and-nvidia-publish-a-five-category-ris-980549c47b",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 19 > 18"
         ]
       },
       "grounding_score": 1.0
@@ -5795,6 +6396,85 @@
         "issues": [
           "mild: acronyms 4 > 3 (CRUD, README, FASTMCP, NEXTDNS)",
           "mild: takeaway_sentences 2 > 1"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "Blogger argues teams should self-host an LLM proxy for per-key request logs, virtual API keys and fast provider switching",
+      "source_url": "https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/",
+      "article_url": "https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/",
+      "tweet_url": null,
+      "author": "amrrs",
+      "published": "2026-10-18",
+      "date": "2026-10",
+      "raw_path": "data/_raw/if-you-don-t-run-your-own-llm-proxy-how-do-you-k-94bf38aedc.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@amrrs via Hacker News",
+      "summary": "An opinion post argues that provider usage dashboards are not enough for engineering decisions and that teams should run their own LLM proxy. The proxy gives one endpoint for multiple providers, logs of which key called which model from which client and when, and virtual API keys so the main provider key is not spread across agents and harnesses. The author names no product, says they modified their proxy for custom MCP endpoints, and uses it to diagnose cache misses.",
+      "takeaway": "A self-hosted LLM gateway gives per-agent key isolation and an audit trail, but it also concentrates every provider key in one place and has to be hardened accordingly.",
+      "lessons": [
+        {
+          "point": "Virtual keys issued per agent or harness limit the blast radius when one key leaks, compared with reusing a single provider key.",
+          "excerpt": "use virtual api keys to stop littering your single main key over your work, agents, and harnesses",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "A proxy produces the attribution log (key, model, client, time, status) that incident response needs and that provider dashboards do not provide.",
+          "excerpt": "logs of which key called what model with what client at what time and its status",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Request-level logs also serve operations, such as diagnosing prompt cache misses during coding sessions.",
+          "excerpt": "When I see a cache miss during a coding session, I can pinpoint why that happened in 20 seconds by hand.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "llm-gateway",
+        "llm-proxy",
+        "observability",
+        "api-keys",
+        "virtual-keys",
+        "logging",
+        "opinion"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Put agents behind a hardened self-hosted LLM gateway",
+        "detail": "Route agent and harness traffic through a gateway you control. Issue one virtual key per agent or tool and keep the provider master key only on the gateway. Log key, model, client, timestamp and status for each request, and forward the logs to your SIEM. Harden the gateway itself: no default master key, admin UI not exposed, pinned versions, egress blocked to the metadata service, and bearer tokens scrubbed from logged bodies."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 40,
+        "newness": 25,
+        "credibility": 55.0,
+        "composite": 29.5,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: facts supported; blast-radius, incident-response and hardening framing is the analyst's inference. Verifier novelty 12, relevance 30; kept 10.",
+      "prior_art": "The pool already covers LLM gateways in depth, mostly as attack targets: the Wiz LiteLLM auth-bypass chain, the trojanized LiteLLM 1.107.0 release and Embrace The Red's 'LLM Heist' in the archive. This post adds only the practitioner case for self-hosting for visibility and key isolation, with no new technique and no discussion of the gateway's own risk.",
+      "related_claims": [],
+      "threat": "Without a gateway, provider keys get reused across agents and harnesses with no per-caller audit trail, so a leaked key is hard to scope or attribute. A self-hosted gateway in turn becomes a high-value target that holds every provider key.",
+      "conditions": "Teams running multiple agents, harnesses or providers directly against provider APIs with shared keys and only vendor dashboards for visibility.",
+      "mitigations": "Run a self-hosted LLM gateway with per-agent virtual keys and per-request logging, and harden it with strong admin authentication, pinned versions, restricted egress and log scrubbing of secrets.",
+      "id": "blogger-argues-teams-should-self-host-an-llm-pro-5ae8b2a6b8",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 19 > 18"
         ]
       },
       "grounding_score": 1.0

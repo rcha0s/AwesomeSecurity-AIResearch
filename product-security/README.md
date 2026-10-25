@@ -2,12 +2,18 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [48 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Trail of Bits: only Go and vcpkg of 25 package managers verified every download from malicious repositories; only Go checked signatures by default](https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/)**
+  _Why now: First cross-ecosystem test of package managers against a malicious registry; tells teams exactly which strict lockfile flags to turn on. · timely · high-relevance_
+- **[Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads, PHP auto_prepend_file persistence, a sudo-alias password stealer and a Go RAT](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/)**
+  _Why now: Live espionage campaign with LLM-written payloads and concrete Linux hunting leads (auto_prepend_file persistence, sudo-alias stealer). · newsworthy · trending · high-relevance_
+- **[CISA KEV: exploited Fortinet CVE-2025-61624 path traversal lets read-write admins write or delete any file on FortiOS, FortiProxy, FortiPAM, FortiSwitchManager](https://nvd.nist.gov/vuln/detail/CVE-2025-61624)**
+  _Why now: Exploited in the wild per CISA KEV with a three-day deadline; Fortinet appliances are widely deployed and need patching now. · cve · active-exploitation · timely_
 - **[tensorlake@0.5.144 npm worm (Mini Shai-Hulud): hijacked admin account committed payload via GitHub UI, ran trusted-publishing workflow; revoking stolen GitHub token wipes home directory](https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud)**
   _Why now: Live npm worm (two independent write-ups, SafeDep and StepSecurity) that published through the project's own trusted-publishing workflow and arms a home-directory wiper on token revocation: a concrete lesson that valid provenance doesn't… · newsworthy · widely-reported · active-exploitation · timely · high-relevance_
 - **[Citrix NetScaler ADC/Gateway pre-auth command injection (CVE-2026-88771): Perl script shells out logged input; zero-day in default configuration, fixed in 14.1-73.37 and 13.1-64.23](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/)**
@@ -136,7 +142,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **52.75** · Oct 15, 2026  
+- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **54.25** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 

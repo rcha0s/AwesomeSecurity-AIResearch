@@ -19,7 +19,7 @@ Signals Corps read headers from 217,097,223 page responses (10% of Common Crawl'
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [source](https://www.signalscorps.com/blog/prompt-injection-in-http-headers/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 25 · Novelty 55 · Relevance 70 · Credibility 50 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 25 · Novelty 55 · Relevance 70 · Credibility 55 · **Composite 52** _(each 0-100)_  
 **Tags:** `prompt-injection`, `http-headers`, `web-agents`, `cloaking`, `common-crawl`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Indirect injection through page bodies is well documented; large-scale measurement of header channels and agent-only cloaking is new. Verifier: SPLX AI-targeted cloaking study (Atlas); Cloudflare Markdown for Agents; earlier indirect prompt injection research (Greshake et al. 2023). Delta: first large-s  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

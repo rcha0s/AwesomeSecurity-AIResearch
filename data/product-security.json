@@ -450,6 +450,106 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Trail of Bits: only Go and vcpkg of 25 package managers verified every download from malicious repositories; only Go checked signatures by default",
+      "source_url": "https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/",
+      "article_url": "https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-14",
+      "date": "2026-10",
+      "raw_path": "data/_raw/package-managers-have-an-integrity-problem-84e69f8c87.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-trailofbits-com-feed",
+      "source_rank": 70.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Trail of Bits",
+      "summary": "Trail of Bits built a Docker and mitmproxy harness that played a compromised package repository and injected malware into real packages. Of 25 package managers, fewer than half verified lockfile hashes by default, and only Go and vcpkg verified every package they downloaded. Some lockfiles carry hashes that don't protect integrity: Pub warns on a mismatch but installs anyway, Conan's MD5 revision is an identifier, and CocoaPods and Composer hashes don't cover the fetched code.",
+      "takeaway": "A committed lockfile doesn't protect you from a compromised registry unless your package manager actually enforces its hashes; check yours and turn on the strict flag.",
+      "lessons": [
+        {
+          "point": "Integrity by default is rare: only two of 25 package managers verified every package they downloaded.",
+          "excerpt": "fewer than half used lockfiles that checked for tampering by default, and only two verified the integrity of every package they downloaded",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A hash in the lockfile is not enough: Pub detects a mismatch, rewrites the lockfile and installs the tampered package unless you pass --enforce-lockfile.",
+          "excerpt": "If there is a mismatch, Pub detects the error, but installs the package anyway.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "pnpm had the same overwrite-on-mismatch default until version 11.4 in May 2026.",
+          "excerpt": "Overwriting the lockfile after a hash mismatch was also the default behavior in pnpm until version",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Commit or tag hashes that don't cover the downloaded artifact give no protection: Composer pins a commit but downloads a ZIP that can't be checked against it.",
+          "excerpt": "Once again, GitHub could serve a malicious ZIP archive without detection by Composer.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "package-managers",
+        "lockfiles",
+        "integrity",
+        "signatures",
+        "registry-compromise",
+        "pnpm",
+        "pub",
+        "composer",
+        "cpanminus"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Enforce lockfile hashes in CI for every ecosystem you use",
+        "detail": "Commit lockfiles for applications and install with the strict mode: npm ci, pnpm install --frozen-lockfile (pnpm 11.4 or later), yarn --immutable, flutter pub get --enforce-lockfile, uv/Poetry lock installs, and pip with hashes (pip --require-hashes). For NuGet set RestorePackagesWithLockFile. Treat Maven, Composer, CocoaPods, Conan, Gem and cpanminus as having no repository-compromise protection, and mirror or vendor their dependencies. Move cpanminus off plain HTTP."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 80,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 55.75,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: every fact checks out (source text truncated before the signature section; Table 2 supports the Go claim). Verifier novelty 50, relevance 72; took the lower novelty.",
+      "prior_art": "Prior work covers maintainer compromise and install-time code execution (pool claim package-installers-run-arbitrary-code-by-default) and the Gamage et al. lockfile study; this is the first cross-ecosystem dynamic test of 25 managers against a malicious repository, with per-manager verdicts.",
+      "related_claims": [],
+      "threat": "An attacker who compromises a package repository or its web front end can serve modified packages that most package managers install without detecting tampering.",
+      "conditions": "Package managers that lack lockfile hashes, don't verify them by default, or whose hashes don't cover the downloaded artifact; cpanminus additionally fetches over plain HTTP.",
+      "mitigations": "Commit lockfiles and install in strict or frozen mode, enable signature verification where supported, mirror or vendor dependencies for ecosystems without integrity checks, and switch cpanminus to HTTPS mirrors.",
+      "id": "trail-of-bits-only-go-and-vcpkg-of-25-package-ma-c26c8a3c55",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "First cross-ecosystem test of package managers against a malicious registry; tells teams exactly which strict lockfile flags to turn on.",
+        "signals": [
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-25T19:46:52+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.offensive",
       "title": "PHP2Shell: Wiz used frontier AI to turn memory-safety bugs in core PHP (two CVEs) into unauthenticated RCE on WordPress, Drupal and Joomla",
       "source_url": "https://www.wiz.io/blog/php2shell-php-rce",
@@ -1121,6 +1221,95 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.mobile",
+      "title": "Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech",
+      "source_url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
+      "article_url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-exposing-adfection-how-discover-tech-turne-1e056ce2b4.txt",
+      "related_claims": [],
+      "summary": "Citizen Lab reports AdFection: Candiru spyware infected Al Jazeera devices through targeted advertisements, which it calls the first public technical confirmation of zero-click mercenary spyware delivered through ads. Discover-Tech, an Israeli firm that looks like a normal ad company, ran a platform that fingerprints devices and infects them when an ad renders. Four billion bidding records show its ads on almost 200,000 sites and apps. Google, IAB Europe, Beeswax, Vungle and Eskimi cut its access after disclosure.",
+      "lessons": [
+        {
+          "point": "Ads delivered a zero-click mercenary spyware attack.",
+          "excerpt": "first public technical confirmation of a zero-click mercenary spyware attack delivered via targeted advertising, which we call AdFection",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Ad industry vendor lists failed to catch the abuse.",
+          "excerpt": "Discover-Tech has appeared on lists of “certified” and “approved” vendors maintained by Google and advertising industry association IAB Europe",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Scale: ads reached nearly 200,000 sites and apps in four months.",
+          "excerpt": "Analysis of four billion Discover-Tech bidding records shows that during a four-month period, the company’s ads were shown on almost 200,000 unique websites and Android/iOS apps in dozens of countries.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Disconnecting the vendor was possible after disclosure.",
+          "excerpt": "Google, IAB Europe, Beeswax, Vungle (Liftoff), and Eskimi took action to disconnect Discover-Tech’s access to the digital advertising ecosystem.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.",
+      "tags": [
+        "spyware",
+        "candiru",
+        "real-time-bidding",
+        "zero-click",
+        "adtech",
+        "citizen-lab"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Reduce ad-delivery exposure for at-risk staff",
+        "detail": "For journalists and executives, enable lockdown or hardened modes, use a content blocker or DNS filtering for ad networks, and keep mobile OS updates current; add ad-exchange vendor review to threat models."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 60,
+        "newness": 25,
+        "credibility": 60.0,
+        "composite": 54.25,
+        "scored_at": "2026-10-25T21:47:31+00:00"
+      },
+      "prior_art": "Zero-click mercenary spyware via messaging apps is well documented; ad-based delivery confirmed technically is new. Verifier: Intellexa Predator/Aladdin ad-based zero-click infection (Amnesty/Haaretz 2023-2024); ADINT surveillance research (Citizen Lab PenLink, Patternz)",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+      "id": "citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "story_corroboration": [
+        {
+          "name": "Wired Security",
+          "url": "https://www.wired.com/story/nightmare-scenario-zero-click-spyware-is-infecting-phones-via-targeted-ads/",
+          "tier": "medium",
+          "published": null
+        },
+        {
+          "name": "Ars Technica Security",
+          "url": "https://arstechnica.com/security/2026/10/targeted-ads-delivered-0-click-exploits-to-install-mercenary-malware/",
+          "tier": "medium",
+          "published": null
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.detection-response",
       "title": "SOCRadar: INC and The Gentlemen ransomware affiliates ran intrusions through AI agents, and exposed their own servers",
       "source_url": "https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/",
@@ -1304,81 +1493,6 @@
           "published": null
         }
       ]
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.mobile",
-      "title": "Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech",
-      "source_url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
-      "article_url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-15",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-exposing-adfection-how-discover-tech-turne-1e056ce2b4.txt",
-      "related_claims": [],
-      "summary": "Citizen Lab reports AdFection: Candiru spyware infected Al Jazeera devices through targeted advertisements, which it calls the first public technical confirmation of zero-click mercenary spyware delivered through ads. Discover-Tech, an Israeli firm that looks like a normal ad company, ran a platform that fingerprints devices and infects them when an ad renders. Four billion bidding records show its ads on almost 200,000 sites and apps. Google, IAB Europe, Beeswax, Vungle and Eskimi cut its access after disclosure.",
-      "lessons": [
-        {
-          "point": "Ads delivered a zero-click mercenary spyware attack.",
-          "excerpt": "first public technical confirmation of a zero-click mercenary spyware attack delivered via targeted advertising, which we call AdFection",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Ad industry vendor lists failed to catch the abuse.",
-          "excerpt": "Discover-Tech has appeared on lists of “certified” and “approved” vendors maintained by Google and advertising industry association IAB Europe",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Scale: ads reached nearly 200,000 sites and apps in four months.",
-          "excerpt": "Analysis of four billion Discover-Tech bidding records shows that during a four-month period, the company’s ads were shown on almost 200,000 unique websites and Android/iOS apps in dozens of countries.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Disconnecting the vendor was possible after disclosure.",
-          "excerpt": "Google, IAB Europe, Beeswax, Vungle (Liftoff), and Eskimi took action to disconnect Discover-Tech’s access to the digital advertising ecosystem.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.",
-      "tags": [
-        "spyware",
-        "candiru",
-        "real-time-bidding",
-        "zero-click",
-        "adtech",
-        "citizen-lab"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Reduce ad-delivery exposure for at-risk staff",
-        "detail": "For journalists and executives, enable lockdown or hardened modes, use a content blocker or DNS filtering for ad networks, and keep mobile OS updates current; add ad-exchange vendor review to threat models."
-      },
-      "scores": {
-        "novelty": 70,
-        "relevance": 60,
-        "newness": 25,
-        "credibility": 50.0,
-        "composite": 52.75,
-        "scored_at": "2026-10-25T16:45:20+00:00"
-      },
-      "prior_art": "Zero-click mercenary spyware via messaging apps is well documented; ad-based delivery confirmed technically is new. Verifier: Intellexa Predator/Aladdin ad-based zero-click infection (Amnesty/Haaretz 2023-2024); ADINT surveillance research (Citizen Lab PenLink, Patternz)",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "agentic-hacks-real-proofs-inside-google-s-pagebr-2b6c249a2a",
@@ -2050,6 +2164,106 @@
           "timely"
         ],
         "at": "2026-10-24T08:21:50+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads, PHP auto_prepend_file persistence, a sudo-alias password stealer and a Go RAT",
+      "source_url": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/",
+      "article_url": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "raw_path": "data/_raw/ai-powered-espionage-campaign-targets-government-932b6d2100.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Palo Alto Networks Unit 42",
+      "summary": "Unit 42 tracked CL-UNK-1211 attacking government and state-affiliated Linux infrastructure from October 2025 to April 2026; payloads carried conversational, step-by-step reasoning comments, which suggests they were produced by an LLM or run by an AI agent. The attackers persisted by setting auto_prepend_file in every PHP config, stole passwords with a .bashrc sudo alias and a PHP login logger, and ran a Go RAT called SysGoRAT over WebSocket C2. They searched qmail mailboxes for social media account emails and tried to kill Cortex XDR processes. One dropped script had a syntax error and would have failed.",
+      "takeaway": "AI-assisted intrusions still rely on ordinary Linux tradecraft, so defenders should hunt for PHP config tampering, shell rc file aliases and outbound reverse shells, and can treat conversational reasoning comments inside dropped scripts as a triage signal.",
+      "lessons": [
+        {
+          "point": "LLM-generated payloads leave a fingerprint: conversational reasoning comments addressed to the operator, which can be used as a hunting and triage indicator.",
+          "excerpt": "Multiple artifacts deployed throughout the intrusion contained AI-made conversational annotations and developer reasoning comments",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Persistence came from editing auto_prepend_file in every PHP config, which loads a web shell before every PHP request. Monitor these directories for integrity changes.",
+          "excerpt": "the attackers modified the auto_prepend_file value across all PHP configurations under the directories /etc/php/ and /opt/plesk/php/.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Credentials were harvested by a .bashrc sudo alias that fakes the password prompt, logs the password and then passes it to the real sudo.",
+          "excerpt": "In one instance, they created an alias for the sudo command that was designed to execute each time a user attempted to run it.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The attackers planted fake red-team markers so responders would mistake the intrusion for an authorized security assessment.",
+          "excerpt": "plant deceptive red-team markers to disguise activity as a legitimate security assessment",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "unit42",
+        "espionage",
+        "linux",
+        "web-shell",
+        "php",
+        "ai-generated-malware",
+        "credential-theft",
+        "anti-forensics",
+        "go-rat"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hunt for CL-UNK-1211-style Linux persistence",
+        "detail": "Search /etc/php/ and /opt/plesk/php/ for non-empty auto_prepend_file values. Look for sudo aliases or functions in users' .bashrc files. Check for files posing as vendor logs, such as Solarwinds.StatusLog.txt. Alert on php-fpm spawning shells or python3, and on mkfifo/nc, /dev/tcp and python socket reverse shells. Block 104.194.158.65. Enforce default-deny egress on web servers. Treat 'red team' markers found during an investigation as unverified until the engagement is confirmed."
+      },
+      "scores": {
+        "novelty": 42,
+        "relevance": 70,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 51.1,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: facts supported; flagged a plural overstatement about broken scripts (fixed to one script). Verifier novelty 42 (closest: Unit 42 TuxBot v3 LLM-assisted malware), relevance 80; took the lower novelty.",
+      "prior_art": "Closest pool entry is archive 'Measuring AI-enabled malware: ~97% of samples never reach production; AI changes how malware is authored, not how it executes'. This report is a concrete in-the-wild case consistent with that finding: the payloads were AI-authored, but the tradecraft is conventional and one script was broken. What is new is the specific TTP set (auto_prepend_file persistence, sudo-alias stealer, SysGoRAT, mailbox-to-social-media targeting, fake red-team markers). No earlier entry covers CL-UNK-1211 or SysGoRAT.",
+      "related_claims": [],
+      "threat": "A state-interest espionage cluster gets into government Linux web and mail servers through web shells, keeps access with PHP config persistence and a Go RAT, steals credentials and mailboxes to take over social media accounts, dumps databases, and tampers with EDR and logs.",
+      "conditions": "Internet-facing Linux servers running PHP or Plesk and qmail, with cleartext credentials in config and history files, permissive outbound network access and EDR that can be killed by a local process.",
+      "mitigations": "Monitor PHP configuration and shell rc files for integrity changes, remove cleartext credentials from configs and history, enforce strict outbound firewall rules on servers, enable EDR tamper protection, forward logs off-host, and hunt for the published indicators.",
+      "id": "unit-42-cl-unk-1211-hit-government-linux-servers-6ffc3fe084",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Live espionage campaign with LLM-written payloads and concrete Linux hunting leads (auto_prepend_file persistence, sudo-alias stealer).",
+        "signals": [
+          "newsworthy",
+          "trending",
+          "high-relevance"
+        ],
+        "at": "2026-10-25T19:46:52+00:00"
       }
     },
     {
@@ -3773,6 +3987,98 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "CISA KEV: exploited Fortinet CVE-2025-61624 path traversal lets read-write admins write or delete any file on FortiOS, FortiProxy, FortiPAM, FortiSwitchManager",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2025-61624",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2025-61624",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-16",
+      "date": "2026-10",
+      "raw_path": "data/_raw/cisa-kev-fortinet-multiple-products-path-travers-23e87718b5.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.6,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "summary": "CISA added CVE-2025-61624 to its Known Exploited Vulnerabilities (KEV) catalog on October 16, 2026, with a remediation due date of October 19. The bug lets an authenticated attacker with an admin profile and at least read-write permissions write or delete arbitrary files through specific CLI commands. It affects FortiOS 6.4 through 7.6.4, FortiProxy through 7.6.4, FortiPAM 1.0 through 1.7.0 and FortiSwitchManager through 7.2.7; Siemens also lists its RUGGEDCOM APE1808 as affected.",
+      "takeaway": "Patch Fortinet appliances now, and treat any admin account with read-write rights on an unpatched box as a path to tampering with the device's own files.",
+      "lessons": [
+        {
+          "point": "Exploitation needs an existing admin session with read-write rights, so it is a post-authentication bug, not an initial-access one.",
+          "excerpt": "may allow an authenticated attacker with admin profile and at least read-write permissions to write or delete arbitrary files via specific CLI commands",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The description calls every FortiOS 7.2, 7.0 and 6.4 version affected, while NVD's table bounds them at 7.2.13, 7.0.19 and 6.4.16, so check Fortinet's advisory for the fixed release on your train.",
+          "excerpt": "FortiOS 7.2 all versions, FortiOS 7.0 all versions, FortiOS 6.4 all versions",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "CISA added it to the KEV catalog on October 16 with a remediation deadline three days later.",
+          "excerpt": "October 16, 2026 | October 19, 2026",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "fortinet",
+        "fortios",
+        "fortiproxy",
+        "fortipam",
+        "path-traversal",
+        "cisa-kev",
+        "cve-2025-61624",
+        "network-appliance"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Upgrade Fortinet devices off affected trains and audit admin accounts",
+        "detail": "Inventory FortiOS, FortiProxy, FortiPAM and FortiSwitchManager (and Siemens RUGGEDCOM APE1808) devices and upgrade each to the fixed release for its train per Fortinet advisory FG-IR-26-122. Review which accounts hold admin profiles with read-write permissions, remove unused ones, and restrict management-plane access to a dedicated network. Check device file integrity and CLI audit logs for unexpected file writes or deletions."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 72,
+        "newness": 25,
+        "credibility": 65.6,
+        "composite": 44.29,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "First verifier refuted the 'no fixed version / train upgrade' lesson (NVD's table bounds the affected ranges) and the chaining speculation; lessons rewritten, and a fresh verifier found every fact supported. Verifier novelty 22, relevance 62; took the lower novelty.",
+      "prior_art": "Many earlier Fortinet KEV entries (FortiOS SSL-VPN and FortiManager bugs) and pool KEV path-traversal entries such as WSO2 CVE-2026-5430; this one is post-authentication and file-write/delete via CLI, so it is a routine but urgent patch item.",
+      "related_claims": [],
+      "threat": "An attacker holding an admin account with read-write permissions can write or delete arbitrary files on the appliance through crafted CLI commands, enabling tampering or persistence.",
+      "conditions": "FortiOS 6.4.0-7.6.4, FortiProxy 7.0.0-7.6.4, FortiPAM 1.0-1.7.0 or FortiSwitchManager 7.0.0-7.2.7 (or Siemens RUGGEDCOM APE1808); attacker has authenticated admin access with at least read-write permissions.",
+      "mitigations": "Upgrade to Fortinet's fixed releases per FG-IR-26-122, limit read-write admin profiles, restrict management access to trusted networks, and review CLI and file-integrity logs.",
+      "id": "cisa-kev-exploited-fortinet-cve-2025-61624-path-1346fd01fe",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Exploited in the wild per CISA KEV with a three-day deadline; Fortinet appliances are widely deployed and need patching now.",
+        "signals": [
+          "cve",
+          "active-exploitation",
+          "timely"
+        ],
+        "at": "2026-10-25T19:46:52+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.detection-response",
       "title": "ANY.RUN: 1,258 sandbox analyses tie fake Claude, ChatGPT and Copilot tools to infostealers, session theft and account phishing",
       "source_url": "https://any.run/cybersecurity-blog/fake-ai-tools-us-companies/",
@@ -3957,6 +4263,96 @@
           "published": null
         }
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "Probability-scoring model matches employee accounts to one person at 0.95 F1, 19-47x cheaper than Claude; prompted gpt-oss wrongly merged service accounts",
+      "source_url": "https://vincenzoiozzo.com/blog/jev-identity-resolution",
+      "article_url": "https://vincenzoiozzo.com/blog/jev-identity-resolution",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "raw_path": "data/_raw/test-driving-jev-on-a-security-task-identity-res-5b5150b479.txt",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "tl;dr sec (curator link)",
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-350",
+      "summary": "Vincenzo Iozzo ran a three-step pipeline (exact email, a 20-candidate Jaro-Winkler shortlist, then a model decision) across five real environments. TypeSafe's Jev model answers yes/no with a probability. It reached 0.948 F1 on four large orgs against 0.894 for Haiku 4.5 and 0.911 for Sonnet 5, at $0.62 per 1,000 accounts and 0.3 s median latency. A gpt-oss-20b baseline gated at 95% merged look-alike service accounts across different AWS accounts, and classic record linkage fell to 0.70 F1 on a small messy directory.",
+      "takeaway": "In identity governance (IGA) and identity-security products, a cheap probability model with a tuned cut-off, plus a frontier-model check only on the 'maybe' band, beats rules and a fixed-confidence LLM gate, but validate on your own data first.",
+      "lessons": [
+        {
+          "point": "Traditional record linkage holds up on clean, large directories but breaks on messy ones. That messy tail is where LLM-style judgment pays off.",
+          "excerpt": "Classic record linkage came close on large, regular directories (F1 0.91 vs 0.95) but collapsed on a small, messy one (0.70 vs 0.92).",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A fixed 95% confidence gate copied from another model throws away most true matches for an underconfident model. Pick the threshold per model.",
+          "excerpt": "With the baseline’s 95% gate, Jev rejects most real matches. At its natural cut-off of 0.5 it is excellent.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The cheaper Claude models over-link: they merge different people who share a first name and similar service accounts, even when the prompt explicitly forbids those patterns.",
+          "excerpt": "The smaller models follow those negative rules less reliably than a model trained specifically to answer yes/no questions like this one.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Sending only the 'maybe' band to a second model lifted F1 on the messy Org D environment from 0.65 to 0.86, but cost a little precision elsewhere. The author simulated it from recorded answers, and the judge was also a Claude model, so the result may flatter the hybrid.",
+          "excerpt": "So the second opinion is worth turning on where a directory is known to be messy, not everywhere.",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "identity-resolution",
+        "entity-resolution",
+        "iga",
+        "llm-classification",
+        "calibration",
+        "model-cascade",
+        "cost-latency"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Cascade for linking accounts to identities",
+        "detail": "1) Group accounts that share an exact email without AI. 2) Build a top-20 shortlist per account by weighted Jaro-Winkler over names, usernames and emails. 3) Score each candidate pair with a cheap model that returns a probability. Pick the cut-off on a manually linked sample, not a fixed 95%. 4) Send only accounts with a candidate scoring 0.2-0.5 to a stronger model for a second opinion. 5) Merge accepted links with union-find. 6) Decide up front whether plus-addressed test logins and personal guest accounts count as the same person, and spot-check service-account merges across cloud accounts."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 55,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 43.75,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: every number and lesson matches the source. Verifier novelty 35 (closest: Red Hat's Jev-style decision-model guardrail benchmark), relevance 40; took the lower novelty.",
+      "prior_art": "Decades of record-linkage and entity-resolution work. No identity-resolution entry found in the pool. The nearest pool item is DecisionPivot (ai-research), on decision models for routers and guardrails. What's new is a practitioner benchmark on private real directories (low contamination risk) with cost, latency and per-environment error analysis, and the finding that a hybrid helps only on messy data. It is a single-author black-box test with a model judge, so the evidence is moderate.",
+      "related_claims": [],
+      "threat": "Wrong identity merges, such as service accounts from different AWS accounts or two people sharing a first name, corrupt the identity graph that access reviews and detections rely on. Missed links leave guest and on-premises accounts unattributed to their owner.",
+      "conditions": "No federation between systems, so accounts must be linked by naming conventions. The data is messy: duplicate B2B guest invites, numbered sibling accounts, shared test mailboxes. The pipeline uses a fixed confidence gate or a cheap prompted LLM that ignores negative rules.",
+      "mitigations": "Tune each model's threshold on a manually linked sample, route only uncertain pairs to a stronger model, and review merges that involve service or shared accounts before they feed access decisions.",
+      "id": "probability-scoring-model-matches-employee-accou-a832b38da3",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 22 > 18"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "ghsa-gg6r-gp4c-89hp-1ccf5472cd",
@@ -4199,6 +4595,85 @@
       "retrieved_at": "2026-10-25T02:36:53+00:00",
       "needs_review": true,
       "readability_rewrite": "reverted title, summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "A client's 1-bit 'valid/invalid' reply leaks the full CKKS secret key to a malicious evaluator, demonstrated in Lattigo v6.2.0",
+      "source_url": "http://arxiv.org/abs/2610.21127v1",
+      "article_url": "http://arxiv.org/abs/2610.21127v1",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "raw_path": "data/_raw/reaction-attack-on-ckks-deployments-with-asympto-d89a50083c.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "IEEE Symposium on Security and Privacy (via arXiv)",
+      "summary": "CKKS is a homomorphic encryption scheme that lets a server compute on encrypted data. The attack targets deployments that publish coefficient-to-slot (C2S) evaluation keys and in which the client reveals whether a returned ciphertext was valid. The malicious evaluator builds ciphertexts whose validity depends on whether one secret-key coefficient matches a guess, and recovers a ternary key in O(H) queries, where H is the key's entropy. The attack does not break the underlying lattice problem (RLWE) or CKKS's chosen-plaintext security (IND-CPA); it fully recovered keys for four standard CKKS presets in Lattigo v6.2.0.",
+      "takeaway": "If you deploy homomorphic encryption with an untrusted server, any client behaviour the server can observe on decryption, such as errors, retries or a 1-bit validity signal, is a key-recovery oracle, even though the scheme itself is secure.",
+      "lessons": [
+        {
+          "point": "This is a protocol and deployment flaw, not a cryptographic break. Sound primitives still leak through the client's observable reactions.",
+          "excerpt": "The attack does not break RLWE or CKKS IND-CPA security.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The attack is practical: full key recovery on four standard parameter presets in Lattigo v6.2.0.",
+          "excerpt": "We implemented the full end-to-end attack in Lattigo v6.2.0 and recovered the full secret key across four parameter sets drawn from standard CKKS presets.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Each query is re-randomized, so it evades trivial client-side detection of repeated malicious ciphertexts.",
+          "excerpt": "each submitted query is independently randomized with a fresh encryption of zero",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "homomorphic-encryption",
+        "ckks",
+        "reaction-attack",
+        "key-recovery",
+        "lattigo",
+        "crypto-implementation",
+        "side-channel"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Remove the validity oracle from CKKS client protocols",
+        "detail": "Review homomorphic encryption deployments where the evaluator is not fully trusted and C2S/bootstrapping keys are public. Make sure the client does not expose decryption validity (error messages, retries, timing, aborts) back to the evaluator. Rotate keys after any suspected exposure, and treat a malicious-evaluator threat model as distinct from the scheme's IND-CPA guarantee."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 30,
+        "newness": 25,
+        "credibility": 72.0,
+        "composite": 42.55,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: core facts match; flagged 'widely used library' and 'does not work' as overstated (both fixed). Verifier novelty 55 (closest: Li-Micciancio IND-CPA-D CKKS attacks), relevance 35.",
+      "prior_art": "The pool has only 'Making private AI practical with homomorphic encryption (HEIR)' in the archive, which covers the tooling, not attacks. The general class of reaction and decryption-failure attacks on lattice schemes and earlier CKKS key-recovery work exists outside the pool. The delta is an asymptotically optimal query count through public C2S keys plus a working attack on Lattigo. This is niche for most product-security readers.",
+      "related_claims": [],
+      "threat": "A malicious homomorphic evaluator, such as a cloud server, recovers the client's ternary CKKS secret key and can then decrypt all of the client's data.",
+      "conditions": "A CKKS deployment that publishes coefficient-to-slot evaluation keys (as bootstrapping does), where the client returns a 1-bit validity response or equivalent observable reaction for ciphertexts the evaluator submits.",
+      "mitigations": "Design the client so the evaluator cannot observe decryption validity, and do not rely on CKKS IND-CPA security alone when the evaluator may be malicious.",
+      "id": "a-client-s-1-bit-valid-invalid-reply-leaks-the-f-ce95131214",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
       "readability": {
         "score": 92,
         "passed": false,
@@ -5746,6 +6221,92 @@
       ]
     },
     {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "BeyondTrust advisory BT26-05: CVSS 9.3 improper origin validation in Remote Support lets a remote attacker perform file operations",
+      "source_url": "https://www.beyondtrust.com/trust-center/security-advisories/bt26-05",
+      "article_url": "https://www.beyondtrust.com/trust-center/security-advisories/bt26-05",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-bt26-05-beyondtrust-3109763fb8.txt",
+      "related_claims": [],
+      "summary": "BeyondTrust advisory BT26-05 (CVE-2026-102764, CWE-290) covers a critical flaw in an internal messaging component of Remote Support that did not validate message origin, allowing file operations on the appliance. SaaS customers were patched by October 9, 2026; self-hosted customers on versions 24.3.1 through 26.2.3 must apply the BT26-05-RS patch, and older versions must upgrade first. The advisory does not say whether the flaw is being exploited.",
+      "lessons": [
+        {
+          "point": "Root cause: messages were accepted without origin validation.",
+          "excerpt": "The components did not adequately validate the origin of the messages it received.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "SaaS is already fixed; self-hosted needs a manual patch.",
+          "excerpt": "As of Oct 9, 2026, a patch that remediates this vulnerability has been applied to all Remote Support SaaS customers.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Old versions must upgrade first.",
+          "excerpt": "Customers on a Remote Support version older than 24.3.1 will need to upgrade to a newer version to apply this patch.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Patch self-hosted Remote Support now and treat remote-support appliances as top-priority edge assets.",
+      "tags": [
+        "beyondtrust",
+        "remote-support",
+        "origin-validation",
+        "cwe-290",
+        "edge-appliance"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch and review remote support appliances",
+        "detail": "Apply BT26-05-RS or upgrade, restrict appliance exposure, and review file-system and session activity on the appliance since October 9."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 55,
+        "newness": 25,
+        "credibility": 55.0,
+        "composite": 37.0,
+        "scored_at": "2026-10-25T21:47:31+00:00"
+      },
+      "prior_art": "BeyondTrust Remote Support has a recurring history of critical pre-auth bugs; this advisory adds nothing technique-wise. Verifier: BeyondTrust Remote Support CVE-2024-12356/12686 and CVE-2025-1094 advisories; generic remote-support appliance flaws (ScreenConnect, Ivanti)",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+      "id": "beyondtrust-advisory-bt26-05-cvss-9-3-improper-o-edad14160e",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Critical Remote Support advisory; self-hosted customers must patch manually.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "CISA Known Exploited Vulnerabilities",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102764",
+          "tier": "high",
+          "published": null
+        }
+      ]
+    },
+    {
       "candidate_id": "cisa-kev-wso2-multiple-products-path-traversal-v-23b6e2ab0a",
       "topic": "product-security",
       "domain": "ps.appsec",
@@ -5817,84 +6378,6 @@
         ]
       },
       "grounding_score": 1.0
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.identity",
-      "title": "BeyondTrust advisory BT26-05: CVSS 9.3 improper origin validation in Remote Support lets a remote attacker perform file operations",
-      "source_url": "https://www.beyondtrust.com/trust-center/security-advisories/bt26-05",
-      "article_url": "https://www.beyondtrust.com/trust-center/security-advisories/bt26-05",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-15",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-bt26-05-beyondtrust-3109763fb8.txt",
-      "related_claims": [],
-      "summary": "BeyondTrust advisory BT26-05 (CVE-2026-102764, CWE-290) covers a critical flaw in an internal messaging component of Remote Support that did not validate message origin, allowing file operations on the appliance. SaaS customers were patched by October 9, 2026; self-hosted customers on versions 24.3.1 through 26.2.3 must apply the BT26-05-RS patch, and older versions must upgrade first. The advisory does not say whether the flaw is being exploited.",
-      "lessons": [
-        {
-          "point": "Root cause: messages were accepted without origin validation.",
-          "excerpt": "The components did not adequately validate the origin of the messages it received.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "SaaS is already fixed; self-hosted needs a manual patch.",
-          "excerpt": "As of Oct 9, 2026, a patch that remediates this vulnerability has been applied to all Remote Support SaaS customers.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Old versions must upgrade first.",
-          "excerpt": "Customers on a Remote Support version older than 24.3.1 will need to upgrade to a newer version to apply this patch.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Patch self-hosted Remote Support now and treat remote-support appliances as top-priority edge assets.",
-      "tags": [
-        "beyondtrust",
-        "remote-support",
-        "origin-validation",
-        "cwe-290",
-        "edge-appliance"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Patch and review remote support appliances",
-        "detail": "Apply BT26-05-RS or upgrade, restrict appliance exposure, and review file-system and session activity on the appliance since October 9."
-      },
-      "scores": {
-        "novelty": 20,
-        "relevance": 55,
-        "newness": 25,
-        "credibility": 50.0,
-        "composite": 36.25,
-        "scored_at": "2026-10-25T16:45:20+00:00"
-      },
-      "prior_art": "BeyondTrust Remote Support has a recurring history of critical pre-auth bugs; this advisory adds nothing technique-wise. Verifier: BeyondTrust Remote Support CVE-2024-12356/12686 and CVE-2025-1094 advisories; generic remote-support appliance flaws (ScreenConnect, Ivanti)",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "beyondtrust-advisory-bt26-05-cvss-9-3-improper-o-edad14160e",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Critical Remote Support advisory; self-hosted customers must patch manually.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      }
     },
     {
       "candidate_id": "cisa-kev-adobe-commerce-and-magento-incorrect-au-51cbf8bda3",
@@ -6123,6 +6606,76 @@
       "retrieved_at": "2026-10-25T02:36:36+00:00",
       "needs_review": true,
       "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Microsoft rates ASP.NET Core security feature bypass CVE-2026-88092 critical across Linux runtime packages (advisory details not captured)",
+      "source_url": "https://github.com/advisories/GHSA-rv87-ccxw-8ggf",
+      "article_url": "https://github.com/advisories/GHSA-rv87-ccxw-8ggf",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-13",
+      "date": "2026-10",
+      "raw_path": null,
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "summary": "Microsoft published CVE-2026-88092, a security feature bypass in ASP.NET Core, mirrored as GHSA-rv87-ccxw-8ggf with CRITICAL severity. Affected packages include the Microsoft.AspNetCore.App.Runtime NuGet packages for linux-arm, linux-arm64, linux-musl-arm, linux-musl-arm64 and linux-musl-x64. The ingested excerpt does not describe which security feature is bypassed or how.",
+      "takeaway": ".NET teams should patch ASP.NET Core runtimes, including self-contained Linux and container builds that bundle the runtime packages, even though the bypass mechanism is not described in the captured text.",
+      "lessons": [
+        {
+          "point": "Microsoft classifies this as a security feature bypass in ASP.NET Core, not as RCE.",
+          "excerpt": "Microsoft Security Advisory CVE-2026-88092 - ASP.NET Core Security Feature Bypass Vulnerability",
+          "confidence": 0.5,
+          "grounded": false
+        },
+        {
+          "point": "The affected packages are the platform-specific runtime packs that self-contained Linux deployments pull from NuGet, so fixing the host's shared runtime alone may not be enough.",
+          "excerpt": "affects nuget/Microsoft.AspNetCore.App.Runtime.linux-arm, nuget/Microsoft.AspNetCore.App.Runtime.linux-arm64",
+          "confidence": 0.4,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "asp-net-core",
+        "dotnet",
+        "security-feature-bypass",
+        "nuget",
+        "microsoft",
+        "ghsa"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Rebuild self-contained ASP.NET Core apps on the patched runtime",
+        "detail": "Update the .NET SDK/runtime to the October 2026 servicing release. Rebuild and redeploy self-contained and containerized apps so the Microsoft.AspNetCore.App.Runtime.* packs are refreshed. Check the full advisory for the specific bypassed feature and any workaround."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 45,
+        "newness": 25,
+        "credibility": 70.0,
+        "composite": 33.25,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": false,
+      "verify_note": "Verifier refuted both lessons' inferences (the not-RCE contrast and the self-contained runtime-pack advice) as unsupported by the truncated advisory excerpt, the only text available (advisory page returned HTTP 403).",
+      "prior_art": "No closer pool entry was found for CVE-2026-88092. This is a routine vendor advisory, and the captured excerpt lists only packages, not a mechanism. The advisory page could not be fetched (HTTP 403).",
+      "related_claims": [],
+      "threat": "An attacker bypasses an unspecified ASP.NET Core security feature in apps running vulnerable runtime versions.",
+      "conditions": "ASP.NET Core applications using vulnerable Microsoft.AspNetCore.App runtime versions, including self-contained Linux builds; specifics not in the captured text.",
+      "mitigations": "Apply the October 2026 .NET servicing update and rebuild or redeploy self-contained and container images so bundled runtime packs are refreshed.",
+      "id": "microsoft-rates-asp-net-core-security-feature-by-1fedc43b4c",
+      "retrieved_at": "2026-10-25T19:45:51+00:00",
+      "needs_review": true,
       "readability": {
         "score": 100,
         "passed": true,
@@ -6754,6 +7307,88 @@
         "passed": false,
         "issues": [
           "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Microsoft's October 2026 Patch Tuesday fixes one exploited Windows Shell bypass (CVE-2026-96951); AD DS and Exchange RCEs rated more likely exploited",
+      "source_url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026/",
+      "article_url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-13",
+      "date": "2026-10",
+      "raw_path": "data/_raw/microsoft-patch-tuesday-for-october-2026-snort-r-0a2cdd8633.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-talosintelligence-com-rss",
+      "source_rank": 69.6,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Cisco Talos Intelligence",
+      "summary": "Talos summarizes Microsoft's October 2026 update: 1415 vulnerabilities, 85 rated critical, 67 of which are RCE. One flaw is exploited in the wild: CVE-2026-96951, a Windows Shell security feature bypass rooted in command injection (CVSS 8.8). Microsoft rates exploitation more likely for CVE-2026-70229, an Active Directory Domain Services RCE caused by incorrect authorization, and CVE-2026-70571, a stack overflow RCE in Exchange Server.",
+      "takeaway": "Patch the exploited Windows Shell bypass and the AD DS and Exchange RCEs first, since the rest is a long routine list.",
+      "lessons": [
+        {
+          "point": "Only one vulnerability this month is confirmed exploited in the wild, which sets the top patching priority.",
+          "excerpt": "Microsoft notes that 1 of the vulnerabilities disclosed this month have been exploited in the wild",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The exploited flaw is a Windows Shell security feature bypass caused by command injection.",
+          "excerpt": "is a security feature bypass vulnerability that affects Windows Shell. The shared weakness is Improper Neutralization of Special Elements used in a Command ('Command Injection').",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Microsoft rates exploitation more likely for an AD DS RCE caused by incorrect authorization, so domain controllers should be in the first patch wave.",
+          "excerpt": "is a remote code execution vulnerability that affects Windows Active Directory Domain Services. The shared weakness is Incorrect Authorization.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "patch-tuesday",
+        "microsoft",
+        "windows",
+        "exchange",
+        "active-directory",
+        "talos",
+        "snort"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Prioritize October 2026 Microsoft patches",
+        "detail": "Deploy the fix for CVE-2026-96951 (Windows Shell) first. Next patch domain controllers for CVE-2026-70229 and Exchange servers for CVE-2026-70571. Then patch the 9.8-rated network-reachable RCEs: QUIC, DHCP Server CVE-2026-96934, Message Queuing CVE-2026-100202 and the Outlook RCEs. Enable the Talos Snort rules for this release on network sensors."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 40,
+        "newness": 25,
+        "credibility": 69.6,
+        "composite": 30.19,
+        "scored_at": "2026-10-25T19:45:56+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: every number and CVE matches; patch-order advice is inference from Microsoft's exploitability ratings. Verifier novelty 15, relevance 45; kept 5.",
+      "prior_art": "No earlier Patch Tuesday roundup was found in the pool. This is a routine monthly vendor roundup with no new research. The captured text is cut off before the Snort rule list.",
+      "related_claims": [],
+      "threat": "Attackers exploit CVE-2026-96951 to bypass Windows Shell security features in the wild. Unpatched AD DS, Exchange and other critical RCEs give further entry points.",
+      "conditions": "Unpatched Windows endpoints and servers, domain controllers, Exchange Server and Office installs as of the October 2026 release.",
+      "mitigations": "Apply the October 2026 Microsoft security updates, starting with the exploited Windows Shell flaw, domain controllers and Exchange, and deploy the corresponding Talos Snort rules.",
+      "id": "microsoft-s-october-2026-patch-tuesday-fixes-one-ffa372bb8b",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
         ]
       },
       "grounding_score": 1.0

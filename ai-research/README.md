@@ -2,12 +2,14 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_4 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [11 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [17 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Letting the agent choose when to compact, guided by a fire/suppress rubric, matches or beats fixed-interval summarization at a fraction of the token cost](https://machinelearning.apple.com/research/self-compacting-language-agents)**
+  _Why now: Directly usable harness change: a model-invoked compaction tool plus a fire/suppress rubric beats fixed token-threshold compaction across seven models. · trending · high-relevance_
 - **[Anthropic describes presenting MCP servers as code APIs so agents load fewer tool definitions and tokens](https://www.anthropic.com/research/code-execution-with-mcp)**
 - **[Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models by ASR-measured word error rate, speaker similarity and latency instead of human votes](https://huggingface.co/blog/open-tts-leaderboard)**
 - **[MentalHealthBench scores model replies against weighted, expert-consensus rubrics across acuity levels and personas](https://openai.com/index/introducing-mentalhealthbench)**
