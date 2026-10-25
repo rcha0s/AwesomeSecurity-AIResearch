@@ -20,12 +20,17 @@ Usage:
 
 from __future__ import annotations
 
+import os
 import re
 import sys
 
 import common as c
 
 URL_SNAPSHOT = c.SCAN_URL_SNAPSHOT
+# The golden run fetches past stories on purpose, so its wrapper sets this. An
+# env var, not a flag: the scan session's `fetch_raw.py *` allowlist rule could
+# pass a flag, but can't prefix the command with an assignment.
+ANY_DATE_ENV = "FETCH_RAW_ANY_DATE"
 ID_RE = re.compile(r"^[A-Za-z0-9_.:-]{1,200}$")
 
 
@@ -39,7 +44,7 @@ def fetch_one(cand_id: str) -> str:
     if not url or not url.startswith(("https://", "http://")):
         raise SystemExit(f"fetch_raw: no http(s) URL recorded for {cand_id}")
     text = c.fetch_readable(url)
-    old = c.stale_page(text, c.ingest_age_days())
+    old = None if os.environ.get(ANY_DATE_ENV) == "1" else c.stale_page(text, c.ingest_age_days())
     if old is not None:
         # The feed's date was a republish or a rebuild: skip it before any analysis.
         raise SystemExit(

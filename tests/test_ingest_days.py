@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import dataclasses
 from datetime import timedelta
+from pathlib import Path
 
 import common as c
 import fetch_raw
@@ -93,3 +94,13 @@ def test_merge_refuses_a_new_entry_whose_page_is_past_the_sites_window(sandbox, 
     merged, errors, _, _ = m.merge([old, new], week)
     assert [x["title"] for x in merged] == ["Fresh finding"]
     assert len(errors) == 1 and "stale: the page says it was published 2022-12-19" in errors[0]
+
+
+def test_the_golden_wrapper_fetches_past_stories(sandbox, week, monkeypatch):
+    c.save_candidates([{"id": "c1", "article_url": "https://www.anthropic.com/research/x"}])
+    fetch_raw.snapshot_urls()
+    monkeypatch.setattr(c, "fetch_readable", lambda url: page("2022-12-19"))
+    monkeypatch.setenv(fetch_raw.ANY_DATE_ENV, "1")
+    assert fetch_raw.fetch_one("c1") == c.load_candidates()[0]["raw_path"]
+    golden = Path(__file__).resolve().parents[1] / "scripts/run_golden_local.sh"
+    assert 'FETCH_RAW_ANY_DATE=1 "$PYTHON" scripts/fetch_raw.py' in golden.read_text()
