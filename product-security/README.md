@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [45 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [48 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -82,6 +82,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[DOMPurify SAFE_FOR_TEMPLATES bypass: split expressions survive inside attached shadow roots](https://github.com/advisories/GHSA-cg2g-xh64-v4q7)**
 - **[Pillow multi-frame loaders reuse stale buffers, causing out-of-bounds writes and possible code execution](https://github.com/advisories/GHSA-v9pv-5gc8-w2m6)**
 - **[Salesforce: AI finds vulnerabilities faster than engineers can fix them; cluster root causes and close exploit chains](https://www.salesforce.com/blog/managing-agentic-security-at-scale/)**
+- **[Cloudflare pairs Daybreak code-vuln findings with live traffic signals and drafts WAF rules plus patches](https://openai.com/index/cloudflare-cyber)**
 - **[OpenAI proposes coordinated disclosure framework after AI-found critical PHP flaws, offers PHP version checker](https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities)**
 - **[Pillow heap overflow when saving TIFF to BytesIO also leaks stale heap bytes](https://github.com/advisories/GHSA-332p-7hrc-92wf)**
 - **[Belarus-aligned Partisan Zmiy hid Vasilek backdoor in VMware Tools for nearly two years in Russian healthcare network](https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html)**

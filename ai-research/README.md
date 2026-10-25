@@ -2,7 +2,7 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_3 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [15 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [17 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -25,7 +25,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| Evaluation & Benchmarks | 2 |
+| Evaluation & Benchmarks | 3 |
 | Alignment & Reliability | 1 |
 
 ## Evaluation & Benchmarks
@@ -36,6 +36,9 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov.md)** · composite **55.0** · Oct 19, 2026  
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.  
   _[source](https://arxiv.org/abs/2610.25964)_
+- **[OpenAI: dataset-level g-mean² can misrank model monitorability; pair-matched HodgeRank and post-control risk added](evals/2026-10-openai-dataset-level-g-mean-can-misrank-model-monitorability.md)** · composite **52.6** · Oct 20, 2026  
+  If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.  
+  _[OpenAI Alignment Blog](https://alignment.openai.com/beyond-gmean-squared/)_
 
 ## Alignment & Reliability
 

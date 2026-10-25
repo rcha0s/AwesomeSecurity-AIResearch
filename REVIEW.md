@@ -4,7 +4,7 @@
 
 _Updated 2026-10-25._
 
-## AI Security (37)
+## AI Security (40)
 
 - **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 66.0 · _news story: excerpt not grounded in source (only 75% of quotes verified)_
   Treat a model eval with production classifiers off as a live agent that may try to escape, where a package-manager proxy is a plausible sandbox-escape primitive.
@@ -52,7 +52,9 @@ _Updated 2026-10-25._
   Treat agents in eval and training runs as potential insiders: enforce isolation technically, wipe leftover artifacts between runs, and do not rely on an AI monitor alone.
 - **[SkillMarker watermarks agent skill files to trace copying, catching copied passages from 1,536 tokens and 72-78% of skills merged into others](https://arxiv.org/abs/2610.15725)** · composite 40.87 · _flagged needs_review (low confidence / novelty / relevance)_
   Skill publishers can now trace leaked or resold skills, but it is a provenance and ownership tool, not protection against malicious skills, and the abstract does not address…
-- **[openapi-mcp-generator 5.0 turns OpenAPI specs into MCP servers; missing credentials now fail closed](https://github.com/harsha-iiiv/openapi-mcp-generator)** · composite 39.07 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[NuGuard: open-source AI-SBOM, static analysis and 100+ scenario sandboxed red-team pipeline for agentic apps](https://github.com/NuGuardAI/nuguard)** · composite 39.14 · _flagged needs_review (low confidence / novelty / relevance)_
+  It is a candidate all-in-one CI red-team harness for agent apps. It's young (67 stars), so treat the comparison claims as unverified marketing until you've benchmarked it against…
+- **[openapi-mcp-generator 5.0 turns OpenAPI specs into MCP servers; missing credentials now fail closed](https://github.com/harsha-iiiv/openapi-mcp-generator)** · composite 39.07 · _ungrounded excerpt — only 75% of quotes verified against the source_
   Auto-generated MCP servers expose your whole API to an agent by default, so filter operations and turn on inbound auth before you deploy one.
 - **[OWASP GenAI Q3 2026 exploit roundup maps the OpenAI/Hugging Face campaign, three Anthropic/Irregular incidents, CoSnitch Copilot (CVE-2026-24301) to LLM and Agentic Top 10s](https://genai.owasp.org/2026/10/08/genai-and-agentic-ai-exploit-roundup-q3-2026/)** · composite 38.12 · _flagged needs_review (low confidence / novelty / relevance)_
   Use it as an index and a mitigation checklist for eval-agent containment failures, not as a source of new findings; its main point is that scope set only in the prompt is not a…
@@ -70,18 +72,22 @@ _Updated 2026-10-25._
   Refusing one request at a time does not stop decomposed abuse campaigns, so detection has to correlate activity across requests and accounts.
 - **[Microsoft and NVIDIA publish a five-category risk taxonomy for open-weight models, arguing deployment context, not weight openness, sets risk](https://www.microsoft.com/en-us/security/blog/2026/10/16/managing-open-weight-model-risk-in-enterprise-deployments/)** · composite 35.19 · _flagged needs_review (low confidence / novelty / relevance)_
   Teams that self-host open-weight models inherit safeguards a managed service would otherwise provide, so each risk needs an owner and a control at the layer where it can actually…
+- **[Microsoft frames agents as insiders and announces Dynamic Permissions, Dynamic Agent Risk and Guardian Agents (Project Perception)](https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/)** · composite 35.19 · _flagged needs_review (low confidence / novelty / relevance)_
+  Graduated containment is a useful design pattern to copy: when agent risk rises, keep reads, revoke writes, require approval, then isolate. Treat the rest as vendor positioning.
 - **[Chainguard's agent-skill hardening pipeline: hash on ingest, rule and AI scans, AI-agent remediation, rescan, then sign and digest-pin](https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities)** · composite 34.87 · _flagged needs_review (low confidence / novelty / relevance)_
   Manage agent skills like packages (scan, sign, pin, keep a private registry), but treat vendor 'hardening' claims as unmeasured until there are detection numbers.
 - **[Vaccine and Booster combined: a trade-off between content and refusals in harmful fine-tuning (Llama-2-7B, 10 prompts, single run)](http://arxiv.org/abs/2609.36862v1)** · composite 32.45 · _flagged needs_review (low confidence / novelty / relevance)_
   Alignment-stage defenses against harmful fine-tuning can trade content safety against refusal retention, but this evidence is too small to rely on.
 - **[Anthropic Frontier Red Team (March 2025): Claude reached undergraduate-level CTF skill but failed autonomous network attacks](https://www.anthropic.com/research/strategic-warning-for-ai-risk-progress-and-insights-from-our-frontier-red-team)** · composite 31.87 · _flagged needs_review (low confidence / novelty / relevance)_
   When estimating offensive AI capability, test with an attack toolkit and not only the bare model, though these March 2025 figures are now well out of date.
+- **[NextDNS MCP server: unauthenticated HTTP mode ships with DNS-rebinding Host/Origin protection off by default](https://github.com/dmeiser/nextdns-mcp)** · composite 30.77 · _flagged needs_review (low confidence / novelty / relevance)_
+  Mostly a generic MCP wrapper. The useful part is a documented example of an unauthenticated localhost MCP endpoint left open to DNS rebinding by default.
 - **[Blogger argues teams should self-host an LLM proxy for per-key request logs, virtual API keys and fast provider switching](https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/)** · composite 29.5 · _flagged needs_review (low confidence / novelty / relevance)_
   A self-hosted LLM gateway gives per-agent key isolation and an audit trail, but it also concentrates every provider key in one place and has to be hardened accordingly.
 - **[Check Point: an infostealer adds collection routines for Claude, ChatGPT Desktop, Codex, Cursor and Windsurf](https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/)** · composite 8.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.
 
-## Product Security (45)
+## Product Security (48)
 
 - **[@subql/common@5.8.3 npm backdoor: short-lived, never-merged branch swapped the build for unverified ci-artifacts.dev tarball before publish; runs on install and on import](https://www.stepsecurity.io/blog/subql-ecosystem-compromised)** · composite 54.62 · _flagged needs_review (low confidence / novelty / relevance)_
   A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on…
@@ -123,6 +129,8 @@ _Updated 2026-10-25._
   US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.
 - **[raml-kql: one KQL query across many Log Analytics workspaces and Entra tenants without a Defender multi-tenant org](https://github.com/luca-ramseyer/raml-kql)** · composite 39.25 · _flagged needs_review (low confidence / novelty / relevance)_
   MSSPs without a Defender MTO can hunt across customer Sentinel workspaces from one query with delegated access only.
+- **[Plex CVE-2026-96652: any X-Plex-Token value lets /player/timeline 'protocol' parameter force server POSTs anywhere](https://nvd.nist.gov/vuln/detail/CVE-2026-96652)** · composite 39.19 · _flagged needs_review (low confidence / novelty / relevance)_
+  Upgrade Plex to 1.43.3.10861 or later: this endpoint turns the server into a POST relay with almost no authentication, and it is exploited in the wild as part of the plex2shell…
 - **[Wiz Scan for Good: an AI pentest agent found internet-facing exposures (leaked admin keys, CI/CD credentials, a container-publish credential) at hospitals, archives and platforms](https://www.wiz.io/blog/scan-for-good-critical-ai-exposures)** · composite 38.69 · _failed independent verification — Verifier: 'top route to full control' is not in the source; title places leaked keys at hospitals, but the hospital findings were missing access controls and an unsafe upload._
   AI agents now find exposed admin keys and credentials across many internet-facing systems quickly, so defenders should assume such leaks will be found and scan their own external…
 - **[CISA KEV: Plex Media Server arbitrary file write CVE-2026-96656 exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-96656)** · composite 38.12 · _failed independent verification — Source text not captured (NVD page empty); lessons rest on the KEV catalog text only._
@@ -139,6 +147,8 @@ _Updated 2026-10-25._
   .NET teams should patch ASP.NET Core runtimes, including self-contained Linux and container builds that bundle the runtime packages, even though the bypass mechanism is not…
 - **[Wiz Blue Agent: stolen GitHub token, 18 cloned private repos, hardcoded AWS keys (2018 CI account), SSM on a production domain controller, S3-staged exfiltration](https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation)** · composite 33.17 · _flagged needs_review (low confidence / novelty / relevance)_
   Hardcoded long-lived keys in private repos turn one stolen GitHub token into cloud RCE, and finding it needs baselines, cross-platform IP pivots and data-plane logs, whether a…
+- **[Researcher reports Samsung Tizen running INT8 AlexNet TFLite on 960x540 captures to identify games played](https://twitter.com/mike64_t/status/2114150399406202896)** · composite 32.5 · _flagged needs_review (low confidence / novelty / relevance)_
+  When auditing TV/IoT firmware, check whether on-device ML screen capture runs before user consent, even if the output is dropped; here the evidence is a single unverified tweet.
 - **[Talos newsletter: PHP2Shell RCEs hit every PHP build since 5.4; no patch for 8.1 or older](https://blog.talosintelligence.com/i-had-plans-for-that-second/)** · composite 32.5 · _flagged needs_review (low confidence / novelty / relevance)_
   If you run PHP 8.1 or older, there is no patch: upgrade to 8.2+ or put network-level protection in front now.
 - **[Contao comments-bundle: unauthenticated visitor's comment XSS fires on any back-end user opening the Comments module; no CSP on back end (GHSA-628f-v4f6-p37r, critical)](https://github.com/advisories/GHSA-628f-v4f6-p37r)** · composite 31.75 · _ungrounded excerpt — only 0% of quotes verified against the source_
@@ -157,6 +167,8 @@ _Updated 2026-10-25._
   Read the original before acting; as captured, this item only signals that a major vendor is tracking the blockchain-C2 plus package-compromise pattern.
 - **[CISA adds 2016 Apache Struts DMI command injection CVE-2016-3081 (S2-032) to KEV on 2026-10-08, due 2026-10-11](https://nvd.nist.gov/vuln/detail/CVE-2016-3081)** · composite 28.16 · _flagged needs_review (low confidence / novelty / relevance)_
   Legacy Struts 2 apps with DMI on are still being hit a decade later; find them and patch or turn DMI off.
+- **[Public bounty server runs pre-PHP2Shell PHP with ~$500 bitcoin key behind a print-flag binary](https://stealmybitcoin.com/)** · composite 28.0 · _flagged needs_review (low confidence / novelty / relevance)_
+  This is a public, live test of PHP2Shell exploitability; a non-zero hack counter would be a signal to speed up PHP patching, but the page itself contains no technical detail.
 - **[Aikido post claims 'http2shell' RCE affects Node, Python and more; captured source has no technical details](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8)** · composite 25.0 · _flagged needs_review (low confidence / novelty / relevance)_
   A possible cross-runtime RCE is circulating, but this capture has no details; get the primary Aikido or vendor advisory before acting.
 - **[Semgrep adds incident-specific rescans and automated response playbooks for compromised-package events](https://semgrep.dev/blog/2026/introducing-malware-detection-and-response-automation)** · composite 23.3 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -174,10 +186,12 @@ _Updated 2026-10-25._
 - **[CISA KEV: Siemens Software Center DLL search-path flaw CVE-2026-110936 exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-110936)** · composite 10.44 · _ungrounded excerpt — only 0% of quotes verified against the source_
   A local attacker who can drop a DLL where Siemens Software Center looks for one gets code execution; CISA says this is being exploited.
 
-## AI Research (15)
+## AI Research (17)
 
 - **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 59.62 · _news story: excerpt not grounded in source (only 0% of quotes verified)_
   In AI bug hunting, outcome definition and per-agent scoping drive output quality most, with a threat-model file as the highest-leverage input.
+- **[GRSE: credit multi-agent skills by contrasting repeated runs, not presence; recovers from planted harmful skills](https://arxiv.org/abs/2610.27227)** · composite 50.77 · _flagged needs_review (low confidence / novelty / relevance)_
+  If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.
 - **[DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522)** · composite 50.5 · _flagged needs_review (low confidence / novelty / relevance)_
   Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.
 - **[Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable](https://www.anthropic.com/news/an-update-on-independent-evaluators)** · composite 49.0 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -196,6 +210,8 @@ _Updated 2026-10-25._
   Agent actions on the physical world need validation against live state, not just syntax, and agents optimizing a proxy metric will exploit artifacts until real-world readouts…
 - **[Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access; each expects to invest at least $1B](https://www.anthropic.com/news/accenture-embedded-evaluation)** · composite 38.12 · _flagged needs_review (low confidence / novelty / relevance)_
   Embedded evaluation is starting with a lab-funded commercial partner and no shared standards, so judge its independence by the access and reporting terms once they are published.
+- **[Amazon Science post on independent third-party review of its AI safety testing (article body not captured)](https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review)** · composite 34.0 · _failed independent verification — Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body._
+  Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.
 - **[HybridAgent post-trains models to reason in latent space and call tools in text, reporting 10.4% gains and 35.5-54.7% fewer tokens](https://arxiv.org/abs/2610.18861)** · composite 32.5 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a model architecture and training change, not a harness technique, so it only matters if you train or serve your own open-weight agent models.
 - **[Bound-conditioned latent inference cuts progressive image codec BD-rate 7.96% vs CTC on Kodak with 5.3x fewer parameters](http://arxiv.org/abs/2610.30966v1)** · composite 30.55 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -209,4 +225,4 @@ _Updated 2026-10-25._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-10-25. 97 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-25. 105 item(s) awaiting review.</sub>

@@ -89,11 +89,11 @@ picked from the taxonomy's keyword hints within that topic.
 
 ## How far back a scan looks
 
-A daily scan ingests only the last `ingest_days` (7): older stories were
-covered by earlier scans. Claim work follows the same week: each scan weighs
-its findings against the whole ledger, so a new result that supports, contests
-or refutes an old claim is still caught. A backfill uses its own window;
-`add.py` keeps `max_age_days`. A feed or sitemap date can be a republish or a
+- Scan windows: daily scans use a 7-day window (`ingest_days`) for stories and claims; only backfill runs reach 31 days. Claims are still checked against prior work to catch refutations. (Rohan, 2026-10)
+
+Older stories were covered by earlier scans. Each scan weighs its findings
+against the whole ledger, so a new result that supports, contests or refutes an
+old claim is still caught. `add.py` keeps `max_age_days`. A feed or sitemap date can be a republish or a
 site rebuild, so the page's own `Published Time` decides wherever the text is
 fetched: `ingest_sitemap.py` drops a page it can't fetch (tried twice) instead
 of dating it by `<lastmod>`, `fetch_raw.py` refuses a page older than the
@@ -213,7 +213,7 @@ likewise unharvested.
 
 ## Daily automation (unattended scan -> PR)
 
-One entrypoint, two runners. Both run the `/daily-scan` skill
+One entrypoint, two runners (the Mac's is the one in use; the cloud routine is paused). Both run the `/daily-scan` skill
 (`.claude/skills/daily-scan/SKILL.md`), which wraps `scripts/run_scan.sh`:
 `pre` (budget guard, then every ingestor, then the batch cut) → LLM analysis →
 `post` (story cap, render, spend record, PR on `claude/scan-<date>-<runner>`). A
@@ -281,17 +281,19 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `data/_scan.log` (grep `session result`), and retries once the same day when the
   failure was analysis-empty and cost under `budget.retry_max_usd`.
 
-- **Cloud (default):** a Claude Code routine with prompt `/daily-scan`, this repo
-  attached, scheduled daily. Environment: Custom network access with the hosts from
-  `python scripts/allowlist.py` plus the default package list; setup script
-  `pip install -r requirements.txt`.
-- **Mac fallback:** `scripts/install_launchd.sh [HOUR MINUTE]` installs a launchd job
+- **Mac (the runner, since 2026-10-25):** `scripts/install_launchd.sh [HOUR MINUTE]` installs a launchd job
   that runs `scripts/run_scan_local.sh` from its own clone in
   `~/.local/share/awesomesec-runner` (macOS won't let launchd jobs read
   `~/Desktop`), pulled to main before each run. The wrapper runs every guarding phase
   itself in its own worktree (`~/.local/share/awesomesec-worktree`, reset each run), and
   the model session only analyzes. It is idle on days a scan already finished;
-  `--uninstall` removes it.
+  `--uninstall` removes it. The Mac must be awake at the scheduled time.
+- Run location: scans run locally on the always-on Mac. The cloud routine was dropped after setup failed 10-22 through 10-25; don't route scans to it. (Rohan, 2026-10)
+- **Cloud (paused 2026-10-25):** a Claude Code routine with prompt `/daily-scan`
+  never got a working setup script (pip failed in the VM), so it is disabled and
+  the Mac runs every scan. The code path stays: to bring it back, re-enable the
+  routine with Custom network access (hosts from `python scripts/allowlist.py`
+  plus the default package list) and setup script `pip install -r requirements.txt`.
 - **Spend guard:** `scripts/budget.py` keeps a ledger on the `budget-ledger` branch.
   Routines draw subscription usage first and can't read their balance, so `pre`
   checks the month's spend against `budget.monthly_cap_usd`, then **reserves** the

@@ -204,7 +204,8 @@ phase_pre() {
   rm -f "$SKIP_MARKER" "$RESULT" "$SUMMARY" "$RUN_ID_FILE" "$STAGED_FILE" \
     data/analysis_out.json data/editorial_out.json data/story_shortlist.json data/story_verdicts.json \
     data/_story_outcomes.md data/_merge_outcomes.json data/_scan_backlog.json \
-    data/_editorial_outcomes.md data/_analysis_draft.json data/_readability_outcomes.md
+    data/_editorial_outcomes.md data/_analysis_draft.json data/_readability_outcomes.md \
+    data/_cross_review_outcomes.md
   local rc=0 run_id
   run_id="${SCAN_RUN_ID:-$RUNNER-$(date -u +%Y%m%dT%H%M%SZ)-$$}"
   check_and_reserve "$run_id" || rc=$?
@@ -288,6 +289,14 @@ phase_post() {
     ledger_append "$run_id" done --run-id "$run_id" --stories "$stories"
     return 0
   fi
+  # A second vendor's shadow read on what this run would publish. Mac only
+  # (the cloud can't sign in to agy); advisory, so it never fails the scan.
+  # Removed first: the session could have written this file, and only this
+  # script's verdicts may reach the PR body.
+  rm -f data/_cross_review_outcomes.md
+  if [[ "$RUNNER" == local ]]; then
+    SCAN_RUN_ID="$run_id" "$PY" scripts/cross_review.py >>"$LOG" 2>&1 || log "cross-review WARN: failed"
+  fi
   run_evals "$run_id" "$stories" || log "evals WARN: history not updated"
   day="$(date -u +%Y-%m-%d)"
   branch="claude/scan-$day-$RUNNER"
@@ -316,7 +325,8 @@ phase_post() {
   # Code-owned records (merge_analysis.py's story verdicts, promote_editorial.py's
   # promotions and removals), never the model's word for them.
   local record
-  for record in data/_story_outcomes.md data/_editorial_outcomes.md data/_readability_outcomes.md; do
+  for record in data/_story_outcomes.md data/_editorial_outcomes.md data/_readability_outcomes.md \
+    data/_cross_review_outcomes.md; do
     if [[ -f "$record" ]]; then body+=$'\n\n'"$("$PY" scripts/scrub.py "$record" "")"; fi
   done
   # The readability rewrite is fact-checked against the pre-rewrite draft.

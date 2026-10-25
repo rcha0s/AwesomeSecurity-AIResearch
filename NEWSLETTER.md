@@ -2,7 +2,7 @@
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-17 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+19 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -22,6 +22,8 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
   A clean per-skill scan does not show that a set of installed skills is safe together, so review and monitoring have to cover the whole pipeline of skills.
 - **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](http://arxiv.org/abs/2610.09793v1)** · _CCS (via arXiv)_ · composite 56.65
   A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type blocklists.
+- **[Guardrail safety benchmarks mostly measure the training label policy: same 53k prompts, two definitions, 0-100 swings](https://arxiv.org/abs/2610.25060)** · _Hugging Face Daily Papers_ · composite 55.87
+  A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail against your own policy.
 
 **📈 Trending & In the News**
 
@@ -45,9 +47,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **coding-agents** (🔺 rising) — 10 findings from 6 sources since 2026-08-06.
-- **agent-monitoring** (🔺 rising) — 3 findings from 3 sources since 2026-10-06.
-- **sandbox-escape** (🔺 rising) — 11 findings from 10 sources since 2026-07-15.
+- **coding-agents** (🔺 rising) — 11 findings from 7 sources since 2026-08-06.
+- **sandbox-escape** (🔺 rising) — 12 findings from 11 sources since 2026-07-15.
+- **red-teaming** (🔺 rising) — 7 findings from 7 sources since 2026-08-06.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -94,8 +96,8 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **rce** (🔺 rising) — 16 findings from 12 sources since 2026-06-29.
-- **exploited-in-the-wild** (🔺 rising) — 10 findings from 3 sources since 2026-09-23.
+- **rce** (🔺 rising) — 17 findings from 13 sources since 2026-06-29.
+- **exploited-in-the-wild** (🔺 rising) — 11 findings from 3 sources since 2026-09-23.
 - **credential-theft** (🔺 rising) — 6 findings from 4 sources since 2026-09-23.
 
 [→ Full Product Security database](product-security/README.md)
@@ -114,6 +116,8 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.
 - **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://arxiv.org/abs/2610.25964)** · _source_ · composite 55.0
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.
+- **[OpenAI: dataset-level g-mean² can misrank model monitorability; pair-matched HodgeRank and post-control risk added](https://alignment.openai.com/beyond-gmean-squared/)** · _OpenAI Alignment Blog_ · composite 52.6
+  If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.
 
 **📈 Trending & In the News**
 
@@ -125,9 +129,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
+- **third-party-evaluation** (🔺 rising) — 2 findings from 2 sources since 2026-10-20.
 - **human-in-the-loop** (🔺 rising) — 3 findings from 3 sources since 2026-08-07.
 - **long-running-agents** (🔺 rising) — 3 findings from 3 sources since 2026-07-22.
-- **llm-as-judge** (🔺 rising) — 4 findings from 3 sources since 2026-08-07.
 
 [→ Full AI Research database](ai-research/README.md)
 

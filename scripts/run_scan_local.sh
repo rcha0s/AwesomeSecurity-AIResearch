@@ -66,6 +66,8 @@ OUT="$(mktemp)"
 # Outside the worktree, which every run cleans: the log an alert points to
 # survives, and the model session (confined to the worktree) can't read it.
 export SCAN_LOG="$REPO/data/_scan.log"
+# Gemini's shadow verdicts, one line each, kept across runs (cross_review.py).
+export CROSS_REVIEW_LOG="$REPO/data/_cross_review.jsonl"
 LOG="$SCAN_LOG"
 trap 'rm -f "$OUT" "$OUT.result"' EXIT
 
