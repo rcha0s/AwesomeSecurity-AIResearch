@@ -20,7 +20,7 @@ _The last 7 days: the stories with the most covering sources first._
 
 _Every claim added, contested or overturned in the last 7 days._
 
-1. **Added:** [A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a…](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=localhost-agent-servers-are-reachable-from-any-webpage#claims) · _current · Oct 25, 2026 · 1 source_
+1. **Added:** [A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a…](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=localhost-agent-servers-are-reachable-from-any-webpage#claims) · _current · Oct 25, 2026 · 2 sources_
 2. **Added:** [A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=per-skill-scanning-misses-cross-skill-cascades#claims) · _current · Oct 25, 2026 · 1 source_
 3. **Added:** [A guardrail weaker than its target can be bypassed](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=input-guardrail-weaker-than-target-is-bypassable#claims) · _current · Oct 24, 2026 · 1 source_  
    An input-screening guardrail model that is less capable than the model it protects (less reasoning effort, no tools) can be bypassed by payloads hidden in plain prose that only the stronger,…

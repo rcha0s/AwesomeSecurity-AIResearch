@@ -402,11 +402,12 @@ _Tags: `jailbreak`, `adversarial`, `transfer`_
 
 **Conditions —** Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control.
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Discovering and exploiting a remote code execution vulnerability in OpenCode (GHSA-632h-h47v-g4x4)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/) | Sep 24, 2026 |
+| supports | [Microsoft DevLabs DebugMCP 1.1.4: drive-by RCE via DNS rebinding to an unauthenticated, stateless localhost MCP server](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/) | Sep 25, 2026 |
 
 </details>
 

@@ -2,12 +2,14 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_2 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [19 held for review](../REVIEW.md)._
+_2 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [24 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Microsoft DevLabs DebugMCP 1.1.4 drive-by RCE: DNS rebinding hits unauthenticated, stateless localhost MCP server; start_debugging runs Windows UNC path from attacker's SMB share](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
+  _Why now: Microsoft DevLabs DebugMCP shows a stateless, unauthenticated localhost MCP server turning one DNS-rebinding request into drive-by RCE; a pattern every local agent-tool server must defend against. · trending · newsworthy · high-relevance_
 - **[Datadog: a malicious webpage could get code execution through OpenCode's local /global/upgrade endpoint (GHSA-632h-h47v-g4x4, 1.14.30-1.18.21, fixed in 1.18.22)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/)**
   _Why now: Drive-by RCE in a popular coding agent's localhost server (GHSA-632h-h47v-g4x4); teaches that loopback binding is not a boundary for agent servers. · cve · trending · timely · high-relevance_
 - **[LiteLLM chain: any Bearer token grants access to MCP, custom guardrail code runs as root, and pass-through routes steal cloud IAM credentials](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)**
@@ -39,6 +41,8 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Vendor piece argues safety controls around the model decide whether AI pentesting agents are usable](https://thehackernews.com/2026/10/the-harness-is-hard-part-of-agentic.html)**
 - **[vlt 1.5.0 links agent skills from dependencies and can exclude packages Socket flags as malware](https://socket.dev/blog/vlt-skills?utm_medium=feed)**
 - **[About 80 WhatsApp help pages exposed hidden instructions for Meta's support chatbot in their page code](https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/)**
+- **[Apple changes macOS Full Disk Access after Meta's Muse agent read a user's Messages; the in-app connector opt-in did not limit the OS grant](https://arstechnica.com/security/2026/10/apple-changes-full-disk-access-permissions-to-curb-abuse-from-ai-agents/)**
+- **[OpenAI's draft safety-case guidelines for frontier RL training: fail-closed monitoring, immutable transcripts, limits on cross-sample channels, no chain-of-thought in graders, and incident-derived regression evals](https://openai.com/index/towards-safety-cases-for-frontier-ai-training)**
 - **[AllenAI's BenchMIRT: WMDP 'safety' scores track reasoning ability, inversely](https://huggingface.co/blog/allenai/benchmirt)**
 - **[OpenClaw 2.0's Usability Overhaul Ships With Security Still Opt-In: Unencrypted Secrets, Sandbox Off by Default](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492)**
 - **[Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)**
