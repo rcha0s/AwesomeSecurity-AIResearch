@@ -165,7 +165,7 @@ def collect(cfg: dict, rules: dict, per_venue: int | None) -> list[dict]:
         print("   (no conferences.venues configured in sources.yaml)")
         return []
     limit = per_venue or conf_cfg.get("per_venue", 20)
-    max_age = c.load_config().max_age_days
+    max_age = c.ingest_age_days()
     since, until = c.ingest_window(max_age)
     cutoff, last = since.date().isoformat(), until.date().isoformat() if until else None
     window = c.backfill_window()

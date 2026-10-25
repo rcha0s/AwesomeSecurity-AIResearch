@@ -175,7 +175,7 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    cutoff, until = c.ingest_window(c.load_config().max_age_days)
+    cutoff, until = c.ingest_window(c.ingest_age_days())
     candidates = collect_rss(rules, cutoff, until=until)
 
     if args.dry_run:

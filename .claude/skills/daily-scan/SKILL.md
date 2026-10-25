@@ -71,7 +71,10 @@ all four.
      count toward the cap; `merge_analysis.py` applies their verdicts.
    - Where a candidate has no `raw_path`, run `python scripts/fetch_raw.py <candidate_id>`
      (this replaces research-scan's `curl` step). Every `excerpt` is a verbatim substring of
-     that saved source text. Nothing you can't ground gets published.
+     that saved source text. Nothing you can't ground gets published. If it prints
+     `fetch_raw: STALE <id>`, the page itself is older than the scan's window (a republish or
+     a site rebuild): skip that candidate, no analysis and no brief, and name it in the run
+     summary.
    - Run research-scan step 3b (readability review) before the verifier, so it checks
      the text that gets published.
    - Then run `python scripts/merge_analysis.py` and `python scripts/verify_citations.py`.

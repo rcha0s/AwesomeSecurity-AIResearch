@@ -68,7 +68,8 @@ cp data/evals/golden.json "$KEEP/golden.json"
   --offset "$((week * per_run))" --manifest "$KEEP/manifest.json"
 "$PYTHON" scripts/fetch_raw.py --snapshot
 for id in $("$PYTHON" -c 'import json,sys;print(" ".join(json.load(open(sys.argv[1]))["ids"]))' "$KEEP/manifest.json"); do
-  "$PYTHON" scripts/fetch_raw.py "$id" || echo "[golden] could not fetch source text for $id"
+  # Golden cases are past stories: skip fetch_raw's scan-window date check.
+  FETCH_RAW_ANY_DATE=1 "$PYTHON" scripts/fetch_raw.py "$id" || echo "[golden] could not fetch source text for $id"
 done
 
 contained_claude "$PROMPT" .claude/skills/research-scan/SKILL.md "$max_usd" "$max_turns" >"$OUT"

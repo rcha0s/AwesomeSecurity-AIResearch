@@ -186,7 +186,7 @@ def main() -> int:
 
     cfg = c.load_yaml(c.SOURCES_FILE)
     terms = tuple(t.lower() for t in cfg.get("conferences", {}).get("security_terms", []))
-    cutoff, until = c.ingest_window(c.load_config().max_age_days)
+    cutoff, until = c.ingest_window(c.ingest_age_days())
     candidates = collect(cfg["classification"], cutoff, terms, until)
     print(f"\nFound {len(candidates)} JSON-feed candidate(s).")
     if args.dry_run:

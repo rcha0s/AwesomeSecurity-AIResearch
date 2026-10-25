@@ -94,26 +94,38 @@ def test_url_to_candidate_classifies_from_real_fetched_body(monkeypatch):
     assert cand["raw_path"] is not None
 
 
-def test_url_to_candidate_falls_back_to_slug_when_fetch_fails(monkeypatch):
-    monkeypatch.setattr(ism, "fetch_body", lambda url: None)
-
+def test_a_page_that_cannot_be_fetched_is_dropped_not_dated_by_lastmod(monkeypatch):
+    # 2026-10-25: three failed fetches staged 2022 and Dec 2025 posts on a
+    # rebuild's lastmod. Without the page there is no date of its own.
+    calls = []
+    monkeypatch.setattr(c, "fetch_readable", lambda url, **kw: calls.append(url) or 1 / 0)
     cand = ism.url_to_candidate(
         "https://www.anthropic.com/news/disrupting-ai-espionage",
         "2026-09-07T09:00:00.000Z",
-        # slug alone doesn't classify without a domain fallback, so give one
-        # to isolate what this test checks: graceful degradation, not the
-        # classifier itself.
         dict(ANTHROPIC_SOURCE, domains=["AI Security"]),
         RULES,
     )
-    assert cand is not None
-    assert cand["title"] == "Disrupting Ai Espionage"
-    assert cand["raw_path"] is None
-    assert cand["excerpt"] == ""
+    assert cand is None
+    assert len(calls) == 2  # retried once before giving up
+
+
+def test_one_failed_fetch_is_retried(monkeypatch):
+    bodies = iter([None, READER_BODY])
+
+    def flaky(url, **kw):
+        body = next(bodies)
+        if body is None:
+            raise TimeoutError
+        return body
+
+    monkeypatch.setattr(c, "fetch_readable", flaky)
+    assert ism.fetch_body("https://www.anthropic.com/news/x") == READER_BODY
 
 
 def test_url_to_candidate_drops_off_topic_with_no_domain_fallback(monkeypatch):
-    monkeypatch.setattr(ism, "fetch_body", lambda url: None)
+    monkeypatch.setattr(
+        ism, "fetch_body", lambda url: "Title: Completely unrelated nonsense words\n"
+    )
     cand = ism.url_to_candidate(
         "https://www.anthropic.com/news/completely-unrelated-nonsense-words",
         "2026-09-07T09:00:00.000Z",

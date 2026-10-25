@@ -17,6 +17,14 @@ weights:
 # (preserved, but no longer shown in the live tracker). "About a month."
 max_age_days: 31
 
+# How far back a DAILY scan ingests (days). The site still shows findings for
+# max_age_days, but a scan only pulls what was published this week: older
+# stories were covered by earlier scans, and re-reading them spends tokens on
+# nothing new (Rohan, 2026-10-25). Claim work follows: a scan weighs this
+# week's findings against the whole ledger. A backfill ignores this; its own
+# window bounds it. Ad-hoc adds (add.py) keep max_age_days.
+ingest_days: 7
+
 # The README "this week" snapshot shows only curated findings published within
 # this many days (the newsletter still covers the full max_age_days window).
 snapshot_days: 7
