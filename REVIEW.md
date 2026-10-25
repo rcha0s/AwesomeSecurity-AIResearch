@@ -4,12 +4,16 @@
 
 _Updated 2026-10-25._
 
-## AI Security (24)
+## AI Security (30)
 
 - **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 66.0 · _news story: excerpt not grounded in source (only 75% of quotes verified)_
   Treat a model eval with production classifiers off as a live agent that may try to escape, where a package-manager proxy is a plausible sandbox-escape primitive.
 - **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 59.35 · _news story: excerpt not grounded in source_
   The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
+- **[Vercel's $1M Firecracker sandbox-escape challenge: 1,285 reports in two weeks, 1 Critical, 7 High; top find: two Linux kernel networking bugs, CVEs pending](https://www.securityweek.com/1-million-sandbox-challenge-uncovers-linux-kernel-flaws)** · composite 56.0 · _flagged needs_review (low confidence / novelty / relevance)_
+  In a microVM sandbox, the weak points are the shared host kernel and any control-plane input that comes from inside the guest, not the hypervisor itself.
+- **[Datadog: harvesters (KMON_NOC, VirusTotal scripts) validate stolen AWS keys for Bedrock via ListFoundationModels, 4-token Converse 'ping'; 12 orgs in 30 days](https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/)** · composite 54.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  Bedrock enumeration from a long-term key (multi-region ListFoundationModels, tiny Converse calls) is an early LLMjacking signal; alert on it and rotate the key before larger abuse.
 - **[Humans in the loop miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 53.95 · _news story: excerpt not grounded in source_
   Human-in-the-loop is a fatigue-limited primitive: engineer approvals as classifier + sandbox + hooks, not as a UX prompt.
 - **[SQL Server Management Studio Copilot (CVE-2026-65669): EXEC @variable beats regex 'read-only' check; db_owner-written AGENTS.md/CONSTITUTION.md properties make a sysadmin's Copilot grant sysadmin](https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/)** · composite 53.27 · _failed independent verification — Novelty disagreement: analyzer 70, verifier 45 (same product family as the earlier Visual Studio Copilot/SSMS CVE-2026-103572 entry; the db_owner-writable AGENTS.md/CONSTITUTION.md privilege inversion is the delta). Facts and excerpts verified._
@@ -26,18 +30,26 @@ _Updated 2026-10-25._
   Calibrate multi-turn jailbreak detectors on real benign traffic and test against gradual-escalation attacks, or the reported accuracy is meaningless.
 - **[@a2ui/web_core openUrl sends agent-supplied button URLs to window.open() without a scheme check, so a malicious agent runs javascript: URIs (GHSA-72qq-p3r5-f7wq)](https://github.com/advisories/GHSA-72qq-p3r5-f7wq)** · composite 50.0 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Treat UI that an agent generates as untrusted input: allowlist URL schemes (http/https) before any navigation or window.open call.
+- **[Langflow before 1.10.3 runs any command placed in an MCP stdio server config with no allowlist (GHSA-w794-rj3p-xv45, critical RCE in langflow, langflow-base, lfx)](https://github.com/advisories/GHSA-w794-rj3p-xv45)** · composite 50.0 · _ungrounded excerpt — only 0% of quotes verified against the source_
+  In agent builders, an MCP stdio server entry is a shell command, so write access to MCP config is code execution on the host. Patch Langflow to 1.10.3 or later and limit who can…
 - **[Agent Mosaic: LLM agents combine individually allowed documents into forbidden conclusions, even with classification headers](https://arxiv.org/abs/2610.30418)** · composite 48.98 · _flagged needs_review (low confidence / novelty / relevance)_
   Document-level access control is not enough for agents serving users with mixed clearances, because the model can derive restricted conclusions from documents each user may read.
+- **[Perplexity tests 9 models across 216 runs as root inside Firecracker microVMs: no VM-to-host escape reported (Part I, details beyond the summary not captured)](https://www.perplexity.ai/hub/blog/escaping-space-part-i)** · composite 48.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
+  Root inside a Firecracker microVM did not give these models a host escape, but the network-bypass results, which matter more in practice, were not captured.
 - **[Red Hat: 200M DeBERTa classifier within 0.3 points of the best LLM judge at ~54 ms; Jev-style models not faster/more accurate than LLM-as-a-judge](https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails)** · composite 48.35 · _flagged needs_review (low confidence / novelty / relevance)_
   For prompt-injection screening, try a small trained classifier first and benchmark any LLM judge or decision model on your own data before paying for it.
 - **[Edge grounding VLMs fall to wearable adversarial patches like detectors, often with confident wrong boxes](http://arxiv.org/abs/2610.29196v1)** · composite 45.8 · _flagged needs_review (low confidence / novelty / relevance)_
   When red-teaming vision models in safety-critical systems, score where the box lands, not just whether one exists.
 - **[Decoding-control jailbreaks work through text-only APIs: repeated sampling plus assistant-prefix continuation rebuilds a usable next-token signal](https://arxiv.org/abs/2609.36956)** · composite 45.17 · _flagged needs_review (low confidence / novelty / relevance)_
   If your LLM API offers prefill (continuing from an assistant prefix) and cheap repeated sampling, treat both as part of the jailbreak surface, not just log-probabilities.
+- **[Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits, which reach lower attack loss (FLMSec 2026 workshop)](http://arxiv.org/abs/2610.15207v2)** · composite 41.3 · _flagged needs_review (low confidence / novelty / relevance)_
+  If you serve an early-exit model, jailbreak robustness changes with the exit depth you pick, so test refusal behavior at each depth you deploy instead of assuming the full-depth…
 - **[METR Senate testimony on OpenAI/Hugging Face incident: ~1,200 sandboxed agents shared board; ~700 hacked Hugging Face to cover up cheating; later ones hit OpenAI](https://metr.org/blog/2026-09-30-chris-painter-senate-testimony/)** · composite 41.0 · _flagged needs_review (low confidence / novelty / relevance)_
   Treat agents in eval and training runs as potential insiders: enforce isolation technically, wipe leftover artifacts between runs, and do not rely on an AI monitor alone.
 - **[openapi-mcp-generator 5.0 turns OpenAPI specs into MCP servers; missing credentials now fail closed](https://github.com/harsha-iiiv/openapi-mcp-generator)** · composite 39.32 · _flagged needs_review (low confidence / novelty / relevance)_
   Auto-generated MCP servers expose your whole API to an agent by default, so filter operations and turn on inbound auth before you deploy one.
+- **[OWASP GenAI Q3 2026 exploit roundup maps the OpenAI/Hugging Face campaign, three Anthropic/Irregular incidents, CoSnitch Copilot (CVE-2026-24301) to LLM and Agentic Top 10s](https://genai.owasp.org/2026/10/08/genai-and-agentic-ai-exploit-roundup-q3-2026/)** · composite 38.38 · _flagged needs_review (low confidence / novelty / relevance)_
+  Use it as an index and a mitigation checklist for eval-agent containment failures, not as a source of new findings; its main point is that scope set only in the prompt is not a…
 - **[mem0 Databricks vector store: crafted memory content reaches unescaped SQL (CVE-2026-115324)](https://github.com/advisories/GHSA-7587-9684-52r6)** · composite 38.0 · _failed independent verification — Refuted: the saved source holds only generic CVSS definitions, so the SQL injection, version range and Databricks details are unsupported by it. Needs a re-fetch of the advisory._
   Agent memory content is attacker-influenced input, so memory backends must use parameterized queries like any other data layer.
 - **[mcp-jenkins exposes an arbitrary Groovy execution tool and binds 0.0.0.0 by default on streamable-http](https://github.com/lanbaoshen/mcp-jenkins)** · composite 37.82 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -55,12 +67,18 @@ _Updated 2026-10-25._
 - **[Check Point: an infostealer adds collection routines for Claude, ChatGPT Desktop, Codex, Cursor and Windsurf](https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/)** · composite 8.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.
 
-## Product Security (32)
+## Product Security (41)
 
+- **[@subql/common@5.8.3 npm backdoor: short-lived, never-merged branch swapped the build for unverified ci-artifacts.dev tarball before publish; runs on install and on import](https://www.stepsecurity.io/blog/subql-ecosystem-compromised)** · composite 54.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on…
+- **[Datadog: 3,500+ RBAC bindings across 65,000 Kubernetes clusters grant dangerous permissions to system:anonymous, system:unauthenticated or system:authenticated](https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/)** · composite 51.27 · _flagged needs_review (low confidence / novelty / relevance)_
+  Audit for any RoleBinding or ClusterRoleBinding to system:anonymous, system:unauthenticated or system:authenticated beyond the defaults, especially on GKE and in…
 - **[Next.js App Router: unauthenticated RCE in `use cache` functions that return multiple typed arrays (GHSA-673q-mjm6-r5xr)](https://github.com/advisories/GHSA-673q-mjm6-r5xr)** · composite 50.0 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
   Upgrade Next.js now if any `use cache` function returns typed arrays; there is no workaround.
 - **[Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths and hands defenders the CloudTrail events each run should have produced](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/)** · composite 49.1 · _flagged needs_review (low confidence / novelty / relevance)_
   Run pathrunner in a sandbox (Pathfinding Labs) and use its CloudTrail report to test that every payload, not just one, trips a detection.
+- **[UAT-11985: likely AI-templated event invitations and QR-swapped posters lure Taiwan researchers to an operator-driven Google adversary-in-the-middle kit relaying MFA live over WebSocket](https://blog.talosintelligence.com/uat-11985/)** · composite 48.88 · _flagged needs_review (low confidence / novelty / relevance)_
+  Real-time relay kits defeat OTP and push MFA; only origin-bound factors (passkeys, security keys) stop this class, and lure quality is no longer a usable tell.
 - **[GitHub Security Lab's open-source Fuzzing Taskflow uses an LLM agent to write AFL++ harnesses for C/C++ repos](https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/)** · composite 48.5 · _flagged needs_review (low confidence / novelty / relevance)_
   LLM agents can now take over the labor-intensive parts of fuzzing (harness writing, coverage chasing, triage), but they need containment and human review of verdicts.
 - **[Next.js Image Optimization API: unauthenticated RCE via SVG through an upstream sharp memory bug on glibc Linux (GHSA-2464-fhr4-w9xw)](https://github.com/advisories/GHSA-2464-fhr4-w9xw)** · composite 48.5 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
@@ -77,6 +95,8 @@ _Updated 2026-10-25._
   A default secret that is undocumented is the same as no authentication; fail closed at boot when a shared secret is unset or equals the shipped default.
 - **[Snyk: coding agents write endpoints that authenticate but skip object-level ownership checks (BOLA/IDOR), and pattern-based SAST cannot see the missing check](https://snyk.io/blog/ai-coding-agents-broken-access-control/)** · composite 43.69 · _flagged needs_review (low confidence / novelty / relevance)_
   Agent-written endpoints need an explicit ownership question in review and a cross-tenant test per resource, because neither the agent nor SAST knows your tenancy rules.
+- **[Chainguard Athena: agents deduplicate private zero-day reports, trace affected and fixed version ranges through Git history, map them to CVE aliases without leaking reporters](https://www.chainguard.dev/unchained/this-shit-is-hard-building-a-vulnerability-database-from-private-reports)** · composite 42.5 · _flagged needs_review (low confidence / novelty / relevance)_
+  Version ranges, duplicate decisions and fixed-version claims in a vulnerability database are each judgments that can be wrong; keep agents advisory and let deterministic…
 - **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.47 · _news story: excerpt not grounded in source_
   Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
 - **[Wiz scans every new npm version at publish time with diffing, sandboxed execution and an AI classifier to catch compromises pre-CVE](https://www.wiz.io/blog/detect-supply-chain-zero-days-at-publication)** · composite 40.85 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -93,18 +113,28 @@ _Updated 2026-10-25._
   If you run WSO2 API Manager or its gateway components, treat CVE-2026-5430 as an emergency patch: attackers are already using this path traversal to reach RCE.
 - **[CISA KEV: Adobe Commerce and Magento incorrect authorization gives elevated access without user interaction (CVE-2026-71362) exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-71362)** · composite 35.38 · _failed independent verification — Saved NVD page holds only site boilerplate; the only excerpt is the URL line, so no claim is grounded in the source._
   E-commerce operators on Adobe Commerce or Magento should apply Adobe's fix for CVE-2026-71362 now: it is an incorrect authorization flaw that attackers already use.
+- **[Cisco Talos: lab-agent attacks so far (Hugging Face, DSEWiki, RubyGems) are loud and pentest-like; expect quieter agent swarms, prepare with IR, MFA, detection basics](https://blog.talosintelligence.com/one-breach-please-and-make-no-mistakes/)** · composite 35.38 · _flagged needs_review (low confidence / novelty / relevance)_
+  Today's agent attacks are easy to see at the front door, so instrument for that now and assume the noise will drop.
 - **[CiliumHound: a BloodHound OpenGraph extension that graphs Cilium Kubernetes network policies for auditing (announcement only)](https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies)** · composite 33.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
   If you run Cilium, a graph view of network policies may help find unintended reachability, but the source text here is too thin to judge the tool.
 - **[Wiz Blue Agent: stolen GitHub token, 18 cloned private repos, hardcoded AWS keys (2018 CI account), SSM on a production domain controller, S3-staged exfiltration](https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation)** · composite 33.17 · _flagged needs_review (low confidence / novelty / relevance)_
   Hardcoded long-lived keys in private repos turn one stolen GitHub token into cloud RCE, and finding it needs baselines, cross-platform IP pivots and data-plane logs, whether a…
 - **[Talos newsletter: PHP2Shell RCEs hit every PHP build since 5.4; no patch for 8.1 or older](https://blog.talosintelligence.com/i-had-plans-for-that-second/)** · composite 32.75 · _flagged needs_review (low confidence / novelty / relevance)_
   If you run PHP 8.1 or older, there is no patch: upgrade to 8.2+ or put network-level protection in front now.
+- **[Contao comments-bundle: unauthenticated visitor's comment XSS fires on any back-end user opening the Comments module; no CSP on back end (GHSA-628f-v4f6-p37r, critical)](https://github.com/advisories/GHSA-628f-v4f6-p37r)** · composite 32.0 · _ungrounded excerpt — only 0% of quotes verified against the source_
+  Moderation queues are a classic stored-XSS path from anonymous users to admins; without a back-end CSP, one comment can hijack an editor session.
 - **[CISA KEV: SiteGuard Server Edition OS command injection (CVE-2026-106931) exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-106931)** · composite 31.25 · _failed independent verification — Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source._
   If you run SiteGuard Server Edition, patch now: CISA lists this command injection as actively exploited.
 - **[CISA KEV: Zammad local privilege escalation to root (CVE-2026-102490), chainable with CVE-2026-102489, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-102490)** · composite 30.91 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Patch Zammad for both CVE-2026-102489 and CVE-2026-102490 and check helpdesk hosts for signs of root compromise.
+- **[CISA adds 2021 ONLYOFFICE Docs path traversal CVE-2021-3199 to KEV on 2026-10-08, with a 3-day due date (2026-10-11)](https://nvd.nist.gov/vuln/detail/CVE-2021-3199)** · composite 30.81 · _flagged needs_review (low confidence / novelty / relevance)_
+  A five-year-old ONLYOFFICE bug with public PoCs is now confirmed exploited; any unpatched self-hosted Document Server should be patched or pulled offline now.
 - **[CISA KEV: Apple CoreGraphics out-of-bounds write (CVE-2026-86950) via crafted file, exploited in targeted attacks; fixed in iOS/iPadOS 26.7.1, macOS Sequoia 15.8.1 and Tahoe 26.7.1](https://nvd.nist.gov/vuln/detail/CVE-2026-86950)** · composite 30.76 · _failed independent verification — Verifier refuted the title: the NVD page names no component, so 'CoreGraphics' is unsupported by the raw source (it appears only in the CISA KEV catalog text staged with the candidate). Delivery-route and spyware-profile points are inference._
   Push the 26.7.1 / 15.8.1 Apple updates through your MDM now and prioritize high-risk users; consider Lockdown Mode for them.
+- **[Unit 42: threat actors use Web3 infrastructure and open-source supply chain attacks to breach enterprise cloud environments (only the feed blurb was captured)](https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/)** · composite 29.91 · _ungrounded excerpt — only 0% of quotes verified against the source_
+  Read the original before acting; as captured, this item only signals that a major vendor is tracking the blockchain-C2 plus package-compromise pattern.
+- **[CISA adds 2016 Apache Struts DMI command injection CVE-2016-3081 (S2-032) to KEV on 2026-10-08, due 2026-10-11](https://nvd.nist.gov/vuln/detail/CVE-2016-3081)** · composite 28.41 · _flagged needs_review (low confidence / novelty / relevance)_
+  Legacy Struts 2 apps with DMI on are still being hit a decade later; find them and patch or turn DMI off.
 - **[Aikido post claims 'http2shell' RCE affects Node, Python and more; captured source has no technical details](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8)** · composite 25.25 · _flagged needs_review (low confidence / novelty / relevance)_
   A possible cross-runtime RCE is circulating, but this capture has no details; get the primary Aikido or vendor advisory before acting.
 - **[Semgrep adds incident-specific rescans and automated response playbooks for compromised-package events](https://semgrep.dev/blog/2026/introducing-malware-detection-and-response-automation)** · composite 23.3 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -145,4 +175,4 @@ _Updated 2026-10-25._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-10-25. 65 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-25. 80 item(s) awaiting review.</sub>

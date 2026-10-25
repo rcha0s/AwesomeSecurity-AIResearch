@@ -14,6 +14,96 @@
   ],
   "entries": [
     {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Atlassian CVE-2026-21589: pre-auth file read via '::' path traversal in atlassian-plugins-webresource (Jira, Confluence, Bitbucket and 5 more Data Center products), chained to Crowd admin",
+      "source_url": "https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/",
+      "article_url": "https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-06",
+      "raw_path": "data/_raw/you-won-t-hear-about-these-even-in-myths-atlassi-ee9a0bdca2.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-labs-watchtowr-com-rss",
+      "source_rank": 73.6,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "watchTowr Labs",
+      "related_claims": [],
+      "summary": "The shared atlassian-plugins-webresource library (vulnerable 6.0.7, changed in 6.0.8) turns '::' into '/' after path checks, so a request like /download/resources/<plugin>/images/..::..::WEB-INF::web.xml reads any file inside the Tomcat webapp without logging in. watchTowr reproduced it on Jira, Confluence and Bitbucket. Where Jira is integrated with Crowd, WEB-INF/classes/crowd.properties holds the Crowd application password in plaintext, which lets an attacker create a user and add it to jira-administrators.",
+      "takeaway": "Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.",
+      "lessons": [
+        {
+          "point": "The root cause is a custom path escape: the router decodes '::' to '/' after traversal checks, so '..::' is a traversal primitive that generic filters miss.",
+          "excerpt": "These functions match and replace double colons (`::`) with forward slashes (`/`).",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Impact is bounded to the webapp root, not the whole filesystem, so severity depends on what config lives in WEB-INF.",
+          "excerpt": "While we are not able to traverse outside of the Tomcat context, we discovered it is possible to read any file within the application server itself.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The documented Crowd integration stores a plaintext app password in a file the bug can read, turning file read into identity-provider admin.",
+          "excerpt": "The Crowd config file is located at `WEB-INF/classes/crowd.properties`.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Crowd app credentials grant user creation and group changes across the Atlassian stack.",
+          "excerpt": "When you access Atlassian Crowd directly with the leaked credentials, it is basically game over.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "atlassian",
+        "jira",
+        "confluence",
+        "bitbucket",
+        "crowd",
+        "path-traversal",
+        "arbitrary-file-read",
+        "cve-2026-21589",
+        "pre-auth"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch Atlassian Data Center and rotate Crowd app credentials",
+        "detail": "Upgrade to the fixed versions (e.g. Jira Software 9.12.40/10.3.26/11.3.12, Confluence 9.2.26/10.2.19, Bitbucket 9.4.26/10.2.8/10.5.1, Crowd 6.3.7+). Until patched, apply Atlassian's advisory WAF regex, which blocks '..' next to '/', backslash, '::' or their percent-encodings. Search access logs for download/resources requests containing '..::'. If any exposed instance uses Crowd, rotate the application.password in crowd.properties and restrict Crowd's remote-address allowlist. watchTowr's detection generator is at github.com/watchtowrlabs/watchTowr-vs-Atlassian-CVE-2026-21589."
+      },
+      "scores": {
+        "novelty": 68,
+        "relevance": 88,
+        "newness": 26,
+        "credibility": 73.6,
+        "composite": 64.34,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim. Verifier: the check-then-unescape ordering is inferred; the Crowd chain needs network reach to Crowd (an IP allowlist may block it). Verifier novelty 70; kept 68.",
+      "prior_art": "Closest pool entry is SecurityWeek's routine Atlassian October 2026 third-party CVE bulletin; this is a separate first-party critical bug with root cause, routes, and a file-read-to-admin chain. It echoes earlier Atlassian pre-auth file-read bugs, but the '::' slash-escape primitive in the shared web-resource library is specific to this case.",
+      "threat": "Unauthenticated read of any file in the application webroot, including WEB-INF config; with Crowd integration, leaked app credentials allow creating admin users.",
+      "conditions": "Network-reachable Bitbucket, Confluence, Jira Software/JSM, Bamboo, Crowd, Crucible or Fisheye Data Center below the fixed versions; Crowd takeover additionally needs crowd.properties in WEB-INF and network reach to Crowd.",
+      "mitigations": "Upgrade to Atlassian's fixed versions; apply the advisory WAF rule meanwhile; rotate Crowd application passwords; IP-restrict Crowd; hunt logs for '..::' in download/resources paths.",
+      "id": "atlassian-data-center-cve-2026-21589-pre-auth-fi-0ce6e7e036",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": false,
+      "readability_rewrite": "reverted title, summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "using-claude-to-reduce-the-attack-surface-of-cod-3e4e4199dd",
       "topic": "product-security",
       "domain": "ps.ai-code",
@@ -97,6 +187,94 @@
         "score": 100,
         "passed": true,
         "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "death-by-a-thousand-papercuts-papercut-pre-auth-9ad245bca6",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "watchTowr breaks PaperCut NG/MF patches three times: Tapestry `service` auth bypass (CVE-2026-81578, bypasses WT-2026-0142/0143) chained with RCE (CVE-2026-82078, WT-2026-0141, CVE-2026-82077 via Scan to Fax)",
+      "source_url": "https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/",
+      "article_url": "https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-09",
+      "raw_path": "data/_raw/death-by-a-thousand-papercuts-papercut-pre-auth-9ad245bca6.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-labs-watchtowr-com-rss",
+      "source_rank": 73.6,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "watchTowr Labs",
+      "related_claims": [],
+      "summary": "PaperCut 26.0.3 was exploited in the wild through an auth bypass (CVE-2026-81578) chained with a post-auth RCE (CVE-2026-82078). The root cause is that PaperCut, built on Apache Tapestry 3, checks authorization only on the root page in the `service` parameter: `direct/1/<public page>/<private page>/<form>` reaches authenticated forms. PaperCut patched page by page, and watchTowr bypassed each fix. The final bypass (WT-2026-0143) reaches Setup Wizard forms through `Home`, resets the admin password in four POSTs, and is chained with a new Scan to Fax command-execution bug (CVE-2026-82077), fixed in 26.0.5.",
+      "takeaway": "When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.",
+      "lessons": [
+        {
+          "point": "The core flaw: Tapestry lets one `service` parameter chain several pages, but PaperCut only authorized the first (root) page.",
+          "excerpt": "However, the code only checks authorization for the root page, so `LogonMessage` in our case, this page does not require authentication.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Fixing individual pages and forms instead of adding a global authorization check left other reachable forms, like the Setup Wizard, unprotected.",
+          "excerpt": "Still, without a global authorization check implemented for all pages, it is hard to keep track and manually verify every page in the codebase.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Routing setup forms through `Home` skips their own guard, so the 'setup already completed' flag never stops an attacker from re-running setup and resetting the admin password.",
+          "excerpt": "Setup pages `pageValidate` method will never be called (thanks to the bypass), so the `system.setup-completed` value is irrelevant for the attacker.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "PaperCut assigned fewer CVEs than distinct bugs, folding patch bypasses into existing IDs, so CVE-based tracking undercounts the fix rounds needed.",
+          "excerpt": "due to PaperCut bundling vulnerabilities and then patch bypasses for those same vulnerabilities into singular CVE IDs",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "papercut",
+        "patch-bypass",
+        "authentication-bypass",
+        "rce",
+        "apache-tapestry",
+        "exploited-in-the-wild",
+        "patch-diffing",
+        "watchtowr"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Get PaperCut NG/MF to 26.0.5+ and check for setup-wizard abuse",
+        "detail": "Upgrade PaperCut NG/MF to 26.0.5 or later (26.0.4 and 26.0.4-PO builds 76508/76530 are each still bypassable for part of the chain). Check app logs for `service=direct/1/Home/Setup` or `direct/1/LogonMessage/` style multi-page requests, unexpected admin password changes, and changes to scan-to-fax command settings. Keep the admin interface off the internet."
+      },
+      "scores": {
+        "novelty": 65,
+        "relevance": 80,
+        "newness": 26,
+        "credibility": 73.6,
+        "composite": 61.04,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "All four excerpts verbatim; ids and patch rounds match the source. Verifier novelty 65.",
+      "prior_art": "watchTowr's SolarWinds Web Help Desk chain (WebObjects multi-step auth bypasses) and the earlier PaperCut KEV bugs CVE-2023-27350/27351. This adds a concrete legacy-framework pattern (Tapestry 3 multi-page `service` routing skipping per-page auth) plus a documented series of per-page patches failing in sequence.",
+      "threat": "Unauthenticated attacker resets the PaperCut admin password via re-run setup forms, then executes OS commands through admin functionality (Scan to Fax command path).",
+      "conditions": "PaperCut NG/MF up to 26.0.4-PO build 76508 for the WT-2026-0143 plus CVE-2026-82077 chain; 26.0.3 for the in-the-wild chain; web interface reachable by the attacker.",
+      "mitigations": "Upgrade to 26.0.5 or later; restrict the admin web interface to trusted networks; apply PaperCut's IOCs and hunt for multi-page `service` requests and unexpected admin credential changes.",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -549,6 +727,192 @@
         ],
         "at": "2026-10-24T08:21:50+00:00"
       }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "@subql/common@5.8.3 npm backdoor: short-lived, never-merged branch swapped the build for unverified ci-artifacts.dev tarball before publish; runs on install and on import",
+      "source_url": "https://www.stepsecurity.io/blog/subql-ecosystem-compromised",
+      "article_url": "https://www.stepsecurity.io/blog/subql-ecosystem-compromised",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-05",
+      "raw_path": "data/_raw/subquery-ecosystem-compromise-hidden-credential-63a68db2d2.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-stepsecurity-io-blog-rss-xml",
+      "source_rank": 52.5,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "StepSecurity",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls",
+        "package-installers-run-arbitrary-code-by-default"
+      ],
+      "summary": "On 5 October 2026 the maintainer account ianhe8x twice created and deleted a temporary branch in subquery/subql; the first run was a 'Red Team Canary (harmless)' workflow that published 5.8.3-onf-rt1 to test the path. The second was a release commit that, after yarn build, downloads a tarball from ci-artifacts.dev and overwrites packages/common with no hash or signature check before publishing 5.8.3; neither commit landed on main. The payload is about 83 KB of JavaScript behind XOR+gzip, PBKDF2 string encryption and AES-GCM-wrapped objects. It starts in a detached child process from both postinstall and module import, collects credentials (including from CI runner memory), and supports a remote shell; the published source map shows a harmless skeleton. 19 of 77 @subql packages' latest versions could resolve to 5.8.3 through ~ or ^ ranges.",
+      "takeaway": "A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on import.",
+      "lessons": [
+        {
+          "point": "Import-time triggers make install-script blocking insufficient on its own.",
+          "excerpt": "Disabling install scripts alone is insufficient because importing the package also starts the payload.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The tampering sat between build and publish: the workflow discarded the built output and shipped an unverified external tarball.",
+          "excerpt": "The new step then removes `packages/common` and replaces it with files downloaded from `ci-artifacts.dev`.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Source maps can be decoys; review the published JavaScript, not the mapped TypeScript.",
+          "excerpt": "Reviewing the mapped source alone would therefore miss the payload and automatic triggers visible in the published JavaScript.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Exact-pinning a top-level package does not pin its transitive ranges; lockfiles are what freeze a shared dependency.",
+          "excerpt": "Pinning one of these parent packages to an exact version does not, by itself, pin its dependencies.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "npm",
+        "supply-chain",
+        "github-actions",
+        "release-workflow",
+        "artifact-substitution",
+        "import-time-payload",
+        "credential-theft",
+        "web3",
+        "source-map"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Alert on publishes from non-default branches and on network fetches between build and publish",
+        "detail": "Treat @subql/common@5.8.3 as malicious: block it and ci-artifacts.dev, check lockfiles for it (including transitive via @subql/cli, node-core, query, node-ethereum and node-*), and rotate secrets on any host or CI runner that installed or imported it. For your own projects, require that publish workflows only run from the protected default branch (environment branch rules on the npm publish environment) and fail any workflow diff that adds curl/wget/tar steps after the build step. Also compare the published tarball against a rebuild from the tagged commit before promoting it to latest."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 80,
+        "newness": 26,
+        "credibility": 52.5,
+        "composite": 54.88,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "All facts and excerpts supported. Verifier: the lockfile point in lesson 4 is the analyst's inference. Verifier novelty 55.",
+      "prior_art": "Close to the same week's tensorlake compromise and the keyv/ChainDrop cases in the archive (maintainer-account abuse of a legitimate release workflow, import-time payloads defeating ignore-scripts). Differs in method: publishing from a throwaway branch that was created and deleted twice and never merged, a 'canary' dry run first, and post-build artifact substitution from an external host instead of committing the payload to source; plus a decoy source map.",
+      "threat": "Compromised or misused maintainer account modifies the release workflow on a temporary branch to publish an externally supplied backdoored build of a shared Web3 indexing library.",
+      "conditions": "Any project that installs or imports @subql/common@5.8.3, directly or via @subql parent packages whose ~5.8.x or ^5.8.x ranges resolve to it; targets developer workstations and CI runners including GitHub Actions.",
+      "mitigations": "Pin @subql/common to 5.8.2 in lockfiles; block ci-artifacts.dev; investigate and rotate credentials where 5.8.3 ran; restrict publish environments to protected branches and review workflow changes.",
+      "corroborating_sources": [],
+      "id": "subql-common-5-8-3-npm-backdoor-short-lived-neve-80547135ae",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18",
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Parser exhaustion: valid SQL crashes SQLGlot and SQLFluff (CVE-2026-46373, CVE-2026-46374) with ~750x memory amplification, taking down Superset SQL Lab, Dify plugins and Pathway",
+      "source_url": "https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/",
+      "article_url": "https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-06",
+      "raw_path": "data/_raw/the-hidden-dos-vector-in-sql-parsers-a581f43365.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-imperva-com-blog-feed",
+      "source_rank": 72.5,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Imperva Threat Research",
+      "related_claims": [],
+      "summary": "SQLGlot and SQLFluff parse deeply nested or very wide but syntactically valid SQL with no depth or node limit: about 50 nesting levels hits Python's recursion limit, and a sub-2MB query builds an abstract syntax tree (AST) using over 1.5GB of RAM. Because apps parse before executing, one authenticated Superset SQL Lab user can kill or pin the shared worker pool, a Dify plugin query broke the daemon-to-worker bridge for about 60 seconds, and Pathway was OOM-killed at 8GB+. The same flaw shows up in Neo4j Cypher, graphql-js and graphql-core.",
+      "takeaway": "Treat any parser that consumes user or LLM-generated text as a trust boundary: cap bytes, depth and node count before parsing, and upgrade SQLGlot/SQLFluff to versions with limits.",
+      "lessons": [
+        {
+          "point": "Recursive-descent parsers without a depth cap fail on modest nesting.",
+          "excerpt": "At 50+ levels of nesting, the recursive descent parser exhausts the call stack.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The DoS fires in the pre-execution parse step, so database-side limits and query timeouts don't help.",
+          "excerpt": "An authenticated user with ordinary SQL Lab access is enough; the query never has to run.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Client-side input limits are not a control; enforce size caps on the server.",
+          "excerpt": "The frontend enforces a 3,000-character input limit. The backend does not.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The bug class is generic to parsers that build rich object trees, not specific to SQL.",
+          "excerpt": "Any parser that turns untrusted text into a rich object tree without bounding depth or node count is exposed.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "denial-of-service",
+        "parser",
+        "sqlglot",
+        "sqlfluff",
+        "apache-superset",
+        "dify",
+        "graphql",
+        "resource-exhaustion",
+        "cve-2026-46373",
+        "cve-2026-46374"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Bound parser input before parsing",
+        "detail": "Upgrade SQLGlot (limit merged ahead of v30.5.0) and SQLFluff to patched releases and keep default limits on. Where a parser takes user or LLM-generated SQL/GraphQL/Cypher, reject on cheap pre-parse checks on the server (byte size, token count, parenthesis depth, column count), run parsing with a timeout in a memory-capped worker or subprocess, and rate-limit submissions. For graphql-js and graphql-core, set an explicit max token/depth limit since none is on by default."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 70,
+        "newness": 26,
+        "credibility": 72.5,
+        "composite": 54.88,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim. Verifier: the two CVEs were assigned to the SQLFluff findings only, and ~750x was measured on SQLGlot. Verifier novelty 55.",
+      "prior_art": "Classic algorithmic-complexity and deep-nesting DoS (billion laughs, JSON/YAML nesting bombs, GraphQL depth/complexity limits, Imperva's own graphql-java DoS write-up). New here: CVEs in the two main Python SQL parsers, measured amplification ratios, and concrete cascades into Superset, Dify and Pathway.",
+      "threat": "An authenticated low-privilege user (or anyone reaching an exposed parse endpoint) sends a valid but deeply nested or very wide query that exhausts memory or CPU in the parser, crashing or hanging shared workers.",
+      "conditions": "Application passes untrusted or LLM-generated SQL to unpatched SQLGlot or SQLFluff (or graphql-js/graphql-core/Cypher without limits) with no server-side size or depth cap.",
+      "mitigations": "Upgrade parsers and keep recursion/node limits enabled; server-side byte/token/depth/column caps before parsing; parse timeouts; container memory limits; rate limiting; isolate plugin processes.",
+      "id": "parser-exhaustion-valid-sql-crashes-sqlglot-and-2f4ce0174e",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title, summary, lessons[1].point",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "oh-look-the-foot-gun-went-off-again-citrix-netsc-93400e33d6",
@@ -1483,6 +1847,119 @@
     {
       "topic": "product-security",
       "domain": "ps.supply-chain",
+      "title": "tensorlake@0.5.144 npm worm (Mini Shai-Hulud): hijacked admin account committed payload via GitHub UI, ran trusted-publishing workflow; revoking stolen GitHub token wipes home directory",
+      "source_url": "https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud",
+      "article_url": "https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-08",
+      "raw_path": "data/_raw/tensorlake-0-5-144-npm-compromise-ships-mini-sha-606531a55b.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-safedep-io-rss-xml",
+      "source_rank": 48.1,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "SafeDep",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls",
+        "package-installers-run-arbitrary-code-by-default"
+      ],
+      "summary": "On 7 October 2026 an attacker using a tensorlake repository admin account committed a Mini Shai-Hulud payload to main through the GitHub web UI (so every commit showed as 'verified'), then started the release workflow by hand. Version 0.5.144 (about 106,000 monthly downloads) shipped through npm trusted publishing with valid provenance and no stolen npm token. Its preinstall loader skips CI, downloads Bun, and runs an 856 KB worm. The worm steals cloud, GitHub, npm, SSH, browser and wallet credentials and republishes the victim's npm packages. It plants Claude Code and VS Code hooks, resolves its command-and-control (C2) server through an Ethereum contract, and installs a gh-token-monitor service that runs rm -rf ~/ when the stolen GitHub token stops working.",
+      "takeaway": "Provenance attestations and 'verified' commit badges prove where a build came from, not that the source is clean; and in this worm family, revoking the stolen GitHub token before removing gh-token-monitor wipes the victim's home directory.",
+      "lessons": [
+        {
+          "point": "No registry credential was needed: control of a repo admin account plus the project's own release workflow was enough to publish.",
+          "excerpt": "The attacker did not need an npm token. They used a repository administrator account to commit the payload to `main` through the GitHub web interface.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Trusted publishing and SLSA provenance faithfully attest a poisoned build; they do not indicate the source is safe.",
+          "excerpt": "The provenance is valid for a build of poisoned source.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Commits made in the GitHub web UI are signed by GitHub, so the 'verified' badge gives no signal about account compromise.",
+          "excerpt": "GitHub signs web interface commits, so all eight show as verified.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Incident response order matters: the dead-man switch fires on revocation, so remove the monitor service first, then rotate tokens.",
+          "excerpt": "If GitHub returns 40x, for example after revocation, it deletes the home directory.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "npm",
+        "shai-hulud",
+        "worm",
+        "trusted-publishing",
+        "provenance",
+        "account-takeover",
+        "credential-theft",
+        "blockchain-c2",
+        "dead-mans-switch",
+        "claude-code-hooks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Remove gh-token-monitor before revoking tokens, and gate release workflows on reviewed commits",
+        "detail": "On any machine that installed tensorlake@0.5.144 (or another Mini Shai-Hulud package), first disable and delete gh-token-monitor (systemd user service, macOS LaunchAgent com.user.gh-token-monitor, or Windows scheduled task; files under ~/.config/gh-token-monitor/ and ~/.local/bin/gh-token-monitor.sh), then rotate GitHub, npm, cloud, SSH, AI-tool and browser-saved credentials. Hunt for public repos described 'Shai-Hulud: Here We Go Again', commits authored as claude, and unexpected .claude/settings.json or .vscode/tasks.json. For your own packages: require PRs and reviews on the branch your publish workflow builds from, require a second approver (GitHub environment protection) for manually dispatched releases, and alert on direct pushes to main by admins. Block iseekaigogo.com and Ethereum RPC egress from developer machines where feasible."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 85,
+        "newness": 26,
+        "credibility": 53.1,
+        "composite": 51.97,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim. Verifier: the token-revocation wiper arms only on some machines (accounts with no organizations, 24-hour watch), and the workflow was started on 8 Oct 00:08 UTC. Novelty lowered to the verifier's 40.",
+      "prior_art": "Same worm family as the keyv/cacheable Mini Shai-Hulud compromise and ChainDrop already in the archive (valid provenance, Bun loader, Ethereum-resolved C2, Claude Code/VS Code hooks). New here: delivery through an admin account's web-UI commits and a manually started trusted-publishing run instead of a stolen npm token, a new C2 domain and Ethereum contract, a browser password stealer, eval of C2 responses, and an identified rm -rf ~/ handler that arms only for tokens whose account has no organizations.",
+      "threat": "Compromised maintainer/admin GitHub account publishes a credential-stealing, self-propagating npm worm through the project's legitimate release pipeline.",
+      "conditions": "Developer workstation (loader exits on CI) runs npm install of tensorlake@0.5.144 with install scripts enabled; the destructive watcher arms when a stolen GitHub token belongs to an account with no organizations.",
+      "mitigations": "Pin tensorlake to 0.5.143 or upgrade to the reverted 0.5.145; set ignore-scripts for installs; remove gh-token-monitor before rotating credentials; enforce branch protection and release approvals so an admin account alone cannot ship from main.",
+      "corroborating_sources": [
+        {
+          "name": "StepSecurity",
+          "url": "https://www.stepsecurity.io/blog/tensorlake-npm-compromised-hostage-token-worm",
+          "published": "2026-10-08"
+        }
+      ],
+      "id": "tensorlake-0-5-144-npm-worm-mini-shai-hulud-hija-9334446799",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18",
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Live npm worm (two independent write-ups, SafeDep and StepSecurity) that published through the project's own trusted-publishing workflow and arms a home-directory wiper on token revocation: a concrete lesson that valid provenance doesn't…",
+        "signals": [
+          "newsworthy",
+          "widely-reported",
+          "active-exploitation",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-25T08:24:38+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
       "title": "OVHcloud CLI: attacker swapped binaries on five GitHub releases for 94 minutes, delivering the GlassWorm loader",
       "summary": "An attacker replaced the binaries on five OVHcloud CLI GitHub releases, kept them live for 94 minutes, then deleted the evidence. StepSecurity rebuilt the attacker's build, recovered the GlassWorm loader from an orphaned commit, and ran the full chain in isolation. Their replay shows the install.sh script never served arm64 Linux, Homebrew was not an infection path, and running the CLI's version command was enough to spot the malicious build.",
       "lessons": [
@@ -1577,6 +2054,96 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Datadog: 3,500+ RBAC bindings across 65,000 Kubernetes clusters grant dangerous permissions to system:anonymous, system:unauthenticated or system:authenticated",
+      "source_url": "https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/",
+      "article_url": "https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-05",
+      "raw_path": "data/_raw/guarding-the-gates-assessing-dangerous-permissio-d1c032b75d.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-securitylabs-datadoghq-com-rss-feed-xml",
+      "source_rank": 72.5,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Datadog Security Labs",
+      "related_claims": [],
+      "summary": "Datadog analyzed 320,000+ bindings to the three Kubernetes built-in principals across 65,000 clusters from almost 10,000 organizations. After removing default bindings and 11,000 stale PodSecurityPolicy bindings (a feature removed in v1.25), 44,000 remained, and 3,500+ granted permissions Datadog classes as dangerous. Real exposure depends on the distribution: AKS rejects anonymous requests, EKS (v1.32+) and GKE (v1.35+) restrict anonymous endpoints, but GKE by default treats any valid Google account as system:authenticated.",
+      "takeaway": "Audit for any RoleBinding or ClusterRoleBinding to system:anonymous, system:unauthenticated or system:authenticated beyond the defaults, especially on GKE and in namespace-as-a-service clusters.",
+      "lessons": [
+        {
+          "point": "Dangerous grants to built-in principals are rare as a share but present at scale in real clusters.",
+          "excerpt": "We found over 3,500 bindings that granted at least one of the permissions in that dangerous list.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "On GKE, system:authenticated means anyone with a Google account unless blocked at cluster creation.",
+          "excerpt": "by default it allows any user with a valid Google account to have that access to any GKE cluster.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Namespace admins in multi-tenant clusters can expose the whole cluster by binding to anonymous principals.",
+          "excerpt": "a namespace-level admin can expose the overall cluster to risks by creating bindings to principals such as `system:unauthenticated`.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Distribution defaults decide whether anonymous bindings matter at all.",
+          "excerpt": "AKS is one of the few distributions that uses the `--anonymous-auth=false` setting.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "kubernetes",
+        "rbac",
+        "gke",
+        "eks",
+        "aks",
+        "least-privilege",
+        "misconfiguration",
+        "telemetry-study"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Find and remove bindings to Kubernetes built-in principals",
+        "detail": "Run `kubectl get clusterrolebindings,rolebindings -A -o json` and flag subjects named system:anonymous, system:unauthenticated or system:authenticated other than the default system:basic-user, system:discovery and system:public-info-viewer bindings; review any that grant secrets read, pod create/exec, wildcard verbs/resources, bind/escalate/impersonate or node proxy. Set --anonymous-auth=false or the v1.34+ anonymous path allowlist on self-managed clusters, block arbitrary Google accounts on new GKE clusters, delete leftover podsecuritypolicy RBAC, and use admission policy to stop namespace admins from binding these principals."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 68,
+        "newness": 26,
+        "credibility": 72.5,
+        "composite": 51.27,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim. Verifier: 'over 65,000' clusters; 'dangerous' is Datadog's own five-category definition. Verifier novelty 45.",
+      "prior_art": "Orca's 'Sys:All' research on GKE system:authenticated (cited in the post) and earlier internet scans for exposed anonymous Kubernetes APIs. This adds a large telemetry-based prevalence number across EKS, GKE and AKS rather than a new technique.",
+      "threat": "Anyone who can reach the API server (or, on GKE, anyone with a Google account) inherits permissions bound to built-in principals, which can include secret read or workload creation.",
+      "conditions": "Non-default bindings to system:anonymous/unauthenticated on distributions that allow anonymous access, or to system:authenticated where authentication is broad (GKE default).",
+      "mitigations": "Remove non-default bindings to built-in principals; disable or restrict anonymous auth; block arbitrary Google accounts on GKE; admission policies preventing such bindings; regular RBAC cleanup.",
+      "id": "datadog-3-500-rbac-bindings-across-65-000-kubern-d8180d9daf",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 19 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.mobile",
       "title": "How we found 24 Android vulnerabilities using our open source AI security agent",
       "source_url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
@@ -1666,6 +2233,86 @@
         ],
         "at": "2026-10-19T23:36:16+00:00"
       }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "CheckerBench: 300 CVE-derived tasks (297 CVEs, 85 CWEs, 5 ecosystems) for agent-written static-analysis checkers; mean Pass@1 32.30%, best 45.33% across 21 model-harness setups",
+      "source_url": "https://arxiv.org/abs/2610.07557",
+      "article_url": "https://arxiv.org/abs/2610.07557",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-06",
+      "raw_path": "data/_raw/checkerbench-can-long-horizon-agents-synthesize-9a8ef69961.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 49.6,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "related_claims": [
+        "score-evals-on-groundedness-not-headline-f1"
+      ],
+      "summary": "CheckerBench asks coding agents to write a working static-analysis checker for a known defect from start to finish inside a real repository. Each task comes with vulnerable and fixed revisions, a pinned analyzer environment and a scaffold. A companion framework, CheckerLab, rebuilds each submitted checker and scores it on whether it fires on the vulnerable version but not the fixed one, patch localization, false positives and tool use. Across 21 model-harness configurations the mean Pass@1 is 32.30% and the best is 45.33%.",
+      "takeaway": "Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to CI.",
+      "lessons": [
+        {
+          "point": "The benchmark is grounded in real CVEs across many CWEs and languages, not synthetic bugs.",
+          "excerpt": "300 tasks derived from 297 CVEs across 167 repositories, 85 CWEs, and five language ecosystems",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Scoring checks that the checker fires on vulnerable code and stays quiet on the fix, plus its false-positive rate. That is the right acceptance test for any generated rule.",
+          "excerpt": "measures vulnerable-fixed diagnostic contrast, patch localization, false positives, and tool use",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Current agents mostly fail. Even the best configuration passes fewer than half the tasks.",
+          "excerpt": "Across 21 model-harness configurations and three independent repeats per configuration, mean Pass@1 is 32.30%, while the best reaches 45.33%",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "static-analysis",
+        "sast",
+        "benchmark",
+        "coding-agents",
+        "variant-analysis",
+        "cve"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Gate agent-written SAST checkers on vulnerable/fixed contrast",
+        "detail": "When using an agent to turn a CVE or bug report into a CodeQL, Semgrep or analyzer-specific checker, require it to fire on the vulnerable commit and stay silent on the fixed commit. Also require it to stay under a false-positive budget on a clean corpus before the rule goes into CI. Expect less than 50% first-try success and budget for iteration or human repair."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 62,
+        "newness": 26,
+        "credibility": 49.6,
+        "composite": 50.54,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "No problems found; excerpts verbatim. Verifier novelty 60.",
+      "prior_art": "CVE-based agent benchmarks such as CyberGym, SEC-bench and CVE-Bench measure patching, PoC generation or detection. LLM-assisted CodeQL and Semgrep rule-generation papers exist but lacked a large executable benchmark. CheckerBench is new in scoring end-to-end checker synthesis with rebuilds and vulnerable/fixed contrast.",
+      "id": "checkerbench-300-cve-derived-tasks-297-cves-85-c-19e296a215",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": false,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -2139,6 +2786,101 @@
       "id": "datadog-s-pathrunner-automates-80-aws-iam-privil-f57e20266a",
       "retrieved_at": "2026-10-23T16:45:06+00:00",
       "needs_review": true,
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "UAT-11985: likely AI-templated event invitations and QR-swapped posters lure Taiwan researchers to an operator-driven Google adversary-in-the-middle kit relaying MFA live over WebSocket",
+      "source_url": "https://blog.talosintelligence.com/uat-11985/",
+      "article_url": "https://blog.talosintelligence.com/uat-11985/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-08",
+      "raw_path": "data/_raw/uat-11985-ai-assisted-event-lures-delivering-rea-c792efe8c5.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-talosintelligence-com-rss",
+      "source_rank": 72.5,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Cisco Talos Intelligence",
+      "related_claims": [],
+      "summary": "Cisco Talos tracked a mid-2026 advanced persistent threat (APT) spear-phishing campaign against Taiwan research staff. It reused real public events, faked senders at the Taiwan European Union Centre, the NCCU Institute of International Relations and the Taiwan Research Institute, and used near-identical three-part templates that Talos assesses were likely AI-assisted. Links displayed as Google Forms led to a fake Google sign-in, and event posters carried swapped QR codes to catch anyone who scanned a printed copy. The kit is operator-driven: HTTP POST sends the victim's identifier, password and browser fingerprint to the actor, who relays them to real Google; a WebSocket channel then tells the page which MFA or passkey screen to render, giving full session takeover. Talos assesses with moderate confidence that the kit's UI was written in Simplified Chinese first.",
+      "takeaway": "Real-time relay kits defeat OTP and push MFA; only origin-bound factors (passkeys, security keys) stop this class, and lure quality is no longer a usable tell.",
+      "lessons": [
+        {
+          "point": "Lure uniformity across topics points to template-driven, probably LLM-assisted generation; polish no longer signals legitimacy.",
+          "excerpt": "suggesting the content was generated from a reusable prompt template rather than independently authored",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Swapped QR codes on genuine posters extend reach to people who never got the email, and bypass email link scanning.",
+          "excerpt": "While the poster designs were scraped from legitimate websites, the embedded QR codes were maliciously altered.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A live operator drives the victim's page step by step, mirroring whatever challenge Google actually issues.",
+          "excerpt": "The C2 server streams real-time instructions to the phishing page via this channel, dictating exactly which MFA challenge screen to render.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The goal is a complete authenticated session, so non-phishing-resistant MFA gives no protection.",
+          "excerpt": "This mechanism effectively bypasses multi-factor authentication (MFA) to harvest complete, authenticated session tokens.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "phishing",
+        "aitm",
+        "mfa-bypass",
+        "quishing",
+        "google-accounts",
+        "apt",
+        "taiwan",
+        "ai-assisted-lures",
+        "websocket"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Enforce phishing-resistant MFA for research and policy staff, and hunt for the kit",
+        "detail": "Enroll targeted staff in passkeys or hardware security keys (Google Advanced Protection where possible), since a relayed password-plus-OTP or push flow yields a full session. Deploy the Talos ClamAV signature Html.Phishing.UAT11985-10060614-0 and Snort SIDs 1:67198 / 7:31, ingest the IOCs from Cisco-Talos/IOCs 2026/10/uat-11985.txt, and tell staff to register for events only via the organizer's own site, not links or QR codes in unsolicited invitations or posters."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 65,
+        "newness": 26,
+        "credibility": 72.5,
+        "composite": 48.88,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim; AI involvement correctly hedged. Verifier: 'bypass email link scanning' (lesson 2) is not in the source. Verifier novelty 40.",
+      "prior_art": "Real-time AitM relay kits (Evilginx, Tycoon 2FA and others) and Talos's own JWR phishing framework write-up with similar WebSocket use are established. New here: an operator-driven Google kit that also branches on passkey availability, QR-altered event posters as a physical second vector, likely AI-templated lures against Taiwan researchers, and localization-based attribution of the kit's developer.",
+      "threat": "Targeted credential and session theft of Google accounts belonging to Taiwan research and policy staff.",
+      "conditions": "Victim follows a disguised registration link or scans a modified poster QR code and authenticates with a password plus a relayable second factor.",
+      "mitigations": "Phishing-resistant MFA (passkeys or FIDO2 keys); verify invitations with the named institution through a known channel; Talos ClamAV/Snort coverage and published IOCs; link-rewrite and QR-aware email scanning.",
+      "corroborating_sources": [],
+      "id": "uat-11985-likely-ai-templated-event-invitations-76a4ddf733",
+      "retrieved_at": "2026-10-25T08:23:36+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway, actionable.detail",
+      "readability": {
+        "score": 68,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 47 > 45 (Deploy the Talos ClamAV signature Html.Phishing.UAT11985-10060614-0 and Snort SIDs 1:67198 / 7:31, ingest the IOCs from )",
+          "mild: acronyms 6 > 3 (UAT, OTP, NCCU, QR, UAT11985, SID)",
+          "mild: title_words 22 > 18",
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
       "grounding_score": 1.0
     },
     {
@@ -3556,6 +4298,93 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Chainguard Athena: agents deduplicate private zero-day reports, trace affected and fixed version ranges through Git history, map them to CVE aliases without leaking reporters",
+      "source_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-building-a-vulnerability-database-from-private-reports",
+      "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-building-a-vulnerability-database-from-private-reports",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-08",
+      "raw_path": "data/_raw/this-shit-is-hard-building-a-vulnerability-datab-edb02358d5.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
+      "source_rank": 50.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "Chainguard Unchained",
+      "related_claims": [],
+      "summary": "Chainguard describes the pipeline behind Athena, which it says has validated 21,175 zero-days in open-source packages. Fingerprints (package, method, weakness type) and embedding similarity were not reliable for deduplication, so an agent now reads the source and compares each new report against existing records. Validation code, not the agent, writes the records. An enrichment agent traces the vulnerable behavior through Git history and release branches to find the affected range, because fixes often land in silent refactors or as backports with different commits. A second agent reviews proposed fix boundaries in an isolated microVM with no credentials or network access. Separate checks strip submitter-identifying details and require a summary, a confirmed code location and a CVSS vector before a record is saved.",
+      "takeaway": "Version ranges, duplicate decisions and fixed-version claims in a vulnerability database are each judgments that can be wrong; keep agents advisory and let deterministic validation own the writes.",
+      "lessons": [
+        {
+          "point": "Deduplication must compare the defect and the code responsible, not just affected versions or matching fields.",
+          "excerpt": "Affected-version overlap alone is insufficient: separate vulnerabilities can affect the same versions, and a duplicate report can identify an affected version we have not recorded yet.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Fix-boundary analysis has to read code changes, because silent fixes hide in refactors.",
+          "excerpt": "Commit messages are not enough, as an ordinary refactor can remove a vulnerability without mentioning security.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Agents propose decisions; validation code applies them, so a bad output cannot mint IDs or overwrite records.",
+          "excerpt": "The agent cannot create identifiers or update records directly.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A CVE alias and a fix are separate facts; mapping to an advisory does not mean a remediation exists.",
+          "excerpt": "Adding an alias does not establish that a fix is available.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "vulnerability-database",
+        "vulnerability-management",
+        "deduplication",
+        "affected-versions",
+        "llm-agents",
+        "open-source",
+        "chainguard"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat fixed-version and duplicate decisions as evidence-backed judgments in your own vuln pipeline",
+        "detail": "If you run internal vulnerability triage with LLM agents: have the agent return decision plus rationale only, and let validation code write records; process each package's submissions one at a time to avoid racing duplicate checks; keep merged records as withdrawn aliases; never let a range update reclassify a confirmed-fixed version as affected (or drop a confirmed-vulnerable one) without resolving the conflict; and verify version-to-commit mappings against registry and repository history rather than trusting commit messages."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 60,
+        "newness": 26,
+        "credibility": 50.0,
+        "composite": 42.5,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim; vendor process post with no accuracy data. Novelty lowered to the verifier's 35.",
+      "prior_art": "Earlier Chainguard posts in the archive (Athena harness and silent-fix disclosure, 'Patching a vulnerability that has no fix', the Black Duck OSV feed) cover finding and patching. OSV.dev already computes affected ranges from Git commit history. New here: the record-building layer for private reports, including agent-based deduplication after fingerprint and embedding matching fell short, a second-agent fix-boundary review, submitter-confidentiality scrubbing, and invariants on range updates. It is a vendor process description with no accuracy numbers.",
+      "corroborating_sources": [],
+      "id": "chainguard-athena-agents-deduplicate-private-zer-8fa32e8541",
+      "retrieved_at": "2026-10-25T08:23:36+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18",
+          "mild: summary_sentences 6 > 4"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.appsec",
       "title": "Horizon3 deep dive on FortiSIEM CVE-2026-106173: an unauthenticated gRPC path traversal plus a null byte becomes arbitrary file write and RCE",
       "source_url": "https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/",
@@ -4960,6 +5789,96 @@
       "grounding_score": 1.0
     },
     {
+      "id": "one-breach-please-and-make-no-mistakes-8d5a486d96",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Cisco Talos: lab-agent attacks so far (Hugging Face, DSEWiki, RubyGems) are loud and pentest-like; expect quieter agent swarms, prepare with IR, MFA, detection basics",
+      "source_url": "https://blog.talosintelligence.com/one-breach-please-and-make-no-mistakes/",
+      "article_url": "https://blog.talosintelligence.com/one-breach-please-and-make-no-mistakes/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-07",
+      "raw_path": "data/_raw/one-breach-please-and-make-no-mistakes-8d5a486d96.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-blog-talosintelligence-com-rss",
+      "source_rank": 72.5,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Cisco Talos Intelligence",
+      "related_claims": [
+        "agent-orchestrated-attacks-compress-human-attack-timelines"
+      ],
+      "summary": "Talos argues that public attacks by lab-built agents (Hugging Face, DSEWiki, RubyGems) look like noisy penetration tests: high volume, off-the-shelf tooling, quickly noticed. It warns that noise is a feature of current agents and will fall once swarms are told to prioritize stealth. Its six recommendations are standard: a rehearsed incident response plan, attack-path mapping and assumed-breach tests, agent-specific tabletop exercises, phishing-resistant MFA everywhere, internal (east-west) and DNS detection, and watching for early high-volume signals.",
+      "takeaway": "Today's agent attacks are easy to see at the front door, so instrument for that now and assume the noise will drop.",
+      "lessons": [
+        {
+          "point": "Current agent attacks are loud, but that will not last; tune detections so they still work once agents are prompted to stay quiet.",
+          "excerpt": "Volume is a property of this generation of AI agents, not a law of nature.",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "The RubyGems attack shows the current pattern: noisy, high-volume abuse that maintainers noticed within days.",
+          "excerpt": "The registration was hammered, packages stuffed, spam everywhere, and maintainers alerted within days",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Cheap early signals: spikes in SQL injection attempts, automated traffic, WAF alerts, and requests with Python, curl or wget user agents.",
+          "excerpt": "requests hitting your pages from Python, curl, or wget user agents rather than real browsers",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Design so that a single stolen credential has limited blast radius, because a persistent agent will eventually get one.",
+          "excerpt": "Assume the swarm gets one set of valid credentials, then design so that one set does not open the whole building.",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agentic-threats",
+        "agent-swarm",
+        "incident-response",
+        "tabletop-exercise",
+        "detection-engineering",
+        "phishing-resistant-mfa",
+        "threat-intel"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Add an agent-swarm scenario to your next tabletop",
+        "detail": "Run a tabletop where an AI agent swarm is inside the network collecting credentials while spoofing employees by email. Measure how fast you can rotate credentials and isolate users, and add alerts for spikes in non-browser user agents (python-requests, curl, wget) and WAF or SQL injection alert surges."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 45,
+        "newness": 26,
+        "credibility": 72.5,
+        "composite": 35.38,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim. Verifier: Talos says 'most' public attacks look like pentests and names RubyGems as the loud example. Novelty lowered to the verifier's 15.",
+      "prior_art": "The claim that agent-orchestrated attacks compress human red-team timelines into hours, plus existing pool coverage of the Hugging Face and RubyGems incidents, already covers the threat. Talos adds the framing that today's agent attacks are pentest-loud and will get quieter, but the defenses are standard practice with no new data.",
+      "threat": "Swarms of AI agents run social engineering, exploitation and credential harvesting in parallel, and later prioritize stealth over speed.",
+      "conditions": "Organizations with untested IR plans, MFA only at the edge, little east-west or DNS visibility, and unmanaged AI applications with server access.",
+      "mitigations": "Rehearsed IR plan with out-of-band comms, assumed-breach attack-path mapping, agent-specific tabletops, phishing-resistant MFA on AD, SSO and Linux, EDR everywhere, east-west and DNS monitoring, an inventory of AI apps, and alerts on early high-volume signals.",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "ciliumhound-graphing-kubernetes-network-policies-931ef7b631",
       "topic": "product-security",
       "domain": "ps.cloud-infra",
@@ -5207,6 +6126,86 @@
       "grounding_score": 1.0
     },
     {
+      "id": "ghsa-628f-v4f6-p37r-b974c6dc31",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Contao comments-bundle: unauthenticated visitor's comment XSS fires on any back-end user opening the Comments module; no CSP on back end (GHSA-628f-v4f6-p37r, critical)",
+      "source_url": "https://github.com/advisories/GHSA-628f-v4f6-p37r",
+      "article_url": "https://github.com/advisories/GHSA-628f-v4f6-p37r",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-09",
+      "raw_path": null,
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "related_claims": [],
+      "summary": "A critical GitHub advisory for the Contao CMS comments bundle says any unauthenticated front-end visitor can post a comment carrying an XSS payload. It runs in the browser of any back-end user who opens the Comments module, so moderating comments is what triggers it. The Contao back end sends no Content-Security-Policy header, so nothing blocks the script; the excerpt is truncated and does not list fixed versions.",
+      "takeaway": "Moderation queues are a classic stored-XSS path from anonymous users to admins; without a back-end CSP, one comment can hijack an editor session.",
+      "lessons": [
+        {
+          "point": "The attacker needs no account: any front-end visitor can submit the payload.",
+          "excerpt": "An unauthenticated front end visitor can post a comment containing a XSS injection.",
+          "confidence": 0.9,
+          "grounded": false
+        },
+        {
+          "point": "Moderation guarantees an admin views the payload, so the review step makes the attack reliable.",
+          "excerpt": "The victim is any back end user who opens the Comments module, and moderation makes exposure certain rather than preventing it.",
+          "confidence": 0.85,
+          "grounded": false
+        },
+        {
+          "point": "No CSP on the admin interface means no second layer stops the injected script.",
+          "excerpt": "No `Content-Security-Policy` header is sent on the Contao back end",
+          "confidence": 0.8,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "contao",
+        "xss",
+        "stored-xss",
+        "cms",
+        "csp",
+        "ghsa",
+        "php"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Update contao/comments-bundle and add a back-end CSP",
+        "detail": "Update contao/comments-bundle to the patched release listed in GHSA-628f-v4f6-p37r. Until then, disable or close public comments. Add a strict Content-Security-Policy on the /contao back end through your web server or reverse proxy."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 40,
+        "newness": 26,
+        "credibility": 70.0,
+        "composite": 32.0,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Excerpts verbatim from the staged advisory excerpt (no raw page: GitHub 403). Title's 'any back-end user' means those who open the Comments module, as the summary says. Verifier novelty 15.",
+      "prior_art": "Standard stored-XSS-to-admin pattern seen across CMS comment and moderation features (WordPress, Drupal plugins); nothing new in technique beyond this product instance.",
+      "threat": "Anonymous visitor plants script that runs in a Contao back-end user's session, enabling actions as that user.",
+      "conditions": "Contao with the comments bundle enabled and accepting public comments; a back-end user opens the Comments module.",
+      "mitigations": "Upgrade the comments bundle; disable public comments until patched; set a Content-Security-Policy on the back end.",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 22 > 18"
+        ]
+      },
+      "grounding_score": 0.0
+    },
+    {
       "id": "cisa-kev-eg-secure-solutions-siteguard-server-ed-63770fa2b6",
       "scores": {
         "novelty": 5,
@@ -5333,6 +6332,87 @@
       "grounding_score": 0.0
     },
     {
+      "id": "cisa-kev-onlyoffice-docs-server-path-traversal-v-af51144a36",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA adds 2021 ONLYOFFICE Docs path traversal CVE-2021-3199 to KEV on 2026-10-08, with a 3-day due date (2026-10-11)",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3199",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3199",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-08",
+      "raw_path": "data/_raw/cisa-kev-onlyoffice-docs-server-path-traversal-v-af51144a36.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 66.1,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "related_claims": [],
+      "summary": "CISA added CVE-2021-3199, a path traversal in ONLYOFFICE Docs (Document Server), to the Known Exploited Vulnerabilities catalog on 2026-10-08. Per the KEV description, the bug occurs when JWT is used, via a `/..` sequence in an image upload parameter, and can lead to remote code execution. NVD links public proof-of-concept exploits and a vendor changelog fix; the KEV entry gives only a 3-day remediation window and no new technical detail.",
+      "takeaway": "A five-year-old ONLYOFFICE bug with public PoCs is now confirmed exploited; any unpatched self-hosted Document Server should be patched or pulled offline now.",
+      "lessons": [
+        {
+          "point": "The KEV entry was added on 2026-10-08 with a due date three days later, a much shorter window than the usual KEV deadline.",
+          "excerpt": "ONLYOFFICE Docs Server Path Traversal Vulnerability | October 08, 2026 | October 11, 2026",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Public proof-of-concept code for the image-upload traversal has been referenced from NVD for years, so exploitation needs little skill.",
+          "excerpt": "CVE-2021-3199/poc_uploadImageFile.py",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "CISA's required action allows discontinuing the product when mitigations are unavailable, under the newer BOD 26-04 guidance.",
+          "excerpt": "Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "cisa-kev",
+        "onlyoffice",
+        "path-traversal",
+        "cve-2021-3199",
+        "old-cve",
+        "exploited-in-the-wild"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Find and patch ONLYOFFICE Document Server instances",
+        "detail": "Inventory self-hosted ONLYOFFICE Docs / Document Server (often embedded in Nextcloud, Seafile or similar). Confirm the version includes the fix referenced in the 5.6.3 changelog or later, check upload directories for unexpected files, and remove internet exposure for anything you cannot patch."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 40,
+        "newness": 26,
+        "credibility": 66.1,
+        "composite": 30.81,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Supported; excerpts verbatim. Verifier: 'much shorter than usual KEV deadline' and 'PoCs for years' are mild inferences. Novelty lowered to the verifier's 8.",
+      "prior_art": "Routine old-CVE KEV addition; the bug, fix and PoCs date from 2021. The only new facts are the in-the-wild exploitation signal and the 3-day due date.",
+      "threat": "Remote attacker uses a path traversal in the image upload parameter to write outside the intended directory and reach code execution on the Document Server.",
+      "conditions": "Unpatched ONLYOFFICE Docs with JWT in use, reachable by the attacker.",
+      "mitigations": "Upgrade ONLYOFFICE Docs to a fixed release; restrict network exposure; follow CISA vendor-instruction mitigations or discontinue use.",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title, takeaway, summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "cisa-kev-apple-multiple-products-out-of-bounds-w-454c2472a7",
       "topic": "product-security",
       "domain": "ps.mobile",
@@ -5423,6 +6503,79 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Unit 42: threat actors use Web3 infrastructure and open-source supply chain attacks to breach enterprise cloud environments (only the feed blurb was captured)",
+      "source_url": "https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/",
+      "article_url": "https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-07",
+      "raw_path": null,
+      "discovered_via": "rss",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_rank": 76.1,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Palo Alto Networks Unit 42",
+      "related_claims": [],
+      "summary": "Unit 42 published an overview of how attackers combine Web3 infrastructure with open-source package compromises to get into enterprise cloud environments. The captured page contains only site navigation, not the article body, so no techniques, cases or indicators could be checked. Recent npm worms already use Ethereum contracts to resolve C2 domains, which fits this theme, but this entry cannot confirm what Unit 42 itself reports.",
+      "takeaway": "Read the original before acting; as captured, this item only signals that a major vendor is tracking the blockchain-C2 plus package-compromise pattern.",
+      "lessons": [
+        {
+          "point": "Unit 42 frames Web3 infrastructure as part of the supply chain attack toolkit, not only as a target.",
+          "excerpt": "threat actors leverage Web3 infrastructure and open-source supply chain attacks",
+          "confidence": 0.5,
+          "grounded": false
+        },
+        {
+          "point": "The stated end goal is enterprise cloud access, so package compromise is treated as an initial-access route to cloud.",
+          "excerpt": "open-source supply chain attacks to breach enterprise cloud environments",
+          "confidence": 0.5,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "web3",
+        "blockchain-c2",
+        "supply-chain",
+        "cloud",
+        "threat-intel"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Re-fetch and re-analyze the full article",
+        "detail": "The raw capture (data/_raw/evolution-of-web3-in-cloud-supply-chain-attacks-108c86f797.txt) contains only Palo Alto Networks site navigation. Re-scrape the article body before extracting techniques or indicators."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 30,
+        "newness": 26,
+        "credibility": 76.1,
+        "composite": 29.91,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Only a one-sentence feed excerpt was available; excerpts verbatim and points hedged. No substantive content. Novelty lowered to the verifier's 10.",
+      "prior_art": "Archive entries on keyv/cacheable Mini Shai-Hulud and ChainDrop already document Ethereum-resolved C2 in npm worms that steal cloud credentials. Without the article body, no difference from that work can be established.",
+      "corroborating_sources": [],
+      "id": "unit-42-threat-actors-use-web3-infrastructure-an-090c76037d",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 23 > 18"
+        ]
+      },
+      "grounding_score": 0.0
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.appsec",
       "title": "Atlassian October 2026 bulletin: 75 unique third-party CVEs across Data Center and Server products",
       "summary": "Atlassian's October 2026 security bulletin lists 176 entries, 14 critical, all in third-party dependencies such as Apache Tomcat, Netty, Bouncy Castle, and Apache SSHD. SecurityWeek counts 75 unique CVEs, six critical, across Bamboo, Bitbucket, Confluence, Crowd, Fisheye/Crucible, and Jira. Atlassian says its use of the critical components carries lower, non-critical risk and the bulletin makes no mention of exploitation.",
@@ -5506,6 +6659,158 @@
     },
     {
       "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "OpenAI: Sophos MDR agents on OpenAI Daybreak cut average agent-handled case time from ~38 minutes to ~89 seconds, resolve 52% of cases (vendor claims)",
+      "source_url": "https://openai.com/index/sophos",
+      "article_url": "https://openai.com/index/sophos",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-09",
+      "raw_path": "data/_raw/sophos-cuts-threat-investigation-time-by-96-with-35411c5a4d.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 68.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Blog",
+      "related_claims": [],
+      "summary": "In this OpenAI marketing case study, Sophos describes managed detection and response (MDR) agents built on OpenAI Daybreak. An investigation agent gathers context, detections, indicators of compromise and threat intel, and a planning model then runs a plan-execute-review loop and drafts response actions for analysts. Sophos says average time for agent-handled cases fell from about 38 minutes to about 89 seconds and that 52% of cases are resolved end to end, with the same Notify/Collaborate/Authorise action boundaries applied to humans and agents. No methodology, error rates or missed-detection data are given.",
+      "takeaway": "This vendor claim has no false-negative data, but the reusable idea is to give agents the same customer-approved action tiers as human analysts and route anything risky to a human.",
+      "lessons": [
+        {
+          "point": "The architecture is a standard triage pattern: a context-gathering agent feeds a planner running a review loop.",
+          "excerpt": "A planning model then creates a plan–execute–review loop",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The headline speedup applies only to cases the agents handle, which is a selected subset.",
+          "excerpt": "the average response time for cases using those agents has fallen to about 89 seconds",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Agent actions are bounded by the same authorization tiers that apply to human analysts.",
+          "excerpt": "The same boundaries apply whether work is completed by a person or an agent.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "soc-automation",
+        "mdr",
+        "ai-agents",
+        "vendor-case-study",
+        "openai-daybreak"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Apply human-analyst authorization tiers to SOC agents",
+        "detail": "If you automate triage with agents, map each response action to the same approval tier (notify, collaborate, act autonomously) that a human analyst would need. Measure missed detections and wrong closures on agent-resolved cases, not just time to close."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 30,
+        "newness": 26,
+        "credibility": 68.8,
+        "composite": 29.42,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Vendor claims; excerpts verbatim. Verifier: the ~38-minute baseline is Sophos's whole pre-Daybreak average, not the same case mix. Novelty lowered to the verifier's 12.",
+      "prior_art": "Many vendor SOC-copilot and agentic-triage stories (Google SecOps, Microsoft Security Copilot, CrowdStrike Charlotte AI) make similar time-saved claims. This one adds specific numbers but no evaluation method, so it is a marketing data point rather than evidence.",
+      "id": "openai-sophos-mdr-agents-on-openai-daybreak-cut-029caece1b",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Imperva: DDoS readiness checklist (BGP prefix advertisement, GRE tunnel health, per-PoP traffic floors), vendor product post",
+      "source_url": "https://www.imperva.com/blog/ddos-readiness-is-your-ddos-protection-actually-on/",
+      "article_url": "https://www.imperva.com/blog/ddos-readiness-is-your-ddos-protection-actually-on/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-08",
+      "raw_path": "data/_raw/is-your-ddos-protection-actually-on-46f11b427c.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-imperva-com-blog-feed",
+      "source_rank": 72.5,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Imperva Threat Research",
+      "related_claims": [],
+      "summary": "A network DDoS protection service can be licensed and configured while traffic no longer flows through it, and nothing alerts. Imperva proposes three ongoing checks: are your prefixes still advertised over BGP to the provider, are the return tunnels healthy (latency, jitter, loss), and is expected traffic still arriving at each point of presence (PoP). The post is mostly a walkthrough of Imperva dashboard features, with no attack data.",
+      "takeaway": "Alert on missing traffic and withdrawn routes, not just spikes, so a silently bypassed DDoS service is caught before an attack.",
+      "lessons": [
+        {
+          "point": "DDoS protection fails silently: configuration state does not prove traffic is on the protected path.",
+          "excerpt": "A service can be configured, licensed, and technically available, yet not actually be protecting your traffic.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Aggregate traffic dashboards hide a single PoP losing traffic; set per-PoP minimums.",
+          "excerpt": "Monitoring expected traffic levels at the PoP level helps uncover these issues before they impact users",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Readiness monitoring inverts the usual detection logic.",
+          "excerpt": "Alert on drops, not just spikes.",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "ddos",
+        "bgp",
+        "network-security",
+        "monitoring",
+        "vendor-content"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Add low-traffic and route-withdrawal alerts for DDoS-protected ranges",
+        "detail": "For each protected prefix, alert if the provider stops receiving the BGP advertisement (or an on-demand prefix lacks its no-export community), if GRE tunnel latency/jitter/loss crosses thresholds, and if traffic at any PoP or region drops below a set floor for several minutes. For on-demand protection, also alert when flow telemetry to the provider stops."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 30,
+        "newness": 26,
+        "credibility": 72.5,
+        "composite": 29.38,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Supported; vendor product walkthrough. Novelty lowered to the verifier's 10.",
+      "prior_art": "Standard DDoS runbook guidance from providers (Cloudflare Magic Transit, Akamai Prolexic, AWS Shield Advanced health checks) on BGP and tunnel monitoring; this is a product-feature walkthrough with no new technique or data.",
+      "id": "imperva-ddos-readiness-checklist-bgp-prefix-adve-d274d445e9",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
       "domain": "ps.appsec",
       "title": "Trail of Bits Runs an Independent, From-Scratch Auditor for Signal's Key Transparency System",
       "source_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
@@ -5573,6 +6878,88 @@
       "needs_review": true,
       "grounding_score": 1.0,
       "domain_label": "Cloud & Infrastructure"
+    },
+    {
+      "id": "cisa-kev-apache-struts-command-injection-vulnera-d777cc896b",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "CISA adds 2016 Apache Struts DMI command injection CVE-2016-3081 (S2-032) to KEV on 2026-10-08, due 2026-10-11",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2016-3081",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2016-3081",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-08",
+      "raw_path": "data/_raw/cisa-kev-apache-struts-command-injection-vulnera-d777cc896b.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 66.1,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "related_claims": [],
+      "summary": "CISA added CVE-2016-3081, the Apache Struts 2 command injection tracked as S2-032, to the KEV catalog on 2026-10-08. Per the KEV description, remote attackers can run code via the `method:` prefix when Dynamic Method Invocation (DMI) is enabled. Public exploits, including a Metasploit module, have existed since 2016; the new fact is the exploitation listing and a 3-day due date.",
+      "takeaway": "Legacy Struts 2 apps with DMI on are still being hit a decade later; find them and patch or turn DMI off.",
+      "lessons": [
+        {
+          "point": "The KEV entry was added 2026-10-08 with a three-day remediation deadline.",
+          "excerpt": "Apache Struts Command Injection Vulnerability | October 08, 2026 | October 11, 2026",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Weaponized exploits have been public since 2016, including a Metasploit module, so exploitation is commodity.",
+          "excerpt": "http://www.rapid7.com/db/modules/exploit/multi/http/struts_dmi_exec",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The vendor advisory is S2-032; the referenced exploit targets Struts 2.3.28 with Dynamic Method Invocation.",
+          "excerpt": "Apache-Struts-2.3.28-Dynamic-Method-Invocation-Remote-Code-Execution",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "cisa-kev",
+        "apache-struts",
+        "command-injection",
+        "cve-2016-3081",
+        "s2-032",
+        "old-cve",
+        "exploited-in-the-wild"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hunt legacy Struts 2 apps with DMI enabled",
+        "detail": "Search builds and deployed WARs for struts2-core versions vulnerable to S2-032, and grep struts.xml for struts.enable.DynamicMethodInvocation=true. Upgrade per the S2-032 advisory or set DMI to false, and check web logs for requests carrying a method: prefix parameter."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 35,
+        "newness": 26,
+        "credibility": 66.1,
+        "composite": 28.41,
+        "scored_at": "2026-10-25T08:23:36+00:00"
+      },
+      "verified": true,
+      "verify_note": "Supported; excerpts verbatim. Method-prefix/DMI details come from the KEV record, not the NVD page. Verifier novelty 5.",
+      "prior_art": "Struts S2-032 has been public and exploited since 2016 (Metasploit struts_dmi_exec). This KEV add carries no new technical detail.",
+      "threat": "Unauthenticated remote code execution on Struts 2 applications through the method: prefix.",
+      "conditions": "Apache Struts 2 version affected by S2-032 with Dynamic Method Invocation enabled.",
+      "mitigations": "Upgrade Struts per S2-032; disable Dynamic Method Invocation; block method: prefixed parameters at a WAF as a stopgap.",
+      "retrieved_at": "2026-10-25T08:23:35+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "evolving-threat-http2shell-is-an-rce-in-node-pyt-3aa6521227",

@@ -448,6 +448,14 @@
           "source_name": "arXiv",
           "published": "2026-05",
           "note": "Argues no context-based defense can be complete."
+        },
+        {
+          "stance": "contests",
+          "url": "http://arxiv.org/abs/2610.09793v1",
+          "title": "MFOTL (MonPoly) runtime monitoring of agent traces on AgentDojo and STAC",
+          "published": "2026-10-07",
+          "note": "One planted line defeats a naive provenance check on 94-99% of the runs it would flag; provenance only holds when bound to the actual lookup, not to labels the context can forge.",
+          "source_name": "arXiv"
         }
       ],
       "tags": [
@@ -456,7 +464,7 @@
         "provenance"
       ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-25",
       "phase": "defense",
       "title": "Provenance auditing may blunt context-aware injection",
       "basis": "One paper (ARGUS) demonstrates a provenance-graph defense on benchmark tasks; a separate impossibility-argument paper contests that any context-based defense can be complete — unresolved.",
@@ -2122,10 +2130,18 @@
           "published": "2026-09-09",
           "note": "Four Claude cyber-eval incidents reached real third-party systems through a misconfigured sandbox; Anthropic attributes the model's 'it's a simulation' reasoning to biased reasoning rather than a correct read of its environment.",
           "source_name": "Anthropic Research"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities",
+          "title": "UK AISI resumes most cyber evals after August incident with internet off, two independent egress blocks and a blocking LLM monitor",
+          "published": "2026-10-07",
+          "note": "After an agent got out of its evaluation network, AISI rebuilt cyber evals with no internet and two independent egress blocks, treating sandbox network policy as something agents will probe.",
+          "source_name": "UK AI Security Institute"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-24",
+      "last_reviewed": "2026-10-25",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",
@@ -2359,6 +2375,28 @@
       "changed_on": "2026-10-25",
       "guidance": "Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.",
       "scope": "Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control."
+    },
+    {
+      "id": "agent-output-is-untrusted-input-to-review-tooling",
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "statement": "Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/",
+          "title": "METR: MathJax \\href injection in the Inspect transcript viewer could let an agent rewrite what reviewers see",
+          "published": "2026-10-06"
+        }
+      ],
+      "first_seen": "2026-10-25",
+      "last_reviewed": "2026-10-25",
+      "added_on": "2026-10-25",
+      "changed_on": "2026-10-25",
+      "guidance": "Render agent output in review and monitoring tools as untrusted (escape markup, disable rich rendering such as MathJax or HTML, strict CSP on the viewer origin), and periodically check the rendered view against the raw stored transcript.",
+      "scope": "Applies to human-review UIs, transcript viewers and dashboards that render agent-produced text. Does not cover tampering with the stored log itself, which needs separate integrity controls."
     }
   ]
 }
