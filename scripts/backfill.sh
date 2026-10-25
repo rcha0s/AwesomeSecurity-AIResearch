@@ -28,6 +28,11 @@
 # unloads its own job. Logs: <runner>/data/_scan.log (grep "[backfill]").
 set -euo pipefail
 
+# launchd starts the job with a bare PATH (/usr/bin:/bin:...), where gh isn't:
+# every PR check then failed and the driver waited out its 48h on a chunk whose
+# PR was long merged (2026-10-24). Appended, so a caller's fake gh still wins.
+export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin"
+
 LABEL="com.rcha0s.awesomesecurity.backfill"
 RUNNER="${SCAN_RUNNER_HOME:-$HOME/.local/share/awesomesec-runner}"
 PLIST="${BACKFILL_PLIST:-$HOME/.local/share/awesomesec-backfill.plist}"
@@ -77,11 +82,15 @@ open_chunk_prs() {
 
 # Wait until the chunk's PR is merged or closed. 1 on timeout.
 wait_for_pr() {
-  local waited=0 limit="$WAIT_SECONDS" n
+  local waited=0 limit="$WAIT_SECONDS" n warned=0
   ((limit > 0)) || return 0
   while :; do
     n="$(open_chunk_prs "$1" "$2" 2>/dev/null || echo unknown)"
     [[ "$n" == 0 ]] && return 0
+    if [[ "$n" == unknown ]] && ((warned == 0)); then
+      log "chunk $1..$2: can't read open PRs from GitHub; still waiting"
+      warned=1
+    fi
     if ((waited >= limit)); then
       log "chunk $1..$2: its PR is still open after ${WAIT_SECONDS}s; stopping (start again to resume)"
       return 1
