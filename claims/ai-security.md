@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_20 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-24_
+_22 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-25_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -392,6 +392,24 @@ _Tags: `jailbreak`, `adversarial`, `transfer`_
 
 </details>
 
+<a id="claim-localhost-agent-servers-are-reachable-from-any-webpage"></a>
+
+### A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.
+
+`localhost-agent-servers-are-reachable-from-any-webpage` · confidence **0.65** · Agent & Harness Security · standing since Oct 25, 2026
+
+**Do this —** Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.
+
+**Conditions —** Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Discovering and exploiting a remote code execution vulnerability in OpenCode (GHSA-632h-h47v-g4x4)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/) | Sep 24, 2026 |
+
+</details>
+
 <a id="claim-dual-llm-pattern-mitigates-injection-blast-radius"></a>
 
 ### Planner/reader split contains prompt-injection blast radius
@@ -457,6 +475,24 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Benchmarking Secure-and-Functional Remediation and How Snyk Agent Fix Lifts Frontier-Model Fix Rates by over 14%](https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/) | Aug 18, 2026 |
+
+</details>
+
+<a id="claim-per-skill-scanning-misses-cross-skill-cascades"></a>
+
+### A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.
+
+`per-skill-scanning-misses-cross-skill-cascades` · confidence **0.50** · MCP, Tools & Skills · standing since Oct 25, 2026
+
+**Do this —** Review installed skills together as one pipeline, not file by file, and test that safety-critical signals survive the whole skill chain end to end.
+
+**Conditions —** Shown in one NeurIPS paper (abstract-level evidence) on skill-based coding agents; does not show that whole-pipeline review catches these attacks.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Stealth Apart, Harm Together: Skill Cascading Attacks on Skill-Based Agent Systems](http://arxiv.org/abs/2609.30383v1) | Sep 24, 2026 |
 
 </details>
 

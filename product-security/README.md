@@ -2,12 +2,14 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_5 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [25 held for review](../REVIEW.md)._
+_6 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [28 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[F5 BIG-IP APM Pre-Auth Heap Overflow RCE (CVE-2026-94127): Unchecked Authorization Header Copy, OAuth Endpoint Handler (APM 21.1.0, 17.5.0-17.5.1, 17.1.0-17.1.3; fixed by hotfixes)](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/)**
+  _Why now: Pre-auth RCE in an internet-facing BIG-IP edge appliance, exploited in the wild; teaches emergency patching and minimal exposure for auth-path parsing on edge devices. · cve · active-exploitation · timely · high-relevance_
 - **[JFrog Artifactory auth-bypass chain exploited in the wild, leaving Groovy plugin backdoors that survive patching and stolen token-signing keys](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201)**
   _Why now: In-the-wild exploitation of a JFrog Artifactory auth-bypass chain leaving Groovy plugin backdoors; teaches what to hunt for on a core build-infrastructure system. · cve · active-exploitation · newsworthy_
 - **[ITRES Labs used ChatGPT to rebuild two BruCON Windows kernel techniques, whose source was never released, in about 24 hours](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
@@ -90,33 +92,40 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Vulnerability Research & Red Teaming | 1 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
+| Application Security | 1 |
 
 ## AI in the SDLC
 
-- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](ai-code/2026-10-claude-found-493-attack-surface-issues-in-25-projects-openss.md)** · composite **64.47** · Oct 20, 2026  
+- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](ai-code/2026-10-claude-found-493-attack-surface-issues-in-25-projects-openss.md)** · composite **64.22** · Oct 20, 2026  
   Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.  
   _[Anthropic Research](https://www.anthropic.com/research/attack-surface-reduction)_
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **60.0** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **59.75** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
 
 ## Vulnerability Research & Red Teaming
 
-- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](offensive/2026-10-pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new.md)** · composite **60.75** · Oct 19, 2026  
+- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](offensive/2026-10-pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new.md)** · composite **60.5** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **53.25** · Oct 15, 2026  
+- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **53.0** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **49.5** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **49.25** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
+
+## Application Security
+
+- **[SourceHut account takeover via OSC 8 hyperlink XSS in ansi2html-rendered build logs (CVE-2026-92973; ansi2html >=1.7.0,<1.9.4, builds.sr.ht >=0.40.0,<0.105.1)](appsec/2026-09-sourcehut-account-takeover-via-osc-8-hyperlink-xss-in-ansi2h.md)** · composite **47.0** · Sep 24, 2026  
+  Treat CI log output as untrusted HTML input: sanitize the output of any ANSI-to-HTML converter and back it with a strict Content-Security-Policy, because one injected escape sequence can become…  
+  _[@arusekk via Hacker News](https://blog.arusekk.pl/posts/srht-account-takeover/)_
 
 ---
 

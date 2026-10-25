@@ -706,6 +706,14 @@
           "title": "Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery",
           "source_name": "Microsoft Security Blog",
           "published": "2026-07-15"
+        },
+        {
+          "stance": "supports",
+          "url": "https://safedep.io/memtensor-sckit-worm-npm-pypi",
+          "title": "MemTensor npm and PyPI packages hit by a Go worm",
+          "published": "2026-09-23",
+          "note": "The sckit implant starts at load with no install hook, so --ignore-scripts does not help.",
+          "source_name": "SafeDep"
         }
       ],
       "supersedes": [
@@ -717,7 +725,7 @@
         "provenance"
       ],
       "first_seen": "2026-07-15",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-25",
       "phase": "attack",
       "title": "Import-time npm payloads defeat --ignore-scripts and provenance",
       "basis": "A forensic breakdown of a real supply-chain compromise (the AsyncAPI npm package) showing the payload fired at import time and shipped with a valid provenance attestation.",
@@ -2299,6 +2307,50 @@
       ],
       "added_on": "2026-10-24",
       "changed_on": "2026-10-24"
+    },
+    {
+      "id": "per-skill-scanning-misses-cross-skill-cascades",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "statement": "A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.",
+      "status": "current",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "http://arxiv.org/abs/2609.30383v1",
+          "title": "Stealth Apart, Harm Together: Skill Cascading Attacks on Skill-Based Agent Systems",
+          "published": "2026-09-24"
+        }
+      ],
+      "first_seen": "2026-10-25",
+      "last_reviewed": "2026-10-25",
+      "added_on": "2026-10-25",
+      "changed_on": "2026-10-25",
+      "guidance": "Review installed skills together as one pipeline, not file by file, and test that safety-critical signals survive the whole skill chain end to end.",
+      "scope": "Shown in one NeurIPS paper (abstract-level evidence) on skill-based coding agents; does not show that whole-pipeline review catches these attacks."
+    },
+    {
+      "id": "localhost-agent-servers-are-reachable-from-any-webpage",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "statement": "A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.",
+      "status": "current",
+      "confidence": 0.65,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/",
+          "title": "Discovering and exploiting a remote code execution vulnerability in OpenCode (GHSA-632h-h47v-g4x4)",
+          "published": "2026-09-24"
+        }
+      ],
+      "first_seen": "2026-10-25",
+      "last_reviewed": "2026-10-25",
+      "added_on": "2026-10-25",
+      "changed_on": "2026-10-25",
+      "guidance": "Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.",
+      "scope": "Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control."
     }
   ]
 }

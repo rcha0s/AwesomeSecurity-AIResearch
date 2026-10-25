@@ -2,12 +2,14 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_1 vetted findings · updated 2026-10-24 · ranked by composite · findings from the latest 31 days · [21 held for review](../REVIEW.md)._
+_2 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [19 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Datadog: a malicious webpage could get code execution through OpenCode's local /global/upgrade endpoint (GHSA-632h-h47v-g4x4, 1.14.30-1.18.21, fixed in 1.18.22)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/)**
+  _Why now: Drive-by RCE in a popular coding agent's localhost server (GHSA-632h-h47v-g4x4); teaches that loopback binding is not a boundary for agent servers. · cve · trending · timely · high-relevance_
 - **[LiteLLM chain: any Bearer token grants access to MCP, custom guardrail code runs as root, and pass-through routes steal cloud IAM credentials](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)**
   _Why now: LiteLLM MCP auth bypass (CVE-2026-59822) is exploited in the wild and ~1 in 10 public gateways run default or no auth; concrete hardening steps for a widely deployed AI gateway. · cve · active-exploitation · high-relevance · timely_
 - **[ProjectDiscovery backdoored Qwen2.5-7B with a cheap LoRA fine-tune; a trigger phrase made Codex CLI exfiltrate .env files](https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned)**
@@ -54,12 +56,19 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | Prompt Injection & Jailbreaks | 1 |
+| MCP, Tools & Skills | 1 |
 
 ## Prompt Injection & Jailbreaks
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **63.84** · Oct 19, 2026  
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **63.59** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
+
+## MCP, Tools & Skills
+
+- **[Skill cascading attacks: a harmful goal split across several benign-looking agent skills evades per-skill scanners and runtime monitors](mcp-tools/2026-09-skill-cascading-attacks-a-harmful-goal-split-across-several.md)** · composite **57.65** · Sep 24, 2026  
+  A clean per-skill scan does not show that a set of installed skills is safe together, so review and monitoring have to cover the whole pipeline of skills.  
+  _[NeurIPS (via arXiv)](http://arxiv.org/abs/2609.30383v1)_
 
 ---
 
