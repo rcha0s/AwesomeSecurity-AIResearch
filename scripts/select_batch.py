@@ -101,6 +101,7 @@ from collections import Counter
 from dataclasses import replace
 from datetime import timedelta
 from pathlib import Path
+from urllib.parse import urlparse
 
 import common as c
 import newsworthy as nw
@@ -124,6 +125,8 @@ DEFAULTS = {
     "max_news_per_run": 0,  # news tier off unless config.yaml sizes it
     "batch_news_per_source": 4,
     "batch_news_min_rank": None,  # None = batch_story_min_rank
+    "batch_lab_max": 0,  # off unless config.yaml names a lane size (and hosts + terms)
+    "batch_lab_per_source": 2,
 }
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
@@ -228,6 +231,55 @@ def is_ai_tooling(cand: dict) -> bool:
     """Prefilter routed it to an AI-security domain on the taxonomy's own hints.
     Not the ingest-time topic guess: that is a keyword match on package names."""
     return str((cand.get("prefilter") or {}).get("domain_hint") or "").startswith("ais.")
+
+
+def lab_source(cand: dict, conf: c.Config) -> bool:
+    """Published by a major AI lab: the article URL's host (no www.) plus path
+    starts with one of `batch_lab_hosts`. Hosts match whole labels, so
+    "openai.com" covers alignment.openai.com but not notopenai.com."""
+    url = urlparse(cand.get("article_url") or cand.get("source_url") or "")
+    host = (url.hostname or "").lower().removeprefix("www.")
+    for entry in conf.limits.get("batch_lab_hosts") or []:
+        want_host, _, want_path = str(entry).lower().partition("/")
+        if host == want_host or host.endswith("." + want_host):
+            if not want_path or url.path.lower().lstrip("/").startswith(want_path):
+                return True
+    return False
+
+
+def lab_relevant(cand: dict, conf: c.Config) -> bool:
+    """A lab post on-thesis for this tracker: one of `batch_lab_terms` (security
+    and safety words) in its title or excerpt. Labs also post customer stories
+    and launches ("Uber brings ChatGPT Work to all employees"), which this skips."""
+    if not lab_source(cand, conf):
+        return False
+    text = f"{cand.get('title') or ''} {cand.get('excerpt') or ''}".lower()
+    return any(str(t).lower() in text for t in conf.limits.get("batch_lab_terms") or [])
+
+
+def lab_rescue(dropped: list[dict], conf: c.Config) -> list[dict]:
+    """Relevant lab posts the prefilter dropped only for a catch-all class with
+    no marker (Cloudflare + OpenAI on vulnerability discovery, 2026-10-21).
+    Excluded-term and duplicate drops stand."""
+    return [
+        x for x in dropped
+        if str((x.get("prefilter") or {}).get("reason") or "").startswith("catch-all")
+        and lab_relevant(x, conf)
+    ]  # fmt: skip
+
+
+def lab_lane(ranked: list[dict], conf: c.Config, limit: int, used: Counter) -> list[dict]:
+    """Up to `limit` recent posts from the major AI labs (rank order: newest,
+    most credible first), at most `batch_lab_per_source` per source. They carry
+    no severity marker, so without a lane they sank below the cut: OpenAI's
+    "Securing our frontier model training environment" (2026-10-23) did."""
+    days = int(setting(conf, "batch_story_days"))
+    eligible = [
+        x for x in ranked
+        if lab_relevant(x, conf) and recent(x, days) and not c.news_denylist_hit(x)
+    ]  # fmt: skip
+    per_source = max(1, int(setting(conf, "batch_lab_per_source")))
+    return deal(eligible, limit, per_source, used=used, fill=False)
 
 
 def priority_lane(ranked: list[dict], limit: int, per_source: int) -> list[dict]:
@@ -418,7 +470,10 @@ def select_tiers(
     `reference` (pools + archive) and `known` (story-ledger sources) default
     to the data files."""
     buckets = pf.bucket(candidates, table)
-    pool = buckets.routed + buckets.filtered
+    rescued = lab_rescue(buckets.dropped, conf)
+    rescued_ids = {id(x) for x in rescued}
+    dropped = [x for x in buckets.dropped if id(x) not in rescued_ids]
+    pool = buckets.routed + buckets.filtered + rescued
     sigs = story_signals(pool, conf, reference, known)
     bonus = {id(x): news_bonus(sig, conf) for x, sig in zip(pool, sigs, strict=True)}
     ranked = sorted(pool, key=lambda x: (-(score(x, conf) + bonus[id(x)]), str(x.get("id") or "")))
@@ -431,6 +486,14 @@ def select_tiers(
     open_ = [x for x in ranked if id(x) not in out]
     lane_max = min(size - len(stories), max(0, int(setting(conf, "batch_priority_max"))))
     lane = priority_lane(open_, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))))
+    room = size - len(stories) - len(lane)
+    lab_max = min(room, max(0, int(setting(conf, "batch_lab_max"))))
+    lane_ids0 = {id(x) for x in lane}
+    labs = lab_lane(
+        [x for x in open_ if id(x) not in lane_ids0], conf, lab_max,
+        Counter(source_key(x) for x in stories + lane),
+    )  # fmt: skip
+    lane = lane + labs
     mins = conf.limits.get("batch_class_min") or {}
     lane_ids = {id(x) for x in lane}
     first = Counter(source_key(x) for x in stories + lane)
@@ -451,16 +514,21 @@ def select_tiers(
     news = news_tier(left, sig_of, groups, conf)
     news_ids = {n.pop("_cand") for n in news}
     rest = [x for x in left if id(x) not in news_ids] + [x for x in ranked if id(x) in siblings]
-    batch = stories + [{**x, "batch_priority": priority_class(x)} for x in lane] + floor + dealt
+    batch = (
+        stories
+        + [{**x, "batch_priority": priority_class(x) or "lab"} for x in lane]
+        + floor
+        + dealt
+    )
     backlog = [
         {**x, "batch_rank": i, **same_story_note(x, siblings)}
         for i, x in enumerate(rest, start=len(batch) + len(news) + 1)
     ]
-    return batch, news, backlog + buckets.dropped
+    return batch, news, backlog + dropped
 
 
 # --- the news tier -------------------------------------------------------------
-NEWS_ORDER = ("story", "priority", "marker")  # reasons, strongest first
+NEWS_ORDER = ("story", "priority", "marker", "lab")  # reasons, strongest first
 
 
 def news_reason(
@@ -473,9 +541,10 @@ def news_reason(
         return "story"
     if priority_class(cand):
         return "priority"
+    lab = "lab" if lab_relevant(cand, conf) else None
     if sig is None or not sig.markers or sig.known or nw.publisher(cand) in nw.NON_INDEPENDENT:
-        return None
-    return "marker" if float(cand.get("source_rank") or 0.0) >= news_rank_floor(conf) else None
+        return lab
+    return "marker" if float(cand.get("source_rank") or 0.0) >= news_rank_floor(conf) else lab
 
 
 def news_rank_floor(conf: c.Config) -> float:

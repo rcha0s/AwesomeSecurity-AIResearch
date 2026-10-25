@@ -130,6 +130,64 @@ limits:
   batch_story_min_rank: 55  # ...and one copy comes from outside GitHub/HN from a source
                           # ranked this or more (medium tier): two attacker repos, an HN
                           # vote or two low-rank feeds can't qualify on markers alone
+  batch_lab_max: 6        # lab lane (select_batch.lab_lane), right after the must-not-miss
+                          # lane: recent posts from the major AI labs (batch_lab_hosts) that
+                          # name a security / safety term (batch_lab_terms). Rohan,
+                          # 2026-10-24: prioritize OpenAI, Anthropic, Google and the other
+                          # major AI research outlets. OpenAI's "Securing our frontier model
+                          # training environment" ranked below the 29-slot cut: lab posts
+                          # carry no severity marker. Leftover ones get a news brief
+                          # (reason `lab`) instead of the backlog
+  batch_lab_per_source: 2 # most lab-lane slots one source (feed) may take
+  batch_lab_hosts:        # host (subdomains included) or host/path-prefix, no scheme
+    - openai.com
+    - anthropic.com
+    - deepmind.google
+    - research.google
+    - blog.google
+    - security.googleblog.com
+    - googleprojectzero.blogspot.com
+    - ai.meta.com
+    - microsoft.com/en-us/research
+    - microsoft.com/en-us/security/blog
+    - msrc.microsoft.com
+    - mistral.ai
+    - huggingface.co/blog
+    - developer.nvidia.com/blog
+    - machinelearning.apple.com
+    - amazon.science
+    - x.ai
+    - cohere.com/blog
+  batch_lab_terms:        # a lab post needs one (title + excerpt, case-insensitive)
+    - secur
+    - safety
+    - safeguard
+    - alignment
+    - misuse
+    - red team
+    - red-team
+    - containment
+    - sandbox
+    - jailbreak
+    - prompt injection
+    - adversarial
+    - backdoor
+    - poisoning
+    - exfiltrat
+    - vulnerab
+    - exploit
+    - attack
+    - threat
+    - malicious
+    - abuse
+    - cyber
+    - privacy
+    - guardrail
+    - interpretab
+    - preparedness
+    - frontier risk
+    - dangerous capabilit
+    - evals
   batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
   batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)
   max_turns: 360          # hard turn cap on the local model session. Sized for 25 deep
