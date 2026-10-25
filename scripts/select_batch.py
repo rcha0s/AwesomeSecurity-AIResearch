@@ -96,6 +96,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from collections import Counter
 from dataclasses import replace
@@ -234,41 +235,70 @@ def is_ai_tooling(cand: dict) -> bool:
 
 
 def lab_source(cand: dict, conf: c.Config) -> bool:
-    """Published by a major AI lab: the article URL's host (no www.) plus path
-    starts with one of `batch_lab_hosts`. Hosts match whole labels, so
-    "openai.com" covers alignment.openai.com but not notopenai.com."""
-    url = urlparse(cand.get("article_url") or cand.get("source_url") or "")
-    host = (url.hostname or "").lower().removeprefix("www.")
+    """Published by a major AI lab: the article URL's host (no www., no trailing
+    dot) is one of `batch_lab_hosts` or a subdomain of it, and its path is the
+    entry's path or under it. "openai.com" covers alignment.openai.com but not
+    notopenai.com; "microsoft.com/en-us/research" covers /en-us/research/blog/x
+    but not /en-us/researchx. A URL that won't parse is not a lab post."""
+    try:
+        url = urlparse(cand.get("article_url") or cand.get("source_url") or "")
+        host = (url.hostname or "").lower().rstrip(".").removeprefix("www.")
+    except ValueError:
+        return False
+    path = url.path.lower().strip("/")
     for entry in conf.limits.get("batch_lab_hosts") or []:
-        want_host, _, want_path = str(entry).lower().partition("/")
-        if host == want_host or host.endswith("." + want_host):
-            if not want_path or url.path.lower().lstrip("/").startswith(want_path):
-                return True
+        want_host, _, want_path = str(entry).lower().strip("/").partition("/")
+        if host != want_host and not host.endswith("." + want_host):
+            continue
+        if not want_path or path == want_path or path.startswith(want_path + "/"):
+            return True
+    return False
+
+
+def lab_terms_hit(text: str, conf: c.Config) -> bool:
+    """One of `batch_lab_terms` as a whole word or phrase (a plural s allowed):
+    "security" but not "securities", "evals" but not "retrievals"."""
+    for term in conf.limits.get("batch_lab_terms") or []:
+        if re.search(rf"\b{re.escape(str(term).lower())}s?\b", text):
+            return True
     return False
 
 
 def lab_relevant(cand: dict, conf: c.Config) -> bool:
-    """A lab post on-thesis for this tracker: one of `batch_lab_terms` (security
-    and safety words) in its title or excerpt. Labs also post customer stories
-    and launches ("Uber brings ChatGPT Work to all employees"), which this skips."""
+    """A lab post on-thesis for this tracker: a `batch_lab_terms` word in its
+    title or excerpt. Labs also post customer stories and launches ("Uber brings
+    ChatGPT Work to all employees"), which this skips."""
     if not lab_source(cand, conf):
         return False
-    text = f"{cand.get('title') or ''} {cand.get('excerpt') or ''}".lower()
-    return any(str(t).lower() in text for t in conf.limits.get("batch_lab_terms") or [])
+    return lab_terms_hit(f"{cand.get('title') or ''} {cand.get('excerpt') or ''}".lower(), conf)
+
+
+def lab_on(conf: c.Config) -> bool:
+    return int(setting(conf, "batch_lab_max")) > 0
 
 
 def lab_rescue(dropped: list[dict], conf: c.Config) -> list[dict]:
     """Relevant lab posts the prefilter dropped only for a catch-all class with
     no marker (Cloudflare + OpenAI on vulnerability discovery, 2026-10-21).
-    Excluded-term and duplicate drops stand."""
-    return [
+    Excluded-term and duplicate drops stand. The prefilter checks catch-alls
+    before duplicates, so a rescued post is re-checked against the pools here."""
+    if not lab_on(conf):
+        return []
+    picks = [
         x for x in dropped
         if str((x.get("prefilter") or {}).get("reason") or "").startswith("catch-all")
         and lab_relevant(x, conf)
     ]  # fmt: skip
+    if not picks:
+        return []
+    urls = c.known_urls()
+    titles = [e.get("title", "") for e in c.all_pool_entries()]
+    return [x for x in picks if not pf.duplicate_of_pool(x, urls, titles)]
 
 
-def lab_lane(ranked: list[dict], conf: c.Config, limit: int, used: Counter) -> list[dict]:
+def lab_lane(
+    ranked: list[dict], conf: c.Config, limit: int, used: Counter, known: set[int]
+) -> list[dict]:
     """Up to `limit` recent posts from the major AI labs (rank order: newest,
     most credible first), at most `batch_lab_per_source` per source. They carry
     no severity marker, so without a lane they sank below the cut: OpenAI's
@@ -276,7 +306,8 @@ def lab_lane(ranked: list[dict], conf: c.Config, limit: int, used: Counter) -> l
     days = int(setting(conf, "batch_story_days"))
     eligible = [
         x for x in ranked
-        if lab_relevant(x, conf) and recent(x, days) and not c.news_denylist_hit(x)
+        if id(x) not in known and lab_relevant(x, conf) and recent(x, days)
+        and not c.news_denylist_hit(x)
     ]  # fmt: skip
     per_source = max(1, int(setting(conf, "batch_lab_per_source")))
     return deal(eligible, limit, per_source, used=used, fill=False)
@@ -489,9 +520,10 @@ def select_tiers(
     room = size - len(stories) - len(lane)
     lab_max = min(room, max(0, int(setting(conf, "batch_lab_max"))))
     lane_ids0 = {id(x) for x in lane}
+    held = {id(x) for x, sig in zip(pool, sigs, strict=True) if sig is not None and sig.known}
     labs = lab_lane(
         [x for x in open_ if id(x) not in lane_ids0], conf, lab_max,
-        Counter(source_key(x) for x in stories + lane),
+        Counter(source_key(x) for x in stories + lane), held,
     )  # fmt: skip
     lane = lane + labs
     mins = conf.limits.get("batch_class_min") or {}
@@ -541,7 +573,8 @@ def news_reason(
         return "story"
     if priority_class(cand):
         return "priority"
-    lab = "lab" if lab_relevant(cand, conf) else None
+    held = sig is not None and sig.known  # the ledger already has this story
+    lab = "lab" if lab_on(conf) and not held and lab_relevant(cand, conf) else None
     if sig is None or not sig.markers or sig.known or nw.publisher(cand) in nw.NON_INDEPENDENT:
         return lab
     return "marker" if float(cand.get("source_rank") or 0.0) >= news_rank_floor(conf) else lab

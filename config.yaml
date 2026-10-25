@@ -144,13 +144,15 @@ limits:
     - anthropic.com
     - deepmind.google
     - research.google
-    - blog.google
+    - blog.google/technology/ai
+    - blog.google/technology/safety-security
     - security.googleblog.com
     - googleprojectzero.blogspot.com
     - ai.meta.com
     - microsoft.com/en-us/research
     - microsoft.com/en-us/security/blog
     - msrc.microsoft.com
+    - deepmindsafetyresearch.medium.com
     - mistral.ai
     - huggingface.co/blog
     - developer.nvidia.com/blog
@@ -158,14 +160,22 @@ limits:
     - amazon.science
     - x.ai
     - cohere.com/blog
-  batch_lab_terms:        # a lab post needs one (title + excerpt, case-insensitive)
-    - secur
+  batch_lab_terms:        # a lab post needs one, as a whole word or phrase (plural s
+                          # allowed) in title + excerpt: "security", not "securities"
+    - security
+    - secure
+    - securing
+    - cybersecurity
+    - cyber
+    - cyberattack
     - safety
     - safeguard
     - alignment
     - misuse
     - red team
     - red-team
+    - red teaming
+    - red-teaming
     - containment
     - sandbox
     - jailbreak
@@ -173,20 +183,21 @@ limits:
     - adversarial
     - backdoor
     - poisoning
-    - exfiltrat
-    - vulnerab
+    - exfiltration
+    - vulnerability
+    - vulnerabilities
     - exploit
-    - attack
-    - threat
+    - exploitation
+    - threat actor
+    - threat intelligence
+    - threat model
     - malicious
-    - abuse
-    - cyber
-    - privacy
+    - malware
     - guardrail
-    - interpretab
+    - interpretability
     - preparedness
     - frontier risk
-    - dangerous capabilit
+    - dangerous capabilities
     - evals
   batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
   batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)

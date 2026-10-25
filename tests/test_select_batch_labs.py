@@ -13,7 +13,7 @@ from test_prefilter import _cand
 from test_select_batch import cands, conf
 
 HOSTS = ["openai.com", "anthropic.com", "microsoft.com/en-us/research", "huggingface.co/blog"]
-TERMS = ["secur", "red team", "vulnerab", "safety"]
+TERMS = ["securing", "security", "red team", "vulnerability", "safety", "evals"]
 LAB = {"batch_lab_max": 2, "batch_lab_per_source": 1, "batch_lab_hosts": HOSTS}
 
 
@@ -53,6 +53,11 @@ def lab_conf(cap: int = 3, margin: int = 0, **extra) -> common.Config:
         ("https://www.microsoft.com/en-us/research/blog/x", True),  # path prefix
         ("https://www.microsoft.com/en-us/store/x", False),
         ("https://huggingface.co/papers/2610.1", False),  # papers are not the blog
+        ("https://www.microsoft.com/en-us/researchx/a", False),  # whole path segments
+        ("https://huggingface.co/blogs/x", False),
+        ("https://openai.com./index/x", True),  # trailing-dot host
+        ("https://OpenAI.com:443/index/x", True),
+        ("http://[bad/x", False),  # unparseable: not a lab post, never a crash
     ],
 )
 def test_lab_source_matches_hosts_by_label_and_path(url, hit):
@@ -65,6 +70,20 @@ def test_lab_relevance_needs_a_security_or_safety_term():
     off = lab(2, "Uber brings ChatGPT Work to all employees", "https://openai.com/b")
     assert select_batch.lab_relevant(on, c) and not select_batch.lab_relevant(off, c)
     assert not select_batch.lab_relevant(on, conf(3, 0, **LAB))  # no terms: lane off
+
+
+@pytest.mark.parametrize(
+    "title, hit",
+    [
+        ("New security research", True),
+        ("Our evals for agents", True),
+        ("Trading securities with GPT", False),  # not "security"
+        ("Faster retrievals at scale", False),  # not "evals"
+    ],
+)
+def test_lab_terms_match_whole_words(title, hit):
+    post = lab(1, title, "https://openai.com/a")
+    assert select_batch.lab_relevant(post, lab_conf()) is hit
 
 
 def test_relevant_lab_posts_get_lane_slots_ahead_of_the_deal(sandbox, table):
@@ -112,3 +131,34 @@ def test_without_a_lab_lane_size_the_batch_is_unchanged(sandbox, table):
     off = conf(3, 0, batch_lab_hosts=HOSTS, batch_lab_terms=TERMS)
     batch, _ = select_batch.select([*cands(6), *labs], off, table)
     assert not any(x.get("batch_priority") == "lab" for x in batch)
+
+
+def test_with_the_lane_off_lab_posts_get_no_briefs_either(sandbox, table):
+    labs = [lab(1, "Securing our frontier model training environment", "https://openai.com/a")]
+    off = conf(3, 0, batch_lab_hosts=HOSTS, batch_lab_terms=TERMS, max_news_per_run=5)
+    _, news, _ = select_batch.select_tiers([*cands(6), *labs], off, table)
+    assert news == []
+
+
+def test_a_rescued_lab_post_already_in_the_pools_stays_dropped(sandbox, table, monkeypatch):
+    url = "https://openai.com/index/cloudflare-vulnerability-discovery"
+    post = lab(1, "Cloudflare links vulnerability discovery to defense", url)
+    post["guess_label"] = "AI Security"
+    monkeypatch.setattr(common, "known_urls", lambda: {common.normalize_url(url)})
+    batch, backlog = select_batch.select([*cands(2), post], lab_conf(), table)
+    assert "lab1" not in [x["id"] for x in batch]
+    assert [x["id"] for x in backlog if x.get("prefilter")] == ["lab1"]
+
+
+def test_a_story_the_ledger_holds_gets_no_lab_slot_or_brief(sandbox, table, monkeypatch):
+    post = lab(1, "Securing our frontier model training environment", "https://openai.com/a")
+    held = select_batch.nw.Signal(markers=frozenset(), matches=(), sources=1, known=True)
+    monkeypatch.setattr(select_batch, "story_signals", lambda pool, *a: [
+        held if x["id"] == "lab1" else None for x in pool
+    ])  # fmt: skip
+    c = lab_conf(max_news_per_run=5)
+    fresh = [  # outrank the post in the deal, one source each: only the lane could take it
+        {**x, "source_id": f"rss:filler{i}"} for i, x in enumerate(cands(6, published=today()))
+    ]
+    batch, news, _ = select_batch.select_tiers([*fresh, post], c, table)
+    assert "lab1" not in [x["id"] for x in batch + news]
