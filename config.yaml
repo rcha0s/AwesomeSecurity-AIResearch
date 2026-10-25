@@ -188,6 +188,10 @@ limits:
     - vulnerabilities
     - exploit
     - exploitation
+    - exploited
+    - vulnerable
+    - jailbroken
+    - safeguarding
     - threat actor
     - threat intelligence
     - threat model
