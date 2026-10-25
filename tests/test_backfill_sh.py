@@ -222,6 +222,24 @@ def test_an_unreadable_pr_list_is_not_read_as_merged(scan_repo, tmp_path):
     (Path(denv["PATH"].split(":")[0]) / "gh").write_text("#!/bin/sh\nexit 1\n")
     res = drive(work, denv, "run", "2026-09-09", "2026-09-24", "8")
     assert res.returncode == 1 and len(chunks_run(tmp_path)) == 1
+    log = (work / "data/_scan.log").read_text()
+    assert log.count("can't read open PRs from GitHub") == 1  # once per wait, not per poll
+    assert "GitHub still unreadable after 2s; stopping" in log and "still open after" not in log
+
+
+def test_the_driver_adds_ghs_homes_to_launchds_bare_path(scan_repo, tmp_path):
+    """launchd gives the job PATH=/usr/bin:/bin:..., without Homebrew's gh."""
+    work, _, env = scan_repo
+    denv = driver_env(work, env, tmp_path)
+    fakes = Path(denv["PATH"].split(":")[0])
+    seen = tmp_path / "gh_path"
+    (fakes / "gh").write_text(f'#!/bin/sh\necho "$PATH" > {seen}\n')
+    denv["PATH"] = f"{fakes}:/usr/bin:/bin:/usr/sbin:/sbin"  # launchd's, plus the fakes
+    res = drive(work, denv, "run", "2026-09-09", "2026-09-24", "8")
+    assert res.returncode == 0, res.stdout + res.stderr
+    path = seen.read_text().strip().split(":")
+    assert path[0] == str(fakes)  # appended: a caller's own gh still wins
+    assert "/opt/homebrew/bin" in path and "/usr/local/bin" in path
 
 
 def test_a_second_driver_is_refused_while_one_runs(scan_repo, tmp_path):
