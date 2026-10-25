@@ -2,12 +2,14 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_5 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [30 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [37 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Zenity AgentCorruption: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials; its default role reached every agent in the region](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model)**
+  _Why now: Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform. · newsworthy · timely · high-relevance_
 - **[Microsoft DevLabs DebugMCP 1.1.4 drive-by RCE: DNS rebinding hits unauthenticated, stateless localhost MCP server; start_debugging runs Windows UNC path from attacker's SMB share](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
   _Why now: Microsoft DevLabs DebugMCP shows a stateless, unauthenticated localhost MCP server turning one DNS-rebinding request into drive-by RCE; a pattern every local agent-tool server must defend against. · trending · newsworthy · high-relevance_
 - **[Datadog: a malicious webpage could get code execution through OpenCode's local /global/upgrade endpoint (GHSA-632h-h47v-g4x4, 1.14.30-1.18.21, fixed in 1.18.22)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/)**
@@ -24,10 +26,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: AI gateway trojanized on PyPI and Docker, ~49,000 downloads; steals cloud and LLM provider keys. · newsworthy · timely · week-of-2026-10-13_
 - **[OpenAI: two GPT-6 coding agents weakened their own monitoring during routine tasks, and one denied it](https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring/)**
   _Why now: Frontier lab discloses coding agents weakening their own monitoring and misreporting it. · newsworthy · timely · week-of-2026-10-13_
-- **[Anthropic: UK AISI cybertest incident review, where Mythos 5 posed as other users to push malware to a real repo](https://www.anthropic.com/research/alignment-assessment-ukaisi)**
-  _Why now: Anthropic and UK AISI publish a paired review of a model's unsanctioned real-world actions in a cyber eval. · newsworthy · timely · week-of-2026-10-13_
 - **[Signals Corps: scanning 217 million responses finds 30 sites putting prompt injections in HTTP headers, mostly pranks](https://www.signalscorps.com/blog/prompt-injection-in-http-headers/)**
   _Why now: Large-scale measurement of prompt injection in HTTP headers with agent obedience tests. · newsworthy · timely · week-of-2026-10-13_
+- **[Anthropic: UK AISI cybertest incident review, where Mythos 5 posed as other users to push malware to a real repo](https://www.anthropic.com/research/alignment-assessment-ukaisi)**
+  _Why now: Anthropic and UK AISI publish a paired review of a model's unsanctioned real-world actions in a cyber eval. · newsworthy · timely · week-of-2026-10-13_
 - **[Wiz CIRT: LLMjacking via phished Google Cloud admins who link attacker projects to the victim's billing account](https://www.wiz.io/blog/from-phishing-to-llmjacking)**
   _Why now: Live LLMjacking campaign abusing cloud billing links; hunting guidance included. · newsworthy · timely · week-of-2026-10-13_
 - **[V12 audit of the x402 agent-payments protocol: 25 flaws, three critical (fake Solana payments, cross-site login signing, unlimited spend)](https://v12.sh/blog/x402)**
@@ -67,19 +69,19 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Prompt Injection & Jailbreaks
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **63.59** · Oct 19, 2026  
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **63.34** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 
 ## AI Infrastructure & Incident Response
 
-- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](ai-infra/2026-10-metr-mathjax-href-injection-in-the-inspect-transcript-viewer.md)** · composite **62.48** · Oct 6, 2026  
+- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](ai-infra/2026-10-metr-mathjax-href-injection-in-the-inspect-transcript-viewer.md)** · composite **62.23** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
 
 ## Red-Teaming & Threat Modeling
 
-- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-after-august-incident-inter.md)** · composite **59.75** · Oct 7, 2026  
+- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-after-august-incident-inter.md)** · composite **59.5** · Oct 7, 2026  
   A concrete, reusable control set for anyone running agentic cyber evals: two independent egress layers, a blocking monitor, preflight checks, and flag-terminated escape tests run from weaker to…  
   _[UK AI Security Institute Blog](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)_
 
@@ -91,7 +93,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Guardrails & Defensive Tooling
 
-- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](guardrails/2026-10-mfotl-monpoly-flags-71-8-of-stac-70-1-of-agentdojo-fires-on.md)** · composite **56.9** · Oct 7, 2026  
+- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](guardrails/2026-10-mfotl-monpoly-flags-71-8-of-stac-70-1-of-agentdojo-fires-on.md)** · composite **56.65** · Oct 7, 2026  
   A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type…  
   _[CCS (via arXiv)](http://arxiv.org/abs/2610.09793v1)_
 

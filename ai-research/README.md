@@ -2,12 +2,14 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_3 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [9 held for review](../REVIEW.md)._
+_3 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [15 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Letting the agent choose when to compact, guided by a fire/suppress rubric, matches or beats fixed-interval summarization at a fraction of the token cost](https://machinelearning.apple.com/research/self-compacting-language-agents)**
+  _Why now: Directly usable harness change: a model-invoked compaction tool plus a fire/suppress rubric beats fixed token-threshold compaction across seven models. · trending · high-relevance_
 - **[Anthropic describes presenting MCP servers as code APIs so agents load fewer tool definitions and tokens](https://www.anthropic.com/research/code-execution-with-mcp)**
 - **[Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models by ASR-measured word error rate, speaker similarity and latency instead of human votes](https://huggingface.co/blog/open-tts-leaderboard)**
 - **[MentalHealthBench scores model replies against weighted, expert-consensus rubrics across acuity levels and personas](https://openai.com/index/introducing-mentalhealthbench)**
@@ -28,16 +30,16 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Evaluation & Benchmarks
 
-- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **58.68** · Oct 19, 2026  
+- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **58.43** · Oct 19, 2026  
   Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.  
   _[arXiv cs.AI (Artificial Intelligence)](https://arxiv.org/abs/2610.22466)_
-- **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov.md)** · composite **55.25** · Oct 19, 2026  
+- **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov.md)** · composite **55.0** · Oct 19, 2026  
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.  
   _[source](https://arxiv.org/abs/2610.25964)_
 
 ## Alignment & Reliability
 
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **58.25** · Oct 20, 2026  
+- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **58.0** · Oct 20, 2026  
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
   _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
 
