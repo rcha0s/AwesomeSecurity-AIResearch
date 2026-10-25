@@ -173,7 +173,9 @@ def _entry_tcm_md(entry: dict) -> list[str]:
     out = ["## Threat · Conditions · Mitigations", ""]
     for label in ("threat", "conditions", "mitigations"):
         if entry.get(label):
-            out.append(f"- **{label.title()}:** {entry[label].strip()}")
+            value = entry[label]  # a list predates merge's normalization
+            text = "; ".join(map(str, value)) if isinstance(value, list) else str(value)
+            out.append(f"- **{label.title()}:** {text.strip()}")
     return out + [""]
 
 

@@ -109,7 +109,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
        → mid; a restatement/duplicate → low. Put the closest prior work in a `prior_art` field.
      - **relevance**: usefulness to the topic's audience (AI Security = a defender; Product
        Security = an appsec/red-team engineer; AI Research = a harness/agent builder).
-   - Security findings may also include `threat`/`conditions`/`mitigations`.
+   - Security findings may also include `threat`/`conditions`/`mitigations`, each one
+     plain-text string (list several mitigations in one sentence, not a JSON list).
 
 3c. **News briefs (the news tier).** A candidate tagged `batch_tier: "news"` is relevant news
    the deep tier had no room for (`batch_news.reason`: `story`, `kev`, `ghsa-critical`,
