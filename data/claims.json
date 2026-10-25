@@ -2207,10 +2207,26 @@
           "url": "https://huggingface.co/blog/allenai/benchmirt",
           "title": "BenchMIRT: What are LLM benchmarks actually measuring?",
           "published": "2026-09-01"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.25060",
+          "title": "Policy Is Not Capability: Some Safety Benchmarks Measure Which Definition of \"Unsafe\" You Trained On",
+          "published": "2026-10-18",
+          "note": "Same ~53k prompts labelled under two policies: guardrail 'safety' benchmark scores swing up to 0.99 with the label definition while detection capability is unchanged.",
+          "source_name": "arXiv (Hugging Face Daily Papers)"
+        },
+        {
+          "stance": "supports",
+          "url": "https://alignment.openai.com/beyond-gmean-squared/",
+          "title": "Beyond g-mean²: complementary metrics for monitorability",
+          "published": "2026-10-20",
+          "note": "A dataset-level monitorability score can reflect capability-driven task selection rather than monitorability; pair-matched comparison corrects it.",
+          "source_name": "OpenAI Alignment Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-25",
       "basis": "empirical study (AllenAI BenchMIRT, multidimensional IRT across 100 models / 16 benchmarks)",
       "guidance": "Before citing a benchmark score as evidence of a specific capability, check whether independent capability-decomposition analysis supports that the benchmark actually isolates that capability and moves in the expected direction, rather than assuming the category label is accurate.",
       "scope": "Demonstrated specifically for WMDP and BBQ within one 16-benchmark, 100-model study; may not generalize to all benchmarks labeled 'safety'.",
