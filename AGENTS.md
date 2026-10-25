@@ -89,11 +89,11 @@ picked from the taxonomy's keyword hints within that topic.
 
 ## How far back a scan looks
 
-A daily scan ingests only the last `ingest_days` (7): older stories were
-covered by earlier scans. Claim work follows the same week: each scan weighs
-its findings against the whole ledger, so a new result that supports, contests
-or refutes an old claim is still caught. A backfill uses its own window;
-`add.py` keeps `max_age_days`. A feed or sitemap date can be a republish or a
+- Scan windows: daily scans use a 7-day window (`ingest_days`) for stories and claims; only backfill runs reach 31 days. Claims are still checked against prior work to catch refutations. (Rohan, 2026-10)
+
+Older stories were covered by earlier scans. Each scan weighs its findings
+against the whole ledger, so a new result that supports, contests or refutes an
+old claim is still caught. `add.py` keeps `max_age_days`. A feed or sitemap date can be a republish or a
 site rebuild, so the page's own `Published Time` decides wherever the text is
 fetched: `ingest_sitemap.py` drops a page it can't fetch (tried twice) instead
 of dating it by `<lastmod>`, `fetch_raw.py` refuses a page older than the
@@ -288,6 +288,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   itself in its own worktree (`~/.local/share/awesomesec-worktree`, reset each run), and
   the model session only analyzes. It is idle on days a scan already finished;
   `--uninstall` removes it. The Mac must be awake at the scheduled time.
+- Run location: scans run locally on the always-on Mac. The cloud routine was dropped after setup failed 10-22 through 10-25; don't route scans to it. (Rohan, 2026-10)
 - **Cloud (paused 2026-10-25):** a Claude Code routine with prompt `/daily-scan`
   never got a working setup script (pip failed in the VM), so it is disabled and
   the Mac runs every scan. The code path stays: to bring it back, re-enable the
