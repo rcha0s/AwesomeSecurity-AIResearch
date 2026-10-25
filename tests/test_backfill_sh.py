@@ -224,6 +224,7 @@ def test_an_unreadable_pr_list_is_not_read_as_merged(scan_repo, tmp_path):
     assert res.returncode == 1 and len(chunks_run(tmp_path)) == 1
     log = (work / "data/_scan.log").read_text()
     assert log.count("can't read open PRs from GitHub") == 1  # once per wait, not per poll
+    assert "GitHub still unreadable after 2s; stopping" in log and "still open after" not in log
 
 
 def test_the_driver_adds_ghs_homes_to_launchds_bare_path(scan_repo, tmp_path):

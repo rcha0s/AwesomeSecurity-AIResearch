@@ -92,7 +92,11 @@ wait_for_pr() {
       warned=1
     fi
     if ((waited >= limit)); then
-      log "chunk $1..$2: its PR is still open after ${WAIT_SECONDS}s; stopping (start again to resume)"
+      if [[ "$n" == unknown ]]; then
+        log "chunk $1..$2: GitHub still unreadable after ${WAIT_SECONDS}s; stopping (start again to resume)"
+      else
+        log "chunk $1..$2: its PR is still open after ${WAIT_SECONDS}s; stopping (start again to resume)"
+      fi
       return 1
     fi
     ((waited == 0)) && log "chunk $1..$2: waiting for its PR to be merged or closed"
