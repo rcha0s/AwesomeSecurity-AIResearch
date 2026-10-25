@@ -35,6 +35,8 @@ data/_scan*
 data/_summary.md
 data/_story_outcomes.md
 data/_editorial_outcomes.md
+data/_cross_review_outcomes.md
+data/_cross_review.jsonl
 data/_merge_outcomes.json
 data/_golden*
 data/_curator_arxiv.json

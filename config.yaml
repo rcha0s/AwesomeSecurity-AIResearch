@@ -25,6 +25,21 @@ max_age_days: 31
 # window bounds it. Ad-hoc adds (add.py) keep max_age_days.
 ingest_days: 7
 
+# Cross-vendor review (scripts/cross_review.py): after the session, the Mac
+# runner asks Gemini, through the Antigravity CLI on the owner's plan, whether
+# each entry this run added or changed is backed by its source and worth
+# publishing, and how each claim edge's source bears on its claim. SHADOW: the
+# verdicts go to the PR body and a log of agreement with Claude, and gate
+# nothing until enough runs show they can be trusted (Rohan, 2026-10-25).
+cross_review:
+  enabled: true
+  agy: ~/.local/bin/agy        # the real binary; a cmux shim of the same name can shadow it on PATH
+  model: gemini-4-argon-high   # Gemini's top model: judgment calls only, so worth it
+  max_calls: 30                # per run; claim edges first, then entries the site would show
+  parallel: 3
+  timeout_s: 180
+  source_chars: 60000          # the whole saved page (fetches cap at 20000); never less than Claude grounded on
+
 # The README "this week" snapshot shows only curated findings published within
 # this many days (the newsletter still covers the full max_age_days window).
 snapshot_days: 7
