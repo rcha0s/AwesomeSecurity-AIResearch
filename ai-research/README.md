@@ -2,13 +2,14 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_3 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [7 held for review](../REVIEW.md)._
+_3 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [9 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
 - **[Anthropic describes presenting MCP servers as code APIs so agents load fewer tool definitions and tokens](https://www.anthropic.com/research/code-execution-with-mcp)**
+- **[Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models by ASR-measured word error rate, speaker similarity and latency instead of human votes](https://huggingface.co/blog/open-tts-leaderboard)**
 - **[MentalHealthBench scores model replies against weighted, expert-consensus rubrics across acuity levels and personas](https://openai.com/index/introducing-mentalhealthbench)**
 - **[UK AISI publishes verified benchmark results with run configuration in a shared schema, showing scores shift with inference compute and protocol](https://huggingface.co/blog/evaleval-aisi)**
 - **[OpenAI proposes US-led international technical standards for frontier AI, including oversight of recursive self-improvement](https://openai.com/index/building-standards-next-phase-ai)**

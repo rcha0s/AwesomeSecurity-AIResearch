@@ -757,6 +757,99 @@
       "grounding_score": 1.0
     },
     {
+      "id": "claude-shaped-science-77bd0f29d1",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Anthropic physicist's BootLoops: Claude agents did checkable science (15 new elliptic Feynman integrals, 36 manuscripts), but off-field results only became interesting after experts steered",
+      "source_url": "https://www.anthropic.com/research/claude-shaped-science",
+      "related_claims": [
+        "capability-elicitation-lags-training"
+      ],
+      "summary": "A physicist built BootLoops, an open-source harness of tools and protocols that grows as Claude adds new tools on each project. He then aimed it at 'Claude-shaped' problems: problems a known technique from math, physics or computer science would solve, and whose answers can be checked numerically. It produced results across many fields (36 manuscripts, 18 fields, three months). In fields the author did not know, Claude's results were usually technically correct but not scientifically interesting until a domain expert redirected the work.",
+      "lessons": [
+        {
+          "point": "Pick agent tasks where the answer can be checked mechanically. Here, anyone could verify a result to many digits by running two scripts.",
+          "excerpt": "it is checkable, since the same numerics let anyone, expert or not, verify the final answer against the integral to as many digits as they like by running two scripts",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Outside your own expertise, you cannot judge agent output well and tend to accept its claims of success. Bring in a domain expert as the reviewer.",
+          "excerpt": "When Claude claims something it did in my field is fantastic, I can judge whether that’s true or not (it often isn’t).",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Technical correctness is not the same as value. The agent's results were mostly correct but only became worthwhile once an expert steered them.",
+          "excerpt": "Indeed, I found that in almost all cases, Claude was technically correct, but the result was not all that interesting until the expert helped steer us.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Make the agent leave behind reusable tools on every project, even failed ones, so the harness keeps growing.",
+          "excerpt": "As the ideas came, I insisted that Claude both use old tools _and_ build new ones, so that the harness would grow.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Orchestration pattern: one session per project, plus a master session that coordinates the others, allocates compute and validates results.",
+          "excerpt": "I have separate sessions for each project, plus a master session that coordinates the others, allocates compute, and validates results.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Agents do best on problems where a known technique applies and the answer can be checked, inside a harness that keeps growing; plan for a domain expert to judge whether the results matter.",
+      "tags": [
+        "ai-for-science",
+        "agent-harness",
+        "verification",
+        "multi-agent-orchestration",
+        "human-in-the-loop",
+        "claude-code"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Grow a tool library per project and gate results on mechanical checks plus expert review",
+        "detail": "Have the agent save every tool it writes into a shared harness repo, failed projects included. Choose tasks with an independent numeric or script-based check and require the agent to ship that check with each result. Run one session per project and a master session that validates results. Have a domain expert review any result outside the operator's own field."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 55,
+        "newness": 26,
+        "credibility": 70.8,
+        "composite": 45.62,
+        "scored_at": "2026-10-25T02:36:54+00:00"
+      },
+      "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
+      "verified": true,
+      "verify_note": "Verifier: figures and excerpts accurate; lessons are generic harness advice from a first-person case study.",
+      "article_url": "https://www.anthropic.com/research/claude-shaped-science",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-01",
+      "raw_path": "data/_raw/claude-shaped-science-77bd0f29d1.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.agents",
       "cluster": "B",
@@ -909,89 +1002,96 @@
       ]
     },
     {
-      "candidate_id": "summary-of-metr-s-predeployment-evaluation-of-cl-6f5117d000",
+      "id": "a-missing-piece-for-trustworthy-ai-reviewers-fro-c9adddd2ed",
       "topic": "ai-research",
-      "domain": "air.models",
-      "title": "METR: Claude Opus 5.5 is an on-trend, modest AI R&D gain over Fable 5.1, unlikely to fully automate AI R&D; Anthropic's own development estimated ~1.5x accelerated by AI",
-      "source_url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
-      "summary": "METR tested Claude Opus 5.5 before release on five long-horizon AI research tasks. It found a modest, on-trend, incremental improvement over Fable 5.1, not a jump, and judged the model unlikely to fully automate AI research and development. A separate METR team estimated ~1.5x overall acceleration of Anthropic's capabilities work due to AI, with a 30% chance of 2x, but for an unspecified time period.",
+      "domain": "air.evals",
+      "title": "RobustReview: LLM paper reviewers change scores on content-preserving rewrites; low rewrite sensitivity can hide score collapse",
+      "source_url": "https://arxiv.org/abs/2609.39027",
+      "related_claims": [
+        "llm-as-judge-is-biased-toward-longer-answers"
+      ],
+      "summary": "AI paper reviewers can give different scores to the same science written differently. The RobustReview benchmark (1,260 manuscript versions, 30 reviewer setups) tests both stability under rewrites and the ability to tell papers apart, and finds that some 'stable' reviewers just give everything the same score. The proposed SciCore averages a full-manuscript judgment with one on an extracted structured science core.",
       "lessons": [
         {
-          "point": "On METR's quantitative tasks, Opus 5.5 is an incremental step over Fable 5.1, not a discontinuous jump.",
-          "excerpt": "Claude Opus 5.5 is an incremental improvement above Fable 5.1 on our quantitative evaluations, rather than a discontinuous jump.",
+          "point": "LLM judges are sensitive to wording, not just content, which rewards rhetorical optimization.",
+          "excerpt": "AI reviewers can assign different judgments to manuscripts that report the same science in different wording, potentially rewarding rhetorical optimization over scientific improvement.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Measure stability and discrimination together; stability alone can come from a judge that scores everything alike.",
+          "excerpt": "The benchmark reveals false robustness, where low rewrite sensitivity coincides with score collapse across papers",
           "confidence": 0.8,
           "grounded": true
         },
         {
-          "point": "METR believes full automation of AI R&D needs better research judgement (foresight, prediction, building one's own feedback loops), and sees no large gain there.",
-          "excerpt": "full automation of AI R&D will require large improvements in foresight, prediction, creating one’s own feedback loops",
+          "point": "Agreement with humans does not tell you a judge is robust to rewording.",
+          "excerpt": "shows that human alignment and rhetorical robustness rank reviewers differently.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Simply prompting the judge to focus on content is not a reliable fix.",
+          "excerpt": "the evaluated content-focused prompting protocol does not consistently improve robustness across backbones.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Judging an extracted, normalized content summary alongside the full text reduces style sensitivity.",
+          "excerpt": "SciCore, a dual-branch reviewer that averages a full-manuscript judgment with a judgment based on an extracted, structured science core.",
           "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "The AI-acceleration figure for Anthropic's own R&D is a second-hand estimate with no stated time window, so treat it loosely.",
-          "excerpt": "~1.5X overall acceleration in capabilities due to AI (i.e. 1.5 years in 1 year), with perhaps 30% chance of 2X acceleration.",
-          "confidence": 0.55,
-          "grounded": true
-        },
-        {
-          "point": "The summary is not fully independent: Anthropic reviewed and edited the text before release.",
-          "excerpt": "We drafted the initial summary, and then Anthropic had the opportunity to review and edit the text.",
-          "confidence": 0.9,
           "grounded": true
         }
       ],
-      "takeaway": "Plan around Opus 5.5 as a modest upgrade that speeds up researchers, not as a model that can run open-ended research on its own judgement.",
+      "takeaway": "When you use an LLM as a judge, test it with content-preserving rewrites and check it still separates good from bad items.",
       "tags": [
-        "metr",
-        "predeployment-evaluation",
-        "ai-rnd-acceleration",
-        "claude-opus-5-5",
-        "long-horizon-tasks",
-        "third-party-evals"
+        "llm-as-judge",
+        "ai-reviewers",
+        "robustness",
+        "paraphrase-sensitivity",
+        "benchmark",
+        "evals"
       ],
       "actionable": {
-        "type": "takeaway",
-        "title": "Keep humans on judgement-heavy research steps when adopting Opus 5.5",
-        "detail": "When moving long-horizon research or engineering agents to Opus 5.5, expect gains on verifiable tasks, such as speedrun-style optimization and bots. Keep human review on open-ended steps such as choosing experiments, setting feedback loops and judging results. Re-run your own long-horizon evals rather than assuming a step change."
+        "type": "harness",
+        "title": "Add a rewrite-stability plus discrimination check to LLM-judge evals",
+        "detail": "For each judged item, generate a few content-preserving rewrites and measure score variance across them; separately measure score spread across genuinely different items. Reject judge setups that are stable only because their scores collapse. Consider scoring an extracted structured summary of the content and averaging it with the full-text score.",
+        "skill_slug": null
       },
       "scores": {
-        "novelty": 40,
+        "novelty": 50,
         "relevance": 55,
         "newness": 5,
-        "credibility": 77.5,
-        "composite": 41.38,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "credibility": 50.8,
+        "composite": 40.37,
+        "scored_at": "2026-10-25T02:36:54+00:00"
       },
+      "prior_art": "LLM-as-judge bias work (verbosity/position bias, Zheng et al. 2023 MT-Bench); DecisionPivot contrast-pair testing of decision models in ai-research.json; ledger claim llm-as-judge-is-biased-toward-longer-answers. The stability-plus-discrimination framing and 'false robustness' finding are the delta. Verifier's closest: MT-Bench judge-bias work (Zheng et al. 2023); llm-as-judge-is-biased-toward-longer-answers.",
       "verified": true,
-      "prior_art": "METR: Anthropic's low misalignment risk holds because models are weak; Anthropic embeds METR.",
-      "related_claims": [],
-      "article_url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
+      "verify_note": "Verifier: supported; lesson 4 overstates an 'intended' effect shown in one comparison.",
+      "article_url": "https://arxiv.org/abs/2609.39027",
       "tweet_url": null,
       "author": null,
       "date": "2026-09",
-      "published": "2026-09-22",
-      "raw_path": "data/_raw/summary-of-metr-s-predeployment-evaluation-of-cl-6f5117d000.txt",
+      "published": "2026-09-30",
+      "raw_path": "data/_raw/a-missing-piece-for-trustworthy-ai-reviewers-fro-c9adddd2ed.txt",
       "discovered_via": "rss",
-      "source_id": "rss:https-metr-org-feed-xml",
-      "source_rank": 77.5,
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 50.8,
       "source_topics": [
-        "ai-research",
-        "ai-security"
+        "ai-research"
       ],
-      "source_name": "METR",
-      "id": "metr-claude-opus-5-5-modest-ai-r-d-gain-over-fab-73a6f2665d",
-      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "source_name": "Hugging Face Daily Papers",
+      "retrieved_at": "2026-10-25T02:36:53+00:00",
       "needs_review": true,
-      "readability_rewrite": "reverted title, lessons[1].point, lessons[2].point",
+      "readability_rewrite": "reverted summary",
       "readability": {
-        "score": 75,
+        "score": 92,
         "passed": false,
         "issues": [
-          "severe: title_words 28 > 24"
+          "mild: jargon_chain 8 > 7 (separately measure score spread across genuinely different items)"
         ]
       },
-      "readability_hold": "readability: title_words 28 > 24",
       "grounding_score": 1.0
     },
     {
@@ -1485,6 +1585,164 @@
         "passed": false,
         "issues": [
           "mild: sentence_words 50 > 45 (Testing GR00T N1.5 over 1,040 rollouts, it finds that headline success rate hides a lot: one camera shift left success u)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "pi pod: self-hosted wrapper that runs the pi coding agent in isolated sandbox 'pods' on your server",
+      "source_url": "https://pipod.dev/",
+      "related_claims": [],
+      "summary": "pi pod is a new open-source project that runs sessions of the minimalist pi coding-agent harness inside isolated sandboxes on a server you control. The author argues that a minimal team agent environment needs four things: sandboxing, native clients, role-based access control (RBAC) for session sharing, and browser/native-app automation. The page is a launch announcement. It gives no details on how the isolation works and no security evaluation.",
+      "lessons": [
+        {
+          "point": "The project aims to keep the user's existing pi harness unchanged and add sandbox isolation around it.",
+          "excerpt": "pi pod aims to seamlessly run your pi in an isolated sandbox with minimal, carefully curated tooling to get out the way and give you the boring stuff you need.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The author's view of the minimum team agent environment: sandboxing, native clients, RBAC session sharing, and browser and native-app automation.",
+          "excerpt": "I consider agent sandboxing, native clients, rbac session sharing, and surface automation (namely browser and native apps) to comprise the minimal agentic engineering environment that should be used for software engineers in an organization.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Self-hosting is pitched as the way for companies to keep the whole agent environment in their own data center.",
+          "excerpt": "Self-hosting also is a great option for businesses who want their entire agentic environment in their preferred data center.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.",
+      "tags": [
+        "coding-agents",
+        "agent-sandbox",
+        "self-hosted",
+        "pi-harness",
+        "launch-announcement"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check pi pod's isolation model before you rely on it",
+        "detail": "If you run pi for a team, read the pi-pod/pipod repository to find out what isolation backs each pod (container, gVisor, microVM), what outbound network access it allows, and how credentials reach the pod. Do this before you treat the sandbox as a security boundary.",
+        "skill_slug": null
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 25,
+        "newness": 26,
+        "credibility": 55.0,
+        "composite": 26.75,
+        "scored_at": "2026-10-25T02:36:54+00:00"
+      },
+      "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
+      "verified": true,
+      "verify_note": "Verifier: thin launch announcement; 'open-source' inferred from a GitHub link.",
+      "article_url": "https://pipod.dev/",
+      "tweet_url": null,
+      "author": "edverma2",
+      "date": "2026-10",
+      "published": "2026-10-02",
+      "raw_path": "data/_raw/show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@edverma2 via Hacker News",
+      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "open-tts-leaderboard-scalable-evaluation-for-mul-2222cbbf2d",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models by ASR-measured word error rate, speaker similarity and latency instead of human votes",
+      "source_url": "https://huggingface.co/blog/open-tts-leaderboard",
+      "related_claims": [],
+      "summary": "Hugging Face built a TTS leaderboard that scores models with automatic metrics. Word error rate comes from an automatic speech recognition (ASR) model's transcript. Speaker-embedding similarity measures voice cloning, and real-time factor plus time-to-first-audio measure speed. This cuts evaluation from weeks of human voting to hours and covers open models that arena leaderboards mostly skip, but the metrics do not measure naturalness or listener preference, the authors say.",
+      "lessons": [
+        {
+          "point": "Automatic TTS metrics are proxies. Intelligibility and voice similarity scores say nothing about how natural or preferred the speech is, so they cannot replace human preference tests.",
+          "excerpt": "Neither directly measures naturalness, expressiveness, or listener preference.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "English scores do not predict quality in other languages. Evaluate each target language on its own.",
+          "excerpt": "English performance doesn't necessarily translate to other languages.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "For voice agents, measure time-to-first-audio. For non-streaming models this is the full generation time, which makes them slow for interactive use.",
+          "excerpt": "For non-streaming models, it's the time until the whole utterance is generated, because playback can't start any earlier.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A simple latency benchmark rule: discard warm-up runs and report the median.",
+          "excerpt": "We drop the first 3 runs as warm-up and report the median TTFA across the rest.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you are choosing a TTS model for a voice agent, use this leaderboard to shortlist by error rate and time-to-first-audio, then listen to the outputs yourself before you decide.",
+      "tags": [
+        "text-to-speech",
+        "leaderboard",
+        "evaluation",
+        "voice-cloning",
+        "latency",
+        "multilingual"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Shortlist TTS models on objective metrics, then confirm by listening",
+        "detail": "For a voice agent, filter the Open TTS Leaderboard by your target languages and the Streaming tab (time-to-first-audio at batch size 1, on your hardware class: GPU or CPU). Then use the Listen tab or your own prompts to check naturalness, since word error rate and speaker similarity do not measure it."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 30,
+        "newness": 5,
+        "credibility": 73.2,
+        "composite": 25.73,
+        "scored_at": "2026-10-25T02:36:54+00:00"
+      },
+      "prior_art": "Hugging Face Open ASR Leaderboard; Seed-TTS-Eval and CV3-Eval benchmarks; TTS Arena v2 and Artificial Analysis TTS arena leaderboards. No closer entry in the corpus. Verifier's closest: Open ASR Leaderboard; TTS Arena v2; Seed-TTS-Eval.",
+      "verified": true,
+      "verify_note": "Verifier: accurate; speech benchmark announcement with little value for harness builders.",
+      "article_url": "https://huggingface.co/blog/open-tts-leaderboard",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-30",
+      "raw_path": "data/_raw/open-tts-leaderboard-scalable-evaluation-for-mul-2222cbbf2d.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 73.2,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Hugging Face Blog",
+      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted lessons[0].point",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
         ]
       },
       "grounding_score": 1.0

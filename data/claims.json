@@ -2343,6 +2343,14 @@
           "url": "https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/",
           "title": "Discovering and exploiting a remote code execution vulnerability in OpenCode (GHSA-632h-h47v-g4x4)",
           "published": "2026-09-24"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/",
+          "title": "Microsoft DevLabs DebugMCP 1.1.4: drive-by RCE via DNS rebinding to an unauthenticated, stateless localhost MCP server",
+          "published": "2026-09-25",
+          "note": "DNS rebinding plus a stateless, unauthenticated MCP transport let one browser request reach a loopback-bound MCP server's start_debugging tool and run code, so loopback binding was no boundary.",
+          "source_name": "Imperva Threat Research"
         }
       ],
       "first_seen": "2026-10-25",
