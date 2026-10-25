@@ -87,11 +87,14 @@ def main_json(rel: str) -> dict | None:
 
 
 def main_pools() -> dict[str, dict]:
-    """origin/main's copy of every pool entry, by id."""
+    """origin/main's copy of every pool and archive entry, by id. The archive
+    counts: rerank pulls archived news back into the pools, and those are
+    main's old stories, not this run's (scan_count.new_entries, 2026-10-20)."""
     entries: dict[str, dict] = {}
-    for path in c.POOL_FILES.values():
+    for path in [*c.POOL_FILES.values(), c.ARCHIVE_FILE]:
         doc = main_json(path.relative_to(c.ROOT).as_posix()) or {}
-        entries.update({e.get("id"): e for e in doc.get("entries", [])})
+        rows = doc if isinstance(doc, list) else doc.get("entries", [])
+        entries.update({e.get("id"): e for e in rows if isinstance(e, dict)})
     return entries
 
 
@@ -110,17 +113,29 @@ def changed_entries(base: dict[str, dict]) -> list[dict]:
     out = []
     for topic in c.TOPICS:
         for e in c.load_pool(topic)["entries"]:
-            old = base.get(e.get("id"))
+            if not isinstance(e, dict) or not isinstance(e.get("id"), str):
+                continue
+            old = base.get(e["id"])
             if old is None or entry_view(old) != entry_view(e):
                 out.append(e)
     return out
 
 
-def source_text(entry: dict, limit: int) -> str | None:
-    path = c.raw_file(entry.get("raw_path"))
-    if not path or not path.exists():
-        return None
-    return path.read_text(encoding="utf-8", errors="replace")[:limit]
+def fetched_sources() -> dict[str, str]:
+    """Normalized URL -> candidate id, from pre's URL snapshot. The session
+    can't write data/_scan* or data/_raw/, so the page Gemini reads is the one
+    the run fetched for that URL, never one the entry's raw_path points at."""
+    urls = c.load_json(c.DATA_DIR / c.SCAN_URL_SNAPSHOT, default={}) or {}
+    return {c.normalize_url(u): cid for cid, u in urls.items() if isinstance(u, str)}
+
+
+def source_text(entry: dict, limit: int, fetched: dict[str, str]) -> str | None:
+    for key in ("source_url", "article_url"):
+        cid = fetched.get(c.normalize_url(str(entry.get(key) or "")))
+        path = c.RAW_DIR / f"{cid}.txt" if cid else None
+        if path and path.exists():
+            return path.read_text(encoding="utf-8", errors="replace")[:limit]
+    return None
 
 
 def claim_edges(base: dict | None) -> list[dict]:
@@ -174,6 +189,8 @@ def parse_reply(stdout: str) -> dict:
         data = json.loads(stdout)
     except json.JSONDecodeError:
         return {"error": "agy returned non-JSON"}
+    if not isinstance(data, dict):
+        return {"error": "agy returned non-object JSON"}
     if data.get("status") != "SUCCESS":
         return {"error": f"agy status {data.get('status')}"}
     m = re.search(r"\{.*\}", str(data.get("response") or ""), re.S)
@@ -181,11 +198,28 @@ def parse_reply(stdout: str) -> dict:
         verdict = json.loads(m.group(0)) if m else None
     except json.JSONDecodeError:
         verdict = None
-    if not isinstance(verdict, dict):
-        return {"error": "no JSON verdict in the reply"}
-    if data.get("denied_actions"):
-        verdict["denied_actions"] = [a.get("action") for a in data["denied_actions"]]
+    if not isinstance(verdict, dict) or not well_formed(verdict):
+        return {"error": "no well-formed verdict in the reply"}
+    denied = data.get("denied_actions")
+    if isinstance(denied, list) and denied:
+        verdict["denied_actions"] = [clean(a.get("action")) for a in denied if isinstance(a, dict)]
     return verdict
+
+
+def well_formed(v: dict) -> bool:
+    """An entry verdict from ENTRY_VERDICTS with a bool publish, or a claim
+    stance from STANCES. Anything else is an error row, never an "agree"."""
+    if "stance" in v:
+        return v["stance"] in STANCES
+    return v.get("verdict") in ENTRY_VERDICTS and isinstance(v.get("publish"), bool)
+
+
+def clean(text, cap: int = 300) -> str:
+    """One line of plain text for the PR body: Gemini's words and entry ids
+    come from third-party pages and a session-written pool, so no newlines,
+    backticks or markdown structure."""
+    one = re.sub(r"[`\r\n\t|<>*_#\[\]]+", " ", str(text or ""))
+    return re.sub(r" {2,}", " ", one).strip()[:cap]
 
 
 def entry_prompt(e: dict, text: str) -> str:
@@ -199,29 +233,39 @@ def claim_prompt(claim: dict, text: str) -> str:
     return f"{CLAIM_ASK}\n\nCLAIM:\n{json.dumps(view, indent=1)}\n\nSOURCE:\n<<<\n{text}\n>>>"
 
 
-def entry_jobs(base: dict[str, dict], limit: int) -> list[dict]:
+def entry_jobs(base: dict[str, dict], limit: int, fetched: dict[str, str]) -> list[dict]:
     """Entries with source text, the ones the site would show first."""
     conf, sources = c.load_config(), c.load_sources_by_id()
     jobs = []
     for e in changed_entries(base):
-        text = source_text(e, limit)
+        text = source_text(e, limit, fetched)
         if text:
             shown = c.is_shown(e, conf, sources)
             jobs.append({"kind": "entry", "entry": e, "text": text, "shown": shown})
     return sorted(jobs, key=lambda j: not j["shown"])
 
 
-def claim_jobs(limit: int) -> list[dict]:
+def claim_jobs(limit: int, fetched: dict[str, str]) -> list[dict]:
     by_url, jobs = pool_by_url(), []
     for edge in claim_edges(main_json("data/claims.json")):
         entry = by_url.get(c.normalize_url(edge["evidence"].get("url") or ""))
-        text = source_text(entry, limit) if entry else None
+        text = source_text(entry, limit, fetched) if entry else None
         if text:
             jobs.append({"kind": "claim", **edge, "text": text})
     return jobs
 
 
 def run_job(job: dict, cfg: dict) -> dict:
+    """One verdict row; an unexpected error is a failed row, never the run's end."""
+    try:
+        return _run_job(job, cfg)
+    except Exception as exc:  # noqa: BLE001 - one bad item must not lose the rest
+        item = job.get("entry") or job.get("claim") or {}
+        return {"kind": job.get("kind"), "id": clean(item.get("id"), 120), "title": "",
+                "gemini": {"error": f"{type(exc).__name__}"}}  # fmt: skip
+
+
+def _run_job(job: dict, cfg: dict) -> dict:
     if job["kind"] == "entry":
         e = job["entry"]
         reply = ask_agy(entry_prompt(e, job["text"]), cfg)
@@ -242,9 +286,7 @@ def disagrees(row: dict) -> str | None:
         return None
     if row["kind"] == "claim":
         if g.get("stance") in STANCES and g.get("stance") != row["claude_stance"]:
-            return (
-                f"stance {row['claude_stance']} vs Gemini {g.get('stance')}: {g.get('reason', '')}"
-            )
+            return f"stance {clean(row['claude_stance'], 20)} vs Gemini {g['stance']}: {clean(g.get('reason'))}"
         return None
     if row["shown"] and (g.get("verdict") != "supported" or g.get("publish") is False):
         return f"shown, but Gemini says {g.get('verdict')}, publish={g.get('publish')}"
@@ -262,8 +304,11 @@ def outcomes_md(rows: list[dict], skipped: int) -> str:
         f"{errors} failed" + (f", {skipped} over the call cap" if skipped else "") + ".",
     ]
     for r, why in split[:15]:
-        problems = "; ".join(map(str, r["gemini"].get("problems") or []))[:300]
-        lines.append(f"- `{r['id']}` ({r['kind']}): {why}" + (f". {problems}" if problems else ""))
+        raw = r["gemini"].get("problems")
+        problems = clean("; ".join(map(str, raw if isinstance(raw, list) else [])))
+        lines.append(
+            f"- {clean(r['id'], 120)} ({r['kind']}): {why}" + (f". {problems}" if problems else "")
+        )
     return "\n".join(lines) + "\n"
 
 
@@ -278,7 +323,8 @@ def log_rows(rows: list[dict], run_id: str) -> None:
 
 def collect_jobs(cfg: dict) -> tuple[list[dict], int]:
     limit = int(cfg.get("source_chars", 15000))
-    jobs = claim_jobs(limit) + entry_jobs(main_pools(), limit)  # claim edges first
+    fetched = fetched_sources()
+    jobs = claim_jobs(limit, fetched) + entry_jobs(main_pools(), limit, fetched)  # claims first
     cap = int(cfg.get("max_calls", 30))
     return jobs[:cap], max(0, len(jobs) - cap)
 
