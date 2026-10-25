@@ -19,7 +19,7 @@ Trend Micro's Zero Day Initiative sent two KSMBD reports (ZDI-CAN-33774 and ZDI-
 
 **Topic:** Product Security  ·  **Domain:** Cloud, Network & Infrastructure  
 **Source:** [source](https://thehackernews.com/2026/10/two-cvss-90-linux-ksmbd-rce-flaws.html)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 27 · Novelty 45 · Relevance 60 · Credibility 50 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 26 · Novelty 45 · Relevance 60 · Credibility 50 · **Composite 46** _(each 0-100)_  
 **Tags:** `ksmbd`, `linux-kernel`, `smb`, `zdi`, `ai-found-vulnerabilities`, `disclosure`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Public disclosure before a patch is unusual; the kernel's policy that AI-found bugs go to public lists is the new process point. Verifier: Prior KSMBD CVEs (CVE-2022-47939, CVE-2023-3866, ZDI-found ksmbd bugs); Linux kernel May 2026 AI-bug-is-public policy and Big Sleep style AI-found kernel bugs  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

@@ -154,10 +154,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 27,
+        "newness": 26,
         "credibility": 43.9,
-        "composite": 58.93,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 58.68,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -172,10 +172,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 27,
+        "newness": 26,
         "credibility": 75.0,
-        "composite": 58.5,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 58.25,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -384,10 +384,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 27,
+        "newness": 26,
         "credibility": 55.0,
-        "composite": 55.5,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 55.25,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -444,93 +444,6 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "id": "harnesstax-how-much-does-the-harness-matter-for-a039173b27",
-      "article_url": "https://harnesstax.github.io/",
-      "source_url": "https://harnesstax.github.io/",
-      "tweet_url": null,
-      "author": "matt_d",
-      "published": "2026-09-16",
-      "date": "2026-09",
-      "raw_path": "data/_raw/harnesstax-how-much-does-the-harness-matter-for-a039173b27.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@matt_d via Hacker News",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "HarnessTax: across 21 model-harness pairs, harness choice barely moved success but changed cost up to 5x; four-tool Pi matched Claude Code and Codex CLI",
-      "summary": "UC Berkeley researchers ran seven models through Claude Code, Codex CLI and Pi on SWE-bench Lite and Terminal-Bench 2.0, using 30 sampled tasks per benchmark and 3 repetitions. Success rates differed little between harnesses, but cost differed a lot, partly because Claude Code's first-call context was over 10 times Pi's. Models also often did as well or better outside their vendor's own harness. The authors note the benchmarks may be in training data and results may not carry over.",
-      "lessons": [
-        {
-          "point": "Harness choice shifts cost far more than success rate on these benchmarks.",
-          "excerpt": "Claude Fable 5 solves 97.8% of attempts in Claude Code, 96.7% in Codex and 96.7% in Pi, yet Claude Code costs about twice as much as Pi ($1.33 vs $0.67).",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A minimal toolset can sit on the cost-success frontier.",
-          "excerpt": "Pi reaches the Pareto frontier on both benchmarks by providing just four tools: read, write, edit, and bash",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Part of the cost gap starts with large instructions and tool schemas in the very first model call.",
-          "excerpt": "Across all seven models, Claude Code’s mean initial context is over 10× Pi’s, with longer instructions and larger tool schemas.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Pairing a model with its own vendor's harness is not guaranteed to be best, and the authors flag benchmark limits.",
-          "excerpt": "an alternative harness achieves the highest observed success rate in nine of twelve comparisons",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Compare cost and success of your model across more than one harness, because a default harness can carry a hidden cost premium for the same results.",
-      "tags": [
-        "coding-agents",
-        "harness",
-        "cost",
-        "swe-bench",
-        "terminal-bench",
-        "minimal-tools"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Run a model-by-harness cost-success sweep before standardizing a coding agent",
-        "detail": "Pick 30 or so representative tasks, run each candidate harness 3 times with the same model and a fixed price list, and record mean cost, success rate and first-call input tokens. Try a minimal read/write/edit/bash harness as the baseline and adopt a richer harness only if it beats it on your tasks."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 85,
-        "newness": 5,
-        "credibility": 55.0,
-        "composite": 51.5,
-        "scored_at": "2026-10-24T08:52:19+00:00"
-      },
-      "prior_art": "Closest in pool are PawBench (LLM x harness performance) and Harness-Delta Attribution; neither found to report a three-harness, seven-model cost comparison like this one. The source cites Portkey's earlier 'Harness Tax' post. Verifier: PawBench: benchmarking LLM x harness performance (archive.json); Harness-Delta Attribution (ai-research.json); Claude Code harness-design entry on tool minimalism. Portkey 'Harness Tax' is cited by the source.",
-      "related_claims": [
-        "few-distinct-tools-beat-many",
-        "tool-count-degrades-agent-performance",
-        "harness-evolution-gains-need-held-out-attribution"
-      ],
-      "verified": true,
-      "verify_note": "All numbers and excerpts check out, and the authors' caveats are reflected. The benchmark sample is small (30 tasks, 3 reps). Novelty is a variation on PawBench, with a new cost angle and the cross-vendor harness result.",
-      "retrieved_at": "2026-10-24T08:52:19+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary, lessons[1].point",
-      "readability": {
-        "score": 84,
-        "passed": false,
-        "issues": [
-          "mild: hedges 2 > 1",
-          "mild: title_words 24 > 18"
-        ]
-      },
       "grounding_score": 1.0
     },
     {
@@ -628,10 +541,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 27,
+        "newness": 26,
         "credibility": 55.0,
-        "composite": 51.0,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 50.75,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -695,10 +608,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 27,
+        "newness": 26,
         "credibility": 75.0,
-        "composite": 49.5,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 49.25,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -996,6 +909,181 @@
       ]
     },
     {
+      "candidate_id": "summary-of-metr-s-predeployment-evaluation-of-cl-6f5117d000",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "title": "METR: Claude Opus 5.5 is an on-trend, modest AI R&D gain over Fable 5.1, unlikely to fully automate AI R&D; Anthropic's own development estimated ~1.5x accelerated by AI",
+      "source_url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
+      "summary": "METR tested Claude Opus 5.5 before release on five long-horizon AI research tasks. It found a modest, on-trend, incremental improvement over Fable 5.1, not a jump, and judged the model unlikely to fully automate AI research and development. A separate METR team estimated ~1.5x overall acceleration of Anthropic's capabilities work due to AI, with a 30% chance of 2x, but for an unspecified time period.",
+      "lessons": [
+        {
+          "point": "On METR's quantitative tasks, Opus 5.5 is an incremental step over Fable 5.1, not a discontinuous jump.",
+          "excerpt": "Claude Opus 5.5 is an incremental improvement above Fable 5.1 on our quantitative evaluations, rather than a discontinuous jump.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "METR believes full automation of AI R&D needs better research judgement (foresight, prediction, building one's own feedback loops), and sees no large gain there.",
+          "excerpt": "full automation of AI R&D will require large improvements in foresight, prediction, creating one’s own feedback loops",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "The AI-acceleration figure for Anthropic's own R&D is a second-hand estimate with no stated time window, so treat it loosely.",
+          "excerpt": "~1.5X overall acceleration in capabilities due to AI (i.e. 1.5 years in 1 year), with perhaps 30% chance of 2X acceleration.",
+          "confidence": 0.55,
+          "grounded": true
+        },
+        {
+          "point": "The summary is not fully independent: Anthropic reviewed and edited the text before release.",
+          "excerpt": "We drafted the initial summary, and then Anthropic had the opportunity to review and edit the text.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Plan around Opus 5.5 as a modest upgrade that speeds up researchers, not as a model that can run open-ended research on its own judgement.",
+      "tags": [
+        "metr",
+        "predeployment-evaluation",
+        "ai-rnd-acceleration",
+        "claude-opus-5-5",
+        "long-horizon-tasks",
+        "third-party-evals"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Keep humans on judgement-heavy research steps when adopting Opus 5.5",
+        "detail": "When moving long-horizon research or engineering agents to Opus 5.5, expect gains on verifiable tasks, such as speedrun-style optimization and bots. Keep human review on open-ended steps such as choosing experiments, setting feedback loops and judging results. Re-run your own long-horizon evals rather than assuming a step change."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 55,
+        "newness": 5,
+        "credibility": 77.5,
+        "composite": 41.38,
+        "scored_at": "2026-10-25T00:44:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "METR: Anthropic's low misalignment risk holds because models are weak; Anthropic embeds METR.",
+      "related_claims": [],
+      "article_url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-22",
+      "raw_path": "data/_raw/summary-of-metr-s-predeployment-evaluation-of-cl-6f5117d000.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-metr-org-feed-xml",
+      "source_rank": 77.5,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "METR",
+      "id": "metr-claude-opus-5-5-modest-ai-r-d-gain-over-fab-73a6f2665d",
+      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title, lessons[1].point, lessons[2].point",
+      "readability": {
+        "score": 75,
+        "passed": false,
+        "issues": [
+          "severe: title_words 28 > 24"
+        ]
+      },
+      "readability_hold": "readability: title_words 28 > 24",
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "how-uk-aisi-and-evaleval-are-making-benchmark-re-31b1ab8407",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "UK AISI publishes verified benchmark results with run configuration in a shared schema, showing scores shift with inference compute and protocol",
+      "source_url": "https://huggingface.co/blog/evaleval-aisi",
+      "summary": "The UK AI Security Institute (AISI) is publishing verified results, context and configuration for five benchmarks and two cyber evals through EvalEval's Every Eval Ever schema and Evaluation Cards. The data backs an AISI paper showing that benchmark scores depend on inference-time compute and evaluation protocol. For example, models kept solving more Humanity's Last Exam tasks as token budgets grew when they got correctness feedback after each attempt.",
+      "lessons": [
+        {
+          "point": "Reported benchmark scores depend on inference compute and evaluation protocol, so a score without its setup is hard to compare.",
+          "excerpt": "which studies how benchmark performance depends on inference-time compute and evaluation protocol",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "With per-attempt correctness feedback from an oracle, solve rates kept rising with more tokens, so retry-with-feedback protocols inflate scores relative to single-shot ones.",
+          "excerpt": "When models received correctness feedback from an oracle after each attempt, they continued to solve additional tasks as token use increased.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Most eval results are published without enough setup detail to reproduce them, and rerunning is often too expensive.",
+          "excerpt": "results are reported across many formats, platforms, and outlets, often without enough information to reproduce them",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A shared results schema that records configuration makes it visible when similar scores came from different conditions.",
+          "excerpt": "they make it easier to understand when apparently similar scores were produced under meaningfully different conditions",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat any benchmark number as meaningless without its token budget, retry and feedback protocol; record those alongside your own eval results.",
+      "tags": [
+        "benchmark",
+        "eval-reproducibility",
+        "inference-compute",
+        "eval-reporting",
+        "uk-aisi",
+        "evaluation-protocol"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Log eval configuration with every score and compare only like-for-like",
+        "detail": "When recording or comparing benchmark results (e.g. Terminal-Bench, SWE-Bench Pro), store token budget, number of attempts, whether correctness feedback was given, and harness version with each score. Consider emitting results in the Every Eval Ever schema so they can be compared against AISI's verified reference runs on Evaluation Cards."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 55,
+        "newness": 5,
+        "credibility": 75.0,
+        "composite": 39.5,
+        "scored_at": "2026-10-25T00:44:25+00:00"
+      },
+      "verified": false,
+      "verify_note": "Verifier: lesson 2's 'retry-with-feedback inflates scores vs single-shot' and the takeaway's 'meaningless without token budget' overstate the source.",
+      "prior_art": "Harness-Delta Attribution and HarnessTax entries (gains partly from inference compute and harness choice).",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "swe-bench-doesnt-generalize-to-production-tasks"
+      ],
+      "article_url": "https://huggingface.co/blog/evaleval-aisi",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-22",
+      "raw_path": "data/_raw/how-uk-aisi-and-evaleval-are-making-benchmark-re-31b1ab8407.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Hugging Face Blog",
+      "id": "uk-ai-security-institute-aisi-publishes-verified-882dd3dd10",
+      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 21 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "accenture-embedded-evaluation-908fa9e458",
       "topic": "ai-research",
       "domain": "air.evals",
@@ -1043,10 +1131,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 27,
+        "newness": 26,
         "credibility": 72.5,
-        "composite": 38.62,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 38.38,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -1075,89 +1163,6 @@
         "passed": false,
         "issues": [
           "mild: title_words 19 > 18"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "alexshpunt-explicit-edit-benchmark-86e89a1b27",
-      "article_url": "https://github.com/alexshpunt/explicit-edit-benchmark",
-      "source_url": "https://github.com/alexshpunt/explicit-edit-benchmark",
-      "tweet_url": null,
-      "author": "alexshpunt",
-      "published": "2026-09-11",
-      "date": "2026-09",
-      "raw_path": "data/_raw/alexshpunt-explicit-edit-benchmark-86e89a1b27.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:llm-evaluation-harness-benchmark",
-      "source_rank": 52.5,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "alexshpunt/explicit-edit-benchmark",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Explicit Edit Benchmark: an open set of 226 byte-exact file-editing tasks for comparing coding agents and harnesses, with community-submitted runs",
-      "summary": "The repository provides 226 small, deterministic editing tasks (replacements, insertions, deletions, copies, moves, large files, Unicode edge cases) checked byte for byte by a verifier. Because the tasks need no deep reasoning, differences come from the model, tools and harness. Anyone can run it on their own harness and publish results to a public Hugging Face dataset and leaderboard, marked verified when run through GitHub Actions or unverified when run locally.",
-      "lessons": [
-        {
-          "point": "Deliberately easy tasks isolate edit-tool and harness quality from model reasoning.",
-          "excerpt": "None of them needs deep reasoning or domain knowledge: the agent finds the right text, changes it, and leaves every other byte as it was.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Scoring is deterministic with no judge model.",
-          "excerpt": "A verifier compares the result byte for byte.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Results are crowd-sourced across many harness variants, with a trust label on each run.",
-          "excerpt": "The Dataset marks approved GitHub workflow results as `verified` and ordinary local contributions as `unverified`.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Runs are only compared when the rules match, which keeps leaderboard comparisons fair.",
-          "excerpt": "A run is grouped with others only when the rules match: how many recovery attempts it allows, how long one attempt may take, the task set, and the verifier.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If you build or tune an edit tool for a coding agent, test it on exact-match edit tasks, since this benchmark isolates that skill from reasoning.",
-      "tags": [
-        "benchmark",
-        "file-editing",
-        "coding-agents",
-        "harness",
-        "leaderboard"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Benchmark your agent's edit tool on explicit-edit-benchmark",
-        "detail": "Clone the repository, install the command-line interface (CLI) for your harness (adapters exist for Pi, Codex CLI, OpenCode, Oh My Pi, GitHub Copilot CLI and DeepSeek Harness), run the benchmark with --local and the --harness and --model flags, and compare your edit-tool variant against the baseline-agent (bash only) result on the public leaderboard."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 60,
-        "newness": 5,
-        "credibility": 52.5,
-        "composite": 36.12,
-        "scored_at": "2026-10-24T08:52:19+00:00"
-      },
-      "prior_art": "Closest in pool is PawBench (LLM x harness performance) and the Claude Code harness-design entry on tool minimalism; no file-edit-specific byte-exact benchmark found in pool. Verifier: PawBench (archive.json); no byte-exact edit-tool benchmark found in the pool.",
-      "related_claims": [],
-      "verified": true,
-      "verify_note": "Summary is accurate. The benchmark is a niche tool for edit-tool builders. The source has no results or findings, only the benchmark and its leaderboard. Unsupported: Lesson 2 'no judge model' is inferred from the byte-for-byte verifier; the source never says it outright. Excerpt problem: Lesson 4 (runs only compared when rules match) cited an excerpt about publishing results that did not support it; the supporting sentence is later in the source. Corrected: lesson 4 excerpt replaced with the verbatim sentence 'A run is grouped with others only when the rules match: ...' from the raw file.",
-      "retrieved_at": "2026-10-24T08:52:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 84,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 53 > 45 (Clone the repository, install the command-line interface (CLI) for your harness (adapters exist for Pi, Codex CLI, OpenC)",
-          "mild: title_words 20 > 18"
         ]
       },
       "grounding_score": 1.0
@@ -1249,6 +1254,91 @@
       "grounding_score": 1.0
     },
     {
+      "candidate_id": "introducing-mentalhealthbench-7b7f3305a0",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "MentalHealthBench scores model replies against weighted, expert-consensus rubrics across acuity levels and personas",
+      "source_url": "https://openai.com/index/introducing-mentalhealthbench",
+      "summary": "OpenAI released an open benchmark of synthetic mental health conversations, from everyday stress to emergencies, across adults, teens, caregivers and clinicians. Over 80 licensed experts wrote per-conversation rubric items weighted from -10 to +10, and only items that at least two of three reviewers agreed on were kept. A model grader scores replies against these rubrics, and the score can be split into ten behavior dimensions, so models with the same total can show different strengths.",
+      "lessons": [
+        {
+          "point": "Per-conversation rubric items carry signed weights, so harmful behavior is penalized and clinically important behavior counts more, rather than a single pass/fail.",
+          "excerpt": "They each carry a weight ranging from -10 to +10: positive points reward beneficial behaviors, while negative points penalize harmful ones",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Rubric quality control uses a simple consensus rule: keep an item only if two of three experts agree and none contradicts it.",
+          "excerpt": "we only retained criteria agreed upon by at least two experts and not contradicted by a third",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Breaking the total score into behavior dimensions reveals differences that a single headline number hides.",
+          "excerpt": "Models with similar overall scores can have different strengths across these behaviors.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Users and experts value different things: users weight practical next steps and tone, experts weight context-gathering. The benchmark scores only the expert view.",
+          "excerpt": "User perspectives highlighted qualities people value in AI support that were less emphasized in expert guidance, particularly practical next steps and tone.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "For subjective, high-stakes domains, weighted per-scenario rubrics with an expert-agreement filter and dimension-level scoring give a more usable eval than a single safety pass rate.",
+      "tags": [
+        "benchmark",
+        "rubric-grading",
+        "llm-as-judge",
+        "expert-annotation",
+        "mental-health",
+        "safety-eval"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Build domain evals as weighted per-scenario rubrics with an agreement filter",
+        "detail": "For each eval scenario, have 3 domain reviewers write single-aspect criteria with signed weights (e.g. -10..+10); keep only criteria at least 2 agree on and none contradicts; grade with a model judge against those criteria and report per-dimension scores alongside the total, not just the headline number."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 5,
+        "credibility": 70.8,
+        "composite": 34.37,
+        "scored_at": "2026-10-25T00:44:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "OpenAI HealthBench (same expert-rubric plus model-grader method).",
+      "related_claims": [
+        "benchmark-category-labels-can-mask-conflated-capabilities",
+        "llm-as-judge-is-biased-toward-longer-answers"
+      ],
+      "article_url": "https://openai.com/index/introducing-mentalhealthbench",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-23",
+      "raw_path": "data/_raw/introducing-mentalhealthbench-7b7f3305a0.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Blog",
+      "id": "mentalhealthbench-scores-model-replies-against-w-b1faffcf20",
+      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "bound-conditioned-latent-inference-for-progressi-6860d502a8",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -1289,10 +1379,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 27,
+        "newness": 26,
         "credibility": 72.0,
-        "composite": 31.05,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 30.8,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -1362,10 +1452,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 27,
+        "newness": 26,
         "credibility": 53.2,
-        "composite": 29.73,
-        "scored_at": "2026-10-24T08:18:14+00:00"
+        "composite": 29.48,
+        "scored_at": "2026-10-25T00:44:25+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -1396,6 +1486,87 @@
         "issues": [
           "mild: sentence_words 50 > 45 (Testing GR00T N1.5 over 1,040 rollouts, it finds that headline success rate hides a lot: one camera shift left success u)"
         ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "building-standards-for-the-next-phase-of-ai-a878382581",
+      "topic": "ai-research",
+      "domain": "air.alignment",
+      "title": "OpenAI proposes US-led international technical standards for frontier AI, including oversight of recursive self-improvement",
+      "source_url": "https://openai.com/index/building-standards-next-phase-ai",
+      "summary": "OpenAI argues for US-led global technical standards for frontier AI, built through the network of national AI safety institutes and the Center for AI Standards and Innovation (CAISI). It says fully autonomous recursive self-improvement (RSI) is not happening today and should not be pursued until it can be done safely. Proposed standards cover measuring autonomous AI research, when automated research must trigger human review, and shared incident severity levels and reporting thresholds. The standards would not be licenses or prerelease approvals.",
+      "lessons": [
+        {
+          "point": "OpenAI states fully autonomous RSI is not happening yet and should wait until it can be done safely.",
+          "excerpt": "Fully autonomous RSI is not happening today, and we should not pursue it unless and until it can be done safely.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Proposed standards include defining which automated research processes must trigger immediate human review.",
+          "excerpt": "Human oversight over automated AI research, including what kinds of automated AI research processes should trigger immediate human review.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The proposal explicitly excludes licensing or mandatory prerelease approval.",
+          "excerpt": "These technical standards would not be licenses, mandatory prerelease review, or approval requirements for AI models.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A stated motivation is that national evals and incident definitions could conflict and prevent comparison.",
+          "excerpt": "Evaluations, reporting requirements, and incident definitions by different nations could conflict",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A policy position with no technical content; useful only as a signal that incident severity levels and human-review triggers for automated research may become shared standards.",
+      "tags": [
+        "ai-policy",
+        "ai-standards",
+        "recursive-self-improvement",
+        "incident-reporting",
+        "human-oversight"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Track emerging incident-severity and human-review-trigger standards",
+        "detail": "If you run autonomous agents that do research or code changes, watch CAISI / AI safety institute and Appia Foundation outputs for incident severity levels and reporting thresholds. Pre-define your own list of agent actions that require immediate human review, so you can map to these standards later."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 15,
+        "newness": 5,
+        "credibility": 70.8,
+        "composite": 20.87,
+        "scored_at": "2026-10-25T00:44:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "External-testing commitments via UK AISI/US CAISI; no prior entry on recursive self-improvement standards.",
+      "related_claims": [],
+      "article_url": "https://openai.com/index/building-standards-next-phase-ai",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-21",
+      "raw_path": "data/_raw/building-standards-for-the-next-phase-of-ai-a878382581.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Blog",
+      "id": "openai-proposes-us-led-international-technical-s-3e0d21dc73",
+      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0
     },

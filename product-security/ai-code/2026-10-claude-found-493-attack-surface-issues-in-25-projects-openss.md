@@ -25,7 +25,7 @@ Anthropic ran Claude over 25 open-source projects (over five million lines) to f
 
 **Topic:** Product Security  ·  **Domain:** AI in the SDLC  
 **Source:** [Anthropic Research](https://www.anthropic.com/research/attack-surface-reduction)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 27 · Novelty 72 · Relevance 85 · Credibility 71 · **Composite 64** _(each 0-100)_  
+**Scores:** Newness 26 · Novelty 72 · Relevance 85 · Credibility 71 · **Composite 64** _(each 0-100)_  
 **Tags:** `attack-surface-reduction`, `openssh`, `configuration-security`, `ai-assisted-review`, `pre-auth`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Pool entries on frontier-model vulnerability discovery (Mythos-era bug finding, AI-built PHP pre-auth chains) and classic attack-surface reduction guidance; this shifts from finding individual bugs to systematic reachability and config-interaction reduction with measured results and an upstream OpenSSH fix. Verifier: Attack-surface reduction (Howard/Manadhata attack-surface metrics, OpenSSH privsep and pre-auth minimization) is classic, and Anthropic's prior LLM vuln-finding posts (Firefox, OSS-Scanner) cover LLM bug finding. What is new is LLM-driven reachability and config-interaction auditing at scale, with the concrete OpenSSH 10.6 pre-auth fix.
 
