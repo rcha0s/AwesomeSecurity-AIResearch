@@ -236,6 +236,15 @@
       "backfill": "2026-10-03..2026-10-10",
       "stories": 25,
       "cost_usd": 0
+    },
+    {
+      "run_id": "local-backfill-20261011-20261018-20261025T090532Z-91283",
+      "date": "2026-10-25",
+      "runner": "local",
+      "kind": "reserve",
+      "backfill": "2026-10-11..2026-10-18",
+      "stories": 0,
+      "cost_usd": 48.1237
     }
   ]
 }
