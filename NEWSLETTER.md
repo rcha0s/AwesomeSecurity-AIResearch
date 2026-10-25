@@ -2,7 +2,7 @@
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-17 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+19 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -12,16 +12,18 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 63.59
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 63.34
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.
-- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)** · _METR_ · composite 62.48
+- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)** · _METR_ · composite 62.23
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any other app that…
-- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)** · _UK AI Security Institute Blog_ · composite 59.75
+- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)** · _UK AI Security Institute Blog_ · composite 59.5
   A concrete, reusable control set for anyone running agentic cyber evals: two independent egress layers, a blocking monitor, preflight checks, and flag-terminated escape tests run from weaker to stronger models.
 - **[Skill cascading attacks: a harmful goal split across several benign-looking agent skills evades per-skill scanners and runtime monitors](http://arxiv.org/abs/2609.30383v1)** · _NeurIPS (via arXiv)_ · composite 57.65
   A clean per-skill scan does not show that a set of installed skills is safe together, so review and monitoring have to cover the whole pipeline of skills.
-- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](http://arxiv.org/abs/2610.09793v1)** · _CCS (via arXiv)_ · composite 56.9
+- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](http://arxiv.org/abs/2610.09793v1)** · _CCS (via arXiv)_ · composite 56.65
   A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type blocklists.
+- **[Guardrail safety benchmarks mostly measure the training label policy: same 53k prompts, two definitions, 0-100 swings](https://arxiv.org/abs/2610.25060)** · _Hugging Face Daily Papers_ · composite 55.87
+  A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail against your own policy.
 
 **📈 Trending & In the News**
 
@@ -45,9 +47,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **coding-agents** (🔺 rising) — 10 findings from 6 sources since 2026-08-06.
+- **coding-agents** (🔺 rising) — 11 findings from 7 sources since 2026-08-06.
+- **sandbox-escape** (🔺 rising) — 12 findings from 11 sources since 2026-07-15.
 - **agent-monitoring** (🔺 rising) — 3 findings from 3 sources since 2026-10-06.
-- **sandbox-escape** (🔺 rising) — 11 findings from 10 sources since 2026-07-15.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -59,17 +61,17 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[Atlassian CVE-2026-21589: pre-auth file read via '::' path traversal in atlassian-plugins-webresource (Jira, Confluence, Bitbucket and 5 more Data Center products), chained to Crowd admin](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)** · _watchTowr Labs_ · composite 64.34
+- **[Atlassian CVE-2026-21589: pre-auth file read via '::' path traversal in atlassian-plugins-webresource (Jira, Confluence, Bitbucket and 5 more Data Center products), chained to Crowd admin](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)** · _watchTowr Labs_ · composite 64.09
   Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.
-- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](https://www.anthropic.com/research/attack-surface-reduction)** · _Anthropic Research_ · composite 64.22
+- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](https://www.anthropic.com/research/attack-surface-reduction)** · _Anthropic Research_ · composite 63.97
   Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.
-- **[watchTowr breaks PaperCut NG/MF patches three times: Tapestry `service` auth bypass (CVE-2026-81578, bypasses WT-2026-0142/0143) chained with RCE (CVE-2026-82078, WT-2026-0141, CVE-2026-82077 via Scan to Fax)](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)** · _watchTowr Labs_ · composite 61.04
+- **[watchTowr breaks PaperCut NG/MF patches three times: Tapestry `service` auth bypass (CVE-2026-81578, bypasses WT-2026-0142/0143) chained with RCE (CVE-2026-82078, WT-2026-0141, CVE-2026-82077 via Scan to Fax)](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)** · _watchTowr Labs_ · composite 60.79
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.
-- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](https://pwn.ai/blog/pwnescape)** · _source_ · composite 60.5
+- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](https://pwn.ai/blog/pwnescape)** · _source_ · composite 60.25
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](https://www.anthropic.com/research/formal-verification)** · _source_ · composite 59.75
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](https://www.anthropic.com/research/formal-verification)** · _source_ · composite 59.5
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.
-- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)** · _source_ · composite 53.0
+- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)** · _source_ · composite 52.75
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.
 
 **📈 Trending & In the News**
@@ -94,8 +96,8 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **rce** (🔺 rising) — 16 findings from 12 sources since 2026-06-29.
-- **exploited-in-the-wild** (🔺 rising) — 10 findings from 3 sources since 2026-09-23.
+- **rce** (🔺 rising) — 17 findings from 13 sources since 2026-06-29.
+- **exploited-in-the-wild** (🔺 rising) — 11 findings from 3 sources since 2026-09-23.
 - **command-injection** (🔺 rising) — 8 findings from 6 sources since 2026-07-20.
 
 [→ Full Product Security database](product-security/README.md)
@@ -108,18 +110,20 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
-- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466)** · _arXiv cs.AI (Artificial Intelligence)_ · composite 58.68
+- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466)** · _arXiv cs.AI (Artificial Intelligence)_ · composite 58.43
   Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)** · _source_ · composite 58.25
+- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)** · _source_ · composite 58.0
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.
-- **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://arxiv.org/abs/2610.25964)** · _source_ · composite 55.25
+- **[POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains](https://arxiv.org/abs/2610.25964)** · _source_ · composite 55.0
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.
+- **[OpenAI: dataset-level g-mean² can misrank model monitorability; pair-matched HodgeRank and post-control risk added](https://alignment.openai.com/beyond-gmean-squared/)** · _OpenAI Alignment Blog_ · composite 52.6
+  If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.
 
 **📈 Emerging trends**
 
+- **third-party-evaluation** (🔺 rising) — 2 findings from 2 sources since 2026-10-20.
 - **llm-as-judge** (🔺 rising) — 4 findings from 3 sources since 2026-08-07.
 - **red-teaming** (🔺 rising) — 6 findings from 6 sources since 2025-03-13.
-- **evals** (🔺 rising) — 21 findings from 10 sources since 2023-12-07.
 
 [→ Full AI Research database](ai-research/README.md)
 
