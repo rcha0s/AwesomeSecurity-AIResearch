@@ -126,7 +126,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    plus the carried fields of step 5 (`article_url, published, raw_path, source_id,
    source_rank, discovered_via, source_name`). No `scores`, no `actionable`, exactly one
    lesson. Fetch every news candidate's text first (`python scripts/fetch_raw.py <id>`, several
-   per turn), then write briefs in batches of up to 10 with ONE fresh subagent per batch
+   per turn; skip any that prints `STALE`), then write briefs in batches of up to 10 with ONE fresh subagent per batch
    (`model: sonnet`), given only each candidate's id, title, source, `raw_path` and this schema;
    it reads the raw files and returns the briefs. Keep the main context small: don't read
    news-tier raw files yourself. If two candidates in the session tell the same story, write

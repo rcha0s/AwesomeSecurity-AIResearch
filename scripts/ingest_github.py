@@ -188,7 +188,7 @@ def collect(cfg: dict, per_query: int | None, fetch: bool) -> list[dict]:
     default_min_stars = gh_cfg.get("min_stars", 0)
     limit = per_query or gh_cfg.get("per_query", 8)
     max_chars = conf.limits.get("article_chars", 20000)
-    cutoff = c.utcnow() - timedelta(days=conf.max_age_days)
+    cutoff = c.utcnow() - timedelta(days=c.ingest_age_days(conf))
     active_after = cutoff.strftime("%Y-%m-%d")
     window = c.backfill_window()
 

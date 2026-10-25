@@ -10,9 +10,9 @@
 # "AI Security" can still contribute a Web or Mobile item.
 # ---------------------------------------------------------------------------
 
-# The hard freshness window (how old a resource may be) lives in config.yaml
-# as `max_age_days` — a single source of truth used by every ingestor and the
-# pool-pruning step. We track only the latest research.
+# The freshness windows live in config.yaml: `ingest_days` (7) is how far back
+# a daily scan's ingestors reach, `max_age_days` (31) how long the site shows a
+# finding before pruning it. We track only the latest research.
 
 # LinkedIn is auth-walled; ad-hoc adds fall back to pasted text/file. Handled
 # by scripts/add.py, not the batch aggregator.

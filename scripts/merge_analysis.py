@@ -195,6 +195,19 @@ def normalize_entry(entry: dict, conf: c.Config) -> dict:
     return entry
 
 
+def stale_source(entry: dict, conf: c.Config) -> str | None:
+    """Why a new entry's fetched page is too old to merge, or None. The page's
+    own `Published Time` decides; a feed or sitemap date can be a republish or
+    a rebuild (2026-10-25: 2022 and Dec 2025 posts staged as Sep 28 news)."""
+    path = c.raw_file(entry.get("raw_path"))
+    if not path or not path.exists():
+        return None
+    old = c.stale_page(path.read_text(encoding="utf-8", errors="replace"), conf.max_age_days)
+    if old is None:
+        return None
+    return f"stale: the page says it was published {old.date().isoformat()}"
+
+
 def merge(
     analyzed: list[dict], conf: c.Config, placements: list | None = None
 ) -> tuple[list[dict], list[str], set[str], list[dict]]:
@@ -223,6 +236,10 @@ def merge(
             stamp_brief(entry, note)
         entries = pools[entry["topic"]]["entries"]
         idx = match_index(entries, entry)
+        old = stale_source(entry, conf) if idx is None else None
+        if old:
+            errors.append(f"{raw.get('title', '?')[:50]}: {old}")
+            continue
         # Undo fact changes from the rewrite, then score; a severe failure holds it.
         readability_step(entry, None if idx is None else entries[idx], drafts, ctx, notes)
         # Ground each cited excerpt against the source; unverified quotes → review.

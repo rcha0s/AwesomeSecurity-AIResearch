@@ -128,7 +128,7 @@ def collect(cfg: dict, rules: dict, limit: int | None) -> list[dict]:
     if window is None:
         print(
             f"-> gh api /advisories (reviewed, newest {per_run} + {per_critical} critical, "
-            f"last {conf.max_age_days}d)"
+            f"last {c.ingest_age_days(conf)}d)"
         )
         advisories = list(fetch_advisories(per_run))
         if per_critical > 0:
@@ -140,7 +140,7 @@ def collect(cfg: dict, rules: dict, limit: int | None) -> list[dict]:
     seen: set[str] = set()
     for adv in advisories:
         cand = advisory_to_candidate(adv, rules)
-        if cand and cand["id"] not in seen and c.is_fresh(cand, conf.max_age_days, now=now):
+        if cand and cand["id"] not in seen and c.is_fresh(cand, c.ingest_age_days(conf), now=now):
             seen.add(cand["id"])
             out.append(cand)
     return out

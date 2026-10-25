@@ -223,6 +223,7 @@ class Config:
     curation: dict[str, float]
     max_age_days: int
     snapshot_days: int
+    ingest_days: int = 31
     news_front_page_days: int = 7
     news_front_page_max: int = 30
 
@@ -241,6 +242,7 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         curation=raw.get("curation", {}),
         max_age_days=int(raw.get("max_age_days", 31)),
         snapshot_days=int(raw.get("snapshot_days", 7)),
+        ingest_days=int(raw.get("ingest_days", raw.get("max_age_days", 31))),
         news_front_page_days=int(raw.get("news_front_page_days", 7)),
         news_front_page_max=int(raw.get("news_front_page_max", 30)),
     )
@@ -1075,14 +1077,15 @@ def save_candidates(candidates: list[dict]) -> None:
     save_json(CANDIDATES_FILE, candidates)
 
 
-def add_candidates(new: list[dict]) -> list[dict]:
+def add_candidates(new: list[dict], max_age: int | None = None) -> list[dict]:
     """Merge new candidates into the staging file, de-duped by URL + title.
 
     De-dupes against both the existing staging queue and the published pools,
     so nothing already analyzed gets re-queued. Returns the actually-added list.
+    `max_age` defaults to the scan's ingest window (ingest_age_days).
     """
     existing = load_candidates()
-    max_age = load_config().max_age_days
+    max_age = ingest_age_days() if max_age is None else max_age
     now = freshness_now()  # a backfill judges freshness at its window's end
     seen_urls = known_urls() | {normalize_url(c.get("source_url", "")) for c in existing}
     seen_titles = [c.get("title", "") for c in existing] + [
@@ -1171,6 +1174,14 @@ def freshness_now() -> datetime:
     return datetime.combine(window[1], time(23, 59, 59), UTC)
 
 
+def ingest_age_days(conf: Config | None = None) -> int:
+    """How far back a scan ingests: `ingest_days` (a week) for a daily scan,
+    `max_age_days` for a backfill, whose own window already bounds it. The
+    site keeps showing findings for max_age_days either way."""
+    conf = conf or load_config()
+    return conf.max_age_days if backfill_window() else conf.ingest_days
+
+
 def ingest_window(max_age_days: int) -> tuple[datetime, datetime | None]:
     """(since, until) for an ingestor: a backfill's [FROM 00:00, TO 23:59:59],
     else the last max_age_days with no upper bound (as before)."""
@@ -1257,6 +1268,51 @@ def main_entry_ids() -> set[str]:
                 ids |= {e.get("id") for e in json.loads(out.stdout).get("entries", [])}
         _MAIN_IDS = ids
     return _MAIN_IDS
+
+
+READER_PUBLISHED = re.compile(r"^Published Time:[ \t]*(.+?)[ \t]*$", re.M)
+# Two different defaults: a field the text didn't state comes out different.
+_PROBE_DEFAULTS = (datetime(1901, 1, 1), datetime(1902, 2, 2))
+
+
+def page_published(text: str | None) -> datetime | None:
+    """The page's own publish time from r.jina.ai's header ('Published Time: ...').
+
+    Feed and sitemap dates move when a site rebuilds or a feed republishes, so
+    they can't say a page is new: on 2026-10-22, 111 of 154 sitemap candidates
+    were posts from 2021 to mid-2026 that a rebuild had re-dated. None when the
+    header is missing, is not a complete date, or lies more than a day ahead.
+    """
+    m = READER_PUBLISHED.search((text or "")[:1000])
+    dt = parse_full_date(m.group(1)) if m else None
+    if dt is None or dt > utcnow() + timedelta(days=1):
+        return None
+    return dt
+
+
+def parse_full_date(raw: str) -> datetime | None:
+    """A date only when the text states year, month and day: ISO-8601, RFC
+    2822/1123 and "July 11, 2023" all qualify. Plain dateutil fills a missing
+    field from today, and an earlier `\\S+` capture cut "Tue, 11 Jul 2023 ..."
+    to "Tue," and read it as 2026-10-27, re-admitting a stale post as new. So
+    parse twice with two different defaults: a field taken from a default
+    comes out different, and the date is rejected."""
+    try:
+        first, second = (dateparser.parse(raw.strip(), default=d) for d in _PROBE_DEFAULTS)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if first.date() != second.date():
+        return None
+    return first.replace(tzinfo=UTC) if first.tzinfo is None else first
+
+
+def stale_page(text: str | None, max_age: int) -> datetime | None:
+    """The page's own publish date when it is older than `max_age` days
+    (judged at freshness_now), else None. An undated page is not stale."""
+    dt = page_published(text)
+    if dt is None or (freshness_now() - dt).days <= max_age:
+        return None
+    return dt
 
 
 def raw_file(raw_path: str | None) -> Path | None:

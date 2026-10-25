@@ -10,6 +10,10 @@ data/_scan_urls.json (via Jina Reader), writes data/_raw/<id>.txt and sets the
 candidate's `raw_path`. The snapshot, not candidates.json, is the source of
 URLs: the model may edit candidates.json, but not data/_scan* files.
 
+A page whose own `Published Time` is older than the scan's ingest window
+(a feed republished it, or a site rebuild re-dated it) is refused with a
+STALE message and no text is written, so the session skips it unanalyzed.
+
 Usage:
     python scripts/fetch_raw.py <candidate_id>
 """
@@ -34,7 +38,16 @@ def fetch_one(cand_id: str) -> str:
     url = urls.get(cand_id)
     if not url or not url.startswith(("https://", "http://")):
         raise SystemExit(f"fetch_raw: no http(s) URL recorded for {cand_id}")
-    raw_path = c.write_raw(cand_id, c.fetch_readable(url))
+    text = c.fetch_readable(url)
+    old = c.stale_page(text, c.ingest_age_days())
+    if old is not None:
+        # The feed's date was a republish or a rebuild: skip it before any analysis.
+        raise SystemExit(
+            f"fetch_raw: STALE {cand_id}: the page says it was published "
+            f"{old.date().isoformat()}, outside this scan's {c.ingest_age_days()}-day "
+            "window. Skip this candidate: no analysis, no brief."
+        )
+    raw_path = c.write_raw(cand_id, text)
     candidates = c.load_candidates()
     for cand in candidates:
         if cand.get("id") == cand_id:

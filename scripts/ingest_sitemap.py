@@ -25,9 +25,9 @@ later pass has nothing left to do for these candidates.
 A source with no working sitemap (missing, non-XML, or an SPA serving its
 app shell for any path — red.anthropic.com does this) is skipped, not
 treated as a hard error: that leaves its research_index registration as an
-honest, documented gap rather than a silent false success. A single page
-fetch failure is likewise best-effort: it falls back to slug-only
-classification rather than dropping the candidate outright.
+honest, documented gap rather than a silent false success. A page whose
+fetch fails twice is dropped, not staged on its lastmod: without the page
+there is no date of its own, and lastmod is often a rebuild's.
 
 Usage:
     python scripts/ingest_sitemap.py --dry-run
@@ -39,13 +39,12 @@ import argparse
 import re
 import sys
 import xml.etree.ElementTree as ET
-from datetime import UTC, datetime, timedelta
+from datetime import datetime
 from urllib.parse import urlparse
 
 import aggregate as agg
 import common as c
 import sources_registry as sr
-from dateutil import parser as dateparser
 
 try:
     import requests
@@ -102,41 +101,9 @@ def title_from_reader_text(body: str, url: str) -> str:
     return title_from_slug(url)
 
 
-READER_PUBLISHED = re.compile(r"^Published Time:[ \t]*(.+?)[ \t]*$", re.M)
-# Two different defaults: a field the text didn't state comes out different.
-_PROBE_DEFAULTS = (datetime(1901, 1, 1), datetime(1902, 2, 2))
-
-
-def reader_published(body: str) -> datetime | None:
-    """The page's own publish time from r.jina.ai's header ('Published Time: ...').
-
-    A sitemap `<lastmod>` moves whenever a site rebuilds, so it can't say a page
-    is new: on 2026-10-22, 111 of 154 sitemap candidates were posts from 2021 to
-    mid-2026 ("Introducing 100K context windows") that a rebuild had re-dated.
-    None (fall back to lastmod) when the header is missing, is not a complete
-    date, or lies more than a day in the future.
-    """
-    m = READER_PUBLISHED.search((body or "")[:1000])
-    dt = parse_full_date(m.group(1)) if m else None
-    if dt is None or dt > c.utcnow() + timedelta(days=1):
-        return None
-    return dt
-
-
-def parse_full_date(raw: str) -> datetime | None:
-    """A date only when the text states year, month and day: ISO-8601, RFC
-    2822/1123 and "July 11, 2023" all qualify. Plain dateutil fills a missing
-    field from today, and an earlier `\\S+` capture cut "Tue, 11 Jul 2023 ..."
-    to "Tue," and read it as 2026-10-27, re-admitting a stale post as new. So
-    parse twice with two different defaults: a field taken from a default
-    comes out different, and the date is rejected."""
-    try:
-        first, second = (dateparser.parse(raw.strip(), default=d) for d in _PROBE_DEFAULTS)
-    except (TypeError, ValueError, OverflowError):
-        return None
-    if first.date() != second.date():
-        return None
-    return first.replace(tzinfo=UTC) if first.tzinfo is None else first
+# The page-date helpers live in common (fetch_raw and merge use them too).
+reader_published = c.page_published
+parse_full_date = c.parse_full_date
 
 
 def path_prefix_of(source_url: str) -> str:
@@ -144,12 +111,15 @@ def path_prefix_of(source_url: str) -> str:
     return f"{path}/"
 
 
-def fetch_body(url: str) -> str | None:
-    """Real page text via the shared Jina Reader helper; None on any failure."""
-    try:
-        return c.fetch_readable(url, timeout=30, max_chars=20000)
-    except Exception:  # noqa: BLE001 - a single page miss shouldn't halt ingestion
-        return None
+def fetch_body(url: str, tries: int = 2) -> str | None:
+    """Real page text via the shared Jina Reader helper, tried twice; None
+    when every try fails."""
+    for _ in range(tries):
+        try:
+            return c.fetch_readable(url, timeout=30, max_chars=20000)
+        except Exception:  # noqa: BLE001 - a single page miss shouldn't halt ingestion
+            continue
+    return None
 
 
 def url_to_candidate(loc: str, lastmod: str, source: dict, rules: dict) -> dict | None:
@@ -158,25 +128,24 @@ def url_to_candidate(loc: str, lastmod: str, source: dict, rules: dict) -> dict 
     nurl = c.normalize_url(loc)
     if not nurl:
         return None
-    dt = c.entry_datetime({"published": lastmod}) if lastmod else None
-
+    # lastmod only earned the fetch. A page we couldn't read has no date of its
+    # own, and lastmod is a rebuild's date: on 2026-10-25 three failed fetches
+    # staged 2022 and Dec 2025 posts as Sep 28 news. Drop it; a real new post
+    # is still in the sitemap tomorrow.
     body = fetch_body(loc)
-    dt = reader_published(body) or dt  # the page's own date beats a rebuild's lastmod
-    if body:
-        title = title_from_reader_text(body, loc)
-        excerpt = c.clean_summary(body, 320)
-        blob = f"{title} {body[:3000]}".lower()
-    else:
-        title = title_from_slug(loc)
-        excerpt = ""
-        blob = title.lower()
+    if not body:
+        return None
+    dt = reader_published(body) or (c.entry_datetime({"published": lastmod}) if lastmod else None)
+    title = title_from_reader_text(body, loc)
+    excerpt = c.clean_summary(body, 320)
+    blob = f"{title} {body[:3000]}".lower()
 
     domain = agg.classify_domain(blob, rules, source.get("domains") or [])
     if domain is None:
         return None
 
     cand_id = c.make_id(title, nurl)
-    raw_path = c.write_raw(cand_id, body) if body else None
+    raw_path = c.write_raw(cand_id, body)
     return {
         "id": cand_id,
         "discovered_via": "sitemap",
@@ -256,7 +225,7 @@ def main() -> int:
     args = ap.parse_args()
 
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
-    cutoff, until = c.ingest_window(c.load_config().max_age_days)
+    cutoff, until = c.ingest_window(c.ingest_age_days())
     candidates = collect(rules, cutoff, until)
 
     if args.dry_run:

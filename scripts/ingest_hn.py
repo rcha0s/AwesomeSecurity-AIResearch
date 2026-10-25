@@ -135,7 +135,7 @@ def collect(cfg: dict, rules: dict, per_query: int | None) -> list[dict]:
     top_stories_min = int(hn_cfg.get("top_stories_min_points", 100))
     limit = per_query or hn_cfg.get("per_query", 8)
     top_limit = per_query or hn_cfg.get("top_stories_per_run", 30)
-    max_age = c.load_config().max_age_days
+    max_age = c.ingest_age_days()
     cutoff, until = c.ingest_window(max_age)
     since_ts = int(cutoff.timestamp())
     until_ts = int(until.timestamp()) if until else None

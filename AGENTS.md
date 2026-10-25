@@ -87,6 +87,19 @@ Ingestors emit `guess_domain` as an ID too: the `sources.yaml` keyword router st
 every ingest decision and topic guess (its class is kept as `guess_label`); the ID is
 picked from the taxonomy's keyword hints within that topic.
 
+## How far back a scan looks
+
+A daily scan ingests only the last `ingest_days` (7): older stories were
+covered by earlier scans. Claim work follows the same week: each scan weighs
+its findings against the whole ledger, so a new result that supports, contests
+or refutes an old claim is still caught. A backfill uses its own window;
+`add.py` keeps `max_age_days`. A feed or sitemap date can be a republish or a
+site rebuild, so the page's own `Published Time` decides wherever the text is
+fetched: `ingest_sitemap.py` drops a page it can't fetch (tried twice) instead
+of dating it by `<lastmod>`, `fetch_raw.py` refuses a page older than the
+window with `STALE` and writes no text, and `merge_analysis.py` refuses a new
+entry whose saved page is older than `max_age_days`.
+
 ## What ages out
 
 Findings age out after `max_age_days` into `data/archive.json`. Claims and

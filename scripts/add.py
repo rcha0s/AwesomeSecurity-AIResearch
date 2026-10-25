@@ -95,7 +95,8 @@ def main() -> int:
 
     text, fetched = resolve_text(args)
     cand = build_candidate(args, text)
-    added = c.add_candidates([cand])
+    # A deliberate add may be older than a scan's week: the site's window applies.
+    added = c.add_candidates([cand], max_age=c.load_config().max_age_days)
     if not added:
         print(f"Already in the pool or staging queue: {cand['title']}")
         return 0
