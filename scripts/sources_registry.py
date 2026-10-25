@@ -172,13 +172,15 @@ def find_source(sources: list[dict], stype: str, handle: str) -> dict | None:
 
 
 def add_source(source: dict) -> tuple[dict, bool]:
-    """Append a source (or return the existing one). Returns (source, is_new)."""
-    sources = load_sources()
-    existing = find_source(sources, source["type"], source["handle"])
+    """Append a source (or return the existing one). Returns (source, is_new).
+    Writes the raw registry, never the stats-overlaid view: saving that view
+    copied every source's scan counts and rank into data/sources.json."""
+    existing = find_source(load_sources(), source["type"], source["handle"])
     if existing:
         return existing, False
-    sources.append(source)
-    save_sources(sources)
+    raw = c.load_json(REGISTRY_FILE, default=[]) or []
+    raw.append(source)
+    save_sources(raw)
     return source, True
 
 

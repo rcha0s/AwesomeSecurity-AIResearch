@@ -1243,9 +1243,11 @@
     },
     "rank": 80.0,
     "added": "2026-08-06",
-    "active": true,
+    "active": false,
     "notes": "DeepMind research + robotics + capability posts",
-    "strict": false
+    "strict": false,
+    "deactivated": "2026-10-25",
+    "deactivated_reason": "feed URL 404s (could not parse on every scan, seen 2026-10-24)"
   },
   {
     "id": "rss:https-blog-google-technology-ai-rss",
@@ -1292,9 +1294,11 @@
     },
     "rank": 80.0,
     "added": "2026-08-06",
-    "active": true,
+    "active": false,
     "notes": "Llama releases, research previews, product announcements",
-    "strict": false
+    "strict": false,
+    "deactivated": "2026-10-25",
+    "deactivated_reason": "feed URL 404s (could not parse on every scan, seen 2026-10-24)"
   },
   {
     "id": "rss:https-mistral-ai-news-rss-xml",
@@ -2156,5 +2160,165 @@
     "notes": "Security journalism with technical depth. Replaces the dead feeds.arstechnica.com handle (404). 2026-10-23: covered PHP2Shell, eMudhra and OpenAI agents hacking sites",
     "track": "news",
     "scope": "both"
+  },
+  {
+    "id": "rss:https-deepmind-google-blog-rss-xml",
+    "type": "rss",
+    "handle": "https://deepmind.google/blog/rss.xml",
+    "name": "Google DeepMind Blog",
+    "url": "https://deepmind.google/blog/rss.xml",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-research-google-blog-rss",
+    "type": "rss",
+    "handle": "https://research.google/blog/rss/",
+    "name": "Google Research Blog",
+    "url": "https://research.google/blog/rss/",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-www-microsoft-com-en-us-research-feed",
+    "type": "rss",
+    "handle": "https://www.microsoft.com/en-us/research/feed/",
+    "name": "Microsoft Research Blog",
+    "url": "https://www.microsoft.com/en-us/research/feed/",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-alignment-openai-com-rss-xml",
+    "type": "rss",
+    "handle": "https://alignment.openai.com/rss.xml",
+    "name": "OpenAI Alignment Blog",
+    "url": "https://alignment.openai.com/rss.xml",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-deepmindsafetyresearch-medium-com-feed",
+    "type": "rss",
+    "handle": "https://deepmindsafetyresearch.medium.com/feed",
+    "name": "Google DeepMind Safety Research",
+    "url": "https://deepmindsafetyresearch.medium.com/feed",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-machinelearning-apple-com-rss-xml",
+    "type": "rss",
+    "handle": "https://machinelearning.apple.com/rss.xml",
+    "name": "Apple Machine Learning Research",
+    "url": "https://machinelearning.apple.com/rss.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-www-amazon-science-index-rss",
+    "type": "rss",
+    "handle": "https://www.amazon.science/index.rss",
+    "name": "Amazon Science",
+    "url": "https://www.amazon.science/index.rss",
+    "topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-25",
+    "active": true,
+    "notes": "major AI lab (lab lane, 2026-10-24)"
   }
 ]
