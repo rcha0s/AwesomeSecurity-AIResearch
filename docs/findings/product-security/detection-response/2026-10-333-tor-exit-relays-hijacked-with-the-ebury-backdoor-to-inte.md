@@ -19,7 +19,7 @@ A researcher who goes by kaba found that attackers had taken over about 333 Tor 
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [source](https://kaba.cx/posts/20261020_Tor/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 26 · Novelty 60 · Relevance 55 · Credibility 55 · **Composite 49** _(each 0-100)_  
+**Scores:** Newness 25 · Novelty 60 · Relevance 55 · Credibility 55 · **Composite 49** _(each 0-100)_  
 **Tags:** `tor`, `ssh`, `mitm`, `ebury`, `exit-relays`, `host-key`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Malicious Tor exit relays are a known threat (sslstrip, bitcoin-swapping); mass port-22 redirection with a backdoored relay fleet is new. Verifier: Malicious Tor exit sniffing/sslstrip (Josh Pitts 2014, 'Spoiled Onions' 2016, KAX17 relays 2020-21); ESET Ebury research (Windigo 2014, 2024 report)
 

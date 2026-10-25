@@ -154,10 +154,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 26,
+        "newness": 25,
         "credibility": 43.9,
-        "composite": 58.68,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 58.43,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -172,10 +172,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 26,
+        "newness": 25,
         "credibility": 75.0,
-        "composite": 58.25,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 58.0,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -384,10 +384,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 26,
+        "newness": 25,
         "credibility": 55.0,
-        "composite": 55.25,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 55.0,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -444,6 +444,93 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "beyond-g-mean-complementary-metrics-for-monitora-351af02230",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "OpenAI: dataset-level g-mean² can misrank model monitorability; pair-matched HodgeRank and post-control risk added",
+      "source_url": "https://alignment.openai.com/beyond-gmean-squared/",
+      "summary": "OpenAI argues that its g-mean² monitorability score can rank models wrongly. Each model misbehaves on a different subset of tasks, so a less capable model that fails only on easy-to-detect tasks can score as more monitorable. To fix this, it compares models only on shared instances and combines the pairwise differences with inverse-variance-weighted HodgeRank. In simulations this recovers a known seven-model ordering, where g-mean² and Bradley-Terry degrade. It also proposes a post-control risk metric: the rate of bad outputs that still get through when a monitor gates retries. The motivating case is that a model trained against a CoT monitor hacked less overall but produced more accepted hacks.",
+      "takeaway": "If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.",
+      "lessons": [
+        {
+          "point": "Monitorability scores computed on each model's own set of positives mix capability-driven task selection into the score.",
+          "excerpt": "Their g-mean² scores can therefore reflect different task mixtures.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Ranking can invert: the model that is easier to monitor on every shared task can still get the lower dataset-level score.",
+          "excerpt": "Model A can consequently receive the higher monitorability score even if, on every task where both models misbehave, Model B’s behavior is actually easier to detect.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Lower misbehavior does not mean lower deployed risk: optimizing against a monitor can increase the hacks that pass monitor-gated rejection sampling.",
+          "excerpt": "a model trained against the CoT monitor hacked less overall than the baseline but produced more accepted hacks under monitor-gated rejection sampling, because it had learned to evade the monitor.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Win/loss (Elo-style) aggregation throws away effect size; aggregation that keeps magnitude ranked better.",
+          "excerpt": "We found this poorly suited to our goal because it discards the magnitude of pairwise differences, preserving only the direction.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "monitorability",
+        "cot-monitoring",
+        "ai-control",
+        "eval-methodology",
+        "selection-bias",
+        "hodgerank"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Evaluate agent monitors on matched instances and post-gate leakage",
+        "detail": "When comparing models or harness versions behind a reviewer/monitor (e.g., an auto-review gate), compute detection rates only on tasks where both versions show the target behavior. Simulate rejection-and-retry with your real attempt budget and report the fraction of accepted outputs that are bad alongside detection rate."
+      },
+      "scores": {
+        "novelty": 62,
+        "relevance": 55,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 52.6,
+        "scored_at": "2026-10-25T16:45:20+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
+      "prior_art": "No g-mean² or monitorability-metric entries in the pool. Nearest are OpenAI's draft safety-case guidelines (don't let graders see CoT, to avoid monitor evasion) and the 'Astra ... CoT-based universal monitoring' entry. This adds metric methodology (selection-effect correction and post-control risk) rather than a policy. Note: raw capture is cut off at Figure 4, so the historical system-card results and post-control results are not captured.",
+      "related_claims": [
+        "benchmark-category-labels-can-mask-conflated-capabilities"
+      ],
+      "article_url": "https://alignment.openai.com/beyond-gmean-squared/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/beyond-g-mean-complementary-metrics-for-monitora-351af02230.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-alignment-openai-com-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Alignment Blog",
+      "id": "openai-dataset-level-g-mean-can-misrank-model-mo-b085470022",
+      "retrieved_at": "2026-10-25T16:45:20+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 6 > 4"
+        ]
+      },
       "grounding_score": 1.0
     },
     {
@@ -537,14 +624,100 @@
       "grounding_score": 1.0
     },
     {
+      "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "GRSE: credit multi-agent skills by contrasting repeated runs, not presence; recovers from planted harmful skills",
+      "source_url": "https://arxiv.org/abs/2610.27227",
+      "summary": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
+      "takeaway": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
+      "lessons": [
+        {
+          "point": "Crediting skills by co-occurrence is broken: a skill that hurts can still get rewarded if it shows up in successful runs.",
+          "excerpt": "presence is not responsibility: a harmful skill active in successful runs still earns positive credit",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Mechanism: repeat each question under identical libraries and contrast the outcomes to attribute credit, as in GRPO.",
+          "excerpt": "it executes each question several times under the same skill libraries and contrasts the executions to credit agent--skill pairs",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Contrastive credit makes self-evolution robust to poisoned skill libraries, where presence-based credit gets worse than where it started.",
+          "excerpt": "starting from planted harmful skills, it credits every planted skill with the correct sign and recovers the score of a clean library (+6.3points), whereas MASkills misattributes two and falls below its starting point.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The authors attribute the gains to better-grounded retrieval rather than unsupported answers.",
+          "excerpt": "Its gains rest on better-grounded retrieval rather than answers given without evidence",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "skill-evolution",
+        "credit-assignment",
+        "multi-agent",
+        "self-improving-agents",
+        "skill-poisoning",
+        "grpo"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Group-relative credit check before promoting or retiring a skill",
+        "detail": "For each candidate skill edit, run the same task batch N times with and without the skill (same seeds and library otherwise). Use the outcome difference as the skill's credit, and require a consistent sign before committing. Include deliberately harmful skills as canaries to confirm the credit signal flags them."
+      },
+      "scores": {
+        "novelty": 58,
+        "relevance": 65,
+        "newness": 25,
+        "credibility": 50.8,
+        "composite": 50.77,
+        "scored_at": "2026-10-25T16:45:20+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
+      "prior_art": "The archive has 'Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?' (per-skill contribution eviction, judge false-pass threshold) and 'Pre-Commit Gating against Skill Contamination' (verifier gatekeeper). GRSE differs by solving multi-agent credit assignment with GRPO-style contrastive reruns instead of judge or verifier gating, and shows it recovers from planted harmful skills. The evidence here is abstract-level only.",
+      "related_claims": [
+        "harness-evolution-gains-need-held-out-attribution"
+      ],
+      "article_url": "https://arxiv.org/abs/2610.27227",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/which-agent-s-skill-should-change-group-relative-448df04fa1.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 50.8,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
+      "retrieved_at": "2026-10-25T16:45:20+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "decisionpivot-a-diagnostic-benchmark-for-decisio-792cc8e267",
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 26,
+        "newness": 25,
         "credibility": 55.0,
-        "composite": 50.75,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 50.5,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -608,10 +781,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 26,
+        "newness": 25,
         "credibility": 75.0,
-        "composite": 49.25,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 49.0,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -815,10 +988,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 26,
+        "newness": 25,
         "credibility": 70.8,
-        "composite": 45.62,
-        "scored_at": "2026-10-25T02:36:54+00:00"
+        "composite": 45.37,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
       "verified": true,
@@ -1231,10 +1404,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 26,
+        "newness": 25,
         "credibility": 72.5,
-        "composite": 38.38,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 38.12,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -1439,6 +1612,78 @@
       "grounding_score": 1.0
     },
     {
+      "candidate_id": "strengthening-ai-safety-evaluation-through-indep-2326f3b106",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Amazon Science post on independent third-party review of its AI safety testing (article body not captured)",
+      "source_url": "https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review",
+      "summary": "Amazon Science announces that it had an independent third party (AVERI, per the RSS excerpt) assess and improve its internal safety testing of Amazon models. The captured raw file has only the title and site navigation, with no article body. Methods, findings, and what changed are therefore unknown.",
+      "takeaway": "Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.",
+      "lessons": [
+        {
+          "point": "Amazon positions external review of its internal safety-eval pipeline as the way to strengthen it; the scope and method are not in the captured text.",
+          "excerpt": "Strengthening AI safety evaluation through independent third-party review",
+          "confidence": 0.4,
+          "grounded": true
+        },
+        {
+          "point": "The framing is review of the evaluation process (meta-evaluation), not just third-party testing of the model itself.",
+          "excerpt": "independent third-party review",
+          "confidence": 0.3,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "third-party-evaluation",
+        "safety-evals",
+        "audit",
+        "amazon-nova",
+        "averi"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Re-fetch article body",
+        "detail": "The raw capture has only navigation. Re-fetch the article with a reader that extracts the main content (the body was not captured; 'AVERI' never appears in the raw), then re-analyze to see which eval gaps the review found and what Amazon changed."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 30,
+        "newness": 25,
+        "credibility": 75.0,
+        "composite": 34.0,
+        "scored_at": "2026-10-25T16:45:20+00:00"
+      },
+      "verified": false,
+      "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
+      "prior_art": "The archive has 'Third-party cyber evaluations involving OpenAI models', and the ai-security pool covers third-party evaluator failures in the OpenAI/Hugging Face incident. Without the body, nothing beyond the 'external review of lab safety evals' framing can be credited.",
+      "related_claims": [],
+      "article_url": "https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/strengthening-ai-safety-evaluation-through-indep-2326f3b106.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-amazon-science-index-rss",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Amazon Science",
+      "id": "amazon-science-post-on-independent-third-party-r-7795a9dd9e",
+      "retrieved_at": "2026-10-25T16:45:20+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: takeaway_sentences 2 > 1"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "bound-conditioned-latent-inference-for-progressi-6860d502a8",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -1479,10 +1724,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 26,
+        "newness": 25,
         "credibility": 72.0,
-        "composite": 30.8,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 30.55,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -1552,10 +1797,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 26,
+        "newness": 25,
         "credibility": 53.2,
-        "composite": 29.48,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 29.23,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -1634,10 +1879,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 26,
+        "newness": 25,
         "credibility": 55.0,
-        "composite": 26.75,
-        "scored_at": "2026-10-25T02:36:54+00:00"
+        "composite": 26.5,
+        "scored_at": "2026-10-25T16:45:20+00:00"
       },
       "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
       "verified": true,

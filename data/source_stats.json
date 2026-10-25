@@ -4,19 +4,19 @@
     "curated": 0
   },
   "github_query:mcp-protocol-or-mcp-specification": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 0
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 7,
+    "ingested": 8,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 11,
-    "curated": 3
+    "ingested": 13,
+    "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 12,
+    "ingested": 13,
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
@@ -29,6 +29,10 @@
   },
   "research_index:https-www-anthropic-com-research": {
     "ingested": 6,
+    "curated": 1
+  },
+  "rss:https-alignment-openai-com-rss-xml": {
+    "ingested": 1,
     "curated": 1
   },
   "rss:https-arstechnica-com-security-feed": {
@@ -72,7 +76,7 @@
     "curated": 2
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 9,
+    "ingested": 11,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -103,6 +107,14 @@
     "ingested": 8,
     "curated": 4
   },
+  "rss:https-www-amazon-science-index-rss": {
+    "ingested": 1,
+    "curated": 0
+  },
+  "rss:https-www-bleepingcomputer-com-feed": {
+    "ingested": 1,
+    "curated": 0
+  },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
     "ingested": 7,
     "curated": 1
@@ -110,6 +122,10 @@
   "rss:https-www-imperva-com-blog-feed": {
     "ingested": 3,
     "curated": 0
+  },
+  "rss:https-www-microsoft-com-en-us-security-blog-feed": {
+    "ingested": 9,
+    "curated": 3
   },
   "rss:https-www-securityweek-com-feed": {
     "ingested": 1,

@@ -257,3 +257,18 @@ def test_main_records_a_verified_domain_proposal(sandbox):
     m.main()
     rows = c.load_json(tp.proposals_file())
     assert [r["key"] for r in rows] == ["ai-security/agent-payments"]
+
+
+def test_a_list_of_mitigations_is_merged_as_one_string(sandbox):
+    e = make_entry(mitigations=["Upgrade lmcache", " Restrict ZeroMQ to localhost "], threat="RCE")
+    merged, errors, _, _ = m.merge([e], c.load_config())
+    assert not errors
+    assert merged[0]["mitigations"] == "Upgrade lmcache; Restrict ZeroMQ to localhost"
+    assert merged[0]["threat"] == "RCE"
+
+
+def test_the_site_renders_a_legacy_list_of_mitigations():
+    import generate_site
+
+    out = generate_site._entry_tcm_md({"mitigations": ["Upgrade", "Restrict egress"]})
+    assert "- **Mitigations:** Upgrade; Restrict egress" in out

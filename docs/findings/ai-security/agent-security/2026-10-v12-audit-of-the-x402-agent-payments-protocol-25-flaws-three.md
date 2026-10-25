@@ -19,7 +19,7 @@ V12 reviewed the x402 codebase, which lets AI agents pay for resources by signin
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [source](https://v12.sh/blog/x402)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 26 · Novelty 50 · Relevance 70 · Credibility 55 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 25 · Novelty 50 · Relevance 70 · Credibility 55 · **Composite 50** _(each 0-100)_  
 **Tags:** `x402`, `agent-payments`, `solana`, `sign-in-with-x`, `wallet-security`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Agent-payment protocols are new; no earlier pool entry audits one, though generic signature-phishing and approval-vs-transfer confusion are known in DeFi. Verifier: General agent-payment and wallet-signing flaw classes (EIP-4361 SIWE phishing, unlimited approvals); Solana instruction-type confusion bugs. Delta: specific x40  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

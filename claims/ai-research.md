@@ -209,11 +209,13 @@ _Tags: `llm-as-judge`, `eval-bias`, `evals`_
 
 **Conditions —** Demonstrated specifically for WMDP and BBQ within one 16-benchmark, 100-model study; may not generalize to all benchmarks labeled 'safety'.
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [BenchMIRT: What are LLM benchmarks actually measuring?](https://huggingface.co/blog/allenai/benchmirt) | Sep 1, 2026 |
+| supports | [Policy Is Not Capability: Some Safety Benchmarks Measure Which Definition of "Unsafe" You Trained On](https://arxiv.org/abs/2610.25060) | Oct 18, 2026 |
+| supports | [Beyond g-mean²: complementary metrics for monitorability](https://alignment.openai.com/beyond-gmean-squared/) | Oct 20, 2026 |
 
 </details>
 
