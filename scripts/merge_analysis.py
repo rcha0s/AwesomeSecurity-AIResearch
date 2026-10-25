@@ -179,8 +179,22 @@ def save_readability_notes(notes: list[str], drafts: dict | None, analyzed: int)
         fh.write(head + "\n".join(notes) + "\n")
 
 
+TCM_FIELDS = ("threat", "conditions", "mitigations")
+
+
+def tcm_text(value):
+    """One string for a threat/conditions/mitigations field. Sessions sometimes
+    write a list of items (2026-10-25: 13 entries crashed generate_site)."""
+    if isinstance(value, list):
+        return "; ".join(str(v).strip() for v in value if str(v).strip())
+    return value
+
+
 def normalize_entry(entry: dict, conf: c.Config) -> dict:
     entry = dict(entry)
+    for key in TCM_FIELDS:
+        if key in entry:
+            entry[key] = tcm_text(entry[key])
     for key in ("source_url", "article_url", "tweet_url"):
         if entry.get(key):
             entry[key] = c.clean_source_url(entry[key])
