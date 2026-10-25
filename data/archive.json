@@ -30456,5 +30456,810 @@
       ]
     },
     "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "aport-vault-benchmarking-ai-agent-payment-author-8ec4f174d8",
+    "topic": "ai-security",
+    "domain": "ais.agent-security",
+    "title": "APort Vault: across 14 models, human-written CTF attacks got 140 forbidden payments through the model alone and 0 behind a deterministic pre-action policy check",
+    "source_url": "https://arxiv.org/abs/2609.22076",
+    "summary": "APort Vault replays 4,371 human-written attacks from a public capture-the-flag event against a payment agent, across 14 models, in about 226,000 evaluations. With the model alone, 140 of 76,842 transfers went to recipients the policy did not allow. Behind a deterministic pre-action check (the Open Agent Passport spec), that dropped to 0 of 69,297. The check did not get there by blocking payments: over 25,000 payments still went through, and it denied only 187 of 25,640 transfer calls.",
+    "lessons": [
+      {
+        "point": "A deterministic authorization check before the payment tool runs stopped every forbidden-recipient transfer that the models alone let through.",
+        "excerpt": "transfers to recipients the passport did not permit number 140 of 76,842 with the model alone and 0 of 69,297 behind the layer",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The models themselves are not a reliable gate: most strong attack prompts got a payment request out of every model tested.",
+        "excerpt": "809 prompts (62.6%) elicited a request from all fourteen models",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The policy layer kept the agent useful: legitimate payments kept flowing and very few transfer calls were denied.",
+        "excerpt": "It was not obtained by refusing payments: 25,370 payments executed behind the layer",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Agent benchmarks should report separate events (request, call, execution, denial) instead of one collapsed attack-success number.",
+        "excerpt": "We report five distinct events per evaluation, because collapsing them is how an agent benchmark produces a number that does not survive review.",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "takeaway": "For agents that move money, put a deterministic policy check on the tool call itself; model choice and prompting do not stop injected payments.",
+    "tags": [
+      "agent-payments",
+      "pre-action-authorization",
+      "deterministic-policy",
+      "benchmark",
+      "ctf",
+      "prompt-injection",
+      "tool-use"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Gate side-effecting agent tools with a deterministic pre-action policy",
+      "detail": "Before any payment or transfer tool executes, check its arguments in code against a per-agent policy (allowed recipients, amount limits, levels) outside the model, and deny on mismatch. Log request, call, policy decision, and execution as separate events. Test the gate by replaying the released APort Vault attack set (huggingface.co/datasets/aporthq/vault-benchmark-v1) against your agent."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 78,
+      "newness": 5,
+      "credibility": 51.6,
+      "composite": 48.89,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": false,
+    "verify_note": "Verifier: lesson on 809 prompts misreads Level 4 (payments went to allowlisted recipients); the five logged events are not named in the source; the 140 vs 0 figures cover Levels 2-4 only.",
+    "prior_art": "V12 audit of the x402 agent-payments protocol (payee allowlists and spend limits).",
+    "related_claims": [
+      "model-internal-refusal-is-not-a-security-boundary",
+      "prompt-injection-is-containment-not-prevention",
+      "dual-llm-pattern-mitigates-injection-blast-radius"
+    ],
+    "threat": "Prompt-injected or socially engineered payment agents sending funds to recipients outside their mandate.",
+    "conditions": "Tool-using agent with payment/transfer tools whose recipient and amount limits are enforced only by the model or its prompt.",
+    "mitigations": "Deterministic pre-action authorization on tool arguments (recipient allowlist, limits) enforced outside the model; per-event logging.",
+    "article_url": "https://arxiv.org/abs/2609.22076",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-18",
+    "raw_path": "data/_raw/aport-vault-benchmarking-ai-agent-payment-author-8ec4f174d8.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 51.6,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Hugging Face Daily Papers",
+    "id": "aport-vault-14-models-140-forbidden-payments-got-41b07c7b2d",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title, lessons[1].point, lessons[2].point",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 24 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "introducing-the-life-sciences-verification-progr-9382b7fd83",
+    "topic": "ai-security",
+    "domain": "ais.guardrails",
+    "title": "Anthropic's Life Sciences Verification Program trades real-time bio refusals for vetted access plus offline, use-case-scoped misuse monitoring",
+    "source_url": "https://www.anthropic.com/news/life-sciences-verification-program",
+    "summary": "Anthropic now gives vetted life-science organizations access to its models with looser biology safeguards. A 'High-risk Use' grant removes all life-sciences blocking for a single project, renewed every six months. In place of per-request blocking, Anthropic monitors traffic offline against each organization's declared use cases, keeps flagged data 30 days, and escalates to the organization's admins; cyber classifiers stay on.",
+    "lessons": [
+      {
+        "point": "For vetted users, safeguards move from blocking each request to reviewing patterns of behavior offline.",
+        "excerpt": "we are shifting safeguards from real-time blocking, where we reject potentially harmful access at the time of each request, to offline monitoring",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The reason given: serious misuse is split across requests and sessions, so a per-request filter misses it.",
+        "excerpt": "Serious misuse is often spread across many requests and sessions to look disconnected and evade detection.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Monitoring is scoped to the use cases each organization declares, so out-of-scope use is what gets flagged.",
+        "excerpt": "Each entity’s access is tied to the use cases it has specified in its grant applications",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The High-risk grant removes life-sciences blocking entirely, so access compromise and insider threats become the main risks the program must manage.",
+        "excerpt": "It removes all safeguards that block life sciences requests.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Frontier providers are replacing refusals with vetted access plus behavior monitoring for dual-use domains, which makes account security and declared scope the real control.",
+    "tags": [
+      "trusted-access",
+      "biosecurity",
+      "dual-use",
+      "misuse-monitoring",
+      "safety-classifiers",
+      "insider-threat",
+      "anthropic"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Treat LSVP-enabled accounts as high-value credentials",
+      "detail": "If your organization enrolls in LSVP, write narrow use-case descriptions and give High-risk grants per project only. Harden those accounts against takeover with phishing-resistant multi-factor authentication (MFA) and scoped API keys. Define an internal triage owner for Anthropic's flagged-usage notices within the agreed timeframe. Limit long-running agents on High-risk grants, since agent misuse is a stated threat model."
+    },
+    "scores": {
+      "novelty": 50,
+      "relevance": 35,
+      "newness": 5,
+      "credibility": 70.8,
+      "composite": 37.37,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "Trusted-access / cyber verification programs; no prior entry on bio tiered grants.",
+    "related_claims": [],
+    "threat": "Vetted access with bio safeguards removed being diverted via account takeover, insiders, or agents acting beyond intent.",
+    "conditions": "Organization holds Standard or High-risk LSVP grants with permissive or removed biology classifiers.",
+    "mitigations": "Use-case-scoped offline monitoring, 30-day retention of flagged data, admin escalation, per-project High-risk grants with six-month renewal; cyber classifiers stay on.",
+    "article_url": "https://www.anthropic.com/news/life-sciences-verification-program",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-17",
+    "raw_path": "data/_raw/introducing-the-life-sciences-verification-progr-9382b7fd83.txt",
+    "discovered_via": "sitemap",
+    "source_id": "research_index:https-www-anthropic-com-news",
+    "source_rank": 70.8,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "Anthropic News",
+    "id": "anthropic-s-life-sciences-verification-program-t-c7238119c5",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted actionable.title",
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "so-i-asked-my-agent-instead-e16b3d9dca",
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "Snyk launches an Evo MCP server for querying AI-asset inventory and policies, with role-scoped tools and approval-gated writes",
+    "source_url": "https://snyk.io/blog/so-i-asked-my-agent-instead/",
+    "summary": "Snyk released a remote MCP server for its Evo product. It lets an agent query an organization's AI assets (models, MCP servers, skills, and which developer machine they sit on), risk scores, policies, and violations. Its safety design has three parts. It runs as the user over OAuth, and write tools are hidden from roles that cannot edit policy and need client-side approval. Query tools only expose fields the user may see. This is a product announcement; it shows a useful pattern for exposing security data to agents but gives no independent evaluation.",
+    "lessons": [
+      {
+        "point": "Scope the tool list to the caller's role: tools a user cannot use should not be listed at all, not just refused at call time.",
+        "excerpt": "Of the eight tools, six read and two write, and if your role does not allow policy editing, the two write tools are not listed for you.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Write actions from an agent should show a preview and require explicit human approval in the client.",
+        "excerpt": "When an agent tries to create or update a policy, Evo previews the change and sends an approval request to your client.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Restricting the query schema to entitled fields keeps the agent from guessing at or reaching data it should not see.",
+        "excerpt": "Fields you are not entitled to query are not returned and are not in the tool's input schema.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Chaining MCP servers (inventory plus ticketing) lets an agent act in other systems, so the agent's real power is bounded by permissions granted to the other servers.",
+        "excerpt": "Snyk does not provide or support those servers, and what the flow can do depends on the permissions you have granted to your ticketing MCP Server",
+        "confidence": 0.75,
+        "grounded": true
+      }
+    ],
+    "takeaway": "If you expose security data to agents through MCP, scope tools and schemas per user and gate writes with approval; the product itself is vendor marketing.",
+    "tags": [
+      "mcp-server",
+      "ai-asset-inventory",
+      "ai-bom",
+      "least-privilege",
+      "human-in-the-loop",
+      "vendor-announcement",
+      "oauth"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Apply role-scoped tool lists and approval-gated writes to internal MCP servers",
+      "detail": "For any MCP server you build over sensitive data, authenticate as the end user via OAuth. Omit write tools from the tool list for roles that lack write permission. Generate per-user input schemas that exclude non-entitled fields. Require a preview plus client-side approval before any write."
+    },
+    "scores": {
+      "novelty": 20,
+      "relevance": 35,
+      "newness": 5,
+      "credibility": 48.3,
+      "composite": 24.99,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "Snyk Evo Agentic AppSec; standard MCP least-privilege and human-in-the-loop guidance.",
+    "related_claims": [],
+    "article_url": "https://snyk.io/blog/so-i-asked-my-agent-instead/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-22",
+    "raw_path": "data/_raw/so-i-asked-my-agent-instead-e16b3d9dca.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-snyk-io-blog-feed",
+    "source_rank": 48.3,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "Snyk Blog",
+    "id": "snyk-launches-an-evo-mcp-server-for-querying-ai-a39896efc7",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted takeaway",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: summary_sentences 6 > 4"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "memtensor-npm-and-pypi-packages-hit-by-a-go-worm-0f811495ba",
+    "topic": "product-security",
+    "domain": "ps.supply-chain",
+    "title": "MemTensor's @memtensor/memos-cloud-openclaw-plugin (npm 0.1.21, 0.1.23, 0.1.25) and MemoryOS (PyPI 2.0.34) shipped the 'sckit' Go worm after publish tokens were stolen through BASH_ENV in GitHub Actions release jobs",
+    "source_url": "https://safedep.io/memtensor-sckit-worm-npm-pypi",
+    "summary": "An attacker with push access pushed unmerged commits that made an earlier step in MemTensor's release job write BASH_ENV into $GITHUB_ENV. That made the publish step run the attacker's script first, which handed the npm or PyPI token to a Go implant and then failed the step. The malicious versions launch the implant at load time (gateway start, memory recall, or logging setup), so --ignore-scripts does not help; it harvests credentials from $HOME and has code to spread into repositories and packages those credentials reach.",
+    "lessons": [
+      {
+        "point": "Any step earlier in a publish job can hijack the publish step's shell by writing BASH_ENV into $GITHUB_ENV.",
+        "excerpt": "Bash reads and runs the file named in `BASH_ENV` before any non-interactive script.",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "Load-time payloads bypass install-hook controls.",
+        "excerpt": "No install hook is involved, so `--ignore-scripts` does not help.",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "Release workflows built commits never merged to main; protected tags and a required reviewer on the release environment would have blocked them.",
+        "excerpt": "Protected tags and a required reviewer on the release environment would have blocked those runs.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The implant is a worm: it reuses stolen credentials to write itself into other reachable repositories and packages.",
+        "excerpt": "It also includes the code it needs to copy itself into other repositories and packages that the stolen credentials can reach.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Publish jobs that build arbitrary refs with a long-lived registry token in scope are token-theft machines; restrict releases to protected, reviewed refs and use trusted publishing so there is no token to steal.",
+    "tags": [
+      "supply-chain",
+      "npm",
+      "pypi",
+      "worm",
+      "github-actions",
+      "ci-token-theft",
+      "bash-env",
+      "import-time-payload",
+      "credential-theft",
+      "openclaw"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Audit installs for sckit indicators of compromise and lock down release workflows",
+      "detail": "If you installed @memtensor/memos-cloud-openclaw-plugin 0.1.21/0.1.23/0.1.25 or MemoryOS 2.0.34: pin 0.1.20 / 2.0.33, kill sckit processes, delete $HOME/.openclaw/.cache/runtime and $HOME/.memos/.cache/runtime, rotate every credential reachable from $HOME and the environment, and check repos you can push to for runtime-update.yml or a .sckit/ directory. For your own release workflows: only publish from protected tags or main, add a required reviewer on the release environment, move to npm/PyPI trusted publishing, and publish provenance attestations."
+    },
+    "scores": {
+      "novelty": 60,
+      "relevance": 85,
+      "newness": 5,
+      "credibility": 50.8,
+      "composite": 52.37,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "ChainDrop and keyv Mini Shai-Hulud npm worms; no prior BASH_ENV-via-GITHUB_ENV publish-step hijack.",
+    "related_claims": [
+      "import-time-payloads-defeat-install-time-controls",
+      "ignore-scripts-blocks-npm-supply-chain",
+      "package-installers-run-arbitrary-code-by-default"
+    ],
+    "threat": "Stolen CI publish tokens used to ship a credential-stealing, self-spreading Go implant that runs when the package loads.",
+    "conditions": "Release workflow builds attacker-pushable refs with a long-lived NPM_TOKEN/PYPI_API_TOKEN in scope; consumers install the affected versions and load them.",
+    "mitigations": "Pin clean versions, rotate credentials, remove sckit state directories; for maintainers: trusted publishing, protected tags, required reviewers on release environments, provenance attestations.",
+    "article_url": "https://safedep.io/memtensor-sckit-worm-npm-pypi",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-23",
+    "raw_path": "data/_raw/memtensor-npm-and-pypi-packages-hit-by-a-go-worm-0f811495ba.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-safedep-io-rss-xml",
+    "source_rank": 50.8,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "SafeDep",
+    "id": "memtensor-s-memtensor-memos-cloud-openclaw-plugi-acd4337ffb",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": false,
+    "readability_rewrite": "reverted title, takeaway, summary, actionable.detail",
+    "readability": {
+      "score": 67,
+      "passed": false,
+      "issues": [
+        "mild: sentence_words 47 > 45 (If you installed @memtensor/memos-cloud-openclaw-plugin 0.1.21/0.1.23/0.1.25 or MemoryOS 2.0.34: pin 0.1.20 / 2.0.33, ki)",
+        "severe: title_words 28 > 24"
+      ]
+    },
+    "readability_hold": "readability: title_words 28 > 24",
+    "grounding_score": 1.0,
+    "story_corroboration": [
+      {
+        "name": "StepSecurity",
+        "url": "https://www.stepsecurity.io/blog/sckit-supply-chain-worm-hits-memtensor-npm-pypi-scopes",
+        "tier": "medium",
+        "published": null
+      }
+    ]
+  },
+  {
+    "candidate_id": "http-3-in-burp-suite-it-s-time-to-find-a-bigger-72313b014d",
+    "topic": "product-security",
+    "domain": "ps.appsec",
+    "title": "Turbo Intruder adds HTTP/3 engine (100k+ requests per second), HTTP/3 race-condition techniques and downgrade header injection; adapter brings HTTP/3-only targets into Burp",
+    "source_url": "https://portswigger.net/research/http3-in-burp-suite",
+    "summary": "PortSwigger added HTTP/3 support to Turbo Intruder, which reached about 100,000 requests per second from a laptop over Wi-Fi and about 180,000 from a cloud box. The new engine includes two HTTP/3 race-condition techniques, the Single Datagram Attack and QPACK blocked-streams orchestration, which hit smaller race windows than the single-packet attack. It also supports header injection when a server downgrades HTTP/3 to HTTP/1, and an HTTP/3 Adapter extension lets all Burp tools test sites that only speak HTTP/3.",
+    "lessons": [
+      {
+        "point": "HTTP/3 sharply raises fuzzing throughput compared with the earlier HTTP/1.1 record of 30,000 requests per second.",
+        "excerpt": "I was able to hit 100,000 RPS to a remote host over Wi-Fi.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "HTTP/3-specific race techniques give tighter request grouping than the single-packet attack, so smaller race windows become exploitable.",
+        "excerpt": "if the target supports HTTP/3 so you can hit smaller race windows",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Front ends that downgrade HTTP/3 to HTTP/1 can be tested for CRLF header injection that leads to request smuggling.",
+        "excerpt": "This would attempt to inject the `Transfer-Encoding: chunked` header once the target downgrades the request from HTTP/3 to HTTP/1.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Sites that only speak HTTP/3 were an untested surface for Burp users until now.",
+        "excerpt": "This means that you can now test sites that only support HTTP/3 and reach a new attack surface that was previously hidden.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "HTTP/3 endpoints and HTTP/3-to-HTTP/1 downgrade paths can now be fuzzed and race-tested with standard tooling, so they belong in application security test scope.",
+    "tags": [
+      "http3",
+      "quic",
+      "race-conditions",
+      "request-smuggling",
+      "burp-suite",
+      "fuzzing",
+      "tooling"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Add HTTP/3 race and downgrade tests with Turbo Intruder HTTP3 engine",
+      "detail": "Install the updated Turbo Intruder and HTTP/3 Adapter from the BApp store. For HTTP/3-capable targets, rerun race-condition tests with race-http3.py (Engine.HTTP3, gateMode='auto'), and probe HTTP/3-to-HTTP/1 downgrades with kettled requests (engine.queue(target.req, kettled=True)) injecting ^~Transfer-Encoding:^schunked. Use the adapter's 'Always HTTP/3 where possible' mode to find HTTP/3-only origins."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 75,
+      "newness": 5,
+      "credibility": 73.2,
+      "composite": 51.23,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "No HTTP/3/QUIC entry; outside the pool, PortSwigger single-packet attack (2023) and HTTP/2 downgrade smuggling (Kettle 2021).",
+    "related_claims": [],
+    "threat": "Race conditions with tiny windows and HTTP/3-to-HTTP/1 downgrade header injection (request smuggling) on HTTP/3-enabled front ends.",
+    "conditions": "Target serves HTTP/3; front end downgrades to HTTP/1 for the back end; state-changing endpoints with TOCTOU windows.",
+    "mitigations": "Strip or reject CR/LF and pseudo-header anomalies on downgrade, avoid HTTP/1 back-end downgrades, use atomic/locked state transitions for limit-enforcing endpoints.",
+    "article_url": "https://portswigger.net/research/http3-in-burp-suite",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-23",
+    "raw_path": "data/_raw/http-3-in-burp-suite-it-s-time-to-find-a-bigger-72313b014d.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-portswigger-net-research-rss",
+    "source_rank": 73.2,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "PortSwigger Research",
+    "id": "turbo-intruder-adds-http-3-engine-100k-requests-68746aa8d4",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted summary, actionable.detail",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 23 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "from-exposure-to-lockdown-how-aws-neutralizes-co-4994a186a1",
+    "topic": "product-security",
+    "domain": "ps.cloud-infra",
+    "title": "Unit 42: AWS auto-attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to public GitHub, and CloudTrail logs it as the victim user",
+    "source_url": "https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/",
+    "summary": "Unit 42 pushed a test AWS IAM (Identity and Access Management) access key to a public GitHub repo. Through GitHub's secret scanning partner program, AWS attached the AWSCompromisedKeyQuarantineV3 managed policy within 10 seconds, then raised a Health alert, an email and a Support case. In CloudTrail the attach event appears as AttachUserPolicy performed by the exposed IAM user itself, and the Health alert and Support case leave no CloudTrail event.",
+    "lessons": [
+      {
+        "point": "AWS quarantine of keys leaked to public GitHub is near-instant and automatic via the GitHub secret scanning partnership.",
+        "excerpt": "AWS attached the AWSCompromisedKeyQuarantineV3 managed policy within 10 seconds of the access key exposure",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The quarantine attach is attributed in CloudTrail to the exposed IAM user, not to AWS, which leads investigators to think the user acted.",
+        "excerpt": "The CloudTrail log did not indicate this was an AWS automated action.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Detect quarantine events by alerting on AttachUserPolicy where the PolicyArn names the quarantine policy.",
+        "excerpt": "The name of the managed policy will be present within the requestparameters subfield PolicyArn.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The Health alert and Support case are invisible in CloudTrail, so security teams relying only on CloudTrail or missing the account emails may not see them.",
+        "excerpt": "This action did not generate an event in the CloudTrail logs.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Alert on AttachUserPolicy with any AWSCompromisedKeyQuarantine PolicyArn; it is the one CloudTrail signal that AWS found your key exposed, and it is misattributed to the user.",
+    "tags": [
+      "aws",
+      "iam",
+      "access-keys",
+      "secret-scanning",
+      "github",
+      "cloudtrail",
+      "detection-engineering",
+      "credential-exposure"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Alert on AWSCompromisedKeyQuarantine attachments",
+      "detail": "Create a detection on CloudTrail eventSource iam.amazonaws.com, eventName AttachUserPolicy, where requestParameters.policyArn contains AWSCompromisedKeyQuarantine (any version). Treat the userIdentity as the affected user, not the actor. Route AWS Support cases and Health events (for example via AWS Systems Manager Explorer) to the security team, then rotate the key and investigate its prior activity. Do not just detach the policy."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 72,
+      "newness": 5,
+      "credibility": 77.5,
+      "composite": 50.97,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "No pool entry on AWSCompromisedKeyQuarantine; nearest is Datadog pathrunner IAM/CloudTrail entry.",
+    "related_claims": [
+      "long-lived-cloud-credentials-are-obsolete"
+    ],
+    "threat": "Long-term IAM user access keys exposed in public repositories or environment files are abused for initial access.",
+    "conditions": "IAM user access key pushed to a public GitHub repository covered by the secret scanning partner program (push protection was bypassed in the test).",
+    "mitigations": "Avoid long-term access keys and apply least privilege; keep GitHub push protection; alert on quarantine-policy attachment; aggregate AWS Support cases for security visibility.",
+    "article_url": "https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-21",
+    "raw_path": "data/_raw/from-exposure-to-lockdown-how-aws-neutralizes-co-4994a186a1.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+    "source_rank": 77.5,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "source_name": "Palo Alto Networks Unit 42",
+    "id": "aws-auto-attaches-awscompromisedkeyquarantinev3-8e113600af",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 23 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "ghsa-5f42-97gr-vfhq-3732c36337",
+    "topic": "product-security",
+    "domain": "ps.identity",
+    "title": "Moquette MQTT broker: clientId wildcard injection into pattern ACLs gives cross-tenant read/write, plus pre-auth broker crash, Will-message authorization bypass and fail-open auth (GHSA-5f42-97gr-vfhq, CVE-2026-85724)",
+    "source_url": "https://github.com/advisories/GHSA-5f42-97gr-vfhq",
+    "summary": "The Moquette MQTT broker substitutes the raw client ID and username into pattern access-control rules, then wildcard-matches them. A client that connects with client ID \"+\" turns the rule sensor/%c/# into sensor/+/#, and gets read and write access to every tenant's topics. The same audit found a broker-wide crash from malformed input, Will messages published without authorization checks, and authentication that fails open if its class cannot load.",
+    "lessons": [
+      {
+        "point": "Substituting an untrusted identifier into an access rule that is later pattern-matched is an injection bug: MQTT wildcard characters in the client ID widen the rule to every tenant.",
+        "excerpt": "the clientId/username is substituted raw into a pattern ACL rule and then wildcard-matched, and the clientId is never validated for MQTT wildcard characters +/# at CONNECT",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "One uncaught exception on a shared, never-restarted event loop takes down every client on the broker, so trivially malformed packets become a whole-broker denial of service.",
+        "excerpt": "catches only InterruptedException and is never restarted (SessionEventLoopGroup), so any uncaught exception on it wedges every co-located client",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Side channels for publishing (the Last-Will message) skipped the authorization checks applied to normal PUBLISH, so every publish path must go through the same check.",
+        "excerpt": "Last-Will topic is published (PostOffice.publishWill) without canWrite/reserved-topic checks used for normal PUBLISH.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "If the configured authenticator or authorizer class fails to load, the broker silently falls back to permit-all instead of refusing to start.",
+        "excerpt": "Fail-open if authenticator/authorizator class fails to load -> PermitAll/AcceptAll",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Anywhere a user-controlled identity goes into a pattern-matched access rule, escape or reject the pattern's metacharacters, or one tenant can claim everyone's data.",
+    "tags": [
+      "mqtt",
+      "iot",
+      "multi-tenant",
+      "acl-bypass",
+      "authorization",
+      "wildcard-injection",
+      "denial-of-service",
+      "fail-open",
+      "java"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Upgrade Moquette and audit pattern-ACL deployments",
+      "detail": "Upgrade maven io.moquette:moquette-broker to v0.18.1 (the release referenced by the advisory). If you use pattern ACL rules with %c or %u, check broker logs for clients that connected with client IDs or usernames containing + or #. Disable anonymous access, and confirm the broker refuses to start (not permit-all) if your authenticator or authorizer class is missing."
+    },
+    "scores": {
+      "novelty": 60,
+      "relevance": 65,
+      "newness": 5,
+      "credibility": 70.0,
+      "composite": 49.25,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "etcd Watch API skipped the range authorization Range/Get apply (archive); no MQTT/Moquette entry.",
+    "related_claims": [],
+    "threat": "Any MQTT client, including anonymous ones, reads and injects messages on other tenants' topics, crashes the broker, or corrupts another client's durable queue.",
+    "conditions": "Pattern ACL rules using %c/%u configured (for the cross-tenant bypass); network reachability to the broker. DoS needs no special config.",
+    "mitigations": "Upgrade to 0.18.1; reject +/# in client IDs and usernames at CONNECT; apply authorization to Will publishes; add resource caps; fail closed on auth-class load errors.",
+    "article_url": "https://github.com/advisories/GHSA-5f42-97gr-vfhq",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-23",
+    "raw_path": "data/_raw/ghsa-5f42-97gr-vfhq-3732c36337.txt",
+    "discovered_via": "github",
+    "source_id": null,
+    "source_rank": 70.0,
+    "source_topics": [],
+    "source_name": "GitHub Advisory Database",
+    "id": "moquette-broker-clientid-wildcard-injection-into-d811b664c0",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": false,
+    "readability_rewrite": "reverted title, summary",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 24 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "ghsa-rr49-f9g6-c9r5-5ea8ef7b1b",
+    "topic": "product-security",
+    "domain": "ps.appsec",
+    "title": "plone.app.portlets Classic portlet TALES expression injection gives any authenticated user RCE (GHSA-rr49-f9g6-c9r5, CVE-2026-57149; fixed in 7.0.2, 6.0.4, 5.0.8)",
+    "source_url": "https://github.com/advisories/GHSA-rr49-f9g6-c9r5",
+    "summary": "Plone's Classic portlet built a TALES (Template Attribute Language Expression Syntax) path from user-supplied template and macro fields, then evaluated it as a full expression. That lets a user who can edit a Classic portlet run arbitrary code in the Plone server process. With the default roles, regular users can do this on their personal dashboard, so any logged-in user can reach it (CVSS 9.9).",
+    "lessons": [
+      {
+        "point": "A field meant to hold a template path was evaluated as a full expression, turning path input into code execution (eval injection, CWE-95).",
+        "excerpt": "Because the value was interpreted as a full TALES expression, a user able to add or edit a Classic portlet could supply a crafted value that escapes simple path traversal and is evaluated as arbitrary code.",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "The default role map gives regular users this permission on their own dashboard, so the bar is just being logged in.",
+        "excerpt": "with the default role map, includes regular users on their personal dashboard",
+        "confidence": 0.95,
+        "grounded": true
+      },
+      {
+        "point": "Fixed versions are 7.0.2 (Plone 6.2), 6.0.4 (Plone 6.1) and 5.0.8 (Plone 6.0); the stopgap is removing ManageOwnPortlets from untrusted roles.",
+        "excerpt": "remove the `plone.app.portlets.ManageOwnPortlets` permission from untrusted roles",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Never evaluate user-editable configuration as a template expression; on Plone, upgrade plone.app.portlets now, because any authenticated user can get server-side code execution.",
+    "tags": [
+      "plone",
+      "zope",
+      "python",
+      "template-injection",
+      "eval-injection",
+      "rce",
+      "privilege-escalation",
+      "cms"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Upgrade plone.app.portlets to 7.0.2 / 6.0.4 / 5.0.8",
+      "detail": "Affected: plone.app.portlets >=7.0.0 <=7.0.1, >=6.0.0 <=6.0.3, >=5.0.0 <=5.0.7. Upgrade to 7.0.2 (Plone 6.2), 6.0.4 (Plone 6.1) or 5.0.8 (Plone 6.0). If you cannot upgrade, remove plone.app.portlets.ManageOwnPortlets from untrusted roles, or blank out the classic.pt template via portal_view_customizations. Review existing Classic portlets for odd template/macro values."
+    },
+    "scores": {
+      "novelty": 30,
+      "relevance": 60,
+      "newness": 5,
+      "credibility": 70.0,
+      "composite": 38.75,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "Server-side template/eval injection is a known class; nearest pool entry is Oh My Posh template re-rendering command execution.",
+    "related_claims": [],
+    "threat": "Low-privilege authenticated user runs arbitrary code as the Plone process.",
+    "conditions": "Vulnerable plone.app.portlets version; user can add or edit a Classic portlet (default for personal dashboards).",
+    "mitigations": "Upgrade; remove ManageOwnPortlets from untrusted roles; unregister or blank the Classic portlet.",
+    "article_url": "https://github.com/advisories/GHSA-rr49-f9g6-c9r5",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-23",
+    "raw_path": "data/_raw/ghsa-rr49-f9g6-c9r5-5ea8ef7b1b.txt",
+    "discovered_via": "github",
+    "source_id": null,
+    "source_rank": 70.0,
+    "source_topics": [],
+    "source_name": "GitHub Advisory Database",
+    "id": "plone-app-portlets-classic-portlet-template-expr-02415c343a",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title, summary, lessons[0].point",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 20 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "summary-of-metr-s-predeployment-evaluation-of-cl-6f5117d000",
+    "topic": "ai-research",
+    "domain": "air.models",
+    "title": "METR: Claude Opus 5.5 is an on-trend, modest AI R&D gain over Fable 5.1, unlikely to fully automate AI R&D; Anthropic's own development estimated ~1.5x accelerated by AI",
+    "source_url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
+    "summary": "METR tested Claude Opus 5.5 before release on five long-horizon AI research tasks. It found a modest, on-trend, incremental improvement over Fable 5.1, not a jump, and judged the model unlikely to fully automate AI research and development. A separate METR team estimated ~1.5x overall acceleration of Anthropic's capabilities work due to AI, with a 30% chance of 2x, but for an unspecified time period.",
+    "lessons": [
+      {
+        "point": "On METR's quantitative tasks, Opus 5.5 is an incremental step over Fable 5.1, not a discontinuous jump.",
+        "excerpt": "Claude Opus 5.5 is an incremental improvement above Fable 5.1 on our quantitative evaluations, rather than a discontinuous jump.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "METR believes full automation of AI R&D needs better research judgement (foresight, prediction, building one's own feedback loops), and sees no large gain there.",
+        "excerpt": "full automation of AI R&D will require large improvements in foresight, prediction, creating one’s own feedback loops",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "The AI-acceleration figure for Anthropic's own R&D is a second-hand estimate with no stated time window, so treat it loosely.",
+        "excerpt": "~1.5X overall acceleration in capabilities due to AI (i.e. 1.5 years in 1 year), with perhaps 30% chance of 2X acceleration.",
+        "confidence": 0.55,
+        "grounded": true
+      },
+      {
+        "point": "The summary is not fully independent: Anthropic reviewed and edited the text before release.",
+        "excerpt": "We drafted the initial summary, and then Anthropic had the opportunity to review and edit the text.",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Plan around Opus 5.5 as a modest upgrade that speeds up researchers, not as a model that can run open-ended research on its own judgement.",
+    "tags": [
+      "metr",
+      "predeployment-evaluation",
+      "ai-rnd-acceleration",
+      "claude-opus-5-5",
+      "long-horizon-tasks",
+      "third-party-evals"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Keep humans on judgement-heavy research steps when adopting Opus 5.5",
+      "detail": "When moving long-horizon research or engineering agents to Opus 5.5, expect gains on verifiable tasks, such as speedrun-style optimization and bots. Keep human review on open-ended steps such as choosing experiments, setting feedback loops and judging results. Re-run your own long-horizon evals rather than assuming a step change."
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 55,
+      "newness": 5,
+      "credibility": 77.5,
+      "composite": 41.38,
+      "scored_at": "2026-10-25T00:44:25+00:00"
+    },
+    "verified": true,
+    "prior_art": "METR: Anthropic's low misalignment risk holds because models are weak; Anthropic embeds METR.",
+    "related_claims": [],
+    "article_url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-09",
+    "published": "2026-09-22",
+    "raw_path": "data/_raw/summary-of-metr-s-predeployment-evaluation-of-cl-6f5117d000.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-metr-org-feed-xml",
+    "source_rank": 77.5,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "METR",
+    "id": "metr-claude-opus-5-5-modest-ai-r-d-gain-over-fab-73a6f2665d",
+    "retrieved_at": "2026-10-25T00:44:25+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title, lessons[1].point, lessons[2].point",
+    "readability": {
+      "score": 75,
+      "passed": false,
+      "issues": [
+        "severe: title_words 28 > 24"
+      ]
+    },
+    "readability_hold": "readability: title_words 28 > 24",
+    "grounding_score": 1.0
   }
 ]

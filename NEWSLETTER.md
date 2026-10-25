@@ -21,6 +21,9 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[Microsoft DevLabs DebugMCP 1.1.4 drive-by RCE: DNS rebinding hits unauthenticated, stateless localhost MCP server; start_debugging runs Windows UNC path from attacker's SMB share](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
+  Any local MCP server with an execution tool is a drive-by RCE target unless it validates Host and Origin, requires authentication and a session, and rejects remote (UNC or URL) paths.
+  _Why now: Microsoft DevLabs DebugMCP shows a stateless, unauthenticated localhost MCP server turning one DNS-rebinding request into drive-by RCE; a pattern every local agent-tool server must defend against. · trending · newsworthy · high-relevance_
 - **[Datadog: a malicious webpage could get code execution through OpenCode's local /global/upgrade endpoint (GHSA-632h-h47v-g4x4, 1.14.30-1.18.21, fixed in 1.18.22)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/)**
   Any local HTTP server that a coding agent exposes is reachable from every webpage the developer visits, so it needs authentication, strict Content-Type checks, and allowlisted inputs before anything…
   _Why now: Drive-by RCE in a popular coding agent's localhost server (GHSA-632h-h47v-g4x4); teaches that loopback binding is not a boundary for agent servers. · cve · trending · timely · high-relevance_
@@ -33,15 +36,12 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[obsidian-tc tool server: any valid token could read, write, or delete any configured vault (CVE-2026-77366)](https://github.com/advisories/GHSA-84c9-qqpq-2pq5)**
   Multi-tenant tool servers must enforce the caller's tenant once at dispatch and never trust a caller-supplied vault or workspace parameter.
   _Why now: Critical GHSA in an agent tool server: missing tenant binding let any token reach every vault; the central dispatch-check fix is a transferable pattern for MCP-style servers. · cve · high-relevance_
-- **[Pillar Security: opencode runs attacker code during remote MCP OAuth sign-in on Windows, and the fix shipped without a CVE](https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth)**
-  Treat every remote MCP server response as untrusted input to your client, never pass it to a shell, and do not rely on CVE feeds to learn about agent-tool fixes.
-  _Why now: Coding-agent MCP sign-in RCE fixed silently with no CVE, so scanners will not flag it. · newsworthy · timely · week-of-2026-10-13_
 
 **📈 Emerging trends**
 
 - **coding-agents** (🔺 rising) — 10 findings from 6 sources since 2026-08-06.
+- **multi-turn** (🔺 rising) — 2 findings from 2 sources since 2026-09-29.
 - **windows** (🔺 rising) — 2 findings from 2 sources since 2026-10-13.
-- **red-teaming** (🔺 rising) — 5 findings from 5 sources since 2026-08-06.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -70,6 +70,12 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[Citrix NetScaler ADC/Gateway pre-auth command injection (CVE-2026-88771): Perl script shells out logged input; zero-day in default configuration, fixed in 14.1-73.37 and 13.1-64.23](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/)**
+  Patch NetScaler ADC and Gateway to 14.1-73.37 / 13.1-64.23 (or the FIPS/NDcPP equivalents) now, enable Enhanced ISN Generation, and hunt for compromise, because this root-level pre-auth bug was…
+  _Why now: Pre-auth root command injection in NetScaler ADC/Gateway exploited as a zero-day in default configuration; concrete fixed builds, a sibling bug the upgrade alone doesn't fix, and log-hunting guidance. · cve · active-exploitation · timely · high-relevance_
+- **[Google PageBreak: non-AI exploit validators gate AI web-testing agent: 500+ XSS bugs, near-zero false positives, but only 2 in apps on Google's high-assurance frameworks](https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project)**
+  Let the AI agent propose bugs, report only what a non-AI validator confirms by exploitation, and treat safe-by-default frameworks as the stronger defense.
+  _Why now: Google's production-scale numbers for AI web testing gated by non-AI exploit validators (500+ XSS, near-zero false positives, only 2 on its high-assurance frameworks) teach how to make agent-found bugs trustworthy. · trending · newsworthy · timely_
 - **[F5 BIG-IP APM Pre-Auth Heap Overflow RCE (CVE-2026-94127): Unchecked Authorization Header Copy, OAuth Endpoint Handler (APM 21.1.0, 17.5.0-17.5.1, 17.1.0-17.1.3; fixed by hotfixes)](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/)**
   Edge appliances keep shipping pre-auth memory-corruption bugs in authentication paths (here, a missing length check on an Authorization header), so they need emergency patching, minimal exposure and…
   _Why now: Pre-auth RCE in an internet-facing BIG-IP edge appliance, exploited in the wild; teaches emergency patching and minimal exposure for auth-path parsing on edge devices. · cve · active-exploitation · timely · high-relevance_
@@ -79,18 +85,12 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[ITRES Labs used ChatGPT to rebuild two BruCON Windows kernel techniques, whose source was never released, in about 24 hours](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
   The author argues LLMs make partially disclosed exploit research much cheaper to reproduce, so release decisions for talks, binaries and repos should assume others can rebuild it.
   _Why now: tl;dr sec-featured case of an LLM-assisted researcher rebuilding Windows kernel techniques from slides and a binary in about 24 hours; it changes how to weigh partial disclosure. · trending · newsworthy_
-- **[OVHcloud CLI: attacker swapped binaries on five GitHub releases for 94 minutes, delivering the GlassWorm loader](https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm)**
-  Release binaries can be replaced after publication, so pin and verify checksums or provenance for downloaded CLIs instead of trusting the release tag.
-  _Why now: Live supply-chain incident: OVHcloud CLI release binaries swapped for 94 minutes to deliver GlassWorm; teaches release-asset verification and how to triage installs. · newsworthy · widely-reported · timely_
-- **[Collabora Built-in CODE Server for Nextcloud: OS command injection in proxy.php exploited in the wild (CVE-2026-110447)](https://nvd.nist.gov/vuln/detail/CVE-2026-110447)**
-  Nextcloud instances using the built-in CODE server need richdocumentscode 26.4.303 or later now, plus a check for signs of compromise.
-  _Why now: CISA KEV with a three-day deadline: exploited command injection in Nextcloud's built-in Collabora CODE server; the fix and the restart-window condition are concrete. · active-exploitation · cve · timely_
 
 **📈 Emerging trends**
 
 - **rce** (🔺 rising) — 15 findings from 12 sources since 2026-06-29.
-- **nextjs** (🔺 rising) — 3 findings from 3 sources since 2026-10-22.
-- **command-injection** (🔺 rising) — 6 findings from 5 sources since 2026-07-20.
+- **command-injection** (🔺 rising) — 7 findings from 6 sources since 2026-07-20.
+- **exploited-in-the-wild** (🔺 rising) — 7 findings from 3 sources since 2026-09-23.
 
 [→ Full Product Security database](product-security/README.md)
 
@@ -111,9 +111,9 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **📈 Emerging trends**
 
+- **llm-as-judge** (🔺 rising) — 4 findings from 3 sources since 2026-08-07.
 - **red-teaming** (🔺 rising) — 6 findings from 6 sources since 2025-03-13.
-- **evals** (🔺 rising) — 20 findings from 10 sources since 2023-12-07.
-- **agents** (steady) — 24 findings from 8 sources since 2026-05.
+- **evals** (🔺 rising) — 21 findings from 10 sources since 2023-12-07.
 
 [→ Full AI Research database](ai-research/README.md)
 
