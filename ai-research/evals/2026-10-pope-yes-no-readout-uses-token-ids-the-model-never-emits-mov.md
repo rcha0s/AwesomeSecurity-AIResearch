@@ -18,7 +18,7 @@ Reproducing a POPE hallucination result, the authors found the two-token logit r
 
 **Topic:** AI Research  ·  **Domain:** Evaluation & Benchmarks  
 **Source:** [source](https://arxiv.org/abs/2610.25964)  ·  **Retrieved:** 2026-10-22  
-**Scores:** Newness 25 · Novelty 70 · Relevance 65 · Credibility 55 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 70 · Relevance 65 · Credibility 55 · **Composite 55** _(each 0-100)_  
 **Tags:** `evals`, `benchmarks`, `tokenization`, `reproducibility`, `vlm`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.
 

@@ -19,7 +19,7 @@ OpenAI argues that its g-mean² monitorability score can rank models wrongly. Ea
 
 **Topic:** AI Research  ·  **Domain:** Evaluation & Benchmarks  
 **Source:** [OpenAI Alignment Blog](https://alignment.openai.com/beyond-gmean-squared/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 25 · Novelty 62 · Relevance 55 · Credibility 75 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 62 · Relevance 55 · Credibility 75 · **Composite 52** _(each 0-100)_  
 **Tags:** `monitorability`, `cot-monitoring`, `ai-control`, `eval-methodology`, `selection-bias`, `hodgerank`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No g-mean² or monitorability-metric entries in the pool. Nearest are OpenAI's draft safety-case guidelines (don't let graders see CoT, to avoid monitor evasion) and the 'Astra ... CoT-based universal monitoring' entry. This adds metric methodology (selection-effect correction and post-control risk) rather than a policy. Note: raw capture is cut off at Figure 4, so the historical system-card results and post-control results are not captured.
 

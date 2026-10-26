@@ -25,7 +25,7 @@ obsidian-tc, an npm tool server for Obsidian vaults, did not check the vault nam
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [GitHub Advisory Database](https://github.com/advisories/GHSA-84c9-qqpq-2pq5)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 25 · Novelty 30 · Relevance 65 · Credibility 70 · **Composite 45** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 30 · Relevance 65 · Credibility 70 · **Composite 45** _(each 0-100)_  
 **Tags:** `authorization`, `idor`, `multi-tenant`, `tool-server`, `jwt`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Classic insecure direct object reference / CWE-639 in a new setting; nearest pool items are MCP server security entries (e.g. BurpMCP-Ultra per-session token and scope gate), none covering cross-tenant tool dispatch. Verifier: Classic IDOR / CWE-639 cross-tenant authorization bypass; tracker already covers MCP server authz/fail-open bugs (e.g. AWS API MCP Server fail-open CVE-2026-16584, BurpMCP scope-gate pattern), so the delta is a small npm tool server's missing tenant binding.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

@@ -19,7 +19,7 @@ The authors express agent safety policies in metric first-order temporal logic (
 
 **Topic:** AI Security  ·  **Domain:** Guardrails & Defensive Tooling  
 **Source:** [CCS (via arXiv)](http://arxiv.org/abs/2610.09793v1)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 25 · Novelty 62 · Relevance 70 · Credibility 72 · **Composite 57** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 62 · Relevance 70 · Credibility 72 · **Composite 56** _(each 0-100)_  
 **Tags:** `runtime-verification`, `guardrails`, `agentdojo`, `temporal-logic`, `provenance`, `agent-traces`, `prompt-injection`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: AgentDojo and STAC are the benchmarks. Earlier guardrails are mostly per-app rules or LLM classifiers, and CaMeL-style capability tracking enforces data flow inside the interpreter. This paper measures off-the-shelf formal temporal monitoring on existing traces, shows the benchmarks' logging is what limits it, and gives a concrete forged-provenance evasion and its fix. That adds evidence to the contested provenance-auditing claim: it works only when provenance is bound by the harness.
 

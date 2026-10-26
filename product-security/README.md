@@ -2,12 +2,16 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [48 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-10-26 · ranked by composite · findings from the latest 31 days · [42 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[New unpatched PHP RCE CVE-2026-115560, separate from PHP2Shell, needs a runtime session.serialize_handler switch; mitigation is session.upload_progress.enabled=0](https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/)**
+  _Why now: A third, still-unpatched PHP RCE (CVE-2026-115560) during the PHP2Shell week, with a one-line config mitigation every PHP operator can apply today. · newsworthy · cve · timely · high-relevance_
+- **[PHP2Shell disclosure fight: PHP says Chainguard broke the embargo with patched images 6+ hours early; Chainguard's CEO cites live exploitation and an AI rediscovery](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611)**
+  _Why now: The PHP2Shell embargo dispute shows how disclosure now breaks down (rumors, PoC video, early distributor binaries, AI rediscovery from a hint); a transferable lesson for patch planning. · trending · widely-reported · timely_
 - **[Trail of Bits: only Go and vcpkg of 25 package managers verified every download from malicious repositories; only Go checked signatures by default](https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/)**
   _Why now: First cross-ecosystem test of package managers against a malicious registry; tells teams exactly which strict lockfile flags to turn on. · timely · high-relevance_
 - **[Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads, PHP auto_prepend_file persistence, a sudo-alias password stealer and a Go RAT](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/)**
@@ -72,13 +76,14 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Exploited-in-the-wild Plex chain added to CISA KEV with a due date of today and a public plex2shell write-up; patch now. · active-exploitation · cve · timely_
 - **[ESET: UAC-0099 used new MythicRatatoskr backdoor with C2 inside the Yggdrasil mesh network before Sandworm wiped a Ukrainian firm](https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html)**
 - **[Atlassian October 2026 bulletin: 75 unique third-party CVEs across Data Center and Server products](https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/)**
+- **[Wasmtime Cranelift bit-packing overflow lets crafted Wasm module escape the sandbox](https://github.com/advisories/GHSA-897f-g5gm-fmxm)**
 - **[Critical Pillow flaw: one crafted FlashPix file opened with Image.open() can run code](https://github.com/advisories/GHSA-5x8w-8jj5-q52h)**
 - **[Echo proxy middleware: rejected WebSocket upgrades bypass route-level access controls](https://github.com/advisories/GHSA-cxf3-9h37-7rr8)**
 - **[Laravel TokenGuard authentication bypass via non-string API credentials rated critical](https://github.com/advisories/GHSA-f9x3-7vq9-cph6)**
-- **[Wasmtime Cranelift bit-packing overflow lets crafted Wasm module escape the sandbox](https://github.com/advisories/GHSA-897f-g5gm-fmxm)**
 - **[Abandoned Time4Popcorn updater (CVE-2026-30612) allowed code execution on millions of PCs; researchers disabled it](https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/)**
 - **[Pillow DoS: a 5.6 KB MIC file hangs n_frames at 100% CPU (GHSA-22hg-r758-rrw9)](https://github.com/advisories/GHSA-22hg-r758-rrw9)**
   _Why now: Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today. · cve · timely · high-relevance_
+- **[Wired: AWS logged PHP2Shell exploitation attempts days before the patch; Wired says bugs are 'broadly exploited'](https://www.wired.com/story/hackers-exploited-the-php-vulnerabilities-days-before-they-were-patched/)**
 - **[DOMPurify SAFE_FOR_TEMPLATES bypass: split expressions survive inside attached shadow roots](https://github.com/advisories/GHSA-cg2g-xh64-v4q7)**
 - **[Pillow multi-frame loaders reuse stale buffers, causing out-of-bounds writes and possible code execution](https://github.com/advisories/GHSA-v9pv-5gc8-w2m6)**
 - **[Salesforce: AI finds vulnerabilities faster than engineers can fix them; cluster root causes and close exploit chains](https://www.salesforce.com/blog/managing-agentic-security-at-scale/)**
@@ -104,51 +109,48 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| Application Security | 3 |
 | AI in the SDLC | 3 |
+| Application Security | 2 |
 | Vulnerability Research & Red Teaming | 1 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
 
-## Application Security
-
-- **[Atlassian CVE-2026-21589: pre-auth file read via '::' path traversal in atlassian-plugins-webresource (Jira, Confluence, Bitbucket and 5 more Data Center products), chained to Crowd admin](appsec/2026-10-atlassian-cve-2026-21589-pre-auth-file-read-via-path-travers.md)** · composite **64.09** · Oct 6, 2026  
-  Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
-  _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
-- **[watchTowr breaks PaperCut NG/MF patches three times: Tapestry `service` auth bypass (CVE-2026-81578, bypasses WT-2026-0142/0143) chained with RCE (CVE-2026-82078, WT-2026-0141, CVE-2026-82077 via Scan to Fax)](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-three-times-tapestry.md)** · composite **60.79** · Oct 9, 2026  
-  When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
-  _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
-- **[SourceHut account takeover via OSC 8 hyperlink XSS in ansi2html-rendered build logs (CVE-2026-92973; ansi2html >=1.7.0,<1.9.4, builds.sr.ht >=0.40.0,<0.105.1)](appsec/2026-09-sourcehut-account-takeover-via-osc-8-hyperlink-xss-in-ansi2h.md)** · composite **47.0** · Sep 24, 2026  
-  Treat CI log output as untrusted HTML input: sanitize the output of any ANSI-to-HTML converter and back it with a strict Content-Security-Policy, because one injected escape sequence can become…  
-  _[@arusekk via Hacker News](https://blog.arusekk.pl/posts/srht-account-takeover/)_
-
 ## AI in the SDLC
 
-- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](ai-code/2026-10-claude-found-493-attack-surface-issues-in-25-projects-openss.md)** · composite **63.97** · Oct 20, 2026  
+- **[Claude found 493 attack-surface issues in 25 projects; OpenSSH made ML-DSA parsing unreachable before auth](ai-code/2026-10-claude-found-493-attack-surface-issues-in-25-projects-openss.md)** · composite **63.72** · Oct 20, 2026  
   Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.  
   _[Anthropic Research](https://www.anthropic.com/research/attack-surface-reduction)_
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **59.5** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points across 123 libraries at the RISC-V binary level by turning fuzz harnesses into specs](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **59.25** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench: 300 CVE-derived tasks (297 CVEs, 85 CWEs, 5 ecosystems) for agent-written static-analysis checkers; mean Pass@1 32.30%, best 45.33% across 21 model-harness setups](ai-code/2026-10-checkerbench-300-cve-derived-tasks-297-cves-85-cwes-5-ecosys.md)** · composite **50.29** · Oct 6, 2026  
+- **[CheckerBench: 300 CVE-derived tasks (297 CVEs, 85 CWEs, 5 ecosystems) for agent-written static-analysis checkers; mean Pass@1 32.30%, best 45.33% across 21 model-harness setups](ai-code/2026-10-checkerbench-300-cve-derived-tasks-297-cves-85-cwes-5-ecosys.md)** · composite **50.04** · Oct 6, 2026  
   Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
+## Application Security
+
+- **[Atlassian CVE-2026-21589: pre-auth file read via '::' path traversal in atlassian-plugins-webresource (Jira, Confluence, Bitbucket and 5 more Data Center products), chained to Crowd admin](appsec/2026-10-atlassian-cve-2026-21589-pre-auth-file-read-via-path-travers.md)** · composite **63.84** · Oct 6, 2026  
+  Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
+  _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
+- **[watchTowr breaks PaperCut NG/MF patches three times: Tapestry `service` auth bypass (CVE-2026-81578, bypasses WT-2026-0142/0143) chained with RCE (CVE-2026-82078, WT-2026-0141, CVE-2026-82077 via Scan to Fax)](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-three-times-tapestry.md)** · composite **60.54** · Oct 9, 2026  
+  When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
+  _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
+
 ## Vulnerability Research & Red Teaming
 
-- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](offensive/2026-10-pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new.md)** · composite **60.25** · Oct 19, 2026  
+- **[PwnEscape: pwn.ai used an LLM research harness to find a new Linux networking bug class that escapes KVM guests (CVE-2026-99999)](offensive/2026-10-pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new.md)** · composite **60.0** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **54.25** · Oct 15, 2026  
+- **[Citizen Lab: AdFection, zero-click Candiru spyware delivered through targeted ads bought via Discover-Tech](mobile/2026-10-citizen-lab-adfection-zero-click-candiru-spyware-delivered-t.md)** · composite **54.0** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **49.0** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **48.75** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 

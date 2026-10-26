@@ -1,7 +1,11 @@
 {
+  "github_query:ai-agent-security-guardrails": {
+    "ingested": 4,
+    "curated": 0
+  },
   "github_query:llm-evaluation-harness-benchmark": {
-    "curated": 0,
-    "ingested": 2
+    "ingested": 3,
+    "curated": 0
   },
   "github_query:mcp-protocol-or-mcp-specification": {
     "curated": 0,
@@ -88,8 +92,8 @@
     "ingested": 4
   },
   "rss:https-research-checkpoint-com-feed": {
-    "curated": 1,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 1
   },
   "rss:https-research-google-blog-rss": {
     "curated": 0,
@@ -108,8 +112,8 @@
     "ingested": 8
   },
   "rss:https-simonwillison-net-atom-everything": {
-    "curated": 6,
-    "ingested": 16
+    "ingested": 17,
+    "curated": 6
   },
   "rss:https-snyk-io-blog-feed": {
     "curated": 1,
@@ -124,8 +128,8 @@
     "ingested": 1
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "curated": 0,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 0
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
     "curated": 1,
@@ -147,9 +151,13 @@
     "curated": 0,
     "ingested": 2
   },
+  "rss:https-www-theregister-com-security-headlines-ato": {
+    "ingested": 8,
+    "curated": 1
+  },
   "rss:https-www-wired-com-feed-category-security-lates": {
-    "curated": 2,
-    "ingested": 4
+    "ingested": 5,
+    "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
     "curated": 0,

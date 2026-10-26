@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_6 vetted findings · updated 2026-10-25 · ranked by composite · findings from the latest 31 days · [40 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-26 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -67,40 +67,33 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Prompt Injection & Jailbreaks | 1 |
 | AI Infrastructure & Incident Response | 1 |
 | Red-Teaming & Threat Modeling | 1 |
-| MCP, Tools & Skills | 1 |
 
 ## Guardrails & Defensive Tooling
 
-- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](guardrails/2026-10-mfotl-monpoly-flags-71-8-of-stac-70-1-of-agentdojo-fires-on.md)** · composite **56.65** · Oct 7, 2026  
+- **[MFOTL (MonPoly) flags 71.8% of STAC, 70.1% of AgentDojo, fires on 29.3% of benign; one planted line beats provenance 94-99% of flagged runs](guardrails/2026-10-mfotl-monpoly-flags-71-8-of-stac-70-1-of-agentdojo-fires-on.md)** · composite **56.4** · Oct 7, 2026  
   A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type…  
   _[CCS (via arXiv)](http://arxiv.org/abs/2610.09793v1)_
-- **[Guardrail safety benchmarks mostly measure the training label policy: same 53k prompts, two definitions, 0-100 swings](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **55.87** · Oct 18, 2026  
+- **[Guardrail safety benchmarks mostly measure the training label policy: same 53k prompts, two definitions, 0-100 swings](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **55.62** · Oct 18, 2026  
   A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
 
 ## Prompt Injection & Jailbreaks
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **63.34** · Oct 19, 2026  
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **63.09** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 
 ## AI Infrastructure & Incident Response
 
-- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](ai-infra/2026-10-metr-mathjax-href-injection-in-the-inspect-transcript-viewer.md)** · composite **62.23** · Oct 6, 2026  
+- **[METR: MathJax \href injection in the Inspect transcript viewer let an agent rewrite what reviewers see (found in ~10 minutes, patched in a day)](ai-infra/2026-10-metr-mathjax-href-injection-in-the-inspect-transcript-viewer.md)** · composite **61.98** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
 
 ## Red-Teaming & Threat Modeling
 
-- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-after-august-incident-inter.md)** · composite **59.5** · Oct 7, 2026  
+- **[UK AISI resumes most cyber evals after August incident: internet off, two independent egress blocks, blocking LLM monitor, pre-run control checks, flag-based escape tests](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-after-august-incident-inter.md)** · composite **59.25** · Oct 7, 2026  
   A concrete, reusable control set for anyone running agentic cyber evals: two independent egress layers, a blocking monitor, preflight checks, and flag-terminated escape tests run from weaker to…  
   _[UK AI Security Institute Blog](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)_
-
-## MCP, Tools & Skills
-
-- **[Skill cascading attacks: a harmful goal split across several benign-looking agent skills evades per-skill scanners and runtime monitors](mcp-tools/2026-09-skill-cascading-attacks-a-harmful-goal-split-across-several.md)** · composite **57.65** · Sep 24, 2026  
-  A clean per-skill scan does not show that a set of installed skills is safe together, so review and monitoring have to cover the whole pipeline of skills.  
-  _[NeurIPS (via arXiv)](http://arxiv.org/abs/2609.30383v1)_
 
 ---
 

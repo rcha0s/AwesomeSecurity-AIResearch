@@ -25,7 +25,7 @@ PaperCut 26.0.3 was exploited in the wild through an auth bypass (CVE-2026-81578
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 25 · Novelty 65 · Relevance 80 · Credibility 74 · **Composite 61** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 65 · Relevance 80 · Credibility 74 · **Composite 61** _(each 0-100)_  
 **Tags:** `papercut`, `patch-bypass`, `authentication-bypass`, `rce`, `apache-tapestry`, `exploited-in-the-wild`, `patch-diffing`, `watchtowr`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: watchTowr's SolarWinds Web Help Desk chain (WebObjects multi-step auth bypasses) and the earlier PaperCut KEV bugs CVE-2023-27350/27351. This adds a concrete legacy-framework pattern (Tapestry 3 multi-page `service` routing skipping per-page auth) plus a documented series of per-page patches failing in sequence.
 
