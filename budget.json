@@ -321,6 +321,14 @@
       "kind": "actual",
       "stories": 9,
       "cost_usd": 10.161475769999997
+    },
+    {
+      "run_id": "local-20261026T163006Z-59980",
+      "date": "2026-10-26",
+      "runner": "local",
+      "kind": "done",
+      "stories": 9,
+      "cost_usd": 0
     }
   ]
 }
