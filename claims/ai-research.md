@@ -357,11 +357,12 @@ Gains from automatically evolving an agent harness (prompts, skills, tools, orch
 
 _Tags: `harness-evolution`, `evals`, `overfitting`, `test-time-compute`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466) | Oct 19, 2026 |
+| supports | [Trustworthy Recursive Self-Improvement in the Era of Large Models: Foundation, Risks, Evaluation and Open Challenges](https://arxiv.org/abs/2610.35193) | Oct 27, 2026 |
 
 </details>
 

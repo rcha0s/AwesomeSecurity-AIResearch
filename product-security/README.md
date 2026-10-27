@@ -2,16 +2,25 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_8 vetted findings · updated 2026-10-27 · ranked by composite · findings from the latest 31 days · [42 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-10-27 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Authlib accepts a JSON web signature with no signatures as verified](https://github.com/advisories/GHSA-6v38-4h7w-rj9h)**
+  _Why now: Critical authentication bypass in a widely used Python library; the fail-open empty-loop pattern is a test every verifier should have. · cve · timely · high-relevance_
+- **[Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets)**
+  _Why now: Active campaign hitting private enterprise repos past GitHub's public-repo safeguard, with concrete hunt indicators and a token-lifetime fix. · active-exploitation · newsworthy · timely · high-relevance_
+- **[Check Point: fake ChatGPT and Claude apps sideload malware via signed installers](https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/)**
+  _Why now: Live campaign using fake ChatGPT and Claude desktop apps and signed vendor installers, with endpoint artifacts defenders can hunt. · active-exploitation · trending · timely_
+- **[Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18](https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/)**
+- **[Better Auth magic link flaw lets attackers take over accounts](https://github.com/advisories/GHSA-965c-763c-88jm)**
 - **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/)**
   _Why now: A third, still-unpatched PHP RCE (CVE-2026-115560) during the PHP2Shell week, with a one-line config mitigation every PHP operator can apply today. · newsworthy · cve · timely · high-relevance_
 - **[PHP says Chainguard broke the PHP2Shell embargo with patched images](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611)**
   _Why now: The PHP2Shell embargo dispute shows how disclosure now breaks down (rumors, PoC video, early distributor binaries, AI rediscovery from a hint); a transferable lesson for patch planning. · trending · widely-reported · timely_
+- **[The Hacker News weekly roundup leads with PHP2Shell exploitation attempts](https://thehackernews.com/2026/10/weekly-recap-this2shell-that2shell.html)**
 - **[Trail of Bits: only Go and vcpkg verified every downloaded package](https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/)**
   _Why now: First cross-ecosystem test of package managers against a malicious registry; tells teams exactly which strict lockfile flags to turn on. · timely · high-relevance_
 - **[Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/)**
@@ -91,6 +100,8 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[OpenAI proposes a coordinated disclosure framework after AI-found PHP flaws](https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities)**
 - **[Pillow heap overflow saving TIFF to BytesIO also leaks stale heap bytes](https://github.com/advisories/GHSA-332p-7hrc-92wf)**
 - **[Partisan Zmiy hid the Vasilek backdoor in VMware Tools for two years](https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html)**
+- **[PHP Foundation ships emergency fix for two critical remote code execution bugs](https://www.theregister.com/security/2026/10/21/php-devs-publish-critical-bug-fix-as-site-owners-warned-pull-em-offline-if-youre-unpatched/5304519)**
+- **[Certifi removes emSign root CA after compromised intermediate keys](https://github.com/advisories/GHSA-6q48-6c7w-9gw2)**
 - **[Pillow thumbnail() heap overflow on lossless JPEGs, found by Anthropic using Claude](https://github.com/advisories/GHSA-8g5g-8vmr-9782)**
 - **[Eight eMudhra intermediate CA certificates with weak private keys get blocked globally](https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/)**
 - **[curl moves low and medium severity vulnerability reports to public GitHub](https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198)**
@@ -109,11 +120,23 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
+| Application Security | 3 |
 | AI in the SDLC | 3 |
-| Application Security | 2 |
 | Vulnerability Research & Red Teaming | 1 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
+
+## Application Security
+
+- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **63.59** · Oct 6, 2026  
+  Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
+  _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
+- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **60.29** · Oct 9, 2026  
+  When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
+  _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **57.63** · Oct 27, 2026  
+  If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
+  _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
 ## AI in the SDLC
 
@@ -126,15 +149,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **49.79** · Oct 6, 2026  
   Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
-
-## Application Security
-
-- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **63.59** · Oct 6, 2026  
-  Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
-  _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
-- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **60.29** · Oct 9, 2026  
-  When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
-  _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
 
 ## Vulnerability Research & Red Teaming
 

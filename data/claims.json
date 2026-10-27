@@ -1460,10 +1460,18 @@
           "stance": "supports",
           "url": "https://docs.github.com/en/actions/concepts/security/openid-connect",
           "title": "GitHub Actions OpenID Connect: exchange short-lived cloud tokens instead of long-lived secrets"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets",
+          "title": "'Gheist' Weaponizes GitHub Tokens to Steal Cloud Secrets",
+          "published": "2026-10-26",
+          "note": "Stolen long-lived GitHub tokens reached private enterprise repos and, within hours, the same organizations' cloud credentials were used to enumerate AWS Secrets Manager; Wiz and Secure.com recommend short-lived fine-grained tokens or GitHub Apps.",
+          "source_name": "Dark Reading"
         }
       ],
       "first_seen": "2021-01",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-27",
       "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users.",
       "tags": [
         "aws",
@@ -2298,10 +2306,18 @@
           "url": "https://arxiv.org/abs/2610.22466",
           "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
           "published": "2026-10-19"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.35193",
+          "title": "Trustworthy Recursive Self-Improvement in the Era of Large Models: Foundation, Risks, Evaluation and Open Challenges",
+          "published": "2026-10-27",
+          "note": "Survey warns that reported self-improvement gains may reflect flawed evaluations and that changing the improvement mechanism may invalidate earlier verification.",
+          "source_name": "arXiv"
         }
       ],
       "first_seen": "2026-10-19",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-27",
       "title": "Auto-evolved harness gains are mostly overfitting",
       "basis": "single preprint: 11 executor models x 3 harness-evolution frameworks; in 21 settings with significant gains, overfitting and test-time scaling averaged 54% and 14% of the gain",
       "guidance": "Accept an auto-evolved harness change only on its delta over a held-out task set the optimizer never saw, measured at matched inference budget; don't trust search-set or validation-set improvement.",

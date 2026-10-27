@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--27-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-17-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-57-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--27-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-18-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-57-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -13,7 +13,7 @@
 _The last 7 days: the stories with the most covering sources first._
 
 1. **[Google: eight eMudhra CA keys had weak entropy and Chrome blocked them](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week)** · _Product Security · Oct 22, 2026 · 10 sources_
-2. **[Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week)** · _Product Security · Oct 21, 2026 · 4 sources_
+2. **[Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week)** · _Product Security · Oct 21, 2026 · 5 sources_
 3. **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8#week)** · _Product Security · Oct 20, 2026 · 4 sources_
 
 ## Claim changes
@@ -28,7 +28,7 @@ _The 6 newest of 7 changes in the last 7 days._
    A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.
 4. **Added:** [A guardrail weaker than its target can be bypassed](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=input-guardrail-weaker-than-target-is-bypassable#claims) · _current · Oct 24, 2026 · 1 source_  
    An input-screening guardrail model that is less capable than the model it protects (less reasoning effort, no tools) can be bypassed by payloads hidden in plain prose that only the stronger,…
-5. **Added:** [Auto-evolved harness gains are mostly overfitting](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims) · _current · Oct 21, 2026 · 1 source_  
+5. **Added:** [Auto-evolved harness gains are mostly overfitting](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims) · _current · Oct 21, 2026 · 2 sources_  
    Gains from automatically evolving an agent harness (prompts, skills, tools, orchestration around a fixed model) are mostly search-set overfitting and extra inference compute: across 21 settings with…
 6. **Overturned:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
    Replaces ~~Assumed TOON's input savings would carry to generation~~: Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on…

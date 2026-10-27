@@ -2,7 +2,7 @@
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-17 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+18 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -27,6 +27,9 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[One crafted medical image file crashes or silently corrupts MONAILabel inference](https://github.com/advisories/GHSA-6hp3-vr39-rqw8)**
+  Machine learning pipelines that read numbers from uploaded files need explicit finiteness checks, because one NaN can corrupt medical output with no error.
+  _Why now: Critical advisory in a medical AI server showing why ML pipelines need finiteness checks on untrusted file metadata. · cve · timely_
 - **[Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model)**
   Treat an agent's HTTP tool as an SSRF primitive and give every agent its own least-privilege role; a shared default role turns one injected agent into a region-wide breach.
   _Why now: Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform. · newsworthy · timely · high-relevance_
@@ -39,9 +42,6 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[LiteLLM flaws chain from any Bearer token to stolen cloud IAM credentials](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)**
   Treat AI gateways as Tier-1 infrastructure: change default keys, gate admin features, validate outbound URLs, and give them least-privilege cloud roles.
   _Why now: LiteLLM MCP auth bypass (CVE-2026-59822) is exploited in the wild and ~1 in 10 public gateways run default or no auth; concrete hardening steps for a widely deployed AI gateway. · cve · active-exploitation · high-relevance · timely_
-- **[A backdoored open model made Codex CLI exfiltrate .env files](https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned)**
-  Clean benchmarks do not show whether downloaded open weights are backdoored, so contain what the agent's tool calls can read and reach.
-  _Why now: Concrete end-to-end demo of a backdoored open-weight model driving Codex CLI to exfiltrate .env files; the lesson is to contain agent tool execution and egress, since clean benchmarks don't reveal the backdoor. · trending · high-relevance_
 
 **📈 Emerging trends**
 
@@ -69,28 +69,28 @@ _Securing products: application security, supply chain, cloud & infra, identity,
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.
 - **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](https://www.anthropic.com/research/formal-verification)** · _source_ · composite 59.0
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)** · _source_ · composite 53.75
-  Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](https://portswigger.net/research/scalable-vector-grief)** · _PortSwigger Research_ · composite 57.63
+  If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.
 
 **📈 Trending & In the News**
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[Authlib accepts a JSON web signature with no signatures as verified](https://github.com/advisories/GHSA-6v38-4h7w-rj9h)**
+  Any verifier that loops over signatures must reject an empty list; test your JWS and JWT code for that case.
+  _Why now: Critical authentication bypass in a widely used Python library; the fail-open empty-loop pattern is a test every verifier should have. · cve · timely · high-relevance_
+- **[Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets)**
+  A stolen GitHub token turns your own CI into a secrets-theft channel, so hunt for the sync-check pattern and replace long-lived personal access tokens with short-lived, scoped ones.
+  _Why now: Active campaign hitting private enterprise repos past GitHub's public-repo safeguard, with concrete hunt indicators and a token-lifetime fix. · active-exploitation · newsworthy · timely · high-relevance_
+- **[Check Point: fake ChatGPT and Claude apps sideload malware via signed installers](https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/)**
+  People searching for desktop AI apps are a live lure, so allow AI clients only from vendor sites and alert when signed vendor installers load libraries from download folders.
+  _Why now: Live campaign using fake ChatGPT and Claude desktop apps and signed vendor installers, with endpoint artifacts defenders can hunt. · active-exploitation · trending · timely_
 - **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/)**
   Set session.upload_progress.enabled=0 on any PHP host that might switch session serializers at runtime. It is the stopgap for CVE-2026-115560 until a patch ships.
   _Why now: A third, still-unpatched PHP RCE (CVE-2026-115560) during the PHP2Shell week, with a one-line config mitigation every PHP operator can apply today. · newsworthy · cve · timely · high-relevance_
 - **[PHP says Chainguard broke the PHP2Shell embargo with patched images](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611)**
   Embargoes now leak through rumors, proof-of-concept videos and early binaries, and an AI harness may turn a hint into a working find within hours, so plan patch rollout for early disclosure.
   _Why now: The PHP2Shell embargo dispute shows how disclosure now breaks down (rumors, PoC video, early distributor binaries, AI rediscovery from a hint); a transferable lesson for patch planning. · trending · widely-reported · timely_
-- **[Trail of Bits: only Go and vcpkg verified every downloaded package](https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/)**
-  A committed lockfile doesn't protect you from a compromised registry unless your package manager actually enforces its hashes; check yours and turn on the strict flag.
-  _Why now: First cross-ecosystem test of package managers against a malicious registry; tells teams exactly which strict lockfile flags to turn on. · timely · high-relevance_
-- **[Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/)**
-  AI-assisted intrusions still rely on ordinary Linux tradecraft, so defenders should hunt for PHP config tampering, shell rc file aliases and outbound reverse shells, and can treat conversational…
-  _Why now: Live espionage campaign with LLM-written payloads and concrete Linux hunting leads (auto_prepend_file persistence, sudo-alias stealer). · newsworthy · trending · high-relevance_
-- **[CISA KEV: exploited Fortinet CVE-2025-61624 lets read-write admins write or delete files](https://nvd.nist.gov/vuln/detail/CVE-2025-61624)**
-  Patch Fortinet appliances now, and treat any admin account with read-write rights on an unpatched box as a path to tampering with the device's own files.
-  _Why now: Exploited in the wild per CISA KEV with a three-day deadline; Fortinet appliances are widely deployed and need patching now. · cve · active-exploitation · timely_
 
 **📈 Emerging trends**
 
@@ -130,9 +130,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **third-party-evaluation** (🔺 rising) — 2 findings from 2 sources since 2026-10-20.
-- **governance** (🔺 rising) — 3 findings from 3 sources since 2026-08-10.
-- **human-in-the-loop** (🔺 rising) — 3 findings from 3 sources since 2026-08-07.
+- **evals** (🔺 rising) — 24 findings from 12 sources since 2023-12-07.
+- **llm-as-judge** (🔺 rising) — 5 findings from 4 sources since 2026-08-07.
+- **benchmarks** (🔺 rising) — 9 findings from 7 sources since 2026-07-09.
 
 [→ Full AI Research database](ai-research/README.md)
 

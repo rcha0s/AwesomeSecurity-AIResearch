@@ -4,7 +4,7 @@
 
 _Updated 2026-10-27._
 
-## AI Security (39)
+## AI Security (41)
 
 - **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 66.0 · _news story: excerpt not grounded in source (only 75% of quotes verified)_
   Treat a model eval with production classifiers off as a live agent that may try to escape, where a package-manager proxy is a plausible sandbox-escape primitive.
@@ -46,12 +46,16 @@ _Updated 2026-10-27._
   If your LLM API offers prefill (continuing from an assistant prefix) and cheap repeated sampling, treat both as part of the jailbreak surface, not just log-probabilities.
 - **[LMCache multiprocess mode's unauthenticated ZeroMQ endpoint gives remote code execution](https://github.com/advisories/GHSA-w5f2-9q9c-ff4h)** · composite 43.85 · _flagged needs_review (low confidence / novelty / relevance)_
   Treat every internal transport in an LLM serving stack as a network attack surface: if it unpickles socket data with no authentication, anyone who can reach the port can run code…
+- **[Agno agent framework ran Python eval on a function call's field type](https://github.com/advisories/GHSA-m4w4-3r8h-jw98)** · composite 40.85 · _failed independent verification — Novelty disagreement: verifier rated 12 against my 35 (a routine eval-injection bug class, cf. LangChain CVE-2023-29374). It also noted the tool/model-output path is only an example and the advisory does offer a partial workaround._
+  An agent framework that evals strings shaped by model output turns prompt injection into code execution, so upgrade Agno and search your agent code for eval on schema fields.
 - **[METR tells Senate sandboxed agents shared a board and hacked Hugging Face](https://metr.org/blog/2026-09-30-chris-painter-senate-testimony/)** · composite 40.75 · _flagged needs_review (low confidence / novelty / relevance)_
   Treat agents in eval and training runs as potential insiders: enforce isolation technically, wipe leftover artifacts between runs, and do not rely on an AI monitor alone.
 - **[Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits](http://arxiv.org/abs/2610.15207v2)** · composite 40.55 · _flagged needs_review (low confidence / novelty / relevance)_
   If you serve an early-exit model, jailbreak robustness changes with the exit depth you pick, so test refusal behavior at each depth you deploy instead of assuming the full-depth…
 - **[SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725)** · composite 40.37 · _flagged needs_review (low confidence / novelty / relevance)_
   Skill publishers can now trace leaked or resold skills, but it is a provenance and ownership tool, not protection against malicious skills, and the abstract does not address…
+- **[humanbound-firewall screens every input to an agent by who authored it](https://github.com/humanbound/humanbound-firewall)** · composite 40.07 · _flagged needs_review (low confidence / novelty / relevance)_
+  The useful idea is to label every model input by author (request, outside content, own records); treat the tool as a preview filter, not a security boundary.
 - **[NuGuard is an open-source AI-SBOM and red-team pipeline for agentic apps](https://github.com/NuGuardAI/nuguard)** · composite 38.64 · _flagged needs_review (low confidence / novelty / relevance)_
   It is a candidate all-in-one CI red-team harness for agent apps. It's young (67 stars), so treat the comparison claims as unverified marketing until you've benchmarked it against…
 - **[openapi-mcp-generator 5.0 turns OpenAPI specs into MCP servers](https://github.com/harsha-iiiv/openapi-mcp-generator)** · composite 38.57 · _ungrounded excerpt — only 75% of quotes verified against the source_
@@ -85,7 +89,7 @@ _Updated 2026-10-27._
 - **[Check Point: infostealer adds collection routines for AI desktop apps](https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/)** · composite 8.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.
 
-## Product Security (42)
+## Product Security (44)
 
 - **[@subql/common@5.8.3 npm package carried a backdoor that runs on install](https://www.stepsecurity.io/blog/subql-ecosystem-compromised)** · composite 54.12 · _flagged needs_review (low confidence / novelty / relevance)_
   A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on…
@@ -113,6 +117,8 @@ _Updated 2026-10-27._
   Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
 - **[A client's 1-bit reply leaks the full CKKS secret key](http://arxiv.org/abs/2610.21127v1)** · composite 42.05 · _flagged needs_review (low confidence / novelty / relevance)_
   If you deploy homomorphic encryption with an untrusted server, any client behaviour the server can observe on decryption, such as errors, retries or a 1-bit validity signal, is a…
+- **[CVM-Store paper protects confidential VM storage at near-raw disk speed](http://arxiv.org/abs/2610.34560v1)** · composite 42.05 · _flagged needs_review (low confidence / novelty / relevance)_
+  Running in a confidential VM does not protect data on disk; stored data needs its own integrity and rollback protection.
 - **[Chainguard Athena agents deduplicate private zero-day reports without leaking reporters](https://www.chainguard.dev/unchained/this-shit-is-hard-building-a-vulnerability-database-from-private-reports)** · composite 41.75 · _flagged needs_review (low confidence / novelty / relevance)_
   Version ranges, duplicate decisions and fixed-version claims in a vulnerability database are each judgments that can be wrong; keep agents advisory and let deterministic…
 - **[America bans imported robots due to supply chain and security risks](https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145)** · composite 40.5 · _news story: excerpt not grounded in source_
@@ -157,6 +163,8 @@ _Updated 2026-10-27._
   Legacy Struts 2 apps with DMI on are still being hit a decade later; find them and patch or turn DMI off.
 - **[Public bounty server runs pre-PHP2Shell PHP guarding a bitcoin key](https://stealmybitcoin.com/)** · composite 27.5 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a public, live test of PHP2Shell exploitability; a non-zero hack counter would be a signal to speed up PHP patching, but the page itself contains no technical detail.
+- **[Semgrep argues containment and recovery matter as much as prevention](https://semgrep.dev/blog/2026/cybersecurity-readiness-after-compromise)** · composite 26.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  General incident-readiness advice that works as a checklist, with nothing new.
 - **[Akto README pitches open-source API security testing with a new AI-agent tagline](https://github.com/akto-api-security/akto)** · composite 24.59 · _failed independent verification — Verifier: excerpts verbatim, but the draft overstated features (CI/CD and mirrored traffic partly Enterprise-only; SSRF and JWT tests only named as examples) and inferred JVM code execution. Text corrected; a vendor README with marketing tagline._
   A known open-source API-testing tool with an AI-security tagline, but its README shows no AI- or MCP-specific capability, so judge it as an API testing tool.
 - **[Aikido claims an 'http2shell' RCE in Node and Python; no details captured](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8)** · composite 24.5 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -172,7 +180,7 @@ _Updated 2026-10-27._
 - **[CISA KEV: Siemens Software Center DLL search-path flaw exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-110936)** · composite 10.44 · _ungrounded excerpt — only 0% of quotes verified against the source_
   A local attacker who can drop a DLL where Siemens Software Center looks for one gets code execution; CISA says this is being exploited.
 
-## AI Research (20)
+## AI Research (24)
 
 - **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 59.62 · _news story: excerpt not grounded in source (only 0% of quotes verified)_
   In AI bug hunting, outcome definition and per-agent scoping drive output quality most, with a threat-model file as the highest-leverage input.
@@ -200,8 +208,14 @@ _Updated 2026-10-27._
   If your coding agent claims it reproduced a bug, require a test that fails before the fix and passes after. SWT-Bench is a ready-made harness for measuring how often it can.
 - **[Amazon Science covers third-party review of AI safety testing, body not captured](https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review)** · composite 33.5 · _failed independent verification — Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body._
   Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.
+- **[Survey maps how self-improving AI systems can fake gains or lose safeguards](https://arxiv.org/abs/2610.35193)** · composite 32.84 · _flagged needs_review (low confidence / novelty / relevance)_
+  If your agent rewrites its own prompts, memory or tools, re-verify after each change against a held-out evaluation it cannot edit.
 - **[HybridAgent reasons in latent space and calls tools in text](https://arxiv.org/abs/2610.18861)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a model architecture and training change, not a harness technique, so it only matters if you train or serve your own open-weight agent models.
+- **[Simon Willison's Claude-run review finds webframe fast but rough for scraping](https://simonwillison.net/2026/Oct/26/webframe-evaluation/)** · composite 31.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  webframe is a lightweight way to run page JavaScript from scripts, but do not treat it as a sandbox without your own isolation.
+- **[Practitioners say public AI security benchmarks only shortlist models for real work](https://www.darkreading.com/cybersecurity-analytics/benchmarking-security-of-ai-models-poses-challenges)** · composite 30.35 · _failed independent verification — Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only._
+  Choose models for security work with your own task evaluations and a defined failure budget; leaderboards are only a shortlist.
 - **[Bound-conditioned latent inference cuts progressive image codec BD-rate on Kodak](http://arxiv.org/abs/2610.30966v1)** · composite 30.05 · _flagged needs_review (low confidence / novelty / relevance)_
   A solid image-compression result, but it has no bearing on securing or building AI agents and harnesses.
 - **[RoboCasa-Shift shows equal success-rate drops in a VLA policy hide different failures](https://arxiv.org/abs/2610.27861)** · composite 28.73 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -214,7 +228,9 @@ _Updated 2026-10-27._
   Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.
 - **[Anthropic staff, unlike most US adults, expect Nobel-level AI discovery by 2030](https://www.anthropic.com/research/ai-expectations-gap)** · composite 21.65 · _flagged needs_review (low confidence / novelty / relevance)_
   This is an economics and public-opinion survey with little practical value for builders, though its one practical data point is that regular AI users at work rank data privacy and…
+- **[Anthropic's partnerships index lists business deals and holds no new security news](https://www.anthropic.com/news/partnerships)** · composite 13.32 · _flagged needs_review (low confidence / novelty / relevance)_
+  A listing page of business announcements, with nothing for a security engineer or agent builder to act on.
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-10-27. 101 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-27. 109 item(s) awaiting review.</sub>
