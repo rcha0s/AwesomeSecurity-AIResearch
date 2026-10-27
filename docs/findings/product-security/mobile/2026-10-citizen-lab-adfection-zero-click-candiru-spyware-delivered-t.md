@@ -19,7 +19,7 @@ Citizen Lab reports AdFection: Candiru spyware infected Al Jazeera devices throu
 
 **Topic:** Product Security  ·  **Domain:** Mobile & Device Security  
 **Source:** [source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 25 · Novelty 70 · Relevance 60 · Credibility 60 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 70 · Relevance 60 · Credibility 60 · **Composite 54** _(each 0-100)_  
 **Tags:** `spyware`, `candiru`, `real-time-bidding`, `zero-click`, `adtech`, `citizen-lab`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Zero-click mercenary spyware via messaging apps is well documented; ad-based delivery confirmed technically is new. Verifier: Intellexa Predator/Aladdin ad-based zero-click infection (Amnesty/Haaretz 2023-2024); ADINT surveillance research (Citizen Lab PenLink, Patternz)
 

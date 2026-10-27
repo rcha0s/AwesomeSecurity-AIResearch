@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--25-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-19-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-57-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--26-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-17-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-57-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -13,8 +13,8 @@
 _The last 7 days: the stories with the most covering sources first._
 
 1. **[Google: eight eMudhra intermediate CA keys had weak entropy, so Chrome blocked them within two hours and is removing the root](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week)** · _Product Security · Oct 22, 2026 · 10 sources_
-2. **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8#week)** · _Product Security · Oct 20, 2026 · 4 sources_
-3. **[Pillow GHSA-w889-685w-c8fh: attacker-controlled filenames inject Ghostscript arguments in EPS handling, even with -dSAFER](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pillow-ghsa-w889-685w-c8fh-attacker-controlled-f-6e66febba5#week)** · _Product Security · Oct 23, 2026 · 3 sources_
+2. **[PHP2Shell: Wiz used frontier AI to turn memory-safety bugs in core PHP (two CVEs) into unauthenticated RCE on WordPress, Drupal and Joomla](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week)** · _Product Security · Oct 21, 2026 · 4 sources_
+3. **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH passwords and unencrypted mail](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8#week)** · _Product Security · Oct 20, 2026 · 4 sources_
 
 ## Claim changes
 
@@ -44,4 +44,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-10-25 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-10-26 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

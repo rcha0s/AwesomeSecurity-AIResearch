@@ -20,7 +20,7 @@ Wiz CIRT walks through intrusions where an AI agent system ran the whole operati
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [source](https://www.wiz.io/blog/anatomy-of-ai-driven-cloud-attacks)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 25 · Novelty 40 · Relevance 80 · Credibility 50 · **Composite 50** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 40 · Relevance 80 · Credibility 50 · **Composite 50** _(each 0-100)_  
 **Tags:** `ai-driven-attacks`, `cloud-security`, `incident-response`, `detection-engineering`, `credential-chaining`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CrowdStrike and Microsoft reports describe attacker use of agent frameworks; this is the first defender-side field guide of observable traits in the pools. Verifier: Sysdig's AI-assisted AWS intrusion write-up (2026), Anthropic GTG-1002, Wiz/Unit42 agentic-attack notes. Delta is the codified 8-trait tell list from a multi-pl  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

@@ -19,7 +19,7 @@ pwn.ai researchers, working in Vercel's sandbox challenge, found that guest-cont
 
 **Topic:** Product Security  ·  **Domain:** Vulnerability Research & Red Teaming  
 **Source:** [source](https://pwn.ai/blog/pwnescape)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 25 · Novelty 75 · Relevance 80 · Credibility 50 · **Composite 60** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 75 · Relevance 80 · Credibility 50 · **Composite 60** _(each 0-100)_  
 **Tags:** `kvm`, `vm-escape`, `linux-kernel`, `ai-assisted-research`, `sandbox`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier VM-escape work targets hypervisor device emulation; this reaches the host through guest-controlled metadata in core networking, with LLM-assisted discovery. Verifier: Checksum offload/virtio_net metadata bugs (virtio-net GSO/csum handling fixes); Google Big Sleep and XBOW LLM-driven vuln finds; kvmCTF KVM escapes
 
