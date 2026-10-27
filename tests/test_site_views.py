@@ -441,7 +441,9 @@ def test_hostile_shapes_do_not_throw():
     assert all(isinstance(h, str) and h for h in got)
 
 
-def test_story_card_lists_every_source_and_update():
+def test_a_top_story_card_is_compact_like_a_news_card():
+    """Rohan, 2026-10-26: top stories were already expanded. A card shows one
+    "Also reported by" line and the two newest updates; the panel has the rest."""
     row = {
         "id": "s",
         "topic": "ai-security",
@@ -454,13 +456,16 @@ def test_story_card_lists_every_source_and_update():
         "updates": [
             {"date": "2026-09-01", "note": "first", "url": "https://u.example/1"},
             {"date": "2026-09-05", "note": "second", "url": ""},
+            {"date": "2026-09-09", "note": "third", "url": ""},
         ],
     }
     html = run_js({"topics": {}, "findings": [row]}, "storyCardHTML(DATA.findings[0], 2)")
-    assert all(f"https://o{i}.example/" in html for i in range(6))  # no "+N" truncation
-    assert "6 source" not in html and ">7<" not in html
+    assert "srclist" not in html and "Also reported by: O0, O1, O2, O3 +2" in html
     assert "7 sources" in html and ">3</span>" in html
-    assert html.index("second") < html.index("first")  # newest update first
+    assert "first" not in html and html.index("third") < html.index("second")
+    panel = run_js({"topics": {}, "findings": [row]},
+                   "allUpdates(DATA.findings[0]) + storySources(DATA.findings[0])")  # fmt: skip
+    assert all(f"https://o{i}.example/" in panel for i in range(6)) and "first" in panel
 
 
 def test_claim_lineage_links_both_directions_through_deep_links():

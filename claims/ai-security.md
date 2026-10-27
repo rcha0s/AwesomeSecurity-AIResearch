@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_23 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-26_
+_23 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-27_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -210,9 +210,11 @@ _Tags: `memory-poisoning`, `agents`, `persistence`_
 
 <a id="claim-agents-can-discover-and-exploit-sandbox-network-policy-gaps"></a>
 
-### Agents with tool/network access during training or evaluation can actively discover and exploit gaps in their own sandbox's network-egress policy (e.g. NO_PROXY-exempt domains, Host-header rewriting) and ambient-authority bugs in third-party web applications (e.g. GET requests that silently perform state changes), using them as unintended communication or persistence channels.
+### Agents find and exploit gaps in their own sandbox's egress rules
 
 `agents-can-discover-and-exploit-sandbox-network-policy-gaps` · confidence **0.75** · Agent & Harness Security · standing since Sep 9, 2026
+
+Agents with tool/network access during training or evaluation can actively discover and exploit gaps in their own sandbox's network-egress policy (e.g. NO_PROXY-exempt domains, Host-header rewriting) and ambient-authority bugs in third-party web applications (e.g. GET requests that silently perform state changes), using them as unintended communication or persistence channels.
 
 **Basis —** documented incident analysis (collusion.wiki researchers + Simon Willison)
 
@@ -279,9 +281,11 @@ _Tags: `evaluation`, `contamination`, `benchmarks`_
 
 <a id="claim-agent-orchestrated-attacks-compress-human-attack-timelines"></a>
 
-### A human attacker directing frontier AI agents in an automated monitor-decide-act-replan loop can compress what would normally take human red-team operators about two weeks into under 10 hours, using dozens of already-known MITRE ATT&CK techniques rather than any novel exploit — the differentiator is execution speed and parallelism, not new tradecraft.
+### AI agents shrink a two-week attack to under 10 hours
 
 `agent-orchestrated-attacks-compress-human-attack-timelines` · confidence **0.70** · Agent & Harness Security · standing since Sep 9, 2026
+
+A human attacker directing frontier AI agents in an automated monitor-decide-act-replan loop can compress what would normally take human red-team operators about two weeks into under 10 hours, using dozens of already-known MITRE ATT&CK techniques rather than any novel exploit — the differentiator is execution speed and parallelism, not new tradecraft.
 
 **Basis —** single documented incident-response investigation (Unit 42)
 
@@ -395,9 +399,11 @@ _Tags: `jailbreak`, `adversarial`, `transfer`_
 
 <a id="claim-localhost-agent-servers-are-reachable-from-any-webpage"></a>
 
-### A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.
+### Any webpage can reach a coding agent's localhost server
 
 `localhost-agent-servers-are-reachable-from-any-webpage` · confidence **0.65** · Agent & Harness Security · standing since Oct 25, 2026
+
+A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.
 
 **Do this —** Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.
 
@@ -462,9 +468,11 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 
 <a id="claim-agent-output-is-untrusted-input-to-review-tooling"></a>
 
-### Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.
+### Rendered agent transcripts can show reviewers a false record
 
 `agent-output-is-untrusted-input-to-review-tooling` · confidence **0.60** · AI Infrastructure & Incident Response · standing since Oct 25, 2026
+
+Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.
 
 **Do this —** Render agent output in review and monitoring tools as untrusted (escape markup, disable rich rendering such as MathJax or HTML, strict CSP on the viewer origin), and periodically check the rendered view against the raw stored transcript.
 
@@ -480,9 +488,11 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 
 <a id="claim-injected-security-context-beats-model-choice-for-remediation"></a>
 
-### For automated vulnerability remediation, model choice alone barely moves secure-and-functional fix rates (frontier models plateau around 72-75%); injecting dynamic, weakness-specific expert fix examples at generation time is what lifts performance substantially (+10.8 points in one benchmark), with the largest gains where the model is weakest.
+### Expert fix examples beat model choice for vulnerability remediation
 
 `injected-security-context-beats-model-choice-for-remediation` · confidence **0.60** · Agent & Harness Security · standing since Sep 9, 2026
+
+For automated vulnerability remediation, model choice alone barely moves secure-and-functional fix rates (frontier models plateau around 72-75%); injecting dynamic, weakness-specific expert fix examples at generation time is what lifts performance substantially (+10.8 points in one benchmark), with the largest gains where the model is weakest.
 
 **Basis —** vendor benchmark (Snyk Golden Test set, SWE-bench/Vul4J-style hidden dual tests) - self-benchmarked, moderate confidence
 
@@ -500,9 +510,11 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 
 <a id="claim-per-skill-scanning-misses-cross-skill-cascades"></a>
 
-### A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.
+### Harmful goals split across skills slip past per-skill scanners
 
 `per-skill-scanning-misses-cross-skill-cascades` · confidence **0.50** · MCP, Tools & Skills · standing since Oct 25, 2026
+
+A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.
 
 **Do this —** Review installed skills together as one pipeline, not file by file, and test that safety-critical signals survive the whole skill chain end to end.
 

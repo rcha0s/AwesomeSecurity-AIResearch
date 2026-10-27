@@ -1,34 +1,5 @@
-# Citrix NetScaler ADC/Gateway pre-auth command injection (CVE-2026-88771): Perl script shells out logged input; zero-day in default configuration, fixed in 14.1-73.37 and 13.1-64.23
+# Moved
 
-**Published:** Sep 28, 2026
+This finding now lives at [Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration](../cloud-infra/2026-09-citrix-netscaler-cve-2026-88771-is-a-pre-auth-command-inject.md).
 
-> **Takeaway:** Patch NetScaler ADC and Gateway to 14.1-73.37 / 13.1-64.23 (or the FIPS/NDcPP equivalents) now, enable Enhanced ISN Generation, and hunt for compromise, because this root-level pre-auth bug was exploited before a fix existed.
-
-## TL;DR
-
-CVE-2026-88771 lets an unauthenticated attacker run commands as root on Citrix NetScaler ADC and NetScaler Gateway in the default configuration, and it was exploited in the wild before a patch existed. The bug is in a crash-reporting Perl script (ns_monuploadd_err.pl) that reads appliance logs, pulls a core-file name out of them without validating it, and passes it to a shell command. Any request field that ends up in the logs, such as a login name or User-Agent header, can carry the attack, and the fix builds the name only from strictly matched fields and calls find without a shell.
-
-## Lessons
-
-- The flaw affects the default configuration and was exploited as a zero-day before Citrix shipped a fix, so any unpatched internet-facing appliance should be treated as possibly compromised. - _"It affects the default configuration and was exploited in the wild as a zero-day, before any fix existed."_
-- Root cause: a log-parsing script trusts whatever text follows NSPPE in a log line as a core-file name and process ID, then interpolates it into a shell command. - _"The problem is that the script never verifies that those first two fields are really an `nsppe` core file name and a numeric process ID."_
-- The attack surface is any input that gets logged, not one endpoint, so blocking a single URL is not a complete mitigation; patching is required. - _"Any endpoint or port that logs data controlled in an HTTP header can trigger this vulnerability."_
-- The fix builds the value only from tightly matched captures. It runs external commands in list form, so no shell interprets metacharacters. - _"Perl does not build a command string and does not start `/bin/sh`, so shell metacharacters cannot be interpreted as commands."_
-- The same bulletin (CTX697096) has a sibling bug, CVE-2026-88778, that the upgrade alone does not fix; it needs a configuration change. - _"Fixed by enabling Enhanced ISN Generation, not by the upgrade alone."_
-
-## Threat · Conditions · Mitigations
-
-- **Threat:** Unauthenticated remote attacker runs arbitrary commands as root on the NetScaler appliance, the front door for enterprise remote access; exploited in the wild as a zero-day alongside the DTLS memory overflow CVE-2026-88772.
-- **Conditions:** NetScaler ADC / NetScaler Gateway in default configuration on builds before the fixed versions (watchTowr diffed vulnerable 14.1 build 73.30 against fixed 73.37). Attacker-controlled text must reach appliance logs that ns_monuploadd_err.pl later parses, which login fields, headers and the management interface all allow.
-- **Mitigations:** Upgrade to 14.1-73.37+, 13.1-64.23+, 14.1-73.37 FIPS+, or 13.1-37.279+ for 13.1-FIPS/NDcPP; enable Enhanced ISN Generation for CVE-2026-88778; take unpatched exposed appliances offline or restrict access; hunt logs for shell metacharacters in logged usernames and headers; assume compromise on appliances that were exposed and unpatched.
-
----
-
-**Topic:** Product Security  ·  **Domain:** Cloud, Network & Infrastructure  
-**Source:** [watchTowr Labs](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 5 · Novelty 50 · Relevance 90 · Credibility 77 · **Composite 55** _(each 0-100)_  
-**Tags:** `citrix`, `netscaler`, `command-injection`, `pre-auth-rce`, `zero-day`, `exploited-in-the-wild`, `network-appliance`, `log-injection`, `perl`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier NetScaler pre-auth bugs in the archive, e.g. 'Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) ... SAML Signature Canonicalization' (memory corruption in nsppe); this one is a different class (shell injection via log content in a Perl helper script) outside nsppe. Verifier's closest: watchTowr Citrix NetScaler CVE-2026-8452; known appliance command-injection patches.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
-
-_Source: [https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/)_  ·  [← back to index](../README.md)
+_The finding was retitled and its page moved with its title._

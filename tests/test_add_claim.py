@@ -22,6 +22,8 @@ def new_args(claim_id: str, *extra: str) -> list[str]:
         "ai-research",
         "--statement",
         f"Statement for {claim_id}.",
+        "--title",
+        f"Title for {claim_id}",
         "--evidence",
         EVIDENCE,
         *extra,
@@ -75,7 +77,16 @@ def test_new_rejects_a_duplicate_id(sandbox):
 
 
 def test_new_refuses_to_save_a_claim_with_no_evidence(sandbox):
-    argv = ["new", "bare", "--topic", "ai-research", "--statement", "No sources."]
+    argv = [
+        "new",
+        "bare",
+        "--topic",
+        "ai-research",
+        "--statement",
+        "No sources.",
+        "--title",
+        "Bare",
+    ]
     assert add_claim.main(argv) == 1
     assert claims.load_ledger()["claims"] == []
 

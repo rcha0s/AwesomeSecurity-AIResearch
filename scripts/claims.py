@@ -245,6 +245,21 @@ def _validate_edges(claim: dict, known_ids: set[str]) -> list[str]:
     return errors
 
 
+TITLE_MAX_WORDS = 12  # Rohan 2026-10-26: every claim card is a short title plus its statement
+
+
+def _validate_title(claim: dict) -> list[str]:
+    """A distinct headline of at most TITLE_MAX_WORDS words; the card shows the
+    statement under it."""
+    title = str(claim.get("title") or "").strip()
+    if not title:
+        return [f"missing title (a headline of at most {TITLE_MAX_WORDS} words)"]
+    if title == str(claim.get("statement") or "").strip():
+        return ["title repeats the statement: give it a short headline"]
+    n = len(title.split())
+    return [f"title is {n} words (max {TITLE_MAX_WORDS})"] if n > TITLE_MAX_WORDS else []
+
+
 def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
     """Human-readable validation errors for one claim (empty == valid).
 
@@ -275,6 +290,7 @@ def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
         + _validate_edges(claim, known_ids)
         + _validate_ledger_dates(claim)
         + _validate_refuted_controls(claim)
+        + _validate_title(claim)
     )
 
 

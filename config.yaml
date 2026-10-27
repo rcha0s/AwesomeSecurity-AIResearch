@@ -361,7 +361,8 @@ readability:
     acronyms: {warn: 3}                     # mild only; unexplained, distinct; p90 4, max 8
     hedges: {warn: 1, hold: 3}              # most in one sentence; 2+ is hedge-stacking
     banned: {warn: 0, hold: 2}              # filler/marketing phrases; any one is mild
-    title_words: {warn: 18, hold: 24}       # p50 11, p90 17, max 25
+    title_words: {warn: 12, hold: 16}       # Rohan 2026-10-26: one plain sentence, 12 words or fewer
+    title_list: {warn: 0, hold: 0}          # "headline: a, b, c" titles always hold
     takeaway_sentences: {warn: 1, hold: 3}  # one clear sentence; p90 2
     takeaway_words: {warn: 45, hold: 65}    # p50 27, p90 47, max 71
     summary_sentences: {warn: 4, hold: 6}   # the skill asks for 2-3

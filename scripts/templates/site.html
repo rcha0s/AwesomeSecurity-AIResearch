@@ -481,6 +481,8 @@
   .chglist { display: grid; grid-template-columns: 1fr; gap: 10px; }
   @media (min-width: 900px) { .chglist { grid-template-columns: 1fr 1fr; } }
   .claim.chg { margin: 0; min-width: 0; }
+  /* Every claim card: a short title, then the statement (and a change's Why) in two lines. */
+  .claim.chg .desc, .claim.chg .guide { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .chg .kind { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
   .chg .when { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
   .evline { font-size: 12.5px; color: var(--ink-3); margin: 8px 0 0; }
@@ -725,19 +727,20 @@
 
   // One story, many outlets: the story's other covering sources.
   function alsoReported(f) {
-    if (!f.corroborators || !f.corroborators.length) return "";
+    var corr = arr(f.corroborators).filter(function (c) { return c && typeof c === "object"; });
+    if (!corr.length) return "";
     return '<p class="why" style="color:var(--ink-3);font-size:12.5px">' +
       'Also reported by: ' +
-      f.corroborators.slice(0, 4).map(function (c) {
+      corr.slice(0, 4).map(function (c) {
         return esc(c.source_name || (function(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "source";}})(c.url));
       }).join(", ") +
-      (f.corroborators.length > 4 ? " +" + (f.corroborators.length - 4) : "") +
+      (corr.length > 4 ? " +" + num(corr.length - 4) : "") +
       '</p>';
   }
   // The story's dated "Updated" lines, newest first (at most two).
   function storyUpdates(f) {
-    if (!f.updates || !f.updates.length) return "";
-    return f.updates.slice(-2).reverse().map(function (u) {
+    var ups = arr(f.updates).filter(function (u) { return u && typeof u === "object"; });
+    return ups.slice(-2).reverse().map(function (u) {
       return '<p class="why" style="font-size:12.5px"><strong>Updated ' + esc(fmtDate(u.date)) +
         ':</strong> ' + txt(u.note) + '</p>';
     }).join("");
@@ -1138,7 +1141,7 @@
   }
   // Every source a story has: the one cited first, then each other outlet.
   function storySources(f) {
-    var rest = arr(f.corroborators).map(function (c) {
+    var rest = arr(f.corroborators).filter(function (c) { return c && typeof c === "object"; }).map(function (c) {
       return '<li><a class="link" href="' + hrefOf(c.url) + '">' + esc(c.source_name || host(c.url) || "source") +
         ' &#8599;</a>' + (c.tier ? '<span class="tier">' + esc(c.tier) + ' tier</span>' : '') + '</li>';
     }).join("");
@@ -1149,23 +1152,27 @@
   }
   // Every dated Updated line, newest first, each with the source that carried it.
   function allUpdates(f) {
-    return arr(f.updates).slice().reverse().map(function (u) {
+    return arr(f.updates).filter(function (u) { return u && typeof u === "object"; }).reverse().map(function (u) {
       var link = safeUrl(u.url) !== "#"
         ? ' <a class="link" href="' + hrefOf(u.url) + '">' + esc(u.source_name || host(u.url) || "source") + ' &#8599;</a>'
         : '';
       return '<p class="updline"><strong>Updated ' + esc(fmtDate(u.date)) + ':</strong> ' + txt(u.note) + link + '</p>';
     }).join("");
   }
+  // A top story is shaped like a "More in the news" card (Rohan, 2026-10-26):
+  // title, takeaway, one quote, one "Also reported by" line, the two newest
+  // updates. Every source and every update are in the detail panel.
   function storyCardHTML(f, i) {
     var n = 1 + arr(f.corroborators).length;
-    return '<article class="story">' +
-      '<div class="meta" style="font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:5px 10px;align-items:center;margin-bottom:6px">' +
-        topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
-        (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
-        (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') + '</div>' +
+    return '<article class="art story">' +
       '<h3><span class="rank">' + num(i + 1) + '</span>' + detailAnchor(f, txt(f.title)) + '</h3>' +
-      (f.takeaway ? '<p class="take" style="color:var(--ink-2);font-size:14.5px;margin:6px 0 0">' + txt(f.takeaway) + '</p>' : '') +
-      quotePreview(f) + allUpdates(f) + storySources(f) + '</article>';
+      (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      quotePreview(f) + alsoReported(f) + storyUpdates(f) +
+      '<div class="meta">' + topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
+        (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
+        (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') +
+        '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
+      '</div></article>';
   }
   // A finding's lessons: each point with the verbatim source quote it rests on.
   // Rendered pages carry the same list under "## Lessons".
@@ -1210,7 +1217,7 @@
     rows.forEach(function (f) { shown[f.id] = 1; });
     return secHead(title, DATA.top_stories_topped_up ? "latest we have" : "last " + num(DATA.snapshot_days) + " days") +
       '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0,
-        DATA.top_stories_multi === true)) + ' Every source that covered each story is listed with it.</p>' +
+        DATA.top_stories_multi === true)) + ' Open a story for every source that covered it and every update.</p>' +
       '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
   }
   // What the ledger changed: claims added, newly contested, and overturned
@@ -1778,8 +1785,12 @@
       // The page's last line repeats the source link and links back to a GitHub
       // index that doesn't exist here; the panel's footer carries the source.
       var md = String(rawMd || "").replace(/^_Source:.*$/gm, "");
-      var html = '<article class="prose">' + renderMarkdown(md) + '</article>';
-      if (finding.url) {
+      // The rendered page has no story updates or covering sources; the cards
+      // leave those to this panel, so it carries every one.
+      var more = (arr(finding.updates).length ? '<h2>Updates</h2>' + allUpdates(finding) : '') +
+        (arr(finding.corroborators).length ? '<h2>Sources</h2>' + storySources(finding) : '');
+      var html = '<article class="prose">' + renderMarkdown(md) + more + '</article>';
+      if (finding.url && !arr(finding.corroborators).length) {
         html += '<div class="modal-source">' +
           '<span style="color:var(--ink-3)">Source:</span> ' +
           '<a href="' + hrefOf(finding.url) + '" target="_blank" rel="noopener noreferrer">' +

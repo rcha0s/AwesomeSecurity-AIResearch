@@ -41,6 +41,7 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+from pathlib import Path
 
 import common as c
 import taxonomy
@@ -278,6 +279,25 @@ def cmd_correct(args: argparse.Namespace) -> int:
     return rc
 
 
+def cmd_titles(args: argparse.Namespace) -> int:
+    """Set the headline of several live claims from a {claim id: title} JSON
+    file in one validated save (a ledger check can need all of them at once)."""
+    titles = json.loads(Path(args.file).read_text(encoding="utf-8"))
+    ledger = cl.load_ledger()
+    index = cl.claim_index(ledger["claims"])
+    bad = [i for i in titles if i not in index or cl.is_retired(index[i])]
+    if bad or not titles:
+        print(f"unknown or retired claims: {', '.join(bad) or '(empty file)'}")
+        return 1
+    stamp = {"last_reviewed": today()}
+    claims = [{**x, "title": titles[x["id"]].strip(), **stamp} if x["id"] in titles else x
+              for x in ledger["claims"]]  # fmt: skip
+    rc = save_validated({**ledger, "claims": claims})
+    if rc == 0:
+        print(f"titled {len(titles)} claims")
+    return rc
+
+
 def _evidence_edit(items: list[dict], args: argparse.Namespace) -> list[dict]:
     """Apply one fix-evidence edit; raises ValueError when the target is ambiguous."""
     hits = [i for i, e in enumerate(items) if e.get("url") == args.url]
@@ -405,7 +425,9 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("id", help="kebab-case stable id")
     new.add_argument("--topic", required=True, choices=list(c.TOPICS))
     new.add_argument("--statement", required=True, help="the claim, as one sentence")
-    new.add_argument("--title", help="concise headline (~5-10 words) shown on the claim card")
+    new.add_argument(
+        "--title", required=True, help="headline of at most 12 words shown on the claim card"
+    )
     new.add_argument(
         "--basis",
         help="the method/evidence type that established this (e.g. 'benchmarked head-to-head')",
@@ -463,6 +485,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--refuted-control=--flag for values starting with -)",
     )
     co.set_defaults(func=cmd_correct)
+
+    ti = sub.add_parser("titles", help="set several live claims' headlines from a JSON file")
+    ti.add_argument("file", help='{"<claim id>": "<title of at most 12 words>"}')
+    ti.set_defaults(func=cmd_titles)
 
     fe = sub.add_parser("fix-evidence", help="correct or remove a mis-cited source on a live claim")
     fe.add_argument("id")

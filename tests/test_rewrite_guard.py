@@ -215,3 +215,79 @@ def test_merge_notes_an_entry_with_no_matching_draft(sandbox):
     m.merge([brief()], c.load_config())
     assert "- no draft for 'Agent frameworks, not models" in notes()
     assert "rewrite not fact-checked" in notes()
+
+
+# A shorter title may drop what the takeaway or summary still says (Rohan,
+# 2026-10-26: titles of 12 words or fewer), never add, swap or un-negate.
+LONG_TITLE = (
+    "OpenAI frontier-agent red team of its own training containment: microVM escapes, "
+    "egress via metrics service, cache-timing channels"
+)
+PROSE = "OpenAI had its frontier agents attack the training sandbox; they escaped 2 microVMs."
+
+
+@pytest.mark.parametrize(
+    "final",
+    [
+        "OpenAI set its own agents loose in its training sandbox, and they broke out",
+        "OpenAI's frontier agents escaped 2 microVMs in its training sandbox",
+    ],
+)
+def test_a_title_may_drop_details_the_prose_keeps(final):
+    assert rg.title_changes(LONG_TITLE, final, PROSE) == []
+
+
+@pytest.mark.parametrize(
+    "final, why",
+    [
+        ("Anthropic set its own agents on its training sandbox", "names changed"),
+        ("OpenAI agents escaped 5 microVMs in its training sandbox", "numbers"),
+        ("OpenAI agents escaped CVE-2026-1 in its sandbox", "added 'CVE-2026-1'"),
+        ("OpenAI agents found a critical sandbox escape", "severity"),
+    ],
+)
+def test_a_title_may_not_add_or_swap_a_fact(final, why):
+    assert any(why in p for p in rg.title_changes(LONG_TITLE, final, PROSE))
+
+
+def test_a_title_keeps_its_negations():
+    draft = "Versions 2.x are not affected by the parser bug in libfoo"
+    assert rg.title_changes(draft, "Versions 2.x are affected by a libfoo bug") == [
+        "dropped a negation"
+    ]
+
+
+def test_merge_keeps_a_shortened_title_and_restores_an_invented_one():
+    draft = brief(title=LONG_TITLE, summary=PROSE)
+    short = brief(title="OpenAI set its own agents loose in its training sandbox", summary=PROSE)
+    assert "title" not in rg.problems(draft, short)
+    bad = brief(title="OpenAI agents escaped 9 microVMs", summary=PROSE)
+    assert "title" in rg.problems(draft, bad)
+
+
+# Review of #124 (Sonnet + Gemini): a guard word borrowed from the prose, a
+# moved negation, a dropped un-/non- word and a flipped default all fail.
+@pytest.mark.parametrize(
+    "draft, final, prose",
+    [
+        ("Nginx is vulnerable to remote RCE", "Nginx is not vulnerable to RCE",
+         "A patch is not available yet."),
+        ("Foo still unpatched after disclosure", "Foo patched after disclosure",
+         "Version 2 of Bar is patched."),
+        ("RCE for authenticated users in Foo", "RCE for unauthenticated users in Foo",
+         "Unauthenticated access is blocked."),
+        ("Debug endpoint off by default in Foo", "Debug endpoint on by default in Foo", ""),
+        ("Foo unaffected by the Bar flaw", "Foo hit by the Bar flaw", ""),
+        ("None of the Linux releases are vulnerable", "Linux releases are vulnerable", ""),
+        ("Patch fixes Alpha but not Beta in Foo", "Patch fixes Beta but not Alpha in Foo", ""),
+    ],
+)  # fmt: skip
+def test_a_title_cannot_borrow_move_or_drop_a_guard_word(draft, final, prose):
+    assert rg.title_changes(draft, final, prose) != []
+
+
+def test_what_code_cannot_see_is_left_to_the_meaning_check():
+    """A non-negating guard word moved to another name passes the code check
+    (anchors only bind negations: shortening moves the rest legitimately).
+    The migration's Gemini pass judged meaning for every pair."""
+    assert rg.title_changes("Critical flaw in Foo; Bar also affected", "Critical flaw in Bar") == []
