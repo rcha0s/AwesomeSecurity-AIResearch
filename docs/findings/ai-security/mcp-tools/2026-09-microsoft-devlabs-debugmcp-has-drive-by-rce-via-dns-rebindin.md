@@ -1,4 +1,4 @@
-# Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding
+# Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding of unauthenticated server
 
 **Published:** Sep 25, 2026
 

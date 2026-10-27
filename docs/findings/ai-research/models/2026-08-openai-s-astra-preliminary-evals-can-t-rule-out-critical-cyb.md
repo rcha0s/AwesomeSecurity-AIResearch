@@ -1,4 +1,4 @@
-# OpenAI's Astra evals can't rule out Critical cyber capability
+# OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability
 
 **Published:** Aug 7, 2026
 

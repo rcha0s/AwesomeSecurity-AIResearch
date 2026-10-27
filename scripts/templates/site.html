@@ -1141,7 +1141,7 @@
   }
   // Every source a story has: the one cited first, then each other outlet.
   function storySources(f) {
-    var rest = arr(f.corroborators).map(function (c) {
+    var rest = arr(f.corroborators).filter(function (c) { return c && typeof c === "object"; }).map(function (c) {
       return '<li><a class="link" href="' + hrefOf(c.url) + '">' + esc(c.source_name || host(c.url) || "source") +
         ' &#8599;</a>' + (c.tier ? '<span class="tier">' + esc(c.tier) + ' tier</span>' : '') + '</li>';
     }).join("");
@@ -1152,7 +1152,7 @@
   }
   // Every dated Updated line, newest first, each with the source that carried it.
   function allUpdates(f) {
-    return arr(f.updates).slice().reverse().map(function (u) {
+    return arr(f.updates).filter(function (u) { return u && typeof u === "object"; }).reverse().map(function (u) {
       var link = safeUrl(u.url) !== "#"
         ? ' <a class="link" href="' + hrefOf(u.url) + '">' + esc(u.source_name || host(u.url) || "source") + ' &#8599;</a>'
         : '';

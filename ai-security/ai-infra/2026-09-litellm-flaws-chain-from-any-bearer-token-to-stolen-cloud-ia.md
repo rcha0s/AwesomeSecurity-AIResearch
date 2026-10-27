@@ -1,4 +1,4 @@
-# LiteLLM flaws let any Bearer token reach MCP and steal cloud credentials
+# LiteLLM flaws chain from any Bearer token to stolen cloud IAM credentials
 
 **Published:** Sep 9, 2026
 

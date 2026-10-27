@@ -32,13 +32,13 @@ _Updated 2026-10-27._
   Calibrate multi-turn jailbreak detectors on real benign traffic and test against gradual-escalation attacks, or the reported accuracy is meaningless.
 - **[@a2ui/web_core openUrl opens agent-supplied URLs without a scheme check](https://github.com/advisories/GHSA-72qq-p3r5-f7wq)** · composite 49.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Treat UI that an agent generates as untrusted input: allowlist URL schemes (http/https) before any navigation or window.open call.
-- **[Langflow runs any MCP stdio server config command with no allowlist](https://github.com/advisories/GHSA-w794-rj3p-xv45)** · composite 49.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
+- **[Langflow before 1.10.3 runs commands placed in MCP config with no allowlist](https://github.com/advisories/GHSA-w794-rj3p-xv45)** · composite 49.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   In agent builders, an MCP stdio server entry is a shell command, so write access to MCP config is code execution on the host. Patch Langflow to 1.10.3 or later and limit who can…
 - **[Agent Mosaic: LLM agents combine allowed documents into forbidden conclusions](https://arxiv.org/abs/2610.30418)** · composite 48.23 · _flagged needs_review (low confidence / novelty / relevance)_
   Document-level access control is not enough for agents serving users with mixed clearances, because the model can derive restricted conclusions from documents each user may read.
-- **[Perplexity found no host escape in 9 models, details not captured](https://www.perplexity.ai/hub/blog/escaping-space-part-i)** · composite 47.75 · _ungrounded excerpt — only 0% of quotes verified against the source_
+- **[Perplexity found no VM-to-host escape across 9 models, details not captured](https://www.perplexity.ai/hub/blog/escaping-space-part-i)** · composite 47.75 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Root inside a Firecracker microVM did not give these models a host escape, but the network-bypass results, which matter more in practice, were not captured.
-- **[Red Hat: Jev-style models are not more accurate than LLM-as-a-judge](https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails)** · composite 47.6 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Red Hat finds Jev-style models not faster or more accurate than LLM-as-a-judge](https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails)** · composite 47.6 · _flagged needs_review (low confidence / novelty / relevance)_
   For prompt-injection screening, try a small trained classifier first and benchmark any LLM judge or decision model on your own data before paying for it.
 - **[Edge grounding VLMs fall to wearable adversarial patches like detectors](http://arxiv.org/abs/2610.29196v1)** · composite 45.05 · _flagged needs_review (low confidence / novelty / relevance)_
   When red-teaming vision models in safety-critical systems, score where the box lands, not just whether one exists.
@@ -89,19 +89,19 @@ _Updated 2026-10-27._
 
 - **[@subql/common@5.8.3 npm package carried a backdoor that runs on install](https://www.stepsecurity.io/blog/subql-ecosystem-compromised)** · composite 54.12 · _flagged needs_review (low confidence / novelty / relevance)_
   A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on…
-- **[Datadog: 3,500+ RBAC bindings grant dangerous permissions to system:anonymous](https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/)** · composite 50.52 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Datadog: 3,500+ RBAC bindings give dangerous permissions to groups like system:unauthenticated](https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/)** · composite 50.52 · _flagged needs_review (low confidence / novelty / relevance)_
   Audit for any RoleBinding or ClusterRoleBinding to system:anonymous, system:unauthenticated or system:authenticated beyond the defaults, especially on GKE and in…
-- **[Next.js App Router `use cache` functions allow RCE (GHSA-673q-mjm6-r5xr)](https://github.com/advisories/GHSA-673q-mjm6-r5xr)** · composite 49.25 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
+- **[Next.js has unauthenticated RCE in use cache functions returning typed arrays](https://github.com/advisories/GHSA-673q-mjm6-r5xr)** · composite 49.25 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
   Upgrade Next.js now if any `use cache` function returns typed arrays; there is no workaround.
 - **[Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/)** · composite 48.35 · _flagged needs_review (low confidence / novelty / relevance)_
   Run pathrunner in a sandbox (Pathfinding Labs) and use its CloudTrail report to test that every payload, not just one, trips a detection.
-- **[UAT-11985 lured Taiwan researchers with AI-templated invitations and a live MFA relay](https://blog.talosintelligence.com/uat-11985/)** · composite 48.12 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[UAT-11985 lured Taiwan researchers with likely AI-templated invitations and live MFA relay](https://blog.talosintelligence.com/uat-11985/)** · composite 48.12 · _flagged needs_review (low confidence / novelty / relevance)_
   Real-time relay kits defeat OTP and push MFA; only origin-bound factors (passkeys, security keys) stop this class, and lure quality is no longer a usable tell.
-- **[Next.js Image Optimization allows RCE via SVG through a sharp bug](https://github.com/advisories/GHSA-2464-fhr4-w9xw)** · composite 47.75 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
+- **[Next.js Image Optimization has unauthenticated RCE via SVG through sharp](https://github.com/advisories/GHSA-2464-fhr4-w9xw)** · composite 47.75 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
   Pin a patched sharp under Next.js and consider disabling SVG optimization; image pipelines are unauthenticated RCE surface.
 - **[watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE](https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/)** · composite 47.02 · _flagged needs_review (low confidence / novelty / relevance)_
   Patch NetScaler to 14.1-73.37 / 13.1-64.23 or later now, or set -dtls OFF on VPN virtual servers until you can, and enable Enhanced ISN Generation separately.
-- **[Hijacked AI coding assistant session recommended a poisoned PyPI package behind Shai-Hulud](https://safedep.io/ai-coding-assistant-hijack-shai-hulud)** · composite 44.57 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Hijacked coding assistant recommended a PyPI package that stole GitHub tokens](https://safedep.io/ai-coding-assistant-hijack-shai-hulud)** · composite 44.57 · _flagged needs_review (low confidence / novelty / relevance)_
   Treat any package your coding assistant suggests as untrusted input. Check it against an allowlist and hashes in CI, and keep long-lived GitHub tokens and AI tool config secrets…
 - **[A probability-scoring model matches employee accounts to one person at 0.95 F1](https://vincenzoiozzo.com/blog/jev-identity-resolution)** · composite 43.25 · _flagged needs_review (low confidence / novelty / relevance)_
   In identity governance (IGA) and identity-security products, a cheap probability model with a tuned cut-off, plus a frontier-model check only on the 'maybe' band, beats rules and…
@@ -133,11 +133,11 @@ _Updated 2026-10-27._
   If you run Cilium, a graph view of network policies may help find unintended reachability, but the source text here is too thin to judge the tool.
 - **[Microsoft rates ASP.NET Core bypass CVE-2026-88092 critical, details not captured](https://github.com/advisories/GHSA-rv87-ccxw-8ggf)** · composite 32.75 · _failed independent verification — Verifier refuted both lessons' inferences (the not-RCE contrast and the self-contained runtime-pack advice) as unsupported by the truncated advisory excerpt, the only text available (advisory page returned HTTP 403)._
   .NET teams should patch ASP.NET Core runtimes, including self-contained Linux and container builds that bundle the runtime packages, even though the bypass mechanism is not…
+- **[PHP2Shell hits every PHP since 5.4, no patch for 8.1 or older](https://blog.talosintelligence.com/i-had-plans-for-that-second/)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
+  If you run PHP 8.1 or older, there is no patch: upgrade to 8.2+ or put network-level protection in front now.
 - **[Researcher reports Samsung Tizen runs AlexNet on screen captures to identify games](https://twitter.com/mike64_t/status/2114150399406202896)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
   When auditing TV/IoT firmware, check whether on-device ML screen capture runs before user consent, even if the output is dropped; here the evidence is a single unverified tweet.
-- **[Talos: PHP2Shell RCEs have no patch for PHP 8.1 or older](https://blog.talosintelligence.com/i-had-plans-for-that-second/)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
-  If you run PHP 8.1 or older, there is no patch: upgrade to 8.2+ or put network-level protection in front now.
-- **[Contao comments-bundle XSS hits back-end users, with no CSP on back end](https://github.com/advisories/GHSA-628f-v4f6-p37r)** · composite 31.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
+- **[Contao comments-bundle unauthenticated comment XSS runs in back end with no CSP](https://github.com/advisories/GHSA-628f-v4f6-p37r)** · composite 31.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Moderation queues are a classic stored-XSS path from anonymous users to admins; without a back-end CSP, one comment can hijack an editor session.
 - **[CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks](https://nvd.nist.gov/vuln/detail/CVE-2026-86950)** · composite 30.51 · _failed independent verification — Verifier refuted the title: the NVD page names no component, so 'CoreGraphics' is unsupported by the raw source (it appears only in the CISA KEV catalog text staged with the candidate). Delivery-route and spyware-profile points are inference._
   Push the 26.7.1 / 15.8.1 Apple updates through your MDM now and prioritize high-risk users; consider Lockdown Mode for them.
@@ -159,7 +159,7 @@ _Updated 2026-10-27._
   This is a public, live test of PHP2Shell exploitability; a non-zero hack counter would be a signal to speed up PHP patching, but the page itself contains no technical detail.
 - **[Akto README pitches open-source API security testing with a new AI-agent tagline](https://github.com/akto-api-security/akto)** · composite 24.59 · _failed independent verification — Verifier: excerpts verbatim, but the draft overstated features (CI/CD and mirrored traffic partly Enterprise-only; SSRF and JWT tests only named as examples) and inferred JVM code execution. Text corrected; a vendor README with marketing tagline._
   A known open-source API-testing tool with an AI-security tagline, but its README shows no AI- or MCP-specific capability, so judge it as an API testing tool.
-- **[Aikido claims 'http2shell' RCE hits Node and Python, with no technical details](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8)** · composite 24.5 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Aikido claims an 'http2shell' RCE in Node and Python; no details captured](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8)** · composite 24.5 · _flagged needs_review (low confidence / novelty / relevance)_
   A possible cross-runtime RCE is circulating, but this capture has no details; get the primary Aikido or vendor advisory before acting.
 - **[Book claims Dutch government hacked Jared Kushner's phone, which Kushner denies](https://twitter.com/jaredkushner/status/2113376217415958767)** · composite 20.0 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a disputed political allegation with no technical content; treat it as unconfirmed news, not threat intelligence.
@@ -167,7 +167,7 @@ _Updated 2026-10-27._
   Any logged-in Plex user can make the server fetch arbitrary addresses, and attackers are chaining it with other Plex bugs.
 - **[Storybook dev server lacks origin validation; malicious sites can change project files](https://github.com/advisories/GHSA-f2ph-cmg5-wxc8)** · composite 10.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Local dev servers reachable from the browser are an attack surface; patch and avoid opening untrusted sites meanwhile.
-- **[uv trusts the emSign root behind eight compromised eMudhra intermediate CAs](https://github.com/advisories/GHSA-hq85-5cpj-mr62)** · composite 10.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
+- **[uv before 0.13.4 trusts the emSign root behind compromised eMudhra CAs](https://github.com/advisories/GHSA-hq85-5cpj-mr62)** · composite 10.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Python installs through uv could accept certificates signed with the leaked eMudhra keys until you upgrade to 0.13.4.
 - **[CISA KEV: Siemens Software Center DLL search-path flaw exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-110936)** · composite 10.44 · _ungrounded excerpt — only 0% of quotes verified against the source_
   A local attacker who can drop a DLL where Siemens Software Center looks for one gets code execution; CISA says this is being exploited.
@@ -198,7 +198,7 @@ _Updated 2026-10-27._
   Embedded evaluation is starting with a lab-funded commercial partner and no shared standards, so judge its independence by the access and reporting terms once they are published.
 - **[SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues](https://github.com/logic-star-ai/swt-bench)** · composite 37.37 · _failed independent verification — Verifier: excerpts verbatim and dataset sizes correct, but the draft over-reached (author attribution, regression-catching inference, filler lesson). Text corrected; held as an old 2024 benchmark README with low novelty._
   If your coding agent claims it reproduced a bug, require a test that fails before the fix and passes after. SWT-Bench is a ready-made harness for measuring how often it can.
-- **[Amazon Science post on third-party AI safety review, article body not captured](https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review)** · composite 33.5 · _failed independent verification — Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body._
+- **[Amazon Science covers third-party review of AI safety testing, body not captured](https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review)** · composite 33.5 · _failed independent verification — Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body._
   Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.
 - **[HybridAgent reasons in latent space and calls tools in text](https://arxiv.org/abs/2610.18861)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a model architecture and training change, not a harness technique, so it only matters if you train or serve your own open-weight agent models.
@@ -212,7 +212,7 @@ _Updated 2026-10-27._
   A hands-on resource for understanding the reasoning model inside agents; teaching material, not a new finding.
 - **[pi pod runs the pi coding agent in isolated sandboxes](https://pipod.dev/)** · composite 26.0 · _flagged needs_review (low confidence / novelty / relevance)_
   Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.
-- **[Anthropic survey: 91% of its staff expect a Nobel-level AI discovery](https://www.anthropic.com/research/ai-expectations-gap)** · composite 21.65 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Anthropic staff, unlike most US adults, expect Nobel-level AI discovery by 2030](https://www.anthropic.com/research/ai-expectations-gap)** · composite 21.65 · _flagged needs_review (low confidence / novelty / relevance)_
   This is an economics and public-opinion survey with little practical value for builders, though its one practical data point is that regular AI users at work rank data privacy and…
 
 ---

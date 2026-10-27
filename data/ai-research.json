@@ -157,7 +157,7 @@
         "newness": 23,
         "credibility": 43.9,
         "composite": 57.93,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -231,7 +231,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 57.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -272,13 +272,13 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 57.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
       "topic": "ai-research",
       "domain": "air.alignment",
-      "title": "METR says Anthropic's low misalignment risk rests on weak models, not monitoring",
+      "title": "METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring",
       "source_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
       "article_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
       "tweet_url": null,
@@ -336,10 +336,7 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "metr-anthropic-s-low-misalignment-risk-holds-because-models"
-      ]
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -349,7 +346,7 @@
         "capability-elicitation-lags-training",
         "provider-guardrails-can-block-incident-response"
       ],
-      "title": "OpenAI's Astra evals can't rule out Critical cyber capability",
+      "title": "OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability",
       "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
       "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
       "published": "2026-08-07",
@@ -493,7 +490,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 54.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -608,7 +605,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 52.1,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -714,7 +711,7 @@
         "newness": 4,
         "credibility": 71.9,
         "composite": 50.78,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Closest pool entries are the archive piece 'Prove security patches instead of trusting them' and the ai-research entry 'How we use /goal to find bugs in Patch the Planet'; the benchmark-critique plus real-world human and maintainer baseline data is new. Verifier: archive: 'Prove security patches instead of trusting them'; ai-research: 'How we use /goal to find bugs in Patch the Planet'",
       "related_claims": [
@@ -791,7 +788,7 @@
         "newness": 23,
         "credibility": 50.8,
         "composite": 50.27,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -835,7 +832,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 50.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -902,7 +899,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 48.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -1030,7 +1027,7 @@
         "newness": 4,
         "credibility": 73.2,
         "composite": 47.98,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Closest in pool is the Anthropic UK AISI cybertest incident review (Mythos 5) and the METR critique of Anthropic's low-misalignment-risk claim; the OpenAI Hugging Face incident is referenced in the source but no matching pool entry was found for this framework. Verifier: Anthropic: UK AISI cybertest incident review (Mythos 5 push malware to real repo); METR critique of Anthropic low-misalignment-risk claim. No pool entry on compaction-summary self-injection.",
       "related_claims": [
@@ -1110,7 +1107,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 47.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -1213,7 +1210,7 @@
         "newness": 23,
         "credibility": 70.8,
         "composite": 44.87,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
       "verified": true,
@@ -1395,7 +1392,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 44.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1484,7 +1481,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 42.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -1548,7 +1545,7 @@
         "newness": 4,
         "credibility": 80.0,
         "composite": 42.4,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
       "article_url": "https://huggingface.co/blog/funes",
@@ -1639,7 +1636,7 @@
         "newness": 4,
         "credibility": 50.8,
         "composite": 40.12,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "LLM-as-judge bias work (verbosity/position bias, Zheng et al. 2023 MT-Bench); DecisionPivot contrast-pair testing of decision models in ai-research.json; ledger claim llm-as-judge-is-biased-toward-longer-answers. The stability-plus-discrimination framing and 'false robustness' finding are the delta. Verifier's closest: MT-Bench judge-bias work (Zheng et al. 2023); llm-as-judge-is-biased-toward-longer-answers.",
       "verified": true,
@@ -1725,7 +1722,7 @@
         "newness": 4,
         "credibility": 75.0,
         "composite": 39.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": false,
       "verify_note": "Verifier: lesson 2's 'retry-with-feedback inflates scores vs single-shot' and the takeaway's 'meaningless without token budget' overstate the source.",
@@ -1829,7 +1826,7 @@
         "newness": 23,
         "credibility": 53.0,
         "composite": 38.3,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -1915,7 +1912,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 38.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -1984,7 +1981,7 @@
         "newness": 23,
         "credibility": 72.5,
         "composite": 37.62,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -2064,7 +2061,7 @@
         "newness": 23,
         "credibility": 50.8,
         "composite": 37.37,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2165,7 +2162,7 @@
         "newness": 4,
         "credibility": 73.2,
         "composite": 34.48,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Closest in pool is the entry on porting Codex's Responses-API compaction protocol into other harnesses (Pi) and the Claude Code harness-design write-up; this is a product launch of an existing capability. Verifier: Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (archive.json); the Claude Code harness-design write-up.",
       "related_claims": [
@@ -2237,7 +2234,7 @@
         "newness": 4,
         "credibility": 70.8,
         "composite": 34.12,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "OpenAI HealthBench (same expert-rubric plus model-grader method).",
@@ -2273,7 +2270,7 @@
       "candidate_id": "strengthening-ai-safety-evaluation-through-indep-2326f3b106",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "Amazon Science post on third-party AI safety review, article body not captured",
+      "title": "Amazon Science covers third-party review of AI safety testing, body not captured",
       "source_url": "https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review",
       "summary": "Amazon Science announces that it had an independent third party (AVERI, per the RSS excerpt) assess and improve its internal safety testing of Amazon models. The captured raw file has only the title and site navigation, with no article body. Methods, findings, and what changed are therefore unknown.",
       "takeaway": "Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.",
@@ -2309,7 +2306,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 33.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -2400,7 +2397,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 32.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -2465,7 +2462,7 @@
         "newness": 23,
         "credibility": 72.0,
         "composite": 30.05,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -2538,7 +2535,7 @@
         "newness": 23,
         "credibility": 53.2,
         "composite": 28.73,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -2616,7 +2613,7 @@
         "newness": 23,
         "credibility": 52.5,
         "composite": 27.73,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -2694,7 +2691,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 26.9,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -2771,7 +2768,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 26.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
       "verified": true,
@@ -2853,7 +2850,7 @@
         "newness": 4,
         "credibility": 73.2,
         "composite": 25.48,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Hugging Face Open ASR Leaderboard; Seed-TTS-Eval and CV3-Eval benchmarks; TTS Arena v2 and Artificial Analysis TTS arena leaderboards. No closer entry in the corpus. Verifier's closest: Open ASR Leaderboard; TTS Arena v2; Seed-TTS-Eval.",
       "verified": true,
@@ -2887,7 +2884,7 @@
     {
       "topic": "ai-research",
       "domain": "air.ml-research",
-      "title": "Anthropic survey: 91% of its staff expect a Nobel-level AI discovery",
+      "title": "Anthropic staff, unlike most US adults, expect Nobel-level AI discovery by 2030",
       "source_url": "https://www.anthropic.com/research/ai-expectations-gap",
       "article_url": "https://www.anthropic.com/research/ai-expectations-gap",
       "tweet_url": null,
@@ -2943,7 +2940,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 21.65,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -3016,7 +3013,7 @@
         "newness": 4,
         "credibility": 70.8,
         "composite": 20.62,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "External-testing commitments via UK AISI/US CAISI; no prior entry on recursive self-improvement standards.",
@@ -3048,7 +3045,7 @@
     {
       "topic": "ai-research",
       "domain": "air.tooling",
-      "title": "Anthropic presents MCP servers as code APIs so agents load fewer tokens",
+      "title": "Anthropic describes presenting MCP servers as code APIs to save tokens",
       "source_url": "https://www.anthropic.com/research/code-execution-with-mcp",
       "takeaway": "Code execution cuts MCP token cost, but the agent-written code then needs sandboxing, limits and monitoring.",
       "summary": "Anthropic says loading every MCP tool definition and passing every result through the model wastes context, and letting agents write code against a file tree of tools cut one example from 150,000 tokens to 2,000. The post warns that this needs a secure execution environment, and the raw text dates the post to 2025-11-04 while the tracker lists 2026-10-18.",

@@ -12,7 +12,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Concrete production numbers (92% to 100%, back to 91% after a vLLM default change) that any team self-hosting open-weight models for agents can act on immediately. · high-relevance · timely_
 - **[Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents)**
   _Why now: Directly usable harness change: a model-invoked compaction tool plus a fire/suppress rubric beats fixed token-threshold compaction across seven models. · trending · high-relevance_
-- **[Anthropic presents MCP servers as code APIs so agents load fewer tokens](https://www.anthropic.com/research/code-execution-with-mcp)**
+- **[Anthropic describes presenting MCP servers as code APIs to save tokens](https://www.anthropic.com/research/code-execution-with-mcp)**
 - **[Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models](https://huggingface.co/blog/open-tts-leaderboard)**
 - **[MentalHealthBench scores model replies against weighted expert-consensus rubrics](https://openai.com/index/introducing-mentalhealthbench)**
 - **[UK AISI publishes verified benchmark results showing scores shift with inference compute](https://huggingface.co/blog/evaleval-aisi)**
@@ -21,7 +21,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Trail of Bits says 1Password's AI patching benchmark is misleading](https://blog.trailofbits.com/2026/09/15/1passwords-ai-patching-benchmark-is-misleading/)**
 - **[OpenAI launches the Agents API in public beta, a hosted Codex harness](https://openai.com/index/introducing-the-agents-api)**
 - **[Hugging Face's funes shares agent memory from raw session text, not summaries](https://huggingface.co/blog/funes)**
-- **[OpenAI's Astra evals can't rule out Critical cyber capability](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)**
+- **[OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)**
 - **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai)**
 - **[A frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)**
 
@@ -44,7 +44,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Alignment & Reliability
 
-- **[METR says Anthropic's low misalignment risk rests on weak models, not monitoring](alignment/2026-10-metr-says-anthropic-s-low-misalignment-risk-rests-on-weak-mo.md)** · composite **57.5** · Oct 20, 2026  
+- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **57.5** · Oct 20, 2026  
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
   _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
 

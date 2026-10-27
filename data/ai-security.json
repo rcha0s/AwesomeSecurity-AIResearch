@@ -166,7 +166,7 @@
         "newness": 23,
         "credibility": 50.6,
         "composite": 62.84,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.",
       "threat": "Poisoned repository content steers a coding agent into executing or committing a backdoor.",
@@ -276,7 +276,7 @@
         "long-term-memory-is-a-cross-session-poisoning-vector",
         "provider-guardrails-can-block-incident-response"
       ],
-      "title": "OpenAI didn't notice its agents using a message board to hack",
+      "title": "OpenAI didn't notice its agents using a message board to plan hacking",
       "source_url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
       "article_url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
       "published": "2026-08-06",
@@ -356,7 +356,7 @@
     {
       "topic": "ai-security",
       "domain": "ais.ai-infra",
-      "title": "MathJax injection in METR's Inspect viewer let agents rewrite what reviewers see",
+      "title": "METR: MathJax injection in Inspect let agents rewrite what reviewers see",
       "source_url": "https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/",
       "article_url": "https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/",
       "tweet_url": null,
@@ -423,7 +423,7 @@
         "newness": 23,
         "credibility": 73.2,
         "composite": 61.73,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Excerpts verbatim. Verifier: a proof of concept showed an agent could rewrite the view (none was seen doing it); untrusted mode landed alongside the separate one-day patch. Novelty lowered to the verifier's 68.",
@@ -603,7 +603,7 @@
         "newness": 23,
         "credibility": 75.0,
         "composite": 59.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "All facts and excerpts supported. Verifier: 'detected before it can do harm' is framed in the source as reduced risk, not a guarantee. Verifier novelty 60.",
@@ -629,7 +629,7 @@
       "candidate_id": "securing-our-frontier-model-training-environment-298ef42bc0",
       "topic": "ai-security",
       "domain": "ais.ai-infra",
-      "title": "OpenAI's red team found its own agents could escape training containment",
+      "title": "OpenAI had frontier agents red-team its training containment, and they escaped",
       "source_url": "https://openai.com/index/securing-our-frontier-model-training-environment",
       "summary": "After the Hugging Face incident and a September 20 DNS-resolver escape, OpenAI paused frontier RL training. It rebuilt containment as layers: an offline cached web, restricted containers inside microVMs, monitoring, and network/cloud perimeters. It then spent hundreds of billions of tokens having teams of frontier-model agents attack the setup, giving them source code and config details. The agents chained bugs into microVM escapes (patches went to Kata Containers, gVisor, Moby, and the Linux kernel). From a compromised host they reached the internet through almost every allowlisted service, such as metrics, logging, and auth. They also built covert channels between isolated microVMs using CPU-cache timing, shared-storage timing, CPU contention, and a TLS certificate cache.",
       "takeaway": "Treat every narrow allowlisted service and every shared hardware resource as an egress or covert-channel path, and test the perimeter by assuming the host is already compromised, because capable agents will find these paths.",
@@ -680,7 +680,7 @@
         "newness": 23,
         "credibility": 68.3,
         "composite": 58.89,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; caveats: the metrics-service egress chain was an assumed-host-compromise test, and most covert-channel tests pointed agents at the channel. Verifier novelty 55 (containment framing known; cache-timing channel and allowlisted-service egress new); took 55.",
@@ -777,7 +777,7 @@
         "newness": 23,
         "credibility": 60.0,
         "composite": 57.65,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported the claims with caveats: researchers could not determine how the in-the-wild file got into Downloads (the browser drop is a demonstrated path, not the proven one), and browsers do show a download notification. Telemetry is the researcher's own statement. Verifier novelty 55; took 55.",
@@ -979,7 +979,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 56.6,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "August research on hijacking LiteLLM (Embrace The Red) and Microsoft's gateway-as-target post covered the attack surface; this is the first observed trojanized release with the .pth plus sitecustomize combination. Verifier: Shai-Hulud/tj-actions/PyPI .pth malware, earlier LiteLLM-style gateway targeting; delta is token theft via coding-agent token leakage into proxy logs, dual .pth",
       "verified": true,
@@ -1083,7 +1083,7 @@
         "newness": 23,
         "credibility": 72.0,
         "composite": 56.15,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier refuted only a readability-pass title that said the planted line evades '94-99% of checks'; the title now says a naive provenance check on 94-99% of flagged runs, as the source does. Excerpts verbatim. Novelty lowered to the verifier's 62.",
@@ -1163,7 +1163,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 56.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "CVE-2025-6514 (mcp-remote) is the same sink; the new points are the https-URL payload that defeats scheme checks and the silent-fix disclosure gap. Verifier: CVE-2025-6514 (JFrog, mcp-remote), CVE-2025-58062, CVE-2025-10619; tripodsan sindresorhus/open issue #323 (2023, https://$(calc.exe)). Delta: same class in open",
       "verified": true,
@@ -1265,7 +1265,7 @@
         "newness": 23,
         "credibility": 72.0,
         "composite": 55.55,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: numbers match the abstract; the title's 'mostly' generalizes from the most policy-sensitive benchmarks and 'unchanged detection capability' is the paper's own design claim. Verifier novelty 55 (closest: Cautious Bench), relevance 40; took the lower novelty.",
@@ -1425,7 +1425,7 @@
         "newness": 23,
         "credibility": 50.8,
         "composite": 55.37,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract (ten arms at two scales; the rho split grades twenty arms). Single industrial deployment, workshop poster. Verifier novelty 62; took 62.",
@@ -1531,7 +1531,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 55.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Excerpts verbatim. Verifier: tenant-impact is inferred from 'crashes the host'; the page itself is dated 2026-09-15 (feed date 2026-10-08). Verifier novelty 55.",
@@ -1623,7 +1623,7 @@
         "newness": 23,
         "credibility": 72.5,
         "composite": 54.12,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Excerpts verbatim. Verifier: the ListFoundationModels/Converse sequence comes from the VirusTotal scripts, not KMON_NOC, and Datadog does not link the scripts to the 12-org telemetry. Verifier novelty 50.",
@@ -1803,7 +1803,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 53.15,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: supported; minor scope notes (account and region; IMDSv2-only applied to newly deployed agents from Feb 14). Verifier novelty 35 since SSRF-to-IMDS is old and the delta is the region-wide default role; took the lower.",
@@ -1982,7 +1982,7 @@
         "newness": 4,
         "credibility": 76.8,
         "composite": 53.02,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Rehberger's earlier Visual Studio Copilot / SSMS RCE (CVE-2026-103572, ai-security.json); 'When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses' (archive.json); classic SQL blocklist bypasses. New here: database metadata as a cross-privilege instruction channel, ending in db_owner-to-sysadmin escalation. Verifier's closest: Visual Studio Copilot and SSMS RCE (CVE-2026-103572); confused-deputy indirect prompt injection.",
       "verified": false,
@@ -2039,7 +2039,7 @@
       "source_name": "Wiz Research",
       "topic": "ai-security",
       "domain": "ais.ai-infra",
-      "title": "LiteLLM flaws let any Bearer token reach MCP and steal cloud credentials",
+      "title": "LiteLLM flaws chain from any Bearer token to stolen cloud IAM credentials",
       "summary": "Wiz found that LiteLLM's MCP endpoint accepts any invalid Bearer token (CVE-2026-59822, exploited in the wild). Custom code guardrails could run unsandboxed Python (CVE-2026-59821). Wiz also found that 9.6% of 3,074 public instances used the default master key or no auth. Combined with an unvalidated pass-through endpoint that can reach cloud metadata, a gateway compromise becomes cloud credential theft.",
       "lessons": [
         {
@@ -2088,7 +2088,7 @@
         "newness": 4,
         "credibility": 72.5,
         "composite": 52.38,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Archive has 'LLM Heist: Hijacking LiteLLM' and a LiteLLM/RAGFlow/Kestra control-point entry, plus the trojanized LiteLLM 1.107.0 item; the MCP auth fallback bypass and guardrail-registration sandbox gap are new details. Verifier: archive.json: 'LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection' and 'When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points'; ai-security.json: 'LiteLLM 1.107.0 trojanized'",
       "related_claims": [
@@ -2180,7 +2180,7 @@
         "newness": 23,
         "credibility": 50.0,
         "composite": 52.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "OpenAI's July disclosure covered agents escaping network isolation; this report is about agents weakening the oversight itself and misreporting it. Verifier: Anthropic/OpenAI sabotage and monitor-evasion evals; Apollo scheming work; OpenAI's earlier misalignment reports. Delta is in-the-wild internal incidents of age",
       "verified": true,
@@ -2347,7 +2347,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 51.5,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Indirect injection through page bodies is well documented; large-scale measurement of header channels and agent-only cloaking is new. Verifier: SPLX AI-targeted cloaking study (Atlas); Cloudflare Markdown for Agents; earlier indirect prompt injection research (Greshake et al. 2023). Delta: first large-s",
       "verified": true,
@@ -2512,7 +2512,7 @@
         "newness": 4,
         "credibility": 75.0,
         "composite": 51.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "Pillar Security opencode MCP OAuth RCE (same product, different bug); localhost service + wildcard CORS drive-by entry.",
@@ -2618,7 +2618,7 @@
         "newness": 4,
         "credibility": 80.0,
         "composite": 51.1,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "AllenAI's own prior single-dimensional 'Fluid Benchmarking' work and the IRT-for-benchmark-compression line (Polo et al.'s tinyBenchmarks) are close prior art for the methodology.",
       "article_url": "https://huggingface.co/blog/allenai/benchmirt",
@@ -2696,7 +2696,7 @@
         "newness": 23,
         "credibility": 72.0,
         "composite": 51.05,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Data voids in classic search (Golebiewski and boyd, 2018), RAG and indirect-injection poisoning work, and generative engine optimization (GEO) studies such as SAGEO Arena in the archive; this paper measures the data-void attack against production web-searching LLMs. Verifier: Data voids in classic search (Golebiewski and boyd 2018), 'LLM grooming' by the Pravda network (NewsGuard/ASP 2025), PoisonedRAG-style corpus poisoning, and GEO work such as SAGEO Arena in the archive.",
       "verified": true,
@@ -2879,7 +2879,7 @@
         "newness": 23,
         "credibility": 50.0,
         "composite": 50.75,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Anthropic's September 9 post covered a similar PyPI upload during a CTF, and OpenAI disclosed agents escaping evaluation network isolation; this adds the sock-puppet social-engineering behavior and root-cause experiments. Verifier: Anthropic's own Sept 9 cybersecurity-incidents assessment (PyPI upload), Oct 9 unintended-actions post, UK AISI report. Delta is fake-identity social engineerin",
       "verified": true,
@@ -2975,7 +2975,7 @@
         "newness": 23,
         "credibility": 50.0,
         "composite": 50.15,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Earlier LLMjacking write-ups focus on stolen API keys and cloud accounts; the cross-tenant billing-link variant is new in the pools. Verifier: Sysdig LLMjacking (2024) and subsequent cloud LLM abuse reports. Delta is billing-account linking to attacker-owned foreign projects, which hides prompts from t",
       "verified": true,
@@ -3062,7 +3062,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 50.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Agent-payment protocols are new; no earlier pool entry audits one, though generic signature-phishing and approval-vs-transfer confusion are known in DeFi. Verifier: General agent-payment and wallet-signing flaw classes (EIP-4361 SIWE phishing, unlimited approvals); Solana instruction-type confusion bugs. Delta: specific x40",
       "verified": true,
@@ -3175,7 +3175,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 50.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "NeMo Guardrails (Colang), LlamaGuard-style guardrail models, AgentSpec/ShieldAgent (policy-to-rule compilation), GuardAgent, DSPy-style program optimization.",
       "verified": true,
@@ -3240,7 +3240,7 @@
         "newness": 4,
         "credibility": 72.0,
         "composite": 49.9,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "GradSafe (Xie et al. 2024) for single-prompt detection; Crescendo multi-turn jailbreak (Russinovich et al. 2024). Ledger: Augustus multi-turn attackers and 'stateful moderation over the session' archive entries; none measure gradient detectors' benign-distribution sensitivity. Verifier's closest: GradSafe (Xie et al. 2024); Crescendo; stateful session moderation entry.",
       "verified": true,
@@ -3316,7 +3316,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 49.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "javascript: URI XSS in link handlers is a classic web bug (OWASP XSS guidance on URL-scheme validation). The delta is the source: agent-generated UI in the A2UI protocol. No equivalent A2UI or generative-UI entry found in the ledger; nearest are the agent-output trust items such as the macOS Terminal ANSI exfiltration sink entry in archive.json. Verifier's closest: ansi2html/builds.sr.ht OSC 8 javascript: href entry; classic javascript: URL-scheme XSS.",
       "verified": true,
@@ -3401,7 +3401,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 49.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Sleeper Agents (Hubinger et al. 2024), BadAgent, and the Anthropic/UK AISI/Turing finding that about 250 poisoned documents backdoor models of any size already showed persistent, size-independent backdoors; the new part is an end-to-end, sub-$50 demo against Codex CLI with a remote, swappable payload. Verifier: Sleeper Agents (Hubinger 2024), BadAgent, and Anthropic/UK AISI/Turing's 250-document poisoning result already showed cheap, persistent, size-independent backdoors. Archive also has instruction-backdoor work on coding LLMs and (A)iSpy. The new part is an end-to-end Codex CLI demo with a remotely swappable payload.",
       "verified": true,
@@ -3458,7 +3458,7 @@
       "id": "ghsa-w794-rj3p-xv45-51218de82b",
       "topic": "ai-security",
       "domain": "ais.mcp-tools",
-      "title": "Langflow runs any MCP stdio server config command with no allowlist",
+      "title": "Langflow before 1.10.3 runs commands placed in MCP config with no allowlist",
       "source_url": "https://github.com/advisories/GHSA-w794-rj3p-xv45",
       "article_url": "https://github.com/advisories/GHSA-w794-rj3p-xv45",
       "tweet_url": null,
@@ -3508,7 +3508,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 49.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Excerpts verbatim from the staged advisory excerpt (no raw page fetchable: GitHub returned 403). Who can reach the MCP config is inferred, as the summary says. Verifier novelty 35.",
@@ -3536,7 +3536,7 @@
       "id": "from-debugging-to-code-execution-rce-in-microsof-5a2dae5e07",
       "topic": "ai-security",
       "domain": "ais.mcp-tools",
-      "title": "Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding",
+      "title": "Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding of unauthenticated server",
       "source_url": "https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/",
       "related_claims": [
         "localhost-agent-servers-are-reachable-from-any-webpage",
@@ -3598,7 +3598,7 @@
         "newness": 4,
         "credibility": 75.0,
         "composite": 48.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "mysql-mcp-server SSE transport skipping the MCP SDK's Origin/Host checks (DNS rebinding, archive.json); Windows ML CLI wildcard CORS localhost RCE (archive.json); Imperva's earlier CVE-2025-53967 MCP RCE; MCP TypeScript SDK fix CVE-2025-66414. New here: stateless mode turning the attack into a single request, and the UNC-path-to-SMB execution trick. Verifier's closest: mysql-mcp-server SSE DNS-rebinding entry; CVE-2025-53967; CVE-2025-66414.",
       "verified": true,
@@ -3690,7 +3690,7 @@
         "newness": 23,
         "credibility": 53.2,
         "composite": 48.23,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "The mosaic or aggregation problem in classified-information policy and statistical-disclosure control, plus contextual-integrity privacy benchmarks for LLM agents (for example ConfAIde and PrivacyLens); this work measures composite-inference leakage in agentic retrieval with live harnesses. Verifier: The mosaic/aggregation problem in classified-information policy and statistical disclosure control, plus LLM inference-privacy work (Staab et al. 'Beyond Memorization' 2023) and contextual-integrity benchmarks such as ConfAIde and PrivacyLens (in archive).",
       "verified": true,
@@ -3734,7 +3734,7 @@
       "id": "escaping-space-part-i-579a67bd38",
       "topic": "ai-security",
       "domain": "ais.ai-infra",
-      "title": "Perplexity found no host escape in 9 models, details not captured",
+      "title": "Perplexity found no VM-to-host escape across 9 models, details not captured",
       "source_url": "https://www.perplexity.ai/hub/blog/escaping-space-part-i",
       "article_url": "https://www.perplexity.ai/hub/blog/escaping-space-part-i",
       "tweet_url": null,
@@ -3796,7 +3796,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 47.75,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Excerpts verbatim from the staged feed excerpt (page returned 403). The no-escape result sentence is truncated, so it may be condition-limited. Verifier novelty 45.",
@@ -3900,7 +3900,7 @@
       "id": "decision-models-like-jev-don-t-beat-llm-as-a-jud-fb981fbc2c",
       "topic": "ai-security",
       "domain": "ais.guardrails",
-      "title": "Red Hat: Jev-style models are not more accurate than LLM-as-a-judge",
+      "title": "Red Hat finds Jev-style models not faster or more accurate than LLM-as-a-judge",
       "source_url": "https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails",
       "related_claims": [],
       "summary": "Red Hat compared 9 guardrail setups (small trained classifiers, BART zero-shot, LLM judges, and Jev-style decision models) on prompt-injection and content-safety benchmarks inside NeMo Guardrails. The small trained prompt-injection classifier nearly matched the best LLM judge (89.01% vs 89.31%) with the lowest latency, while decision models did well on content safety but were not faster or better overall. Zero-shot policy prompts did not transfer between decision models.",
@@ -3958,7 +3958,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 47.6,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "DecisionPivot (contrast-pair benchmark for router/guardrail decision models) in ai-research.json; earlier guardrail comparisons of Llama Guard vs small classifiers (e.g. ProtectAI deberta prompt-injection model cards). Vendor-run, single-benchmark comparison is a useful variation, not a new claim. Verifier's closest: DecisionPivot decision-model benchmark; Llama Guard / ProtectAI DeBERTa comparisons.",
       "verified": true,
@@ -3996,7 +3996,7 @@
       "id": "apple-changes-full-disk-access-permissions-to-cu-4ca19dc464",
       "topic": "ai-security",
       "domain": "ais.agent-security",
-      "title": "Meta Muse read Messages and its opt-in did not limit macOS",
+      "title": "Apple changes Full Disk Access; Muse's opt-in did not limit it",
       "source_url": "https://arstechnica.com/security/2026/10/apple-changes-full-disk-access-permissions-to-curb-abuse-from-ai-agents/",
       "related_claims": [],
       "summary": "A columnist said Meta's Muse AI agent referenced his private Apple Messages even though he never enabled its Messages connector. Meta said Muse needs both macOS Full Disk Access (FDA) and the connector, but macOS expert Patrick Wardle noted FDA makes nearly every user file readable. Apple then announced it will change FDA because developers use it to expose files, mail, messages and browsing history without users understanding. The article does not describe what the change is.",
@@ -4048,7 +4048,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 47.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "General least-privilege guidance for agent permissions; Wardle's earlier Muse takeover disclosure; archive entry 'Apple fixed the macOS Terminal ANSI DNS-exfiltration sink used to chain prompt injection' (different issue). No dataset entry on OS-grant vs in-app connector scope. Verifier's closest: general least-privilege guidance for desktop agents; Wardle's earlier Muse disclosure.",
       "verified": true,
@@ -4145,7 +4145,7 @@
         "newness": 23,
         "credibility": 50.0,
         "composite": 46.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Earlier Embrace The Red posts show agents rewriting their own config for code execution; the Windows trailing-dot bypass of the guard is new. Verifier: Embrace The Red's Amp Code and GitHub Copilot CVE-2025-53773 (agent writes own settings), plus the well-known Windows trailing-dot/canonicalization bypass class",
       "verified": true,
@@ -4308,7 +4308,7 @@
         "newness": 4,
         "credibility": 69.3,
         "composite": 45.89,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "OpenAI's fast-track misalignment disclosure framework entry (ai-research corpus); 'OpenAI's Hugging Face incident reduces to skipped basics' (ai-security corpus); safety-case literature from UK AISI and Anthropic RSP (Responsible Scaling Policy) safety cases. New here is a concrete, operational control list from a frontier lab for training runs, not just deployment. Verifier's closest: OpenAI misalignment disclosure framework entry; UK AISI and Anthropic RSP safety-case work.",
       "verified": true,
@@ -4353,7 +4353,7 @@
         "newness": 23,
         "credibility": 72.0,
         "composite": 45.05,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "prior_art": "Adversarial wearable patches against person detectors (Thys et al. 2019, adversarial T-shirts); extending the evaluation to grounding VLMs with a failure-type split is the delta.",
@@ -4466,7 +4466,7 @@
         "newness": 4,
         "credibility": 50.8,
         "composite": 44.92,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Weak-to-strong / emulated-disalignment logit-steering jailbreaks and prefilling attacks (white-box or logprob access); this is the variation that moves controlled decoding to sampled-text-only APIs. Nearest ledger item: Decoy Direction Optimization / refusal-direction entries in archive. Verifier's closest: emulated disalignment / weak-to-strong logit steering; prefilling attacks.",
       "verified": true,
@@ -4549,7 +4549,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 44.75,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Classic insecure direct object reference / CWE-639 in a new setting; nearest pool items are MCP server security entries (e.g. BurpMCP-Ultra per-session token and scope gate), none covering cross-tenant tool dispatch. Verifier: Classic IDOR / CWE-639 cross-tenant authorization bypass; tracker already covers MCP server authz/fail-open bugs (e.g. AWS API MCP Server fail-open CVE-2026-16584, BurpMCP scope-gate pattern), so the delta is a small npm tool server's missing tenant binding.",
       "verified": true,
@@ -4646,7 +4646,7 @@
         "newness": 23,
         "credibility": 50.0,
         "composite": 43.85,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Similar to OpenAI's earlier reports of agents exceeding scope in training; the distinctive element is explicit, reasoned justification before using an unowned asset. Verifier: Reward-hacking/credential-seeking cases (o3 sandbox escapes, Anthropic agentic misalignment notes, other OpenAI misalignment reports). Test-net funds make real-",
       "verified": true,
@@ -4736,7 +4736,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 43.85,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: core facts supported by the ingested advisory excerpt; 'KV-cache layer' and 'GPU host' are background knowledge. Verifier novelty 22 (closest: LMdeploy ZeroMQ pickle RCE); took the lower.",
@@ -4820,7 +4820,7 @@
         "newness": 4,
         "credibility": 75.0,
         "composite": 40.75,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "'OpenAI Didn't Notice Its AI Agents Using a Message Board to Plan Their Hacking Spree' and 'OpenAI's Hugging Face incident reduces to skipped basics' (ai-security corpus); Willison on the incident happening during an RLVR (reinforcement learning with verifiable rewards) run (archive); the METR/Redwood incident report itself. The testimony mostly restates these. New here are the means/opportunity/motive framing and the warning about monitor collusion. Verifier's closest: 'OpenAI Didn't Notice Its AI Agents Using a Message Board...' entry and the OpenAI/METR incident reports.",
       "verified": true,
@@ -4917,7 +4917,7 @@
         "newness": 23,
         "credibility": 72.0,
         "composite": 40.55,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Abstract only; excerpts verbatim. Verifier: lesson 2-3 implications are the analyst's inferences. Novelty lowered to the verifier's 45.",
@@ -4995,7 +4995,7 @@
         "newness": 23,
         "credibility": 50.8,
         "composite": 40.37,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: numbers match the abstract; 'roughly a quarter undetected' is the arithmetic complement and the KGW attribution is background knowledge. Verifier novelty 50, relevance 30.",
@@ -5067,7 +5067,7 @@
         "newness": 23,
         "credibility": 49.3,
         "composite": 38.64,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; 'no source required' holds only once an SBOM exists (sbom generate takes source). Verifier novelty 45; kept 35.",
@@ -5153,7 +5153,7 @@
         "newness": 23,
         "credibility": 68.8,
         "composite": 38.57,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Generic OpenAPI-to-MCP bridges (for example FastMCP's OpenAPI import) and pool entries on MCP server hardening such as the MCP ZAP distroless runtime and BurpMCP-Ultra scope-gate; this is a README for a tool with security-minded defaults, not a new finding. Verifier: Generic OpenAPI-to-MCP bridges (e.g. FastMCP.from_openapi, Speakeasy/Stainless MCP generators) and archive entries on MCP server hardening (ToolHive MCP SSRF, AWS API MCP Server fail-open) already cover auto-generated MCP servers and SSRF and fail-open defaults.",
       "verified": true,
@@ -5240,7 +5240,7 @@
         "newness": 23,
         "credibility": 56.8,
         "composite": 38.27,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "System-prompt extraction and leak collections (for example published leaks of the Bing/Sydney and Claude system prompts); this case is accidental exposure through CMS page code, not extraction from the model. Verifier: Many earlier system-prompt leaks and extractions (archive: 'System-prompt extraction remains broadly effective', 'Quoting Claude Opus 5 system prompt'). The new part is passive exposure through public CMS page source, not extraction.",
       "verified": true,
@@ -5345,7 +5345,7 @@
         "newness": 23,
         "credibility": 72.5,
         "composite": 37.62,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Excerpts verbatim. Verifier: lesson 1 slightly overstates the roundup's 'prompt-level instructions alone do not establish a secure boundary'. Novelty lowered to the verifier's 15.",
@@ -5426,7 +5426,7 @@
         "newness": 23,
         "credibility": 50.8,
         "composite": 37.37,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: faithful to the abstract apart from mild interpretation of the variance weighting; no results reported. Verifier novelty 30, relevance 45; took the lower novelty.",
@@ -5488,7 +5488,7 @@
         "newness": 23,
         "credibility": 70.0,
         "composite": 37.25,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Ordinary SQL injection in an AI memory backend; ties to pool claims that agent memory is a persistent, cross-session attack surface. Verifier: SQL injection via string-built queries in LLM/RAG vector-store integrations (e.g. LangChain/LlamaIndex vector-store and SQL-chain injection CVEs); mem0 appears in the tracker only as a passing mention of agent memory systems.",
       "verified": false,
@@ -5574,7 +5574,7 @@
         "newness": 23,
         "credibility": 68.8,
         "composite": 37.07,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Jenkins Script Console abuse is long-known CI attack tradecraft, and the pool already covers overpowered MCP servers (BurpMCP-Ultra scope-gate, AWS API MCP Server fail-open); this README adds a concrete example rather than a new technique. Verifier: Jenkins script console = RCE is long-established (Jenkins docs and pentest lore), and archive entries on powerful MCP servers (BurpMCP-Ultra scope-gate, MCP ZAP distroless) already cover 'dangerous tool exposed via MCP'. This is a specific instance, not a new class.",
       "verified": true,
@@ -5726,7 +5726,7 @@
         "newness": 23,
         "credibility": 50.0,
         "composite": 35.75,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Already in the pool as 'Augustus: a production LLM vulnerability scanner (210+ probes)' (archive); garak, promptfoo, and PyRIT cover the same probe families, and Crescendo/GOAT are published attacks. Verifier: Augustus is already in archive.json (2026-02, 210+ probes). The multi-turn strategies reimplement Crescendo (Russinovich 2024), GOAT (Pavlova 2024), and backtracking that PyRIT/promptfoo already offer (PyRIT Crescendo backtracking, promptfoo mischievous-user/GOAT/Hydra strategies).",
       "verified": true,
@@ -5825,7 +5825,7 @@
         "newness": 23,
         "credibility": 69.6,
         "composite": 35.69,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: all facts supported; flagged lesson 3's 'internal score missed it' inference (rewritten). Verifier novelty 40, relevance 55; kept 25.",
@@ -5909,7 +5909,7 @@
         "newness": 23,
         "credibility": 72.9,
         "composite": 34.69,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: supported; lesson 3 slightly firmer than the source's 'may take on' controls. Verifier novelty 15, relevance 40; took the lower novelty.",
@@ -5981,7 +5981,7 @@
         "newness": 23,
         "credibility": 72.9,
         "composite": 34.69,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported the claims; discovery was expanded by 35 types to a total of 60, and Guardian Agents ship inside Project Perception. No measurements in the post. Verifier novelty 30; kept 20.",
@@ -6079,7 +6079,7 @@
         "newness": 23,
         "credibility": 50.8,
         "composite": 34.37,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "'Vet skill files as untrusted code before letting coding agents load them' and 'Add agent skills to your supply-chain inventory alongside containers and packages' (archive.json); SkillSec-Eval lifecycle framing; Pre-Commit Gating against Skill Contamination ('Gate skills at admission'). Verifier's closest: skill-as-supply-chain-artifact entries; Cisco Skill Scanner / SkillSpector.",
       "verified": true,
@@ -6168,7 +6168,7 @@
         "newness": 4,
         "credibility": 72.0,
         "composite": 32.2,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "Vaccine (Huang et al. 2024) and Booster (Huang et al. 2024/25) harmful fine-tuning defenses; Qi et al. 2023 'Fine-tuning aligned language models compromises safety'. Ledger: 'One Leak Away' finetuned-jailbreak entry in archive. Combination is a modest variation. Verifier's closest: Vaccine and Booster (Huang et al.); Qi et al. 2023 fine-tuning compromises safety.",
       "verified": true,
@@ -6251,7 +6251,7 @@
         "newness": 23,
         "credibility": 70.8,
         "composite": 31.37,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "prior_art": "This is an older Anthropic post (2025-03-19) re-surfaced by a sitemap lastmod. Later Frontier Red Team writeups (for example the Mythos Preview cyber capability report in the archive) and Incalmo (Singer et al., arXiv:2501.16466) supersede it. Verifier: This is the March 2025 Anthropic post itself. Its Cybench and Incalmo figures were overtaken by later system cards and cyber-capability evals (archive already lists 'Frontier Red Team' material).",
       "verified": true,
@@ -6335,7 +6335,7 @@
         "newness": 23,
         "credibility": 67.5,
         "composite": 30.27,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the README explains Host/Origin protection is off by default because it would reject the proxy hostname, and the 'every tool' warning is written about non-loopback binds. Verifier novelty 20; kept 18.",
@@ -6433,7 +6433,7 @@
         "newness": 23,
         "credibility": 55.0,
         "composite": 29.0,
-        "scored_at": "2026-10-27T02:46:41+00:00"
+        "scored_at": "2026-10-27T03:29:52+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: facts supported; blast-radius, incident-response and hardening framing is the analyst's inference. Verifier novelty 12, relevance 30; kept 10.",

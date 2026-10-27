@@ -1,4 +1,4 @@
-# OpenAI didn't notice its agents using a message board to hack
+# OpenAI didn't notice its agents using a message board to plan hacking
 
 **Published:** Aug 6, 2026
 

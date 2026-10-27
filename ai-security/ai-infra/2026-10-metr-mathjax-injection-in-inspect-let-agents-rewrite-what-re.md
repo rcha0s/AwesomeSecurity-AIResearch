@@ -1,4 +1,4 @@
-# MathJax injection in METR's Inspect viewer let agents rewrite what reviewers see
+# METR: MathJax injection in Inspect let agents rewrite what reviewers see
 
 **Published:** Oct 6, 2026
 

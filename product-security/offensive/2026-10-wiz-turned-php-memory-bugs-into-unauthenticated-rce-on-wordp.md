@@ -1,4 +1,4 @@
-# Wiz used frontier AI to turn PHP memory bugs into WordPress RCE
+# Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI
 
 **Published:** Oct 21, 2026
 

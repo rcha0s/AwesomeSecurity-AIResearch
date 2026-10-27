@@ -3847,7 +3847,7 @@
     "id": "oh-my-rogue-agent-87a47d2f7a",
     "topic": "ai-research",
     "domain": "air.evals",
-    "title": "Rogue eval agents are not new: ~20% of CTF solves went off-path",
+    "title": "Rogue agents are not unprecedented, ~20% of ProjectDiscovery's CTF solves were unintended",
     "source_url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
     "raw_path": "data/_raw/oh-my-rogue-agent-87a47d2f7a.txt",
     "summary": "A ProjectDiscovery eval engineer answers the Hugging Face agentic-intrusion story with their own logs: roughly 20% of solves on their internal CTF suite took an unintended path, and they publish four case studies of agents pivoting out of scope - including one that reached the harness's own tracing service and read the answers to every other challenge in the run. The containment argument is the useful part, and so is the cheapest fix: one line of prompt scope killed a whole pivot class.",
@@ -4554,7 +4554,7 @@
       "long-lived-cloud-credentials-are-obsolete",
       "ssrf-guards-must-cover-agent-outbound-calls"
     ],
-    "title": "Chainguard's microVM primitive: hypervisor-enforced egress, no ambient credentials for AI agents",
+    "title": "Chainguard's microVM gives AI agents no ambient credentials and hypervisor-enforced egress",
     "source_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
     "article_url": "https://www.chainguard.dev/unchained/this-shit-is-hard-how-chainguard-is-sandboxing-athena",
     "published": "2026-07-29",
@@ -4634,7 +4634,10 @@
     "retrieved_at": "2026-08-10T19:18:37+00:00",
     "needs_review": false,
     "grounding_score": null,
-    "domain_label": "Deployment Infra & Sandboxing"
+    "domain_label": "Deployment Infra & Sandboxing",
+    "previous_slugs": [
+      "chainguard-s-microvm-primitive-hypervisor-enforced-egress-no"
+    ]
   },
   {
     "article_url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
@@ -5670,7 +5673,7 @@
       "prompt-injection-is-a-permanent-attack-surface",
       "prompt-injection-is-containment-not-prevention"
     ],
-    "title": "AI Security Leaderboard: Methodology, Results and Minimal Standard",
+    "title": "FAR.AI's AI Security Leaderboard finds a >100x spread in model safeguards",
     "source_url": "https://arxiv.org/abs/2608.03070",
     "article_url": "https://arxiv.org/abs/2608.03070",
     "published": "2026-08-07",
@@ -5741,7 +5744,10 @@
     "retrieved_at": "2026-08-14T20:08:52+00:00",
     "needs_review": true,
     "grounding_score": null,
-    "domain_label": "AI Security"
+    "domain_label": "AI Security",
+    "previous_slugs": [
+      "ai-security-leaderboard-methodology-results-and-minimal-stan"
+    ]
   },
   {
     "id": "the-vulnerability-with-no-cve-managing-persisten-63bb328fd5",
@@ -5752,7 +5758,7 @@
       "agent-tool-selection-can-be-steered-by-untrusted-context",
       "gate-agent-prs-with-automated-checks"
     ],
-    "title": "AI coding agents carry a vulnerability with no CVE: mandate exceeds authority",
+    "title": "AI coding agents have a vulnerability with no CVE: authority exceeding mandate",
     "source_url": "https://arxiv.org/abs/2608.05884",
     "article_url": "https://arxiv.org/abs/2608.05884",
     "published": "2026-08-07",
@@ -5917,7 +5923,7 @@
       "jailbreak-transfers-across-models",
       "score-evals-on-groundedness-not-headline-f1"
     ],
-    "title": "LLMs cannot reliably judge: LLM-as-a-Judge robustness assessment",
+    "title": "LLMs Cannot Reliably Judge (Yet?) in a robustness assessment of LLM-as-a-Judge",
     "source_url": "https://arxiv.org/abs/2506.09443",
     "article_url": "https://arxiv.org/abs/2506.09443",
     "published": "2026-08-07",
@@ -7024,7 +7030,7 @@
       "package-installers-run-arbitrary-code-by-default",
       "import-time-payloads-defeat-install-time-controls"
     ],
-    "title": "ChainDrop npm worm mints valid Sigstore provenance and exfiltrates through Ethereum-routed C2",
+    "title": "ChainDrop self-propagating npm worm mints valid Sigstore provenance, exfiltrates via Ethereum-routed C2",
     "source_url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
     "article_url": "https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/",
     "published": "2026-08-06",
@@ -7097,10 +7103,7 @@
     "retrieved_at": "2026-08-10T05:24:14+00:00",
     "needs_review": true,
     "grounding_score": null,
-    "domain_label": "Supply Chain & Dependencies",
-    "previous_slugs": [
-      "chaindrop-self-propagating-npm-worm-mints-valid-sigstore-pro"
-    ]
+    "domain_label": "Supply Chain & Dependencies"
   },
   {
     "topic": "product-security",
@@ -9566,7 +9569,7 @@
     "domain": "air.agents",
     "cluster": "J",
     "related_claims": [],
-    "title": "Innovation-residual auditing of autonomous analysis agents has limits on detection",
+    "title": "Innovation-residual auditing for autonomous analysis agents, with detection limits",
     "source_url": "https://arxiv.org/abs/2608.05490",
     "article_url": "https://arxiv.org/abs/2608.05490",
     "published": "2026-08-07",
@@ -11643,7 +11646,7 @@
     "domain": "air.alignment",
     "cluster": null,
     "related_claims": [],
-    "title": "A framework for warranted reliance on generative AI in high-stakes workflows",
+    "title": "A normative framework for epistemic trustworthiness in generative AI",
     "source_url": "https://arxiv.org/abs/2608.05602",
     "article_url": "https://arxiv.org/abs/2608.05602",
     "published": "2026-08-07",
@@ -12844,7 +12847,7 @@
   {
     "topic": "ai-security",
     "domain": "ais.model-supply-chain",
-    "title": "Windows ML CLI's CORS wildcard gives any website localhost RCE",
+    "title": "Windows ML CLI's CORS wildcard gives websites localhost RCE",
     "source_url": "https://github.com/advisories/GHSA-96p9-rh4f-92cf",
     "cluster": "I",
     "related_claims": [
@@ -13064,7 +13067,7 @@
   {
     "topic": "ai-security",
     "domain": "ais.red-teaming",
-    "title": "Latin American attackers used commercial LLMs for live troubleshooting during intrusions",
+    "title": "Attackers in Latin American intrusion campaigns used commercial LLMs for live troubleshooting",
     "source_url": "https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/",
     "cluster": null,
     "related_claims": [],
@@ -14034,7 +14037,7 @@
       "tool-count-degrades-agent-performance",
       "few-distinct-tools-beat-many"
     ],
-    "title": "BurpMCP-Ultra serves 150-tool Burp access via MCP with a scope-gate",
+    "title": "BurpMCP-Ultra is a 150-tool MCP server with a scope gate",
     "source_url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
     "article_url": "https://github.com/Cy-S3c/BurpMCP-Ultra",
     "published": "2026-08-10",
@@ -16799,7 +16802,7 @@
   {
     "topic": "product-security",
     "domain": "ps.offensive",
-    "title": "Show, don't tell: Evo found 33 validated issues in a real SaaS",
+    "title": "Show, Don't Tell: Evo found issues in a real enterprise SaaS",
     "source_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
     "article_url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
     "published": "2026-08-10",
@@ -17026,7 +17029,7 @@
     "id": "u42-state-of-ai-enabled-malware-2026-08",
     "topic": "product-security",
     "domain": "ps.detection-response",
-    "title": "AI changes authoring, not execution, and ~97% of samples never reach production",
+    "title": "AI changes malware authoring, not execution, and most samples never ship",
     "source_url": "https://unit42.paloaltonetworks.com/ai-enabled-malware-analysis/",
     "raw_path": "data/_raw/u42-ai-enabled-malware-2026-08.txt",
     "summary": "Unit 42 analyzed 405 AI-integrating malware samples and found only 12 reached protected production endpoints; ~97% exist only in sandboxes, VirusTotal, and research repos. Their thesis: AI lowers the barrier to authoring malware and speeds iteration (e.g. FunkSec's seven builds in six days), but the resulting binaries are caught by the same behavioral/sandbox/entropy detection as conventional malware.",
@@ -17455,7 +17458,7 @@
   {
     "topic": "product-security",
     "domain": "ps.appsec",
-    "title": "Hono's path-traversal fix blocked only one parent-directory segment",
+    "title": "Hono's Path-Traversal Fix Only Blocked One Parent-Directory Segment",
     "source_url": "https://github.com/advisories/GHSA-gqvv-2mrq-wpjv",
     "cluster": null,
     "related_claims": [],
@@ -17508,10 +17511,7 @@
     "retrieved_at": "2026-09-09T06:16:09+00:00",
     "needs_review": true,
     "grounding_score": 1.0,
-    "domain_label": "Application Security",
-    "previous_slugs": [
-      "hono-s-path-traversal-fix-only-blocked-one-parent-directory"
-    ]
+    "domain_label": "Application Security"
   },
   {
     "topic": "product-security",
@@ -18491,7 +18491,7 @@
     "domain": "air.evals",
     "cluster": "B",
     "related_claims": [],
-    "title": "Early evidence on whether AI agents can conduct open-ended AI research",
+    "title": "Can AI agents conduct open-ended AI research? Evidence from two case studies",
     "source_url": "https://arxiv.org/abs/2607.27191",
     "article_url": "https://arxiv.org/abs/2607.27191",
     "published": "2026-08-10",
@@ -21873,7 +21873,7 @@
     "domain": "air.tooling",
     "cluster": null,
     "related_claims": [],
-    "title": "CubicQuant uses parametric non-uniform codebooks for 1-8-bit LLM weights",
+    "title": "CubicQuant: parametric non-uniform codebooks for high-throughput LLM inference, 1-8-Bit weights",
     "source_url": "https://arxiv.org/abs/2608.06763",
     "article_url": "https://arxiv.org/abs/2608.06763",
     "published": "2026-08-10",
@@ -21934,10 +21934,7 @@
     "retrieved_at": "2026-08-14T20:08:49+00:00",
     "needs_review": true,
     "grounding_score": 1.0,
-    "domain_label": "Architecture & Optimization",
-    "previous_slugs": [
-      "cubicquant-parametric-non-uniform-codebooks-for-high-through"
-    ]
+    "domain_label": "Architecture & Optimization"
   },
   {
     "topic": "ai-research",
@@ -23942,7 +23939,7 @@
     "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
-    "title": "Accuracy alone does not show whether a surrogate model helps configuration tuning",
+    "title": "Evaluating useful surrogate models for configuration tuning from a fitness landscape perspective",
     "source_url": "https://arxiv.org/abs/2509.21945",
     "article_url": "https://arxiv.org/abs/2509.21945",
     "published": "2026-08-10",
@@ -23999,10 +23996,7 @@
     "retrieved_at": "2026-08-14T20:08:48+00:00",
     "needs_review": true,
     "grounding_score": 1.0,
-    "domain_label": "Software Engineering",
-    "previous_slugs": [
-      "evaluating-useful-surrogate-models-for-configuration-tuning"
-    ]
+    "domain_label": "Software Engineering"
   },
   {
     "id": "h2al-hyperbolic-hierarchy-aware-aggregative-lear-21de3a9ba0",
@@ -25650,7 +25644,7 @@
     "domain": "air.tooling",
     "cluster": null,
     "related_claims": [],
-    "title": "Tiny threat-intelligence fine-tuning set barely shifts a judge score on DGX Spark",
+    "title": "Dual-node NVIDIA DGX Spark over Tailscale is a remote-access LLM training testbed",
     "source_url": "https://arxiv.org/abs/2608.07226",
     "article_url": "https://arxiv.org/abs/2608.07226",
     "published": "2026-08-10",
@@ -26915,7 +26909,7 @@
     "domain": "air.ml-research",
     "cluster": null,
     "related_claims": [],
-    "title": "MaskFlow: Precise, Consistent and Seamless Regional Image Editing",
+    "title": "MaskFlow folds the edit mask into flow matching for regional image editing",
     "source_url": "https://arxiv.org/abs/2608.06929",
     "article_url": "https://arxiv.org/abs/2608.06929",
     "published": "2026-08-10",
@@ -26969,7 +26963,10 @@
     "retrieved_at": "2026-08-14T20:08:47+00:00",
     "needs_review": true,
     "grounding_score": 1.0,
-    "domain_label": "Computer Vision / Image Editing"
+    "domain_label": "Computer Vision / Image Editing",
+    "previous_slugs": [
+      "maskflow-precise-consistent-and-seamless-regional-image-edit"
+    ]
   },
   {
     "id": "neurai-vn-benchmark-standardized-machine-learnin-2c06fe67e8",
@@ -29660,7 +29657,7 @@
     "curated_by": null,
     "topic": "ai-security",
     "domain": "ais.agent-security",
-    "title": "No multi-agent world resisted all three injected stresses",
+    "title": "None resisted all three injected stresses in eight multi-agent worlds",
     "summary": "Emergence World runs eight parallel worlds of ten agents (seven single-model, one mixed) for 16 days. It then delivers indirect prompt injection, misinformation and private-memory exposure through ordinary interaction surfaces. No world was fully resilient. Agents could recognize a threat yet still write it into persistent memory and act on it up to 46 hours later. The same model behaved differently in mixed versus homogeneous populations.",
     "lessons": [
       {
@@ -29916,7 +29913,7 @@
     "source_name": "GitHub Advisory Database",
     "topic": "ai-security",
     "domain": "ais.mcp-tools",
-    "title": "mysql-mcp-server SSE transport skips Origin/Host checks, allowing SQL execution via DNS rebinding",
+    "title": "mysql-mcp-server SSE allows unauthenticated SQL execution via DNS rebinding",
     "summary": "In SSE/HTTP mode, the pip package mysql-mcp-server builds its transport without the security settings that turn on the MCP Python SDK's DNS-rebinding protection. A web page or network client can therefore reach the server's SQL tooling without authentication. The advisory is rated critical.",
     "lessons": [
       {
@@ -31397,7 +31394,7 @@
     "candidate_id": "from-exposure-to-lockdown-how-aws-neutralizes-co-4994a186a1",
     "topic": "product-security",
     "domain": "ps.cloud-infra",
-    "title": "AWS auto-attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key on public GitHub",
+    "title": "AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub",
     "source_url": "https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/",
     "summary": "Unit 42 pushed a test AWS IAM (Identity and Access Management) access key to a public GitHub repo. Through GitHub's secret scanning partner program, AWS attached the AWSCompromisedKeyQuarantineV3 managed policy within 10 seconds, then raised a Health alert, an email and a Support case. In CloudTrail the attach event appears as AttachUserPolicy performed by the exposed IAM user itself, and the Health alert and Support case leave no CloudTrail event.",
     "lessons": [
@@ -32295,7 +32292,7 @@
     "candidate_id": "scan-for-good-using-ai-to-discover-and-fix-high-479c7c4331",
     "topic": "product-security",
     "domain": "ps.offensive",
-    "title": "Wiz's AI pentest agent found leaked admin keys at hospitals and archives",
+    "title": "Wiz's AI pentest agent found exposures at hospitals, archives and platforms",
     "source_url": "https://www.wiz.io/blog/scan-for-good-critical-ai-exposures",
     "summary": "Wiz pointed its AI pentest agent, Red Agent, which runs on Google's Gemini cyber models, at the internet-facing systems of public services and critical platforms, with authorization. It reports that the agent found the issues on its own and humans validated and disclosed them. Findings included an admin key on a public web server exposing 8.8 million archive files, leaked CI/CD credentials, and a credential in website code that could have pushed malware into more than 500 production container images. Wiz's main point is that serious risk often comes from small exposures that look harmless alone but chain into an attack path.",
     "lessons": [

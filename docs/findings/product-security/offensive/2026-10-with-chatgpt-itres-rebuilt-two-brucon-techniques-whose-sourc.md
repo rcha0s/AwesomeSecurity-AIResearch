@@ -1,4 +1,4 @@
-# ITRES Labs used ChatGPT to rebuild BruCON kernel techniques never released
+# With ChatGPT, ITRES rebuilt two BruCON techniques whose source was never released
 
 **Published:** Oct 22, 2026
 

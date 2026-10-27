@@ -96,8 +96,10 @@ def guard(token: str) -> str | None:
     t = token.lower()
     if t.endswith(("n't", "n’t")):
         return "n't"
+    if t in GUARD_WORDS:  # before the prefix strip: "none" is not "non" + "e"
+        return t
     stem = re.sub(r"^(?:un|non-?)", "", t)
-    return t if stem in GUARD_WORDS else None  # stem == t when there is no prefix
+    return t if stem in GUARD_WORDS else None
 
 
 def guard_words(text: str) -> Counter:
@@ -238,32 +240,49 @@ def changes(
     return out
 
 
-NEGATIONS = frozenset({"not", "no", "never", "without", "cannot", "n't"})
-PREPOSITIONS = frozenset({"on", "up"})  # guard words a rephrased title uses as plain prepositions
+NEGATIONS = frozenset({"not", "no", "never", "without", "cannot", "n't", "none", "unaffected"})
+
+
+def _negating(g: str) -> bool:
+    return g in NEGATIONS or g.startswith(("un", "non"))  # "unpatched", "non-default"
+
+
+def _anchored(text: str) -> Counter:
+    """anchor_pairs with a real anchor: what each guard word or number applies to."""
+    return Counter({k: n for k, n in anchor_pairs(text).items() if k[1]})
 
 
 def title_changes(draft: str, final: str, prose: str = "") -> list[str]:
     """Why a shortened title no longer says what its draft said ([] = fine).
 
     A title may drop what the entry's takeaway or summary (`prose`) still
-    says, so it is checked one way only: everything the new title says must
-    be in the draft title or that prose, and it keeps every negation."""
+    says, so it is checked one way only. Guard words (negation, range,
+    severity, polarity) come from the draft title alone, as a multiset;
+    every negating one stays, still applying to the same name or number.
+    Numbers, names and ids must come from the draft title or the prose; a
+    number keeps what it counted. This catches a small model's slips; it
+    cannot prove two sentences mean the same thing (a swapped verb passes),
+    which is why retitle.py's migration also had a second model judge each
+    pair, and why step 4's verifier reads the final text."""
     source = f"{draft}\n{prose}"
     out = []
-    if number_pairs(final) - number_pairs(source):
-        out.append("numbers or what they count changed")
-    if set(guard_words(final)) - set(guard_words(source)) - PREPOSITIONS:
+    if number_pairs(final) - (number_pairs(draft) + number_pairs(prose)):  # per text: a title-
+        out.append("numbers or what they count changed")  # final number pairs with ""
+    before, after = guard_words(draft), guard_words(final)
+    if after - before:
         out.append("negation, range, severity or polarity words changed")
-    neg = Counter({g: n for g, n in guard_words(draft).items() if g in NEGATIONS})
-    if neg - guard_words(final):
+    if Counter({g: n for g, n in before.items() if _negating(g)}) - after:
         out.append("dropped a negation")
+    moved = [k for k in _anchored(final) - _anchored(draft) if _negating(k[0])]
+    if moved:
+        out.append("what a negation applies to changed")
     words = {t.lower() for t in _tokens(source)}
-    gained = {
+    gained = sorted({
         t.lower() for t in _tokens(final)
         if t[:1].isupper() and t.lower() not in rd.FUNCTION_WORDS and t.lower() not in words
-    }  # fmt: skip
+    })  # fmt: skip
     if gained:
-        out.append(f"names changed ({', '.join(sorted(gained))})")
+        out.append(f"names changed ({', '.join(gained)})")
     out += [f"added {f!r}" for f in sorted(facts(final) - facts(source))]
     return out
 

@@ -229,7 +229,7 @@ PROSE = "OpenAI had its frontier agents attack the training sandbox; they escape
 @pytest.mark.parametrize(
     "final",
     [
-        "OpenAI set its own agents on its training sandbox, and they broke out",
+        "OpenAI set its own agents loose in its training sandbox, and they broke out",
         "OpenAI's frontier agents escaped 2 microVMs in its training sandbox",
     ],
 )
@@ -259,7 +259,35 @@ def test_a_title_keeps_its_negations():
 
 def test_merge_keeps_a_shortened_title_and_restores_an_invented_one():
     draft = brief(title=LONG_TITLE, summary=PROSE)
-    short = brief(title="OpenAI set its own agents on its training sandbox", summary=PROSE)
+    short = brief(title="OpenAI set its own agents loose in its training sandbox", summary=PROSE)
     assert "title" not in rg.problems(draft, short)
     bad = brief(title="OpenAI agents escaped 9 microVMs", summary=PROSE)
     assert "title" in rg.problems(draft, bad)
+
+
+# Review of #124 (Sonnet + Gemini): a guard word borrowed from the prose, a
+# moved negation, a dropped un-/non- word and a flipped default all fail.
+@pytest.mark.parametrize(
+    "draft, final, prose",
+    [
+        ("Nginx is vulnerable to remote RCE", "Nginx is not vulnerable to RCE",
+         "A patch is not available yet."),
+        ("Foo still unpatched after disclosure", "Foo patched after disclosure",
+         "Version 2 of Bar is patched."),
+        ("RCE for authenticated users in Foo", "RCE for unauthenticated users in Foo",
+         "Unauthenticated access is blocked."),
+        ("Debug endpoint off by default in Foo", "Debug endpoint on by default in Foo", ""),
+        ("Foo unaffected by the Bar flaw", "Foo hit by the Bar flaw", ""),
+        ("None of the Linux releases are vulnerable", "Linux releases are vulnerable", ""),
+        ("Patch fixes Alpha but not Beta in Foo", "Patch fixes Beta but not Alpha in Foo", ""),
+    ],
+)  # fmt: skip
+def test_a_title_cannot_borrow_move_or_drop_a_guard_word(draft, final, prose):
+    assert rg.title_changes(draft, final, prose) != []
+
+
+def test_what_code_cannot_see_is_left_to_the_meaning_check():
+    """A non-negating guard word moved to another name passes the code check
+    (anchors only bind negations: shortening moves the rest legitimately).
+    The migration's Gemini pass judged meaning for every pair."""
+    assert rg.title_changes("Critical flaw in Foo; Bar also affected", "Critical flaw in Bar") == []

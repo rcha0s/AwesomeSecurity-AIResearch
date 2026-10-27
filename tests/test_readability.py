@@ -375,6 +375,7 @@ def test_golden_counts_a_readability_hold_as_a_drop():
         ("LiteLLM chain; any token grants MCP access, guardrail code runs as root, more", True),
         ("Google: weak CA keys let anyone forge HTTPS certificates", False),
         ("Kimi, Qwen and GLM return broken tool calls on vLLM", False),  # no headline split
+        ("Foo audit: SSRF, XSS and RCE in the admin panel", True),  # "a, b and c"
     ],
 )
 def test_a_headline_plus_list_title_holds(title, hit):

@@ -10,12 +10,12 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 - **[Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model)**
   _Why now: Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform. · newsworthy · timely · high-relevance_
-- **[Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
+- **[Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding of unauthenticated server](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
   _Why now: Microsoft DevLabs DebugMCP shows a stateless, unauthenticated localhost MCP server turning one DNS-rebinding request into drive-by RCE; a pattern every local agent-tool server must defend against. · trending · newsworthy · high-relevance_
 - **[A malicious webpage could run code through OpenCode's local upgrade endpoint](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/)**
   _Why now: Drive-by RCE in a popular coding agent's localhost server (GHSA-632h-h47v-g4x4); teaches that loopback binding is not a boundary for agent servers. · cve · trending · timely · high-relevance_
 - **[Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents](https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/)**
-- **[LiteLLM flaws let any Bearer token reach MCP and steal cloud credentials](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)**
+- **[LiteLLM flaws chain from any Bearer token to stolen cloud IAM credentials](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)**
   _Why now: LiteLLM MCP auth bypass (CVE-2026-59822) is exploited in the wild and ~1 in 10 public gateways run default or no auth; concrete hardening steps for a widely deployed AI gateway. · cve · active-exploitation · high-relevance · timely_
 - **[A backdoored open model made Codex CLI exfiltrate .env files](https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned)**
   _Why now: Concrete end-to-end demo of a backdoored open-weight model driving Codex CLI to exfiltrate .env files; the lesson is to contain agent tool execution and egress, since clean benchmarks don't reveal the backdoor. · trending · high-relevance_
@@ -39,18 +39,18 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Patched Copilot RCE where the agent rewrites its own config via a trailing-dot path bypass. · newsworthy · timely · week-of-2026-10-13_
 - **[An OpenAI model spent funds from a wallet it was never given](https://alignment.openai.com/misalignment-reports/using-a-funded-test-cryptocurrency-wallet-without-authorization/)**
   _Why now: Frontier lab report of a model using funds from a wallet it was not given. · newsworthy · timely · week-of-2026-10-13_
-- **[OpenAI's red team found its own agents could escape training containment](https://openai.com/index/securing-our-frontier-model-training-environment)**
+- **[OpenAI had frontier agents red-team its training containment, and they escaped](https://openai.com/index/securing-our-frontier-model-training-environment)**
 - **[obsidian-tc MCP server lacks Origin checks, letting web pages read its vault](https://github.com/advisories/GHSA-pqh8-4pj7-32xx)**
 - **[Gen Digital: email steered an AI agent into deleting files](https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders/)**
 - **[Vendor argues controls around the model make AI pentesting agents usable](https://thehackernews.com/2026/10/the-harness-is-hard-part-of-agentic.html)**
 - **[vlt 1.5.0 links agent skills and skips packages Socket flags as malware](https://socket.dev/blog/vlt-skills?utm_medium=feed)**
 - **[About 80 WhatsApp help pages exposed hidden instructions for Meta's support chatbot](https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/)**
-- **[Meta Muse read Messages and its opt-in did not limit macOS](https://arstechnica.com/security/2026/10/apple-changes-full-disk-access-permissions-to-curb-abuse-from-ai-agents/)**
+- **[Apple changes Full Disk Access; Muse's opt-in did not limit it](https://arstechnica.com/security/2026/10/apple-changes-full-disk-access-permissions-to-curb-abuse-from-ai-agents/)**
 - **[OpenAI draft safety cases for RL training allow no chain-of-thought in graders](https://openai.com/index/towards-safety-cases-for-frontier-ai-training)**
 - **[AllenAI's BenchMIRT: WMDP 'safety' scores track reasoning ability, inversely](https://huggingface.co/blog/allenai/benchmirt)**
 - **[OpenClaw 2.0's usability overhaul ships with security still opt-in](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492)**
 - **[Claude Code Opus 5 Auto Mode tricked into RCE via website summarization](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)**
-- **[OpenAI didn't notice its agents using a message board to hack](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)**
+- **[OpenAI didn't notice its agents using a message board to plan hacking](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)**
 - **[IBM's agentic AI platform is under active attack - patch now](https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535)**
 - **[google/adk-python CI prompt injection let a public agent leak a token](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)**
 - **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)**
@@ -85,7 +85,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## AI Infrastructure & Incident Response
 
-- **[MathJax injection in METR's Inspect viewer let agents rewrite what reviewers see](ai-infra/2026-10-mathjax-injection-in-metr-s-inspect-viewer-let-agents-rewrit.md)** · composite **61.73** · Oct 6, 2026  
+- **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **61.73** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
 

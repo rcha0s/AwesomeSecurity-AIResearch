@@ -13,7 +13,7 @@
 _The last 7 days: the stories with the most covering sources first._
 
 1. **[Google: eight eMudhra CA keys had weak entropy and Chrome blocked them](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week)** · _Product Security · Oct 22, 2026 · 10 sources_
-2. **[Wiz used frontier AI to turn PHP memory bugs into WordPress RCE](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week)** · _Product Security · Oct 21, 2026 · 4 sources_
+2. **[Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week)** · _Product Security · Oct 21, 2026 · 4 sources_
 3. **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=333-tor-exit-relays-hijacked-with-the-ebury-back-02fda395c8#week)** · _Product Security · Oct 20, 2026 · 4 sources_
 
 ## Claim changes

@@ -20,25 +20,25 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Exploited in the wild per CISA KEV with a three-day deadline; Fortinet appliances are widely deployed and need patching now. · cve · active-exploitation · timely_
 - **[tensorlake@0.5.144 npm worm spread from a hijacked admin account](https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud)**
   _Why now: Live npm worm (two independent write-ups, SafeDep and StepSecurity) that published through the project's own trusted-publishing workflow and arms a home-directory wiper on token revocation: a concrete lesson that valid provenance doesn't… · newsworthy · widely-reported · active-exploitation · timely · high-relevance_
-- **[Citrix NetScaler command injection (CVE-2026-88771) was exploited before a patch existed](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/)**
+- **[Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/)**
   _Why now: Pre-auth root command injection in NetScaler ADC/Gateway exploited as a zero-day in default configuration; concrete fixed builds, a sibling bug the upgrade alone doesn't fix, and log-hunting guidance. · cve · active-exploitation · timely · high-relevance_
 - **[Google PageBreak finds 500+ XSS bugs with near-zero false positives](https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project)**
   _Why now: Google's production-scale numbers for AI web testing gated by non-AI exploit validators (500+ XSS, near-zero false positives, only 2 on its high-assurance frameworks) teach how to make agent-found bugs trustworthy. · trending · newsworthy · timely_
-- **[F5 BIG-IP APM heap overflow RCE (CVE-2026-94127) is exploited in the wild](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/)**
+- **[F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/)**
   _Why now: Pre-auth RCE in an internet-facing BIG-IP edge appliance, exploited in the wild; teaches emergency patching and minimal exposure for auth-path parsing on edge devices. · cve · active-exploitation · timely · high-relevance_
 - **[JFrog Artifactory auth bypass chain exploited in the wild leaves persistent backdoors](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201)**
   _Why now: In-the-wild exploitation of a JFrog Artifactory auth-bypass chain leaving Groovy plugin backdoors; teaches what to hunt for on a core build-infrastructure system. · cve · active-exploitation · newsworthy_
-- **[ITRES Labs used ChatGPT to rebuild BruCON kernel techniques never released](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
+- **[With ChatGPT, ITRES rebuilt two BruCON techniques whose source was never released](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)**
   _Why now: tl;dr sec-featured case of an LLM-assisted researcher rebuilding Windows kernel techniques from slides and a binary in about 24 hours; it changes how to weigh partial disclosure. · trending · newsworthy_
 - **[OVHcloud CLI GitHub releases carried attacker binaries for 94 minutes, delivering GlassWorm](https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm)**
   _Why now: Live supply-chain incident: OVHcloud CLI release binaries swapped for 94 minutes to deliver GlassWorm; teaches release-asset verification and how to triage installs. · newsworthy · widely-reported · timely_
 - **[Collabora CODE Server for Nextcloud command injection exploited in the wild (CVE-2026-110447)](https://nvd.nist.gov/vuln/detail/CVE-2026-110447)**
   _Why now: CISA KEV with a three-day deadline: exploited command injection in Nextcloud's built-in Collabora CODE server; the fix and the restart-window condition are concrete. · active-exploitation · cve · timely_
-- **[Wiz used frontier AI to turn PHP memory bugs into WordPress RCE](https://www.wiz.io/blog/php2shell-php-rce)**
+- **[Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://www.wiz.io/blog/php2shell-php-rce)**
   _Why now: Core PHP RCE chain built with frontier AI; patched October 21 with broad vendor mitigations. · newsworthy · timely · week-of-2026-10-13_
 - **[Microsoft says Storm-0940 used the ARTEX pentest framework against 2,250+ tenants](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)**
   _Why now: Microsoft attributes machine-speed ConnectWise supply-chain follow-on attacks to an agentic pentest framework. · newsworthy · timely · week-of-2026-10-13_
-- **[Unit 42: ransomware groups exploit PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/)**
+- **[Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/)**
   _Why now: Ransomware groups attempting a PAN-OS MFA bypass and pivoting to the hypervisor layer. · newsworthy · timely · week-of-2026-10-13_
 - **[SOCRadar: INC and The Gentlemen ransomware affiliates ran intrusions through AI agents](https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/)**
   _Why now: Exposed ransomware-affiliate servers show AI-agent-run intrusions against edge devices. · newsworthy · timely · week-of-2026-10-13_
@@ -56,7 +56,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Fake Claude and ChatGPT lures targeting developers, with detection angles. · newsworthy · timely · week-of-2026-10-13_
 - **[GitLab patches CVE-2026-110264, a CVSS 10.0 unauthenticated RCE in the regex compiler](https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/)**
   _Why now: Maximum-severity unauthenticated GitLab RCE across 12 years of releases; patch released. · newsworthy · timely · week-of-2026-10-13_
-- **[Horizon3: FortiSIEM CVE-2026-106173 gRPC path traversal becomes arbitrary file write and RCE](https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/)**
+- **[Horizon3 shows FortiSIEM CVE-2026-106173 unauthenticated gRPC path traversal leads to RCE](https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/)**
   _Why now: Technical write-up of an unauthenticated FortiSIEM file-write RCE. · newsworthy · timely · week-of-2026-10-13_
 - **[Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild](https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199)**
   _Why now: Vendor-confirmed active exploitation of an SD-WAN orchestrator flaw. · newsworthy · timely · week-of-2026-10-13_
@@ -99,7 +99,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Mercury analytics app: a missing comma lets anyone open a root shell](https://github.com/advisories/GHSA-f8c7-rwf9-fmgm)**
 - **[Mercury still exposed to unauthenticated code execution via /api/kernels after terminals fix](https://github.com/advisories/GHSA-rv4m-xm3f-3ccq)**
 - **[UpGuard uses OnlyFans takedown data to find hacked university and government sites](https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites)**
-- **[Sophos MDR agents on OpenAI Daybreak cut case time to 89 seconds](https://openai.com/index/sophos)**
+- **[OpenAI says Sophos MDR agents cut average case time to ~89 seconds](https://openai.com/index/sophos)**
 - **[Imperva publishes a DDoS readiness checklist covering BGP and GRE tunnel health](https://www.imperva.com/blog/ddos-readiness-is-your-ddos-protection-actually-on/)**
 - **[Valid SQL crashes SQLGlot and SQLFluff with huge memory amplification](https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/)**
 - **[A Lean 4 string-slice mismatch let native_decide 'prove' Fermat's Last Theorem](https://blog.trailofbits.com/2026/09/09/a-proof-of-fermats-last-theorem-that-fits-the-margin/)**
@@ -123,13 +123,13 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **59.0** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench tests agent-written static-analysis checkers on 300 CVE-derived tasks](ai-code/2026-10-checkerbench-tests-agent-written-static-analysis-checkers-on.md)** · composite **49.79** · Oct 6, 2026  
+- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **49.79** · Oct 6, 2026  
   Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
 ## Application Security
 
-- **[Atlassian Data Center path traversal bug (CVE-2026-21589) reads files without logging in](appsec/2026-10-atlassian-data-center-path-traversal-bug-cve-2026-21589-read.md)** · composite **63.59** · Oct 6, 2026  
+- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **63.59** · Oct 6, 2026  
   Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
   _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
 - **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **60.29** · Oct 9, 2026  

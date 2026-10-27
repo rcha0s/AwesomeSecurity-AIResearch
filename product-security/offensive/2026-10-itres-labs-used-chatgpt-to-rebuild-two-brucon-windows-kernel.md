@@ -1,5 +1,5 @@
 # Moved
 
-This finding now lives at [ITRES Labs used ChatGPT to rebuild BruCON kernel techniques never released](../offensive/2026-10-itres-labs-used-chatgpt-to-rebuild-brucon-kernel-techniques.md).
+This finding now lives at [With ChatGPT, ITRES rebuilt two BruCON techniques whose source was never released](../offensive/2026-10-with-chatgpt-itres-rebuilt-two-brucon-techniques-whose-sourc.md).
 
 _The finding was retitled and its page moved with its title._

@@ -195,7 +195,10 @@ TITLE_SPLIT = re.compile(r":|;|\s[-\u2013\u2014]\s")
 def title_list(title: str) -> bool:
     """A title that is a headline plus a list ("X: a, b, c")."""
     parts = TITLE_SPLIT.split(title, maxsplit=1)
-    return len(parts) == 2 and len(re.findall(r"[,;]", parts[1])) >= 2
+    if len(parts) != 2:
+        return False
+    seps = len(re.findall(r"[,;]", parts[1]))
+    return seps >= 2 or (seps == 1 and re.search(r"\b(?:and|or)\b", parts[1]) is not None)
 
 
 # --- The check ----------------------------------------------------------------

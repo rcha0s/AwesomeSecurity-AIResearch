@@ -492,7 +492,9 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
     (Rohan, 2026-10-26). Over 12 words is mild; over 16 words or a list holds. The rewrite
     may shorten a title by dropping details the takeaway or summary still carry, never by
     adding one, and keeps every negation (`rewrite_guard.title_changes`); `retitle.py`
-    applies the same check to existing titles.
+    applies the same check to existing titles. Code checks words, not meaning (a swapped
+    verb passes), so the one-time rewrite of 392 titles also had Gemini judge each
+    old/new pair against the summary; it flagged 20, all rewritten and re-judged.
   - **Holds:** merge records every brief's score (`readability`). Only a severe length
     or structure failure holds it in REVIEW.md (`readability_hold`, reason
     `readability: …`); acronyms, noun chains and long words are mild-only. Rerank
