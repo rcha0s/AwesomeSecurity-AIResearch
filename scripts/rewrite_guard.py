@@ -26,6 +26,10 @@ rewrite changed what it says:
                  Moving a name within the field is fine
   facts          CVE/GHSA ids, numbers and code spans added or removed
 
+The title is checked one way (`title_changes`): a shorter title may drop what
+the takeaway or summary still says, but whatever it says must come from the
+draft title or that prose, and it keeps every negation.
+
 Lesson excerpts are verbatim quotes: any change to one is restored. A revert is
 recorded on the entry (`readability_rewrite: "reverted <fields>"`) and never
 holds it.
@@ -234,6 +238,36 @@ def changes(
     return out
 
 
+NEGATIONS = frozenset({"not", "no", "never", "without", "cannot", "n't"})
+PREPOSITIONS = frozenset({"on", "up"})  # guard words a rephrased title uses as plain prepositions
+
+
+def title_changes(draft: str, final: str, prose: str = "") -> list[str]:
+    """Why a shortened title no longer says what its draft said ([] = fine).
+
+    A title may drop what the entry's takeaway or summary (`prose`) still
+    says, so it is checked one way only: everything the new title says must
+    be in the draft title or that prose, and it keeps every negation."""
+    source = f"{draft}\n{prose}"
+    out = []
+    if number_pairs(final) - number_pairs(source):
+        out.append("numbers or what they count changed")
+    if set(guard_words(final)) - set(guard_words(source)) - PREPOSITIONS:
+        out.append("negation, range, severity or polarity words changed")
+    neg = Counter({g: n for g, n in guard_words(draft).items() if g in NEGATIONS})
+    if neg - guard_words(final):
+        out.append("dropped a negation")
+    words = {t.lower() for t in _tokens(source)}
+    gained = {
+        t.lower() for t in _tokens(final)
+        if t[:1].isupper() and t.lower() not in rd.FUNCTION_WORDS and t.lower() not in words
+    }  # fmt: skip
+    if gained:
+        out.append(f"names changed ({', '.join(sorted(gained))})")
+    out += [f"added {f!r}" for f in sorted(facts(final) - facts(source))]
+    return out
+
+
 # --- Fields -----------------------------------------------------------------
 def fields(entry: dict) -> dict[str, str]:
     """Every rewritable field (plus excerpts) by path."""
@@ -272,8 +306,12 @@ def problems(draft: dict, final: dict) -> dict[str, list[str]]:
         excerpt = path.endswith(".excerpt")
         if new is None:
             why = ["field removed"]
+        elif path == "title":
+            why = title_changes(
+                text, new, f"{before.get('takeaway', '')}\n{before.get('summary', '')}"
+            )
         else:
-            why = ["excerpt changed"] if excerpt else changes(text, new, known, path == "title")
+            why = ["excerpt changed"] if excerpt else changes(text, new, known)
         if why:
             out[path] = why
     return out

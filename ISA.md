@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 29/35
+progress: 35/41
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -105,6 +105,17 @@ Why: the site is the product; the README is a short pointer into it, generated f
 - [x] ISC-33: README is short: what it is, this week's top 3 stories and top 3 claims linking to site pages, big links (Briefing, Claims, Topics, Methodology, Archive), contribute, last-updated (probe: README under ~80 lines, every link resolves). — #77 README 44 lines; `tests/test_readme_links.py`
 - [x] ISC-34: The site shows this week's top 5–8 stories with all sources, the claim ledger with supersession history, topic/domain pages on taxonomy IDs, trends, methodology and archive (probe: Interceptor read of each view). — #77 Topics/Archive/Methodology/claim deep links; Interceptor read of live site 7544e95
 - [x] ISC-35: Screenshot-verified at desktop and phone width (probe: two Interceptor captures, viewed). — live 7544e95: desktop capture + 390px pixel capture viewed; 8 views scrollWidth=390, gutters 16px
+
+### F7 · Readable cards and titles (2026-10-26)
+Why: Rohan, 2026-10-26: titles like "OpenAI frontier-agent red team of its own training containment: microVM escapes, egress via metrics service, cache-timing channels" are unreadable; top stories render already expanded; claim cards mix long statement-titles with short title + description. "I like the More in the news structure." One PR.
+
+- [x] ISC-36: Top-story cards use the "More in the news" shape: title, takeaway, one quote, one "Also reported by" line, at most the two newest updates. The full source list and every update live only in the detail panel The panel shows every update and source; the rendered page alone had neither (probe: Interceptor eval of the Briefing: no `.srclist` inside `#view-week .story`, ≤2 update lines per card; panel lists them all). — local build: 8 cards, srclist 0, max 2 updates; panel 4 updates + 10 sources; `test_a_top_story_card_is_compact_like_a_news_card`
+- [x] ISC-37: Every claim has a distinct title of at most 12 words, and every claim card (Claims tab and Claim changes) shows that title plus a statement clamped to two lines (probe: `add_claim.py validate` fails a missing or long title; Interceptor eval: every `.claim h3` ≤12 words). — 9 claims titled via `add_claim.py titles`; local Claims tab 64 cards, max 12 words, 0 without a statement line
+- [x] ISC-38: Every shown and archived finding title is at most 12 words and has no "headline: a, b, c" list (probe: a scan over pools + archive finds 0). — `retitle.py apply` 392 titles; `retitle.py list` → 0
+- [x] ISC-39: A new title that breaks the rule is held, not published: `readability.py` holds a title over 16 words or with a colon list, and the research-scan skill tells the analyzer and the 3b rewrite the title rule (probe: tests). — `test_a_headline_plus_list_title_holds`, `test_titles_over_twelve_words_warn_and_over_sixteen_hold`
+- [x] ISC-40: A shortened title may drop facts the takeaway or summary still carries, never add or change one, and keeps every negation: `rewrite_guard` and the migration use the same check (probe: tests; the migration refuses a title that adds a number or name). — `test_a_title_may_not_add_or_swap_a_fact`, `test_check_refuses_an_invented_fact_or_a_long_title`
+- [x] ISC-41: Old page links survive the retitles: each retitled entry leaves a "Moved" stub at its old page path (probe: an old path from main resolves to a stub). — all 191 old page paths exist; 158 are Moved stubs; `test_apply_retitles_every_copy_and_the_old_page_gets_a_stub`
+- [x] ISC-A3 (anti): No fact is invented by a retitle, and no claim's statement, status, evidence or history changes beyond its new title (probe: the ISC-40 check over every retitle; claim diff touches only `title`). — `retitle check` 392 ok; claim value diff = title ×9 + last_reviewed ×9
 
 ## Decisions
 

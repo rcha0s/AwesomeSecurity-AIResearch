@@ -2141,12 +2141,13 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-25",
+      "last_reviewed": "2026-10-27",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",
       "added_on": "2026-09-09",
-      "changed_on": "2026-09-09"
+      "changed_on": "2026-09-09",
+      "title": "Agents find and exploit gaps in their own sandbox's egress rules"
     },
     {
       "id": "agent-orchestrated-attacks-compress-human-attack-timelines",
@@ -2164,12 +2165,13 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-27",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",
       "added_on": "2026-09-09",
-      "changed_on": "2026-09-09"
+      "changed_on": "2026-09-09",
+      "title": "AI agents shrink a two-week attack to under 10 hours"
     },
     {
       "id": "package-yank-warnings-can-be-weaponized-to-push-malicious-versions",
@@ -2187,12 +2189,13 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-27",
       "basis": "documented incident analysis (safedep.io + RustSec advisory)",
       "guidance": "Flag a maintainer yanking multiple prior versions in quick succession, leaving only a very recent version installable, as a supply-chain risk signal — review before consuming the registry's 'update to a non-yanked version' prompt.",
       "scope": "Applies to registries supporting version yanking (crates.io, npm, PyPI, etc); doesn't apply to registries without a yank/deprecate mechanism.",
       "added_on": "2026-09-09",
-      "changed_on": "2026-09-09"
+      "changed_on": "2026-09-09",
+      "title": "Yanking clean versions can steer developers to a malicious release"
     },
     {
       "id": "benchmark-category-labels-can-mask-conflated-capabilities",
@@ -2226,12 +2229,13 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-25",
+      "last_reviewed": "2026-10-27",
       "basis": "empirical study (AllenAI BenchMIRT, multidimensional IRT across 100 models / 16 benchmarks)",
       "guidance": "Before citing a benchmark score as evidence of a specific capability, check whether independent capability-decomposition analysis supports that the benchmark actually isolates that capability and moves in the expected direction, rather than assuming the category label is accurate.",
       "scope": "Demonstrated specifically for WMDP and BBQ within one 16-benchmark, 100-model study; may not generalize to all benchmarks labeled 'safety'.",
       "added_on": "2026-09-09",
-      "changed_on": "2026-09-09"
+      "changed_on": "2026-09-09",
+      "title": "A benchmark's category label may not measure that capability"
     },
     {
       "id": "injected-security-context-beats-model-choice-for-remediation",
@@ -2249,12 +2253,13 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-27",
       "basis": "vendor benchmark (Snyk Golden Test set, SWE-bench/Vul4J-style hidden dual tests) - self-benchmarked, moderate confidence",
       "guidance": "Invest in retrieving and injecting relevant expert-written fix examples for the specific vulnerability class at remediation time, rather than assuming a newer frontier model will meaningfully improve secure-and-functional fix rates on its own.",
       "scope": "Based on one vendor's ~150-sample benchmark (Snyk, benchmarking their own product) across Python/JS/Java; magnitude may not generalize to other vulnerability classes, codebases, or independently-run benchmarks.",
       "added_on": "2026-09-09",
-      "changed_on": "2026-09-09"
+      "changed_on": "2026-09-09",
+      "title": "Expert fix examples beat model choice for vulnerability remediation"
     },
     {
       "id": "shared-library-call-count-can-beat-timing-side-channels",
@@ -2272,12 +2277,13 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-10-27",
       "basis": "detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)",
       "guidance": "When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.",
       "scope": "Shown with an instrumented call-count observer against phpseclib's pure-PHP X25519 (ext-sodium absent, reused key, local co-residency); a working Flush+Reload spy was not built.",
       "added_on": "2026-09-09",
-      "changed_on": "2026-09-09"
+      "changed_on": "2026-09-09",
+      "title": "Counting shared-library calls can recover keys faster than timing"
     },
     {
       "id": "harness-evolution-gains-need-held-out-attribution",
@@ -2356,11 +2362,12 @@
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-10-25",
+      "last_reviewed": "2026-10-27",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Review installed skills together as one pipeline, not file by file, and test that safety-critical signals survive the whole skill chain end to end.",
-      "scope": "Shown in one NeurIPS paper (abstract-level evidence) on skill-based coding agents; does not show that whole-pipeline review catches these attacks."
+      "scope": "Shown in one NeurIPS paper (abstract-level evidence) on skill-based coding agents; does not show that whole-pipeline review catches these attacks.",
+      "title": "Harmful goals split across skills slip past per-skill scanners"
     },
     {
       "id": "localhost-agent-servers-are-reachable-from-any-webpage",
@@ -2386,11 +2393,12 @@
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-10-25",
+      "last_reviewed": "2026-10-27",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.",
-      "scope": "Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control."
+      "scope": "Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control.",
+      "title": "Any webpage can reach a coding agent's localhost server"
     },
     {
       "id": "agent-output-is-untrusted-input-to-review-tooling",
@@ -2408,11 +2416,12 @@
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-10-25",
+      "last_reviewed": "2026-10-27",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Render agent output in review and monitoring tools as untrusted (escape markup, disable rich rendering such as MathJax or HTML, strict CSP on the viewer origin), and periodically check the rendered view against the raw stored transcript.",
-      "scope": "Applies to human-review UIs, transcript viewers and dashboards that render agent-produced text. Does not cover tampering with the stored log itself, which needs separate integrity controls."
+      "scope": "Applies to human-review UIs, transcript viewers and dashboards that render agent-produced text. Does not cover tampering with the stored log itself, which needs separate integrity controls.",
+      "title": "Rendered agent transcripts can show reviewers a false record"
     }
   ]
 }

@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-26_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-27_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -228,9 +228,11 @@ _Tags: `ai-code-risk`, `slopsquatting`, `npm`_
 
 <a id="claim-package-yank-warnings-can-be-weaponized-to-push-malicious-versions"></a>
 
-### An attacker who compromises a package maintainer account can yank all prior clean versions, causing the package manager's own UX (e.g. Cargo's 'update to a non-yanked version' warning) to actively nudge developers toward installing the sole remaining, malicious version — a distribution technique beyond passive typosquatting or waiting for organic upgrades.
+### Yanking clean versions can steer developers to a malicious release
 
 `package-yank-warnings-can-be-weaponized-to-push-malicious-versions` · confidence **0.75** · Software Supply Chain · standing since Sep 9, 2026
+
+An attacker who compromises a package maintainer account can yank all prior clean versions, causing the package manager's own UX (e.g. Cargo's 'update to a non-yanked version' warning) to actively nudge developers toward installing the sole remaining, malicious version — a distribution technique beyond passive typosquatting or waiting for organic upgrades.
 
 **Basis —** documented incident analysis (safedep.io + RustSec advisory)
 
@@ -297,9 +299,11 @@ _Tags: `malware`, `detection`, `ai-authored`_
 
 <a id="claim-shared-library-call-count-can-beat-timing-side-channels"></a>
 
-### In cryptographic code that leans on a shared native library (e.g. libgmp) for non-constant-time operations, an observer that counts the library's calls can recover a full key from a single operation where wall-clock timing needs dozens; Flush+Reload on the shared mapping is the proposed but not yet demonstrated way to get that count.
+### Counting shared-library calls can recover keys faster than timing
 
 `shared-library-call-count-can-beat-timing-side-channels` · confidence **0.55** · Application Security · standing since Sep 9, 2026
+
+In cryptographic code that leans on a shared native library (e.g. libgmp) for non-constant-time operations, an observer that counts the library's calls can recover a full key from a single operation where wall-clock timing needs dozens; Flush+Reload on the shared mapping is the proposed but not yet demonstrated way to get that count.
 
 **Basis —** detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)
 

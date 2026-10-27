@@ -1,4 +1,4 @@
-# Claude Code Opus 5 Auto Mode Tricked Into RCE via Website Summarization; Its Own Safety Refusal Becomes Part of the Exploit Path
+# Claude Code Opus 5 Auto Mode tricked into RCE via website summarization
 
 **Published:** Aug 28, 2026
 

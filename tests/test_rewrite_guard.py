@@ -215,3 +215,51 @@ def test_merge_notes_an_entry_with_no_matching_draft(sandbox):
     m.merge([brief()], c.load_config())
     assert "- no draft for 'Agent frameworks, not models" in notes()
     assert "rewrite not fact-checked" in notes()
+
+
+# A shorter title may drop what the takeaway or summary still says (Rohan,
+# 2026-10-26: titles of 12 words or fewer), never add, swap or un-negate.
+LONG_TITLE = (
+    "OpenAI frontier-agent red team of its own training containment: microVM escapes, "
+    "egress via metrics service, cache-timing channels"
+)
+PROSE = "OpenAI had its frontier agents attack the training sandbox; they escaped 2 microVMs."
+
+
+@pytest.mark.parametrize(
+    "final",
+    [
+        "OpenAI set its own agents on its training sandbox, and they broke out",
+        "OpenAI's frontier agents escaped 2 microVMs in its training sandbox",
+    ],
+)
+def test_a_title_may_drop_details_the_prose_keeps(final):
+    assert rg.title_changes(LONG_TITLE, final, PROSE) == []
+
+
+@pytest.mark.parametrize(
+    "final, why",
+    [
+        ("Anthropic set its own agents on its training sandbox", "names changed"),
+        ("OpenAI agents escaped 5 microVMs in its training sandbox", "numbers"),
+        ("OpenAI agents escaped CVE-2026-1 in its sandbox", "added 'CVE-2026-1'"),
+        ("OpenAI agents found a critical sandbox escape", "severity"),
+    ],
+)
+def test_a_title_may_not_add_or_swap_a_fact(final, why):
+    assert any(why in p for p in rg.title_changes(LONG_TITLE, final, PROSE))
+
+
+def test_a_title_keeps_its_negations():
+    draft = "Versions 2.x are not affected by the parser bug in libfoo"
+    assert rg.title_changes(draft, "Versions 2.x are affected by a libfoo bug") == [
+        "dropped a negation"
+    ]
+
+
+def test_merge_keeps_a_shortened_title_and_restores_an_invented_one():
+    draft = brief(title=LONG_TITLE, summary=PROSE)
+    short = brief(title="OpenAI set its own agents on its training sandbox", summary=PROSE)
+    assert "title" not in rg.problems(draft, short)
+    bad = brief(title="OpenAI agents escaped 9 microVMs", summary=PROSE)
+    assert "title" in rg.problems(draft, bad)

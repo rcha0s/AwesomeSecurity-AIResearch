@@ -1,4 +1,4 @@
-# CrowdStrike: four newly seen actors ran agentic Claude Code intrusions; guardrails only slowed the weakest
+# CrowdStrike: four newly seen actors ran agentic Claude Code intrusions
 
 **Published:** Oct 21, 2026
 
@@ -19,7 +19,7 @@ CrowdStrike analyzed four previously unreported actors (not all clearly criminal
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [source](https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 24 · Novelty 45 · Relevance 85 · Credibility 55 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 23 · Novelty 45 · Relevance 85 · Credibility 55 · **Composite 53** _(each 0-100)_  
 **Tags:** `agentic-ai`, `claude-code`, `threat-actors`, `guardrails`, `pentestgpt`, `crowdstrike`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Anthropic and OpenAI threat reports describe misuse; this adds four exposed harness architectures with named designs. Verifier: Anthropic GTG-1002 disclosure (Nov 2025) and later Anthropic threat reports; PentestGPT, PentAGI; Gambit and SOCRadar reports from the same period. Delta: four   
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

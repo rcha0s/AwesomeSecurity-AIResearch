@@ -1,0 +1,25 @@
+# CheckerBench tests agent-written static-analysis checkers on 300 CVE-derived tasks
+
+**Published:** Oct 6, 2026
+
+> **Takeaway:** Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to CI.
+
+## TL;DR
+
+CheckerBench asks coding agents to write a working static-analysis checker for a known defect from start to finish inside a real repository. Each task comes with vulnerable and fixed revisions, a pinned analyzer environment and a scaffold. A companion framework, CheckerLab, rebuilds each submitted checker and scores it on whether it fires on the vulnerable version but not the fixed one, patch localization, false positives and tool use. Across 21 model-harness configurations the mean Pass@1 is 32.30% and the best is 45.33%.
+
+## Lessons
+
+- The benchmark is grounded in real CVEs across many CWEs and languages, not synthetic bugs. - _"300 tasks derived from 297 CVEs across 167 repositories, 85 CWEs, and five language ecosystems"_
+- Scoring checks that the checker fires on vulnerable code and stays quiet on the fix, plus its false-positive rate. That is the right acceptance test for any generated rule. - _"measures vulnerable-fixed diagnostic contrast, patch localization, false positives, and tool use"_
+- Current agents mostly fail. Even the best configuration passes fewer than half the tasks. - _"Across 21 model-harness configurations and three independent repeats per configuration, mean Pass@1 is 32.30%, while the best reaches 45.33%"_
+
+---
+
+**Topic:** Product Security  ·  **Domain:** AI in the SDLC  
+**Source:** [Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)  ·  **Retrieved:** 2026-10-25  
+**Scores:** Newness 23 · Novelty 60 · Relevance 62 · Credibility 50 · **Composite 50** _(each 0-100)_  
+**Tags:** `static-analysis`, `sast`, `benchmark`, `coding-agents`, `variant-analysis`, `cve`  
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CVE-based agent benchmarks such as CyberGym, SEC-bench and CVE-Bench measure patching, PoC generation or detection. LLM-assisted CodeQL and Semgrep rule-generation papers exist but lacked a large executable benchmark. CheckerBench is new in scoring end-to-end checker synthesis with rebuilds and vulnerable/fixed contrast.
+
+_Source: [https://arxiv.org/abs/2610.07557](https://arxiv.org/abs/2610.07557)_  ·  [← back to index](../README.md)

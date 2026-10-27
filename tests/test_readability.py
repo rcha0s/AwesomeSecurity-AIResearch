@@ -83,7 +83,7 @@ def test_a_hard_brief_is_flagged_on_each_check():
     assert found["long_word_ratio"] == "mild"
     assert r["hold"] and not r["passed"] and r["score"] < 50
     reason = rd.hold_reason(r)
-    assert reason.startswith("readability: ") and "; title_words 30 > 24" in reason
+    assert reason.startswith("readability: ") and "; title_words 30 > 16" in reason
 
 
 @pytest.mark.parametrize(
@@ -365,3 +365,29 @@ def test_golden_counts_a_readability_hold_as_a_drop():
     held = eg.score_case(case, brief(title=" ".join(["w"] * 30)), conf, tax, 0.5)
     assert not held["passed"] and not held["readable"] and "readability:" in held["why"]
     assert eg.score([case], [brief()])["readability_pass"] == 1.0
+
+
+@pytest.mark.parametrize(
+    "title, hit",
+    [
+        ("OpenAI red team of its containment: microVM escapes, egress via metrics, timing", True),
+        ("UK AISI resumes cyber evals - internet off, two egress blocks, an LLM monitor", True),
+        ("LiteLLM chain; any token grants MCP access, guardrail code runs as root, more", True),
+        ("Google: weak CA keys let anyone forge HTTPS certificates", False),
+        ("Kimi, Qwen and GLM return broken tool calls on vLLM", False),  # no headline split
+    ],
+)
+def test_a_headline_plus_list_title_holds(title, hit):
+    result = rd.check(brief(title=title))
+    assert (result["metrics"]["title_list"] == 1) is hit
+    assert (
+        any(i["check"] == "title_list" and i["level"] == "severe" for i in result["issues"]) is hit
+    )
+
+
+def test_titles_over_twelve_words_warn_and_over_sixteen_hold():
+    words = "one two three four five six seven eight nine ten eleven twelve thirteen".split()
+    warn = rd.check(brief(title=" ".join(words)))
+    hold = rd.check(brief(title=" ".join(words * 2)))
+    assert [i["level"] for i in warn["issues"] if i["check"] == "title_words"] == ["mild"]
+    assert [i["level"] for i in hold["issues"] if i["check"] == "title_words"] == ["severe"]

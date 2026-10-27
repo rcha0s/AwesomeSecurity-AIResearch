@@ -1,4 +1,4 @@
-# Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads, PHP auto_prepend_file persistence, a sudo-alias password stealer and a Go RAT
+# Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads
 
 **Published:** Oct 15, 2026
 
@@ -25,7 +25,7 @@ Unit 42 tracked CL-UNK-1211 attacking government and state-affiliated Linux infr
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [Palo Alto Networks Unit 42](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 24 · Novelty 42 · Relevance 70 · Credibility 75 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 23 · Novelty 42 · Relevance 70 · Credibility 75 · **Composite 51** _(each 0-100)_  
 **Tags:** `unit42`, `espionage`, `linux`, `web-shell`, `php`, `ai-generated-malware`, `credential-theft`, `anti-forensics`, `go-rat`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Closest pool entry is archive 'Measuring AI-enabled malware: ~97% of samples never reach production; AI changes how malware is authored, not how it executes'. This report is a concrete in-the-wild case consistent with that finding: the payloads were AI-authored, but the tradecraft is conventional and one script was broken. What is new is the specific TTP set (auto_prepend_file persistence, sudo-alias stealer, SysGoRAT, mailbox-to-social-media targeting, fake red-team markers). No earlier entry covers CL-UNK-1211 or SysGoRAT.  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

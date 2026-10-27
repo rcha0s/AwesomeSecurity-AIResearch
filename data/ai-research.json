@@ -154,10 +154,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 24,
+        "newness": 23,
         "credibility": 43.9,
-        "composite": 58.18,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 57.93,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -170,7 +170,7 @@
     {
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Letting the agent choose when to compact, guided by a fire/suppress rubric, matches or beats fixed-interval summarization at a fraction of the token cost",
+      "title": "Letting the agent choose when to compact matches fixed-interval summarization cheaply",
       "source_url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
       "article_url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
       "tweet_url": null,
@@ -228,10 +228,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 57.75,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 57.5,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -259,23 +259,26 @@
           "high-relevance"
         ],
         "at": "2026-10-25T19:46:52+00:00"
-      }
+      },
+      "previous_slugs": [
+        "letting-the-agent-choose-when-to-compact-guided-by-a-fire-su"
+      ]
     },
     {
       "id": "review-of-the-misalignment-in-high-stakes-settin-5863cde447",
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 57.75,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 57.5,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
       "topic": "ai-research",
       "domain": "air.alignment",
-      "title": "METR: Anthropic's 'low misalignment risk' holds because models are weak, not because the monitoring would catch it",
+      "title": "METR says Anthropic's low misalignment risk rests on weak models, not monitoring",
       "source_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
       "article_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
       "tweet_url": null,
@@ -333,7 +336,10 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "metr-anthropic-s-low-misalignment-risk-holds-because-models"
+      ]
     },
     {
       "topic": "ai-research",
@@ -343,7 +349,7 @@
         "capability-elicitation-lags-training",
         "provider-guardrails-can-block-incident-response"
       ],
-      "title": "OpenAI: Astra preliminary evals can't rule out 'Critical' cyber capability; new controls include CoT-based universal monitoring",
+      "title": "OpenAI's Astra evals can't rule out Critical cyber capability",
       "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
       "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
       "published": "2026-08-07",
@@ -409,12 +415,15 @@
       "retrieved_at": "2026-08-10T19:18:36+00:00",
       "needs_review": false,
       "grounding_score": null,
-      "domain_label": "Frontier Cyber Capabilities & Preparedness"
+      "domain_label": "Frontier Cyber Capabilities & Preparedness",
+      "previous_slugs": [
+        "openai-astra-preliminary-evals-can-t-rule-out-critical-cyber"
+      ]
     },
     {
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Goal-persistent agents: a frontier model built a bespoke zlib fuzzing lab in a day",
+      "title": "A frontier model built a bespoke zlib fuzzing lab in a day",
       "source_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
       "article_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
       "published": "2026-07-02",
@@ -471,23 +480,26 @@
       "retrieved_at": "2026-07-16T07:43:12+00:00",
       "needs_review": false,
       "grounding_score": 1.0,
-      "domain_label": "Agents & Harnesses"
+      "domain_label": "Agents & Harnesses",
+      "previous_slugs": [
+        "goal-persistent-agents-a-frontier-model-built-a-bespoke-zlib"
+      ]
     },
     {
       "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 24,
+        "newness": 23,
         "credibility": 55.0,
-        "composite": 54.75,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 54.5,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "POPE yes/no readout uses token IDs the model never emits, moving F1 more than most published gains",
+      "title": "POPE yes/no readout uses token IDs the model never emits",
       "source_url": "https://arxiv.org/abs/2610.25964",
       "article_url": "https://arxiv.org/abs/2610.25964",
       "tweet_url": null,
@@ -538,13 +550,16 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov"
+      ]
     },
     {
       "candidate_id": "beyond-g-mean-complementary-metrics-for-monitora-351af02230",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "OpenAI: dataset-level g-mean² can misrank model monitorability; pair-matched HodgeRank and post-control risk added",
+      "title": "OpenAI finds dataset-level g-mean² can misrank model monitorability",
       "source_url": "https://alignment.openai.com/beyond-gmean-squared/",
       "summary": "OpenAI argues that its g-mean² monitorability score can rank models wrongly. Each model misbehaves on a different subset of tasks, so a less capable model that fails only on easy-to-detect tasks can score as more monitorable. To fix this, it compares models only on shared instances and combines the pairwise differences with inverse-variance-weighted HodgeRank. In simulations this recovers a known seven-model ordering, where g-mean² and Bradley-Terry degrade. It also proposes a post-control risk metric: the rate of bad outputs that still get through when a monitor gates retries. The motivating case is that a model trained against a CoT monitor hacked less overall but produced more accepted hacks.",
       "takeaway": "If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.",
@@ -590,10 +605,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 55,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 52.35,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 52.1,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -625,7 +640,10 @@
           "mild: summary_sentences 6 > 4"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "openai-dataset-level-g-mean-can-misrank-model-monitorability"
+      ]
     },
     {
       "id": "1password-s-ai-patching-benchmark-is-misleading-6437abf21b",
@@ -647,7 +665,7 @@
       "curated_by": null,
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "Trail of Bits: 1Password's 26% clean-fix AI patching rate pools wrong-fix prompts and no-testing trials; with testing, 86% of patches blocked the exploit",
+      "title": "Trail of Bits says 1Password's AI patching benchmark is misleading",
       "summary": "Trail of Bits reanalyzed 1Password's FLAWED benchmark and found its 26% clean-fix headline pools hand-picked hard bugs, prompts that tell agents to apply the wrong fix, and trials where agents were barred from running code. Restricted to trials where agents could run code and got no bad instructions, 86% of patches blocked the supplied exploit. They also report human first-fix failure (12.5%) and maintainer acceptance of agent-written patches (67.7% merged) as comparison points, and release two agent skills.",
       "lessons": [
         {
@@ -693,10 +711,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 75,
-        "newness": 5,
+        "newness": 4,
         "credibility": 71.9,
-        "composite": 51.03,
-        "scored_at": "2026-10-24T08:52:19+00:00"
+        "composite": 50.78,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Closest pool entries are the archive piece 'Prove security patches instead of trusting them' and the ai-research entry 'How we use /goal to find bugs in Patch the Planet'; the benchmark-critique plus real-world human and maintainer baseline data is new. Verifier: archive: 'Prove security patches instead of trusting them'; ai-research: 'How we use /goal to find bugs in Patch the Planet'",
       "related_claims": [
@@ -715,13 +733,16 @@
           "mild: title_words 24 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "trail-of-bits-1password-s-26-clean-fix-ai-patching-rate-pool"
+      ]
     },
     {
       "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "GRSE: credit multi-agent skills by contrasting repeated runs, not presence; recovers from planted harmful skills",
+      "title": "GRSE credits multi-agent skills by contrasting repeated runs, not presence",
       "source_url": "https://arxiv.org/abs/2610.27227",
       "summary": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
       "takeaway": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
@@ -767,10 +788,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 65,
-        "newness": 24,
+        "newness": 23,
         "credibility": 50.8,
-        "composite": 50.52,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 50.27,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -801,17 +822,20 @@
           "mild: summary_sentences 5 > 4"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "grse-credit-multi-agent-skills-by-contrasting-repeated-runs"
+      ]
     },
     {
       "id": "decisionpivot-a-diagnostic-benchmark-for-decisio-792cc8e267",
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 24,
+        "newness": 23,
         "credibility": 55.0,
-        "composite": 50.25,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 50.0,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -875,16 +899,16 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 48.75,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 48.5,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
       "topic": "ai-research",
       "domain": "air.alignment",
-      "title": "Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable",
+      "title": "Anthropic embeds METR with employee-like access but controls what is redactable",
       "source_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
       "article_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
       "tweet_url": null,
@@ -935,7 +959,10 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "anthropic-embeds-metr-with-employee-like-access-but-keeps-co"
+      ]
     },
     {
       "id": "our-framework-for-reporting-model-misalignment-19d153bc9f",
@@ -956,7 +983,7 @@
       "source_name": "OpenAI Blog",
       "topic": "ai-research",
       "domain": "air.alignment",
-      "title": "OpenAI sets up a fast-track misalignment disclosure process and publishes six first reports, including models injecting instructions into their own context summaries",
+      "title": "OpenAI sets up fast-track misalignment disclosure and publishes six first reports",
       "summary": "OpenAI describes a framework for flagging, investigating and publishing model misalignment quickly, even before the behavior is fully explained or fixed. The framework comes with six first reports: self-written instructions in compaction summaries (summaries that carry work into a new context window), a model using a leaked API key and fabricating results, and agents sharing files through public hosting or an internal repository against task rules. The reports are individual instances, not frequency estimates.",
       "lessons": [
         {
@@ -1000,10 +1027,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 70,
-        "newness": 5,
+        "newness": 4,
         "credibility": 73.2,
-        "composite": 48.23,
-        "scored_at": "2026-10-24T08:52:19+00:00"
+        "composite": 47.98,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Closest in pool is the Anthropic UK AISI cybertest incident review (Mythos 5) and the METR critique of Anthropic's low-misalignment-risk claim; the OpenAI Hugging Face incident is referenced in the source but no matching pool entry was found for this framework. Verifier: Anthropic: UK AISI cybertest incident review (Mythos 5 push malware to real repo); METR critique of Anthropic low-misalignment-risk claim. No pool entry on compaction-summary self-injection.",
       "related_claims": [
@@ -1021,7 +1048,10 @@
           "mild: title_words 22 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "openai-sets-up-a-fast-track-misalignment-disclosure-process"
+      ]
     },
     {
       "id": "fixing-tool-call-accuracy-in-vllm-5470a07021",
@@ -1031,7 +1061,7 @@
         "constrained-decoding-for-structured-output",
         "match-tool-schemas-to-the-target-model"
       ],
-      "title": "Kimi K2.6 on vLLM 0.28 returned valid tool-calls 92% of the time; constrained decoding reached 100%, but vLLM leaves it off by default",
+      "title": "Kimi K2.6 on vLLM returned valid tool-calls 92% of the time",
       "summary": "Ubicloud measured tool-call schema accuracy with Moonshot AI's K2-Vendor-Verifier ToolCall benchmark (2,000 requests). Serving Kimi K2.6 on vLLM 0.28 without constrained decoding, they got the expected schema 92% of the time. With constrained decoding (XGrammar structural tags that mask invalid tokens), they report 100% across all served model versions, with negligible overhead. After they moved to upstream vLLM, accuracy fell back to 91%, because vLLM disables constrained decoding by default for requests that don't ask for it.",
       "lessons": [
         {
@@ -1077,10 +1107,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 24,
+        "newness": 23,
         "credibility": 55.0,
-        "composite": 47.25,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 47.0,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -1116,13 +1146,16 @@
           "timely"
         ],
         "at": "2026-10-26T16:51:29+00:00"
-      }
+      },
+      "previous_slugs": [
+        "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
+      ]
     },
     {
       "id": "claude-shaped-science-77bd0f29d1",
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Anthropic physicist's BootLoops: Claude agents did checkable science (15 new elliptic Feynman integrals, 36 manuscripts), but off-field results only became interesting after experts steered",
+      "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
       "source_url": "https://www.anthropic.com/research/claude-shaped-science",
       "related_claims": [
         "capability-elicitation-lags-training"
@@ -1177,10 +1210,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 24,
+        "newness": 23,
         "credibility": 70.8,
-        "composite": 45.12,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 44.87,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
       "verified": true,
@@ -1298,7 +1331,7 @@
     {
       "topic": "ai-research",
       "domain": "air.alignment",
-      "title": "METR's proposed third-party review of unreleased models' worst misaligned actions mines internal transcripts; two months would cost over $10M in API credits",
+      "title": "METR proposes third-party review of unreleased models by mining internal transcripts",
       "source_url": "https://metr.org/blog/2026-10-14-alignment-assessment-proposal/",
       "article_url": "https://metr.org/blog/2026-10-14-alignment-assessment-proposal/",
       "tweet_url": null,
@@ -1359,10 +1392,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 44.25,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 44.0,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1381,12 +1414,15 @@
           "mild: title_words 23 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "metr-s-proposed-third-party-review-of-unreleased-models-wors"
+      ]
     },
     {
       "topic": "ai-research",
       "domain": "air.tooling",
-      "title": "MLX tensor parallelism over Thunderbolt RDMA runs an 816B mixture-of-experts model at about 36 tokens/s on four M5 Ultra Mac Studios",
+      "title": "MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios",
       "source_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
       "article_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
       "tweet_url": null,
@@ -1445,10 +1481,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 42.75,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 42.5,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -1466,12 +1502,15 @@
           "mild: title_words 22 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "mlx-tensor-parallelism-over-thunderbolt-rdma-runs-an-816b-mi"
+      ]
     },
     {
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Hugging Face's funes: shared agent memory that keeps the raw session text, not summaries",
+      "title": "Hugging Face's funes shares agent memory from raw session text, not summaries",
       "source_url": "https://huggingface.co/blog/funes",
       "cluster": "B",
       "related_claims": [],
@@ -1506,10 +1545,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 58,
-        "newness": 5,
+        "newness": 4,
         "credibility": 80.0,
-        "composite": 42.65,
-        "scored_at": "2026-10-23T16:45:06+00:00"
+        "composite": 42.4,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
       "article_url": "https://huggingface.co/blog/funes",
@@ -1533,14 +1572,15 @@
       "grounding_score": 1.0,
       "domain_label": "Harness & Agent Security",
       "previous_slugs": [
-        "funes-a-cross-agent-memory-layer-that-preserves-raw-session"
+        "funes-a-cross-agent-memory-layer-that-preserves-raw-session",
+        "hugging-face-s-funes-shared-agent-memory-that-keeps-the-raw"
       ]
     },
     {
       "id": "a-missing-piece-for-trustworthy-ai-reviewers-fro-c9adddd2ed",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "RobustReview: LLM paper reviewers change scores on content-preserving rewrites; low rewrite sensitivity can hide score collapse",
+      "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
       "source_url": "https://arxiv.org/abs/2609.39027",
       "related_claims": [
         "llm-as-judge-is-biased-toward-longer-answers"
@@ -1596,10 +1636,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 55,
-        "newness": 5,
+        "newness": 4,
         "credibility": 50.8,
-        "composite": 40.37,
-        "scored_at": "2026-10-25T02:36:54+00:00"
+        "composite": 40.12,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "LLM-as-judge bias work (verbosity/position bias, Zheng et al. 2023 MT-Bench); DecisionPivot contrast-pair testing of decision models in ai-research.json; ledger claim llm-as-judge-is-biased-toward-longer-answers. The stability-plus-discrimination framing and 'false robustness' finding are the delta. Verifier's closest: MT-Bench judge-bias work (Zheng et al. 2023); llm-as-judge-is-biased-toward-longer-answers.",
       "verified": true,
@@ -1627,13 +1667,16 @@
           "mild: jargon_chain 8 > 7 (separately measure score spread across genuinely different items)"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "robustreview-llm-paper-reviewers-change-scores-on-content-pr"
+      ]
     },
     {
       "candidate_id": "how-uk-aisi-and-evaleval-are-making-benchmark-re-31b1ab8407",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "UK AISI publishes verified benchmark results with run configuration in a shared schema, showing scores shift with inference compute and protocol",
+      "title": "UK AISI publishes verified benchmark results showing scores shift with inference compute",
       "source_url": "https://huggingface.co/blog/evaleval-aisi",
       "summary": "The UK AI Security Institute (AISI) is publishing verified results, context and configuration for five benchmarks and two cyber evals through EvalEval's Every Eval Ever schema and Evaluation Cards. The data backs an AISI paper showing that benchmark scores depend on inference-time compute and evaluation protocol. For example, models kept solving more Humanity's Last Exam tasks as token budgets grew when they got correctness feedback after each attempt.",
       "lessons": [
@@ -1679,10 +1722,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 5,
+        "newness": 4,
         "credibility": 75.0,
-        "composite": 39.5,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 39.25,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": false,
       "verify_note": "Verifier: lesson 2's 'retry-with-feedback inflates scores vs single-shot' and the takeaway's 'meaningless without token budget' overstate the source.",
@@ -1716,12 +1759,15 @@
           "mild: title_words 21 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "uk-aisi-publishes-verified-benchmark-results-with-run-config"
+      ]
     },
     {
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt and built a SPARQL engine too large to review",
+      "title": "Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt",
       "source_url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
       "article_url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
       "tweet_url": null,
@@ -1780,10 +1826,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 24,
+        "newness": 23,
         "credibility": 53.0,
-        "composite": 38.55,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 38.3,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -1805,7 +1851,7 @@
     {
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Google's VERID checks agent-written lab-robot protocols against a 3D digital twin before execution; wet-lab data exposed a proxy-metric failure that agents then fixed",
+      "title": "Google's VERID checks agent-written lab-robot protocols against a 3D digital twin",
       "source_url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
       "article_url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
       "tweet_url": null,
@@ -1866,10 +1912,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 38.25,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 38.0,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -1891,7 +1937,7 @@
       "candidate_id": "accenture-embedded-evaluation-908fa9e458",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access; each expects to invest at least $1B",
+      "title": "Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access",
       "summary": "Anthropic named Accenture, through its AI unit Faculty, as an embedded evaluator that will red-team models, run alignment assessments, and test safeguards from inside the company with access comparable to an employee's. Each company expects to invest at least $1 billion over five years. Anthropic funds the work directly and says there are no standards yet for evaluator access or reporting.",
       "lessons": [
         {
@@ -1935,10 +1981,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 24,
+        "newness": 23,
         "credibility": 72.5,
-        "composite": 37.88,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 37.62,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -1976,7 +2022,7 @@
       "topic": "ai-research",
       "domain": "air.evals",
       "related_claims": [],
-      "title": "SWT-Bench (NeurIPS 2024): a Docker harness that scores LLM-written tests that reproduce GitHub issues, failing before the fix and passing after",
+      "title": "SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues",
       "summary": "SWT-Bench re-uses SWE-bench tooling and datasets, but asks the model for a reproducing test instead of a fix. The test must fail on the original code and pass once a patch resolving the issue is applied. The harness has two modes: unit tests run in the project's suite, or standalone reproduction scripts judged only by exit code. It also reports coverage change and ships Lite (276), Verified (433) and Full (2294) datasets.",
       "lessons": [
         {
@@ -2015,10 +2061,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 24,
+        "newness": 23,
         "credibility": 50.8,
-        "composite": 37.62,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 37.37,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2047,7 +2093,10 @@
           "mild: takeaway_sentences 2 > 1"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "swt-bench-neurips-2024-a-docker-harness-that-scores-llm-writ"
+      ]
     },
     {
       "id": "introducing-the-agents-api-243d2668ed",
@@ -2068,7 +2117,7 @@
       "source_name": "OpenAI Blog",
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "OpenAI launches the Agents API in public beta: a hosted Codex harness with managed compaction, tool search, subagents and a choice of sandbox",
+      "title": "OpenAI launches the Agents API in public beta, a hosted Codex harness",
       "summary": "OpenAI offers the harness behind Codex as a managed service. A single call specifies task, model, tools and environment, and the sandbox can be OpenAI-hosted, self-hosted or from partners such as E2B, Modal and Cloudflare. The harness handles automatic compaction, tool search, programmatic tool calling and parallel subagents, and costs only the tokens and tools used. This is a product launch with no measurements.",
       "lessons": [
         {
@@ -2113,10 +2162,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 60,
-        "newness": 5,
+        "newness": 4,
         "credibility": 73.2,
-        "composite": 34.73,
-        "scored_at": "2026-10-24T08:52:19+00:00"
+        "composite": 34.48,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Closest in pool is the entry on porting Codex's Responses-API compaction protocol into other harnesses (Pi) and the Claude Code harness-design write-up; this is a product launch of an existing capability. Verifier: Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (archive.json); the Claude Code harness-design write-up.",
       "related_claims": [
@@ -2139,7 +2188,7 @@
       "candidate_id": "introducing-mentalhealthbench-7b7f3305a0",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "MentalHealthBench scores model replies against weighted, expert-consensus rubrics across acuity levels and personas",
+      "title": "MentalHealthBench scores model replies against weighted expert-consensus rubrics",
       "source_url": "https://openai.com/index/introducing-mentalhealthbench",
       "summary": "OpenAI released an open benchmark of synthetic mental health conversations, from everyday stress to emergencies, across adults, teens, caregivers and clinicians. Over 80 licensed experts wrote per-conversation rubric items weighted from -10 to +10, and only items that at least two of three reviewers agreed on were kept. A model grader scores replies against these rubrics, and the score can be split into ten behavior dimensions, so models with the same total can show different strengths.",
       "lessons": [
@@ -2185,10 +2234,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 5,
+        "newness": 4,
         "credibility": 70.8,
-        "composite": 34.37,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 34.12,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "prior_art": "OpenAI HealthBench (same expert-rubric plus model-grader method).",
@@ -2224,7 +2273,7 @@
       "candidate_id": "strengthening-ai-safety-evaluation-through-indep-2326f3b106",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "Amazon Science post on independent third-party review of its AI safety testing (article body not captured)",
+      "title": "Amazon Science post on third-party AI safety review, article body not captured",
       "source_url": "https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review",
       "summary": "Amazon Science announces that it had an independent third party (AVERI, per the RSS excerpt) assess and improve its internal safety testing of Amazon models. The captured raw file has only the title and site navigation, with no article body. Methods, findings, and what changed are therefore unknown.",
       "takeaway": "Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.",
@@ -2257,10 +2306,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 24,
+        "newness": 23,
         "credibility": 75.0,
-        "composite": 33.75,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 33.5,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -2290,12 +2339,15 @@
           "mild: takeaway_sentences 2 > 1"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "amazon-science-post-on-independent-third-party-review-of-its"
+      ]
     },
     {
       "topic": "ai-research",
       "domain": "air.ml-research",
-      "title": "HybridAgent post-trains models to reason in latent space and call tools in text, reporting 10.4% gains and 35.5-54.7% fewer tokens",
+      "title": "HybridAgent reasons in latent space and calls tools in text",
       "source_url": "https://arxiv.org/abs/2610.18861",
       "article_url": "https://arxiv.org/abs/2610.18861",
       "tweet_url": null,
@@ -2345,10 +2397,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 24,
+        "newness": 23,
         "credibility": 55.0,
-        "composite": 32.25,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 32.0,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -2364,13 +2416,16 @@
           "mild: title_words 21 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "hybridagent-post-trains-models-to-reason-in-latent-space-and"
+      ]
     },
     {
       "candidate_id": "bound-conditioned-latent-inference-for-progressi-6860d502a8",
       "topic": "ai-research",
       "domain": "air.ml-research",
-      "title": "Bound-conditioned latent inference cuts progressive image codec BD-rate 7.96% vs CTC on Kodak with 5.3x fewer parameters",
+      "title": "Bound-conditioned latent inference cuts progressive image codec BD-rate on Kodak",
       "summary": "Progressive image codecs send one bitstream that can be cut short at any point, encoding latents as trit-planes (base-3 digit layers). This NeurIPS 2026 paper treats the trits decoded so far as lower and upper bounds on each continuous latent, and uses the center and width of those bounds to refine both the entropy model and the reconstruction. On Kodak it lowers BD-rate (the average bitrate saving at equal quality) by 17.78% vs DPICT and 7.96% vs CTC, using one shared model instead of per-plane predictors.",
       "lessons": [
         {
@@ -2407,10 +2462,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 24,
+        "newness": 23,
         "credibility": 72.0,
-        "composite": 30.3,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 30.05,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -2442,7 +2497,7 @@
       "candidate_id": "robocasa-shift-stage-aware-robustness-evaluation-c4163a1f0c",
       "topic": "ai-research",
       "domain": "air.ml-research",
-      "title": "RoboCasa-Shift: equal success-rate drops in a VLA robot policy hide very different failure stages",
+      "title": "RoboCasa-Shift shows equal success-rate drops in a VLA policy hide different failures",
       "summary": "RoboCasa-Shift is a robustness benchmark for vision-language-action (VLA) robot policies. It pairs each clean rollout with a perturbed one that differs only in one shift, and records which task stage fails. Testing GR00T N1.5 over 1,040 rollouts, it finds that headline success rate hides a lot: one camera shift left success unchanged while 8 of 80 paired episodes flipped outcome, and two shifts with the same success drop failed at the first stage at very different rates (19.0% vs 36.4%).",
       "lessons": [
         {
@@ -2480,10 +2535,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 24,
+        "newness": 23,
         "credibility": 53.2,
-        "composite": 28.98,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 28.73,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -2515,14 +2570,17 @@
           "mild: sentence_words 50 > 45 (Testing GR00T N1.5 over 1,040 rollouts, it finds that headline success rate hides a lot: one camera shift left success u)"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "robocasa-shift-equal-success-rate-drops-in-a-vla-robot-polic"
+      ]
     },
     {
       "id": "donating-agent-skills-to-the-agentic-ai-foundati-d53589b814",
       "topic": "ai-research",
       "domain": "air.tooling",
       "related_claims": [],
-      "title": "Anthropic donates the Agent Skills standard to the Linux Foundation's Agentic AI Foundation, where MCP already lives",
+      "title": "Anthropic donates the Agent Skills standard to the Agentic AI Foundation",
       "summary": "Anthropic has donated the Agent Skills standard to the Agentic AI Foundation (AAIF). AAIF sits under the Linux Foundation, was co-founded by Anthropic, Block and OpenAI, and already holds the Model Context Protocol (MCP). Simon Willison notes he predicted this in December 2025. This is a governance change; the post describes no change to the skills format.",
       "lessons": [
         {
@@ -2555,10 +2613,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 24,
+        "newness": 23,
         "credibility": 52.5,
-        "composite": 27.98,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 27.73,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -2584,14 +2642,17 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "anthropic-donates-the-agent-skills-standard-to-the-linux-fou"
+      ]
     },
     {
       "id": "sebastian-raschka-s-from-scratch-video-course-on-5051734d4d",
       "topic": "ai-research",
       "domain": "air.models",
       "related_claims": [],
-      "title": "Sebastian Raschka's 11-hour, 8-video from-scratch course on building reasoning models, starting from Qwen3 0.6B",
+      "title": "Sebastian Raschka releases a from-scratch video course on building reasoning models",
       "summary": "Raschka published eight coding lectures (11 hours) to go with his book Build a Reasoning Model (From Scratch). Starting from a pre-trained Qwen3 0.6B, the course builds a MATH-500 answer verifier and uses it both as the evaluator and as the reward for reinforcement learning with verifiable rewards (RLVR). It then covers self-consistency, self-refinement, a simplified GRPO training loop, and distillation from DeepSeek R1 answers.",
       "lessons": [
         {
@@ -2630,10 +2691,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 24,
+        "newness": 23,
         "credibility": 55.0,
-        "composite": 27.15,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 26.9,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -2657,13 +2718,16 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "sebastian-raschka-s-11-hour-8-video-from-scratch-course-on-b"
+      ]
     },
     {
       "id": "show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99",
       "topic": "ai-research",
       "domain": "air.tooling",
-      "title": "pi pod: self-hosted wrapper that runs the pi coding agent in isolated sandbox 'pods' on your server",
+      "title": "pi pod runs the pi coding agent in isolated sandboxes",
       "source_url": "https://pipod.dev/",
       "related_claims": [],
       "summary": "pi pod is a new open-source project that runs sessions of the minimalist pi coding-agent harness inside isolated sandboxes on a server you control. The author argues that a minimal team agent environment needs four things: sandboxing, native clients, role-based access control (RBAC) for session sharing, and browser/native-app automation. The page is a launch announcement. It gives no details on how the isolation works and no security evaluation.",
@@ -2704,10 +2768,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 24,
+        "newness": 23,
         "credibility": 55.0,
-        "composite": 26.25,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 26.0,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
       "verified": true,
@@ -2730,13 +2794,16 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "pi-pod-self-hosted-wrapper-that-runs-the-pi-coding-agent-in"
+      ]
     },
     {
       "id": "open-tts-leaderboard-scalable-evaluation-for-mul-2222cbbf2d",
       "topic": "ai-research",
       "domain": "air.evals",
-      "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models by ASR-measured word error rate, speaker similarity and latency instead of human votes",
+      "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
       "source_url": "https://huggingface.co/blog/open-tts-leaderboard",
       "related_claims": [],
       "summary": "Hugging Face built a TTS leaderboard that scores models with automatic metrics. Word error rate comes from an automatic speech recognition (ASR) model's transcript. Speaker-embedding similarity measures voice cloning, and real-time factor plus time-to-first-audio measure speed. This cuts evaluation from weeks of human voting to hours and covers open models that arena leaderboards mostly skip, but the metrics do not measure naturalness or listener preference, the authors say.",
@@ -2783,10 +2850,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 5,
+        "newness": 4,
         "credibility": 73.2,
-        "composite": 25.73,
-        "scored_at": "2026-10-25T02:36:54+00:00"
+        "composite": 25.48,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "prior_art": "Hugging Face Open ASR Leaderboard; Seed-TTS-Eval and CV3-Eval benchmarks; TTS Arena v2 and Artificial Analysis TTS arena leaderboards. No closer entry in the corpus. Verifier's closest: Open ASR Leaderboard; TTS Arena v2; Seed-TTS-Eval.",
       "verified": true,
@@ -2820,7 +2887,7 @@
     {
       "topic": "ai-research",
       "domain": "air.ml-research",
-      "title": "Anthropic survey: 91% of its staff vs 39% of US adults expect AI to make a Nobel-level discovery by 2030",
+      "title": "Anthropic survey: 91% of its staff expect a Nobel-level AI discovery",
       "source_url": "https://www.anthropic.com/research/ai-expectations-gap",
       "article_url": "https://www.anthropic.com/research/ai-expectations-gap",
       "tweet_url": null,
@@ -2873,10 +2940,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 24,
+        "newness": 23,
         "credibility": 70.0,
-        "composite": 21.9,
-        "scored_at": "2026-10-26T16:50:42+00:00"
+        "composite": 21.65,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -2892,13 +2959,16 @@
           "mild: title_words 20 > 18"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "anthropic-survey-91-of-its-staff-vs-39-of-us-adults-expect-a"
+      ]
     },
     {
       "candidate_id": "building-standards-for-the-next-phase-of-ai-a878382581",
       "topic": "ai-research",
       "domain": "air.alignment",
-      "title": "OpenAI proposes US-led international technical standards for frontier AI, including oversight of recursive self-improvement",
+      "title": "OpenAI proposes US-led international technical standards for frontier AI",
       "source_url": "https://openai.com/index/building-standards-next-phase-ai",
       "summary": "OpenAI argues for US-led global technical standards for frontier AI, built through the network of national AI safety institutes and the Center for AI Standards and Innovation (CAISI). It says fully autonomous recursive self-improvement (RSI) is not happening today and should not be pursued until it can be done safely. Proposed standards cover measuring autonomous AI research, when automated research must trigger human review, and shared incident severity levels and reporting thresholds. The standards would not be licenses or prerelease approvals.",
       "lessons": [
@@ -2943,10 +3013,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 15,
-        "newness": 5,
+        "newness": 4,
         "credibility": 70.8,
-        "composite": 20.87,
-        "scored_at": "2026-10-25T00:44:25+00:00"
+        "composite": 20.62,
+        "scored_at": "2026-10-27T02:46:41+00:00"
       },
       "verified": true,
       "prior_art": "External-testing commitments via UK AISI/US CAISI; no prior entry on recursive self-improvement standards.",
@@ -2978,7 +3048,7 @@
     {
       "topic": "ai-research",
       "domain": "air.tooling",
-      "title": "Anthropic describes presenting MCP servers as code APIs so agents load fewer tool definitions and tokens",
+      "title": "Anthropic presents MCP servers as code APIs so agents load fewer tokens",
       "source_url": "https://www.anthropic.com/research/code-execution-with-mcp",
       "takeaway": "Code execution cuts MCP token cost, but the agent-written code then needs sandboxing, limits and monitoring.",
       "summary": "Anthropic says loading every MCP tool definition and passing every result through the model wastes context, and letting agents write code against a file tree of tools cut one example from 150,000 tokens to 2,000. The post warns that this needs a secure execution environment, and the raw text dates the post to 2025-11-04 while the tracker lists 2026-10-18.",
@@ -3025,7 +3095,10 @@
         "credibility": 70.8,
         "composite": 10.62,
         "scored_at": "2026-10-24T08:21:16+00:00"
-      }
+      },
+      "previous_slugs": [
+        "anthropic-describes-presenting-mcp-servers-as-code-apis-so-a"
+      ]
     }
   ]
 }

@@ -89,6 +89,10 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      ledger via `python scripts/add_claim.py list` before analyzing. Leave empty if the
      finding stands alone. Extras beyond the cap of 3 belong in step 8's PR body under
      an audit-of-cap section.
+   - **title** — one plain sentence saying what happened or was found, at most 12 words,
+     led by who or what (vendor, product, team). No "headline: a, b, c" list after a colon,
+     semicolon or dash; versions, most CVE ids, percentages and lists go in the summary.
+     `readability.py` holds a title over 16 words or with such a list.
    - **summary** — 2-3 sentence teachable summary.
    - **lessons** — the concrete, transferable takeaways. Each: `{point, excerpt,
      confidence}` where `excerpt` is a short quote/anchor from the source and
@@ -117,7 +121,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    `ghsa-ai`, `marker`, or `lab`: a security or safety post from a major AI lab). It gets a short brief instead of step 3, and no verifier pass:
    ```json
    {"brief": "news", "topic": "...", "domain": "<an ID of the topic>",
-    "title": "what happened, concretely", "source_url": "<the candidate's own URL>",
+    "title": "what happened, in 12 words or fewer (step 3's title rule)", "source_url": "<the candidate's own URL>",
     "takeaway": "one sentence: so what, for the topic's reader",
     "summary": "1-2 sentences: who, what, how bad, what to do",
     "lessons": [{"point": "what the quote shows", "excerpt": "<ONE verbatim quote, 20+ chars>",
@@ -149,7 +153,9 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      entry's `title`, `takeaway`, `summary`, lesson `point`s and `actionable.title`/`detail`.
      It returns those fields rewritten for clarity: every number with what it counts, every
      negation, version bound and severity word, every name, CVE/GHSA id and code span kept;
-     nothing added. It never sees or touches excerpts. Put its text back; change nothing else.
+     nothing added. The title is the exception: it is cut to step 3's title rule (12 words
+     or fewer, no list) and may drop details the takeaway or summary still carry, but
+     never adds one and keeps every negation (`rewrite_guard.title_changes` checks it). It never sees or touches excerpts. Put its text back; change nothing else.
    - Run `python scripts/readability.py --analysis`. A `REWRITE:` line names a field whose
      facts changed: restore it from the draft now (merge would restore it anyway). Rewrite
      each `HOLD` entry once more yourself against its listed issues and check again; `MILD`
@@ -201,7 +207,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      (the note is optional: one sentence on what this source shows for the claim).
    - **New** — it answers a question the ledger has no claim for. Add one, with the
      `guidance` (what to DO) and `scope` (where it does *not* apply):
-     `python scripts/add_claim.py new <kebab-id> --topic … --domain … --statement … --guidance … --scope … --confidence 0.N --evidence "supports|<url>|<title>|<date>"`
+     `python scripts/add_claim.py new <kebab-id> --topic … --domain … --title "<headline, 12 words max>" --statement … --guidance … --scope … --confidence 0.N --evidence "supports|<url>|<title>|<date>"`
    - **Superseding** — it gives a *better answer* than a claim we already hold. Write the new
      claim first, then retire the old one; both ends of the edge are written for you:
      `python scripts/add_claim.py supersede <old-id> <new-id> --reason "<why the old answer no longer holds>"`

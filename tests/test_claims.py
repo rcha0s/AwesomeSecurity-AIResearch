@@ -14,6 +14,7 @@ def make_claim(**over) -> dict:
         "id": "toon-over-json-for-agent-io",
         "topic": "ai-research",
         "domain": "Architecture & Optimization",
+        "title": "TOON beats JSON for agent I/O tokens",
         "statement": "TOON encoding cuts agent I/O tokens 30-60% versus JSON at equal fidelity.",
         "status": "current",
         "confidence": 0.8,

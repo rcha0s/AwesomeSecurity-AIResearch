@@ -73,10 +73,11 @@ def _urls(entry: dict) -> set[str]:
 
 
 def find_output(case: dict, outputs: list[dict]) -> dict | None:
-    """The analyzer entry for a case: same canonical URL, else a near-identical title."""
+    """The analyzer entry for a case: same id, same canonical URL, else a
+    near-identical title (a retitle keeps the id, not the title)."""
     want = _urls(case)
     for out in outputs:
-        if want & _urls(out):
+        if out.get("id") == case["id"] or want & _urls(out):
             return out
     return next((o for o in outputs if c.title_similar(o.get("title", ""), case["title"])), None)
 

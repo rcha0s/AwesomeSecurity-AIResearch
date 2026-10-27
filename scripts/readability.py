@@ -22,6 +22,8 @@ above `warn` is a mild issue, above `hold` a severe one):
   hedges             most hedge words ("may", "could", "likely"...) in one sentence
   banned             filler/marketing phrases ("game-changer", "it's worth noting")
   title_words        words in the title
+  title_list         a "headline: a, b, c" title: after a colon, semicolon or
+                     dash, a list of 3+ items (the details belong in the summary)
   takeaway_sentences sentences in the takeaway (it should be one)
   takeaway_words     words in the takeaway
   summary_sentences  sentences in the summary
@@ -187,6 +189,15 @@ def banned_hits(text: str, phrases: list[str]) -> list[str]:
     return [p for p in phrases if re.search(rf"(?<!\w){re.escape(p.lower())}(?!\w)", low)]
 
 
+TITLE_SPLIT = re.compile(r":|;|\s[-\u2013\u2014]\s")
+
+
+def title_list(title: str) -> bool:
+    """A title that is a headline plus a list ("X: a, b, c")."""
+    parts = TITLE_SPLIT.split(title, maxsplit=1)
+    return len(parts) == 2 and len(re.findall(r"[,;]", parts[1])) >= 2
+
+
 # --- The check ----------------------------------------------------------------
 def measure(entry: dict, cfg: dict) -> tuple[dict, dict]:
     """(metrics, details) for one brief."""
@@ -208,6 +219,7 @@ def measure(entry: dict, cfg: dict) -> tuple[dict, dict]:
         "hedges": max_hedges(prose, {h.lower() for h in cfg["hedges"]}),
         "banned": len(banned),
         "title_words": len(words(fields.get("title", ""))),
+        "title_list": int(title_list(fields.get("title", ""))),
         "takeaway_sentences": len(sentences(fields.get("takeaway", ""))),
         "takeaway_words": len(words(fields.get("takeaway", ""))),
         "summary_sentences": len(sentences(fields.get("summary", ""))),

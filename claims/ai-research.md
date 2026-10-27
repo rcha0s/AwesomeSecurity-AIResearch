@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_18 current · 2 contested · 2 superseded · 1 refuted · updated 2026-10-26_
+_18 current · 2 contested · 2 superseded · 1 refuted · updated 2026-10-27_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -199,9 +199,11 @@ _Tags: `llm-as-judge`, `eval-bias`, `evals`_
 
 <a id="claim-benchmark-category-labels-can-mask-conflated-capabilities"></a>
 
-### A benchmark's stated capability category (e.g. 'safety') doesn't guarantee its score is actually driven by that capability, or even moves in the direction you'd assume — independent multidimensional decomposition (multidimensional Item Response Theory) can reveal that a nominally 'safety' benchmark like WMDP actually correlates more strongly with general reasoning than safety, and in the inverse direction (stronger reasoners score LOWER, since WMDP scores refusing/failing to answer as the desired outcome).
+### A benchmark's category label may not measure that capability
 
 `benchmark-category-labels-can-mask-conflated-capabilities` · confidence **0.70** · Evaluation & Benchmarks · standing since Sep 9, 2026
+
+A benchmark's stated capability category (e.g. 'safety') doesn't guarantee its score is actually driven by that capability, or even moves in the direction you'd assume — independent multidimensional decomposition (multidimensional Item Response Theory) can reveal that a nominally 'safety' benchmark like WMDP actually correlates more strongly with general reasoning than safety, and in the inverse direction (stronger reasoners score LOWER, since WMDP scores refusing/failing to answer as the desired outcome).
 
 **Basis —** empirical study (AllenAI BenchMIRT, multidimensional IRT across 100 models / 16 benchmarks)
 

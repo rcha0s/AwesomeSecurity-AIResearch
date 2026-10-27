@@ -46,6 +46,7 @@ scripts/taxonomy_proposals.py # record verified proposals; recurring -> `taxonom
 scripts/verify_citations.py # ground each lesson excerpt vs its source (hallucinated quote → review)
 scripts/readability.py    # deterministic readability check of each brief (title..action; never excerpts)
 scripts/rewrite_guard.py  # restores any rewritten brief field whose facts changed (vs data/_analysis_draft.json)
+scripts/retitle.py        # cut existing titles to 12 words, no list: list | check FILE | apply FILE (Moved stubs)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
 scripts/story_ledger.py   # story ledger: shortlist, judge verdicts (same/update/new), ledgering
@@ -117,6 +118,9 @@ The pools answer **"what was published lately"** — a rolling feed that ages ou
 right now, and what did that replace"**. It is durable: claims never age out.
 
 - A claim has a `status`: `current` · `contested` · `superseded` · `refuted`.
+- A claim has a `title` of at most 12 words, distinct from its `statement`: the card shows
+  the title with the statement clamped to two lines under it (`claims.py` refuses one
+  without; `add_claim.py new` needs `--title`, `add_claim.py titles FILE` sets several).
 - Supersession is an **edge written on both ends** — the retired claim gets
   `superseded_by` + `superseded_on` + `supersession_reason`; the winner gets `supersedes`.
   `scripts/add_claim.py supersede` writes both, so they can never drift apart.
@@ -484,6 +488,11 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
     revert never holds it. No draft for a non-empty analysis is a warning in merge and
     in the scan PR body. This guards against small-model rewrite error, not a hostile
     session (the session authors the draft).
+  - **Titles:** one plain sentence of at most 12 words with no "headline: a, b, c" list
+    (Rohan, 2026-10-26). Over 12 words is mild; over 16 words or a list holds. The rewrite
+    may shorten a title by dropping details the takeaway or summary still carry, never by
+    adding one, and keeps every negation (`rewrite_guard.title_changes`); `retitle.py`
+    applies the same check to existing titles.
   - **Holds:** merge records every brief's score (`readability`). Only a severe length
     or structure failure holds it in REVIEW.md (`readability_hold`, reason
     `readability: …`); acronyms, noun chains and long words are mild-only. Rerank

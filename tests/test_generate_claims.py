@@ -14,11 +14,13 @@ def superseded_pair() -> dict:
     """A retired claim plus the claim that replaced it, edges already wired."""
     old = make_claim(
         id="grep-is-enough-for-code-search",
+        title="Lexical grep/glob search is enough",
         statement="Lexical grep/glob search is sufficient for agent code retrieval.",
         first_seen="2026-03-01",
     )
     new = make_claim(
         id="code-graph-beats-lexical-search",
+        title="Graph-based code retrieval beats lexical search",
         statement="Graph-based code retrieval beats lexical search on multi-hop tasks.",
         first_seen="2026-07-20",
     )
@@ -103,6 +105,7 @@ def test_index_shows_recent_supersessions_newest_first():
     ledger = superseded_pair()
     older = make_claim(
         id="older-retired",
+        title="An older retired claim.",
         statement="An older retired claim.",
         status="superseded",
         superseded_by=["code-graph-beats-lexical-search"],

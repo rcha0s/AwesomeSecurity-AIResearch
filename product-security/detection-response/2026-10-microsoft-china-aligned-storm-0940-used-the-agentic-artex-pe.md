@@ -1,27 +1,5 @@
-# Microsoft: China-aligned Storm-0940 used the agentic ARTEX pentest framework to hit 2,250+ tenants after the ConnectWise supply-chain compromise
+# Moved
 
-**Published:** Oct 21, 2026
+This finding now lives at [Microsoft says Storm-0940 used the ARTEX pentest framework against 2,250+ tenants](../detection-response/2026-10-microsoft-says-storm-0940-used-the-artex-pentest-framework-a.md).
 
-> **Takeaway:** Agent-driven intrusions compress the time from first touch to privileged cloud access to hours, so detection and OAuth-app hygiene must work at machine speed.
-
-## TL;DR
-
-Microsoft says Storm-0940 used ARTEX, an open-source multi-agent penetration-testing framework, to run password spraying, reconnaissance and OAuth-application abuse at machine speed after the ConnectWise Cloud Backup compromise. The actor tried to sign in to more than 2,250 tenants, and in several cases went from first targeting to privileged cloud access in under 3 hours. Most attempts failed, but the speed left defenders little time to respond.
-
-## Lessons
-
-- Agentic tooling is already used by a state-aligned actor to scale known tradecraft such as spraying and OAuth abuse. - _"ARTEX is an open-source penetration testing framework that can use any AI model to automate a variety of offensive security workflows."_
-- Time to privileged cloud access fell under 3 hours in several cases. - _"Several of these Storm-0940 ARTEX-driven attacks have resulted in the actor obtaining privileged access to an organization’s cloud infrastructure - including multiple instances where the time from initial targeting to privileged access was less than 3 hours."_
-- Alerts fire, but the pace outruns coordinated response. - _"the speed of the activity allows very little time for Defenders to respond to those alerts and remediate the actor’s access in a coordinated fashion."_
-- Hunt for service-principal sign-ins and unexpected credential or privilege changes on applications. - _"Customers should review service principal sign-ins, investigate unexpected application credential or privilege changes"_
-
----
-
-**Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
-**Source:** [source](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 24 · Novelty 50 · Relevance 85 · Credibility 55 · **Composite 55** _(each 0-100)_  
-**Tags:** `artex`, `agentic-ai`, `oauth`, `connectwise`, `storm-0940`, `microsoft-graph`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier pool entries cover AI-orchestrated attacks compressing human timelines (claim agent-orchestrated-attacks-compress-human-attack-timelines); this adds a named state actor, a named framework and measured tenant scale. Verifier: Anthropic GTG-1002 (Nov 2025) AI-orchestrated espionage report; Google GTIG AI misuse reports. Delta is a named open-source agentic pentest framework (ARTEX) us  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
-
-_Source: [https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)_  ·  [← back to index](../README.md)
+_The finding was retitled and its page moved with its title._
