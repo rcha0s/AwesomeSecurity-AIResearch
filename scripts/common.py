@@ -17,6 +17,7 @@ import os
 import re
 import sys
 from dataclasses import dataclass
+from dataclasses import field as dc_field
 from datetime import UTC, date, datetime, time, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -226,6 +227,7 @@ class Config:
     ingest_days: int = 31
     news_front_page_days: int = 7
     news_front_page_max: int = 30
+    ghsa: dict = dc_field(default_factory=dict)  # which GitHub advisories are kept
 
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -245,6 +247,7 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         ingest_days=int(raw.get("ingest_days", raw.get("max_age_days", 31))),
         news_front_page_days=int(raw.get("news_front_page_days", 7)),
         news_front_page_max=int(raw.get("news_front_page_max", 30)),
+        ghsa=raw.get("ghsa") or {},
     )
 
 
