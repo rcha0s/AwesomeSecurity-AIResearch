@@ -943,7 +943,9 @@ def test_filtered_route_round_trips_state_url_state():
 def test_state_query_covers_every_search_and_filter_and_skips_defaults():
     expr = (
         "(function(){var out = {};"
-        "stateFromQuery('?" + STATE_QUERY + "&ctopic=ai-security&aq=kev&atopic=ai-security&sq=hello');"
+        "stateFromQuery('?"
+        + STATE_QUERY
+        + "&ctopic=ai-security&aq=kev&atopic=ai-security&sq=hello');"
         "['news','claims','archive','search'].forEach(function(v){ out[v] = stateQuery(v); });"
         "out.defaults = (function(){ claimState.sort='confidence'; return stateQuery('week'); })();"
         "return out;})()"
@@ -992,7 +994,9 @@ def test_hostile_search_value_in_url_renders_escaped():
 
 
 def test_search_text_is_length_capped():
-    got = run_js({}, "(function(){stateFromQuery('?nq=' + 'a'.repeat(5000)); return newsState.q.length;})()")
+    got = run_js(
+        {}, "(function(){stateFromQuery('?nq=' + 'a'.repeat(5000)); return newsState.q.length;})()"
+    )
     assert got == 200
 
 
