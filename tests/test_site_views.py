@@ -1001,11 +1001,11 @@ STATE_QUERY = "nq=prompt+injection&nkind=research&ntopic=ai-security"
 def test_filtered_route_round_trips_state_url_state():
     expr = (
         "(function(){"
-        "var applied = stateFromQuery('?cq=agent&cstatus=refuted&csort=change&nq=x&nkind=news');"
+        "var applied = stateFromQuery('?cq=agent&cstatus=refuted&csort=confidence&nq=x&nkind=news');"
         "var first = [claimState.q, claimState.status, claimState.sort, newsState.q, newsState.kind];"
         "var cq = stateQuery('claims'), nq = stateQuery('news');"
         # Reset, then restore from the URLs built from the state.
-        "claimState.q = ''; claimState.status = 'all'; claimState.sort = 'confidence';"
+        "claimState.q = ''; claimState.status = 'all'; claimState.sort = 'change';"
         "newsState.q = ''; newsState.kind = 'all';"
         "stateFromQuery('?' + cq + '&' + nq);"
         "return {applied: applied, first: first, cq: cq, nq: nq,"
@@ -1013,9 +1013,9 @@ def test_filtered_route_round_trips_state_url_state():
         "})()"
     )
     got = run_js({}, expr)
-    assert got["first"] == ["agent", "refuted", "change", "x", "news"]
+    assert got["first"] == ["agent", "refuted", "confidence", "x", "news"]
     assert got["again"] == got["first"]
-    assert got["cq"] == "cq=agent&cstatus=refuted&csort=change"
+    assert got["cq"] == "cq=agent&cstatus=refuted&csort=confidence"
     assert got["nq"] == "nq=x&nkind=news"
     assert set(got["applied"]) == {"cq", "cstatus", "csort", "nq", "nkind"}
 
@@ -1027,7 +1027,7 @@ def test_state_query_covers_every_search_and_filter_and_skips_defaults():
         + STATE_QUERY
         + "&ctopic=ai-security&aq=kev&atopic=ai-security&sq=hello');"
         "['news','claims','archive','search'].forEach(function(v){ out[v] = stateQuery(v); });"
-        "out.defaults = (function(){ claimState.sort='confidence'; return stateQuery('week'); })();"
+        "out.defaults = (function(){ claimState.sort='change'; return stateQuery('week'); })();"
         "return out;})()"
     )
     got = run_js({}, expr)
@@ -1037,7 +1037,7 @@ def test_state_query_covers_every_search_and_filter_and_skips_defaults():
     assert got["search"] == "sq=hello"
     assert got["defaults"] == ""
     # Only defaults: nothing in the URL.
-    expr = "(function(){stateFromQuery('?nkind=all&csort=confidence&cstatus=all');return stateQuery('news')+stateQuery('claims');})()"
+    expr = "(function(){stateFromQuery('?nkind=all&csort=change&cstatus=all');return stateQuery('news')+stateQuery('claims');})()"
     assert run_js({}, expr) == ""
 
 
@@ -1056,7 +1056,7 @@ def test_unknown_filter_values_are_ignored(query):
     got = run_js({}, expr)
     assert got["applied"] == {}
     assert got["news"] == {"topic": "all", "kind": "all", "q": ""}
-    assert got["claim"] == {"topic": "all", "status": "all", "sort": "confidence", "q": ""}
+    assert got["claim"] == {"topic": "all", "status": "all", "sort": "change", "q": ""}
     assert got["archive"] == {"topic": "all", "q": ""}
 
 
