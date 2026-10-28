@@ -7,8 +7,8 @@ and the ledger's "claim changes". They are picked here, from the same site
 rows, so the two surfaces can never disagree.
 
   top_stories   rows active in the last `days` (a fresh Updated line counts),
-                most covering sources first, then most recent activity, then
-                composite. Fewer than `n_min` in the window -> topped up with
+                newest activity first, then most covering sources, then
+                composite (Rohan, 2026-10-27: the briefing reads latest first). Fewer than `n_min` in the window -> topped up with
                 the most recent stories outside it (and the caller says so).
   claim_changes what the ledger changed in the last `days`: claims added,
                 newly contested, and overturned (superseded or refuted, shown
@@ -67,7 +67,7 @@ def top_stories(
     """(the front page's top stories, whether the window had to be topped up)."""
     cutoff = _cutoff(now, days)
     fresh = [r for r in rows if last_activity(r) >= cutoff]
-    picked = _ranked(fresh, source_count, last_activity, _composite)[:n_max]
+    picked = _ranked(fresh, last_activity, source_count, _composite)[:n_max]
     if len(picked) >= n_min:
         return picked, False
     older = _ranked([r for r in rows if last_activity(r) < cutoff], last_activity, source_count)
@@ -84,9 +84,8 @@ def fresh_count(rows: list[dict], now: str, days: int) -> int:
     return sum(1 for r in rows if last_activity(r) >= cutoff)
 
 
-def window_note(fresh: int, total: int, days: int, multi_source: bool = False) -> str:
-    """The one sentence README and site both print above the top stories.
-    `multi_source`: some story has 2+ covering sources, so saying they lead means something."""
+def window_note(fresh: int, total: int, days: int) -> str:
+    """The one sentence README and site both print above the top stories."""
     if not total:
         return "No stories yet."
     if fresh == 0:
@@ -96,13 +95,7 @@ def window_note(fresh: int, total: int, days: int, multi_source: bool = False) -
             f"Fewer than five stories in the last {days} days, so the most recent ones "
             "before it fill in."
         )
-    if multi_source:
-        return f"The last {days} days: the stories with the most covering sources first."
     return f"The last {days} days, newest first."
-
-
-def any_multi_source(rows: list[dict]) -> bool:
-    return any(source_count(r) > 1 for r in rows)
 
 
 # --- Claim changes: the ledger's job is to call claims out, not to-do lists ---

@@ -185,7 +185,6 @@ def test_site_and_readme_print_the_same_window_sentence():
     from test_site_views import run_js
 
     cases = [(0, 0), (0, 5), (1, 5), (4, 5), (5, 5), (8, 8)]
-    for multi in (False, True):
-        js = ",".join(f"windowNote({f}, {t}, 7, {str(multi).lower()})" for f, t in cases)
-        got = run_js({}, "[" + js + "]")
-        assert got == [briefing.window_note(f, t, 7, multi) for f, t in cases]
+    js = ",".join(f"windowNote({f}, {t}, 7)" for f, t in cases)
+    got = run_js({}, "[" + js + "]")
+    assert got == [briefing.window_note(f, t, 7) for f, t in cases]

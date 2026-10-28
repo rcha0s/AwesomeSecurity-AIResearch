@@ -446,7 +446,6 @@ def _teaser(payload: dict) -> list[str]:
         payload["top_stories_fresh"],
         len(payload["top_stories"]),
         payload["snapshot_days"],
-        payload.get("top_stories_multi", False),
     )
     out = ["## This week's top stories", "", f"_{when}_", ""]
     out += [_story_line(i, r, names) for i, r in enumerate(stories, 1)] or ["_No stories yet._"]

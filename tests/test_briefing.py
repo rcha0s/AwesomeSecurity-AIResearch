@@ -23,22 +23,22 @@ def ids(rows):
     return [r["id"] for r in rows]
 
 
-def test_most_covered_story_leads_then_most_recent():
+def test_newest_story_leads_then_most_covered():
     rows = [
         row("one-source-newest", "2026-10-19"),
         row("three-sources", "2026-10-14", n_corr=2),
-        row("two-sources", "2026-10-18", n_corr=1),
+        row("two-sources-same-day", "2026-10-19", n_corr=1),
         row("one-source-older", "2026-10-15"),
-        row("one-source-mid", "2026-10-17"),
+        row("updated-yesterday", "2026-10-10", updated="2026-10-18"),
     ]
     got, topped = b.top_stories(rows, NOW, 7)
     assert not topped
     assert ids(got) == [
-        "three-sources",
-        "two-sources",
+        "two-sources-same-day",
         "one-source-newest",
-        "one-source-mid",
+        "updated-yesterday",
         "one-source-older",
+        "three-sources",
     ]
 
 

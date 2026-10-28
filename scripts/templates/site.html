@@ -1127,8 +1127,8 @@
 
   // ================= TOP STORIES + CLAIM CHANGES =================
   // Picked in scripts/briefing.py (the README teaser shows the same picks):
-  // stories by most covering sources, then latest activity; claim changes
-  // newest first.
+  // stories newest activity first, then most covering sources; claim
+  // changes newest first.
   function rowsById() {
     var m = {};
     arr(DATA.findings).concat(arr(DATA.editorial)).forEach(function (f) { m[f.id] = f; });
@@ -1200,11 +1200,10 @@
       '<h2>Sources</h2>' + storySources(f) + '</article>';
   }
   // Same sentence as scripts/briefing.py:window_note (the README prints that one).
-  function windowNote(fresh, total, days, multi) {
+  function windowNote(fresh, total, days) {
     if (!total) return "No stories yet.";
     if (fresh === 0) return "Nothing new in the last " + days + " days, so these are the latest top stories.";
     if (fresh < total) return "Fewer than five stories in the last " + days + " days, so the most recent ones before it fill in.";
-    if (multi) return "The last " + days + " days: the stories with the most covering sources first.";
     return "The last " + days + " days, newest first.";
   }
   function topStoriesHTML(shown) {
@@ -1216,8 +1215,7 @@
     }
     rows.forEach(function (f) { shown[f.id] = 1; });
     return secHead(title, DATA.top_stories_topped_up ? "latest we have" : "last " + num(DATA.snapshot_days) + " days") +
-      '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0,
-        DATA.top_stories_multi === true)) + ' Open a story for every source that covered it and every update.</p>' +
+      '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0)) + ' Open a story for every source that covered it and every update.</p>' +
       '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
   }
   // What the ledger changed: claims added, newly contested, and overturned
