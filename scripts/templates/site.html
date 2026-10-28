@@ -827,7 +827,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = biggestHTML(shown) + topStoriesHTML(shown) + claimChangesHTML();
+    var html = biggestHTML(shown) + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -868,7 +868,16 @@
   }
 
   // ================= CLAIMS =================
-  var claimState = { topic: "all", status: "all", sort: "change", q: "" };
+  var claimState = { topic: "all", eff: "all", status: "all", sort: "change", q: "" };
+  // Cost and work efficiency are their own tracks: two ai-research domains
+  // (scripts/briefing.py EFFICIENCY_DOMAINS). An unknown filter value narrows nothing.
+  var EFF_DOMAINS = { cost: "air.cost-efficiency", work: "air.work-efficiency" };
+  var EFF_LABEL = { cost: "Cost", work: "Work" };
+  function effKey(c) {
+    var k = Object.keys(EFF_DOMAINS).filter(function (x) { return EFF_DOMAINS[x] === (c && c.domain_id); })[0];
+    return k || "";
+  }
+  function effMatches(c, eff) { return has(EFF_DOMAINS, eff) ? effKey(c) === eff : true; }
   function isRetired(c) { return c.status === "superseded" || c.status === "refuted"; }
   // The ledger's own change dates; first_seen is when the belief dates from.
   // How confidence is set, from what the code does: research-scan SKILL.md has the
@@ -907,6 +916,7 @@
     html += '<div class="toolbar" style="margin-top:-6px">';
     html += filterGroup("Track", "topic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
       return [t, tname(t)]; })), claimState.topic);
+    html += filterGroup("Efficiency", "eff", [["all", "All"], ["cost", "Cost"], ["work", "Work"]], claimState.eff);
     html += filterGroup("Status", "status", [["all", "All"], ["current", "Current (" + counts.current + ")"],
       ["contested", "Contested (" + counts.contested + ")"], ["superseded", "Superseded (" + counts.superseded + ")"],
       ["refuted", "Refuted (" + counts.refuted + ")"]], claimState.status);
@@ -941,7 +951,7 @@
     var wrap = $("#claim-list");
     var q = claimState.q.trim().toLowerCase();
     var claims = arr(DATA.claims).filter(function (c) {
-      return (claimState.topic === "all" || c.topic === claimState.topic) &&
+      return (claimState.topic === "all" || c.topic === claimState.topic) && effMatches(c, claimState.eff) &&
              (claimState.status === "all" || c.status === claimState.status) && claimMatches(c, q);
     });
     var live = sortClaims(claims.filter(function (c) { return !isRetired(c); }), claimState.sort);
@@ -1180,6 +1190,7 @@
     ["ntopic", "news", "news", "topic", "TOPICS", "all"],
     ["cq", "claims", "claim", "q", null, ""],
     ["ctopic", "claims", "claim", "topic", "TOPICS", "all"],
+    ["ceff", "claims", "claim", "eff", ["all", "cost", "work"], "all"],
     ["cstatus", "claims", "claim", "status", ["all", "current", "contested", "superseded", "refuted"], "all"],
     ["csort", "claims", "claim", "sort", ["change", "confidence"], "change"],
     ["aq", "archive", "archive", "q", null, ""],
@@ -1435,6 +1446,34 @@
     return html + '<p class="why">The ledger: ' + countsLine(n) + '. ' + routeLink("claims", {}, "Open it &#8594;") + '</p>';
   }
 
+  // The Efficiency section: the newest cost and work efficiency claims and this
+  // week's findings in those domains, picked in scripts/briefing.py. Hidden when empty.
+  function efficiencyClaimHTML(c) {
+    var desc = c.title && c.statement && c.title !== c.statement ? '<p class="desc">' + txt(c.statement) + '</p>' : '';
+    return '<div class="claim chg st-' + esc(c.status) + '">' +
+      '<div class="claim-top"><span class="kind">' + esc(EFF_LABEL[effKey(c)] || "Efficiency") + '</span>' +
+        '<span class="when">' + esc(fmtDate(lastChange(c))) + '</span>' +
+        '<span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span></div>' +
+      '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc + doLine(c) +
+      evidenceLine(c) + '</div>';
+  }
+  function efficiencyHTML(shown) {
+    var claims = arr(DATA.efficiency_claims).map(claimById).filter(function (c) { return c && effKey(c); });
+    var byId = rowsById();
+    var finds = arr(DATA.efficiency_findings).map(function (id) { return has(byId, id) ? byId[id] : null; })
+      .filter(function (f) { return f && !(shown && shown[f.id]); });
+    if (!claims.length && !finds.length) return "";
+    var html = secHead("Efficiency", "cost and work, from the claim ledger") +
+      '<p class="sec-lede">' + esc(efficiencyNote()) + '</p>';
+    if (claims.length) html += '<div class="chglist">' + claims.map(efficiencyClaimHTML).join("") + '</div>';
+    if (finds.length) {
+      html += '<h3 class="kick hits-h">New this week</h3><div class="artlist">' +
+        finds.map(function (f) { if (shown) shown[f.id] = 1; return newsCardHTML(f); }).join("") + '</div>';
+    }
+    return html + '<p class="why">' + routeLink("claims", {}, "Every claim &#8594;") + '</p>';
+  }
+  function efficiencyNote() { return "Where agent harnesses still waste tokens or time, and what to change."; }
+
   // ================= CLAIM LINEAGE =================
   function claimIds(v) { return Array.isArray(v) ? v : (v ? [v] : []); }
   function claimRef(id) {
@@ -1458,8 +1497,8 @@
   // Clear any filter, or a search the claim doesn't match, that would hide the
   // claim a link points at. True when something changed (the list must redraw).
   function clearFiltersFor(c) {
-    var changed = claimState.topic !== "all" || claimState.status !== "all";
-    claimState.topic = "all"; claimState.status = "all";
+    var changed = claimState.topic !== "all" || claimState.status !== "all" || claimState.eff !== "all";
+    claimState.topic = "all"; claimState.status = "all"; claimState.eff = "all";
     var q = String(claimState.q || "").trim().toLowerCase();
     if (q && !claimMatches(c, q)) { claimState.q = ""; changed = true; }
     return changed;

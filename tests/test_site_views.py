@@ -209,6 +209,11 @@ FNS = [
     "allStories",
     "storyCard",
     "clearFiltersFor",
+    "effKey",
+    "effMatches",
+    "efficiencyClaimHTML",
+    "efficiencyHTML",
+    "efficiencyNote",
     "stateObjs",
     "fieldOptions",
     "cleanField",
@@ -238,6 +243,8 @@ def run_js(data: dict, expr: str):
     labels += "\n" + re.search(r"var CONF_TIP = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var BOILERPLATE = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var claimState = \{.*?\};", src).group(0)
+    labels += "\n" + re.search(r"var EFF_DOMAINS = \{.*?\};", src).group(0)
+    labels += "\n" + re.search(r"var EFF_LABEL = \{.*?\};", src).group(0)
     for name in ("newsState", "archiveState", "siteState"):
         labels += "\n" + re.search(rf"var {name} = \{{.*?\}};", src).group(0)
     labels += "\n" + re.search(r"var STATE_MAX_Q = .*?;", src).group(0)
@@ -1044,7 +1051,7 @@ def test_state_query_covers_every_search_and_filter_and_skips_defaults():
 @pytest.mark.parametrize(
     "query",
     [
-        "?nkind=bogus&ntopic=nope&cstatus=__proto__&csort=toString&ctopic=%3Cb%3E&atopic=constructor",
+        "?nkind=bogus&ceff=bogus&ntopic=nope&cstatus=__proto__&csort=toString&ctopic=%3Cb%3E&atopic=constructor",
         "?nkind=news%20&ntopic=AI-SECURITY&cstatus=",
     ],
 )
@@ -1056,7 +1063,13 @@ def test_unknown_filter_values_are_ignored(query):
     got = run_js({}, expr)
     assert got["applied"] == {}
     assert got["news"] == {"topic": "all", "kind": "all", "q": ""}
-    assert got["claim"] == {"topic": "all", "status": "all", "sort": "change", "q": ""}
+    assert got["claim"] == {
+        "topic": "all",
+        "eff": "all",
+        "status": "all",
+        "sort": "change",
+        "q": "",
+    }
     assert got["archive"] == {"topic": "all", "q": ""}
 
 
@@ -1179,3 +1192,121 @@ def test_exploited_chip_only_when_true():
     for flag in (False, "true", 1, None):
         off = cards({"r": triage_row(exploited=flag)})
         assert not any("Exploited" in h for h in off)
+
+
+# --- Efficiency track (cost / work) -------------------------------------------
+def eff_data(claims, **over):
+    base = {"claims": claims, "findings": [], "editorial": [], "generated": NOW, "topics": {}}
+    return base | over
+
+
+def eff_claim(cid, domain_id, **over):
+    return {
+        "id": cid,
+        "topic": "ai-research",
+        "domain_id": domain_id,
+        "title": cid,
+        "statement": cid + " statement",
+        "status": "current",
+        "evidence": [],
+        "first_seen": "2026-07-10",
+        **over,
+    }
+
+
+def test_efficiency_filter_narrows_claims_and_unknown_value_is_ignored():
+    claims = [
+        eff_claim("c1", "air.cost-efficiency"),
+        eff_claim("w1", "air.work-efficiency"),
+        eff_claim("o1", "air.evals"),
+    ]
+    got = run_js(
+        eff_data(claims),
+        "['cost','work','all','bogus','__proto__','constructor'].map(function (e) {"
+        " return DATA.claims.filter(function (c) { return effMatches(c, e); })"
+        ".map(function (c) { return c.id; }); })",
+    )
+    everyone = ["c1", "w1", "o1"]
+    assert got == [["c1"], ["w1"], everyone, everyone, everyone, everyone]
+
+
+def test_clearing_filters_for_a_claim_resets_the_efficiency_filter():
+    data = eff_data([eff_claim("o1", "air.evals")])
+    expr = "(claimState.eff = 'cost', clearFiltersFor(DATA.claims[0]), claimState.eff)"
+    assert run_js(data, expr) == "all"
+
+
+def test_efficiency_section_is_hidden_when_empty():
+    assert run_js(eff_data([]), "efficiencyHTML({})") == ""
+    data = eff_data(
+        [eff_claim("o1", "air.evals")],
+        efficiency_claims=["o1", "missing"],
+        efficiency_findings=["nope"],
+    )
+    assert run_js(data, "efficiencyHTML({})") == ""
+    assert run_js(eff_data([], efficiency_claims="junk"), "efficiencyHTML(null)") == ""
+
+
+def test_efficiency_section_lists_claims_in_payload_order_and_findings_once():
+    claims = [eff_claim("c1", "air.cost-efficiency"), eff_claim("w1", "air.work-efficiency")]
+    data = eff_data(
+        claims,
+        findings=[evil_row(id="f1", title="Fresh find")],
+        efficiency_claims=["w1", "c1"],
+        efficiency_findings=["f1"],
+    )
+    html = run_js(data, "efficiencyHTML({})")
+    assert html.index("w1 statement") < html.index("c1 statement")
+    assert "Fresh find" in html
+    assert "Fresh find" not in run_js(data, "efficiencyHTML({f1: 1})")
+
+
+def test_efficiency_section_renders_hostile_values_inert():
+    claim = eff_claim("c1", "air.cost-efficiency", title=EVIL, statement=EVIL + "!", status=EVIL)
+    claim["evidence"] = [{"stance": "supports", "url": EVIL_URL, "source_name": EVIL}]
+    data = eff_data([claim], efficiency_claims=["c1"], efficiency_findings=[])
+    html = run_js(data, "efficiencyHTML({})")
+    assert html and EVIL not in html
+    assert_inert(html)
+
+
+def test_site_and_readme_print_the_same_efficiency_sentence():
+    import briefing
+
+    assert run_js({}, "efficiencyNote()") == briefing.efficiency_note()
+
+
+def test_front_page_ships_efficiency_picks_as_ids(sandbox):
+    ledger = ledger_of(
+        make_claim(id="cost-1", topic="ai-research", domain="Cost Efficiency"),
+        make_claim(id="other-1", topic="ai-research", domain="Evals"),
+    )
+    data = build(sandbox, ledger=ledger)
+    assert data["efficiency_claims"] == ["cost-1"]
+    assert data["efficiency_findings"] == []
+
+
+def test_efficiency_filter_round_trips_through_the_url_and_ignores_unknown_values():
+    expr = (
+        "(function(){"
+        "var applied = stateFromQuery('?ceff=cost&cstatus=current');"
+        "var q = stateQuery('claims');"
+        "claimState.eff = 'all'; claimState.status = 'all';"
+        "stateFromQuery('?' + q);"
+        "var back = claimState.eff;"
+        "claimState.eff = 'all'; claimState.status = 'all';"
+        "claimState.eff = 'work'; stateFromQuery('?ceff=bogus');"
+        "var bad = claimState.eff;"
+        "stateFromQuery('?ceff=__proto__');"
+        "var proto = claimState.eff;"
+        "claimState.eff = 'all'; claimState.status = 'all';"
+        "return {applied: applied, q: q, back: back, bad: bad, proto: proto,"
+        " dflt: stateQuery('claims')};"
+        "})()"
+    )
+    got = run_js({}, expr)
+    assert got["applied"] == {"ceff": "cost", "cstatus": "current"}
+    assert got["q"] == "ceff=cost&cstatus=current"
+    assert got["back"] == "cost"
+    assert got["bad"] == "work" and got["proto"] == "work"  # unknown values leave state alone
+    assert got["dflt"] == ""  # the default never reaches the URL
