@@ -21,7 +21,6 @@ HPE Networking bulletin HPESBNW05162 lists multiple critical flaws in AOS-10 and
 **Source:** [source](https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US)  ·  **Retrieved:** 2026-10-24  
 **Scores:** Newness 23 · Novelty 20 · Relevance 60 · Credibility 55 · **Composite 38** _(each 0-100)_  
 **Tags:** `arubaos`, `hpe`, `network-devices`, `unauthenticated-rce`, `command-injection`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Large vendor advisory batches are routine; no novel technique reported. Verifier: Routine Aruba/HPE multi-CVE bulletins (e.g., ArubaOS PAPI buffer overflow advisories 2022-2025); only the all-10.0 scoring is notable  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Large vendor advisory batches are routine; no novel technique reported. Verifier: Routine Aruba/HPE multi-CVE bulletins (e.g., ArubaOS PAPI buffer overflow advisories 2022-2025); only the all-10.0 scoring is notable
 
 _Source: [https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US](https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US)_  ·  [← back to index](../README.md)

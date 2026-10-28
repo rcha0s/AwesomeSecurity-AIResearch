@@ -25,7 +25,6 @@ Once agents move from reading to acting, a poisoned MCP tool description turns p
 **Source:** [source](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)  ·  **Retrieved:** 2026-07-16  
 **Scores:** Newness 0 · Novelty 50 · Relevance 84 · Credibility 75 · **Composite 51** _(each 0-100)_  
 **Tags:** `mcp`, `tool-poisoning`, `prompt-injection`, `agent-security`, `supply-chain`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Invariant Labs' April 2025 MCP tool-poisoning disclosure and OWASP's ASI02/ASI04 categories; this piece is a practical defender playbook on that known class, with the 'silent re-trust' on dynamic metadata as the sharpest incremental point.
 
 _Source: [https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/](https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/)_  ·  [← back to index](../README.md)

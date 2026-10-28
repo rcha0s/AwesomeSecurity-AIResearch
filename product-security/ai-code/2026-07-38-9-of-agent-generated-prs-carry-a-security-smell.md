@@ -26,7 +26,6 @@ A large-scale study of the AIDev dataset classified security smells across 16,11
 **Source:** [source](https://arxiv.org/abs/2607.12428)  ·  **Author:** A H M Nazmus Sakib et al.  ·  **Retrieved:** 2026-07-21  
 **Scores:** Newness 0 · Novelty 57 · Relevance 88 · Credibility 58 · **Composite 52** _(each 0-100)_  
 **Tags:** `ai-generated-code`, `coding-agents`, `secrets`, `supply-chain`, `code-review`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.
 
 _Source: [https://arxiv.org/abs/2607.12428](https://arxiv.org/abs/2607.12428)_  ·  [← back to index](../README.md)
