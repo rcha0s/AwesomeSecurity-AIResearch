@@ -2,12 +2,13 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_4 vetted findings · updated 2026-10-27 · ranked by composite · findings from the latest 31 days · [20 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-10-27 · ranked by composite · findings from the latest 31 days · [24 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly](https://huggingface.co/blog/allenai/novelty-bench)**
 - **[Kimi K2.6 on vLLM returned valid tool-calls 92% of the time](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm)**
   _Why now: Concrete production numbers (92% to 100%, back to 91% after a vLLM default change) that any team self-hosting open-weight models for agents can act on immediately. · high-relevance · timely_
 - **[Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents)**

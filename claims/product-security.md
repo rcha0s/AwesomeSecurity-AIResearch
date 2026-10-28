@@ -95,7 +95,7 @@ Long-lived static cloud credentials are the most common cause of publicly docume
 
 _Tags: `aws`, `credentials`, `oidc`_
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -103,6 +103,7 @@ _Tags: `aws`, `credentials`, `oidc`_
 | supports | [Token jacking: stolen AI API keys resold via gray-market transfer stations, ~$1M losses](https://unit42.paloaltonetworks.com/ai-token-jacking/) | Aug 6, 2026 |
 | supports | [Attackers harvest gateway secrets from /proc/1/environ on compromised LiteLLM AI infrastructure](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/) | Aug 26, 2026 |
 | supports | [GitHub Actions OpenID Connect: exchange short-lived cloud tokens instead of long-lived secrets](https://docs.github.com/en/actions/concepts/security/openid-connect) | undated |
+| supports | ['Gheist' Weaponizes GitHub Tokens to Steal Cloud Secrets](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) | Oct 26, 2026 |
 
 </details>
 

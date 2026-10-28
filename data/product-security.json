@@ -517,9 +517,9 @@
         "novelty": 58,
         "relevance": 80,
         "newness": 23,
-        "credibility": 65.0,
-        "composite": 56.9,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "credibility": 70.0,
+        "composite": 57.65,
+        "scored_at": "2026-10-27T18:41:52+00:00"
       },
       "prior_art": "Core-language RCE disclosures exist (for example PHP-CGI), but a core PHP memory-corruption chain exploited pre-auth across three CMSs with frontier-model-built exploits has no equal in the pools. Verifier: Google Big Sleep / Project Zero AI-found bugs, DARPA AIxCC, XBOW; earlier frontier-model exploit-development reports. Delta is AI-built multi-bug chain on core ",
       "verified": true,
@@ -563,10 +563,220 @@
           "url": "https://semgrep.dev/blog/2026/php2shell-php-runtime-rce",
           "tier": "medium",
           "published": null
+        },
+        {
+          "name": "Socket",
+          "url": "https://socket.dev/blog/php-critical-rce-patches?utm_medium=feed",
+          "tier": "medium",
+          "published": null
         }
       ],
       "previous_slugs": [
         "php2shell-wiz-used-frontier-ai-to-turn-memory-safety-bugs-in"
+      ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers",
+      "summary": "Gareth Heyes tested eight sanitizers for Scalable Vector Graphics (SVG) uploads and bypassed six, using tricks such as switching one element's namespace to XHTML, animating a link into a JavaScript URL, and pointing a stylesheet instruction at a data URL. He also showed Firefox running JavaScript from a stylesheet delivered in a `Link` response header over a harmless XML body, and Safari importing a GIF as SVG through `<use>`. DOMPurify and darylldoyle/svg-sanitizer resisted every technique.",
+      "lessons": [
+        {
+          "point": "Two libraries held up against every technique in the post.",
+          "excerpt": "Both DOMPurify and darylldoyle/svg-sanitizer held up against everything in this post, which is quite impressive.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A namespace switch on one element brings HTML into an SVG without foreignObject.",
+          "excerpt": "Switch the XML namespace on a single element to XHTML and the browser renders it as HTML directly inside the SVG.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Response headers can load stylesheets in Firefox, so a clean body is not enough.",
+          "excerpt": "Firefox lets you load external CSS files using a Link response header.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "An uploaded GIF can carry an SVG payload that Safari imports.",
+          "excerpt": "if you can upload a GIF that contains the payload, it won't render when you open it in the browser, but it can still be imported with a `<use>` element!",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.",
+      "tags": [
+        "xss",
+        "svg",
+        "sanitizer-bypass",
+        "xslt",
+        "browser-quirks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit which SVG sanitizer you use",
+        "detail": "If your app uses mattkrick/sanitize-svg, Borewit/svg-sanitizer, bgalek/safe-svg, alnorris/SVG-Sanitizer, cloudflare/svg-hush or jams2/py-svg-hush, switch to DOMPurify or darylldoyle/svg-sanitizer. Serve uploaded images from a separate cookieless origin with a strict CSP, and make sure no user input reaches Link headers."
+      },
+      "scores": {
+        "novelty": 62,
+        "relevance": 75,
+        "newness": 23,
+        "credibility": 71.9,
+        "composite": 57.63,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "All claims supported; 'held' covers only these techniques and the GIF is SVG text under a .gif name. Novelty lowered to its 62.",
+      "prior_art": "SVG XSS and sanitizer bypasses are a long-running topic, and the post cites Kevin Mizu's animateTransform trick; the Link-header stylesheet execution in Firefox and Safari's GIF-as-SVG import are new.",
+      "threat": "Stored XSS through uploaded SVG or image files that pass a sanitizer.",
+      "conditions": "Applications that accept SVG or image uploads and serve them from the main origin using one of the six bypassed sanitizers.",
+      "mitigations": "Use DOMPurify or darylldoyle/svg-sanitizer, serve uploads from a separate origin with a strict CSP, and keep user input out of response headers.",
+      "related_claims": [],
+      "source_url": "https://portswigger.net/research/scalable-vector-grief",
+      "article_url": "https://portswigger.net/research/scalable-vector-grief",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/scalable-vector-grief-a167491ad6.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-portswigger-net-research-rss",
+      "source_rank": 71.9,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "PortSwigger Research",
+      "id": "portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "oh-look-the-foot-gun-went-off-again-citrix-netsc-93400e33d6",
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration",
+      "source_url": "https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/",
+      "related_claims": [],
+      "summary": "CVE-2026-88771 lets an unauthenticated attacker run commands as root on Citrix NetScaler ADC and NetScaler Gateway in the default configuration, and it was exploited in the wild before a patch existed. The bug is in a crash-reporting Perl script (ns_monuploadd_err.pl) that reads appliance logs, pulls a core-file name out of them without validating it, and passes it to a shell command. Any request field that ends up in the logs, such as a login name or User-Agent header, can carry the attack, and the fix builds the name only from strictly matched fields and calls find without a shell.",
+      "lessons": [
+        {
+          "point": "The flaw affects the default configuration and was exploited as a zero-day before Citrix shipped a fix, so any unpatched internet-facing appliance should be treated as possibly compromised.",
+          "excerpt": "It affects the default configuration and was exploited in the wild as a zero-day, before any fix existed.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Root cause: a log-parsing script trusts whatever text follows NSPPE in a log line as a core-file name and process ID, then interpolates it into a shell command.",
+          "excerpt": "The problem is that the script never verifies that those first two fields are really an `nsppe` core file name and a numeric process ID.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The attack surface is any input that gets logged, not one endpoint, so blocking a single URL is not a complete mitigation; patching is required.",
+          "excerpt": "Any endpoint or port that logs data controlled in an HTTP header can trigger this vulnerability.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The fix builds the value only from tightly matched captures. It runs external commands in list form, so no shell interprets metacharacters.",
+          "excerpt": "Perl does not build a command string and does not start `/bin/sh`, so shell metacharacters cannot be interpreted as commands.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The same bulletin (CTX697096) has a sibling bug, CVE-2026-88778, that the upgrade alone does not fix; it needs a configuration change.",
+          "excerpt": "Fixed by enabling Enhanced ISN Generation, not by the upgrade alone.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Patch NetScaler ADC and Gateway to 14.1-73.37 / 13.1-64.23 (or the FIPS/NDcPP equivalents) now, enable Enhanced ISN Generation, and hunt for compromise, because this root-level pre-auth bug was exploited before a fix existed.",
+      "tags": [
+        "citrix",
+        "netscaler",
+        "command-injection",
+        "pre-auth-rce",
+        "zero-day",
+        "exploited-in-the-wild",
+        "network-appliance",
+        "log-injection",
+        "perl"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch, harden and hunt on NetScaler ADC/Gateway for CVE-2026-88771 and siblings",
+        "detail": "1) Inventory all NetScaler ADC and Gateway appliances, including management interfaces. 2) Upgrade to 14.1-73.37+, 13.1-64.23+, 14.1-73.37 FIPS+, or 13.1-37.279+ (13.1-FIPS/NDcPP) per Citrix bulletin CTX697096; if you cannot patch at once, take internet-facing appliances offline or restrict access, as watchTowr advised. 3) Enable Enhanced ISN Generation for CVE-2026-88778, which the upgrade alone does not fix. 4) Hunt: because exploitation went through logged fields, review appliance logs (AAA/SSLVPN login records, User-Agent and request-parameter entries) for usernames or headers containing 'pitboss' or 'NSPPE' text alongside shell metacharacters such as semicolons or backticks, and check for unexpected files in temp directories and unexpected processes running as root. 5) Because the bug was exploited before disclosure, treat unpatched exposed appliances as possibly compromised: rotate credentials and session secrets handled by the appliance and review downstream access from it.",
+        "skill_slug": ""
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 90,
+        "newness": 4,
+        "credibility": 81.8,
+        "composite": 55.27,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "prior_art": "Earlier NetScaler pre-auth bugs in the archive, e.g. 'Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) ... SAML Signature Canonicalization' (memory corruption in nsppe); this one is a different class (shell injection via log content in a Perl helper script) outside nsppe. Verifier's closest: watchTowr Citrix NetScaler CVE-2026-8452; known appliance command-injection patches.",
+      "verified": true,
+      "verify_note": "Verifier: versions, CVE-2026-88778, zero-day and default-configuration claims match; lessons 3-4 slightly over-generalize.",
+      "threat": "Unauthenticated remote attacker runs arbitrary commands as root on the NetScaler appliance, the front door for enterprise remote access; exploited in the wild as a zero-day alongside the DTLS memory overflow CVE-2026-88772.",
+      "conditions": "NetScaler ADC / NetScaler Gateway in default configuration on builds before the fixed versions (watchTowr diffed vulnerable 14.1 build 73.30 against fixed 73.37). Attacker-controlled text must reach appliance logs that ns_monuploadd_err.pl later parses, which login fields, headers and the management interface all allow.",
+      "mitigations": "Upgrade to 14.1-73.37+, 13.1-64.23+, 14.1-73.37 FIPS+, or 13.1-37.279+ for 13.1-FIPS/NDcPP; enable Enhanced ISN Generation for CVE-2026-88778; take unpatched exposed appliances offline or restrict access; hunt logs for shell metacharacters in logged usernames and headers; assume compromise on appliances that were exposed and unpatched.",
+      "article_url": "https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-28",
+      "raw_path": "data/_raw/oh-look-the-foot-gun-went-off-again-citrix-netsc-93400e33d6.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-labs-watchtowr-com-rss",
+      "source_rank": 76.8,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "watchTowr Labs",
+      "retrieved_at": "2026-10-25T02:36:36+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway, summary, actionable.detail",
+      "readability": {
+        "score": 76,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 49 > 45 (4) Hunt: because exploitation went through logged fields, review appliance logs (AAA/SSLVPN login records, User-Agent an)",
+          "mild: acronyms 6 > 3 (ADC, FIPS, ISN, NSPPE, AAA, SSLVPN)",
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Pre-auth root command injection in NetScaler ADC/Gateway exploited as a zero-day in default configuration; concrete fixed builds, a sibling bug the upgrade alone doesn't fix, and log-hunting guidance.",
+        "signals": [
+          "cve",
+          "active-exploitation",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-25T02:37:41+00:00"
+      },
+      "previous_slugs": [
+        "citrix-netscaler-adc-gateway-pre-auth-command-injection-cve"
+      ],
+      "story_corroboration": [
+        {
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/this-is-fine-what-netscaler-zero-days-tell-us-about-the-new-normal/",
+          "tier": "medium",
+          "published": null
+        }
       ]
     },
     {
@@ -670,119 +880,6 @@
       },
       "previous_slugs": [
         "trail-of-bits-only-go-and-vcpkg-of-25-package-managers-verif"
-      ]
-    },
-    {
-      "id": "oh-look-the-foot-gun-went-off-again-citrix-netsc-93400e33d6",
-      "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration",
-      "source_url": "https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/",
-      "related_claims": [],
-      "summary": "CVE-2026-88771 lets an unauthenticated attacker run commands as root on Citrix NetScaler ADC and NetScaler Gateway in the default configuration, and it was exploited in the wild before a patch existed. The bug is in a crash-reporting Perl script (ns_monuploadd_err.pl) that reads appliance logs, pulls a core-file name out of them without validating it, and passes it to a shell command. Any request field that ends up in the logs, such as a login name or User-Agent header, can carry the attack, and the fix builds the name only from strictly matched fields and calls find without a shell.",
-      "lessons": [
-        {
-          "point": "The flaw affects the default configuration and was exploited as a zero-day before Citrix shipped a fix, so any unpatched internet-facing appliance should be treated as possibly compromised.",
-          "excerpt": "It affects the default configuration and was exploited in the wild as a zero-day, before any fix existed.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Root cause: a log-parsing script trusts whatever text follows NSPPE in a log line as a core-file name and process ID, then interpolates it into a shell command.",
-          "excerpt": "The problem is that the script never verifies that those first two fields are really an `nsppe` core file name and a numeric process ID.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The attack surface is any input that gets logged, not one endpoint, so blocking a single URL is not a complete mitigation; patching is required.",
-          "excerpt": "Any endpoint or port that logs data controlled in an HTTP header can trigger this vulnerability.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The fix builds the value only from tightly matched captures. It runs external commands in list form, so no shell interprets metacharacters.",
-          "excerpt": "Perl does not build a command string and does not start `/bin/sh`, so shell metacharacters cannot be interpreted as commands.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The same bulletin (CTX697096) has a sibling bug, CVE-2026-88778, that the upgrade alone does not fix; it needs a configuration change.",
-          "excerpt": "Fixed by enabling Enhanced ISN Generation, not by the upgrade alone.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Patch NetScaler ADC and Gateway to 14.1-73.37 / 13.1-64.23 (or the FIPS/NDcPP equivalents) now, enable Enhanced ISN Generation, and hunt for compromise, because this root-level pre-auth bug was exploited before a fix existed.",
-      "tags": [
-        "citrix",
-        "netscaler",
-        "command-injection",
-        "pre-auth-rce",
-        "zero-day",
-        "exploited-in-the-wild",
-        "network-appliance",
-        "log-injection",
-        "perl"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Patch, harden and hunt on NetScaler ADC/Gateway for CVE-2026-88771 and siblings",
-        "detail": "1) Inventory all NetScaler ADC and Gateway appliances, including management interfaces. 2) Upgrade to 14.1-73.37+, 13.1-64.23+, 14.1-73.37 FIPS+, or 13.1-37.279+ (13.1-FIPS/NDcPP) per Citrix bulletin CTX697096; if you cannot patch at once, take internet-facing appliances offline or restrict access, as watchTowr advised. 3) Enable Enhanced ISN Generation for CVE-2026-88778, which the upgrade alone does not fix. 4) Hunt: because exploitation went through logged fields, review appliance logs (AAA/SSLVPN login records, User-Agent and request-parameter entries) for usernames or headers containing 'pitboss' or 'NSPPE' text alongside shell metacharacters such as semicolons or backticks, and check for unexpected files in temp directories and unexpected processes running as root. 5) Because the bug was exploited before disclosure, treat unpatched exposed appliances as possibly compromised: rotate credentials and session secrets handled by the appliance and review downstream access from it.",
-        "skill_slug": ""
-      },
-      "scores": {
-        "novelty": 50,
-        "relevance": 90,
-        "newness": 4,
-        "credibility": 76.8,
-        "composite": 54.52,
-        "scored_at": "2026-10-27T03:29:52+00:00"
-      },
-      "prior_art": "Earlier NetScaler pre-auth bugs in the archive, e.g. 'Citrix NetScaler Pre-Auth Heap Overflow (CVE-2026-8452) ... SAML Signature Canonicalization' (memory corruption in nsppe); this one is a different class (shell injection via log content in a Perl helper script) outside nsppe. Verifier's closest: watchTowr Citrix NetScaler CVE-2026-8452; known appliance command-injection patches.",
-      "verified": true,
-      "verify_note": "Verifier: versions, CVE-2026-88778, zero-day and default-configuration claims match; lessons 3-4 slightly over-generalize.",
-      "threat": "Unauthenticated remote attacker runs arbitrary commands as root on the NetScaler appliance, the front door for enterprise remote access; exploited in the wild as a zero-day alongside the DTLS memory overflow CVE-2026-88772.",
-      "conditions": "NetScaler ADC / NetScaler Gateway in default configuration on builds before the fixed versions (watchTowr diffed vulnerable 14.1 build 73.30 against fixed 73.37). Attacker-controlled text must reach appliance logs that ns_monuploadd_err.pl later parses, which login fields, headers and the management interface all allow.",
-      "mitigations": "Upgrade to 14.1-73.37+, 13.1-64.23+, 14.1-73.37 FIPS+, or 13.1-37.279+ for 13.1-FIPS/NDcPP; enable Enhanced ISN Generation for CVE-2026-88778; take unpatched exposed appliances offline or restrict access; hunt logs for shell metacharacters in logged usernames and headers; assume compromise on appliances that were exposed and unpatched.",
-      "article_url": "https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-28",
-      "raw_path": "data/_raw/oh-look-the-foot-gun-went-off-again-citrix-netsc-93400e33d6.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-labs-watchtowr-com-rss",
-      "source_rank": 76.8,
-      "source_topics": [
-        "product-security"
-      ],
-      "source_name": "watchTowr Labs",
-      "retrieved_at": "2026-10-25T02:36:36+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted takeaway, summary, actionable.detail",
-      "readability": {
-        "score": 76,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 49 > 45 (4) Hunt: because exploitation went through logged fields, review appliance logs (AAA/SSLVPN login records, User-Agent an)",
-          "mild: acronyms 6 > 3 (ADC, FIPS, ISN, NSPPE, AAA, SSLVPN)",
-          "mild: title_words 24 > 18"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Pre-auth root command injection in NetScaler ADC/Gateway exploited as a zero-day in default configuration; concrete fixed builds, a sibling bug the upgrade alone doesn't fix, and log-hunting guidance.",
-        "signals": [
-          "cve",
-          "active-exploitation",
-          "timely",
-          "high-relevance"
-        ],
-        "at": "2026-10-25T02:37:41+00:00"
-      },
-      "previous_slugs": [
-        "citrix-netscaler-adc-gateway-pre-auth-command-injection-cve"
       ]
     },
     {
@@ -3296,6 +3393,91 @@
     {
       "topic": "product-security",
       "domain": "ps.appsec",
+      "title": "Authlib accepts a JSON web signature with no signatures as verified",
+      "summary": "Authlib before 1.9.0 returns the payload of a JSON Web Signature (JWS) object in JSON serialization as verified when its `signatures` array is empty. The validity flag starts as true and only the per-signature loop can clear it, so an empty list skips every check. Any service that calls `JsonWebSignature.deserialize_json()` on outside input accepts a forged payload, even when it passes the correct key; upgrade to 1.9.0.",
+      "lessons": [
+        {
+          "point": "The bug is a fail-open default: the validity flag starts true and only the loop body can clear it, so zero signatures means zero checks.",
+          "excerpt": "`is_valid` is initialised to `True` and only ever set to `False` from inside the loop.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Holding the correct key does not protect the caller, because no signature is ever examined.",
+          "excerpt": "and [B] shows that holding the correct key does not",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Normal tests still pass, so the flaw hides in a deployment that looks healthy.",
+          "excerpt": "[C] proves the verifier works normally on a genuine object, so a deployment looks healthy.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Any verifier that loops over signatures must reject an empty list; test your JWS and JWT code for that case.",
+      "tags": [
+        "jws",
+        "jwt",
+        "authentication-bypass",
+        "fail-open",
+        "python"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Add an empty-signatures test to every signature verifier",
+        "detail": "Upgrade Authlib to 1.9.0 or move to joserfc. In your own token and multi-signature verifiers, add a negative test that submits a JSON-serialized token with `\"signatures\": []` and a forged payload, with and without the real key, and require a rejection. Search for validity flags set to true before a loop."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 75,
+        "newness": 23,
+        "credibility": 70.0,
+        "composite": 47.75,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier confirmed the core bug; it noted the 1.9.0 fix is inferred from the release reference and rated novelty 30 (known fail-open class).",
+      "prior_art": "Fail-open signature checks such as JWT alg=none bypasses are a known bug class; this is a new instance in Authlib's JWS JSON path, not a new technique.",
+      "threat": "An unauthenticated remote attacker forges identity or authorization claims that the relying party accepts as signed.",
+      "conditions": "A service calls Authlib's JsonWebSignature.deserialize_json() on input it did not produce, with Authlib before 1.9.0.",
+      "mitigations": "Upgrade to Authlib 1.9.0 or joserfc, and reject JWS objects whose signatures array is empty.",
+      "related_claims": [],
+      "source_url": "https://github.com/advisories/GHSA-6v38-4h7w-rj9h",
+      "article_url": "https://github.com/advisories/GHSA-6v38-4h7w-rj9h",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/ghsa-6v38-4h7w-rj9h-92ba27346b.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "authlib-accepts-a-json-web-signature-with-no-sig-de447b05f2",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Critical authentication bypass in a widely used Python library; the fail-open empty-loop pattern is a test every verifier should have.",
+        "signals": [
+          "cve",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-27T18:54:15+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
       "title": "Next.js Image Optimization has unauthenticated RCE via SVG through sharp",
       "source_url": "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
       "article_url": "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
@@ -3355,6 +3537,105 @@
       "previous_slugs": [
         "next-js-image-optimization-api-unauthenticated-rce-via-svg-t"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs",
+      "summary": "Wiz Research tracked Gheist, active from September 15 and still running on October 24, which used stolen GitHub tokens to push more than 13,500 branches across more than 850 accounts, each adding a `sync-check` workflow that tries to print the repository's secrets into its own log. The tool downloads the log through the GitHub API and deletes the run seconds later, so no attacker domain is involved. GitHub's July safeguard covers only public repositories; Wiz saw private enterprise repositories hit and, within hours, the same organization's cloud credentials used to list AWS Secrets Manager.",
+      "lessons": [
+        {
+          "point": "Secrets leave through GitHub's own API, so blocking outbound traffic does not help; detection has to use workflow and audit events.",
+          "excerpt": "Because the secrets leave through GitHub's own API, there is no attacker domain or outbound connection to block",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "GitHub's public-repository safeguard does not apply once an enterprise credential is stolen.",
+          "excerpt": "once an enterprise credential is compromised, that control doesn’t apply",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Wiz gives concrete hunt indicators: short-lived workflow runs on ci-sync branches.",
+          "excerpt": "workflow runs on \"ci-sync-*\" branches that were deleted within a minute of completion",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Cloudsmith's security head notes that a token issued to a person months earlier still carried full write access.",
+          "excerpt": "a credential issued to a human months ago still carried full write authority",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A stolen GitHub token turns your own CI into a secrets-theft channel, so hunt for the sync-check pattern and replace long-lived personal access tokens with short-lived, scoped ones.",
+      "tags": [
+        "github-actions",
+        "token-theft",
+        "secrets-exfiltration",
+        "supply-chain",
+        "credential-theft"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hunt for Gheist workflows and shorten token lifetimes",
+        "detail": "Search organization audit logs for branches named ci-sync- plus six characters that only add .github/workflows/sync-check.yml with the commit message \"ci: sync config\", workflow runs deleted within a minute, and API calls with the user agent \"gheist\". Rotate every secret those repositories hold, then replace personal access tokens with GitHub Apps or short-lived fine-grained tokens and require reviewers on environments with production secrets."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 80,
+        "newness": 23,
+        "credibility": 40.0,
+        "composite": 47.75,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Core claims supported via Dark Reading's write-up of Wiz; the workflow 'tries' to print secrets and the long-lived-token point is a Cloudsmith quote, both now worded so. Novelty lowered to its 40.",
+      "prior_art": "Secrets-dumping workflows pushed with stolen tokens appeared in earlier campaigns such as GhostAction; Gheist adds log-then-delete theft with no attacker domain and reaches private enterprise repositories past GitHub's public-repository safeguard.",
+      "threat": "Theft of repository and cloud secrets through malicious GitHub Actions workflows pushed with stolen tokens, followed by cloud enumeration.",
+      "conditions": "A GitHub token, often from infostealer malware or an earlier supply chain compromise, with write access to repositories that hold secrets.",
+      "mitigations": "Hunt for the ci-sync and sync-check indicators, rotate exposed secrets, use GitHub Apps or short-lived fine-grained tokens, and require reviewers on production environments.",
+      "related_claims": [
+        "long-lived-cloud-credentials-are-obsolete"
+      ],
+      "source_url": "https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets",
+      "article_url": "https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-26",
+      "raw_path": "data/_raw/gheist-weaponizes-github-tokens-to-steal-cloud-s-7064f60f37.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-darkreading-com-rss-xml",
+      "source_rank": 40.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Dark Reading",
+      "id": "wiz-gheist-used-stolen-github-tokens-to-dump-sec-e306c78f52",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 46 > 45 (Wiz Research tracked Gheist, active from September 15 and still running on October 24, which used stolen GitHub tokens t)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Active campaign hitting private enterprise repos past GitHub's public-repo safeguard, with concrete hunt indicators and a token-lifetime fix.",
+        "signals": [
+          "active-exploitation",
+          "newsworthy",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-27T18:54:15+00:00"
+      }
     },
     {
       "id": "here-we-go-again-citrix-netscaler-dtls-preauth-m-d5f2f4fe06",
@@ -4586,7 +4867,104 @@
       },
       "previous_slugs": [
         "php2shell-disclosure-fight-php-says-chainguard-broke-the-emb"
-      ]
+      ],
+      "story_corroboration": []
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Check Point: fake ChatGPT and Claude apps sideload malware via signed installers",
+      "summary": "Check Point Research tracked a campaign it calls Yoba that used GitHub repositories and GitHub.io pages posing as desktop apps named GPT-5.6 Sol, GPT-6 Astra and Claude Opus, which rank on Google through search poisoning. Their downloads pair a legitimate signed OpenAI or Anthropic `Setup.exe` with a malicious `winmm.dll` that the installer loads, and the malware persists through a scheduled task that loads a second library through the Windows Media Player binary `WMPDMC.exe`. The loader finds its server by reading a Telegram channel's profile image and using its last 50 bytes to seed a word-list domain generator.",
+      "lessons": [
+        {
+          "point": "A trusted signed vendor binary is the carrier; the malicious code is the library placed beside it.",
+          "excerpt": "`Setup.exe`, a legitimate signed OpenAI executable, is used during execution to sideload the malicious DLL.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The lure ranks on Google rather than GitHub search, so no fake stars were needed.",
+          "excerpt": "they still appear among the top results on Google. This is most likely due to SEO poisoning",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The server address hides in a Telegram profile picture, so changing the picture moves the server.",
+          "excerpt": "By changing the image of the Telegram channel, a new domain can be generated.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The archives were not password-protected because anti-analysis checks already kept detection low.",
+          "excerpt": "neither of these repositories used password protection, as the binaries already had very low detection rates thanks to their anti-sandbox and other anti-analysis techniques.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "People searching for desktop AI apps are a live lure, so allow AI clients only from vendor sites and alert when signed vendor installers load libraries from download folders.",
+      "tags": [
+        "malware",
+        "dll-sideloading",
+        "seo-poisoning",
+        "ai-lure",
+        "github-abuse"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hunt for Yoba's sideloading and persistence artifacts",
+        "detail": "Search endpoints for a ProgramData\\WMProcess folder holding WMPDMC.exe and wmpdui.dll, scheduled tasks described as \"Collects device metadata for Windows Media Player.\" that run as Local System, and winmm.dll next to a signed OpenAI or Anthropic Setup.exe. Block AI desktop app downloads from GitHub releases and GitHub.io pages by policy."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 60,
+        "newness": 23,
+        "credibility": 55.0,
+        "composite": 42.5,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Claims supported; the SEO-poisoning cause and the anti-analysis reasoning are Check Point's inference. Domain-generator wording corrected. Novelty lowered to its 35.",
+      "prior_art": "Fake AI-tool installers and loading malicious libraries through signed binaries are established techniques; seeding a domain generator from a Telegram channel's profile image is the less common detail.",
+      "threat": "Windows malware delivered as fake ChatGPT and Claude desktop apps, persisting with Local System rights.",
+      "conditions": "A user downloads an AI desktop app from a search result that leads to a GitHub repository or GitHub.io page and runs it as administrator.",
+      "mitigations": "Allow AI clients only from vendor domains, block execution from download folders, and hunt for the WMProcess folder and the Windows Media Player scheduled task.",
+      "related_claims": [],
+      "source_url": "https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/",
+      "article_url": "https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/tricks-from-the-past-deployed-via-signed-chatgpt-07d4ae26e5.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-research-checkpoint-com-feed",
+      "source_rank": 55.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Check Point Research",
+      "id": "check-point-fake-chatgpt-and-claude-apps-sideloa-665c3109ff",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: jargon_chain 8 > 7 (password-protected because anti-analysis checks already kept detection low)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Live campaign using fake ChatGPT and Claude desktop apps and signed vendor installers, with endpoint artifacts defenders can hunt.",
+        "signals": [
+          "active-exploitation",
+          "trending",
+          "timely"
+        ],
+        "at": "2026-10-27T18:54:15+00:00"
+      }
     },
     {
       "topic": "product-security",
@@ -4749,6 +5127,81 @@
       "previous_slugs": [
         "a-client-s-1-bit-valid-invalid-reply-leaks-the-full-ckks-sec"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "CVM-Store paper protects confidential VM storage at near-raw disk speed",
+      "summary": "Confidential virtual machines encrypt memory in use but leave persistent storage outside their trust boundary, exposed to the cloud provider. CVM-Store, accepted at the NDSS 2027 conference, combines authenticated encryption with a userspace input/output engine to give confidentiality, integrity and freshness, and uses a trusted counter service for rollback protection. It reports staying within about 1% of raw disk bandwidth for writes and 1-19% for reads of large objects; only the abstract was available.",
+      "lessons": [
+        {
+          "point": "Confidential VMs protect memory, not disks, so stored data stays exposed to the provider.",
+          "excerpt": "they protect only data in use; persistent storage lies outside the CVM trust boundary, exposing all stateful data to the cloud provider.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The overhead comes from combining encryption and input/output naively, not from either alone.",
+          "excerpt": "neither authenticated encryption nor I/O is a bottleneck by itself, but their naive combination is.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Rollback protection needs a separate mechanism because the hardware offers none.",
+          "excerpt": "CVMs lack hardware primitives for this purpose, requiring alternative solutions.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Running in a confidential VM does not protect data on disk; stored data needs its own integrity and rollback protection.",
+      "tags": [
+        "confidential-computing",
+        "storage-encryption",
+        "rollback-protection",
+        "cloud",
+        "academic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check what protects data at rest in confidential VMs",
+        "detail": "For workloads in confidential VMs, confirm that disks use authenticated encryption with keys held inside the VM, and decide how you detect a provider rolling storage back to an older state, since the hardware gives no freshness guarantee."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 35,
+        "newness": 23,
+        "credibility": 72.0,
+        "composite": 42.05,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Faithful to the abstract; figures are the authors' own, for large objects, and freshness is eventual due to epoch batching.",
+      "prior_art": "Disk encryption and integrity layers inside confidential VMs and trusted-counter rollback defenses exist; the paper's claim is near-raw throughput from co-designing the input/output path.",
+      "threat": "A cloud provider reading, altering or rolling back a confidential workload's persistent data.",
+      "conditions": "Stateful workloads in confidential VMs whose storage sits outside the trust boundary.",
+      "mitigations": "Authenticated encryption of stored data with keys inside the VM, plus an external trusted counter for freshness.",
+      "related_claims": [],
+      "source_url": "http://arxiv.org/abs/2610.34560v1",
+      "article_url": "http://arxiv.org/abs/2610.34560v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-25",
+      "raw_path": "data/_raw/cvm-store-a-secure-storage-system-for-confidenti-bcaeacc771.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NDSS (via arXiv)",
+      "id": "cvm-store-paper-protects-confidential-vm-storage-a806d8d77a",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "russia-linked-hackers-used-new-mesh-network-back-d6e9a1e5f7",
@@ -5320,7 +5773,8 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "story_corroboration": []
     },
     {
       "topic": "product-security",
@@ -6008,6 +6462,109 @@
       ]
     },
     {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "HPE bulletin HPESBNW05162 lists CVSS 10.0 unauthenticated RCE flaws in ArubaOS",
+      "source_url": "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US",
+      "article_url": "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-23",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-hpesbnw05162-rev-1-multiple-vulnerabilitie-f532b4c073.txt",
+      "related_claims": [],
+      "summary": "HPE Networking bulletin HPESBNW05162 lists multiple critical flaws in AOS-10 and AOS-8, each scored CVSS 10.0. They include authentication bypass leading to remote code execution, bypass of PAPI protocol controls, unauthenticated command injection and an unauthenticated buffer overflow. HPE says the bugs were generally found by internal research and it knows of no public exploit code, and tells customers to patch quickly and to restrict management interfaces.",
+      "lessons": [
+        {
+          "point": "The flaws were found internally and no exploit was known at release.",
+          "excerpt": "HPE Networking is not aware of any public discussion or exploit code that targets the listed vulnerabilities as of the release date of this advisory.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Workaround: put management on a dedicated segment with firewall controls.",
+          "excerpt": "HPE Networking recommends that the CLI and web-based management interfaces be restricted to a dedicated layer 2 segment/VLAN",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Unauthenticated memory corruption reaches RCE in AOS-10.",
+          "excerpt": "Unauthenticated Buffer Overflow Vulnerabilities leads to Remote Code Execution in AOS-10 (CVE-2026-79847)",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Discovery was in-house.",
+          "excerpt": "These vulnerabilities were generally discovered by internal security research at HPE Networking.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Patch ArubaOS and isolate management interfaces on a dedicated VLAN.",
+      "tags": [
+        "arubaos",
+        "hpe",
+        "network-devices",
+        "unauthenticated-rce",
+        "command-injection"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch and segment wireless management",
+        "detail": "Apply the AOS-10 and AOS-8 fixes, move controllers and conductors' management planes to a dedicated VLAN with firewall rules, and monitor for exploitation once proofs of concept appear."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 60,
+        "newness": 23,
+        "credibility": 55.0,
+        "composite": 38.0,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "prior_art": "Large vendor advisory batches are routine; no novel technique reported. Verifier: Routine Aruba/HPE multi-CVE bulletins (e.g., ArubaOS PAPI buffer overflow advisories 2022-2025); only the all-10.0 scoring is notable",
+      "verified": true,
+      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+      "id": "hpe-bulletin-hpesbnw05162-cvss-10-0-unauthentica-f6223d0a71",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (HPE, HPESBNW05162, AOS, PAPI)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Batch of CVSS 10.0 unauthenticated flaws in ArubaOS.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "www.bleepingcomputer.com",
+          "url": "https://www.bleepingcomputer.com/news/security/hpe-patches-eight-max-severity-rce-and-auth-bypass-aos-flaws/",
+          "tier": "",
+          "published": null
+        },
+        {
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/hpe-patches-dozens-of-critical-flaws-in-networking-products/",
+          "tier": "medium",
+          "published": null
+        }
+      ],
+      "previous_slugs": [
+        "hpe-bulletin-hpesbnw05162-cvss-10-0-unauthenticated-rce-and"
+      ]
+    },
+    {
       "candidate_id": "cloudflare-links-vulnerability-discovery-to-defe-fad83f398c",
       "topic": "product-security",
       "domain": "ps.appsec",
@@ -6159,103 +6716,6 @@
     },
     {
       "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "HPE bulletin HPESBNW05162 lists CVSS 10.0 unauthenticated RCE flaws in ArubaOS",
-      "source_url": "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US",
-      "article_url": "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-23",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-hpesbnw05162-rev-1-multiple-vulnerabilitie-f532b4c073.txt",
-      "related_claims": [],
-      "summary": "HPE Networking bulletin HPESBNW05162 lists multiple critical flaws in AOS-10 and AOS-8, each scored CVSS 10.0. They include authentication bypass leading to remote code execution, bypass of PAPI protocol controls, unauthenticated command injection and an unauthenticated buffer overflow. HPE says the bugs were generally found by internal research and it knows of no public exploit code, and tells customers to patch quickly and to restrict management interfaces.",
-      "lessons": [
-        {
-          "point": "The flaws were found internally and no exploit was known at release.",
-          "excerpt": "HPE Networking is not aware of any public discussion or exploit code that targets the listed vulnerabilities as of the release date of this advisory.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Workaround: put management on a dedicated segment with firewall controls.",
-          "excerpt": "HPE Networking recommends that the CLI and web-based management interfaces be restricted to a dedicated layer 2 segment/VLAN",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Unauthenticated memory corruption reaches RCE in AOS-10.",
-          "excerpt": "Unauthenticated Buffer Overflow Vulnerabilities leads to Remote Code Execution in AOS-10 (CVE-2026-79847)",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Discovery was in-house.",
-          "excerpt": "These vulnerabilities were generally discovered by internal security research at HPE Networking.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Patch ArubaOS and isolate management interfaces on a dedicated VLAN.",
-      "tags": [
-        "arubaos",
-        "hpe",
-        "network-devices",
-        "unauthenticated-rce",
-        "command-injection"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Patch and segment wireless management",
-        "detail": "Apply the AOS-10 and AOS-8 fixes, move controllers and conductors' management planes to a dedicated VLAN with firewall rules, and monitor for exploitation once proofs of concept appear."
-      },
-      "scores": {
-        "novelty": 20,
-        "relevance": 60,
-        "newness": 23,
-        "credibility": 50.0,
-        "composite": 37.25,
-        "scored_at": "2026-10-27T03:29:52+00:00"
-      },
-      "prior_art": "Large vendor advisory batches are routine; no novel technique reported. Verifier: Routine Aruba/HPE multi-CVE bulletins (e.g., ArubaOS PAPI buffer overflow advisories 2022-2025); only the all-10.0 scoring is notable",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
-      "id": "hpe-bulletin-hpesbnw05162-cvss-10-0-unauthentica-f6223d0a71",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 4 > 3 (HPE, HPESBNW05162, AOS, PAPI)"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Batch of CVSS 10.0 unauthenticated flaws in ArubaOS.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      },
-      "story_corroboration": [
-        {
-          "name": "www.bleepingcomputer.com",
-          "url": "https://www.bleepingcomputer.com/news/security/hpe-patches-eight-max-severity-rce-and-auth-bypass-aos-flaws/",
-          "tier": "",
-          "published": null
-        }
-      ],
-      "previous_slugs": [
-        "hpe-bulletin-hpesbnw05162-cvss-10-0-unauthenticated-rce-and"
-      ]
-    },
-    {
-      "topic": "product-security",
       "domain": "ps.identity",
       "title": "BeyondTrust Remote Support flaw lets a remote attacker perform file operations",
       "source_url": "https://www.beyondtrust.com/trust-center/security-advisories/bt26-05",
@@ -6342,6 +6802,86 @@
       "previous_slugs": [
         "beyondtrust-advisory-bt26-05-cvss-9-3-improper-origin-valida"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.mobile",
+      "title": "Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18",
+      "summary": "Apple's October 26 updates fix 263 vulnerabilities in macOS Golden Gate 27.2 and 163 in iOS and iPadOS 27.2, with about 140 shared, for 286 in total. iOS and iPadOS 18.7.11 now carry the fix for CVE-2026-86950, the CoreGraphics zero-day Apple says was exploited in an extremely sophisticated attack and first patched in late September. The macOS release also fixes a Remote Management bug that could let a remote attacker run code.",
+      "lessons": [
+        {
+          "point": "Devices that stayed on iOS 18 lacked the fix for the exploited CoreGraphics bug until this backport.",
+          "excerpt": "iOS and iPadOS 18.7.11 fix three vulnerabilities, including CVE-2026-86950, which had been exploited as a zero-day in what Apple described as an “extremely sophisticated attack.”",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "macOS 27.2 also closes a remotely reachable code execution bug in Remote Management.",
+          "excerpt": "including a Remote Management bug that could allow a remote attacker to execute arbitrary code.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "No public details exist about the attacks that used the zero-day.",
+          "excerpt": "There does not appear to be any public information detailing the attacks exploiting CVE-2026-86950.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Push iOS 18.7.11 to devices that cannot run iOS 27, and patch Macs that expose Remote Management or Screen Sharing.",
+      "tags": [
+        "apple",
+        "ios",
+        "macos",
+        "zero-day",
+        "patch-tuesday"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch the iOS 18 fleet and Macs with remote services",
+        "detail": "Use mobile device management to push iOS and iPadOS 18.7.11 to devices that cannot move to 27.x, and prioritize macOS 27.2, Tahoe 26.7.2 or Sequoia 15.8.2 on Macs with Remote Management, Screen Sharing or SMB reachable from the network."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 55,
+        "newness": 23,
+        "credibility": 52.5,
+        "composite": 34.62,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Numbers and dates check out; the iOS 18 exposure lesson is an inference from the backport.",
+      "prior_art": "The pool already has the CISA KEV entry for CVE-2026-86950 and its September fix; the new facts are the iOS 18 backport and the size of the 27.2 release.",
+      "threat": "Exploited CoreGraphics memory corruption on older iPhones, plus remote code execution in macOS Remote Management.",
+      "conditions": "iPhones and iPads on iOS 18 before 18.7.11, and Macs before the October 26 updates.",
+      "mitigations": "Install iOS and iPadOS 18.7.11 or 27.2 and the matching macOS updates.",
+      "related_claims": [],
+      "source_url": "https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/",
+      "article_url": "https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/ios-macos-27-2-patch-286-bugs-fix-for-exploited-5d72c71cbc.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 52.5,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "SecurityWeek",
+      "id": "apple-patches-286-flaws-and-backports-exploited-3532f4d06b",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 55 > 45 (Apple's October 26 updates fix 263 vulnerabilities in macOS Golden Gate 27.2 and 163 in iOS and iPadOS 27.2, with about )"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "one-breach-please-and-make-no-mistakes-8d5a486d96",
@@ -7967,6 +8507,80 @@
       ]
     },
     {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Semgrep argues containment and recovery matter as much as prevention",
+      "summary": "The fourth post in Semgrep's readiness series argues that teams should plan for compromise. It says to segment access so one stolen credential or developer laptop cannot reach everything, automate token revocation and quarantine when confidence is high, and test restores against business priorities. It also recommends measuring how long detection, containment and recovery took after each incident.",
+      "lessons": [
+        {
+          "point": "Test separation by asking what a compromised account or laptop can actually reach.",
+          "excerpt": "If you compromise a test account, what can it reach? If a developer laptop is infected, which credentials and systems are exposed?",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Automate the routine containment steps when confidence is high.",
+          "excerpt": "Revoke compromised tokens, disable suspicious accounts, quarantine malicious packages, and isolate affected systems when there's enough confidence to act.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Recovery planning must include restore order, not just working backups.",
+          "excerpt": "A successful restore isn't much of a victory if nobody knows which systems the business needs first.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "General incident-readiness advice that works as a checklist, with nothing new.",
+      "tags": [
+        "incident-response",
+        "containment",
+        "readiness",
+        "least-privilege",
+        "opinion"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Run a blast-radius test from one developer laptop",
+        "detail": "Pick a test account and a developer machine, list every credential and system each can reach, and cut access that is not needed. Script token revocation and package quarantine so responders can act without waiting for approvals."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 35,
+        "newness": 23,
+        "credibility": 46.7,
+        "composite": 26.25,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "All claims supported; generic best-practice advice.",
+      "prior_art": "Standard incident-response guidance (least privilege, containment, recovery testing) found in NIST and vendor playbooks.",
+      "related_claims": [],
+      "source_url": "https://semgrep.dev/blog/2026/cybersecurity-readiness-after-compromise",
+      "article_url": "https://semgrep.dev/blog/2026/cybersecurity-readiness-after-compromise",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/you-can-be-aware-and-still-get-compromised-readi-6ca61d4cf7.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-semgrep-dev-blog-rss",
+      "source_rank": 46.7,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "Semgrep Blog",
+      "id": "semgrep-argues-containment-and-recovery-matter-a-dc84790f96",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "akto-api-security-akto-d858d79ec2",
       "topic": "product-security",
       "domain": "ps.appsec",
@@ -8358,6 +8972,109 @@
       "previous_slugs": [
         "openai-proposes-coordinated-disclosure-framework-after-ai-fo"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "Better Auth magic link flaw lets attackers take over accounts",
+      "source_url": "https://github.com/advisories/GHSA-965c-763c-88jm",
+      "takeaway": "An OAuth state value can pass as a magic link token, so email-based sign-in proves nothing about mailbox ownership until you patch or change settings.",
+      "summary": "Better Auth from 1.4.0-beta.18 up to before 1.7.7 accepts an OAuth sign-in state value as a Magic Link token when Magic Link and social or Generic OAuth sign-in are both on, so an attacker who knows an email address can get a session for that user (CVE-2026-114607). The fix is merged for 1.7.7 but not yet released, so until then set account.storeStateStrategy to \"cookie\" or turn off one of the two sign-in methods.",
+      "lessons": [
+        {
+          "point": "The advisory states the core bug: an OAuth state value is accepted where only an emailed magic link token should work.",
+          "excerpt": "Better Auth accepts an OAuth sign-in state value as a Magic Link token.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://github.com/advisories/GHSA-965c-763c-88jm",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/ghsa-965c-763c-88jm-ef927fec2e.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "better-auth-magic-link-flaw-lets-attackers-take-355611906f",
+      "retrieved_at": "2026-10-27T18:50:08+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-27"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 49 > 45 (Better Auth from 1.4.0-beta.18 up to before 1.7.7 accepts an OAuth sign-in state value as a Magic Link token when Magic )"
+        ]
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-27T18:50:08+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Certifi removes emSign root CA after compromised intermediate keys",
+      "source_url": "https://github.com/advisories/GHSA-6q48-6c7w-9gw2",
+      "takeaway": "A trusted root in a widely vendored CA bundle can enable TLS interception, so container images that bundle certifi need a rebuild.",
+      "summary": "Certifi before 2026.10.18 trusts the emSign ECC Root CA - G3 root, under which eight eMudhra intermediate certificates have compromised and revoked private keys, so an on-path attacker holding one could intercept TLS traffic from tools such as requests, urllib3 and pip. Upgrade to certifi 2026.10.19 or later and rebuild container images that bundle it.",
+      "lessons": [
+        {
+          "point": "The advisory explains the impact: a compromised intermediate key lets an attacker mint certificates for any hostname.",
+          "excerpt": "An attacker with one of the compromised keys can issue valid-looking certificates for any hostname.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://github.com/advisories/GHSA-6q48-6c7w-9gw2",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/ghsa-6q48-6c7w-9gw2-6c625c0435.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "certifi-removes-emsign-root-ca-after-compromised-b7f6e013c3",
+      "retrieved_at": "2026-10-27T18:50:08+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "compromise",
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-27"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-27T18:50:08+00:00"
+      }
     },
     {
       "topic": "product-security",
@@ -9212,6 +9929,113 @@
       "previous_slugs": [
         "belarus-aligned-partisan-zmiy-hid-vasilek-backdoor-in-vmware"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "PHP Foundation ships emergency fix for two critical remote code execution bugs",
+      "source_url": "https://www.theregister.com/security/2026/10/21/php-devs-publish-critical-bug-fix-as-site-owners-warned-pull-em-offline-if-youre-unpatched/5304519",
+      "takeaway": "Unauthenticated code execution in PHP itself, with exploits public, means patch or isolate exposed PHP hosts at once.",
+      "summary": "PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35 fix CVE-2026-109618 and CVE-2026-109619, which can allow unauthenticated remote code execution (CVSS 9.2 per CERT-EU) in any PHP setup serving web requests, and watchTowr already saw attempts in the wild, though none had succeeded. Update now or isolate internet-facing apps, as some government sites already went offline as a precaution.",
+      "lessons": [
+        {
+          "point": "The PHP developers rate mod_php as the riskiest setup, with a demonstrated pre-application exploit.",
+          "excerpt": "We consider the risk highest for mod_php, with a demonstrated exploit where an unauthenticated request can trigger the attack before any application code runs.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "corroborating_sources": [
+        {
+          "name": "Simon Willison's Weblog",
+          "url": "https://simonwillison.net/2026/Oct/21/php-security-release/",
+          "published": "2026-10-21"
+        }
+      ],
+      "article_url": "https://www.theregister.com/security/2026/10/21/php-devs-publish-critical-bug-fix-as-site-owners-warned-pull-em-offline-if-youre-unpatched/5304519",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/php-devs-publish-critical-bug-fix-as-site-owners-0ad31fb047.txt",
+      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
+      "source_rank": 48.8,
+      "discovered_via": "rss",
+      "source_name": "The Register — Security",
+      "id": "php-foundation-ships-emergency-fix-for-two-criti-252dc386af",
+      "retrieved_at": "2026-10-27T18:50:08+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "critical"
+        ],
+        "sources": 1,
+        "at": "2026-10-27"
+      },
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 53.8,
+        "composite": 8.07,
+        "scored_at": "2026-10-27T18:50:08+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "The Hacker News weekly roundup leads with PHP2Shell exploitation attempts",
+      "source_url": "https://thehackernews.com/2026/10/weekly-recap-this2shell-that2shell.html",
+      "takeaway": "PHP is on a huge share of web servers, so defenders should patch now because scanning and exploit attempts are already heavy.",
+      "summary": "This weekly roundup's top item is PHP2Shell (CVE-2026-109618 and CVE-2026-109619), a pair of PHP flaws that can allow unauthenticated remote code execution, with Cloudflare reporting millions of exploitation attempts but no confirmed successful exploitation so far. Patch PHP first, since some sites already went offline as a precaution.",
+      "lessons": [
+        {
+          "point": "The roundup reports the scale of scanning after disclosure, which shows how fast attackers moved.",
+          "excerpt": "Cloudflare stating it detected millions of exploitation attempts after public disclosure.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://thehackernews.com/2026/10/weekly-recap-this2shell-that2shell.html",
+      "published": "2026-10-26",
+      "raw_path": "data/_raw/weekly-recap-this2shell-that2shell-everything-s-90977b0ed8.txt",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 52.5,
+      "discovered_via": "rss",
+      "source_name": "The Hacker News",
+      "id": "the-hacker-news-weekly-roundup-leads-with-php2sh-296e9534dc",
+      "retrieved_at": "2026-10-27T18:50:08+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "critical",
+          "rce"
+        ],
+        "sources": 1,
+        "at": "2026-10-27"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 52.5,
+        "composite": 7.88,
+        "scored_at": "2026-10-27T18:50:08+00:00"
+      }
     },
     {
       "topic": "product-security",

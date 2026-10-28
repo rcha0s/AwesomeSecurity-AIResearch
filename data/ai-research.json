@@ -643,6 +643,89 @@
       ]
     },
     {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly",
+      "summary": "Ai2 built a benchmark from ICLR 2026 peer reviews to test six LLM judges, from GPT-5.1 to Claude Opus 4.6, on whether research ideas are novel. Rewording one prompt dropped GPT-5.4 from 93.5% to 40.9% accuracy on pairs of human and AI-generated ideas, and prompt changes moved judges far more on AI-generated ideas than on human-written ones. A three-vote Claude Opus 4.6 prompt scored 0.854 macro-F1 for $2.59, beating two purpose-built novelty checkers that cost $30.66 and $82.05, and extra reasoning plus live search did not help.",
+      "lessons": [
+        {
+          "point": "For GPT-5.4, a small change in prompt framing swung accuracy from 93.5% to below chance on the same items.",
+          "excerpt": "When we switched to the simpler prompt, accuracy dropped from 93.5% to 40.9% – below chance – and the model changed its verdict on more than half of the same pairs.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Prompt changes moved judges less on human-written ideas than on AI-generated ones, so validate on what the judge will actually see.",
+          "excerpt": "a novelty judge can appear relatively stable on human-authored research but behave very differently on AI-generated ideas.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "No prompt is best across models.",
+          "excerpt": "A prompt that works well for one model may not transfer to another, in other words.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "An agentic judge with high reasoning and live search cost about ten times more and scored lower.",
+          "excerpt": "while costing roughly 10× more per decision at current API prices",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Before trusting an LLM judge, measure how many verdicts flip across reworded prompts and test it on the kind of content it will actually judge.",
+      "tags": [
+        "llm-as-judge",
+        "evals",
+        "prompt-sensitivity",
+        "novelty",
+        "benchmark"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add a prompt-perturbation check to every LLM judge",
+        "detail": "Run the same labeled items through two or three reworded judge prompts and report the share of verdicts that flip; reject setups where many flip. Validate on generated content, not only human-written examples, and compare against a cheap majority-vote baseline before paying for retrieval-heavy judges. This applies directly to pipelines that score novelty with an LLM."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 80,
+        "newness": 23,
+        "credibility": 71.9,
+        "composite": 51.03,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": false,
+      "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
+      "prior_art": "Earlier work found length and position biases in LLM-as-judge; this adds a large measured prompt-wording effect specific to AI-generated content and cost data against purpose-built evaluators.",
+      "related_claims": [
+        "llm-as-judge-is-biased-toward-longer-answers"
+      ],
+      "source_url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "article_url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/can-we-trust-llms-to-judge-whether-a-research-id-b9be574da7.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 71.9,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Hugging Face Blog",
+      "id": "ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "1password-s-ai-patching-benchmark-is-misleading-6437abf21b",
       "article_url": "https://blog.trailofbits.com/2026/09/15/1passwords-ai-patching-benchmark-is-misleading/",
       "source_url": "https://blog.trailofbits.com/2026/09/15/1passwords-ai-patching-benchmark-is-misleading/",
@@ -2343,6 +2426,83 @@
     },
     {
       "topic": "ai-research",
+      "domain": "air.alignment",
+      "title": "Survey maps how self-improving AI systems can fake gains or lose safeguards",
+      "summary": "A new survey defines recursive self-improvement as AI systems changing their own models, prompts, memories, tools and update mechanisms, and groups the requirements for doing it safely into four themes: genuine improvement, behavioral constraints and alignment, security and privacy, and transparency and controllability. It warns that reported gains can come from flawed evaluations, that compromised artifacts can carry into successor systems, and that changing the improvement process can invalidate earlier verification. It is a literature review with no new experiments.",
+      "lessons": [
+        {
+          "point": "Self-reported gains can be evaluation artifacts, and old capabilities and constraints can erode.",
+          "excerpt": "Reported gains may reflect flawed evaluations, previously acquired capabilities may deteriorate, and compliance with behavioral constraints may weaken.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Compromised artifacts can carry into later versions of a self-updating system.",
+          "excerpt": "Compromised artifacts or sensitive information may also persist in successor systems.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Changing how the system improves can void earlier verification.",
+          "excerpt": "Changes to improvement mechanisms may invalidate earlier verification results and make human oversight less effective.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your agent rewrites its own prompts, memory or tools, re-verify after each change against a held-out evaluation it cannot edit.",
+      "tags": [
+        "self-improvement",
+        "survey",
+        "agent-evolution",
+        "oversight",
+        "evals"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Gate self-modifying agents on a frozen held-out evaluation",
+        "detail": "When an agent edits its own prompts, skills, memory or tools, keep a held-out evaluation set and scoring code outside its write access, re-run it after every accepted change, and keep the previous version to roll back to."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 40,
+        "newness": 23,
+        "credibility": 50.6,
+        "composite": 32.84,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
+      "prior_art": "The ledger already holds a claim that harness-evolution gains need held-out attribution; this survey restates the risk more broadly without new data.",
+      "related_claims": [
+        "harness-evolution-gains-need-held-out-attribution"
+      ],
+      "source_url": "https://arxiv.org/abs/2610.35193",
+      "article_url": "https://arxiv.org/abs/2610.35193",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/trustworthy-recursive-self-improvement-in-the-er-8eaa505e1a.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+      "source_rank": 50.6,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "arXiv cs.CR (Cryptography and Security)",
+      "id": "survey-maps-how-self-improving-ai-systems-can-fa-73b25ce21f",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
       "domain": "air.ml-research",
       "title": "HybridAgent reasons in latent space and calls tools in text",
       "source_url": "https://arxiv.org/abs/2610.18861",
@@ -2417,6 +2577,157 @@
       "previous_slugs": [
         "hybridagent-post-trains-models-to-reason-in-latent-space-and"
       ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Simon Willison's Claude-run review finds webframe fast but rough for scraping",
+      "summary": "webframe, a small Go tool by Jeff Lindsay, runs a web page or file in the operating system's own hidden web view and prints `console.log()` output to standard output. Simon Willison had Claude Opus 5.5 test it as a scraper and as a sandbox. The report finds it fast and comparable to shot-scraper for scraping, but with rough edges: CSP failures, a 0×0 viewport, hanging loads, missing HTTP metadata and limited browser controls. The captured post gives no detail on the sandbox verdict.",
+      "lessons": [
+        {
+          "point": "webframe runs a page like a command-line program, printing console output.",
+          "excerpt": "lets you \"run a web page like a program\"",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The evaluation found several practical rough edges.",
+          "excerpt": "but with important rough edges including CSP failures, a 0×0 viewport, hanging loads, missing HTTP metadata, and limited browser controls.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "It uses the system browser engine rather than bundling one.",
+          "excerpt": "it doesn't need to bundle its own browser engine.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "webframe is a lightweight way to run page JavaScript from scripts, but do not treat it as a sandbox without your own isolation.",
+      "tags": [
+        "scraping",
+        "headless-browser",
+        "sandbox",
+        "agent-tooling",
+        "evaluation"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Try webframe for light page scripting, not isolation",
+        "detail": "For agent or scraping tasks that just need page JavaScript output, webframe is a smaller alternative to Playwright-based tools. Run it inside your own container or VM if pages are untrusted, since the post gives no sandbox guarantees."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 30,
+        "newness": 23,
+        "credibility": 52.0,
+        "composite": 31.55,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
+      "prior_art": "shot-scraper and Playwright-based runners already cover this; webframe is a smaller variant built on the system web view.",
+      "related_claims": [],
+      "source_url": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+      "article_url": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-26",
+      "raw_path": "data/_raw/webframe-evaluated-as-a-scraper-and-a-sandbox-6c4e2e0e9d.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-simonwillison-net-atom-everything",
+      "source_rank": 52.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Simon Willison's Weblog",
+      "id": "simon-willison-s-claude-run-review-finds-webfram-25bf35897e",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Practitioners say public AI security benchmarks only shortlist models for real work",
+      "summary": "Dark Reading asked vendors how they measure AI models on security work: XBOW builds its own harness and scores exploit-finding, Sonar's leaderboard ranks secure code generation, and the UK AI Security Institute tests whether models can complete a 32-step attack chain, which two models have done so far. Interviewees agree public rankings only shortlist candidates and that the harness around a model matters as much as the model. XBOW adds that harm is hard to benchmark, because one bad run after a thousand clean ones outweighs them all.",
+      "lessons": [
+        {
+          "point": "Public benchmarks narrow the field, but the decision needs your own evaluations.",
+          "excerpt": "Public benchmarks help shortlist candidates, but the decision needs evaluations that reflect your own code and workflows.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The harness, not just the model, decides how well context and tools are used.",
+          "excerpt": "The model supplies capability; the harness determines how effectively it uses context and tools.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Rare harmful actions make safety hard to benchmark with pass rates.",
+          "excerpt": "That 1,001 time negates all the first thousand runs that went well.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Choose models for security work with your own task evaluations and a defined failure budget; leaderboards are only a shortlist.",
+      "tags": [
+        "benchmarks",
+        "evals",
+        "security-models",
+        "harness",
+        "model-selection"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Build a small in-house evaluation before picking a security model",
+        "detail": "Start from the tasks and the failures you cannot accept, build a test set from your own code and workflows, and run shortlisted models through your actual harness, repeating runs to catch rare harmful actions."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 50,
+        "newness": 23,
+        "credibility": 40.0,
+        "composite": 30.35,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": false,
+      "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
+      "prior_art": "The pool already holds claims that benchmark scores do not transfer to production tasks; this piece collects practitioner views without new data.",
+      "related_claims": [],
+      "source_url": "https://www.darkreading.com/cybersecurity-analytics/benchmarking-security-of-ai-models-poses-challenges",
+      "article_url": "https://www.darkreading.com/cybersecurity-analytics/benchmarking-security-of-ai-models-poses-challenges",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/so-many-ai-security-benchmarks-but-none-tell-the-c27ce2d0c6.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-darkreading-com-rss-xml",
+      "source_rank": 40.0,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "Dark Reading",
+      "id": "practitioners-say-public-ai-security-benchmarks-91c7d45e09",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 49 > 45 (Dark Reading asked vendors how they measure AI models on security work: XBOW builds its own harness and scores exploit-f)"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "bound-conditioned-latent-inference-for-progressi-6860d502a8",
@@ -3034,6 +3345,74 @@
       "source_name": "OpenAI Blog",
       "id": "openai-proposes-us-led-international-technical-s-3e0d21dc73",
       "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "title": "Anthropic's partnerships index lists business deals and holds no new security news",
+      "summary": "This is Anthropic's Partnerships index page, not a single announcement: it lists deals from December 2025 to October 8, 2026, such as a $150 million Genesis Mission commitment, the Accenture embedded-evaluation partnership and enterprise rollouts with consulting firms. The only security item is a July 6 entry on the Government of Alberta using Claude Code to find and fix vulnerabilities. Nothing on the page is from this week.",
+      "lessons": [
+        {
+          "point": "The one security-relevant entry is a government using Claude Code to find and fix vulnerabilities.",
+          "excerpt": "Since 2025, the Government of Alberta has been using Claude Code with both Opus and Sonnet models to review its systems, find vulnerabilities, and fix them.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The newest entry is from October 8, 2026, so the page holds no news from this scan's week.",
+          "excerpt": "Anthropic is committing $150 million over three years to the Genesis Mission",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A listing page of business announcements, with nothing for a security engineer or agent builder to act on.",
+      "tags": [
+        "anthropic",
+        "partnerships",
+        "index-page",
+        "business-news"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Skip index pages in sitemap ingestion",
+        "detail": "The sitemap ingestor picked up a listing page with no date of its own. Consider excluding category paths such as /news/partnerships from Anthropic sitemap ingestion so batch slots go to real articles."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 5,
+        "newness": 0,
+        "credibility": 68.8,
+        "composite": 13.32,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Index page content matches; verifier agrees it holds nothing new.",
+      "prior_art": "The Accenture embedded-evaluation partnership is already in the pool; the rest is older business news.",
+      "related_claims": [],
+      "source_url": "https://www.anthropic.com/news/partnerships",
+      "article_url": "https://www.anthropic.com/news/partnerships",
+      "tweet_url": null,
+      "author": null,
+      "date": null,
+      "published": null,
+      "raw_path": "data/_raw/partnerships-d29f03c3a4.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 68.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "id": "anthropic-s-partnerships-index-lists-business-de-170f30719d",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,

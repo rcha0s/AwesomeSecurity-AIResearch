@@ -12,8 +12,8 @@
     "ingested": 7
   },
   "github_query:prompt-injection-llm": {
-    "curated": 1,
-    "ingested": 8
+    "ingested": 9,
+    "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
     "curated": 4,
@@ -28,12 +28,16 @@
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "curated": 0,
-    "ingested": 4
+    "ingested": 5,
+    "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
     "curated": 1,
     "ingested": 7
+  },
+  "rss:http-export-arxiv-org-rss-cs-cr": {
+    "ingested": 34,
+    "curated": 10
   },
   "rss:https-alignment-openai-com-rss-xml": {
     "curated": 1,
@@ -56,8 +60,8 @@
     "ingested": 4
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "curated": 0,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 0
   },
   "rss:https-genai-owasp-org-feed": {
     "curated": 0,
@@ -68,8 +72,8 @@
     "ingested": 1
   },
   "rss:https-huggingface-co-blog-feed-xml": {
-    "curated": 1,
-    "ingested": 4
+    "ingested": 5,
+    "curated": 1
   },
   "rss:https-labs-watchtowr-com-rss": {
     "curated": 4,
@@ -88,11 +92,11 @@
     "ingested": 11
   },
   "rss:https-portswigger-net-research-rss": {
-    "curated": 1,
-    "ingested": 4
+    "ingested": 5,
+    "curated": 2
   },
   "rss:https-research-checkpoint-com-feed": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 1
   },
   "rss:https-research-google-blog-rss": {
@@ -108,11 +112,11 @@
     "ingested": 3
   },
   "rss:https-semgrep-dev-blog-rss": {
-    "curated": 0,
-    "ingested": 8
+    "ingested": 9,
+    "curated": 0
   },
   "rss:https-simonwillison-net-atom-everything": {
-    "ingested": 17,
+    "ingested": 18,
     "curated": 6
   },
   "rss:https-snyk-io-blog-feed": {
@@ -128,12 +132,16 @@
     "ingested": 1
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 0
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
     "curated": 1,
     "ingested": 7
+  },
+  "rss:https-www-darkreading-com-rss-xml": {
+    "ingested": 2,
+    "curated": 0
   },
   "rss:https-www-imperva-com-blog-feed": {
     "curated": 0,
@@ -144,8 +152,8 @@
     "ingested": 18
   },
   "rss:https-www-securityweek-com-feed": {
-    "curated": 0,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
     "curated": 0,

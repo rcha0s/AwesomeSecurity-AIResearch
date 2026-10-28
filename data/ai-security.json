@@ -4087,6 +4087,177 @@
     },
     {
       "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "Xint used OpenAI's compaction step to leak hidden reasoning as plain text",
+      "summary": "Security firm Xint showed that OpenAI's compaction step, which shrinks a conversation into an encrypted item, could be told to copy a reasoning model's encrypted reasoning into that item word for word, with spaces swapped for tabs to get past usage-policy filters. Because compaction items move between models, gpt-4.1 and gpt-4o then repeated it as plain text, getting around the cross-model replay block OpenAI added in August. OpenAI fixed it on its side on October 23 and paid a $6,000 reward; Xint tested only gpt-5.6-sol and cannot prove the copy is exact.",
+      "lessons": [
+        {
+          "point": "The bypass worked because compaction runs on the same model that produced the reasoning, so the cross-model check never fired.",
+          "excerpt": "Compaction got past that block, Xint said, because the compaction step runs on the same model that made the reasoning, so it never triggers the cross-model check.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "In Xint's view, any provider-side step that reads decrypted reasoning and follows user instructions is a leak path.",
+          "excerpt": "any server-side step that reads a model's decrypted reasoning and follows the user's instructions could leak it.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "API users need not change anything; the fix was on OpenAI's side.",
+          "excerpt": "The fix was on OpenAI's side, so developers who build on the API do not need to change anything.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Whether the extracted text exactly matches the real reasoning is unproven.",
+          "excerpt": "Xint says it cannot prove the copied text is word-for-word the model's real reasoning",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Encrypted reasoning stays readable to any provider-side step that can be instructed, so treat hidden reasoning as hidden by policy, not by cryptography.",
+      "tags": [
+        "reasoning-extraction",
+        "openai",
+        "compaction",
+        "distillation",
+        "model-io"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Do not treat encrypted reasoning items as confidential",
+        "detail": "If your product stores or forwards OpenAI encrypted reasoning or compaction items, handle them as sensitive data: keep them out of logs and client-side storage, and do not assume a model cannot be asked to repeat their contents."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 55,
+        "newness": 23,
+        "credibility": 52.5,
+        "composite": 46.62,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "All claims supported; the general leak-path lesson is Xint's opinion, labeled as such.",
+      "prior_art": "The August 'Stolen Thoughts' paper replayed encrypted reasoning into weaker models from the same vendor, and Xint's earlier GhostCompact work showed compaction can run attacker-chosen tasks; this combines them to defeat the August fix.",
+      "threat": "Extraction of a provider's hidden model reasoning, for example for distillation into a rival model.",
+      "conditions": "OpenAI reasoning models with compaction before the October 23, 2026 server-side fix.",
+      "mitigations": "Fixed by OpenAI; customers need no change, but should not rely on encrypted reasoning for confidentiality.",
+      "related_claims": [],
+      "source_url": "https://thehackernews.com/2026/10/openai-compaction-flaw-let-researchers.html",
+      "article_url": "https://thehackernews.com/2026/10/openai-compaction-flaw-let-researchers.html",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/openai-compaction-flaw-let-researchers-bypass-hi-6f8590b757.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 52.5,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "The Hacker News",
+      "id": "xint-used-openai-s-compaction-step-to-leak-hidde-5fbcc72044",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "One crafted medical image file crashes or silently corrupts MONAILabel inference",
+      "summary": "An unauthenticated attacker can upload a 132 KB medical image file (DICOM format) with NaN or infinity in fields such as PixelSpacing to MONAILabel's default web API. pydicom accepts those values in its default validation mode and MONAI builds its spatial transforms from them without checks. In the proof of concept every inference crashed with HTTP 500; the advisory warns that when the writer does not crash, wrong segmentation masks come back with HTTP 200. The file stays in the datastore, so later inference on it repeats the crash; the advisory points to MONAI release 1.6.1 and a fix commit.",
+      "lessons": [
+        {
+          "point": "pydicom's value check only runs in a mode that is off by default, so NaN and infinity pass through.",
+          "excerpt": "The `is_valid_ds()` check only runs in RAISE validation mode, which is NOT the default.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The advisory warns of a silent outcome, a wrong medical result returned as a success, though its proof of concept only showed crashes.",
+          "excerpt": "If the output writer does not crash, the result is returned with HTTP 200 and zero warnings.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The poisoned file persists, so the attack repeats on every later request for that image.",
+          "excerpt": "The NaN DICOM persists in the datastore — any future inference on that image ID crashes the server again.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Machine learning pipelines that read numbers from uploaded files need explicit finiteness checks, because one NaN can corrupt medical output with no error.",
+      "tags": [
+        "medical-ai",
+        "input-validation",
+        "nan-injection",
+        "inference-integrity",
+        "monai"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Reject non-finite numbers at machine learning input boundaries",
+        "detail": "Upgrade MONAI per the advisory and put authentication in front of MONAILabel's web API (port 8000 by default). Add math.isfinite() checks on every spatial or scaling value read from uploaded files before it reaches transforms or the model, and run pydicom in RAISE validation mode for untrusted input."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 65,
+        "newness": 23,
+        "credibility": 70.0,
+        "composite": 46.25,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier noted silent corruption is asserted but not demonstrated (the proof of concept shows only crashes); summary and lesson now say so. Novelty lowered to its 35.",
+      "prior_art": "NaN and infinity injection into numeric parsers is a known input-validation bug class; using it to silently corrupt medical inference through a persistent datastore is the new angle.",
+      "threat": "Denial of service and silent corruption of medical AI inference results from one unauthenticated upload.",
+      "conditions": "A MONAILabel server with its default unauthenticated web API reachable over the network.",
+      "mitigations": "Upgrade MONAI per the advisory, require authentication on the MONAILabel API, and validate that spatial metadata is finite before inference.",
+      "related_claims": [],
+      "source_url": "https://github.com/advisories/GHSA-6hp3-vr39-rqw8",
+      "article_url": "https://github.com/advisories/GHSA-6hp3-vr39-rqw8",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/ghsa-6hp3-vr39-rqw8-739100010a.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "one-crafted-medical-image-file-crashes-or-silent-00971da138",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 46 > 45 (An unauthenticated attacker can upload a 132 KB medical image file (DICOM format) with NaN or infinity in fields such as)",
+          "mild: acronyms 4 > 3 (KB, DICOM, MONAI, RAISE)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Critical advisory in a medical AI server showing why ML pipelines need finiteness checks on untrusted file metadata.",
+        "signals": [
+          "cve",
+          "timely"
+        ],
+        "at": "2026-10-27T18:54:15+00:00"
+      }
+    },
+    {
+      "topic": "ai-security",
       "domain": "ais.agent-security",
       "title": "Visual Studio Copilot RCE lets an agent rewrite its own config",
       "source_url": "https://embracethered.com/blog/posts/2026/visual-studio-copilot-remote-code-execution/",
@@ -4759,6 +4930,159 @@
       ]
     },
     {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "Warp: vendor breach exposed agent logs for roughly 1% of users",
+      "summary": "Warp, an agentic development environment with at least 800,000 users, says an attack on a third-party vendor in its infrastructure exposed agent decision logs and telemetry, and its CEO estimates roughly 1% of users may be affected. Warp has not said whether the data included source code, prompts or credentials. An unattributed analysis cited by BleepingComputer says the attack used an \"agent swarm\". The breach follows last week's OpenCode breach that exposed stored provider API keys.",
+      "lessons": [
+        {
+          "point": "Agent traces are now sensitive data held by tool vendors and their suppliers.",
+          "excerpt": "Agent decision logs and telemetry data belonging to Warp agentic development environment users were exposed in an attack on a third-party vendor in the project’s infrastructure.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The contents of the exposed traces are unknown, so assume they can hold code, prompts or secrets.",
+          "excerpt": "the company did not clarify whether the exposed information included source code, prompts, credentials, or other sensitive details.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The agent-swarm description is unverified.",
+          "excerpt": "the attack was powered by \"an agent swarm\"",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Agent logs from coding tools can carry code and secrets, so list which vendors keep them and rotate secrets that passed through Warp agent sessions if Warp notifies you.",
+      "tags": [
+        "breach",
+        "agent-telemetry",
+        "coding-agent",
+        "third-party-risk",
+        "warp"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat coding-agent traces as sensitive vendor-held data",
+        "detail": "Inventory which coding-agent vendors store agent traces or telemetry for your developers and what those traces can contain. Prefer settings that keep traces local or disable telemetry, and rotate any credentials that appeared in sessions with a breached vendor."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 60,
+        "newness": 23,
+        "credibility": 50.8,
+        "composite": 41.87,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "Facts supported; the agent-swarm analysis is unattributed in the source and is now worded that way.",
+      "prior_art": "OpenCode's console breach a week earlier exposed stored API keys; this is the second AI coding-tool vendor breach in two weeks, with agent traces as the exposed data.",
+      "threat": "Exposure of agent decision logs and telemetry, which can contain code, prompts or credentials.",
+      "conditions": "Warp users whose data passed through the breached third-party vendor.",
+      "mitigations": "Watch for Warp's notification, rotate secrets used in agent sessions, and limit what agent telemetry leaves developer machines.",
+      "related_claims": [],
+      "source_url": "https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/",
+      "article_url": "https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/warp-discloses-breach-exposing-ai-agent-logs-use-64de781a92.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-bleepingcomputer-com-feed",
+      "source_rank": 50.8,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "BleepingComputer",
+      "id": "warp-vendor-breach-exposed-agent-logs-for-roughl-f14f66a367",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Agno agent framework ran Python eval on a function call's field type",
+      "summary": "Agno before 2.3.24 passed the `field_type` value of a `FunctionCall` input field to Python's built-in `eval()`, so anyone able to influence it can run arbitrary Python in the Agno process (CVE-2026-35002, rated critical). The advisory names untrusted tool or model output as one way to reach it. The project published it on June 30, 2026, and GitHub's database added it on October 27; the fix in 2.3.24 replaces `eval()` with a fixed type lookup.",
+      "lessons": [
+        {
+          "point": "Tool or model output that shapes a function call is attacker-influenced input, and here it reached eval().",
+          "excerpt": "(for example via an API, web UI, or untrusted tool/model output) is affected.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The fix swaps eval() for a fixed lookup table of known types.",
+          "excerpt": "The unsafe `eval()` call was replaced with a fixed `type_mapping` dictionary",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "There is no safe workaround short of upgrading.",
+          "excerpt": "There is no safe workaround. Users who cannot upgrade should ensure no",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "An agent framework that evals strings shaped by model output turns prompt injection into code execution, so upgrade Agno and search your agent code for eval on schema fields.",
+      "tags": [
+        "agent-framework",
+        "code-injection",
+        "eval",
+        "python",
+        "agno"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Upgrade Agno and ban eval on agent schema data",
+        "detail": "Upgrade Agno to 2.3.24 or later (the 2.6.x line includes the fix). In your own agent code, search for eval(), exec() and similar calls on any value that a tool result, model output or API caller can influence, and replace them with fixed lookup tables."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 70,
+        "newness": 23,
+        "credibility": 70.0,
+        "composite": 40.85,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": false,
+      "verify_note": "Novelty disagreement: verifier rated 12 against my 35 (a routine eval-injection bug class, cf. LangChain CVE-2023-29374). It also noted the tool/model-output path is only an example and the advisory does offer a partial workaround.",
+      "prior_art": "Earlier agent-framework bugs where model output reached eval or exec (for example LangChain's math and program-aided chains) follow the same pattern; this is a new instance, first published in June.",
+      "threat": "An attacker who influences a FunctionCall field type, directly or through tool or model output, runs arbitrary Python in the Agno process.",
+      "conditions": "Agno before 2.3.24 with FunctionCall inputs that user, tool or model content can influence.",
+      "mitigations": "Upgrade to Agno 2.3.24 or later; until then keep untrusted input away from the field_type parameter.",
+      "related_claims": [],
+      "source_url": "https://github.com/advisories/GHSA-m4w4-3r8h-jw98",
+      "article_url": "https://github.com/advisories/GHSA-m4w4-3r8h-jw98",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/ghsa-m4w4-3r8h-jw98-80210e306e.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "agno-agent-framework-ran-python-eval-on-a-functi-b83b4a2ceb",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "chris-painter-s-testimony-to-the-u-s-senate-on-a-f4c0efdb67",
       "topic": "ai-security",
       "domain": "ais.agent-security",
@@ -5018,6 +5342,86 @@
       "previous_slugs": [
         "skillmarker-watermarks-agent-skill-files-to-trace-copying-ca"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "humanbound-firewall screens every input to an agent by who authored it",
+      "summary": "humanbound-firewall is an open-source firewall for AI agents, still in preview (0.3.x), that checks the user's turn, every tool result and every record read back from memory before the model sees them. It sorts each input into `request`, `ingest` or `recall` by author and judges it against one policy file that describes the agent, using local tiers first and an LLM judge only when they are unsure. It plugs into LangChain as middleware in two lines.",
+      "lessons": [
+        {
+          "point": "An agent's own records coming back from memory get their own trust class: they may be data, never instructions.",
+          "excerpt": "our own records coming back — a DB row, a memory entry",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Indirect injection can arrive on any input path, not only the user's turn.",
+          "excerpt": "An agent does not only read what its user types. It reads web pages, documents",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The interface is unstable, so pin a version if you try it.",
+          "excerpt": "may change before 1.0. Pin to a specific version if you",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "The useful idea is to label every model input by author (request, outside content, own records); treat the tool as a preview filter, not a security boundary.",
+      "tags": [
+        "prompt-injection",
+        "llm-firewall",
+        "langchain",
+        "memory-poisoning",
+        "open-source"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Label every agent input by author before it reaches the model",
+        "detail": "In your agent harness, tag each input as a principal request, outside content (pages, documents, tool results, sub-agents) or recalled own records, and apply a different rule to each. Outside content can inform but not direct, and recalled records must never contain instructions. Do this even if you never adopt this preview library."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 55,
+        "newness": 23,
+        "credibility": 48.8,
+        "composite": 40.07,
+        "scored_at": "2026-10-27T18:41:52+00:00"
+      },
+      "verified": true,
+      "verify_note": "README claims match; no benchmarks, Tier 1-2 optional, recall applies only to tools the policy lists.",
+      "prior_art": "Prompt-injection firewalls and classifier cascades (Lakera Guard, LLM Guard, Meta Prompt Guard) are common; the explicit trust class for an agent's own recalled records is the less common part.",
+      "threat": "Indirect prompt injection through tool results and poisoned memory records.",
+      "conditions": "Agents that read web content, tool output or stored memory, here built on LangChain or a manual integration.",
+      "mitigations": "Screen every input path by author and keep containment controls (least privilege, approvals) in place, since a filter can be bypassed.",
+      "related_claims": [
+        "prompt-injection-is-containment-not-prevention",
+        "input-guardrail-weaker-than-target-is-bypassable"
+      ],
+      "source_url": "https://github.com/humanbound/humanbound-firewall",
+      "article_url": "https://github.com/humanbound/humanbound-firewall",
+      "tweet_url": null,
+      "author": "humanbound",
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/humanbound-humanbound-firewall-4a2107515f.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 48.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "humanbound/humanbound-firewall",
+      "id": "humanbound-firewall-screens-every-input-to-an-ag-19f1e54dbc",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "nuguardai-nuguard-71b493a052",
@@ -6507,6 +6911,59 @@
       "previous_slugs": [
         "obsidian-tc-mcp-server-lacks-origin-checks-letting-a-web-pag"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "vLLM advisory withdrawn as duplicate of remote code execution flaw",
+      "source_url": "https://github.com/advisories/GHSA-f623-hjm8-5wg5",
+      "takeaway": "Teams serving models with vLLM should track the surviving advisory, because the flaw lets a request run Python on the inference server.",
+      "summary": "This advisory was withdrawn as a duplicate of GHSA-h3rc-6mm3-gc2m, but the flaw is real: vLLM 0.7.3 up to before 0.31.0 lets a request choose which revision of a model's processor code loads under trust_remote_code, so an attacker controlling a revision in the served repository can run Python in the API process (CVE-2026-114053, CVSS 9.2). Upgrade to vLLM 0.31.0.",
+      "lessons": [
+        {
+          "point": "The original description shows the attack path: an unauthenticated tokenize request reaches code execution in the API process.",
+          "excerpt": "An attacker controlling a revision in the served model repository can send a multimodal request to the unauthenticated /tokenize endpoint to execute arbitrary Python in the vLLM API process.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://github.com/advisories/GHSA-f623-hjm8-5wg5",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/ghsa-f623-hjm8-5wg5-96b2bc907b.txt",
+      "source_id": null,
+      "source_rank": 70.0,
+      "discovered_via": "github",
+      "source_name": "GitHub Advisory Database",
+      "id": "vllm-advisory-withdrawn-as-duplicate-of-remote-c-a6d57fc2d7",
+      "retrieved_at": "2026-10-27T18:50:08+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "ghsa-critical",
+        "markers": [
+          "critical",
+          "rce"
+        ],
+        "sources": 1,
+        "at": "2026-10-27"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 56 > 45 (This advisory was withdrawn as a duplicate of GHSA-h3rc-6mm3-gc2m, but the flaw is real: vLLM 0.7.3 up to before 0.31.0 )"
+        ]
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 70.0,
+        "composite": 10.5,
+        "scored_at": "2026-10-27T18:50:08+00:00"
+      }
     },
     {
       "candidate_id": "infostealer-riding-the-ai-train-094624ecae",

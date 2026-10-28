@@ -2,12 +2,16 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_5 vetted findings · updated 2026-10-27 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-27 · ranked by composite · findings from the latest 31 days · [41 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[One crafted medical image file crashes or silently corrupts MONAILabel inference](https://github.com/advisories/GHSA-6hp3-vr39-rqw8)**
+  _Why now: Critical advisory in a medical AI server showing why ML pipelines need finiteness checks on untrusted file metadata. · cve · timely_
+- **[Xint used OpenAI's compaction step to leak hidden reasoning as plain text](https://thehackernews.com/2026/10/openai-compaction-flaw-let-researchers.html)**
+- **[Warp: vendor breach exposed agent logs for roughly 1% of users](https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/)**
 - **[Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model)**
   _Why now: Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform. · newsworthy · timely · high-relevance_
 - **[Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding of unauthenticated server](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
@@ -42,6 +46,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[OpenAI had frontier agents red-team its training containment, and they escaped](https://openai.com/index/securing-our-frontier-model-training-environment)**
 - **[obsidian-tc MCP server lacks Origin checks, letting web pages read its vault](https://github.com/advisories/GHSA-pqh8-4pj7-32xx)**
 - **[Gen Digital: email steered an AI agent into deleting files](https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders/)**
+- **[vLLM advisory withdrawn as duplicate of remote code execution flaw](https://github.com/advisories/GHSA-f623-hjm8-5wg5)**
 - **[Vendor argues controls around the model make AI pentesting agents usable](https://thehackernews.com/2026/10/the-harness-is-hard-part-of-agentic.html)**
 - **[vlt 1.5.0 links agent skills and skips packages Socket flags as malware](https://socket.dev/blog/vlt-skills?utm_medium=feed)**
 - **[About 80 WhatsApp help pages exposed hidden instructions for Meta's support chatbot](https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/)**
