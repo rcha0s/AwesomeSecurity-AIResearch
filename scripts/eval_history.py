@@ -253,7 +253,8 @@ def body(rows: list[dict], run_id: str, cfg: dict) -> str:
         lines[2] += f" Backfill {row['backfill']}: not counted in the gate."
     per = _curator_line(row)
     out = lines + ([f"\n**Recall by curator** (this run): {per}"] if per else [])
-    return "\n".join(out + _backfill_line(rows))
+    # Only a backfill chunk's own PR lists the backfill runs (Rohan, 2026-10-27).
+    return "\n".join(out + (_backfill_line(rows) if row.get("backfill") else []))
 
 
 def _backfill_line(rows: list[dict], last: int = 5) -> list[str]:
