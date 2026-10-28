@@ -435,7 +435,7 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "editorial": editorial,
         "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
         "archive": archived,
-        **front_page(findings + editorial, cl.all_claims(ledger), now, snapshot_days),
+        **front_page(findings + editorial, claims_payload(ledger, tax), now, snapshot_days),
     }
     normalize_source_names(payload, list(c.load_sources_by_id().values()))
     return payload
@@ -641,6 +641,8 @@ def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dic
         "stories_this_week": briefing.fresh_count(rows, now, days),
         "claim_changes": changes,
         "claim_changes_fresh": changes_fresh,
+        "efficiency_claims": [claim["id"] for claim in briefing.efficiency_claims(claims)],
+        "efficiency_findings": [row["id"] for row in briefing.efficiency_findings(rows, now, days)],
     }
 
 

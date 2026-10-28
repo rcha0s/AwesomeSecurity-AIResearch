@@ -253,3 +253,45 @@ def test_top_stories_leave_out_the_biggest_and_stay_capped_and_topped_up():
 
 def test_biggest_note_names_the_window():
     assert b.biggest_note(7) == "Most covered or exploited in the last 7 days."
+
+
+# --- Efficiency track ---------------------------------------------------------
+COST, WORK = "air.cost-efficiency", "air.work-efficiency"
+
+
+def eff(cid, domain_id, first_seen="2026-10-01", status="current", **over):
+    return claim(cid, status=status, first_seen=first_seen, domain_id=domain_id, **over)
+
+
+def test_efficiency_claims_pick_only_the_two_domains_live_newest_first():
+    claims = [
+        eff("old-cost", COST, "2026-09-01"),
+        eff("new-work", WORK, "2026-10-10"),
+        eff("other", "air.evals", "2026-10-15"),
+        eff("gone", COST, "2026-10-12", status="superseded"),
+        eff("mid-cost", COST, "2026-10-05", changed_on="2026-10-11", status="contested"),
+    ]
+    assert ids(b.efficiency_claims(claims)) == ["mid-cost", "new-work", "old-cost"]
+
+
+def test_efficiency_claims_cap_at_four_and_tie_on_id():
+    claims = [eff(f"c{i}", COST if i % 2 else WORK, "2026-10-10") for i in range(6)]
+    assert ids(b.efficiency_claims(claims)) == ["c0", "c1", "c2", "c3"]
+
+
+def test_efficiency_claims_empty():
+    assert b.efficiency_claims([]) == []
+    assert b.efficiency_claims([eff("x", "air.evals")]) == []
+
+
+def test_efficiency_findings_are_recent_in_domain_capped_at_three():
+    rows = [
+        {**row("a", "2026-10-19"), "domain_id": COST},
+        {**row("b", "2026-10-18"), "domain_id": WORK},
+        {**row("c", "2026-10-17"), "domain_id": "air.evals"},
+        {**row("d", "2026-10-01"), "domain_id": COST},
+        {**row("e", "2026-10-16"), "domain_id": COST},
+        {**row("f", "2026-10-15"), "domain_id": WORK},
+    ]
+    assert ids(b.efficiency_findings(rows, NOW, 7)) == ["a", "b", "e"]
+    assert b.efficiency_findings([], NOW, 7) == []

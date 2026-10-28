@@ -227,3 +227,30 @@ def test_readme_leads_with_biggest_this_week_and_no_story_repeats(sandbox):
 def test_readme_has_no_biggest_section_when_nothing_qualifies(sandbox):
     md = _readme_with(sandbox, ["2026-07-14"])
     assert "## Biggest this week" not in md
+
+
+# --- The Efficiency teaser ----------------------------------------------------
+def test_readme_lists_efficiency_claims_and_omits_the_section_when_empty(sandbox):
+    claims.save_ledger(ledger_of(make_claim(id="plain")))
+    gs.main()
+    assert "## Efficiency" not in (sandbox / "README.md").read_text(encoding="utf-8")
+
+    claims.save_ledger(
+        ledger_of(
+            make_claim(id="plain"),
+            make_claim(
+                id="cache-more",
+                topic="ai-research",
+                domain="Cost Efficiency",
+                title="Cache the prompt prefix",
+            ),
+        )
+    )
+    gs.main()
+    md = (sandbox / "README.md").read_text(encoding="utf-8")
+    assert "## Efficiency" in md
+    section = md.split("## Efficiency", 1)[1].split("\n## ", 1)[0]
+    assert "[Cache the prompt prefix](" in section and "?claim=cache-more#claims" in section
+    assert "plain" not in section
+    payload = gh.build_payload(claims.load_ledger(), common.load_config(), "2026-07-15")
+    assert payload["efficiency_claims"] == ["cache-more"]

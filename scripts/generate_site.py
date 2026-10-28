@@ -462,6 +462,12 @@ def _teaser(payload: dict) -> list[str]:
     out += ["", "## Claim changes", "", f"_{note}_", ""]
     for i, change in enumerate(changes, 1):
         out += _change_line(i, change, claims)
+    picks = [claims[i] for i in payload.get("efficiency_claims", []) if i in claims]
+    if picks:
+        out += ["", "## Efficiency", "", f"_{briefing.efficiency_note()}_", ""]
+        for claim in picks:
+            link = site_link("claims", claim=claim["id"])
+            out.append(f"- [{_claim_label(claim)}]({link})")
     return out + [""]
 
 
