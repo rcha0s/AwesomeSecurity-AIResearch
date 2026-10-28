@@ -26,7 +26,7 @@ import shutil
 from html import escape
 from json import dumps
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urlparse, urlsplit
 
 import briefing
 import common as c
@@ -107,23 +107,39 @@ def _clean_caveats(raw: object) -> list[dict]:
     return out
 
 
+EXPLOITED_TAGS = frozenset({"exploited-in-the-wild", "active-exploitation", "kev"})
+KEV_HOSTS = frozenset({"cisa.gov", "www.cisa.gov"})
+KEV_PATH = "/known-exploited-vulnerabilities"
+
+
+def is_exploited(tags: object, url: str) -> bool:
+    """True when a story is known to be exploited: it carries an exploitation tag,
+    or its source is CISA's Known Exploited Vulnerabilities catalog."""
+    if isinstance(tags, (list, tuple)) and any(str(t).lower() in EXPLOITED_TAGS for t in tags):
+        return True
+    parts = urlparse(url or "")
+    return (parts.hostname or "").lower() in KEV_HOSTS and parts.path.lower().startswith(KEV_PATH)
+
+
 def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
     """The subset of a pool entry the site actually renders."""
     scores = entry.get("scores") or {}
     cred = scores.get("credibility")
+    url = c.clean_source_url(entry.get("source_url") or entry.get("article_url") or "")
     return {
         "id": entry.get("id", ""),
         "topic": entry.get("topic", ""),
         "domain": c.domain_name(entry.get("domain") or ""),
         "domain_id": entry.get("domain", ""),
         "title": entry.get("title", ""),
-        "url": c.clean_source_url(entry.get("source_url") or entry.get("article_url") or ""),
+        "url": url,
         "takeaway": entry.get("takeaway") or entry.get("summary") or "",
         "summary": entry.get("summary", ""),
         "published": c.best_date(entry) or "",
         "composite": c.entry_composite(entry, conf),
         "source_name": entry.get("source_name", ""),
         "tags": entry.get("tags") or [],
+        "exploited": is_exploited(entry.get("tags"), url),
         "caveats": _clean_caveats(entry.get("caveats")),
         "scores": {
             "novelty": _round(scores.get("novelty")),
@@ -574,9 +590,12 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
 def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dict:
     """The README teaser's and the Briefing's shared picks: row ids, and the
     claim changes (each names its claim, and for a reversal the one it replaced)."""
-    stories, topped_up = briefing.top_stories(rows, now, days)
+    biggest = briefing.biggest_stories(rows, now, days)
+    taken = {row["id"] for row in biggest}
+    stories, topped_up = briefing.top_stories(rows, now, days, exclude=taken)
     changes, changes_fresh = briefing.claim_changes(claims, now, days)
     return {
+        "biggest_stories": [row["id"] for row in biggest],
         "top_stories": [row["id"] for row in stories],
         "top_stories_topped_up": topped_up,
         "top_stories_fresh": briefing.fresh_count(stories, now, days),

@@ -237,6 +237,7 @@
     color: var(--ink-3); border-radius: 999px; white-space: nowrap; background: var(--card); }
   .chip.sig { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent) 30%, var(--rule));
     background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+  .chip.exploited { color: #fff; background: #c62828; border-color: #c62828; font-weight: 600; }
   .chip.fresh { color: #fff; background: var(--accent); border-color: var(--accent);
     font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: .06em; }
   /* Caveat chips surface refuter-panel prior-art / scope concerns without
@@ -795,7 +796,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = topStoriesHTML(shown) + claimChangesHTML();
+    var html = biggestHTML(shown) + topStoriesHTML(shown) + claimChangesHTML();
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -1210,6 +1211,7 @@
       quotePreview(f) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
+        (f.exploited === true ? '<span class="chip exploited">Exploited</span>' : '') +
         (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
       '</div></article>';
@@ -1245,6 +1247,17 @@
     if (fresh === 0) return "Nothing new in the last " + days + " days, so these are the latest top stories.";
     if (fresh < total) return "Fewer than five stories in the last " + days + " days, so the most recent ones before it fill in.";
     return "The last " + days + " days, newest first.";
+  }
+  // Same sentence as scripts/briefing.py:biggest_note (the README prints that one).
+  function biggestNote(days) { return "Most covered or exploited in the last " + days + " days."; }
+  function biggestHTML(shown) {
+    var m = rowsById();
+    var rows = arr(DATA.biggest_stories).map(function (id) { return has(m, id) ? m[id] : null; }).filter(Boolean);
+    if (!rows.length) return "";
+    rows.forEach(function (f) { shown[f.id] = 1; });
+    return secHead("Biggest this week", "last " + num(DATA.snapshot_days) + " days") +
+      '<p class="sec-lede">' + esc(biggestNote(Number(DATA.snapshot_days) | 0)) + '</p>' +
+      '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
   }
   function topStoriesHTML(shown) {
     var m = rowsById();
