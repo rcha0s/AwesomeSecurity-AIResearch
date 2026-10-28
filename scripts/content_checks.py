@@ -10,6 +10,9 @@ bound what that content can do once published:
   render_problems       docs/index.html is byte-equal to main's renderer applied
                         to the payload and stamp it carries: the page is main's
                         template plus data, never hand-written HTML or script.
+  feed_problems         docs/feed.xml is byte-equal to main's render_feed() applied
+                        to the payload and stamp docs/index.html carries; a
+                        missing feed is refused while main has one.
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
@@ -84,17 +87,43 @@ def url_problems(obj: object, where: str = "") -> list[str]:
     return out
 
 
-def render_problems(page: str, render) -> list[str]:
-    """`render(payload, stamp)` (main's generate_html.render) must reproduce `page`."""
+def embedded(page: str) -> tuple[dict | None, str, list[str]]:
+    """(payload, stamp, problems) of a rendered page: its one data block and one stamp."""
     payloads, stamps = PAYLOAD.findall(page), STAMP.findall(page)
     if len(payloads) != 1 or len(stamps) != 1:
-        return ["docs/index.html: expected exactly one data block and one generated stamp"]
+        return (
+            None,
+            "",
+            ["docs/index.html: expected exactly one data block and one generated stamp"],
+        )
     try:
         payload = json.loads(payloads[0])
     except json.JSONDecodeError:
-        return ["docs/index.html: the data block is not JSON"]
-    if render(payload, html.unescape(stamps[0])) != page:
+        return None, "", ["docs/index.html: the data block is not JSON"]
+    return payload, html.unescape(stamps[0]), []
+
+
+def render_problems(page: str, render) -> list[str]:
+    """`render(payload, stamp)` (main's generate_html.render) must reproduce `page`."""
+    payload, stamp, problems = embedded(page)
+    if problems:
+        return problems
+    if render(payload, stamp) != page:
         return ["docs/index.html: not what main's renderer makes from its own data"]
+    return []
+
+
+def feed_problems(feed: str | None, page: str, render_feed, main_has_feed: bool) -> list[str]:
+    """docs/feed.xml must be main's `render_feed(payload, stamp)` of the payload and
+    stamp the PR's docs/index.html carries, byte for byte. A missing feed is a
+    problem once main has one."""
+    if feed is None:
+        return ["docs/feed.xml is missing"] if main_has_feed else []
+    payload, stamp, problems = embedded(page)
+    if problems:
+        return ["docs/feed.xml: cannot check it, docs/index.html carries no usable data"]
+    if render_feed(payload, stamp) != feed:
+        return ["docs/feed.xml: not what main's renderer makes from the page's data"]
     return []
 
 

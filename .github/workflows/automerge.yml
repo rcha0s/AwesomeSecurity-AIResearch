@@ -31,7 +31,8 @@ name: Auto-merge gate
 #   test    read-only (contents: read, no credentials persisted). Main merged
 #           with that PR head, which by then is content-only; runs
 #           scripts/merge_gate.py (pytest, ledger, http(s)-only URLs,
-#           docs/index.html == main's renderer on its own payload, claim
+#           docs/index.html == main's renderer on its own payload,
+#           docs/feed.xml == main's feed renderer on that payload, claim
 #           history vs main, and the Phase 3 eval hook).
 #           Its only input to `decide` is its pass/fail result.
 #   decide  write. Checks out main only and runs main's code: re-fetches and

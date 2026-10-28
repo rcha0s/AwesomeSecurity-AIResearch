@@ -318,3 +318,44 @@ def test_add_claim_evidence_leaves_ledger_dates_alone(sandbox):
     cl.save_ledger(copy.deepcopy(main))
     assert add_claim.main(["evidence", "dated", "--evidence", "supports|https://e/2"]) == 0
     assert cc.claim_history_problems(main, cl.load_ledger()) == []
+
+
+# ---------------------------------------------------------------- feed equality
+
+
+def feed_for(p):
+    return gh.render_feed_for_page(p)
+
+
+def test_exact_feed_render_is_accepted():
+    p = page()
+    assert cc.feed_problems(feed_for(p), p, gh.render_feed, True) == []
+
+
+@pytest.mark.parametrize(
+    "tamper",
+    [
+        lambda f: f.replace("</feed>", "<entry/></feed>"),
+        lambda f: f.replace("<title>", "<title>x"),
+        lambda f: f + "\n",
+        lambda f: '<?xml-stylesheet href="feed.xsl"?>\n' + f,
+        lambda f: "",
+    ],
+)
+def test_hand_edited_feed_is_refused(tamper):
+    p = page()
+    assert cc.feed_problems(tamper(feed_for(p)), p, gh.render_feed, True) != []
+
+
+def test_feed_must_match_the_payload_the_page_carries():
+    other = page(payload={**PAYLOAD, "biggest_stories": ["x"], "findings": [{"id": "x"}]})
+    assert cc.feed_problems(feed_for(page()), other, gh.render_feed, True) != []
+
+
+def test_deleted_feed_is_refused_only_while_main_has_one():
+    assert cc.feed_problems(None, page(), gh.render_feed, True) == ["docs/feed.xml is missing"]
+    assert cc.feed_problems(None, page(), gh.render_feed, False) == []
+
+
+def test_feed_with_an_unusable_page_is_refused():
+    assert cc.feed_problems("<feed/>", "<html></html>", gh.render_feed, True) != []

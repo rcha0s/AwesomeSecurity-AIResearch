@@ -400,13 +400,19 @@ on a `claude/scan-*` branch.
   (`ai-security/`, `product-security/`, `ai-research/`, `claims/`) or the
   generated `README.md`, `NEWSLETTER.md`, `TRENDS.md`, `REVIEW.md`. Inside those
   directories only `.json`, `.md` and `.png` regular files count, plus exactly
-  `docs/index.html` and `docs/.nojekyll`: no other HTML, because HTML runs
-  script on the site's origin.
+  `docs/index.html`, `docs/feed.xml` (the Atom feed) and `docs/.nojekyll`: no
+  other HTML or XML, because HTML runs script on the site's origin and XML
+  can carry XSLT processing instructions or the xhtml namespace, which do too.
 - **It must also pass `scripts/merge_gate.py`**, run inside the workflow on main
   merged with the PR head: pytest, the claim ledger, the analysis eval, any eval
   listed under `automerge.evals`, and these content checks
   (`scripts/content_checks.py`):
   - every `url` / `*_url` field in `data/*.json` is an `http(s)://` URL;
+  - (both files are compared as raw bytes, so a CRLF or CR copy fails)
+  - `docs/feed.xml` is byte-equal to main's `generate_html.render_feed()` applied
+    to the payload and stamp the PR's `docs/index.html` carries, so the feed is
+    main's code plus the page's data and nothing hand-written. A PR that deletes
+    it is refused while main has one;
   - `docs/index.html` is byte-equal to main's `generate_html.render()` applied to
     the payload and stamp the page carries, so the page is main's template plus
     data, never hand-written HTML. The payload itself is still PR-shaped, so

@@ -10,6 +10,7 @@ Jekyll theme, no build step, and no external requests (a strict-CSP-safe page).
 
 Writes:
   docs/index.html   the site (data embedded as JSON, styles/scripts inlined)
+  docs/feed.xml     Atom feed of the Briefing's picks (text only)
   docs/.nojekyll    tells Pages to serve the HTML as-is instead of running Jekyll
 
 Point GitHub Pages at branch `main`, folder `/docs`.
@@ -23,10 +24,12 @@ from __future__ import annotations
 import math
 import re
 import shutil
+import xml.etree.ElementTree as ET
+from datetime import date
 from html import escape
 from json import dumps
 from pathlib import Path
-from urllib.parse import urlparse, urlsplit
+from urllib.parse import quote, urlparse, urlsplit
 
 import briefing
 import common as c
@@ -71,6 +74,7 @@ TEMPLATE = Path(__file__).resolve().parent / "templates" / "site.html"
 REPO_NAME = "AwesomeSecurity-AIResearch"
 REPO_URL = f"https://github.com/rcha0s/{REPO_NAME}"
 SITE_URL = f"https://rcha0s.github.io/{REPO_NAME}/"
+SITE_AUTHOR = "Awesome Security & AI Research"
 SITE_TITLE = "Awesome Security & AI Research: a weekly vetted briefing"
 SITE_DESC = (
     "A weekly, source-cited briefing on AI security, product security, and applied "
@@ -665,6 +669,113 @@ def render(payload: dict, now: str) -> str:
     return html
 
 
+ATOM_NS = "http://www.w3.org/2005/Atom"
+_XML_BAD = re.compile("[^\t\n\r -퟿-�\U00010000-\U0010ffff]")
+_DAY = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
+# Used only when the payload's own `generated` day is not a real date: a fixed day,
+# never the wall clock, so a re-render stays byte-identical.
+FEED_EPOCH = "2000-01-01"
+
+
+def _xml_text(value: object) -> str:
+    """Plain text safe for an XML text node: no control characters, one-space gaps."""
+    return " ".join(_XML_BAD.sub("", str(value or "")).split())
+
+
+def _real_day(value: object) -> str | None:
+    """The first ten characters of `value` if they are an ASCII YYYY-MM-DD real date."""
+    text = str(value or "")[:10]
+    if not _DAY.fullmatch(text):
+        return None
+    try:
+        date.fromisoformat(text)
+    except ValueError:
+        return None
+    return text
+
+
+def _rfc3339(day: object, fallback: str) -> str:
+    """`day` as RFC 3339 midnight UTC; an invalid day falls back to `fallback`
+    (a real day, or FEED_EPOCH when that is invalid too)."""
+    text = _real_day(day) or _real_day(fallback) or FEED_EPOCH
+    return f"{text}T00:00:00Z"
+
+
+def feed_items(payload: dict) -> list[dict]:
+    """The Briefing's picks as feed items: biggest stories, top stories, claim changes."""
+    found = (payload.get("findings") or []) + (payload.get("editorial") or [])
+    rows = {r.get("id"): r for r in found}
+    claims = {k.get("id"): k for k in payload.get("claims") or []}
+    items: list[dict] = []
+    for rid in (payload.get("biggest_stories") or []) + (payload.get("top_stories") or []):
+        row = rows.get(rid)
+        if row:
+            items.append(
+                {
+                    "link": f"{SITE_URL}?finding={quote(str(rid), safe='')}#week",
+                    "title": row.get("title"),
+                    "updated": briefing.last_activity(row),
+                    "summary": row.get("takeaway") or row.get("summary"),
+                }
+            )
+    for change in payload.get("claim_changes") or []:
+        claim = claims.get(change.get("claim"))
+        if claim:
+            items.append(
+                {
+                    "link": f"{SITE_URL}?claim={quote(str(claim['id']), safe='')}#claims",
+                    "title": claim.get("title") or claim.get("statement"),
+                    "updated": change.get("date"),
+                    "summary": claim.get("statement"),
+                }
+            )
+    return items
+
+
+def render_feed(payload: dict, now: str) -> str:
+    """The Atom 1.0 feed of the Briefing's picks: text content only, built with
+    ElementTree (which escapes), dated from the payload's `generated` day (`now`),
+    so a re-render is byte-identical. Every payload value is treated as hostile text."""
+    feed = ET.Element("feed", {"xmlns": ATOM_NS})  # no ET namespace registry: no global state
+    today = _rfc3339(now, FEED_EPOCH)
+
+    def add(parent: ET.Element, tag: str, text: str = "", **attrs: str) -> ET.Element:
+        node = ET.SubElement(parent, tag, attrs)
+        if text:
+            node.text = text
+        return node
+
+    add(feed, "title", _xml_text(SITE_TITLE))
+    add(feed, "subtitle", _xml_text(SITE_DESC))
+    add(feed, "id", SITE_URL)
+    add(add(feed, "author"), "name", _xml_text(SITE_AUTHOR))
+    add(feed, "updated", today)
+    add(feed, "link", href=f"{SITE_URL}feed.xml", rel="self", type="application/atom+xml")
+    add(feed, "link", href=SITE_URL, rel="alternate", type="text/html")
+    seen: set[str] = set()
+    for item in feed_items(payload):
+        if item["link"] in seen:
+            continue
+        seen.add(item["link"])
+        entry = add(feed, "entry")
+        add(entry, "id", item["link"])
+        add(entry, "title", _xml_text(item["title"]) or item["link"])
+        add(entry, "updated", _rfc3339(item["updated"], today[:10]))
+        add(entry, "link", href=item["link"], rel="alternate", type="text/html")
+        add(entry, "summary", _xml_text(item["summary"]), type="text")
+    ET.indent(feed)
+    return f'<?xml version="1.0" encoding="utf-8"?>\n{ET.tostring(feed, encoding="unicode")}\n'
+
+
+def render_feed_for_page(page: str) -> str:
+    """The feed for a rendered page, from the payload and stamp it carries: exactly
+    what the merge gate recomputes (the embedded payload, not the in-memory one)."""
+    payload, stamp, problems = cc.embedded(page)
+    if problems or payload is None:
+        raise ValueError("; ".join(problems))
+    return render_feed(payload, stamp)
+
+
 def main() -> int:
     ledger = cl.load_ledger()
     errors = cl.validate_ledger(ledger)
@@ -686,7 +797,9 @@ def main() -> int:
 
     docs = c.ROOT / "docs"
     docs.mkdir(parents=True, exist_ok=True)
-    (docs / "index.html").write_text(render(payload, now), encoding="utf-8")
+    page = render(payload, now)
+    (docs / "index.html").write_text(page, encoding="utf-8")
+    (docs / "feed.xml").write_text(render_feed_for_page(page), encoding="utf-8")
     # Without this, Pages runs the output through Jekyll and mangles it.
     (docs / ".nojekyll").write_text("", encoding="utf-8")
     detail_pages = _copy_detail_pages(docs, conf)
