@@ -247,3 +247,43 @@ def claim_domain(claim: dict, tax: taxonomy.Taxonomy) -> str:
         return ""
     did, how = taxonomy.resolve(tax, topic, label)
     return did if how in _TRUSTED_RESOLUTION else ""
+
+
+# --- Efficiency: cost and work efficiency read as their own tracks ---
+EFFICIENCY_DOMAINS = {"cost": "air.cost-efficiency", "work": "air.work-efficiency"}
+EFFICIENCY_CLAIMS_MAX = 4
+EFFICIENCY_FINDINGS_MAX = 3
+
+
+def _last_change(claim: dict) -> str:
+    """The claim's newest ledger date (the site's "Last change" sort)."""
+    keys = ("changed_on", "superseded_on", "added_on", "first_seen")
+    return next((str(claim[k]) for k in keys if claim.get(k)), "")
+
+
+def efficiency_claims(claims: list[dict], n_max: int = EFFICIENCY_CLAIMS_MAX) -> list[dict]:
+    """Live claims filed under the cost or work efficiency domain, newest change first
+    (ties: claim id). Retired claims are history, not a track to follow."""
+    ids = set(EFFICIENCY_DOMAINS.values())
+    live = [
+        c
+        for c in claims
+        if c.get("domain_id") in ids and c.get("status") in ("current", "contested") and c.get("id")
+    ]
+    live.sort(key=lambda c: str(c["id"]))
+    live.sort(key=_last_change, reverse=True)
+    return live[:n_max]
+
+
+def efficiency_findings(
+    rows: list[dict], now: str, days: int, n_max: int = EFFICIENCY_FINDINGS_MAX
+) -> list[dict]:
+    """Stories in the efficiency domains active in the last `days`, newest first."""
+    ids, cutoff = set(EFFICIENCY_DOMAINS.values()), _cutoff(now, days)
+    hits = [r for r in rows if r.get("domain_id") in ids and last_activity(r) >= cutoff]
+    return _ranked(hits, last_activity, source_count, _composite)[:n_max]
+
+
+def efficiency_note() -> str:
+    """The one sentence README and site both print above the Efficiency section."""
+    return "Where agent harnesses still waste tokens or time, and what to change."
