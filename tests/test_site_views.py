@@ -172,6 +172,9 @@ FNS = [
     "archiveMatches",
     "tvar",
     "windowNote",
+    "biggestNote",
+    "biggestHTML",
+    "rowsById",
     "emergingBlock",
     "secHead",
     "lessonsHTML",
@@ -839,3 +842,61 @@ def test_sentence_cut_does_not_end_at_abbreviations():
         gh.sentence_cut("We tested v. 2. It held up. More " + "x " * 60, 40)
         == "We tested v. 2. It held up. …"
     )
+
+
+# --- Biggest this week (JS) ----------------------------------------------------
+def _story(rid, **over):
+    return {
+        "id": rid,
+        "topic": "ai-security",
+        "title": f"Story {rid}",
+        "url": "https://example.com/" + rid,
+        "published": "2026-07-14",
+        "corroborators": [],
+        "updates": [],
+        "lessons": [],
+        **over,
+    }
+
+
+def test_biggest_lane_renders_cards_with_the_exploited_chip():
+    data = {
+        "topics": {},
+        "snapshot_days": 7,
+        "biggest_stories": ["hot", "wide", "gone"],
+        "findings": [_story("hot", exploited=True), _story("wide", exploited=False)],
+        "editorial": [],
+    }
+    shown = {}
+    html = run_js(data, "biggestHTML(DATA.__shown = {})")
+    assert "Biggest this week" in html
+    assert "Most covered or exploited in the last 7 days." in html
+    assert html.count('class="art story"') == 2  # the unknown id is skipped
+    assert html.count('class="chip exploited">Exploited<') == 1
+    assert html.index("Story hot") < html.index("Story wide")
+    assert shown == {}
+
+
+def test_biggest_lane_marks_its_rows_shown_and_hides_when_empty():
+    data = {
+        "topics": {},
+        "snapshot_days": 7,
+        "biggest_stories": ["hot"],
+        "findings": [_story("hot")],
+        "editorial": [],
+    }
+    assert run_js(data, "(function(){var s={};biggestHTML(s);return s;})()") == {"hot": 1}
+    empty = {
+        "snapshot_days": 7,
+        "biggest_stories": [],
+        "findings": [_story("hot")],
+        "editorial": [],
+    }
+    assert run_js(empty, "biggestHTML({})") == ""
+    assert run_js({"snapshot_days": 7, "findings": [], "editorial": []}, "biggestHTML({})") == ""
+
+
+def test_exploited_chip_is_only_for_a_true_boolean():
+    data = {"topics": {}, "findings": [_story("a", exploited="yes"), _story("b", exploited=True)]}
+    got = run_js(data, "[storyCardHTML(DATA.findings[0], 0), storyCardHTML(DATA.findings[1], 0)]")
+    assert "Exploited" not in got[0] and "Exploited" in got[1]

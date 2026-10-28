@@ -447,7 +447,13 @@ def _teaser(payload: dict) -> list[str]:
         len(payload["top_stories"]),
         payload["snapshot_days"],
     )
-    out = ["## This week's top stories", "", f"_{when}_", ""]
+    biggest = [rows[i] for i in payload.get("biggest_stories", [])[:3] if i in rows]
+    out = []
+    if biggest:
+        note = briefing.biggest_note(payload["snapshot_days"])
+        out += ["## Biggest this week", "", f"_{note}_", ""]
+        out += [_story_line(i, r, names) for i, r in enumerate(biggest, 1)] + [""]
+    out += ["## This week's top stories", "", f"_{when}_", ""]
     out += [_story_line(i, r, names) for i, r in enumerate(stories, 1)] or ["_No stories yet._"]
     last = fmt_published({"published": changes[0]["date"]}) if changes else ""
     note = briefing.changes_note(
