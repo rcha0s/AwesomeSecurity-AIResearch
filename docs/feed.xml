@@ -87,45 +87,45 @@
     <summary type="text">Push iOS 18.7.11 to devices that cannot run iOS 27, and patch Macs that expose Remote Management or Screen Sharing.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-output-is-untrusted-input-to-review-tooling#claims</id>
-    <title>Rendered agent transcripts can show reviewers a false record</title>
-    <updated>2026-10-25T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-output-is-untrusted-input-to-review-tooling#claims" rel="alternate" type="text/html" />
-    <summary type="text">Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims</id>
+    <title>Send simple subagent jobs to a cheaper model</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims" rel="alternate" type="text/html" />
+    <summary type="text">Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing quality.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=localhost-agent-servers-are-reachable-from-any-webpage#claims</id>
-    <title>Any webpage can reach a coding agent's localhost server</title>
-    <updated>2026-10-25T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=localhost-agent-servers-are-reachable-from-any-webpage#claims" rel="alternate" type="text/html" />
-    <summary type="text">A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims</id>
+    <title>Compact near the context limit; reset only if the model needs it</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness should compact long sessions automatically, and add hard context resets only for models that wrap up early near the limit.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=per-skill-scanning-misses-cross-skill-cascades#claims</id>
-    <title>Harmful goals split across skills slip past per-skill scanners</title>
-    <updated>2026-10-25T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=per-skill-scanning-misses-cross-skill-cascades#claims" rel="alternate" type="text/html" />
-    <summary type="text">A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims</id>
+    <title>Return short tool responses and distilled subagent summaries</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=input-guardrail-weaker-than-target-is-bypassable#claims</id>
-    <title>A guardrail weaker than its target can be bypassed</title>
-    <updated>2026-10-24T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=input-guardrail-weaker-than-target-is-bypassable#claims" rel="alternate" type="text/html" />
-    <summary type="text">An input-screening guardrail model that is less capable than the model it protects (less reasoning effort, no tools) can be bypassed by payloads hidden in plain prose that only the stronger, tool-using target can decode.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims</id>
+    <title>Keep intermediate tool results out of the model context</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims" rel="alternate" type="text/html" />
+    <summary type="text">In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims</id>
-    <title>Auto-evolved harness gains are mostly overfitting</title>
-    <updated>2026-10-21T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims" rel="alternate" type="text/html" />
-    <summary type="text">Gains from automatically evolving an agent harness (prompts, skills, tools, orchestration around a fixed model) are mostly search-set overfitting and extra inference compute: across 21 settings with significant gains, those two explained 54% and 14% of the gain on average, search-set gains often failed to transfer to held-out tasks, and a validation split did not prevent the overfitting.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims</id>
+    <title>Load tool definitions on demand, not all at start</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims" rel="alternate" type="text/html" />
+    <summary type="text">Vendors report that loading tool definitions only when needed cut tokens by 47% (Cursor A/B test, runs that called an MCP tool) to 85% (Anthropic Tool Search); Anthropic's 98.7% is a single worked example.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=diff-review-catches-more-than-full-file-review#claims</id>
-    <title>Diff review catches more LLM-introduced defects than full-file review</title>
-    <updated>2026-10-21T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=diff-review-catches-more-than-full-file-review#claims" rel="alternate" type="text/html" />
-    <summary type="text">Reviewing an LLM's proposed change as a diff catches more defects than reviewing the resulting full file.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims</id>
+    <title>Measure speedups with repeated trials, not impressions</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.</summary>
   </entry>
 </feed>
