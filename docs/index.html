@@ -474,6 +474,9 @@
   details.claim[open] > summary .more { display: none; }
   details.claim > summary .desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   details.claim[open] > summary .desc { display: block; }
+  .claim .do { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  details.claim[open] > summary .do { display: none; }
+  .conf-how { font-size: 11px; margin-left: -2px; }
   .chain { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; }
   .chain .here { font-weight: 600; color: var(--ink); }
   .sitesearch { flex: 1 1 220px; max-width: 360px; }
@@ -833,9 +836,18 @@
   }
 
   // ================= CLAIMS =================
-  var claimState = { topic: "all", status: "all", sort: "confidence", q: "" };
+  var claimState = { topic: "all", status: "all", sort: "change", q: "" };
   function isRetired(c) { return c.status === "superseded" || c.status === "refuted"; }
   // The ledger's own change dates; first_seen is when the belief dates from.
+  // How confidence is set, from what the code does: research-scan SKILL.md has the
+  // model pick `--confidence` for add_claim.py "to reflect the strength and
+  // independence of the evidence"; claims.py only checks 0..1 (default 0.5) and
+  // nothing recomputes it when evidence is added.
+  var CONF_TIP = "A judgment call, not a formula: the model that wrote the claim set this from how strong and " +
+    "independent its evidence looked. It is not recalculated when evidence is added.";
+  function doLine(c) {
+    return c && c.guidance && !isRetired(c) ? '<p class="guide do"><b>Do.</b> ' + txt(c.guidance) + '</p>' : '';
+  }
   function lastChange(c) { return String(c.changed_on || c.superseded_on || c.added_on || c.first_seen || ""); }
   function ledgerCounts(claims) {
     var n = { current: 0, contested: 0, retired: 0 };
@@ -866,7 +878,7 @@
     html += filterGroup("Status", "status", [["all", "All"], ["current", "Current (" + counts.current + ")"],
       ["contested", "Contested (" + counts.contested + ")"], ["superseded", "Superseded (" + counts.superseded + ")"],
       ["refuted", "Refuted (" + counts.refuted + ")"]], claimState.status);
-    html += filterGroup("Sort", "sort", [["confidence", "Confidence"], ["change", "Last change"]], claimState.sort);
+    html += filterGroup("Sort", "sort", [["change", "Last change"], ["confidence", "Confidence"]], claimState.sort);
     html += '</div><div id="claim-list"></div>';
     root.innerHTML = html;
     $("#claims-q").addEventListener("input", function () { claimState.q = this.value; drawClaims(); });
@@ -965,9 +977,11 @@
     return '<details class="claim st-' + esc(c.status) + (gone ? ' retired' : '') + '" id="claim-' + esc(c.id) + '">' +
       '<summary><div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
         topicPill(c.topic) +
-        (!gone && c.confidence != null ? '<span class="conf-pill">' + num(Math.round(Number(c.confidence) * 100)) + '% confidence</span>' : '') +
+        (!gone && c.confidence != null ? '<span class="conf-pill">' + num(Math.round(Number(c.confidence) * 100)) + '% confidence</span>' +
+          '<a class="link conf-how" href="#methodology" data-goto="methodology" data-anchor="method-confidence" title="' +
+          esc(CONF_TIP) + '">how?</a>' : '') +
         (c.domain ? '<span style="color:var(--ink-3);font-size:12px">' + txt(c.domain) + '</span>' : '') +
-      '</div><h3>' + txt(title) + '</h3>' + line + '<span class="more">Details &#9662;</span></summary>' +
+      '</div><h3>' + txt(title) + '</h3>' + line + doLine(c) + '<span class="more">Details &#9662;</span></summary>' +
       body +
       (meta.length ? '<div class="cmeta">' + meta.map(function (m) { return '<span>' + m + '</span>'; }).join("") + '</div>' : "") +
       (evHtml ? '<details class="ev"><summary>Evidence &amp; sources (' + num(arr(c.evidence).length) + ')</summary>' + evHtml + '</details>' : "") +
@@ -1296,7 +1310,7 @@
       '<div class="claim-top"><span class="kind">' + esc(ch.pinned === true && ch.kind === "overturned" ? "Last reversal" : CHANGE_LABEL[ch.kind]) + '</span>' +
         '<span class="when">' + esc(fmtDate(ch.date)) + (ageText(ch.date) ? ' · ' + esc(ageText(ch.date)) : '') + '</span>' +
         '<span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' + topicPill(c.topic) + '</div>' +
-      '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc +
+      '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc + doLine(c) +
       (old ? '<p class="lineage"><b>Replaced</b> <span class="status ' + esc(old.status) + '">' + esc(old.status) +
         '</span> <s>' + claimRef(old.id) + '</s></p>' : '') +
       (fell && fell.supersession_reason ? '<p class="guide"><b>Why.</b> ' + txt(fell.supersession_reason) + '</p>' : '') +
@@ -1520,6 +1534,11 @@
           'contested, superseded or refuted; the old one stays, struck through, with the date and the reason.</div>' +
         '<div><b>News story</b>: one event, however many outlets covered it, kept for good under ' + routeLink("news", {}, "Stories") +
           '. The front page shows the last ' + num(D.news_front_page_days) + ' days, at most ' + num(D.news_front_page_max) + ' stories.</div>' +
+        '<div id="method-confidence"><b>Confidence</b>: the percentage on a claim card. It is a judgment call, not a formula. ' +
+          'When a claim is added, the model writing it sets a number from 0 to 1 meant to reflect the strength and ' +
+          'independence of the evidence, and the ledger only checks that it is between 0 and 1 (0.5 if none is given). ' +
+          'Adding evidence later does not recalculate it; a human or a correction edits it. Claim status (current, ' +
+          'contested, superseded, refuted) is separate.</div>' +
         '<div><b>Source-checked (automated)</b>: the lesson quotes were found in the source text and a separate model pass ' +
           'did not refute them. It is an automated check, not human review.</div>' +
         '<div><b>This week</b>: the last ' + num(D.snapshot_days) + ' days. Top stories are newest first, then the ones with ' +
@@ -1596,6 +1615,10 @@
       setRoute(next);
     }
     show(g.dataset.goto);
+    if (g.dataset.anchor) {
+      var t = document.getElementById(g.dataset.anchor);
+      if (t && t.scrollIntoView) t.scrollIntoView();
+    }
   });
 
   (function () {
