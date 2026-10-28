@@ -188,3 +188,42 @@ def test_site_and_readme_print_the_same_window_sentence():
     js = ",".join(f"windowNote({f}, {t}, 7)" for f, t in cases)
     got = run_js({}, "[" + js + "]")
     assert got == [briefing.window_note(f, t, 7) for f, t in cases]
+
+
+def test_site_and_readme_print_the_same_biggest_sentence():
+    import briefing
+    from test_site_views import run_js
+
+    got = run_js({}, "[biggestNote(7), biggestNote(14)]")
+    assert got == [briefing.biggest_note(7), briefing.biggest_note(14)]
+
+
+def test_readme_leads_with_biggest_this_week_and_no_story_repeats(sandbox):
+    import claims
+
+    claims.save_ledger(ledger_of(make_claim()))
+    pool = common.load_pool("ai-research")
+    pool["entries"] += [
+        make_entry(
+            id="quiet", title="Quiet story", source_url="https://e.com/q", published="2026-07-14"
+        ),
+        make_entry(
+            id="hot",
+            title="Exploited story",
+            source_url="https://e.com/x",
+            published="2026-07-13",
+            tags=["exploited-in-the-wild"],
+        ),
+    ]
+    common.save_pool("ai-research", pool)
+    gs.main()
+    md = (sandbox / "README.md").read_text(encoding="utf-8")
+    assert md.index("## Biggest this week") < md.index("## This week's top stories")
+    assert "_Most covered or exploited in the last 7 days._" in md
+    assert md.count("Exploited story") == 1
+    assert md.count("Quiet story") == 1
+
+
+def test_readme_has_no_biggest_section_when_nothing_qualifies(sandbox):
+    md = _readme_with(sandbox, ["2026-07-14"])
+    assert "## Biggest this week" not in md

@@ -197,3 +197,59 @@ def test_claim_domain_maps_labels_to_taxonomy_ids_but_not_bare_defaults():
     assert b.claim_domain({"topic": "ai-security", "domain": "Zzyzx"}, tax) == ""
     assert b.claim_domain({"topic": "nope", "domain": "Prompt Injection"}, tax) == ""
     assert b.claim_domain({"topic": "ai-security"}, tax) == ""
+
+
+# --- Biggest this week --------------------------------------------------------
+def big(rid, published, n_corr=0, exploited=False, composite=50):
+    return {**row(rid, published, n_corr=n_corr, composite=composite), "exploited": exploited}
+
+
+def test_biggest_needs_two_sources_or_exploited_in_the_window():
+    rows = [
+        big("single", "2026-10-19"),
+        big("two", "2026-10-19", n_corr=1),
+        big("exploited-single", "2026-10-18", exploited=True),
+        big("old-and-covered", "2026-09-01", n_corr=4),
+    ]
+    assert ids(b.biggest_stories(rows, NOW, 7)) == ["exploited-single", "two"]
+
+
+def test_biggest_ranks_exploited_then_sources_then_newest_then_composite():
+    rows = [
+        big("three-src", "2026-10-15", n_corr=2),
+        big("two-new", "2026-10-19", n_corr=1),
+        big("two-old", "2026-10-16", n_corr=1),
+        big("kev", "2026-10-14", exploited=True),
+        big("two-new-high", "2026-10-19", n_corr=1, composite=90),
+    ]
+    got = b.biggest_stories(rows, NOW, 7, n_max=10)
+    assert ids(got) == ["kev", "three-src", "two-new-high", "two-new", "two-old"]
+
+
+def test_biggest_is_capped_at_three():
+    rows = [big(f"s{i}", "2026-10-19", n_corr=1) for i in range(6)]
+    assert len(b.biggest_stories(rows, NOW, 7)) == 3
+
+
+def test_biggest_is_empty_when_nothing_qualifies():
+    assert b.biggest_stories([big("a", "2026-10-19")], NOW, 7) == []
+    assert b.biggest_stories([], NOW, 7) == []
+
+
+def test_top_stories_leave_out_the_biggest_and_stay_capped_and_topped_up():
+    rows = [big(f"s{i}", f"2026-10-{12 + i:02d}", n_corr=1 if i < 3 else 0) for i in range(10)]
+    taken = set(ids(b.biggest_stories(rows, NOW, 7)))
+    got, topped = b.top_stories(rows, NOW, 7, exclude=taken)
+    assert not taken & set(ids(got))
+    assert len(got) == 7 and not topped  # 10 rows minus the 3 in the lane
+    thin = [big("a", "2026-10-19", n_corr=1)] + [
+        big(f"o{i}", f"2026-09-{10 + i}") for i in range(6)
+    ]
+    lane = set(ids(b.biggest_stories(thin, NOW, 7)))
+    got, topped = b.top_stories(thin, NOW, 7, exclude=lane)
+    assert topped and "a" not in ids(got) and len(got) == 5
+    assert b.fresh_count(got, NOW, 7) == 0
+
+
+def test_biggest_note_names_the_window():
+    assert b.biggest_note(7) == "Most covered or exploited in the last 7 days."

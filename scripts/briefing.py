@@ -10,6 +10,10 @@ rows, so the two surfaces can never disagree.
                 newest activity first, then most covering sources, then
                 composite (Rohan, 2026-10-27: the briefing reads latest first). Fewer than `n_min` in the window -> topped up with
                 the most recent stories outside it (and the caller says so).
+  biggest_stories  the week's lead lane: stories in the window with 2+ covering
+                sources or marked exploited, exploited first, then most sources,
+                newest activity, composite. At most BIGGEST_MAX; none -> no lane.
+                top_stories leaves these out so no story shows twice.
   claim_changes what the ledger changed in the last `days`: claims added,
                 newly contested, and overturned (superseded or refuted, shown
                 as the claim that replaced them). Fewer than `n_min` in the
@@ -26,6 +30,7 @@ from datetime import datetime, timedelta
 
 import taxonomy
 
+BIGGEST_MAX = 3
 TOP_STORIES_MAX = 8
 TOP_STORIES_MIN = 5
 # A label resolved by these rules is trusted on a topic page; a bare default is not.
@@ -57,15 +62,31 @@ def _composite(row: dict) -> float:
         return 0.0
 
 
+def biggest_stories(rows: list[dict], now: str, days: int, n_max: int = BIGGEST_MAX) -> list[dict]:
+    """The "Biggest this week" lane: widely covered or exploited, active in the window."""
+    cutoff = _cutoff(now, days)
+    big = [
+        r
+        for r in rows
+        if last_activity(r) >= cutoff and (r.get("exploited") is True or source_count(r) >= 2)
+    ]
+    return _ranked(
+        big, lambda r: r.get("exploited") is True, source_count, last_activity, _composite
+    )[:n_max]
+
+
 def top_stories(
     rows: list[dict],
     now: str,
     days: int,
     n_max: int = TOP_STORIES_MAX,
     n_min: int = TOP_STORIES_MIN,
+    exclude: frozenset | set = frozenset(),
 ) -> tuple[list[dict], bool]:
-    """(the front page's top stories, whether the window had to be topped up)."""
+    """(the front page's top stories, whether the window had to be topped up).
+    Rows whose id is in `exclude` (the Biggest lane's) are left out, top-up included."""
     cutoff = _cutoff(now, days)
+    rows = [r for r in rows if r.get("id") not in exclude]
     fresh = [r for r in rows if last_activity(r) >= cutoff]
     picked = _ranked(fresh, last_activity, source_count, _composite)[:n_max]
     if len(picked) >= n_min:
@@ -82,6 +103,11 @@ def fresh_count(rows: list[dict], now: str, days: int) -> int:
     """How many of `rows` were active in the last `days` (the rest topped up)."""
     cutoff = _cutoff(now, days)
     return sum(1 for r in rows if last_activity(r) >= cutoff)
+
+
+def biggest_note(days: int) -> str:
+    """The one sentence README and site both print above the Biggest lane."""
+    return f"Most covered or exploited in the last {days} days."
 
 
 def window_note(fresh: int, total: int, days: int) -> str:
