@@ -203,6 +203,7 @@ FNS = [
     "sortClaims",
     "claimEvidenceHTML",
     "claimHTML",
+    "doLine",
     "claimChain",
     "storyMatches",
     "allStories",
@@ -227,6 +228,7 @@ def run_js(data: dict, expr: str):
     src = gh.TEMPLATE.read_text(encoding="utf-8")
     labels = re.search(r"var CHANGE_LABEL = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var CHECKED_TIP = .*?;\n", src, re.S).group(0)
+    labels += "\n" + re.search(r"var CONF_TIP = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var BOILERPLATE = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var claimState = \{.*?\};", src).group(0)
     prelude = (
@@ -374,7 +376,7 @@ def test_claim_changes_skip_unknown_kinds_and_missing_claims():
     assert run_js(data, "DATA.claim_changes.map(claimChangeHTML).join('')") == ""
 
 
-def test_claim_change_card_shows_the_reversal_and_keeps_guidance_off_the_front_page():
+def test_claim_change_card_shows_the_reversal_and_shows_the_do_line():
     data = {
         "topics": {},
         "claims": [
@@ -423,7 +425,7 @@ def test_claim_change_card_shows_the_reversal_and_keeps_guidance_off_the_front_p
     assert "<s>" in html and "Old belief" in html and 'href="?claim=old#claims"' in html
     assert "Ten scanners missed it." in html and "refuted" in html
     assert "3 sources" in html and "https://b.example/2" in html and "Newer" in html
-    assert "DO-THIS-ON-THE-CLAIMS-TAB" not in html
+    assert "<b>Do.</b> DO-THIS-ON-THE-CLAIMS-TAB" in html
 
 
 def test_site_and_readme_print_the_same_changes_sentence():
@@ -730,7 +732,7 @@ def test_ledger_cards_are_collapsed_with_guidance_inside_and_retired_lead_with_w
     }
     old, mid, live = run_js(data, "DATA.claims.map(claimHTML)")
     summary = live[: live.index("</summary>")]
-    assert live.startswith("<details") and "Do C." not in summary and "Do C." in live
+    assert live.startswith("<details") and "Do C." in summary and "Do C." in live
     assert "80% confidence" in summary and "C basis" in live
     assert "belief dates from 2016-06" in live and "added to the ledger 2026-10-01" in live
     assert "confidence" not in old and "A basis" not in old
@@ -846,6 +848,80 @@ def test_sentence_cut_does_not_end_at_abbreviations():
         gh.sentence_cut("We tested v. 2. It held up. More " + "x " * 60, 40)
         == "We tested v. 2. It held up. …"
     )
+
+
+def _card_data():
+    return {
+        "topics": {},
+        "claims": [
+            {
+                "id": "g",
+                "status": "current",
+                "title": "T",
+                "statement": "S",
+                "confidence": 0.8,
+                "guidance": "Pin <b>x</b> & verify.",
+                "added_on": "2026-10-01",
+            },
+            {"id": "n", "status": "current", "title": "T2", "statement": "S2", "confidence": 0.6},
+            {
+                "id": "old",
+                "status": "superseded",
+                "guidance": "stale advice",
+                "superseded_by": ["g"],
+            },
+        ],
+        "claim_changes": [
+            {"kind": "added", "claim": "g", "date": "2026-10-02"},
+            {"kind": "added", "claim": "n", "date": "2026-10-02"},
+        ],
+    }
+
+
+def test_collapsed_claim_card_shows_do_line_and_escapes_it():
+    html = run_js(_card_data(), "claimHTML(DATA.claims[0])")
+    summary = html[: html.index("</summary>")]
+    assert '<p class="guide do"><b>Do.</b> Pin &lt;b&gt;x&lt;/b&gt; &amp; verify.</p>' in summary
+    assert "<b>x</b>" not in html
+
+
+def test_claim_card_without_guidance_has_no_do_line_in_summary():
+    html = run_js(_card_data(), "claimHTML(DATA.claims[1])")
+    assert "Do." not in html[: html.index("</summary>")]
+    retired = run_js(_card_data(), "claimHTML(DATA.claims[2])")
+    assert "stale advice" not in retired
+
+
+def test_confidence_explainer_present_with_how_link():
+    html = run_js(_card_data(), "claimHTML(DATA.claims[0])")
+    summary = html[: html.index("</summary>")]
+    assert "80% confidence" in summary and ">how?</a>" in summary
+    assert 'data-goto="methodology"' in summary and 'data-anchor="method-confidence"' in summary
+    assert "not a formula" in summary  # tooltip
+    src = gh.TEMPLATE.read_text(encoding="utf-8")
+    assert 'id="method-confidence"' in src and "<b>Confidence</b>" in src
+
+
+def test_claims_default_order_is_most_recently_changed_first():
+    data = {
+        "claims": [
+            {"id": "evergreen", "status": "current", "confidence": 0.95, "first_seen": "2016-01"},
+            {"id": "fresh", "status": "current", "confidence": 0.5, "added_on": "2026-10-20"},
+            {"id": "changed", "status": "contested", "confidence": 0.6, "changed_on": "2026-10-25"},
+        ]
+    }
+    got = run_js(
+        data,
+        "[claimState.sort, sortClaims(DATA.claims, claimState.sort).map(function (c) { return c.id; }),"
+        " sortClaims(DATA.claims, 'confidence').map(function (c) { return c.id; })]",
+    )
+    assert got == ["change", ["changed", "fresh", "evergreen"], ["evergreen", "changed", "fresh"]]
+
+
+def test_briefing_change_card_shows_do_line_only_when_guidance_exists():
+    with_g, without = run_js(_card_data(), "DATA.claim_changes.map(claimChangeHTML)")
+    assert "<b>Do.</b> Pin &lt;b&gt;x&lt;/b&gt; &amp; verify." in with_g
+    assert "Do." not in without
 
 
 # --- Biggest this week (JS) ----------------------------------------------------
