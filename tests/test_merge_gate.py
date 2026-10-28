@@ -236,6 +236,7 @@ def test_feed_and_page_are_compared_as_raw_bytes(tmp_path, monkeypatch, eol):
 
     root = _tree(tmp_path)
     monkeypatch.setattr(gate, "main_has_feed", lambda base: True)
+    monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
     index, feed = root / "docs" / "index.html", root / "docs" / "feed.xml"
     good = gh.render_feed_for_page(index.read_text())
     feed.write_bytes(good.encode())
