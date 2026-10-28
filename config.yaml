@@ -226,6 +226,41 @@ limits:
     - frontier risk
     - dangerous capabilities
     - evals
+  batch_eff_max: 3        # efficiency lane (select_batch.eff_lane), right after the lab lane:
+                          # recent candidates whose title / excerpt name a batch_eff_terms
+                          # phrase (token spend, prompt caching, subagents, parallel agents,
+                          # ...), tagged `batch_priority: efficiency`. Practitioner posts on
+                          # cost and work efficiency (Rohan, 2026-10-27, F9) carry no
+                          # severity marker, so they sank below the cut
+  batch_eff_per_source: 1 # most efficiency-lane slots one source (feed) may take
+  batch_eff_terms:        # as a whole word or phrase (plural s allowed), title + excerpt
+    - token usage
+    - token cost
+    - token budget
+    - token efficiency
+    - token spend
+    - prompt caching
+    - prompt cache
+    - cache hit
+    - context window
+    - context budget
+    - context engineering
+    - compaction
+    - subagent
+    - sub-agent
+    - parallel agents
+    - harness
+    - cost per task
+    - model routing
+    - cheaper model
+    - developer productivity
+    - productivity study
+    - agent workflow
+    - verification loop
+    - task decomposition
+    - spec-driven
+    - agent skills
+    - tool search
   batch_marker_bonus: 4   # deal score points for any severity / AI-incident marker
   batch_corroboration_bonus: 3  # ...plus this per extra source covering the story (max 3)
   max_turns: 360          # hard turn cap on the local model session. Sized for 25 deep

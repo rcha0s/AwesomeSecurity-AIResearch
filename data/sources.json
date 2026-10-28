@@ -2320,5 +2320,247 @@
     "added": "2026-10-25",
     "active": true,
     "notes": "major AI lab (lab lane, 2026-10-24)"
+  },
+  {
+    "id": "rss:https-danielmiessler-com-feed-rss",
+    "type": "rss",
+    "handle": "https://danielmiessler.com/feed.rss",
+    "name": "Daniel Miessler",
+    "url": "https://danielmiessler.com/feed.rss",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "rss:https-www-aihero-dev-rss-xml",
+    "type": "rss",
+    "handle": "https://www.aihero.dev/rss.xml",
+    "name": "AI Hero (Matt Pocock)",
+    "url": "https://www.aihero.dev/rss.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "rss:https-github-com-mattpocock-skills-releases-atom",
+    "type": "rss",
+    "handle": "https://github.com/mattpocock/skills/releases.atom",
+    "name": "Matt Pocock skills releases",
+    "url": "https://github.com/mattpocock/skills/releases.atom",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "newsletter:https-www-latent-space-feed",
+    "type": "newsletter",
+    "handle": "https://www.latent.space/feed",
+    "name": "Latent Space",
+    "url": "https://www.latent.space/feed",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "rss:https-hamel-dev-index-xml",
+    "type": "rss",
+    "handle": "https://hamel.dev/index.xml",
+    "name": "Hamel Husain",
+    "url": "https://hamel.dev/index.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "newsletter:https-newsletter-pragmaticengineer-com-feed",
+    "type": "newsletter",
+    "handle": "https://newsletter.pragmaticengineer.com/feed",
+    "name": "The Pragmatic Engineer",
+    "url": "https://newsletter.pragmaticengineer.com/feed",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "rss:https-factory-com-news-rss",
+    "type": "rss",
+    "handle": "https://factory.com/news/rss",
+    "name": "Factory",
+    "url": "https://factory.com/news/rss",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": "feed served at factory.com (factory.ai/news/rss 308-redirects there)"
+  },
+  {
+    "id": "rss:https-sourcegraph-com-blog-rss-xml",
+    "type": "rss",
+    "handle": "https://sourcegraph.com/blog/rss.xml",
+    "name": "Sourcegraph",
+    "url": "https://sourcegraph.com/blog/rss.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "rss:https-ampcode-com-news-rss",
+    "type": "rss",
+    "handle": "https://ampcode.com/news.rss",
+    "name": "Amp",
+    "url": "https://ampcode.com/news.rss",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
+  },
+  {
+    "id": "rss:https-steipete-me-rss-xml",
+    "type": "rss",
+    "handle": "https://steipete.me/rss.xml",
+    "name": "Peter Steinberger",
+    "url": "https://steipete.me/rss.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": "quiet since 2026-02"
+  },
+  {
+    "id": "rss:https-eugeneyan-com-rss",
+    "type": "rss",
+    "handle": "https://eugeneyan.com/rss/",
+    "name": "Eugene Yan",
+    "url": "https://eugeneyan.com/rss/",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-28",
+    "active": true,
+    "notes": null
   }
 ]

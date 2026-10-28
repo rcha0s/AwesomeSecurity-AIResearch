@@ -159,10 +159,22 @@ domains:
     keywords: [rag, retrieval augmented, retrieval-augmented, hybrid search, reranking, chunking, long context, long-context, lost in the middle, context window, context engineering, context compression, system prompt, few-shot, kv cache]
   air.model-io:
     name: Model I/O & Cost
-    scope: Serialization, structured output and constrained decoding, extraction pipelines, token cost, caching and model routing.
+    scope: Serialization, structured output and constrained decoding, extraction pipelines, batching.
     claim_eligible: true
     legacy_clusters: [C]
-    keywords: [structured output, constrained decoding, json schema, grammar-based generation, token cost, toon, prompt cache, prompt caching, batching, model routing, information extraction, serialization]
+    keywords: [structured output, constrained decoding, json schema, grammar-based generation, toon, batching, information extraction, serialization]
+  air.cost-efficiency:
+    name: Cost Efficiency
+    scope: The token use and spend of agents and their harnesses - prompt caching and cache hit rate, context budgets and compaction cost, loading tool definitions on demand, keeping tool output out of context, model routing and cheaper subagents, cost per task.
+    claim_eligible: true
+    legacy_clusters: []
+    keywords: [token cost, token usage, token budget, token efficiency, prompt cache, prompt caching, cache hit, context budget, compaction cost, tool search, on-demand tool, tool definitions, tool output, model routing, cheaper model, cheaper subagent, cost per task, inference cost]
+  air.work-efficiency:
+    name: Work Efficiency
+    scope: How a harness setup gets more correct work done per hour - planning and spec steps, task decomposition, subagent delegation, parallel agents, verification loops, skills, measured developer-productivity studies.
+    claim_eligible: true
+    legacy_clusters: []
+    keywords: [spec-driven, spec driven, planning step, plan mode, task decomposition, subagent delegation, parallel agents, agent workflow, verification loop, agent skills, developer productivity, productivity study, agentic engineering, harness engineering]
   air.evals:
     name: Evaluation & Benchmarks
     scope: How to measure LLMs and agents honestly - eval design, benchmarks, LLM-as-judge, and red-team eval methodology.
