@@ -54,6 +54,8 @@ def test_archive_ships_only_vetted_findings_newest_first_and_compact(sandbox):
         "source_name",
         "published",
         "takeaway",
+        "ids",
+        "exploited",
     }
     assert data["archive"][0]["domain"] == "Agents & Harnesses"
     assert len(data["archive"][2]["takeaway"]) <= gh.ARCHIVE_TAKEAWAY_CHARS + 2
@@ -186,6 +188,8 @@ FNS = [
     "quotePreview",
     "checkedChip",
     "caveatChips",
+    "idChip",
+    "triageChips",
     "alsoReported",
     "storyUpdates",
     "articleHTML",
@@ -1016,3 +1020,86 @@ def test_copy_link_button_is_keyboard_reachable_and_wired_to_the_panel_url():
         "https://x.test/site/?finding=abc%201#week",
         "https://x.test/site/?claim=c-1#claims",
     ]
+
+
+# --- Triage chips (ISC-46) ------------------------------------------------------
+def triage_row(**kw):
+    row = {
+        "id": "t1",
+        "topic": "ai-security",
+        "title": "A story",
+        "url": "https://e.com/a",
+        "takeaway": "Takeaway.",
+        "published": "2026-10-20",
+        "signals": ["week-of-2026-10-13", "timely", "high-relevance", "cve"],
+        "tags": ["timely", "week-of-2026-10-13"],
+        "ids": ["CVE-2026-12345", "GHSA-abcd-1234-wxyz"],
+        "exploited": True,
+        "corroborators": [],
+        "updates": [],
+    }
+    row.update(kw)
+    return row
+
+
+def cards(data):
+    return run_js({"topics": {}, **data}, ALL_CARDS)
+
+
+ALL_CARDS = (
+    "[storyCardHTML(DATA.r, 0), articleHTML(DATA.r), articleHTML(DATA.r, {kind: 1}),"
+    " newsCardHTML(DATA.r), newsCardHTML(DATA.r, {kind: 1}), archiveRowHTML(DATA.r)]"
+)
+
+
+def test_extract_ids_finds_cve_and_ghsa_in_order():
+    got = gh.extract_ids(
+        "Patch cve-2026-0001 now", "see GHSA-ABCD-1234-wxyz and CVE-2025-99999", "https://x.io/p"
+    )
+    assert got == ["CVE-2026-0001", "GHSA-abcd-1234-wxyz", "CVE-2025-99999"]
+
+
+def test_extract_ids_none_dedupes_and_caps():
+    assert gh.extract_ids("", None, "no ids here, CVE-12-1 or GHSA-abc") == []
+    assert gh.extract_ids("CVE-2026-1111 CVE-2026-1111", "cve-2026-1111") == ["CVE-2026-1111"]
+    many = " ".join(f"CVE-2026-{n}" for n in range(1000, 1010))
+    assert gh.extract_ids(many) == [f"CVE-2026-{n}" for n in range(1000, 1004)]
+    assert gh.extract_ids("xCVE-2026-1111") == []
+
+
+def test_payload_rows_carry_ids(sandbox):
+    entry = make_entry(
+        title="Exploit for CVE-2026-4242",
+        takeaway="Also GHSA-aaaa-bbbb-cccc",
+        source_url="https://e.com/q",
+    )
+    data = build(sandbox, entries=[entry])
+    assert data["findings"][0]["ids"] == ["CVE-2026-4242", "GHSA-aaaa-bbbb-cccc"]
+
+
+def test_id_chips_link_to_nvd_and_advisories_on_every_card():
+    for html in cards({"r": triage_row()}):
+        assert 'href="https://nvd.nist.gov/vuln/detail/CVE-2026-12345"' in html
+        assert 'href="https://github.com/advisories/GHSA-abcd-1234-wxyz"' in html
+        assert_inert(html)
+
+
+def test_hostile_ids_render_inert():
+    bad = [EVIL_URL, '"><img src=x onerror=alert(1)>', "CVE-2026-1<b>", EVIL, 7, None, {}]
+    for html in cards({"r": triage_row(ids=bad)}):
+        assert_inert(html)
+        assert "chip vid" not in html
+
+
+def test_no_pipeline_tags_on_cards():
+    for html in cards({"r": triage_row()}):
+        assert "week-of-" not in html and "timely" not in html
+        assert "high-relevance" not in html and 'class="chip sig"' not in html
+
+
+def test_exploited_chip_only_when_true():
+    on = cards({"r": triage_row()})
+    assert all('<span class="chip exploited">Exploited</span>' in h for h in on)
+    for flag in (False, "true", 1, None):
+        off = cards({"r": triage_row(exploited=flag)})
+        assert not any("Exploited" in h for h in off)

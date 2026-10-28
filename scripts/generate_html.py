@@ -121,6 +121,26 @@ def is_exploited(tags: object, url: str) -> bool:
     return (parts.hostname or "").lower() in KEV_HOSTS and parts.path.lower().startswith(KEV_PATH)
 
 
+_ID_PATTERN = re.compile(
+    r"(?<![A-Za-z0-9])(CVE-\d{4}-\d{4,}|GHSA(?:-[a-z0-9]{4}){3})(?![A-Za-z0-9])", re.I
+)
+MAX_IDS = 4
+
+
+def extract_ids(*texts: object) -> list[str]:
+    """CVE and GHSA ids named in the given texts, in first-seen order, upper-case
+    CVE and lower-case GHSA, deduplicated, at most MAX_IDS. The site builds each
+    id's link from this strict match, never from free text."""
+    found: list[str] = []
+    for text in texts:
+        for m in _ID_PATTERN.finditer(str(text or "")):
+            raw = m.group(1)
+            ident = raw.upper() if raw[:3].upper() == "CVE" else "GHSA" + raw[4:].lower()
+            if ident not in found:
+                found.append(ident)
+    return found[:MAX_IDS]
+
+
 def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
     """The subset of a pool entry the site actually renders."""
     scores = entry.get("scores") or {}
@@ -151,6 +171,12 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
         "fresh": c.is_fresh(entry, snapshot_days),
         "detail_path": _detail_relpath(entry),
         "lessons": finding_lessons(entry),
+        "ids": extract_ids(
+            entry.get("title"),
+            entry.get("takeaway"),
+            entry.get("summary"),
+            entry.get("source_url") or entry.get("article_url"),
+        ),
     }
 
 
@@ -580,6 +606,15 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
             "source_name": e.get("source_name", ""),
             "published": c.best_date(e) or "",
             "takeaway": sentence_cut(e.get("takeaway") or e.get("summary") or ""),
+            "exploited": is_exploited(
+                e.get("tags"), c.clean_source_url(e.get("source_url") or e.get("article_url") or "")
+            ),
+            "ids": extract_ids(
+                e.get("title"),
+                e.get("takeaway"),
+                e.get("summary"),
+                e.get("source_url") or e.get("article_url"),
+            ),
         }
         for e in archive
         if isinstance(e, dict) and (c.is_curated(e, conf) or archived_brief(e))

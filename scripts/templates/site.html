@@ -238,6 +238,10 @@
   .chip.sig { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent) 30%, var(--rule));
     background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
   .chip.exploited { color: #fff; background: #c62828; border-color: #c62828; font-weight: 600; }
+  .chip.vid { text-decoration: none; }
+  .chip.vid:hover { text-decoration: underline; }
+  details.scored { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
+  details.scored > summary { cursor: pointer; }
   .chip.fresh { color: #fff; background: var(--accent); border-color: var(--accent);
     font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: .06em; }
   /* Caveat chips surface refuter-panel prior-art / scope concerns without
@@ -706,12 +710,30 @@
     }).join("");
   }
 
+  // Triage chips: a red "Exploited" chip and links for the CVE / GHSA ids in a
+  // story. Each id is matched against a strict pattern and its URL built here,
+  // never taken from the payload, so a hostile `ids` value renders nothing.
+  function idChip(raw) {
+    var CVE_RE = /^CVE-\d{4}-\d{4,}$/i, GHSA_RE = /^GHSA(?:-[a-z0-9]{4}){3}$/i;
+    var id = String(raw == null ? "" : raw), url;
+    if (CVE_RE.test(id)) { id = id.toUpperCase(); url = "https://nvd.nist.gov/vuln/detail/" + id; }
+    else if (GHSA_RE.test(id)) { id = "GHSA" + id.slice(4).toLowerCase(); url = "https://github.com/advisories/" + id; }
+    else return "";
+    return '<a class="chip vid" href="' + hrefOf(url) + '" target="_blank" rel="noopener noreferrer">' + esc(id) + '</a>';
+  }
+  function triageChips(f) {
+    var out = f.exploited === true ? '<span class="chip exploited">Exploited</span>' : '';
+    var ids = arr(f.ids).slice(0, 4).map(idChip).join("");
+    return out + (ids ? '<span class="chips">' + ids + '</span>' : '');
+  }
+
   function articleHTML(f, opts) {
     opts = opts || {};
     var meta = [];
     if (opts.showTrack !== false) meta.push(topicPill(f.topic));
     if (opts.kind) meta.push('<span class="chip">research</span>');
     if (f.fresh) meta.push('<span class="chip fresh">new</span>');
+    meta.push(triageChips(f));
     var caveats = caveatChips(f);
     if (caveats) meta.push(caveats);
     if (f.domain) meta.push('<span>' + txt(f.domain) + '</span>');
@@ -792,8 +814,7 @@
       quotePreview(f, opts.q) + corr +
       '<div class="meta">' + topicPill(f.topic) + (opts.kind ? '<span class="chip">news</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
-        (f.signals && f.signals.length ? '<span class="chips">' + arr(f.signals).slice(0, 4).map(function (s) {
-          return '<span class="chip sig">' + esc(clean(s)) + '</span>'; }).join("") + '</span>' : '') +
+        triageChips(f) +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
       '</div></article>';
   }
@@ -1272,8 +1293,7 @@
       quotePreview(f) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
-        (f.exploited === true ? '<span class="chip exploited">Exploited</span>' : '') +
-        (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') +
+        (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') + triageChips(f) +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
       '</div></article>';
   }
@@ -1295,7 +1315,7 @@
   function storyPanelHTML(f) {
     return '<article class="prose"><h1 id="modal-title">' + txt(f.title) + '</h1>' +
       '<p>' + topicPill(f.topic) + (f.domain ? ' &nbsp;' + txt(f.domain) : '') +
-        (f.published ? ' &nbsp;·&nbsp; ' + esc(fmtDate(f.published)) : '') + '</p>' +
+        (f.published ? ' &nbsp;·&nbsp; ' + esc(fmtDate(f.published)) : '') + ' ' + triageChips(f) + '</p>' +
       (f.takeaway ? '<blockquote><p><strong>Takeaway:</strong> ' + rich(f.takeaway) + '</p></blockquote>' : '') +
       (f.summary && f.summary !== f.takeaway ? '<p>' + txt(f.summary) + '</p>' : '') +
       lessonsHTML(f) +
@@ -1537,7 +1557,7 @@
       '<div class="meta">' + topicPill(f.topic) +
         (f.domain_id && domainInfo(f.domain_id) ? routeLink("topics", { domain: f.domain_id }, txt(f.domain)) :
           (f.domain ? '<span>' + txt(f.domain) + '</span>' : '')) +
-        (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
+        (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') + triageChips(f) +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
       '</div></article>';
   }
@@ -1944,11 +1964,16 @@
       // The page's last line repeats the source link and links back to a GitHub
       // index that doesn't exist here; the panel's footer carries the source.
       var md = String(rawMd || "").replace(/^_Source:.*$/gm, "");
+      // Scores and raw tags are pipeline detail: folded away under a summary.
+      var scored = [];
+      md = md.replace(/^\*\*(?:Scores|Tags):\*\*.*\n?/gm, function (m) { scored.push(m.replace(/\s+$/, "")); return ""; });
+      var how = scored.length ? '<details class="scored"><summary>How this was scored</summary>' +
+        renderMarkdown(scored.join("\n\n")) + '</details>' : '';
       // The rendered page has no story updates or covering sources; the cards
       // leave those to this panel, so it carries every one.
       var more = (arr(finding.updates).length ? '<h2>Updates</h2>' + allUpdates(finding) : '') +
         (arr(finding.corroborators).length ? '<h2>Sources</h2>' + storySources(finding) : '');
-      var html = '<article class="prose">' + renderMarkdown(md) + more + '</article>';
+      var html = '<article class="prose">' + renderMarkdown(md) + more + how + '</article>';
       if (finding.url && !arr(finding.corroborators).length) {
         html += '<div class="modal-source">' +
           '<span style="color:var(--ink-3)">Source:</span> ' +
