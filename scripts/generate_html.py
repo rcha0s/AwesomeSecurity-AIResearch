@@ -25,6 +25,7 @@ import math
 import re
 import shutil
 import xml.etree.ElementTree as ET
+from datetime import date
 from html import escape
 from json import dumps
 from pathlib import Path
@@ -73,6 +74,7 @@ TEMPLATE = Path(__file__).resolve().parent / "templates" / "site.html"
 REPO_NAME = "AwesomeSecurity-AIResearch"
 REPO_URL = f"https://github.com/rcha0s/{REPO_NAME}"
 SITE_URL = f"https://rcha0s.github.io/{REPO_NAME}/"
+SITE_AUTHOR = "Awesome Security & AI Research"
 SITE_TITLE = "Awesome Security & AI Research: a weekly vetted briefing"
 SITE_DESC = (
     "A weekly, source-cited briefing on AI security, product security, and applied "
@@ -667,7 +669,10 @@ def render(payload: dict, now: str) -> str:
 
 ATOM_NS = "http://www.w3.org/2005/Atom"
 _XML_BAD = re.compile("[^\t\n\r -퟿-�\U00010000-\U0010ffff]")
-_DAY = re.compile(r"\d{4}-\d{2}-\d{2}")
+_DAY = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
+# Used only when the payload's own `generated` day is not a real date: a fixed day,
+# never the wall clock, so a re-render stays byte-identical.
+FEED_EPOCH = "2000-01-01"
 
 
 def _xml_text(value: object) -> str:
@@ -675,9 +680,23 @@ def _xml_text(value: object) -> str:
     return " ".join(_XML_BAD.sub("", str(value or "")).split())
 
 
+def _real_day(value: object) -> str | None:
+    """The first ten characters of `value` if they are an ASCII YYYY-MM-DD real date."""
+    text = str(value or "")[:10]
+    if not _DAY.fullmatch(text):
+        return None
+    try:
+        date.fromisoformat(text)
+    except ValueError:
+        return None
+    return text
+
+
 def _rfc3339(day: object, fallback: str) -> str:
-    text = str(day or "")[:10]
-    return f"{text if _DAY.fullmatch(text) else fallback}T00:00:00Z"
+    """`day` as RFC 3339 midnight UTC; an invalid day falls back to `fallback`
+    (a real day, or FEED_EPOCH when that is invalid too)."""
+    text = _real_day(day) or _real_day(fallback) or FEED_EPOCH
+    return f"{text}T00:00:00Z"
 
 
 def feed_items(payload: dict) -> list[dict]:
@@ -715,12 +734,11 @@ def render_feed(payload: dict, now: str) -> str:
     """The Atom 1.0 feed of the Briefing's picks: text content only, built with
     ElementTree (which escapes), dated from the payload's `generated` day (`now`),
     so a re-render is byte-identical. Every payload value is treated as hostile text."""
-    ET.register_namespace("", ATOM_NS)
-    feed = ET.Element(f"{{{ATOM_NS}}}feed")
-    today = _rfc3339(now, "1970-01-01")
+    feed = ET.Element("feed", {"xmlns": ATOM_NS})  # no ET namespace registry: no global state
+    today = _rfc3339(now, FEED_EPOCH)
 
     def add(parent: ET.Element, tag: str, text: str = "", **attrs: str) -> ET.Element:
-        node = ET.SubElement(parent, f"{{{ATOM_NS}}}{tag}", attrs)
+        node = ET.SubElement(parent, tag, attrs)
         if text:
             node.text = text
         return node
@@ -728,6 +746,7 @@ def render_feed(payload: dict, now: str) -> str:
     add(feed, "title", _xml_text(SITE_TITLE))
     add(feed, "subtitle", _xml_text(SITE_DESC))
     add(feed, "id", SITE_URL)
+    add(add(feed, "author"), "name", _xml_text(SITE_AUTHOR))
     add(feed, "updated", today)
     add(feed, "link", href=f"{SITE_URL}feed.xml", rel="self", type="application/atom+xml")
     add(feed, "link", href=SITE_URL, rel="alternate", type="text/html")

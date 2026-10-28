@@ -3,6 +3,9 @@
   <title>Awesome Security &amp; AI Research: a weekly vetted briefing</title>
   <subtitle>A weekly, source-cited briefing on AI security, product security, and applied AI research. Every finding is vetted, distilled to one lesson and one action, and filed by field. A standing-claims ledger tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.</subtitle>
   <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/</id>
+  <author>
+    <name>Awesome Security &amp; AI Research</name>
+  </author>
   <updated>2026-10-28T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />

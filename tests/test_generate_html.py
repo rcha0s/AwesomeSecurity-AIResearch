@@ -763,3 +763,28 @@ def test_site_links_the_feed():
     page = gh.render({}, "2026-10-27")
     assert '<link rel="alternate" type="application/atom+xml"' in page
     assert 'href="feed.xml"' in page and ">Feed</a>" in page
+
+
+def test_feed_has_an_author_and_never_publishes_invalid_dates():
+    bad = ["٢٠٢٦-٠١-٠١", "9999-99-99", "2026-02-30"]
+    rows = [{"id": f"r{i}", "title": "t", "published": d} for i, d in enumerate(bad)]
+    payload = {"findings": rows, "biggest_stories": [r["id"] for r in rows]}
+    text, root = feed_of(payload)
+    assert root.find(ATOM + "author/" + ATOM + "name").text
+    assert {e.find(ATOM + "updated").text for e in root.iter(ATOM + "entry")} == {
+        "2026-10-27T00:00:00Z"
+    }
+    for digit in "٢٠":
+        assert digit not in text
+    bad_now = gh.render_feed(payload, "9999-99-99")
+    assert f"<updated>{gh.FEED_EPOCH}T00:00:00Z</updated>" in bad_now
+
+
+def test_feed_does_not_touch_the_global_namespace_registry():
+    import xml.etree.ElementTree as ET
+
+    before = dict(ET._namespace_map)
+    first = gh.render_feed(FEED_PAYLOAD, "2026-10-27")
+    assert ET._namespace_map == before
+    assert first == gh.render_feed(FEED_PAYLOAD, "2026-10-27")
+    assert first.count("xmlns=") == 1 and "ns0" not in first

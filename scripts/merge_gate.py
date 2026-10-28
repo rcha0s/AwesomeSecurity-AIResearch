@@ -11,7 +11,8 @@ config.yaml. An eval whose script is missing is skipped with a notice until it i
 declared `required: true`; from then on a missing script fails the gate (closed).
 
 It also runs content_checks.py in-process: URL schemes in data/*.json, render
-equality of docs/index.html, claim-ledger history against main (`--base`),
+equality of docs/index.html (raw bytes, so line endings count) and of
+docs/feed.xml (main's render_feed of that page's data), claim-ledger history against main (`--base`),
 sticky editorial promotions (a removal needs a human unless main had already lost integrity),
 and the eval history: main's rows untouched, at most one new row, and that row's
 charge, integrity, golden result and cap checked against the budget ledger
@@ -94,7 +95,7 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
         out += [f"{path.name}: {p}" for p in found]
     page = root / "docs" / "index.html"
     if page.is_file():
-        out += cc.render_problems(page.read_text(encoding="utf-8"), generate_html.render)
+        out += cc.render_problems(read_exact(page), generate_html.render)
     else:
         out.append("docs/index.html is missing")
     out += feed_check(base, root)
@@ -109,10 +110,28 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     return out
 
 
+def read_exact(path: Path) -> str:
+    """A file's text with its line endings untouched (read_text would turn CRLF and
+    CR into LF, so a CRLF copy would pass byte-equality). Invalid UTF-8 raises."""
+    return path.read_bytes().decode("utf-8")
+
+
 def main_has_feed(base: str) -> bool:
-    """Whether main already publishes docs/feed.xml."""
-    cmd = ["git", "cat-file", "-e", f"{base}:docs/feed.xml"]
-    return subprocess.run(cmd, cwd=ROOT, capture_output=True).returncode == 0
+    """Whether main already publishes docs/feed.xml. Fails closed: an unknown base
+    or any git error raises, it never reads as "no feed"."""
+    ok = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", f"{base}^{{commit}}"],
+        cwd=ROOT,
+        capture_output=True,
+    )
+    if ok.returncode != 0:
+        raise RuntimeError(f"base {base!r} is not a commit; cannot tell if main has a feed")
+    found = subprocess.run(
+        ["git", "ls-tree", "--name-only", base, "docs/feed.xml"], cwd=ROOT, capture_output=True
+    )
+    if found.returncode != 0:
+        raise RuntimeError(f"git ls-tree failed ({found.returncode}): {found.stderr[:200]!r}")
+    return found.stdout.strip() == b"docs/feed.xml"  # empty output: no such path on main
 
 
 def feed_check(base: str, root: Path = ROOT) -> list[str]:
@@ -122,10 +141,8 @@ def feed_check(base: str, root: Path = ROOT) -> list[str]:
     page, feed = root / "docs" / "index.html", root / "docs" / "feed.xml"
     if not page.is_file():
         return []  # already reported as "docs/index.html is missing"
-    text = feed.read_text(encoding="utf-8") if feed.is_file() else None
-    return cc.feed_problems(
-        text, page.read_text(encoding="utf-8"), generate_html.render_feed, main_has_feed(base)
-    )
+    text = read_exact(feed) if feed.is_file() else None
+    return cc.feed_problems(text, read_exact(page), generate_html.render_feed, main_has_feed(base))
 
 
 def pool_docs(base: str, root: Path = ROOT) -> tuple[list, list]:
