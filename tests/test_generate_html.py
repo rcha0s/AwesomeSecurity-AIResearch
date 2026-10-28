@@ -653,3 +653,31 @@ def test_a_bare_host_or_empty_source_name_becomes_the_registry_name():
         "",
     ]
     assert payload["nested"]["updates"][0]["source_name"] == "Other"
+
+
+@pytest.mark.parametrize(
+    "tags,url,want",
+    [
+        (["exploited-in-the-wild"], "https://x.example/a", True),
+        (["Active-Exploitation"], "https://x.example/a", True),
+        (["kev", "cve"], "https://x.example/a", True),
+        ([], "https://www.cisa.gov/known-exploited-vulnerabilities-catalog", True),
+        ([], "https://cisa.gov/known-exploited-vulnerabilities", True),
+        ([], "https://www.cisa.gov/news-events/alerts/2026/10/01/x", False),
+        ([], "https://evilcisa.gov/known-exploited-vulnerabilities", False),
+        ([], "https://x.example/cisa.gov/known-exploited-vulnerabilities", False),
+        (["exploit"], "https://x.example/a", False),
+        (None, "", False),
+        ("kev", "", False),
+    ],
+)
+def test_is_exploited_rule(tags, url, want):
+    assert gh.is_exploited(tags, url) is want
+
+
+def test_payload_rows_carry_exploited_and_no_story_is_in_both_lists(sandbox):
+    hot = make_entry(title="Hot one", source_url="https://e.com/hot", tags=["kev"])
+    data = payload_of(sandbox, entries=[hot])
+    row = next(f for f in data["findings"] if f["title"] == "Hot one")
+    assert row["exploited"] is True
+    assert not set(data["biggest_stories"]) & set(data["top_stories"])
