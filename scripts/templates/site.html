@@ -393,6 +393,14 @@
     border-radius: 8px; cursor: pointer; font-size: 22px; line-height: 1; padding: 0;
   }
   .modal-close:hover { color: var(--ink); border-color: var(--ink-3); }
+  .modal-copy {
+    position: absolute; top: 10px; right: 52px; height: 34px; padding: 0 12px;
+    background: var(--card); border: 1px solid var(--rule); color: var(--ink-2);
+    border-radius: 8px; cursor: pointer; font: inherit; font-size: 13px;
+  }
+  .modal-copy:hover { color: var(--ink); border-color: var(--ink-3); }
+  .modal-copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .modal-copy-fallback { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .modal-body {
     padding: 32px 36px 28px; overflow-y: auto; overscroll-behavior: contain;
     line-height: 1.6;
@@ -592,6 +600,8 @@
 <div id="modal" class="modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal-backdrop" data-close="1"></div>
   <div class="modal-panel" role="document">
+    <button class="modal-copy" id="modal-copy" type="button" aria-label="Copy link to this panel">Copy link</button>
+    <input class="modal-copy-fallback" id="modal-copy-url" type="text" readonly tabindex="-1" aria-hidden="true">
     <button class="modal-close" type="button" aria-label="Close" data-close="1">&times;</button>
     <div class="modal-body" id="modal-body">
       <p class="modal-loading">Loading…</p>
@@ -905,13 +915,13 @@
     html += filterGroup("Sort", "sort", [["change", "Last change"], ["confidence", "Confidence"]], claimState.sort);
     html += '</div><div id="claim-list"></div>';
     root.innerHTML = html;
-    $("#claims-q").addEventListener("input", function () { claimState.q = this.value; drawClaims(); });
+    $("#claims-q").addEventListener("input", function () { claimState.q = this.value.slice(0, STATE_MAX_Q); drawClaims(); syncUrl(); });
     root.querySelectorAll(".opt").forEach(function (b) {
       b.addEventListener("click", function () {
         claimState[b.dataset.k] = b.dataset.v;
         root.querySelectorAll('.opt[data-k="' + b.dataset.k + '"]').forEach(function (o) {
           o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
-        drawClaims();
+        drawClaims(); syncUrl();
       });
     });
     drawClaims();
@@ -1067,13 +1077,13 @@
     html += '</div><div id="news-list"></div>';
     root.innerHTML = html;
 
-    $("#news-q").addEventListener("input", function () { newsState.q = this.value; drawNews(); });
+    $("#news-q").addEventListener("input", function () { newsState.q = this.value.slice(0, STATE_MAX_Q); drawNews(); syncUrl(); });
     root.querySelectorAll(".toolbar .opt").forEach(function (b) {
       b.addEventListener("click", function () {
         newsState[b.dataset.k === "nkind" ? "kind" : "topic"] = b.dataset.v;
         root.querySelectorAll('.opt[data-k="' + b.dataset.k + '"]').forEach(function (o) {
           o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
-        drawNews();
+        drawNews(); syncUrl();
       });
     });
     drawNews();
@@ -1125,10 +1135,10 @@
   // ================= SEARCH =================
   // One box in the header searches every story (with their quotes), the
   // archive and the claim ledger.
-  var siteQ = "";
+  var siteState = { q: "" };
   function renderSearch() {
     var root = $("#view-search");
-    var q = siteQ.trim().toLowerCase();
+    var q = siteState.q.trim().toLowerCase();
     if (!q) { root.innerHTML = secHead("Search", "") + '<p class="empty-note">Type in the search box above.</p>'; return; }
     var stories = allStories().filter(function (it) { return storyMatches(it.f, q); });
     var old = arr(DATA.archive).filter(function (f) { return archiveMatches(f, "all", q); });
@@ -1160,7 +1170,72 @@
   //   ?topic=<slug>#topics          a topic page
   //   ?domain=<taxonomy id>#topics  a domain page (data/taxonomy.yaml IDs)
   var VIEW_ALIASES = { fields: "topics", feed: "news", lessons: "news" };
-  var ROUTE_PARAMS = ["topic", "domain", "claim"];
+  // View state that survives in the URL (?nq=...&nkind=research#news). Each row:
+  // [param, view, state object, key, allowed values or "TOPICS" or null for free text,
+  // default]. A default never reaches the URL; a value outside the allowed set
+  // is ignored on the way in, because the query string is hostile input.
+  var STATE_MAX_Q = 200;
+  var STATE_FIELDS = [
+    ["sq", "search", "site", "q", null, ""],
+    ["nq", "news", "news", "q", null, ""],
+    ["nkind", "news", "news", "kind", ["all", "news", "research"], "all"],
+    ["ntopic", "news", "news", "topic", "TOPICS", "all"],
+    ["cq", "claims", "claim", "q", null, ""],
+    ["ctopic", "claims", "claim", "topic", "TOPICS", "all"],
+    ["cstatus", "claims", "claim", "status", ["all", "current", "contested", "superseded", "refuted"], "all"],
+    ["csort", "claims", "claim", "sort", ["change", "confidence"], "change"],
+    ["aq", "archive", "archive", "q", null, ""],
+    ["atopic", "archive", "archive", "topic", "TOPICS", "all"]
+  ];
+  var ROUTE_PARAMS = ["topic", "domain", "claim"].concat(STATE_FIELDS.map(function (f) { return f[0]; }));
+  function stateObjs() { return { site: siteState, news: newsState, claim: claimState, archive: archiveState }; }
+  function fieldOptions(f) {
+    return f[4] === "TOPICS" ? ["all"].concat(TOPIC_ORDER) : f[4];
+  }
+  // A raw query value as a state value, or null when it is not acceptable.
+  function cleanField(f, raw) {
+    if (raw == null) return null;
+    var opts = fieldOptions(f);
+    if (!opts) return String(raw).slice(0, STATE_MAX_Q);
+    return opts.indexOf(String(raw)) >= 0 ? String(raw) : null;
+  }
+  // Query string -> state. Returns the params that were applied.
+  function stateFromQuery(search) {
+    var applied = {}, p, objs = stateObjs();
+    try { p = new URLSearchParams(search); } catch (e) { return applied; }
+    STATE_FIELDS.forEach(function (f) {
+      var v = cleanField(f, p.get(f[0]));
+      if (v === null) return;
+      objs[f[2]][f[3]] = v;
+      applied[f[0]] = v;
+    });
+    return applied;
+  }
+  // State -> the non-default params of one view, as [[param, value], ...].
+  function statePairs(view) {
+    var objs = stateObjs();
+    return STATE_FIELDS.filter(function (f) { return f[1] === view; }).map(function (f) {
+      var v = cleanField(f, objs[f[2]][f[3]]);
+      return v === null || v === f[5] ? null : [f[0], v];
+    }).filter(Boolean);
+  }
+  function stateQuery(view) {
+    var p = new URLSearchParams();
+    statePairs(view).forEach(function (kv) { p.append(kv[0], kv[1]); });
+    return p.toString();
+  }
+  var curView = "week";
+  // Write the active view's filters and search into the URL; replaceState, so
+  // typing never floods the back button.
+  function syncUrl() {
+    try {
+      var p = new URLSearchParams(location.search);
+      STATE_FIELDS.forEach(function (f) { p.delete(f[0]); });
+      statePairs(curView).forEach(function (kv) { p.append(kv[0], kv[1]); });
+      var q = p.toString();
+      history.replaceState(null, "", location.pathname + (q ? "?" + q : "") + location.hash);
+    } catch (e) {}
+  }
   function arr(v) { return Array.isArray(v) ? v : []; }
   function has(obj, key) { return !!obj && Object.prototype.hasOwnProperty.call(obj, key); }
   function param(name) {
@@ -1515,13 +1590,13 @@
     html += '<div class="toolbar" style="margin-top:-6px">' + filterGroup("Track", "atopic", [["all", "All"]].concat(
       TOPIC_ORDER.map(function (t) { return [t, tname(t)]; })), archiveState.topic) + '</div><div id="archive-list"></div>';
     root.innerHTML = html;
-    $("#archive-q").addEventListener("input", function () { archiveState.q = this.value; drawArchive(); });
+    $("#archive-q").addEventListener("input", function () { archiveState.q = this.value.slice(0, STATE_MAX_Q); drawArchive(); syncUrl(); });
     root.querySelectorAll(".toolbar .opt").forEach(function (b) {
       b.addEventListener("click", function () {
         archiveState.topic = b.dataset.v;
         root.querySelectorAll('.opt[data-k="atopic"]').forEach(function (o) {
           o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
-        drawArchive();
+        drawArchive(); syncUrl();
       });
     });
     drawArchive();
@@ -1634,7 +1709,9 @@
       b.setAttribute("aria-selected", b.dataset.view === view ? "true" : "false"); });
     if (location.hash.slice(1) !== view) history.replaceState(null, "", "#" + view);
     if (view !== "search") window.scrollTo({ top: 0 });
+    curView = view;
     if (view === "claims" && param("claim")) focusClaim(param("claim"));
+    syncUrl();
   }
   document.querySelectorAll(".vtab").forEach(function (b) {
     b.addEventListener("click", function () { setRoute({}); show(b.dataset.view); });
@@ -1698,13 +1775,20 @@
   (function () {
     var box = $("#site-q");
     box.addEventListener("input", function () {
-      siteQ = box.value;
+      siteState.q = box.value.slice(0, STATE_MAX_Q);
       drawn.search = false;
-      show(siteQ.trim() ? "search" : "week");
+      show(siteState.q.trim() ? "search" : "week");
     });
   })();
 
-  show((location.hash || "").slice(1) || "week");
+  // Restore filters and search from the URL; with no #tab, the first view
+  // whose params are present is the tab.
+  (function () {
+    var applied = stateFromQuery(location.search), start = (location.hash || "").slice(1);
+    $("#site-q").value = siteState.q;
+    if (!start) STATE_FIELDS.some(function (f) { if (has(applied, f[0])) { start = f[1]; return true; } return false; });
+    show(start || "week");
+  })();
   window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
 
   // ================= Detail modal =================
@@ -1831,6 +1915,42 @@
     return null;
   }
 
+  // The shareable URL of a detail panel: a finding, or a claim in the ledger.
+  function shareHref(kind, id, base) {
+    var b = String(base || "");
+    return kind === "claim" ? b + "?claim=" + encodeURIComponent(id) + "#claims"
+      : b + "?finding=" + encodeURIComponent(id) + "#week";
+  }
+  function pageBase() {
+    try { return location.origin + location.pathname; } catch (e) { return ""; }
+  }
+  // Copy text: the clipboard API, else select a read-only input and copy.
+  function copyText(text, done) {
+    function fallback() {
+      var box = document.getElementById("modal-copy-url"), ok = false;
+      try {
+        box.value = text; box.select(); box.setSelectionRange(0, text.length);
+        ok = document.execCommand("copy");
+      } catch (e) {}
+      done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+    } else fallback();
+  }
+  var copyBtn = document.getElementById("modal-copy"), copyTimer = null;
+  function resetCopyBtn() { copyBtn.textContent = "Copy link"; copyBtn.removeAttribute("data-copied"); }
+  copyBtn.addEventListener("click", function () {
+    var url = copyBtn.getAttribute("data-url");
+    if (!url) return;
+    copyText(url, function (ok) {
+      copyBtn.textContent = ok ? "Copied" : "Copy failed";
+      if (ok) copyBtn.setAttribute("data-copied", "1");
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(resetCopyBtn, 2000);
+    });
+  });
+
   function setModalParam(id) {
     try {
       var url = new URL(location.href);
@@ -1857,6 +1977,8 @@
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
     setModalParam(finding.id);
+    copyBtn.setAttribute("data-url", shareHref("finding", finding.id, pageBase()));
+    resetCopyBtn();
     modalBody.innerHTML = '<p class="modal-loading">Loading…</p>';
     // Focus the close button so ESC / Enter behaves.
     var closeBtn = modal.querySelector('.modal-close');

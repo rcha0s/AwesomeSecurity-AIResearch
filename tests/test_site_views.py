@@ -209,6 +209,13 @@ FNS = [
     "allStories",
     "storyCard",
     "clearFiltersFor",
+    "stateObjs",
+    "fieldOptions",
+    "cleanField",
+    "stateFromQuery",
+    "statePairs",
+    "stateQuery",
+    "shareHref",
 ]
 
 
@@ -231,6 +238,10 @@ def run_js(data: dict, expr: str):
     labels += "\n" + re.search(r"var CONF_TIP = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var BOILERPLATE = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var claimState = \{.*?\};", src).group(0)
+    for name in ("newsState", "archiveState", "siteState"):
+        labels += "\n" + re.search(rf"var {name} = \{{.*?\}};", src).group(0)
+    labels += "\n" + re.search(r"var STATE_MAX_Q = .*?;", src).group(0)
+    labels += "\n" + re.search(r"var STATE_FIELDS = \[.*?\n  \];", src, re.S).group(0)
     prelude = (
         "var TMETA = {}; var TOPIC_ORDER = ['ai-security'];\n"
         f"{labels}\nvar DATA = {json.dumps(data)};\n"
@@ -980,6 +991,111 @@ def test_exploited_chip_is_only_for_a_true_boolean():
     data = {"topics": {}, "findings": [_story("a", exploited="yes"), _story("b", exploited=True)]}
     got = run_js(data, "[storyCardHTML(DATA.findings[0], 0), storyCardHTML(DATA.findings[1], 0)]")
     assert "Exploited" not in got[0] and "Exploited" in got[1]
+
+
+# ---- shareable state: filters and search live in the URL ----
+
+STATE_QUERY = "nq=prompt+injection&nkind=research&ntopic=ai-security"
+
+
+def test_filtered_route_round_trips_state_url_state():
+    expr = (
+        "(function(){"
+        "var applied = stateFromQuery('?cq=agent&cstatus=refuted&csort=confidence&nq=x&nkind=news');"
+        "var first = [claimState.q, claimState.status, claimState.sort, newsState.q, newsState.kind];"
+        "var cq = stateQuery('claims'), nq = stateQuery('news');"
+        # Reset, then restore from the URLs built from the state.
+        "claimState.q = ''; claimState.status = 'all'; claimState.sort = 'change';"
+        "newsState.q = ''; newsState.kind = 'all';"
+        "stateFromQuery('?' + cq + '&' + nq);"
+        "return {applied: applied, first: first, cq: cq, nq: nq,"
+        "  again: [claimState.q, claimState.status, claimState.sort, newsState.q, newsState.kind]};"
+        "})()"
+    )
+    got = run_js({}, expr)
+    assert got["first"] == ["agent", "refuted", "confidence", "x", "news"]
+    assert got["again"] == got["first"]
+    assert got["cq"] == "cq=agent&cstatus=refuted&csort=confidence"
+    assert got["nq"] == "nq=x&nkind=news"
+    assert set(got["applied"]) == {"cq", "cstatus", "csort", "nq", "nkind"}
+
+
+def test_state_query_covers_every_search_and_filter_and_skips_defaults():
+    expr = (
+        "(function(){var out = {};"
+        "stateFromQuery('?"
+        + STATE_QUERY
+        + "&ctopic=ai-security&aq=kev&atopic=ai-security&sq=hello');"
+        "['news','claims','archive','search'].forEach(function(v){ out[v] = stateQuery(v); });"
+        "out.defaults = (function(){ claimState.sort='change'; return stateQuery('week'); })();"
+        "return out;})()"
+    )
+    got = run_js({}, expr)
+    assert got["news"] == STATE_QUERY
+    assert got["claims"] == "ctopic=ai-security"
+    assert got["archive"] == "aq=kev&atopic=ai-security"
+    assert got["search"] == "sq=hello"
+    assert got["defaults"] == ""
+    # Only defaults: nothing in the URL.
+    expr = "(function(){stateFromQuery('?nkind=all&csort=change&cstatus=all');return stateQuery('news')+stateQuery('claims');})()"
+    assert run_js({}, expr) == ""
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "?nkind=bogus&ntopic=nope&cstatus=__proto__&csort=toString&ctopic=%3Cb%3E&atopic=constructor",
+        "?nkind=news%20&ntopic=AI-SECURITY&cstatus=",
+    ],
+)
+def test_unknown_filter_values_are_ignored(query):
+    expr = (
+        "(function(){var applied = stateFromQuery(" + json.dumps(query) + ");"
+        "return {applied: applied, news: newsState, claim: claimState, archive: archiveState};})()"
+    )
+    got = run_js({}, expr)
+    assert got["applied"] == {}
+    assert got["news"] == {"topic": "all", "kind": "all", "q": ""}
+    assert got["claim"] == {"topic": "all", "status": "all", "sort": "change", "q": ""}
+    assert got["archive"] == {"topic": "all", "q": ""}
+
+
+def test_hostile_search_value_in_url_renders_escaped():
+    expr = (
+        "(function(){stateFromQuery('?nq=' + encodeURIComponent(" + json.dumps(EVIL) + "));"
+        "return {q: newsState.q, cards: DATA.findings.map(function(f){"
+        "return storyCard({f: f, kind: 'research'}, newsState.q.toLowerCase()); }).join(''),"
+        "input: '<input value=\"' + esc(newsState.q) + '\">'};})()"
+    )
+    got = run_js(evil_data(), expr)
+    assert got["q"] == EVIL  # kept as text...
+    assert_inert(got["input"])  # ...and escaped wherever it becomes markup
+    assert_inert(got["cards"])
+
+
+def test_search_text_is_length_capped():
+    got = run_js(
+        {}, "(function(){stateFromQuery('?nq=' + 'a'.repeat(5000)); return newsState.q.length;})()"
+    )
+    assert got == 200
+
+
+def test_copy_link_button_is_keyboard_reachable_and_wired_to_the_panel_url():
+    src = gh.TEMPLATE.read_text(encoding="utf-8")
+    btn = re.search(r'<button[^>]*id="modal-copy"[^>]*>', src).group(0)
+    assert 'type="button"' in btn and 'aria-label="' in btn and "tabindex" not in btn
+    assert 'id="modal-copy-url"' in src and "readonly" in src
+    assert "navigator.clipboard.writeText" in src and "setTimeout(resetCopyBtn, 2000)" in src
+    # openModal points the button at the panel's own URL.
+    assert 'copyBtn.setAttribute("data-url", shareHref("finding", finding.id, pageBase()))' in src
+    got = run_js(
+        {},
+        "[shareHref('finding', 'abc 1', 'https://x.test/site/'), shareHref('claim', 'c-1', 'https://x.test/site/')]",
+    )
+    assert got == [
+        "https://x.test/site/?finding=abc%201#week",
+        "https://x.test/site/?claim=c-1#claims",
+    ]
 
 
 # --- Triage chips (ISC-46) ------------------------------------------------------
