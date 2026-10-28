@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 35/41
+progress: 35/55
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -116,6 +116,30 @@ Why: Rohan, 2026-10-26: titles like "OpenAI frontier-agent red team of its own t
 - [x] ISC-40: A shortened title may drop facts the takeaway or summary still carries, never add or change one, and keeps every negation: `rewrite_guard` and the migration use the same check (probe: tests; the migration refuses a title that adds a number or name). — `test_a_title_cannot_borrow_move_or_drop_a_guard_word` (review cases), `test_check_refuses_an_invented_fact_or_a_long_title`; #124
 - [x] ISC-41: Old page links survive the retitles: each retitled entry leaves a "Moved" stub at its old page path (probe: an old path from main resolves to a stub). — all 191 old page paths exist; 158 are Moved stubs; `test_apply_retitles_every_copy_and_the_old_page_gets_a_stub`
 - [x] ISC-A4 (anti): No fact is invented by a retitle, and no claim's statement, status, evidence or history changes beyond its new title (probe: the ISC-40 check over every retitle; claim diff touches only `title`). — `retitle check` 392 ok + Gemini meaning judge 392/392 clean after 20 rewrites (fac89ce); claim value diff = title ×9 + last_reviewed ×9
+
+### F8 · A site a security researcher can triage from (2026-10-27)
+Why: Rohan, 2026-10-27: "Ship out all the improvements one by one ... just do this overnight, figure things out on your own and run it, and then merge." The improvements are the Opus usability review's (newest-first made "top" mean "latest"; card bugs; no triage fields; no feed). One PR per item, each merged on green.
+
+- [ ] ISC-42: The Briefing leads with a "Biggest this week" lane ranked by covering sources and exploited/KEV status; the newest-first list follows it, and no story shows twice (probe: briefing test; live DOM shows the 10-source eMudhra story in the lane while it is in the window).
+- [ ] ISC-43: A card shows its two newest updates and the panel lists every update newest first, whatever order the payload stores them in (probe: JS test with shuffled dates; live eMudhra card shows Oct 22 lines).
+- [ ] ISC-44: An update note never ends mid-word and carries no pipeline wording ("shortlisted story") (probe: story_ledger test; no rendered note matches either).
+- [ ] ISC-45: An old reversal never pushes this week's claim changes off the Briefing; when shown, it is labelled as the last reversal (probe: briefing test; note sentence matches what is shown).
+- [ ] ISC-46: Cards carry triage chips: CVE/GHSA ids linked to NVD/GHSA, "Exploited (KEV)" when known; internal tags (`week-of-*`, `timely`, `high-relevance`, composite/newness scores) are gone from cards (probe: JS test; live DOM grep finds none).
+- [ ] ISC-47: Search and filter state survive in the URL, and the detail panel has a copy-link button (probe: JS test round-trips a filtered route).
+- [ ] ISC-48: `docs/feed.xml` is a valid Atom feed of top stories and claim changes, linked from the page head, and auto-merge accepts it only when it is byte-equal to main's renderer output (probe: XML parse test; merge_guard + content_checks tests; Opus review of the boundary change).
+- [ ] ISC-49: A collapsed claim card shows its "Do." line and one plain sentence on how confidence is scored (probe: JS test; live DOM).
+- [ ] ISC-50: Card quotes skip CVSS boilerplate, render backticks as code, and a source is named the same way on every card (probe: tests; live DOM has no "Attack Vector:" quote).
+- [ ] ISC-A5 (anti): No item that was reachable on the site before F8 becomes unreachable, and the auto-merge allowlist widens by exactly `docs/feed.xml` under render-equality, nothing else (probe: before/after id sets; merge_guard diff).
+
+### F9 · Efficiency tracks: cost and work (2026-10-27)
+Why: Rohan, 2026-10-27: "I do want to look at claims that call out, okay, these are the improvements in harnesses that need to be made for cost efficiency, for work efficiency ... maybe like those can be separate tracks ... whatever sources you need to use, capture, you suggest all of them and figure out, and then give me a report later."
+
+- [ ] ISC-51: Two claim-eligible domains exist, cost efficiency (tokens, caching, routing, context budgets) and work efficiency (delegation, subagents, planning, verification loops, parallel agents), and the site shows them as their own Efficiency lane and filter (probe: taxonomy test; live DOM).
+- [ ] ISC-52: Every recommended practitioner source with a working feed is registered through `add_source.py`, each feed verified to parse with recent items (probe: `aggregate.py --dry-run` stages items from each).
+- [ ] ISC-53: A batch lane reserves daily slots for efficiency candidates so CVEs can't crowd them out (probe: select_batch test; a dry run deals them).
+- [ ] ISC-54: The ledger holds claims that say what a harness should change for cost or work efficiency, each with at least two primary-source evidence links whose quotes were fetched and checked (probe: add_claim validate; per-quote fetch log).
+- [ ] ISC-55: Rohan gets a report: sources added and rejected (why), the claims and their evidence, and what's open (probe: published private artifact link).
+- [ ] ISC-A6 (anti): No efficiency claim rests on a vendor's marketing number alone or on a quote that wasn't found in the fetched source (probe: per-claim evidence review).
 
 ## Decisions
 
