@@ -458,6 +458,10 @@
     text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); }
   a.detail-open:hover { color: var(--accent); }
   /* A grounded source quote on a story card (its first lesson's excerpt). */
+  .take code, .qprev code, .why code, .updline code, blockquote code {
+    font-family: var(--mono); font-size: .92em; padding: 0 4px;
+    background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
+  }
   .qprev { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; padding-left: 10px;
     border-left: 3px solid var(--rule); font-style: italic; line-height: 1.5; }
   /* Claims ledger: collapsed cards in a grid; expand for the rest. */
@@ -613,16 +617,25 @@
     var href = "?finding=" + encodeURIComponent(id) + "#week";
     return '<a class="detail-open" href="' + esc(href) + '" data-fid="' + esc(id) + '">' + inner + '</a>';
   }
-  // A grounded quote from the source: the first lesson's verbatim excerpt.
+  // Scoring-table text (CVSS vectors, metric definitions) is not a quote worth showing.
+  var BOILERPLATE = ["Attack Vector:", "This metric reflects", "CVSS:3"];
+  function isBoilerplate(s) {
+    s = String(s == null ? "" : s);
+    return BOILERPLATE.some(function (b) { return s.indexOf(b) >= 0; });
+  }
+  // A grounded quote from the source: the first lesson's verbatim excerpt that
+  // is not boilerplate; none when every excerpt is.
   function quotePreview(f, q) {
-    var ls = arr(f.lessons).filter(function (l) { return l && typeof l === "object" && l.excerpt && l.grounded !== false; });
+    var ls = arr(f.lessons).filter(function (l) {
+      return l && typeof l === "object" && l.excerpt && l.grounded !== false && !isBoilerplate(l.excerpt);
+    });
     var pick = ls[0];
     if (q) {
       for (var i = 0; i < ls.length; i++) {
         if ((String(ls[i].excerpt) + " " + String(ls[i].point || "")).toLowerCase().indexOf(q) >= 0) { pick = ls[i]; break; }
       }
     }
-    return pick ? '<p class="qprev">&ldquo;' + txt(pick.excerpt) + '&rdquo;</p>' : '';
+    return pick ? '<p class="qprev">&ldquo;' + rich(pick.excerpt) + '&rdquo;</p>' : '';
   }
   var CHECKED_TIP = "The lesson quotes were found in the source text and a second model pass did not refute them. " +
     "Automated, not human review.";
@@ -653,6 +666,9 @@
   }
   function clean(s) { return String(s == null ? "" : s).replace(/\s*[—–]\s*/g, " - "); }
   function txt(s) { return esc(clean(s)); }
+  // Text with `backtick` spans shown as <code>. Escape first, then wrap: the
+  // span's content is already inert, so no payload text ever becomes markup.
+  function rich(s) { return txt(s).replace(/`([^`\n]+)`/g, "<code>$1</code>"); }
   function tname(t) { return (DATA.topics[t] && DATA.topics[t].name) || t; }
   function tvar(t) { return "var(" + ((TMETA[t] && TMETA[t].v) || "--ink") + ")"; }
   function host(url) { try { return new URL(url).hostname.replace(/^www\./, ""); } catch (e) { return ""; } }
@@ -693,7 +709,7 @@
     meta.push('<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>');
     return '<article class="art">' +
       '<h3>' + detailAnchor(f, txt(f.title)) + '</h3>' +
-      (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
       quotePreview(f, opts.q) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + meta.join("") + '</div>' +
       '</article>';
@@ -737,12 +753,22 @@
       (corr.length > 4 ? " +" + num(corr.length - 4) : "") +
       '</p>';
   }
+  // A story's updates newest first by date, whatever order the payload has;
+  // equal dates keep payload order (the index breaks the tie, so the sort is
+  // stable in every engine).
+  function sortedUpdates(f) {
+    return arr(f.updates).filter(function (u) { return u && typeof u === "object"; })
+      .map(function (u, i) { return { u: u, i: i }; })
+      .sort(function (a, b) {
+        var da = String(a.u.date || ""), db = String(b.u.date || "");
+        return da < db ? 1 : da > db ? -1 : a.i - b.i;
+      }).map(function (x) { return x.u; });
+  }
   // The story's dated "Updated" lines, newest first (at most two).
   function storyUpdates(f) {
-    var ups = arr(f.updates).filter(function (u) { return u && typeof u === "object"; });
-    return ups.slice(-2).reverse().map(function (u) {
+    return sortedUpdates(f).slice(0, 2).map(function (u) {
       return '<p class="why" style="font-size:12.5px"><strong>Updated ' + esc(fmtDate(u.date)) +
-        ':</strong> ' + txt(u.note) + '</p>';
+        ':</strong> ' + rich(u.note) + '</p>';
     }).join("");
   }
 
@@ -751,7 +777,7 @@
     var corr = alsoReported(f) + storyUpdates(f);
     return '<article class="art">' +
       '<h3>' + detailAnchor(f, txt(f.title)) + '</h3>' +
-      (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
       quotePreview(f, opts.q) + corr +
       '<div class="meta">' + topicPill(f.topic) + (opts.kind ? '<span class="chip">news</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
@@ -1152,11 +1178,11 @@
   }
   // Every dated Updated line, newest first, each with the source that carried it.
   function allUpdates(f) {
-    return arr(f.updates).filter(function (u) { return u && typeof u === "object"; }).reverse().map(function (u) {
+    return sortedUpdates(f).map(function (u) {
       var link = safeUrl(u.url) !== "#"
         ? ' <a class="link" href="' + hrefOf(u.url) + '">' + esc(u.source_name || host(u.url) || "source") + ' &#8599;</a>'
         : '';
-      return '<p class="updline"><strong>Updated ' + esc(fmtDate(u.date)) + ':</strong> ' + txt(u.note) + link + '</p>';
+      return '<p class="updline"><strong>Updated ' + esc(fmtDate(u.date)) + ':</strong> ' + rich(u.note) + link + '</p>';
     }).join("");
   }
   // A top story is shaped like a "More in the news" card (Rohan, 2026-10-26):
@@ -1166,7 +1192,7 @@
     var n = 1 + arr(f.corroborators).length;
     return '<article class="art story">' +
       '<h3><span class="rank">' + num(i + 1) + '</span>' + detailAnchor(f, txt(f.title)) + '</h3>' +
-      (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
       quotePreview(f) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
@@ -1184,7 +1210,7 @@
     return '<h2>Lessons</h2><ul class="lessons">' + rows.map(function (l) {
       return '<li>' + txt(l.point) + (l.grounded === false
         ? ' <em class="ev-note">(excerpt not found in source)</em>'
-        : '<blockquote><p>&ldquo;' + txt(l.excerpt) + '&rdquo;</p></blockquote>') + '</li>';
+        : '<blockquote><p>&ldquo;' + rich(l.excerpt) + '&rdquo;</p></blockquote>') + '</li>';
     }).join("") + '</ul>';
   }
   // The detail modal for a story with no rendered page (news-gate rows), and
@@ -1193,7 +1219,7 @@
     return '<article class="prose"><h1 id="modal-title">' + txt(f.title) + '</h1>' +
       '<p>' + topicPill(f.topic) + (f.domain ? ' &nbsp;' + txt(f.domain) : '') +
         (f.published ? ' &nbsp;·&nbsp; ' + esc(fmtDate(f.published)) : '') + '</p>' +
-      (f.takeaway ? '<blockquote><p><strong>Takeaway:</strong> ' + txt(f.takeaway) + '</p></blockquote>' : '') +
+      (f.takeaway ? '<blockquote><p><strong>Takeaway:</strong> ' + rich(f.takeaway) + '</p></blockquote>' : '') +
       (f.summary && f.summary !== f.takeaway ? '<p>' + txt(f.summary) + '</p>' : '') +
       lessonsHTML(f) +
       (arr(f.updates).length ? '<h2>Updates</h2>' + allUpdates(f) : '') +
@@ -1267,7 +1293,7 @@
     var fell = old || (ch.kind === "overturned" && isRetired(c) ? c : null);
     var desc = c.title && c.statement && c.title !== c.statement ? '<p class="desc">' + txt(c.statement) + '</p>' : '';
     return '<div class="claim chg st-' + esc(c.status) + '">' +
-      '<div class="claim-top"><span class="kind">' + esc(CHANGE_LABEL[ch.kind]) + '</span>' +
+      '<div class="claim-top"><span class="kind">' + esc(ch.pinned === true && ch.kind === "overturned" ? "Last reversal" : CHANGE_LABEL[ch.kind]) + '</span>' +
         '<span class="when">' + esc(fmtDate(ch.date)) + (ageText(ch.date) ? ' · ' + esc(ageText(ch.date)) : '') + '</span>' +
         '<span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' + topicPill(c.topic) + '</div>' +
       '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc +
@@ -1419,7 +1445,7 @@
   function archiveRowHTML(f) {
     return '<article class="art">' +
       '<h3><a href="' + hrefOf(f.url) + '">' + txt(f.title) + '</a></h3>' +
-      (f.takeaway ? '<p class="take">' + txt(f.takeaway) + '</p>' : '') +
+      (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
       '<div class="meta">' + topicPill(f.topic) +
         (f.domain_id && domainInfo(f.domain_id) ? routeLink("topics", { domain: f.domain_id }, txt(f.domain)) :
           (f.domain ? '<span>' + txt(f.domain) + '</span>' : '')) +

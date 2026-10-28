@@ -259,6 +259,19 @@ def test_verdict_update_adds_a_dated_line_moves_up_and_flags_claims():
     assert len(story["sources"]) == 2
 
 
+def test_update_notes_are_cut_at_a_word_boundary_with_an_ellipsis():
+    assert sl.cut_note("short note") == "short note"
+    exact = "x" * 280
+    assert sl.cut_note(exact) == exact
+    text = " ".join(["Wasmtime"] * 60)  # 539 characters
+    got = sl.cut_note(text)
+    assert len(got) <= 280 and got.endswith("Wasmtime…")
+    assert set(got[:-1].split()) == {"Wasmtime"}  # no half word
+    assert sl.cut_note("y" * 400) == "y" * 279 + "…"  # one long word: cut hard
+    _, sid, out = _apply({"verdict": "update", "note": text})
+    assert out["action"] == "update"
+
+
 def test_verdict_new_writes_nothing():
     ledger, sid, out = _apply({"verdict": "new"})
     assert out["action"] == "new"

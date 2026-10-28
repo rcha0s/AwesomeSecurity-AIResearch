@@ -424,7 +424,7 @@ def _change_line(n: int, change: dict, claims: dict) -> list[str]:
     meta = [str(claim.get("status") or ""), fmt_published({"published": change["date"]})]
     meta.append(f"{n_ev} source{'s' if n_ev != 1 else ''}")
     head = (
-        f"{n}. **{CHANGE_LABELS.get(change['kind'], 'Changed')}:** "
+        f"{n}. **{'Last reversal' if change.get('pinned') else CHANGE_LABELS.get(change['kind'], 'Changed')}:** "
         f"[{_claim_label(claim)}]({site_link('claims', claim=claim['id'])}) "
         f"· _{md_text(' · '.join(meta))}_"
     )

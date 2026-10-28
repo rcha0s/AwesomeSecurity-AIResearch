@@ -543,6 +543,22 @@ def linked_claims(story: dict, entries_by_id: dict) -> list[str]:
     return sorted(ids)
 
 
+NOTE_MAX = 280
+
+
+def cut_note(text: str, limit: int = NOTE_MAX) -> str:
+    """`text` cut at the last word boundary within `limit` characters, with an
+    ellipsis when it was cut (the ellipsis counts toward the limit)."""
+    text = text.strip()
+    if len(text) <= limit:
+        return text
+    head = text[: limit - 1]
+    mid_word = not head[-1].isspace() and not text[limit - 1].isspace()
+    if mid_word and len(head.split()) > 1:
+        head = head.rsplit(None, 1)[0]
+    return head.rstrip(" ,;:-") + "…"
+
+
 def apply_verdict(
     ledger: dict,
     cand: dict,
@@ -577,7 +593,7 @@ def apply_verdict(
     if v == "update":
         day = entry_day(cand) or c.utcnow().strftime("%Y-%m-%d")
         claims = linked_claims(story, entries_by_id or {})
-        note = str(verdict.get("note") or cand.get("title", ""))[:280]
+        note = cut_note(str(verdict.get("note") or cand.get("title", "")))
         row = {
             "date": day,
             "note": note,
