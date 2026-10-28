@@ -247,7 +247,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   Meta, Microsoft, ...) that name one of `batch_lab_terms` (security and safety
   words), tagged `batch_priority: lab`. Lab posts carry no severity marker, so they
   used to sink below the cut. A relevant lab post the prefilter dropped only as a
-  catch-all without a marker is let back in; excluded-term and duplicate drops stand. Next, `batch_class_min`
+  catch-all without a marker is let back in; excluded-term and duplicate drops stand. Then an efficiency lane of up to
+  `batch_eff_max` slots (at most `batch_eff_per_source` per feed) takes recent candidates whose
+  title or excerpt name one of `batch_eff_terms` (token usage, prompt caching, subagents,
+  parallel agents, harness, cost per task, ...), tagged `batch_priority: efficiency`. It
+  runs after the must-not-miss and lab lanes and never takes a candidate they took. These
+  practitioner posts (the `air.cost-efficiency` and `air.work-efficiency` domains) carry no
+  severity marker, so they used to sink below the cut. Next, `batch_class_min`
   guarantees named classes a floor: `curator: 1` puts one tl;dr sec curator link
   in every batch (two at most, by the per-source cap). The rest go to
   `data/_scan_backlog.json` for diagnosis

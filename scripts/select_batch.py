@@ -128,6 +128,8 @@ DEFAULTS = {
     "batch_news_min_rank": None,  # None = batch_story_min_rank
     "batch_lab_max": 0,  # off unless config.yaml names a lane size (and hosts + terms)
     "batch_lab_per_source": 2,
+    "batch_eff_max": 0,  # off unless config.yaml names a lane size (and terms)
+    "batch_eff_per_source": 1,
 }
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
@@ -255,10 +257,11 @@ def lab_source(cand: dict, conf: c.Config) -> bool:
     return False
 
 
-def lab_terms_hit(text: str, conf: c.Config) -> bool:
-    """One of `batch_lab_terms` as a whole word or phrase (a plural s allowed):
-    "security" but not "securities", "evals" but not "retrievals"."""
-    for term in conf.limits.get("batch_lab_terms") or []:
+def lab_terms_hit(text: str, conf: c.Config, key: str = "batch_lab_terms") -> bool:
+    """One of the `key` terms (`batch_lab_terms`, or `batch_eff_terms`) as a whole
+    word or phrase (a plural s allowed): "security" but not "securities",
+    "evals" but not "retrievals"."""
+    for term in conf.limits.get(key) or []:
         if re.search(rf"\b{re.escape(str(term).lower())}s?\b", text):
             return True
     return False
@@ -310,6 +313,27 @@ def lab_lane(
         and not c.news_denylist_hit(x)
     ]  # fmt: skip
     per_source = max(1, int(setting(conf, "batch_lab_per_source")))
+    return deal(eligible, limit, per_source, used=used, fill=False)
+
+
+def eff_lane(
+    ranked: list[dict], conf: c.Config, limit: int, used: Counter, known: set[int]
+) -> list[dict]:
+    """Up to `limit` recent candidates whose title or excerpt names a
+    `batch_eff_terms` phrase (token spend, prompt caching, subagents, parallel
+    agents, ...), at most `batch_eff_per_source` per source. Practitioner posts
+    on cost and work efficiency carry no severity marker, so they sank below the
+    cut like lab posts did. Runs after the must-not-miss and lab lanes; the
+    caller passes only what those lanes left."""
+    days = int(setting(conf, "batch_story_days"))
+    eligible = [
+        x for x in ranked
+        if id(x) not in known and recent(x, days) and not c.news_denylist_hit(x)
+        and lab_terms_hit(
+            f"{x.get('title') or ''} {x.get('excerpt') or ''}".lower(), conf, "batch_eff_terms"
+        )
+    ]  # fmt: skip
+    per_source = max(1, int(setting(conf, "batch_eff_per_source")))
     return deal(eligible, limit, per_source, used=used, fill=False)
 
 
@@ -526,6 +550,14 @@ def select_tiers(
         Counter(source_key(x) for x in stories + lane), held,
     )  # fmt: skip
     lane = lane + labs
+    eff_max = min(size - len(stories) - len(lane), max(0, int(setting(conf, "batch_eff_max"))))
+    taken = {id(x) for x in lane}
+    effs = eff_lane(
+        [x for x in open_ if id(x) not in taken], conf, eff_max,
+        Counter(source_key(x) for x in stories + lane), held,
+    )  # fmt: skip
+    eff_ids = {id(x) for x in effs}
+    lane = lane + effs
     mins = conf.limits.get("batch_class_min") or {}
     lane_ids = {id(x) for x in lane}
     first = Counter(source_key(x) for x in stories + lane)
@@ -546,17 +578,18 @@ def select_tiers(
     news = news_tier(left, sig_of, groups, conf)
     news_ids = {n.pop("_cand") for n in news}
     rest = [x for x in left if id(x) not in news_ids] + [x for x in ranked if id(x) in siblings]
-    batch = (
-        stories
-        + [{**x, "batch_priority": priority_class(x) or "lab"} for x in lane]
-        + floor
-        + dealt
-    )
+    batch = stories + [{**x, "batch_priority": lane_tag(x, eff_ids)} for x in lane] + floor + dealt
     backlog = [
         {**x, "batch_rank": i, **same_story_note(x, siblings)}
         for i, x in enumerate(rest, start=len(batch) + len(news) + 1)
     ]
     return batch, news, backlog + dropped
+
+
+def lane_tag(cand: dict, eff_ids: set[int]) -> str:
+    """batch_priority of a lane member: its must-not-miss class, else efficiency
+    (the efficiency lane's pick), else lab."""
+    return priority_class(cand) or ("efficiency" if id(cand) in eff_ids else "lab")
 
 
 # --- the news tier -------------------------------------------------------------

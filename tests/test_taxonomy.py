@@ -26,10 +26,18 @@ def tax() -> tx.Taxonomy:
 
 
 # --- the vocabulary itself ---------------------------------------------------
-def test_three_topics_each_with_six_to_eight_domains(tax):
+def test_three_topics_each_with_six_to_ten_domains(tax):
     assert set(tax.defaults) == set(c.TOPICS)
     for topic in c.TOPICS:
-        assert 6 <= len(tax.for_topic(topic)) <= 8, topic
+        assert 6 <= len(tax.for_topic(topic)) <= 10, topic
+
+
+def test_efficiency_domains_are_claim_eligible_and_own_their_cost_hints(tax):
+    for did in ("air.cost-efficiency", "air.work-efficiency"):
+        assert tax.domains[did].topic == "ai-research" and tax.domains[did].claim_eligible
+    moved = {"token cost", "prompt cache", "prompt caching", "model routing"}
+    assert moved <= set(tax.domains["air.cost-efficiency"].keywords)
+    assert not moved & set(tax.domains["air.model-io"].keywords)
 
 
 def test_ids_carry_their_topic_prefix(tax):

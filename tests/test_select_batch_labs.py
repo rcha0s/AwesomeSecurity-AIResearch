@@ -162,3 +162,61 @@ def test_a_story_the_ledger_holds_gets_no_lab_slot_or_brief(sandbox, table, monk
     ]
     batch, news, _ = select_batch.select_tiers([*fresh, post], c, table)
     assert "lab1" not in [x["id"] for x in batch + news]
+
+
+# --- the efficiency lane (F9) --------------------------------------------------
+EFF_TERMS = ["prompt caching", "token usage", "subagent", "harness"]
+EFF = {"batch_eff_max": 3, "batch_eff_per_source": 1, "batch_eff_terms": EFF_TERMS}
+
+
+def eff(i: int, title: str, host: str = "", days_ago: int = 0, **over) -> dict:
+    host = host or f"eff{i}.example"
+    return lab(i, title, f"https://{host}/p{i}", days_ago, source_id=f"rss:{host}", **over)
+
+
+def eff_ids(batch: list[dict]) -> list[str]:
+    return [x["id"] for x in batch if x.get("batch_priority") == "efficiency"]
+
+
+def test_the_efficiency_lane_fills_with_recent_term_matches(sandbox, table):
+    posts = [
+        eff(1, "Cutting token usage with prompt caching"),
+        eff(2, "Subagent patterns that save time", days_ago=1),
+        eff(3, "Building a harness that verifies itself", days_ago=2),
+        eff(4, "More prompt caching notes", days_ago=3),  # a fourth: over batch_eff_max
+        eff(5, "Weekend reading list"),  # no term
+        eff(6, "Old harness post", days_ago=30),  # not recent
+    ]
+    batch, backlog = select_batch.select([*cands(4), *posts], conf(6, 0, **EFF), table)
+    assert eff_ids(batch) == ["lab1", "lab2", "lab3"]
+    assert {x["id"] for x in backlog} >= {"lab4", "lab6"}  # over the lane size, and stale
+
+
+def test_the_efficiency_lane_caps_each_source(sandbox, table):
+    posts = [
+        eff(1, "Prompt caching in practice", host="blog.example"),
+        eff(2, "Token usage of a subagent", host="blog.example", days_ago=1),
+        eff(3, "A harness for evals", host="other.example", days_ago=2),
+    ]
+    batch, _ = select_batch.select([*cands(3), *posts], conf(6, 0, **EFF), table)
+    assert eff_ids(batch) == ["lab1", "lab3"]
+
+
+def test_the_efficiency_lane_is_empty_without_matches_or_a_lane_size(sandbox, table):
+    posts = [eff(1, "Weekend reading list"), eff(2, "Notes on a new model")]
+    batch, _ = select_batch.select([*cands(3), *posts], conf(6, 0, **EFF), table)
+    assert eff_ids(batch) == []
+    match = [eff(3, "Prompt caching in practice")]
+    off_conf = conf(6, 0, **{**EFF, "batch_eff_max": 0})
+    off, _ = select_batch.select([*cands(3), *match], off_conf, table)
+    assert eff_ids(off) == []
+
+
+def test_the_efficiency_lane_never_takes_what_an_earlier_lane_took(sandbox, table):
+    both = lab(1, "Securing our harness against prompt injection", "https://openai.com/a")
+    other = eff(2, "Prompt caching in practice")
+    extra = {**LAB, "batch_lab_terms": TERMS, **EFF}
+    batch, _ = select_batch.select([*cands(3), both, other], conf(6, 0, **extra), table)
+    tags = {x["id"]: x.get("batch_priority") for x in batch}
+    assert tags["lab1"] == "lab" and tags["lab2"] == "efficiency"
+    assert [x["id"] for x in batch].count("lab1") == 1
