@@ -244,6 +244,43 @@ classification:
       - "red team"
       - "guardrail"
       - "hallucination"
+    # ---- Efficiency classes (F9, 2026-10-27): the registered practitioner feeds
+    # (Miessler, Latent Space, Hamel, Amp, Factory, ...) write about token spend and
+    # how to get more done per hour with a harness. None of the classes above
+    # matched those words, so a non-strict feed dropped them before staging. Multi-
+    # word phrases only; the IDs are taxonomy domains (topic ai-research).
+    "air.cost-efficiency":
+      - "token usage"
+      - "token cost"
+      - "token budget"
+      - "token efficiency"
+      - "prompt caching"
+      - "prompt cache"
+      - "cache hit"
+      - "context budget"
+      - "context compaction"
+      - "tool search"
+      - "model routing"
+      - "cheaper model"
+      - "cost per task"
+      - "inference cost"
+    "air.work-efficiency":
+      - "subagent"
+      - "sub-agent"
+      - "parallel agents"
+      - "agent workflow"
+      - "spec-driven"
+      - "task decomposition"
+      - "verification loop"
+      - "agent skills"
+      - "developer productivity"
+      - "productivity study"
+      - "agentic engineering"
+      - "harness engineering"
+      - "harnesses"
+      - "harness design"
+      - "agentic coding"
+      - "agentic workflow"
     # ---- Catch-alls, checked LAST: only items no class above matched -------
     # 2026-10-23: Wiz's own PHP2Shell post ("AI uncovers critical RCE
     # vulnerabilities affecting 70% of the Internet"), The Register's GitLab

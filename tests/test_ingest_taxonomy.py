@@ -27,6 +27,9 @@ MAIN_TOPIC = FROZEN["labels"]
 # Router classes added after the taxonomy (2026-10-23 catch-alls, checked last):
 # taxonomy IDs, so their topic is the taxonomy's, not a frozen legacy guess.
 CATCH_ALLS = ("ais.agent-security", "ps.appsec")
+# Efficiency classes (F9), also taxonomy IDs, checked after every legacy class and
+# before the catch-alls.
+EFFICIENCY = ("air.cost-efficiency", "air.work-efficiency")
 FEEDS = [
     {"name": "strict", "strict": True, "domains": ["AI Security"]},
     {"name": "fallback", "domains": ["Web Application Security"]},
@@ -61,7 +64,7 @@ def test_router_decisions_are_unchanged_and_domains_are_ids(feed):
             continue
         kept += 1
         assert cand["guess_label"] == label
-        if label in CATCH_ALLS:
+        if label in CATCH_ALLS + EFFICIENCY:
             assert cand["guess_topic"] == tx.get().domains[label].topic
         else:
             assert cand["guess_topic"] == MAIN_TOPIC[label]  # main's topic guess, frozen
@@ -72,7 +75,20 @@ def test_router_decisions_are_unchanged_and_domains_are_ids(feed):
 def test_the_catch_alls_come_last_so_no_earlier_label_changes():
     labels = list(RULES["domains"])
     assert labels[-len(CATCH_ALLS) :] == list(CATCH_ALLS)
-    assert all(label in MAIN_TOPIC for label in labels[: -len(CATCH_ALLS)])
+    before = labels[: -len(CATCH_ALLS)]
+    assert before[-len(EFFICIENCY) :] == list(EFFICIENCY)
+    assert all(label in MAIN_TOPIC for label in before[: -len(EFFICIENCY)])
+
+
+def test_efficiency_posts_stage_with_an_ai_research_guess():
+    feed = {"name": "x", "domains": []}
+    item = {"link": "https://e.com/a", "title": "How we cut token usage with prompt caching",
+            "summary": "A look at cost per task."}  # fmt: skip
+    cand = aggregate.build_candidate(item, feed, RULES)
+    assert cand["guess_label"] == "air.cost-efficiency"
+    assert (cand["guess_topic"], cand["guess_domain"]) == ("ai-research", "air.cost-efficiency")
+    item = {"link": "https://e.com/b", "title": "Running parallel agents", "summary": ""}
+    assert aggregate.build_candidate(item, feed, RULES)["guess_domain"] == "air.work-efficiency"
 
 
 def _kev(name: str, desc: str = "") -> dict:
@@ -120,9 +136,9 @@ def test_frozen_table_covers_every_label_the_router_can_emit():
     sources = json.loads((REPO / "data" / "sources.json").read_text())
     labels |= {d for src in sources for d in src.get("domains") or []}
     labels |= set(c.LEGACY_DOMAIN_TO_TOPIC)
-    labels -= set(CATCH_ALLS)  # taxonomy IDs: the taxonomy decides their topic
+    labels -= set(CATCH_ALLS + EFFICIENCY)  # taxonomy IDs: the taxonomy decides their topic
     assert labels <= set(MAIN_TOPIC), sorted(labels - set(MAIN_TOPIC))
-    assert all(tx.get().domains.get(label) for label in CATCH_ALLS)
+    assert all(tx.get().domains.get(label) for label in CATCH_ALLS + EFFICIENCY)
     assert len(MAIN_TOPIC) >= 50
 
 
