@@ -177,32 +177,6 @@ _Tags: `evals`, `benchmarks`, `security-scanning`_
 
 </details>
 
-<a id="claim-load-tool-definitions-on-demand"></a>
-
-### Load tool definitions on demand, not all at start
-
-`load-tool-definitions-on-demand` · confidence **0.75** · Cost Efficiency · standing since Nov 4, 2025
-
-Loading tool definitions only when a task needs them cut agent tokens by 47% to 98.7% in the authors' own tests.
-
-**Basis —** Three vendor-run measurements: Anthropic (98.7% and 85%) and a Cursor A/B test (46.9%).
-
-**Do this —** Expose tool names only, and fetch a tool's schema when the task needs it.
-
-**Conditions —** Measured by the vendors on their own harnesses; gains grow with the number of tools or MCP servers installed.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: code execution with mcp](https://www.anthropic.com/engineering/code-execution-with-mcp) | Nov 4, 2025 |
-| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
-| supports | [Cursor: dynamic context discovery](https://cursor.com/blog/dynamic-context-discovery) | Jan 6, 2026 |
-
-</details>
-
 <a id="claim-retrieval-quality-dominates-generation-quality-in-rag"></a>
 
 ### Retrieval quality dominates generator quality in RAG
@@ -350,54 +324,29 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 
 </details>
 
-<a id="claim-keep-bulk-tool-output-out-of-context"></a>
-
-### Keep intermediate tool results out of the model context
-
-`keep-bulk-tool-output-out-of-context` · confidence **0.70** · Cost Efficiency · standing since Jul 18, 2025
-
-A harness that processes tool output in code or files, and passes only summaries to the model, cut average tokens by 37 percent on research tasks.
-
-**Basis —** Anthropic's programmatic tool calling measurement (37% fewer tokens) and Manus's file-system-as-context design.
-
-**Do this —** Run bulk filtering in a code sandbox or write long output to a file and let the agent grep it.
-
-**Conditions —** Needs a code sandbox or file access the agent can search; a single small tool result gains little.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
-
-</details>
-
 <a id="claim-measure-speedups-with-repeated-trials"></a>
 
 ### Measure speedups with repeated trials, not impressions
 
 `measure-speedups-with-repeated-trials` · confidence **0.70** · Work Efficiency · standing since Jul 10, 2025
 
-A harness team should judge work efficiency with repeated-trial evals or timed studies, since developers can feel faster while measuring slower.
+A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.
 
-**Basis —** METR's randomized study (19% slower while feeling faster) and Anthropic's eval guidance on multiple trials.
+**Basis —** METR's randomized study (19% slower; developers still believed they were 20% faster) and Anthropic's eval guidance on multiple trials.
 
 **Do this —** Track time-to-merged-change and pass rate over multiple trials per task before claiming a gain.
 
-**Conditions —** METR studied experienced developers on their own large repos in early 2025; results may differ for other tools and tasks.
+**Conditions —** METR studied experienced developers on their own large repos in early 2025; METR published newer data on late-2025 tools in February 2026.
 
 _Tags: `efficiency`, `work-efficiency`, `harness`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [METR: 2025 07 10 early 2025 ai experienced os dev study](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) | Jul 10, 2025 |
 | supports | [Anthropic Engineering: demystifying evals for ai agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | Jan 9, 2026 |
+| supports | [METR: 2025 07 10 early 2025 ai experienced os dev study](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) | Jul 10, 2025 |
 
 </details>
 
@@ -407,13 +356,13 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 
 `simplest-pipeline-first` · confidence **0.70** · Cost Efficiency · standing since Jul 1, 2024
 
-A harness should start with a simple fixed workflow, since a non-agentic pipeline matched or beat agent frameworks at $0.70 per task on SWE-bench Lite.
+A harness should start with a simple fixed workflow, since in 2024 the non-agentic Agentless pipeline scored highest among open-source agents on SWE-bench Lite (32.00%) at $0.70 per task, in the authors' own evaluation.
 
 **Basis —** Anthropic's agent-building guidance and the Agentless paper ($0.70 per task, best open-source score on SWE-bench Lite at the time).
 
 **Do this —** Add agent loops, tools or subagents only after a simpler version fails on your evals.
 
-**Conditions —** The Agentless result is from 2024 on SWE-bench Lite; stronger models since may shift where agent loops pay off.
+**Conditions —** The Agentless result is the authors' own 2024 evaluation on SWE-bench Lite; stronger models since may shift where agent loops pay off.
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
@@ -498,19 +447,45 @@ _Tags: `prompting`, `few-shot`, `brittleness`_
 
 </details>
 
+<a id="claim-load-tool-definitions-on-demand"></a>
+
+### Load tool definitions on demand, not all at start
+
+`load-tool-definitions-on-demand` · confidence **0.65** · Cost Efficiency · standing since Nov 4, 2025
+
+Vendors report that loading tool definitions only when needed cut tokens by 47% (Cursor A/B test, runs that called an MCP tool) to 85% (Anthropic Tool Search); Anthropic's 98.7% is a single worked example.
+
+**Basis —** Two vendor measurements (Cursor A/B test 46.9%, Anthropic Tool Search 85%) and one Anthropic worked example (98.7%).
+
+**Do this —** Expose tool names only, and fetch a tool's schema when the task needs it.
+
+**Conditions —** Measured by the vendors on their own harnesses; gains grow with the number of tools or MCP servers installed.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: code execution with mcp](https://www.anthropic.com/engineering/code-execution-with-mcp) | Nov 4, 2025 |
+| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
+| supports | [Cursor: dynamic context discovery](https://cursor.com/blog/dynamic-context-discovery) | Jan 6, 2026 |
+
+</details>
+
 <a id="claim-concise-tool-responses-and-subagent-summaries"></a>
 
 ### Return short tool responses and distilled subagent summaries
 
 `concise-tool-responses-and-subagent-summaries` · confidence **0.65** · Cost Efficiency · standing since Sep 29, 2025
 
-A harness that makes tools return concise fields, and subagents return 1,000-2,000 token summaries, keeps the main context small.
+A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.
 
 **Basis —** Anthropic engineering guidance with one worked example (about a third of the tokens).
 
 **Do this —** Offer a concise response format on tools and cap subagent reports.
 
-**Conditions —** Shown on Anthropic's own examples; a summary that drops facts the lead needs costs more than it saves.
+**Conditions —** Shown on Anthropic's own examples, not a controlled study.
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
@@ -549,15 +524,41 @@ _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
 </details>
 
+<a id="claim-keep-bulk-tool-output-out-of-context"></a>
+
+### Keep intermediate tool results out of the model context
+
+`keep-bulk-tool-output-out-of-context` · confidence **0.65** · Cost Efficiency · standing since Jul 18, 2025
+
+In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.
+
+**Basis —** Anthropic's own measurement of programmatic tool calling (37% fewer tokens), with Manus's file-system-as-context design as supporting practice.
+
+**Do this —** Run bulk filtering in a code sandbox or write long output to a file and let the agent grep it.
+
+**Conditions —** Needs a code sandbox or file access the agent can search; a single small tool result gains little.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
+
+</details>
+
 <a id="claim-parallel-reads-single-threaded-writes"></a>
 
 ### Parallelize independent reads; keep writes single-threaded
 
 `parallel-reads-single-threaded-writes` · confidence **0.65** · Work Efficiency · standing since Jun 12, 2025
 
-A harness should fan out parallel subagents for independent research, but keep code-writing in one context, since parallel writers make conflicting decisions.
+A harness should fan out parallel subagents for independent research but keep code-writing in one context, since Cognition argues parallel writers act on conflicting assumptions.
 
-**Basis —** Anthropic's multi-agent research system (90.2% better on research) and Cognition's case against parallel writers.
+**Basis —** Anthropic's multi-agent research system (90.2% better on Anthropic's internal research eval) and Cognition's case against parallel writers.
 
 **Do this —** Parallelize search and review; serialize edits through one agent that holds the shared context.
 
@@ -596,33 +597,6 @@ _Tags: `chain-of-thought`, `agents`, `evals`_
 | --- | --- | --- |
 | supports | [LLMs Get Lost In Multi-Turn Conversation](https://arxiv.org/abs/2505.06120) | May 9, 2025 |
 | supports | [When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories](https://arxiv.org/abs/2608.06057) | Aug 6, 2026 |
-
-</details>
-
-<a id="claim-cheaper-models-for-simple-subagent-jobs"></a>
-
-### Send simple subagent jobs to a cheaper model
-
-`cheaper-models-for-simple-subagent-jobs` · confidence **0.65** · Cost Efficiency · standing since Jun 26, 2024
-
-A harness should route read-only or mechanical subtasks to a cheaper model and keep the strong model for planning.
-
-**Basis —** Claude Code docs, Aider's architect/editor benchmark, and the RouteLLM paper.
-
-**Do this —** Set Haiku-class models on search and summarizing subagents; keep the top model for the lead.
-
-**Conditions —** Holds for mechanical or read-only subtasks; judgment-heavy steps lose quality on a weaker model.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (4)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Claude Code docs: sub agents](https://code.claude.com/docs/en/sub-agents) | undated |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
-| supports | [Aider: architect](https://aider.chat/2024/09/26/architect.html) | Sep 26, 2024 |
-| supports | [arXiv: RouteLLM: 2406.18665](https://arxiv.org/abs/2406.18665) | Jun 26, 2024 |
 
 </details>
 
@@ -677,32 +651,6 @@ _Tags: `harness`, `tool-use`, `agents`, `evals`_
 
 </details>
 
-<a id="claim-separate-grader-from-generator"></a>
-
-### Split generating from evaluating with a separate grader
-
-`separate-grader-from-generator` · confidence **0.60** · Work Efficiency · standing since Mar 24, 2026
-
-A harness should have a separate evaluator agent score the output against explicit criteria, at a cost that can exceed 20 times a solo run.
-
-**Basis —** Anthropic's harness-design experiments with a separate evaluator, at over 20x the cost of a solo run.
-
-**Do this —** Write gradable criteria and run a fresh-context reviewer; keep it for tasks where quality justifies the spend.
-
-**Conditions —** Worth it where quality is subjective or costly to get wrong; the cost makes it a poor default for routine work.
-
-_Tags: `efficiency`, `work-efficiency`, `harness`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
-| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
-
-</details>
-
 <a id="claim-constrained-decoding-for-structured-output"></a>
 
 ### Constrained decoding wins for structured output, not TOON
@@ -735,7 +683,7 @@ _Tags: `tokens`, `serialization`, `structured-output`, `decoding`_
 
 `retest-harness-scaffolding-on-model-change` · confidence **0.60** · Work Efficiency · standing since Sep 29, 2025
 
-A harness should treat each component as an assumption about model weakness and remove it when a stronger model makes it unnecessary.
+A harness should treat each component as an assumption about model weakness, stress-test it on each model upgrade, and remove it if it is no longer needed.
 
 **Basis —** Anthropic's harness-design and context-engineering posts.
 
@@ -779,6 +727,57 @@ _Tags: `evals`, `swe-bench`, `benchmarks`_
 
 </details>
 
+<a id="claim-cheaper-models-for-simple-subagent-jobs"></a>
+
+### Send simple subagent jobs to a cheaper model
+
+`cheaper-models-for-simple-subagent-jobs` · confidence **0.55** · Cost Efficiency · standing since Sep 26, 2024
+
+Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing quality.
+
+**Basis —** Vendor guidance, not a measured saving: Claude Code docs, plus Aider's architect/editor quality result.
+
+**Do this —** Set Haiku-class models on search and summarizing subagents; keep the top model for the lead.
+
+**Conditions —** No source here measures the cost saving; Aider's result is about quality, not cost.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Claude Code docs: sub agents](https://code.claude.com/docs/en/sub-agents) | undated |
+| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
+| supports | [Aider: architect](https://aider.chat/2024/09/26/architect.html) | Sep 26, 2024 |
+
+</details>
+
+<a id="claim-separate-grader-from-generator"></a>
+
+### Split generating from evaluating with a separate grader
+
+`separate-grader-from-generator` · confidence **0.50** · Work Efficiency · standing since Mar 24, 2026
+
+A separate evaluator scoring against explicit criteria was part of a three-agent harness that cost over 20x a solo run and, in the author's judgment on one prompt, produced visibly better output.
+
+**Basis —** One Anthropic harness-design experiment: a planner, generator and evaluator together cost over 20x a solo run, judged better by the author on one prompt.
+
+**Do this —** Write gradable criteria and run a fresh-context reviewer; keep it for tasks where quality justifies the spend.
+
+**Conditions —** Worth it where quality is subjective or costly to get wrong; the cost makes it a poor default for routine work.
+
+_Tags: `efficiency`, `work-efficiency`, `harness`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+
+</details>
+
 ## ⚖️ Contested
 
 > Credible evidence on both sides. Treat these as open questions, not guidance.
@@ -799,13 +798,14 @@ A harness should use multi-agent runs only for breadth-first tasks, because they
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
 | supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
 | contests | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+| supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
 
 </details>
 
