@@ -48,6 +48,11 @@ def test_the_trend_table_skips_backfill_rows_and_lists_them_apart():
     assert "Backfill runs" not in eh.body([row(i) for i in range(3)], "r2", CFG)
 
 
+def test_a_daily_run_pr_does_not_list_backfill_runs():
+    rows = [row(i) for i in range(3)] + [bf(3)] + [row(4)]
+    assert "Backfill" not in eh.body(rows, "r4", CFG)
+
+
 def test_append_marks_the_row(monkeypatch, sandbox):
     monkeypatch.setattr(eh.eval_integrity, "run", lambda: {"passed": True, "problems": []})
     args = argparse.Namespace(config=eh.c.CONFIG_FILE, run_id="b1", runner="local", stories=2,
