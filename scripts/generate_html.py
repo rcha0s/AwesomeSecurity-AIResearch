@@ -26,6 +26,7 @@ import shutil
 from html import escape
 from json import dumps
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import briefing
 import common as c
@@ -372,7 +373,7 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
     editorial = without_missing_pages(editorial_rows(conf, snapshot_days, ctx, exclude=shown))
     archived = archive_rows(archive, conf)
     tax = taxonomy.get()
-    return {
+    payload = {
         "generated": now,
         "snapshot_days": snapshot_days,
         "max_age_days": conf.max_age_days,
@@ -390,6 +391,53 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "archive": archived,
         **front_page(findings + editorial, cl.all_claims(ledger), now, snapshot_days),
     }
+    normalize_source_names(payload, list(c.load_sources_by_id().values()))
+    return payload
+
+
+# --- One name per source ------------------------------------------------------
+BARE_HOST = re.compile(r"^(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+$", re.I)
+
+
+def _host(url: object) -> str:
+    try:
+        host = urlsplit(str(url or "")).hostname or ""
+    except ValueError:
+        return ""
+    return host.lower().removeprefix("www.")
+
+
+def source_names_by_host(sources: list[dict]) -> dict[str, str]:
+    """Registry host -> the registry's display name (first source wins)."""
+    out: dict[str, str] = {}
+    for src in sources:
+        host = _host(src.get("url") or src.get("handle"))
+        if host and src.get("name"):
+            out.setdefault(host, str(src["name"]))
+    return out
+
+
+def normalize_source_names(node: object, sources: list[dict]) -> None:
+    """Name a source the same way everywhere: where a row's `source_name` is empty
+    or a bare host (www.bleepingcomputer.com), use the registry's name for that
+    host when one matches. Walks the whole payload, in place."""
+    names = source_names_by_host(sources)
+    _walk_source_names(node, names)
+
+
+def _walk_source_names(node: object, names: dict[str, str]) -> None:
+    if isinstance(node, dict):
+        if "source_name" in node:
+            given = str(node.get("source_name") or "").strip()
+            if not given or BARE_HOST.match(given):
+                host = _host(node.get("url")) if not given else given.lower().removeprefix("www.")
+                if host in names:
+                    node["source_name"] = names[host]
+        for value in node.values():
+            _walk_source_names(value, names)
+    elif isinstance(node, list):
+        for value in node:
+            _walk_source_names(value, names)
 
 
 # --- Phase 6 views: topics/domains, archive, front-page picks ------------------

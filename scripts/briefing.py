@@ -168,18 +168,28 @@ def claim_changes(
 ) -> tuple[list[dict], int]:
     """(the front page's claim changes, how many changes fall in the last `days`).
 
-    At most `n_max` are shown. The newest reversal always gets one of those
-    slots, whether it is this week's or older; the count is of every change in
-    the window, not just the ones shown."""
+    At most `n_max` are shown. The window's changes come first, then the
+    n_min top-up; the newest reversal is added after those only when a slot is
+    still free, so an old one never pushes a change from the window off the
+    list. A reversal older than the window carries `"pinned": True`. The count
+    is of every change in the window, not just the ones shown."""
     cutoff = _cutoff(now, days)
     changes = all_changes(claims)
     fresh = [ch for ch in changes if ch["date"] >= cutoff]
     older = [ch for ch in changes if ch["date"] < cutoff]
     picked = fresh[:n_max] + older[: max(0, n_min - len(fresh))]
     reversal = next((ch for ch in changes if ch["kind"] == "overturned"), None)
-    if reversal is not None and reversal not in picked:
-        picked = picked[: max(0, n_max - 1)] + [reversal]
+    if reversal is not None:
+        if reversal in picked:
+            picked = [_pin(ch, cutoff) if ch is reversal else ch for ch in picked]
+        elif len(picked) < n_max:
+            picked.append(_pin(reversal, cutoff))
     return _by_date(picked), len(fresh)
+
+
+def _pin(change: dict, cutoff: str) -> dict:
+    """The newest reversal, marked `pinned` when it is older than the window."""
+    return {**change, "pinned": True} if change["date"] < cutoff else change
 
 
 def _by_date(changes: list[dict]) -> list[dict]:

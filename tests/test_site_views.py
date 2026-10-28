@@ -141,6 +141,9 @@ FNS = [
     "safeRel",
     "clean",
     "txt",
+    "rich",
+    "isBoilerplate",
+    "sortedUpdates",
     "tname",
     "tcls",
     "topicPill",
@@ -217,6 +220,7 @@ def run_js(data: dict, expr: str):
     src = gh.TEMPLATE.read_text(encoding="utf-8")
     labels = re.search(r"var CHANGE_LABEL = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var CHECKED_TIP = .*?;\n", src, re.S).group(0)
+    labels += "\n" + re.search(r"var BOILERPLATE = .*?;\n", src, re.S).group(0)
     labels += "\n" + re.search(r"var claimState = \{.*?\};", src).group(0)
     prelude = (
         "var TMETA = {}; var TOPIC_ORDER = ['ai-security'];\n"
@@ -466,6 +470,94 @@ def test_a_top_story_card_is_compact_like_a_news_card():
     panel = run_js({"topics": {}, "findings": [row]},
                    "allUpdates(DATA.findings[0]) + storySources(DATA.findings[0])")  # fmt: skip
     assert all(f"https://o{i}.example/" in panel for i in range(6)) and "first" in panel
+
+
+SHUFFLED = [
+    {"date": "2026-09-05", "note": "mid-a", "url": "https://u.example/a"},
+    {"date": "2026-09-09", "note": "newest", "url": ""},
+    {"date": "2026-09-01", "note": "oldest", "url": ""},
+    {"date": "2026-09-05", "note": "mid-b", "url": ""},
+]
+
+
+def test_updates_are_newest_first_whatever_order_the_payload_has():
+    """ISC-43: the card shows the two newest, the panel every one; ties keep payload order."""
+    row = {"id": "s", "topic": "ai-security", "title": "T", "url": "https://l.example/"}
+    data = {"topics": {}, "findings": [{**row, "updates": SHUFFLED}]}
+    card = run_js(data, "storyUpdates(DATA.findings[0])")
+    assert "newest" in card and "mid-a" in card
+    assert "mid-b" not in card and "oldest" not in card
+    assert card.index("newest") < card.index("mid-a")
+    panel = run_js(data, "allUpdates(DATA.findings[0])")
+    order = [panel.index(n) for n in ("newest", "mid-a", "mid-b", "oldest")]
+    assert order == sorted(order)
+    assert run_js(data, "DATA.findings[0].updates.map(function (u) { return u.note; })") == [
+        u["note"] for u in SHUFFLED
+    ]  # the payload itself is not reordered
+
+
+def test_metric_boilerplate_is_not_shown_as_a_quote():
+    """ISC-50: a CVSS table cell is skipped for the next lesson, else no quote."""
+
+    def lesson(text):
+        return {"point": "p", "excerpt": text, "grounded": True}
+
+    boiler = [
+        "Attack Vector: Network, Attack Complexity: Low",
+        "This metric reflects the context by which exploitation is possible.",
+        "Score CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    ]
+    base = {"id": "s", "topic": "ai-security", "title": "T", "url": "https://l.example/"}
+    fallback = {**base, "lessons": [lesson(b) for b in boiler] + [lesson("A real sentence.")]}
+    none = {**base, "lessons": [lesson(b) for b in boiler]}
+    data = {"topics": {}, "findings": [fallback, none]}
+    got = run_js(data, "[quotePreview(DATA.findings[0]), quotePreview(DATA.findings[1])]")
+    assert "A real sentence." in got[0] and "Attack Vector" not in got[0]
+    assert got[1] == ""
+
+
+def test_backtick_spans_render_as_escaped_code():
+    """ISC-50: escape first, then wrap, so a payload `<b>` never becomes markup."""
+    row = {
+        "id": "s",
+        "topic": "ai-security",
+        "title": "T",
+        "url": "https://l.example/",
+        "takeaway": "Use `<b>bold</b>` and `rm -rf` carefully",
+        "lessons": [
+            {"point": "p", "excerpt": "call `<img src=x onerror=1>` now", "grounded": True}
+        ],
+        "updates": [{"date": "2026-09-09", "note": "patched `v1.2`", "url": ""}],
+    }
+    data = {"topics": {}, "findings": [row]}
+    html = run_js(
+        data,
+        "quotePreview(DATA.findings[0]) + newsCardHTML(DATA.findings[0], {}) + "
+        "storyUpdates(DATA.findings[0])",
+    )
+    assert "<code>&lt;b&gt;bold&lt;/b&gt;</code>" in html
+    assert "<code>&lt;img src=x onerror=1&gt;</code>" in html
+    assert "<code>rm -rf</code>" in html and "<code>v1.2</code>" in html
+    assert "<b>" not in html and "<img" not in html and "`" not in html
+
+
+def test_a_pinned_reversal_is_labeled_last_reversal():
+    data = {
+        "topics": {},
+        "claims": [
+            {"id": "new", "status": "current", "title": "New belief", "topic": "ai-security"}
+        ],
+        "claim_changes": [
+            {"kind": "overturned", "date": "2026-01-20", "claim": "new", "replaced": "new"},
+            {"kind": "overturned", "date": "2026-10-20", "claim": "new", "replaced": "new"},
+        ],
+    }
+    data["claim_changes"][0]["pinned"] = True
+    old, fresh = run_js(
+        data, "[claimChangeHTML(DATA.claim_changes[0]), claimChangeHTML(DATA.claim_changes[1])]"
+    )
+    assert "Last reversal" in old and "Overturned" not in old
+    assert "Overturned" in fresh and "Last reversal" not in fresh
 
 
 def test_claim_lineage_links_both_directions_through_deep_links():

@@ -624,3 +624,32 @@ def test_every_data_href_goes_through_the_scheme_check():
     src = gh.TEMPLATE.read_text(encoding="utf-8")
     assert not re.search(r"href=\"' \+ esc\([a-z]+\.url", src)
     assert "window.open(finding.url" not in src
+
+
+def test_a_bare_host_or_empty_source_name_becomes_the_registry_name():
+    """ISC-50: one source, one name, resolved in the payload (not in JS)."""
+    sources = [
+        {"id": "r1", "name": "BleepingComputer", "url": "https://www.bleepingcomputer.com/feed/"},
+        {"id": "r2", "name": "Other", "handle": "https://blog.example.org/rss"},
+    ]
+    payload = {
+        "findings": [
+            {"source_name": "www.bleepingcomputer.com", "url": "https://x.example/a"},
+            {"source_name": "", "url": "https://www.bleepingcomputer.com/news/a"},
+            {"source_name": "blog.example.org", "url": ""},
+            {"source_name": "Already Named", "url": "https://www.bleepingcomputer.com/b"},
+            {"source_name": "unknown.example.net", "url": "https://unknown.example.net/"},
+            {"source_name": "", "url": "https://unknown.example.net/"},
+        ],
+        "nested": {"updates": [{"source_name": "", "url": "https://blog.example.org/p"}]},
+    }
+    gh.normalize_source_names(payload, sources)
+    assert [r["source_name"] for r in payload["findings"]] == [
+        "BleepingComputer",
+        "BleepingComputer",
+        "Other",
+        "Already Named",
+        "unknown.example.net",
+        "",
+    ]
+    assert payload["nested"]["updates"][0]["source_name"] == "Other"
