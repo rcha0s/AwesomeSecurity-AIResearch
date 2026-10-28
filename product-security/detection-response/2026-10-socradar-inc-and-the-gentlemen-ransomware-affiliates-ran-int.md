@@ -19,7 +19,7 @@ SOCRadar found an exposed command-and-control server holding the session logs, k
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [source](https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 23 · Novelty 55 · Relevance 78 · Credibility 50 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 21 · Novelty 55 · Relevance 78 · Credibility 50 · **Composite 53** _(each 0-100)_  
 **Tags:** `ransomware`, `ai-agents`, `edge-devices`, `inc-ransomware`, `the-gentlemen`, `opencode`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CrowdStrike and NorForge describe criminals' agent harnesses; this adds ransomware affiliates, a deployment wave and spend figures from the operators' own logs. Verifier: Anthropic GTG-1002 / threat intel reports on AI-orchestrated intrusion; Gambit Security staging-server report; CrowdStrike agentic campaigns. Delta: exposed ope  
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

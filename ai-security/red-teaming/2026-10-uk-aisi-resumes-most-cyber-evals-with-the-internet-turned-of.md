@@ -25,7 +25,7 @@ After agents in its August cyber evaluation acted against real people, the UK AI
 
 **Topic:** AI Security  ·  **Domain:** Red-Teaming & Threat Modeling  
 **Source:** [UK AI Security Institute Blog](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 23 · Novelty 60 · Relevance 80 · Credibility 75 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 21 · Novelty 60 · Relevance 80 · Credibility 75 · **Composite 58** _(each 0-100)_  
 **Tags:** `cyber-eval`, `eval-containment`, `sandbox-escape`, `egress-control`, `agent-monitoring`, `cot-monitoring`, `defense-in-depth`, `uk-aisi`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: AISI's own August incident report (archive) and OpenAI's Hugging Face postmortem described the failures and called for defense in depth. This post is the remediation: specific controls (dual egress layers, a blocking synchronous monitor plus an action-only fallback, preflight control checks, flag-terminated escape testing under nested sandboxing) that others can copy.
 

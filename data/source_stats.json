@@ -12,7 +12,7 @@
     "ingested": 7
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 9,
+    "ingested": 10,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
@@ -23,17 +23,21 @@
     "curated": 0,
     "ingested": 14
   },
+  "newsletter:https-www-latent-space-feed": {
+    "ingested": 1,
+    "curated": 0
+  },
   "research_index:https-www-aisi-gov-uk-blog": {
     "curated": 1,
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "curated": 1,
-    "ingested": 7
+    "ingested": 9,
+    "curated": 2
   },
   "rss:http-export-arxiv-org-rss-cs-cr": {
     "ingested": 34,
@@ -43,9 +47,13 @@
     "curated": 1,
     "ingested": 1
   },
+  "rss:https-ampcode-com-news-rss": {
+    "ingested": 1,
+    "curated": 0
+  },
   "rss:https-arstechnica-com-security-feed": {
-    "curated": 0,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 1
   },
   "rss:https-blog-talosintelligence-com-rss": {
     "curated": 0,
@@ -55,12 +63,16 @@
     "curated": 1,
     "ingested": 7
   },
+  "rss:https-danielmiessler-com-feed-rss": {
+    "ingested": 1,
+    "curated": 0
+  },
   "rss:https-embracethered-com-blog-index-xml": {
     "curated": 2,
     "ingested": 4
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 2,
+    "ingested": 4,
     "curated": 0
   },
   "rss:https-genai-owasp-org-feed": {
@@ -88,8 +100,8 @@
     "ingested": 5
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "curated": 1,
-    "ingested": 11
+    "ingested": 13,
+    "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
     "ingested": 5,
@@ -132,7 +144,7 @@
     "ingested": 1
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 3,
+    "ingested": 5,
     "curated": 0
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {

@@ -19,7 +19,7 @@ Wiz Research reported memory-safety bugs in the PHP engine itself (CVE-2026-1096
 
 **Topic:** Product Security  ·  **Domain:** Vulnerability Research & Red Teaming  
 **Source:** [source](https://www.wiz.io/blog/php2shell-php-rce)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 23 · Novelty 58 · Relevance 80 · Credibility 70 · **Composite 58** _(each 0-100)_  
+**Scores:** Newness 21 · Novelty 58 · Relevance 80 · Credibility 70 · **Composite 57** _(each 0-100)_  
 **Tags:** `php`, `rce`, `memory-safety`, `ai-assisted-exploitation`, `wordpress`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Core-language RCE disclosures exist (for example PHP-CGI), but a core PHP memory-corruption chain exploited pre-auth across three CMSs with frontier-model-built exploits has no equal in the pools. Verifier: Google Big Sleep / Project Zero AI-found bugs, DARPA AIxCC, XBOW; earlier frontier-model exploit-development reports. Delta is AI-built multi-bug chain on core   
 > ⚠️ _Pending review - auto-analyzed, not yet human-verified._

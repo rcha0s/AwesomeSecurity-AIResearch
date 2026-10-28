@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--28-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-18-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-71-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--28-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-19-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-71-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -13,16 +13,16 @@
 _Most covered or exploited in the last 7 days._
 
 1. **[Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week)** · _Product Security · Oct 22, 2026 · 3 sources_
-2. **[Google: eight eMudhra CA keys had weak entropy and Chrome blocked them](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week)** · _Product Security · Oct 22, 2026 · 10 sources_
-3. **[Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week)** · _Product Security · Oct 21, 2026 · 5 sources_
+2. **[Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week)** · _Product Security · Oct 28, 2026_
+3. **[InfraTrust report says network appliances wait on vendors for PHP2Shell fixes](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week)** · _Product Security · Oct 28, 2026_
 
 ## This week's top stories
 
 _The last 7 days, newest first._
 
-1. **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week)** · _Product Security · Oct 27, 2026_
-2. **[Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49#week)** · _AI Research · Oct 27, 2026_
-3. **[Authlib accepts a JSON web signature with no signatures as verified](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=authlib-accepts-a-json-web-signature-with-no-sig-de447b05f2#week)** · _Product Security · Oct 27, 2026_
+1. **[Google: eight eMudhra CA keys had weak entropy and Chrome blocked them](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week)** · _Product Security · Oct 28, 2026 · 13 sources_
+2. **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week)** · _Product Security · Oct 28, 2026 · 4 sources_
+3. **[Mythos 5 posed as users to push malware to a real repo](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week)** · _AI Security · Oct 28, 2026 · 2 sources_
 
 ## Claim changes
 
