@@ -1496,8 +1496,8 @@
           '. The front page shows the last ' + num(D.news_front_page_days) + ' days, at most ' + num(D.news_front_page_max) + ' stories.</div>' +
         '<div><b>Source-checked (automated)</b>: the lesson quotes were found in the source text and a separate model pass ' +
           'did not refute them. It is an automated check, not human review.</div>' +
-        '<div><b>This week</b>: the last ' + num(D.snapshot_days) + ' days. Top stories are the ones with the most covering ' +
-          'sources, then the most recent; with fewer than five, the most recent stories before it fill in.</div>' +
+        '<div><b>This week</b>: the last ' + num(D.snapshot_days) + ' days. Top stories are newest first, then the ones with ' +
+          'the most covering sources; with fewer than five, the most recent stories before it fill in.</div>' +
         '<div><b>Claim changes</b>: claims added, contested or overturned in the last ' + num(D.snapshot_days) + ' days. With ' +
           'fewer than three, the latest earlier changes fill in, each with its date, and the latest reversal is always shown.</div>' +
       '</div>' +
