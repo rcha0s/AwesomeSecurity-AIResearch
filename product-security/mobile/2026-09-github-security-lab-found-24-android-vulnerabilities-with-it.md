@@ -21,7 +21,6 @@ GitHub Security Lab extended its open-source Taskflow Agent with Android-specifi
 **Source:** [GitHub Security Lab](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/)  ·  **Retrieved:** 2026-10-19  
 **Scores:** Newness 4 · Novelty 45 · Relevance 82 · Credibility 75 · **Composite 50** _(each 0-100)_  
 **Tags:** `android`, `ai-vuln-discovery`, `taskflows`, `webview`, `llm-triage`, `false-positives`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier GHSL Taskflow Agent posts on generic audit taskflows, and LLM-assisted SAST triage; the delta is the Android-specific entry-point and checklist decomposition plus its field results.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier GHSL Taskflow Agent posts on generic audit taskflows, and LLM-assisted SAST triage; the delta is the Android-specific entry-point and checklist decomposition plus its field results.
 
 _Source: [https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/)_  ·  [← back to index](../README.md)

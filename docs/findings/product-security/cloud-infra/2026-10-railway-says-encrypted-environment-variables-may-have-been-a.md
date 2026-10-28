@@ -21,7 +21,6 @@ On October 21, 2026 Railway said it detected anomalous activity on systems that 
 **Source:** [source](https://blog.railway.com/p/security-disclosure-wednesday-october-21st)  ·  **Retrieved:** 2026-10-24  
 **Scores:** Newness 23 · Novelty 25 · Relevance 65 · Credibility 50 · **Composite 40** _(each 0-100)_  
 **Tags:** `railway`, `secrets`, `environment-variables`, `incident`, `llm-api-keys`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Hosting-platform secret exposures (Heroku/Travis 2022, CircleCI 2023) share the pattern; the AI inference provider targeting is the new element. Verifier: Heroku/Travis CI OAuth token theft 2022, CircleCI 2023 breach (rotate all secrets), Codecov bash uploader  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Hosting-platform secret exposures (Heroku/Travis 2022, CircleCI 2023) share the pattern; the AI inference provider targeting is the new element. Verifier: Heroku/Travis CI OAuth token theft 2022, CircleCI 2023 breach (rotate all secrets), Codecov bash uploader
 
 _Source: [https://blog.railway.com/p/security-disclosure-wednesday-october-21st](https://blog.railway.com/p/security-disclosure-wednesday-october-21st)_  ·  [← back to index](../README.md)

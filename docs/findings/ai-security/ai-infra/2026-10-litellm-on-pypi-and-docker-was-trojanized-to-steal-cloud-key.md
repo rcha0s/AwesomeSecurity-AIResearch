@@ -22,7 +22,6 @@ On October 21, 2026 a malicious LiteLLM 1.107.0 was uploaded to PyPI (about 49,0
 **Source:** [source](https://www.wiz.io/blog/litellm-compromised-steals-credentials)  ·  **Retrieved:** 2026-10-24  
 **Scores:** Newness 23 · Novelty 52 · Relevance 90 · Credibility 55 · **Composite 57** _(each 0-100)_  
 **Tags:** `litellm`, `pypi`, `supply-chain`, `credential-theft`, `llm-gateway`, `oauth-tokens`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: August research on hijacking LiteLLM (Embrace The Red) and Microsoft's gateway-as-target post covered the attack surface; this is the first observed trojanized release with the .pth plus sitecustomize combination. Verifier: Shai-Hulud/tj-actions/PyPI .pth malware, earlier LiteLLM-style gateway targeting; delta is token theft via coding-agent token leakage into proxy logs, dual .pth  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: August research on hijacking LiteLLM (Embrace The Red) and Microsoft's gateway-as-target post covered the attack surface; this is the first observed trojanized release with the .pth plus sitecustomize combination. Verifier: Shai-Hulud/tj-actions/PyPI .pth malware, earlier LiteLLM-style gateway targeting; delta is token theft via coding-agent token leakage into proxy logs, dual .pth
 
 _Source: [https://www.wiz.io/blog/litellm-compromised-steals-credentials](https://www.wiz.io/blog/litellm-compromised-steals-credentials)_  ·  [← back to index](../README.md)

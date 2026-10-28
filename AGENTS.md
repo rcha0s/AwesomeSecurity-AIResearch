@@ -240,7 +240,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   holds never qualify. Markers and corroboration also add `batch_marker_bonus`
   and `batch_corroboration_bonus` to the deal's score. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
-  entries and critical GHSA advisories (plus high ones in AI tooling), tagged
+  entries and the GHSA advisories the keep rule below allows, tagged
   `batch_priority`; the session analyzes those first. Then a lab lane of up to
   `batch_lab_max` slots (at most `batch_lab_per_source` per feed) takes recent posts
   from the major AI labs (`batch_lab_hosts`: OpenAI, Anthropic, Google/DeepMind,
@@ -259,9 +259,18 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
+- **GitHub advisories (Rohan, 2026-10-28):** an advisory is not a story until it
+  blows up on the internet, so `select_batch.ghsa_keep_reason` drops every GHSA
+  candidate before it can take a deal, lane or news slot unless it is AI-related
+  (the prefilter routed it to an `ais.*` domain, or a package is in
+  `ghsa.ai_packages` in `config.yaml`) or it is CRITICAL in a package in
+  `ghsa.well_known_packages` (litellm, django, pillow, ...). The head of a
+  big-story group with 2+ independent publishers still gets in through the story
+  lane. Dropped advisories wait in the backlog as `ghsa:not-kept`. Existing
+  pool entries follow the same rule; the rest moved to `data/archive.json`.
 - **News tier:** the batch above is the DEEP tier (full analysis, at most
   `max_stories_per_run`). Every leftover candidate that is relevant news (the head
-  of a big-story group the lane had no slot for, a KEV / critical GHSA the
+  of a big-story group the lane had no slot for, a KEV or a kept GHSA the
   must-not-miss lane had no slot for, or a severity / AI-incident marker from a
   non-GitHub/HN source ranked `batch_story_min_rank`+, or a lab-lane post the lane
   had no slot for, published in the last

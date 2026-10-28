@@ -99,7 +99,7 @@ limits:
                           # (scripts/budget.py); the guard refuses a run that no longer
                           # fits the month (a skipped day), it never overspends.
   max_news_per_run: 80    # NEWS tier (select_batch.py): every leftover candidate that
-                          # is relevant news (a big-story group, a KEV / critical GHSA,
+                          # is relevant news (a big-story group, a KEV / kept GHSA (AI or critical),
                           # or a severity / AI-incident marker from a source ranked
                           # batch_news_min_rank+) gets a short grounded brief instead of
                           # deep analysis. A runaway guard, not a quota: the 2026-10-23
@@ -126,8 +126,8 @@ limits:
   batch_margin: 4         # extra candidates in the session's batch for ones the story
                           # judge finds same/update (scripts/select_batch.py)
   batch_per_source: 2     # most batch slots one source may take while others wait
-  batch_priority_max: 4   # must-not-miss lane: new CISA KEV + critical GHSA (+ high GHSA
-                          # in AI tooling) dealt right after the big-story lane; ~3 a day
+  batch_priority_max: 4   # must-not-miss lane: new CISA KEV + kept GHSA (AI-related, or
+                          # critical in a well-known package; see ghsa:) dealt right after the big-story lane; ~3 a day
                           # arrive (2026-W43: 8 KEV + 11 critical GHSA, 0 held by the
                           # pools). 4, not 5, since 2026-10-23: a KEV that is also the
                           # week's story now takes a story slot, and 3 of that day's 5
@@ -351,6 +351,87 @@ automerge:
       required: true    # exists since Phase 3: a missing copy now fails the gate
     - script: scripts/eval_readability.py
       required: false   # report only: fails below readability.eval_min_pass (0 today)
+
+# GitHub advisories (select_batch.ghsa_keep_reason). Rohan, 2026-10-28: advisories
+# are not stories until they blow up on the internet. A GHSA candidate is kept only
+# when it is AI-related (the prefilter routed it to an ais.* domain, or one of its
+# packages is in ai_packages) or it is CRITICAL in a package in well_known_packages.
+# A big-story group with 2+ independent publishers still gets in through the story
+# lane. Entries match a package name, or "ecosystem/name", case-insensitively.
+ghsa:
+  ai_packages:
+    - litellm
+    - langchain
+    - langchain-core
+    - langchain-community
+    - langgraph
+    - llama-index
+    - llama-index-core
+    - llama-cpp-python
+    - openai
+    - anthropic
+    - "@anthropic-ai/sdk"
+    - claude-agent-sdk
+    - "@anthropic-ai/claude-code"
+    - transformers
+    - vllm
+    - lmcache
+    - ollama
+    - mlflow
+    - ray
+    - gradio
+    - streamlit
+    - huggingface-hub
+    - langflow
+    - crewai
+    - autogen
+    - pyautogen
+    - mcp
+    - "@modelcontextprotocol/sdk"
+    - torch
+    - pytorch-lightning
+    - tensorflow
+    - onnx
+    - keras
+    - monai
+    - mem0ai
+  well_known_packages:
+    # AI libraries (also in ai_packages: any severity)
+    - litellm
+    - langchain
+    - langchain-core
+    - openai
+    - anthropic
+    - transformers
+    - vllm
+    - llama-index
+    - mlflow
+    - ray
+    - gradio
+    - huggingface-hub
+    # web and platform libraries
+    - django
+    - flask
+    - fastapi
+    - requests
+    - urllib3
+    - pillow
+    - jinja2
+    - pyyaml
+    - cryptography
+    - express
+    - lodash
+    - axios
+    - next
+    - react
+    - webpack
+    - log4j-core
+    - spring-core
+    - jackson-databind
+    - openssl
+    - curl
+    - nginx
+    - golang.org/x/crypto
 
 # Story ledger (ISA ISC-19/20). data/news_stories.json is permanent: one row per
 # story, never pruned. A new candidate is matched only against stories touched

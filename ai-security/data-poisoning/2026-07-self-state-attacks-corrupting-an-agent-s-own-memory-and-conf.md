@@ -26,7 +26,6 @@ Self-hosted agents read and write their own memory and configuration files, so o
 **Source:** [source](https://arxiv.org/abs/2607.17986v1)  ·  **Author:** Yimeng Chen et al.  ·  **Retrieved:** 2026-07-21  
 **Scores:** Newness 0 · Novelty 45 · Relevance 80 · Credibility 58 · **Composite 46** _(each 0-100)_  
 **Tags:** `agent-security`, `self-hosted`, `os-defenses`, `memory-poisoning`, `threat-modeling`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Agent memory poisoning and config tampering have been discussed piecemeal. The contribution is systematizing the space (four-axis, 23-cell matrix) and measuring which cells OS defenses cover - not a new attack capability, since it presumes existing local write access. 'Self-state attacks' is the authors' own coinage in this paper. Preprint, not peer-reviewed.
 
 _Source: [https://arxiv.org/abs/2607.17986v1](https://arxiv.org/abs/2607.17986v1)_  ·  [← back to index](../README.md)

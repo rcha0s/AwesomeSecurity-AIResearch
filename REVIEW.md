@@ -2,7 +2,7 @@
 
 > Everything held back from the site, with the reason. Findings that are **not yet vetted** (low confidence/novelty/relevance, or below the composite floor (20)), and news stories whose excerpt is not grounded in its source. Nothing here is deleted; promote a finding by raising its scores or clearing `needs_review`, or fix a news story's excerpt, then regenerate.
 
-_Updated 2026-10-27._
+_Updated 2026-10-28._
 
 ## AI Security (41)
 
@@ -89,7 +89,7 @@ _Updated 2026-10-27._
 - **[Check Point: infostealer adds collection routines for AI desktop apps](https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/)** · composite 8.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.
 
-## Product Security (44)
+## Product Security (39)
 
 - **[@subql/common@5.8.3 npm package carried a backdoor that runs on install](https://www.stepsecurity.io/blog/subql-ecosystem-compromised)** · composite 54.12 · _flagged needs_review (low confidence / novelty / relevance)_
   A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on…
@@ -109,8 +109,6 @@ _Updated 2026-10-27._
   Treat any package your coding assistant suggests as untrusted input. Check it against an allowlist and hashes in CI, and keep long-lived GitHub tokens and AI tool config secrets…
 - **[A probability-scoring model matches employee accounts to one person at 0.95 F1](https://vincenzoiozzo.com/blog/jev-identity-resolution)** · composite 43.25 · _flagged needs_review (low confidence / novelty / relevance)_
   In identity governance (IGA) and identity-security products, a cheap probability model with a tuned cut-off, plus a frontier-model check only on the 'maybe' band, beats rules and…
-- **[Trigger.dev self-host uses a hardcoded default secret most operators never change](https://github.com/advisories/GHSA-gg6r-gp4c-89hp)** · composite 43.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
-  A default secret that is undocumented is the same as no authentication; fail closed at boot when a shared secret is unset or equals the shipped default.
 - **[Snyk: SAST cannot see missing ownership checks in agent-written endpoints](https://snyk.io/blog/ai-coding-agents-broken-access-control/)** · composite 42.94 · _flagged needs_review (low confidence / novelty / relevance)_
   Agent-written endpoints need an explicit ownership question in review and a cross-tenant test per resource, because neither the agent nor SAST knows your tenancy rules.
 - **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.47 · _news story: excerpt not grounded in source_
@@ -137,14 +135,10 @@ _Updated 2026-10-27._
   Hardcoded long-lived keys in private repos turn one stolen GitHub token into cloud RCE, and finding it needs baselines, cross-platform IP pivots and data-plane logs, whether a…
 - **[CiliumHound graphs Cilium Kubernetes network policies as a BloodHound OpenGraph extension](https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies)** · composite 32.75 · _ungrounded excerpt — only 0% of quotes verified against the source_
   If you run Cilium, a graph view of network policies may help find unintended reachability, but the source text here is too thin to judge the tool.
-- **[Microsoft rates ASP.NET Core bypass CVE-2026-88092 critical, details not captured](https://github.com/advisories/GHSA-rv87-ccxw-8ggf)** · composite 32.75 · _failed independent verification — Verifier refuted both lessons' inferences (the not-RCE contrast and the self-contained runtime-pack advice) as unsupported by the truncated advisory excerpt, the only text available (advisory page returned HTTP 403)._
-  .NET teams should patch ASP.NET Core runtimes, including self-contained Linux and container builds that bundle the runtime packages, even though the bypass mechanism is not…
 - **[PHP2Shell hits every PHP since 5.4, no patch for 8.1 or older](https://blog.talosintelligence.com/i-had-plans-for-that-second/)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
   If you run PHP 8.1 or older, there is no patch: upgrade to 8.2+ or put network-level protection in front now.
 - **[Researcher reports Samsung Tizen runs AlexNet on screen captures to identify games](https://twitter.com/mike64_t/status/2114150399406202896)** · composite 32.0 · _flagged needs_review (low confidence / novelty / relevance)_
   When auditing TV/IoT firmware, check whether on-device ML screen capture runs before user consent, even if the output is dropped; here the evidence is a single unverified tweet.
-- **[Contao comments-bundle unauthenticated comment XSS runs in back end with no CSP](https://github.com/advisories/GHSA-628f-v4f6-p37r)** · composite 31.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
-  Moderation queues are a classic stored-XSS path from anonymous users to admins; without a back-end CSP, one comment can hijack an editor session.
 - **[CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks](https://nvd.nist.gov/vuln/detail/CVE-2026-86950)** · composite 30.51 · _failed independent verification — Verifier refuted the title: the NVD page names no component, so 'CoreGraphics' is unsupported by the raw source (it appears only in the CISA KEV catalog text staged with the candidate). Delivery-route and spyware-profile points are inference._
   Push the 26.7.1 / 15.8.1 Apple updates through your MDM now and prioritize high-risk users; consider Lockdown Mode for them.
 - **[CISA KEV: SiteGuard Server Edition OS command injection exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-106931)** · composite 30.5 · _failed independent verification — Fetched NVD page was empty; the only lesson rests on the KEV catalog description and cannot be grounded in the saved source._
@@ -173,10 +167,6 @@ _Updated 2026-10-27._
   This is a disputed political allegation with no technical content; treat it as unconfirmed news, not threat intelligence.
 - **[CISA KEV: Plex Media Server SSRF exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-96655)** · composite 11.94 · _ungrounded excerpt — only 0% of quotes verified against the source_
   Any logged-in Plex user can make the server fetch arbitrary addresses, and attackers are chaining it with other Plex bugs.
-- **[Storybook dev server lacks origin validation; malicious sites can change project files](https://github.com/advisories/GHSA-f2ph-cmg5-wxc8)** · composite 10.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
-  Local dev servers reachable from the browser are an attack surface; patch and avoid opening untrusted sites meanwhile.
-- **[uv before 0.13.4 trusts the emSign root behind compromised eMudhra CAs](https://github.com/advisories/GHSA-hq85-5cpj-mr62)** · composite 10.5 · _ungrounded excerpt — only 0% of quotes verified against the source_
-  Python installs through uv could accept certificates signed with the leaked eMudhra keys until you upgrade to 0.13.4.
 - **[CISA KEV: Siemens Software Center DLL search-path flaw exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-110936)** · composite 10.44 · _ungrounded excerpt — only 0% of quotes verified against the source_
   A local attacker who can drop a DLL where Siemens Software Center looks for one gets code execution; CISA says this is being exploited.
 
@@ -233,4 +223,4 @@ _Updated 2026-10-27._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-10-27. 109 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-10-28. 104 item(s) awaiting review.</sub>

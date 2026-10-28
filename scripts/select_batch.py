@@ -35,12 +35,20 @@ a cap of 2, each batch gets one or two.
 RSS feeds are one class of 60+ feeds and a third of the staged set, and the
 research posts the recall eval misses most come from them.
 
-Must-not-miss lane: the recall eval scores every new CISA KEV entry and every
-critical GHSA advisory, and on 2026-W43 held 0 of 19. Before the deal, up to
-`batch_priority_max` slots go to those classes (and to high-severity GHSA
-advisories in AI tooling), AI-tooling advisories first, at most
+Must-not-miss lane: the recall eval scores every new CISA KEV entry, and on
+2026-W43 held 0 of 19 KEV and critical GHSA items. Before the deal, up to
+`batch_priority_max` slots go to new KEV entries and to the GHSA advisories
+`ghsa_keep_reason` keeps, AI-tooling advisories first, at most
 `batch_priority_per_source` from one source. Each carries `batch_priority`
 so the session analyzes it before the cap runs out.
+
+GitHub advisories (Rohan, 2026-10-28): they are not stories until they blow up
+on the internet, so a GHSA candidate is dropped before it can take a deal slot,
+a lane slot or a news slot unless `ghsa_keep_reason` keeps it: it is AI-related
+(the prefilter routed it to an `ais.*` domain, or a package is in config
+`ghsa.ai_packages`), or it is CRITICAL in a package in `ghsa.well_known_packages`.
+The head of a big-story group (2+ independent publishers) still gets in through
+the story lane. Dropped advisories go to the backlog with reason `ghsa:not-kept`.
 
 Big-story lane (newsworthy.py): on 2026-10-23 PHP2Shell was staged from six
 registered feeds and every copy ranked 50th or worse, because newness and
@@ -67,8 +75,9 @@ published in the last `batch_story_days`, is not on the news deny list, and is
 
     story     the head of a big-story group (newsworthy.py, judged as the lane
               judges it) that the lane had no slot for
-    priority  a new CISA KEV entry or a critical (or AI-tooling high) GHSA
-              advisory the must-not-miss lane had no slot for
+    priority  a new CISA KEV entry, or a GHSA advisory that is AI-related or
+              critical in a well-known package, which the must-not-miss lane
+              had no slot for
     marker    a severity or AI-incident marker from a publisher outside
               GitHub/HN whose source ranks `batch_news_min_rank` or more (40:
               The Register, Dark Reading; the lane keeps its own 55), and not
@@ -216,24 +225,77 @@ def deal(
     return taken + [x for x in ranked if id(x) not in ids][: size - len(taken)]
 
 
-def priority_class(cand: dict) -> str | None:
-    """The must-not-miss class a candidate belongs to, else None."""
+def priority_class(cand: dict, conf: c.Config) -> str | None:
+    """The must-not-miss class a candidate belongs to, else None. A GHSA advisory
+    is in it only when ghsa_keep_reason keeps it: `ghsa-ai` (AI-related) or
+    `ghsa-critical` (critical in a well-known package)."""
     if (cand.get("source_id") or "").startswith("kev_json:"):
         return "kev"
     if cand.get("source_type") != "GHSA":
         return None
-    severity = str(cand.get("severity") or "").upper()
-    if severity == "CRITICAL":
-        return "ghsa-critical"
-    if severity == "HIGH" and is_ai_tooling(cand):
-        return "ghsa-ai"
-    return None
+    reason = ghsa_keep_reason(cand, conf)
+    return {"ai-domain": "ghsa-ai", "ai-package": "ghsa-ai", "critical": "ghsa-critical"}.get(
+        reason or ""
+    )
 
 
 def is_ai_tooling(cand: dict) -> bool:
     """Prefilter routed it to an AI-security domain on the taxonomy's own hints.
     Not the ingest-time topic guess: that is a keyword match on package names."""
     return str((cand.get("prefilter") or {}).get("domain_hint") or "").startswith("ais.")
+
+
+def package_names(cand: dict) -> set[str]:
+    """Lower-cased `name` and `ecosystem/name` of each affected package (the
+    GHSA ingestor's `packages` rows)."""
+    out: set[str] = set()
+    for row in cand.get("packages") or []:
+        name = str((row or {}).get("name") or "").strip().lower()
+        if name:
+            out |= {name, f"{str((row or {}).get('ecosystem') or '').strip().lower()}/{name}"}
+    return out
+
+
+def ghsa_keep_reason(cand: dict, conf: c.Config) -> str | None:
+    """Why a GitHub advisory stays in play, else None (drop it). Pure.
+
+    Rohan, 2026-10-28: advisories are not stories until they blow up on the
+    internet, but AI bugs from them stay, and so do CRITICAL ones in well-known
+    libraries (litellm). Kept when:
+      ai-domain   the prefilter routed it to an ais.* domain
+      ai-package  an affected package is in config `ghsa.ai_packages`
+      critical    severity CRITICAL and an affected package is in
+                  `ghsa.well_known_packages`
+    The third way in, a big-story group of 2+ independent publishers, is the
+    story lane's call (newsworthy.py), not decided here. A candidate that is not
+    a GHSA advisory has no reason (the rule is about GHSA only)."""
+    if cand.get("source_type") != "GHSA":
+        return None
+    if is_ai_tooling(cand):
+        return "ai-domain"
+    names = package_names(cand)
+    listed = lambda key: {str(x).strip().lower() for x in (conf.ghsa.get(key) or [])}  # noqa: E731
+    if names & listed("ai_packages"):
+        return "ai-package"
+    if str(cand.get("severity") or "").upper() == "CRITICAL" and names & listed(
+        "well_known_packages"
+    ):
+        return "critical"
+    return None
+
+
+def ghsa_drop_note(cand: dict) -> dict:
+    """The backlog copy of an advisory the keep rule refused."""
+    return {**cand, "prefilter": {**(cand.get("prefilter") or {}), "reason": "ghsa:not-kept"}}
+
+
+def ghsa_dropped(cand: dict, conf: c.Config, groups: dict[int, tuple]) -> bool:
+    """A GHSA advisory the keep rule refuses and no big story vouches for. The
+    head of a lane-worthy story group (2+ independent publishers) is not dropped."""
+    if cand.get("source_type") != "GHSA" or ghsa_keep_reason(cand, conf):
+        return False
+    group = groups.get(id(cand))
+    return not (group and group[1])
 
 
 def lab_source(cand: dict, conf: c.Config) -> bool:
@@ -337,12 +399,14 @@ def eff_lane(
     return deal(eligible, limit, per_source, used=used, fill=False)
 
 
-def priority_lane(ranked: list[dict], limit: int, per_source: int) -> list[dict]:
+def priority_lane(ranked: list[dict], limit: int, per_source: int, conf: c.Config) -> list[dict]:
     """Up to `limit` must-not-miss candidates, dealt in turn between KEV and
     GHSA, at most `per_source` from either. Within GHSA: critical advisories in
     AI tooling, then the other critical ones, then high ones in AI tooling, so
     a HIGH can never take a critical's slot. Otherwise rank (newest) order."""
-    eligible = sorted((x for x in ranked if priority_class(x)), key=lane_order)  # stable
+    eligible = sorted(
+        (x for x in ranked if priority_class(x, conf)), key=lambda x: lane_order(x, conf)
+    )  # stable
     return deal(eligible, limit, per_source, fill=False)
 
 
@@ -494,9 +558,9 @@ def with_story(head: dict, sig: nw.Signal, others: list[dict]) -> dict:
     return {**head, "batch_priority": "story", "batch_story": story, "_head": id(head)}
 
 
-def lane_order(cand: dict) -> int:
-    kind = priority_class(cand)
-    if kind == "ghsa-critical" and is_ai_tooling(cand):
+def lane_order(cand: dict, conf: c.Config) -> int:
+    kind = priority_class(cand, conf)
+    if kind == "ghsa-ai" and str(cand.get("severity") or "").upper() == "CRITICAL":
         return 0
     return 2 if kind == "ghsa-ai" else 1
 
@@ -540,7 +604,12 @@ def select_tiers(
     out = heads | set(siblings)
     open_ = [x for x in ranked if id(x) not in out]
     lane_max = min(size - len(stories), max(0, int(setting(conf, "batch_priority_max"))))
-    lane = priority_lane(open_, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))))
+    gone = [x for x in open_ if ghsa_dropped(x, conf, groups)]
+    open_ = [x for x in open_ if id(x) not in {id(g) for g in gone}]
+    dropped += [ghsa_drop_note(x) for x in gone]
+    lane = priority_lane(
+        open_, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))), conf
+    )
     room = size - len(stories) - len(lane)
     lab_max = min(room, max(0, int(setting(conf, "batch_lab_max"))))
     lane_ids0 = {id(x) for x in lane}
@@ -578,7 +647,12 @@ def select_tiers(
     news = news_tier(left, sig_of, groups, conf)
     news_ids = {n.pop("_cand") for n in news}
     rest = [x for x in left if id(x) not in news_ids] + [x for x in ranked if id(x) in siblings]
-    batch = stories + [{**x, "batch_priority": lane_tag(x, eff_ids)} for x in lane] + floor + dealt
+    batch = (
+        stories
+        + [{**x, "batch_priority": lane_tag(x, eff_ids, conf)} for x in lane]
+        + floor
+        + dealt
+    )
     backlog = [
         {**x, "batch_rank": i, **same_story_note(x, siblings)}
         for i, x in enumerate(rest, start=len(batch) + len(news) + 1)
@@ -586,10 +660,10 @@ def select_tiers(
     return batch, news, backlog + dropped
 
 
-def lane_tag(cand: dict, eff_ids: set[int]) -> str:
+def lane_tag(cand: dict, eff_ids: set[int], conf: c.Config) -> str:
     """batch_priority of a lane member: its must-not-miss class, else efficiency
     (the efficiency lane's pick), else lab."""
-    return priority_class(cand) or ("efficiency" if id(cand) in eff_ids else "lab")
+    return priority_class(cand, conf) or ("efficiency" if id(cand) in eff_ids else "lab")
 
 
 # --- the news tier -------------------------------------------------------------
@@ -604,7 +678,7 @@ def news_reason(
         return None
     if group is not None and group[1]:
         return "story"
-    if priority_class(cand):
+    if priority_class(cand, conf):
         return "priority"
     held = sig is not None and sig.known  # the ledger already has this story
     lab = "lab" if lab_on(conf) and not held and lab_relevant(cand, conf) else None
@@ -642,16 +716,18 @@ def news_tier(left: list[dict], sig_of: dict, groups: dict, conf: c.Config) -> l
         if used[source_key(cand)] >= per_source:
             continue
         used[source_key(cand)] += 1
-        out.append(news_entry(cand, reason, sig_of.get(id(cand)), groups.get(id(cand))))
+        out.append(news_entry(cand, reason, sig_of.get(id(cand)), groups.get(id(cand)), conf))
     return out
 
 
-def news_entry(cand: dict, reason: str, sig: nw.Signal | None, group: tuple | None) -> dict:
+def news_entry(
+    cand: dict, reason: str, sig: nw.Signal | None, group: tuple | None, conf: c.Config
+) -> dict:
     """The news-tier copy of a candidate: why it is news, its markers, how many
     publishers told it, and the story's other copies (its covering sources)."""
     lead = group[0] if group else sig
     note = {
-        "reason": priority_class(cand) if reason == "priority" else reason,
+        "reason": priority_class(cand, conf) if reason == "priority" else reason,
         "markers": sorted(lead.markers) if lead else [],
         "sources": lead.sources if lead else 1,
         "coverage": [coverage_row(x) for x in (group[2] if group else [])],
