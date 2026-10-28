@@ -119,6 +119,7 @@ def _no_main_stories(monkeypatch):
     """main's story ledger and eval history come from git; these trees carry
     neither (the real main does once a scan has merged)."""
     monkeypatch.setattr(gate, "main_stories", lambda base: {})
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: False)
     no_main_history(monkeypatch)
 
 
@@ -207,3 +208,20 @@ def test_missing_page_is_a_problem(tmp_path, monkeypatch):
 def test_main_ledger_reads_git_not_the_tree():
     ledger = gate.main_ledger("HEAD")
     assert isinstance(ledger, dict) and "claims" in ledger
+
+
+def test_feed_check_accepts_exact_render_and_refuses_edits(tmp_path, monkeypatch):
+    import generate_html as gh
+
+    root = _tree(tmp_path)
+    page = (root / "docs" / "index.html").read_text()
+    feed = root / "docs" / "feed.xml"
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: True)
+    assert gate.feed_check("main", root) == ["docs/feed.xml is missing"]
+    feed.write_text(gh.render_feed_for_page(page))
+    assert gate.feed_check("main", root) == []
+    feed.write_text(feed.read_text().replace("<title>", "<title>x", 1))
+    assert gate.feed_check("main", root) != []
+    feed.unlink()
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: False)
+    assert gate.feed_check("main", root) == []

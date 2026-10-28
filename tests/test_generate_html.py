@@ -681,3 +681,85 @@ def test_payload_rows_carry_exploited_and_no_story_is_in_both_lists(sandbox):
     row = next(f for f in data["findings"] if f["title"] == "Hot one")
     assert row["exploited"] is True
     assert not set(data["biggest_stories"]) & set(data["top_stories"])
+
+
+# --- Atom feed ---------------------------------------------------------------
+ATOM = "{http://www.w3.org/2005/Atom}"
+FEED_PAYLOAD = {
+    "findings": [
+        {"id": "a", "title": "Big <script>alert(1)</script> story", "takeaway": "x ]]> y <b>z</b>",
+         "published": "2026-10-20", "updated": "2026-10-22"},
+        {"id": "b&c", "title": "Second", "summary": "plain", "published": "2026-10-21"},
+    ],
+    "editorial": [],
+    "claims": [{"id": "k1", "title": "A claim", "statement": "It holds."}],
+    "biggest_stories": ["a"],
+    "top_stories": ["b&c", "missing"],
+    "claim_changes": [{"kind": "added", "date": "2026-10-25", "claim": "k1"}],
+}  # fmt: skip
+
+
+def feed_of(payload=FEED_PAYLOAD):
+    import xml.etree.ElementTree as ET
+
+    text = gh.render_feed(payload, "2026-10-27")
+    return text, ET.fromstring(text)
+
+
+def test_feed_is_atom_with_the_briefings_picks():
+    text, root = feed_of()
+    assert root.tag == ATOM + "feed"
+    assert root.find(ATOM + "updated").text == "2026-10-27T00:00:00Z"
+    entries = root.findall(ATOM + "entry")
+    ids = [e.find(ATOM + "id").text for e in entries]
+    base = gh.SITE_URL
+    assert ids == [
+        f"{base}?finding=a#week",
+        f"{base}?finding=b%26c#week",
+        f"{base}?claim=k1#claims",
+    ]
+    assert [e.find(ATOM + "updated").text for e in entries] == [
+        "2026-10-22T00:00:00Z",
+        "2026-10-21T00:00:00Z",
+        "2026-10-25T00:00:00Z",
+    ]
+    assert entries[2].find(ATOM + "summary").text == "It holds."
+    assert entries[2].find(ATOM + "link").get("href") == ids[2]
+
+
+def test_feed_is_text_only_whatever_the_payload_says():
+    text, root = feed_of()
+    assert root.find(ATOM + "entry/" + ATOM + "title").text.startswith("Big <script>")
+    for bad in ("<script", "<?xml-stylesheet", "xhtml", "]]>", "<![CDATA[", "<content"):
+        assert bad not in text
+    assert all(e.find(ATOM + "summary").get("type") == "text" for e in root.iter(ATOM + "entry"))
+
+
+def test_feed_survives_control_characters_and_bad_dates():
+    payload = {
+        **FEED_PAYLOAD,
+        "findings": [{"id": "a", "title": "T\x00\x08x", "published": "soon"}],
+    }
+    _, root = feed_of(payload)
+    entry = root.find(ATOM + "entry")
+    assert entry.find(ATOM + "title").text == "Tx"
+    assert entry.find(ATOM + "updated").text == "2026-10-27T00:00:00Z"
+
+
+def test_feed_is_deterministic_and_empty_payload_is_valid():
+    assert gh.render_feed(FEED_PAYLOAD, "2026-10-27") == gh.render_feed(FEED_PAYLOAD, "2026-10-27")
+    _, root = feed_of({})
+    assert root.findall(ATOM + "entry") == []
+
+
+def test_feed_for_a_page_matches_a_fresh_render_of_its_payload():
+    page = gh.render(FEED_PAYLOAD, "2026-10-27")
+    assert gh.render_feed_for_page(page) == gh.render_feed(FEED_PAYLOAD, "2026-10-27")
+    with pytest.raises(ValueError):
+        gh.render_feed_for_page("<html></html>")
+
+
+def test_site_links_the_feed():
+    page = gh.render({}, "2026-10-27")
+    assert '<link rel="alternate" type="application/atom+xml"' in page
+    assert 'href="feed.xml"' in page and ">Feed</a>" in page

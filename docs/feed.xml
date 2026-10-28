@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Awesome Security &amp; AI Research: a weekly vetted briefing</title>
+  <subtitle>A weekly, source-cited briefing on AI security, product security, and applied AI research. Every finding is vetted, distilled to one lesson and one action, and filed by field. A standing-claims ledger tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.</subtitle>
+  <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/</id>
+  <updated>2026-10-28T00:00:00Z</updated>
+  <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week</id>
+    <title>Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild</title>
+    <updated>2026-10-22T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch VCO on-prem and restrict its web interface to admin networks; any user account, however low, is enough to exploit it.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week</id>
+    <title>Google: eight eMudhra CA keys had weak entropy and Chrome blocked them</title>
+    <updated>2026-10-22T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week" rel="alternate" type="text/html" />
+    <summary type="text">Weak randomness in CA key generation is catastrophic; Certificate Transparency and fast key-hash blocks are what contained this one.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week</id>
+    <title>Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI</title>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch PHP now: the flaws are in the engine, not your app, and AI has cut the cost of turning old memory bugs into working exploits.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week</id>
+    <title>PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week" rel="alternate" type="text/html" />
+    <summary type="text">If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49#week</id>
+    <title>Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49#week" rel="alternate" type="text/html" />
+    <summary type="text">Before trusting an LLM judge, measure how many verdicts flip across reworded prompts and test it on the kind of content it will actually judge.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=authlib-accepts-a-json-web-signature-with-no-sig-de447b05f2#week</id>
+    <title>Authlib accepts a JSON web signature with no signatures as verified</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=authlib-accepts-a-json-web-signature-with-no-sig-de447b05f2#week" rel="alternate" type="text/html" />
+    <summary type="text">Any verifier that loops over signatures must reject an empty list; test your JWS and JWT code for that case.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xint-used-openai-s-compaction-step-to-leak-hidde-5fbcc72044#week</id>
+    <title>Xint used OpenAI's compaction step to leak hidden reasoning as plain text</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xint-used-openai-s-compaction-step-to-leak-hidde-5fbcc72044#week" rel="alternate" type="text/html" />
+    <summary type="text">Encrypted reasoning stays readable to any provider-side step that can be instructed, so treat hidden reasoning as hidden by policy, not by cryptography.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=one-crafted-medical-image-file-crashes-or-silent-00971da138#week</id>
+    <title>One crafted medical image file crashes or silently corrupts MONAILabel inference</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=one-crafted-medical-image-file-crashes-or-silent-00971da138#week" rel="alternate" type="text/html" />
+    <summary type="text">Machine learning pipelines that read numbers from uploaded files need explicit finiteness checks, because one NaN can corrupt medical output with no error.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-fake-chatgpt-and-claude-apps-sideloa-665c3109ff#week</id>
+    <title>Check Point: fake ChatGPT and Claude apps sideload malware via signed installers</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-fake-chatgpt-and-claude-apps-sideloa-665c3109ff#week" rel="alternate" type="text/html" />
+    <summary type="text">People searching for desktop AI apps are a live lure, so allow AI clients only from vendor sites and alert when signed vendor installers load libraries from download folders.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=warp-vendor-breach-exposed-agent-logs-for-roughl-f14f66a367#week</id>
+    <title>Warp: vendor breach exposed agent logs for roughly 1% of users</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=warp-vendor-breach-exposed-agent-logs-for-roughl-f14f66a367#week" rel="alternate" type="text/html" />
+    <summary type="text">Agent logs from coding tools can carry code and secrets, so list which vendors keep them and rotate secrets that passed through Warp agent sessions if Warp notifies you.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=apple-patches-286-flaws-and-backports-exploited-3532f4d06b#week</id>
+    <title>Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=apple-patches-286-flaws-and-backports-exploited-3532f4d06b#week" rel="alternate" type="text/html" />
+    <summary type="text">Push iOS 18.7.11 to devices that cannot run iOS 27, and patch Macs that expose Remote Management or Screen Sharing.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-output-is-untrusted-input-to-review-tooling#claims</id>
+    <title>Rendered agent transcripts can show reviewers a false record</title>
+    <updated>2026-10-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-output-is-untrusted-input-to-review-tooling#claims" rel="alternate" type="text/html" />
+    <summary type="text">Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=localhost-agent-servers-are-reachable-from-any-webpage#claims</id>
+    <title>Any webpage can reach a coding agent's localhost server</title>
+    <updated>2026-10-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=localhost-agent-servers-are-reachable-from-any-webpage#claims" rel="alternate" type="text/html" />
+    <summary type="text">A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=per-skill-scanning-misses-cross-skill-cascades#claims</id>
+    <title>Harmful goals split across skills slip past per-skill scanners</title>
+    <updated>2026-10-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=per-skill-scanning-misses-cross-skill-cascades#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=input-guardrail-weaker-than-target-is-bypassable#claims</id>
+    <title>A guardrail weaker than its target can be bypassed</title>
+    <updated>2026-10-24T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=input-guardrail-weaker-than-target-is-bypassable#claims" rel="alternate" type="text/html" />
+    <summary type="text">An input-screening guardrail model that is less capable than the model it protects (less reasoning effort, no tools) can be bypassed by payloads hidden in plain prose that only the stronger, tool-using target can decode.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims</id>
+    <title>Auto-evolved harness gains are mostly overfitting</title>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-evolution-gains-need-held-out-attribution#claims" rel="alternate" type="text/html" />
+    <summary type="text">Gains from automatically evolving an agent harness (prompts, skills, tools, orchestration around a fixed model) are mostly search-set overfitting and extra inference compute: across 21 settings with significant gains, those two explained 54% and 14% of the gain on average, search-set gains often failed to transfer to held-out tasks, and a validation split did not prevent the overfitting.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=diff-review-catches-more-than-full-file-review#claims</id>
+    <title>Diff review catches more LLM-introduced defects than full-file review</title>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=diff-review-catches-more-than-full-file-review#claims" rel="alternate" type="text/html" />
+    <summary type="text">Reviewing an LLM's proposed change as a diff catches more defects than reviewing the resulting full file.</summary>
+  </entry>
+</feed>

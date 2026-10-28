@@ -66,8 +66,9 @@ DENIED_NAMES = frozenset(
 )
 ALLOWED_SUFFIXES = (".json", ".md", ".png")
 # HTML runs script on the site's origin: only the one rendered page, which
-# merge_gate.py also proves is main's renderer output.
-EXACT_FILES = frozenset({"docs/index.html", "docs/.nojekyll"})
+# merge_gate.py also proves is main's renderer output. docs/feed.xml is the Atom
+# feed; merge_gate.py proves it is main's render_feed() of that page's data.
+EXACT_FILES = frozenset({"docs/index.html", "docs/feed.xml", "docs/.nojekyll"})
 ALLOWED_DOTFILES = frozenset({"docs/.nojekyll"})
 SAFE_PATH = re.compile(r"[A-Za-z0-9._/-]+")
 MAX_PATH_LEN = 300

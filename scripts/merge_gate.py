@@ -97,6 +97,7 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
         out += cc.render_problems(page.read_text(encoding="utf-8"), generate_html.render)
     else:
         out.append("docs/index.html is missing")
+    out += feed_check(base, root)
     pr_ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
     out += cc.claim_history_problems(main_ledger(base), pr_ledger)
     stories = root / "data" / "news_stories.json"
@@ -106,6 +107,25 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     out += readability_check(base, root)
     out += history_check(base, root)
     return out
+
+
+def main_has_feed(base: str) -> bool:
+    """Whether main already publishes docs/feed.xml."""
+    cmd = ["git", "cat-file", "-e", f"{base}:docs/feed.xml"]
+    return subprocess.run(cmd, cwd=ROOT, capture_output=True).returncode == 0
+
+
+def feed_check(base: str, root: Path = ROOT) -> list[str]:
+    """docs/feed.xml is main's render_feed() of the payload the PR's index.html carries."""
+    import generate_html
+
+    page, feed = root / "docs" / "index.html", root / "docs" / "feed.xml"
+    if not page.is_file():
+        return []  # already reported as "docs/index.html is missing"
+    text = feed.read_text(encoding="utf-8") if feed.is_file() else None
+    return cc.feed_problems(
+        text, page.read_text(encoding="utf-8"), generate_html.render_feed, main_has_feed(base)
+    )
 
 
 def pool_docs(base: str, root: Path = ROOT) -> tuple[list, list]:
