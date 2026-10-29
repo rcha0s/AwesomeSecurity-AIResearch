@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_5 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [45 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -45,20 +45,29 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[An OpenAI model spent funds from a wallet it was never given](https://alignment.openai.com/misalignment-reports/using-a-funded-test-cryptocurrency-wallet-without-authorization/)**
   _Why now: Frontier lab report of a model using funds from a wallet it was not given. · newsworthy · timely · week-of-2026-10-13_
 - **[OpenAI had frontier agents red-team its training containment, and they escaped](https://openai.com/index/securing-our-frontier-model-training-environment)**
+- **[Anthropic's red team found Claude reached undergraduate-level CTF skill](https://www.anthropic.com/research/strategic-warning-for-ai-risk-progress-and-insights-from-our-frontier-red-team)**
 - **[obsidian-tc MCP server lacks Origin checks, letting web pages read its vault](https://github.com/advisories/GHSA-pqh8-4pj7-32xx)**
 - **[Gen Digital: email steered an AI agent into deleting files](https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders/)**
 - **[vLLM advisory withdrawn as duplicate of remote code execution flaw](https://github.com/advisories/GHSA-f623-hjm8-5wg5)**
 - **[Vendor argues controls around the model make AI pentesting agents usable](https://thehackernews.com/2026/10/the-harness-is-hard-part-of-agentic.html)**
 - **[vlt 1.5.0 links agent skills and skips packages Socket flags as malware](https://socket.dev/blog/vlt-skills?utm_medium=feed)**
 - **[About 80 WhatsApp help pages exposed hidden instructions for Meta's support chatbot](https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/)**
+- **[Microsoft and NVIDIA say deployment context, not weight openness, sets open-weight risk](https://www.microsoft.com/en-us/security/blog/2026/10/16/managing-open-weight-model-risk-in-enterprise-deployments/)**
+- **[Red teams found Claude refuses direct election-abuse requests but misses split subtasks](https://www.anthropic.com/news/2026-us-midterms)**
+- **[UK AISI resumes most cyber evals with the internet turned off](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)**
 - **[Apple changes Full Disk Access; Muse's opt-in did not limit it](https://arstechnica.com/security/2026/10/apple-changes-full-disk-access-permissions-to-curb-abuse-from-ai-agents/)**
 - **[OpenAI draft safety cases for RL training allow no chain-of-thought in graders](https://openai.com/index/towards-safety-cases-for-frontier-ai-training)**
+- **[Anthropic's Life Sciences Verification Program trades bio refusals for vetted access](https://www.anthropic.com/news/life-sciences-verification-program)**
+- **[ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion](https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/)**
+- **[Attackers in Latin American intrusion campaigns used commercial LLMs for live troubleshooting](https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/)**
+- **[OWASP GenAI Security Project unveils its 2026 Top 10 for LLM Applications](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)**
 - **[AllenAI's BenchMIRT: WMDP 'safety' scores track reasoning ability, inversely](https://huggingface.co/blog/allenai/benchmirt)**
 - **[OpenClaw 2.0's usability overhaul ships with security still opt-in](https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492)**
 - **[Claude Code Opus 5 Auto Mode tricked into RCE via website summarization](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)**
 - **[OpenAI didn't notice its agents using a message board to plan hacking](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)**
 - **[IBM's agentic AI platform is under active attack - patch now](https://www.theregister.com/security/2026/08/05/ibms-agentic-ai-platform-is-under-active-attack-patch-now/5283535)**
 - **[google/adk-python CI prompt injection let a public agent leak a token](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)**
+- **[LLM Heist hijacks LiteLLM for traffic interception, key theft and tool-call injection](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)**
 - **[Anthropic's own cybersecurity evals let three Claude models breach real production infrastructure](https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/)**
 - **[Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)**
   _Why now: A disclosed real-world incident (the Hugging Face agentic intrusion) with an actionable IR lesson: pre-stage a local open-weight forensic model because commercial guardrails may refuse the workload mid-breach. · newsworthy · trending · high-relevance · timely_
@@ -66,13 +75,13 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Microsoft security guidance on a fast-moving theme (agentic MCP tooling): version and re-approve tool descriptions like system prompts. Part of the top agent-security trend cluster. · trending · newsworthy · timely_
 - **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986v1)**
   _Why now: Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files. · trending · timely_
+- **[OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/)**
 
 | Domain | Findings |
 | --- | --- |
 | Guardrails & Defensive Tooling | 2 |
 | Prompt Injection & Jailbreaks | 1 |
 | AI Infrastructure & Incident Response | 1 |
-| Red-Teaming & Threat Modeling | 1 |
 
 ## Guardrails & Defensive Tooling
 
@@ -94,12 +103,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **61.23** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
-
-## Red-Teaming & Threat Modeling
-
-- **[UK AISI resumes most cyber evals with the internet turned off](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-with-the-internet-turned-of.md)** · composite **58.5** · Oct 7, 2026  
-  A concrete, reusable control set for anyone running agentic cyber evals: two independent egress layers, a blocking monitor, preflight checks, and flag-terminated escape tests run from weaker to…  
-  _[UK AI Security Institute Blog](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)_
 
 ---
 

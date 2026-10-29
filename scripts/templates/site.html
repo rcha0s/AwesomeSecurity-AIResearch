@@ -829,7 +829,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = biggestHTML(shown) + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
+    var html = focusHTML(shown) + biggestHTML(shown) + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -1312,13 +1312,14 @@
   // A top story is shaped like a "More in the news" card (Rohan, 2026-10-26):
   // title, takeaway, one quote, one "Also reported by" line, the two newest
   // updates. Every source and every update are in the detail panel.
-  function storyCardHTML(f, i) {
+  function storyCardHTML(f, i, tags) {
     var n = 1 + arr(f.corroborators).length;
     return '<article class="art story">' +
       '<h3><span class="rank">' + num(i + 1) + '</span>' + detailAnchor(f, txt(f.title)) + '</h3>' +
       (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
       quotePreview(f) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
+        arr(tags).map(function (t) { return '<span class="chip sig">' + txt(t) + '</span>'; }).join("") +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
         (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') + triageChips(f) +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
@@ -1358,6 +1359,35 @@
   }
   // Same sentence as scripts/briefing.py:biggest_note (the README prints that one).
   function biggestNote(days) { return "Most covered or exploited in the last " + days + " days."; }
+  // Same sentence as scripts/briefing.py:focus_note (the README prints that one).
+  function focusNote(fresh, total, days) {
+    if (!total) return "Nothing in your focus areas yet.";
+    if (fresh === 0) return "Nothing new in your focus areas in the last " + days + " days, so these are the latest.";
+    if (fresh < total) return "Only " + fresh + " in the last " + days + " days, so the latest earlier ones fill in.";
+    return "Your focus areas, last " + days + " days: most areas matched first, then newest.";
+  }
+  // The lead lane: stories and claim changes matching config.yaml `focus:`,
+  // picked in scripts/briefing.py. Hidden when the config names no area or
+  // nothing matches. Later lanes leave out what this one shows.
+  function focusHTML(shown) {
+    var m = rowsById(), tags = DATA.focus_tags || {};
+    var rows = arr(DATA.focus_stories).map(function (id) { return has(m, id) ? m[id] : null; }).filter(Boolean);
+    var changes = arr(DATA.focus_claim_changes).filter(validChange);
+    if (!rows.length && !changes.length) return "";
+    rows.forEach(function (f) { shown[f.id] = 1; });
+    var html = secHead("Your focus", arr(DATA.focus_areas).length + " areas") +
+      '<p class="sec-lede">' + esc(focusNote(Number(DATA.focus_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0)) +
+      ' ' + esc(arr(DATA.focus_areas).join(", ")) + '.</p>';
+    if (rows.length) {
+      html += '<div class="artlist">' + rows.map(function (f, i) {
+        return storyCardHTML(f, i, has(tags, f.id) ? tags[f.id] : []); }).join("") + '</div>';
+    }
+    if (changes.length) {
+      html += '<h3 class="kick hits-h">Claim changes in your focus</h3><div class="chglist">' +
+        changes.map(claimChangeHTML).join("") + '</div>';
+    }
+    return html;
+  }
   function biggestHTML(shown) {
     var m = rowsById();
     var rows = arr(DATA.biggest_stories).map(function (id) { return has(m, id) ? m[id] : null; }).filter(Boolean);

@@ -10190,6 +10190,182 @@
       "previous_slugs": [
         "upguard-researcher-uses-onlyfans-copyright-takedown-data-to"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "cluster": "E",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "prompt-injection-is-a-permanent-attack-surface"
+      ],
+      "title": "Sanitized webmail CSS steals tokens and keylogs Outlook",
+      "source_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
+      "article_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
+      "published": "2026-08-06",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch01-3.txt",
+      "source_id": "rss:https-portswigger-net-research-rss",
+      "source_topics": [
+        "product-security"
+      ],
+      "source_rank": 75.0,
+      "summary": "Gareth Heyes chains allowed HTML/CSS features across Fastmail, Outlook, AOL/Yahoo/Gmail/ProtonMail and OpenAI's Atlas AI browser to defeat webmail CSS sanitization. Techniques include HTML labels that trigger arbitrary UI actions, invisible :before/:after content that feeds one story to the human and another to an AI browser (indirect prompt injection), attribute-selector nesting to brute-force login tokens after a paste-into-draft, CSS hotwiring to hijack any click, and a real-time keylogger via select+opacity plus Chrome interest invokers.",
+      "takeaway": "CSS sanitizers built as feature allow-lists are not a trust boundary; the only durable defense is strict iframe sandboxing plus killing dangerous selectors, select, and free-form image URLs.",
+      "lessons": [
+        {
+          "point": "Invisible :before/:after content lets an attacker present two different messages to the human and to an AI browser reading the same email, enabling indirect prompt injection through webmail.",
+          "excerpt": "you could use the `:before` and `:after` pseudo-elements to hide the text from the LLM and you could use opacity to hide it from the victim. This creates a disparity between what the victim sees and what the LLM sees, potentially altering the email's context.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "CSS attribute selectors, combined with nesting, can brute-force secret URL parameters (e.g. Medium's 12-char login token) inside a webmail draft after a single paste, without JavaScript.",
+          "excerpt": "using nesting we can match the start with one selector that's outputted only once and then nest the other selectors to brute-force the token with a smaller amount of CSS",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The only defense that actually holds is strict iframe sandboxing plus removing dangerous selectors and select elements; feature-level CSS/HTML allow lists get bypassed by gadgets and mutation.",
+          "excerpt": "One of the best methods to protect against these attacks is strict isolation. If you isolate the email message using sandboxed iframes you restrict the ability to break out of trusted boundaries.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "CSS hotwiring lets an attacker with allow-listed CSS force the victim's next click, anywhere on the page, to fire a chosen UI action, including multi-step ones.",
+          "excerpt": "CSS hotwiring is a technique that allows you to force the victim to click a specific UI action when clicking anywhere on the page **including multi-step actions** using just CSS.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "css",
+        "webmail",
+        "sanitization",
+        "prompt-injection",
+        "keylogger",
+        "atlas",
+        "outlook"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Threat-model webmail-style renderers as adversarial input surfaces for both humans and AI browsers",
+        "detail": "For any product rendering third-party HTML/CSS to a user (webmail, comment systems, agent-visible pages): isolate in a sandboxed iframe; strip select and any dangerous selectors (:has, :checked, :focus, :not); route images through a proxy; reject data: URLs; and assume attackers will use :before/:after to differ human vs LLM view. Add a regression test that renders a corpus of PortSwigger's published payloads and confirms none reach the DOM.",
+        "skill_slug": "webmail-css-sanitizer-hardening"
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 88,
+        "newness": 20,
+        "credibility": 75.0,
+        "composite": 66.05,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
+      "discovered_via": "rss",
+      "verified": true,
+      "threat": "A single crafted email lets an attacker (a) spoof or hijack UI actions in Outlook/Fastmail via HTML labels + CSS hotwiring, (b) exfiltrate login tokens and passwords from third-party sites the victim pastes into a webmail draft, (c) inject instructions that only the AI browser sees, causing an AI email assistant to open attacker-controlled tabs and leak the victim's name, and (d) keylog Outlook via CSS/select gadgets. All from allow-listed HTML/CSS with no JavaScript.",
+      "conditions": "Webmail client renders untrusted HTML/CSS in the same DOM as the trusted UI (no sandboxed iframe isolation), or the user pastes clipboard HTML into a contenteditable draft on Firefox, or an AI browser (e.g. Atlas) processes the email body as prompt context.",
+      "mitigations": "Sandbox untrusted email content in an iframe with a strict CSP that blocks external image requests and data: URLs. Strip select, dangerous selectors (:has, :checked, :focus, :not), and image URLs pointing to attacker-controllable domains. When an image proxy is available, force all image requests through it. In AI-browser layers, treat CSS-hidden or opacity-zero content as untrusted content the model should not act on.",
+      "id": "css-the-bomb-sanitized-webmail-css-steals-tokens-ccb02c3f70",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": null,
+      "domain_label": "Web Application Security",
+      "previous_slugs": [
+        "css-the-bomb-sanitized-webmail-css-steals-tokens-keylogs-out"
+      ]
+    },
+    {
+      "candidate_id": "ai-powered-fuzzing-with-the-github-security-lab-2713e1bcb6",
+      "topic": "product-security",
+      "domain": "ps.offensive",
+      "title": "GitHub Security Lab's Fuzzing Taskflow has an LLM agent write AFL++ harnesses",
+      "source_url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
+      "summary": "GitHub Security Lab released a Fuzzing Taskflow that takes a C/C++ GitHub repo and autonomously writes fuzzing harnesses, runs AFL++, reads coverage to chase gaps, improves the harnesses, and triages crashes into reports. The agent makes decisions while MCP tools do the execution, and a coverage loop with doubling time budgets stops once gains plateau. The author warns that the agent runs LLM-chosen build commands on the host with no container. It should only run in a throwaway environment, and its crash verdicts still need human review.",
+      "lessons": [
+        {
+          "point": "Split authority: the LLM picks what to fuzz and which gap to chase, while narrow tools perform execution and state lives in a database rather than in the agent.",
+          "excerpt": "the **LLM agent owns the decisions, and the MCP tools own the execution**",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Bound agent compute with plateau detection: stop iterating when coverage gains fall below a small threshold for two rounds.",
+          "excerpt": "once two consecutive iterations each gain less than a configurable threshold (1% absolute line coverage by default)",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Coverage-driven dictionary enrichment pulls magic constants from the comparisons that guard unreached code, helping the fuzzer pass hard checks.",
+          "excerpt": "Then, after every coverage step, the pipeline looks at the guards near the uncovered lines",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "An agent that runs LLM-chosen build commands on the host is a prompt-injection risk; contain it in a disposable environment.",
+          "excerpt": "A prompt-injected agent could, in principle, do anything your user can.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "LLM agents can now take over the labor-intensive parts of fuzzing (harness writing, coverage chasing, triage), but they need containment and human review of verdicts.",
+      "tags": [
+        "fuzzing",
+        "afl-plus-plus",
+        "llm-agents",
+        "taskflows",
+        "coverage-guided",
+        "crash-triage",
+        "mcp",
+        "agent-sandboxing"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Run seclab-taskflows-fuzzing against a C/C++ project in a Codespace",
+        "detail": "Start a Codespace from github.com/GitHubSecurityLab/seclab-taskflows-fuzzing and run ./scripts/fuzzing/run_fuzzing.sh owner/repo (try DaveGamble/cJSON first as a smoke test). Do not run it on a workstation with credentials or elevated privileges. Watch the dashboard on port 8765, and treat every 'vulnerability' verdict and suggested diff as a draft to confirm by hand."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 75,
+        "newness": 5,
+        "credibility": 75.0,
+        "composite": 48.5,
+        "scored_at": "2026-10-25T00:44:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "GitHub Security Lab Taskflow Android audit (24 vulnerabilities); OSS-Fuzz-gen.",
+      "related_claims": [
+        "prompt-injection-is-containment-not-prevention"
+      ],
+      "threat": "The agent executes arbitrary LLM-chosen build commands on the host; a prompt-injected agent (for example via hostile content in the target repo) could act with the user's privileges.",
+      "conditions": "Running the taskflow outside a disposable environment, or with elevated privileges.",
+      "mitigations": "Run only in a Codespace or throwaway VM without elevated privileges; keep human review on verdicts and suggested patches.",
+      "article_url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-24",
+      "raw_path": "data/_raw/ai-powered-fuzzing-with-the-github-security-lab-2713e1bcb6.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-github-blog-tag-github-security-lab-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "GitHub Security Lab",
+      "id": "github-security-lab-s-open-source-fuzzing-taskfl-342d0c4b97",
+      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "github-security-lab-s-open-source-fuzzing-taskflow-uses-an-l"
+      ]
     }
   ]
 }

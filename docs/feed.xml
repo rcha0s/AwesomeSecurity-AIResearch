@@ -115,17 +115,17 @@
     <summary type="text">In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims</id>
-    <title>Load tool definitions on demand, not all at start</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims" rel="alternate" type="text/html" />
-    <summary type="text">Vendors report that loading tool definitions only when needed cut tokens by 47% (Cursor A/B test, runs that called an MCP tool) to 85% (Anthropic Tool Search); Anthropic's 98.7% is a single worked example.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims</id>
     <title>Measure speedups with repeated trials, not impressions</title>
     <updated>2026-10-28T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims" rel="alternate" type="text/html" />
     <summary type="text">A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=parallel-reads-single-threaded-writes#claims</id>
+    <title>Parallelize independent reads; keep writes single-threaded</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=parallel-reads-single-threaded-writes#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness should fan out parallel subagents for independent research but keep code-writing in one context, since Cognition argues parallel writers act on conflicting assumptions.</summary>
   </entry>
 </feed>

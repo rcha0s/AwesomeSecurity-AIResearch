@@ -266,13 +266,41 @@ def test_is_news_curated_requires_news_track_source():
     """A perfectly on-topic, fresh entry from a research-only source doesn't
     reach the news lane. It has to be sourced from a news-tagged feed."""
     conf = c.load_config()
-    entry = _news_entry(source_id="rss:research-only")
+    # Off-focus on purpose: a focus match also reaches the lane (next test).
+    entry = _news_entry(
+        source_id="rss:research-only",
+        domain="ps.appsec",
+        title="Cache poisoning in a CDN edge",
+        summary="A cache key flaw.",
+        takeaway="Check your cache keys.",
+    )
     research_source = {"rss:research-only": {"track": "research", "tier": "high"}}
     both_source = {"rss:research-only": {"track": "both", "tier": "high"}}
     news_source = {"rss:research-only": {"track": "news", "tier": "high"}}
     assert not c.is_news_curated(entry, conf, research_source)
     assert c.is_news_curated(entry, conf, both_source)
     assert c.is_news_curated(entry, conf, news_source)
+
+
+def test_a_focus_match_reaches_the_news_lane_from_a_research_source():
+    """OWASP ACS (2026-09-01) came from a research-track feed and sat archived:
+    a focus-area match keeps a story like news. Tier and the deny list still apply."""
+    conf = c.load_config()
+    entry = _news_entry(source_id="rss:research-only")  # an MCP story
+    high = {"rss:research-only": {"track": "research", "tier": "high"}}
+    low = {"rss:research-only": {"track": "research", "tier": "low"}}
+    assert c.is_news_curated(entry, conf, high)
+    assert not c.is_news_curated(entry, conf, low)
+    assert c.is_news_story(entry, conf, high)  # so rerank never archives it
+    medium = {"rss:research-only": {"track": "research", "tier": "medium"}}
+    assert not c.is_news_curated(entry, conf, medium)  # high-tier feeds only
+    assert not c.is_news_curated(
+        {**entry, "discovered_via": "github"}, conf, high
+    )  # repos are volume
+    import dataclasses
+
+    bare = dataclasses.replace(conf, focus={})
+    assert not c.is_news_curated(entry, bare, high)
 
 
 def test_is_news_curated_rejects_low_tier():

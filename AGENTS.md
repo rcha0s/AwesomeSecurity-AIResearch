@@ -57,6 +57,8 @@ scripts/generate_claims.py# claims/ — standing answers on top, retired ones un
 scripts/generate_html.py  # docs/index.html — THE SITE (filterable, self-contained, no Jekyll)
 scripts/templates/site.html # the site template (__DATA__ placeholder; a code asset, not data)
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
+scripts/focus.py          # which focus area (config.yaml `focus:`) an item matches (pure)
+scripts/weekly_digest.py  # docs/digest.md: the last 7 days of focus items (Mac wrapper, weekly)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
 scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py · eval_readability.py  # Phase 3 evals (see Evals)
@@ -110,6 +112,33 @@ the front page's "Trending & In the News" lane shows only the last
 `news_front_page_days` (7), newest first, at most `news_front_page_max` (30).
 Every kept story is on the site's News tab, grouped by month. Retired claims
 fold into a collapsed section under the live ones.
+
+A story that matches a focus area (below) and comes from a high-tier feed is kept
+like news too, whatever the feed's track (`common._focus_news`): rerank restores it
+from the archive and never prunes it. GitHub and HN items are excluded; their volume
+would swamp the lane. Grounding still applies. OWASP ACS (2026-09-01) sat archived,
+held for novelty, until this.
+
+## Your focus (config.yaml `focus:`)
+
+Rohan's focus areas (MCP security, prompt injection, AI supply chain, AI-assisted
+security review, guardrails, red teaming, AI regulation for insurers) are named once,
+as taxonomy domain IDs and/or keyword phrases. `focus.py` matches a story or claim to an
+area by domain ID or by whole-word keywords in its title/takeaway/summary/statement.
+The Briefing opens with a "Your focus" lane (`briefing.focus_stories`,
+`focus_claim_changes`): matching stories of the last 7 days, most areas matched first,
+then newest; `lane_min` earlier ones fill in on a thin week. Biggest, top stories,
+claim changes and Efficiency leave out what the lane took, so nothing shows twice;
+generic CVEs and efficiency items still show below it. The README teaser leads with the
+same lane. Add an area or keyword in `config.yaml` only; add a domain in the taxonomy
+YAML (never reuse or rename an ID).
+
+`scripts/weekly_digest.py` writes `docs/digest.md` (title, one-line takeaway, link per
+item, plus claim changes) from the same rules, no top-up. `run_scan_local.sh` runs it on
+`focus.digest_weekday` (0 = Monday ... 6 = Sunday; env `DIGEST_WEEKDAY` overrides, `any`
+runs it daily) before `post`, so the scan PR carries it. After the PR opens, and only
+when env `DIGEST_NOTIFY_URL` is set, the wrapper POSTs `{"message": ...}` to it with
+curl (10 second limit, failure ignored, URL never logged). No URL is stored in the repo.
 
 ## Findings vs claims (two different questions)
 
