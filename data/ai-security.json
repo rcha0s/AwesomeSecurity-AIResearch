@@ -2430,70 +2430,6 @@
     },
     {
       "topic": "ai-security",
-      "domain": "ais.agent-security",
-      "title": "Roo Code's command auto-approval can be bypassed in seven ways",
-      "source_url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
-      "article_url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
-      "source_id": null,
-      "discovered_via": "manual",
-      "source_name": "vulncheck.com",
-      "published": "2026-10-13",
-      "raw_path": "data/_raw/title-roo-code-through-3-54-0-auto-approve-bypas-1cd193b60e.txt",
-      "related_claims": [],
-      "summary": "VulnCheck published seven CVEs for Roo Code through 3.54.0 (checked at NVD): CVE-2026-82536 and CVE-2026-82537 on 2026-09-08, and CVE-2026-110202 to CVE-2026-110206 on 2026-10-13. Each lets indirect prompt injection run a denied shell command in an auto-approve setup by exploiting a gap between Roo's regex parser and bash: quote masking, glob tokens, redirects, ${ cmd; } substitutions, pipes, comments, or a substitution in command position. The advisories name no fixed version.",
-      "takeaway": "Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.",
-      "lessons": [
-        {
-          "point": "An allowlisted prefix like echo hides a command separator when the approval regex and the shell disagree about quotes.",
-          "excerpt": "Attackers can use indirect prompt injection with escaped or single-quoted double quotes to hide command separators behind allowlisted prefixes like echo, executing commands without user approval.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "roo-code",
-        "coding-agents",
-        "auto-approve",
-        "command-allowlist",
-        "prompt-injection",
-        "cve"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Turn off command auto-approve in Roo Code and similar agents",
-        "detail": "Require a human prompt for shell commands, or run the agent in a sandbox with no credentials. If you build an approval gate, parse with the same grammar the shell uses, and ask the user whenever the parse is incomplete."
-      },
-      "scores": {
-        "novelty": 60,
-        "relevance": 85,
-        "newness": 0,
-        "credibility": 55.0,
-        "composite": 51.75,
-        "scored_at": "2026-10-29T07:30:02+00:00"
-      },
-      "prior_art": "CVE-2026-30307 (March 2026, MITRE) reported Roo Code's regex whitelist as ineffective in general; these seven are distinct parser differentials (quote masking, glob tokens, redirects, funsub, pipes, comments, command position), each with its own CVE.",
-      "verified": true,
-      "verify_note": "All seven CVE ids confirmed at NVD on 2026-10-29 (assigner disclosure@vulncheck.com, text matches the VulnCheck advisories). Only the quote-masking advisory page was fetched in full.",
-      "corroborating_sources": [
-        {
-          "name": "NVD CVE-2026-110203",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110203",
-          "published": "2026-10-13"
-        }
-      ],
-      "id": "roo-code-s-command-auto-approval-can-be-bypassed-9fe22bfbf0",
-      "retrieved_at": "2026-10-29T07:30:02+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "date": "2026-10"
-    },
-    {
-      "topic": "ai-security",
       "domain": "ais.mcp-tools",
       "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
@@ -3036,87 +2972,6 @@
     {
       "topic": "ai-security",
       "domain": "ais.ai-infra",
-      "title": "\"Black October\" is an X label for a week of disclosures",
-      "source_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
-      "article_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
-      "source_id": null,
-      "discovered_via": "manual",
-      "source_name": "forkast.news",
-      "published": "2026-10-23",
-      "raw_path": "data/_raw/title-black-october-is-a-disclosure-wave-the-lab-0f3e6f17e4.txt",
-      "related_claims": [],
-      "summary": "\"Black October\" is the name an X post by the AISafetyMemes account gave on 2026-10-22 to the disclosures of Oct 19 to 22. They include PHP2Shell (CVE-2026-109618 and CVE-2026-109619, found by Wiz with frontier AI models), a GitLab 10.0 flaw, a Node.js Brotli RCE, the eMudhra certificate keys and a poisoned LiteLLM 1.107.0. Forkast's reading is that this was a disclosure wave, not an attack wave: most flaws and intrusions are months or years old, and AI models both found the worst bugs and were the target of the credential theft.",
-      "takeaway": "Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.",
-      "lessons": [
-        {
-          "point": "The label compresses events of very different ages into one week; the disclosure date is not the exposure date.",
-          "excerpt": "This was a disclosure wave, not an attack wave.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Frontier models found several of the week's worst flaws, so patch windows will keep shrinking.",
-          "excerpt": "Models and agents found this week’s worst flaws: PHP2Shell through frontier models, Brotli through OpenAI Codex Security researchers.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Dating exposure from the disclosure week hides how long the weak keys, bugs and intrusions were live.",
-          "excerpt": "The week of Oct 19 to 22 is when the bills were dated, not when they were incurred.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "black-october",
-        "php2shell",
-        "litellm",
-        "disclosure",
-        "ai-found-vulnerabilities",
-        "x-discourse"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Date your exposure from when the flaw shipped, not from the headline",
-        "detail": "For each incident in a cluster like this, record when the weakness entered your estate, when it became public and when you patched. Rotate AI provider keys and coding-tool secrets on any host that installed LiteLLM 1.107.0."
-      },
-      "scores": {
-        "novelty": 60,
-        "relevance": 80,
-        "newness": 0,
-        "credibility": 60.0,
-        "composite": 51.0,
-        "scored_at": "2026-10-29T07:30:02+00:00"
-      },
-      "prior_art": "The pool holds the Wiz and Talos PHP2Shell items; no entry covers the label, its X origin, or the 'disclosure wave, not attack wave' reading of the cluster.",
-      "verified": true,
-      "verify_note": "Label origin read from the post itself (x.com/AISafetyMemes/status/2113113711644737835, 2026-10-22 03:42 UTC); PHP2Shell CVE ids and dates confirmed at NVD and the Wiz post. Forkast's LiteLLM timeline is vendor-attributed and not independently confirmed here.",
-      "corroborating_sources": [
-        {
-          "name": "AISafetyMemes on X (the post that named it)",
-          "url": "https://x.com/AISafetyMemes/status/2113113711644737835",
-          "published": "2026-10-22"
-        },
-        {
-          "name": "Wiz Research: PHP2Shell",
-          "url": "https://www.wiz.io/blog/php2shell-php-rce",
-          "published": "2026-10-21"
-        }
-      ],
-      "id": "black-october-is-an-x-label-for-a-week-of-disclo-a8254f47f5",
-      "retrieved_at": "2026-10-29T07:30:02+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "date": "2026-10"
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.ai-infra",
       "title": "NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy",
       "source_url": "https://docs.nvidia.com/openshell/latest/about/overview.html",
       "article_url": "https://docs.nvidia.com/openshell/latest/about/overview.html",
@@ -3327,6 +3182,70 @@
       "previous_slugs": [
         "data-void-exploits-attacker-content-showed-up-in-31-of-web-s"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Roo Code's command auto-approval can be bypassed in seven ways",
+      "source_url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
+      "article_url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "vulncheck.com",
+      "published": "2026-10-13",
+      "raw_path": "data/_raw/title-roo-code-through-3-54-0-auto-approve-bypas-1cd193b60e.txt",
+      "related_claims": [],
+      "summary": "VulnCheck published seven CVEs for Roo Code through 3.54.0 (checked at NVD): CVE-2026-82536 and CVE-2026-82537 on 2026-09-08, and CVE-2026-110202 to CVE-2026-110206 on 2026-10-13. Each lets indirect prompt injection run a denied shell command in an auto-approve setup by exploiting a gap between Roo's regex parser and bash: quote masking, glob tokens, redirects, ${ cmd; } substitutions, pipes, comments, or a substitution in command position. The advisories name no fixed version.",
+      "takeaway": "Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.",
+      "lessons": [
+        {
+          "point": "An allowlisted prefix like echo hides a command separator when the approval regex and the shell disagree about quotes.",
+          "excerpt": "Attackers can use indirect prompt injection with escaped or single-quoted double quotes to hide command separators behind allowlisted prefixes like echo, executing commands without user approval.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "roo-code",
+        "coding-agents",
+        "auto-approve",
+        "command-allowlist",
+        "prompt-injection",
+        "cve"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Turn off command auto-approve in Roo Code and similar agents",
+        "detail": "Require a human prompt for shell commands, or run the agent in a sandbox with no credentials. If you build an approval gate, parse with the same grammar the shell uses, and ask the user whenever the parse is incomplete."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 85,
+        "newness": 0,
+        "credibility": 55.0,
+        "composite": 50.25,
+        "scored_at": "2026-10-29T07:30:02+00:00"
+      },
+      "prior_art": "CVE-2026-30307 (March 2026, MITRE) already reported Roo Code's regex whitelist as ineffective; these are seven further bypasses of the same gate.",
+      "verified": true,
+      "verify_note": "All seven CVE ids confirmed at NVD on 2026-10-29 (assigner disclosure@vulncheck.com, text matches the VulnCheck advisories). Only the quote-masking advisory page was fetched in full.",
+      "corroborating_sources": [
+        {
+          "name": "NVD CVE-2026-110203",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110203",
+          "published": "2026-10-13"
+        }
+      ],
+      "id": "roo-code-s-command-auto-approval-can-be-bypassed-9fe22bfbf0",
+      "retrieved_at": "2026-10-29T07:30:02+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
     },
     {
       "id": "ghsa-26p8-2jq9-3vq9-b2530edfb9",
@@ -3581,6 +3500,87 @@
       "previous_slugs": [
         "wiz-cirt-llmjacking-via-phished-google-cloud-admins-who-link"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "\"Black October\" is an X label for a week of disclosures",
+      "source_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+      "article_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "forkast.news",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/title-black-october-is-a-disclosure-wave-the-lab-0f3e6f17e4.txt",
+      "related_claims": [],
+      "summary": "\"Black October\" is the name an X post by the AISafetyMemes account gave on 2026-10-22 to the disclosures of Oct 19 to 22. They include PHP2Shell (CVE-2026-109618 and CVE-2026-109619, found by Wiz with frontier AI models), a GitLab 10.0 flaw, a Node.js Brotli RCE, the eMudhra certificate keys and a poisoned LiteLLM 1.107.0. Forkast's reading is that this was a disclosure wave, not an attack wave: most flaws and intrusions are months or years old, and AI models both found the worst bugs and were the target of the credential theft.",
+      "takeaway": "Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.",
+      "lessons": [
+        {
+          "point": "The label compresses events of very different ages into one week; the disclosure date is not the exposure date.",
+          "excerpt": "This was a disclosure wave, not an attack wave.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Frontier models found several of the week's worst flaws, so patch windows will keep shrinking.",
+          "excerpt": "Models and agents found this week’s worst flaws: PHP2Shell through frontier models, Brotli through OpenAI Codex Security researchers.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Dating exposure from the disclosure week hides how long the weak keys, bugs and intrusions were live.",
+          "excerpt": "The week of Oct 19 to 22 is when the bills were dated, not when they were incurred.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "black-october",
+        "php2shell",
+        "litellm",
+        "disclosure",
+        "ai-found-vulnerabilities",
+        "x-discourse"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Date your exposure from when the flaw shipped, not from the headline",
+        "detail": "For each incident in a cluster like this, record when the weakness entered your estate, when it became public and when you patched. Rotate AI provider keys and coding-tool secrets on any host that installed LiteLLM 1.107.0."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 80,
+        "newness": 0,
+        "credibility": 60.0,
+        "composite": 49.5,
+        "scored_at": "2026-10-29T07:30:02+00:00"
+      },
+      "prior_art": "The pool already holds the Wiz PHP2Shell disclosure and a Talos PHP2Shell newsletter; this entry adds the cluster framing and the label's origin.",
+      "verified": true,
+      "verify_note": "Label origin read from the post itself (x.com/AISafetyMemes/status/2113113711644737835, 2026-10-22 03:42 UTC); PHP2Shell CVE ids and dates confirmed at NVD and the Wiz post. Forkast's LiteLLM timeline is vendor-attributed and not independently confirmed here.",
+      "corroborating_sources": [
+        {
+          "name": "AISafetyMemes on X (the post that named it)",
+          "url": "https://x.com/AISafetyMemes/status/2113113711644737835",
+          "published": "2026-10-22"
+        },
+        {
+          "name": "Wiz Research: PHP2Shell",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "published": "2026-10-21"
+        }
+      ],
+      "id": "black-october-is-an-x-label-for-a-week-of-disclo-a8254f47f5",
+      "retrieved_at": "2026-10-29T07:30:02+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
     },
     {
       "topic": "ai-security",

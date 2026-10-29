@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--29-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-26-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-71-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--29-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-24-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-71-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 

@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_12 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
+_10 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [46 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -69,10 +69,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| AI Infrastructure & Incident Response | 3 |
-| Agent & Harness Security | 3 |
+| AI Infrastructure & Incident Response | 2 |
 | Red-Teaming & Threat Modeling | 2 |
 | Guardrails & Defensive Tooling | 2 |
+| Agent & Harness Security | 2 |
 | Prompt Injection & Jailbreaks | 1 |
 | MCP, Tools & Skills | 1 |
 
@@ -81,24 +81,9 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **61.23** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
-- **["Black October" is an X label for a week of disclosures](ai-infra/2026-10-black-october-is-an-x-label-for-a-week-of-disclosures.md)** · composite **51.0** · Oct 23, 2026 · 🔗 +2 sources  
-  Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.  
-  _[forkast.news](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)_
 - **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **51.0** · Oct 27, 2026  
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.  
   _[docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)_
-
-## Agent & Harness Security
-
-- **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](agent-security/2026-10-mistral-vibe-fixes-permission-check-bypasses-in-versions-2-2.md)** · composite **51.75** · Oct 13, 2026 · 🔗 +1 sources  
-  A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.  
-  _[vulncheck.com](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)_
-- **[Roo Code's command auto-approval can be bypassed in seven ways](agent-security/2026-10-roo-code-s-command-auto-approval-can-be-bypassed-in-seven-wa.md)** · composite **51.75** · Oct 13, 2026 · 🔗 +1 sources  
-  Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.  
-  _[vulncheck.com](https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization)_
-- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **48.0** · Oct 22, 2026  
-  Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.  
-  _[motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)_
 
 ## Red-Teaming & Threat Modeling
 
@@ -117,6 +102,15 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **54.87** · Oct 18, 2026  
   A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
+
+## Agent & Harness Security
+
+- **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](agent-security/2026-10-mistral-vibe-fixes-permission-check-bypasses-in-versions-2-2.md)** · composite **51.75** · Oct 13, 2026 · 🔗 +1 sources  
+  A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.  
+  _[vulncheck.com](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)_
+- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **48.0** · Oct 22, 2026  
+  Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.  
+  _[motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)_
 
 ## Prompt Injection & Jailbreaks
 
