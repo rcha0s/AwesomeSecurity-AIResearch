@@ -43,7 +43,8 @@ SETTINGS='{"permissions": {
 # result goes to stdout. A caller may tighten (never loosen) the settings by
 # setting CONTAINED_SETTINGS to $SETTINGS with more denies (the golden run does).
 contained_claude() {
-  env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN SCAN_LOCKED=1 "$CLAUDE" -p "$1" \
+  env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u REDDIT_CLIENT_ID -u REDDIT_CLIENT_SECRET \
+    SCAN_LOCKED=1 "$CLAUDE" -p "$1" \
     --append-system-prompt-file "$2" \
     --output-format json --permission-mode dontAsk \
     --setting-sources local --strict-mcp-config --mcp-config '{"mcpServers": {}}' \

@@ -37,6 +37,7 @@ import sys
 import time
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from urllib.parse import urlparse
 
 import aggregate as agg
 import common as c
@@ -99,7 +100,8 @@ def normalize(raw: dict, sub: str) -> dict | None:
         return None
     href = raw.get("url") or ""
     link = None
-    if not raw.get("is_self") and href.startswith("http") and not c.is_reddit_url(href):
+    scheme = urlparse(href).scheme.lower()
+    if not raw.get("is_self") and scheme in ("http", "https") and not c.is_reddit_url(href):
         link = href
     return {
         "sub": sub,
@@ -112,6 +114,13 @@ def normalize(raw: dict, sub: str) -> dict | None:
         "created": when,
         "text": selftext_of(raw),
     }
+
+
+def describe(exc: Exception) -> str:
+    """An error for the log: its type and HTTP status only, never its message (a library
+    may echo a URL or header)."""
+    status = getattr(getattr(exc, "response", None), "status_code", None)
+    return type(exc).__name__ + (f" HTTP {status}" if status else "")
 
 
 def get_token(client_id: str, client_secret: str, cfg: dict) -> str:
@@ -164,8 +173,7 @@ def read_all(fetch, cfg: dict, stats: dict) -> list[dict]:
             try:
                 items = fetch(sub, sort, cfg)
             except Exception as exc:  # 403/429/network: never fail the scan
-                print(f"reddit: r/{sub} {sort} skipped ({type(exc).__name__}: {exc})",
-                      file=sys.stderr)  # fmt: skip
+                print(f"reddit: r/{sub} {sort} skipped ({describe(exc)})", file=sys.stderr)
                 continue
             for raw in items:
                 post = normalize(raw, sub)
@@ -293,9 +301,7 @@ def make_fetch(cfg: dict):
     try:
         token = get_token(*creds, cfg)
     except Exception as exc:  # status or type only: never echo a request
-        status = getattr(getattr(exc, "response", None), "status_code", "")
-        print(f"reddit: skipped: token request failed ({type(exc).__name__} {status})",
-              file=sys.stderr)  # fmt: skip
+        print(f"reddit: skipped: token request failed ({describe(exc)})", file=sys.stderr)
         return None
     return lambda sub, sort, cfg: fetch_listing(sub, sort, cfg, token)
 
@@ -315,14 +321,20 @@ def main(argv: list[str] | None = None, fetch=None) -> int:
         rules = c.load_yaml(c.SOURCES_FILE)["classification"]
         stats: dict = {}
         cands, selfposts = select(read_all(fetch, cfg, stats), cfg, stats, rules)
-        for cand in cands:
-            print(f"   [{cand['guess_topic']}/{cand['guess_domain']}] {cand['title'][:80]}")
-        report(stats, len(cands), len(selfposts))
-        if not args.dry_run:
-            save_signal(selfposts, cfg)
-            c.add_candidates(cands)
     except Exception as exc:  # the lane is optional: log and exit 0
-        print(f"reddit: failed soft ({type(exc).__name__}: {exc})", file=sys.stderr)
+        print(f"reddit: failed soft ({describe(exc)})", file=sys.stderr)
+        return 0
+    for cand in cands:
+        print(f"   [{cand['guess_topic']}/{cand['guess_domain']}] {cand['title'][:80]}")
+    report(stats, len(cands), len(selfposts))
+    if not args.dry_run:
+        # Candidates first, each write on its own: one failing must not lose the other.
+        for what, write in (("candidates", lambda: c.add_candidates(cands)),
+                            ("signal file", lambda: save_signal(selfposts, cfg))):  # fmt: skip
+            try:
+                write()
+            except Exception as exc:
+                print(f"reddit: {what} not written ({describe(exc)})", file=sys.stderr)
     return 0
 
 

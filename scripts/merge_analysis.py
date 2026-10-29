@@ -246,11 +246,11 @@ def merge(
             errors.append(f"{raw.get('title', '?')[:50]}: {'; '.join(problems)}")
             continue
         entry = tx.enforce(normalize_entry(raw, conf), tx.get())
-        if c.reddit_only(entry):  # a thread alone is practitioner signal, not a finding
-            entry["needs_review"] = True
-            entry["citation_hold"] = REDDIT_ONLY_HOLD
         if raw.get("brief") == c.NEWS_BRIEF:
             stamp_brief(entry, note)
+        if c.reddit_only(entry):  # after stamp_brief, which can rewrite source_url
+            entry["needs_review"] = True
+            entry["citation_hold"] = REDDIT_ONLY_HOLD
         entries = pools[entry["topic"]]["entries"]
         idx = match_index(entries, entry)
         old = stale_source(entry, conf) if idx is None else None

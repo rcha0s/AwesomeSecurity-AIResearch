@@ -281,7 +281,9 @@ def test_a_failed_request_is_soft(sandbox, monkeypatch, capsys, status):
         raise RuntimeError(status)
 
     assert ir.main([], fetch=fail) == 0
-    assert status in capsys.readouterr().err and not common.load_candidates()
+    err = capsys.readouterr().err
+    assert "skipped (RuntimeError)" in err and status not in err  # type only, not the message
+    assert not common.load_candidates()
 
 
 def test_an_unexpected_error_is_logged_and_exit_is_zero(sandbox, monkeypatch, capsys):
@@ -358,3 +360,123 @@ def test_the_scan_allowlist_names_the_reddit_api_hosts():
     import allowlist
 
     assert {"www.reddit.com", "oauth.reddit.com"} <= set(allowlist.FIXED_HOSTS)
+
+
+# --- the floor: no lane may show a Reddit-only entry ------------------------------------------
+def _held_entry(**over):
+    return make_entry(needs_review=True, **over)
+
+
+def test_the_editorial_track_can_never_promote_a_reddit_only_entry():
+    conf = common.load_config()
+    assert common.editorial_eligible(_held_entry(), conf)  # control: eligible otherwise
+    entry = _held_entry(source_url=REDDIT_URL, article_url=REDDIT_URL)
+    assert not common.editorial_eligible(entry, conf)
+
+
+def test_a_reddit_only_entry_is_never_a_finding_or_news():
+    conf = common.load_config()
+    ok = make_entry()
+    assert common.is_curated(ok, conf)
+    reddit = make_entry(source_url=REDDIT_URL, article_url=REDDIT_URL)
+    assert not common.is_curated(reddit, conf)
+    promoted = {"editorial": {"promoted": True}, "grounding_score": 1.0}
+    assert common.is_news_story({**ok, **promoted}, conf, {})  # control
+    assert not common.is_news_story({**reddit, **promoted}, conf, {})  # even if promoted
+    assert not common.news_shown({**reddit, **promoted}, conf, {})
+    assert not common.is_shown({**reddit, **promoted}, conf, {})
+
+
+def test_a_reddit_only_news_brief_is_not_kept_or_shown():
+    conf = common.load_config()
+    brief = make_entry(news_brief={"tier": "news"}, source_url=REDDIT_URL, article_url=REDDIT_URL)
+    assert common.is_news_brief(brief)
+    assert not common.is_news_curated(brief, conf, {}, window=None)
+    assert not common.is_news_story(brief, conf, {})
+    assert not common.brief_kept(brief, conf, {})
+
+
+def test_the_hold_is_judged_after_stamp_brief_rewrites_the_url(sandbox, monkeypatch):
+    def rewrite(entry, note):
+        entry["source_url"] = entry["article_url"] = REDDIT_URL
+
+    monkeypatch.setattr(m, "stamp_brief", rewrite)
+    monkeypatch.setattr(m, "news_tier_note", lambda raw, tiers: {})
+    monkeypatch.setattr(m, "brief_problems", lambda raw, note: [])
+    entry = merged(sandbox, brief=common.NEWS_BRIEF)
+    assert entry["citation_hold"] == m.REDDIT_ONLY_HOLD and entry["needs_review"] is True
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://www.reddit.com./r/x",
+        "https://REDDIT.COM./r/x",
+        "https://i.reddituploads.com/x",
+        "https://reddit.app.link/abc",
+    ],
+)
+def test_more_reddit_spellings_count_as_reddit(url):
+    assert common.is_reddit_url(url) and common.reddit_only({"source_url": url})
+
+
+def test_lookalike_hosts_are_not_reddit():
+    for url in (
+        "https://notreddit.com/x",
+        "https://reddit.com.evil.example/x",
+        "https://example.com/reddit.com",
+    ):
+        assert not common.is_reddit_url(url)
+
+
+def test_a_non_http_link_scheme_is_never_staged():
+    for href in ("ftp://example.com/x", "javascript:alert(1)", "httpx://example.com"):
+        post = {**items()[0], "url": href}
+        assert ir.normalize(post, "netsec")["link"] is None
+
+
+def test_log_lines_carry_the_type_and_status_not_the_message():
+    class Err(Exception):
+        response = type("R", (), {"status_code": 429})()
+
+    assert ir.describe(Err("Bearer tok-123 in message")) == "Err HTTP 429"
+    assert ir.describe(ValueError("x")) == "ValueError"
+
+
+def test_a_failing_candidate_write_does_not_lose_the_signal_file(sandbox, monkeypatch, capsys):
+    monkeypatch.setattr(ir, "settings", lambda: CFG)
+    monkeypatch.setattr(common, "add_candidates", lambda cands: 1 / 0)
+    assert ir.main([], fetch=serve()) == 0
+    assert "candidates not written (ZeroDivisionError)" in capsys.readouterr().err
+    assert len(common.load_json(ir.signal_file())) == 2
+
+
+# --- the merge gate refuses a shown Reddit-only row ---------------------------------------------
+def test_the_gate_refuses_a_rendered_row_that_cites_only_reddit():
+    import content_checks as cc
+
+    row = {"id": "r1", "url": REDDIT_URL, "corroborators": [{"url": "https://redd.it/abc"}]}
+    payload = {"findings": [row], "editorial": [{**row, "id": "r2"}]}
+    assert cc.reddit_shown_problems(payload) == [
+        f"{cc.REDDIT_SHOWN}: r1",
+        f"{cc.REDDIT_SHOWN}: r2",
+    ]
+    assert cc.REDDIT_SHOWN == "reddit-only citation on a shown entry"
+    ok = {**row, "corroborators": [{"url": "https://example.com/a"}]}
+    other = {"id": "x", "url": "https://a.example/"}
+    assert cc.reddit_shown_problems({"findings": [ok, other]}) == []
+    assert cc.reddit_shown_problems({}) == []
+
+
+def test_content_problems_refuse_a_page_showing_a_reddit_only_entry(tmp_path, monkeypatch):
+    import generate_html as gh
+    import test_merge_gate as tg
+
+    row = {"id": "r1", "url": REDDIT_URL, "corroborators": []}
+    page = gh.render({"findings": [row]}, "2026-10-20")
+    root = tg._tree(tmp_path, page=page)
+    monkeypatch.setattr(tg.gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
+    tg.no_main_history(monkeypatch)
+    monkeypatch.setattr(tg.gate, "main_stories", lambda base: {})
+    monkeypatch.setattr(tg.gate, "main_has_feed", lambda base: False)
+    assert "reddit-only citation on a shown entry: r1" in tg.gate.content_problems("main", root)

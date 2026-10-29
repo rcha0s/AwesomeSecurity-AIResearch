@@ -172,7 +172,11 @@ app-only OAuth: a client-credentials token from `www.reddit.com/api/v1/access_to
 request per sub per sort, with the User-Agent `awesomesec-research/1.0`. Credentials are
 the env vars `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET` only; create them as a
 "script" app at reddit.com/prefs/apps (redirect URI `http://localhost`). Unset, the lane
-logs "skipped: no Reddit API credentials" and exits 0. The token stays in memory, goes
+logs "skipped: no Reddit API credentials" and exits 0. On the Mac,
+`run_scan_local.sh` reads them from the Keychain just before `run_scan.sh pre` and gives
+them to that one command only (the model session's `env` unsets them). Store them once:
+`security add-generic-password -s awesomesec-reddit -a client_id -w '<client id>'` and
+`security add-generic-password -s awesomesec-reddit -a client_secret -w '<client secret>'`. The token stays in memory, goes
 only in the Authorization header, and is never logged or put in a URL. The keyless
 scraping routes (`.json`, `.rss`, the shreddit partial) are not used: Reddit blocks them
 on purpose, and a user login or a browser is out of scope (ISA ISC-A7). A 401, 403, 429
@@ -197,7 +201,12 @@ one of two ways:
   links to Reddit itself are neither.
 
 `merge_analysis.py` holds any entry whose citations are all Reddit URLs
-(`common.reddit_only`): `needs_review` plus `citation_hold`. A backfill run skips the
+(`common.reddit_only`, judged after `stamp_brief`): `needs_review` plus `citation_hold`.
+It is also a hard floor in code: such an entry is never curated, never editorially
+promoted (`editorial_eligible`), and never in the news lane (`is_news_curated`,
+`is_news_story`, so no brief or promotion shows it), and `merge_gate.py` refuses a scan PR
+whose rendered page shows a row citing only Reddit ("reddit-only citation on a shown
+entry"; it only adds a refusal). A backfill run skips the
 lane (Reddit cannot be windowed). `www.reddit.com` and `oauth.reddit.com` are in `allowlist.FIXED_HOSTS`.
 
 ### Curator links (tl;dr sec)
