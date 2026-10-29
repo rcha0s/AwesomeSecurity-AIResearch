@@ -93,3 +93,10 @@ def test_the_daily_scan_runs_the_ingestor_with_a_small_cap():
     assert "ingest_youtube" in re.search(r"INGESTORS=\((.*?)\)", sh).group(1).split()
     limits = c.load_config().limits
     assert 1 <= limits["youtube_per_channel"] <= 3 and limits["youtube_max_per_run"] <= 10
+
+
+def test_the_run_cap_keeps_the_newest_videos_across_channels(monkeypatch):
+    _channels(monkeypatch, 2)
+    by_handle = {"@c0": [_video(1, 5), _video(2, 6)], "@c1": [_video(3, 1), _video(4, 2)]}
+    monkeypatch.setattr(iy, "list_videos", lambda h, n: by_handle[h])
+    assert [x["title"] for x in iy.collect(2, max_total=2)] == ["Video 3", "Video 4"]

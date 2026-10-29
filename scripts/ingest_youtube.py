@@ -124,6 +124,7 @@ def collect(per_channel: int, max_total: int = 0) -> list[dict]:
             cand = video_to_candidate(v, source)
             if cand and in_window(cand, since, until):
                 out.append(cand)
+    out.sort(key=lambda x: x["published"], reverse=True)  # stable: newest first, any channel
     return out[:max_total] if max_total > 0 else out
 
 
