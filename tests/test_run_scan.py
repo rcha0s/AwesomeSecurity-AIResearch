@@ -22,7 +22,7 @@ import pytest
 REPO = Path(__file__).resolve().parent.parent
 STUBBED = (
     "ingest_curator_links aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn "
-    "ingest_conferences ingest_json_feeds "
+    "ingest_conferences ingest_json_feeds ingest_youtube "
     "rerank generate_site generate_claims generate_html generate_og trends "
     "generate_newsletter generate_review add_claim eval_recall"
 ).split()

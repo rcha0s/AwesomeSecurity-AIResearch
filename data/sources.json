@@ -2562,5 +2562,139 @@
     "added": "2026-10-28",
     "active": true,
     "notes": null
+  },
+  {
+    "id": "youtube:ucbrp3c757lwg9m-u7tyekxa",
+    "type": "youtube",
+    "handle": "UCbRP3c757lWg9M-U7TyEkXA",
+    "name": "Theo - t3.gg",
+    "url": null,
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10: efficiency and AI-dev channel (Rohan named); feed title verified 'Theo - t3.gg'"
+  },
+  {
+    "id": "youtube:ucswg6fsbgzjbwtdf-hmlaow",
+    "type": "youtube",
+    "handle": "UCswG6FSbgZjbWtdf_hMLaow",
+    "name": "Matt Pocock",
+    "url": null,
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10: agent workflow channel (Rohan named); feed title verified 'Matt Pocock'"
+  },
+  {
+    "id": "youtube:ucswcjxqwe6gwu9ikc0qwo5g",
+    "type": "youtube",
+    "handle": "UCSwcJXQWE6GWu9IKc0QwO5g",
+    "name": "Embrace The Red",
+    "url": null,
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10: AI security (prompt injection, agent exploits); feed verified"
+  },
+  {
+    "id": "youtube:ucbuw0vvet-kb7lpj-xsnq9q",
+    "type": "youtube",
+    "handle": "UCBUw0vVET-kB7LPj_XsNQ9Q",
+    "name": "AI Village (DEF CON)",
+    "url": null,
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10: DEF CON AI Village talks; feed verified"
+  },
+  {
+    "id": "youtube:uce8j61abyduptdtjitd2vea",
+    "type": "youtube",
+    "handle": "UCe8j61ABYDuPTdtjItD2veA",
+    "name": "OWASP Foundation",
+    "url": null,
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10: OWASP talks incl. AI threat modeling; feed verified"
+  },
+  {
+    "id": "youtube:uc6om9kakl32dwldsnlds9iw",
+    "type": "youtube",
+    "handle": "UC6Om9kAkl32dWlDSNlDS9Iw",
+    "name": "DEF CON Conference",
+    "url": null,
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10: DEF CON talks incl. AI agents; feed verified"
   }
 ]
