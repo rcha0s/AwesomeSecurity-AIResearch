@@ -7919,6 +7919,466 @@
         "composite": 7.62,
         "scored_at": "2026-10-28T16:52:05+00:00"
       }
+    },
+    {
+      "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+      "article_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+      "source_name": "Palo Alto Networks Unit 42",
+      "source_type": "Vendor research",
+      "published": "2026-06-23",
+      "date": "2026-06",
+      "discovered_via": "rss",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_rank": 75.0,
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+      "summary": "Unit 42 found five evasive malicious 'skills' persisting on ClawHub — the marketplace OpenClaw's agent pulls third-party, markdown-driven packages from with broad local system access — despite VirusTotal + ClawScan screening added after February's incidents. The five span infostealers (macOS, C2), scanner evasion (inflated file size to exceed thresholds), and two NOVEL agentic threats: runtime agentic affiliate injection and agentic front-running.",
+      "takeaway": "Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.",
+      "lessons": [
+        {
+          "point": "Agent skills are broad-access packages; the marketplace is a supply-chain link to treat as untrusted",
+          "excerpt": "markdown-driven packages with broad local system access, making ClawHub a critical link in the agentic software supply chain",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Malware evades marketplace scanners with simple tricks (oversized files exceed scan thresholds)",
+          "excerpt": "inflated file size to exceed scanner thresholds, bypassing both ClawScan and VirusTotal detection",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "New 'agentic' threat classes are emerging — affiliate injection and front-running done at agent runtime",
+          "excerpt": "runtime agentic affiliate injection and agentic front-running. Both are novel techniques",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-security",
+        "skill-scanning",
+        "supply-chain",
+        "agentic-threats",
+        "unit42"
+      ],
+      "scores": {
+        "novelty": 82,
+        "relevance": 88,
+        "newness": 6,
+        "composite": 63.75,
+        "scored_at": "2026-07-21T07:37:44+00:00",
+        "credibility": 75.0
+      },
+      "id": "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b",
+      "retrieved_at": "2026-07-13T04:19:32+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
+    },
+    {
+      "id": "llm-heist-hijacking-litellm-for-traffic-intercep-7dd99ae13f",
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "cluster": "I",
+      "related_claims": [
+        "long-lived-cloud-credentials-are-obsolete",
+        "agent-tool-selection-can-be-steered-by-untrusted-context",
+        "prompt-injection-is-containment-not-prevention"
+      ],
+      "title": "LLM Heist hijacks LiteLLM for traffic interception, key theft and tool-call injection",
+      "source_url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
+      "article_url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
+      "published": "2026-08-03",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch06-1.txt",
+      "source_id": "rss:https-embracethered-com-blog-index-xml",
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_rank": 72.5,
+      "summary": "Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that a compromised proxy-admin credential lets an attacker (a) reroute traffic through an attacker-controlled LiteLLM instance, (b) harvest resolved backend LLM provider keys, and (c) modify or forge responses and tool-calls downstream of inference, bypassing all prompt-level defenses. The `llm-heist` tool automates harvest, provision, hijack, inject.",
+      "takeaway": "AI gateways sit downstream of the model, so a proxy-admin credential compromise lets an attacker inject arbitrary tool calls into agent clients without ever touching the model prompt or its provider guardrails. Prompt-level defenses do not see this attack.",
+      "lessons": [
+        {
+          "point": "Tool-call injection at the gateway layer bypasses prompt-level defenses because it modifies responses after inference.",
+          "excerpt": "Even more interesting though, if the clients are AI agents with tool access, an injected response can carry a tool-call. Because the output is changed **after** inference, this bypasses prompt-level defenses.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A single AI-gateway admin credential compromises the whole org's LLM traffic centrally and stealthily, without touching any user machine.",
+          "excerpt": "*   **It is pretty stealthy.** No configuration changes to developer and user machines.\n*   **It is central.** One gateway compromise might cover the entire organization.\n*   **It operates after inference.** It's possible to modify requests to the LLM. But we can also inject messages and tool calls downstream of the model, so prompt-level defenses never see it.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Only two config settings (`api_base` and `use_litellm_proxy`) via a documented model-management API are needed to reroute all traffic to an attacker gateway; alerting on those changes is a concrete blue-team detection.",
+          "excerpt": "To achieve that, there are only two settings updated via the [`/model/update`](https://docs.litellm.ai/docs/proxy/model_management) API:\n\n1.   `api_base` is changed to point to the attacker LiteLLM gateway\n2.   `use_litellm_proxy` to `true`. This enables proxy mode to route traffic to another instance.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "Prompt-and-response signing would let clients detect a hostile gateway in the middle; this is a design ask for model providers, not a config the operator can enable today.",
+          "excerpt": "*   **Prompt and Response Signing.** This is something for the AI labs to consider as a feature! Basically the idea is to enforce integrity and detect an AI gateway in the middle hijacking traffic.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "ai-gateway",
+        "litellm",
+        "tool-call-injection",
+        "adversary-in-the-middle",
+        "credential-theft",
+        "red-team"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Alert on api_base and use_litellm_proxy changes; sign responses if you can",
+        "detail": "Snapshot and diff LiteLLM (or equivalent AI-gateway) model configs — specifically `api_base` and `use_litellm_proxy` — and forward to a SIEM. Restrict provider keys to requests from approved gateway IPs. Reconcile provider billing independently. For agent clients, treat gateway-forwarded tool calls as untrusted: keep explicit tool authorization on the client side (do not run in yolo mode) and consider requiring per-tool user confirmation for high-impact tools like Bash."
+      },
+      "scores": {
+        "novelty": 78,
+        "relevance": 90,
+        "newness": 20,
+        "credibility": 72.5,
+        "composite": 66.28,
+        "scored_at": "2026-08-29T23:46:33+00:00"
+      },
+      "prior_art": "Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).",
+      "discovered_via": "rss",
+      "threat": "An attacker with LITELLM_MASTER_KEY (or an equivalent proxy-admin credential) reroutes an internal AI gateway through their own LiteLLM instance, harvests resolved backend provider keys from the Authorization header of forwarded requests, and injects arbitrary responses and tool calls (e.g., a Bash tool call) into legitimate agent clients like Claude Code.",
+      "conditions": "AI gateway (LiteLLM or similar) deployed as a central proxy with virtual keys. Proxy-admin credential exposure (leaked .env, weak admin UI, unpatched CVE, prior host compromise). Agent clients accept tool calls returned by the gateway without a signature/integrity check (i.e., all current clients). Provider keys not restricted to approved gateway egress IPs; no anomaly detection on config changes.",
+      "mitigations": "Alert on any `api_base` or `use_litellm_proxy` change; snapshot model config as code. Alert on new callback/guardrail/hook registrations on the gateway. Restrict provider API keys to source IPs of approved gateway hosts; rotate on a schedule. Independent billing reconciliation against provider dashboards. Lock down admin API/UI: no internet exposure, MFA, short-lived admin tokens. Patch LiteLLM aggressively (CVE-2026-42271 is on CISA KEV). Do not run agent clients in yolo/auto-approve mode; require per-tool confirmation for shell/write tools.",
+      "verified": true,
+      "verify_note": "All four excerpts were verified verbatim against data/_raw/mrscan-batch06-1.txt. Cluster I fits (deployment infra, IAM for agents). Related claims exist in claims.json.",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": null,
+      "domain_label": "AI Gateway / Deployment Infrastructure",
+      "previous_slugs": [
+        "llm-heist-hijacking-litellm-for-traffic-interception-key-the"
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.prompt-injection",
+      "title": "ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
+      "cluster": "E",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable"
+      ],
+      "summary": "Microsoft built a hunting signature for invisible Unicode Tags-block characters (U+E0000-U+E007F) — the technique popularized as \"ASCII smuggling\" in AI prompt-injection research — to detect hidden instructions targeting AI email processing. Instead, the tuned signature surfaced a large-scale phishing campaign using the same invisible characters to split finance-themed lure words and evade traditional email filters, unrelated to any AI involvement, peaking at over 2.3 million daily hits.",
+      "takeaway": "A detection technique built for one threat model (AI prompt injection) surfaced an unrelated, larger threat (traditional phishing filter evasion) using the identical underlying mechanism — invisible Unicode characters exploit the same human/machine text-parsing gap regardless of whether the downstream reader is an AI model or a keyword filter.",
+      "lessons": [
+        {
+          "point": "The same invisible-character property that lets an attacker smuggle instructions past a human and into an AI model also lets an attacker smuggle keywords past a human-invisible pattern and away from a text-matching detector — the mechanism is identical, only the target reader differs.",
+          "excerpt": "tag characters are invisible to humans but exist at the text-processing level, the same property that makes them useful for _smuggling instructions into a model_ also makes them useful for _obfuscating keywords before a detector evaluates them_. The intent is inverted, but the mechanism is similar and a user’s suspicions are not raised.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A naive detection signature for the Unicode Tags block produced false positives on three subdivision flag emojis (England, Scotland, Wales), which are legitimately encoded using the same invisible tag-character range — illustrating a concrete tuning pitfall for anyone building this detector.",
+          "excerpt": "The first version simply flagged _any_ code point in that range, which proved too blunt. It kept firing on a small subset of perfectly legitimate messages",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The false positives all traced back to three subdivision flag emojis, which are encoded using the exact Unicode tag-character range the detector was watching for.",
+          "excerpt": "because those emojis are encoded using tag characters.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Once tuned, signature hits jumped roughly two orders of magnitude in a single day (February 9, 2026) and peaked above 2.3 million daily hits, showing the technique was being used at real production phishing scale, not as a novelty.",
+          "excerpt": "Volume holds at a low-thousands baseline through February 8, jumps roughly two orders of magnitude on February 9, peaks at over 2.3 million",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "ascii-smuggling",
+        "prompt-injection",
+        "phishing",
+        "unicode",
+        "detection"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Build a tuned Unicode Tags-block detector for email/content pipelines",
+        "skill_slug": "ascii-smuggling-detector",
+        "detail": "Hunt for U+E0000-U+E007F code points in ingested email/document text, but explicitly allowlist known-legitimate emoji flag sequences (England/Scotland/Wales subdivision flags, and any other flag emoji using tag-character encoding) before alerting, to avoid the false-positive pattern Microsoft hit."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 72,
+        "newness": 63,
+        "credibility": 71.6,
+        "composite": 66.09,
+        "scored_at": "2026-09-09T06:16:10+00:00"
+      },
+      "prior_art": "ASCII smuggling is well-documented in prompt-injection literature (Embrace The Red's ASCII Smuggler tool); older character-obfuscation phishing tricks are the closest non-AI prior art.",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-03",
+      "raw_path": "data/_raw/ascii-smuggling-crosses-over-from-ai-prompt-inje-552737ca10.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_rank": 71.6,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "verified": true,
+      "verify_note": "All 4 lessons are direct quotes/paraphrases from the Microsoft blog; scores reasonable.",
+      "id": "ascii-smuggling-crosses-over-from-ai-prompt-inje-4f527e04ae",
+      "retrieved_at": "2026-09-09T06:16:06+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "domain_label": "Prompt Injection"
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Attackers in Latin American intrusion campaigns used commercial LLMs for live troubleshooting",
+      "source_url": "https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/",
+      "cluster": null,
+      "related_claims": [],
+      "summary": "Unit 42 tracked two unrelated Latin American intrusion clusters (Mexican transportation/government targets and Brazilian financial-sector targets) that each stood up a self-hosted NextChat multi-LLM interface (querying Claude and GPT-4.1) on their own infrastructure to troubleshoot exploitation scripts in real time. Both clusters left the NextChat backend and staging directories exposed on the open internet, which is how researchers found them.",
+      "takeaway": "AI-enabled attackers are cutting the skill floor for post-exploitation tooling, but their operational security has not caught up to their new capability — exposed NextChat instances and open staging directories remain the most reliable way to find and disrupt these campaigns, not the AI usage itself.",
+      "lessons": [
+        {
+          "point": "Attackers self-hosted an open-source multi-model chat interface (NextChat) on their own C2 infrastructure to compare and query multiple commercial LLMs live during the intrusion, rather than relying on ad-hoc single-model queries.",
+          "excerpt": "This address hosted an instance of the open-source tool NextChat on TCP port 3000.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "NextChat specifically lets operators compare responses across multiple different LLMs, with the prompts themselves hosted on attacker-controlled infrastructure rather than a third-party service.",
+          "excerpt": "NextChat is an open-source web interface where users can load and interact with multiple models. NextChat allows operators to compare across models and ensure prompts are hosted on attacker-controlled infrastructure.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Exposing the AI backend to the public internet was the attacker's decisive operational security failure — it gave defenders visibility into the full prompt history and staging scripts, not just indicators of compromise.",
+          "excerpt": "Exposing an open NextChat directory to the public internet reveals a fundamental lack of operational maturity. The AI provided the necessary tactical workaround to extract the Active Directory database, but the human operators failed to secure the staging server. This left their entire playbook, prompt history and staging scripts visible to threat researchers.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "In a separate, technically distinct campaign against Brazilian financial targets, exploit scripts were named with LLM-generated descriptive adjectives (exploit_creative.py, exploit_careful.py, rce_focused.py), a naming pattern consistent with iterative LLM-driven script generation rather than human authorship.",
+          "excerpt": "attackers appended exploit filenames with descriptive adjectives. This suggests that the attackers employed iterative, language model-driven development: exploit_creative.py, exploit_careful.py and rce_focused.py.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "threat-intel",
+        "llm-abuse",
+        "opsec",
+        "nextchat",
+        "detection"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Hunt for self-hosted LLM chat interfaces on suspicious infrastructure",
+        "detail": "Add detection signatures for exposed NextChat and similar self-hosted multi-model chat UIs on attacker-adjacent infrastructure (e.g. open TCP/3000 with the NextChat banner), and flag iterative/adjective-based script naming conventions (script_v1..v9, exploit_creative.py) as a weak signal of LLM-assisted tooling generation during incident triage.",
+        "skill_slug": null
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 68,
+        "newness": 63,
+        "credibility": 76.8,
+        "composite": 62.67,
+        "scored_at": "2026-09-09T06:16:10+00:00"
+      },
+      "prior_art": "CloudSEK's 'Operation Escaneo' and Trend Micro's 'Vibe Hacking' report already documented the core LLM usage in these same clusters, as the entry's own prior_art note concedes.",
+      "article_url": "https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-03",
+      "raw_path": "data/_raw/attackers-expose-ongoing-ai-tool-use-targeting-o-35d913a9a9.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_rank": 76.8,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "verified": true,
+      "verify_note": "All 4 lessons verbatim-supported by the Unit 42 report; novelty/relevance reasonable for a cross-cluster correlation piece.",
+      "id": "commercial-llms-used-as-live-troubleshooting-bac-63baa0b688",
+      "retrieved_at": "2026-09-09T06:16:06+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "LLM Red-Teaming",
+      "previous_slugs": [
+        "commercial-llms-used-as-live-troubleshooting-backends-in-lat"
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "OWASP GenAI Security Project unveils its 2026 Top 10 for LLM Applications",
+      "source_url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
+      "cluster": "K",
+      "related_claims": [],
+      "summary": "OWASP's GenAI Security Project shipped the 2026 Top 10 for LLM Applications, ranked for the first time against thousands of real-world AI security incidents rather than expert opinion alone, and donated a new Agent Control Standard (ACS) for practical runtime enforcement of agent identity, governance, and testing.",
+      "takeaway": "Excessive Agency jumped to #3 in the OWASP LLM Top 10 once the ranking was checked against real incident data instead of just expert consensus — validating that the actual failure mode in production is agents with too much unchecked reach, not just prompt-level attacks.",
+      "lessons": [
+        {
+          "point": "The 2026 edition is the first to weigh community ranking against real incident data, and Excessive Agency is where expert judgment and the incident record agree most: now #3.",
+          "excerpt": "This is the first edition to weigh the community’s ranking against a large body of real incident data, and the risk where expert judgment and the record agree most clearly is Excessive Agency, now number three.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "OWASP donated a new Agent Control Standard (ACS) specifically for runtime enforcement — moving past guidance-only documents toward enforceable controls for what agents can access, decide, and do.",
+          "excerpt": "(ACS) has been donated to the OWASP GenAI Security Project. The addition of ACS complements the project’s existing work on agentic AI risks, security controls, identity, governance and testing by extending that guidance toward practical runtime enforcement.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "owasp",
+        "llm-top-10",
+        "agent-governance",
+        "excessive-agency",
+        "standards"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Re-baseline agent threat models against OWASP's 2026 Top 10",
+        "detail": "Pull the OWASP GenAI Security Top 10 2026 and check Excessive Agency (now #3) specifically: audit which of your agents can take consequential actions (write access, financial transactions, deletions) without a scoped permission boundary, and map that against ACS's runtime enforcement controls."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 75,
+        "newness": 63,
+        "credibility": 75.0,
+        "composite": 57.0,
+        "scored_at": "2026-09-09T06:16:10+00:00"
+      },
+      "prior_art": "OWASP's own 2025 LLM/Agentic Top 10s, plus the general precedent of ranking security lists against real incident/vulnerability data (e.g., MITRE's CWE Top 25 methodology).",
+      "article_url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-02",
+      "raw_path": "data/_raw/owasp-genai-security-project-unveils-2026-top-10-e07831dd6b.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-genai-owasp-org-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "verified": false,
+      "verify_note": "Lessons are accurately quoted, but this is a PR announcement of a versioned refresh and a donated standard, not new research; independent reviewer scored novelty/relevance lower (25/55 vs 55/75) — sent to review as a scoring disagreement, not a factual refutation.",
+      "id": "owasp-genai-security-project-unveils-2026-top-10-be98b1e553",
+      "retrieved_at": "2026-09-09T06:16:05+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security",
+      "previous_slugs": [
+        "owasp-genai-security-project-unveils-2026-top-10-for-llm-app"
+      ],
+      "verify_reason": "scoring"
+    },
+    {
+      "candidate_id": "introducing-the-life-sciences-verification-progr-9382b7fd83",
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "Anthropic's Life Sciences Verification Program trades bio refusals for vetted access",
+      "source_url": "https://www.anthropic.com/news/life-sciences-verification-program",
+      "summary": "Anthropic now gives vetted life-science organizations access to its models with looser biology safeguards. A 'High-risk Use' grant removes all life-sciences blocking for a single project, renewed every six months. In place of per-request blocking, Anthropic monitors traffic offline against each organization's declared use cases, keeps flagged data 30 days, and escalates to the organization's admins; cyber classifiers stay on.",
+      "lessons": [
+        {
+          "point": "For vetted users, safeguards move from blocking each request to reviewing patterns of behavior offline.",
+          "excerpt": "we are shifting safeguards from real-time blocking, where we reject potentially harmful access at the time of each request, to offline monitoring",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The reason given: serious misuse is split across requests and sessions, so a per-request filter misses it.",
+          "excerpt": "Serious misuse is often spread across many requests and sessions to look disconnected and evade detection.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Monitoring is scoped to the use cases each organization declares, so out-of-scope use is what gets flagged.",
+          "excerpt": "Each entity’s access is tied to the use cases it has specified in its grant applications",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The High-risk grant removes life-sciences blocking entirely, so access compromise and insider threats become the main risks the program must manage.",
+          "excerpt": "It removes all safeguards that block life sciences requests.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Frontier providers are replacing refusals with vetted access plus behavior monitoring for dual-use domains, which makes account security and declared scope the real control.",
+      "tags": [
+        "trusted-access",
+        "biosecurity",
+        "dual-use",
+        "misuse-monitoring",
+        "safety-classifiers",
+        "insider-threat",
+        "anthropic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat LSVP-enabled accounts as high-value credentials",
+        "detail": "If your organization enrolls in LSVP, write narrow use-case descriptions and give High-risk grants per project only. Harden those accounts against takeover with phishing-resistant multi-factor authentication (MFA) and scoped API keys. Define an internal triage owner for Anthropic's flagged-usage notices within the agreed timeframe. Limit long-running agents on High-risk grants, since agent misuse is a stated threat model."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 35,
+        "newness": 5,
+        "credibility": 70.8,
+        "composite": 37.37,
+        "scored_at": "2026-10-25T00:44:25+00:00"
+      },
+      "verified": true,
+      "prior_art": "Trusted-access / cyber verification programs; no prior entry on bio tiered grants.",
+      "related_claims": [],
+      "threat": "Vetted access with bio safeguards removed being diverted via account takeover, insiders, or agents acting beyond intent.",
+      "conditions": "Organization holds Standard or High-risk LSVP grants with permissive or removed biology classifiers.",
+      "mitigations": "Use-case-scoped offline monitoring, 30-day retention of flagged data, admin escalation, per-project High-risk grants with six-month renewal; cyber classifiers stay on.",
+      "article_url": "https://www.anthropic.com/news/life-sciences-verification-program",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-09",
+      "published": "2026-09-17",
+      "raw_path": "data/_raw/introducing-the-life-sciences-verification-progr-9382b7fd83.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "id": "anthropic-s-life-sciences-verification-program-t-c7238119c5",
+      "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted actionable.title",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "anthropic-s-life-sciences-verification-program-trades-real-t"
+      ]
     }
   ]
 }

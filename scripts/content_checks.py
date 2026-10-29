@@ -46,7 +46,11 @@ import html
 import json
 import re
 
-from common import integrity_lost, is_shown  # the integrity floor; what the site shows
+from common import (
+    integrity_lost,
+    is_reddit_url,
+    is_shown,
+)  # the integrity floor; what the site shows
 
 # Same rule as safeUrl() in scripts/templates/site.html: keep them in step.
 HTTP_URL = re.compile(r"https?://[^\s\"<>`]+", re.IGNORECASE)
@@ -186,6 +190,25 @@ def editorial_problems(main_docs: list, pr_docs: list) -> list[str]:
 
 
 READABILITY_REVIEW = "readability hold of a published entry needs human review"
+REDDIT_SHOWN = "reddit-only citation on a shown entry"
+
+
+def reddit_shown_problems(payload: dict) -> list[str]:
+    """A Reddit thread alone is practitioner signal, never a finding: no row the site
+    renders (vetted findings, the news lane) may cite only Reddit URLs (its own link
+    and its covering sources). Read from the rendered payload, so it holds whatever
+    predicate let the row through. Only ever adds a refusal."""
+    out = []
+    for row in (payload.get("findings") or []) + (payload.get("editorial") or []):
+        if not isinstance(row, dict):
+            continue
+        urls = [row.get("url")] + [
+            s.get("url") for s in row.get("corroborators") or [] if isinstance(s, dict)
+        ]
+        urls = [u for u in urls if u]
+        if urls and all(is_reddit_url(u) for u in urls):
+            out.append(f"{REDDIT_SHOWN}: {row.get('id') or row.get('title', '?')}")
+    return out
 
 
 def shown_ids(main_docs: list, conf, sources_by_id: dict) -> set[str]:

@@ -139,11 +139,13 @@ DEFAULTS = {
     "batch_lab_per_source": 2,
     "batch_eff_max": 0,  # off unless config.yaml names a lane size (and terms)
     "batch_eff_per_source": 1,
+    "batch_std_max": 0,  # off unless config.yaml names a lane size (and hosts / sources)
+    "batch_std_per_source": 2,
 }
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
-OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator")
+OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator", "reddit")
 
 
 def backlog_file() -> Path:
@@ -298,9 +300,10 @@ def ghsa_dropped(cand: dict, conf: c.Config, groups: dict[int, tuple]) -> bool:
     return not (group and group[1])
 
 
-def lab_source(cand: dict, conf: c.Config) -> bool:
-    """Published by a major AI lab: the article URL's host (no www., no trailing
-    dot) is one of `batch_lab_hosts` or a subdomain of it, and its path is the
+def lab_source(cand: dict, conf: c.Config, key: str = "batch_lab_hosts") -> bool:
+    """Published by a major AI lab (or, with `key`, a standards body): the article
+    URL's host (no www., no trailing dot) is one of `key`'s hosts
+    (`batch_lab_hosts`, `batch_std_hosts`) or a subdomain of it, and its path is the
     entry's path or under it. "openai.com" covers alignment.openai.com but not
     notopenai.com; "microsoft.com/en-us/research" covers /en-us/research/blog/x
     but not /en-us/researchx. A URL that won't parse is not a lab post."""
@@ -310,7 +313,7 @@ def lab_source(cand: dict, conf: c.Config) -> bool:
     except ValueError:
         return False
     path = url.path.lower().strip("/")
-    for entry in conf.limits.get("batch_lab_hosts") or []:
+    for entry in conf.limits.get(key) or []:
         want_host, _, want_path = str(entry).lower().strip("/").partition("/")
         if host != want_host and not host.endswith("." + want_host):
             continue
@@ -338,21 +341,26 @@ def lab_relevant(cand: dict, conf: c.Config) -> bool:
     return lab_terms_hit(f"{cand.get('title') or ''} {cand.get('excerpt') or ''}".lower(), conf)
 
 
+def std_on(conf: c.Config) -> bool:
+    return int(setting(conf, "batch_std_max")) > 0
+
+
 def lab_on(conf: c.Config) -> bool:
     return int(setting(conf, "batch_lab_max")) > 0
 
 
 def lab_rescue(dropped: list[dict], conf: c.Config) -> list[dict]:
-    """Relevant lab posts the prefilter dropped only for a catch-all class with
-    no marker (Cloudflare + OpenAI on vulnerability discovery, 2026-10-21).
+    """Relevant lab and standards posts the prefilter dropped only for a catch-all
+    class with no marker (Cloudflare + OpenAI on vulnerability discovery,
+    2026-10-21; OWASP's Agent Control Standard, guess_label ais.agent-security).
     Excluded-term and duplicate drops stand. The prefilter checks catch-alls
     before duplicates, so a rescued post is re-checked against the pools here."""
-    if not lab_on(conf):
+    if not (lab_on(conf) or std_on(conf)):
         return []
     picks = [
         x for x in dropped
         if str((x.get("prefilter") or {}).get("reason") or "").startswith("catch-all")
-        and lab_relevant(x, conf)
+        and ((lab_on(conf) and lab_relevant(x, conf)) or (std_on(conf) and std_relevant(x, conf)))
     ]  # fmt: skip
     if not picks:
         return []
@@ -375,6 +383,43 @@ def lab_lane(
         and not c.news_denylist_hit(x)
     ]  # fmt: skip
     per_source = max(1, int(setting(conf, "batch_lab_per_source")))
+    return deal(eligible, limit, per_source, used=used, fill=False)
+
+
+def std_relevant(cand: dict, conf: c.Config) -> bool:
+    """A standards-body release: from a `batch_std_sources` feed (the MCP spec's
+    releases: every one counts), or from a `batch_std_hosts` host with a
+    `batch_std_terms` word in its title or excerpt (OWASP GenAI also posts event
+    notes). A `batch_std_strict_hosts` host (NIST also posts time standards and
+    lab news) needs both a `batch_std_topic_terms` word (AI or cyber) and a
+    `batch_std_pub_terms` word (a publication)."""
+    if cand.get("source_id") in (conf.limits.get("batch_std_sources") or []):
+        return True
+    if not lab_source(cand, conf, "batch_std_hosts"):
+        return False
+    text = f"{cand.get('title') or ''} {cand.get('excerpt') or ''}".lower()
+    if lab_source(cand, conf, "batch_std_strict_hosts"):
+        return lab_terms_hit(text, conf, "batch_std_topic_terms") and lab_terms_hit(
+            text, conf, "batch_std_pub_terms"
+        )
+    return lab_terms_hit(text, conf, "batch_std_terms")
+
+
+def std_lane(
+    ranked: list[dict], conf: c.Config, limit: int, used: Counter, known: set[int]
+) -> list[dict]:
+    """Up to `limit` recent releases from the standards bodies (OWASP GenAI, NIST,
+    CoSAI, the MCP spec, NAIC), at most `batch_std_per_source` per source. A new
+    standard carries no severity marker, so OWASP's Agent Control Standard
+    (2026-09-01) sank below the cut and Rohan never saw it. Runs right after the
+    must-not-miss lane; the caller passes only what that lane left."""
+    days = int(setting(conf, "batch_story_days"))
+    eligible = [
+        x for x in ranked
+        if id(x) not in known and std_relevant(x, conf) and recent(x, days)
+        and not c.news_denylist_hit(x)
+    ]  # fmt: skip
+    per_source = max(1, int(setting(conf, "batch_std_per_source")))
     return deal(eligible, limit, per_source, used=used, fill=False)
 
 
@@ -611,11 +656,17 @@ def select_tiers(
         open_, lane_max, max(1, int(setting(conf, "batch_priority_per_source"))), conf
     )
     room = size - len(stories) - len(lane)
-    lab_max = min(room, max(0, int(setting(conf, "batch_lab_max"))))
-    lane_ids0 = {id(x) for x in lane}
     held = {id(x) for x, sig in zip(pool, sigs, strict=True) if sig is not None and sig.known}
+    std_max = min(room, max(0, int(setting(conf, "batch_std_max"))))
+    stds = std_lane(
+        [x for x in open_ if id(x) not in {id(y) for y in lane}], conf, std_max,
+        Counter(source_key(x) for x in stories + lane), held,
+    )  # fmt: skip
+    std_ids = {id(x) for x in stds}
+    lane = lane + stds
+    lab_max = min(room - len(stds), max(0, int(setting(conf, "batch_lab_max"))))
     labs = lab_lane(
-        [x for x in open_ if id(x) not in lane_ids0], conf, lab_max,
+        [x for x in open_ if id(x) not in {id(y) for y in lane}], conf, lab_max,
         Counter(source_key(x) for x in stories + lane), held,
     )  # fmt: skip
     lane = lane + labs
@@ -649,7 +700,7 @@ def select_tiers(
     rest = [x for x in left if id(x) not in news_ids] + [x for x in ranked if id(x) in siblings]
     batch = (
         stories
-        + [{**x, "batch_priority": lane_tag(x, eff_ids, conf)} for x in lane]
+        + [{**x, "batch_priority": lane_tag(x, eff_ids, std_ids, conf)} for x in lane]
         + floor
         + dealt
     )
@@ -660,14 +711,16 @@ def select_tiers(
     return batch, news, backlog + dropped
 
 
-def lane_tag(cand: dict, eff_ids: set[int], conf: c.Config) -> str:
-    """batch_priority of a lane member: its must-not-miss class, else efficiency
-    (the efficiency lane's pick), else lab."""
+def lane_tag(cand: dict, eff_ids: set[int], std_ids: set[int], conf: c.Config) -> str:
+    """batch_priority of a lane member: its must-not-miss class, else standard
+    or efficiency (that lane's pick), else lab."""
+    if id(cand) in std_ids:
+        return priority_class(cand, conf) or "standard"
     return priority_class(cand, conf) or ("efficiency" if id(cand) in eff_ids else "lab")
 
 
 # --- the news tier -------------------------------------------------------------
-NEWS_ORDER = ("story", "priority", "marker", "lab")  # reasons, strongest first
+NEWS_ORDER = ("story", "priority", "standard", "marker", "lab")  # reasons, strongest first
 
 
 def news_reason(
@@ -681,6 +734,8 @@ def news_reason(
     if priority_class(cand, conf):
         return "priority"
     held = sig is not None and sig.known  # the ledger already has this story
+    if std_on(conf) and not held and std_relevant(cand, conf):
+        return "standard"
     lab = "lab" if lab_on(conf) and not held and lab_relevant(cand, conf) else None
     if sig is None or not sig.markers or sig.known or nw.publisher(cand) in nw.NON_INDEPENDENT:
         return lab

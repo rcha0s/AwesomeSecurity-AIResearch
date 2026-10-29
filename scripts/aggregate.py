@@ -181,7 +181,10 @@ def main() -> int:
     if args.dry_run:
         print(f"\n(dry run) {len(candidates)} candidate(s) would be staged:")
         for cand in candidates:
-            print(f"   [{cand['guess_topic']}/{cand['guess_domain']}] {cand['title']}")
+            print(
+                f"   [{cand['guess_topic']}/{cand['guess_domain']}] {cand['title']}"
+                f"  <{cand.get('source_name', '')}>"
+            )
         return 0
 
     added = c.add_candidates(candidates)

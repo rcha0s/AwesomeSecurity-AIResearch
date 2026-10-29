@@ -41,6 +41,7 @@ try:
 except ImportError as exc:  # pragma: no cover - environment guard
     raise SystemExit("Missing dependencies. Run: pip install -r requirements.txt") from exc
 
+import focus as focus_mod  # noqa: E402
 import taxonomy  # noqa: E402  (after the dependency guard: it needs yaml)
 
 # Use the OS-native certificate trust store (Windows/macOS/Linux) instead of
@@ -228,6 +229,7 @@ class Config:
     news_front_page_days: int = 7
     news_front_page_max: int = 30
     ghsa: dict = dc_field(default_factory=dict)  # which GitHub advisories are kept
+    focus: dict = dc_field(default_factory=dict)  # Rohan's focus areas (scripts/focus.py)
 
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -248,6 +250,7 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         news_front_page_days=int(raw.get("news_front_page_days", 7)),
         news_front_page_max=int(raw.get("news_front_page_max", 30)),
         ghsa=raw.get("ghsa") or {},
+        focus=raw.get("focus") or {},
     )
 
 
@@ -296,6 +299,31 @@ def normalize_url(url: str) -> str:
     url = re.sub(r"#.*$", "", url)
     url = re.sub(r"\?.*$", "", url)
     return url.rstrip("/")
+
+
+REDDIT_HOSTS = (
+    "reddit.com",
+    "redd.it",
+    "redditmedia.com",
+    "redditstatic.com",
+    "reddituploads.com",
+    "reddit.app.link",
+)
+
+
+def is_reddit_url(url: str) -> bool:
+    """True for a Reddit-hosted URL (a thread, a media link, a short link)."""
+    host = (urlparse(url or "").hostname or "").lower().rstrip(".")  # `reddit.com.` too
+    return any(host == h or host.endswith("." + h) for h in REDDIT_HOSTS)
+
+
+def reddit_only(entry: dict) -> bool:
+    """True when every citation an entry carries is a Reddit URL: a thread is
+    practitioner signal, never the source of a finding."""
+    urls = [entry.get(k) for k in ("source_url", "article_url", "tweet_url")]
+    urls += [s.get("url") for s in entry.get("corroborating_sources") or [] if isinstance(s, dict)]
+    urls = [u for u in urls if u]
+    return bool(urls) and all(is_reddit_url(u) for u in urls)
 
 
 _TRACKING_PARAM = re.compile(r"^(utm_|fbclid|gclid|mc_|ref$|ref_|igshid|si$)", re.I)
@@ -584,6 +612,8 @@ def is_curated(entry: dict, conf: Config) -> bool:
     below the composite floor — is held in the REVIEW.md queue (still in the pool)."""
     if entry.get("needs_review") or domain_held(entry) or readability_held(entry):
         return False
+    if reddit_only(entry):  # a thread alone is never a finding
+        return False
     if not is_scored(entry):
         return False
     if conf.curation.get("require_verification", True) and entry.get("verified") is False:
@@ -630,6 +660,8 @@ def editorial_eligible(entry: dict, conf: Config) -> bool:
     floors: an ungrounded quote or a verifier-refuted claim is not a matter of
     editorial taste. Only findings the novelty gate held (i.e. not already
     curated), that are scored, grounded, and not refuted, are in play."""
+    if reddit_only(entry):  # integrity floor: a Reddit thread alone is never promoted
+        return False
     if is_curated(entry, conf) or not is_scored(entry) or domain_held(entry):
         return False
     return not readability_held(entry) and not integrity_lost(entry)
@@ -802,6 +834,29 @@ def _source_track_and_tier(entry: dict, sources_by_id: dict[str, dict]) -> tuple
     return src.get("track", "research"), src.get("tier", "low")
 
 
+# Where a focus match does NOT stand in for a news-track source: repos and HN
+# posts are volume, and a focus keyword matches far too many of them.
+FOCUS_NEWS_EXCLUDED_VIA = ("github", "hackernews")
+
+
+def _focus_news(entry: dict, conf: Config, tier: str) -> bool:
+    """A focus-area match (config.yaml `focus:`) from a high-tier feed stands in
+    for a news-track source, so a standard from a research-track feed (OWASP ACS,
+    2026-09-01) is kept like news instead of aging into the archive unseen."""
+    from verify_citations import publishable_grounding
+
+    if tier != "high" or entry.get("discovered_via") in FOCUS_NEWS_EXCLUDED_VIA:
+        return False
+    if not publishable_grounding(entry):
+        return False  # an ungrounded quote is never kept, however on-topic
+    # `verified: false` is either a factual refutation or a scoring disagreement
+    # (ACS: a PR announcement scored low on novelty). Only an explicit
+    # verify_reason "scoring" passes; unlabeled or "factual" stays out.
+    if entry.get("verified") is False and entry.get("verify_reason") != "scoring":
+        return False
+    return focus_mod.matches(entry, conf.focus)
+
+
 def is_news_curated(
     entry: dict,
     conf: Config,
@@ -817,6 +872,8 @@ def is_news_curated(
     clearing the research floor."""
     if not topic_scope_ok(entry) or domain_held(entry) or readability_held(entry):
         return False
+    if reddit_only(entry):  # a thread alone is never news
+        return False
     if window is not None and not is_fresh(entry, window, now=now):
         return False
     if news_denylist_hit(entry):
@@ -828,7 +885,7 @@ def is_news_curated(
         return entry.get("verified") is not False
     sources_by_id = sources_by_id or {}
     track, tier = _source_track_and_tier(entry, sources_by_id)
-    if track not in ("news", "both"):
+    if track not in ("news", "both") and not _focus_news(entry, conf, tier):
         return False
     if tier not in ("high", "medium"):
         return False
@@ -903,6 +960,8 @@ def is_news_story(entry: dict, conf: Config, sources_by_id: dict[str, dict]) -> 
     """True for anything the news lane keeps: an editorial promotion, or a
     news-gated story of any age (a news brief: see brief_kept). These are
     exempt from the freshness prune."""
+    if reddit_only(entry):  # beats an editorial promotion too
+        return False
     if is_news_brief(entry) and not is_editorial(entry):
         return brief_kept(entry, conf, sources_by_id)
     return is_editorial(entry) or is_news_curated(entry, conf, sources_by_id, window=None)

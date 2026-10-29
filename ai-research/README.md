@@ -26,6 +26,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Hugging Face's funes shares agent memory from raw session text, not summaries](https://huggingface.co/blog/funes)**
 - **[OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)**
 - **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai)**
+- **[Enhancing AI security through global AI red teaming](https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/)**
 - **[A frontier model built a bespoke zlib fuzzing lab in a day](https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/)**
 
 | Domain | Findings |

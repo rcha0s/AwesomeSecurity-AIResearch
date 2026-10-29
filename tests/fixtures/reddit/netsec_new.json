@@ -1,0 +1,189 @@
+{
+ "kind": "Listing",
+ "data": {
+  "after": null,
+  "children": [
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s001",
+     "subreddit": "netsec",
+     "title": "Prompt injection in MCP servers: a field report",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s001/prompt_injection_in_mcp_server/",
+     "score": 20,
+     "num_comments": 5,
+     "created_utc": 1793222679.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://mcp.example.com/field-report?utm_source=reddit"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s002",
+     "subreddit": "netsec",
+     "title": "XML Signature Wrapping authentication bypass in Moldova's MPass SAML NuGet library",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s002/xml_signature_wrapping_authent/",
+     "score": 3,
+     "num_comments": 0,
+     "created_utc": 1793235622.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://www.masiutin.net/mpass-saml-xml-signature-wrapping.html"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s003",
+     "subreddit": "netsec",
+     "title": "How do you triage prompt injection reports from agents in production?",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s003/how_do_you_triage_prompt_injec/",
+     "score": 31,
+     "num_comments": 22,
+     "created_utc": 1793222679.0,
+     "is_self": true,
+     "selftext": "We get a few a week. Curious how others rank severity & dedupe.",
+     "url": "https://www.reddit.com/r/netsec/comments/1s003/how_do_you_triage_prompt_injec/"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s004",
+     "subreddit": "netsec",
+     "title": "Weekly discussion thread",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s004/weekly_discussion_thread/",
+     "score": 9,
+     "num_comments": 14,
+     "created_utc": 1793222679.0,
+     "is_self": true,
+     "selftext": "This week: how are you stopping prompt injection in your agents?",
+     "url": "https://www.reddit.com/r/netsec/comments/1s004/weekly_discussion_thread/"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s005",
+     "subreddit": "netsec",
+     "title": "Thread about an RCE exploit chain",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s005/thread_about_an_rce_exploit_ch/",
+     "score": 12,
+     "num_comments": 0,
+     "created_utc": 1793222679.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://www.reddit.com/r/netsec/comments/1s005/thread_about_an_rce_exploit_ch/"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s006",
+     "subreddit": "netsec",
+     "title": "Old prompt injection writeup",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s006/old_prompt_injection_writeup/",
+     "score": 10,
+     "num_comments": 0,
+     "created_utc": 1792497600.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://old.example.com/x"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s007",
+     "subreddit": "netsec",
+     "title": "Low score prompt injection post",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s007/low_score_prompt_injection_pos/",
+     "score": 1,
+     "num_comments": 0,
+     "created_utc": 1793222679.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://low.example.com/x"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s008",
+     "subreddit": "netsec",
+     "title": "Best sourdough starter recipes",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s008/best_sourdough_starter_recipes/",
+     "score": 10,
+     "num_comments": 0,
+     "created_utc": 1793222679.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://bread.example.com/starter"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s009",
+     "subreddit": "netsec",
+     "title": "New jailbreak technique bypasses agent guardrails",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s009/new_jailbreak_technique_bypass/",
+     "score": 6,
+     "num_comments": 1,
+     "created_utc": 1793222679.0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://jb.example.com/technique"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s010",
+     "subreddit": "netsec",
+     "title": "Self post about sourdough",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s010/self_post_about_sourdough/",
+     "score": 40,
+     "num_comments": 0,
+     "created_utc": 1793222679.0,
+     "is_self": true,
+     "selftext": "my starter is bubbly",
+     "url": "https://www.reddit.com/r/netsec/comments/1s010/self_post_about_sourdough/"
+    }
+   },
+   {
+    "kind": "t1",
+    "data": {
+     "body": "a comment, not a post"
+    }
+   },
+   {
+    "kind": "t3",
+    "data": {
+     "id": "1s011",
+     "subreddit": "netsec",
+     "title": "No timestamp prompt injection post",
+     "author": "someone",
+     "permalink": "/r/netsec/comments/1s011/no_timestamp_prompt_injection_/",
+     "score": 10,
+     "num_comments": 0,
+     "is_self": false,
+     "selftext": "",
+     "url": "https://nots.example.com/x"
+    }
+   }
+  ]
+ }
+}

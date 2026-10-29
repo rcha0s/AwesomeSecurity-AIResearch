@@ -4,9 +4,17 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--29-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-24-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-71-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--29-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-71-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
+
+## Your focus
+
+_Your focus areas, last 7 days: most areas matched first, then newest._
+
+1. **[obsidian-tc tool server lets any valid token delete any configured vault](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=obsidian-tc-tool-server-any-valid-token-could-re-fa07994e1a#week)** · _AI Security · Oct 23, 2026_
+2. **[Anthropic's red team found Claude reached undergraduate-level CTF skill](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-frontier-red-team-march-2025-claude-re-f200b2d0f2#week)** · _AI Security · Oct 23, 2026_
+3. **[obsidian-tc MCP server lacks Origin checks, letting web pages read its vault](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=obsidian-tc-mcp-server-lacks-origin-checks-letti-667c4739d3#week)** · _AI Security · Oct 23, 2026_
 
 ## Biggest this week
 
@@ -26,7 +34,7 @@ _The last 7 days, newest first._
 
 ## Claim changes
 
-_The 6 newest of 18 changes in the last 7 days._
+_The 6 newest of 15 changes in the last 7 days._
 
 1. **Added:** [Send simple subagent jobs to a cheaper model](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims) · _current · Oct 28, 2026 · 3 sources_  
    Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing…
@@ -36,10 +44,10 @@ _The 6 newest of 18 changes in the last 7 days._
    A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the…
 4. **Added:** [Keep intermediate tool results out of the model context](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims) · _current · Oct 28, 2026 · 3 sources_  
    In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.
-5. **Added:** [Load tool definitions on demand, not all at start](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims) · _current · Oct 28, 2026 · 3 sources_  
-   Vendors report that loading tool definitions only when needed cut tokens by 47% (Cursor A/B test, runs that called an MCP tool) to 85% (Anthropic Tool Search); Anthropic's 98.7% is a single worked…
-6. **Added:** [Measure speedups with repeated trials, not impressions](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims) · _current · Oct 28, 2026 · 3 sources_  
+5. **Added:** [Measure speedups with repeated trials, not impressions](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims) · _current · Oct 28, 2026 · 3 sources_  
    A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.
+6. **Added:** [Parallelize independent reads; keep writes single-threaded](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=parallel-reads-single-threaded-writes#claims) · _current · Oct 28, 2026 · 4 sources_  
+   A harness should fan out parallel subagents for independent research but keep code-writing in one context, since Cognition argues parallel writers act on conflicting assumptions.
 
 ## Efficiency
 

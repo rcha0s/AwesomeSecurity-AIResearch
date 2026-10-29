@@ -30,11 +30,14 @@ data/sources.json         # ranked source registry (add via add_source.py; revie
 data/source_stats.json    # per-source hit-rate counts written by scans (overlaid on the registry)
 data/candidates.json      # transient ingest staging (gitignored)
 data/_raw/                # transient fetched article text (gitignored)
+data/_practitioner_signal.json # Reddit self posts (title, permalink, score, comments, sub, created), gitignored
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
+scripts/ingest_youtube.py # registered YouTube channels (yt-dlp): `youtube_per_channel` / `youtube_max_per_run`, in-window videos only
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
+scripts/ingest_reddit.py  # subreddit lane, official API (app-only OAuth): link posts stage their article; self posts -> data/_practitioner_signal.json
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube); `deactivate <id> --reason`
 scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
@@ -57,6 +60,8 @@ scripts/generate_claims.py# claims/ — standing answers on top, retired ones un
 scripts/generate_html.py  # docs/index.html — THE SITE (filterable, self-contained, no Jekyll)
 scripts/templates/site.html # the site template (__DATA__ placeholder; a code asset, not data)
 scripts/trends.py         # data/trends.json + TRENDS.md (emerging themes)
+scripts/focus.py          # which focus area (config.yaml `focus:`) an item matches (pure)
+scripts/weekly_digest.py  # docs/digest.md: the last 7 days of focus items (Mac wrapper, weekly)
 scripts/generate_newsletter.py # NEWSLETTER.md (rolling, 3 topic sections)
 scripts/generate_review.py# REVIEW.md (non-vetted queue: needs_review or below composite floor)
 scripts/eval_integrity.py · eval_recall.py · eval_golden.py · eval_history.py · eval_readability.py  # Phase 3 evals (see Evals)
@@ -111,6 +116,33 @@ the front page's "Trending & In the News" lane shows only the last
 Every kept story is on the site's News tab, grouped by month. Retired claims
 fold into a collapsed section under the live ones.
 
+A story that matches a focus area (below) and comes from a high-tier feed is kept
+like news too, whatever the feed's track (`common._focus_news`): rerank restores it
+from the archive and never prunes it. GitHub and HN items are excluded; their volume
+would swamp the lane. Grounding still applies. OWASP ACS (2026-09-01) sat archived,
+held for novelty, until this.
+
+## Your focus (config.yaml `focus:`)
+
+Rohan's focus areas (MCP security, prompt injection, AI supply chain, AI-assisted
+security review, guardrails, red teaming, AI regulation for insurers) are named once,
+as taxonomy domain IDs and/or keyword phrases. `focus.py` matches a story or claim to an
+area by domain ID or by whole-word keywords in its title/takeaway/summary/statement.
+The Briefing opens with a "Your focus" lane (`briefing.focus_stories`,
+`focus_claim_changes`): matching stories of the last 7 days, most areas matched first,
+then newest; `lane_min` earlier ones fill in on a thin week. Biggest, top stories,
+claim changes and Efficiency leave out what the lane took, so nothing shows twice;
+generic CVEs and efficiency items still show below it. The README teaser leads with the
+same lane. Add an area or keyword in `config.yaml` only; add a domain in the taxonomy
+YAML (never reuse or rename an ID).
+
+`scripts/weekly_digest.py` writes `docs/digest.md` (title, one-line takeaway, link per
+item, plus claim changes) from the same rules, no top-up. `run_scan_local.sh` runs it on
+`focus.digest_weekday` (0 = Monday ... 6 = Sunday; env `DIGEST_WEEKDAY` overrides, `any`
+runs it daily) before `post`, so the scan PR carries it. After the PR opens, and only
+when env `DIGEST_NOTIFY_URL` is set, the wrapper POSTs `{"message": ...}` to it with
+curl (10 second limit, failure ignored, URL never logged). No URL is stored in the repo.
+
 ## Findings vs claims (two different questions)
 
 The pools answer **"what was published lately"** — a rolling feed that ages out after
@@ -158,7 +190,55 @@ python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
+python scripts/ingest_reddit.py           # r/netsec etc. via the Reddit API (--dry-run); skipped without credentials
+python scripts/ingest_youtube.py          # recent videos of registered channels (yt-dlp; capped)
 ```
+
+### Reddit (practitioner signal, official API)
+
+`ingest_reddit.py` reads the subreddits in `config.yaml reddit.subreddits` (netsec,
+cybersecurity, AI_Agents, LLMDevs, devsecops) through Reddit's official API with
+app-only OAuth: a client-credentials token from `www.reddit.com/api/v1/access_token`
+(HTTP basic auth), then `oauth.reddit.com/r/{sub}/new` and `/top?t=day` as JSON, one
+request per sub per sort, with the User-Agent `awesomesec-research/1.0`. Credentials are
+the env vars `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET` only; create them as a
+"script" app at reddit.com/prefs/apps (redirect URI `http://localhost`). Unset, the lane
+logs "skipped: no Reddit API credentials" and exits 0. On the Mac,
+`run_scan_local.sh` reads them from the Keychain just before `run_scan.sh pre` and gives
+them to that one command only (the model session's `env` unsets them). Store them once:
+`security add-generic-password -s awesomesec-reddit -a client_id -w '<client id>'` and
+`security add-generic-password -s awesomesec-reddit -a client_secret -w '<client secret>'`. The token stays in memory, goes
+only in the Authorization header, and is never logged or put in a URL. The keyless
+scraping routes (`.json`, `.rss`, the shreddit partial) are not used: Reddit blocks them
+on purpose, and a user login or a browser is out of scope (ISA ISC-A7). A 401, 403, 429
+or network error is logged and the exit code stays 0: a scan never fails because of
+Reddit.
+
+A thread alone never becomes a finding. Posts newer than `reddit.lookback_hours` (48)
+with at least `reddit.min_score` that pass the curator ingestor's on-thesis filter
+(taxonomy keyword hint in the title or a self post's `selftext`, no excluded term, not on
+the news deny-list) go
+one of two ways:
+
+- A link post whose `url` is not a Reddit host stages that article as the
+  candidate's `source_url` (`source_id` `reddit:<sub>`, `discovered_via: "reddit"`),
+  with the thread as `reddit_url`, `reddit_score` and `reddit_comments`;
+  `merge_analysis.stamp_curator` copies them onto the pool entry. At most
+  `reddit.max_per_run` (6) are staged, best engagement (score + 2 x comments) first,
+  and anything the pools, archive or story ledger hold is skipped.
+- A self post (`is_self`) is not staged. It is upserted into the gitignored
+  `data/_practitioner_signal.json` (rows older than `reddit.signal_days` drop out) for
+  the "what practitioners are arguing" section (ISC-61). Crossposts, galleries and
+  links to Reddit itself are neither.
+
+`merge_analysis.py` holds any entry whose citations are all Reddit URLs
+(`common.reddit_only`, judged after `stamp_brief`): `needs_review` plus `citation_hold`.
+It is also a hard floor in code: such an entry is never curated, never editorially
+promoted (`editorial_eligible`), and never in the news lane (`is_news_curated`,
+`is_news_story`, so no brief or promotion shows it), and `merge_gate.py` refuses a scan PR
+whose rendered page shows a row citing only Reddit ("reddit-only citation on a shown
+entry"; it only adds a refusal). A backfill run skips the
+lane (Reddit cannot be windowed). `www.reddit.com` and `oauth.reddit.com` are in `allowlist.FIXED_HOSTS`.
 
 ### Curator links (tl;dr sec)
 
@@ -241,7 +321,15 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   and `batch_corroboration_bonus` to the deal's score. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
   entries and the GHSA advisories the keep rule below allows, tagged
-  `batch_priority`; the session analyzes those first. Then a lab lane of up to
+  `batch_priority`; the session analyzes those first. Then a standards lane of up to
+  `batch_std_max` slots (at most `batch_std_per_source` per feed) takes recent releases from
+  OWASP GenAI, NIST, CoSAI, the MCP spec and NAIC, tagged `batch_priority: standard`: an
+  article on a `batch_std_hosts` host that names a `batch_std_terms` word, or any post
+  from a `batch_std_sources` feed (the MCP spec's releases). A new standard carries no
+  severity marker, so OWASP's Agent Control Standard sank below the cut. NIST hosts need an
+  AI or cyber term and a publication term (`batch_std_strict_hosts`), since NIST also posts
+  time standards and lab news. A standards post the prefilter dropped only as a catch-all
+  without a marker is let back in like a lab post. Then a lab lane of up to
   `batch_lab_max` slots (at most `batch_lab_per_source` per feed) takes recent posts
   from the major AI labs (`batch_lab_hosts`: OpenAI, Anthropic, Google/DeepMind,
   Meta, Microsoft, ...) that name one of `batch_lab_terms` (security and safety
@@ -251,11 +339,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `batch_eff_max` slots (at most `batch_eff_per_source` per feed) takes recent candidates whose
   title or excerpt name one of `batch_eff_terms` (token usage, prompt caching, subagents,
   parallel agents, harness, cost per task, ...), tagged `batch_priority: efficiency`. It
-  runs after the must-not-miss and lab lanes and never takes a candidate they took. These
+  runs after the must-not-miss, standards and lab lanes and never takes a candidate they took. These
   practitioner posts (the `air.cost-efficiency` and `air.work-efficiency` domains) carry no
   severity marker, so they used to sink below the cut. Next, `batch_class_min`
   guarantees named classes a floor: `curator: 1` puts one tl;dr sec curator link
-  in every batch (two at most, by the per-source cap). The rest go to
+  in every batch (two at most, by the per-source cap). Reddit links (`reddit:<sub>`
+  source ids) are their own class in the round-robin, with no floor: the lane stages
+  at most `reddit.max_per_run` (6), and `batch_per_source` caps each sub. The rest go to
   `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
@@ -273,7 +363,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   of a big-story group the lane had no slot for, a KEV or a kept GHSA the
   must-not-miss lane had no slot for, or a severity / AI-incident marker from a
   non-GitHub/HN source ranked `batch_story_min_rank`+, or a lab-lane post the lane
-  had no slot for, published in the last
+  had no slot for, a standards-lane post the lane had no slot for (`standard`), published in the last
   `batch_story_days`, not deny-listed, not a story the ledger holds) joins
   `data/candidates.json` tagged `batch_tier: "news"`, at most `max_news_per_run`
   and `batch_news_per_source` per source. Each gets a short news brief
@@ -360,6 +450,11 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   demotion with a reason (`{"id", "demote": true, "reason"}`) or when its
   integrity fails (refuted or ungrounded). Every promotion and removal goes into
   the code-owned `data/_editorial_outcomes.md`, which `post` puts in the PR body.
+  `verified: false` means either a factual refutation or a scoring disagreement, so the
+  verifier step also sets `verify_reason` (`factual` or `scoring`). Editorial eligibility
+  is unchanged: any `verified: false` stays out. Focus news (below) keeps a
+  `verified: false` entry only when `verify_reason` is `scoring`, and never an
+  ungrounded one. OWASP ACS carries `scoring`.
 
 ### Backfill (issue #52): a past window, same pipeline
 

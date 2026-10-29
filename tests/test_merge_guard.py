@@ -49,6 +49,7 @@ ALLOWED = [
     "docs/index.html",
     "docs/og.png",
     "docs/feed.xml",
+    "docs/digest.md",  # the weekly focus digest: .md under docs/, no widening
     "docs/.nojekyll",
     "docs/findings/ai-research/agent-evals/2026-08-some-slug.md",
     "ai-security/README.md",
