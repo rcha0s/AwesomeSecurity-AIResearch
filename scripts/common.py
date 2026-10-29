@@ -298,6 +298,24 @@ def normalize_url(url: str) -> str:
     return url.rstrip("/")
 
 
+REDDIT_HOSTS = ("reddit.com", "redd.it", "redditmedia.com", "redditstatic.com")
+
+
+def is_reddit_url(url: str) -> bool:
+    """True for a Reddit-hosted URL (a thread, a media link, a short link)."""
+    host = (urlparse(url or "").hostname or "").lower()
+    return any(host == h or host.endswith("." + h) for h in REDDIT_HOSTS)
+
+
+def reddit_only(entry: dict) -> bool:
+    """True when every citation an entry carries is a Reddit URL: a thread is
+    practitioner signal, never the source of a finding."""
+    urls = [entry.get(k) for k in ("source_url", "article_url", "tweet_url")]
+    urls += [s.get("url") for s in entry.get("corroborating_sources") or [] if isinstance(s, dict)]
+    urls = [u for u in urls if u]
+    return bool(urls) and all(is_reddit_url(u) for u in urls)
+
+
 _TRACKING_PARAM = re.compile(r"^(utm_|fbclid|gclid|mc_|ref$|ref_|igshid|si$)", re.I)
 
 

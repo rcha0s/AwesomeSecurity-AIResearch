@@ -23,6 +23,7 @@ FIXED_HOSTS = (
     "r.jina.ai",  # common.fetch_readable — every article fetch
     "export.arxiv.org",  # ingest_conferences ARXIV_API
     "huggingface.co",  # paper_gate HF_DAILY_API: the gate needs it even if hf_papers is off
+    "www.reddit.com",  # ingest_reddit: the keyless community-more-posts partial
     "hn.algolia.com",  # ingest_hn / source_scout HN_SEARCH
     *eval_recall.CURATOR_HOSTS,  # recall eval curators; tldrsec.com is also ingest_curator_links
 )

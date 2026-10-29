@@ -30,11 +30,13 @@ data/sources.json         # ranked source registry (add via add_source.py; revie
 data/source_stats.json    # per-source hit-rate counts written by scans (overlaid on the registry)
 data/candidates.json      # transient ingest staging (gitignored)
 data/_raw/                # transient fetched article text (gitignored)
+data/_practitioner_signal.json # Reddit self posts (title, permalink, score, comments, sub, created), gitignored
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
+scripts/ingest_reddit.py  # subreddit lane, keyless: link posts stage their article; self posts -> data/_practitioner_signal.json
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube); `deactivate <id> --reason`
 scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
@@ -158,7 +160,41 @@ python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
+python scripts/ingest_reddit.py           # r/netsec etc., keyless (--dry-run); fails soft
 ```
+
+### Reddit (practitioner signal, keyless)
+
+`ingest_reddit.py` reads the subreddits in `config.yaml reddit.subreddits` (netsec,
+cybersecurity, AI_Agents, LLMDevs, devsecops) logged out, through the server-rendered
+partial `www.reddit.com/svc/shreddit/community-more-posts/{sort}/?name={sub}`: one
+request per sub per sort (`new`, and `top` with `t=day`), a short timeout, a desktop
+browser User-Agent. Each post is a `<shreddit-post>` start tag; its attributes
+(`permalink`, `content-href`, `post-title`, `score`, `comment-count`,
+`created-timestamp`, `post-type`) are read with the stdlib HTML parser. `search.json`,
+`.json`, `.rss` and api.reddit.com answer 403 keyless, and a logged-in session or a
+browser is out of scope (ISA ISC-A7). A 403, 429 or network error is logged and the exit
+code stays 0: a scan never fails because of Reddit.
+
+A thread alone never becomes a finding. Posts newer than `reddit.lookback_hours` (48)
+with at least `reddit.min_score` that pass the curator ingestor's on-thesis filter
+(taxonomy keyword hint in the title, no excluded term, not on the news deny-list) go
+one of two ways:
+
+- A link post whose `content-href` is not a Reddit host stages that article as the
+  candidate's `source_url` (`source_id` `reddit:<sub>`, `discovered_via: "reddit"`),
+  with the thread as `reddit_url`, `reddit_score` and `reddit_comments`;
+  `merge_analysis.stamp_curator` copies them onto the pool entry. At most
+  `reddit.max_per_run` (6) are staged, best engagement (score + 2 x comments) first,
+  and anything the pools, archive or story ledger hold is skipped.
+- A self/text post is not staged. It is upserted into the gitignored
+  `data/_practitioner_signal.json` (rows older than `reddit.signal_days` drop out) for
+  the "what practitioners are arguing" section (ISC-61). Crossposts, galleries and
+  links to Reddit itself are neither.
+
+`merge_analysis.py` holds any entry whose citations are all Reddit URLs
+(`common.reddit_only`): `needs_review` plus `citation_hold`. A backfill run skips the
+lane (Reddit cannot be windowed). `www.reddit.com` is in `allowlist.FIXED_HOSTS`.
 
 ### Curator links (tl;dr sec)
 
@@ -255,7 +291,9 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   practitioner posts (the `air.cost-efficiency` and `air.work-efficiency` domains) carry no
   severity marker, so they used to sink below the cut. Next, `batch_class_min`
   guarantees named classes a floor: `curator: 1` puts one tl;dr sec curator link
-  in every batch (two at most, by the per-source cap). The rest go to
+  in every batch (two at most, by the per-source cap). Reddit links (`reddit:<sub>`
+  source ids) are their own class in the round-robin, with no floor: the lane stages
+  at most `reddit.max_per_run` (6), and `batch_per_source` caps each sub. The rest go to
   `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
