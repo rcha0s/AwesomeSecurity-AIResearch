@@ -9,8 +9,10 @@ entries. The daily scan session reads them (`signal`), writes at most a handful 
 arguments to data/_arguments_out.json, and `merge` validates them into the committed
 data/arguments.json. The model supplies only prose and URLs. Everything else is code:
 
-  * each source URL must be a Reddit thread or an X post permalink AND appear in this
-    run's signal (signal file, staged candidates, or pool entries from the lane);
+  * each source URL must be a Reddit thread or an X post permalink AND appear in the
+    signal frozen by `pre` before the session started (the Reddit signal file and the
+    staged candidates; `signal` and `merge` read only that frozen, session-proof file);
+  * position and counterpoint may not contain a URL, `www.` or a bare domain;
   * the stored URL, label (r/sub or @handle) and engagement come from the signal, never
     from the model;
   * a position is one sentence of at most `text_max_chars`; a row needs `min_sources`
@@ -27,6 +29,7 @@ Rows age out `row_days` after the day they were written. merge_gate.py runs
 hosts and the weight arithmetic (it cannot see the gitignored signal).
 
 Usage:
+    python scripts/arguments.py freeze    # `pre`: freeze the signal into data/_scan_arguments_signal.json
     python scripts/arguments.py signal    # compact view of this run's signal, best first
     python scripts/arguments.py merge     # data/_arguments_out.json -> data/arguments.json
 """
@@ -44,6 +47,7 @@ import common as c
 OUT_NAME = "_arguments_out.json"
 ROWS_NAME = "arguments.json"
 SIGNAL_NAME = "_practitioner_signal.json"
+FROZEN_NAME = "_scan_arguments_signal.json"  # code-owned: Edit(data/_scan*) is denied
 DEFAULTS = {
     "max_new_per_run": 5,  # rows taken from one run's staging file
     "max_rows": 5,  # rows the site shows
@@ -59,11 +63,17 @@ DEFAULTS = {
 _SEG = r"[A-Za-z0-9_%.\-]+"
 REDDIT_RE = re.compile(
     rf"^https?://(?:www\.|old\.|np\.)?reddit\.com/r/([A-Za-z0-9_]{{2,21}})/comments/([a-z0-9]{{4,10}})(?:/{_SEG})*/?$",
-    re.I,
+    re.I | re.ASCII,  # ASCII: no dotless i or Kelvin sign standing in for i / k
 )
 X_RE = re.compile(
     r"^https?://(?:www\.|mobile\.)?(?:x|twitter)\.com/([A-Za-z0-9_]{1,15})/status/(\d{5,25})/?$",
-    re.I,
+    re.I | re.ASCII,
+)
+# A link-like string in prose: a scheme, www., or a bare domain. A position is a claim,
+# never a lure, so any of these refuses the text.
+LINKISH = re.compile(
+    r"://|\bwww\.|\b[a-z0-9-]+\.(?:com|io|net|org|dev|ai|xyz|co|app|sh|me|info|biz|us|uk|gg|ly)\b",
+    re.I | re.ASCII,
 )
 ROW_KEYS = {
     "id",
@@ -87,10 +97,10 @@ def settings() -> dict:
 
 def parse_source(url: object) -> dict | None:
     """{kind, key, label} for a Reddit thread or X post permalink, else None."""
-    text = url.strip() if isinstance(url, str) else ""
-    if m := REDDIT_RE.match(text):
+    text = url if isinstance(url, str) else ""
+    if m := REDDIT_RE.fullmatch(text):
         return {"kind": "reddit", "key": f"reddit:{m.group(2).lower()}", "label": f"r/{m.group(1)}"}
-    if m := X_RE.match(text):
+    if m := X_RE.fullmatch(text):
         return {"kind": "x", "key": f"x:{m.group(2)}", "label": f"@{m.group(1)}"}
     return None
 
@@ -106,7 +116,7 @@ def weight_of(score: int, comments: int, authors: int, cfg: dict) -> int:
 def clean_text(value: object, cfg: dict) -> str | None:
     """One line of prose, within the length limit; None when empty or too long."""
     text = _CTRL.sub(" ", value).strip() if isinstance(value, str) else ""
-    if not text or len(text) > int(cfg["text_max_chars"]):
+    if not text or len(text) > int(cfg["text_max_chars"]) or LINKISH.search(text):
         return None
     return text
 
@@ -149,8 +159,10 @@ def _from_entry(row: dict, cfg: dict) -> list[dict]:
     return [i for i in items if i]
 
 
-def load_signal(cfg: dict) -> dict[str, dict]:
-    """Every thread or post this run may cite, by key. A repeat keeps the larger counts."""
+def build_signal(cfg: dict) -> dict[str, dict]:
+    """Every thread or post this run may cite, by key, from the Reddit signal file and the
+    staged candidates (Reddit links, X list posts). A repeat keeps the larger counts.
+    Pool entries are not read: the session can edit them."""
     items: list[dict] = []
     for row in c.load_json(c.DATA_DIR / SIGNAL_NAME, default=[]) or []:
         if isinstance(row, dict) and _recent(row.get("created"), cfg):
@@ -163,14 +175,29 @@ def load_signal(cfg: dict) -> dict[str, dict]:
             items += [item] if item else []
     for row in c.load_json(c.CANDIDATES_FILE, default=[]) or []:
         items += _from_entry(row, cfg)
-    for topic in c.TOPICS:
-        for row in (c.load_pool(topic) or {}).get("entries") or []:
-            items += _from_entry(row, cfg)
     out: dict[str, dict] = {}
     for item in items:
         old = out.get(item["key"])
         if old is None or (item["score"], item["comments"]) > (old["score"], old["comments"]):
             out[item["key"]] = item
+    return out
+
+
+def load_signal(cfg: dict) -> dict[str, dict]:
+    """The signal frozen by `freeze` in `pre`, before the session started. It is the only
+    signal `signal` and `merge` read: the session can edit the files it was built from."""
+    frozen = c.load_json(c.DATA_DIR / FROZEN_NAME, default=[]) or []
+    out: dict[str, dict] = {}
+    for item in frozen if isinstance(frozen, list) else []:
+        info = parse_source(item.get("url")) if isinstance(item, dict) else None
+        if info is not None:
+            out[info["key"]] = {
+                **info,
+                "url": item["url"],
+                "title": str(item.get("title") or ""),
+                "score": _num(item.get("score")),
+                "comments": _num(item.get("comments")),
+            }
     return out
 
 
@@ -277,17 +304,22 @@ def row_problems(row: dict, cfg: dict | None = None) -> list[str]:
     if not (isinstance(row["id"], str) and re.fullmatch(r"arg-[0-9a-f]{10}", row["id"])):
         out.append("bad id")
     try:
-        date.fromisoformat(row["created"])
+        if date.fromisoformat(row["created"]) > c.utcnow().date() + timedelta(days=1):
+            out.append("created is in the future")
     except (TypeError, ValueError):
         out.append("created is not a date")
     for key in ("position", "counterpoint"):
         text = row[key]
         if not isinstance(text, str) or len(text) > int(cfg["text_max_chars"]):
             out.append(f"{key} is not text within the limit")
+        elif LINKISH.search(text):
+            out.append(f"{key} contains a link or domain")
     if not row["position"] if isinstance(row["position"], str) else True:
         out.append("position is empty")
-    out += _count_problems(row) + _source_problems(row, cfg)
-    return out
+    counts = _count_problems(row)
+    if counts:  # weight arithmetic below needs real integers
+        return out + counts
+    return out + _source_problems(row, cfg)
 
 
 def _count_problems(row: dict) -> list[str]:
@@ -345,6 +377,16 @@ def cmd_signal(cfg: dict) -> int:
     return 0
 
 
+def cmd_freeze(cfg: dict) -> int:
+    """Write the signal the session may cite to data/_scan_arguments_signal.json. Run by
+    `pre` before the session starts; the session cannot Edit data/_scan* files."""
+    items = list(build_signal(cfg).values())
+    keep = ("url", "title", "score", "comments")
+    c.save_json(c.DATA_DIR / FROZEN_NAME, [{k: i[k] for k in keep} for i in items])
+    print(f"arguments: froze {len(items)} thread(s) or post(s)")
+    return 0
+
+
 def cmd_merge(cfg: dict) -> int:
     today = c.utcnow().date().isoformat()
     staged = c.load_json(c.DATA_DIR / OUT_NAME, default=[])
@@ -364,6 +406,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_signal(cfg)
     if args == ["merge"]:
         return cmd_merge(cfg)
+    if args == ["freeze"]:
+        return cmd_freeze(cfg)
     print(__doc__.split("Usage:")[1].strip(), file=sys.stderr)
     return 2
 

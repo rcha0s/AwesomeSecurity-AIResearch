@@ -263,7 +263,7 @@ def test_main_has_feed_fails_closed():
 def _argument_row(url="https://www.reddit.com/r/netsec/comments/abc123/slug/"):
     return {
         "id": "arg-0123456789",
-        "created": "2026-10-28",
+        "created": "2026-07-14",
         "position": "p",
         "counterpoint": "",
         "sources": [

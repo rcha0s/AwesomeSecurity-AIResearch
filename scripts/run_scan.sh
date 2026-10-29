@@ -230,6 +230,9 @@ phase_pre() {
     return 1
   fi
   staged_count >"$STAGED_FILE"
+  # Freeze the practitioner signal the session may cite (arguments.py) before it starts:
+  # data/_scan* is Edit-denied to the session, the files it is built from are not.
+  "$PY" scripts/arguments.py freeze | tee -a "$LOG" || log "arguments freeze WARN: failed"
   # The session's budget is sized for one batch, so it sees only that batch.
   # Before the URL snapshot and the shortlist: fetch_raw.py may fetch, and the
   # judge may match, only batch members.

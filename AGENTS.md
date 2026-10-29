@@ -252,15 +252,21 @@ lane (Reddit cannot be windowed). `www.reddit.com` and `oauth.reddit.com` are in
 
 The Briefing shows "What practitioners are arguing" after the focus lane and Biggest this
 week. The raw signal never reaches the site (`data/_practitioner_signal.json` is
-gitignored), so the daily scan session synthesizes it (research-scan step 7b): it reads
-`python scripts/arguments.py signal` (Reddit self posts, plus this run's candidates and
-pool entries that carry a `reddit_url` or came from the X list lane), writes at most
+gitignored), so the daily scan session synthesizes it (research-scan step 7b). `pre`
+runs `arguments.py freeze` before the session starts, writing the code-owned
+`data/_scan_arguments_signal.json` (Edit-denied with the other `data/_scan*` files) from
+the Reddit signal file plus the staged candidates (Reddit links, X list posts). The
+session reads `python scripts/arguments.py signal`, which shows only that frozen file
+(it also cannot Edit `data/_practitioner_signal.json`; pool entries are not signal at
+all), and writes at most
 `arguments.max_new_per_run` (5) arguments to `data/_arguments_out.json`, and
 `arguments.py merge` validates them into the committed `data/arguments.json`:
 
 - The model supplies a one-sentence position, an optional one-sentence counterpoint (each
   at most `text_max_chars`, 280) and 2 to 6 URLs. Every URL must be a Reddit thread or
-  X post permalink AND appear in this run's signal, or the argument is dropped. The stored
+  X post permalink (ASCII-only match, so lookalike letters fail) AND appear in the frozen
+  signal, or the argument is dropped. Text containing a URL scheme, `www.` or a bare
+  domain (`.com`, `.io`, `.xyz`, ...) is refused, by `arguments.py` and again by the gate. The stored
   URL, its label (`r/sub`, `@handle`) and all engagement numbers come from the signal, never
   from the model. The session cannot Edit `data/arguments.json`.
 - Engagement weight: a Reddit thread counts score + 2 x comments. The X list lane captures
