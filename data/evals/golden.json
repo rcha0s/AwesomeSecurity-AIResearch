@@ -757,14 +757,15 @@
       "title": "\"Black October\" is an X label for a week of disclosures",
       "url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
       "from": "pool",
-      "keep": false,
+      "keep": true,
+      "known_miss": true,
       "on_topic": true,
       "domain": "ais.ai-infra",
       "also_accept": [
         "ps.detection-response",
         "ais.red-teaming"
       ],
-      "reason": "Held: the 'Black October' label and its X origin, but the analyzer scores novelty 55, under the curation floor of 60 because the pool already holds the PHP2Shell items. On topic; in the pool, not curated.",
+      "reason": "pipeline holds it below the novelty floor (55 < 60); the golden case records the miss",
       "facts": [
         {
           "fact": "The label comes from an X post by AISafetyMemes on 2026-10-22",
@@ -786,8 +787,7 @@
             "disclosure wave"
           ]
         }
-      ],
-      "unsure": "Held only by the novelty floor (55 vs 60); Rohan may want it curated."
+      ]
     },
     {
       "id": "nvidia-openshell-runs-coding-agents-in-kernel-en-59acb3968b",
@@ -886,13 +886,14 @@
       "title": "Roo Code's command auto-approval can be bypassed in seven ways",
       "url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
       "from": "pool",
-      "keep": false,
+      "keep": true,
+      "known_miss": true,
       "on_topic": true,
       "domain": "ais.agent-security",
       "also_accept": [
         "ps.ai-code"
       ],
-      "reason": "Held: seven NVD-confirmed Roo Code approval-bypass CVEs (VulnCheck), but the analyzer scores novelty 55, under the curation floor of 60 because CVE-2026-30307 already reported the same gate. On topic; in the pool, not curated.",
+      "reason": "pipeline holds it below the novelty floor (55 < 60); the golden case records the miss",
       "facts": [
         {
           "fact": "Seven CVEs including CVE-2026-110202 to 110206",
@@ -908,8 +909,7 @@
             "3.54.0"
           ]
         }
-      ],
-      "unsure": "Held only by the novelty floor (55 vs 60); Rohan may want it curated."
+      ]
     },
     {
       "id": "mistral-vibe-fixes-permission-check-bypasses-in-94d849d8e3",
