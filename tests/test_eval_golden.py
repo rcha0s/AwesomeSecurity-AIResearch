@@ -53,9 +53,9 @@ def scored(cases, outputs):
     return eg.score(cases, outputs)
 
 
-def test_the_real_golden_set_is_well_formed_and_about_thirty_cases():
+def test_the_real_golden_set_is_well_formed_and_not_runaway():
     cases = eg.load_cases()
-    assert 28 <= len(cases) <= 36
+    assert 28 <= len(cases) <= 60  # grows by one case per wrong real-run answer
     keeps = [k for k in cases if k["keep"]]
     assert 0.35 <= len(keeps) / len(cases) <= 0.65  # both answers well represented
     assert sum(not k["on_topic"] for k in cases) >= 4  # the off-topic rate means something

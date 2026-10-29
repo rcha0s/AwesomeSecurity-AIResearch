@@ -550,7 +550,7 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   the two means our own sources are slipping behind the curator. tl;dr sec issues are
   picked like the ingestor's (newest `evals.recall.tldrsec_max_issues` by number,
   dated by the page itself).
-- **Golden** (`data/evals/golden.json` + `scripts/eval_golden.py`, ISC-23): ~30 past
+- **Golden** (`data/evals/golden.json` + `scripts/eval_golden.py`, ISC-23): 40+ past
   stories with checked keep/drop, on-topic, domain ID and key facts. `score` grades an
   analyzer output file deterministically; `scripts/run_golden_local.sh` is the weekly
   LLM run: a rotating slice staged in a throwaway worktree that `stage` scrubs of every

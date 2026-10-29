@@ -915,6 +915,76 @@
     },
     {
       "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3",
+      "source_url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86",
+      "article_url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "github.com",
+      "published": "2026-10-21",
+      "raw_path": "data/_raw/title-malicious-mcp-oauth-callback-can-switch-tr-1790033a52.txt",
+      "related_claims": [],
+      "summary": "On 2026-10-21 the MCP project published two critical advisories (CVSS 9.6 each, no CVE id yet) for MCP Inspector, the debugging tool many developers run against untrusted MCP servers. GHSA-4fc4-wcmh-4g86: a malicious remote server redirects the OAuth callback with transport=stdio and serverCommand parameters, and Inspector runs that command locally. GHSA-6x67-4w4w-9f3w: a malicious MCP App steals the proxy auth token through a same-origin sandbox and then calls the stdio endpoint. Both affect versions up to 1.0.2 and are fixed in 1.0.3.",
+      "takeaway": "Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.",
+      "lessons": [
+        {
+          "point": "The OAuth callback trusted configuration read from its own URL, so an attacker-controlled authorization server could switch the transport to a local command.",
+          "excerpt": "The OAuth callback must not read any Inspector configuration from the callback URL.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Connecting to a hostile MCP server was enough: no tool call and no further click was needed for command execution.",
+          "excerpt": "Connecting to an unknown MCP can immediately trigger RCE without any futher interaction with tools.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "mcp",
+        "mcp-inspector",
+        "rce",
+        "oauth",
+        "ghsa",
+        "developer-tools"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Upgrade MCP Inspector to 1.0.3 and run it only against trusted servers",
+        "detail": "Check npx and global installs of @modelcontextprotocol/inspector for versions up to 1.0.2 and update to 1.0.3. Keep the proxy auth token out of shared browser sessions, and treat any tool that spawns stdio servers on behalf of a remote page as a code-execution boundary."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 90,
+        "newness": 0,
+        "credibility": 55.0,
+        "composite": 56.25,
+        "scored_at": "2026-10-29T07:29:03+00:00"
+      },
+      "prior_art": "CVE-2025-49596 (proxy without authentication) and CVE-2025-58444 (XSS to command execution) hit the same tool earlier; these two are new attack paths (OAuth callback parameters, MCP App sandbox token theft).",
+      "verified": true,
+      "verify_note": "Both advisories and their 9.6 scores read through the GitHub security-advisories API on 2026-10-29; neither carries a CVE id yet.",
+      "corroborating_sources": [
+        {
+          "name": "GitHub advisory GHSA-6x67-4w4w-9f3w",
+          "url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-6x67-4w4w-9f3w",
+          "published": "2026-10-21"
+        }
+      ],
+      "id": "mcp-inspector-fixes-two-critical-one-click-rce-f-59c5ba7eb8",
+      "retrieved_at": "2026-10-29T07:29:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
+    },
+    {
+      "topic": "ai-security",
       "domain": "ais.ai-infra",
       "title": "LiteLLM on PyPI and Docker was trojanized to steal cloud keys",
       "source_url": "https://www.wiz.io/blog/litellm-compromised-steals-credentials",
@@ -2290,6 +2360,140 @@
     },
     {
       "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5",
+      "source_url": "https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation",
+      "article_url": "https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "vulncheck.com",
+      "published": "2026-10-13",
+      "raw_path": "data/_raw/title-mistral-vibe-2-25-5-permission-bypass-via-8d3ce714fc.txt",
+      "related_claims": [],
+      "summary": "VulnCheck's 2026-10-13 advisory for CVE-2026-109428 shows Mistral Vibe approving a command from the part tree-sitter-bash extracted (an allowlisted cd) while bash joins a backslash-newline into a hidden curl, CVSS 4.0 of 8.7; fixed in 2.25.5. CVE-2026-109429 (command substitution hidden in a single-quoted variable value) is fixed in 2.25.4. HiddenLayer's 2026-09-11 advisories added CVE-2026-87984 to CVE-2026-87988, including unparsable shell syntax approved without a prompt (CVE-2026-87986, CVSS 4.0 of 10). All ids were confirmed at NVD.",
+      "takeaway": "A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.",
+      "lessons": [
+        {
+          "point": "The approval check and the shell read the same string differently, so an allowlisted prefix hid an unapproved command.",
+          "excerpt": "Attackers can craft a command string where tree-sitter-bash extracts only an allowlisted prefix such as cd while bash joins the line continuation into a materially different and hidden command such as a curl request",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Mistral Vibe versions before 2.25.5 are affected, so the fix is an upgrade.",
+          "excerpt": "Mistral Vibe before 2.25.5 contains a permission validation bypass vulnerability",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "mistral-vibe",
+        "coding-agents",
+        "permission-bypass",
+        "tree-sitter",
+        "command-allowlist",
+        "cve"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Update Mistral Vibe to 2.25.5 or later and keep allowlists narrow",
+        "detail": "Upgrade, then review which commands are set to always allow. In your own agent, route any command whose parse tree has an error node to a user prompt."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 85,
+        "newness": 0,
+        "credibility": 55.0,
+        "composite": 51.75,
+        "scored_at": "2026-10-29T07:30:02+00:00"
+      },
+      "prior_art": "Roo Code's seven auto-approve bypasses in the same pool show the same parser-differential pattern in another coding agent.",
+      "verified": true,
+      "verify_note": "CVE-2026-87984 to 87988, 93993, 109428 and 109429 confirmed at NVD on 2026-10-29. The VulnCheck page and HiddenLayer's CVE-2026-87986 advisory were read in full.",
+      "corroborating_sources": [
+        {
+          "name": "HiddenLayer: unparsable shell constructs auto-approved (CVE-2026-87986)",
+          "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-09-mistral-vibe4",
+          "published": "2026-09-11"
+        }
+      ],
+      "id": "mistral-vibe-fixes-permission-check-bypasses-in-94d849d8e3",
+      "retrieved_at": "2026-10-29T07:30:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Roo Code's command auto-approval can be bypassed in seven ways",
+      "source_url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
+      "article_url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "vulncheck.com",
+      "published": "2026-10-13",
+      "raw_path": "data/_raw/title-roo-code-through-3-54-0-auto-approve-bypas-1cd193b60e.txt",
+      "related_claims": [],
+      "summary": "VulnCheck published seven CVEs for Roo Code through 3.54.0 (checked at NVD): CVE-2026-82536 and CVE-2026-82537 on 2026-09-08, and CVE-2026-110202 to CVE-2026-110206 on 2026-10-13. Each lets indirect prompt injection run a denied shell command in an auto-approve setup by exploiting a gap between Roo's regex parser and bash: quote masking, glob tokens, redirects, ${ cmd; } substitutions, pipes, comments, or a substitution in command position. The advisories name no fixed version.",
+      "takeaway": "Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.",
+      "lessons": [
+        {
+          "point": "An allowlisted prefix like echo hides a command separator when the approval regex and the shell disagree about quotes.",
+          "excerpt": "Attackers can use indirect prompt injection with escaped or single-quoted double quotes to hide command separators behind allowlisted prefixes like echo, executing commands without user approval.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "roo-code",
+        "coding-agents",
+        "auto-approve",
+        "command-allowlist",
+        "prompt-injection",
+        "cve"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Turn off command auto-approve in Roo Code and similar agents",
+        "detail": "Require a human prompt for shell commands, or run the agent in a sandbox with no credentials. If you build an approval gate, parse with the same grammar the shell uses, and ask the user whenever the parse is incomplete."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 85,
+        "newness": 0,
+        "credibility": 55.0,
+        "composite": 51.75,
+        "scored_at": "2026-10-29T07:30:02+00:00"
+      },
+      "prior_art": "CVE-2026-30307 (March 2026, MITRE) reported Roo Code's regex whitelist as ineffective in general; these seven are distinct parser differentials (quote masking, glob tokens, redirects, funsub, pipes, comments, command position), each with its own CVE.",
+      "verified": true,
+      "verify_note": "All seven CVE ids confirmed at NVD on 2026-10-29 (assigner disclosure@vulncheck.com, text matches the VulnCheck advisories). Only the quote-masking advisory page was fetched in full.",
+      "corroborating_sources": [
+        {
+          "name": "NVD CVE-2026-110203",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110203",
+          "published": "2026-10-13"
+        }
+      ],
+      "id": "roo-code-s-command-auto-approval-can-be-bypassed-9fe22bfbf0",
+      "retrieved_at": "2026-10-29T07:30:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
+    },
+    {
+      "topic": "ai-security",
       "domain": "ais.mcp-tools",
       "title": "Treat MCP tool descriptions as system prompts: silent re-trust poisoning",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/06/30/securing-ai-agents-ai-tools-move-from-reading-acting/",
@@ -2828,6 +3032,213 @@
       "previous_slugs": [
         "signals-corps-scanning-217-million-responses-finds-30-sites"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "\"Black October\" is an X label for a week of disclosures",
+      "source_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+      "article_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "forkast.news",
+      "published": "2026-10-23",
+      "raw_path": "data/_raw/title-black-october-is-a-disclosure-wave-the-lab-0f3e6f17e4.txt",
+      "related_claims": [],
+      "summary": "\"Black October\" is the name an X post by the AISafetyMemes account gave on 2026-10-22 to the disclosures of Oct 19 to 22. They include PHP2Shell (CVE-2026-109618 and CVE-2026-109619, found by Wiz with frontier AI models), a GitLab 10.0 flaw, a Node.js Brotli RCE, the eMudhra certificate keys and a poisoned LiteLLM 1.107.0. Forkast's reading is that this was a disclosure wave, not an attack wave: most flaws and intrusions are months or years old, and AI models both found the worst bugs and were the target of the credential theft.",
+      "takeaway": "Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.",
+      "lessons": [
+        {
+          "point": "The label compresses events of very different ages into one week; the disclosure date is not the exposure date.",
+          "excerpt": "This was a disclosure wave, not an attack wave.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Frontier models found several of the week's worst flaws, so patch windows will keep shrinking.",
+          "excerpt": "Models and agents found this week’s worst flaws: PHP2Shell through frontier models, Brotli through OpenAI Codex Security researchers.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Dating exposure from the disclosure week hides how long the weak keys, bugs and intrusions were live.",
+          "excerpt": "The week of Oct 19 to 22 is when the bills were dated, not when they were incurred.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "black-october",
+        "php2shell",
+        "litellm",
+        "disclosure",
+        "ai-found-vulnerabilities",
+        "x-discourse"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Date your exposure from when the flaw shipped, not from the headline",
+        "detail": "For each incident in a cluster like this, record when the weakness entered your estate, when it became public and when you patched. Rotate AI provider keys and coding-tool secrets on any host that installed LiteLLM 1.107.0."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 80,
+        "newness": 0,
+        "credibility": 60.0,
+        "composite": 51.0,
+        "scored_at": "2026-10-29T07:30:02+00:00"
+      },
+      "prior_art": "The pool holds the Wiz and Talos PHP2Shell items; no entry covers the label, its X origin, or the 'disclosure wave, not attack wave' reading of the cluster.",
+      "verified": true,
+      "verify_note": "Label origin read from the post itself (x.com/AISafetyMemes/status/2113113711644737835, 2026-10-22 03:42 UTC); PHP2Shell CVE ids and dates confirmed at NVD and the Wiz post. Forkast's LiteLLM timeline is vendor-attributed and not independently confirmed here.",
+      "corroborating_sources": [
+        {
+          "name": "AISafetyMemes on X (the post that named it)",
+          "url": "https://x.com/AISafetyMemes/status/2113113711644737835",
+          "published": "2026-10-22"
+        },
+        {
+          "name": "Wiz Research: PHP2Shell",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "published": "2026-10-21"
+        }
+      ],
+      "id": "black-october-is-an-x-label-for-a-week-of-disclo-a8254f47f5",
+      "retrieved_at": "2026-10-29T07:30:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy",
+      "source_url": "https://docs.nvidia.com/openshell/latest/about/overview.html",
+      "article_url": "https://docs.nvidia.com/openshell/latest/about/overview.html",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "docs.nvidia.com",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/title-overview-of-nvidia-openshell-1819103c69.txt",
+      "related_claims": [],
+      "summary": "NVIDIA OpenShell is an open-source runtime (about 20,600 GitHub stars; v0.1.6 on 2026-10-27, the version of the docs read) that runs agents such as Claude Code, Codex, OpenCode and GitHub Copilot CLI in sandboxes. Landlock restricts files, seccomp and an unprivileged identity block escalation, network egress is allow-listed and hot-reloadable, and provider credentials are resolved from placeholders only at authorized endpoints.",
+      "takeaway": "A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.",
+      "lessons": [
+        {
+          "point": "Filesystem and process limits are fixed at sandbox creation, while network policy can change at runtime.",
+          "excerpt": "Filesystem restrictions (Landlock) confine access to declared paths only.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Egress is deny-by-default, which is the control that stops exfiltration by a compromised agent.",
+          "excerpt": "Network policies allow only approved destinations; other outbound traffic is denied.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "sandbox",
+        "coding-agents",
+        "landlock",
+        "seccomp",
+        "egress-policy",
+        "nvidia",
+        "openshell"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Trial OpenShell for unattended coding-agent runs",
+        "detail": "Run one agent task inside an OpenShell sandbox with the default policy, read which outbound hosts it needs, and turn that list into a reviewed network policy before widening access."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 85,
+        "newness": 0,
+        "credibility": 50.0,
+        "composite": 51.0,
+        "scored_at": "2026-10-29T07:29:03+00:00"
+      },
+      "prior_art": "Other agent sandboxes (containers, microVMs, Claude Code's own sandbox) isolate similarly; OpenShell's difference is the declarative policy with hot-reloadable network rules and credential placeholders.",
+      "verified": true,
+      "verify_note": "Docs page and GitHub repo metadata (stars, release dates) read on 2026-10-29. Vendor documentation: the controls are stated, not independently tested here.",
+      "id": "nvidia-openshell-runs-coding-agents-in-kernel-en-59acb3968b",
+      "retrieved_at": "2026-10-29T07:29:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Paper proves models can hide capabilities that audits cannot find",
+      "source_url": "https://arxiv.org/abs/2610.13928",
+      "article_url": "https://arxiv.org/abs/2610.13928",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "arxiv.org",
+      "published": "2026-10-09",
+      "raw_path": "data/_raw/title-ai-models-can-provably-hide-arbitrary-capa-931964d165.txt",
+      "related_claims": [],
+      "summary": "Draguns, Motwani, Douglas and Schroeder de Witt (arXiv 2610.13928, accepted at NeurIPS 2026) build backdoors that embed an encrypted neural network inside a host model's weights. It decrypts and runs only on a secret trigger, and under cryptographic assumptions it stays hard to elicit even with full weight access. Fine-tuning, weight noising, gradient-based trigger search and latent adversarial training did not surface it on a small chemical-reaction proxy task.",
+      "takeaway": "A clean capability evaluation cannot prove a model lacks a dangerous capability if the model's builder is adversarial.",
+      "lessons": [
+        {
+          "point": "The construction hides an arbitrary computation, not just a fixed string, behind a secret trigger.",
+          "excerpt": "constructing backdoor attacks that embed encrypted neural networks within host model weights, decrypting and executing them only upon receiving a secret trigger",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The result bounds what elicitation-based audits can promise when the model provider is untrusted.",
+          "excerpt": "reveal a limit of elicitation-based capability audits",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "backdoor",
+        "capability-evals",
+        "model-audits",
+        "cryptography",
+        "neurips-2026"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Do not treat a passed capability eval as proof of absence for third-party weights",
+        "detail": "For models from parties you do not trust, combine evals with provenance, training-data and supply-chain controls, and state in risk reviews that elicitation tests can only show presence."
+      },
+      "scores": {
+        "novelty": 75,
+        "relevance": 70,
+        "newness": 0,
+        "credibility": 50.0,
+        "composite": 51.0,
+        "scored_at": "2026-10-29T07:29:03+00:00"
+      },
+      "prior_art": "Earlier work hid fixed strings behind digital lockers (planted backdoors); this paper extends the idea to arbitrary computations.",
+      "verified": true,
+      "verify_note": "Abstract and 'Accepted at NeurIPS 2026' comment read on arxiv.org on 2026-10-29. Only the abstract was read, not the full paper.",
+      "id": "paper-proves-models-can-hide-capabilities-that-a-d6718de0b7",
+      "retrieved_at": "2026-10-29T07:29:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
     },
     {
       "candidate_id": "data-void-exploits-in-web-searching-llms-c6d19c606f",
@@ -3724,6 +4135,68 @@
       "previous_slugs": [
         "microsoft-devlabs-debugmcp-1-1-4-drive-by-rce-dns-rebinding"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Major US banks are blocking customers' third-party AI agents",
+      "source_url": "https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/",
+      "article_url": "https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/",
+      "source_id": null,
+      "discovered_via": "manual",
+      "source_name": "motherjones.com",
+      "published": "2026-10-22",
+      "raw_path": "data/_raw/title-banks-are-struggling-to-protect-customers-eb77661e65.txt",
+      "related_claims": [],
+      "summary": "Mother Jones, relaying a 2026-10-22 Axios report and the Financial Times, says leading US banks have found unapproved AI agents inside customer accounts, sometimes acting against the user's instructions. It happens when customers give an assistant their login or link it through an aggregator such as Plaid. JPMorgan Chase, Citigroup and Bank of America are restricting automated agents and often allow read-only access only. This is secondary reporting of anonymous bank sources.",
+      "takeaway": "Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.",
+      "lessons": [
+        {
+          "point": "Customer-delegated credentials let agents act inside accounts in ways the bank did not sanction.",
+          "excerpt": "Leading US banks have reportedly found unapproved AI agents operating inside customer accounts on users’ behalf, sometimes acting independent of their instructions.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The core detection problem is attributing agent traffic to a consenting owner.",
+          "excerpt": "banks have difficulty distinguishing between different AI agents accessing accounts, as well as whether detected activity comes from an agent authorized by a customer or one that has gone rogue",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-identity",
+        "banking",
+        "delegated-credentials",
+        "plaid",
+        "financial-services"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Give agents scoped delegated access, not the owner's password",
+        "detail": "For financial or insurance workflows, require token-based, read-only or capped delegation with an agent identity the provider can see, and write terms of service that say what agent access is allowed."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 75,
+        "newness": 0,
+        "credibility": 50.0,
+        "composite": 48.0,
+        "scored_at": "2026-10-29T07:29:03+00:00"
+      },
+      "prior_art": "Agent-identity and delegated-authorization entries in the pool cover the protocol side; this is the first deployment-side report of banks blocking agents.",
+      "verified": true,
+      "verify_note": "Article text read in full. The underlying Axios and Financial Times reports were not fetched; claims are attributed to them as Mother Jones reports them.",
+      "id": "major-us-banks-are-blocking-customers-third-part-e536547195",
+      "retrieved_at": "2026-10-29T07:29:02+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "date": "2026-10"
     },
     {
       "candidate_id": "agent-mosaic-recognizing-confidentiality-leaks-i-f6765ba57a",

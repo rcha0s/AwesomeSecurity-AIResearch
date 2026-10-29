@@ -720,6 +720,222 @@
       "domain": "air.ml-research",
       "reason": "Held: off-thesis ML (sign-language dataset).",
       "facts": []
+    },
+    {
+      "id": "mcp-inspector-fixes-two-critical-one-click-rce-f-59c5ba7eb8",
+      "title": "MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3",
+      "url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.mcp-tools",
+      "reason": "Curated: two critical (CVSS 9.6) MCP Inspector advisories from the project's own repo; direct RCE via a tool developers run against untrusted servers.",
+      "facts": [
+        {
+          "fact": "Both advisories score CVSS 9.6",
+          "any": [
+            "9.6"
+          ]
+        },
+        {
+          "fact": "Fixed in version 1.0.3",
+          "any": [
+            "1.0.3"
+          ]
+        },
+        {
+          "fact": "One path abuses the OAuth callback to switch to stdio and run a command",
+          "any": [
+            "oauth callback",
+            "oauth"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "black-october-is-an-x-label-for-a-week-of-disclo-a8254f47f5",
+      "title": "\"Black October\" is an X label for a week of disclosures",
+      "url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.ai-infra",
+      "also_accept": [
+        "ps.detection-response",
+        "ais.red-teaming"
+      ],
+      "reason": "Curated: names what the X label 'Black October' refers to (a 2026-10-22 post; disclosures of Oct 19 to 22) and why it is a disclosure wave, not one attack.",
+      "facts": [
+        {
+          "fact": "The label comes from an X post by AISafetyMemes on 2026-10-22",
+          "any": [
+            "aisafetymemes",
+            "x post"
+          ]
+        },
+        {
+          "fact": "PHP2Shell CVE-2026-109618 and CVE-2026-109619 found with frontier AI models",
+          "any": [
+            "109618",
+            "php2shell"
+          ]
+        },
+        {
+          "fact": "A disclosure wave, not an attack wave",
+          "any": [
+            "disclosure wave"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nvidia-openshell-runs-coding-agents-in-kernel-en-59acb3968b",
+      "title": "NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy",
+      "url": "https://docs.nvidia.com/openshell/latest/about/overview.html",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.ai-infra",
+      "also_accept": [
+        "ais.agent-security"
+      ],
+      "reason": "Curated: first-party docs for an open-source kernel-enforced sandbox for coding agents (Landlock, seccomp, egress allow-list).",
+      "facts": [
+        {
+          "fact": "Uses Landlock and seccomp for kernel-level isolation",
+          "any": [
+            "landlock"
+          ]
+        },
+        {
+          "fact": "Outbound network is deny-by-default under a declarative YAML policy",
+          "any": [
+            "outbound",
+            "egress"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paper-proves-models-can-hide-capabilities-that-a-d6718de0b7",
+      "title": "Paper proves models can hide capabilities that audits cannot find",
+      "url": "https://arxiv.org/abs/2610.13928",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.red-teaming",
+      "also_accept": [
+        "ais.model-supply-chain"
+      ],
+      "reason": "Curated: NeurIPS 2026 paper (arXiv 2610.13928) with a cryptographic result that limits elicitation-based capability audits.",
+      "facts": [
+        {
+          "fact": "Encrypted networks hidden in model weights, run only on a secret trigger",
+          "any": [
+            "encrypted",
+            "secret trigger"
+          ]
+        },
+        {
+          "fact": "Resists fine-tuning, weight noising and latent adversarial training",
+          "any": [
+            "fine-tuning",
+            "adversarial training"
+          ]
+        },
+        {
+          "fact": "Accepted at NeurIPS 2026",
+          "any": [
+            "neurips"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "major-us-banks-are-blocking-customers-third-part-e536547195",
+      "title": "Major US banks are blocking customers' third-party AI agents",
+      "url": "https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.agent-security",
+      "also_accept": [
+        "ps.identity"
+      ],
+      "reason": "Curated: deployment-side report (Mother Jones relaying Axios and the FT) of banks blocking customer-delegated agents; secondary reporting on anonymous sources.",
+      "facts": [
+        {
+          "fact": "JPMorgan Chase, Citigroup and Bank of America restrict automated agents",
+          "any": [
+            "jpmorgan",
+            "citigroup"
+          ]
+        },
+        {
+          "fact": "Banks cannot tell an authorized agent from a rogue one",
+          "any": [
+            "rogue",
+            "distinguish"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roo-code-s-command-auto-approval-can-be-bypassed-9fe22bfbf0",
+      "title": "Roo Code's command auto-approval can be bypassed in seven ways",
+      "url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.agent-security",
+      "also_accept": [
+        "ps.ai-code"
+      ],
+      "reason": "Curated: seven NVD-confirmed CVEs (VulnCheck CNA) for approval bypasses in a popular coding agent; CVE ids checked at NVD.",
+      "facts": [
+        {
+          "fact": "Seven CVEs including CVE-2026-110202 to 110206",
+          "any": [
+            "110202",
+            "110206",
+            "seven"
+          ]
+        },
+        {
+          "fact": "Affects Roo Code through 3.54.0 via indirect prompt injection",
+          "any": [
+            "3.54.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mistral-vibe-fixes-permission-check-bypasses-in-94d849d8e3",
+      "title": "Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5",
+      "url": "https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation",
+      "from": "pool",
+      "keep": true,
+      "on_topic": true,
+      "domain": "ais.agent-security",
+      "also_accept": [
+        "ps.ai-code"
+      ],
+      "reason": "Curated: NVD-confirmed Mistral Vibe permission bypasses (VulnCheck and HiddenLayer advisories) with fixed versions.",
+      "facts": [
+        {
+          "fact": "CVE-2026-109428 line-continuation bypass fixed in 2.25.5",
+          "any": [
+            "109428",
+            "2.25.5"
+          ]
+        },
+        {
+          "fact": "tree-sitter-bash and bash parse the command differently",
+          "any": [
+            "tree-sitter"
+          ]
+        }
+      ]
     }
   ]
 }
