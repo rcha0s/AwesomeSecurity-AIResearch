@@ -176,7 +176,18 @@ attempt() {
   cap_usd="${limits% *}"
   max_turns="${limits#* }"
 
-  scripts/run_scan.sh pre || exit 1     # pre raises its own alert
+  # Reddit API credentials (the optional ingest_reddit.py lane) come from the macOS
+  # Keychain and reach `pre` alone: never exported wrapper-wide, never echoed. A missing
+  # item or no `security` leaves them empty and the lane skips itself.
+  reddit_id="" reddit_secret=""
+  if command -v security >/dev/null 2>&1; then
+    reddit_id="$(security find-generic-password -s awesomesec-reddit -a client_id -w 2>/dev/null)" || reddit_id=""
+    reddit_secret="$(security find-generic-password -s awesomesec-reddit -a client_secret -w 2>/dev/null)" || reddit_secret=""
+  fi
+  [[ -n "$reddit_id" && -n "$reddit_secret" ]] || { reddit_id=""; reddit_secret=""; }
+  REDDIT_CLIENT_ID="$reddit_id" REDDIT_CLIENT_SECRET="$reddit_secret" \
+    scripts/run_scan.sh pre || exit 1   # pre raises its own alert
+  unset reddit_id reddit_secret
   [[ -f data/_scan_skip ]] && return 3 # raced: the guard refused at pre time
 
   contained_claude \
