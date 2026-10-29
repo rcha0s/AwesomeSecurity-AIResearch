@@ -153,6 +153,9 @@ limits:
   batch_story_min_rank: 55  # ...and one copy comes from outside GitHub/HN from a source
                           # ranked this or more (medium tier): two attacker repos, an HN
                           # vote or two low-rank feeds can't qualify on markers alone
+  youtube_per_channel: 2  # ingest_youtube.py (in run_scan.sh INGESTORS since F10): most recent
+                          # videos taken from one registered channel per scan
+  youtube_max_per_run: 8  # ...and the most it stages in all, so 20+ channels cannot flood a batch
   batch_lab_max: 6        # lab lane (select_batch.lab_lane), right after the must-not-miss
                           # lane: recent posts from the major AI labs (batch_lab_hosts) that
                           # name a security / safety term (batch_lab_terms). Rohan,

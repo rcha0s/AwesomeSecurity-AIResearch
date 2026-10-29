@@ -34,6 +34,7 @@ data/_practitioner_signal.json # Reddit self posts (title, permalink, score, com
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
+scripts/ingest_youtube.py # registered YouTube channels (yt-dlp): `youtube_per_channel` / `youtube_max_per_run`, in-window videos only
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
 scripts/ingest_reddit.py  # subreddit lane, official API (app-only OAuth): link posts stage their article; self posts -> data/_practitioner_signal.json
@@ -161,6 +162,7 @@ python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
 python scripts/ingest_reddit.py           # r/netsec etc. via the Reddit API (--dry-run); skipped without credentials
+python scripts/ingest_youtube.py          # recent videos of registered channels (yt-dlp; capped)
 ```
 
 ### Reddit (practitioner signal, official API)
