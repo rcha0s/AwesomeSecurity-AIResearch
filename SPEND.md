@@ -1,6 +1,6 @@
 # Scan spend, 2026-10
 
-**$208.77 charged of $600.00.** Local runs are charged their measured `total_cost_usd`; cloud runs can't read their cost, so they are charged their reserved ceiling.
+**$134.63 charged of $600.00.** Local runs are charged their measured `total_cost_usd`; cloud runs can't read their cost, so they are charged their reserved ceiling.
 
 | Date | Runner | Run | Stories | Charged | Basis | Finished |
 |---|---|---|---|---|---|---|
@@ -19,6 +19,6 @@
 | 2026-10-26 | local | `local-20261026T163006Z-59980` | 9 | $10.16 | measured | yes |
 | 2026-10-27 | local | `local-20261027T163007Z-34056` | 17 + 5 news | $9.37 | measured | yes |
 | 2026-10-28 | local | `local-20261028T163006Z-93566` | 17 + 6 news | $9.22 | measured | yes |
-| 2026-10-29 | local | `local-20261029T163006Z-16998` | 0 | $82.99 | reserved ceiling | no |
+| 2026-10-29 | local | `local-20261029T163006Z-16998` | 14 + 5 news | $8.84 | measured | no |
 
 **Backfill 2026-09-09..2026-10-18:** $72.35 charged of $200.00, 6 of 6 runs started. Finished windows: 2026-09-09..2026-09-16, 2026-09-17..2026-09-24, 2026-09-25..2026-10-02, 2026-10-03..2026-10-10, 2026-10-11..2026-10-18.
