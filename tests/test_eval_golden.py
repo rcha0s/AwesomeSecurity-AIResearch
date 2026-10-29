@@ -9,6 +9,7 @@ from pathlib import Path
 import common
 import eval_golden as eg
 import pytest
+import taxonomy as tx
 from conftest import make_entry
 
 TOPICS = ("harness permission bypass", "sandbox egress leak", "tool schema regression",
@@ -53,9 +54,9 @@ def scored(cases, outputs):
     return eg.score(cases, outputs)
 
 
-def test_the_real_golden_set_is_well_formed_and_about_thirty_cases():
+def test_the_real_golden_set_is_well_formed_and_not_runaway():
     cases = eg.load_cases()
-    assert 28 <= len(cases) <= 36
+    assert 28 <= len(cases) <= 60  # grows by one case per wrong real-run answer
     keeps = [k for k in cases if k["keep"]]
     assert 0.35 <= len(keeps) / len(cases) <= 0.65  # both answers well represented
     assert sum(not k["on_topic"] for k in cases) >= 4  # the off-topic rate means something
@@ -66,13 +67,26 @@ def test_the_real_golden_set_is_well_formed_and_about_thirty_cases():
 def test_the_pipelines_own_past_answers_score_perfectly(tmp_path):
     """The real entries, replayed as analyzer output, agree with every checked answer:
     the answers were built from the data, and the matcher/fact phrases find them."""
-    cases = eg.load_cases()
+    cases = [k for k in eg.load_cases() if not k.get("known_miss")]
     outs = [eg.find_entry(k) for k in cases]
     assert all(outs)
     result = scored(cases, outs)
     assert result["score"] == 1.0 and result["fact_coverage"] == 1.0, [
         r for r in result["results"] if not r["passed"]
     ]
+
+
+def test_known_misses_are_exactly_the_keep_answers_the_pipeline_holds():
+    """`known_miss` marks a keep answer whose current pool entry the pipeline holds.
+    When a pipeline fix curates it, or a new miss appears, the flag must change."""
+    cases = eg.load_cases()
+    held = {
+        k["id"]
+        for k in cases
+        if k["keep"] and not eg.predicted_keep(eg.find_entry(k), common.load_config(), tx.get())
+    }
+    flagged = {k["id"] for k in cases if k.get("known_miss")}
+    assert flagged == held
 
 
 def test_a_perfect_run_passes_and_a_skipped_drop_is_a_correct_drop():
