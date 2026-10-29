@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_10 vetted findings · updated 2026-10-28 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
+_10 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -26,7 +26,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[EDK2 network boot flaw lets attackers run code before Secure Boot](https://arstechnica.com/security/2026/10/code-execution-flaw-in-uefi-firmware-threatens-most-servers-on-planet-earth/)**
 - **[Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18](https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/)**
 - **[Check Point uses OpenAI Daybreak to turn vulnerability research into signatures](https://openai.com/index/check-point-daybreak)**
-- **[Better Auth magic link flaw lets attackers take over accounts](https://github.com/advisories/GHSA-965c-763c-88jm)**
 - **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/)**
   _Why now: A third, still-unpatched PHP RCE (CVE-2026-115560) during the PHP2Shell week, with a one-line config mitigation every PHP operator can apply today. · newsworthy · cve · timely · high-relevance_
 - **[PHP says Chainguard broke the PHP2Shell embargo with patched images](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611)**
@@ -96,15 +95,11 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Exploited-in-the-wild Plex chain added to CISA KEV with a due date of today and a public plex2shell write-up; patch now. · active-exploitation · cve · timely_
 - **[ESET: UAC-0099 used MythicRatatoskr with C2 inside Yggdrasil before Sandworm struck](https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html)**
 - **[Atlassian October 2026 bulletin lists 75 unique third-party CVEs](https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/)**
-- **[Wasmtime Cranelift bit-packing overflow lets crafted Wasm module escape the sandbox](https://github.com/advisories/GHSA-897f-g5gm-fmxm)**
 - **[Critical Pillow flaw lets one crafted FlashPix file run code](https://github.com/advisories/GHSA-5x8w-8jj5-q52h)**
-- **[Echo proxy middleware: rejected WebSocket upgrades bypass route-level access controls](https://github.com/advisories/GHSA-cxf3-9h37-7rr8)**
-- **[Laravel TokenGuard authentication bypass via non-string API credentials rated critical](https://github.com/advisories/GHSA-f9x3-7vq9-cph6)**
 - **[Abandoned Time4Popcorn updater allowed code execution on millions of PCs](https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/)**
 - **[Pillow DoS: a 5.6 KB MIC file hangs n_frames](https://github.com/advisories/GHSA-22hg-r758-rrw9)**
   _Why now: Fresh HIGH advisory in Pillow, which nearly every Python upload path uses; the fix pattern (formats allowlist, drop olefile, wall-clock timeouts) applies today. · cve · timely · high-relevance_
 - **[Wired: AWS logged PHP2Shell exploitation attempts days before the patch](https://www.wired.com/story/hackers-exploited-the-php-vulnerabilities-days-before-they-were-patched/)**
-- **[DOMPurify SAFE_FOR_TEMPLATES bypass: split expressions survive inside attached shadow roots](https://github.com/advisories/GHSA-cg2g-xh64-v4q7)**
 - **[Pillow multi-frame loaders reuse stale buffers, causing out-of-bounds writes](https://github.com/advisories/GHSA-v9pv-5gc8-w2m6)**
 - **[Salesforce says AI finds vulnerabilities faster than engineers can fix them](https://www.salesforce.com/blog/managing-agentic-security-at-scale/)**
 - **[Cloudflare pairs Daybreak findings with live traffic to draft WAF rules](https://openai.com/index/cloudflare-cyber)**
@@ -113,14 +108,11 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Partisan Zmiy hid the Vasilek backdoor in VMware Tools for two years](https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html)**
 - **[PHP Foundation ships emergency fix for two critical remote code execution bugs](https://www.theregister.com/security/2026/10/21/php-devs-publish-critical-bug-fix-as-site-owners-warned-pull-em-offline-if-youre-unpatched/5304519)**
 - **[PHP Foundation ships fixes for two RCE flaws after a disclosure leak](https://simonwillison.net/2026/Oct/21/php-security-release/)**
-- **[Certifi removes emSign root CA after compromised intermediate keys](https://github.com/advisories/GHSA-6q48-6c7w-9gw2)**
 - **[Pillow thumbnail() heap overflow on lossless JPEGs, found by Anthropic using Claude](https://github.com/advisories/GHSA-8g5g-8vmr-9782)**
 - **[Eight eMudhra intermediate CA certificates with weak private keys get blocked globally](https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/)**
 - **[curl moves low and medium severity vulnerability reports to public GitHub](https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198)**
 - **[GitHub Security Lab found 24 Android vulnerabilities with its AI agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/)**
   _Why now: 24 real, disclosed Android vulnerabilities (OsmAnd location tracking, a WebView account-takeover chain) found with an open-source agent you can run today, plus candid lessons on LLM severity misjudgment and false positives. · newsworthy · trending · timely · high-relevance_
-- **[Mercury analytics app: a missing comma lets anyone open a root shell](https://github.com/advisories/GHSA-f8c7-rwf9-fmgm)**
-- **[Mercury still exposed to unauthenticated code execution via /api/kernels after terminals fix](https://github.com/advisories/GHSA-rv4m-xm3f-3ccq)**
 - **[UpGuard uses OnlyFans takedown data to find hacked university and government sites](https://www.darkreading.com/vulnerabilities-threats/onlyfans-copyright-takedowns-expose-compromised-websites)**
 - **[OpenAI says Sophos MDR agents cut average case time to ~89 seconds](https://openai.com/index/sophos)**
 - **[Imperva publishes a DDoS readiness checklist covering BGP and GRE tunnel health](https://www.imperva.com/blog/ddos-readiness-is-your-ddos-protection-actually-on/)**

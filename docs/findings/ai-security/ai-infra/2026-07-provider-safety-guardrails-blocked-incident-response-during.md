@@ -26,7 +26,6 @@ Hugging Face disclosed an intrusion it says was driven end to end by an autonomo
 **Source:** [source](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)  ·  **Author:** Johann Rehberger  ·  **Retrieved:** 2026-07-21  
 **Scores:** Newness 0 · Novelty 45 · Relevance 90 · Credibility 75 · **Composite 52** _(each 0-100)_  
 **Tags:** `agent-security`, `incident-response`, `supply-chain`, `guardrails`, `autonomous-attack`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Guardrails obstructing legitimate security and malware analysis is a long-running, frequently-reported community complaint, and the intrusion TTPs themselves are conventional. The delta is a fresh, concrete, named instance - a vendor pivoting to a self-hosted open-weight model mid-incident - not a new phenomenon.
 
 _Source: [https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/](https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/)_  ·  [← back to index](../README.md)

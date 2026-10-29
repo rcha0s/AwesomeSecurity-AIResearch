@@ -28,7 +28,6 @@
 **Source:** [source](https://github.com/advisories/GHSA-mchm-gjx6-7h55)  ·  **Retrieved:** 2026-10-23  
 **Scores:** Newness 21 · Novelty 40 · Relevance 78 · Credibility 70 · **Composite 51** _(each 0-100)_  
 **Tags:** `nextjs`, `middleware`, `authorization-bypass`, `sentry`, `ghsa`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Next.js CVE-2025-29927 (x-middleware-subrequest middleware bypass) established that middleware-only authorization in Next.js is fragile; this is a new, SDK-introduced instance of the same class.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Next.js CVE-2025-29927 (x-middleware-subrequest middleware bypass) established that middleware-only authorization in Next.js is fragile; this is a new, SDK-introduced instance of the same class.
 
 _Source: [https://github.com/advisories/GHSA-mchm-gjx6-7h55](https://github.com/advisories/GHSA-mchm-gjx6-7h55)_  ·  [← back to index](../README.md)

@@ -27,7 +27,6 @@ A Brazilian card-skimming (Magecart) gang changed the Plausible analytics tracke
 **Source:** [BleepingComputer](https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/)  ·  **Retrieved:** 2026-10-28  
 **Scores:** Newness 21 · Novelty 28 · Relevance 60 · Credibility 50 · **Composite 39** _(each 0-100)_  
 **Tags:** `magecart`, `web-skimming`, `supply-chain`, `plausible-analytics`, `e-commerce`, `payment-card`, `third-party-scripts`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No Magecart or Plausible entries in the pools. Compromising a shared third-party script to skim cards is a well-known Magecart pattern; the new detail is a self-hosted analytics server as the injection point.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No Magecart or Plausible entries in the pools. Compromising a shared third-party script to skim cards is a well-known Magecart pattern; the new detail is a self-hosted analytics server as the injection point.
 
 _Source: [https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/](https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/)_  ·  [← back to index](../README.md)

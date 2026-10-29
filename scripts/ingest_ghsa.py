@@ -72,6 +72,18 @@ def _affected_packages(adv: dict) -> str:
     return ", ".join(dict.fromkeys(pkgs))  # dedup, keep order
 
 
+def _package_rows(adv: dict) -> list[dict]:
+    """Affected packages as {ecosystem, name} rows, for select_batch's keep rule."""
+    rows: list[dict] = []
+    for v in adv.get("vulnerabilities") or []:
+        pkg = (v or {}).get("package") or {}
+        if pkg.get("name"):
+            row = {"ecosystem": pkg.get("ecosystem") or "", "name": pkg["name"]}
+            if row not in rows:
+                rows.append(row)
+    return rows
+
+
 def advisory_to_candidate(adv: dict, rules: dict) -> dict | None:
     """Map a GHSA advisory to a candidate; None if it lacks an id/url."""
     ghsa_id = adv.get("ghsa_id") or ""
@@ -109,6 +121,7 @@ def advisory_to_candidate(adv: dict, rules: dict) -> dict | None:
         "raw_path": None,
         **agg.guess_fields(blob, domain, rules, topic="product-security"),
         "severity": severity,
+        "packages": _package_rows(adv),
         "source_id": None,
         "source_rank": 70.0,  # first-party GitHub, human-reviewed
         "source_topics": [],

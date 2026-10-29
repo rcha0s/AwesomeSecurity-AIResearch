@@ -149,9 +149,10 @@ def must_not_miss_mix() -> list[dict]:
     tooling" means prefilter routed it to an ais.* domain (two keyword hits)."""
     ghsa = {"source_id": None, "discovered_via": "github", "source_type": "GHSA"}
 
-    def adv(i, severity, ai=False, rank=40.0):
+    def adv(i, severity, ai=False, rank=40.0, pkg="django"):
         title = f"Prompt injection jailbreak in agentpkg{i}" if ai else f"Advisory {i} in pkg{i}"
         return _cand(
+            packages=[{"ecosystem": "pip", "name": pkg}],
             id=f"adv{i}",
             title=title,
             source_url=f"https://github.com/advisories/GHSA-{i}",
@@ -169,8 +170,9 @@ def must_not_miss_mix() -> list[dict]:
         adv(2, "CRITICAL", rank=30.0),
         adv(3, "CRITICAL", ai=True, rank=20.0),  # Claude Agent SDK, LMCache
         adv(4, "HIGH", ai=True, rank=10.0),
-        adv(5, "HIGH"),  # not AI tooling: no lane
-        adv(6, "MODERATE", ai=True),  # not severe enough: no lane
+        adv(5, "HIGH"),  # not AI tooling and not critical: dropped
+        adv(6, "CRITICAL", pkg="unknownlib"),  # critical, but not a well-known package: dropped
+        adv(7, "MODERATE", ai=True, rank=5.0),  # AI-related at any severity: kept, last
     ]
 
 
@@ -184,11 +186,14 @@ def test_must_not_miss_lane_comes_first_and_ai_tooling_leads_it(sandbox, table):
     lane = [c for c in batch if c.get("batch_priority")]
     assert batch[: len(lane)] == lane and len(lane) == 5
     # dealt in turn, best head first: the critical in AI tooling leads (adv3); then
-    # KEV (rank 50) and the other criticals (adv1 rank 40) in rank order. The HIGH
-    # AI-tooling advisory (adv4) never takes a critical's place.
+    # KEV (rank 50) and the other criticals (adv1 rank 40) in rank order. An AI
+    # advisory that is not critical (adv4, adv7, the routed flood) never takes a
+    # critical's place; adv5 (high) and adv6 (critical, unknown package) are dropped.
     assert [c["id"] for c in lane] == ["adv3", "kev0", "kev1", "adv1", "kev2"]
     kinds = [c["batch_priority"] for c in lane]
-    assert kinds == ["ghsa-critical", "kev", "kev", "ghsa-critical", "kev"]
+    assert kinds == ["ghsa-ai", "kev", "kev", "ghsa-critical", "kev"]
+    dropped = {c["id"] for c in backlog if c["prefilter"]["reason"] == "ghsa:not-kept"}
+    assert {"adv5", "adv6"} <= dropped
     sources = [select_batch.source_key(c) for c in batch]
     assert sources.count("github:GHSA") == 2  # the lane used GHSA's batch_per_source
     assert sources.count("kev_json:cisa") == 3  # lane cap 3, above batch_per_source
@@ -202,7 +207,9 @@ def test_criticals_come_before_high_ai_tooling_within_ghsa(sandbox, table):
     wide = {"batch_priority_max": 9, "batch_priority_per_source": 4}
     batch, _ = select_batch.select(must_not_miss_mix(), conf(8, 4, **wide), table)
     ghsa = [c["id"] for c in batch if c.get("batch_priority", "").startswith("ghsa")]
-    assert ghsa == ["adv3", "adv1", "adv2", "adv4"]
+    # criticals first (AI, then well-known), then AI advisories by rank: the routed
+    # flood outranks adv4 and adv7, and GHSA's per-source cap of 4 ends the list
+    assert ghsa == ["adv3", "adv1", "adv2", "ghsa0"]
 
 
 def test_lane_order_beats_rank_within_ghsa(sandbox, table):
@@ -214,6 +221,7 @@ def test_lane_order_beats_rank_within_ghsa(sandbox, table):
         title = f"Prompt injection jailbreak in agentpkg{i}" if ai else f"Advisory {i} in pkg{i}"
         url = f"https://github.com/advisories/GHSA-{i}"
         return _cand(
+            packages=[{"ecosystem": "pip", "name": "django"}],
             id=f"adv{i}",
             title=title,
             source_url=url,
@@ -239,14 +247,14 @@ def test_false_ai_highs_cannot_starve_the_criticals(sandbox, table):
     per-source slots. Built through the real ingestor mapping."""
     rules = common.load_yaml(common.SOURCES_FILE)["classification"]
 
-    def adv(gid, summary, severity):
+    def adv(gid, summary, severity, pkg=None):
         raw = {
             "ghsa_id": gid,
             "summary": summary,
             "severity": severity,
             "html_url": f"https://github.com/advisories/{gid}",
             "published_at": "2026-07-14T00:00:00Z",
-            "vulnerabilities": [{"package": {"ecosystem": "pip", "name": gid.lower()}}],
+            "vulnerabilities": [{"package": {"ecosystem": "pip", "name": pkg or gid.lower()}}],
         }
         return ingest_ghsa.advisory_to_candidate(raw, rules)
 
@@ -258,8 +266,8 @@ def test_false_ai_highs_cannot_starve_the_criticals(sandbox, table):
     ]
     assert all(c["guess_topic"] == "product-security" for c in false_ai)
     criticals = [
-        adv("GHSA-c1", "Remote code execution in webkit", "critical"),
-        adv("GHSA-c2", "SSRF in fetchy", "critical"),
+        adv("GHSA-c1", "Remote code execution in webkit", "critical", "django"),
+        adv("GHSA-c2", "SSRF in fetchy", "critical", "requests"),
     ]
     kev = [
         _cand(
@@ -293,23 +301,24 @@ def test_lane_respects_its_size_and_per_source_cap(sandbox, table):
     one_each = {"batch_priority_max": 9, "batch_priority_per_source": 1}
     batch, _ = select_batch.select(staged, conf(8, 4, **one_each), table)
     lane = [c["batch_priority"] for c in batch if c.get("batch_priority")]
-    assert lane == ["ghsa-critical", "kev"]
+    assert lane == ["ghsa-ai", "kev"]
 
 
 def test_priority_class_names_only_the_must_not_miss_kinds():
     ghsa = {"source_type": "GHSA"}
     pc = select_batch.priority_class
-    assert pc({"source_id": "kev_json:cisa"}) == "kev"
-    assert pc({**ghsa, "severity": "critical"}) == "ghsa-critical"
-    assert pc({**ghsa, "severity": "HIGH", "prefilter": {"domain_hint": "ais.mcp-tools"}}) == (
-        "ghsa-ai"
-    )
-    assert pc({**ghsa, "severity": "HIGH", "guess_topic": "ai-security"}) is None  # a guess
-    assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ais.mcp-tools"}) is None
-    assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ps.appsec"}) is None
-    moderate_ai = {"severity": "MODERATE", "prefilter": {"domain_hint": "ais.mcp-tools"}}
-    assert pc({**ghsa, **moderate_ai}) is None
-    assert pc({"severity": "CRITICAL", "source_id": "rss:x"}) is None
+    cf = conf()
+    well_known = {"packages": [{"ecosystem": "pip", "name": "Django"}]}
+    assert pc({"source_id": "kev_json:cisa"}, cf) == "kev"
+    assert pc({**ghsa, **well_known, "severity": "critical"}, cf) == "ghsa-critical"
+    assert pc({**ghsa, "severity": "critical"}, cf) is None  # no package named
+    ai = {"prefilter": {"domain_hint": "ais.mcp-tools"}}
+    assert pc({**ghsa, "severity": "HIGH", **ai}, cf) == "ghsa-ai"
+    assert pc({**ghsa, "severity": "MODERATE", **ai}, cf) == "ghsa-ai"  # any severity
+    assert pc({**ghsa, "severity": "HIGH", "guess_topic": "ai-security"}, cf) is None  # a guess
+    assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ais.mcp-tools"}, cf) is None
+    assert pc({**ghsa, "severity": "HIGH", "guess_domain": "ps.appsec"}, cf) is None
+    assert pc({"severity": "CRITICAL", "source_id": "rss:x", **well_known}, cf) is None
 
 
 def test_class_slots_let_a_class_deal_more_than_one_per_round(sandbox, table):

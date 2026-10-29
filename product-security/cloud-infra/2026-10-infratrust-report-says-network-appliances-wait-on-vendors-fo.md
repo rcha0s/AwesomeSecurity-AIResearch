@@ -26,7 +26,6 @@ Eclypsium's October InfraTrust Pulse tracked 133 advisories from 18 vendors cove
 **Source:** [BleepingComputer](https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/)  ·  **Retrieved:** 2026-10-28  
 **Scores:** Newness 21 · Novelty 35 · Relevance 70 · Credibility 50 · **Composite 44** _(each 0-100)_  
 **Tags:** `php2shell`, `network-appliances`, `edge-devices`, `firmware`, `kev`, `bundled-components`, `vpn`, `firewall`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Many PHP2Shell entries in product-security.json ('PHP2Shell hits every PHP since 5.4', 'Patch PHP and inventory PHP runtimes', AWS-logged exploitation). New: appliances with PHP built into firmware depend on vendor rebuilds.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Many PHP2Shell entries in product-security.json ('PHP2Shell hits every PHP since 5.4', 'Patch PHP and inventory PHP runtimes', AWS-logged exploitation). New: appliances with PHP built into firmware depend on vendor rebuilds.
 
 _Source: [https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/](https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/)_  ·  [← back to index](../README.md)

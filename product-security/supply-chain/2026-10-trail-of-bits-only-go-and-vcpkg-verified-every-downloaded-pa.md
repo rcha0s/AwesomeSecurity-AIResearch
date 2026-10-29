@@ -27,7 +27,6 @@ Trail of Bits built a Docker and mitmproxy harness that played a compromised pac
 **Source:** [Trail of Bits](https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/)  ·  **Retrieved:** 2026-10-25  
 **Scores:** Newness 21 · Novelty 50 · Relevance 80 · Credibility 70 · **Composite 55** _(each 0-100)_  
 **Tags:** `supply-chain`, `package-managers`, `lockfiles`, `integrity`, `signatures`, `registry-compromise`, `pnpm`, `pub`, `composer`, `cpanminus`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Prior work covers maintainer compromise and install-time code execution (pool claim package-installers-run-arbitrary-code-by-default) and the Gamage et al. lockfile study; this is the first cross-ecosystem dynamic test of 25 managers against a malicious repository, with per-manager verdicts.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Prior work covers maintainer compromise and install-time code execution (pool claim package-installers-run-arbitrary-code-by-default) and the Gamage et al. lockfile study; this is the first cross-ecosystem dynamic test of 25 managers against a malicious repository, with per-manager verdicts.
 
 _Source: [https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/](https://blog.trailofbits.com/2026/10/14/package-managers-have-an-integrity-problem/)_  ·  [← back to index](../README.md)

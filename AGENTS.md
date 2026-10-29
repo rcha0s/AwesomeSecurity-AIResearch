@@ -240,7 +240,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   holds never qualify. Markers and corroboration also add `batch_marker_bonus`
   and `batch_corroboration_bonus` to the deal's score. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
-  entries and critical GHSA advisories (plus high ones in AI tooling), tagged
+  entries and the GHSA advisories the keep rule below allows, tagged
   `batch_priority`; the session analyzes those first. Then a lab lane of up to
   `batch_lab_max` slots (at most `batch_lab_per_source` per feed) takes recent posts
   from the major AI labs (`batch_lab_hosts`: OpenAI, Anthropic, Google/DeepMind,
@@ -259,9 +259,18 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `data/_scan_backlog.json` for diagnosis
   (Edit- and Read-denied to the Mac session; a convention only in the cloud);
   tomorrow's ingest re-stages any that are still fresh.
+- **GitHub advisories (Rohan, 2026-10-28):** an advisory is not a story until it
+  blows up on the internet, so `select_batch.ghsa_keep_reason` drops every GHSA
+  candidate before it can take a deal, lane or news slot unless it is AI-related
+  (the prefilter routed it to an `ais.*` domain, or a package is in
+  `ghsa.ai_packages` in `config.yaml`) or it is CRITICAL in a package in
+  `ghsa.well_known_packages` (litellm, django, pillow, ...). The head of a
+  big-story group with 2+ independent publishers still gets in through the story
+  lane. Dropped advisories wait in the backlog as `ghsa:not-kept`. Existing
+  pool entries follow the same rule; the rest moved to `data/archive.json`.
 - **News tier:** the batch above is the DEEP tier (full analysis, at most
   `max_stories_per_run`). Every leftover candidate that is relevant news (the head
-  of a big-story group the lane had no slot for, a KEV / critical GHSA the
+  of a big-story group the lane had no slot for, a KEV or a kept GHSA the
   must-not-miss lane had no slot for, or a severity / AI-incident marker from a
   non-GitHub/HN source ranked `batch_story_min_rank`+, or a lab-lane post the lane
   had no slot for, published in the last
@@ -400,13 +409,19 @@ on a `claude/scan-*` branch.
   (`ai-security/`, `product-security/`, `ai-research/`, `claims/`) or the
   generated `README.md`, `NEWSLETTER.md`, `TRENDS.md`, `REVIEW.md`. Inside those
   directories only `.json`, `.md` and `.png` regular files count, plus exactly
-  `docs/index.html` and `docs/.nojekyll`: no other HTML, because HTML runs
-  script on the site's origin.
+  `docs/index.html`, `docs/feed.xml` (the Atom feed) and `docs/.nojekyll`: no
+  other HTML or XML, because HTML runs script on the site's origin and XML
+  can carry XSLT processing instructions or the xhtml namespace, which do too.
 - **It must also pass `scripts/merge_gate.py`**, run inside the workflow on main
   merged with the PR head: pytest, the claim ledger, the analysis eval, any eval
   listed under `automerge.evals`, and these content checks
   (`scripts/content_checks.py`):
   - every `url` / `*_url` field in `data/*.json` is an `http(s)://` URL;
+  - (both files are compared as raw bytes, so a CRLF or CR copy fails)
+  - `docs/feed.xml` is byte-equal to main's `generate_html.render_feed()` applied
+    to the payload and stamp the PR's `docs/index.html` carries, so the feed is
+    main's code plus the page's data and nothing hand-written. A PR that deletes
+    it is refused while main has one;
   - `docs/index.html` is byte-equal to main's `generate_html.render()` applied to
     the payload and stamp the page carries, so the page is main's template plus
     data, never hand-written HTML. The payload itself is still PR-shaped, so

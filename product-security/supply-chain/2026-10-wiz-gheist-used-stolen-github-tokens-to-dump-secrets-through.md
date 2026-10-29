@@ -27,7 +27,6 @@ Wiz Research tracked Gheist, active from September 15 and still running on Octob
 **Source:** [Dark Reading](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets)  ·  **Retrieved:** 2026-10-27  
 **Scores:** Newness 21 · Novelty 40 · Relevance 80 · Credibility 40 · **Composite 47** _(each 0-100)_  
 **Tags:** `github-actions`, `token-theft`, `secrets-exfiltration`, `supply-chain`, `credential-theft`  
-**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Secrets-dumping workflows pushed with stolen tokens appeared in earlier campaigns such as GhostAction; Gheist adds log-then-delete theft with no attacker domain and reaches private enterprise repositories past GitHub's public-repository safeguard.  
-> ⚠️ _Pending review - auto-analyzed, not yet human-verified._
+**Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Secrets-dumping workflows pushed with stolen tokens appeared in earlier campaigns such as GhostAction; Gheist adds log-then-delete theft with no attacker domain and reaches private enterprise repositories past GitHub's public-repository safeguard.
 
 _Source: [https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets)_  ·  [← back to index](../README.md)

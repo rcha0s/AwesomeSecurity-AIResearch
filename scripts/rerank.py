@@ -86,7 +86,10 @@ def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
         return c.is_news_story(e, conf, sources)
 
     live = {e.get("id") for e in pool["entries"]}
-    restored = c.unarchive(lambda e: e.get("topic") == track and is_news(e))
+    # prune_ghsa.py's archived advisories stay archived even when a news brief
+    restored = c.unarchive(
+        lambda e: e.get("topic") == track and is_news(e) and not e.get("archived_reason")
+    )
     pool["entries"] += [e for e in restored if e.get("id") not in live]
     if restored:
         print(f"  restored {len(restored)} archived news stories to {track}")

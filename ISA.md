@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 47/55
+progress: 48/55
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -126,7 +126,7 @@ Why: Rohan, 2026-10-27: "Ship out all the improvements one by one ... just do th
 - [x] ISC-45: An old reversal never pushes this week's claim changes off the Briefing; when shown, it is labelled as the last reversal (probe: briefing test; note sentence matches what is shown). — #130 `test_an_old_reversal_never_takes_a_slot_from_a_full_window`
 - [x] ISC-46: Cards carry triage chips: CVE/GHSA ids linked to NVD/GHSA, "Exploited (KEV)" when known; internal tags (`week-of-*`, `timely`, `high-relevance`, composite/newness scores) are gone from cards (probe: JS test; live DOM grep finds none). — #134; live: 28 NVD/GHSA id links, 2 Exploited chips on the Briefing, no `week-of-`/`timely`/`high-relevance` text
 - [x] ISC-47: Search and filter state survive in the URL, and the detail panel has a copy-link button (probe: JS test round-trips a filtered route). — #136 + #138 (`ceff`); live `?ceff=cost#claims` restores 8 cost claims; Copy link button present (clipboard click not exercised in the browser)
-- [ ] ISC-48: `docs/feed.xml` is a valid Atom feed of top stories and claim changes, linked from the page head, and auto-merge accepts it only when it is byte-equal to main's renderer output (probe: XML parse test; merge_guard + content_checks tests; Opus review of the boundary change).
+- [x] ISC-48: `docs/feed.xml` is a valid Atom feed of top stories and claim changes, linked from the page head, and auto-merge accepts it only when it is byte-equal to main's renderer output (probe: XML parse test; merge_guard + content_checks tests; Opus review of the boundary change). — #137; live feed.xml HTTP 200, parses as Atom with 17 entries and an author; raw-byte gate tests; Opus review SAFE
 - [x] ISC-49: A collapsed claim card shows its "Do." line and one plain sentence on how confidence is scored (probe: JS test; live DOM). — #132; live Claims tab: 8/8 cards with a Do. line and a "how?" link; default sort Last change
 - [x] ISC-50: Card quotes skip CVSS boilerplate, render backticks as code, and a source is named the same way on every card (probe: tests; live DOM has no "Attack Vector:" quote). — #130; live: 0 of 140 card quotes are CVSS boilerplate, 20 code spans, bare-host source names 0
 - [x] ISC-A5 (anti): No item that was reachable on the site before F8 becomes unreachable, and the auto-merge allowlist widens by exactly `docs/feed.xml` under render-equality, nothing else (probe: before/after id sets; merge_guard diff). — Stories 141 and Archive 81 before and after F8; merge_guard widens by `docs/feed.xml` only (#137 diff, Opus review)

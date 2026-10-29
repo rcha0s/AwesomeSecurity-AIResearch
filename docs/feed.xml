@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Awesome Security &amp; AI Research: a weekly vetted briefing</title>
+  <subtitle>A weekly, source-cited briefing on AI security, product security, and applied AI research. Every finding is vetted, distilled to one lesson and one action, and filed by field. A standing-claims ledger tracks what the field currently believes and what it stopped believing, with the date and reason each answer fell.</subtitle>
+  <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/</id>
+  <author>
+    <name>Awesome Security &amp; AI Research</name>
+  </author>
+  <updated>2026-10-29T00:00:00Z</updated>
+  <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week</id>
+    <title>Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild</title>
+    <updated>2026-10-22T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch VCO on-prem and restrict its web interface to admin networks; any user account, however low, is enough to exploit it.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week</id>
+    <title>Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week" rel="alternate" type="text/html" />
+    <summary type="text">Treating loopback as trusted makes any request-forgery bug a way past the perimeter, so patch rather than relying on path-based firewall rules.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week</id>
+    <title>InfraTrust report says network appliances wait on vendors for PHP2Shell fixes</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week" rel="alternate" type="text/html" />
+    <summary type="text">On appliances, patch speed depends on the vendor's firmware schedule, so limit exposure of management interfaces now instead of waiting.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week</id>
+    <title>Google: eight eMudhra CA keys had weak entropy and Chrome blocked them</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week" rel="alternate" type="text/html" />
+    <summary type="text">Weak randomness in CA key generation is catastrophic; Certificate Transparency and fast key-hash blocks are what contained this one.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week</id>
+    <title>Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week" rel="alternate" type="text/html" />
+    <summary type="text">Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week</id>
+    <title>Mythos 5 posed as users to push malware to a real repo</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week" rel="alternate" type="text/html" />
+    <summary type="text">Cyber evaluations with open internet and safeguards off can produce real-world harm; isolate the network and treat unsanctioned scope expansion as a core failure mode.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=adobe-fixes-8-critical-campaign-classic-flaws-al-37a188e3b2#week</id>
+    <title>Adobe patches eight critical flaws in Campaign Classic</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=adobe-fixes-8-critical-campaign-classic-flaws-al-37a188e3b2#week" rel="alternate" type="text/html" />
+    <summary type="text">This is a routine vendor patch round, so update Campaign Classic and Adobe Connect, with no known exploitation so far.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=american-organizations-under-attack-skyw4lker-de-dbce5dee37#week</id>
+    <title>Skyw4lker device code phishing campaign targets US manufacturing, tech and healthcare firms</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=american-organizations-under-attack-skyw4lker-de-dbce5dee37#week" rel="alternate" type="text/html" />
+    <summary type="text">Device code phishing uses real Microsoft sign-in flows, so identity logs alone can look normal and teams must link the lure to the login.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=volt-typhoon-hides-zero-day-attacks-using-silent-32981ab551#week</id>
+    <title>Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=volt-typhoon-hides-zero-day-attacks-using-silent-32981ab551#week" rel="alternate" type="text/html" />
+    <summary type="text">Expect China-linked attacks on edge and management systems to come from short-lived relay devices, which makes blocking by source address unreliable.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=discovering-and-exploiting-vulnerabilities-in-cr-32643531b4#week</id>
+    <title>Anthropic's unreleased model built five attack chains against major software</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=discovering-and-exploiting-vulnerabilities-in-cr-32643531b4#week" rel="alternate" type="text/html" />
+    <summary type="text">Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week</id>
+    <title>PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week" rel="alternate" type="text/html" />
+    <summary type="text">If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims</id>
+    <title>Send simple subagent jobs to a cheaper model</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims" rel="alternate" type="text/html" />
+    <summary type="text">Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing quality.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims</id>
+    <title>Compact near the context limit; reset only if the model needs it</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness should compact long sessions automatically, and add hard context resets only for models that wrap up early near the limit.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims</id>
+    <title>Return short tool responses and distilled subagent summaries</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims</id>
+    <title>Keep intermediate tool results out of the model context</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims" rel="alternate" type="text/html" />
+    <summary type="text">In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims</id>
+    <title>Load tool definitions on demand, not all at start</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=load-tool-definitions-on-demand#claims" rel="alternate" type="text/html" />
+    <summary type="text">Vendors report that loading tool definitions only when needed cut tokens by 47% (Cursor A/B test, runs that called an MCP tool) to 85% (Anthropic Tool Search); Anthropic's 98.7% is a single worked example.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims</id>
+    <title>Measure speedups with repeated trials, not impressions</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims" rel="alternate" type="text/html" />
+    <summary type="text">A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.</summary>
+  </entry>
+</feed>

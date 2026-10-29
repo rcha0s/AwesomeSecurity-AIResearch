@@ -119,6 +119,7 @@ def _no_main_stories(monkeypatch):
     """main's story ledger and eval history come from git; these trees carry
     neither (the real main does once a scan has merged)."""
     monkeypatch.setattr(gate, "main_stories", lambda base: {})
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: False)
     no_main_history(monkeypatch)
 
 
@@ -207,3 +208,53 @@ def test_missing_page_is_a_problem(tmp_path, monkeypatch):
 def test_main_ledger_reads_git_not_the_tree():
     ledger = gate.main_ledger("HEAD")
     assert isinstance(ledger, dict) and "claims" in ledger
+
+
+def test_feed_check_accepts_exact_render_and_refuses_edits(tmp_path, monkeypatch):
+    import generate_html as gh
+
+    root = _tree(tmp_path)
+    page = (root / "docs" / "index.html").read_text()
+    feed = root / "docs" / "feed.xml"
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: True)
+    assert gate.feed_check("main", root) == ["docs/feed.xml is missing"]
+    feed.write_text(gh.render_feed_for_page(page))
+    assert gate.feed_check("main", root) == []
+    feed.write_text(feed.read_text().replace("<title>", "<title>x", 1))
+    assert gate.feed_check("main", root) != []
+    feed.unlink()
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: False)
+    assert gate.feed_check("main", root) == []
+
+
+REAL_MAIN_HAS_FEED = gate.main_has_feed
+
+
+@pytest.mark.parametrize("eol", ["\r\n", "\r"])
+def test_feed_and_page_are_compared_as_raw_bytes(tmp_path, monkeypatch, eol):
+    import generate_html as gh
+
+    root = _tree(tmp_path)
+    monkeypatch.setattr(gate, "main_has_feed", lambda base: True)
+    monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
+    index, feed = root / "docs" / "index.html", root / "docs" / "feed.xml"
+    good = gh.render_feed_for_page(index.read_text())
+    feed.write_bytes(good.encode())
+    assert gate.feed_check("main", root) == []
+    feed.write_bytes(good.replace("\n", eol).encode())
+    assert gate.feed_check("main", root) != []
+    feed.write_bytes(good.encode())
+    index.write_bytes(index.read_text().replace("\n", eol).encode())
+    assert any("docs/index.html" in p for p in gate.content_problems("main", root))
+
+
+def test_main_has_feed_fails_closed():
+    main_has_feed = REAL_MAIN_HAS_FEED  # the autouse fixture stubs gate.main_has_feed
+    with pytest.raises(RuntimeError):
+        main_has_feed("no-such-ref-xyz")
+    head = gate.subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=gate.ROOT, capture_output=True, text=True
+    ).stdout.strip()
+    assert main_has_feed(head) in (True, False)  # a valid commit answers
+    with pytest.raises(RuntimeError):
+        main_has_feed("4b825dc642cb6eb9a060e54bf8d69288fbee4904")  # a tree, not a commit
