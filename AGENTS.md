@@ -40,6 +40,7 @@ scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # inges
 scripts/ingest_youtube.py # registered YouTube channels (yt-dlp): `youtube_per_channel` / `youtube_max_per_run`, in-window videos only
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
+scripts/ingest_x_list.py  # X list, last 24h, local runner only (read-only via Interceptor)
 scripts/ingest_reddit.py  # subreddit lane, official API (app-only OAuth): link posts stage their article; self posts -> data/_practitioner_signal.json
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube); `deactivate <id> --reason`
@@ -196,6 +197,7 @@ python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
+SCAN_RUNNER=local python scripts/ingest_x_list.py --dry-run  # X list, local Mac only
 python scripts/ingest_reddit.py           # r/netsec etc. via the Reddit API (--dry-run); skipped without credentials
 python scripts/ingest_youtube.py          # recent videos of registered channels (yt-dlp; capped)
 ```
@@ -297,6 +299,46 @@ paragraphs (supporting links under a headline) are not staged. A staged link's
 credibility is `curator_links.source_rank` (70): the linked blog is usually unknown to
 the registry, so the curator's pick lifts it above the neutral 50 and the 45
 `min_credibility` bar, but below tl;dr sec's own 80.
+
+### X list (local runner only)
+
+`ingest_x_list.py` stages the last 24 hours of Rohan's X list
+(`x_list.list_url` in `config.yaml`). `run_scan.sh` adds it to the ingestors only when
+`SCAN_RUNNER=local`, and the script itself exits 0 with a "skipped" line under `CI` or
+`GITHUB_ACTIONS`, when `SCAN_RUNNER` is not `local`, and when Interceptor or its test
+profile is unavailable, so a closed Chrome never fails a scan.
+
+- **Read-only, in its own tab.** It drives the Interceptor CLI (arg arrays, never a
+  shell string) in the `interceptor-test` profile and the `x-list` tab group, and pins
+  every call after `open` to its own tab id with `--tab`. The only verbs it can run are
+  `open`, `read`, `links`, `scroll down` and `tab close`, enforced in `build_command`
+  and tested; it never clicks, types, evals, posts, likes, follows or replies. The
+  profile is signed into Rohan's main X account, so the lane stays read-only.
+- **24-hour lookback, hard** (`x_list.lookback_hours`). A post is dated by its status id
+  (a snowflake, so exact); a repost carries the original post's time. Older or undated
+  posts are dropped. Replies and off-thesis posts (the taxonomy keyword hints and
+  excluded terms `eval_recall.on_thesis` uses, then the news deny-list) are dropped, and
+  so is anything already in the pools, archive or story ledger.
+- **Citation.** If the post links an article (a non-X host; a `t.co` link is expanded by
+  reading its redirect, not following it), the article is `source_url` and the post is
+  `tweet_url`. With no article, the post text is staged as `raw_path` (the `add.py --text`
+  mechanism) and the post URL is `source_url`, so the analysis session never fetches
+  x.com. Candidates carry `discovered_via: x-list`, `source_id: x:list` and the author.
+- **Batch.** `x` is its own ingestor class in `select_batch.py` with a floor of one
+  slot (`batch_class_min`); `x_list.source_rank` (60) sets its credibility.
+- **Coverage.** A background tab does not load more of the list on `scroll down`, so one
+  read sees only 5 to 10 posts. `ingest_x_list.py --collect` reads the list and upserts the
+  posts by status id into the gitignored `data/_x_list_seen.json` (rows older than 48h
+  dropped); the scan-time run merges that store with a fresh read before the 24h filter,
+  and falls back to the store alone when the fresh read is skipped. The optional launchd
+  job `scripts/install_launchd.sh --xlist` (`--uninstall-xlist` removes it) runs
+  `--collect` every 3 hours from the runner clone, with the same local-only refusals,
+  never activating the tab, logging `[x-list]` lines to `data/_scan.log`.
+- **Hardening.** `open` is limited to an `https://x.com/i/lists/<id>` URL with only
+  `--text-only`, `--full`, `--json` and `--timeout <int>` (`--activate` is refused). The tab
+  id is read from `open --json` (`data.tabId`) or the first output line only, never the
+  page text. Interceptor must be 0.16 or newer. `fetch_raw.py` never fetches x.com,
+  twitter.com or t.co, so a staged post keeps the text already in its `raw_path`.
 
 ### Conference ingestion
 
@@ -754,5 +796,5 @@ change, or a change would delete/relicense existing curated findings.
 
 - Data pools are the single source of truth; regenerate rendered files, never edit them.
 - Keep functions <40 lines, named constants in `config.yaml`, PEP 8 + type hints.
-- X/Twitter ingestion is out of scope for now (#57: future local-only runner,
-  never CI or cloud).
+- X ingestion is the one local-only lane (#57): `scripts/ingest_x_list.py`, below.
+  It never runs in CI or the cloud, and nothing else in the repo reads X.

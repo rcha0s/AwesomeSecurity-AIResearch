@@ -1,0 +1,144 @@
+To view keyboard shortcuts, press question mark
+View keyboard shortcuts
+Home
+Explore
+Notifications
+Post
+Example Viewer
+@viewer
+Example List
+List
+Example List
+Example Owner
+@owner
+10 Members
+0 Followers
+Alpha Papers reposted
+Alpha Papers
+@alpha_papers
+·
+16h
+Introducing NotebookLM for arXiv Papers 🚀
+
+Transform dense AI research into engaging convos you can hear on the go
+
+With context from thousands of related papers, it captures motivations, draws connections to SOTA, and explains key ideas like a prof who's read the entire field
+14
+69
+383
+18K
+Dev Tooling
+@dev_tooling
+·
+20m
+Should we take on more "harness configuration" type stuff in T3 Code? Skill manager, MCP marketplace, global agentmd/claudemd management type stuff?
+82
+2
+140
+4.9K
+Dev Tooling
+@dev_tooling
+·
+1h
+It is insane to me that there are still devs using terminals to prompt their agents
+247
+44
+1.1K
+84K
+Sec Voice
+@sec_voice
+·
+21m
+Replying to 
+@dev_tooling
+If you use a system like Herdr it’s very similar to T3. It’s not an old school terminal like before.
+3
+271
+Alpha Papers
+@alpha_papers
+·
+28m
+"Contextual Correction of Parallel Drafts for Speculative Decoding"
+
+Parallel speculative decoding can generate multiple tokens at once, but the tokens can be inconsistent because they don't know which earlier tokens were selected.
+
+This paper DCOCO uses a lightweight corrector
+Show more
+1
+11
+807
+Alpha Papers
+@alpha_papers
+·
+29m
+"The Surprising Effectiveness of Shared Memory in Looped Transformers"
+
+Looped Transformers usually maintain separate KV-caches for each pass, but this paper shows that sharing memory across loops can actually improve model quality while reducing memory usage.
+
+So Looped
+Show more
+1
+3
+8
+1.2K
+Dev Tooling
+@dev_tooling
+·
+33m
+It's been amazing to learn how few devs are actually able to read
+Quote
+Quote A
+@quote_a
+·
+38m
+this is your competition
+Quote
+Dev Tooling
+@dev_tooling
+·
+1h
+It is insane to me that there are still devs using terminals to prompt their agents
+25
+3
+196
+9.4K
+Dev Tooling
+@dev_tooling
+·
+37m
+I've been claudemaxxing a bit too hard lately. I needed more compute, more accounts, more guardrails, and now I just need more sleep.
+
+This video is a chaotic spiral into hill climbing. Consider it the start of a series. Only gets weirder from here.
+Quote
+Quote B
+@quote_b
+·
+10h
+omfg @dev_tooling just released a video that talks about 
+https://
+boat.dev
+24
+7
+172
+9.3K
+Some Person reposted
+ML Hacker
+@ml_hacker
+·
+20h
+1/4
+
+Meet Qwenputer: Qwen3.5-4B with a full RISC-V CPU inside its weights, using the model's own Gated DeltaNet layers as RAM.
+
+It runs C and MicroPython in its forward passes, no external runtime.
+
+On DeepMind math: base 55–90%, base + Python tool 95–100%, Qwenputer 97.5–100%.
+143
+505
+2.9K
+267K
+Subscribe to Premium
+Get rid of ads
+Subscribe
+Trending now
+What’s happening
