@@ -635,3 +635,20 @@ readability:
     a testament to, robust and scalable, leverage the power]
   hedges: [may, might, could, possibly, potentially, perhaps, likely, probably,
     arguably, somewhat, seemingly, apparently, presumably, appears, seems, suggests]
+
+# "What practitioners are arguing" (scripts/arguments.py, ISA ISC-61). The scan session
+# writes up to `max_new_per_run` arguments from the Reddit / X signal; code checks every
+# link against the run's signal and computes the weight: Reddit score + 2 x comments, plus
+# `x_author_weight` per distinct X author (the X list lane captures no like or reply
+# counts). Rows leave the file and the page `row_days` after they were written.
+arguments:
+  max_new_per_run: 5
+  max_rows: 5
+  store_max: 10
+  row_days: 14
+  min_sources: 2
+  max_sources: 6
+  text_max_chars: 280
+  x_author_weight: 25
+  signal_rows: 40
+  signal_days: 14

@@ -399,3 +399,29 @@ def recall_shape_problems(recall: object) -> list[str]:
         if not ok or not all(_share(t.get(k)) for k in ("recall", "independent_recall")):
             out.append(f"history: recall curator_recall row {str(name)[:32]!r} is malformed")
     return out
+
+
+ARGUMENTS_FILE = "arguments.json"
+
+
+def arguments_problems(rows: object, cfg: dict | None = None) -> list[str]:
+    """data/arguments.json ("what practitioners are arguing") in a scan PR: a list of at
+    most `store_max` rows, each exactly the schema, every source link a Reddit thread or
+    X post permalink whose label and kind agree with its URL, and the weight equal to
+    score + 2 x comments + x authors x `x_author_weight`. The gitignored signal is not
+    visible here, so "the link appeared in this run's signal" is arguments.py's job."""
+    import arguments  # imported late: its settings read config.yaml
+
+    cfg = cfg or arguments.settings()
+    if not isinstance(rows, list):
+        return [f"{ARGUMENTS_FILE}: not a list"]
+    out = []
+    if len(rows) > int(cfg["store_max"]):
+        out.append(f"{ARGUMENTS_FILE}: more than {cfg['store_max']} rows")
+    seen: set = set()
+    for i, row in enumerate(rows):
+        out += [f"{ARGUMENTS_FILE}[{i}]: {p}" for p in arguments.row_problems(row, cfg)]
+        rid = row.get("id") if isinstance(row, dict) else None
+        out += [f"{ARGUMENTS_FILE}[{i}]: duplicate id"] if rid in seen else []
+        seen.add(rid)
+    return out

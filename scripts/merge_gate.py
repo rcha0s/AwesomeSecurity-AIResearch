@@ -102,11 +102,15 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     if page.is_file():
         payload, _, found = cc.embedded(read_exact(page))
         out += [] if found else cc.reddit_shown_problems(payload)
+        out += [] if found else cc.arguments_problems(payload.get("arguments") or [])
     pr_ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
     out += cc.claim_history_problems(main_ledger(base), pr_ledger)
     stories = root / "data" / "news_stories.json"
     pr_stories = json.loads(stories.read_text(encoding="utf-8")) if stories.is_file() else {}
     out += cc.story_membership_problems(main_stories(base), pr_stories)
+    arguments_file = root / "data" / cc.ARGUMENTS_FILE
+    if arguments_file.is_file():
+        out += cc.arguments_problems(json.loads(arguments_file.read_text(encoding="utf-8")))
     out += editorial_check(base, root)
     out += readability_check(base, root)
     out += history_check(base, root)

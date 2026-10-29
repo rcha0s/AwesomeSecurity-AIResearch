@@ -83,6 +83,10 @@ all four.
      earlier promotions are sticky, a demotion needs `"demote": true` and a reason),
      `python scripts/promote_editorial.py`.
 
+   - Then research-scan step 7b: `python scripts/arguments.py signal`, write
+     `data/_arguments_out.json` (at most 5 arguments, each on 2+ links from that output),
+     `python scripts/arguments.py merge`. Skip it, and say so in the summary, when the signal is empty.
+
 3. **Summary:** write `data/_summary.md`. It becomes the PR body: every claim change
    first (added, contested, superseded or refuted, each with its reason), then any
    `CLAIM REVIEW` lines from story updates, then story verdicts (same / update / new), stories

@@ -31,6 +31,7 @@ from json import dumps
 from pathlib import Path
 from urllib.parse import quote, urlparse, urlsplit
 
+import arguments
 import briefing
 import common as c
 import content_checks as cc
@@ -435,6 +436,9 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "editorial": editorial,
         "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
         "archive": archived,
+        "arguments": arguments.shown(
+            c.load_json(c.DATA_DIR / arguments.ROWS_NAME, []), now, arguments.settings()
+        ),
         **front_page(
             findings + editorial, claims_payload(ledger, tax), now, snapshot_days, conf.focus
         ),

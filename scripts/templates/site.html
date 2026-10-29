@@ -829,7 +829,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = focusHTML(shown) + biggestHTML(shown) + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
+    var html = focusHTML(shown) + biggestHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -1397,6 +1397,42 @@
     return secHead("Biggest this week", "last " + num(DATA.snapshot_days) + " days") +
       '<p class="sec-lede">' + esc(biggestNote(Number(DATA.snapshot_days) | 0)) + '</p>' +
       '<div class="artlist">' + rows.map(function (f, i) { return storyCardHTML(f, i); }).join("") + '</div>';
+  }
+  // "What practitioners are arguing": rows from data/arguments.json (scripts/arguments.py),
+  // ranked by weight. Every link must be a Reddit or X permalink; a row with fewer than
+  // two such links, or no position, is skipped; no rows renders nothing.
+  var ARG_HOST = /^https?:\/\/(?:[a-z0-9-]+\.)?(?:reddit\.com|x\.com|twitter\.com)\//i;
+  function argSources(row) {
+    return arr(row && row.sources).filter(function (s) {
+      return s && typeof s.url === "string" && ARG_HOST.test(s.url) && safeUrl(s.url) !== "#";
+    });
+  }
+  function argEngagement(row) {
+    var parts = [];
+    if ((Number(row.reddit_score) | 0) || (Number(row.reddit_comments) | 0)) {
+      parts.push(num(row.reddit_score) + " points and " + num(row.reddit_comments) + " comments on Reddit");
+    }
+    var x = Number(row.x_authors) | 0;
+    if (x) parts.push(num(x) + (x === 1 ? " author" : " distinct authors") + " on X");
+    return parts.join("; ");
+  }
+  function argumentHTML(row) {
+    var links = argSources(row).slice(0, 6).map(function (s) {
+      return '<a class="link" href="' + hrefOf(s.url) + '" target="_blank" rel="noopener noreferrer">' +
+        txt(s.label || host(s.url)) + ' &#8599;</a>';
+    }).join(" ");
+    return '<article class="claim chg"><div class="desc"><b>' + txt(row.position) + '</b></div>' +
+      (row.counterpoint ? '<div class="guide">Counterpoint: ' + txt(row.counterpoint) + '</div>' : '') +
+      '<div class="meta"><span>' + argEngagement(row) + '</span>' + links + '</div></article>';
+  }
+  function argumentsHTML() {
+    var rows = arr(DATA.arguments).filter(function (r) {
+      return r && typeof r.position === "string" && r.position && argSources(r).length >= 2;
+    }).sort(function (a, b) { return (Number(b.weight) | 0) - (Number(a.weight) | 0); }).slice(0, 5);
+    if (!rows.length) return "";
+    return secHead("What practitioners are arguing", "Reddit and X, by engagement") +
+      '<p class="sec-lede">Points practitioners are debating, ranked by Reddit score plus two per comment and by distinct X authors. Every point links to its threads or posts.</p>' +
+      '<div class="chglist">' + rows.map(argumentHTML).join("") + '</div>';
   }
   function topStoriesHTML(shown) {
     var m = rowsById();

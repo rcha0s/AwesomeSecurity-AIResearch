@@ -138,11 +138,32 @@ weekly_digest() {
   return 0
 }
 
+# launchd passes no environment, so when DIGEST_NOTIFY_URL is unset take it from
+# ~/.config/awesomesec/env: the first `DIGEST_NOTIFY_URL=value` line (optional matching
+# quotes), an http(s) URL only. The file is read as text, never sourced or evaluated,
+# and no other key in it is used. The variable stays unexported (not in any child env).
+read_notify_url() {
+  [[ -z "${DIGEST_NOTIFY_URL:-}" ]] || return 0
+  local file="$HOME/.config/awesomesec/env" line value
+  [[ -f "$file" && -r "$file" ]] || return 0
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%$'\r'}"
+    [[ "$line" == DIGEST_NOTIFY_URL=* ]] || continue
+    value="${line#DIGEST_NOTIFY_URL=}"
+    if [[ "$value" == \"*\" || "$value" == \'*\' ]]; then value="${value:1:${#value}-2}"; fi
+    [[ "$value" =~ ^https?://[^[:space:]]+$ ]] && DIGEST_NOTIFY_URL="$value"
+    return 0
+  done <"$file"
+  return 0
+}
+
 # After the PR is open: POST {"message": ...} to $DIGEST_NOTIFY_URL, only when
 # that is set (no URL is stored in the repo; it may carry a token, so it is
 # never logged). curl gets an argument array and a short timeout; failure is soft.
 digest_notify() {
-  [[ -n "$DIGEST_MSG" && -n "${DIGEST_NOTIFY_URL:-}" ]] || return 0
+  [[ -n "$DIGEST_MSG" ]] || return 0
+  read_notify_url
+  [[ -n "${DIGEST_NOTIFY_URL:-}" ]] || return 0
   local body
   body="$("$PYTHON" -c 'import json,sys;print(json.dumps({"message": sys.argv[1]}))' "$DIGEST_MSG")" ||
     return 0
