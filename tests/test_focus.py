@@ -204,9 +204,15 @@ def test_a_quiet_week_says_so():
     assert "## Claim changes" not in text
 
 
+def test_digest_link_urls_encode_parentheses():
+    row_ = row("p", NOW, title="T", domain_id="ais.mcp-tools", url="https://x.example/a_(b)")
+    assert "(https://x.example/a_%28b%29)" in wd._story_line(row_, FOCUS)
+
+
 def test_message_is_one_line_with_counts():
     assert wd.message(1, 0).startswith("Weekly focus digest: 1 story, 0 claim changes.")
     assert "\n" not in wd.message(5, 1)
+    assert "digest.md" not in wd.message(5, 1)  # not live until the PR merges
 
 
 def test_due_on_the_configured_weekday_with_an_env_override():

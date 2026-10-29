@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_4 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [45 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [41 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 

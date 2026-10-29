@@ -1319,7 +1319,8 @@
       (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
       quotePreview(f) + alsoReported(f) + storyUpdates(f) +
       '<div class="meta">' + topicPill(f.topic) + (f.domain ? '<span>' + txt(f.domain) + '</span>' : '') +
-        arr(tags).map(function (t) { return '<span class="chip sig">' + txt(t) + '</span>'; }).join("") +
+        arr(tags).filter(function (t) { return typeof t === "string"; })
+          .map(function (t) { return '<span class="chip sig">' + txt(t) + '</span>'; }).join("") +
         (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
         (n > 1 ? '<span>' + num(n) + ' sources</span>' : '') + triageChips(f) +
         '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
@@ -1395,7 +1396,7 @@
     rows.forEach(function (f) { shown[f.id] = 1; });
     return secHead("Biggest this week", "last " + num(DATA.snapshot_days) + " days") +
       '<p class="sec-lede">' + esc(biggestNote(Number(DATA.snapshot_days) | 0)) + '</p>' +
-      '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
+      '<div class="artlist">' + rows.map(function (f, i) { return storyCardHTML(f, i); }).join("") + '</div>';
   }
   function topStoriesHTML(shown) {
     var m = rowsById();
@@ -1407,7 +1408,7 @@
     rows.forEach(function (f) { shown[f.id] = 1; });
     return secHead(title, DATA.top_stories_topped_up ? "latest we have" : "last " + num(DATA.snapshot_days) + " days") +
       '<p class="sec-lede">' + esc(windowNote(Number(DATA.top_stories_fresh) | 0, rows.length, Number(DATA.snapshot_days) | 0)) + ' Open a story for every source that covered it and every update.</p>' +
-      '<div class="artlist">' + rows.map(storyCardHTML).join("") + '</div>';
+      '<div class="artlist">' + rows.map(function (f, i) { return storyCardHTML(f, i); }).join("") + '</div>';
   }
   // What the ledger changed: claims added, newly contested, and overturned
   // (headlined by the claim that replaced them). "Do." guidance stays on the

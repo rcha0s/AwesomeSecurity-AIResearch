@@ -389,6 +389,11 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   demotion with a reason (`{"id", "demote": true, "reason"}`) or when its
   integrity fails (refuted or ungrounded). Every promotion and removal goes into
   the code-owned `data/_editorial_outcomes.md`, which `post` puts in the PR body.
+  `verified: false` means either a factual refutation or a scoring disagreement, so the
+  verifier step also sets `verify_reason` (`factual` or `scoring`). Editorial eligibility
+  is unchanged: any `verified: false` stays out. Focus news (below) keeps a
+  `verified: false` entry only when `verify_reason` is `scoring`, and never an
+  ungrounded one. OWASP ACS carries `scoring`.
 
 ### Backfill (issue #52): a past window, same pipeline
 

@@ -176,6 +176,7 @@ FNS = [
     "windowNote",
     "biggestNote",
     "biggestHTML",
+    "topStoriesHTML",
     "rowsById",
     "emergingBlock",
     "secHead",
@@ -992,6 +993,29 @@ def test_biggest_lane_marks_its_rows_shown_and_hides_when_empty():
     }
     assert run_js(empty, "biggestHTML({})") == ""
     assert run_js({"snapshot_days": 7, "findings": [], "editorial": []}, "biggestHTML({})") == ""
+
+
+def test_biggest_and_top_cards_carry_no_focus_chips():
+    """Array.map passes the index and the array: the array must not read as `tags`."""
+    data = {
+        "topics": {},
+        "snapshot_days": 7,
+        "biggest_stories": ["hot"],
+        "top_stories": ["hot", "wide"],
+        "top_stories_fresh": 2,
+        "findings": [_story("hot", exploited=True), _story("wide")],
+        "editorial": [],
+    }
+    for expr in ("biggestHTML({})", "topStoriesHTML({})"):
+        html = run_js(data, expr)
+        assert 'class="art story"' in html
+        assert "chip sig" not in html and "[object" not in html
+    # a non-string `tags` value is ignored; strings still render as chips
+    got = run_js(
+        data,
+        "[storyCardHTML(DATA.findings[0], 0, [{}, 3]), storyCardHTML(DATA.findings[0], 0, ['MCP'])]",
+    )
+    assert "chip sig" not in got[0] and 'chip sig">MCP<' in got[1]
 
 
 def test_exploited_chip_is_only_for_a_true_boolean():

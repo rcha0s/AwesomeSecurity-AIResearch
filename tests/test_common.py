@@ -303,6 +303,27 @@ def test_a_focus_match_reaches_the_news_lane_from_a_research_source():
     assert not c.is_news_curated(entry, bare, high)
 
 
+def test_a_verified_false_focus_match_needs_verify_reason_scoring():
+    """verified:false is a factual refutation OR a scoring disagreement; only a
+    labeled scoring disagreement (OWASP ACS) may be kept as focus news."""
+    conf = c.load_config()
+    src = {"rss:research-only": {"track": "research", "tier": "high"}}
+    entry = _news_entry(source_id="rss:research-only", verified=False)
+    assert not c.is_news_curated(entry, conf, src)
+    assert not c.is_news_curated({**entry, "verify_reason": "factual"}, conf, src)
+    assert c.is_news_curated({**entry, "verify_reason": "scoring"}, conf, src)
+    # a news-track source is unaffected: the news gate never read `verified`
+    news = {"rss:research-only": {"track": "news", "tier": "high"}}
+    assert c.is_news_curated(entry, conf, news)
+
+
+def test_an_ungrounded_focus_match_is_not_kept_as_news():
+    conf = c.load_config()
+    src = {"rss:research-only": {"track": "research", "tier": "high"}}
+    entry = _news_entry(source_id="rss:research-only", grounding_score=0.75)
+    assert not c.is_news_curated(entry, conf, src)
+
+
 def test_is_news_curated_rejects_low_tier():
     conf = c.load_config()
     entry = _news_entry(source_id="rss:noname")

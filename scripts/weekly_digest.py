@@ -54,6 +54,11 @@ def _one_line(text: str, limit: int = TAKEAWAY_CHARS) -> str:
     return gh.sentence_cut(" ".join(str(text or "").split()), limit)
 
 
+def _link_url(url: str) -> str:
+    """A URL safe inside a markdown link target: parentheses and spaces encoded."""
+    return str(url).replace(" ", "%20").replace("(", "%28").replace(")", "%29")
+
+
 def _link_label(title: str) -> str:
     return " ".join(str(title or "").split()).replace("[", "(").replace("]", ")")
 
@@ -73,7 +78,7 @@ def pick(payload_rows: list[dict], claims: list[dict], focus: dict, now: str) ->
 
 def _story_line(row: dict, focus: dict) -> str:
     tags = focus_mod.names(focus_mod.areas(row, focus), focus)
-    line = f"- [{_link_label(row['title'])}]({row['url']})"
+    line = f"- [{_link_label(row['title'])}]({_link_url(row['url'])})"
     if row.get("takeaway"):
         line += f" - {_one_line(row['takeaway'])}"
     return line + (f" _({', '.join(tags)})_" if tags else "")
@@ -117,10 +122,11 @@ def render(
 
 
 def message(n_stories: int, n_changes: int) -> str:
-    """The one-line notification: counts and where the digest lives once merged."""
+    """The one-line notification: counts and the site's front page (the digest file
+    is not live until the scan PR merges, so it is not linked)."""
     stories = f"{n_stories} {'story' if n_stories == 1 else 'stories'}"
     changes = f"{n_changes} claim change{'' if n_changes == 1 else 's'}"
-    return f"Weekly focus digest: {stories}, {changes}. {gh.SITE_URL}{DIGEST_FILE}"
+    return f"Weekly focus digest: {stories}, {changes}. Your focus lane: {gh.SITE_URL}"
 
 
 def build(now: str | None = None) -> tuple[str, int, int]:

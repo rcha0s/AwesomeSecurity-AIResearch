@@ -814,7 +814,16 @@ def _focus_news(entry: dict, conf: Config, tier: str) -> bool:
     """A focus-area match (config.yaml `focus:`) from a high-tier feed stands in
     for a news-track source, so a standard from a research-track feed (OWASP ACS,
     2026-09-01) is kept like news instead of aging into the archive unseen."""
+    from verify_citations import publishable_grounding
+
     if tier != "high" or entry.get("discovered_via") in FOCUS_NEWS_EXCLUDED_VIA:
+        return False
+    if not publishable_grounding(entry):
+        return False  # an ungrounded quote is never kept, however on-topic
+    # `verified: false` is either a factual refutation or a scoring disagreement
+    # (ACS: a PR announcement scored low on novelty). Only an explicit
+    # verify_reason "scoring" passes; unlabeled or "factual" stays out.
+    if entry.get("verified") is False and entry.get("verify_reason") != "scoring":
         return False
     return focus_mod.matches(entry, conf.focus)
 

@@ -32442,5 +32442,317 @@
       "uv-before-0-13-4-trusts-the-emsign-root-behind-eight-comprom"
     ],
     "archived_reason": "ghsa-not-kept"
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.guardrails",
+    "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+    "source_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+    "article_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+    "published": "2026-08-28",
+    "date": "2026-08",
+    "source_name": "Unit 42 (Palo Alto Networks)",
+    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+    "source_rank": 76.8,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoints the tiny set of feed-forward neurons carrying an aligned LLM's refusal behavior. On Qwen3-4B, just 50 of 350,208 neurons (~0.014%) control the safety refusal template, and removing them breaks refusal formatting on 80% of harmful prompts. A derived FFN/Skip ratio predicts 81% of the variance in each model's steerability, offering a quantitative safety fragility score.",
+    "lessons": [
+      {
+        "point": "An aligned model's refusal behavior can be concentrated in a vanishingly small number of neurons, making it fragile to internal manipulation or even routine fine-tuning.",
+        "excerpt": "just 50 neurons out of 350,208 - about 0.014% of the model's feed-forward neurons - control the safety refusal template",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Model-internal alignment is a thin layer, not a robust distributed defense, so it should not be the only safety control.",
+        "excerpt": "It lives in a thin template layer - a tiny fraction of the network that an attacker who can manipulate internals could disable",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Defenders must layer external filters and runtime guardrails on top of the base model's built-in safety.",
+        "excerpt": "True AI safety demands a defense-in-depth strategy, with external content filters and runtime guardrails layered on top of whatever the base model was trained to do",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "A cheap computable metric can predict how easily a model's safety can be steered, enabling pre-deployment fragility scoring without full red-team campaigns.",
+        "excerpt": "this ratio explained 81% of the variance in how vulnerable each model's safety behavior was to a small targeted change",
+        "confidence": 0.7,
+        "grounded": false
+      }
+    ],
+    "takeaway": "LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.",
+    "tags": [
+      "llm-safety",
+      "jailbreak",
+      "alignment",
+      "mechanistic-interpretability",
+      "guardrails",
+      "defense-in-depth"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Add fragility diagnostics and external guardrails to LLM deployments",
+      "detail": "Integrate a safety-fragility diagnostic (e.g., FFN/Skip ratio) into model evaluation pipelines to compare candidate models before production, and layer runtime content filters/guardrails in front of any deployed model rather than trusting built-in refusal training alone."
+    },
+    "scores": {
+      "novelty": 72,
+      "relevance": 72,
+      "newness": 11,
+      "credibility": 76.8,
+      "composite": 57.47,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work",
+    "threat": "Safety alignment can be disabled or shifted by altering a tiny neuron set or via ordinary optimization runs.",
+    "conditions": "Anyone deploying open-weight or fine-tunable aligned LLMs where model internals or fine-tuning can be influenced.",
+    "mitigations": "Defense-in-depth: external content filters, runtime guardrails, and fragility scoring before deployment.",
+    "cluster": "H",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df.txt",
+    "id": "perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": false,
+    "grounding_score": 0.75,
+    "domain_label": "LLM Safety / Alignment Robustness"
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.ai-infra",
+    "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+    "source_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+    "article_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+    "published": "2026-08-16",
+    "date": "2026-08",
+    "source_name": "Embrace The Red (Johann Rehberger)",
+    "source_id": "rss:https-embracethered-com-blog-index-xml",
+    "source_rank": 76.8,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Rehberger reproduces a technique for recovering the plaintext of 'encrypted' LLM reasoning blobs by replaying the encrypted_content to a weaker, easier-to-jailbreak sibling model from the same provider and asking it to transcribe. Because providers appear to share encryption keys across users, sessions, models and accounts, leaked session files can expose hidden reasoning - including a recovered password and, in the paper, 367 PII items and 182 credentials.",
+    "lessons": [
+      {
+        "point": "Encrypted reasoning blobs can be decrypted-by-proxy by replaying them to a weaker sibling model that is easier to jailbreak into transcribing them.",
+        "excerpt": "This new paper now takes that a step further by replaying the encrypted blob to a less capable model that is easier to jailbreak, and convince it into revealing the underlying reasoning.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Shared provider encryption keys across users/sessions/models mean a leaked blob may be recoverable by anyone.",
+        "excerpt": "This seems possible because providers likely use shared encryption keys across users, sessions, and models.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Hidden reasoning frequently contains real secrets, so these blobs are a data-leak surface at scale.",
+        "excerpt": "They decoded 315,320 reasoning blocks scraped from public repositories and recovered 367 pieces of PII and 182 credentials, including API keys and passwords.",
+        "confidence": 0.8,
+        "grounded": false
+      },
+      {
+        "point": "Treat shared session files as sensitive: encrypted reasoning is not opaque or safe to publish.",
+        "excerpt": "Encrypted reasoning blobs should not be treated as harmless opaque data.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "So-called encrypted LLM reasoning traces are recoverable by cross-model replay, so session files containing them can leak passwords, API keys and PII.",
+    "tags": [
+      "reasoning-traces",
+      "encrypted-content",
+      "data-exfiltration",
+      "jailbreak",
+      "credentials"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Treat LLM session files with encrypted reasoning as secrets",
+      "detail": "Do not commit or share agent session files that contain reasoning encrypted_content; scrub or exclude reasoning blobs before sharing, and avoid placing secrets in prompts since they may surface inside recoverable reasoning traces."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 68,
+      "newness": 11,
+      "credibility": 76.8,
+      "composite": 51.17,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "arXiv work on stealing reasoning traces from proprietary LLM APIs; Matthew Green's encrypted-reasoning-blob replay discussion",
+    "threat": "Recovery of hidden model reasoning (including secrets) from replayed encrypted blobs across models/sessions/accounts.",
+    "conditions": "Users of provider APIs who share or leak session files containing encrypted reasoning content.",
+    "mitigations": "Per-user/session key isolation by providers; users should scrub reasoning blobs from shared files and keep secrets out of prompts.",
+    "cluster": "C",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/recovering-plaintext-from-encrypted-llm-reasonin-b9207da4.txt",
+    "id": "recovering-plaintext-from-encrypted-llm-reasonin-b9207da4",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": true,
+    "grounding_score": 0.75,
+    "domain_label": "Model I/O & Reasoning Traces"
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.red-teaming",
+    "title": "The Red Team's role is evolving in the era of agentic security",
+    "source_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+    "article_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+    "published": "2026-08-13",
+    "date": "2026-08",
+    "source_name": "Google Online Security Blog",
+    "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Google's Head of Red Teams argues autonomous agent-driven attacks are emerging and will most benefit scale-oriented actors via machine-speed operations that collapse dwell time. Over the next 6-12 months open-weight models are expected to match frontier cyber capabilities and can be 'abliterated' to strip guardrails. The prescription: Red Teams should iteratively build their own modular red-teaming agents to simulate agentic attackers before adversaries operationalize theirs.",
+    "lessons": [
+      {
+        "point": "Autonomous agent-driven attacks are shifting from theoretical to operational and most favor high-volume actors.",
+        "excerpt": "We are entering an era where autonomous attacks are executed by agents on behalf of threat actors.",
+        "confidence": 0.7,
+        "grounded": false
+      },
+      {
+        "point": "Agentic attacks compress dwell time so much that detections may fire after objectives are already met, breaking human-speed response.",
+        "excerpt": "AI agents can autonomously move on objectives so rapidly that even if a detection triggers, the agents often accomplish their goals before a human analyst has time to review the alert",
+        "confidence": 0.75,
+        "grounded": false
+      },
+      {
+        "point": "Open-weight models are expected to reach frontier cyber capability soon and can have guardrails stripped, so defenders can't rely on model-vendor safety.",
+        "excerpt": "We anticipate that over the next 6 to 12 months, open-weight models will match today's cybersecurity capabilities of frontier models.",
+        "confidence": 0.65,
+        "grounded": false
+      },
+      {
+        "point": "Defenders should build their own modular red-teaming agents now to simulate agentic adversaries before those adversaries mature.",
+        "excerpt": "The best way for a Red Team to prepare an organization for this future is to build its own Red Teaming agent that simulates the exact tools and techniques real-world attackers are developing.",
+        "confidence": 0.75,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Prepare for machine-speed agentic attacks by building your own iterative red-teaming agents and ensuring detection/response is near real-time.",
+    "tags": [
+      "red-teaming",
+      "agentic-ai",
+      "threat-modeling",
+      "open-weight-models",
+      "detection"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Stand up an incremental agentic red team",
+      "detail": "Automate isolated phases (recon, initial access, lateral movement) as modular subagents, connect them via an orchestrator to run end-to-end agentic simulations, and validate that detection pipelines are near real-time and corrective controls don't wholly depend on humans-in-the-loop."
+    },
+    "scores": {
+      "novelty": 45,
+      "relevance": 66,
+      "newness": 11,
+      "credibility": 75.0,
+      "composite": 47.3,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "Google's AI Red Team and Secure AI Framework (SAIF); broader agentic-threat forecasting",
+    "threat": "Threat actors operationalizing autonomous attack agents for machine-speed, scaled intrusions.",
+    "conditions": "Enterprises whose detection/response and red teams are geared to human-speed, manual adversaries.",
+    "mitigations": "Build modular red-teaming agents, ensure near-real-time detection and non-human-blocking corrective controls.",
+    "cluster": "L",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/the-evolving-role-of-the-red-team-in-the-era-of--39c3911b.txt",
+    "id": "the-evolving-role-of-the-red-team-in-the-era-of--39c3911b",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": true,
+    "grounding_score": 0.0,
+    "domain_label": "Red-Teaming Methodology (Agentic)",
+    "previous_slugs": [
+      "the-evolving-role-of-the-red-team-in-the-era-of-agentic-secu"
+    ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.model-supply-chain",
+    "title": "Making private AI practical with homomorphic encryption (HEIR)",
+    "source_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+    "article_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+    "published": "2026-08-14",
+    "date": "2026-08",
+    "source_name": "Google Online Security Blog",
+    "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Google showcases HEIR, an open-source compiler toolchain that converts pre-trained AI models to run inference directly on homomorphically encrypted inputs, so servers can process ciphertexts and return encrypted results without seeing the data. It targets the privacy/capability trade-off in sensitive sectors and avoids shipping proprietary models to devices. Demos include the Kitsune anomaly detector operating on encrypted network traffic.",
+    "lessons": [
+      {
+        "point": "Homomorphic encryption lets servers run computations on ciphertexts, changing the privacy/capability trade-off into a cost question.",
+        "excerpt": "A solution to these issues is homomorphic encryption, a rapidly maturing technology that fundamentally alters this trade-off by allowing computations to be performed directly on encrypted data.",
+        "confidence": 0.8,
+        "grounded": false
+      },
+      {
+        "point": "Local on-device inference to preserve privacy risks exposing proprietary model IP; encrypted server-side inference avoids that.",
+        "excerpt": "Shipping proprietary AI to a device risks leaking the model.",
+        "confidence": 0.75,
+        "grounded": false
+      },
+      {
+        "point": "Tooling like HEIR lowers the expertise barrier by compiling existing models to operate on encrypted inputs.",
+        "excerpt": "HEIR can convert pre-trained AI models that operate on unencrypted data to operate on encrypted inputs",
+        "confidence": 0.8,
+        "grounded": false
+      },
+      {
+        "point": "Security functions like network anomaly detection can run over encrypted traffic without exposing packet contents.",
+        "excerpt": "This allows a service provider to detect anomalies without revealing the contents of network packets to the service provider.",
+        "confidence": 0.75,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Homomorphic-encryption compilers like HEIR make encrypted AI inference (and encrypted-traffic detection) practical, protecting both user data and proprietary model weights.",
+    "tags": [
+      "homomorphic-encryption",
+      "privacy-preserving-ml",
+      "model-protection",
+      "encrypted-inference",
+      "anomaly-detection"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Evaluate encrypted inference for sensitive workloads",
+      "detail": "For regulated data (healthcare, finance) or when protecting proprietary models, assess homomorphic-encryption toolchains such as HEIR to run server-side inference on ciphertexts, weighing cost overhead against avoiding plaintext data exposure and model-leak risk from on-device shipping."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 45,
+      "newness": 11,
+      "credibility": 75.0,
+      "composite": 44.0,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "Google's prior differential privacy, private set membership, private information retrieval work",
+    "threat": "Data exposure to service providers and proprietary-model leakage when balancing AI features against privacy.",
+    "conditions": "Organizations in regulated sectors needing AI features without exposing raw user data or shipping proprietary models to devices.",
+    "mitigations": "Compile models with HEIR for encrypted inference; use HE-based detection so providers never see plaintext data/packets.",
+    "cluster": "I",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/making-private-ai-practical-with-homomorphic-enc-bdd3b443.txt",
+    "id": "making-private-ai-practical-with-homomorphic-enc-bdd3b443",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": true,
+    "grounding_score": 0.0,
+    "domain_label": "Privacy-Preserving AI / Model Protection"
   }
 ]
