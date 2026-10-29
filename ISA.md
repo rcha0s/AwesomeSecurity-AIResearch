@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 48/55
+progress: 49/63
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -138,8 +138,21 @@ Why: Rohan, 2026-10-27: "I do want to look at claims that call out, okay, these 
 - [x] ISC-52: Every recommended practitioner source with a working feed is registered through `add_source.py`, each feed verified to parse with recent items (probe: `aggregate.py --dry-run` stages items from each). — #133: 11 sources registered after feed fetch; 7-day replay staged Latent Space 5, Miessler 1, Amp 1
 - [x] ISC-53: A batch lane reserves daily slots for efficiency candidates so CVEs can't crowd them out (probe: select_batch test; a dry run deals them). — #133 `eff_lane` + 4 tests in test_select_batch_labs.py
 - [x] ISC-54: The ledger holds claims that say what a harness should change for cost or work efficiency, each with at least two primary-source evidence links whose quotes were fetched and checked (probe: add_claim validate; per-quote fetch log). — #135: 14 claims (8 cost, 6 work), 2-5 sources each, 40/40 quotes matched to fetched pages, overreach review fixed 8
-- [ ] ISC-55: Rohan gets a report: sources added and rejected (why), the claims and their evidence, and what's open (probe: published private artifact link).
+- [x] ISC-55: Rohan gets a report: sources added and rejected (why), the claims and their evidence, and what's open (probe: published private artifact link). — delivered 2026-10-28 as a private artifact; the source count was corrected and republished
 - [x] ISC-A6 (anti): No efficiency claim rests on a vendor's marketing number alone or on a quote that wasn't found in the fetched source (probe: per-claim evidence review). — #135 review: every claim names a vendor's own number as such; cheaper-subagent claim marked guidance at 0.55
+
+### F10 · AI security signal Rohan would otherwise miss (2026-10-29)
+Why: Rohan missed OWASP's Agent Control Standard (ACS v0.1.0, 2026-09-01). The 2026-09-09 scan captured it, but it sat in the archive and the story ledger and never reached a surface he reads. The cause is ranking and delivery, not capture. A 2026-10-28 trial with the last30days engine, X and Reddit found stories the repo lacks. Rohan, 2026-10-28: "I need more content on AI Security. this includes learnings from x posts and videos ... only lookback max 1 day"; 2026-10-29: use list 2115494675994071362, "I think i have enough folks on that list for now".
+
+- [ ] ISC-56: The front page leads with Rohan's focus (MCP security, prompt injection, AI supply chain, AI-assisted security review, guardrails, red teaming, AI regulation for insurers), and a weekly digest of it reaches Pulse with a notification before his Tuesday 9:30 review (probe: briefing test with a focus fixture; live DOM; the Pulse notification arrives).
+- [ ] ISC-57: A must-not-miss standards lane, like the KEV lane, gives batch slots to new releases from OWASP GenAI, NIST, CoSAI, the MCP spec and NAIC, and they show on the Briefing (probe: select_batch test; replaying 2026-09-09 puts OWASP ACS on the Briefing).
+- [ ] ISC-58: A local-only X lane reads list 2115494675994071362 through Interceptor in a managed tab group and stages posts from the last 24 hours only, with a linked article as the citation when there is one (probe: dry run stages only posts 24h old or newer; a test refuses to run under CI or the cloud runner).
+- [ ] ISC-59: YouTube channel feeds for Theo, Matt Pocock and the AI security channels Rohan names are registered via `add_source.py`, each verified to parse (probe: `aggregate.py --dry-run` stages items from each).
+- [ ] ISC-60: Subreddit-scoped, keyless Reddit (r/netsec, r/cybersecurity, r/AI_Agents, r/LLMDevs, r/devsecops) is staged as practitioner signal, and a Reddit thread alone never becomes a finding (probe: ingest test; merge refuses a Reddit-only citation).
+- [ ] ISC-61: A "what practitioners are arguing" section, weighted by engagement, links every point to its threads or posts (probe: renderer test; live DOM).
+- [ ] ISC-62: Insurance-regulation sources (NAIC, state DOI bulletins, insurance-law firm feeds) are registered after each feed is verified (probe: `aggregate.py --dry-run`).
+- [ ] ISC-63: Every miss from the trial is a recall case in `data/evals/golden.json` and is in the pools: the MCP Inspector RCE pair, "Black October", NVIDIA OpenShell, arXiv 2610.13928, Mother Jones on banks vs customers' AI agents, and the Roo Code and Mistral Vibe approval bypasses (CVE ids checked at the primary source first) (probe: `eval_golden.py check`; recall eval).
+- [ ] ISC-A7 (anti): The last30days engine is not a dependency; no logged-in Reddit, Polymarket, TikTok, Instagram, ScrapeCreators or Digg; the X lane never posts, likes or follows, and never runs off this Mac (probe: requirements diff; X ingestor code review).
 
 ## Decisions
 
@@ -187,6 +200,7 @@ Why: Rohan, 2026-10-27: "I do want to look at claims that call out, okay, these 
 - 2026-10-19: Rohan: "you can archive but keep both the claims and the news as we go forward." Findings still age out at `max_age_days`. Claims were already durable. News (editorial promotions + news-gated stories) is now kept the same way: rerank never archives it and pulls previously archived news back into its pool, and the site's news lane drops its 7-day display limit (7 days now only governs entering the lane). On #68's data: 24 archived stories restored, 25 lane rows.
 - 2026-10-19: #69 review (2 important, 1 minor). ADOPTED: kept news no longer counts as held, so it can't pile up in REVIEW.md, the review ranking or the topic pages' held count (`common.is_held`, regression-tested); the README and topic text now says claims and news are kept. DECLINED with evidence: "news vanishes on the second render through the persisted dedup index". Rendering #68's data twice gave 20 news + 5 editorial rows both times.
 - 2026-10-28: F8/F9 overnight run (#129-#138). Opus usability review (Gemini quota exhausted, so the Claude fallback Rohan set) drove F8. Newest-first ordering (#127) made "top" mean "latest", so #131 added a "Biggest this week" lane ahead of it. The claims overreach review fixed 8 of 14 efficiency claims before merge (vendor-own numbers named as such, RouteLLM goal dropped, grader cost attributed to the whole three-agent harness). #137 widens auto-merge by `docs/feed.xml` only; the Opus review found it safe, and both reviews' hardening (raw-byte compare for feed and index.html, ASCII dates and author, fail-closed `main_has_feed`) landed before merge. The Forge cross-vendor pass was skipped for cause: `codex` is not installed on this Mac. Branch updates after the first push use `git merge origin/main`, never a force-push.
+- 2026-10-29: F10 from the last30days handoff and Rohan's X ask. Order: ISC-63 first (the recall cases measure everything else), then 56, 57 and 58. The X lane uses Rohan's own list, which he says has enough members for now. The handoff's "don't absorb" list is ISC-A7. Open: the Interceptor test profile is signed into Rohan's main X account, while #57 planned a dedicated one, so the lane stays read-only until he decides.
 
 ## Verification
 
