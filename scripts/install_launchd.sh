@@ -20,6 +20,52 @@ SRC="$(cd "$(dirname "$0")/.." && pwd)"
 RUNNER="${SCAN_RUNNER_HOME:-$HOME/.local/share/awesomesec-runner}"
 DOMAIN="gui/$(id -u)"
 
+# Optional, opt-in: the X list collector (scripts/ingest_x_list.py --collect), every
+# 3 hours, from the runner clone. A background tab loads only 5 to 10 posts per
+# read, so one read per day would miss most of a 24h window; each run upserts into
+# data/_x_list_seen.json (48h) and the daily scan merges it. Local Mac only, read-only,
+# never activates the tab. Needs the runner clone (install the daily job first).
+#   scripts/install_launchd.sh --xlist            # install
+#   scripts/install_launchd.sh --uninstall-xlist  # remove
+XLABEL="com.rcha0s.awesomesecurity.xlist"
+XPLIST="$HOME/Library/LaunchAgents/$XLABEL.plist"
+if [[ "${1:-}" == "--uninstall-xlist" ]]; then
+  launchctl bootout "$DOMAIN/$XLABEL" 2>/dev/null || true
+  rm -f "$XPLIST"
+  echo "Removed $XLABEL"
+  exit 0
+fi
+if [[ "${1:-}" == "--xlist" ]]; then
+  if [[ "$RUNNER" == *[\'\&\<\>]* || ! -d "$RUNNER/.git" ]]; then
+    echo "install_launchd: install the daily job first (runner clone missing or unsafe path)" >&2
+    exit 1
+  fi
+  mkdir -p "$HOME/Library/LaunchAgents" "$RUNNER/data"
+  XRUN="cd '$RUNNER' || exit 1; export PATH=\"\$PATH:/opt/homebrew/bin:/usr/local/bin:\$HOME/.local/bin\" SCAN_RUNNER=local; git fetch -q origin main; git reset -q --hard origin/main; .venv/bin/python scripts/ingest_x_list.py --collect 2>&1 | sed 's/^/[x-list] /' >> data/_scan.log"
+  NEW="$XPLIST.new"
+  cat >"$NEW" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>$XLABEL</string>
+  <key>ProgramArguments</key>
+  <array><string>/bin/bash</string><string>-c</string><string>$XRUN</string></array>
+  <key>WorkingDirectory</key><string>$RUNNER</string>
+  <key>StartInterval</key><integer>10800</integer>
+  <key>StandardOutPath</key><string>$RUNNER/data/_scan_launchd.log</string>
+  <key>StandardErrorPath</key><string>$RUNNER/data/_scan_launchd.log</string>
+</dict>
+</plist>
+EOF
+  plutil -lint "$NEW" >/dev/null
+  mv "$NEW" "$XPLIST"
+  launchctl bootout "$DOMAIN/$XLABEL" 2>/dev/null || true
+  launchctl bootstrap "$DOMAIN" "$XPLIST"
+  echo "Installed $XLABEL: every 3 hours, logs [x-list] lines to $RUNNER/data/_scan.log"
+  exit 0
+fi
+
 if [[ "${1:-}" == "--uninstall" ]]; then
   launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
   rm -f "$PLIST"

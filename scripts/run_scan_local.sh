@@ -42,6 +42,9 @@
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
 REPO="$PWD"
+# The X list collector job writes its 48h store in the clone; the scan worktree is
+# fresh every run, so point ingest_x_list.py at the clone's copy.
+export X_LIST_SEEN="$REPO/data/_x_list_seen.json"
 export SCAN_RUNNER=local
 export SCAN_RUN_ID="local-$(date -u +%Y%m%dT%H%M%SZ)-$$"
 # A backfill chunk (scripts/backfill.sh sets SCAN_BACKFILL_FROM/TO; see
