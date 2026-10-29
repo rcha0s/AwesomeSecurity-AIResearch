@@ -99,6 +99,9 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
     else:
         out.append("docs/index.html is missing")
     out += feed_check(base, root)
+    if page.is_file():
+        payload, _, found = cc.embedded(read_exact(page))
+        out += [] if found else cc.reddit_shown_problems(payload)
     pr_ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
     out += cc.claim_history_problems(main_ledger(base), pr_ledger)
     stories = root / "data" / "news_stories.json"

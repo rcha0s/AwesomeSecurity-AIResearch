@@ -444,6 +444,22 @@ stories:
   match_window_days: 90
   shortlist_max: 5
 
+# Subreddits as practitioner signal (scripts/ingest_reddit.py, ISA ISC-60). Reddit's
+# official API, app-only OAuth: REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET from the
+# environment, else the lane is skipped. A thread alone is never a finding: a link post
+# stages its linked article (the thread rides along as reddit_* fields), a self post goes
+# to the gitignored data/_practitioner_signal.json. Failures are soft (exit 0).
+reddit:
+  subreddits: [netsec, cybersecurity, AI_Agents, LLMDevs, devsecops]
+  sorts: [new, top]       # `top` is asked with t=day; one request per sub per sort
+  lookback_hours: 48      # posts newer than this
+  max_per_run: 6          # most links staged per run, best engagement (score + 2 x comments) first
+  min_score: 2            # drops the zero-vote new posts that are mostly spam
+  source_rank: 55         # registry-rank scale: above the 45 min_credibility bar, below curators (70)
+  timeout_seconds: 15
+  delay_seconds: 1        # pause between requests
+  signal_days: 14         # self-post rows older than this leave the signal file
+
 # Phase 3 evals (ISA ISC-22..26): the reviewer nobody has to be. Each eval is a
 # CLI that exits 0 on pass and prints one `EVAL <name> PASS|FAIL k=v ...` line,
 # so a merge gate can run it. data/evals/history.json gets one row per scan;
