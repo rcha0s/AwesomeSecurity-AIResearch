@@ -40,6 +40,7 @@ data/_cross_review.jsonl
 data/_merge_outcomes.json
 data/_golden*
 data/_curator_arxiv.json
+data/_practitioner_signal.json
 data/_analysis_draft.json
 data/_readability_outcomes.md
 

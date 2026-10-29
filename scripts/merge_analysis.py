@@ -248,6 +248,9 @@ def merge(
         entry = tx.enforce(normalize_entry(raw, conf), tx.get())
         if raw.get("brief") == c.NEWS_BRIEF:
             stamp_brief(entry, note)
+        if c.reddit_only(entry):  # after stamp_brief, which can rewrite source_url
+            entry["needs_review"] = True
+            entry["citation_hold"] = REDDIT_ONLY_HOLD
         entries = pools[entry["topic"]]["entries"]
         idx = match_index(entries, entry)
         old = stale_source(entry, conf) if idx is None else None
@@ -475,6 +478,8 @@ def ledger_placements(placements: list, outcomes: list[dict]) -> None:
 
 
 CURATOR_FIELDS = ("curated_by", "curator_issue")
+REDDIT_FIELDS = ("reddit_url", "reddit_score", "reddit_comments")  # ingest_reddit.py
+REDDIT_ONLY_HOLD = "reddit-only: the only citations are Reddit threads"
 
 
 def _match_keys(d: dict) -> set[str]:
@@ -485,7 +490,7 @@ def _match_keys(d: dict) -> set[str]:
 
 
 def stamp_curator(analyzed: list[dict], candidates: list[dict]) -> int:
-    """Copy a curator-link candidate's provenance onto its analyzed entry.
+    """Copy a curator-link (or Reddit-link) candidate's provenance onto its analyzed entry.
 
     The recall eval must know which entries came from a curator's own links
     (ingest_curator_links.py), so the marker is copied here, by candidate id,
@@ -493,13 +498,13 @@ def stamp_curator(analyzed: list[dict], candidates: list[dict]) -> int:
     it. A curator candidate no analyzed entry matches is logged (it may simply
     not have been analyzed this run, e.g. judged the same story)."""
     by_key: dict[str, dict] = {}
-    for cand in (x for x in candidates if x.get("curated_by")):
+    for cand in (x for x in candidates if x.get("curated_by") or x.get("reddit_url")):
         by_key.update({k: cand for k in _match_keys(cand)})
     done: set[int] = set()
     for entry in (e for e in analyzed if isinstance(e, dict)):
         cand = next((by_key[k] for k in sorted(_match_keys(entry)) if k in by_key), None)
         if cand:
-            entry.update({k: cand[k] for k in CURATOR_FIELDS if cand.get(k)})
+            entry.update({k: cand[k] for k in CURATOR_FIELDS + REDDIT_FIELDS if cand.get(k)})
             entry.setdefault("source_id", cand.get("source_id"))
             done.add(id(cand))
     for cand in {id(x): x for x in by_key.values()}.values():

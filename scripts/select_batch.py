@@ -145,7 +145,7 @@ DEFAULTS = {
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
-OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator")
+OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator", "reddit")
 
 
 def backlog_file() -> Path:
