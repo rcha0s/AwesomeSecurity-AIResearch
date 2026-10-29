@@ -645,7 +645,7 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   the two means our own sources are slipping behind the curator. tl;dr sec issues are
   picked like the ingestor's (newest `evals.recall.tldrsec_max_issues` by number,
   dated by the page itself).
-- **Golden** (`data/evals/golden.json` + `scripts/eval_golden.py`, ISC-23): ~30 past
+- **Golden** (`data/evals/golden.json` + `scripts/eval_golden.py`, ISC-23): 40+ past
   stories with checked keep/drop, on-topic, domain ID and key facts. `score` grades an
   analyzer output file deterministically; `scripts/run_golden_local.sh` is the weekly
   LLM run: a rotating slice staged in a throwaway worktree that `stage` scrubs of every
@@ -655,7 +655,11 @@ Every eval is a CLI: exit 0 = pass, and its last stdout line is
   `claude/golden-<date>` PR with the result. **A wrong answer in a real run adds a
   case:** copy the story's entry into `cases` with the checked answer, a `reason`, and
   1-3 `facts` (each with `any` phrases), mark doubts in `unsure`, and run
-  `eval_golden.py check`.
+  `eval_golden.py check`. A story Rohan wanted that the pipeline still holds (below
+  the curation floor) keeps `keep: true` and gets `known_miss: true` with a reason: the
+  case records the miss rather than bending the answer. A test requires `known_miss` to
+  match exactly the keep cases whose pool entry is held, so fixing the pipeline (or a
+  new miss) forces the flag to change; the self-replay test scores the rest at 1.0.
 - **Cost + gate** (`scripts/eval_history.py`, ISC-25/26): `post` appends one row per
   scan PR to `data/evals/history.json` (candidates, stories, kept, integrity, this run's
   recall with its independent and per-curator figures, the newest golden result, the ledger charge with its basis) and puts the
