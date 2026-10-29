@@ -19,7 +19,7 @@ Microsoft built a hunting signature for invisible Unicode Tags-block characters 
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [source](https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/)  ·  **Retrieved:** 2026-09-09  
-**Scores:** Newness 63 · Novelty 60 · Relevance 72 · Credibility 72 · **Composite 66** _(each 0-100)_  
+**Scores:** Newness 4 · Novelty 60 · Relevance 72 · Credibility 72 · **Composite 51** _(each 0-100)_  
 **Tags:** `ascii-smuggling`, `prompt-injection`, `phishing`, `unicode`, `detection`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: ASCII smuggling is well-documented in prompt-injection literature (Embrace The Red's ASCII Smuggler tool); older character-obfuscation phishing tricks are the closest non-AI prior art.
 

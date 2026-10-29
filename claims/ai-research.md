@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_31 current · 3 contested · 2 superseded · 1 refuted · updated 2026-10-29_
+_32 current · 3 contested · 2 superseded · 1 refuted · updated 2026-10-29_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -597,6 +597,26 @@ _Tags: `chain-of-thought`, `agents`, `evals`_
 | --- | --- | --- |
 | supports | [LLMs Get Lost In Multi-Turn Conversation](https://arxiv.org/abs/2505.06120) | May 9, 2025 |
 | supports | [When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories](https://arxiv.org/abs/2608.06057) | Aug 6, 2026 |
+
+</details>
+
+<a id="claim-agent-stated-lean-steers-expert-decisions"></a>
+
+### An agent's stated lean steers expert judgment calls
+
+`agent-stated-lean-steers-expert-decisions` · confidence **0.60** · Agents & Harnesses · standing since Oct 29, 2026
+
+When an agent states a preference on an open judgment call, experts mostly follow it: in Anthropic's randomized study analysts matched a coin-flip-assigned agent lean 86% of the time versus about 50% expected with no influence, often reusing the agent's arguments without crediting it.
+
+**Do this —** At human decision points in a harness, have the agent present the strongest case for each option and capture the human's own preference before the agent states its lean; do not rely on the human's self-report to judge whether they were steered.
+
+**Conditions —** Shown for open analytical choices with no clearly correct answer, in one study of expert analysts; not shown for decisions with a verifiable right answer or for permission prompts.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic study finds analysts follow an agent's hidden lean on judgment calls](https://www.anthropic.com/research/agents-judgment-calls) | Oct 27, 2026 |
 
 </details>
 

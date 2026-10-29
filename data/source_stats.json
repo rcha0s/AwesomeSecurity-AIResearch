@@ -20,11 +20,15 @@
     "ingested": 15
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "curated": 0,
-    "ingested": 14
+    "ingested": 16,
+    "curated": 0
+  },
+  "newsletter:https-newsletter-pragmaticengineer-com-feed": {
+    "ingested": 1,
+    "curated": 0
   },
   "newsletter:https-www-latent-space-feed": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
@@ -32,11 +36,11 @@
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 9,
+    "ingested": 10,
     "curated": 2
   },
   "rss:http-export-arxiv-org-rss-cs-cr": {
@@ -72,7 +76,7 @@
     "ingested": 4
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 4,
+    "ingested": 5,
     "curated": 0
   },
   "rss:https-genai-owasp-org-feed": {
@@ -148,8 +152,8 @@
     "curated": 0
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
-    "curated": 1,
-    "ingested": 7
+    "ingested": 8,
+    "curated": 1
   },
   "rss:https-www-darkreading-com-rss-xml": {
     "ingested": 2,
@@ -160,8 +164,8 @@
     "ingested": 3
   },
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
-    "curated": 6,
-    "ingested": 18
+    "ingested": 19,
+    "curated": 6
   },
   "rss:https-www-securityweek-com-feed": {
     "ingested": 2,
@@ -180,7 +184,11 @@
     "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
-    "curated": 0,
-    "ingested": 5
+    "ingested": 6,
+    "curated": 0
+  },
+  "youtube:ucbrp3c757lwg9m-u7tyekxa": {
+    "ingested": 1,
+    "curated": 0
   }
 }

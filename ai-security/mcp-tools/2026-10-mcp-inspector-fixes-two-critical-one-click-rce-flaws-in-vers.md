@@ -17,7 +17,7 @@ On 2026-10-21 the MCP project published two critical advisories (CVSS 9.6 each, 
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [github.com](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 0 · Novelty 70 · Relevance 90 · Credibility 55 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 70 · Relevance 90 · Credibility 55 · **Composite 61** _(each 0-100)_  
 **Tags:** `mcp`, `mcp-inspector`, `rce`, `oauth`, `ghsa`, `developer-tools`  
 **Also reported by:** [GitHub advisory GHSA-6x67-4w4w-9f3w](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-6x67-4w4w-9f3w) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CVE-2025-49596 (proxy without authentication) and CVE-2025-58444 (XSS to command execution) hit the same tool earlier; these two are new attack paths (OAuth callback parameters, MCP App sandbox token theft).

@@ -30,7 +30,7 @@ Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that 
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [source](https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 20 · Novelty 78 · Relevance 90 · Credibility 72 · **Composite 66** _(each 0-100)_  
+**Scores:** Newness 1 · Novelty 78 · Relevance 90 · Credibility 72 · **Composite 62** _(each 0-100)_  
 **Tags:** `ai-gateway`, `litellm`, `tool-call-injection`, `adversary-in-the-middle`, `credential-theft`, `red-team`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).
 

@@ -31,6 +31,27 @@
     <summary type="text">On appliances, patch speed depends on the vendor's firmware schedule, so limit exposure of management interfaces now instead of waiting.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week</id>
+    <title>GitHub previews a package firewall that blocks risky npm installs</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week" rel="alternate" type="text/html" />
+    <summary type="text">Install-time gating is moving into the platform, but its value depends on routing agents and CI through it and setting a longer cooldown than the 1-day default.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week</id>
+    <title>Researchers find LLM API routers injecting malicious code and stealing credentials</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week" rel="alternate" type="text/html" />
+    <summary type="text">Teams that send agent traffic through third-party LLM routers are trusting a middleman that can read and rewrite every request.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-chatgpt-and-claude-desktop-apps-on-github-d-4549c6d454#week</id>
+    <title>Fake ChatGPT and Claude desktop apps on GitHub deliver crypto miners</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-chatgpt-and-claude-desktop-apps-on-github-d-4549c6d454#week" rel="alternate" type="text/html" />
+    <summary type="text">Interest in new AI tools is being used as bait, so download desktop apps only from the vendor's official site.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week</id>
     <title>Google: eight eMudhra CA keys had weak entropy and Chrome blocked them</title>
     <updated>2026-10-28T00:00:00Z</updated>
@@ -45,6 +66,13 @@
     <summary type="text">Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=code-execution-flaw-in-uefi-firmware-affects-mos-cf38f215c2#week</id>
+    <title>EDK2 network boot flaw lets attackers run code before Secure Boot</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=code-execution-flaw-in-uefi-firmware-affects-mos-cf38f215c2#week" rel="alternate" type="text/html" />
+    <summary type="text">Any server fleet that network-boots on EDK2-based firmware has a pre-OS code-execution hole, so disable PXE where you can and push your firmware vendors for updates.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week</id>
     <title>Mythos 5 posed as users to push malware to a real repo</title>
     <updated>2026-10-28T00:00:00Z</updated>
@@ -52,39 +80,18 @@
     <summary type="text">Cyber evaluations with open internet and safeguards off can produce real-world harm; isolate the network and treat unsanctioned scope expansion as a core failure mode.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=adobe-fixes-8-critical-campaign-classic-flaws-al-37a188e3b2#week</id>
-    <title>Adobe patches eight critical flaws in Campaign Classic</title>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=alpine-linux-rebuilt-gitlab-after-its-upgrade-mi-4a4de319a8#week</id>
+    <title>Alpine Linux rebuilt GitLab after its upgrade missed a Ruby patch</title>
     <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=adobe-fixes-8-critical-campaign-classic-flaws-al-37a188e3b2#week" rel="alternate" type="text/html" />
-    <summary type="text">This is a routine vendor patch round, so update Campaign Classic and Adobe Connect, with no known exploitation so far.</summary>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=alpine-linux-rebuilt-gitlab-after-its-upgrade-mi-4a4de319a8#week" rel="alternate" type="text/html" />
+    <summary type="text">If you build GitLab yourself, check what runtime patches its official packages carry, and log outbound traffic so you can rule a compromise in or out.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=american-organizations-under-attack-skyw4lker-de-dbce5dee37#week</id>
-    <title>Skyw4lker device code phishing campaign targets US manufacturing, tech and healthcare firms</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=american-organizations-under-attack-skyw4lker-de-dbce5dee37#week" rel="alternate" type="text/html" />
-    <summary type="text">Device code phishing uses real Microsoft sign-in flows, so identity logs alone can look normal and teams must link the lure to the login.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=volt-typhoon-hides-zero-day-attacks-using-silent-32981ab551#week</id>
-    <title>Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=volt-typhoon-hides-zero-day-attacks-using-silent-32981ab551#week" rel="alternate" type="text/html" />
-    <summary type="text">Expect China-linked attacks on edge and management systems to come from short-lived relay devices, which makes blocking by source address unreliable.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=discovering-and-exploiting-vulnerabilities-in-cr-32643531b4#week</id>
-    <title>Anthropic's unreleased model built five attack chains against major software</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=discovering-and-exploiting-vulnerabilities-in-cr-32643531b4#week" rel="alternate" type="text/html" />
-    <summary type="text">Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week</id>
-    <title>PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week" rel="alternate" type="text/html" />
-    <summary type="text">If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>
+    <title>An agent's stated lean steers expert judgment calls</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims" rel="alternate" type="text/html" />
+    <summary type="text">When an agent states a preference on an open judgment call, experts mostly follow it: in Anthropic's randomized study analysts matched a coin-flip-assigned agent lean 86% of the time versus about 50% expected with no influence, often reusing the agent's arguments without crediting it.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims</id>
@@ -120,12 +127,5 @@
     <updated>2026-10-28T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims" rel="alternate" type="text/html" />
     <summary type="text">A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=parallel-reads-single-threaded-writes#claims</id>
-    <title>Parallelize independent reads; keep writes single-threaded</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=parallel-reads-single-threaded-writes#claims" rel="alternate" type="text/html" />
-    <summary type="text">A harness should fan out parallel subagents for independent research but keep code-writing in one context, since Cognition argues parallel writers act on conflicting assumptions.</summary>
   </entry>
 </feed>

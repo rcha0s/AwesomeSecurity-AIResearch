@@ -17,7 +17,7 @@ VulnCheck's 2026-10-13 advisory for CVE-2026-109428 shows Mistral Vibe approving
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [vulncheck.com](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 0 · Novelty 60 · Relevance 85 · Credibility 55 · **Composite 52** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 60 · Relevance 85 · Credibility 55 · **Composite 57** _(each 0-100)_  
 **Tags:** `mistral-vibe`, `coding-agents`, `permission-bypass`, `tree-sitter`, `command-allowlist`, `cve`  
 **Also reported by:** [HiddenLayer: unparsable shell constructs auto-approved (CVE-2026-87986)](https://www.hiddenlayer.com/sai-security-advisory/2026-09-mistral-vibe4) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Roo Code's seven auto-approve bypasses in the same pool show the same parser-differential pattern in another coding agent.

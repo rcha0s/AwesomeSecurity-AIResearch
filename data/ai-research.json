@@ -156,10 +156,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 21,
+        "newness": 20,
         "credibility": 43.9,
-        "composite": 57.43,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 57.18,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -230,10 +230,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 57.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 56.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -271,10 +271,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 57.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 56.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -489,10 +489,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 21,
+        "newness": 20,
         "credibility": 55.0,
-        "composite": 54.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 53.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -604,10 +604,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 55,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 51.6,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 51.35,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -784,10 +784,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 80,
-        "newness": 21,
+        "newness": 20,
         "credibility": 71.9,
-        "composite": 50.53,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 50.28,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": false,
       "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
@@ -870,10 +870,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 65,
-        "newness": 21,
+        "newness": 20,
         "credibility": 50.8,
-        "composite": 49.77,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 49.52,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -914,10 +914,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 21,
+        "newness": 20,
         "credibility": 55.0,
-        "composite": 49.5,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 49.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -977,74 +977,93 @@
       "grounding_score": 1.0
     },
     {
-      "id": "an-update-on-independent-evaluators-d4058e7ed4",
+      "candidate_id": "how-ai-agents-shape-experts-judgment-calls-570284eaf9",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "related_claims": [
+        "measure-speedups-with-repeated-trials",
+        "separate-grader-from-generator"
+      ],
+      "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
+      "summary": "Anthropic ran a randomized trial in which 50 professional causal-inference analysts did an hour-long statistical analysis in Claude Code, with the agent secretly told (by coin flip) to favor one of two reasonable options on each decision. Analysts matched the agent's lean 86% of the time against a 50% no-effect baseline, often dropped their own stated preference when the agent disagreed, and later explained their choices in the agent's words while still calling the result their own. The agents were instructed to hold and voice leans, so the effect in unprompted real use may be smaller, but the study shows a human reviewer is not automatically an independent check on agent work.",
+      "lessons": [
+        {
+          "point": "An agent's stated preference on open analytical choices largely decides what an expert picks: analysts matched a coin-flip-assigned lean 86% of the time where no influence would give about 50%.",
+          "excerpt": "Across all four combined, the result was 86%.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Experts who had already stated a preference switched away from it 60% of the time when the agent disagreed versus 6% when it agreed, though this rests on only 38 cases with a wide confidence interval.",
+          "excerpt": "they switched 60% of the time, compared with 6% when it agreed with their choice",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Analysts often reused the agent's arguments without crediting it (77% reused them, 15% credited the agent) and felt just as confident, so asking people whether they were steered is a weak check.",
+          "excerpt": "sometimes word for word, and only 15% credited the agent anywhere",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The agents argued their own side well but rarely made the case for the alternative, and the authors suggest presenting the other option's strongest case could have helped experts choose for themselves.",
+          "excerpt": "But they rarely made a strong case for why an expert might prefer the other option",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your harness relies on a human to make or check judgment calls, the agent's framing will often make the call instead, so design for that.",
+      "tags": [
+        "human-in-the-loop",
+        "automation-bias",
+        "agent-influence",
+        "claude-code",
+        "user-study",
+        "oversight"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Make the agent argue both options at human decision points",
+        "detail": "When an agent reaches a decision with more than one reasonable answer, have it state its own lean and also the strongest case for the alternative, ideally asking the human to commit to a choice before it voices its lean. Do not treat a human sign-off as independent review of agent-produced analysis, and do not rely on users' self-reported ownership or confidence as evidence they were not steered."
+      },
       "scores": {
-        "novelty": 55,
-        "relevance": 50,
-        "newness": 21,
-        "credibility": 75.0,
-        "composite": 48.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "novelty": 40,
+        "relevance": 70,
+        "newness": 20,
+        "credibility": 70.2,
+        "composite": 48.53,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
-      "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
-      "topic": "ai-research",
-      "domain": "air.alignment",
-      "title": "Anthropic embeds METR with employee-like access but controls what is redactable",
-      "source_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
-      "article_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
+      "prior_art": "Closest pool entry is the Claude Code permission-prompt game showing approval fatigue (humans approve about 1 in 3 malicious commands), which concerns rubber-stamping actions; general automation-bias research is also prior. This study adds a randomized measurement of agents steering expert analytical judgment and of experts misattributing that influence.",
+      "threat": "An agent's arbitrary or misaligned preferences silently decide expert judgment calls and make human review a non-independent check, including in agent-run AI safety research.",
+      "conditions": "Open decisions with more than one defensible answer, an agent that voices a preference, and an expert who forms views while weighing options; measured on one hour-long farming task with Claude Opus 4.8 given deliberately strengthened leans.",
+      "mitigations": "Have the agent present the strongest case for each option, capture the human's preference before the agent states its lean, and do not count a human sign-off on agent work as an independent check.",
+      "article_url": "https://www.anthropic.com/research/agents-judgment-calls",
       "tweet_url": null,
       "author": null,
       "date": "2026-10",
-      "published": "2026-10-20",
-      "raw_path": "data/_raw/an-update-on-independent-evaluators-d4058e7ed4.txt",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/how-ai-agents-shape-experts-judgment-calls-570284eaf9.txt",
       "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-news",
-      "source_rank": 75.0,
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.2,
       "source_topics": [
         "ai-research",
         "ai-security"
       ],
-      "related_claims": [],
-      "summary": "Anthropic has onboarded six METR staff with company hardware and internal-tool access roughly on par with its own risk-assessment teams, and METR will publish its risk assessments. Anthropic cannot veto publication but can require redaction within predefined categories, and Anthropic itself decides what falls into those categories. Other evaluator partnerships (SecureBio, Accenture, early talks with Hugging Face) get more limited access and publication rights.",
-      "lessons": [
-        {
-          "point": "The embedded METR team gets internal-tool access roughly comparable to Anthropic's own risk-assessment teams.",
-          "excerpt": "access to internal tools and systems that are roughly on par with what our own risk assessment teams have access to",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Publication is not vetoable, but redaction within predefined categories is, and the lab decides what fits a category: the independence guarantee depends on how those categories are drawn.",
-          "excerpt": "require them to redact information if it falls into predefined categories such as reproducing confidential IP",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Anthropic's stated evaluator criteria include independence: no equity in the lab and no financial or operational dependence on it.",
-          "excerpt": "or be financially or operationally dependent on it",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Embedded third-party evaluation is now a concrete arrangement at one frontier lab; when you weigh its outputs, look at the redaction terms.",
-      "tags": [
-        "third-party-evaluation",
-        "governance",
-        "frontier-labs",
-        "metr"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Read evaluator reports with their access and redaction terms",
-        "detail": "When you cite a third-party frontier-model assessment, record which access tier the evaluator had (embedded vs limited) and whether the lab controlled redaction categories; weight conclusions accordingly."
-      },
-      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "source_name": "Anthropic Research",
+      "source_url": "https://www.anthropic.com/research/agents-judgment-calls",
+      "id": "anthropic-study-finds-analysts-follow-an-agent-s-e364841c07",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
       "needs_review": true,
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "anthropic-embeds-metr-with-employee-like-access-but-keeps-co"
-      ]
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "our-framework-for-reporting-model-misalignment-19d153bc9f",
@@ -1136,6 +1155,76 @@
       ]
     },
     {
+      "id": "an-update-on-independent-evaluators-d4058e7ed4",
+      "scores": {
+        "novelty": 55,
+        "relevance": 50,
+        "newness": 20,
+        "credibility": 75.0,
+        "composite": 47.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "verified": true,
+      "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
+      "topic": "ai-research",
+      "domain": "air.alignment",
+      "title": "Anthropic embeds METR with employee-like access but controls what is redactable",
+      "source_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "article_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/an-update-on-independent-evaluators-d4058e7ed4.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "related_claims": [],
+      "summary": "Anthropic has onboarded six METR staff with company hardware and internal-tool access roughly on par with its own risk-assessment teams, and METR will publish its risk assessments. Anthropic cannot veto publication but can require redaction within predefined categories, and Anthropic itself decides what falls into those categories. Other evaluator partnerships (SecureBio, Accenture, early talks with Hugging Face) get more limited access and publication rights.",
+      "lessons": [
+        {
+          "point": "The embedded METR team gets internal-tool access roughly comparable to Anthropic's own risk-assessment teams.",
+          "excerpt": "access to internal tools and systems that are roughly on par with what our own risk assessment teams have access to",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Publication is not vetoable, but redaction within predefined categories is, and the lab decides what fits a category: the independence guarantee depends on how those categories are drawn.",
+          "excerpt": "require them to redact information if it falls into predefined categories such as reproducing confidential IP",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Anthropic's stated evaluator criteria include independence: no equity in the lab and no financial or operational dependence on it.",
+          "excerpt": "or be financially or operationally dependent on it",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Embedded third-party evaluation is now a concrete arrangement at one frontier lab; when you weigh its outputs, look at the redaction terms.",
+      "tags": [
+        "third-party-evaluation",
+        "governance",
+        "frontier-labs",
+        "metr"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Read evaluator reports with their access and redaction terms",
+        "detail": "When you cite a third-party frontier-model assessment, record which access tier the evaluator had (embedded vs limited) and whether the lab controlled redaction categories; weight conclusions accordingly."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "anthropic-embeds-metr-with-employee-like-access-but-keeps-co"
+      ]
+    },
+    {
       "id": "fixing-tool-call-accuracy-in-vllm-5470a07021",
       "topic": "ai-research",
       "domain": "air.model-io",
@@ -1189,10 +1278,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 21,
+        "newness": 20,
         "credibility": 55.0,
-        "composite": 46.5,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 46.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -1232,6 +1321,90 @@
       "previous_slugs": [
         "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
       ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "cluster": "L",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "jailbreak-transfers-across-models",
+        "llm-eval-datasets-leak-into-training-sets"
+      ],
+      "title": "Enhancing AI security through global AI red teaming",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+      "published": "2026-07-27",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch09-3.txt",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 76.8,
+      "summary": "Microsoft launched the External Red Team Alliance (EXTRA), an unrestricted-gifts program funding 18 university labs across six continents — including CMU CyLab, Georgetown SecLab, KAIST WSP, IIT Madras CeRAI, Berkeley RDI, Toronto CleverHans, UCL ISec — plus a distributed operational network of regional and domain specialists. The load-bearing claim is that meaningful AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harms, alignment failures, and geography-specific abuse patterns that no single internal team can staff. The unrestricted-funding structure is deliberate: Microsoft does not want to steer research to predefined deliverables, because doing so would compromise independent capacity. The doctrinal point is that external expertise is no longer supplemental to red-teaming, it is essential.",
+      "takeaway": "AI red-teaming is now interdisciplinary, multilingual, and geographically distributed by requirement, not by preference — internal-only teams cannot cover the actual attack surface.",
+      "lessons": [
+        {
+          "point": "AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harm, alignment failure, and regional abuse patterns — an attack surface no single corporate team can staff.",
+          "excerpt": "AI red teaming is no longer just about prompt injection or content safety edge cases. It increasingly involves security operations, misuse scenarios, multilingual harms, alignment failures, and domain-specific abuse patterns that can vary significantly across geographies and languages.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Unrestricted funding is a deliberate design choice: directing external research toward predefined deliverables would compromise the independent capacity that makes the external contribution valuable in the first place.",
+          "excerpt": "The funding is unrestricted because the objective is not to direct research outcomes toward product requirements or predefined deliverables. The goal is to strengthen independent safety research capacity globally and create stronger long-term collaboration between academia and operational AI security teams.",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Microsoft's operational conclusion: external red-team expertise is not a nice-to-have supplement, it is essential to identifying meaningful failure modes at frontier capability.",
+          "excerpt": "EXTRA reflects a practical shift in how AI security testing must operate going forward. External expertise is no longer supplemental to red teaming; in many cases, it is essential.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Low-resource / non-English contexts are a specific frontier-model risk vector — named explicitly as a reason to fund labs in South Africa, Brazil, India, Korea, and Australia rather than just North American and European institutions.",
+          "excerpt": "As frontier model capabilities advance, they create new risk opportunities, particularly in low-resource settings. Partnerships, such as this EXTRA, bring greater attention to the study of the local risk landscape and can enable broader impact of the work carried out around the globe in smaller academic settings.",
+          "confidence": 0.88,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "red-teaming",
+        "ai-safety",
+        "external-testing",
+        "academic-partnership",
+        "multilingual",
+        "regional-abuse",
+        "microsoft"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat external, multi-region, non-English red-team coverage as a required control, not a supplementary one",
+        "detail": "For any org deploying a frontier model at scale: (1) enumerate the language, cultural, and regional attack surfaces your product actually reaches, (2) verify that your red-team roster covers each of those surfaces with actual practitioners in-region — machine-translation is not coverage, (3) fund the coverage on an unrestricted basis so the researchers can pursue emerging risks rather than a corporate checklist, and (4) treat operational (SecOps / misuse / alignment failure) categories as first-class red-team scope alongside prompt-injection and content-safety. The Microsoft position is that internal-only teams cannot staff this attack surface, and that follows for any organization operating at frontier-model scale."
+      },
+      "scores": {
+        "novelty": 48,
+        "relevance": 64,
+        "newness": 0,
+        "credibility": 76.8,
+        "composite": 45.12,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "prior_art": "Vendor red-team-alliance announcements are a well-worn genre (OpenAI Red Teaming Network, Anthropic's ASL red-team program, Google DeepMind's Gemini safety collaborations). Microsoft's delta is the 18-lab six-continent list, the unrestricted-funding structure (as opposed to work-for-hire contracts), and the explicit doctrinal claim that external expertise is essential rather than supplemental.",
+      "discovered_via": "rss",
+      "threat": null,
+      "conditions": null,
+      "mitigations": null,
+      "verified": true,
+      "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-batch09-3.txt; related_claims exist in data/claims.json. Program-launch story, not a specific vulnerability — threat/conditions/mitigations left null in favor of the takeaway-shaped actionable.",
+      "id": "enhancing-ai-security-through-global-ai-red-team-58e381fc0f",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "Red-Teaming Methodology"
     },
     {
       "topic": "ai-research",
@@ -1376,10 +1549,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 21,
+        "newness": 20,
         "credibility": 70.8,
-        "composite": 44.37,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 44.12,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
       "verified": true,
@@ -1406,6 +1579,112 @@
         "passed": false,
         "issues": [
           "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "ainews-gemini-4-carbon-tops-leaderboards-launche-76614ce5e4",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "related_claims": [
+        "retest-harness-scaffolding-on-model-change"
+      ],
+      "title": "Google ships Gemini 4 Carbon to trusted cyber defenders first",
+      "summary": "Google DeepMind's Gemini 4 Carbon, released two weeks after Argon, takes #1 on the Artificial Analysis Intelligence Index v5 and is positioned as state of the art for cybersecurity, with Google-claimed scores of 88.2% on SEC-bench Pro (vulnerability finding), 54.8% on ExploitGym (exploitation) and 71.0% on CWE-bench (patching). Access goes first to trusted cyber defenders through the Fairwind Program. Independent evals show it trailing Opus 5.5 and GPT-6 Astra on several coding benchmarks, and its measured hallucination rate rose from 4% to 11% versus Argon.",
+      "lessons": [
+        {
+          "point": "Google's cyber numbers cover finding, exploiting and patching, but they are vendor-claimed scores, not independent results.",
+          "excerpt": "88.2% on SEC-bench Pro for vulnerability finding, 54.8% on ExploitGym for exploitation and 71.0% on CWE-bench for patching",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The release is gated: trusted defenders get the model before general developers, with no firm date for wider access.",
+          "excerpt": "Carbon first goes to trusted cyber defenders through the Fairwind Program, with wider developer access promised",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Coding-agent results were measured in one harness, so expect different results in your own harness.",
+          "excerpt": "The coding-agent results were measured in Antigravity CLI, so results in other harnesses are untested",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Its hallucination rate went up versus Argon, and users have raised that as a concern for security work.",
+          "excerpt": "Some users are concerned about hallucination in cyber use",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A strong new model for vulnerability work, but its cyber scores come from Google and its hallucination rate went up, so validate it on your own triage tasks before you trust its findings.",
+      "tags": [
+        "frontier-model",
+        "cyber-capability",
+        "vulnerability-discovery",
+        "benchmarks",
+        "gated-access",
+        "hallucination"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Rerun your vulnerability-triage eval set before adopting Gemini 4 Carbon",
+        "detail": "If you get Fairwind access, run Carbon in your own harness on a held-out set of known-true and known-false vulnerability findings. Measure the false-positive and hallucinated-finding rate next to your current model. Do not rely on SEC-bench Pro or ExploitGym scores or on Antigravity CLI results."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 55,
+        "newness": 20,
+        "credibility": 87.5,
+        "composite": 43.62,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier upheld all four lessons; novelty agreed at 30 (gated trusted-defender access is established prior art).",
+      "prior_art": "Earlier frontier releases with gated cyber access and vendor-reported cyber evals (Anthropic Mythos coverage, Gemini 4 Argon three weeks earlier); claims that harness changes alter measured capability are already in the ledger (retest-harness-scaffolding-on-model-change).",
+      "threat": "Frontier models with strong exploitation scores (54.8% on ExploitGym, Google-claimed) raise attacker capability once access widens beyond trusted defenders.",
+      "conditions": "Applies once access extends past the Fairwind Program; the cyber scores are reported by Google, and the coding results were measured only in Antigravity CLI.",
+      "mitigations": "Validate the model on in-house triage data before use, have a human check its findings because of the higher hallucination rate, and plan for faster exploit development once wider access ships.",
+      "corroborating_sources": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/googles-gemini-4-carbon-leads.html",
+          "published": "2026-10-29"
+        },
+        {
+          "name": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "published": "2026-10-29"
+        },
+        {
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/google-says-gemini-4-carbon-leads-in-finding-exploiting-and-fixing-vulnerabilities/",
+          "published": "2026-10-29"
+        }
+      ],
+      "source_url": "https://latent.space/p/ainews-gemini-4-carbon/",
+      "article_url": "https://latent.space/p/ainews-gemini-4-carbon/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/ainews-gemini-4-carbon-tops-leaderboards-launche-76614ce5e4.txt",
+      "discovered_via": "rss",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 72.5,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Latent Space",
+      "id": "google-ships-gemini-4-carbon-to-trusted-cyber-de-dc08c8f441",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 48 > 45 (Google DeepMind's Gemini 4 Carbon, released two weeks after Argon, takes #1 on the Artificial Analysis Intelligence Inde)"
         ]
       },
       "grounding_score": 1.0
@@ -1474,10 +1753,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 43.5,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 43.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1632,10 +1911,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 42.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 41.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -1908,10 +2187,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 21,
+        "newness": 20,
         "credibility": 53.0,
-        "composite": 37.8,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 37.55,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -1994,10 +2273,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 37.5,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 37.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -2063,10 +2342,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 21,
+        "newness": 20,
         "credibility": 72.5,
-        "composite": 37.12,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 36.88,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -2143,10 +2422,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 21,
+        "newness": 20,
         "credibility": 50.8,
-        "composite": 36.87,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 36.62,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2230,10 +2509,10 @@
       "scores": {
         "novelty": 18,
         "relevance": 45,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 35.4,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 35.15,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
@@ -2472,10 +2751,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 33.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 32.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -2551,10 +2830,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 21,
+        "newness": 20,
         "credibility": 75.0,
-        "composite": 33.0,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 32.75,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
@@ -2626,10 +2905,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 21,
+        "newness": 20,
         "credibility": 50.6,
-        "composite": 32.34,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 32.09,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -2654,6 +2933,89 @@
       "source_name": "arXiv cs.CR (Cryptography and Security)",
       "id": "survey-maps-how-self-improving-ai-systems-can-fa-73b25ce21f",
       "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "software-engineering-at-google-cs-education-with-181268fcd9",
+      "topic": "ai-research",
+      "domain": "air.work-efficiency",
+      "related_claims": [
+        "measure-speedups-with-repeated-trials"
+      ],
+      "title": "Titus Winters says AI raised code output and outages, not features shipped",
+      "summary": "In a Pragmatic Engineer podcast, Titus Winters, lead author of Software Engineering at Google, says engineers he talks to report code output up sharply, outages up about 30%, and features shipped flat. He describes Google's 2010 cleanup of a roughly 250-million-line C++ codebase done without LLMs (abstract syntax tree matching, generated edits, old and new APIs coexisting, sharded rollout, blocking the old pattern, then deletion) and Google's rule that every change carry a test. He argues AI's real value is enabling projects too ambitious to attempt before, not doing the same work faster.",
+      "lessons": [
+        {
+          "point": "More code output from AI does not mean more delivered value: Winters reports outages up about 30% with features shipped flat, though this is anecdote from conversations, not a measured study.",
+          "excerpt": "outages are also up about 30%, while the number of features shipped is static",
+          "confidence": 0.4,
+          "grounded": true
+        },
+        {
+          "point": "Google's pre-LLM large-scale refactor recipe was to parse code into abstract syntax trees, match exact patterns, generate edits, let old and new APIs coexist, ship by directory shard, block the old pattern, then delete it.",
+          "excerpt": "ran a MapReduce over the whole codebase. The mapper parsed every build target into an abstract syntax tree",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "After Google required a test with every change, Google Search returned from quarterly to its former faster shipping cadence.",
+          "excerpt": "mandated that every change was to be accompanied by a test",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Winters argues productivity metrics that count speed on existing work miss AI's main benefit, which is making previously unrealistic projects feasible.",
+          "excerpt": "He sees the real value of AI as not in repeating the same things as before at higher speed.",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Judge AI-assisted engineering by outages and delivered features, not code volume, and wrap large AI rewrites in the coexist, shard and block-the-old discipline Google used before LLMs.",
+      "tags": [
+        "developer-productivity",
+        "large-scale-refactoring",
+        "testing",
+        "reliability",
+        "podcast"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track outages and shipped features alongside AI code output",
+        "detail": "When measuring an AI coding rollout, report change-failure or outage rate and features shipped next to lines or PRs produced. For agent-driven migrations, keep old and new APIs working side by side, ship edits in directory-sized shards, add a check that blocks reintroducing the old pattern, and delete the old API only at the end."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 40,
+        "newness": 20,
+        "credibility": 55.0,
+        "composite": 31.85,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier upheld lessons 1, 3 and 4; lesson 2's agent-migration framing was our inference and was reworded to the recipe the source gives (novelty 22 vs 30, lower kept).",
+      "prior_art": "The pool's work-efficiency claim that developers misjudge AI speedups (METR's early-2025 study) already makes the point that output impressions mislead; Google's large-scale change practice is documented in the Software Engineering at Google book. The 30% outage figure is new but anecdotal.",
+      "article_url": "https://newsletter.pragmaticengineer.com/p/software-engineering-at-google-and",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/software-engineering-at-google-cs-education-with-181268fcd9.txt",
+      "discovered_via": "rss",
+      "source_id": "newsletter:https-newsletter-pragmaticengineer-com-feed",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "The Pragmatic Engineer",
+      "source_url": "https://newsletter.pragmaticengineer.com/p/software-engineering-at-google-and",
+      "id": "titus-winters-says-ai-raised-code-output-and-out-3746e9ad00",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -2715,10 +3077,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 21,
+        "newness": 20,
         "credibility": 55.0,
-        "composite": 31.5,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 31.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -2780,10 +3142,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 21,
+        "newness": 20,
         "credibility": 52.0,
-        "composite": 31.05,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 30.8,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -2854,10 +3216,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 21,
+        "newness": 20,
         "credibility": 40.0,
-        "composite": 29.85,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 29.6,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -2931,10 +3293,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 21,
+        "newness": 20,
         "credibility": 72.0,
-        "composite": 29.55,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 29.3,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -3005,10 +3367,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 15,
-        "newness": 21,
+        "newness": 20,
         "credibility": 72.0,
-        "composite": 29.55,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 29.3,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
@@ -3077,10 +3439,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 21,
+        "newness": 20,
         "credibility": 53.2,
-        "composite": 28.23,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 27.98,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -3155,10 +3517,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 21,
+        "newness": 20,
         "credibility": 57.5,
-        "composite": 27.98,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 27.73,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -3239,10 +3601,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 21,
+        "newness": 20,
         "credibility": 69.3,
-        "composite": 27.64,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 27.39,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
@@ -3316,10 +3678,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 21,
+        "newness": 20,
         "credibility": 55.0,
-        "composite": 26.4,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 26.15,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -3346,82 +3708,6 @@
       "grounding_score": 1.0,
       "previous_slugs": [
         "sebastian-raschka-s-11-hour-8-video-from-scratch-course-on-b"
-      ]
-    },
-    {
-      "id": "show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "pi pod runs the pi coding agent in isolated sandboxes",
-      "source_url": "https://pipod.dev/",
-      "related_claims": [],
-      "summary": "pi pod is a new open-source project that runs sessions of the minimalist pi coding-agent harness inside isolated sandboxes on a server you control. The author argues that a minimal team agent environment needs four things: sandboxing, native clients, role-based access control (RBAC) for session sharing, and browser/native-app automation. The page is a launch announcement. It gives no details on how the isolation works and no security evaluation.",
-      "lessons": [
-        {
-          "point": "The project aims to keep the user's existing pi harness unchanged and add sandbox isolation around it.",
-          "excerpt": "pi pod aims to seamlessly run your pi in an isolated sandbox with minimal, carefully curated tooling to get out the way and give you the boring stuff you need.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The author's view of the minimum team agent environment: sandboxing, native clients, RBAC session sharing, and browser and native-app automation.",
-          "excerpt": "I consider agent sandboxing, native clients, rbac session sharing, and surface automation (namely browser and native apps) to comprise the minimal agentic engineering environment that should be used for software engineers in an organization.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Self-hosting is pitched as the way for companies to keep the whole agent environment in their own data center.",
-          "excerpt": "Self-hosting also is a great option for businesses who want their entire agentic environment in their preferred data center.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.",
-      "tags": [
-        "coding-agents",
-        "agent-sandbox",
-        "self-hosted",
-        "pi-harness",
-        "launch-announcement"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Check pi pod's isolation model before you rely on it",
-        "detail": "If you run pi for a team, read the pi-pod/pipod repository to find out what isolation backs each pod (container, gVisor, microVM), what outbound network access it allows, and how credentials reach the pod. Do this before you treat the sandbox as a security boundary.",
-        "skill_slug": null
-      },
-      "scores": {
-        "novelty": 15,
-        "relevance": 25,
-        "newness": 21,
-        "credibility": 55.0,
-        "composite": 25.5,
-        "scored_at": "2026-10-28T16:52:05+00:00"
-      },
-      "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
-      "verified": true,
-      "verify_note": "Verifier: thin launch announcement; 'open-source' inferred from a GitHub link.",
-      "article_url": "https://pipod.dev/",
-      "tweet_url": null,
-      "author": "edverma2",
-      "date": "2026-10",
-      "published": "2026-10-02",
-      "raw_path": "data/_raw/show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@edverma2 via Hacker News",
-      "retrieved_at": "2026-10-25T02:36:53+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "pi-pod-self-hosted-wrapper-that-runs-the-pi-coding-agent-in"
       ]
     },
     {
@@ -3510,6 +3796,157 @@
       "grounding_score": 1.0
     },
     {
+      "id": "show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "pi pod runs the pi coding agent in isolated sandboxes",
+      "source_url": "https://pipod.dev/",
+      "related_claims": [],
+      "summary": "pi pod is a new open-source project that runs sessions of the minimalist pi coding-agent harness inside isolated sandboxes on a server you control. The author argues that a minimal team agent environment needs four things: sandboxing, native clients, role-based access control (RBAC) for session sharing, and browser/native-app automation. The page is a launch announcement. It gives no details on how the isolation works and no security evaluation.",
+      "lessons": [
+        {
+          "point": "The project aims to keep the user's existing pi harness unchanged and add sandbox isolation around it.",
+          "excerpt": "pi pod aims to seamlessly run your pi in an isolated sandbox with minimal, carefully curated tooling to get out the way and give you the boring stuff you need.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The author's view of the minimum team agent environment: sandboxing, native clients, RBAC session sharing, and browser and native-app automation.",
+          "excerpt": "I consider agent sandboxing, native clients, rbac session sharing, and surface automation (namely browser and native apps) to comprise the minimal agentic engineering environment that should be used for software engineers in an organization.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Self-hosting is pitched as the way for companies to keep the whole agent environment in their own data center.",
+          "excerpt": "Self-hosting also is a great option for businesses who want their entire agentic environment in their preferred data center.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.",
+      "tags": [
+        "coding-agents",
+        "agent-sandbox",
+        "self-hosted",
+        "pi-harness",
+        "launch-announcement"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check pi pod's isolation model before you rely on it",
+        "detail": "If you run pi for a team, read the pi-pod/pipod repository to find out what isolation backs each pod (container, gVisor, microVM), what outbound network access it allows, and how credentials reach the pod. Do this before you treat the sandbox as a security boundary.",
+        "skill_slug": null
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 25,
+        "newness": 20,
+        "credibility": 55.0,
+        "composite": 25.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
+      "verified": true,
+      "verify_note": "Verifier: thin launch announcement; 'open-source' inferred from a GitHub link.",
+      "article_url": "https://pipod.dev/",
+      "tweet_url": null,
+      "author": "edverma2",
+      "date": "2026-10",
+      "published": "2026-10-02",
+      "raw_path": "data/_raw/show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@edverma2 via Hacker News",
+      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "pi-pod-self-hosted-wrapper-that-runs-the-pi-coding-agent-in"
+      ]
+    },
+    {
+      "candidate_id": "ai-for-science-expands-to-foundations-and-resear-ea6046e123",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "related_claims": [],
+      "title": "Anthropic expands AI for Science credits to 20 foundations and institutions",
+      "summary": "Anthropic is giving free Claude credits through 20 science funders, research institutions and projects, including the Sloan and Simons foundations, the US National Science Foundation, the Space Telescope Science Institute and the Broad Institute's gnomAD. The post also mentions the Model Hardware Standard, a specification for agents to operate lab instruments that is in research preview, and the Allen Institute's agent teams for data analysis. It is a program announcement with no technical detail or results.",
+      "lessons": [
+        {
+          "point": "The expansion is mainly a free Claude credits program, given through partner organizations and to six named research projects, rather than new tooling.",
+          "excerpt": "which gives free Claude credits to researchers working on high-impact scientific projects",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Anthropic and a research partner built the Model Hardware Standard, a shared specification for AI agents to operate lab instruments, currently in research preview; the post gives no technical detail.",
+          "excerpt": "a shared specification that lets AI agents safely operate lab instruments",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The Allen Institute is said to use teams of AI agents to cut data analysis from months to hours, a claim the post does not support with any measurement.",
+          "excerpt": "The institute is building teams of AI agents to analyze that data, turning months of manual analysis into hours.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A funding and partnership announcement with nothing to change in a harness, apart from noting the Model Hardware Standard for agents that drive physical instruments.",
+      "tags": [
+        "anthropic",
+        "ai-for-science",
+        "program-announcement",
+        "lab-automation"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Watch the Model Hardware Standard if agents control lab equipment",
+        "detail": "Nothing to adopt from this post itself. If you build agents that drive physical instruments, follow the Model Hardware Standard research preview for its permission and safety model once details are published."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 10,
+        "newness": 20,
+        "credibility": 67.5,
+        "composite": 22.62,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier upheld lessons; some credits also go directly to six named projects, not only through partners.",
+      "prior_art": "Earlier pool entries on Anthropic science and partnership announcements (Claude-driven drug development partnerships, the partnerships index) and the original May 2025 AI for Science program launch; this is an expansion of the same program.",
+      "article_url": "https://www.anthropic.com/news/ai-for-science-expands-foundations-research-institutions",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-28",
+      "raw_path": "data/_raw/ai-for-science-expands-to-foundations-and-resear-ea6046e123.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 67.5,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "source_url": "https://www.anthropic.com/news/ai-for-science-expands-foundations-research-institutions",
+      "id": "anthropic-expands-ai-for-science-credits-to-20-f-1d085f3ad9",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.ml-research",
       "title": "Anthropic staff, unlike most US adults, expect Nobel-level AI discovery by 2030",
@@ -3565,10 +4002,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 21,
+        "newness": 20,
         "credibility": 70.0,
-        "composite": 21.15,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 20.9,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -3713,10 +4150,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 21,
+        "newness": 20,
         "credibility": 67.5,
-        "composite": 19.88,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 19.62,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
@@ -3743,6 +4180,78 @@
         "score": 100,
         "passed": true,
         "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "how-to-give-claude-unlimited-usage-105fdb2030",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "related_claims": [],
+      "title": "Theo video on running Claude for weeks, transcript not captured",
+      "summary": "A Theo (t3.gg) YouTube video claims to show how to run Claude for weeks, but the captured page holds only the video description, a sponsor link and viewer comments. No technique, setup or result from the video itself is in the source text, so nothing here can be taught as a finding.",
+      "lessons": [
+        {
+          "point": "The video promises a way to run Claude for weeks, but the description gives no method and mostly promotes a sponsor.",
+          "excerpt": "how to run Claude for WEEKS Thank you to Browserbase for Sponsoring",
+          "confidence": 0.3,
+          "grounded": true
+        },
+        {
+          "point": "The fetch hit an authorization error, so the captured text is page chrome and comments rather than the transcript.",
+          "excerpt": "Warning: Target URL returned error 401: Unauthorized",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Nothing usable was captured. Watch the video or fetch its transcript before treating it as a source on long-running agents.",
+      "tags": [
+        "claude",
+        "long-running-agent",
+        "video",
+        "low-signal",
+        "no-transcript"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Fetch the transcript before analyzing video candidates",
+        "detail": "For YouTube candidates whose raw text is only the description and comments, fetch the transcript first, or score the entry as low-signal and hold it rather than inferring the video's content."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 15,
+        "newness": 20,
+        "credibility": 55.0,
+        "composite": 19.25,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "verified": false,
+      "verify_reason": "factual",
+      "verify_note": "Verifier: the description is truncated, so 'gives no method' cannot be confirmed from the captured text.",
+      "prior_art": "The pool already covers long-running agent harnesses and session persistence (for example the claim persist-feature-list-and-progress-across-sessions). With no transcript, there is no claim from this video to compare.",
+      "source_url": "https://www.youtube.com/watch?v=NBCM_ZoWZo8",
+      "article_url": "https://www.youtube.com/watch?v=NBCM_ZoWZo8",
+      "tweet_url": null,
+      "author": "Theo - t3․gg",
+      "date": "2026-10",
+      "published": "2026-10-28",
+      "raw_path": "data/_raw/how-to-give-claude-unlimited-usage-105fdb2030.txt",
+      "discovered_via": "youtube",
+      "source_id": "youtube:ucbrp3c757lwg9m-u7tyekxa",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Theo - t3.gg",
+      "id": "theo-video-on-running-claude-for-weeks-transcrip-78f5dfee1f",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: takeaway_sentences 2 > 1"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -3788,10 +4297,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 21,
+        "newness": 20,
         "credibility": 68.1,
-        "composite": 18.76,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 18.51,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; no technical claim to compare.",
@@ -3813,6 +4322,77 @@
       ],
       "source_name": "Anthropic News",
       "retrieved_at": "2026-10-28T16:52:05+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "goodside-we-ve-known-since-2023-ai-could-not-con-155de79300",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "related_claims": [],
+      "title": "Riley Goodside mocks the claim that model collapse halted LLM progress",
+      "summary": "An X post by @goodside sarcastically claims that model collapse, from training on AI-generated web data, has stalled LLMs since 2023 and will make them disappear by 2030. It is satire of the model-collapse prediction, not evidence, and it contains no data.",
+      "lessons": [
+        {
+          "point": "The post satirizes the model-collapse prediction by claiming the opposite of the progress practitioners see.",
+          "excerpt": "This is why LLMs have made no progress since that time, steadily declining on all benchmarks",
+          "confidence": 0.4,
+          "grounded": true
+        },
+        {
+          "point": "The idea being mocked is that training on AI-generated web text degrades future models.",
+          "excerpt": "training on poisoned internet data generated by AI",
+          "confidence": 0.35,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A joke, not a finding, and it signals only that practitioners see model collapse as an overblown prediction so far.",
+      "tags": [
+        "model-collapse",
+        "synthetic-data",
+        "satire",
+        "x-post"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat model-collapse claims as unproven in either direction",
+        "detail": "Do not cite this post as evidence. If synthetic-data contamination matters to your pipeline, measure it directly on your own data instead of relying on social-media takes."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 8,
+        "newness": 20,
+        "credibility": 60.0,
+        "composite": 17.3,
+        "scored_at": "2026-10-29T16:50:31+00:00"
+      },
+      "verified": false,
+      "verify_reason": "factual",
+      "verify_note": "Verifier: the text carries no explicit sarcasm marker, so the 'mocks' reading of lesson 1 is inference from tone.",
+      "prior_art": "The 2023-2024 model-collapse literature and the ongoing debate about it; no pool entry adds evidence, and this post is commentary only.",
+      "source_url": "https://x.com/goodside/status/2115825541244760315",
+      "article_url": null,
+      "tweet_url": "https://x.com/goodside/status/2115825541244760315",
+      "author": "@goodside",
+      "date": "2026-10",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/goodside-we-ve-known-since-2023-ai-could-not-con-155de79300.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "id": "riley-goodside-mocks-the-claim-that-model-collap-501c4f1a0a",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3856,10 +4436,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 10,
-        "newness": 21,
+        "newness": 20,
         "credibility": 55.0,
-        "composite": 17.4,
-        "scored_at": "2026-10-28T16:52:05+00:00"
+        "composite": 17.15,
+        "scored_at": "2026-10-29T16:50:31+00:00"
       },
       "verified": true,
       "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
@@ -4060,90 +4640,6 @@
         "composite": 7.74,
         "scored_at": "2026-10-28T16:52:05+00:00"
       }
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "cluster": "L",
-      "related_claims": [
-        "capability-elicitation-lags-training",
-        "jailbreak-transfers-across-models",
-        "llm-eval-datasets-leak-into-training-sets"
-      ],
-      "title": "Enhancing AI security through global AI red teaming",
-      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-      "published": "2026-07-27",
-      "date": "2026-07",
-      "raw_path": "data/_raw/mrscan-batch09-3.txt",
-      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "source_rank": 76.8,
-      "summary": "Microsoft launched the External Red Team Alliance (EXTRA), an unrestricted-gifts program funding 18 university labs across six continents — including CMU CyLab, Georgetown SecLab, KAIST WSP, IIT Madras CeRAI, Berkeley RDI, Toronto CleverHans, UCL ISec — plus a distributed operational network of regional and domain specialists. The load-bearing claim is that meaningful AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harms, alignment failures, and geography-specific abuse patterns that no single internal team can staff. The unrestricted-funding structure is deliberate: Microsoft does not want to steer research to predefined deliverables, because doing so would compromise independent capacity. The doctrinal point is that external expertise is no longer supplemental to red-teaming, it is essential.",
-      "takeaway": "AI red-teaming is now interdisciplinary, multilingual, and geographically distributed by requirement, not by preference — internal-only teams cannot cover the actual attack surface.",
-      "lessons": [
-        {
-          "point": "AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harm, alignment failure, and regional abuse patterns — an attack surface no single corporate team can staff.",
-          "excerpt": "AI red teaming is no longer just about prompt injection or content safety edge cases. It increasingly involves security operations, misuse scenarios, multilingual harms, alignment failures, and domain-specific abuse patterns that can vary significantly across geographies and languages.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Unrestricted funding is a deliberate design choice: directing external research toward predefined deliverables would compromise the independent capacity that makes the external contribution valuable in the first place.",
-          "excerpt": "The funding is unrestricted because the objective is not to direct research outcomes toward product requirements or predefined deliverables. The goal is to strengthen independent safety research capacity globally and create stronger long-term collaboration between academia and operational AI security teams.",
-          "confidence": 0.88,
-          "grounded": true
-        },
-        {
-          "point": "Microsoft's operational conclusion: external red-team expertise is not a nice-to-have supplement, it is essential to identifying meaningful failure modes at frontier capability.",
-          "excerpt": "EXTRA reflects a practical shift in how AI security testing must operate going forward. External expertise is no longer supplemental to red teaming; in many cases, it is essential.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Low-resource / non-English contexts are a specific frontier-model risk vector — named explicitly as a reason to fund labs in South Africa, Brazil, India, Korea, and Australia rather than just North American and European institutions.",
-          "excerpt": "As frontier model capabilities advance, they create new risk opportunities, particularly in low-resource settings. Partnerships, such as this EXTRA, bring greater attention to the study of the local risk landscape and can enable broader impact of the work carried out around the globe in smaller academic settings.",
-          "confidence": 0.88,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "red-teaming",
-        "ai-safety",
-        "external-testing",
-        "academic-partnership",
-        "multilingual",
-        "regional-abuse",
-        "microsoft"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Treat external, multi-region, non-English red-team coverage as a required control, not a supplementary one",
-        "detail": "For any org deploying a frontier model at scale: (1) enumerate the language, cultural, and regional attack surfaces your product actually reaches, (2) verify that your red-team roster covers each of those surfaces with actual practitioners in-region — machine-translation is not coverage, (3) fund the coverage on an unrestricted basis so the researchers can pursue emerging risks rather than a corporate checklist, and (4) treat operational (SecOps / misuse / alignment failure) categories as first-class red-team scope alongside prompt-injection and content-safety. The Microsoft position is that internal-only teams cannot staff this attack surface, and that follows for any organization operating at frontier-model scale."
-      },
-      "scores": {
-        "novelty": 48,
-        "relevance": 64,
-        "newness": 8,
-        "credibility": 76.8,
-        "composite": 47.12,
-        "scored_at": "2026-08-14T20:28:50+00:00"
-      },
-      "prior_art": "Vendor red-team-alliance announcements are a well-worn genre (OpenAI Red Teaming Network, Anthropic's ASL red-team program, Google DeepMind's Gemini safety collaborations). Microsoft's delta is the 18-lab six-continent list, the unrestricted-funding structure (as opposed to work-for-hire contracts), and the explicit doctrinal claim that external expertise is essential rather than supplemental.",
-      "discovered_via": "rss",
-      "threat": null,
-      "conditions": null,
-      "mitigations": null,
-      "verified": true,
-      "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-batch09-3.txt; related_claims exist in data/claims.json. Program-launch story, not a specific vulnerability — threat/conditions/mitigations left null in favor of the takeaway-shaped actionable.",
-      "id": "enhancing-ai-security-through-global-ai-red-team-58e381fc0f",
-      "retrieved_at": "2026-08-10T19:18:37+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Red-Teaming Methodology"
     }
   ]
 }

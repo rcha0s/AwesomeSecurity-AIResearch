@@ -24,7 +24,7 @@ An unauthenticated attacker can upload a 132 KB medical image file (DICOM format
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [GitHub Advisory Database](https://github.com/advisories/GHSA-6hp3-vr39-rqw8)  ·  **Retrieved:** 2026-10-27  
-**Scores:** Newness 21 · Novelty 35 · Relevance 65 · Credibility 70 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 35 · Relevance 65 · Credibility 70 · **Composite 46** _(each 0-100)_  
 **Tags:** `medical-ai`, `input-validation`, `nan-injection`, `inference-integrity`, `monai`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: NaN and infinity injection into numeric parsers is a known input-validation bug class; using it to silently corrupt medical inference through a persistent datastore is the new angle.
 

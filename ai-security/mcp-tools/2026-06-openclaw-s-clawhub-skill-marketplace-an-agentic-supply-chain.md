@@ -18,7 +18,7 @@ Unit 42 found five evasive malicious 'skills' persisting on ClawHub - the market
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [Palo Alto Networks Unit 42](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/)  ·  **Retrieved:** 2026-07-13  
-**Scores:** Newness 6 · Novelty 82 · Relevance 88 · Credibility 75 · **Composite 64** _(each 0-100)_  
+**Scores:** Newness 0 · Novelty 82 · Relevance 88 · Credibility 75 · **Composite 62** _(each 0-100)_  
 **Tags:** `agent-security`, `skill-scanning`, `supply-chain`, `agentic-threats`, `unit42`
 
 _Source: [https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/)_  ·  [← back to index](../README.md)
