@@ -22,7 +22,7 @@ review it day to day.
 
 ## Out of Scope
 
-- X/Twitter ingestion (future, local-only runner; tracked separately).
+- X/Twitter ingestion beyond the one local-only list lane (`ingest_x_list.py`, ISC-58); #57 tracks the dedicated-account question.
 - UI redesign (#50), re-evaluating held findings (#51), backfilling the Sept→now gap (#52).
 
 ## Constraints

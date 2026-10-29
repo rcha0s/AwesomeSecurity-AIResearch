@@ -24,6 +24,7 @@ Slots are dealt round-robin across ingestor classes (KEV, HN, GHSA, GitHub
 search, HF papers, conference papers, research sitemaps, RSS feeds), best
 class first, each class giving its best remaining candidate, and no single
 source takes more than `batch_per_source` slots unless nothing else is left.
+X list posts (ingest_x_list.py, `x:` source ids) are their own class too.
 Curator links (ingest_curator_links.py, `curator:` source ids) are their own
 class, and `batch_class_min` reserves each named class a floor of slots right
 after the must-not-miss lane: a curator link carries the issue's date, so its
@@ -143,7 +144,7 @@ DEFAULTS = {
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
 # source_id prefixes that name their own ingestor; plain `rss:` feeds share one class.
-OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator")
+OWN_CLASS = ("kev_json", "hf_papers", "research_index", "github_query", "sitemap", "curator", "x")
 
 
 def backlog_file() -> Path:

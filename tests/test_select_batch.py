@@ -368,7 +368,11 @@ def test_the_class_floor_puts_one_or_two_curator_links_in_every_batch(sandbox, t
     assert curated(batch_class_min={"curator": 2}) == 2
     assert curated(batch_class_min={"curator": 4}) == 2  # the per-source cap still holds
     real = common.load_config()
-    assert real.limits["batch_class_min"] == {"curator": 1}
+    assert real.limits["batch_class_min"] == {"x": 1, "curator": 1}
+
+
+def test_x_list_posts_are_their_own_class():
+    assert select_batch.ingestor_class({"source_id": "x:list", "discovered_via": "x-list"}) == "x"
 
 
 def test_the_class_floor_never_overfills_the_batch(sandbox, table):

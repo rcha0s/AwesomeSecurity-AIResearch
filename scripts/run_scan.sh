@@ -69,6 +69,8 @@ fi
 # ingest_curator_links goes first: it records the arXiv ids tl;dr sec's issues
 # link to (data/_curator_arxiv.json), aggregate's paper-gate curator signal.
 INGESTORS=(ingest_curator_links aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn ingest_conferences ingest_json_feeds)
+# The X list lane reads a logged-in browser: local runner only, never the cloud.
+[[ "$RUNNER" == local ]] && INGESTORS+=(ingest_x_list)
 # No generate_og: it needs the Ubuntu fonts in /usr/share/fonts (absent on the
 # Mac and not promised in the cloud VM). update.yml's render job on main owns
 # docs/og.png.

@@ -137,6 +137,7 @@ limits:
     rss: 2                # RSS is one class of 60+ feeds, 35% of staged candidates, and
                           # where the 12 tl;dr sec misses of W43 (of 31) were published
   batch_class_min:        # slots a class is guaranteed right after the must-not-miss lane
+    x: 1                  # X list posts (ingest_x_list.py, local runner only): one slot
     curator: 1            # tl;dr sec curator links (ingest_curator_links.py); with
                           # batch_per_source 2, one or two reach every batch
   batch_routed_bonus: 5   # composite points for a confident prefilter domain hint
@@ -275,6 +276,18 @@ limits:
 # before any LLM work, and refuses once the month's spend reaches the cap. Runs
 # read these values from origin/main, never from a working tree. Routines draw subscription usage first; usage
 # credits only cover overage (routines.md § Usage and limits).
+x_list:                   # ingest_x_list.py: Rohan's X list, local runner only (#57)
+  list_url: https://x.com/i/lists/2115494675994071362
+  lookback_hours: 24      # hard: older or undated posts are dropped (a repost counts by
+                          # the original post's time, from the status id)
+  context: interceptor-test   # Interceptor browser profile (never the main profile)
+  group: x-list           # the lane's own managed tab group
+  open_timeout_ms: 25000
+  max_scrolls: 6          # scroll-downs in its own tab to reach posts past the first screen
+  scroll_wait_s: 3
+  source_rank: 60         # a list post is a pointer, below the 70 of a curated link
+  max_candidates: 40      # most posts staged per run
+
 budget:
   monthly_cap_usd: 600        # Rohan 2026-10-23: don't worry about budget for now
                               # (was 100, Rohan 2026-10-19); null = every run skips LLM work
