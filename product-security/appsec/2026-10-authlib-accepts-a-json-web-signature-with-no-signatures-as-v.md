@@ -24,7 +24,7 @@ Authlib before 1.9.0 returns the payload of a JSON Web Signature (JWS) object in
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [GitHub Advisory Database](https://github.com/advisories/GHSA-6v38-4h7w-rj9h)  ·  **Retrieved:** 2026-10-27  
-**Scores:** Newness 23 · Novelty 30 · Relevance 75 · Credibility 70 · **Composite 48** _(each 0-100)_  
+**Scores:** Newness 21 · Novelty 30 · Relevance 75 · Credibility 70 · **Composite 47** _(each 0-100)_  
 **Tags:** `jws`, `jwt`, `authentication-bypass`, `fail-open`, `python`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Fail-open signature checks such as JWT alg=none bypasses are a known bug class; this is a new instance in Authlib's JWS JSON path, not a new technique.
 

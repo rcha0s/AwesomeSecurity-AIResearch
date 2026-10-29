@@ -2,19 +2,30 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-10-28 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
+_10 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html)**
+  _Why now: ShinyHunters has exploited this PeopleSoft chain since May. It teaches two things that transfer: a default loopback allowlist turns server-side request forgery into unauthenticated RCE, and path-matching WAF rules fall to a single… · active-exploitation · cve · newsworthy · high-relevance_
+- **[InfraTrust report says network appliances wait on vendors for PHP2Shell fixes](https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/)**
+  _Why now: PHP2Shell is the theme of the week. This adds a lesson that changes what defenders do: appliances with PHP compiled into their firmware cannot be patched by customers, so pull their management interfaces off the internet now. · trending · active-exploitation · timely_
+- **[Skimmers hijacked Convertr's self-hosted analytics script to steal checkout card data](https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/)**
+  _Why now: A live Magecart incident in which one self-hosted analytics script skimmed every merchant's checkout. The lesson is concrete: treat every script loaded on checkout pages, analytics included, as payment-critical and check its integrity. · newsworthy · timely · high-relevance_
+- **[Adobe patches eight critical flaws in Campaign Classic](https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html)**
+- **[Skyw4lker device code phishing campaign targets US manufacturing, tech and healthcare firms](https://thehackernews.com/2026/10/american-organizations-under-attack.html)**
+- **[Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices](https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/)**
 - **[Authlib accepts a JSON web signature with no signatures as verified](https://github.com/advisories/GHSA-6v38-4h7w-rj9h)**
   _Why now: Critical authentication bypass in a widely used Python library; the fail-open empty-loop pattern is a test every verifier should have. · cve · timely · high-relevance_
 - **[Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets)**
   _Why now: Active campaign hitting private enterprise repos past GitHub's public-repo safeguard, with concrete hunt indicators and a token-lifetime fix. · active-exploitation · newsworthy · timely · high-relevance_
 - **[Check Point: fake ChatGPT and Claude apps sideload malware via signed installers](https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/)**
   _Why now: Live campaign using fake ChatGPT and Claude desktop apps and signed vendor installers, with endpoint artifacts defenders can hunt. · active-exploitation · trending · timely_
+- **[EDK2 network boot flaw lets attackers run code before Secure Boot](https://arstechnica.com/security/2026/10/code-execution-flaw-in-uefi-firmware-threatens-most-servers-on-planet-earth/)**
 - **[Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18](https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/)**
+- **[Check Point uses OpenAI Daybreak to turn vulnerability research into signatures](https://openai.com/index/check-point-daybreak)**
 - **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/)**
   _Why now: A third, still-unpatched PHP RCE (CVE-2026-115560) during the PHP2Shell week, with a one-line config mitigation every PHP operator can apply today. · newsworthy · cve · timely · high-relevance_
 - **[PHP says Chainguard broke the PHP2Shell embargo with patched images](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611)**
@@ -96,6 +107,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Pillow heap overflow saving TIFF to BytesIO also leaks stale heap bytes](https://github.com/advisories/GHSA-332p-7hrc-92wf)**
 - **[Partisan Zmiy hid the Vasilek backdoor in VMware Tools for two years](https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html)**
 - **[PHP Foundation ships emergency fix for two critical remote code execution bugs](https://www.theregister.com/security/2026/10/21/php-devs-publish-critical-bug-fix-as-site-owners-warned-pull-em-offline-if-youre-unpatched/5304519)**
+- **[PHP Foundation ships fixes for two RCE flaws after a disclosure leak](https://simonwillison.net/2026/Oct/21/php-security-release/)**
 - **[Pillow thumbnail() heap overflow on lossless JPEGs, found by Anthropic using Claude](https://github.com/advisories/GHSA-8g5g-8vmr-9782)**
 - **[Eight eMudhra intermediate CA certificates with weak private keys get blocked globally](https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/)**
 - **[curl moves low and medium severity vulnerability reports to public GitHub](https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198)**
@@ -114,49 +126,52 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | --- | --- |
 | Application Security | 3 |
 | AI in the SDLC | 3 |
-| Vulnerability Research & Red Teaming | 1 |
+| Vulnerability Research & Red Teaming | 2 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
 
 ## Application Security
 
-- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **63.59** · Oct 6, 2026  
+- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **63.09** · Oct 6, 2026  
   Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
   _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
-- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **60.29** · Oct 9, 2026  
+- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **59.79** · Oct 9, 2026  
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
   _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **57.63** · Oct 27, 2026  
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **57.13** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
 ## AI in the SDLC
 
-- **[Claude found 493 attack-surface issues across 25 open-source projects](ai-code/2026-10-claude-found-493-attack-surface-issues-across-25-open-source.md)** · composite **63.47** · Oct 20, 2026  
+- **[Claude found 493 attack-surface issues across 25 open-source projects](ai-code/2026-10-claude-found-493-attack-surface-issues-across-25-open-source.md)** · composite **62.97** · Oct 20, 2026  
   Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.  
   _[Anthropic Research](https://www.anthropic.com/research/attack-surface-reduction)_
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **59.0** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **58.5** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **49.79** · Oct 6, 2026  
+- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **49.29** · Oct 6, 2026  
   Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
 ## Vulnerability Research & Red Teaming
 
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **59.75** · Oct 19, 2026  
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **64.39** · Oct 27, 2026 · 🔗 +1 sources  
+  Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
+  _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **59.25** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **53.75** · Oct 15, 2026  
+- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **53.25** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **48.5** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **48.0** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 

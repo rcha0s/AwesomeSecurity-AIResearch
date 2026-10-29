@@ -2170,10 +2170,18 @@
           "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
           "title": "An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation",
           "published": "2026-09-02"
+        },
+        {
+          "stance": "supports",
+          "url": "https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html",
+          "title": "CyberStrikeAI Uses 44 AI Agents to Automate Hacking Operations Against Japan Targets",
+          "published": "2026-10-27",
+          "note": "TrendAI found attackers running a 44-agent CyberStrikeAI workflow against 19+ Japanese organizations, exploiting basic weaknesses (default credentials, unpatched edge devices) at scale rather than new tradecraft.",
+          "source_name": "The Hacker News"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-27",
+      "last_reviewed": "2026-10-28",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",

@@ -18,7 +18,7 @@ The advisory reports that Pillow's EPS plugin builds the Ghostscript command lin
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [source](https://github.com/python-pillow/Pillow/security/advisories/GHSA-w889-685w-c8fh)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 23 · Novelty 35 · Relevance 55 · Credibility 55 · **Composite 41** _(each 0-100)_  
+**Scores:** Newness 21 · Novelty 35 · Relevance 55 · Credibility 55 · **Composite 40** _(each 0-100)_  
 **Tags:** `pillow`, `ghostscript`, `argument-injection`, `python`, `file-upload`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Argument injection into Ghostscript from image libraries is a known class (ImageMagick, Pillow's earlier EPS issues); this variant bypasses -dSAFER. Verifier: Ghostscript/ImageMagick delegate and option-injection issues (e.g., CVE-2018-16509, ImageTragick); Pillow EPS/Ghostscript CVE-2017-8291 class
 

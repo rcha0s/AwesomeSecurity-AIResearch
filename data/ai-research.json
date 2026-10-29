@@ -6,6 +6,8 @@
     "air.agents",
     "air.context",
     "air.model-io",
+    "air.cost-efficiency",
+    "air.work-efficiency",
     "air.evals",
     "air.tooling",
     "air.alignment",
@@ -154,10 +156,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 23,
+        "newness": 21,
         "credibility": 43.9,
-        "composite": 57.93,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 57.43,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -228,10 +230,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 57.5,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 57.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -269,10 +271,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 57.5,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 57.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -487,10 +489,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 23,
+        "newness": 21,
         "credibility": 55.0,
-        "composite": 54.5,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 54.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -602,10 +604,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 55,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 52.1,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 51.6,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -641,89 +643,6 @@
       "previous_slugs": [
         "openai-dataset-level-g-mean-can-misrank-model-monitorability"
       ]
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly",
-      "summary": "Ai2 built a benchmark from ICLR 2026 peer reviews to test six LLM judges, from GPT-5.1 to Claude Opus 4.6, on whether research ideas are novel. Rewording one prompt dropped GPT-5.4 from 93.5% to 40.9% accuracy on pairs of human and AI-generated ideas, and prompt changes moved judges far more on AI-generated ideas than on human-written ones. A three-vote Claude Opus 4.6 prompt scored 0.854 macro-F1 for $2.59, beating two purpose-built novelty checkers that cost $30.66 and $82.05, and extra reasoning plus live search did not help.",
-      "lessons": [
-        {
-          "point": "For GPT-5.4, a small change in prompt framing swung accuracy from 93.5% to below chance on the same items.",
-          "excerpt": "When we switched to the simpler prompt, accuracy dropped from 93.5% to 40.9% – below chance – and the model changed its verdict on more than half of the same pairs.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Prompt changes moved judges less on human-written ideas than on AI-generated ones, so validate on what the judge will actually see.",
-          "excerpt": "a novelty judge can appear relatively stable on human-authored research but behave very differently on AI-generated ideas.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "No prompt is best across models.",
-          "excerpt": "A prompt that works well for one model may not transfer to another, in other words.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "An agentic judge with high reasoning and live search cost about ten times more and scored lower.",
-          "excerpt": "while costing roughly 10× more per decision at current API prices",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Before trusting an LLM judge, measure how many verdicts flip across reworded prompts and test it on the kind of content it will actually judge.",
-      "tags": [
-        "llm-as-judge",
-        "evals",
-        "prompt-sensitivity",
-        "novelty",
-        "benchmark"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add a prompt-perturbation check to every LLM judge",
-        "detail": "Run the same labeled items through two or three reworded judge prompts and report the share of verdicts that flip; reject setups where many flip. Validate on generated content, not only human-written examples, and compare against a cheap majority-vote baseline before paying for retrieval-heavy judges. This applies directly to pipelines that score novelty with an LLM."
-      },
-      "scores": {
-        "novelty": 35,
-        "relevance": 80,
-        "newness": 23,
-        "credibility": 71.9,
-        "composite": 51.03,
-        "scored_at": "2026-10-27T18:41:52+00:00"
-      },
-      "verified": false,
-      "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
-      "prior_art": "Earlier work found length and position biases in LLM-as-judge; this adds a large measured prompt-wording effect specific to AI-generated content and cost data against purpose-built evaluators.",
-      "related_claims": [
-        "llm-as-judge-is-biased-toward-longer-answers"
-      ],
-      "source_url": "https://huggingface.co/blog/allenai/novelty-bench",
-      "article_url": "https://huggingface.co/blog/allenai/novelty-bench",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-27",
-      "raw_path": "data/_raw/can-we-trust-llms-to-judge-whether-a-research-id-b9be574da7.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-huggingface-co-blog-feed-xml",
-      "source_rank": 71.9,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Hugging Face Blog",
-      "id": "ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49",
-      "retrieved_at": "2026-10-27T18:41:51+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "1password-s-ai-patching-benchmark-is-misleading-6437abf21b",
@@ -819,6 +738,89 @@
       ]
     },
     {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly",
+      "summary": "Ai2 built a benchmark from ICLR 2026 peer reviews to test six LLM judges, from GPT-5.1 to Claude Opus 4.6, on whether research ideas are novel. Rewording one prompt dropped GPT-5.4 from 93.5% to 40.9% accuracy on pairs of human and AI-generated ideas, and prompt changes moved judges far more on AI-generated ideas than on human-written ones. A three-vote Claude Opus 4.6 prompt scored 0.854 macro-F1 for $2.59, beating two purpose-built novelty checkers that cost $30.66 and $82.05, and extra reasoning plus live search did not help.",
+      "lessons": [
+        {
+          "point": "For GPT-5.4, a small change in prompt framing swung accuracy from 93.5% to below chance on the same items.",
+          "excerpt": "When we switched to the simpler prompt, accuracy dropped from 93.5% to 40.9% – below chance – and the model changed its verdict on more than half of the same pairs.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Prompt changes moved judges less on human-written ideas than on AI-generated ones, so validate on what the judge will actually see.",
+          "excerpt": "a novelty judge can appear relatively stable on human-authored research but behave very differently on AI-generated ideas.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "No prompt is best across models.",
+          "excerpt": "A prompt that works well for one model may not transfer to another, in other words.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "An agentic judge with high reasoning and live search cost about ten times more and scored lower.",
+          "excerpt": "while costing roughly 10× more per decision at current API prices",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Before trusting an LLM judge, measure how many verdicts flip across reworded prompts and test it on the kind of content it will actually judge.",
+      "tags": [
+        "llm-as-judge",
+        "evals",
+        "prompt-sensitivity",
+        "novelty",
+        "benchmark"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add a prompt-perturbation check to every LLM judge",
+        "detail": "Run the same labeled items through two or three reworded judge prompts and report the share of verdicts that flip; reject setups where many flip. Validate on generated content, not only human-written examples, and compare against a cheap majority-vote baseline before paying for retrieval-heavy judges. This applies directly to pipelines that score novelty with an LLM."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 80,
+        "newness": 21,
+        "credibility": 71.9,
+        "composite": 50.53,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": false,
+      "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
+      "prior_art": "Earlier work found length and position biases in LLM-as-judge; this adds a large measured prompt-wording effect specific to AI-generated content and cost data against purpose-built evaluators.",
+      "related_claims": [
+        "llm-as-judge-is-biased-toward-longer-answers"
+      ],
+      "source_url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "article_url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/can-we-trust-llms-to-judge-whether-a-research-id-b9be574da7.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 71.9,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Hugging Face Blog",
+      "id": "ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49",
+      "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
       "topic": "ai-research",
       "domain": "air.agents",
@@ -868,10 +870,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 65,
-        "newness": 23,
+        "newness": 21,
         "credibility": 50.8,
-        "composite": 50.27,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 49.77,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -912,10 +914,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 23,
+        "newness": 21,
         "credibility": 55.0,
-        "composite": 50.0,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 49.5,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -979,10 +981,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 48.5,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 48.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -1187,10 +1189,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 23,
+        "newness": 21,
         "credibility": 55.0,
-        "composite": 47.0,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 46.5,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -1230,99 +1232,6 @@
       "previous_slugs": [
         "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
       ]
-    },
-    {
-      "id": "claude-shaped-science-77bd0f29d1",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-      "source_url": "https://www.anthropic.com/research/claude-shaped-science",
-      "related_claims": [
-        "capability-elicitation-lags-training"
-      ],
-      "summary": "A physicist built BootLoops, an open-source harness of tools and protocols that grows as Claude adds new tools on each project. He then aimed it at 'Claude-shaped' problems: problems a known technique from math, physics or computer science would solve, and whose answers can be checked numerically. It produced results across many fields (36 manuscripts, 18 fields, three months). In fields the author did not know, Claude's results were usually technically correct but not scientifically interesting until a domain expert redirected the work.",
-      "lessons": [
-        {
-          "point": "Pick agent tasks where the answer can be checked mechanically. Here, anyone could verify a result to many digits by running two scripts.",
-          "excerpt": "it is checkable, since the same numerics let anyone, expert or not, verify the final answer against the integral to as many digits as they like by running two scripts",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Outside your own expertise, you cannot judge agent output well and tend to accept its claims of success. Bring in a domain expert as the reviewer.",
-          "excerpt": "When Claude claims something it did in my field is fantastic, I can judge whether that’s true or not (it often isn’t).",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Technical correctness is not the same as value. The agent's results were mostly correct but only became worthwhile once an expert steered them.",
-          "excerpt": "Indeed, I found that in almost all cases, Claude was technically correct, but the result was not all that interesting until the expert helped steer us.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Make the agent leave behind reusable tools on every project, even failed ones, so the harness keeps growing.",
-          "excerpt": "As the ideas came, I insisted that Claude both use old tools _and_ build new ones, so that the harness would grow.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Orchestration pattern: one session per project, plus a master session that coordinates the others, allocates compute and validates results.",
-          "excerpt": "I have separate sessions for each project, plus a master session that coordinates the others, allocates compute, and validates results.",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Agents do best on problems where a known technique applies and the answer can be checked, inside a harness that keeps growing; plan for a domain expert to judge whether the results matter.",
-      "tags": [
-        "ai-for-science",
-        "agent-harness",
-        "verification",
-        "multi-agent-orchestration",
-        "human-in-the-loop",
-        "claude-code"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Grow a tool library per project and gate results on mechanical checks plus expert review",
-        "detail": "Have the agent save every tool it writes into a shared harness repo, failed projects included. Choose tasks with an independent numeric or script-based check and require the agent to ship that check with each result. Run one session per project and a master session that validates results. Have a domain expert review any result outside the operator's own field."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 55,
-        "newness": 23,
-        "credibility": 70.8,
-        "composite": 44.87,
-        "scored_at": "2026-10-27T03:29:52+00:00"
-      },
-      "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
-      "verified": true,
-      "verify_note": "Verifier: figures and excerpts accurate; lessons are generic harness advice from a first-person case study.",
-      "article_url": "https://www.anthropic.com/research/claude-shaped-science",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-01",
-      "raw_path": "data/_raw/claude-shaped-science-77bd0f29d1.txt",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-research",
-      "source_rank": 70.8,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Anthropic Research",
-      "retrieved_at": "2026-10-25T02:36:53+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 24 > 18"
-        ]
-      },
-      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -1409,6 +1318,99 @@
       "domain_label": "Agent Verification & Stewardship"
     },
     {
+      "id": "claude-shaped-science-77bd0f29d1",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+      "source_url": "https://www.anthropic.com/research/claude-shaped-science",
+      "related_claims": [
+        "capability-elicitation-lags-training"
+      ],
+      "summary": "A physicist built BootLoops, an open-source harness of tools and protocols that grows as Claude adds new tools on each project. He then aimed it at 'Claude-shaped' problems: problems a known technique from math, physics or computer science would solve, and whose answers can be checked numerically. It produced results across many fields (36 manuscripts, 18 fields, three months). In fields the author did not know, Claude's results were usually technically correct but not scientifically interesting until a domain expert redirected the work.",
+      "lessons": [
+        {
+          "point": "Pick agent tasks where the answer can be checked mechanically. Here, anyone could verify a result to many digits by running two scripts.",
+          "excerpt": "it is checkable, since the same numerics let anyone, expert or not, verify the final answer against the integral to as many digits as they like by running two scripts",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Outside your own expertise, you cannot judge agent output well and tend to accept its claims of success. Bring in a domain expert as the reviewer.",
+          "excerpt": "When Claude claims something it did in my field is fantastic, I can judge whether that’s true or not (it often isn’t).",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Technical correctness is not the same as value. The agent's results were mostly correct but only became worthwhile once an expert steered them.",
+          "excerpt": "Indeed, I found that in almost all cases, Claude was technically correct, but the result was not all that interesting until the expert helped steer us.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Make the agent leave behind reusable tools on every project, even failed ones, so the harness keeps growing.",
+          "excerpt": "As the ideas came, I insisted that Claude both use old tools _and_ build new ones, so that the harness would grow.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Orchestration pattern: one session per project, plus a master session that coordinates the others, allocates compute and validates results.",
+          "excerpt": "I have separate sessions for each project, plus a master session that coordinates the others, allocates compute, and validates results.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Agents do best on problems where a known technique applies and the answer can be checked, inside a harness that keeps growing; plan for a domain expert to judge whether the results matter.",
+      "tags": [
+        "ai-for-science",
+        "agent-harness",
+        "verification",
+        "multi-agent-orchestration",
+        "human-in-the-loop",
+        "claude-code"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Grow a tool library per project and gate results on mechanical checks plus expert review",
+        "detail": "Have the agent save every tool it writes into a shared harness repo, failed projects included. Choose tasks with an independent numeric or script-based check and require the agent to ship that check with each result. Run one session per project and a master session that validates results. Have a domain expert review any result outside the operator's own field."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 55,
+        "newness": 21,
+        "credibility": 70.8,
+        "composite": 44.37,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
+      "verified": true,
+      "verify_note": "Verifier: figures and excerpts accurate; lessons are generic harness advice from a first-person case study.",
+      "article_url": "https://www.anthropic.com/research/claude-shaped-science",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-01",
+      "raw_path": "data/_raw/claude-shaped-science-77bd0f29d1.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.alignment",
       "title": "METR proposes third-party review of unreleased models by mining internal transcripts",
@@ -1472,10 +1474,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 44.0,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 43.5,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1497,94 +1499,6 @@
       "grounding_score": 1.0,
       "previous_slugs": [
         "metr-s-proposed-third-party-review-of-unreleased-models-wors"
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios",
-      "source_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
-      "article_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-15",
-      "date": "2026-10",
-      "raw_path": "data/_raw/local-and-distributed-large-llm-inference-with-m-3d665c1072.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-machinelearning-apple-com-rss-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Apple Machine Learning Research",
-      "summary": "Apple benchmarks the MLX framework on Mac Studio with Qwen 3.8 (27B), Mistral Medium 3.5 (128B) and Muse Spark Open (816B mixture of experts, run in 4-bit NVFP4 format). Moving from a single M3 Ultra to a single M5 Ultra gives up to 4.6x faster time to first token (TTFT) and 1.6x faster decode. Splitting a model across 2 or 4 machines over RDMA (remote direct memory access) on Thunderbolt 5 adds further speedups, and four machines run Muse Spark Open at 36.73 tokens/s. Apple shows serving with mlx_lm.server and pointing the OpenCode coding agent at that server's OpenAI-compatible endpoint.",
-      "takeaway": "A small Mac cluster can now serve a near-trillion-parameter open model to a local coding agent at usable speed, but tensor parallelism helps decode far more than pipeline parallelism.",
-      "lessons": [
-        {
-          "point": "Prefill and decode are bound by different hardware limits, so upgrades help them differently: prefill by compute, decode by memory bandwidth.",
-          "excerpt": "Generation speed (in tokens per second) is memory-bandwidth bound.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Pipeline parallelism (splitting by layers) leaves decode speed unchanged. At long contexts it speeds up prefill because chunks overlap across machines.",
-          "excerpt": "pipeline parallelization ends up faster than a single node for prefill",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Tensor parallelism (splitting each layer across machines) gives the decode gains, and dense models scale better than mixture-of-experts models.",
-          "excerpt": "Notably, dense architectures scale better across multiple computers.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The headline result is decode throughput for the 816B model on four machines.",
-          "excerpt": "On a cluster of four Mac Studios, Muse Spark Open generates over 36 tokens per second",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "mlx",
-        "local-inference",
-        "rdma",
-        "tensor-parallelism",
-        "apple-silicon",
-        "self-hosted-agents"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Serve a large open model locally for a coding agent with MLX",
-        "detail": "Install MLX v0.30.1 or later on macOS 26.2 or later. Link the Macs with Thunderbolt 5, using two cables per link for more bandwidth. Start mlx_lm.server under mlx.launch with --backend jaccl, without --pipeline, which gives tensor parallelism. Point your agent at http://127.0.0.1:8080/v1 as an OpenAI-compatible provider. Benchmark at your real context size with mlx_lm.benchmark first."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 45,
-        "newness": 23,
-        "credibility": 75.0,
-        "composite": 42.5,
-        "scored_at": "2026-10-27T03:29:52+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
-      "prior_art": "The pool's inference entries are server and GPU papers, such as KV-cache tiering and disaggregated GPU inference. None covers consumer-hardware clusters. What is new here: concrete TTFT and decode numbers for RDMA-linked Macs, and a direct recipe for connecting a local agent to the server.",
-      "related_claims": [
-        "quantization-preserves-most-benchmark-scores"
-      ],
-      "id": "mlx-tensor-parallelism-over-thunderbolt-rdma-run-6e1245e8ef",
-      "retrieved_at": "2026-10-25T19:45:56+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 22 > 18"
-        ]
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "mlx-tensor-parallelism-over-thunderbolt-rdma-runs-an-816b-mi"
       ]
     },
     {
@@ -1654,6 +1568,94 @@
       "previous_slugs": [
         "funes-a-cross-agent-memory-layer-that-preserves-raw-session",
         "hugging-face-s-funes-shared-agent-memory-that-keeps-the-raw"
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios",
+      "source_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
+      "article_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-15",
+      "date": "2026-10",
+      "raw_path": "data/_raw/local-and-distributed-large-llm-inference-with-m-3d665c1072.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-machinelearning-apple-com-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Apple Machine Learning Research",
+      "summary": "Apple benchmarks the MLX framework on Mac Studio with Qwen 3.8 (27B), Mistral Medium 3.5 (128B) and Muse Spark Open (816B mixture of experts, run in 4-bit NVFP4 format). Moving from a single M3 Ultra to a single M5 Ultra gives up to 4.6x faster time to first token (TTFT) and 1.6x faster decode. Splitting a model across 2 or 4 machines over RDMA (remote direct memory access) on Thunderbolt 5 adds further speedups, and four machines run Muse Spark Open at 36.73 tokens/s. Apple shows serving with mlx_lm.server and pointing the OpenCode coding agent at that server's OpenAI-compatible endpoint.",
+      "takeaway": "A small Mac cluster can now serve a near-trillion-parameter open model to a local coding agent at usable speed, but tensor parallelism helps decode far more than pipeline parallelism.",
+      "lessons": [
+        {
+          "point": "Prefill and decode are bound by different hardware limits, so upgrades help them differently: prefill by compute, decode by memory bandwidth.",
+          "excerpt": "Generation speed (in tokens per second) is memory-bandwidth bound.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Pipeline parallelism (splitting by layers) leaves decode speed unchanged. At long contexts it speeds up prefill because chunks overlap across machines.",
+          "excerpt": "pipeline parallelization ends up faster than a single node for prefill",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Tensor parallelism (splitting each layer across machines) gives the decode gains, and dense models scale better than mixture-of-experts models.",
+          "excerpt": "Notably, dense architectures scale better across multiple computers.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The headline result is decode throughput for the 816B model on four machines.",
+          "excerpt": "On a cluster of four Mac Studios, Muse Spark Open generates over 36 tokens per second",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "mlx",
+        "local-inference",
+        "rdma",
+        "tensor-parallelism",
+        "apple-silicon",
+        "self-hosted-agents"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Serve a large open model locally for a coding agent with MLX",
+        "detail": "Install MLX v0.30.1 or later on macOS 26.2 or later. Link the Macs with Thunderbolt 5, using two cables per link for more bandwidth. Start mlx_lm.server under mlx.launch with --backend jaccl, without --pipeline, which gives tensor parallelism. Point your agent at http://127.0.0.1:8080/v1 as an OpenAI-compatible provider. Benchmark at your real context size with mlx_lm.benchmark first."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 45,
+        "newness": 21,
+        "credibility": 75.0,
+        "composite": 42.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
+      "prior_art": "The pool's inference entries are server and GPU papers, such as KV-cache tiering and disaggregated GPU inference. None covers consumer-hardware clusters. What is new here: concrete TTFT and decode numbers for RDMA-linked Macs, and a direct recipe for connecting a local agent to the server.",
+      "related_claims": [
+        "quantization-preserves-most-benchmark-scores"
+      ],
+      "id": "mlx-tensor-parallelism-over-thunderbolt-rdma-run-6e1245e8ef",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 22 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "mlx-tensor-parallelism-over-thunderbolt-rdma-runs-an-816b-mi"
       ]
     },
     {
@@ -1906,10 +1908,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 23,
+        "newness": 21,
         "credibility": 53.0,
-        "composite": 38.3,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 37.8,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -1992,10 +1994,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 38.0,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 37.5,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -2061,10 +2063,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 23,
+        "newness": 21,
         "credibility": 72.5,
-        "composite": 37.62,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 37.12,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -2141,10 +2143,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 23,
+        "newness": 21,
         "credibility": 50.8,
-        "composite": 37.37,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 36.87,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2177,6 +2179,90 @@
       "previous_slugs": [
         "swt-bench-neurips-2024-a-docker-harness-that-scores-llm-writ"
       ]
+    },
+    {
+      "id": "coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "A Thomson Reuters engineer runs a coding agent fully offline with Qwen",
+      "summary": "A principal engineer at Thomson Reuters shows how to run the OpenCode coding agent with no internet, using Ollama to serve Qwen3.5 9B on a laptop. The configuration enables only the local provider, asks before file edits and shell commands, and blocks web tools. Offline, the agent fixed a one-line bug and the existing tests passed, which the author checked by re-running them. The author says this shows only that small, self-contained tasks work, not how the setup copes with large repositories.",
+      "lessons": [
+        {
+          "point": "Anything that needs the network, such as new packages or web lookups, has to be prepared before going offline.",
+          "excerpt": "Downloading a new package or looking something up on the web will still need a connection.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The small local model guessed the wrong test runner once, so put the exact test command in the prompt.",
+          "excerpt": "For the next task, I would include the exact test command in the prompt: python3 -m unittest -v.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Existing, unchanged tests give the agent a target and give you a check that does not depend on the agent's own explanation.",
+          "excerpt": "It also gives us a way to check the result independently of its explanation.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Lock the local setup down: local provider only, approval before edits and commands, web tools blocked.",
+          "excerpt": "It also asks before editing files or running shell commands, and blocks the web tools.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A 9B local model with OpenCode can handle small, test-backed fixes offline, but the source shows only one trivial task.",
+      "tags": [
+        "local-models",
+        "offline-agents",
+        "opencode",
+        "ollama",
+        "qwen",
+        "coding-agents",
+        "self-hosted-agents"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Set up an offline OpenCode plus Ollama coding agent",
+        "detail": "While still online, start Ollama with OLLAMA_HOST=127.0.0.1:11434 OLLAMA_NO_CLOUD=1 OLLAMA_CONTEXT_LENGTH=65536 ollama serve and run ollama pull qwen3.5:9b. In opencode.json, point baseURL at http://127.0.0.1:11434/v1, enable only the local provider, require approval for edits and shell commands, and block web tools. Launch with opencode --pure once online, then disconnect. Give the exact test command in every prompt and re-run the tests yourself afterwards. Budget 12-16 GB of RAM or more for a 64k context."
+      },
+      "scores": {
+        "novelty": 18,
+        "relevance": 45,
+        "newness": 21,
+        "credibility": 75.0,
+        "composite": 35.4,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
+      "related_claims": [
+        "localhost-agent-servers-are-reachable-from-any-webpage"
+      ],
+      "corroborating_sources": [],
+      "source_url": "https://latent.space/p/offline-coding/",
+      "article_url": "https://latent.space/p/offline-coding/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474.txt",
+      "discovered_via": "rss",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Latent Space",
+      "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "introducing-the-agents-api-243d2668ed",
@@ -2386,10 +2472,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 23,
+        "newness": 21,
         "credibility": 75.0,
-        "composite": 33.5,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 33.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -2423,6 +2509,81 @@
       "previous_slugs": [
         "amazon-science-post-on-independent-third-party-review-of-its"
       ]
+    },
+    {
+      "id": "models-are-the-how-harnesses-are-the-what-dae2fc2220",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Daniel Miessler argues harnesses should describe what you want, not steps",
+      "summary": "Daniel Miessler offers a way to remember what a harness is for: the model handles how to do the task, and the harness supplies what you want. That means your preferences, goals, context and what good looks like. He argues that harnesses which force the model through fixed steps limit it, while harnesses that describe your goals let it choose its own path. This is an opinion piece with no experiments.",
+      "lessons": [
+        {
+          "point": "Miessler quotes Theo's definition: a harness is the code around a model, its tools, the format for calling them, and the loop that runs them.",
+          "excerpt": "The code wrapped around a model that lets it act",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Forcing the model through fixed steps limits its results. Describing goals and preferences works better.",
+          "excerpt": "Micromanaging the steps caps the model; describing what you want frees it",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "Context about the user stays valuable as models improve, even though he also says you will need the harness less.",
+          "excerpt": "A smarter model does more with that context, not less.",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Spend harness effort on user context and definitions of done rather than step-by-step scripts, as a heuristic, not a measured result.",
+      "tags": [
+        "harness-design",
+        "context-engineering",
+        "user-preferences",
+        "opinion"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Replace step scripts with goal, preference and done-criteria context",
+        "detail": "Review your agent's system prompt and skills. Where they prescribe numbered steps, try swapping them for who the user is, how they like things done and what a finished result looks like. Compare the two versions on the same task set before adopting the change."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 40,
+        "newness": 21,
+        "credibility": 75.0,
+        "composite": 33.0,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
+      "related_claims": [
+        "retest-harness-scaffolding-on-model-change"
+      ],
+      "corroborating_sources": [],
+      "source_url": "https://danielmiessler.com/blog/models-how-harnesses-what",
+      "article_url": "https://danielmiessler.com/blog/models-how-harnesses-what",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-25",
+      "raw_path": "data/_raw/models-are-the-how-harnesses-are-the-what-dae2fc2220.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-danielmiessler-com-feed-rss",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Daniel Miessler",
+      "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -2465,10 +2626,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 23,
+        "newness": 21,
         "credibility": 50.6,
-        "composite": 32.84,
-        "scored_at": "2026-10-27T18:41:52+00:00"
+        "composite": 32.34,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -2554,10 +2715,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 23,
+        "newness": 21,
         "credibility": 55.0,
-        "composite": 32.0,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 31.5,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -2619,10 +2780,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 23,
+        "newness": 21,
         "credibility": 52.0,
-        "composite": 31.55,
-        "scored_at": "2026-10-27T18:41:52+00:00"
+        "composite": 31.05,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -2693,10 +2854,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 23,
+        "newness": 21,
         "credibility": 40.0,
-        "composite": 30.35,
-        "scored_at": "2026-10-27T18:41:52+00:00"
+        "composite": 29.85,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -2770,10 +2931,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 23,
+        "newness": 21,
         "credibility": 72.0,
-        "composite": 30.05,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 29.55,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -2793,6 +2954,79 @@
       "source_name": "NeurIPS (via arXiv)",
       "id": "bound-conditioned-latent-inference-cuts-progress-ea3eddcedb",
       "retrieved_at": "2026-10-24T08:18:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "prism-pathology-reliability-in-scarce-label-medi-bc02577d9b",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "PRISM benchmark shows pathology model calibration breaks down with scarce labels",
+      "summary": "PRISM tests eight pathology foundation models on six tile-level datasets, with label budgets from 1% to 100% and transfer between hospitals, and measures calibration (whether confidence matches accuracy). At 1% labels the link between accuracy rank and calibration rank becomes dataset-specific, and when transfer is weak, extra labels often make calibration error worse. Temperature scaling, a standard calibration fix, failed in 49 of 288 cells.",
+      "lessons": [
+        {
+          "point": "A model's accuracy ranking stops predicting its calibration ranking when labels are scarce.",
+          "excerpt": "whereas at 1% labels the relationship becomes dataset-specific (rho = -0.24, I^2 = 67%)",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "When transfer to a new site is weak, more source-domain labels can make target calibration worse.",
+          "excerpt": "below a transfer AUROC of roughly 0.85, more labels worsen target ECE in 86-88% of combinations",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Post-hoc temperature scaling is not a reliable calibration fix.",
+          "excerpt": "Temperature scaling fails to reduce ECE in 49 of 288 cells",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Medical ML result, off-thesis here: the general point is not to treat an accuracy leaderboard as a stand-in for calibration under low labels or domain shift.",
+      "tags": [
+        "benchmark",
+        "calibration",
+        "pathology",
+        "foundation-models",
+        "distribution-shift",
+        "medical-ml"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Measure calibration separately at your real label budget",
+        "detail": "When choosing a foundation model for a task with few labels, report calibration error at your actual label fraction and on an out-of-distribution split. Do not assume a temperature fitted on source data will transfer."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 15,
+        "newness": 21,
+        "credibility": 72.0,
+        "composite": 29.55,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "http://arxiv.org/abs/2610.36517v1",
+      "article_url": "http://arxiv.org/abs/2610.36517v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/prism-pathology-reliability-in-scarce-label-medi-bc02577d9b.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NeurIPS (via arXiv)",
+      "retrieved_at": "2026-10-28T16:52:05+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -2843,10 +3077,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 23,
+        "newness": 21,
         "credibility": 53.2,
-        "composite": 28.73,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 28.23,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -2921,10 +3155,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 23,
-        "credibility": 52.5,
-        "composite": 27.73,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "newness": 21,
+        "credibility": 57.5,
+        "composite": 27.98,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -2953,7 +3187,90 @@
       "grounding_score": 1.0,
       "previous_slugs": [
         "anthropic-donates-the-agent-skills-standard-to-the-linux-fou"
+      ],
+      "corroborating_sources": [
+        {
+          "name": "Anthropic News",
+          "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+          "published": "2026-10-22"
+        }
       ]
+    },
+    {
+      "id": "early-progress-on-accelerating-drug-development-0bec8872c4",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Anthropic reports early results from Claude-driven drug development partnerships",
+      "summary": "Anthropic describes work with six drug developers and its own programs, almost all preclinical, meaning not yet tested in humans. In one case Claude largely on its own generated about 35,000 antibody designs, and in another Enveda's document-review system caught all 11 known issues in 1,061 pages, found 7 more, and cut review time by 89%. The post also mentions a verification program that gives vetted organizations looser safeguards.",
+      "lessons": [
+        {
+          "point": "An agent run largely on its own can produce large candidate sets for humans to narrow down and test.",
+          "excerpt": "largely autonomously, generated roughly 35,000 antibody designs in about a month",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "With raw lab data, Claude and a researcher together questioned the metrics themselves, not just optimized against them.",
+          "excerpt": "Claude and the researcher reanalyzed the raw data, then proposed different metrics and a protocol change to test them.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Model-assisted document review was checked against known human findings and also surfaced issues the humans had missed.",
+          "excerpt": "Over tests on 1,061 pages of documentation, Claude caught all 11 issues that human reviewers had spotted",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "The reusable idea in this off-field vendor report is to check agent review against known human findings before relying on it.",
+      "tags": [
+        "life-sciences",
+        "drug-discovery",
+        "claude",
+        "agents",
+        "case-study",
+        "vendor-announcement"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Validate agent document review against a human-labeled issue set",
+        "detail": "Before deploying an LLM reviewer, run it on documents where humans have already logged the issues. Measure how many known issues it catches and how many new ones it flags, then check the new ones by hand. Only after that should you claim time savings."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 20,
+        "newness": 21,
+        "credibility": 69.3,
+        "composite": 27.64,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "https://www.anthropic.com/research/early-progress-drug-development",
+      "article_url": "https://www.anthropic.com/research/early-progress-drug-development",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/early-progress-on-accelerating-drug-development-0bec8872c4.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 69.3,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "retrieved_at": "2026-10-28T16:52:05+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "sebastian-raschka-s-from-scratch-video-course-on-5051734d4d",
@@ -2999,10 +3316,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 23,
+        "newness": 21,
         "credibility": 55.0,
-        "composite": 26.9,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 26.4,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -3076,10 +3393,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 23,
+        "newness": 21,
         "credibility": 55.0,
-        "composite": 26.0,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 25.5,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
       "verified": true,
@@ -3248,10 +3565,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 23,
+        "newness": 21,
         "credibility": 70.0,
-        "composite": 21.65,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 21.15,
+        "scored_at": "2026-10-28T16:52:05+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -3345,6 +3662,224 @@
       "source_name": "OpenAI Blog",
       "id": "openai-proposes-us-led-international-technical-s-3e0d21dc73",
       "retrieved_at": "2026-10-25T00:44:25+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "openai-expands-partnership-with-oracle-to-bring-a2c7ec9106",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "OpenAI and Oracle expand their partnership to bring Oracle apps into ChatGPT",
+      "summary": "OpenAI and Oracle announce Oracle AI Workspace, which brings Oracle business applications and data into ChatGPT, governed by each organization's permissions. Oracle also announces products built on OpenAI models: AI Security Mesh for finding and fixing vulnerabilities, an SMB bundle and App Composer. US Oracle customers can also buy OpenAI products through Oracle Marketplace. The post is a business announcement with no technical or security detail.",
+      "lessons": [
+        {
+          "point": "Oracle AI Security Mesh will use OpenAI cyber models for vulnerability finding and fixing, with Oracle running the testing infrastructure.",
+          "excerpt": "is designed to help customers find and fix vulnerabilities in applications and infrastructure using OpenAI cyber models",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Access to Oracle data from ChatGPT is meant to follow each organization's own permissions and sign-in, but no mechanism is described.",
+          "excerpt": "with simpler administration, unified sign-in, and access governed by each organization",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "Most of the news is commercial: buying OpenAI products through Oracle procurement.",
+          "excerpt": "Oracle customers in the U.S. can purchase access to the OpenAI API, Codex, and ChatGPT Work through",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Nothing in this partnership news helps a harness builder or defender until Oracle publishes how agent access to its apps is controlled.",
+      "tags": [
+        "partnership",
+        "oracle",
+        "openai",
+        "chatgpt-apps",
+        "enterprise-agents",
+        "business-announcement"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action beyond inventory if you run Oracle apps",
+        "detail": "If your organization uses Oracle applications, note that ChatGPT-based agent access is coming through Oracle AI Workspace. Before enabling it, ask for documentation on how permissions, sign-in and approvals limit what agents can read and do."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 10,
+        "newness": 21,
+        "credibility": 67.5,
+        "composite": 19.88,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "https://openai.com/index/oracle-apps-in-chatgpt",
+      "article_url": "https://openai.com/index/oracle-apps-in-chatgpt",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/openai-expands-partnership-with-oracle-to-bring-a2c7ec9106.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 67.5,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Blog",
+      "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "expanding-our-partnership-with-gsa-to-bring-clau-1a43fc95af",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Anthropic expands its GSA deal to discount Claude for governments",
+      "summary": "Anthropic's new agreement with the General Services Administration (GSA) gives a 40% discount on Claude products to federal, state, local, tribal and territorial governments. The post lists self-reported productivity stories, such as a Utah pilot with 34 developers, and compliance status, including FedRAMP High for Claude for Government and on Bedrock and Vertex AI. This is a business announcement with no technical detail.",
+      "lessons": [
+        {
+          "point": "The deal is mainly a pricing change covering all Claude product surfaces for government buyers.",
+          "excerpt": "gives government partners a 40% discount on Claude Enterprise, Claude for Government, and the Claude API",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The productivity numbers are self-reported results from small pilots, not controlled measurements.",
+          "excerpt": "Utah gave Claude Code to 34 developers across 10 state agencies.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Agencies building their own tools can get Claude under FedRAMP High and DoD IL4/IL5 through cloud providers.",
+          "excerpt": "On Bedrock, Claude is authorized for FedRAMP High, with select models authorized for DoD IL4 and IL5 workloads in AWS GovCloud.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This procurement news only matters if you buy Claude for a US government organization.",
+      "tags": [
+        "anthropic",
+        "government",
+        "procurement",
+        "fedramp",
+        "vendor-announcement"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Check the compliance route if you are a government buyer",
+        "detail": "Public-sector teams can buy through GSA's Multiple Award Schedule at the OneGov discount. Choose Claude for Government (FedRAMP High) or Bedrock or Vertex AI depending on whether the workload needs IL4 or IL5."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 8,
+        "newness": 21,
+        "credibility": 68.1,
+        "composite": 18.76,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "No close entries; no technical claim to compare.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "https://www.anthropic.com/news/expanding-partnership-gsa",
+      "article_url": "https://www.anthropic.com/news/expanding-partnership-gsa",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/expanding-our-partnership-with-gsa-to-bring-clau-1a43fc95af.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 68.1,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "retrieved_at": "2026-10-28T16:52:05+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "amp-on-android-5fe9c0a919",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Amp releases an Android app for its coding agent",
+      "summary": "Amp, a coding agent, has released an Android app. The screenshots show agent threads, a Portals tab showing a slide deck, and a Changes tab showing code diffs. The post contains no technical, security or evaluation detail beyond the announcement.",
+      "lessons": [
+        {
+          "point": "Amp now has an Android client.",
+          "excerpt": "We now have an Android app:",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The mobile app lets you review the agent's code changes as diffs.",
+          "excerpt": "The present.js diff in the Changes tab of the Amp Android app",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Amp users can now check agent threads and diffs from a phone, but there is nothing to learn about building agents.",
+      "tags": [
+        "amp",
+        "coding-agent",
+        "android",
+        "product-launch"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action beyond optional install",
+        "detail": "Amp users who want to review agent threads and code diffs on mobile can install the app from ampcode.com/app. There is no technique to adopt."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 10,
+        "newness": 21,
+        "credibility": 55.0,
+        "composite": 17.4,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "https://ampcode.com/news/amp-on-android",
+      "article_url": "https://ampcode.com/news/amp-on-android",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/amp-on-android-5fe9c0a919.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-ampcode-com-news-rss",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Amp",
+      "retrieved_at": "2026-10-28T16:52:04+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3475,6 +4010,56 @@
       "previous_slugs": [
         "anthropic-describes-presenting-mcp-servers-as-code-apis-so-a"
       ]
+    },
+    {
+      "id": "game-boy-color-on-my-conference-badge-097e3cc534",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Steve Francia runs Game Boy emulators on a GitHub Universe badge",
+      "source_url": "https://simonwillison.net/2026/Oct/27/game-boy-color-on-my-conference-badge/",
+      "takeaway": "A hobby hardware post with little AI content, apart from a note that Gemini helped build an emulator.",
+      "summary": "Simon Willison links to a post by Steve Francia, who worked with Gemini to get an NES emulator running on the GitHub Universe conference badge and then added Game Boy and Game Boy Color emulators.",
+      "lessons": [
+        {
+          "point": "The conference badge is a small color-screen computer that people can hack on.",
+          "excerpt": "the conference badge is a full-blown color screen computer.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://simonwillison.net/2026/Oct/27/game-boy-color-on-my-conference-badge/",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/game-boy-color-on-my-conference-badge-097e3cc534.txt",
+      "source_id": "rss:https-simonwillison-net-atom-everything",
+      "source_rank": 51.6,
+      "discovered_via": "rss",
+      "source_name": "Simon Willison's Weblog",
+      "retrieved_at": "2026-10-28T16:52:05+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-28"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 51.6,
+        "composite": 7.74,
+        "scored_at": "2026-10-28T16:52:05+00:00"
+      }
     }
   ]
 }

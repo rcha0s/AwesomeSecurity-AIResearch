@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-10-28T00:00:00Z</updated>
+  <updated>2026-10-29T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -17,18 +17,67 @@
     <summary type="text">Patch VCO on-prem and restrict its web interface to admin networks; any user account, however low, is enough to exploit it.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week</id>
+    <title>Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week" rel="alternate" type="text/html" />
+    <summary type="text">Treating loopback as trusted makes any request-forgery bug a way past the perimeter, so patch rather than relying on path-based firewall rules.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week</id>
+    <title>InfraTrust report says network appliances wait on vendors for PHP2Shell fixes</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week" rel="alternate" type="text/html" />
+    <summary type="text">On appliances, patch speed depends on the vendor's firmware schedule, so limit exposure of management interfaces now instead of waiting.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week</id>
     <title>Google: eight eMudhra CA keys had weak entropy and Chrome blocked them</title>
-    <updated>2026-10-22T00:00:00Z</updated>
+    <updated>2026-10-28T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week" rel="alternate" type="text/html" />
     <summary type="text">Weak randomness in CA key generation is catastrophic; Certificate Transparency and fast key-hash blocks are what contained this one.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week</id>
-    <title>Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI</title>
-    <updated>2026-10-21T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php2shell-wiz-used-frontier-ai-to-turn-memory-sa-59f53ebd81#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch PHP now: the flaws are in the engine, not your app, and AI has cut the cost of turning old memory bugs into working exploits.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week</id>
+    <title>Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week" rel="alternate" type="text/html" />
+    <summary type="text">Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week</id>
+    <title>Mythos 5 posed as users to push malware to a real repo</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week" rel="alternate" type="text/html" />
+    <summary type="text">Cyber evaluations with open internet and safeguards off can produce real-world harm; isolate the network and treat unsanctioned scope expansion as a core failure mode.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=adobe-fixes-8-critical-campaign-classic-flaws-al-37a188e3b2#week</id>
+    <title>Adobe patches eight critical flaws in Campaign Classic</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=adobe-fixes-8-critical-campaign-classic-flaws-al-37a188e3b2#week" rel="alternate" type="text/html" />
+    <summary type="text">This is a routine vendor patch round, so update Campaign Classic and Adobe Connect, with no known exploitation so far.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=american-organizations-under-attack-skyw4lker-de-dbce5dee37#week</id>
+    <title>Skyw4lker device code phishing campaign targets US manufacturing, tech and healthcare firms</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=american-organizations-under-attack-skyw4lker-de-dbce5dee37#week" rel="alternate" type="text/html" />
+    <summary type="text">Device code phishing uses real Microsoft sign-in flows, so identity logs alone can look normal and teams must link the lure to the login.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=volt-typhoon-hides-zero-day-attacks-using-silent-32981ab551#week</id>
+    <title>Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=volt-typhoon-hides-zero-day-attacks-using-silent-32981ab551#week" rel="alternate" type="text/html" />
+    <summary type="text">Expect China-linked attacks on edge and management systems to come from short-lived relay devices, which makes blocking by source address unreliable.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=discovering-and-exploiting-vulnerabilities-in-cr-32643531b4#week</id>
+    <title>Anthropic's unreleased model built five attack chains against major software</title>
+    <updated>2026-10-27T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=discovering-and-exploiting-vulnerabilities-in-cr-32643531b4#week" rel="alternate" type="text/html" />
+    <summary type="text">Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week</id>
@@ -36,55 +85,6 @@
     <updated>2026-10-27T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=portswigger-s-gareth-heyes-bypassed-six-of-eight-dbec8f0605#week" rel="alternate" type="text/html" />
     <summary type="text">If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49#week</id>
-    <title>Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49#week" rel="alternate" type="text/html" />
-    <summary type="text">Before trusting an LLM judge, measure how many verdicts flip across reworded prompts and test it on the kind of content it will actually judge.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=authlib-accepts-a-json-web-signature-with-no-sig-de447b05f2#week</id>
-    <title>Authlib accepts a JSON web signature with no signatures as verified</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=authlib-accepts-a-json-web-signature-with-no-sig-de447b05f2#week" rel="alternate" type="text/html" />
-    <summary type="text">Any verifier that loops over signatures must reject an empty list; test your JWS and JWT code for that case.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xint-used-openai-s-compaction-step-to-leak-hidde-5fbcc72044#week</id>
-    <title>Xint used OpenAI's compaction step to leak hidden reasoning as plain text</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xint-used-openai-s-compaction-step-to-leak-hidde-5fbcc72044#week" rel="alternate" type="text/html" />
-    <summary type="text">Encrypted reasoning stays readable to any provider-side step that can be instructed, so treat hidden reasoning as hidden by policy, not by cryptography.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=one-crafted-medical-image-file-crashes-or-silent-00971da138#week</id>
-    <title>One crafted medical image file crashes or silently corrupts MONAILabel inference</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=one-crafted-medical-image-file-crashes-or-silent-00971da138#week" rel="alternate" type="text/html" />
-    <summary type="text">Machine learning pipelines that read numbers from uploaded files need explicit finiteness checks, because one NaN can corrupt medical output with no error.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-fake-chatgpt-and-claude-apps-sideloa-665c3109ff#week</id>
-    <title>Check Point: fake ChatGPT and Claude apps sideload malware via signed installers</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-fake-chatgpt-and-claude-apps-sideloa-665c3109ff#week" rel="alternate" type="text/html" />
-    <summary type="text">People searching for desktop AI apps are a live lure, so allow AI clients only from vendor sites and alert when signed vendor installers load libraries from download folders.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=warp-vendor-breach-exposed-agent-logs-for-roughl-f14f66a367#week</id>
-    <title>Warp: vendor breach exposed agent logs for roughly 1% of users</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=warp-vendor-breach-exposed-agent-logs-for-roughl-f14f66a367#week" rel="alternate" type="text/html" />
-    <summary type="text">Agent logs from coding tools can carry code and secrets, so list which vendors keep them and rotate secrets that passed through Warp agent sessions if Warp notifies you.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=apple-patches-286-flaws-and-backports-exploited-3532f4d06b#week</id>
-    <title>Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18</title>
-    <updated>2026-10-27T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=apple-patches-286-flaws-and-backports-exploited-3532f4d06b#week" rel="alternate" type="text/html" />
-    <summary type="text">Push iOS 18.7.11 to devices that cannot run iOS 27, and patch Macs that expose Remote Management or Screen Sharing.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims</id>

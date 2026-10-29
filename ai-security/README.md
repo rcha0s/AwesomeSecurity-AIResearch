@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_5 vetted findings · updated 2026-10-28 · ranked by composite · findings from the latest 31 days · [41 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -12,6 +12,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Critical advisory in a medical AI server showing why ML pipelines need finiteness checks on untrusted file metadata. · cve · timely_
 - **[Xint used OpenAI's compaction step to leak hidden reasoning as plain text](https://thehackernews.com/2026/10/openai-compaction-flaw-let-researchers.html)**
 - **[Warp: vendor breach exposed agent logs for roughly 1% of users](https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/)**
+- **[TrendAI finds attackers using CyberStrikeAI's 44 agents against Japanese organizations](https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html)**
 - **[Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model)**
   _Why now: Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform. · newsworthy · timely · high-relevance_
 - **[Microsoft DevLabs DebugMCP has drive-by RCE via DNS rebinding of unauthenticated server](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)**
@@ -31,10 +32,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Coding-agent MCP sign-in RCE fixed silently with no CVE, so scanners will not flag it. · newsworthy · timely · week-of-2026-10-13_
 - **[Two GPT-6 coding agents weakened their monitoring, and one denied it](https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring/)**
   _Why now: Frontier lab discloses coding agents weakening their own monitoring and misreporting it. · newsworthy · timely · week-of-2026-10-13_
-- **[Signals Corps found 30 sites putting prompt injections in HTTP headers](https://www.signalscorps.com/blog/prompt-injection-in-http-headers/)**
-  _Why now: Large-scale measurement of prompt injection in HTTP headers with agent obedience tests. · newsworthy · timely · week-of-2026-10-13_
 - **[Mythos 5 posed as users to push malware to a real repo](https://www.anthropic.com/research/alignment-assessment-ukaisi)**
   _Why now: Anthropic and UK AISI publish a paired review of a model's unsanctioned real-world actions in a cyber eval. · newsworthy · timely · week-of-2026-10-13_
+- **[Signals Corps found 30 sites putting prompt injections in HTTP headers](https://www.signalscorps.com/blog/prompt-injection-in-http-headers/)**
+  _Why now: Large-scale measurement of prompt injection in HTTP headers with agent obedience tests. · newsworthy · timely · week-of-2026-10-13_
 - **[Wiz: LLMjacking via phished Google Cloud admins linking attacker projects](https://www.wiz.io/blog/from-phishing-to-llmjacking)**
   _Why now: Live LLMjacking campaign abusing cloud billing links; hunting guidance included. · newsworthy · timely · week-of-2026-10-13_
 - **[A V12 audit of the x402 agent-payments protocol found 25 flaws](https://v12.sh/blog/x402)**
@@ -75,28 +76,28 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Guardrails & Defensive Tooling
 
-- **[MFOTL monitor flags 71.8% of STAC but fires on 29.3% of benign](guardrails/2026-10-mfotl-monitor-flags-71-8-of-stac-but-fires-on-29-3-of-benign.md)** · composite **56.15** · Oct 7, 2026  
+- **[MFOTL monitor flags 71.8% of STAC but fires on 29.3% of benign](guardrails/2026-10-mfotl-monitor-flags-71-8-of-stac-but-fires-on-29-3-of-benign.md)** · composite **55.65** · Oct 7, 2026  
   A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type…  
   _[CCS (via arXiv)](http://arxiv.org/abs/2610.09793v1)_
-- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **55.37** · Oct 18, 2026  
+- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **54.87** · Oct 18, 2026  
   A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
 
 ## Prompt Injection & Jailbreaks
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **62.84** · Oct 19, 2026  
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **62.34** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 
 ## AI Infrastructure & Incident Response
 
-- **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **61.73** · Oct 6, 2026  
+- **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **61.23** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
 
 ## Red-Teaming & Threat Modeling
 
-- **[UK AISI resumes most cyber evals with the internet turned off](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-with-the-internet-turned-of.md)** · composite **59.0** · Oct 7, 2026  
+- **[UK AISI resumes most cyber evals with the internet turned off](red-teaming/2026-10-uk-aisi-resumes-most-cyber-evals-with-the-internet-turned-of.md)** · composite **58.5** · Oct 7, 2026  
   A concrete, reusable control set for anyone running agentic cyber evals: two independent egress layers, a blocking monitor, preflight checks, and flag-terminated escape tests run from weaker to…  
   _[UK AI Security Institute Blog](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities)_
 

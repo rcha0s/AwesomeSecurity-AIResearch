@@ -19,7 +19,7 @@ Pillar found that opencode (versions 1.0.137 to 1.18.32 on Windows and WSL) pass
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [source](https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 23 · Novelty 55 · Relevance 85 · Credibility 55 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 21 · Novelty 55 · Relevance 85 · Credibility 55 · **Composite 56** _(each 0-100)_  
 **Tags:** `opencode`, `mcp`, `oauth`, `command-injection`, `windows`, `coding-agents`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CVE-2025-6514 (mcp-remote) is the same sink; the new points are the https-URL payload that defeats scheme checks and the silent-fix disclosure gap. Verifier: CVE-2025-6514 (JFrog, mcp-remote), CVE-2025-58062, CVE-2025-10619; tripodsan sindresorhus/open issue #323 (2023, https://$(calc.exe)). Delta: same class in open
 
