@@ -4060,6 +4060,90 @@
         "composite": 7.74,
         "scored_at": "2026-10-28T16:52:05+00:00"
       }
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "cluster": "L",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "jailbreak-transfers-across-models",
+        "llm-eval-datasets-leak-into-training-sets"
+      ],
+      "title": "Enhancing AI security through global AI red teaming",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+      "published": "2026-07-27",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch09-3.txt",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_rank": 76.8,
+      "summary": "Microsoft launched the External Red Team Alliance (EXTRA), an unrestricted-gifts program funding 18 university labs across six continents — including CMU CyLab, Georgetown SecLab, KAIST WSP, IIT Madras CeRAI, Berkeley RDI, Toronto CleverHans, UCL ISec — plus a distributed operational network of regional and domain specialists. The load-bearing claim is that meaningful AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harms, alignment failures, and geography-specific abuse patterns that no single internal team can staff. The unrestricted-funding structure is deliberate: Microsoft does not want to steer research to predefined deliverables, because doing so would compromise independent capacity. The doctrinal point is that external expertise is no longer supplemental to red-teaming, it is essential.",
+      "takeaway": "AI red-teaming is now interdisciplinary, multilingual, and geographically distributed by requirement, not by preference — internal-only teams cannot cover the actual attack surface.",
+      "lessons": [
+        {
+          "point": "AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harm, alignment failure, and regional abuse patterns — an attack surface no single corporate team can staff.",
+          "excerpt": "AI red teaming is no longer just about prompt injection or content safety edge cases. It increasingly involves security operations, misuse scenarios, multilingual harms, alignment failures, and domain-specific abuse patterns that can vary significantly across geographies and languages.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Unrestricted funding is a deliberate design choice: directing external research toward predefined deliverables would compromise the independent capacity that makes the external contribution valuable in the first place.",
+          "excerpt": "The funding is unrestricted because the objective is not to direct research outcomes toward product requirements or predefined deliverables. The goal is to strengthen independent safety research capacity globally and create stronger long-term collaboration between academia and operational AI security teams.",
+          "confidence": 0.88,
+          "grounded": true
+        },
+        {
+          "point": "Microsoft's operational conclusion: external red-team expertise is not a nice-to-have supplement, it is essential to identifying meaningful failure modes at frontier capability.",
+          "excerpt": "EXTRA reflects a practical shift in how AI security testing must operate going forward. External expertise is no longer supplemental to red teaming; in many cases, it is essential.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Low-resource / non-English contexts are a specific frontier-model risk vector — named explicitly as a reason to fund labs in South Africa, Brazil, India, Korea, and Australia rather than just North American and European institutions.",
+          "excerpt": "As frontier model capabilities advance, they create new risk opportunities, particularly in low-resource settings. Partnerships, such as this EXTRA, bring greater attention to the study of the local risk landscape and can enable broader impact of the work carried out around the globe in smaller academic settings.",
+          "confidence": 0.88,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "red-teaming",
+        "ai-safety",
+        "external-testing",
+        "academic-partnership",
+        "multilingual",
+        "regional-abuse",
+        "microsoft"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat external, multi-region, non-English red-team coverage as a required control, not a supplementary one",
+        "detail": "For any org deploying a frontier model at scale: (1) enumerate the language, cultural, and regional attack surfaces your product actually reaches, (2) verify that your red-team roster covers each of those surfaces with actual practitioners in-region — machine-translation is not coverage, (3) fund the coverage on an unrestricted basis so the researchers can pursue emerging risks rather than a corporate checklist, and (4) treat operational (SecOps / misuse / alignment failure) categories as first-class red-team scope alongside prompt-injection and content-safety. The Microsoft position is that internal-only teams cannot staff this attack surface, and that follows for any organization operating at frontier-model scale."
+      },
+      "scores": {
+        "novelty": 48,
+        "relevance": 64,
+        "newness": 8,
+        "credibility": 76.8,
+        "composite": 47.12,
+        "scored_at": "2026-08-14T20:28:50+00:00"
+      },
+      "prior_art": "Vendor red-team-alliance announcements are a well-worn genre (OpenAI Red Teaming Network, Anthropic's ASL red-team program, Google DeepMind's Gemini safety collaborations). Microsoft's delta is the 18-lab six-continent list, the unrestricted-funding structure (as opposed to work-for-hire contracts), and the explicit doctrinal claim that external expertise is essential rather than supplemental.",
+      "discovered_via": "rss",
+      "threat": null,
+      "conditions": null,
+      "mitigations": null,
+      "verified": true,
+      "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-batch09-3.txt; related_claims exist in data/claims.json. Program-launch story, not a specific vulnerability — threat/conditions/mitigations left null in favor of the takeaway-shaped actionable.",
+      "id": "enhancing-ai-security-through-global-ai-red-team-58e381fc0f",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "Red-Teaming Methodology"
     }
   ]
 }

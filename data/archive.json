@@ -853,62 +853,6 @@
     "domain_label": "Evals"
   },
   {
-    "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-    "article_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-    "source_name": "Palo Alto Networks Unit 42",
-    "source_type": "Vendor research",
-    "published": "2026-06-23",
-    "date": "2026-06",
-    "discovered_via": "rss",
-    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-    "source_rank": 75.0,
-    "topic": "ai-security",
-    "domain": "ais.mcp-tools",
-    "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-    "summary": "Unit 42 found five evasive malicious 'skills' persisting on ClawHub — the marketplace OpenClaw's agent pulls third-party, markdown-driven packages from with broad local system access — despite VirusTotal + ClawScan screening added after February's incidents. The five span infostealers (macOS, C2), scanner evasion (inflated file size to exceed thresholds), and two NOVEL agentic threats: runtime agentic affiliate injection and agentic front-running.",
-    "takeaway": "Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.",
-    "lessons": [
-      {
-        "point": "Agent skills are broad-access packages; the marketplace is a supply-chain link to treat as untrusted",
-        "excerpt": "markdown-driven packages with broad local system access, making ClawHub a critical link in the agentic software supply chain",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Malware evades marketplace scanners with simple tricks (oversized files exceed scan thresholds)",
-        "excerpt": "inflated file size to exceed scanner thresholds, bypassing both ClawScan and VirusTotal detection",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "New 'agentic' threat classes are emerging — affiliate injection and front-running done at agent runtime",
-        "excerpt": "runtime agentic affiliate injection and agentic front-running. Both are novel techniques",
-        "confidence": 0.85,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "agent-security",
-      "skill-scanning",
-      "supply-chain",
-      "agentic-threats",
-      "unit42"
-    ],
-    "scores": {
-      "novelty": 82,
-      "relevance": 88,
-      "newness": 6,
-      "composite": 63.75,
-      "scored_at": "2026-07-21T07:37:44+00:00",
-      "credibility": 75.0
-    },
-    "id": "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b",
-    "retrieved_at": "2026-07-13T04:19:32+00:00",
-    "needs_review": false,
-    "grounding_score": 1.0,
-    "domain_label": "Harness & Agent Security"
-  },
-  {
     "topic": "ai-security",
     "domain": "ais.model-supply-chain",
     "title": "Over 970,000 AI-Apps on model hubs measured: thousands leak credentials",
@@ -3902,90 +3846,6 @@
   {
     "topic": "ai-research",
     "domain": "air.evals",
-    "cluster": "L",
-    "related_claims": [
-      "capability-elicitation-lags-training",
-      "jailbreak-transfers-across-models",
-      "llm-eval-datasets-leak-into-training-sets"
-    ],
-    "title": "Enhancing AI security through global AI red teaming",
-    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-    "published": "2026-07-27",
-    "date": "2026-07",
-    "raw_path": "data/_raw/mrscan-batch09-3.txt",
-    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "source_rank": 76.8,
-    "summary": "Microsoft launched the External Red Team Alliance (EXTRA), an unrestricted-gifts program funding 18 university labs across six continents — including CMU CyLab, Georgetown SecLab, KAIST WSP, IIT Madras CeRAI, Berkeley RDI, Toronto CleverHans, UCL ISec — plus a distributed operational network of regional and domain specialists. The load-bearing claim is that meaningful AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harms, alignment failures, and geography-specific abuse patterns that no single internal team can staff. The unrestricted-funding structure is deliberate: Microsoft does not want to steer research to predefined deliverables, because doing so would compromise independent capacity. The doctrinal point is that external expertise is no longer supplemental to red-teaming, it is essential.",
-    "takeaway": "AI red-teaming is now interdisciplinary, multilingual, and geographically distributed by requirement, not by preference — internal-only teams cannot cover the actual attack surface.",
-    "lessons": [
-      {
-        "point": "AI red-teaming has moved past prompt-injection edge cases into security operations, multilingual harm, alignment failure, and regional abuse patterns — an attack surface no single corporate team can staff.",
-        "excerpt": "AI red teaming is no longer just about prompt injection or content safety edge cases. It increasingly involves security operations, misuse scenarios, multilingual harms, alignment failures, and domain-specific abuse patterns that can vary significantly across geographies and languages.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Unrestricted funding is a deliberate design choice: directing external research toward predefined deliverables would compromise the independent capacity that makes the external contribution valuable in the first place.",
-        "excerpt": "The funding is unrestricted because the objective is not to direct research outcomes toward product requirements or predefined deliverables. The goal is to strengthen independent safety research capacity globally and create stronger long-term collaboration between academia and operational AI security teams.",
-        "confidence": 0.88,
-        "grounded": true
-      },
-      {
-        "point": "Microsoft's operational conclusion: external red-team expertise is not a nice-to-have supplement, it is essential to identifying meaningful failure modes at frontier capability.",
-        "excerpt": "EXTRA reflects a practical shift in how AI security testing must operate going forward. External expertise is no longer supplemental to red teaming; in many cases, it is essential.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Low-resource / non-English contexts are a specific frontier-model risk vector — named explicitly as a reason to fund labs in South Africa, Brazil, India, Korea, and Australia rather than just North American and European institutions.",
-        "excerpt": "As frontier model capabilities advance, they create new risk opportunities, particularly in low-resource settings. Partnerships, such as this EXTRA, bring greater attention to the study of the local risk landscape and can enable broader impact of the work carried out around the globe in smaller academic settings.",
-        "confidence": 0.88,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "red-teaming",
-      "ai-safety",
-      "external-testing",
-      "academic-partnership",
-      "multilingual",
-      "regional-abuse",
-      "microsoft"
-    ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Treat external, multi-region, non-English red-team coverage as a required control, not a supplementary one",
-      "detail": "For any org deploying a frontier model at scale: (1) enumerate the language, cultural, and regional attack surfaces your product actually reaches, (2) verify that your red-team roster covers each of those surfaces with actual practitioners in-region — machine-translation is not coverage, (3) fund the coverage on an unrestricted basis so the researchers can pursue emerging risks rather than a corporate checklist, and (4) treat operational (SecOps / misuse / alignment failure) categories as first-class red-team scope alongside prompt-injection and content-safety. The Microsoft position is that internal-only teams cannot staff this attack surface, and that follows for any organization operating at frontier-model scale."
-    },
-    "scores": {
-      "novelty": 48,
-      "relevance": 64,
-      "newness": 8,
-      "credibility": 76.8,
-      "composite": 47.12,
-      "scored_at": "2026-08-14T20:28:50+00:00"
-    },
-    "prior_art": "Vendor red-team-alliance announcements are a well-worn genre (OpenAI Red Teaming Network, Anthropic's ASL red-team program, Google DeepMind's Gemini safety collaborations). Microsoft's delta is the 18-lab six-continent list, the unrestricted-funding structure (as opposed to work-for-hire contracts), and the explicit doctrinal claim that external expertise is essential rather than supplemental.",
-    "discovered_via": "rss",
-    "threat": null,
-    "conditions": null,
-    "mitigations": null,
-    "verified": true,
-    "verify_note": "All four excerpts verified verbatim against data/_raw/mrscan-batch09-3.txt; related_claims exist in data/claims.json. Program-launch story, not a specific vulnerability — threat/conditions/mitigations left null in favor of the takeaway-shaped actionable.",
-    "id": "enhancing-ai-security-through-global-ai-red-team-58e381fc0f",
-    "retrieved_at": "2026-08-10T19:18:37+00:00",
-    "needs_review": true,
-    "grounding_score": 1.0,
-    "domain_label": "Red-Teaming Methodology"
-  },
-  {
-    "topic": "ai-research",
-    "domain": "air.evals",
     "title": "Kimi K3 code-security eval: matching F1 hides a precision gap",
     "source_url": "https://semgrep.dev/blog/2026/kimi-k3s-code-security-results-lack-precision",
     "summary": "When benchmarking LLMs for code-security scanning (IDOR detection across repos), Kimi K3's aggregate F1 (0.340) sat within noise of GLM-5.2 and Claude Opus 4.8, but its precision (0.684 vs a 0.84-0.91 competitor band) was far lower and it collapsed to ~6% F1 on the largest enterprise-style repo while peers held ~20%. The transferable lesson: a headline F1 or recall number can mask where the real deployment cost lives (false positives your team must triage), so evaluate precision, per-repo behavior, and repos that resemble your own rather than a single aggregate score.",
@@ -4129,91 +3989,6 @@
     "domain_label": "Agent reliability & capability boundaries",
     "previous_slugs": [
       "protective-capacity-hallucination-given-a-protective-role-an"
-    ]
-  },
-  {
-    "id": "llm-heist-hijacking-litellm-for-traffic-intercep-7dd99ae13f",
-    "topic": "ai-security",
-    "domain": "ais.ai-infra",
-    "cluster": "I",
-    "related_claims": [
-      "long-lived-cloud-credentials-are-obsolete",
-      "agent-tool-selection-can-be-steered-by-untrusted-context",
-      "prompt-injection-is-containment-not-prevention"
-    ],
-    "title": "LLM Heist hijacks LiteLLM for traffic interception, key theft and tool-call injection",
-    "source_url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
-    "article_url": "https://embracethered.com/blog/posts/2026/hijacking-litellm-for-fun-and-profit/",
-    "published": "2026-08-03",
-    "date": "2026-08",
-    "raw_path": "data/_raw/mrscan-batch06-1.txt",
-    "source_id": "rss:https-embracethered-com-blog-index-xml",
-    "source_topics": [
-      "ai-security"
-    ],
-    "source_rank": 72.5,
-    "summary": "Johann Rehberger walks through a red-team TTP set against LiteLLM, showing that a compromised proxy-admin credential lets an attacker (a) reroute traffic through an attacker-controlled LiteLLM instance, (b) harvest resolved backend LLM provider keys, and (c) modify or forge responses and tool-calls downstream of inference, bypassing all prompt-level defenses. The `llm-heist` tool automates harvest, provision, hijack, inject.",
-    "takeaway": "AI gateways sit downstream of the model, so a proxy-admin credential compromise lets an attacker inject arbitrary tool calls into agent clients without ever touching the model prompt or its provider guardrails. Prompt-level defenses do not see this attack.",
-    "lessons": [
-      {
-        "point": "Tool-call injection at the gateway layer bypasses prompt-level defenses because it modifies responses after inference.",
-        "excerpt": "Even more interesting though, if the clients are AI agents with tool access, an injected response can carry a tool-call. Because the output is changed **after** inference, this bypasses prompt-level defenses.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "A single AI-gateway admin credential compromises the whole org's LLM traffic centrally and stealthily, without touching any user machine.",
-        "excerpt": "*   **It is pretty stealthy.** No configuration changes to developer and user machines.\n*   **It is central.** One gateway compromise might cover the entire organization.\n*   **It operates after inference.** It's possible to modify requests to the LLM. But we can also inject messages and tool calls downstream of the model, so prompt-level defenses never see it.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Only two config settings (`api_base` and `use_litellm_proxy`) via a documented model-management API are needed to reroute all traffic to an attacker gateway; alerting on those changes is a concrete blue-team detection.",
-        "excerpt": "To achieve that, there are only two settings updated via the [`/model/update`](https://docs.litellm.ai/docs/proxy/model_management) API:\n\n1.   `api_base` is changed to point to the attacker LiteLLM gateway\n2.   `use_litellm_proxy` to `true`. This enables proxy mode to route traffic to another instance.",
-        "confidence": 0.95,
-        "grounded": true
-      },
-      {
-        "point": "Prompt-and-response signing would let clients detect a hostile gateway in the middle; this is a design ask for model providers, not a config the operator can enable today.",
-        "excerpt": "*   **Prompt and Response Signing.** This is something for the AI labs to consider as a feature! Basically the idea is to enforce integrity and detect an AI gateway in the middle hijacking traffic.",
-        "confidence": 0.8,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "ai-gateway",
-      "litellm",
-      "tool-call-injection",
-      "adversary-in-the-middle",
-      "credential-theft",
-      "red-team"
-    ],
-    "actionable": {
-      "type": "harness",
-      "title": "Alert on api_base and use_litellm_proxy changes; sign responses if you can",
-      "detail": "Snapshot and diff LiteLLM (or equivalent AI-gateway) model configs — specifically `api_base` and `use_litellm_proxy` — and forward to a SIEM. Restrict provider keys to requests from approved gateway IPs. Reconcile provider billing independently. For agent clients, treat gateway-forwarded tool calls as untrusted: keep explicit tool authorization on the client side (do not run in yolo mode) and consider requiring per-tool user confirmation for high-impact tools like Bash."
-    },
-    "scores": {
-      "novelty": 78,
-      "relevance": 90,
-      "newness": 20,
-      "credibility": 72.5,
-      "composite": 66.28,
-      "scored_at": "2026-08-29T23:46:33+00:00"
-    },
-    "prior_art": "Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).",
-    "discovered_via": "rss",
-    "threat": "An attacker with LITELLM_MASTER_KEY (or an equivalent proxy-admin credential) reroutes an internal AI gateway through their own LiteLLM instance, harvests resolved backend provider keys from the Authorization header of forwarded requests, and injects arbitrary responses and tool calls (e.g., a Bash tool call) into legitimate agent clients like Claude Code.",
-    "conditions": "AI gateway (LiteLLM or similar) deployed as a central proxy with virtual keys. Proxy-admin credential exposure (leaked .env, weak admin UI, unpatched CVE, prior host compromise). Agent clients accept tool calls returned by the gateway without a signature/integrity check (i.e., all current clients). Provider keys not restricted to approved gateway egress IPs; no anomaly detection on config changes.",
-    "mitigations": "Alert on any `api_base` or `use_litellm_proxy` change; snapshot model config as code. Alert on new callback/guardrail/hook registrations on the gateway. Restrict provider API keys to source IPs of approved gateway hosts; rotate on a schedule. Independent billing reconciliation against provider dashboards. Lock down admin API/UI: no internet exposure, MFA, short-lived admin tokens. Patch LiteLLM aggressively (CVE-2026-42271 is on CISA KEV). Do not run agent clients in yolo/auto-approve mode; require per-tool confirmation for shell/write tools.",
-    "verified": true,
-    "verify_note": "All four excerpts were verified verbatim against data/_raw/mrscan-batch06-1.txt. Cluster I fits (deployment infra, IAM for agents). Related claims exist in claims.json.",
-    "retrieved_at": "2026-08-10T19:18:36+00:00",
-    "needs_review": false,
-    "grounding_score": null,
-    "domain_label": "AI Gateway / Deployment Infrastructure",
-    "previous_slugs": [
-      "llm-heist-hijacking-litellm-for-traffic-interception-key-the"
     ]
   },
   {
@@ -7269,91 +7044,6 @@
     "needs_review": true,
     "grounding_score": null,
     "domain_label": "Autonomous Vulnerability Research"
-  },
-  {
-    "topic": "product-security",
-    "domain": "ps.appsec",
-    "cluster": "E",
-    "related_claims": [
-      "indirect-injection-via-retrieved-content-is-viable",
-      "prompt-injection-is-a-permanent-attack-surface"
-    ],
-    "title": "Sanitized webmail CSS steals tokens and keylogs Outlook",
-    "source_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
-    "article_url": "https://portswigger.net/research/css-the-bomb-inside-your-inbox",
-    "published": "2026-08-06",
-    "date": "2026-08",
-    "raw_path": "data/_raw/mrscan-batch01-3.txt",
-    "source_id": "rss:https-portswigger-net-research-rss",
-    "source_topics": [
-      "product-security"
-    ],
-    "source_rank": 75.0,
-    "summary": "Gareth Heyes chains allowed HTML/CSS features across Fastmail, Outlook, AOL/Yahoo/Gmail/ProtonMail and OpenAI's Atlas AI browser to defeat webmail CSS sanitization. Techniques include HTML labels that trigger arbitrary UI actions, invisible :before/:after content that feeds one story to the human and another to an AI browser (indirect prompt injection), attribute-selector nesting to brute-force login tokens after a paste-into-draft, CSS hotwiring to hijack any click, and a real-time keylogger via select+opacity plus Chrome interest invokers.",
-    "takeaway": "CSS sanitizers built as feature allow-lists are not a trust boundary; the only durable defense is strict iframe sandboxing plus killing dangerous selectors, select, and free-form image URLs.",
-    "lessons": [
-      {
-        "point": "Invisible :before/:after content lets an attacker present two different messages to the human and to an AI browser reading the same email, enabling indirect prompt injection through webmail.",
-        "excerpt": "you could use the `:before` and `:after` pseudo-elements to hide the text from the LLM and you could use opacity to hide it from the victim. This creates a disparity between what the victim sees and what the LLM sees, potentially altering the email's context.",
-        "confidence": 0.95,
-        "grounded": true
-      },
-      {
-        "point": "CSS attribute selectors, combined with nesting, can brute-force secret URL parameters (e.g. Medium's 12-char login token) inside a webmail draft after a single paste, without JavaScript.",
-        "excerpt": "using nesting we can match the start with one selector that's outputted only once and then nest the other selectors to brute-force the token with a smaller amount of CSS",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "The only defense that actually holds is strict iframe sandboxing plus removing dangerous selectors and select elements; feature-level CSS/HTML allow lists get bypassed by gadgets and mutation.",
-        "excerpt": "One of the best methods to protect against these attacks is strict isolation. If you isolate the email message using sandboxed iframes you restrict the ability to break out of trusted boundaries.",
-        "confidence": 0.95,
-        "grounded": true
-      },
-      {
-        "point": "CSS hotwiring lets an attacker with allow-listed CSS force the victim's next click, anywhere on the page, to fire a chosen UI action, including multi-step ones.",
-        "excerpt": "CSS hotwiring is a technique that allows you to force the victim to click a specific UI action when clicking anywhere on the page **including multi-step actions** using just CSS.",
-        "confidence": 0.9,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "css",
-      "webmail",
-      "sanitization",
-      "prompt-injection",
-      "keylogger",
-      "atlas",
-      "outlook"
-    ],
-    "actionable": {
-      "type": "skill",
-      "title": "Threat-model webmail-style renderers as adversarial input surfaces for both humans and AI browsers",
-      "detail": "For any product rendering third-party HTML/CSS to a user (webmail, comment systems, agent-visible pages): isolate in a sandboxed iframe; strip select and any dangerous selectors (:has, :checked, :focus, :not); route images through a proxy; reject data: URLs; and assume attackers will use :before/:after to differ human vs LLM view. Add a regression test that renders a corpus of PortSwigger's published payloads and confirms none reach the DOM.",
-      "skill_slug": "webmail-css-sanitizer-hardening"
-    },
-    "scores": {
-      "novelty": 78,
-      "relevance": 88,
-      "newness": 20,
-      "credibility": 75.0,
-      "composite": 66.05,
-      "scored_at": "2026-08-29T23:46:33+00:00"
-    },
-    "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
-    "discovered_via": "rss",
-    "verified": true,
-    "threat": "A single crafted email lets an attacker (a) spoof or hijack UI actions in Outlook/Fastmail via HTML labels + CSS hotwiring, (b) exfiltrate login tokens and passwords from third-party sites the victim pastes into a webmail draft, (c) inject instructions that only the AI browser sees, causing an AI email assistant to open attacker-controlled tabs and leak the victim's name, and (d) keylog Outlook via CSS/select gadgets. All from allow-listed HTML/CSS with no JavaScript.",
-    "conditions": "Webmail client renders untrusted HTML/CSS in the same DOM as the trusted UI (no sandboxed iframe isolation), or the user pastes clipboard HTML into a contenteditable draft on Firefox, or an AI browser (e.g. Atlas) processes the email body as prompt context.",
-    "mitigations": "Sandbox untrusted email content in an iframe with a strict CSP that blocks external image requests and data: URLs. Strip select, dangerous selectors (:has, :checked, :focus, :not), and image URLs pointing to attacker-controllable domains. When an image proxy is available, force all image requests through it. In AI-browser layers, treat CSS-hidden or opacity-zero content as untrusted content the model should not act on.",
-    "id": "css-the-bomb-sanitized-webmail-css-steals-tokens-ccb02c3f70",
-    "retrieved_at": "2026-08-10T19:18:36+00:00",
-    "needs_review": false,
-    "grounding_score": null,
-    "domain_label": "Web Application Security",
-    "previous_slugs": [
-      "css-the-bomb-sanitized-webmail-css-steals-tokens-keylogs-out"
-    ]
   },
   {
     "topic": "product-security",
@@ -12766,86 +12456,6 @@
   },
   {
     "topic": "ai-security",
-    "domain": "ais.prompt-injection",
-    "title": "ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion",
-    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
-    "cluster": "E",
-    "related_claims": [
-      "indirect-injection-via-retrieved-content-is-viable"
-    ],
-    "summary": "Microsoft built a hunting signature for invisible Unicode Tags-block characters (U+E0000-U+E007F) — the technique popularized as \"ASCII smuggling\" in AI prompt-injection research — to detect hidden instructions targeting AI email processing. Instead, the tuned signature surfaced a large-scale phishing campaign using the same invisible characters to split finance-themed lure words and evade traditional email filters, unrelated to any AI involvement, peaking at over 2.3 million daily hits.",
-    "takeaway": "A detection technique built for one threat model (AI prompt injection) surfaced an unrelated, larger threat (traditional phishing filter evasion) using the identical underlying mechanism — invisible Unicode characters exploit the same human/machine text-parsing gap regardless of whether the downstream reader is an AI model or a keyword filter.",
-    "lessons": [
-      {
-        "point": "The same invisible-character property that lets an attacker smuggle instructions past a human and into an AI model also lets an attacker smuggle keywords past a human-invisible pattern and away from a text-matching detector — the mechanism is identical, only the target reader differs.",
-        "excerpt": "tag characters are invisible to humans but exist at the text-processing level, the same property that makes them useful for _smuggling instructions into a model_ also makes them useful for _obfuscating keywords before a detector evaluates them_. The intent is inverted, but the mechanism is similar and a user’s suspicions are not raised.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "A naive detection signature for the Unicode Tags block produced false positives on three subdivision flag emojis (England, Scotland, Wales), which are legitimately encoded using the same invisible tag-character range — illustrating a concrete tuning pitfall for anyone building this detector.",
-        "excerpt": "The first version simply flagged _any_ code point in that range, which proved too blunt. It kept firing on a small subset of perfectly legitimate messages",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "The false positives all traced back to three subdivision flag emojis, which are encoded using the exact Unicode tag-character range the detector was watching for.",
-        "excerpt": "because those emojis are encoded using tag characters.",
-        "confidence": 0.85,
-        "grounded": true
-      },
-      {
-        "point": "Once tuned, signature hits jumped roughly two orders of magnitude in a single day (February 9, 2026) and peaked above 2.3 million daily hits, showing the technique was being used at real production phishing scale, not as a novelty.",
-        "excerpt": "Volume holds at a low-thousands baseline through February 8, jumps roughly two orders of magnitude on February 9, peaks at over 2.3 million",
-        "confidence": 0.8,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "ascii-smuggling",
-      "prompt-injection",
-      "phishing",
-      "unicode",
-      "detection"
-    ],
-    "actionable": {
-      "type": "skill",
-      "title": "Build a tuned Unicode Tags-block detector for email/content pipelines",
-      "skill_slug": "ascii-smuggling-detector",
-      "detail": "Hunt for U+E0000-U+E007F code points in ingested email/document text, but explicitly allowlist known-legitimate emoji flag sequences (England/Scotland/Wales subdivision flags, and any other flag emoji using tag-character encoding) before alerting, to avoid the false-positive pattern Microsoft hit."
-    },
-    "scores": {
-      "novelty": 60,
-      "relevance": 72,
-      "newness": 63,
-      "credibility": 71.6,
-      "composite": 66.09,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "ASCII smuggling is well-documented in prompt-injection literature (Embrace The Red's ASCII Smuggler tool); older character-obfuscation phishing tricks are the closest non-AI prior art.",
-    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
-    "tweet_url": null,
-    "author": null,
-    "date": "2026-09",
-    "published": "2026-09-03",
-    "raw_path": "data/_raw/ascii-smuggling-crosses-over-from-ai-prompt-inje-552737ca10.txt",
-    "discovered_via": "rss",
-    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-    "source_rank": 71.6,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "verified": true,
-    "verify_note": "All 4 lessons are direct quotes/paraphrases from the Microsoft blog; scores reasonable.",
-    "id": "ascii-smuggling-crosses-over-from-ai-prompt-inje-4f527e04ae",
-    "retrieved_at": "2026-09-09T06:16:06+00:00",
-    "needs_review": false,
-    "grounding_score": 1.0,
-    "domain_label": "Prompt Injection"
-  },
-  {
-    "topic": "ai-security",
     "domain": "ais.model-supply-chain",
     "title": "Windows ML CLI's CORS wildcard gives websites localhost RCE",
     "source_url": "https://github.com/advisories/GHSA-96p9-rh4f-92cf",
@@ -13063,87 +12673,6 @@
     "needs_review": false,
     "grounding_score": 0.67,
     "domain_label": "Agent Safety / Monitoring"
-  },
-  {
-    "topic": "ai-security",
-    "domain": "ais.red-teaming",
-    "title": "Attackers in Latin American intrusion campaigns used commercial LLMs for live troubleshooting",
-    "source_url": "https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/",
-    "cluster": null,
-    "related_claims": [],
-    "summary": "Unit 42 tracked two unrelated Latin American intrusion clusters (Mexican transportation/government targets and Brazilian financial-sector targets) that each stood up a self-hosted NextChat multi-LLM interface (querying Claude and GPT-4.1) on their own infrastructure to troubleshoot exploitation scripts in real time. Both clusters left the NextChat backend and staging directories exposed on the open internet, which is how researchers found them.",
-    "takeaway": "AI-enabled attackers are cutting the skill floor for post-exploitation tooling, but their operational security has not caught up to their new capability — exposed NextChat instances and open staging directories remain the most reliable way to find and disrupt these campaigns, not the AI usage itself.",
-    "lessons": [
-      {
-        "point": "Attackers self-hosted an open-source multi-model chat interface (NextChat) on their own C2 infrastructure to compare and query multiple commercial LLMs live during the intrusion, rather than relying on ad-hoc single-model queries.",
-        "excerpt": "This address hosted an instance of the open-source tool NextChat on TCP port 3000.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "NextChat specifically lets operators compare responses across multiple different LLMs, with the prompts themselves hosted on attacker-controlled infrastructure rather than a third-party service.",
-        "excerpt": "NextChat is an open-source web interface where users can load and interact with multiple models. NextChat allows operators to compare across models and ensure prompts are hosted on attacker-controlled infrastructure.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Exposing the AI backend to the public internet was the attacker's decisive operational security failure — it gave defenders visibility into the full prompt history and staging scripts, not just indicators of compromise.",
-        "excerpt": "Exposing an open NextChat directory to the public internet reveals a fundamental lack of operational maturity. The AI provided the necessary tactical workaround to extract the Active Directory database, but the human operators failed to secure the staging server. This left their entire playbook, prompt history and staging scripts visible to threat researchers.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "In a separate, technically distinct campaign against Brazilian financial targets, exploit scripts were named with LLM-generated descriptive adjectives (exploit_creative.py, exploit_careful.py, rce_focused.py), a naming pattern consistent with iterative LLM-driven script generation rather than human authorship.",
-        "excerpt": "attackers appended exploit filenames with descriptive adjectives. This suggests that the attackers employed iterative, language model-driven development: exploit_creative.py, exploit_careful.py and rce_focused.py.",
-        "confidence": 0.85,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "threat-intel",
-      "llm-abuse",
-      "opsec",
-      "nextchat",
-      "detection"
-    ],
-    "actionable": {
-      "type": "harness",
-      "title": "Hunt for self-hosted LLM chat interfaces on suspicious infrastructure",
-      "detail": "Add detection signatures for exposed NextChat and similar self-hosted multi-model chat UIs on attacker-adjacent infrastructure (e.g. open TCP/3000 with the NextChat banner), and flag iterative/adjective-based script naming conventions (script_v1..v9, exploit_creative.py) as a weak signal of LLM-assisted tooling generation during incident triage.",
-      "skill_slug": null
-    },
-    "scores": {
-      "novelty": 50,
-      "relevance": 68,
-      "newness": 63,
-      "credibility": 76.8,
-      "composite": 62.67,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "CloudSEK's 'Operation Escaneo' and Trend Micro's 'Vibe Hacking' report already documented the core LLM usage in these same clusters, as the entry's own prior_art note concedes.",
-    "article_url": "https://unit42.paloaltonetworks.com/ai-tool-use-targeting-latam-orgs/",
-    "tweet_url": null,
-    "author": null,
-    "date": "2026-09",
-    "published": "2026-09-03",
-    "raw_path": "data/_raw/attackers-expose-ongoing-ai-tool-use-targeting-o-35d913a9a9.txt",
-    "discovered_via": "rss",
-    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security",
-      "product-security"
-    ],
-    "verified": true,
-    "verify_note": "All 4 lessons verbatim-supported by the Unit 42 report; novelty/relevance reasonable for a cross-cluster correlation piece.",
-    "id": "commercial-llms-used-as-live-troubleshooting-bac-63baa0b688",
-    "retrieved_at": "2026-09-09T06:16:06+00:00",
-    "needs_review": true,
-    "grounding_score": 1.0,
-    "domain_label": "LLM Red-Teaming",
-    "previous_slugs": [
-      "commercial-llms-used-as-live-troubleshooting-backends-in-lat"
-    ]
   },
   {
     "topic": "ai-security",
@@ -13576,84 +13105,6 @@
   },
   {
     "topic": "ai-security",
-    "domain": "ais.guardrails",
-    "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
-    "source_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
-    "article_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
-    "published": "2026-08-28",
-    "date": "2026-08",
-    "source_name": "Unit 42 (Palo Alto Networks)",
-    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security"
-    ],
-    "discovered_via": "rss",
-    "summary": "Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoints the tiny set of feed-forward neurons carrying an aligned LLM's refusal behavior. On Qwen3-4B, just 50 of 350,208 neurons (~0.014%) control the safety refusal template, and removing them breaks refusal formatting on 80% of harmful prompts. A derived FFN/Skip ratio predicts 81% of the variance in each model's steerability, offering a quantitative safety fragility score.",
-    "lessons": [
-      {
-        "point": "An aligned model's refusal behavior can be concentrated in a vanishingly small number of neurons, making it fragile to internal manipulation or even routine fine-tuning.",
-        "excerpt": "just 50 neurons out of 350,208 - about 0.014% of the model's feed-forward neurons - control the safety refusal template",
-        "confidence": 0.8,
-        "grounded": true
-      },
-      {
-        "point": "Model-internal alignment is a thin layer, not a robust distributed defense, so it should not be the only safety control.",
-        "excerpt": "It lives in a thin template layer - a tiny fraction of the network that an attacker who can manipulate internals could disable",
-        "confidence": 0.85,
-        "grounded": true
-      },
-      {
-        "point": "Defenders must layer external filters and runtime guardrails on top of the base model's built-in safety.",
-        "excerpt": "True AI safety demands a defense-in-depth strategy, with external content filters and runtime guardrails layered on top of whatever the base model was trained to do",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "A cheap computable metric can predict how easily a model's safety can be steered, enabling pre-deployment fragility scoring without full red-team campaigns.",
-        "excerpt": "this ratio explained 81% of the variance in how vulnerable each model's safety behavior was to a small targeted change",
-        "confidence": 0.7,
-        "grounded": false
-      }
-    ],
-    "takeaway": "LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.",
-    "tags": [
-      "llm-safety",
-      "jailbreak",
-      "alignment",
-      "mechanistic-interpretability",
-      "guardrails",
-      "defense-in-depth"
-    ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Add fragility diagnostics and external guardrails to LLM deployments",
-      "detail": "Integrate a safety-fragility diagnostic (e.g., FFN/Skip ratio) into model evaluation pipelines to compare candidate models before production, and layer runtime content filters/guardrails in front of any deployed model rather than trusting built-in refusal training alone."
-    },
-    "scores": {
-      "novelty": 72,
-      "relevance": 72,
-      "newness": 11,
-      "credibility": 76.8,
-      "composite": 57.47,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work",
-    "threat": "Safety alignment can be disabled or shifted by altering a tiny neuron set or via ordinary optimization runs.",
-    "conditions": "Anyone deploying open-weight or fine-tunable aligned LLMs where model internals or fine-tuning can be influenced.",
-    "mitigations": "Defense-in-depth: external content filters, runtime guardrails, and fragility scoring before deployment.",
-    "cluster": "H",
-    "related_claims": [],
-    "verified": true,
-    "raw_path": "data/_raw/perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df.txt",
-    "id": "perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df",
-    "retrieved_at": "2026-08-29T23:46:33+00:00",
-    "needs_review": false,
-    "grounding_score": 0.75,
-    "domain_label": "LLM Safety / Alignment Robustness"
-  },
-  {
-    "topic": "ai-security",
     "domain": "ais.agent-security",
     "title": "Five Primitives for Governing Autonomous AI Agents at Runtime",
     "source_url": "https://arxiv.org/abs/2608.26696",
@@ -13729,73 +13180,6 @@
     "needs_review": false,
     "grounding_score": 1.0,
     "domain_label": "Agent Governance / Runtime"
-  },
-  {
-    "topic": "ai-security",
-    "domain": "ais.agent-security",
-    "title": "OWASP GenAI Security Project unveils its 2026 Top 10 for LLM Applications",
-    "source_url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
-    "cluster": "K",
-    "related_claims": [],
-    "summary": "OWASP's GenAI Security Project shipped the 2026 Top 10 for LLM Applications, ranked for the first time against thousands of real-world AI security incidents rather than expert opinion alone, and donated a new Agent Control Standard (ACS) for practical runtime enforcement of agent identity, governance, and testing.",
-    "takeaway": "Excessive Agency jumped to #3 in the OWASP LLM Top 10 once the ranking was checked against real incident data instead of just expert consensus — validating that the actual failure mode in production is agents with too much unchecked reach, not just prompt-level attacks.",
-    "lessons": [
-      {
-        "point": "The 2026 edition is the first to weigh community ranking against real incident data, and Excessive Agency is where expert judgment and the incident record agree most: now #3.",
-        "excerpt": "This is the first edition to weigh the community’s ranking against a large body of real incident data, and the risk where expert judgment and the record agree most clearly is Excessive Agency, now number three.",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "OWASP donated a new Agent Control Standard (ACS) specifically for runtime enforcement — moving past guidance-only documents toward enforceable controls for what agents can access, decide, and do.",
-        "excerpt": "(ACS) has been donated to the OWASP GenAI Security Project. The addition of ACS complements the project’s existing work on agentic AI risks, security controls, identity, governance and testing by extending that guidance toward practical runtime enforcement.",
-        "confidence": 0.85,
-        "grounded": true
-      }
-    ],
-    "tags": [
-      "owasp",
-      "llm-top-10",
-      "agent-governance",
-      "excessive-agency",
-      "standards"
-    ],
-    "actionable": {
-      "type": "harness",
-      "title": "Re-baseline agent threat models against OWASP's 2026 Top 10",
-      "detail": "Pull the OWASP GenAI Security Top 10 2026 and check Excessive Agency (now #3) specifically: audit which of your agents can take consequential actions (write access, financial transactions, deletions) without a scoped permission boundary, and map that against ACS's runtime enforcement controls."
-    },
-    "scores": {
-      "novelty": 25,
-      "relevance": 75,
-      "newness": 63,
-      "credibility": 75.0,
-      "composite": 57.0,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "OWASP's own 2025 LLM/Agentic Top 10s, plus the general precedent of ranking security lists against real incident/vulnerability data (e.g., MITRE's CWE Top 25 methodology).",
-    "article_url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
-    "tweet_url": null,
-    "author": null,
-    "date": "2026-09",
-    "published": "2026-09-02",
-    "raw_path": "data/_raw/owasp-genai-security-project-unveils-2026-top-10-e07831dd6b.txt",
-    "discovered_via": "rss",
-    "source_id": "rss:https-genai-owasp-org-feed",
-    "source_rank": 75.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "verified": false,
-    "verify_note": "Lessons are accurately quoted, but this is a PR announcement of a versioned refresh and a donated standard, not new research; independent reviewer scored novelty/relevance lower (25/55 vs 55/75) — sent to review as a scoring disagreement, not a factual refutation.",
-    "id": "owasp-genai-security-project-unveils-2026-top-10-be98b1e553",
-    "retrieved_at": "2026-09-09T06:16:05+00:00",
-    "needs_review": true,
-    "grounding_score": 1.0,
-    "domain_label": "Harness & Agent Security",
-    "previous_slugs": [
-      "owasp-genai-security-project-unveils-2026-top-10-for-llm-app"
-    ]
   },
   {
     "topic": "product-security",
@@ -14406,83 +13790,6 @@
     "domain_label": "AI Security"
   },
   {
-    "topic": "ai-security",
-    "domain": "ais.ai-infra",
-    "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
-    "source_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
-    "article_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
-    "published": "2026-08-16",
-    "date": "2026-08",
-    "source_name": "Embrace The Red (Johann Rehberger)",
-    "source_id": "rss:https-embracethered-com-blog-index-xml",
-    "source_rank": 76.8,
-    "source_topics": [
-      "ai-security"
-    ],
-    "discovered_via": "rss",
-    "summary": "Rehberger reproduces a technique for recovering the plaintext of 'encrypted' LLM reasoning blobs by replaying the encrypted_content to a weaker, easier-to-jailbreak sibling model from the same provider and asking it to transcribe. Because providers appear to share encryption keys across users, sessions, models and accounts, leaked session files can expose hidden reasoning - including a recovered password and, in the paper, 367 PII items and 182 credentials.",
-    "lessons": [
-      {
-        "point": "Encrypted reasoning blobs can be decrypted-by-proxy by replaying them to a weaker sibling model that is easier to jailbreak into transcribing them.",
-        "excerpt": "This new paper now takes that a step further by replaying the encrypted blob to a less capable model that is easier to jailbreak, and convince it into revealing the underlying reasoning.",
-        "confidence": 0.8,
-        "grounded": true
-      },
-      {
-        "point": "Shared provider encryption keys across users/sessions/models mean a leaked blob may be recoverable by anyone.",
-        "excerpt": "This seems possible because providers likely use shared encryption keys across users, sessions, and models.",
-        "confidence": 0.75,
-        "grounded": true
-      },
-      {
-        "point": "Hidden reasoning frequently contains real secrets, so these blobs are a data-leak surface at scale.",
-        "excerpt": "They decoded 315,320 reasoning blocks scraped from public repositories and recovered 367 pieces of PII and 182 credentials, including API keys and passwords.",
-        "confidence": 0.8,
-        "grounded": false
-      },
-      {
-        "point": "Treat shared session files as sensitive: encrypted reasoning is not opaque or safe to publish.",
-        "excerpt": "Encrypted reasoning blobs should not be treated as harmless opaque data.",
-        "confidence": 0.85,
-        "grounded": true
-      }
-    ],
-    "takeaway": "So-called encrypted LLM reasoning traces are recoverable by cross-model replay, so session files containing them can leak passwords, API keys and PII.",
-    "tags": [
-      "reasoning-traces",
-      "encrypted-content",
-      "data-exfiltration",
-      "jailbreak",
-      "credentials"
-    ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Treat LLM session files with encrypted reasoning as secrets",
-      "detail": "Do not commit or share agent session files that contain reasoning encrypted_content; scrub or exclude reasoning blobs before sharing, and avoid placing secrets in prompts since they may surface inside recoverable reasoning traces."
-    },
-    "scores": {
-      "novelty": 55,
-      "relevance": 68,
-      "newness": 11,
-      "credibility": 76.8,
-      "composite": 51.17,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "arXiv work on stealing reasoning traces from proprietary LLM APIs; Matthew Green's encrypted-reasoning-blob replay discussion",
-    "threat": "Recovery of hidden model reasoning (including secrets) from replayed encrypted blobs across models/sessions/accounts.",
-    "conditions": "Users of provider APIs who share or leak session files containing encrypted reasoning content.",
-    "mitigations": "Per-user/session key isolation by providers; users should scrub reasoning blobs from shared files and keep secrets out of prompts.",
-    "cluster": "C",
-    "related_claims": [],
-    "verified": true,
-    "raw_path": "data/_raw/recovering-plaintext-from-encrypted-llm-reasonin-b9207da4.txt",
-    "id": "recovering-plaintext-from-encrypted-llm-reasonin-b9207da4",
-    "retrieved_at": "2026-08-29T23:46:33+00:00",
-    "needs_review": true,
-    "grounding_score": 0.75,
-    "domain_label": "Model I/O & Reasoning Traces"
-  },
-  {
     "id": "fu351-doberman-core-e4ac92e630",
     "topic": "ai-security",
     "domain": "ais.guardrails",
@@ -15084,86 +14391,6 @@
   },
   {
     "topic": "ai-security",
-    "domain": "ais.red-teaming",
-    "title": "The Red Team's role is evolving in the era of agentic security",
-    "source_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
-    "article_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
-    "published": "2026-08-13",
-    "date": "2026-08",
-    "source_name": "Google Online Security Blog",
-    "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
-    "source_rank": 75.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "discovered_via": "rss",
-    "summary": "Google's Head of Red Teams argues autonomous agent-driven attacks are emerging and will most benefit scale-oriented actors via machine-speed operations that collapse dwell time. Over the next 6-12 months open-weight models are expected to match frontier cyber capabilities and can be 'abliterated' to strip guardrails. The prescription: Red Teams should iteratively build their own modular red-teaming agents to simulate agentic attackers before adversaries operationalize theirs.",
-    "lessons": [
-      {
-        "point": "Autonomous agent-driven attacks are shifting from theoretical to operational and most favor high-volume actors.",
-        "excerpt": "We are entering an era where autonomous attacks are executed by agents on behalf of threat actors.",
-        "confidence": 0.7,
-        "grounded": false
-      },
-      {
-        "point": "Agentic attacks compress dwell time so much that detections may fire after objectives are already met, breaking human-speed response.",
-        "excerpt": "AI agents can autonomously move on objectives so rapidly that even if a detection triggers, the agents often accomplish their goals before a human analyst has time to review the alert",
-        "confidence": 0.75,
-        "grounded": false
-      },
-      {
-        "point": "Open-weight models are expected to reach frontier cyber capability soon and can have guardrails stripped, so defenders can't rely on model-vendor safety.",
-        "excerpt": "We anticipate that over the next 6 to 12 months, open-weight models will match today's cybersecurity capabilities of frontier models.",
-        "confidence": 0.65,
-        "grounded": false
-      },
-      {
-        "point": "Defenders should build their own modular red-teaming agents now to simulate agentic adversaries before those adversaries mature.",
-        "excerpt": "The best way for a Red Team to prepare an organization for this future is to build its own Red Teaming agent that simulates the exact tools and techniques real-world attackers are developing.",
-        "confidence": 0.75,
-        "grounded": false
-      }
-    ],
-    "takeaway": "Prepare for machine-speed agentic attacks by building your own iterative red-teaming agents and ensuring detection/response is near real-time.",
-    "tags": [
-      "red-teaming",
-      "agentic-ai",
-      "threat-modeling",
-      "open-weight-models",
-      "detection"
-    ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Stand up an incremental agentic red team",
-      "detail": "Automate isolated phases (recon, initial access, lateral movement) as modular subagents, connect them via an orchestrator to run end-to-end agentic simulations, and validate that detection pipelines are near real-time and corrective controls don't wholly depend on humans-in-the-loop."
-    },
-    "scores": {
-      "novelty": 45,
-      "relevance": 66,
-      "newness": 11,
-      "credibility": 75.0,
-      "composite": 47.3,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "Google's AI Red Team and Secure AI Framework (SAIF); broader agentic-threat forecasting",
-    "threat": "Threat actors operationalizing autonomous attack agents for machine-speed, scaled intrusions.",
-    "conditions": "Enterprises whose detection/response and red teams are geared to human-speed, manual adversaries.",
-    "mitigations": "Build modular red-teaming agents, ensure near-real-time detection and non-human-blocking corrective controls.",
-    "cluster": "L",
-    "related_claims": [],
-    "verified": true,
-    "raw_path": "data/_raw/the-evolving-role-of-the-red-team-in-the-era-of--39c3911b.txt",
-    "id": "the-evolving-role-of-the-red-team-in-the-era-of--39c3911b",
-    "retrieved_at": "2026-08-29T23:46:33+00:00",
-    "needs_review": true,
-    "grounding_score": 0.0,
-    "domain_label": "Red-Teaming Methodology (Agentic)",
-    "previous_slugs": [
-      "the-evolving-role-of-the-red-team-in-the-era-of-agentic-secu"
-    ]
-  },
-  {
-    "topic": "ai-security",
     "domain": "ais.agent-security",
     "title": "Injected security context, not model choice, moves vulnerability fixes past a plateau",
     "source_url": "https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/",
@@ -15380,83 +14607,6 @@
     "needs_review": true,
     "grounding_score": 1.0,
     "domain_label": "Guardrails & Alignment"
-  },
-  {
-    "topic": "ai-security",
-    "domain": "ais.model-supply-chain",
-    "title": "Making private AI practical with homomorphic encryption (HEIR)",
-    "source_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
-    "article_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
-    "published": "2026-08-14",
-    "date": "2026-08",
-    "source_name": "Google Online Security Blog",
-    "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
-    "source_rank": 75.0,
-    "source_topics": [
-      "ai-security"
-    ],
-    "discovered_via": "rss",
-    "summary": "Google showcases HEIR, an open-source compiler toolchain that converts pre-trained AI models to run inference directly on homomorphically encrypted inputs, so servers can process ciphertexts and return encrypted results without seeing the data. It targets the privacy/capability trade-off in sensitive sectors and avoids shipping proprietary models to devices. Demos include the Kitsune anomaly detector operating on encrypted network traffic.",
-    "lessons": [
-      {
-        "point": "Homomorphic encryption lets servers run computations on ciphertexts, changing the privacy/capability trade-off into a cost question.",
-        "excerpt": "A solution to these issues is homomorphic encryption, a rapidly maturing technology that fundamentally alters this trade-off by allowing computations to be performed directly on encrypted data.",
-        "confidence": 0.8,
-        "grounded": false
-      },
-      {
-        "point": "Local on-device inference to preserve privacy risks exposing proprietary model IP; encrypted server-side inference avoids that.",
-        "excerpt": "Shipping proprietary AI to a device risks leaking the model.",
-        "confidence": 0.75,
-        "grounded": false
-      },
-      {
-        "point": "Tooling like HEIR lowers the expertise barrier by compiling existing models to operate on encrypted inputs.",
-        "excerpt": "HEIR can convert pre-trained AI models that operate on unencrypted data to operate on encrypted inputs",
-        "confidence": 0.8,
-        "grounded": false
-      },
-      {
-        "point": "Security functions like network anomaly detection can run over encrypted traffic without exposing packet contents.",
-        "excerpt": "This allows a service provider to detect anomalies without revealing the contents of network packets to the service provider.",
-        "confidence": 0.75,
-        "grounded": false
-      }
-    ],
-    "takeaway": "Homomorphic-encryption compilers like HEIR make encrypted AI inference (and encrypted-traffic detection) practical, protecting both user data and proprietary model weights.",
-    "tags": [
-      "homomorphic-encryption",
-      "privacy-preserving-ml",
-      "model-protection",
-      "encrypted-inference",
-      "anomaly-detection"
-    ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Evaluate encrypted inference for sensitive workloads",
-      "detail": "For regulated data (healthcare, finance) or when protecting proprietary models, assess homomorphic-encryption toolchains such as HEIR to run server-side inference on ciphertexts, weighing cost overhead against avoiding plaintext data exposure and model-leak risk from on-device shipping."
-    },
-    "scores": {
-      "novelty": 55,
-      "relevance": 45,
-      "newness": 11,
-      "credibility": 75.0,
-      "composite": 44.0,
-      "scored_at": "2026-09-09T06:16:10+00:00"
-    },
-    "prior_art": "Google's prior differential privacy, private set membership, private information retrieval work",
-    "threat": "Data exposure to service providers and proprietary-model leakage when balancing AI features against privacy.",
-    "conditions": "Organizations in regulated sectors needing AI features without exposing raw user data or shipping proprietary models to devices.",
-    "mitigations": "Compile models with HEIR for encrypted inference; use HE-based detection so providers never see plaintext data/packets.",
-    "cluster": "I",
-    "related_claims": [],
-    "verified": true,
-    "raw_path": "data/_raw/making-private-ai-practical-with-homomorphic-enc-bdd3b443.txt",
-    "id": "making-private-ai-practical-with-homomorphic-enc-bdd3b443",
-    "retrieved_at": "2026-08-29T23:46:33+00:00",
-    "needs_review": true,
-    "grounding_score": 0.0,
-    "domain_label": "Privacy-Preserving AI / Model Protection"
   },
   {
     "topic": "ai-security",
@@ -31017,96 +30167,6 @@
     ]
   },
   {
-    "candidate_id": "introducing-the-life-sciences-verification-progr-9382b7fd83",
-    "topic": "ai-security",
-    "domain": "ais.guardrails",
-    "title": "Anthropic's Life Sciences Verification Program trades bio refusals for vetted access",
-    "source_url": "https://www.anthropic.com/news/life-sciences-verification-program",
-    "summary": "Anthropic now gives vetted life-science organizations access to its models with looser biology safeguards. A 'High-risk Use' grant removes all life-sciences blocking for a single project, renewed every six months. In place of per-request blocking, Anthropic monitors traffic offline against each organization's declared use cases, keeps flagged data 30 days, and escalates to the organization's admins; cyber classifiers stay on.",
-    "lessons": [
-      {
-        "point": "For vetted users, safeguards move from blocking each request to reviewing patterns of behavior offline.",
-        "excerpt": "we are shifting safeguards from real-time blocking, where we reject potentially harmful access at the time of each request, to offline monitoring",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "The reason given: serious misuse is split across requests and sessions, so a per-request filter misses it.",
-        "excerpt": "Serious misuse is often spread across many requests and sessions to look disconnected and evade detection.",
-        "confidence": 0.75,
-        "grounded": true
-      },
-      {
-        "point": "Monitoring is scoped to the use cases each organization declares, so out-of-scope use is what gets flagged.",
-        "excerpt": "Each entity’s access is tied to the use cases it has specified in its grant applications",
-        "confidence": 0.85,
-        "grounded": true
-      },
-      {
-        "point": "The High-risk grant removes life-sciences blocking entirely, so access compromise and insider threats become the main risks the program must manage.",
-        "excerpt": "It removes all safeguards that block life sciences requests.",
-        "confidence": 0.8,
-        "grounded": true
-      }
-    ],
-    "takeaway": "Frontier providers are replacing refusals with vetted access plus behavior monitoring for dual-use domains, which makes account security and declared scope the real control.",
-    "tags": [
-      "trusted-access",
-      "biosecurity",
-      "dual-use",
-      "misuse-monitoring",
-      "safety-classifiers",
-      "insider-threat",
-      "anthropic"
-    ],
-    "actionable": {
-      "type": "takeaway",
-      "title": "Treat LSVP-enabled accounts as high-value credentials",
-      "detail": "If your organization enrolls in LSVP, write narrow use-case descriptions and give High-risk grants per project only. Harden those accounts against takeover with phishing-resistant multi-factor authentication (MFA) and scoped API keys. Define an internal triage owner for Anthropic's flagged-usage notices within the agreed timeframe. Limit long-running agents on High-risk grants, since agent misuse is a stated threat model."
-    },
-    "scores": {
-      "novelty": 50,
-      "relevance": 35,
-      "newness": 5,
-      "credibility": 70.8,
-      "composite": 37.37,
-      "scored_at": "2026-10-25T00:44:25+00:00"
-    },
-    "verified": true,
-    "prior_art": "Trusted-access / cyber verification programs; no prior entry on bio tiered grants.",
-    "related_claims": [],
-    "threat": "Vetted access with bio safeguards removed being diverted via account takeover, insiders, or agents acting beyond intent.",
-    "conditions": "Organization holds Standard or High-risk LSVP grants with permissive or removed biology classifiers.",
-    "mitigations": "Use-case-scoped offline monitoring, 30-day retention of flagged data, admin escalation, per-project High-risk grants with six-month renewal; cyber classifiers stay on.",
-    "article_url": "https://www.anthropic.com/news/life-sciences-verification-program",
-    "tweet_url": null,
-    "author": null,
-    "date": "2026-09",
-    "published": "2026-09-17",
-    "raw_path": "data/_raw/introducing-the-life-sciences-verification-progr-9382b7fd83.txt",
-    "discovered_via": "sitemap",
-    "source_id": "research_index:https-www-anthropic-com-news",
-    "source_rank": 70.8,
-    "source_topics": [
-      "ai-research",
-      "ai-security"
-    ],
-    "source_name": "Anthropic News",
-    "id": "anthropic-s-life-sciences-verification-program-t-c7238119c5",
-    "retrieved_at": "2026-10-25T00:44:25+00:00",
-    "needs_review": true,
-    "readability_rewrite": "reverted actionable.title",
-    "readability": {
-      "score": 100,
-      "passed": true,
-      "issues": []
-    },
-    "grounding_score": 1.0,
-    "previous_slugs": [
-      "anthropic-s-life-sciences-verification-program-trades-real-t"
-    ]
-  },
-  {
     "candidate_id": "so-i-asked-my-agent-instead-e16b3d9dca",
     "topic": "ai-security",
     "domain": "ais.mcp-tools",
@@ -31923,97 +30983,6 @@
       "issues": []
     },
     "grounding_score": 1.0
-  },
-  {
-    "candidate_id": "ai-powered-fuzzing-with-the-github-security-lab-2713e1bcb6",
-    "topic": "product-security",
-    "domain": "ps.offensive",
-    "title": "GitHub Security Lab's Fuzzing Taskflow has an LLM agent write AFL++ harnesses",
-    "source_url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
-    "summary": "GitHub Security Lab released a Fuzzing Taskflow that takes a C/C++ GitHub repo and autonomously writes fuzzing harnesses, runs AFL++, reads coverage to chase gaps, improves the harnesses, and triages crashes into reports. The agent makes decisions while MCP tools do the execution, and a coverage loop with doubling time budgets stops once gains plateau. The author warns that the agent runs LLM-chosen build commands on the host with no container. It should only run in a throwaway environment, and its crash verdicts still need human review.",
-    "lessons": [
-      {
-        "point": "Split authority: the LLM picks what to fuzz and which gap to chase, while narrow tools perform execution and state lives in a database rather than in the agent.",
-        "excerpt": "the **LLM agent owns the decisions, and the MCP tools own the execution**",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Bound agent compute with plateau detection: stop iterating when coverage gains fall below a small threshold for two rounds.",
-        "excerpt": "once two consecutive iterations each gain less than a configurable threshold (1% absolute line coverage by default)",
-        "confidence": 0.9,
-        "grounded": true
-      },
-      {
-        "point": "Coverage-driven dictionary enrichment pulls magic constants from the comparisons that guard unreached code, helping the fuzzer pass hard checks.",
-        "excerpt": "Then, after every coverage step, the pipeline looks at the guards near the uncovered lines",
-        "confidence": 0.85,
-        "grounded": true
-      },
-      {
-        "point": "An agent that runs LLM-chosen build commands on the host is a prompt-injection risk; contain it in a disposable environment.",
-        "excerpt": "A prompt-injected agent could, in principle, do anything your user can.",
-        "confidence": 0.9,
-        "grounded": true
-      }
-    ],
-    "takeaway": "LLM agents can now take over the labor-intensive parts of fuzzing (harness writing, coverage chasing, triage), but they need containment and human review of verdicts.",
-    "tags": [
-      "fuzzing",
-      "afl-plus-plus",
-      "llm-agents",
-      "taskflows",
-      "coverage-guided",
-      "crash-triage",
-      "mcp",
-      "agent-sandboxing"
-    ],
-    "actionable": {
-      "type": "tool",
-      "title": "Run seclab-taskflows-fuzzing against a C/C++ project in a Codespace",
-      "detail": "Start a Codespace from github.com/GitHubSecurityLab/seclab-taskflows-fuzzing and run ./scripts/fuzzing/run_fuzzing.sh owner/repo (try DaveGamble/cJSON first as a smoke test). Do not run it on a workstation with credentials or elevated privileges. Watch the dashboard on port 8765, and treat every 'vulnerability' verdict and suggested diff as a draft to confirm by hand."
-    },
-    "scores": {
-      "novelty": 45,
-      "relevance": 75,
-      "newness": 5,
-      "credibility": 75.0,
-      "composite": 48.5,
-      "scored_at": "2026-10-25T00:44:25+00:00"
-    },
-    "verified": true,
-    "prior_art": "GitHub Security Lab Taskflow Android audit (24 vulnerabilities); OSS-Fuzz-gen.",
-    "related_claims": [
-      "prompt-injection-is-containment-not-prevention"
-    ],
-    "threat": "The agent executes arbitrary LLM-chosen build commands on the host; a prompt-injected agent (for example via hostile content in the target repo) could act with the user's privileges.",
-    "conditions": "Running the taskflow outside a disposable environment, or with elevated privileges.",
-    "mitigations": "Run only in a Codespace or throwaway VM without elevated privileges; keep human review on verdicts and suggested patches.",
-    "article_url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
-    "tweet_url": null,
-    "author": null,
-    "date": "2026-09",
-    "published": "2026-09-24",
-    "raw_path": "data/_raw/ai-powered-fuzzing-with-the-github-security-lab-2713e1bcb6.txt",
-    "discovered_via": "rss",
-    "source_id": "rss:https-github-blog-tag-github-security-lab-feed",
-    "source_rank": 75.0,
-    "source_topics": [
-      "product-security"
-    ],
-    "source_name": "GitHub Security Lab",
-    "id": "github-security-lab-s-open-source-fuzzing-taskfl-342d0c4b97",
-    "retrieved_at": "2026-10-25T00:44:25+00:00",
-    "needs_review": true,
-    "readability": {
-      "score": 100,
-      "passed": true,
-      "issues": []
-    },
-    "grounding_score": 1.0,
-    "previous_slugs": [
-      "github-security-lab-s-open-source-fuzzing-taskflow-uses-an-l"
-    ]
   },
   {
     "candidate_id": "mapping-out-your-unknown-a-threat-hunter-s-guide-2c33cd0086",
@@ -33473,5 +32442,317 @@
       "uv-before-0-13-4-trusts-the-emsign-root-behind-eight-comprom"
     ],
     "archived_reason": "ghsa-not-kept"
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.guardrails",
+    "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+    "source_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+    "article_url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
+    "published": "2026-08-28",
+    "date": "2026-08",
+    "source_name": "Unit 42 (Palo Alto Networks)",
+    "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+    "source_rank": 76.8,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Unit 42 introduces 'perturbation probing', a two-forward-pass method that pinpoints the tiny set of feed-forward neurons carrying an aligned LLM's refusal behavior. On Qwen3-4B, just 50 of 350,208 neurons (~0.014%) control the safety refusal template, and removing them breaks refusal formatting on 80% of harmful prompts. A derived FFN/Skip ratio predicts 81% of the variance in each model's steerability, offering a quantitative safety fragility score.",
+    "lessons": [
+      {
+        "point": "An aligned model's refusal behavior can be concentrated in a vanishingly small number of neurons, making it fragile to internal manipulation or even routine fine-tuning.",
+        "excerpt": "just 50 neurons out of 350,208 - about 0.014% of the model's feed-forward neurons - control the safety refusal template",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Model-internal alignment is a thin layer, not a robust distributed defense, so it should not be the only safety control.",
+        "excerpt": "It lives in a thin template layer - a tiny fraction of the network that an attacker who can manipulate internals could disable",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Defenders must layer external filters and runtime guardrails on top of the base model's built-in safety.",
+        "excerpt": "True AI safety demands a defense-in-depth strategy, with external content filters and runtime guardrails layered on top of whatever the base model was trained to do",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "A cheap computable metric can predict how easily a model's safety can be steered, enabling pre-deployment fragility scoring without full red-team campaigns.",
+        "excerpt": "this ratio explained 81% of the variance in how vulnerable each model's safety behavior was to a small targeted change",
+        "confidence": 0.7,
+        "grounded": false
+      }
+    ],
+    "takeaway": "LLM refusal safety lives in a razor-thin neural layer, so external guardrails and a measurable fragility score are essential rather than optional.",
+    "tags": [
+      "llm-safety",
+      "jailbreak",
+      "alignment",
+      "mechanistic-interpretability",
+      "guardrails",
+      "defense-in-depth"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Add fragility diagnostics and external guardrails to LLM deployments",
+      "detail": "Integrate a safety-fragility diagnostic (e.g., FFN/Skip ratio) into model evaluation pipelines to compare candidate models before production, and layer runtime content filters/guardrails in front of any deployed model rather than trusting built-in refusal training alone."
+    },
+    "scores": {
+      "novelty": 72,
+      "relevance": 72,
+      "newness": 11,
+      "credibility": 76.8,
+      "composite": 57.47,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "Unit 42 logit-gap steering research; broader RLHF-refusal and mechanistic-interpretability work",
+    "threat": "Safety alignment can be disabled or shifted by altering a tiny neuron set or via ordinary optimization runs.",
+    "conditions": "Anyone deploying open-weight or fine-tunable aligned LLMs where model internals or fine-tuning can be influenced.",
+    "mitigations": "Defense-in-depth: external content filters, runtime guardrails, and fragility scoring before deployment.",
+    "cluster": "H",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df.txt",
+    "id": "perturbation-probing-a-new-diagnostic-for-the-fr-b42a17df",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": false,
+    "grounding_score": 0.75,
+    "domain_label": "LLM Safety / Alignment Robustness"
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.ai-infra",
+    "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+    "source_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+    "article_url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+    "published": "2026-08-16",
+    "date": "2026-08",
+    "source_name": "Embrace The Red (Johann Rehberger)",
+    "source_id": "rss:https-embracethered-com-blog-index-xml",
+    "source_rank": 76.8,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Rehberger reproduces a technique for recovering the plaintext of 'encrypted' LLM reasoning blobs by replaying the encrypted_content to a weaker, easier-to-jailbreak sibling model from the same provider and asking it to transcribe. Because providers appear to share encryption keys across users, sessions, models and accounts, leaked session files can expose hidden reasoning - including a recovered password and, in the paper, 367 PII items and 182 credentials.",
+    "lessons": [
+      {
+        "point": "Encrypted reasoning blobs can be decrypted-by-proxy by replaying them to a weaker sibling model that is easier to jailbreak into transcribing them.",
+        "excerpt": "This new paper now takes that a step further by replaying the encrypted blob to a less capable model that is easier to jailbreak, and convince it into revealing the underlying reasoning.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Shared provider encryption keys across users/sessions/models mean a leaked blob may be recoverable by anyone.",
+        "excerpt": "This seems possible because providers likely use shared encryption keys across users, sessions, and models.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Hidden reasoning frequently contains real secrets, so these blobs are a data-leak surface at scale.",
+        "excerpt": "They decoded 315,320 reasoning blocks scraped from public repositories and recovered 367 pieces of PII and 182 credentials, including API keys and passwords.",
+        "confidence": 0.8,
+        "grounded": false
+      },
+      {
+        "point": "Treat shared session files as sensitive: encrypted reasoning is not opaque or safe to publish.",
+        "excerpt": "Encrypted reasoning blobs should not be treated as harmless opaque data.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "So-called encrypted LLM reasoning traces are recoverable by cross-model replay, so session files containing them can leak passwords, API keys and PII.",
+    "tags": [
+      "reasoning-traces",
+      "encrypted-content",
+      "data-exfiltration",
+      "jailbreak",
+      "credentials"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Treat LLM session files with encrypted reasoning as secrets",
+      "detail": "Do not commit or share agent session files that contain reasoning encrypted_content; scrub or exclude reasoning blobs before sharing, and avoid placing secrets in prompts since they may surface inside recoverable reasoning traces."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 68,
+      "newness": 11,
+      "credibility": 76.8,
+      "composite": 51.17,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "arXiv work on stealing reasoning traces from proprietary LLM APIs; Matthew Green's encrypted-reasoning-blob replay discussion",
+    "threat": "Recovery of hidden model reasoning (including secrets) from replayed encrypted blobs across models/sessions/accounts.",
+    "conditions": "Users of provider APIs who share or leak session files containing encrypted reasoning content.",
+    "mitigations": "Per-user/session key isolation by providers; users should scrub reasoning blobs from shared files and keep secrets out of prompts.",
+    "cluster": "C",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/recovering-plaintext-from-encrypted-llm-reasonin-b9207da4.txt",
+    "id": "recovering-plaintext-from-encrypted-llm-reasonin-b9207da4",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": true,
+    "grounding_score": 0.75,
+    "domain_label": "Model I/O & Reasoning Traces"
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.red-teaming",
+    "title": "The Red Team's role is evolving in the era of agentic security",
+    "source_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+    "article_url": "https://blog.google/technology/safety-security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+    "published": "2026-08-13",
+    "date": "2026-08",
+    "source_name": "Google Online Security Blog",
+    "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Google's Head of Red Teams argues autonomous agent-driven attacks are emerging and will most benefit scale-oriented actors via machine-speed operations that collapse dwell time. Over the next 6-12 months open-weight models are expected to match frontier cyber capabilities and can be 'abliterated' to strip guardrails. The prescription: Red Teams should iteratively build their own modular red-teaming agents to simulate agentic attackers before adversaries operationalize theirs.",
+    "lessons": [
+      {
+        "point": "Autonomous agent-driven attacks are shifting from theoretical to operational and most favor high-volume actors.",
+        "excerpt": "We are entering an era where autonomous attacks are executed by agents on behalf of threat actors.",
+        "confidence": 0.7,
+        "grounded": false
+      },
+      {
+        "point": "Agentic attacks compress dwell time so much that detections may fire after objectives are already met, breaking human-speed response.",
+        "excerpt": "AI agents can autonomously move on objectives so rapidly that even if a detection triggers, the agents often accomplish their goals before a human analyst has time to review the alert",
+        "confidence": 0.75,
+        "grounded": false
+      },
+      {
+        "point": "Open-weight models are expected to reach frontier cyber capability soon and can have guardrails stripped, so defenders can't rely on model-vendor safety.",
+        "excerpt": "We anticipate that over the next 6 to 12 months, open-weight models will match today's cybersecurity capabilities of frontier models.",
+        "confidence": 0.65,
+        "grounded": false
+      },
+      {
+        "point": "Defenders should build their own modular red-teaming agents now to simulate agentic adversaries before those adversaries mature.",
+        "excerpt": "The best way for a Red Team to prepare an organization for this future is to build its own Red Teaming agent that simulates the exact tools and techniques real-world attackers are developing.",
+        "confidence": 0.75,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Prepare for machine-speed agentic attacks by building your own iterative red-teaming agents and ensuring detection/response is near real-time.",
+    "tags": [
+      "red-teaming",
+      "agentic-ai",
+      "threat-modeling",
+      "open-weight-models",
+      "detection"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Stand up an incremental agentic red team",
+      "detail": "Automate isolated phases (recon, initial access, lateral movement) as modular subagents, connect them via an orchestrator to run end-to-end agentic simulations, and validate that detection pipelines are near real-time and corrective controls don't wholly depend on humans-in-the-loop."
+    },
+    "scores": {
+      "novelty": 45,
+      "relevance": 66,
+      "newness": 11,
+      "credibility": 75.0,
+      "composite": 47.3,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "Google's AI Red Team and Secure AI Framework (SAIF); broader agentic-threat forecasting",
+    "threat": "Threat actors operationalizing autonomous attack agents for machine-speed, scaled intrusions.",
+    "conditions": "Enterprises whose detection/response and red teams are geared to human-speed, manual adversaries.",
+    "mitigations": "Build modular red-teaming agents, ensure near-real-time detection and non-human-blocking corrective controls.",
+    "cluster": "L",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/the-evolving-role-of-the-red-team-in-the-era-of--39c3911b.txt",
+    "id": "the-evolving-role-of-the-red-team-in-the-era-of--39c3911b",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": true,
+    "grounding_score": 0.0,
+    "domain_label": "Red-Teaming Methodology (Agentic)",
+    "previous_slugs": [
+      "the-evolving-role-of-the-red-team-in-the-era-of-agentic-secu"
+    ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.model-supply-chain",
+    "title": "Making private AI practical with homomorphic encryption (HEIR)",
+    "source_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+    "article_url": "https://blog.google/technology/safety-security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+    "published": "2026-08-14",
+    "date": "2026-08",
+    "source_name": "Google Online Security Blog",
+    "source_id": "rss:https-security-googleblog-com-feeds-posts-defaul",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-security"
+    ],
+    "discovered_via": "rss",
+    "summary": "Google showcases HEIR, an open-source compiler toolchain that converts pre-trained AI models to run inference directly on homomorphically encrypted inputs, so servers can process ciphertexts and return encrypted results without seeing the data. It targets the privacy/capability trade-off in sensitive sectors and avoids shipping proprietary models to devices. Demos include the Kitsune anomaly detector operating on encrypted network traffic.",
+    "lessons": [
+      {
+        "point": "Homomorphic encryption lets servers run computations on ciphertexts, changing the privacy/capability trade-off into a cost question.",
+        "excerpt": "A solution to these issues is homomorphic encryption, a rapidly maturing technology that fundamentally alters this trade-off by allowing computations to be performed directly on encrypted data.",
+        "confidence": 0.8,
+        "grounded": false
+      },
+      {
+        "point": "Local on-device inference to preserve privacy risks exposing proprietary model IP; encrypted server-side inference avoids that.",
+        "excerpt": "Shipping proprietary AI to a device risks leaking the model.",
+        "confidence": 0.75,
+        "grounded": false
+      },
+      {
+        "point": "Tooling like HEIR lowers the expertise barrier by compiling existing models to operate on encrypted inputs.",
+        "excerpt": "HEIR can convert pre-trained AI models that operate on unencrypted data to operate on encrypted inputs",
+        "confidence": 0.8,
+        "grounded": false
+      },
+      {
+        "point": "Security functions like network anomaly detection can run over encrypted traffic without exposing packet contents.",
+        "excerpt": "This allows a service provider to detect anomalies without revealing the contents of network packets to the service provider.",
+        "confidence": 0.75,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Homomorphic-encryption compilers like HEIR make encrypted AI inference (and encrypted-traffic detection) practical, protecting both user data and proprietary model weights.",
+    "tags": [
+      "homomorphic-encryption",
+      "privacy-preserving-ml",
+      "model-protection",
+      "encrypted-inference",
+      "anomaly-detection"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Evaluate encrypted inference for sensitive workloads",
+      "detail": "For regulated data (healthcare, finance) or when protecting proprietary models, assess homomorphic-encryption toolchains such as HEIR to run server-side inference on ciphertexts, weighing cost overhead against avoiding plaintext data exposure and model-leak risk from on-device shipping."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 45,
+      "newness": 11,
+      "credibility": 75.0,
+      "composite": 44.0,
+      "scored_at": "2026-09-09T06:16:10+00:00"
+    },
+    "prior_art": "Google's prior differential privacy, private set membership, private information retrieval work",
+    "threat": "Data exposure to service providers and proprietary-model leakage when balancing AI features against privacy.",
+    "conditions": "Organizations in regulated sectors needing AI features without exposing raw user data or shipping proprietary models to devices.",
+    "mitigations": "Compile models with HEIR for encrypted inference; use HE-based detection so providers never see plaintext data/packets.",
+    "cluster": "I",
+    "related_claims": [],
+    "verified": true,
+    "raw_path": "data/_raw/making-private-ai-practical-with-homomorphic-enc-bdd3b443.txt",
+    "id": "making-private-ai-practical-with-homomorphic-enc-bdd3b443",
+    "retrieved_at": "2026-08-29T23:46:33+00:00",
+    "needs_review": true,
+    "grounding_score": 0.0,
+    "domain_label": "Privacy-Preserving AI / Model Protection"
   }
 ]

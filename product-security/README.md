@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_10 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-10-29 · ranked by composite · findings from the latest 31 days · [39 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -108,6 +108,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Partisan Zmiy hid the Vasilek backdoor in VMware Tools for two years](https://thehackernews.com/2026/10/hackers-hid-vasilek-backdoor-in-vmware.html)**
 - **[PHP Foundation ships emergency fix for two critical remote code execution bugs](https://www.theregister.com/security/2026/10/21/php-devs-publish-critical-bug-fix-as-site-owners-warned-pull-em-offline-if-youre-unpatched/5304519)**
 - **[PHP Foundation ships fixes for two RCE flaws after a disclosure leak](https://simonwillison.net/2026/Oct/21/php-security-release/)**
+- **[Claude found 493 attack-surface issues across 25 open-source projects](https://www.anthropic.com/research/attack-surface-reduction)**
 - **[Pillow thumbnail() heap overflow on lossless JPEGs, found by Anthropic using Claude](https://github.com/advisories/GHSA-8g5g-8vmr-9782)**
 - **[Eight eMudhra intermediate CA certificates with weak private keys get blocked globally](https://arstechnica.com/security/2026/10/the-internet-goes-on-high-alert-after-discovery-of-8-compromised-tls-certs/)**
 - **[curl moves low and medium severity vulnerability reports to public GitHub](https://www.theregister.com/security/2026/10/20/swamped-curl-maintainers-take-low-level-flaws-public-to-survive-vulnerability-avalanche/5304198)**
@@ -117,16 +118,18 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[OpenAI says Sophos MDR agents cut average case time to ~89 seconds](https://openai.com/index/sophos)**
 - **[Imperva publishes a DDoS readiness checklist covering BGP and GRE tunnel health](https://www.imperva.com/blog/ddos-readiness-is-your-ddos-protection-actually-on/)**
 - **[Valid SQL crashes SQLGlot and SQLFluff with huge memory amplification](https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/)**
+- **[GitHub Security Lab's Fuzzing Taskflow has an LLM agent write AFL++ harnesses](https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/)**
 - **[A Lean 4 string-slice mismatch let native_decide 'prove' Fermat's Last Theorem](https://blog.trailofbits.com/2026/09/09/a-proof-of-fermats-last-theorem-that-fits-the-margin/)**
 - **[Trail of Bits runs an independent auditor for Signal's Key Transparency system](https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/)**
+- **[Sanitized webmail CSS steals tokens and keylogs Outlook](https://portswigger.net/research/css-the-bomb-inside-your-inbox)**
 - **[38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428)**
   _Why now: Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%. · trending · high-relevance · teachable_
 
 | Domain | Findings |
 | --- | --- |
 | Application Security | 3 |
-| AI in the SDLC | 3 |
 | Vulnerability Research & Red Teaming | 2 |
+| AI in the SDLC | 2 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
 
@@ -142,18 +145,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
-## AI in the SDLC
-
-- **[Claude found 493 attack-surface issues across 25 open-source projects](ai-code/2026-10-claude-found-493-attack-surface-issues-across-25-open-source.md)** · composite **62.97** · Oct 20, 2026  
-  Cutting pre-auth and default-reachable code lowers the severity of bugs you have not found, and an LLM can do this audit at scale.  
-  _[Anthropic Research](https://www.anthropic.com/research/attack-surface-reduction)_
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **58.5** · Oct 22, 2026  
-  If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
-  _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **49.29** · Oct 6, 2026  
-  Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
-  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
-
 ## Vulnerability Research & Red Teaming
 
 - **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **64.39** · Oct 27, 2026 · 🔗 +1 sources  
@@ -162,6 +153,15 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **59.25** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
+
+## AI in the SDLC
+
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **58.5** · Oct 22, 2026  
+  If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
+  _[source](https://www.anthropic.com/research/formal-verification)_
+- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **49.29** · Oct 6, 2026  
+  Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
+  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
 ## Mobile & Device Security
 

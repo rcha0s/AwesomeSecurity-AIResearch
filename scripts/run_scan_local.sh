@@ -129,6 +129,32 @@ record_actual() {
   scripts/run_scan.sh actual "$SCAN_RUN_ID" "$stories" "$cost" "$outcome" "$news"
 }
 
+# Once a week (config.yaml focus.digest_weekday), write docs/digest.md before post
+# so the scan PR carries it, and keep the one-line message for digest_notify.
+# Soft: a digest failure never fails the scan.
+DIGEST_MSG=""
+weekly_digest() {
+  DIGEST_MSG=""
+  "$PYTHON" scripts/weekly_digest.py --due >/dev/null 2>&1 || return 0
+  DIGEST_MSG="$("$PYTHON" scripts/weekly_digest.py 2>>"$LOG" | tail -n 1)" ||
+    echo "[local] weekly digest failed (ignored)" | tee -a "$LOG"
+  return 0
+}
+
+# After the PR is open: POST {"message": ...} to $DIGEST_NOTIFY_URL, only when
+# that is set (no URL is stored in the repo; it may carry a token, so it is
+# never logged). curl gets an argument array and a short timeout; failure is soft.
+digest_notify() {
+  [[ -n "$DIGEST_MSG" && -n "${DIGEST_NOTIFY_URL:-}" ]] || return 0
+  local body
+  body="$("$PYTHON" -c 'import json,sys;print(json.dumps({"message": sys.argv[1]}))' "$DIGEST_MSG")" ||
+    return 0
+  local args=(-sS -o /dev/null --max-time 10 -X POST -H "Content-Type: application/json"
+    --data "$body" --url "$DIGEST_NOTIFY_URL")
+  curl "${args[@]}" >/dev/null 2>&1 || echo "[local] digest notify failed (ignored)" | tee -a "$LOG"
+  return 0
+}
+
 # One attempt: check -> pre -> session -> actual -> post. Returns 0 when a PR
 # was opened (or there was nothing to change), 3 when the budget guard skipped,
 # and 4 when post failed the run as analysis-empty (it raised the alert). Any
@@ -153,7 +179,18 @@ attempt() {
   cap_usd="${limits% *}"
   max_turns="${limits#* }"
 
-  scripts/run_scan.sh pre || exit 1     # pre raises its own alert
+  # Reddit API credentials (the optional ingest_reddit.py lane) come from the macOS
+  # Keychain and reach `pre` alone: never exported wrapper-wide, never echoed. A missing
+  # item or no `security` leaves them empty and the lane skips itself.
+  reddit_id="" reddit_secret=""
+  if command -v security >/dev/null 2>&1; then
+    reddit_id="$(security find-generic-password -s awesomesec-reddit -a client_id -w 2>/dev/null)" || reddit_id=""
+    reddit_secret="$(security find-generic-password -s awesomesec-reddit -a client_secret -w 2>/dev/null)" || reddit_secret=""
+  fi
+  [[ -n "$reddit_id" && -n "$reddit_secret" ]] || { reddit_id=""; reddit_secret=""; }
+  REDDIT_CLIENT_ID="$reddit_id" REDDIT_CLIENT_SECRET="$reddit_secret" \
+    scripts/run_scan.sh pre || exit 1   # pre raises its own alert
+  unset reddit_id reddit_secret
   [[ -f data/_scan_skip ]] && return 3 # raced: the guard refused at pre time
 
   contained_claude \
@@ -191,6 +228,8 @@ attempt() {
   fi
   [[ "$capped" == 1 && -z "$outcome" ]] && outcome="session-capped"
   record_actual "$cost" "$stories" "$outcome" || actual_ok=0
+
+  weekly_digest
 
   # post fails a session that merged nothing and applied no story verdict
   # (analysis-empty, exit 4): it raises the alert and opens no PR.
@@ -230,3 +269,4 @@ if [[ "$rc" == 4 ]]; then
   [[ "$rc" == 0 ]] || exit 1 # the first attempt already raised analysis-empty
 fi
 [[ "$rc" == 0 || "$rc" == 3 ]] || exit 1
+[[ "$rc" != 0 ]] || digest_notify
