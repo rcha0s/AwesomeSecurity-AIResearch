@@ -31,6 +31,9 @@ data/source_stats.json    # per-source hit-rate counts written by scans (overlai
 data/candidates.json      # transient ingest staging (gitignored)
 data/_raw/                # transient fetched article text (gitignored)
 data/_practitioner_signal.json # Reddit self posts (title, permalink, score, comments, sub, created), gitignored
+data/arguments.json       # "what practitioners are arguing" rows (committed; written only by arguments.py merge)
+data/_arguments_out.json  # the scan session's staged arguments (gitignored)
+scripts/arguments.py      # signal view + merge/validate of the arguments; rows age out after 14 days
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
@@ -143,6 +146,9 @@ item, plus claim changes) from the same rules, no top-up. `run_scan_local.sh` ru
 runs it daily) before `post`, so the scan PR carries it. After the PR opens, and only
 when env `DIGEST_NOTIFY_URL` is set, the wrapper POSTs `{"message": ...}` to it with
 curl (10 second limit, failure ignored, URL never logged). No URL is stored in the repo.
+launchd passes no environment, so when the variable is unset the wrapper reads it from
+`~/.config/awesomesec/env`: the first `DIGEST_NOTIFY_URL=value` line (optional matching
+quotes, `http(s)://` values only), parsed as text and never sourced; no other key is read.
 
 ## Findings vs claims (two different questions)
 
@@ -241,6 +247,41 @@ promoted (`editorial_eligible`), and never in the news lane (`is_news_curated`,
 whose rendered page shows a row citing only Reddit ("reddit-only citation on a shown
 entry"; it only adds a refusal). A backfill run skips the
 lane (Reddit cannot be windowed). `www.reddit.com` and `oauth.reddit.com` are in `allowlist.FIXED_HOSTS`.
+
+### What practitioners are arguing (ISC-61)
+
+The Briefing shows "What practitioners are arguing" after the focus lane and Biggest this
+week. The raw signal never reaches the site (`data/_practitioner_signal.json` is
+gitignored), so the daily scan session synthesizes it (research-scan step 7b). `pre`
+runs `arguments.py freeze` before the session starts, writing the code-owned
+`data/_scan_arguments_signal.json` (Edit-denied with the other `data/_scan*` files) from
+the Reddit signal file plus the staged candidates (Reddit links, X list posts). The
+session reads `python scripts/arguments.py signal`, which shows only that frozen file
+(it also cannot Edit `data/_practitioner_signal.json`; pool entries are not signal at
+all), and writes at most
+`arguments.max_new_per_run` (5) arguments to `data/_arguments_out.json`, and
+`arguments.py merge` validates them into the committed `data/arguments.json`:
+
+- The model supplies a one-sentence position, an optional one-sentence counterpoint (each
+  at most `text_max_chars`, 280) and 2 to 6 URLs. Every URL must be a Reddit thread or
+  X post permalink (ASCII-only match, so lookalike letters fail) AND appear in the frozen
+  signal, or the argument is dropped. Text containing a URL scheme, `www.` or a bare
+  domain (`.com`, `.io`, `.xyz`, ...) is refused, by `arguments.py` and again by the gate. The stored
+  URL, its label (`r/sub`, `@handle`) and all engagement numbers come from the signal, never
+  from the model. The session cannot Edit `data/arguments.json`.
+- Engagement weight: a Reddit thread counts score + 2 x comments. The X list lane captures
+  no like or reply counts, so an X post counts `arguments.x_author_weight` (25) per
+  distinct author, count-based rather than engagement-based. A row's weight is the sum; the
+  section ranks by it and shows at most `max_rows` (5); the file keeps `store_max` (10).
+- A row leaves the file and the page `row_days` (14) days after the day it was written.
+  A new row that shares a thread with an old one replaces it.
+- `content_checks.arguments_problems` (run by `merge_gate.py` on the file and on the
+  rendered payload's `arguments`) refuses a scan PR whose rows break the schema, whose
+  source is not a Reddit or X permalink, whose label disagrees with its URL, or whose weight
+  is not the formula's. It cannot see the gitignored signal; the "link appeared in the
+  signal" rule is `arguments.py`'s. `merge_guard.py` is unchanged: `data/arguments.json` is
+  an ordinary content file. The page renders every value through `esc()`/`txt()`/`safeUrl()`/`num()`,
+  and an empty section renders nothing.
 
 ### Curator links (tl;dr sec)
 

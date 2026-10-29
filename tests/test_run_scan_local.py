@@ -263,3 +263,57 @@ def test_a_failing_digest_notify_never_fails_the_scan(scan_repo, tmp_path):
     )
     assert res.returncode == 0, res.stdout + res.stderr
     assert "digest notify failed" in res.stdout
+
+
+def write_env_file(tmp_path, text):
+    path = tmp_path / "home" / ".config" / "awesomesec" / "env"
+    path.parent.mkdir(parents=True)
+    path.write_text(text)
+
+
+def curl_url(tmp_path):
+    args = (tmp_path / "curl-args").read_text().splitlines()
+    return args[args.index("--url") + 1]
+
+
+def test_digest_url_comes_from_the_env_file_when_the_env_var_is_unset(scan_repo, tmp_path):
+    """launchd passes no environment: only DIGEST_NOTIFY_URL is read, as text, never sourced."""
+    work, origin, env = digest_repo(scan_repo, tmp_path)
+    env.pop("DIGEST_NOTIFY_URL", None)
+    write_env_file(
+        tmp_path,
+        "OTHER_KEY=https://not.invalid/used\n"
+        "touch=$(touch pwned)\n"
+        'DIGEST_NOTIFY_URL="https://hooks.invalid/n?t=$(touch${IFS}pwned)&u=`id`"\n'
+        "DIGEST_NOTIFY_URL=https://second.invalid/ignored\n",
+    )
+    res, _ = run_local(work, env, tmp_path, FAKE_ANALYSIS="1", FAKE_TOUCH="1")
+    assert res.returncode == 0, res.stdout + res.stderr
+    assert curl_url(tmp_path) == "https://hooks.invalid/n?t=$(touch${IFS}pwned)&u=`id`"  # literal
+    assert not list(tmp_path.rglob("pwned"))  # nothing in the file was executed
+    assert "hooks.invalid" not in res.stdout + res.stderr  # never logged
+
+
+def test_the_env_var_beats_the_env_file(scan_repo, tmp_path):
+    work, origin, env = digest_repo(scan_repo, tmp_path)
+    write_env_file(tmp_path, "DIGEST_NOTIFY_URL=https://file.invalid/x\n")
+    res, _ = run_local(
+        work,
+        env,
+        tmp_path,
+        DIGEST_NOTIFY_URL="https://env.invalid/x",
+        FAKE_ANALYSIS="1",
+        FAKE_TOUCH="1",
+    )
+    assert res.returncode == 0, res.stdout + res.stderr
+    assert curl_url(tmp_path) == "https://env.invalid/x"
+
+
+def test_a_non_http_url_in_the_env_file_is_ignored(scan_repo, tmp_path):
+    work, origin, env = digest_repo(scan_repo, tmp_path)
+    env.pop("DIGEST_NOTIFY_URL", None)
+    write_env_file(tmp_path, "DIGEST_NOTIFY_URL=file:///etc/passwd\n")
+    res, _ = run_local(work, env, tmp_path, FAKE_ANALYSIS="1", FAKE_TOUCH="1")
+    assert res.returncode == 0, res.stdout + res.stderr
+    assert (tmp_path / "scan-worktree" / "digest_ran").exists()  # the scan ran and built a digest
+    assert not (tmp_path / "curl-args").exists()

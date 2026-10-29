@@ -177,6 +177,10 @@ FNS = [
     "biggestNote",
     "biggestHTML",
     "topStoriesHTML",
+    "argSources",
+    "argEngagement",
+    "argumentHTML",
+    "argumentsHTML",
     "rowsById",
     "emergingBlock",
     "secHead",
@@ -246,6 +250,7 @@ def run_js(data: dict, expr: str):
     labels += "\n" + re.search(r"var claimState = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var EFF_DOMAINS = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var EFF_LABEL = \{.*?\};", src).group(0)
+    labels += "\n" + re.search(r"var ARG_HOST = .*?;\n", src).group(0)
     for name in ("newsState", "archiveState", "siteState"):
         labels += "\n" + re.search(rf"var {name} = \{{.*?\}};", src).group(0)
     labels += "\n" + re.search(r"var STATE_MAX_Q = .*?;", src).group(0)

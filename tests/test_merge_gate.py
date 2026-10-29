@@ -258,3 +258,32 @@ def test_main_has_feed_fails_closed():
     assert main_has_feed(head) in (True, False)  # a valid commit answers
     with pytest.raises(RuntimeError):
         main_has_feed("4b825dc642cb6eb9a060e54bf8d69288fbee4904")  # a tree, not a commit
+
+
+def _argument_row(url="https://www.reddit.com/r/netsec/comments/abc123/slug/"):
+    return {
+        "id": "arg-0123456789",
+        "created": "2026-07-14",
+        "position": "p",
+        "counterpoint": "",
+        "sources": [
+            {"url": url, "label": "r/netsec", "kind": "reddit"},
+            {"url": "https://x.com/a/status/1900000000000000001", "label": "@a", "kind": "x"},
+        ],
+        "reddit_score": 10,
+        "reddit_comments": 2,
+        "x_authors": 1,
+        "weight": 10 + 4 + 25,
+    }
+
+
+def test_content_problems_refuse_an_argument_row_with_a_foreign_link(tmp_path, monkeypatch):
+    import json
+
+    monkeypatch.setattr(gate, "main_ledger", lambda base: {"claims": [{"id": "a"}]})
+    root = _tree(tmp_path)
+    rows = root / "data" / "arguments.json"
+    rows.write_text(json.dumps([_argument_row()]))
+    assert gate.content_problems("main", root) == []
+    rows.write_text(json.dumps([_argument_row("https://evil.example/r/netsec/comments/abc123/")]))
+    assert any("permalink" in p for p in gate.content_problems("main", root))
