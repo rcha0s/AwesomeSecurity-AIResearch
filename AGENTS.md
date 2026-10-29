@@ -36,7 +36,7 @@ scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
-scripts/ingest_reddit.py  # subreddit lane, keyless: link posts stage their article; self posts -> data/_practitioner_signal.json
+scripts/ingest_reddit.py  # subreddit lane, official API (app-only OAuth): link posts stage their article; self posts -> data/_practitioner_signal.json
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
 scripts/add_source.py     # register a source (x/blog/newsletter/github/youtube); `deactivate <id> --reason`
 scripts/select_batch.py   # scan pre: cut staged candidates to this run's batch (rest -> data/_scan_backlog.json)
@@ -160,41 +160,45 @@ python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
-python scripts/ingest_reddit.py           # r/netsec etc., keyless (--dry-run); fails soft
+python scripts/ingest_reddit.py           # r/netsec etc. via the Reddit API (--dry-run); skipped without credentials
 ```
 
-### Reddit (practitioner signal, keyless)
+### Reddit (practitioner signal, official API)
 
 `ingest_reddit.py` reads the subreddits in `config.yaml reddit.subreddits` (netsec,
-cybersecurity, AI_Agents, LLMDevs, devsecops) logged out, through the server-rendered
-partial `www.reddit.com/svc/shreddit/community-more-posts/{sort}/?name={sub}`: one
-request per sub per sort (`new`, and `top` with `t=day`), a short timeout, a desktop
-browser User-Agent. Each post is a `<shreddit-post>` start tag; its attributes
-(`permalink`, `content-href`, `post-title`, `score`, `comment-count`,
-`created-timestamp`, `post-type`) are read with the stdlib HTML parser. `search.json`,
-`.json`, `.rss` and api.reddit.com answer 403 keyless, and a logged-in session or a
-browser is out of scope (ISA ISC-A7). A 403, 429 or network error is logged and the exit
-code stays 0: a scan never fails because of Reddit.
+cybersecurity, AI_Agents, LLMDevs, devsecops) through Reddit's official API with
+app-only OAuth: a client-credentials token from `www.reddit.com/api/v1/access_token`
+(HTTP basic auth), then `oauth.reddit.com/r/{sub}/new` and `/top?t=day` as JSON, one
+request per sub per sort, with the User-Agent `awesomesec-research/1.0`. Credentials are
+the env vars `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET` only; create them as a
+"script" app at reddit.com/prefs/apps (redirect URI `http://localhost`). Unset, the lane
+logs "skipped: no Reddit API credentials" and exits 0. The token stays in memory, goes
+only in the Authorization header, and is never logged or put in a URL. The keyless
+scraping routes (`.json`, `.rss`, the shreddit partial) are not used: Reddit blocks them
+on purpose, and a user login or a browser is out of scope (ISA ISC-A7). A 401, 403, 429
+or network error is logged and the exit code stays 0: a scan never fails because of
+Reddit.
 
 A thread alone never becomes a finding. Posts newer than `reddit.lookback_hours` (48)
 with at least `reddit.min_score` that pass the curator ingestor's on-thesis filter
-(taxonomy keyword hint in the title, no excluded term, not on the news deny-list) go
+(taxonomy keyword hint in the title or a self post's `selftext`, no excluded term, not on
+the news deny-list) go
 one of two ways:
 
-- A link post whose `content-href` is not a Reddit host stages that article as the
+- A link post whose `url` is not a Reddit host stages that article as the
   candidate's `source_url` (`source_id` `reddit:<sub>`, `discovered_via: "reddit"`),
   with the thread as `reddit_url`, `reddit_score` and `reddit_comments`;
   `merge_analysis.stamp_curator` copies them onto the pool entry. At most
   `reddit.max_per_run` (6) are staged, best engagement (score + 2 x comments) first,
   and anything the pools, archive or story ledger hold is skipped.
-- A self/text post is not staged. It is upserted into the gitignored
+- A self post (`is_self`) is not staged. It is upserted into the gitignored
   `data/_practitioner_signal.json` (rows older than `reddit.signal_days` drop out) for
   the "what practitioners are arguing" section (ISC-61). Crossposts, galleries and
   links to Reddit itself are neither.
 
 `merge_analysis.py` holds any entry whose citations are all Reddit URLs
 (`common.reddit_only`): `needs_review` plus `citation_hold`. A backfill run skips the
-lane (Reddit cannot be windowed). `www.reddit.com` is in `allowlist.FIXED_HOSTS`.
+lane (Reddit cannot be windowed). `www.reddit.com` and `oauth.reddit.com` are in `allowlist.FIXED_HOSTS`.
 
 ### Curator links (tl;dr sec)
 

@@ -1,9 +1,10 @@
-"""Tests for scripts/ingest_reddit.py — the keyless subreddit lane. A recorded,
-trimmed community-more-posts partial (tests/fixtures/reddit), no network."""
+"""Tests for scripts/ingest_reddit.py — the subreddit lane over Reddit's official API
+(app-only OAuth). A recorded-shape listing (tests/fixtures/reddit), no network."""
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+import json
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import common
@@ -13,9 +14,11 @@ import pytest
 import select_batch as sb
 from conftest import make_entry
 
-FIXTURE = Path(__file__).parent / "fixtures" / "reddit" / "netsec_new.html"
+FIXTURE = Path(__file__).parent / "fixtures" / "reddit" / "netsec_new.json"
 NOW = datetime(2026, 10, 29, 6, 0, tzinfo=UTC)
 CFG = {**ir.DEFAULTS, "subreddits": ["netsec"], "sorts": ["new"], "delay_seconds": 0}
+SECRET = "s3cr3t-value"
+TRIAGE = "How do you triage prompt injection reports from agents in production?"
 
 
 @pytest.fixture(autouse=True)
@@ -27,62 +30,90 @@ def clock(monkeypatch):
         raise AssertionError("ingest_reddit touched the network in a test")
 
     monkeypatch.setattr(requests, "get", boom)
+    monkeypatch.setattr(requests, "post", boom)
 
 
-def html() -> str:
-    return FIXTURE.read_text()
+def listing() -> dict:
+    return json.loads(FIXTURE.read_text())
 
 
-def serve(text: str):
-    return lambda sub, sort, cfg: text
+def items() -> list[dict]:
+    return [ch["data"] for ch in listing()["data"]["children"] if ch["kind"] == "t3"]
 
 
-def run(cfg=None, text=None):
+def serve(data=None):
+    data = items() if data is None else data
+    return lambda sub, sort, cfg: data
+
+
+def run(cfg=None, data=None):
     cfg = {**CFG, **(cfg or {})}
     stats: dict = {}
-    posts = ir.read_all(serve(text or html()), cfg, stats)
+    posts = ir.read_all(serve(data), cfg, stats)
     rules = common.load_yaml(common.SOURCES_FILE)["classification"]
     cands, selfposts = ir.select(posts, cfg, stats, rules)
     return stats, cands, selfposts
 
 
-# --- attribute parsing --------------------------------------------------------------
-def test_parser_reads_only_post_tags_and_unescapes_attributes():
-    posts = ir.parse_posts(html())
-    assert len(posts) == 11  # the overflow-menu element is not a post
-    first = posts[0]
-    assert first["score"] == "49" and first["comment-count"] == "2"
-    assert first["post-type"] == "link" and first["subreddit-name"] == "netsec"
-    assert first["content-href"].startswith("https://www.atredis.com/")
-    assert first["created-timestamp"] == "2026-10-28T21:24:39.496000+0000"
-    assert "&#39;" not in posts[1]["post-title"] and "Moldova's" in posts[1]["post-title"]
+# --- field mapping --------------------------------------------------------------------
+def by_title() -> dict:
+    return {p["title"]: ir.normalize(p, "netsec") for p in items()}
 
 
-def test_normalize_classifies_link_text_and_reddit_hosted_links():
-    by = {p["permalink"].split("/")[-2]: ir.normalize(p, "netsec") for p in ir.parse_posts(html())}
-    text = by["how_do_you_triage_prompt_injection_reports"]
-    assert text["kind"] == "text" and text["link"] is None
-    assert text["permalink"].startswith("https://www.reddit.com/r/netsec/comments/")
-    reddit_link = by["crosspost_of_a_thread_about_rce"]
-    assert reddit_link["link"] is None  # a Reddit-hosted href is never an article
-    atredis = by["turning_the_valve_exploiting_rce_and_lpe_in_the"]
-    assert atredis["kind"] == "link" and atredis["score"] == 49 and atredis["comments"] == 2
-    assert atredis["created"].utcoffset().total_seconds() == 0
-    crosspost = next(p for k, p in by.items() if k.startswith("cache_me_if_you_can"))
-    assert crosspost["kind"] == "other"  # a crosspost has no article of its own
-    assert by["broken"] is None  # no timestamp: skipped
+def test_normalize_maps_the_listing_fields():
+    post = by_title()["Prompt injection in MCP servers: a field report"]
+    assert post["kind"] == "link" and post["link"].startswith("https://mcp.example.com/")
+    assert (post["score"], post["comments"]) == (20, 5)
+    assert post["permalink"].startswith("https://www.reddit.com/r/netsec/comments/1s001/")
+    assert post["created"] == datetime.fromtimestamp(post["created"].timestamp(), UTC)
+    assert post["created"].isoformat() == "2026-10-28T21:24:39+00:00"
+
+
+def test_normalize_classifies_self_reddit_hosted_and_broken_posts():
+    posts = by_title()
+    triage = posts[TRIAGE]
+    assert triage["kind"] == "text" and triage["link"] is None and "dedupe" in triage["text"]
+    assert posts["Thread about an RCE exploit chain"]["kind"] == "other"  # Reddit-hosted url
+    assert posts["No timestamp prompt injection post"] is None
+
+
+def test_the_listing_reader_keeps_only_posts(monkeypatch):
+    import requests
+
+    seen = {}
+
+    class Resp:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return listing()
+
+    def fake(url, params=None, headers=None, timeout=None):
+        seen.update(url=url, params=params, headers=headers, timeout=timeout)
+        return Resp()
+
+    monkeypatch.setattr(requests, "get", fake)
+    got = ir.fetch_listing("netsec", "top", CFG, "tok-123")
+    assert len(got) == 11  # the t1 child is dropped
+    assert seen["url"] == "https://oauth.reddit.com/r/netsec/top"
+    assert seen["params"]["t"] == "day" and seen["timeout"] == CFG["timeout_seconds"]
+    assert seen["headers"]["Authorization"] == "Bearer tok-123"
+    assert seen["headers"]["User-Agent"] == ir.USER_AGENT
+    assert "tok-123" not in seen["url"] and "tok-123" not in str(seen["params"])
+    ir.fetch_listing("netsec", "new", CFG, "tok-123")
+    assert "t" not in seen["params"]
 
 
 # --- window, filters, staging ---------------------------------------------------------
-def test_stats_count_every_parsed_post_and_the_window_drops_old_ones():
-    stats, cands, selfposts = run()
-    assert stats["netsec"]["read"] == 10  # 11 parsed, one without a timestamp
+def test_stats_count_every_valid_post_and_the_window_drops_old_ones():
+    stats, cands, _ = run()
+    assert stats["netsec"]["read"] == 10  # 11 posts, one without a timestamp
     titles = [x["title"] for x in cands]
-    assert not any("Old prompt injection" in t for t in titles)  # 9 days old, lookback is 48h
-    assert not any("Low score prompt injection" in t for t in titles)
+    assert not any("Old prompt injection" in t for t in titles)  # 9 days old, lookback 48h
+    assert not any("Low score" in t for t in titles)
     assert not any("sourdough" in t for t in titles)  # off-thesis
     assert any("MCP servers" in t for t in titles) and any("MPass" in t for t in titles)
-    assert not any("Valve" in t for t in titles)  # no taxonomy hint in its title
 
 
 def test_lookback_hours_is_configurable():
@@ -96,27 +127,29 @@ def test_a_link_post_stages_its_article_with_the_thread_as_signal():
     assert "MCP servers" in top["title"]
     assert top["source_url"] == "https://mcp.example.com/field-report"  # tracking param cleaned
     assert top["article_url"] == top["source_url"]
-    assert not common.is_reddit_url(top["source_url"])
-    assert top["discovered_via"] == "reddit"
-    assert top["reddit_url"].startswith("https://www.reddit.com/r/netsec/comments/")
+    assert top["discovered_via"] == "reddit" and top["source_id"] == "reddit:netsec"
+    assert top["reddit_url"].startswith("https://www.reddit.com/r/netsec/comments/1s001/")
     assert (top["reddit_score"], top["reddit_comments"]) == (20, 5)
-    assert top["source_id"] == "reddit:netsec"
-    assert top["published"] == "2026-10-28"  # the post's own date
+    assert top["published"] == "2026-10-28"
 
 
 def test_a_self_post_is_signal_and_never_a_candidate():
     _, cands, selfposts = run()
-    assert [p["title"] for p in selfposts] == [
-        "How do you triage prompt injection reports from agents in production?"
-    ]
-    assert not any("triage prompt injection" in x["title"] for x in cands)
+    assert [p["title"] for p in selfposts] == [TRIAGE, "Weekly discussion thread"]
+    assert not any(p["title"] in {x["title"] for x in cands} for p in selfposts)
     assert not any(common.is_reddit_url(x["source_url"]) for x in cands)
+
+
+def test_a_self_posts_body_counts_for_the_on_thesis_check():
+    _, _, selfposts = run()
+    assert "Weekly discussion thread" in [p["title"] for p in selfposts]  # title alone has no hint
+    assert "Self post about sourdough" not in [p["title"] for p in selfposts]
 
 
 def test_a_link_to_reddit_itself_is_never_staged():
     _, cands, selfposts = run()
-    assert not any("Thread about an RCE" in x["title"] for x in cands)
-    assert not any("Thread about an RCE" in p["title"] for p in selfposts)  # kind: other
+    everything = [x["title"] for x in cands] + [p["title"] for p in selfposts]
+    assert "Thread about an RCE exploit chain" not in everything
 
 
 def test_the_per_run_cap_keeps_the_best_engagement():
@@ -128,7 +161,7 @@ def test_the_per_run_cap_keeps_the_best_engagement():
 def test_top_and_new_are_deduplicated_by_thread():
     cfg = {**CFG, "sorts": ["new", "top"]}
     stats: dict = {}
-    posts = ir.read_all(serve(html()), cfg, stats)
+    posts = ir.read_all(serve(), cfg, stats)
     assert stats["netsec"]["read"] == 20 and len(posts) == 10
 
 
@@ -140,29 +173,95 @@ def test_a_held_article_is_not_staged_again(sandbox):
     assert not any("mcp.example.com" in x["source_url"] for x in cands)
 
 
-# --- main: writes, idempotence, soft failure --------------------------------------------
+# --- main: credentials, writes, idempotence, soft failure --------------------------------
 def test_main_stages_candidates_and_writes_the_gitignored_signal_file(sandbox, monkeypatch):
     monkeypatch.setattr(ir, "settings", lambda: CFG)
-    assert ir.main([], fetch=serve(html())) == 0
+    assert ir.main([], fetch=serve()) == 0
     staged = common.load_candidates()
     assert staged and all(x["discovered_via"] == "reddit" for x in staged)
     rows = common.load_json(ir.signal_file())
-    assert rows == [
-        {
-            "title": "How do you triage prompt injection reports from agents in production?",
-            "permalink": "https://www.reddit.com/r/netsec/comments/1xsynth1/how_do_you_triage_prompt_injection_reports/",
-            "score": 31, "comments": 22, "sub": "netsec",
-            "created": "2026-10-28T21:24:39.496000+00:00",
-        }
-    ]  # fmt: skip
-    assert ir.main([], fetch=serve(html())) == 0  # a rerun adds nothing
+    assert [r["title"] for r in rows] == [TRIAGE, "Weekly discussion thread"]
+    assert rows[0] == {
+        "title": TRIAGE,
+        "permalink": rows[0]["permalink"], "score": 31, "comments": 22, "sub": "netsec",
+        "created": "2026-10-28T21:24:39+00:00",
+    }  # fmt: skip
+    assert ir.main([], fetch=serve()) == 0  # a rerun adds nothing
     assert len(common.load_candidates()) == len(staged)
-    assert len(common.load_json(ir.signal_file())) == 1
+    assert len(common.load_json(ir.signal_file())) == 2
+
+
+def test_no_credentials_skips_the_lane_and_exits_zero(sandbox, monkeypatch, capsys):
+    monkeypatch.setattr(ir, "settings", lambda: CFG)
+    monkeypatch.delenv("REDDIT_CLIENT_ID", raising=False)
+    monkeypatch.delenv("REDDIT_CLIENT_SECRET", raising=False)
+    assert ir.main([]) == 0  # the autouse guard would fail on any request
+    assert "skipped: no Reddit API credentials" in capsys.readouterr().out
+    assert not common.load_candidates() and not ir.signal_file().exists()
+
+
+def test_one_credential_alone_is_not_enough(monkeypatch):
+    monkeypatch.setenv("REDDIT_CLIENT_ID", "id")
+    monkeypatch.delenv("REDDIT_CLIENT_SECRET", raising=False)
+    assert ir.credentials() is None
+
+
+def test_the_token_request_uses_basic_auth_and_the_secret_stays_out_of_the_url(monkeypatch):
+    import requests
+
+    seen = {}
+
+    class Resp:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {"access_token": "tok-abc", "token_type": "bearer"}
+
+    def fake(url, auth=None, data=None, headers=None, timeout=None):
+        seen.update(url=url, auth=auth, data=data, headers=headers)
+        return Resp()
+
+    monkeypatch.setattr(requests, "post", fake)
+    assert ir.get_token("cid", SECRET, CFG) == "tok-abc"
+    assert seen["url"] == "https://www.reddit.com/api/v1/access_token"
+    assert seen["auth"] == ("cid", SECRET) and seen["data"] == {"grant_type": "client_credentials"}
+    assert seen["headers"]["User-Agent"] == "awesomesec-research/1.0"
+    assert SECRET not in seen["url"]
+
+
+def test_a_failed_token_request_is_soft_and_never_logs_the_secret(monkeypatch, capsys):
+    import requests
+
+    def fake(*a, **k):
+        raise RuntimeError(f"401 for {SECRET}")  # even if a library echoed it
+
+    monkeypatch.setattr(requests, "post", fake)
+    monkeypatch.setenv("REDDIT_CLIENT_ID", "cid")
+    monkeypatch.setenv("REDDIT_CLIENT_SECRET", SECRET)
+    monkeypatch.setattr(ir, "settings", lambda: CFG)
+    assert ir.main([]) == 0
+    out = capsys.readouterr()
+    assert "token request failed" in out.err
+    assert SECRET not in out.err and SECRET not in out.out
+
+
+def test_make_fetch_binds_the_token_for_the_listing_calls(monkeypatch):
+    monkeypatch.setenv("REDDIT_CLIENT_ID", "cid")
+    monkeypatch.setenv("REDDIT_CLIENT_SECRET", SECRET)
+    monkeypatch.setattr(ir, "get_token", lambda cid, secret, cfg: "tok-1")
+    calls = []
+    monkeypatch.setattr(
+        ir, "fetch_listing", lambda sub, sort, cfg, tok: calls.append((sub, sort, tok)) or []
+    )
+    fetch = ir.make_fetch(CFG)
+    fetch("netsec", "new", CFG)
+    assert calls == [("netsec", "new", "tok-1")]
 
 
 def test_dry_run_writes_nothing(sandbox, monkeypatch):
     monkeypatch.setattr(ir, "settings", lambda: CFG)
-    assert ir.main(["--dry-run"], fetch=serve(html())) == 0
+    assert ir.main(["--dry-run"], fetch=serve()) == 0
     assert not common.load_candidates() and not ir.signal_file().exists()
 
 
@@ -174,7 +273,7 @@ def test_signal_rows_older_than_signal_days_are_dropped(sandbox):
     assert common.load_json(ir.signal_file()) == []
 
 
-@pytest.mark.parametrize("status", ["403 Blocked", "429 Too Many Requests", "timeout"])
+@pytest.mark.parametrize("status", ["401 Unauthorized", "403 Blocked", "429 Too Many", "timeout"])
 def test_a_failed_request_is_soft(sandbox, monkeypatch, capsys, status):
     monkeypatch.setattr(ir, "settings", lambda: CFG)
 
@@ -182,53 +281,26 @@ def test_a_failed_request_is_soft(sandbox, monkeypatch, capsys, status):
         raise RuntimeError(status)
 
     assert ir.main([], fetch=fail) == 0
-    out = capsys.readouterr()
-    assert "skipped" in out.err and status in out.err
-    assert not common.load_candidates()
+    assert status in capsys.readouterr().err and not common.load_candidates()
 
 
 def test_an_unexpected_error_is_logged_and_exit_is_zero(sandbox, monkeypatch, capsys):
     monkeypatch.setattr(ir, "settings", lambda: CFG)
     monkeypatch.setattr(ir, "select", lambda *a: 1 / 0)
-    assert ir.main([], fetch=serve(html())) == 0
+    assert ir.main([], fetch=serve()) == 0
     assert "failed soft" in capsys.readouterr().err
 
 
-def test_garbage_html_yields_nothing(sandbox, monkeypatch):
+def test_an_empty_listing_yields_nothing(sandbox, monkeypatch):
     monkeypatch.setattr(ir, "settings", lambda: CFG)
-    assert ir.main([], fetch=serve("<html><body>Blocked</body></html>")) == 0
+    assert ir.main([], fetch=serve([])) == 0
     assert not common.load_candidates()
 
 
 def test_a_backfill_run_skips_the_lane(sandbox, monkeypatch, capsys):
-    from datetime import date
-
     monkeypatch.setattr(common, "backfill_window", lambda: (date(2026, 9, 1), date(2026, 9, 9)))
-    assert ir.main([], fetch=serve(html())) == 0
+    assert ir.main([], fetch=serve()) == 0
     assert "skipped" in capsys.readouterr().out and not common.load_candidates()
-
-
-def test_live_fetch_asks_once_per_sub_per_sort_with_a_browser_agent(monkeypatch):
-    import requests
-
-    seen = []
-
-    class Resp:
-        text = "<html></html>"
-
-        def raise_for_status(self):
-            pass
-
-    def fake(url, params=None, headers=None, timeout=None):
-        seen.append((url, params, headers["User-Agent"], timeout))
-        return Resp()
-
-    monkeypatch.setattr(requests, "get", fake)
-    ir.fetch_html("netsec", "new", CFG)
-    ir.fetch_html("netsec", "top", CFG)
-    assert seen[0][0].endswith("/svc/shreddit/community-more-posts/new/")
-    assert seen[0][1] == {"name": "netsec"} and seen[1][1] == {"name": "netsec", "t": "day"}
-    assert seen[0][2].startswith("Mozilla/5.0") and seen[0][3] == CFG["timeout_seconds"]
 
 
 def test_config_lists_the_five_subreddits_and_a_lookback():
@@ -242,8 +314,7 @@ REDDIT_URL = "https://www.reddit.com/r/netsec/comments/1xsynth1/how_do_you_triag
 
 
 def merged(sandbox, **over):
-    conf = common.load_config()
-    out, errors, _, _ = m.merge([make_entry(**over)], conf)
+    out, errors, _, _ = m.merge([make_entry(**over)], common.load_config())
     assert not errors, errors
     return out[0]
 
@@ -254,7 +325,7 @@ def test_an_entry_whose_only_citation_is_reddit_is_held(sandbox):
     assert entry["citation_hold"] == m.REDDIT_ONLY_HOLD
 
 
-def test_reddit_short_and_media_hosts_count_as_reddit(sandbox):
+def test_reddit_short_and_media_hosts_count_as_reddit():
     for url in ("https://redd.it/1xsynth1", "https://old.reddit.com/r/x/comments/1/t/",
                 "https://i.redd.it/a.png"):  # fmt: skip
         assert common.reddit_only({"source_url": url})
@@ -279,12 +350,11 @@ def test_merge_stamps_the_thread_fields_from_the_candidate():
 
 # --- batch + allowlist ------------------------------------------------------------------------
 def test_reddit_is_its_own_batch_class():
-    cand = {"source_id": "reddit:netsec", "discovered_via": "reddit"}
-    assert sb.ingestor_class(cand) == "reddit"
+    assert sb.ingestor_class({"source_id": "reddit:netsec", "discovered_via": "reddit"}) == "reddit"
     assert sb.ingestor_class({"source_id": "reddit:devsecops"}) == "reddit"
 
 
-def test_the_scan_allowlist_names_reddit():
+def test_the_scan_allowlist_names_the_reddit_api_hosts():
     import allowlist
 
-    assert "www.reddit.com" in allowlist.FIXED_HOSTS
+    assert {"www.reddit.com", "oauth.reddit.com"} <= set(allowlist.FIXED_HOSTS)
