@@ -13,7 +13,7 @@ from pathlib import Path
 
 import content_checks
 import pytest
-from test_run_scan import SECRET, gh_calls, git, ledger_rows, open_budget
+from test_run_scan import SECRET, commit_main, gh_calls, git, ledger_rows, open_budget
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
@@ -197,3 +197,69 @@ def test_the_retry_ships_when_its_session_analyzes(scan_repo, tmp_path):
     log = (work / "data/_scan.log").read_text()
     assert log.count("FAILED in phase 'analysis-empty'") == 1  # only the first attempt
     assert "SCAN_RESULT" in log  # the retry's post ran to the end
+
+
+# --- weekly focus digest (ISC-56): written before post, notified after -------
+
+STUB_DIGEST = """import sys
+if "--due" in sys.argv:
+    raise SystemExit(0)
+open("digest_ran", "w").write("x")
+print("Weekly focus digest: 2 stories, 1 claim change. https://example.invalid/digest.md")
+"""
+FAKE_CURL = """#!/bin/sh
+printf '%s\\n' "$@" > "$CURL_ARGS"
+"""
+
+
+def digest_repo(scan_repo, tmp_path):
+    """The scan repo with a stub digest script and a fake curl that records its argv."""
+    work, origin, env = scan_repo
+    (work / "scripts" / "weekly_digest.py").write_text(STUB_DIGEST)
+    commit_main(work, "stub the digest")
+    bin_dir = Path(env["PATH"].split(":")[0])
+    (bin_dir / "curl").write_text(FAKE_CURL)
+    (bin_dir / "curl").chmod(0o755)
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    return work, origin, {**env, "CURL_ARGS": str(tmp_path / "curl-args")}
+
+
+def test_digest_notify_is_skipped_when_the_url_env_is_unset(scan_repo, tmp_path):
+    work, origin, env = digest_repo(scan_repo, tmp_path)
+    env.pop("DIGEST_NOTIFY_URL", None)
+    res, _ = run_local(work, env, tmp_path, FAKE_ANALYSIS="1", FAKE_TOUCH="1")
+    assert res.returncode == 0, res.stdout + res.stderr
+    assert (tmp_path / "scan-worktree" / "digest_ran").exists()  # the digest was built
+    assert not (tmp_path / "curl-args").exists()  # and nothing was posted
+
+
+def test_digest_notify_posts_a_json_message_with_a_short_timeout_when_set(scan_repo, tmp_path):
+    work, origin, env = digest_repo(scan_repo, tmp_path)
+    url = "https://hooks.invalid/notify?token=s3cret"
+    res, _ = run_local(
+        work, env, tmp_path, DIGEST_NOTIFY_URL=url, FAKE_ANALYSIS="1", FAKE_TOUCH="1"
+    )
+    assert res.returncode == 0, res.stdout + res.stderr
+    args = (tmp_path / "curl-args").read_text().splitlines()
+    assert args[args.index("--max-time") + 1] == "10"
+    body = json.loads(args[args.index("--data") + 1])
+    assert body == {
+        "message": "Weekly focus digest: 2 stories, 1 claim change. https://example.invalid/digest.md"
+    }
+    assert args[args.index("--url") + 1] == url
+    assert "s3cret" not in res.stdout + res.stderr  # the URL may carry a token: never logged
+
+
+def test_a_failing_digest_notify_never_fails_the_scan(scan_repo, tmp_path):
+    work, origin, env = digest_repo(scan_repo, tmp_path)
+    (Path(env["PATH"].split(":")[0]) / "curl").write_text("#!/bin/sh\nexit 7\n")
+    res, _ = run_local(
+        work,
+        env,
+        tmp_path,
+        DIGEST_NOTIFY_URL="https://hooks.invalid/x",
+        FAKE_ANALYSIS="1",
+        FAKE_TOUCH="1",
+    )
+    assert res.returncode == 0, res.stdout + res.stderr
+    assert "digest notify failed" in res.stdout

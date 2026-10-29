@@ -170,7 +170,10 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    source? (b) independently re-judge novelty as claim-level delta-vs-prior-art (name the closest
    prior work). (c) re-judge relevance. Then reconcile:
    - if the verifier refutes a claim, or its novelty is much lower than yours (disagreement),
-     set `verified: false` and a short `verify_note` — the merge gate sends it to REVIEW.md;
+     set `verified: false`, a short `verify_note` and a `verify_reason` — `factual` when the
+     verifier found a lesson the source does not support, `scoring` when the lessons hold but its
+     novelty or relevance came out much lower. The merge gate sends it to REVIEW.md either way;
+     only `scoring` can still be kept as focus news, so never leave `verify_reason` off;
    - otherwise set `verified: true`, take the **lower** of the two novelty scores, and record
      `prior_art`. This makes the score an independent judgment, not a self-grade.
 

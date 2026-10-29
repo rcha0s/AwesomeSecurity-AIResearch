@@ -41,6 +41,7 @@ try:
 except ImportError as exc:  # pragma: no cover - environment guard
     raise SystemExit("Missing dependencies. Run: pip install -r requirements.txt") from exc
 
+import focus as focus_mod  # noqa: E402
 import taxonomy  # noqa: E402  (after the dependency guard: it needs yaml)
 
 # Use the OS-native certificate trust store (Windows/macOS/Linux) instead of
@@ -228,6 +229,7 @@ class Config:
     news_front_page_days: int = 7
     news_front_page_max: int = 30
     ghsa: dict = dc_field(default_factory=dict)  # which GitHub advisories are kept
+    focus: dict = dc_field(default_factory=dict)  # Rohan's focus areas (scripts/focus.py)
 
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -248,6 +250,7 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         news_front_page_days=int(raw.get("news_front_page_days", 7)),
         news_front_page_max=int(raw.get("news_front_page_max", 30)),
         ghsa=raw.get("ghsa") or {},
+        focus=raw.get("focus") or {},
     )
 
 
@@ -831,6 +834,29 @@ def _source_track_and_tier(entry: dict, sources_by_id: dict[str, dict]) -> tuple
     return src.get("track", "research"), src.get("tier", "low")
 
 
+# Where a focus match does NOT stand in for a news-track source: repos and HN
+# posts are volume, and a focus keyword matches far too many of them.
+FOCUS_NEWS_EXCLUDED_VIA = ("github", "hackernews")
+
+
+def _focus_news(entry: dict, conf: Config, tier: str) -> bool:
+    """A focus-area match (config.yaml `focus:`) from a high-tier feed stands in
+    for a news-track source, so a standard from a research-track feed (OWASP ACS,
+    2026-09-01) is kept like news instead of aging into the archive unseen."""
+    from verify_citations import publishable_grounding
+
+    if tier != "high" or entry.get("discovered_via") in FOCUS_NEWS_EXCLUDED_VIA:
+        return False
+    if not publishable_grounding(entry):
+        return False  # an ungrounded quote is never kept, however on-topic
+    # `verified: false` is either a factual refutation or a scoring disagreement
+    # (ACS: a PR announcement scored low on novelty). Only an explicit
+    # verify_reason "scoring" passes; unlabeled or "factual" stays out.
+    if entry.get("verified") is False and entry.get("verify_reason") != "scoring":
+        return False
+    return focus_mod.matches(entry, conf.focus)
+
+
 def is_news_curated(
     entry: dict,
     conf: Config,
@@ -859,7 +885,7 @@ def is_news_curated(
         return entry.get("verified") is not False
     sources_by_id = sources_by_id or {}
     track, tier = _source_track_and_tier(entry, sources_by_id)
-    if track not in ("news", "both"):
+    if track not in ("news", "both") and not _focus_news(entry, conf, tier):
         return False
     if tier not in ("high", "medium"):
         return False

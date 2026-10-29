@@ -50,6 +50,54 @@ snapshot_days: 7
 news_front_page_days: 7
 news_front_page_max: 30
 
+# Rohan's focus areas (ISA ISC-56). The Briefing opens with a "Your focus" lane
+# of the week's stories and claim changes that match one, ahead of "Biggest this
+# week", and a weekly digest (docs/digest.md) lists the same items. An item
+# matches an area when its taxonomy domain ID is in `domains` or a `keywords`
+# phrase appears (whole words, any case) in its title or takeaway. A story that
+# matches stays in the news lane like news does, however old: rerank never
+# archives it, so a standard like OWASP ACS (2026-09-01) cannot vanish unseen.
+# The lane shows `lane_min` to `lane_max` stories (older ones fill in when the
+# week is thin), ranked by areas matched, then newest activity.
+# `digest_weekday` is 0 = Monday ... 6 = Sunday (env DIGEST_WEEKDAY overrides it;
+# `any` runs every day); the Mac wrapper builds the digest on that day only.
+focus:
+  lane_min: 3
+  lane_max: 6
+  claim_changes_max: 3
+  digest_weekday: 6
+  digest_days: 7
+  digest_max: 15
+  areas:
+    - id: mcp-security
+      name: MCP security
+      domains: [ais.mcp-tools]
+      keywords: [mcp, model context protocol, mcp inspector, tool poisoning]
+    - id: prompt-injection
+      name: Prompt injection
+      domains: [ais.prompt-injection]
+      keywords: [prompt injection, indirect prompt injection, jailbreak]
+    - id: ai-supply-chain
+      name: AI supply chain
+      domains: [ais.model-supply-chain]
+      keywords: [ai supply chain, model supply chain, slopsquatting, malicious model, poisoned package, agent skill, skill marketplace]
+    - id: ai-security-review
+      name: AI-assisted security review
+      domains: [ps.ai-code]
+      keywords: [ai code review, ai-assisted code review, ai-assisted security review, ai threat modeling, ai-generated code, agentic appsec, llm-based vulnerability]
+    - id: guardrails
+      name: Guardrails
+      domains: [ais.guardrails]
+      keywords: [guardrail, guardrails, agent control standard, runtime enforcement, llm firewall, owasp top 10 for llm]
+    - id: red-teaming
+      name: Red teaming
+      domains: [ais.red-teaming]
+      keywords: [ai red team, ai red teaming, red-teaming llm, adversarial testing]
+    - id: insurer-regulation
+      name: AI regulation for insurers
+      domains: []
+      keywords: [naic, insurer, insurers, insurance regulator, insurance regulation, model bulletin, department of insurance, unfair discrimination, ai act]
+
 # Emerging trends (scripts/trends.py). A tag's "recent" count is its dated
 # findings inside max_age_days. Its baseline is the rate it ran at over the
 # `baseline_days` before that window (shorter if the topic's history is), scaled

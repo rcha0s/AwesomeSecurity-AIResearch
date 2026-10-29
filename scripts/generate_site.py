@@ -446,6 +446,15 @@ def _teaser(payload: dict) -> list[str]:
     )
     biggest = [rows[i] for i in payload.get("biggest_stories", [])[:3] if i in rows]
     out = []
+    focus = [rows[i] for i in payload.get("focus_stories", [])[:3] if i in rows]
+    if focus:
+        note = briefing.focus_note(
+            payload.get("focus_stories_fresh", 0),
+            len(payload["focus_stories"]),
+            payload["snapshot_days"],
+        )
+        out += ["## Your focus", "", f"_{note}_", ""]
+        out += [_story_line(i, r, names) for i, r in enumerate(focus, 1)] + [""]
     if biggest:
         note = briefing.biggest_note(payload["snapshot_days"])
         out += ["## Biggest this week", "", f"_{note}_", ""]

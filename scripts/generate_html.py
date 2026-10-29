@@ -435,7 +435,9 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "editorial": editorial,
         "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
         "archive": archived,
-        **front_page(findings + editorial, claims_payload(ledger, tax), now, snapshot_days),
+        **front_page(
+            findings + editorial, claims_payload(ledger, tax), now, snapshot_days, conf.focus
+        ),
     }
     normalize_source_names(payload, list(c.load_sources_by_id().values()))
     return payload
@@ -626,14 +628,32 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
     return sorted(rows, key=lambda r: (r["published"], r["id"]), reverse=True)
 
 
-def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dict:
+def front_page(
+    rows: list[dict], claims: list[dict], now: str, days: int, focus: dict | None = None
+) -> dict:
     """The README teaser's and the Briefing's shared picks: row ids, and the
-    claim changes (each names its claim, and for a reversal the one it replaced)."""
-    biggest = briefing.biggest_stories(rows, now, days)
-    taken = {row["id"] for row in biggest}
+    claim changes (each names its claim, and for a reversal the one it replaced).
+    The focus lane (config.yaml `focus:`) leads; every later lane leaves out what
+    it took, so nothing shows twice."""
+    focus = focus or {}
+    foc_rows, foc_topped = briefing.focus_stories(rows, focus, now, days) if focus else ([], False)
+    foc_changes = briefing.focus_claim_changes(claims, focus, now, days) if focus else []
+    foc_ids = {row["id"] for row in foc_rows}
+    foc_claims = {ch["claim"] for ch in foc_changes}
+    biggest = briefing.biggest_stories(rows, now, days, exclude=foc_ids)
+    taken = foc_ids | {row["id"] for row in biggest}
     stories, topped_up = briefing.top_stories(rows, now, days, exclude=taken)
-    changes, changes_fresh = briefing.claim_changes(claims, now, days)
+    changes, changes_fresh = briefing.claim_changes(claims, now, days, exclude=foc_claims)
+    eff_claims = briefing.efficiency_claims(claims, exclude=foc_claims)
     return {
+        "focus_areas": [a["name"] for a in focus.get("areas") or []],
+        "focus_stories": [row["id"] for row in foc_rows],
+        "focus_stories_topped_up": foc_topped,
+        "focus_stories_fresh": briefing.fresh_count(foc_rows, now, days),
+        "focus_claim_changes": foc_changes,
+        "focus_tags": briefing.focus_tags(
+            foc_rows + [c for c in claims if c["id"] in foc_claims], focus
+        ),
         "biggest_stories": [row["id"] for row in biggest],
         "top_stories": [row["id"] for row in stories],
         "top_stories_topped_up": topped_up,
@@ -641,8 +661,10 @@ def front_page(rows: list[dict], claims: list[dict], now: str, days: int) -> dic
         "stories_this_week": briefing.fresh_count(rows, now, days),
         "claim_changes": changes,
         "claim_changes_fresh": changes_fresh,
-        "efficiency_claims": [claim["id"] for claim in briefing.efficiency_claims(claims)],
-        "efficiency_findings": [row["id"] for row in briefing.efficiency_findings(rows, now, days)],
+        "efficiency_claims": [claim["id"] for claim in eff_claims],
+        "efficiency_findings": [
+            row["id"] for row in briefing.efficiency_findings(rows, now, days, exclude=taken)
+        ],
     }
 
 

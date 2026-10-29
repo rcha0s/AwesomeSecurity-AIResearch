@@ -6,6 +6,12 @@ The README teaser and the site's Briefing both show "this week's top stories"
 and the ledger's "claim changes". They are picked here, from the same site
 rows, so the two surfaces can never disagree.
 
+  focus_stories the lead lane: the week's stories matching a focus area
+                (config.yaml `focus:`), ranked by areas matched, then newest
+                activity. Thin week -> topped up with the latest earlier ones.
+                biggest/top/efficiency leave these out so nothing shows twice.
+  focus_claim_changes  the week's claim changes whose claim matches a focus area;
+                claim_changes leaves them out the same way.
   top_stories   rows active in the last `days` (a fresh Updated line counts),
                 newest activity first, then most covering sources, then
                 composite (Rohan, 2026-10-27: the briefing reads latest first). Fewer than `n_min` in the window -> topped up with
@@ -28,6 +34,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 
+import focus as focus_mod
 import taxonomy
 
 BIGGEST_MAX = 3
@@ -62,13 +69,22 @@ def _composite(row: dict) -> float:
         return 0.0
 
 
-def biggest_stories(rows: list[dict], now: str, days: int, n_max: int = BIGGEST_MAX) -> list[dict]:
-    """The "Biggest this week" lane: widely covered or exploited, active in the window."""
+def biggest_stories(
+    rows: list[dict],
+    now: str,
+    days: int,
+    n_max: int = BIGGEST_MAX,
+    exclude: frozenset | set = frozenset(),
+) -> list[dict]:
+    """The "Biggest this week" lane: widely covered or exploited, active in the window.
+    Rows whose id is in `exclude` (the focus lane's) are left out."""
     cutoff = _cutoff(now, days)
     big = [
         r
         for r in rows
-        if last_activity(r) >= cutoff and (r.get("exploited") is True or source_count(r) >= 2)
+        if r.get("id") not in exclude
+        and last_activity(r) >= cutoff
+        and (r.get("exploited") is True or source_count(r) >= 2)
     ]
     return _ranked(
         big, lambda r: r.get("exploited") is True, source_count, last_activity, _composite
@@ -191,6 +207,7 @@ def claim_changes(
     days: int,
     n_max: int = CHANGES_MAX,
     n_min: int = CHANGES_MIN,
+    exclude: frozenset | set = frozenset(),
 ) -> tuple[list[dict], int]:
     """(the front page's claim changes, how many changes fall in the last `days`).
 
@@ -198,9 +215,10 @@ def claim_changes(
     n_min top-up; the newest reversal is added after those only when a slot is
     still free, so an old one never pushes a change from the window off the
     list. A reversal older than the window carries `"pinned": True`. The count
-    is of every change in the window, not just the ones shown."""
+    is of every change in the window, not just the ones shown. Changes whose claim
+    is in `exclude` (the focus lane's) are left out."""
     cutoff = _cutoff(now, days)
-    changes = all_changes(claims)
+    changes = [ch for ch in all_changes(claims) if ch["claim"] not in exclude]
     fresh = [ch for ch in changes if ch["date"] >= cutoff]
     older = [ch for ch in changes if ch["date"] < cutoff]
     picked = fresh[:n_max] + older[: max(0, n_min - len(fresh))]
@@ -261,14 +279,19 @@ def _last_change(claim: dict) -> str:
     return next((str(claim[k]) for k in keys if claim.get(k)), "")
 
 
-def efficiency_claims(claims: list[dict], n_max: int = EFFICIENCY_CLAIMS_MAX) -> list[dict]:
+def efficiency_claims(
+    claims: list[dict], n_max: int = EFFICIENCY_CLAIMS_MAX, exclude: frozenset | set = frozenset()
+) -> list[dict]:
     """Live claims filed under the cost or work efficiency domain, newest change first
     (ties: claim id). Retired claims are history, not a track to follow."""
     ids = set(EFFICIENCY_DOMAINS.values())
     live = [
         c
         for c in claims
-        if c.get("domain_id") in ids and c.get("status") in ("current", "contested") and c.get("id")
+        if c.get("domain_id") in ids
+        and c.get("status") in ("current", "contested")
+        and c.get("id")
+        and c["id"] not in exclude
     ]
     live.sort(key=lambda c: str(c["id"]))
     live.sort(key=_last_change, reverse=True)
@@ -276,14 +299,83 @@ def efficiency_claims(claims: list[dict], n_max: int = EFFICIENCY_CLAIMS_MAX) ->
 
 
 def efficiency_findings(
-    rows: list[dict], now: str, days: int, n_max: int = EFFICIENCY_FINDINGS_MAX
+    rows: list[dict],
+    now: str,
+    days: int,
+    n_max: int = EFFICIENCY_FINDINGS_MAX,
+    exclude: frozenset | set = frozenset(),
 ) -> list[dict]:
     """Stories in the efficiency domains active in the last `days`, newest first."""
     ids, cutoff = set(EFFICIENCY_DOMAINS.values()), _cutoff(now, days)
-    hits = [r for r in rows if r.get("domain_id") in ids and last_activity(r) >= cutoff]
+    hits = [
+        r
+        for r in rows
+        if r.get("domain_id") in ids and last_activity(r) >= cutoff and r.get("id") not in exclude
+    ]
     return _ranked(hits, last_activity, source_count, _composite)[:n_max]
 
 
 def efficiency_note() -> str:
     """The one sentence README and site both print above the Efficiency section."""
     return "Where agent harnesses still waste tokens or time, and what to change."
+
+
+# --- Your focus: the lead lane (config.yaml `focus:`, ISA ISC-56) ---
+FOCUS_LANE_MAX = 6
+FOCUS_LANE_MIN = 3
+FOCUS_CHANGES_MAX = 3
+
+
+def focus_stories(rows: list[dict], focus: dict, now: str, days: int) -> tuple[list[dict], bool]:
+    """(the focus lane's stories, whether older ones had to fill in).
+
+    Matching stories active in the last `days`: most areas first, then newest
+    activity, most sources, composite. Fewer than `lane_min` -> topped up with
+    the latest earlier matches, so a quiet week still shows the newest standard
+    or advisory in a focus area instead of an empty lane."""
+    n_max = int(focus.get("lane_max") or FOCUS_LANE_MAX)
+    n_min = min(n_max, int(focus.get("lane_min") or FOCUS_LANE_MIN))
+    cutoff = _cutoff(now, days)
+    hits = [(r, len(focus_mod.areas(r, focus))) for r in rows]
+    hits = [(r, n) for r, n in hits if n]
+    count = {r["id"]: n for r, n in hits}
+    rank = (lambda r: count[r["id"]], last_activity, source_count, _composite)
+    fresh = _ranked([r for r, _ in hits if last_activity(r) >= cutoff], *rank)[:n_max]
+    if len(fresh) >= n_min:
+        return fresh, False
+    older = _ranked([r for r, _ in hits if last_activity(r) < cutoff], last_activity, source_count)
+    return fresh + older[: n_min - len(fresh)], bool(older[: n_min - len(fresh)])
+
+
+def focus_claim_changes(claims: list[dict], focus: dict, now: str, days: int) -> list[dict]:
+    """The window's claim changes whose headline claim matches a focus area,
+    newest first (no top-up: an old claim change is not this week's news)."""
+    n_max = int(focus.get("claim_changes_max") or FOCUS_CHANGES_MAX)
+    by_id = {str(c.get("id")): c for c in claims}
+    cutoff = _cutoff(now, days)
+    hits = [
+        ch
+        for ch in all_changes(claims)
+        if ch["date"] >= cutoff and focus_mod.matches(by_id.get(ch["claim"]) or {}, focus)
+    ]
+    return hits[:n_max]
+
+
+def focus_tags(items: list[dict], focus: dict) -> dict[str, list[str]]:
+    """item id -> display names of the focus areas it matches (for the lane's chips)."""
+    return {
+        str(i["id"]): focus_mod.names(focus_mod.areas(i, focus), focus)
+        for i in items
+        if i.get("id")
+    }
+
+
+def focus_note(fresh: int, total: int, days: int) -> str:
+    """The one sentence README and site both print above the focus lane."""
+    if not total:
+        return "Nothing in your focus areas yet."
+    if fresh == 0:
+        return f"Nothing new in your focus areas in the last {days} days, so these are the latest."
+    if fresh < total:
+        return f"Only {fresh} in the last {days} days, so the latest earlier ones fill in."
+    return f"Your focus areas, last {days} days: most areas matched first, then newest."
