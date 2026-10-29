@@ -160,7 +160,7 @@ limits:
                           # Standard (ACS v0.1.0, 2026-09-01): captured, but it sank below
                           # the cut (F10, ISC-57). Leftovers get a news brief (reason
                           # `standard`)
-  batch_std_per_source: 2 # most standards-lane slots one source (feed) may take
+  batch_std_per_source: 1 # most standards-lane slots one source (feed) may take
   batch_std_hosts:        # host (subdomains included) or host/path-prefix, no scheme; the
     - genai.owasp.org     # post also needs a batch_std_terms word
     - nist.gov
@@ -168,6 +168,31 @@ limits:
     - cosai.org
     - modelcontextprotocol.io
     - naic.org
+  batch_std_strict_hosts: # these hosts need a topic AND a publication term (NIST also posts
+    - nist.gov            # time standards, lab news and award notes)
+  batch_std_topic_terms:
+    - ai
+    - artificial intelligence
+    - cybersecurity
+    - cyber
+    - agent
+    - agentic
+    - llm
+    - generative
+    - machine learning
+    - post-quantum
+  batch_std_pub_terms:
+    - standard
+    - framework
+    - guideline
+    - guidance
+    - profile
+    - draft
+    - publication
+    - special publication
+    - sp 800
+    - overlay
+    - taxonomy
   batch_std_sources:      # feeds whose every release counts (no term needed)
     - rss:https-github-com-modelcontextprotocol-specificat
     - rss:https---github-com-modelcontextprotocol-specific

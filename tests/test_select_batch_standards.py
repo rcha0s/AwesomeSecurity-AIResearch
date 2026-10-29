@@ -133,3 +133,53 @@ def test_the_real_config_names_the_lane():
     assert "genai.owasp.org" in real["batch_std_hosts"]
     assert all(real.get(k) for k in ("batch_std_terms", "batch_std_sources"))
     assert today() >= "2026-01-01"
+
+
+STRICT = {
+    "batch_std_strict_hosts": ["nist.gov"],
+    "batch_std_topic_terms": ["ai", "artificial intelligence", "cybersecurity", "agent"],
+    "batch_std_pub_terms": ["standard", "framework", "guidance", "draft"],
+}
+
+
+@pytest.mark.parametrize(
+    "title, hit",
+    [
+        ("NIST releases draft AI risk management profile", True),
+        ("NIST publishes cybersecurity framework guidance", True),
+        ("NIST unveils new time standard for atomic clocks", False),  # no AI / cyber term
+        ("NIST AI researchers win an award", False),  # no publication term
+        ("Security of the lab building", False),
+    ],
+)
+def test_nist_needs_a_topic_term_and_a_publication_term(title, hit):
+    post = std(1, title, "https://www.nist.gov/news-events/news/x")
+    assert select_batch.std_relevant(post, std_conf(**STRICT)) is hit
+
+
+def test_a_nist_time_standard_release_takes_no_slot(sandbox, table):
+    clock = std(2, "NIST releases new time standard", "https://www.nist.gov/news-events/news/t")
+    ai = std(3, "NIST draft guidance on AI agent hijacking", "https://www.nist.gov/news/a", 1)
+    c = std_conf(3, 0, **STRICT)
+    batch, _ = select_batch.select([*cands(6), clock, ai], c, table)
+    assert ids(batch) == ["lab3"]
+
+
+def test_a_catch_all_drop_of_a_standards_post_is_rescued(sandbox):
+    real = prefilter.load_keywords()
+    label = next(iter(real.catch_alls))
+    acs = std(1, *ACS, guess_label=label)
+    other = std(2, "Vendor stock rallies", "https://other.example/x", guess_label=label)
+    batch, backlog = select_batch.select([*cands(2), acs, other], std_conf(), real)
+    assert ids(batch) == ["lab1"]
+    dropped = {x["id"]: x["prefilter"]["reason"] for x in backlog if x.get("prefilter")}
+    assert dropped.get("lab2", "").startswith("catch-all")  # only standards posts are rescued
+
+
+def test_a_rescued_standards_post_already_in_the_pools_stays_dropped(sandbox, monkeypatch):
+    real = prefilter.load_keywords()
+    acs = std(1, *ACS, guess_label=next(iter(real.catch_alls)))
+    monkeypatch.setattr(common, "known_urls", lambda: {common.normalize_url(ACS[1])})
+    batch, backlog = select_batch.select([*cands(2), acs], std_conf(), real)
+    assert "lab1" not in [x["id"] for x in batch]
+    assert [x["id"] for x in backlog if x.get("prefilter")] == ["lab1"]

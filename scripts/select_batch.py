@@ -350,16 +350,17 @@ def lab_on(conf: c.Config) -> bool:
 
 
 def lab_rescue(dropped: list[dict], conf: c.Config) -> list[dict]:
-    """Relevant lab posts the prefilter dropped only for a catch-all class with
-    no marker (Cloudflare + OpenAI on vulnerability discovery, 2026-10-21).
+    """Relevant lab and standards posts the prefilter dropped only for a catch-all
+    class with no marker (Cloudflare + OpenAI on vulnerability discovery,
+    2026-10-21; OWASP's Agent Control Standard, guess_label ais.agent-security).
     Excluded-term and duplicate drops stand. The prefilter checks catch-alls
     before duplicates, so a rescued post is re-checked against the pools here."""
-    if not lab_on(conf):
+    if not (lab_on(conf) or std_on(conf)):
         return []
     picks = [
         x for x in dropped
         if str((x.get("prefilter") or {}).get("reason") or "").startswith("catch-all")
-        and lab_relevant(x, conf)
+        and ((lab_on(conf) and lab_relevant(x, conf)) or (std_on(conf) and std_relevant(x, conf)))
     ]  # fmt: skip
     if not picks:
         return []
@@ -389,12 +390,18 @@ def std_relevant(cand: dict, conf: c.Config) -> bool:
     """A standards-body release: from a `batch_std_sources` feed (the MCP spec's
     releases: every one counts), or from a `batch_std_hosts` host with a
     `batch_std_terms` word in its title or excerpt (OWASP GenAI also posts event
-    notes; NIST also posts everything NIST does)."""
+    notes). A `batch_std_strict_hosts` host (NIST also posts time standards and
+    lab news) needs both a `batch_std_topic_terms` word (AI or cyber) and a
+    `batch_std_pub_terms` word (a publication)."""
     if cand.get("source_id") in (conf.limits.get("batch_std_sources") or []):
         return True
     if not lab_source(cand, conf, "batch_std_hosts"):
         return False
     text = f"{cand.get('title') or ''} {cand.get('excerpt') or ''}".lower()
+    if lab_source(cand, conf, "batch_std_strict_hosts"):
+        return lab_terms_hit(text, conf, "batch_std_topic_terms") and lab_terms_hit(
+            text, conf, "batch_std_pub_terms"
+        )
     return lab_terms_hit(text, conf, "batch_std_terms")
 
 

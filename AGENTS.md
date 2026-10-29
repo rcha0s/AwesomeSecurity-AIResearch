@@ -246,7 +246,10 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   OWASP GenAI, NIST, CoSAI, the MCP spec and NAIC, tagged `batch_priority: standard`: an
   article on a `batch_std_hosts` host that names a `batch_std_terms` word, or any post
   from a `batch_std_sources` feed (the MCP spec's releases). A new standard carries no
-  severity marker, so OWASP's Agent Control Standard sank below the cut. Then a lab lane of up to
+  severity marker, so OWASP's Agent Control Standard sank below the cut. NIST hosts need an
+  AI or cyber term and a publication term (`batch_std_strict_hosts`), since NIST also posts
+  time standards and lab news. A standards post the prefilter dropped only as a catch-all
+  without a marker is let back in like a lab post. Then a lab lane of up to
   `batch_lab_max` slots (at most `batch_lab_per_source` per feed) takes recent posts
   from the major AI labs (`batch_lab_hosts`: OpenAI, Anthropic, Google/DeepMind,
   Meta, Microsoft, ...) that name one of `batch_lab_terms` (security and safety
