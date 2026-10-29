@@ -211,8 +211,19 @@ profile is unavailable, so a closed Chrome never fails a scan.
   x.com. Candidates carry `discovered_via: x-list`, `source_id: x:list` and the author.
 - **Batch.** `x` is its own ingestor class in `select_batch.py` with a floor of one
   slot (`batch_class_min`); `x_list.source_rank` (60) sets its credibility.
-- A background tab does not load more of the list on `scroll down`, so a run sees what
-  the first screens hold (about 10 posts); the loop stops when a scroll adds nothing.
+- **Coverage.** A background tab does not load more of the list on `scroll down`, so one
+  read sees only 5 to 10 posts. `ingest_x_list.py --collect` reads the list and upserts the
+  posts by status id into the gitignored `data/_x_list_seen.json` (rows older than 48h
+  dropped); the scan-time run merges that store with a fresh read before the 24h filter,
+  and falls back to the store alone when the fresh read is skipped. The optional launchd
+  job `scripts/install_launchd.sh --xlist` (`--uninstall-xlist` removes it) runs
+  `--collect` every 3 hours from the runner clone, with the same local-only refusals,
+  never activating the tab, logging `[x-list]` lines to `data/_scan.log`.
+- **Hardening.** `open` is limited to an `https://x.com/i/lists/<id>` URL with only
+  `--text-only`, `--full`, `--json` and `--timeout <int>` (`--activate` is refused). The tab
+  id is read from `open --json` (`data.tabId`) or the first output line only, never the
+  page text. Interceptor must be 0.16 or newer. `fetch_raw.py` never fetches x.com,
+  twitter.com or t.co, so a staged post keeps the text already in its `raw_path`.
 
 ### Conference ingestion
 

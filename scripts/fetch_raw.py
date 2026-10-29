@@ -23,6 +23,7 @@ from __future__ import annotations
 import os
 import re
 import sys
+from urllib.parse import urlparse
 
 import common as c
 
@@ -31,6 +32,7 @@ URL_SNAPSHOT = c.SCAN_URL_SNAPSHOT
 # env var, not a flag: the scan session's `fetch_raw.py *` allowlist rule could
 # pass a flag, but can't prefix the command with an assignment.
 ANY_DATE_ENV = "FETCH_RAW_ANY_DATE"
+NO_FETCH_HOSTS = ("x.com", "twitter.com", "t.co")
 ID_RE = re.compile(r"^[A-Za-z0-9_.:-]{1,200}$")
 
 
@@ -41,6 +43,10 @@ def fetch_one(cand_id: str) -> str:
     if urls is None:
         raise SystemExit("fetch_raw: no URL snapshot; run `run_scan.sh pre` first")
     url = urls.get(cand_id)
+    host = (urlparse(url or "").hostname or "").lower()
+    if any(host == h or host.endswith("." + h) for h in NO_FETCH_HOSTS):
+        # An X post is staged with its own text as raw_path; x.com needs a login.
+        raise SystemExit(f"fetch_raw: {cand_id}: {host} is never fetched (use its staged text)")
     if not url or not url.startswith(("https://", "http://")):
         raise SystemExit(f"fetch_raw: no http(s) URL recorded for {cand_id}")
     text = c.fetch_readable(url)

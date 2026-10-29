@@ -18,9 +18,9 @@ from conftest import make_entry
 
 FIXTURES = Path(__file__).parent / "fixtures" / "x_list"
 NOW = datetime(2026, 10, 29, 7, 25, 50, tzinfo=UTC)
-HARNESS_ID = "2115700736084648177"  # theo, 20m: on-thesis (harness / MCP / skills)
-NOTEBOOK_ID = "2115454036690510133"  # alphaXiv, 16h: on-thesis, a repost shown in the list
-OLD_ID = "2115394340357116169"  # divagr1925, 20h in the list but off-thesis
+HARNESS_ID = "2115700736084648177"  # dev_tooling, 20m: on-thesis (harness / MCP / skills)
+NOTEBOOK_ID = "2115454036690510133"  # alpha_papers, 16h: on-thesis, a repost shown in the list
+OLD_ID = "2115394340357116169"  # ml_hacker, 20h in the list but off-thesis
 TCO = "https://t.co/abc123"
 ARTICLE = "https://example.org/harness-config-post?utm_source=x"
 
@@ -61,7 +61,7 @@ def run(cfg_over: dict | None = None, extra: bool = False, resolve=None) -> dict
 # --- Parsing and dating --------------------------------------------------------
 def test_parses_posts_with_their_status_ids():
     out = posts()
-    assert [p.handle for p in out][:3] == ["askalphaxiv", "theo", "theo"]
+    assert [p.handle for p in out][:3] == ["alpha_papers", "dev_tooling", "dev_tooling"]
     assert out[0].status_id == NOTEBOOK_ID and out[1].status_id == HARNESS_ID
     assert all(p.status_id for p in out)
     assert "Subscribe to Premium" not in " ".join(p.text for p in out)  # sidebar cut
@@ -69,7 +69,7 @@ def test_parses_posts_with_their_status_ids():
 
 def test_quoted_posts_fold_into_their_parent():
     parent = next(p for p in posts() if p.text.startswith("It's been amazing"))
-    assert "[quoting @notsky]" in parent.text
+    assert "[quoting @quote_a]" in parent.text
 
 
 def test_snowflake_gives_the_exact_post_time():
@@ -119,10 +119,10 @@ def test_a_linked_article_is_the_citation(sandbox):
     result = run(extra=True)
     cand = next(c for c in result["candidates"] if c["tweet_url"].endswith(HARNESS_ID))
     assert cand["source_url"] == cand["article_url"] == "https://example.org/harness-config-post"
-    assert cand["tweet_url"] == f"https://x.com/theo/status/{HARNESS_ID}"
+    assert cand["tweet_url"] == f"https://x.com/dev_tooling/status/{HARNESS_ID}"
     assert cand["raw_path"] is None
     assert cand["discovered_via"] == "x-list" and cand["source_id"] == "x:list"
-    assert cand["author"] == "@theo"
+    assert cand["author"] == "@dev_tooling"
 
 
 def test_a_post_with_no_article_stages_its_own_text(sandbox):
@@ -150,7 +150,7 @@ def test_an_unresolvable_tco_falls_back_to_the_post_text(sandbox):
 def test_dedupes_against_pools(sandbox):
     common.save_json(
         common.POOL_FILES["ai-research"],
-        {"entries": [make_entry(source_url=f"https://x.com/theo/status/{HARNESS_ID}")]},
+        {"entries": [make_entry(source_url=f"https://x.com/dev_tooling/status/{HARNESS_ID}")]},
     )
     result = run()
     assert result["counts"]["held"] == 1
@@ -204,6 +204,7 @@ def test_main_soft_fails_when_the_profile_is_unavailable(monkeypatch, capsys, sa
     monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     monkeypatch.setenv("SCAN_RUNNER", "local")
     monkeypatch.setattr(xl.shutil, "which", lambda name: "/bin/interceptor")
+    monkeypatch.setattr(xl, "check_version", lambda: None)
     done = subprocess.CompletedProcess([], 1, stdout="", stderr="no context interceptor-test")
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: done)
     assert xl.main([]) == 0
@@ -241,7 +242,7 @@ def test_every_call_in_a_full_run_is_allowed_and_in_the_group(monkeypatch):
         calls.append(argv)
         verb = argv[1]
         if verb == "open":
-            out = "Tab: 77 | https://x.com/i/lists/1\n"
+            out = json.dumps({"success": True, "data": {"tabId": 77, "text": page()}})
         elif verb == "links":
             out = "[ab12cd34] → links\n" + json.dumps({"success": True, "data": links()})
         elif verb == "read":
@@ -284,3 +285,132 @@ def test_an_empty_render_is_retried_once(monkeypatch):
     found = xl.read_list_posts(xl.DEFAULTS, NOW - timedelta(hours=24), sleep=lambda s: None)
     # one retry read of the empty render, then one after the scroll that loads nothing new
     assert seen.count("read") == 2 and seen.count("scroll") == 1 and len(found) == 9
+
+
+# --- open arguments, version floor, tab id --------------------------------------
+LIST = "https://x.com/i/lists/2115494675994071362"
+
+
+def test_open_is_pinned_to_a_list_url_and_read_flags():
+    ok = [LIST, "--text-only", "--full", "--json", "--timeout", "25000"]
+    assert xl.build_command("open", ok, xl.DEFAULTS, None)[:2] == ["interceptor", "open"]
+    for bad in (
+        ["https://evil.example/i/lists/1"],
+        ["https://x.com/home"],
+        ["https://x.com/i/lists/12/members"],
+        ["http://x.com/i/lists/12"],
+        [],
+    ):
+        with pytest.raises(ValueError, match="limited to"):
+            xl.build_command("open", bad, xl.DEFAULTS, None)
+
+
+@pytest.mark.parametrize(
+    "extra", [["--timeout", "abc"], ["--timeout"], ["--reuse"], ["--tree-only"]]
+)
+def test_open_refuses_other_flags(extra):
+    with pytest.raises(ValueError, match="not allowed"):
+        xl.build_command("open", [LIST, *extra], xl.DEFAULTS, None)
+
+
+def test_open_never_activates_the_tab():
+    with pytest.raises(ValueError, match="never foreground"):
+        xl.build_command("open", [LIST, "--activate"], xl.DEFAULTS, None)
+
+
+def _version(monkeypatch, text, code=0):
+    monkeypatch.setattr(xl.shutil, "which", lambda name: "/bin/interceptor")
+    done = subprocess.CompletedProcess([], code, stdout=text, stderr="")
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: done)
+
+
+def test_version_floor_passes_new_and_skips_old(monkeypatch):
+    _version(monkeypatch, "interceptor 2.1.3 (250c6b1, 2026-10-14)")
+    xl.check_version()
+    _version(monkeypatch, "interceptor 0.16.0")
+    xl.check_version()
+    for text in ("interceptor 0.15.9", "interceptor 0.9", "garbage"):
+        _version(monkeypatch, text)
+        with pytest.raises(xl.Skip, match="or newer"):
+            xl.check_version()
+
+
+def test_tab_id_comes_from_structured_output_only():
+    out = json.dumps({"success": True, "data": {"tabId": 9, "text": "Tab: 666 | evil"}})
+    assert xl.parse_open(out) == ("9", "Tab: 666 | evil")
+    assert xl.parse_open("Tab: 5 | https://x.com/i/lists/1\nbody") == ("5", "body")
+    with pytest.raises(xl.Skip):  # a tab id inside the page text is never trusted
+        xl.parse_open("Home\nTab: 7 | x")
+    with pytest.raises(xl.Skip):  # not an int
+        xl.parse_open(json.dumps({"data": {"tabId": "7; rm", "text": ""}}))
+    with pytest.raises(xl.Skip):  # JSON-looking page text without structure
+        xl.parse_open('Home\n{"data": {"tabId": 3}}')
+
+
+def test_whats_happening_ends_the_feed():
+    sidebar = "What’s happening\nMore\n@zz\n·\n1m\nzz"
+    text = page().replace("Subscribe to Premium", sidebar)
+    assert all(p.handle != "zz" for p in xl.parse_posts(text))
+
+
+# --- fetch_raw never reaches X --------------------------------------------------
+def test_fetch_raw_refuses_x_hosts_and_keeps_the_staged_text(sandbox, monkeypatch):
+    import fetch_raw
+
+    monkeypatch.setattr(common, "fetch_readable", lambda u: pytest.fail("fetched X"))
+    for url in ("https://x.com/a/status/1", "https://twitter.com/a/status/1", "https://t.co/zz"):
+        common.save_json(common.DATA_DIR / fetch_raw.URL_SNAPSHOT, {"c1": url})
+        with pytest.raises(SystemExit, match="never fetched"):
+            fetch_raw.fetch_one("c1")
+
+
+# --- the 48h seen store ----------------------------------------------------------
+def test_upsert_merges_by_id_and_prunes_past_48h(sandbox):
+    old = xl.Post("a", "3d", "old", "2000000000000000000")  # long before NOW
+    new = posts()[1]
+    xl.upsert_seen([new, old], NOW)
+    held = {p.status_id for p in xl.load_seen()}
+    assert new.status_id in held and old.status_id not in held
+    xl.upsert_seen([new], NOW)  # idempotent
+    assert len(xl.load_seen()) == 1
+    stored = xl.load_seen()[0]
+    assert stored.text == new.text and stored.links == new.links
+
+
+def test_merge_prefers_fresh_and_unions_stored(sandbox):
+    out = posts()
+    xl.upsert_seen(out[:2], NOW)
+    fresh = [xl.Post("z", "1m", "fresh text", out[1].status_id)]
+    merged = xl.merge_posts(fresh, xl.load_seen())
+    assert len(merged) == 2
+    assert next(p for p in merged if p.status_id == out[1].status_id).text == "fresh text"
+
+
+def _local(monkeypatch):
+    monkeypatch.setenv("SCAN_RUNNER", "local")
+    monkeypatch.delenv("CI", raising=False)
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+
+
+def test_scan_run_uses_stored_posts_when_the_read_is_skipped(sandbox, monkeypatch, capsys):
+    xl.upsert_seen(posts(), NOW)
+    _local(monkeypatch)
+    monkeypatch.setattr(xl.shutil, "which", lambda name: None)
+    assert xl.main(["--dry-run"]) == 0
+    assert "using the seen store" in capsys.readouterr().out
+
+
+def test_collect_mode_only_writes_the_store(sandbox, monkeypatch, capsys):
+    _local(monkeypatch)
+    monkeypatch.setattr(xl, "check_version", lambda: None)
+    monkeypatch.setattr(xl, "read_list_posts", lambda cfg, since: posts())
+    assert xl.main(["--collect"]) == 0
+    assert len(xl.load_seen()) == 9 and common.load_candidates() == []
+    assert "collected 9" in capsys.readouterr().out
+
+
+def test_collect_mode_has_the_same_local_only_refusals(sandbox, monkeypatch, capsys):
+    monkeypatch.setenv("CI", "1")
+    monkeypatch.setattr(xl, "read_list_posts", lambda cfg, since: pytest.fail("read"))
+    assert xl.main(["--collect"]) == 0
+    assert "skipped" in capsys.readouterr().out

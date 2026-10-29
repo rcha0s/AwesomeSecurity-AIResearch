@@ -50,3 +50,4 @@ data/_readability_outcomes.md
 .env
 .env.*
 !.env.example
+data/_x_list_seen.json

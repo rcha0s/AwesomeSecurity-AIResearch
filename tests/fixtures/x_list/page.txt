@@ -1,32 +1,21 @@
-[57e40cf2] → extract_text
 To view keyboard shortcuts, press question mark
 View keyboard shortcuts
 Home
 Explore
 Notifications
-Chat
-Calls
-Grok
-History
-Premium
-Profile
-More
 Post
-Rohan Isawe
-@RohanIsawe
-AI Researchers
-@RohanIsawe
-See new posts
+Example Viewer
+@viewer
+Example List
 List
-AI Researchers
-Rohan Isawe
-@RohanIsawe
-15 Members
+Example List
+Example Owner
+@owner
+10 Members
 0 Followers
-Edit List
-alphaXiv reposted
-alphaXiv
-@askalphaxiv
+Alpha Papers reposted
+Alpha Papers
+@alpha_papers
 ·
 16h
 Introducing NotebookLM for arXiv Papers 🚀
@@ -38,8 +27,8 @@ With context from thousands of related papers, it captures motivations, draws co
 69
 383
 18K
-Theo - t3.gg
-@theo
+Dev Tooling
+@dev_tooling
 ·
 20m
 Should we take on more "harness configuration" type stuff in T3 Code? Skill manager, MCP marketplace, global agentmd/claudemd management type stuff?
@@ -47,8 +36,8 @@ Should we take on more "harness configuration" type stuff in T3 Code? Skill mana
 2
 140
 4.9K
-Theo - t3.gg
-@theo
+Dev Tooling
+@dev_tooling
 ·
 1h
 It is insane to me that there are still devs using terminals to prompt their agents
@@ -56,17 +45,17 @@ It is insane to me that there are still devs using terminals to prompt their age
 44
 1.1K
 84K
-ᴅᴀɴɪᴇʟ ᴍɪᴇssʟᴇʀ 🛡️
-@DanielMiessler
+Sec Voice
+@sec_voice
 ·
 21m
 Replying to 
-@theo
+@dev_tooling
 If you use a system like Herdr it’s very similar to T3. It’s not an old school terminal like before.
 3
 271
-alphaXiv
-@askalphaxiv
+Alpha Papers
+@alpha_papers
 ·
 28m
 "Contextual Correction of Parallel Drafts for Speculative Decoding"
@@ -78,8 +67,8 @@ Show more
 1
 11
 807
-alphaXiv
-@askalphaxiv
+Alpha Papers
+@alpha_papers
 ·
 29m
 "The Surprising Effectiveness of Shared Memory in Looped Transformers"
@@ -92,20 +81,20 @@ Show more
 3
 8
 1.2K
-Theo - t3.gg
-@theo
+Dev Tooling
+@dev_tooling
 ·
 33m
 It's been amazing to learn how few devs are actually able to read
 Quote
-sky
-@notsky
+Quote A
+@quote_a
 ·
 38m
 this is your competition
 Quote
-Theo - t3.gg
-@theo
+Dev Tooling
+@dev_tooling
 ·
 1h
 It is insane to me that there are still devs using terminals to prompt their agents
@@ -113,28 +102,28 @@ It is insane to me that there are still devs using terminals to prompt their age
 3
 196
 9.4K
-Theo - t3.gg
-@theo
+Dev Tooling
+@dev_tooling
 ·
 37m
 I've been claudemaxxing a bit too hard lately. I needed more compute, more accounts, more guardrails, and now I just need more sleep.
 
 This video is a chaotic spiral into hill climbing. Consider it the start of a series. Only gets weirder from here.
 Quote
-Anicet
-@AniC_dev
+Quote B
+@quote_b
 ·
 10h
-omfg @theo just released a video that talks about 
+omfg @dev_tooling just released a video that talks about 
 https://
 boat.dev
 24
 7
 172
 9.3K
-Nicolas Krassas reposted
-div (fp32)
-@divagr1925
+Some Person reposted
+ML Hacker
+@ml_hacker
 ·
 20h
 1/4
@@ -149,42 +138,7 @@ On DeepMind math: base 55–90%, base + Python tool 95–100%, Qwenputer 97.5–
 2.9K
 267K
 Subscribe to Premium
-Get rid of ads, see your analytics, boost your replies and unlock 20+ features.
+Get rid of ads
 Subscribe
 Trending now
 What’s happening
-Trending
-Federal Reserve
-Technology · Trending
-Claude Opus
-Trending in United States
-#PhantomBlade0
-Trending
-#SaaS
-Show more
-Who to follow
-cve.now
-@cvedotnow
-Follow
-Automated by @sazabi
-Anthropic
-@AnthropicAI
-Follow
-Google for Developers
-@googledevs
-Follow
-Show more
-Terms
- ·
-Privacy
- ·
-Cookies
- ·
-Accessibility
- ·
-US TIDA
- ·
-Ads Info
- ·
-More
-© 2026 X Corp.

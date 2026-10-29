@@ -21,6 +21,10 @@ post that links an article stages the article as the citation (`source_url`)
 with the post as `tweet_url`; a post with no article stages its own text as
 `raw_path`, like `add.py --text`, so the analysis session never fetches x.com.
 
+`--collect` only reads the list into a gitignored 48h store (data/_x_list_seen.json,
+or $X_LIST_SEEN); the scan-time run merges that store with a fresh read, because a
+background tab loads only 5 to 10 posts per read. An optional launchd job runs it.
+
 Skips (exit 0, one "skipped" line) under CI/GITHUB_ACTIONS, when SCAN_RUNNER is
 not `local`, and when Interceptor or its test profile is unavailable.
 
@@ -41,8 +45,9 @@ import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from urllib.parse import urlparse
 
 import aggregate as agg
@@ -75,7 +80,18 @@ DATE_RE = re.compile(r"^[A-Z][a-z]{2} \d{1,2}(, \d{4})?$")
 HANDLE_RE = re.compile(r"^@(\w{1,15})$")
 STATUS_RE = re.compile(r"^https://x\.com/(\w+)/status/(\d+)$")
 NOISE = {"Show more", "Quote", "Pinned", "Replying to"}
-FEED_END = ("Subscribe to Premium", "Who to follow", "Trending now")
+FEED_END = (
+    "Subscribe to Premium",
+    "Who to follow",
+    "Trending now",
+    "What’s happening",
+    "What's happening",
+)
+LIST_URL_RE = re.compile(r"^https://x\.com/i/lists/\d+$")
+OPEN_FLAGS = {"--text-only", "--full", "--json"}  # plus `--timeout <int>`; never --activate
+MIN_VERSION = (0, 16)
+SEEN_KEEP_HOURS = 48
+SEEN_ENV = "X_LIST_SEEN"
 OWN_HOSTS = ("x.com", "twitter.com", "twimg.com", "x.ai")
 ECHO_RE = re.compile(r"^\[[0-9a-f]+\] → \S+\n?")
 
@@ -110,10 +126,44 @@ def check_runner(env: dict | None = None) -> None:
 
 
 # --- Interceptor (read-only wrapper) ---------------------------------------
+def check_open_args(args: list[str]) -> None:
+    """`open` takes only the list URL and read flags; --activate (foreground) is refused."""
+    if not args or not LIST_URL_RE.match(args[0]):
+        raise ValueError("open is limited to an https://x.com/i/lists/<id> URL")
+    rest = args[1:]
+    i = 0
+    while i < len(rest):
+        if rest[i] == "--activate":
+            raise ValueError("open --activate is refused (never foreground the tab)")
+        if rest[i] == "--timeout" and i + 1 < len(rest) and rest[i + 1].isdigit():
+            i += 2
+        elif rest[i] in OPEN_FLAGS:
+            i += 1
+        else:
+            raise ValueError(f"open flag {rest[i]!r} is not allowed")
+
+
+def check_version() -> None:
+    """Skip unless the installed Interceptor is at least MIN_VERSION."""
+    binary = shutil.which("interceptor")
+    if binary is None:
+        raise Skip("interceptor is not installed")
+    try:
+        res = subprocess.run([binary, "--version"], capture_output=True, text=True, timeout=20)
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        raise Skip(f"interceptor --version failed: {type(exc).__name__}") from exc
+    m = re.search(r"(\d+)\.(\d+)", res.stdout)
+    if res.returncode != 0 or not m or (int(m.group(1)), int(m.group(2))) < MIN_VERSION:
+        floor = ".".join(map(str, MIN_VERSION))
+        raise Skip(f"interceptor {floor} or newer is required: {res.stdout.strip()[:40]!r}")
+
+
 def build_command(verb: str, args: list[str], cfg: dict, tab: str | None) -> list[str]:
     """The argv for one allowed Interceptor call; ValueError for anything else."""
     if verb not in ALLOWED_VERBS:
         raise ValueError(f"interceptor verb {verb!r} is not allowed (read-only lane)")
+    if verb == "open":
+        check_open_args(args)
     if verb == "scroll" and args != ["down"]:
         raise ValueError("scroll is limited to `scroll down`")
     if verb == "tab" and args != ["close"]:
@@ -145,17 +195,30 @@ def interceptor(verb: str, args: list[str], cfg: dict, tab: str | None = None) -
     return out
 
 
-def open_list(cfg: dict) -> tuple[str, str]:
-    """Open the list in the managed group; return (tab id, page text)."""
-    out = interceptor(
-        "open",
-        [cfg["list_url"], "--text-only", "--full", "--timeout", str(cfg["open_timeout_ms"])],
-        cfg,
-    )
-    m = re.search(r"^Tab: (\d+)", out, re.M)
+def parse_open(out: str) -> tuple[str, str]:
+    """(tab id, page text) from `open --json` (data.tabId, data.text); else the
+    first line only (`Tab: <id> | <url>`) with the rest as text. Never searches
+    the page text for a tab id."""
+    if out.lstrip().startswith("{"):
+        try:
+            data = json.loads(out).get("data") or {}
+        except ValueError:
+            data = {}
+        tab = data.get("tabId")
+        if isinstance(tab, int) and not isinstance(tab, bool):
+            return str(tab), str(data.get("text") or "")
+    first, _, rest = out.partition("\n")
+    m = re.match(r"Tab: (\d+) \|", first)
     if not m:
         raise Skip("interceptor open returned no tab id")
-    return m.group(1), out
+    return m.group(1), rest
+
+
+def open_list(cfg: dict) -> tuple[str, str]:
+    """Open the list in the managed group; return (tab id, page text)."""
+    args = [cfg["list_url"], "--text-only", "--full", "--json"]
+    args += ["--timeout", str(int(cfg["open_timeout_ms"]))]
+    return parse_open(interceptor("open", args, cfg))
 
 
 def read_links(cfg: dict, tab: str) -> list[dict]:
@@ -417,6 +480,39 @@ def read_list_posts(
     return list(seen.values())
 
 
+def seen_path() -> Path:
+    return Path(os.environ.get(SEEN_ENV) or c.DATA_DIR / "_x_list_seen.json")
+
+
+def load_seen() -> list[Post]:
+    rows = c.load_json(seen_path(), default=[]) or []
+    return [Post(**r) for r in rows if isinstance(r, dict) and r.get("status_id")]
+
+
+def merge_posts(*groups: list[Post]) -> list[Post]:
+    """Union of post lists by status id; the first group to hold an id wins."""
+    out: dict[str, Post] = {}
+    for group in groups:
+        for p in group:
+            if p.status_id:
+                out.setdefault(p.status_id, p)
+    return list(out.values())
+
+
+def upsert_seen(fresh: list[Post], now: datetime) -> list[Post]:
+    """Merge `fresh` into the store, drop rows older than SEEN_KEEP_HOURS, save."""
+    keep_from = now - timedelta(hours=SEEN_KEEP_HOURS)
+    posts = [
+        p
+        for p in merge_posts(fresh, load_seen())
+        if snowflake_time(p.status_id or "0") >= keep_from
+    ]
+    path = seen_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps([asdict(p) for p in posts], indent=1), encoding="utf-8")
+    return posts
+
+
 def report(result: dict) -> None:
     print("X list: " + ", ".join(f"{k}={v}" for k, v in result["counts"].items()))
     for cand in result["candidates"]:
@@ -426,20 +522,35 @@ def report(result: dict) -> None:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[1])
     ap.add_argument("--dry-run", action="store_true", help="print, write nothing")
+    ap.add_argument(
+        "--collect", action="store_true", help="only read the list into the 48h seen store"
+    )
     args = ap.parse_args(argv)
+    now = c.utcnow()
+    fresh: list[Post] = []
     try:
         check_runner()
         cfg = settings()
-        since = c.utcnow() - timedelta(hours=float(cfg["lookback_hours"]))
-        posts = read_list_posts(cfg, since)
+        try:
+            check_version()
+            fresh = read_list_posts(cfg, now - timedelta(hours=float(cfg["lookback_hours"])))
+        except Skip as why:
+            if args.collect or not load_seen():
+                raise
+            print(f"X list: fresh read skipped ({why}); using the seen store")
     except Skip as why:
         print(f"X list: skipped ({why})")
         return 0
+    if args.collect:
+        print(f"X list: collected {len(fresh)} post(s); {len(upsert_seen(fresh, now))} held")
+        return 0
+    posts = merge_posts(fresh, load_seen())
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
     result = select(posts, cfg, rules, resolve_tco, args.dry_run)
     report(result)
     if args.dry_run:
         return 0
+    upsert_seen(fresh, now)
     added = c.add_candidates(result["candidates"], max_age=2)
     print(f"Staged {len(added)} new candidate(s) in {c.CANDIDATES_FILE.name}.")
     return 0
