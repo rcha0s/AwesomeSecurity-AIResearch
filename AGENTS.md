@@ -33,6 +33,7 @@ data/_raw/                # transient fetched article text (gitignored)
 scripts/common.py         # shared helpers, TOPICS, schema, scoring, Jina fetch
 scripts/sources_registry.py # source registry + hybrid ranking
 scripts/aggregate.py · ingest_github.py · ingest_youtube.py · add.py  # ingest → candidates
+scripts/ingest_youtube.py # registered YouTube channels (yt-dlp): `youtube_per_channel` / `youtube_max_per_run`, in-window videos only
 scripts/ingest_json_feeds.py # CISA KEV (exploited in the wild) + HF Daily Papers (keyless JSON, no RSS)
 scripts/ingest_curator_links.py # stories tl;dr sec's recent issues link to (article = citation)
 scripts/paper_gate.py     # paper admission gate: venue acceptance | HF Daily Papers | trusted-curator link
@@ -158,6 +159,7 @@ python scripts/ingest_hn.py --max 6       # Hacker News velocity signal
 python scripts/ingest_conferences.py --max 20  # peer-reviewed venues via arXiv
 python scripts/ingest_json_feeds.py       # CISA KEV + Hugging Face Daily Papers
 python scripts/ingest_curator_links.py    # tl;dr sec issue links (--dry-run [--misses R])
+python scripts/ingest_youtube.py          # recent videos of registered channels (yt-dlp; capped)
 ```
 
 ### Curator links (tl;dr sec)

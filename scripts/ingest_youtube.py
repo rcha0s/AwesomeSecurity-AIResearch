@@ -7,6 +7,11 @@ videos via yt-dlp (title, description, upload date, URL) and stages them as
 candidates. The analyze step can pull the full transcript later (yt-dlp
 subtitles). Degrades gracefully if yt-dlp is not installed.
 
+The daily scan runs it (run_scan.sh INGESTORS) with a small cap: at most
+`limits.youtube_per_channel` videos per channel and `limits.youtube_max_per_run`
+in all, and only videos published inside the ingest window (a channel's older
+uploads are not news). `--max` overrides the per-channel count.
+
 Usage:
     python scripts/ingest_youtube.py --dry-run
     python scripts/ingest_youtube.py --max 5
@@ -18,11 +23,13 @@ import argparse
 import json
 import subprocess
 import sys
+from datetime import UTC, datetime
 
 import common as c
 import sources_registry as sr
 
-DEFAULT_MAX = 5
+DEFAULT_PER_CHANNEL = 2  # config limits.youtube_per_channel overrides
+DEFAULT_MAX_PER_RUN = 8  # config limits.youtube_max_per_run overrides
 
 
 def channel_videos_url(handle: str) -> str:
@@ -97,24 +104,38 @@ def video_to_candidate(v: dict, source: dict) -> dict | None:
     }
 
 
-def collect(per_channel: int) -> list[dict]:
+def in_window(cand: dict, since: datetime, until: datetime | None) -> bool:
+    """Published inside the ingest window; an undated video is not."""
+    day = cand.get("published")
+    if not day:
+        return False
+    when = datetime.fromisoformat(day).replace(tzinfo=UTC)
+    return c.in_ingest_window(when, since, until)
+
+
+def collect(per_channel: int, max_total: int = 0) -> list[dict]:
+    """Recent in-window videos of every registered channel, newest first within
+    a channel, at most `per_channel` each and `max_total` overall (0 = no cap)."""
+    since, until = c.ingest_window(c.ingest_age_days())
     out: list[dict] = []
     for source in sr.sources_of_type("youtube"):
         print(f"-> youtube {source['handle']} (rank {source.get('rank')})")
         for v in list_videos(source["handle"], per_channel):
             cand = video_to_candidate(v, source)
-            if cand:
+            if cand and in_window(cand, since, until):
                 out.append(cand)
-    return out
+    return out[:max_total] if max_total > 0 else out
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--max", type=int, default=DEFAULT_MAX, help="videos per channel")
+    ap.add_argument("--max", type=int, default=None, help="videos per channel")
     args = ap.parse_args()
 
-    candidates = collect(args.max)
+    limits = c.load_config().limits
+    per_channel = args.max or int(limits.get("youtube_per_channel", DEFAULT_PER_CHANNEL))
+    candidates = collect(per_channel, int(limits.get("youtube_max_per_run", DEFAULT_MAX_PER_RUN)))
     print(f"\nFound {len(candidates)} video candidate(s).")
     if args.dry_run:
         for cand in candidates:
