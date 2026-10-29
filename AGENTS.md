@@ -292,7 +292,15 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   and `batch_corroboration_bonus` to the deal's score. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
   entries and the GHSA advisories the keep rule below allows, tagged
-  `batch_priority`; the session analyzes those first. Then a lab lane of up to
+  `batch_priority`; the session analyzes those first. Then a standards lane of up to
+  `batch_std_max` slots (at most `batch_std_per_source` per feed) takes recent releases from
+  OWASP GenAI, NIST, CoSAI, the MCP spec and NAIC, tagged `batch_priority: standard`: an
+  article on a `batch_std_hosts` host that names a `batch_std_terms` word, or any post
+  from a `batch_std_sources` feed (the MCP spec's releases). A new standard carries no
+  severity marker, so OWASP's Agent Control Standard sank below the cut. NIST hosts need an
+  AI or cyber term and a publication term (`batch_std_strict_hosts`), since NIST also posts
+  time standards and lab news. A standards post the prefilter dropped only as a catch-all
+  without a marker is let back in like a lab post. Then a lab lane of up to
   `batch_lab_max` slots (at most `batch_lab_per_source` per feed) takes recent posts
   from the major AI labs (`batch_lab_hosts`: OpenAI, Anthropic, Google/DeepMind,
   Meta, Microsoft, ...) that name one of `batch_lab_terms` (security and safety
@@ -302,7 +310,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `batch_eff_max` slots (at most `batch_eff_per_source` per feed) takes recent candidates whose
   title or excerpt name one of `batch_eff_terms` (token usage, prompt caching, subagents,
   parallel agents, harness, cost per task, ...), tagged `batch_priority: efficiency`. It
-  runs after the must-not-miss and lab lanes and never takes a candidate they took. These
+  runs after the must-not-miss, standards and lab lanes and never takes a candidate they took. These
   practitioner posts (the `air.cost-efficiency` and `air.work-efficiency` domains) carry no
   severity marker, so they used to sink below the cut. Next, `batch_class_min`
   guarantees named classes a floor: `curator: 1` puts one tl;dr sec curator link
@@ -326,7 +334,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   of a big-story group the lane had no slot for, a KEV or a kept GHSA the
   must-not-miss lane had no slot for, or a severity / AI-incident marker from a
   non-GitHub/HN source ranked `batch_story_min_rank`+, or a lab-lane post the lane
-  had no slot for, published in the last
+  had no slot for, a standards-lane post the lane had no slot for (`standard`), published in the last
   `batch_story_days`, not deny-listed, not a story the ledger holds) joins
   `data/candidates.json` tagged `batch_tier: "news"`, at most `max_news_per_run`
   and `batch_news_per_source` per source. Each gets a short news brief

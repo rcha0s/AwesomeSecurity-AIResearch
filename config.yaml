@@ -153,6 +153,69 @@ limits:
   batch_story_min_rank: 55  # ...and one copy comes from outside GitHub/HN from a source
                           # ranked this or more (medium tier): two attacker repos, an HN
                           # vote or two low-rank feeds can't qualify on markers alone
+  batch_std_max: 4        # standards lane (select_batch.std_lane), right after the
+                          # must-not-miss lane and before the lab lane: recent releases from
+                          # OWASP GenAI, NIST, CoSAI, the MCP spec and NAIC, tagged
+                          # `batch_priority: standard`. Rohan missed OWASP's Agent Control
+                          # Standard (ACS v0.1.0, 2026-09-01): captured, but it sank below
+                          # the cut (F10, ISC-57). Leftovers get a news brief (reason
+                          # `standard`)
+  batch_std_per_source: 1 # most standards-lane slots one source (feed) may take
+  batch_std_hosts:        # host (subdomains included) or host/path-prefix, no scheme; the
+    - genai.owasp.org     # post also needs a batch_std_terms word
+    - nist.gov
+    - coalitionforsecureai.org
+    - cosai.org
+    - modelcontextprotocol.io
+    - naic.org
+  batch_std_strict_hosts: # these hosts need a topic AND a publication term (NIST also posts
+    - nist.gov            # time standards, lab news and award notes)
+  batch_std_topic_terms:
+    - ai
+    - artificial intelligence
+    - cybersecurity
+    - cyber
+    - agent
+    - agentic
+    - llm
+    - generative
+    - machine learning
+    - post-quantum
+  batch_std_pub_terms:
+    - standard
+    - framework
+    - guideline
+    - guidance
+    - profile
+    - draft
+    - publication
+    - special publication
+    - sp 800
+    - overlay
+    - taxonomy
+  batch_std_sources:      # feeds whose every release counts (no term needed)
+    - rss:https-github-com-modelcontextprotocol-specificat
+    - rss:https---github-com-modelcontextprotocol-specific
+  batch_std_terms:        # as a whole word or phrase (plural s allowed), title + excerpt
+    - standard
+    - specification
+    - framework
+    - guideline
+    - guidance
+    - profile
+    - top 10
+    - release
+    - released
+    - publishes
+    - draft
+    - ai
+    - artificial intelligence
+    - agent
+    - agentic
+    - mcp
+    - model bulletin
+    - cybersecurity
+    - security
   youtube_per_channel: 2  # ingest_youtube.py (in run_scan.sh INGESTORS since F10): most recent
                           # videos taken from one registered channel per scan
   youtube_max_per_run: 8  # ...and the most it stages in all, so 20+ channels cannot flood a batch

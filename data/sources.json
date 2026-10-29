@@ -2696,5 +2696,254 @@
     "added": "2026-10-29",
     "active": true,
     "notes": "F10: DEF CON talks incl. AI agents; feed verified"
+  },
+  {
+    "id": "rss:https-www-nist-gov-news-events-news-rss-xml",
+    "type": "rss",
+    "handle": "https://www.nist.gov/news-events/news/rss.xml",
+    "name": "NIST News",
+    "url": "https://www.nist.gov/news-events/news/rss.xml",
+    "topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 standards lane: NIST news (AI and cyber publications among them)"
+  },
+  {
+    "id": "rss:https-www-nist-gov-blogs-cybersecurity-insights",
+    "type": "rss",
+    "handle": "https://www.nist.gov/blogs/cybersecurity-insights/rss.xml",
+    "name": "NIST Cybersecurity Insights",
+    "url": "https://www.nist.gov/blogs/cybersecurity-insights/rss.xml",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 standards lane"
+  },
+  {
+    "id": "rss:https-www-coalitionforsecureai-org-feed",
+    "type": "rss",
+    "handle": "https://www.coalitionforsecureai.org/feed/",
+    "name": "Coalition for Secure AI (CoSAI)",
+    "url": "https://www.coalitionforsecureai.org/feed/",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 standards lane"
+  },
+  {
+    "id": "rss:https-www-debevoisedatablog-com-feed",
+    "type": "rss",
+    "handle": "https://www.debevoisedatablog.com/feed/",
+    "name": "Debevoise Data Blog",
+    "url": "https://www.debevoisedatablog.com/feed/",
+    "topics": [
+      "ai-security",
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 insurance and AI regulation: law firm blog"
+  },
+  {
+    "id": "rss:https-www-insideprivacy-com-feed",
+    "type": "rss",
+    "handle": "https://www.insideprivacy.com/feed/",
+    "name": "Covington Inside Privacy",
+    "url": "https://www.insideprivacy.com/feed/",
+    "topics": [
+      "ai-security",
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 AI regulation: law firm blog"
+  },
+  {
+    "id": "rss:https-www-troutman-com-feed",
+    "type": "rss",
+    "handle": "https://www.troutman.com/feed/",
+    "name": "Troutman Pepper Locke",
+    "url": "https://www.troutman.com/feed/",
+    "topics": [
+      "ai-security",
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 insurance and AI regulation: law firm feed (all topics; the prefilter drops the rest)"
+  },
+  {
+    "id": "rss:https-www-insurancejournal-com-rss-news-national",
+    "type": "rss",
+    "handle": "https://www.insurancejournal.com/rss/news/national/",
+    "name": "Insurance Journal (national)",
+    "url": "https://www.insurancejournal.com/rss/news/national/",
+    "topics": [
+      "ai-security",
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 insurance regulation news incl. NAIC; naic.org itself is behind a Cloudflare challenge"
+  },
+  {
+    "id": "rss:https-www-carriermanagement-com-feed",
+    "type": "rss",
+    "handle": "https://www.carriermanagement.com/feed/",
+    "name": "Carrier Management",
+    "url": "https://www.carriermanagement.com/feed/",
+    "topics": [
+      "ai-security",
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 insurance regulation news"
+  },
+  {
+    "id": "rss:https-www-insurance-wa-gov-rss-xml",
+    "type": "rss",
+    "handle": "https://www.insurance.wa.gov/rss.xml",
+    "name": "WA Office of the Insurance Commissioner",
+    "url": "https://www.insurance.wa.gov/rss.xml",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 state DOI bulletins"
+  },
+  {
+    "id": "rss:https-dfr-vermont-gov-rss-xml",
+    "type": "rss",
+    "handle": "https://dfr.vermont.gov/rss.xml",
+    "name": "Vermont DFR",
+    "url": "https://dfr.vermont.gov/rss.xml",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 state DOI bulletins"
+  },
+  {
+    "id": "rss:https-oci-georgia-gov-rss-xml",
+    "type": "rss",
+    "handle": "https://oci.georgia.gov/rss.xml",
+    "name": "Georgia Insurance Commissioner",
+    "url": "https://oci.georgia.gov/rss.xml",
+    "topics": [
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "low",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 40.0,
+    "added": "2026-10-29",
+    "active": true,
+    "notes": "F10 state DOI bulletins"
   }
 ]
