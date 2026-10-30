@@ -24,7 +24,7 @@ Installing a package with npm or gem, or a source distribution with pip, execute
 
 _Tags: `npm`, `pip`, `supply-chain`_
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -32,6 +32,7 @@ _Tags: `npm`, `pip`, `supply-chain`_
 | supports | [ChainDrop: Inside a Self-Propagating npm Worm](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) | Aug 6, 2026 |
 | supports | [Typosquatting programming language package managers: install-time code ran on 17,000 hosts via PyPI, npm and RubyGems](https://incolumitas.com/2016/06/08/typosquatting-package-managers/) | Jun 8, 2016 |
 | supports | [Deep-Live-Cam Supply Chain Attack: Technical Analysis](https://safedep.io/deep-live-cam-supply-chain-attack) | Sep 9, 2026 |
+| supports | [GitHub previews a package firewall that blocks risky npm installs](https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html) | Oct 29, 2026 |
 
 </details>
 

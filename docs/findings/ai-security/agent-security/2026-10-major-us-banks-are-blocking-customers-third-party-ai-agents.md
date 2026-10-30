@@ -17,7 +17,7 @@ Mother Jones, relaying a 2026-10-22 Axios report and the Financial Times, says l
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 0 · Novelty 60 · Relevance 75 · Credibility 50 · **Composite 48** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 60 · Relevance 75 · Credibility 50 · **Composite 53** _(each 0-100)_  
 **Tags:** `agent-identity`, `banking`, `delegated-credentials`, `plaid`, `financial-services`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Agent-identity and delegated-authorization entries in the pool cover the protocol side; this is the first deployment-side report of banks blocking agents.
 

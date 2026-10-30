@@ -1339,10 +1339,18 @@
           "published": "2026-09-09",
           "note": "A hijacked repo swapped in a git-URL dependency named requests whose setup.py ran a hidden payload at pip install time.",
           "source_name": "SafeDep"
+        },
+        {
+          "stance": "supports",
+          "url": "https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html",
+          "title": "GitHub previews a package firewall that blocks risky npm installs",
+          "published": "2026-10-29",
+          "note": "GitHub's npm firewall adds a policy that blocks versions newly adding preinstall or postinstall scripts, treating install-time code as the risk to gate.",
+          "source_name": "The Hacker News"
         }
       ],
       "first_seen": "2016-06-08",
-      "last_reviewed": "2026-10-24",
+      "last_reviewed": "2026-10-29",
       "guidance": "Do first-touch installs in a sandbox. Skipping install scripts (--ignore-scripts) is not enough on its own: a payload that runs at import time gets past it (see import-time-payloads-defeat-install-time-controls), so also pin and review dependency updates and run the first import in a sandbox.",
       "tags": [
         "npm",
@@ -2178,10 +2186,18 @@
           "published": "2026-10-27",
           "note": "TrendAI found attackers running a 44-agent CyberStrikeAI workflow against 19+ Japanese organizations, exploiting basic weaknesses (default credentials, unpatched edge devices) at scale rather than new tradecraft.",
           "source_name": "The Hacker News"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.wiz.io/blog/the-rise-of-agentic-attacks",
+          "title": "Wiz lists the fingerprints that mark an intrusion as agent-driven",
+          "published": "2026-10-29",
+          "note": "Wiz's real-world cases show agents iterating through numbered script versions and trying many lateral paths at once, at a cadence set by step complexity rather than human working pace.",
+          "source_name": "Wiz Research"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-10-29",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",
@@ -3041,6 +3057,29 @@
         "work-efficiency",
         "harness"
       ]
+    },
+    {
+      "id": "agent-stated-lean-steers-expert-decisions",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "statement": "When an agent states a preference on an open judgment call, experts mostly follow it: in Anthropic's randomized study analysts matched a coin-flip-assigned agent lean 86% of the time versus about 50% expected with no influence, often reusing the agent's arguments without crediting it.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://www.anthropic.com/research/agents-judgment-calls",
+          "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
+          "published": "2026-10-27"
+        }
+      ],
+      "first_seen": "2026-10-29",
+      "last_reviewed": "2026-10-29",
+      "added_on": "2026-10-29",
+      "changed_on": "2026-10-29",
+      "title": "An agent's stated lean steers expert judgment calls",
+      "guidance": "At human decision points in a harness, have the agent present the strongest case for each option and capture the human's own preference before the agent states its lean; do not rely on the human's self-report to judge whether they were steered.",
+      "scope": "Shown for open analytical choices with no clearly correct answer, in one study of expert analysts; not shown for decisions with a verifiable right answer or for permission prompts."
     }
   ]
 }

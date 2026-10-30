@@ -24,7 +24,7 @@ The Built-in CODE Server app for Nextcloud (richdocumentscode) before 26.4.303 h
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [CISA Known Exploited Vulnerabilities](https://nvd.nist.gov/vuln/detail/CVE-2026-110447)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 21 · Novelty 30 · Relevance 65 · Credibility 70 · **Composite 44** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 30 · Relevance 65 · Credibility 70 · **Composite 44** _(each 0-100)_  
 **Tags:** `cisa-kev`, `command-injection`, `nextcloud`, `collabora`, `rce`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Standard KEV-listed web-app command injection; the NVD record notes it is distinct from the earlier CVE-2025-66208, and no pool entry covers Collabora/Nextcloud. Verifier: Standard KEV-listed unauthenticated OS command injection in a self-hosted collaboration add-on; closest prior is the earlier richdocumentscode/Collabora CVE-2025-66208 that NVD explicitly distinguishes; no prior entry in the tracker data.
 

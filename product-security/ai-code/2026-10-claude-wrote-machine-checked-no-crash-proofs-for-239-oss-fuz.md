@@ -26,7 +26,7 @@ Anthropic and Theorem had Claude prove, in Rocq, that 239 OSS-Fuzz entry points 
 
 **Topic:** Product Security  ·  **Domain:** AI in the SDLC  
 **Source:** [source](https://www.anthropic.com/research/formal-verification)  ·  **Author:** Keane Lucas et al. (Anthropic, Theorem)  ·  **Retrieved:** 2026-10-23  
-**Scores:** Newness 21 · Novelty 75 · Relevance 75 · Credibility 55 · **Composite 58** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 75 · Relevance 75 · Credibility 55 · **Composite 58** _(each 0-100)_  
 **Tags:** `formal-verification`, `fuzzing`, `memory-safety`, `rocq`, `llm-proofs`, `oss-fuzz`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: seL4 and CompCert (human-written verification at 10x code effort), binary-level verifiers like Alive2, LLM proof assistants (Baldur, AlphaProof), and AI bug finding (Big Sleep, AIxCC). None showed LLM-written, machine-checked binary-level proofs at this scale.
 

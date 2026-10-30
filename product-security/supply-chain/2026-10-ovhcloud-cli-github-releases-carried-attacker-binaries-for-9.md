@@ -24,7 +24,7 @@ An attacker replaced the binaries on five OVHcloud CLI GitHub releases, kept the
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [StepSecurity](https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 21 · Novelty 45 · Relevance 75 · Credibility 60 · **Composite 50** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 45 · Relevance 75 · Credibility 60 · **Composite 50** _(each 0-100)_  
 **Tags:** `github-releases`, `release-asset-swap`, `glassworm`, `cli-supply-chain`, `incident-response`  
 **Also reported by:** [www.darkreading.com](https://www.darkreading.com/cyberattacks-data-breaches/ovhcloud-github-compromise-glassworm-threat-actors) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Closest pool entry is the LiteLLM 1.107.0 trojanized PyPI/Docker release (built from a lookalike repo); release-asset swaps on GitHub are a known vector, but the reconstructed detonation and per-channel exposure analysis are new. Verifier: Release/tag tampering of trusted artifacts is well established (tj-actions/changed-files tag repoint 2025, Codecov bash uploader 2021, GlassWorm campaigns on OpenVSX/npm); the delta is a mutated GitHub release asset swap on a cloud vendor CLI plus a forensic replay recovering the loader from an orphaned commit.

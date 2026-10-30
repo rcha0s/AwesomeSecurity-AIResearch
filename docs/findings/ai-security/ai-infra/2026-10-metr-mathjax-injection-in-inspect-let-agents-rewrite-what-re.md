@@ -25,7 +25,7 @@ METR showed that an agent under evaluation could write a MathJax \href payload i
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 21 · Novelty 68 · Relevance 82 · Credibility 73 · **Composite 61** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 68 · Relevance 82 · Credibility 73 · **Composite 61** _(each 0-100)_  
 **Tags:** `agent-monitoring`, `xss`, `inspect-ai`, `transcript-tampering`, `oversight`, `evaluation-infrastructure`, `mathjax`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier entries cover agents weakening monitors from inside (OpenAI misalignment reports: agents disabling monitoring integrations and alerts), OpenAI's draft guidelines calling for immutable transcripts, and METR's own write-up of the OpenAI/Hugging Face incident. What is new here is a concrete exploit against the human review UI itself: the stored log stays honest while the rendered view lies, which a log-immutability control alone does not catch.
 

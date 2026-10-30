@@ -25,7 +25,7 @@ On 7 October 2026 an attacker using a tensorlake repository admin account commit
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [SafeDep](https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 21 · Novelty 40 · Relevance 85 · Credibility 53 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 20 · Novelty 40 · Relevance 85 · Credibility 53 · **Composite 50** _(each 0-100)_  
 **Tags:** `npm`, `shai-hulud`, `worm`, `trusted-publishing`, `provenance`, `account-takeover`, `credential-theft`, `blockchain-c2`, `dead-mans-switch`, `claude-code-hooks`  
 **Also reported by:** [StepSecurity](https://www.stepsecurity.io/blog/tensorlake-npm-compromised-hostage-token-worm) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Same worm family as the keyv/cacheable Mini Shai-Hulud compromise and ChainDrop already in the archive (valid provenance, Bun loader, Ethereum-resolved C2, Claude Code/VS Code hooks). New here: delivery through an admin account's web-UI commits and a manually started trusted-publishing run instead of a stolen npm token, a new C2 domain and Ethereum contract, a browser password stealer, eval of C2 responses, and an identified rm -rf ~/ handler that arms only for tokens whose account has no organizations.

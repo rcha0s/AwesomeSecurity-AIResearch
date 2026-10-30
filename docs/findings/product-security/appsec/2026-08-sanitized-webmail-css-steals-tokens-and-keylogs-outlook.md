@@ -25,7 +25,7 @@ Gareth Heyes chains allowed HTML/CSS features across Fastmail, Outlook, AOL/Yaho
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [source](https://portswigger.net/research/css-the-bomb-inside-your-inbox)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 20 · Novelty 78 · Relevance 88 · Credibility 75 · **Composite 66** _(each 0-100)_  
+**Scores:** Newness 1 · Novelty 78 · Relevance 88 · Credibility 75 · **Composite 61** _(each 0-100)_  
 **Tags:** `css`, `webmail`, `sanitization`, `prompt-injection`, `keylogger`, `atlas`, `outlook`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.
 
