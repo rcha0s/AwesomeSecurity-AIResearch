@@ -25,7 +25,7 @@ CVE-2026-97631 (severity 9.5) is a 16-year-old buffer overflow in the network bo
 
 **Topic:** Product Security  ·  **Domain:** Cloud, Network & Infrastructure  
 **Source:** [Ars Technica Security](https://arstechnica.com/security/2026/10/code-execution-flaw-in-uefi-firmware-threatens-most-servers-on-planet-earth/)  ·  **Retrieved:** 2026-10-28  
-**Scores:** Newness 20 · Novelty 60 · Relevance 70 · Credibility 58 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 60 · Relevance 70 · Credibility 58 · **Composite 52** _(each 0-100)_  
 **Tags:** `uefi`, `edk2`, `pxe`, `firmware`, `secure-boot`, `buffer-overflow`, `embargo-break`, `servers`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No UEFI, EDK2 or PXE entries in the pools. The source names PixieFail, an earlier EDK2 PXE flaw class, as the closest precedent.
 

@@ -25,7 +25,7 @@ The PeopleSoft bug that ShinyHunters has exploited since May, patched as CVE-202
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [The Hacker News](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html)  ·  **Retrieved:** 2026-10-28  
-**Scores:** Newness 20 · Novelty 50 · Relevance 75 · Credibility 51 · **Composite 50** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 50 · Relevance 75 · Credibility 51 · **Composite 50** _(each 0-100)_  
 **Tags:** `oracle-peoplesoft`, `ssrf`, `loopback-trust`, `waf-bypass`, `shinyhunters`, `zero-day`, `rce`, `kev`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No PeopleSoft or ShinyHunters entries in the pools. Closest: the ai-security entry on loopback MCP servers needing Host/Origin checks, the same loopback-trust failure in a different product.
 

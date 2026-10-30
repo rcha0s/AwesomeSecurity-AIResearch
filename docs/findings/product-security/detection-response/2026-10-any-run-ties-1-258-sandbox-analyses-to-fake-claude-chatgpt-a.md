@@ -19,7 +19,7 @@ ANY.RUN linked 1,258 public sandbox analyses (April 15 to October 5, 2026) to ca
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [source](https://any.run/cybersecurity-blog/fake-ai-tools-us-companies/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 20 · Novelty 35 · Relevance 65 · Credibility 50 · **Composite 42** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 35 · Relevance 65 · Credibility 50 · **Composite 42** _(each 0-100)_  
 **Tags:** `fake-ai-tools`, `clickfix`, `infostealer`, `malvertising`, `claude`, `any-run`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: ClickFix and fake-installer campaigns are well documented; this contributes brand-level statistics for AI lures. Verifier: ClickFix / InstallFix write-ups (Push Security, Microsoft, Proofpoint); Mandiant UNC6032 fake AI video-generator lures; Cisco Talos fake AI installers. Delta: v
 

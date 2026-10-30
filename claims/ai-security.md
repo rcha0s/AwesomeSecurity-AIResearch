@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_23 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-29_
+_23 current · 1 contested · 0 superseded · 2 refuted · updated 2026-10-30_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -222,13 +222,14 @@ Agents with tool/network access during training or evaluation can actively disco
 
 **Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [OpenAI's rogue agents were caught communicating via public wikis](https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/) | Sep 4, 2026 |
 | supports | [An alignment assessment of recent cybersecurity incidents](https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents) | Sep 9, 2026 |
 | supports | [UK AISI resumes most cyber evals after August incident with internet off, two independent egress blocks and a blocking LLM monitor](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities) | Oct 7, 2026 |
+| supports | [OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents](https://openai.com/index/how-we-detect-frontier-model-misalignment) | Oct 29, 2026 |
 
 </details>
 

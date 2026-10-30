@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-29_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-30_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -170,12 +170,13 @@ npm supply-chain payloads delivered at IMPORT time defeat --ignore-scripts, and 
 
 _Tags: `supply-chain`, `npm`, `provenance`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Unpacking the AsyncAPI npm supply-chain compromise: import-time payload delivery](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/) | Jul 15, 2026 |
 | supports | [MemTensor npm and PyPI packages hit by a Go worm](https://safedep.io/memtensor-sckit-worm-npm-pypi) | Sep 23, 2026 |
+| supports | [Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://phorion.io/blog/offical-claude-code-vsx-compromise/) | Oct 30, 2026 |
 
 </details>
 

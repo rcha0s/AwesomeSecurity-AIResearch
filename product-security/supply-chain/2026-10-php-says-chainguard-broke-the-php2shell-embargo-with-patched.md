@@ -25,7 +25,7 @@ Rumored CVE IDs led PHP to move its release up one day, and Calif, one of the fi
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [The Register - Security](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611)  ·  **Retrieved:** 2026-10-26  
-**Scores:** Newness 20 · Novelty 30 · Relevance 66 · Credibility 54 · **Composite 42** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 30 · Relevance 66 · Credibility 54 · **Composite 42** _(each 0-100)_  
 **Tags:** `coordinated-disclosure`, `embargo`, `php2shell`, `ai-vulnerability-discovery`, `patch-diffing`, `distributors`  
 **Also reported by:** [Socket](https://socket.dev/blog/php-embargo-dispute?utm_medium=feed) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool has Wiz's PHP2Shell technical write-up and OpenAI's coordinated-disclosure framework for the same CVEs, plus Chainguard's Athena disclosure program in the archive. New here are the distributor-side embargo break, its timeline, and the CEO's claim of AI rediscovery from a hint alone.

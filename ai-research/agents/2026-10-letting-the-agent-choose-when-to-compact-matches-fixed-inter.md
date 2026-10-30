@@ -19,7 +19,7 @@ SELFCOMPACT gives the model a compaction tool plus a short rubric saying when to
 
 **Topic:** AI Research  ·  **Domain:** Agents & Harnesses  
 **Source:** [Apple Machine Learning Research](https://machinelearning.apple.com/research/self-compacting-language-agents)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 20 · Novelty 55 · Relevance 80 · Credibility 75 · **Composite 57** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 55 · Relevance 80 · Credibility 75 · **Composite 56** _(each 0-100)_  
 **Tags:** `compaction`, `context-management`, `long-running-agents`, `scaffolding`, `summarization`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Several pool entries treat compaction as harness infrastructure: the Claude Code harness design entry (system-prompt compaction), the Codex/Pi encrypted compaction port, and the OpenAI Agents API with managed compaction. All of them trigger on fixed thresholds or leave the trigger unspecified. What is new: evidence that the timing of compaction matters, and that a prompt-level rubric, not training, lets the model choose that timing well.
 
