@@ -25,7 +25,7 @@ Anthropic used an unreleased internal research model to find and chain vulnerabi
 
 **Topic:** Product Security  ·  **Domain:** Vulnerability Research & Red Teaming  
 **Source:** [Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)  ·  **Retrieved:** 2026-10-28  
-**Scores:** Newness 20 · Novelty 70 · Relevance 90 · Credibility 74 · **Composite 64** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 70 · Relevance 90 · Credibility 74 · **Composite 64** _(each 0-100)_  
 **Tags:** `ai-vulnerability-research`, `exploit-chains`, `browser-security`, `sandbox-escape`, `linux-kernel`, `android`, `variant-analysis`, `pr-scanning`, `anthropic`  
 **Also reported by:** [The Hacker News](https://thehackernews.com/2026/10/anthropics-unreleased-ai-model-chains.html) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Closest pool entries: 'Claude found 493 attack-surface issues across 25 open-source projects' (finds issues but builds no exploit chains), 'GitHub Security Lab found 24 Android vulnerabilities with its AI agent', and the Mythos 5 AISI incident (a cyber-capability incident, not vulnerability research). New here: end-to-end exploit chains against Chrome, Safari, Android, Windows and Linux.

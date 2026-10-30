@@ -19,7 +19,7 @@ Ubicloud measured tool-call schema accuracy with Moonshot AI's K2-Vendor-Verifie
 
 **Topic:** AI Research  ·  **Domain:** Model I/O & Cost  
 **Source:** [@coffeemug via Hacker News](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm)  ·  **Author:** coffeemug  ·  **Retrieved:** 2026-10-26  
-**Scores:** Newness 20 · Novelty 30 · Relevance 80 · Credibility 55 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 30 · Relevance 80 · Credibility 55 · **Composite 46** _(each 0-100)_  
 **Tags:** `tool-calling`, `constrained-decoding`, `vllm`, `xgrammar`, `serving`, `open-weights`, `benchmarks`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.
 

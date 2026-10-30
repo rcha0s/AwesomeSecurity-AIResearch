@@ -25,7 +25,7 @@ On October 20 and 21 a newly registered account sent crafted CI configurations t
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [@sashk via Hacker News](https://alpinelinux.org/posts/GitLab-security-incident-CVE-2026-97229.html)  ·  **Author:** sashk  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 20 · Novelty 50 · Relevance 80 · Credibility 55 · **Composite 52** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 50 · Relevance 80 · Credibility 55 · **Composite 52** _(each 0-100)_  
 **Tags:** `gitlab`, `ruby`, `onigmo`, `regex`, `incident-response`, `patch-management`, `forensics`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool has GitLab's advisory for a different CVSS 10.0 regex RCE (CVE-2026-110264, 19.5.1 patch release), which is a vendor patch notice. This entry adds a first-hand incident: the fix lived in a bundled Ruby patch that self-built installs missed, plus the forensic limits that forced a rebuild.
 
