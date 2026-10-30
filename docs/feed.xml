@@ -6,16 +6,9 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-10-29T00:00:00Z</updated>
+  <updated>2026-10-30T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week</id>
-    <title>Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild</title>
-    <updated>2026-10-22T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch VCO on-prem and restrict its web interface to admin networks; any user account, however low, is enough to exploit it.</summary>
-  </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week</id>
     <title>Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws</title>
@@ -29,6 +22,13 @@
     <updated>2026-10-28T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week" rel="alternate" type="text/html" />
     <summary type="text">On appliances, patch speed depends on the vendor's firmware schedule, so limit exposure of management interfaces now instead of waiting.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=exploited-linux-kernel-flaw-lets-ipsec-decryptio-36ad1359f1#week</id>
+    <title>Exploited Linux kernel flaw lets IPsec decryption overwrite page-cache data</title>
+    <updated>2026-10-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=exploited-linux-kernel-flaw-lets-ipsec-decryptio-36ad1359f1#week" rel="alternate" type="text/html" />
+    <summary type="text">A kernel bug disclosed in May is now exploited in the wild, so any Linux host still on an unpatched kernel needs the vendor update now.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week</id>
