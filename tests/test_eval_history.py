@@ -166,6 +166,28 @@ def test_run_charge_reports_basis_and_ceiling(tmp_path):
     assert eh.run_charge(None, "C1")["cost_basis"] is None
 
 
+def test_a_run_crossing_utc_midnight_keeps_its_reservation_date(tmp_path, monkeypatch):
+    """Reserved at 23:57 on 07-15, row written at 00:03 on 07-16: the row says 07-15,
+    the day the gate's runner/date check compares it with (2026-10-29, #152)."""
+    from datetime import UTC, datetime
+
+    import content_checks
+
+    ledger = tmp_path / "l.json"
+    write_ledger(ledger, "C1", {"kind": "reserve", "cost_usd": 2.0})
+    after = datetime(2026, 7, 16, 0, 3, tzinfo=UTC)
+    monkeypatch.setattr(common, "utcnow", lambda: after)
+    assert eh.run_date(ledger, "C1") == "2026-07-15"
+    assert eh.run_date(ledger, "nope") == "2026-07-16"  # no reservation: today (UTC)
+    assert eh.run_date(None, "C1") == "2026-07-16"
+    row = {"run_id": "C1", "runner": "cloud", "date": eh.run_date(ledger, "C1"),
+           "ceiling_usd": 2.0}  # fmt: skip
+    runs = json.loads(ledger.read_text())["runs"]
+    assert not any("runner/date" in p for p in content_checks._ledger_problems(row, runs))
+    row["date"] = after.strftime("%Y-%m-%d")  # the old clock-dated row
+    assert any("runner/date" in p for p in content_checks._ledger_problems(row, runs))
+
+
 def setup_append(sandbox, monkeypatch):
     monkeypatch.setattr(common, "_MAIN_IDS", set())  # every pool entry is this run's
     monkeypatch.setattr(eh.eval_integrity, "run", lambda: {"passed": True, "problems": []})

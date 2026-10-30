@@ -120,6 +120,17 @@ def run_charge(ledger: Path | None, run_id: str) -> dict:
             "ceiling_usd": float(held[0]["cost_usd"])}  # fmt: skip
 
 
+def run_date(ledger: Path | None, run_id: str) -> str:
+    """The day this run reserved on the ledger, so a run that crosses UTC midnight
+    keeps the date the gate checks it against; today (UTC) when there's no reservation."""
+    if ledger is not None and ledger.exists():
+        held = [r for r in budget.load_ledger(ledger)
+                if r["run_id"] == run_id and r["kind"] == "reserve"]  # fmt: skip
+        if held and held[0].get("date"):
+            return str(held[0]["date"])
+    return c.utcnow().strftime("%Y-%m-%d")
+
+
 def build_row(args) -> dict:
     cfg = el.settings(args.config)
     age = int(cfg["max_result_age_days"])
@@ -130,7 +141,7 @@ def build_row(args) -> dict:
     new, kept = kept_new()
     return {
         "run_id": args.run_id,
-        "date": c.utcnow().strftime("%Y-%m-%d"),
+        "date": run_date(args.ledger, args.run_id),
         "runner": args.runner,
         "candidates": args.candidates,
         "stories": args.stories,
