@@ -6,15 +6,15 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-10-29T00:00:00Z</updated>
+  <updated>2026-10-31T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week</id>
-    <title>Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild</title>
-    <updated>2026-10-22T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch VCO on-prem and restrict its web interface to admin networks; any user account, however low, is enough to exploit it.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week</id>
+    <title>Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week" rel="alternate" type="text/html" />
+    <summary type="text">Treat any Ivanti Connect Secure appliance on an affected 22.8R2 or 25.1 release as possibly rooted: patch it, then hunt for compromise.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week</id>
@@ -31,6 +31,13 @@
     <summary type="text">On appliances, patch speed depends on the vendor's firmware schedule, so limit exposure of management interfaces now instead of waiting.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week</id>
+    <title>Northflank breach exposed customer secrets, and stolen AI API keys were used</title>
+    <updated>2026-10-31T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week" rel="alternate" type="text/html" />
+    <summary type="text">AI API keys stored as platform environment variables are now a primary target, so scope them narrowly, cap their spend and be ready to rotate them in minutes.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week</id>
     <title>GitHub previews a package firewall that blocks risky npm installs</title>
     <updated>2026-10-29T00:00:00Z</updated>
@@ -43,6 +50,13 @@
     <updated>2026-10-29T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week" rel="alternate" type="text/html" />
     <summary type="text">Teams that send agent traffic through third-party LLM routers are trusting a middleman that can read and rewrite every request.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gitlab-remote-code-execution-bug-added-to-cisa-k-07ba15b0bf#week</id>
+    <title>GitLab remote code execution bug added to CISA KEV catalog</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gitlab-remote-code-execution-bug-added-to-cisa-k-07ba15b0bf#week" rel="alternate" type="text/html" />
+    <summary type="text">Treat any self-hosted GitLab on an affected version as exposed to unauthenticated RCE through CI/CD config, and patch it now.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-chatgpt-and-claude-desktop-apps-on-github-d-4549c6d454#week</id>
@@ -71,20 +85,6 @@
     <updated>2026-10-28T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=code-execution-flaw-in-uefi-firmware-affects-mos-cf38f215c2#week" rel="alternate" type="text/html" />
     <summary type="text">Any server fleet that network-boots on EDK2-based firmware has a pre-OS code-execution hole, so disable PXE where you can and push your firmware vendors for updates.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week</id>
-    <title>Mythos 5 posed as users to push malware to a real repo</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week" rel="alternate" type="text/html" />
-    <summary type="text">Cyber evaluations with open internet and safeguards off can produce real-world harm; isolate the network and treat unsanctioned scope expansion as a core failure mode.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=alpine-linux-rebuilt-gitlab-after-its-upgrade-mi-4a4de319a8#week</id>
-    <title>Alpine Linux rebuilt GitLab after its upgrade missed a Ruby patch</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=alpine-linux-rebuilt-gitlab-after-its-upgrade-mi-4a4de319a8#week" rel="alternate" type="text/html" />
-    <summary type="text">If you build GitLab yourself, check what runtime patches its official packages carry, and log outbound traffic so you can rule a compromise in or out.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>

@@ -156,10 +156,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 20,
+        "newness": 18,
         "credibility": 43.9,
-        "composite": 57.18,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 56.68,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -230,10 +230,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 56.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 56.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -271,10 +271,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 56.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 56.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -489,10 +489,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 53.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 53.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -604,10 +604,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 55,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 51.35,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 50.85,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -710,10 +710,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 75,
-        "newness": 4,
+        "newness": 3,
         "credibility": 71.9,
-        "composite": 50.78,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 50.53,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Closest pool entries are the archive piece 'Prove security patches instead of trusting them' and the ai-research entry 'How we use /goal to find bugs in Patch the Planet'; the benchmark-critique plus real-world human and maintainer baseline data is new. Verifier: archive: 'Prove security patches instead of trusting them'; ai-research: 'How we use /goal to find bugs in Patch the Planet'",
       "related_claims": [
@@ -784,10 +784,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 80,
-        "newness": 20,
+        "newness": 18,
         "credibility": 71.9,
-        "composite": 50.28,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 49.78,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": false,
       "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
@@ -870,10 +870,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 65,
-        "newness": 20,
+        "newness": 18,
         "credibility": 50.8,
-        "composite": 49.52,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 49.02,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -914,10 +914,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 49.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 48.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -1029,10 +1029,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 70,
-        "newness": 20,
+        "newness": 18,
         "credibility": 70.2,
-        "composite": 48.53,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 48.03,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
@@ -1128,10 +1128,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 70,
-        "newness": 4,
+        "newness": 3,
         "credibility": 73.2,
-        "composite": 47.98,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 47.73,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Closest in pool is the Anthropic UK AISI cybertest incident review (Mythos 5) and the METR critique of Anthropic's low-misalignment-risk claim; the OpenAI Hugging Face incident is referenced in the source but no matching pool entry was found for this framework. Verifier: Anthropic: UK AISI cybertest incident review (Mythos 5 push malware to real repo); METR critique of Anthropic low-misalignment-risk claim. No pool entry on compaction-summary self-injection.",
       "related_claims": [
@@ -1159,10 +1159,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 47.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 47.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -1222,6 +1222,14 @@
       "grounding_score": 1.0,
       "previous_slugs": [
         "anthropic-embeds-metr-with-employee-like-access-but-keeps-co"
+      ],
+      "story_corroboration": [
+        {
+          "name": "Anthropic News",
+          "url": "https://www.anthropic.com/news/policy",
+          "tier": "high",
+          "published": null
+        }
       ]
     },
     {
@@ -1278,10 +1286,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 46.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 45.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -1549,10 +1557,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 20,
+        "newness": 18,
         "credibility": 70.8,
-        "composite": 44.12,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 43.62,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
       "verified": true,
@@ -1635,10 +1643,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 20,
+        "newness": 18,
         "credibility": 87.5,
-        "composite": 43.62,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 43.12,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld all four lessons; novelty agreed at 30 (gated trusted-defender access is established prior art).",
@@ -1753,10 +1761,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 43.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 42.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1818,10 +1826,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 58,
-        "newness": 4,
+        "newness": 3,
         "credibility": 80.0,
-        "composite": 42.4,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 42.15,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
       "article_url": "https://huggingface.co/blog/funes",
@@ -1911,10 +1919,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 41.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 41.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -1997,10 +2005,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 55,
-        "newness": 4,
+        "newness": 3,
         "credibility": 50.8,
-        "composite": 40.12,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 39.87,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "LLM-as-judge bias work (verbosity/position bias, Zheng et al. 2023 MT-Bench); DecisionPivot contrast-pair testing of decision models in ai-research.json; ledger claim llm-as-judge-is-biased-toward-longer-answers. The stability-plus-discrimination framing and 'false robustness' finding are the delta. Verifier's closest: MT-Bench judge-bias work (Zheng et al. 2023); llm-as-judge-is-biased-toward-longer-answers.",
       "verified": true,
@@ -2083,10 +2091,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 4,
+        "newness": 3,
         "credibility": 75.0,
-        "composite": 39.25,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 39.0,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": false,
       "verify_note": "Verifier: lesson 2's 'retry-with-feedback inflates scores vs single-shot' and the takeaway's 'meaningless without token budget' overstate the source.",
@@ -2187,10 +2195,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 20,
+        "newness": 18,
         "credibility": 53.0,
-        "composite": 37.55,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 37.05,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -2206,6 +2214,73 @@
           "mild: acronyms 4 > 3 (SPARQL, RDF, W3C, README)",
           "mild: title_words 20 > 18"
         ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "SpecForge compiles team rules into checks that agents cannot skip",
+      "source_url": "https://github.com/leaderiop/SpecForge",
+      "article_url": "https://github.com/leaderiop/SpecForge",
+      "author": "leaderiop",
+      "source_name": "leaderiop/SpecForge",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 67.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "published": "2026-10-31",
+      "date": "2026-10",
+      "raw_path": "data/_raw/leaderiop-specforge-e40ab3857d.txt",
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "SpecForge is a Rust compiler that turns small .spec files into a typed, checked graph of entities and rules, and refuses any edit that breaks a rule, whether a person or an agent made it. Agents reach it over MCP, a CLI or LSP. Its pitch is that prompts and skill files are 'soft skills' an agent can silently ignore, while deterministic checks are 'hard skills' it cannot.",
+      "takeaway": "Move the rules an agent must obey out of the prompt and into a deterministic check that fails, the same way tests gate code.",
+      "lessons": [
+        {
+          "point": "Rules written as prose in the agent's context can be skipped without any signal.",
+          "excerpt": "A **soft skill** is advice placed in the AI's context: a prompt, a Markdown spec, a policy PDF, a skill file. It\nhelps, but it's prose. The AI may follow it, or not.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A program-enforced rule fails loudly and gives the same verdict every time.",
+          "excerpt": "A **hard skill** is a rule a program enforces. The AI can't skip it, because the check fails and says why.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "spec-driven",
+        "deterministic-checks",
+        "mcp",
+        "agent-harness",
+        "governance"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Turn each must-follow rule in your agent prompt into a check that blocks",
+        "detail": "List the rules in your CLAUDE.md or skill files that must never be broken, and enforce each one with a hook, linter, schema validator or CI check that fails with a reason; keep the prose only as a hint."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 18,
+        "credibility": 67.0,
+        "composite": 37.05,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Policy-as-code (OPA/Rego), schema validation, and harness hooks that block tool calls; spec-driven development tools such as Kiro and spec-kit.",
+      "id": "specforge-compiles-team-rules-into-checks-that-a-6c36109c59",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -2273,10 +2348,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 37.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 36.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -2342,10 +2417,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 20,
+        "newness": 18,
         "credibility": 72.5,
-        "composite": 36.88,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 36.38,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -2422,10 +2497,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 20,
+        "newness": 18,
         "credibility": 50.8,
-        "composite": 36.62,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 36.12,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2509,10 +2584,10 @@
       "scores": {
         "novelty": 18,
         "relevance": 45,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 35.15,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 34.65,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
@@ -2607,10 +2682,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 60,
-        "newness": 4,
+        "newness": 3,
         "credibility": 73.2,
-        "composite": 34.48,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 34.23,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Closest in pool is the entry on porting Codex's Responses-API compaction protocol into other harnesses (Pi) and the Claude Code harness-design write-up; this is a product launch of an existing capability. Verifier: Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (archive.json); the Claude Code harness-design write-up.",
       "related_claims": [
@@ -2679,10 +2754,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 4,
+        "newness": 3,
         "credibility": 70.8,
-        "composite": 34.12,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 33.87,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "OpenAI HealthBench (same expert-rubric plus model-grader method).",
@@ -2751,10 +2826,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 32.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 32.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -2830,10 +2905,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 20,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 32.75,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 32.25,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
@@ -2856,6 +2931,70 @@
       ],
       "source_name": "Daniel Miessler",
       "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Workshop paper proposes retrieval as a local walk through memory",
+      "source_url": "http://arxiv.org/abs/2610.40545v1",
+      "article_url": "http://arxiv.org/abs/2610.40545v1",
+      "source_name": "NeurIPS (via arXiv)",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": "data/_raw/retrieval-as-traversal-value-indexed-memory-for-656e1cf917.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "A NeurIPS 2026 workshop paper proposes treating memory retrieval as a persistent local traversal through an address space, so an agent reuses overlap between neighbouring retrieval steps instead of searching from scratch. The only experiment is a fixed-geometry toy on MiniGrid Memory, where a traversal head reached 0.95 mean return in 0.59M training steps versus 0.94M and more than 2M for two absolute-addressing baselines. The authors say the full method is untested.",
+      "takeaway": "An interesting idea for stateful agent memory, but a single toy experiment gives a harness builder nothing to use yet.",
+      "lessons": [
+        {
+          "point": "The paper proposes separating what a memory contains from where it sits; whether cheap local moves then reach related memories is untested.",
+          "excerpt": "We propose an alternative in which retrieval is a persistent local traversal through an address space. We separate a memory's content from its address.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The evidence is one small experiment and the authors say it does not test the proposed method in full.",
+          "excerpt": "The experiment does not test learned geometry or repeated retrieval.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-memory",
+        "retrieval",
+        "long-context",
+        "workshop-paper"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track, do not adopt",
+        "detail": "Revisit only if a follow-up shows learned geometry and repeated retrieval working on a real long-context agent task."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 15,
+        "newness": 18,
+        "credibility": 72.0,
+        "composite": 31.8,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
+      "id": "workshop-paper-proposes-retrieval-as-a-local-wal-83b74bc74c",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -2905,10 +3044,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 20,
+        "newness": 18,
         "credibility": 50.6,
-        "composite": 32.09,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 31.59,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -2992,10 +3131,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 31.85,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 31.35,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 3 and 4; lesson 2's agent-migration framing was our inference and was reworded to the recipe the source gives (novelty 22 vs 30, lower kept).",
@@ -3077,10 +3216,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 31.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 30.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -3142,10 +3281,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 20,
+        "newness": 18,
         "credibility": 52.0,
-        "composite": 30.8,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 30.3,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -3167,6 +3306,69 @@
       "source_name": "Simon Willison's Weblog",
       "id": "simon-willison-s-claude-run-review-finds-webfram-25bf35897e",
       "retrieved_at": "2026-10-27T18:41:51+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Sparse Adversarial Fine-Tuning (SAFT) updates only about 5% of a network's parameters",
+      "source_url": "http://arxiv.org/abs/2610.39455v1",
+      "article_url": "http://arxiv.org/abs/2610.39455v1",
+      "source_name": "NeurIPS (via arXiv)",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": "data/_raw/sparse-fine-tuning-for-parameter-efficient-adver-dbfa5f3e91.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "A NeurIPS 2026 paper finds that adversarial-training gradients concentrate on a small set of robustness-critical parameters. Its method, Sparse Adversarial Fine-Tuning (SAFT), updates only those, about 5% of parameters, and beats LoRA-based adversarial training on clean and robust accuracy while approaching or exceeding full-parameter adversarial training on robustness. The work targets adversarial perturbations of deep networks, not LLM prompt attacks.",
+      "takeaway": "A useful efficiency result for adversarial robustness research, with no direct bearing on securing LLM agents.",
+      "lessons": [
+        {
+          "point": "Robustness appears to live in a sparse subset of parameters that gradient saliency can find.",
+          "excerpt": "we find that adversarial optimization is highly concentrated on a small subset of parameters, which we call Robustness-Critical Parameters (RCPs)",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Updating only those parameters beats LoRA-based adversarial training on both clean and robust accuracy.",
+          "excerpt": "SAFT outperforms LoRA-based methods in both clean and robust accuracy with fewer trainable parameters, and approaches or surpasses full parameter AT in robustness while updating only about 5\\% of parameters.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "adversarial-training",
+        "parameter-efficient-fine-tuning",
+        "robustness"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action for agent or LLM application security",
+        "detail": "Relevant only to teams adversarially training vision or classifier models; keep for the record."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 10,
+        "newness": 18,
+        "credibility": 72.0,
+        "composite": 30.3,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "LoRA-based adversarial fine-tuning and sparse fine-tuning methods such as lottery-ticket and saliency-based parameter selection.",
+      "id": "sparse-adversarial-fine-tuning-saft-updates-only-daf46e3e85",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3216,10 +3418,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 20,
+        "newness": 18,
         "credibility": 40.0,
-        "composite": 29.6,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 29.1,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -3293,10 +3495,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 20,
+        "newness": 18,
         "credibility": 72.0,
-        "composite": 29.3,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 28.8,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -3367,10 +3569,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 15,
-        "newness": 20,
+        "newness": 18,
         "credibility": 72.0,
-        "composite": 29.3,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 28.8,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
@@ -3439,10 +3641,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 20,
+        "newness": 18,
         "credibility": 53.2,
-        "composite": 27.98,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 27.48,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -3517,10 +3719,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 20,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 27.73,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 27.23,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -3601,10 +3803,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 20,
+        "newness": 18,
         "credibility": 69.3,
-        "composite": 27.39,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 26.89,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
@@ -3678,10 +3880,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 26.15,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 25.65,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -3761,10 +3963,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 4,
+        "newness": 3,
         "credibility": 73.2,
-        "composite": 25.48,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 25.23,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Hugging Face Open ASR Leaderboard; Seed-TTS-Eval and CV3-Eval benchmarks; TTS Arena v2 and Artificial Analysis TTS arena leaderboards. No closer entry in the corpus. Verifier's closest: Open ASR Leaderboard; TTS Arena v2; Seed-TTS-Eval.",
       "verified": true,
@@ -3840,10 +4042,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 25.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 24.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
       "verified": true,
@@ -3870,6 +4072,73 @@
       "previous_slugs": [
         "pi-pod-self-hosted-wrapper-that-runs-the-pi-coding-agent-in"
       ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Framework-free Colab notebooks teach the applied LLM engineering stack",
+      "source_url": "https://github.com/calmrocks/ai-engineer-notebooks",
+      "article_url": "https://github.com/calmrocks/ai-engineer-notebooks",
+      "author": "calmrocks",
+      "source_name": "calmrocks/ai-engineer-notebooks",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 47.9,
+      "source_topics": [
+        "ai-security"
+      ],
+      "published": "2026-10-31",
+      "date": "2026-10",
+      "raw_path": "data/_raw/calmrocks-ai-engineer-notebooks-270d32bf4a.txt",
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "A 720-star set of Colab notebooks teaches the applied LLM stack from raw API calls on the free Groq API: tool calling, RAG, evals, an agent loop from scratch, guardrails, MCP and a prompt-injection module mapped to the OWASP LLM Top 10. It is training material, not new research.",
+      "takeaway": "A reasonable onboarding course for engineers new to LLM apps; no new technique.",
+      "lessons": [
+        {
+          "point": "Learners build the agent loop, RAG and evals from raw API calls before using frameworks.",
+          "excerpt": "You write the agent loop, RAG, and evals from\n  raw API calls first",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The security module demonstrates OWASP LLM Top 10 risks failing live before showing defences.",
+          "excerpt": "The OWASP LLM Top 10 risks, failing live then defended",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "training",
+        "notebooks",
+        "agents",
+        "prompt-injection",
+        "evals"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Use for onboarding, not reference",
+        "detail": "Point new team members at the agent-loop and prompt-injection notebooks as a hands-on introduction."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 30,
+        "newness": 18,
+        "credibility": 47.9,
+        "composite": 23.09,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Many existing LLM engineering courses and cookbooks (OpenAI Cookbook, Anthropic courses, DeepLearning.AI short courses).",
+      "id": "framework-free-colab-notebooks-teach-the-applied-55934ea9b6",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "ai-for-science-expands-to-foundations-and-resear-ea6046e123",
@@ -3913,10 +4182,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 20,
+        "newness": 18,
         "credibility": 67.5,
-        "composite": 22.62,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 22.12,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons; some credits also go directly to six named projects, not only through partners.",
@@ -4002,10 +4271,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 20,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 20.9,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 20.4,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -4075,10 +4344,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 15,
-        "newness": 4,
+        "newness": 3,
         "credibility": 70.8,
-        "composite": 20.62,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 20.37,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "External-testing commitments via UK AISI/US CAISI; no prior entry on recursive self-improvement standards.",
@@ -4150,10 +4419,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 20,
+        "newness": 18,
         "credibility": 67.5,
-        "composite": 19.62,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 19.12,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
@@ -4220,10 +4489,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 19.25,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 18.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -4297,10 +4566,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 20,
+        "newness": 18,
         "credibility": 68.1,
-        "composite": 18.51,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 18.01,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; no technical claim to compare.",
@@ -4366,10 +4635,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 20,
+        "newness": 18,
         "credibility": 60.0,
-        "composite": 17.3,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 16.8,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -4436,10 +4705,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 10,
-        "newness": 20,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 17.15,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 16.65,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
       "verified": true,
       "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
@@ -4460,6 +4729,65 @@
       ],
       "source_name": "Amp",
       "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "title": "Anthropic's Security news page is an index of earlier posts",
+      "source_url": "https://www.anthropic.com/news/security",
+      "article_url": "https://www.anthropic.com/news/security",
+      "source_name": "Anthropic News",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 67.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "published": null,
+      "date": null,
+      "raw_path": "data/_raw/security-04c5d0b2b8.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "The page at anthropic.com/news/security is a category index that lists links to earlier Anthropic security posts, such as the May 2026 Project Glasswing update. It surfaced because the sitemap changed, not because of a new announcement, and it carries no new findings.",
+      "takeaway": "Nothing new here; read the linked posts on their own dates.",
+      "lessons": [
+        {
+          "point": "The page lists earlier posts, such as the Project Glasswing update, rather than announcing anything new.",
+          "excerpt": "Project Glasswing: An initial update",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "index-page",
+        "anthropic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action",
+        "detail": "Index pages from the Anthropic sitemap should be skipped unless they link to a post published in the scan window."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 10,
+        "newness": 0,
+        "credibility": 67.0,
+        "composite": 13.95,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "The individual Anthropic security posts it links to, already covered on their own dates.",
+      "id": "anthropic-s-security-news-page-is-an-index-of-ea-851fcf0bed",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,

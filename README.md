@@ -4,13 +4,13 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--29-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-72-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--10--31-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-72-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
 ## Your focus
 
-_Your focus areas, last 7 days: most areas matched first, then newest._
+_Only 1 in the last 7 days, so the latest earlier ones fill in._
 
 1. **[Wiz lists the fingerprints that mark an intrusion as agent-driven](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=wiz-lists-the-fingerprints-that-mark-an-intrusio-b890aba68a#week)** · _Product Security · Oct 29, 2026_
 2. **[obsidian-tc tool server lets any valid token delete any configured vault](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=obsidian-tc-tool-server-any-valid-token-could-re-fa07994e1a#week)** · _AI Security · Oct 23, 2026_
@@ -20,7 +20,7 @@ _Your focus areas, last 7 days: most areas matched first, then newest._
 
 _Most covered or exploited in the last 7 days._
 
-1. **[Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week)** · _Product Security · Oct 22, 2026 · 3 sources_
+1. **[Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week)** · _Product Security · Oct 30, 2026_
 2. **[Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week)** · _Product Security · Oct 28, 2026_
 3. **[InfraTrust report says network appliances wait on vendors for PHP2Shell fixes](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week)** · _Product Security · Oct 28, 2026_
 
@@ -28,9 +28,9 @@ _Most covered or exploited in the last 7 days._
 
 _The last 7 days, newest first._
 
-1. **[GitHub previews a package firewall that blocks risky npm installs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week)** · _Product Security · Oct 29, 2026_
-2. **[Researchers find LLM API routers injecting malicious code and stealing credentials](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week)** · _AI Security · Oct 29, 2026_
-3. **[Fake ChatGPT and Claude desktop apps on GitHub deliver crypto miners](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-chatgpt-and-claude-desktop-apps-on-github-d-4549c6d454#week)** · _Product Security · Oct 29, 2026_
+1. **[Northflank breach exposed customer secrets, and stolen AI API keys were used](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week)** · _AI Security · Oct 31, 2026_
+2. **[GitHub previews a package firewall that blocks risky npm installs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week)** · _Product Security · Oct 29, 2026_
+3. **[Researchers find LLM API routers injecting malicious code and stealing credentials](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week)** · _AI Security · Oct 29, 2026_
 
 ## Claim changes
 
@@ -72,4 +72,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-10-29 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-10-31 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
