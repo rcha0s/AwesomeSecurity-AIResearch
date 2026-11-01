@@ -637,7 +637,7 @@ on a `claude/scan-*` branch.
   tests (`tests/test_merge_guard.py`). When it was built, a hand-run mutation
   pass (each rule loosened in turn) was killed by those tests; that pass is not
   in CI. Widening the allowlist is a security change: review it as one.
-- **Shadow mode:** `automerge.mode` in `config.yaml` ships as `shadow`. The
+- **Shadow mode:** `automerge.mode` in `config.yaml` shipped as `shadow` and is `merge` since 2026-10-31. In shadow the
   workflow evaluates every scan PR and reports its verdict in the job summary and
   one PR comment per head and verdict ("would merge", "refused" + reasons), and
   merges nothing. Anything other than exactly `merge` reads as shadow.

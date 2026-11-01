@@ -52,8 +52,10 @@ def test_missing_config_is_shadow(tmp_path):
     assert am.settings(tmp_path / "nope.yaml") == {"mode": "shadow", "merge_method": "squash"}
 
 
-def test_shipped_config_is_shadow():
-    assert am.settings(am.ROOT / "config.yaml")["mode"] == "shadow"
+def test_shipped_config_is_merge():
+    """Rohan ended the shadow period 2026-10-31 (ISA.md). Changing the mode again
+    should change this test too, so the switch is always a deliberate edit."""
+    assert am.settings(am.ROOT / "config.yaml")["mode"] == "merge"
 
 
 # ---------------------------------------------------------------- a fake GitHub
