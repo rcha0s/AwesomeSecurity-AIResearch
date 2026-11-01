@@ -17,7 +17,7 @@ Draguns, Motwani, Douglas and Schroeder de Witt (arXiv 2610.13928, accepted at N
 
 **Topic:** AI Security  ·  **Domain:** Red-Teaming & Threat Modeling  
 **Source:** [arxiv.org](https://arxiv.org/abs/2610.13928)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 20 · Novelty 75 · Relevance 70 · Credibility 50 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 75 · Relevance 70 · Credibility 50 · **Composite 56** _(each 0-100)_  
 **Tags:** `backdoor`, `capability-evals`, `model-audits`, `cryptography`, `neurips-2026`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier work hid fixed strings behind digital lockers (planted backdoors); this paper extends the idea to arbitrary computations.
 

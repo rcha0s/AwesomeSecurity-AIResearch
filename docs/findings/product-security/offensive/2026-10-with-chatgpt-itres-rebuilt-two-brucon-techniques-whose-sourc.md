@@ -25,7 +25,7 @@ A researcher with no recent kernel experience used ChatGPT, conference slide pho
 
 **Topic:** Product Security  ·  **Domain:** Vulnerability Research & Red Teaming  
 **Source:** [tl;dr sec (curator link)](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 20 · Novelty 55 · Relevance 72 · Credibility 70 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 55 · Relevance 72 · Credibility 70 · **Composite 53** _(each 0-100)_  
 **Tags:** `windows-kernel`, `ai-assisted-exploitation`, `ssdt`, `disclosure-opsec`, `llm-refusals`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Closest pool work covers frontier AI agents compressing intrusion timelines (archive: 'Frontier AI Agents Compress a Two-Week Intrusion Into 10 Hours') and LLM research harnesses finding bugs (PwnEscape); this adds a measured case of LLM-assisted reproduction of unreleased kernel exploitation research from partial artifacts, plus refusal counts. Verifier: Earlier work showed LLMs speeding up exploit reproduction from partial information (e.g., GPT-4 one-day exploitation from CVE descriptions, Fang et al. 2024; AI-assisted n-day patch-diff reproduction). This adds a concrete kernel/HVCI case study with refusal counts, but the thesis itself is not new.
 

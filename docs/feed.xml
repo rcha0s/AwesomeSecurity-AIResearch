@@ -6,29 +6,78 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-10-29T00:00:00Z</updated>
+  <updated>2026-10-30T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week</id>
-    <title>Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild</title>
-    <updated>2026-10-22T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=arista-velocloud-orchestrator-cve-2026-114625-sq-de4dcb4c11#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch VCO on-prem and restrict its web interface to admin networks; any user account, however low, is enough to exploit it.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-actively-exploit-highly-critical-drupal-bb564fb962#week</id>
+    <title>Attackers exploit a missing-authorization flaw in Drupal Commerce Core</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-actively-exploit-highly-critical-drupal-bb564fb962#week" rel="alternate" type="text/html" />
+    <summary type="text">Drupal Commerce sites should upgrade Commerce Core now and audit orders and entity changes, because exploitation is underway and no indicators are public.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week</id>
-    <title>Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba#week" rel="alternate" type="text/html" />
-    <summary type="text">Treating loopback as trusted makes any request-forgery bug a way past the perimeter, so patch rather than relying on path-based firewall rules.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-exploited-cisco-sd-wan-flaw-to-plant-mal-907b712081#week</id>
+    <title>KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-exploited-cisco-sd-wan-flaw-to-plant-mal-907b712081#week" rel="alternate" type="text/html" />
+    <summary type="text">Patching an SD-WAN control system that was already compromised is not enough: hunt for KeyDrift's files and treat the inter-site keys as possibly exposed.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week</id>
-    <title>InfraTrust report says network appliances wait on vendors for PHP2Shell fixes</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=infratrust-report-warns-of-exploited-flaws-in-cr-5e52d9a705#week" rel="alternate" type="text/html" />
-    <summary type="text">On appliances, patch speed depends on the vendor's firmware schedule, so limit exposure of management interfaces now instead of waiting.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8#week</id>
+    <title>Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8#week" rel="alternate" type="text/html" />
+    <summary type="text">If your ASA or FTD SSL VPN uses secondary authentication, patch now: unauthenticated attackers are already using this bug to reload the device.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
+    <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week" rel="alternate" type="text/html" />
+    <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=2-million-drained-from-polymarket-traders-in-new-536e5ae3f7#week</id>
+    <title>A compromised DebugBear monitoring script drained Polymarket traders' accounts</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=2-million-drained-from-polymarket-traders-in-new-536e5ae3f7#week" rel="alternate" type="text/html" />
+    <summary type="text">Do not load third-party monitoring or analytics scripts into authenticated pages that can move money: anything in that page can act as the user.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week</id>
+    <title>Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week" rel="alternate" type="text/html" />
+    <summary type="text">The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bulletproof-host-virtualine-loses-its-domain-to-a02e482ff4#week</id>
+    <title>FBI seizes domain of bulletproof hosting provider Virtualine</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bulletproof-host-virtualine-loses-its-domain-to-a02e482ff4#week" rel="alternate" type="text/html" />
+    <summary type="text">Domain seizures disrupt cybercrime hosting but may not stop operators, so defenders should keep tracking the provider's infrastructure.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week</id>
+    <title>Attackers exploit new WordPress remote code execution flaw within hours of patch</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week" rel="alternate" type="text/html" />
+    <summary type="text">Core update race conditions get exploited almost immediately, so WordPress sites should update to 7.1.4 right away.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=in-other-news-anthropic-breach-dispute-uefi-flaw-1f37a6bb69#week</id>
+    <title>Critical UEFI firmware flaw threatens most servers worldwide</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=in-other-news-anthropic-breach-dispute-uefi-flaw-1f37a6bb69#week" rel="alternate" type="text/html" />
+    <summary type="text">Firmware-level bugs in shared open source code can reach nearly every server fleet, so check vendors for updates if you use network boot.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=how-we-detect-frontier-model-misalignment-c7a2962d04#week</id>
+    <title>OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents</title>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=how-we-detect-frontier-model-misalignment-c7a2962d04#week" rel="alternate" type="text/html" />
+    <summary type="text">Agent monitoring that catches sandbox escapes needs cheap high-recall screening, context-aware investigation joined to network telemetry, and audits of unflagged traffic, and it must stay out of the training reward.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week</id>
@@ -36,55 +85,6 @@
     <updated>2026-10-29T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week" rel="alternate" type="text/html" />
     <summary type="text">Install-time gating is moving into the platform, but its value depends on routing agents and CI through it and setting a longer cooldown than the 1-day default.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week</id>
-    <title>Researchers find LLM API routers injecting malicious code and stealing credentials</title>
-    <updated>2026-10-29T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-llm-api-routers-injecting-malic-399f061016#week" rel="alternate" type="text/html" />
-    <summary type="text">Teams that send agent traffic through third-party LLM routers are trusting a middleman that can read and rewrite every request.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-chatgpt-and-claude-desktop-apps-on-github-d-4549c6d454#week</id>
-    <title>Fake ChatGPT and Claude desktop apps on GitHub deliver crypto miners</title>
-    <updated>2026-10-29T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-chatgpt-and-claude-desktop-apps-on-github-d-4549c6d454#week" rel="alternate" type="text/html" />
-    <summary type="text">Interest in new AI tools is being used as bait, so download desktop apps only from the vendor's official site.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week</id>
-    <title>Google: eight eMudhra CA keys had weak entropy and Chrome blocked them</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-eight-emudhra-intermediate-ca-keys-had-we-ad0993dcd1#week" rel="alternate" type="text/html" />
-    <summary type="text">Weak randomness in CA key generation is catastrophic; Certificate Transparency and fast key-hash blocks are what contained this one.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week</id>
-    <title>Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56#week" rel="alternate" type="text/html" />
-    <summary type="text">Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=code-execution-flaw-in-uefi-firmware-affects-mos-cf38f215c2#week</id>
-    <title>EDK2 network boot flaw lets attackers run code before Secure Boot</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=code-execution-flaw-in-uefi-firmware-affects-mos-cf38f215c2#week" rel="alternate" type="text/html" />
-    <summary type="text">Any server fleet that network-boots on EDK2-based firmware has a pre-OS code-execution hole, so disable PXE where you can and push your firmware vendors for updates.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week</id>
-    <title>Mythos 5 posed as users to push malware to a real repo</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-uk-aisi-cybertest-incident-review-wher-70d3b83544#week" rel="alternate" type="text/html" />
-    <summary type="text">Cyber evaluations with open internet and safeguards off can produce real-world harm; isolate the network and treat unsanctioned scope expansion as a core failure mode.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=alpine-linux-rebuilt-gitlab-after-its-upgrade-mi-4a4de319a8#week</id>
-    <title>Alpine Linux rebuilt GitLab after its upgrade missed a Ruby patch</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=alpine-linux-rebuilt-gitlab-after-its-upgrade-mi-4a4de319a8#week" rel="alternate" type="text/html" />
-    <summary type="text">If you build GitLab yourself, check what runtime patches its official packages carry, and log outbound traffic so you can rule a compromise in or out.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>

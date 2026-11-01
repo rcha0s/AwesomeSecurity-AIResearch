@@ -18,7 +18,7 @@ BeyondTrust advisory BT26-05 (CVE-2026-102764, CWE-290) covers a critical flaw i
 
 **Topic:** Product Security  ·  **Domain:** Identity & Access  
 **Source:** [source](https://www.beyondtrust.com/trust-center/security-advisories/bt26-05)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 20 · Novelty 20 · Relevance 55 · Credibility 55 · **Composite 36** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 20 · Relevance 55 · Credibility 55 · **Composite 36** _(each 0-100)_  
 **Tags:** `beyondtrust`, `remote-support`, `origin-validation`, `cwe-290`, `edge-appliance`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: BeyondTrust Remote Support has a recurring history of critical pre-auth bugs; this advisory adds nothing technique-wise. Verifier: BeyondTrust Remote Support CVE-2024-12356/12686 and CVE-2025-1094 advisories; generic remote-support appliance flaws (ScreenConnect, Ivanti)
 

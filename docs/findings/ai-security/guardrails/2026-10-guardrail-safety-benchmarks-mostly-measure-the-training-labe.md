@@ -19,7 +19,7 @@ In one industrial deployment, the same ~53k prompts were labelled twice: once fo
 
 **Topic:** AI Security  ·  **Domain:** Guardrails & Defensive Tooling  
 **Source:** [Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 20 · Novelty 62 · Relevance 78 · Credibility 51 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 62 · Relevance 78 · Credibility 51 · **Composite 54** _(each 0-100)_  
 **Tags:** `guardrails`, `safety-benchmarks`, `label-policy`, `benchmark-contamination`, `over-refusal`, `eval-methodology`, `distillation`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool's closest entries are the WMDP/BBQ IRT entry behind the benchmark-category-labels claim (safety benchmarks track reasoning) and the archive over-safety benchmark entry ('Test guardrails for name-superstition over-refusal', policy-derived labels). This paper adds a controlled natural experiment: same prompts, two label policies, fixed architecture. It shows that policy, contamination, and teacher soft labels drive guardrail benchmark scores while detection capability stays the same.
 
