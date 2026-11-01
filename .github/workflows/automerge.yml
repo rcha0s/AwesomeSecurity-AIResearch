@@ -128,6 +128,9 @@ jobs:
     needs: [select, test]
     if: always() && github.ref == 'refs/heads/main' && needs.select.result == 'success'
     runs-on: ubuntu-latest
+    # Deployment branch policy: only main may run in this Environment, so a job
+    # from any other ref that names it is refused before it starts.
+    environment: automerge
     permissions:
       contents: write # merge, update-branch
       pull-requests: write # merge, verdict comments
