@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-10-30_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-01_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -96,7 +96,7 @@ Long-lived static cloud credentials are the most common cause of publicly docume
 
 _Tags: `aws`, `credentials`, `oidc`_
 
-<details><summary>Evidence (5)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -105,6 +105,7 @@ _Tags: `aws`, `credentials`, `oidc`_
 | supports | [Attackers harvest gateway secrets from /proc/1/environ on compromised LiteLLM AI infrastructure](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/) | Aug 26, 2026 |
 | supports | [GitHub Actions OpenID Connect: exchange short-lived cloud tokens instead of long-lived secrets](https://docs.github.com/en/actions/concepts/security/openid-connect) | undated |
 | supports | ['Gheist' Weaponizes GitHub Tokens to Steal Cloud Secrets](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) | Oct 26, 2026 |
+| supports | [Northflank security breach leads to abuse of customers' AI API keys](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/) | Oct 31, 2026 |
 
 </details>
 
