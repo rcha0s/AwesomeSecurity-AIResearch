@@ -2945,5 +2945,50 @@
     "added": "2026-10-29",
     "active": true,
     "notes": "F10 state DOI bulletins"
+  },
+  {
+    "id": "rss:https-doublepulsar-com-feed",
+    "type": "rss",
+    "handle": "https://doublepulsar.com/feed",
+    "name": "DoublePulsar (Kevin Beaumont)",
+    "url": "https://doublepulsar.com/feed",
+    "topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-01",
+    "active": true,
+    "notes": "source-scout 2026-10-31 (#108): hit rate 0.5; incident write-ups"
+  },
+  {
+    "id": "rss:https-binarysecurity-no-feed-xml",
+    "type": "rss",
+    "handle": "https://binarysecurity.no/feed.xml",
+    "name": "Binary Security",
+    "url": "https://binarysecurity.no/feed.xml",
+    "topics": [
+      "product-security"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-01",
+    "active": true,
+    "notes": "source-scout 2026-10-31 (#108): hit rate 0.6; cloud and CI research"
   }
 ]
