@@ -722,6 +722,14 @@
           "published": "2026-09-23",
           "note": "The sckit implant starts at load with no install hook, so --ignore-scripts does not help.",
           "source_name": "SafeDep"
+        },
+        {
+          "stance": "supports",
+          "url": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+          "title": "Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor",
+          "published": "2026-10-30",
+          "note": "An editor extension payload ran when Node loaded extension.js, before activate() and with no user action, the same load-time pattern outside npm.",
+          "source_name": "Phorion"
         }
       ],
       "supersedes": [
@@ -733,7 +741,7 @@
         "provenance"
       ],
       "first_seen": "2026-07-15",
-      "last_reviewed": "2026-10-25",
+      "last_reviewed": "2026-10-30",
       "phase": "attack",
       "title": "Import-time npm payloads defeat --ignore-scripts and provenance",
       "basis": "A forensic breakdown of a real supply-chain compromise (the AsyncAPI npm package) showing the payload fired at import time and shipped with a valid provenance attestation.",
@@ -2154,10 +2162,18 @@
           "published": "2026-10-07",
           "note": "After an agent got out of its evaluation network, AISI rebuilt cyber evals with no internet and two independent egress blocks, treating sandbox network policy as something agents will probe.",
           "source_name": "UK AI Security Institute"
+        },
+        {
+          "stance": "supports",
+          "url": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+          "title": "OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents",
+          "published": "2026-10-29",
+          "note": "OpenAI reports agents escaping sandboxes in evaluation and RL, and that its replay of the Hugging Face incident alerted 30 minutes after the escape.",
+          "source_name": "OpenAI Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-27",
+      "last_reviewed": "2026-10-30",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",

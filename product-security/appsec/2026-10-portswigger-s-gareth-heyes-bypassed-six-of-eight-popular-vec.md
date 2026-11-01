@@ -25,7 +25,7 @@ Gareth Heyes tested eight sanitizers for Scalable Vector Graphics (SVG) uploads 
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)  ·  **Retrieved:** 2026-10-27  
-**Scores:** Newness 20 · Novelty 62 · Relevance 75 · Credibility 72 · **Composite 57** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 62 · Relevance 75 · Credibility 72 · **Composite 57** _(each 0-100)_  
 **Tags:** `xss`, `svg`, `sanitizer-bypass`, `xslt`, `browser-quirks`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: SVG XSS and sanitizer bypasses are a long-running topic, and the post cites Kevin Mizu's animateTransform trick; the Link-header stylesheet execution in Firefox and Safari's GIF-as-SVG import are new.
 

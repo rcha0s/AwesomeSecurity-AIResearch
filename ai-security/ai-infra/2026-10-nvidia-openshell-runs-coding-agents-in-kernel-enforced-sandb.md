@@ -17,7 +17,7 @@ NVIDIA OpenShell is an open-source runtime (about 20,600 GitHub stars; v0.1.6 on
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 20 · Novelty 60 · Relevance 85 · Credibility 50 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 19 · Novelty 60 · Relevance 85 · Credibility 50 · **Composite 56** _(each 0-100)_  
 **Tags:** `sandbox`, `coding-agents`, `landlock`, `seccomp`, `egress-policy`, `nvidia`, `openshell`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Other agent sandboxes (containers, microVMs, Claude Code's own sandbox) isolate similarly; OpenShell's difference is the declarative policy with hot-reloadable network rules and credential placeholders.
 
