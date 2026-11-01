@@ -102,16 +102,22 @@
     {
       "topic": "ai-security",
       "tag": "prompt-injection",
-      "count": 38,
-      "recent": 10,
+      "count": 39,
+      "recent": 11,
       "baseline": 4.7,
       "state": "rising",
-      "excess": 5.3,
-      "momentum": 5.3,
+      "excess": 6.3,
+      "momentum": 6.3,
       "sources": 20,
       "first_seen": "2026-02",
-      "last_seen": "2026-10-28",
+      "last_seen": "2026-10-30",
       "members": [
+        {
+          "title": "Tamga's prompt-injection rules caught 27 of 203 attacks written by others",
+          "url": "https://github.com/yatuk/tamga",
+          "date": "2026-10-30",
+          "fresh": true
+        },
         {
           "title": "CollieAi's LLM Firewall filters prompts and responses through a hosted proxy",
           "url": "https://github.com/CollieAi/llm-firewall",
@@ -344,93 +350,111 @@
     },
     {
       "topic": "ai-security",
-      "tag": "sandbox-escape",
-      "count": 13,
+      "tag": "guardrails",
+      "count": 16,
       "recent": 6,
-      "baseline": 1.2,
+      "baseline": 1.7,
       "state": "rising",
-      "excess": 4.8,
-      "momentum": 4.8,
-      "sources": 11,
-      "first_seen": "2026-07-15",
-      "last_seen": "2026-10-29",
+      "excess": 4.3,
+      "momentum": 4.3,
+      "sources": 9,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-10-31",
       "members": [
         {
-          "title": "OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents",
-          "url": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
-          "date": "2026-10-29",
+          "title": "OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails",
+          "url": "https://github.com/openguardrails/openguardrails",
+          "date": "2026-10-31",
           "fresh": true
         },
         {
-          "title": "OpenAI had frontier agents red-team its training containment, and they escaped",
-          "url": "https://openai.com/index/securing-our-frontier-model-training-environment",
-          "date": "2026-10-23",
+          "title": "CollieAi's LLM Firewall filters prompts and responses through a hosted proxy",
+          "url": "https://github.com/CollieAi/llm-firewall",
+          "date": "2026-10-28",
           "fresh": true
         },
         {
-          "title": "Vercel's $1M Firecracker sandbox-escape challenge drew 1,285 reports in two weeks",
-          "url": "https://www.securityweek.com/1-million-sandbox-challenge-uncovers-linux-kernel-flaws",
-          "date": "2026-10-08",
+          "title": "SCOPE compiles natural-language agent policies into predicate programs run by small models",
+          "url": "https://arxiv.org/abs/2610.31062",
+          "date": "2026-10-22",
           "fresh": true
         },
         {
-          "title": "Perplexity found no VM-to-host escape across 9 models, details not captured",
-          "url": "https://www.perplexity.ai/hub/blog/escaping-space-part-i",
-          "date": "2026-10-08",
+          "title": "Guardrail safety benchmarks mostly measure the training label policy",
+          "url": "https://arxiv.org/abs/2610.25060",
+          "date": "2026-10-18",
           "fresh": true
         },
         {
-          "title": "UK AISI resumes most cyber evals with the internet turned off",
-          "url": "https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities",
+          "title": "MFOTL monitor flags 71.8% of STAC but fires on 29.3% of benign",
+          "url": "http://arxiv.org/abs/2610.09793v1",
           "date": "2026-10-07",
           "fresh": true
         },
         {
-          "title": "METR tells Senate sandboxed agents shared a board and hacked Hugging Face",
-          "url": "https://metr.org/blog/2026-09-30-chris-painter-senate-testimony/",
-          "date": "2026-09-30",
+          "title": "Red Hat finds Jev-style models not faster or more accurate than LLM-as-a-judge",
+          "url": "https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails",
+          "date": "2026-10-02",
           "fresh": true
         },
         {
-          "title": "Anthropic: Claude cyber-eval incidents reached real third-party systems via a misconfigured sandbox",
-          "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
-          "date": "2026-09-09",
+          "title": "CC Safety Net blocks destructive agent commands by parsing intent, not strings",
+          "url": "https://github.com/kenryu42/cc-safety-net",
+          "date": "2026-09-08",
           "fresh": false
         },
         {
-          "title": "OpenAI's training-time agents exploited a CGI bug and an egress-filter bypass",
-          "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
-          "date": "2026-09-04",
-          "fresh": false
-        },
-        {
-          "title": "Claude Code Opus 5 Auto Mode tricked into RCE via website summarization",
-          "url": "https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372",
+          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
+          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
           "date": "2026-08-28",
           "fresh": false
         },
         {
-          "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
-          "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
-          "date": "2026-08-03",
+          "title": "Scary object names make agent guardrails over-refuse legitimate actions",
+          "url": "https://arxiv.org/abs/2608.27009",
+          "date": "2026-08-27",
           "fresh": false
         },
         {
-          "title": "OpenAI's Hugging Face incident shows the generator can't be the validator",
-          "url": "https://snyk.io/blog/openai-hugging-face-incident/",
-          "date": "2026-07-28",
+          "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
+          "url": "https://arxiv.org/abs/2608.25817",
+          "date": "2026-08-26",
           "fresh": false
         },
         {
-          "title": "AWS Bedrock AgentCore Python SDK install_packages() injection gives RCE in sandbox",
-          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
-          "date": "2026-07-24",
+          "title": "Pydantic AI Ships Official First-Party Guardrails, Upstreaming a Community Library",
+          "url": "https://github.com/pydantic/pydantic-ai-harness",
+          "date": "2026-08-17",
           "fresh": false
         },
         {
-          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
-          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
-          "date": "2026-07-15",
+          "title": "fu351/Doberman-Core",
+          "url": "https://github.com/fu351/Doberman-Core",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
+          "url": "https://arxiv.org/abs/2604.00310",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "ECHO is a locally deployable agentic health assistant with safety guardrails",
+          "url": "https://arxiv.org/abs/2608.06110",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
+          "url": "https://arxiv.org/abs/2608.05695",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -527,6 +551,99 @@
     },
     {
       "topic": "ai-security",
+      "tag": "sandbox-escape",
+      "count": 13,
+      "recent": 5,
+      "baseline": 1.4,
+      "state": "rising",
+      "excess": 3.6,
+      "momentum": 3.6,
+      "sources": 11,
+      "first_seen": "2026-07-15",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents",
+          "url": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI had frontier agents red-team its training containment, and they escaped",
+          "url": "https://openai.com/index/securing-our-frontier-model-training-environment",
+          "date": "2026-10-23",
+          "fresh": true
+        },
+        {
+          "title": "Vercel's $1M Firecracker sandbox-escape challenge drew 1,285 reports in two weeks",
+          "url": "https://www.securityweek.com/1-million-sandbox-challenge-uncovers-linux-kernel-flaws",
+          "date": "2026-10-08",
+          "fresh": true
+        },
+        {
+          "title": "Perplexity found no VM-to-host escape across 9 models, details not captured",
+          "url": "https://www.perplexity.ai/hub/blog/escaping-space-part-i",
+          "date": "2026-10-08",
+          "fresh": true
+        },
+        {
+          "title": "UK AISI resumes most cyber evals with the internet turned off",
+          "url": "https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities",
+          "date": "2026-10-07",
+          "fresh": true
+        },
+        {
+          "title": "METR tells Senate sandboxed agents shared a board and hacked Hugging Face",
+          "url": "https://metr.org/blog/2026-09-30-chris-painter-senate-testimony/",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "Anthropic: Claude cyber-eval incidents reached real third-party systems via a misconfigured sandbox",
+          "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
+          "date": "2026-09-09",
+          "fresh": false
+        },
+        {
+          "title": "OpenAI's training-time agents exploited a CGI bug and an egress-filter bypass",
+          "url": "https://simonwillison.net/2026/Sep/4/rogue-agent-wikis/",
+          "date": "2026-09-04",
+          "fresh": false
+        },
+        {
+          "title": "Claude Code Opus 5 Auto Mode tricked into RCE via website summarization",
+          "url": "https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372",
+          "date": "2026-08-28",
+          "fresh": false
+        },
+        {
+          "title": "Watching Agents Work: A Behavioral Audit of Offensive-Security LLM Runs",
+          "url": "https://projectdiscovery.io/blog/watching-agents-work-a-behavioral-audit-of-offensive-security-llm-runs",
+          "date": "2026-08-03",
+          "fresh": false
+        },
+        {
+          "title": "OpenAI's Hugging Face incident shows the generator can't be the validator",
+          "url": "https://snyk.io/blog/openai-hugging-face-incident/",
+          "date": "2026-07-28",
+          "fresh": false
+        },
+        {
+          "title": "AWS Bedrock AgentCore Python SDK install_packages() injection gives RCE in sandbox",
+          "url": "https://github.com/advisories/GHSA-j6g5-3hh3-pgw8",
+          "date": "2026-07-24",
+          "fresh": false
+        },
+        {
+          "title": "ToolHive MCP SSRF: host-side discovery runs outside the sandbox it enforces",
+          "url": "https://github.com/advisories/GHSA-pr64-jmmf-jp54",
+          "date": "2026-07-15",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "red-teaming",
       "count": 7,
       "recent": 4,
@@ -578,111 +695,6 @@
           "title": "Meta's frontier model broke out during cyber evals, like OpenAI's and Anthropic's",
           "url": "https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/",
           "date": "2026-08-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "guardrails",
-      "count": 15,
-      "recent": 5,
-      "baseline": 1.7,
-      "state": "rising",
-      "excess": 3.3,
-      "momentum": 3.3,
-      "sources": 9,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-10-28",
-      "members": [
-        {
-          "title": "CollieAi's LLM Firewall filters prompts and responses through a hosted proxy",
-          "url": "https://github.com/CollieAi/llm-firewall",
-          "date": "2026-10-28",
-          "fresh": true
-        },
-        {
-          "title": "SCOPE compiles natural-language agent policies into predicate programs run by small models",
-          "url": "https://arxiv.org/abs/2610.31062",
-          "date": "2026-10-22",
-          "fresh": true
-        },
-        {
-          "title": "Guardrail safety benchmarks mostly measure the training label policy",
-          "url": "https://arxiv.org/abs/2610.25060",
-          "date": "2026-10-18",
-          "fresh": true
-        },
-        {
-          "title": "MFOTL monitor flags 71.8% of STAC but fires on 29.3% of benign",
-          "url": "http://arxiv.org/abs/2610.09793v1",
-          "date": "2026-10-07",
-          "fresh": true
-        },
-        {
-          "title": "Red Hat finds Jev-style models not faster or more accurate than LLM-as-a-judge",
-          "url": "https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails",
-          "date": "2026-10-02",
-          "fresh": true
-        },
-        {
-          "title": "CC Safety Net blocks destructive agent commands by parsing intent, not strings",
-          "url": "https://github.com/kenryu42/cc-safety-net",
-          "date": "2026-09-08",
-          "fresh": false
-        },
-        {
-          "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
-          "url": "https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/",
-          "date": "2026-08-28",
-          "fresh": false
-        },
-        {
-          "title": "Scary object names make agent guardrails over-refuse legitimate actions",
-          "url": "https://arxiv.org/abs/2608.27009",
-          "date": "2026-08-27",
-          "fresh": false
-        },
-        {
-          "title": "SkillShield: Prompt-Space Security Skills for LLM Coding Agents",
-          "url": "https://arxiv.org/abs/2608.25817",
-          "date": "2026-08-26",
-          "fresh": false
-        },
-        {
-          "title": "Pydantic AI Ships Official First-Party Guardrails, Upstreaming a Community Library",
-          "url": "https://github.com/pydantic/pydantic-ai-harness",
-          "date": "2026-08-17",
-          "fresh": false
-        },
-        {
-          "title": "fu351/Doberman-Core",
-          "url": "https://github.com/fu351/Doberman-Core",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "CASA: Classification Augmented with Safety Attention for Robust Multimodal Alignment",
-          "url": "https://arxiv.org/abs/2604.00310",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "ECHO is a locally deployable agentic health assistant with safety guardrails",
-          "url": "https://arxiv.org/abs/2608.06110",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "DreamGuard: Efficient Runtime Guardrail for LLM Agents via Risk-Aware World Model",
-          "url": "https://arxiv.org/abs/2608.05695",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -819,6 +831,78 @@
           "url": "https://arxiv.org/abs/2610.25060",
           "date": "2026-10-18",
           "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "llmjacking",
+      "count": 3,
+      "recent": 3,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 3.0,
+      "momentum": 3.0,
+      "sources": 3,
+      "first_seen": "2026-10-06",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "Northflank breach exposed customer secrets, and stolen AI API keys were used",
+          "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "Wiz: LLMjacking via phished Google Cloud admins linking attacker projects",
+          "url": "https://www.wiz.io/blog/from-phishing-to-llmjacking",
+          "date": "2026-10-20",
+          "fresh": true
+        },
+        {
+          "title": "Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls",
+          "url": "https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/",
+          "date": "2026-10-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "aws",
+      "count": 4,
+      "recent": 3,
+      "baseline": 0.2,
+      "state": "rising",
+      "excess": 2.8,
+      "momentum": 2.8,
+      "sources": 3,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Adan Alvarez tested which AWS attacks 14 LLMs propose with stolen keys",
+          "url": "https://medium.com/@adan.alvarez/i-gave-14-llms-aws-keys-heres-what-they-wanted-to-do-next-48585761a11b",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials",
+          "url": "https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model",
+          "date": "2026-10-15",
+          "fresh": true
+        },
+        {
+          "title": "Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls",
+          "url": "https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/",
+          "date": "2026-10-06",
+          "fresh": true
+        },
+        {
+          "title": "AWS API MCP Server fails open and silently bypasses its security policy",
+          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+          "date": "2026-07-24",
+          "fresh": false
         }
       ]
     },
@@ -1169,33 +1253,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "agents-md",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-09-30",
-      "last_seen": "2026-10-25",
-      "members": [
-        {
-          "title": "Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents",
-          "url": "https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/",
-          "date": "2026-10-25",
-          "fresh": true
-        },
-        {
-          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
-          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
-          "date": "2026-09-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "benchmark-contamination",
       "count": 2,
       "recent": 2,
@@ -1217,6 +1274,60 @@
           "title": "Guardrail safety benchmarks mostly measure the training label policy",
           "url": "https://arxiv.org/abs/2610.25060",
           "date": "2026-10-18",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "black-october",
+      "count": 2,
+      "recent": 2,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 2.0,
+      "momentum": 2.0,
+      "sources": 2,
+      "first_seen": "2026-10-23",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "Northflank breach exposed customer secrets, and stolen AI API keys were used",
+          "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "\"Black October\" is an X label for a week of disclosures",
+          "url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+          "date": "2026-10-23",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "cloudtrail",
+      "count": 2,
+      "recent": 2,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 2.0,
+      "momentum": 2.0,
+      "sources": 2,
+      "first_seen": "2026-10-06",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Adan Alvarez tested which AWS attacks 14 LLMs propose with stolen keys",
+          "url": "https://medium.com/@adan.alvarez/i-gave-14-llms-aws-keys-heres-what-they-wanted-to-do-next-48585761a11b",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls",
+          "url": "https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/",
+          "date": "2026-10-06",
           "fresh": true
         }
       ]
@@ -1250,6 +1361,33 @@
     },
     {
       "topic": "ai-security",
+      "tag": "detection-engineering",
+      "count": 2,
+      "recent": 2,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 2.0,
+      "momentum": 2.0,
+      "sources": 2,
+      "first_seen": "2026-10-06",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Adan Alvarez tested which AWS attacks 14 LLMs propose with stolen keys",
+          "url": "https://medium.com/@adan.alvarez/i-gave-14-llms-aws-keys-heres-what-they-wanted-to-do-next-48585761a11b",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls",
+          "url": "https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/",
+          "date": "2026-10-06",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "iam",
       "count": 2,
       "recent": 2,
@@ -1277,33 +1415,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "indirect-prompt-injection",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-09-30",
-      "last_seen": "2026-10-25",
-      "members": [
-        {
-          "title": "Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents",
-          "url": "https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/",
-          "date": "2026-10-25",
-          "fresh": true
-        },
-        {
-          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
-          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
-          "date": "2026-09-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "label-policy",
       "count": 2,
       "recent": 2,
@@ -1325,33 +1436,6 @@
           "title": "Guardrail safety benchmarks mostly measure the training label policy",
           "url": "https://arxiv.org/abs/2610.25060",
           "date": "2026-10-18",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "llmjacking",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-10-06",
-      "last_seen": "2026-10-20",
-      "members": [
-        {
-          "title": "Wiz: LLMjacking via phished Google Cloud admins linking attacker projects",
-          "url": "https://www.wiz.io/blog/from-phishing-to-llmjacking",
-          "date": "2026-10-20",
-          "fresh": true
-        },
-        {
-          "title": "Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls",
-          "url": "https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/",
-          "date": "2026-10-06",
           "fresh": true
         }
       ]
@@ -1412,33 +1496,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "vendor-marketing",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-19",
-      "members": [
-        {
-          "title": "Microsoft frames agents as insiders and announces Dynamic Permissions and Guardian Agents",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/",
-          "date": "2026-10-19",
-          "fresh": true
-        },
-        {
-          "title": "Chainguard hardens agent skills by scanning, signing and digest-pinning them",
-          "url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
-          "date": "2026-10-01",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "windows",
       "count": 2,
       "recent": 2,
@@ -1493,7 +1550,7 @@
     },
     {
       "topic": "ai-security",
-      "tag": "aws",
+      "tag": "agent-telemetry",
       "count": 3,
       "recent": 2,
       "baseline": 0.2,
@@ -1501,25 +1558,58 @@
       "excess": 1.8,
       "momentum": 1.8,
       "sources": 3,
-      "first_seen": "2026-07-24",
-      "last_seen": "2026-10-15",
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-10-31",
       "members": [
         {
-          "title": "Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials",
-          "url": "https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model",
-          "date": "2026-10-15",
+          "title": "OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails",
+          "url": "https://github.com/openguardrails/openguardrails",
+          "date": "2026-10-31",
           "fresh": true
         },
         {
-          "title": "Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls",
-          "url": "https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/",
-          "date": "2026-10-06",
+          "title": "Warp: vendor breach exposed agent logs for roughly 1% of users",
+          "url": "https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/",
+          "date": "2026-10-27",
           "fresh": true
         },
         {
-          "title": "AWS API MCP Server fails open and silently bypasses its security policy",
-          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
-          "date": "2026-07-24",
+          "title": "OpenAI didn't notice its agents using a message board to plan hacking",
+          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
+          "date": "2026-08-06",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "api-keys",
+      "count": 3,
+      "recent": 2,
+      "baseline": 0.2,
+      "state": "rising",
+      "excess": 1.8,
+      "momentum": 1.8,
+      "sources": 3,
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "Northflank breach exposed customer secrets, and stolen AI API keys were used",
+          "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "Blogger argues teams should self-host an LLM proxy for per-key request logs",
+          "url": "https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/",
+          "date": "2026-10-18",
+          "fresh": true
+        },
+        {
+          "title": "Stolen AI API keys are resold through gray-market 'transfer stations'",
+          "url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
+          "date": "2026-08-06",
           "fresh": false
         }
       ]
@@ -1724,45 +1814,6 @@
           "title": "CARE: Pre-Execution Command Verification for Shell-Executing LLM Agents",
           "url": "https://arxiv.org/abs/2607.21642",
           "date": "2026-07-21",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "agent-skills",
-      "count": 4,
-      "recent": 2,
-      "baseline": 0.3,
-      "state": "rising",
-      "excess": 1.7,
-      "momentum": 1.7,
-      "sources": 4,
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-10-11",
-      "members": [
-        {
-          "title": "SkillMarker watermarks agent skill files to trace copying",
-          "url": "https://arxiv.org/abs/2610.15725",
-          "date": "2026-10-11",
-          "fresh": true
-        },
-        {
-          "title": "Chainguard hardens agent skills by scanning, signing and digest-pinning them",
-          "url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Skill cascading attacks split a harmful goal across benign-looking agent skills",
-          "url": "http://arxiv.org/abs/2609.30383v1",
-          "date": "2026-09-24",
-          "fresh": false
-        },
-        {
-          "title": "SkillSec-Eval shows agent skill security is a lifecycle problem, not just runtime",
-          "url": "https://arxiv.org/abs/2607.13987",
-          "date": "2026-07-16",
           "fresh": false
         }
       ]
@@ -2048,6 +2099,51 @@
     },
     {
       "topic": "ai-security",
+      "tag": "incident-response",
+      "count": 5,
+      "recent": 2,
+      "baseline": 0.5,
+      "state": "rising",
+      "excess": 1.5,
+      "momentum": 1.5,
+      "sources": 4,
+      "first_seen": "2026-07-19",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "Northflank breach exposed customer secrets, and stolen AI API keys were used",
+          "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents",
+          "url": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "OpenAI draft safety cases for RL training allow no chain-of-thought in graders",
+          "url": "https://openai.com/index/towards-safety-cases-for-frontier-ai-training",
+          "date": "2026-09-28",
+          "fresh": false
+        },
+        {
+          "title": "Frontier AI agents compress a two-week intrusion into 10 hours",
+          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
+          "date": "2026-09-02",
+          "fresh": false
+        },
+        {
+          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
+          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
+          "date": "2026-07-19",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "litellm",
       "count": 5,
       "recent": 2,
@@ -2279,7 +2375,7 @@
           "title": "Decoding-control jailbreaks work through text-only APIs using repeated sampling and assistant-prefix continuation",
           "url": "https://arxiv.org/abs/2609.36956",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety",
@@ -2804,6 +2900,45 @@
     },
     {
       "topic": "ai-security",
+      "tag": "agent-skills",
+      "count": 4,
+      "recent": 1,
+      "baseline": 0.5,
+      "state": "steady",
+      "excess": 0.5,
+      "momentum": 0.0,
+      "sources": 4,
+      "first_seen": "2026-07-16",
+      "last_seen": "2026-10-11",
+      "members": [
+        {
+          "title": "SkillMarker watermarks agent skill files to trace copying",
+          "url": "https://arxiv.org/abs/2610.15725",
+          "date": "2026-10-11",
+          "fresh": true
+        },
+        {
+          "title": "Chainguard hardens agent skills by scanning, signing and digest-pinning them",
+          "url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Skill cascading attacks split a harmful goal across benign-looking agent skills",
+          "url": "http://arxiv.org/abs/2609.30383v1",
+          "date": "2026-09-24",
+          "fresh": false
+        },
+        {
+          "title": "SkillSec-Eval shows agent skill security is a lifecycle problem, not just runtime",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "date": "2026-07-16",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "coding-agent",
       "count": 4,
       "recent": 1,
@@ -2915,45 +3050,6 @@
           "title": "Quoting OpenClaw",
           "url": "https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything",
           "date": "2026-08-10",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "incident-response",
-      "count": 4,
-      "recent": 1,
-      "baseline": 0.5,
-      "state": "steady",
-      "excess": 0.5,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-07-19",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents",
-          "url": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "OpenAI draft safety cases for RL training allow no chain-of-thought in graders",
-          "url": "https://openai.com/index/towards-safety-cases-for-frontier-ai-training",
-          "date": "2026-09-28",
-          "fresh": false
-        },
-        {
-          "title": "Frontier AI agents compress a two-week intrusion into 10 hours",
-          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/",
-          "date": "2026-09-02",
-          "fresh": false
-        },
-        {
-          "title": "Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion",
-          "url": "https://embracethered.com/blog/posts/2026/ai-intrusion-are-now-real/",
-          "date": "2026-07-19",
           "fresh": false
         }
       ]
@@ -3164,39 +3260,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "data-exfiltration",
-      "count": 3,
-      "recent": 1,
-      "baseline": 0.3,
-      "state": "steady",
-      "excess": 0.7,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-16",
-      "last_seen": "2026-09-30",
-      "members": [
-        {
-          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
-          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
-          "date": "2026-09-30",
-          "fresh": true
-        },
-        {
-          "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
-          "url": "https://arxiv.org/abs/2608.27092",
-          "date": "2026-08-27",
-          "fresh": false
-        },
-        {
-          "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
-          "url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
-          "date": "2026-08-16",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "data-poisoning",
       "count": 3,
       "recent": 1,
@@ -3218,7 +3281,7 @@
           "title": "Vaccine and Booster combined trade content safety against refusals in fine-tuning",
           "url": "http://arxiv.org/abs/2609.36862v1",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "(A)iSpy moves the trojan into the ML runtime",
@@ -3710,33 +3773,6 @@
     },
     {
       "topic": "ai-security",
-      "tag": "agent-telemetry",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-06",
-      "last_seen": "2026-10-27",
-      "members": [
-        {
-          "title": "Warp: vendor breach exposed agent logs for roughly 1% of users",
-          "url": "https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/",
-          "date": "2026-10-27",
-          "fresh": true
-        },
-        {
-          "title": "OpenAI didn't notice its agents using a message board to plan hacking",
-          "url": "https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/",
-          "date": "2026-08-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
       "tag": "agentdojo",
       "count": 2,
       "recent": 1,
@@ -3764,6 +3800,33 @@
     },
     {
       "topic": "ai-security",
+      "tag": "agents-md",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-10-25",
+      "members": [
+        {
+          "title": "Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents",
+          "url": "https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/",
+          "date": "2026-10-25",
+          "fresh": true
+        },
+        {
+          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
+          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
+          "date": "2026-09-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "ai-red-teaming",
       "count": 2,
       "recent": 1,
@@ -3785,33 +3848,6 @@
           "title": "Isolated AI security tools report clean while attackers reach an execution sink",
           "url": "https://snyk.io/blog/why-your-ai-application-is-exposed/",
           "date": "2026-08-26",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-security",
-      "tag": "api-keys",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-06",
-      "last_seen": "2026-10-18",
-      "members": [
-        {
-          "title": "Blogger argues teams should self-host an LLM proxy for per-key request logs",
-          "url": "https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/",
-          "date": "2026-10-18",
-          "fresh": true
-        },
-        {
-          "title": "Stolen AI API keys are resold through gray-market 'transfer stations'",
-          "url": "https://unit42.paloaltonetworks.com/ai-token-jacking/",
-          "date": "2026-08-06",
           "fresh": false
         }
       ]
@@ -3980,6 +4016,60 @@
     },
     {
       "topic": "ai-security",
+      "tag": "fail-open",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails",
+          "url": "https://github.com/openguardrails/openguardrails",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "AWS API MCP Server fails open and silently bypasses its security policy",
+          "url": "https://github.com/advisories/GHSA-29w2-fq35-v728",
+          "date": "2026-07-24",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "indirect-prompt-injection",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-10-25",
+      "members": [
+        {
+          "title": "Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents",
+          "url": "https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/",
+          "date": "2026-10-25",
+          "fresh": true
+        },
+        {
+          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
+          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
+          "date": "2026-09-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "langflow",
       "count": 2,
       "recent": 1,
@@ -4136,7 +4226,7 @@
           "title": "GradSafe-style gradient jailbreak detection drops sharply on real multi-turn chats",
           "url": "http://arxiv.org/abs/2609.36849v1",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         }
       ]
     },
@@ -4250,7 +4340,7 @@
     },
     {
       "topic": "ai-security",
-      "tag": "privilege-escalation",
+      "tag": "protocol",
       "count": 2,
       "recent": 1,
       "baseline": 0.2,
@@ -4258,19 +4348,19 @@
       "excess": 0.8,
       "momentum": 0.0,
       "sources": 2,
-      "first_seen": "2026-08-03",
-      "last_seen": "2026-09-30",
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-10-31",
       "members": [
         {
-          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
-          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
-          "date": "2026-09-30",
+          "title": "OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails",
+          "url": "https://github.com/openguardrails/openguardrails",
+          "date": "2026-10-31",
           "fresh": true
         },
         {
-          "title": "google/adk-python CI prompt injection let a public agent leak a token",
-          "url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
-          "date": "2026-08-03",
+          "title": "modelcontextprotocol/modelcontextprotocol",
+          "url": "https://github.com/modelcontextprotocol/modelcontextprotocol",
+          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -4439,7 +4529,7 @@
     },
     {
       "topic": "ai-security",
-      "tag": "skill-supply-chain",
+      "tag": "secrets",
       "count": 2,
       "recent": 1,
       "baseline": 0.2,
@@ -4447,20 +4537,74 @@
       "excess": 0.8,
       "momentum": 0.0,
       "sources": 2,
-      "first_seen": "2026-09-24",
-      "last_seen": "2026-10-01",
+      "first_seen": "2026-08-09",
+      "last_seen": "2026-10-31",
       "members": [
+        {
+          "title": "Northflank breach exposed customer secrets, and stolen AI API keys were used",
+          "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "affaan-m/agentshield",
+          "url": "https://github.com/affaan-m/agentshield",
+          "date": "2026-08-09",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "standards",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails",
+          "url": "https://github.com/openguardrails/openguardrails",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "OWASP GenAI Security Project unveils its 2026 Top 10 for LLM Applications",
+          "url": "https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/",
+          "date": "2026-09-02",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "vendor-marketing",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-19",
+      "members": [
+        {
+          "title": "Microsoft frames agents as insiders and announces Dynamic Permissions and Guardian Agents",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/",
+          "date": "2026-10-19",
+          "fresh": true
+        },
         {
           "title": "Chainguard hardens agent skills by scanning, signing and digest-pinning them",
           "url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
           "date": "2026-10-01",
           "fresh": true
-        },
-        {
-          "title": "Skill cascading attacks split a harmful goal across benign-looking agent skills",
-          "url": "http://arxiv.org/abs/2609.30383v1",
-          "date": "2026-09-24",
-          "fresh": false
         }
       ]
     },
@@ -5054,6 +5198,39 @@
     },
     {
       "topic": "ai-security",
+      "tag": "data-exfiltration",
+      "count": 3,
+      "recent": 0,
+      "baseline": 0.5,
+      "state": "quiet",
+      "excess": -0.5,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-08-16",
+      "last_seen": "2026-09-30",
+      "members": [
+        {
+          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
+          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "The Framing Gap: reframed indirect prompt-injection exfiltration defeats surface-level defenses",
+          "url": "https://arxiv.org/abs/2608.27092",
+          "date": "2026-08-27",
+          "fresh": false
+        },
+        {
+          "title": "Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay",
+          "url": "https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/",
+          "date": "2026-08-16",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "irregular",
       "count": 3,
       "recent": 0,
@@ -5396,7 +5573,7 @@
           "title": "GradSafe-style gradient jailbreak detection drops sharply on real multi-turn chats",
           "url": "http://arxiv.org/abs/2609.36849v1",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Post-Hoc Trajectory-Risk Certification for Modular LLM-Based Security Agents",
@@ -5531,7 +5708,7 @@
           "title": "GradSafe-style gradient jailbreak detection drops sharply on real multi-turn chats",
           "url": "http://arxiv.org/abs/2609.36849v1",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Scary object names make agent guardrails over-refuse legitimate actions",
@@ -5840,6 +6017,33 @@
     },
     {
       "topic": "ai-security",
+      "tag": "privilege-escalation",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-09-30",
+      "members": [
+        {
+          "title": "SQL Server Management Studio Copilot can be steered into granting sysadmin",
+          "url": "https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "google/adk-python CI prompt injection let a public agent leak a token",
+          "url": "https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496",
+          "date": "2026-08-03",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
       "tag": "rag",
       "count": 2,
       "recent": 0,
@@ -5969,6 +6173,33 @@
           "title": "ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs",
           "url": "https://arxiv.org/abs/2607.17503",
           "date": "2026-07-20",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-security",
+      "tag": "skill-supply-chain",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-09-24",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Chainguard hardens agent skills by scanning, signing and digest-pinning them",
+          "url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Skill cascading attacks split a harmful goal across benign-looking agent skills",
+          "url": "http://arxiv.org/abs/2609.30383v1",
+          "date": "2026-09-24",
           "fresh": false
         }
       ]
@@ -6502,7 +6733,7 @@
           "title": "Wiz Blue Agent traces a stolen GitHub token to hardcoded AWS keys",
           "url": "https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Semgrep adds incident-specific rescans and automated response playbooks for compromised-package events",
@@ -6565,7 +6796,7 @@
           "title": "Wiz Blue Agent traces a stolen GitHub token to hardcoded AWS keys",
           "url": "https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "MemTensor packages shipped the 'sckit' Go worm after stolen publish tokens",
@@ -6865,6 +7096,45 @@
     },
     {
       "topic": "product-security",
+      "tag": "infostealer",
+      "count": 4,
+      "recent": 4,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 4.0,
+      "momentum": 4.0,
+      "sources": 4,
+      "first_seen": "2026-10-02",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "VOLTA infostealer uses an LLM to rank victims' assets by value",
+          "url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "Check Point digest: PHP2Shell attempts reportedly rose from thousands to millions",
+          "url": "https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/",
+          "date": "2026-10-26",
+          "fresh": true
+        },
+        {
+          "title": "ANY.RUN ties 1,258 sandbox analyses to fake Claude, ChatGPT and Copilot",
+          "url": "https://any.run/cybersecurity-blog/fake-ai-tools-us-companies/",
+          "date": "2026-10-14",
+          "fresh": true
+        },
+        {
+          "title": "Hijacked coding assistant recommended a PyPI package that stole GitHub tokens",
+          "url": "https://safedep.io/ai-coding-assistant-hijack-shai-hulud",
+          "date": "2026-10-02",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "linux-kernel",
       "count": 4,
       "recent": 4,
@@ -6904,51 +7174,45 @@
     },
     {
       "topic": "product-security",
-      "tag": "xss",
-      "count": 6,
+      "tag": "denial-of-service",
+      "count": 5,
       "recent": 4,
-      "baseline": 0.3,
+      "baseline": 0.2,
       "state": "rising",
-      "excess": 3.7,
-      "momentum": 3.7,
-      "sources": 6,
-      "first_seen": "2026-08-25",
-      "last_seen": "2026-10-28",
+      "excess": 3.8,
+      "momentum": 3.8,
+      "sources": 4,
+      "first_seen": "2026-09-23",
+      "last_seen": "2026-10-29",
       "members": [
         {
-          "title": "Adobe patches eight critical flaws in Campaign Classic",
-          "url": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
-          "date": "2026-10-28",
+          "title": "Google declines to fix zero-click SMS that crashes Android telephony",
+          "url": "https://smsofdeath.com/",
+          "date": "2026-10-29",
           "fresh": true
         },
         {
-          "title": "PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers",
-          "url": "https://portswigger.net/research/scalable-vector-grief",
-          "date": "2026-10-27",
+          "title": "Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+          "date": "2026-10-29",
           "fresh": true
         },
         {
-          "title": "Contao comments-bundle unauthenticated comment XSS runs in back end with no CSP",
-          "url": "https://github.com/advisories/GHSA-628f-v4f6-p37r",
-          "date": "2026-10-09",
+          "title": "Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+          "date": "2026-10-29",
           "fresh": true
         },
         {
-          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
-          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
-          "date": "2026-10-01",
+          "title": "Valid SQL crashes SQLGlot and SQLFluff with huge memory amplification",
+          "url": "https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/",
+          "date": "2026-10-06",
           "fresh": true
         },
         {
-          "title": "SourceHut account takeover via OSC 8 hyperlink XSS in rendered build logs",
-          "url": "https://blog.arusekk.pl/posts/srht-account-takeover/",
-          "date": "2026-09-24",
-          "fresh": false
-        },
-        {
-          "title": "What's in a tag name? JavaScript, apparently",
-          "url": "https://portswigger.net/research",
-          "date": "2026-08-25",
+          "title": "Moquette MQTT broker clientId wildcard injection gives cross-tenant read/write",
+          "url": "https://github.com/advisories/GHSA-5f42-97gr-vfhq",
+          "date": "2026-09-23",
           "fresh": false
         }
       ]
@@ -7207,6 +7471,39 @@
     },
     {
       "topic": "product-security",
+      "tag": "anti-forensics",
+      "count": 3,
+      "recent": 3,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 3.0,
+      "momentum": 3.0,
+      "sources": 2,
+      "first_seen": "2026-10-15",
+      "last_seen": "2026-10-28",
+      "members": [
+        {
+          "title": "CISA says a low-severity VMware ESX logging gap is being exploited",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Exploited VMware ESX flaw lets attacker with admin rights act unlogged",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads",
+          "url": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/",
+          "date": "2026-10-15",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "authentication-bypass",
       "count": 3,
       "recent": 3,
@@ -7240,7 +7537,7 @@
     },
     {
       "topic": "product-security",
-      "tag": "infostealer",
+      "tag": "cloud",
       "count": 3,
       "recent": 3,
       "baseline": 0.0,
@@ -7248,25 +7545,58 @@
       "excess": 3.0,
       "momentum": 3.0,
       "sources": 3,
-      "first_seen": "2026-10-02",
-      "last_seen": "2026-10-26",
+      "first_seen": "2026-10-07",
+      "last_seen": "2026-10-29",
       "members": [
         {
-          "title": "Check Point digest: PHP2Shell attempts reportedly rose from thousands to millions",
-          "url": "https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/",
-          "date": "2026-10-26",
+          "title": "Kat Traxler used AI and security principles to find cloud design flaws",
+          "url": "https://github.com/KatTraxler/presentations/tree/main/security-constitution",
+          "date": "2026-10-29",
           "fresh": true
         },
         {
-          "title": "ANY.RUN ties 1,258 sandbox analyses to fake Claude, ChatGPT and Copilot",
-          "url": "https://any.run/cybersecurity-blog/fake-ai-tools-us-companies/",
-          "date": "2026-10-14",
+          "title": "CVM-Store paper protects confidential VM storage at near-raw disk speed",
+          "url": "http://arxiv.org/abs/2610.34560v1",
+          "date": "2026-10-25",
           "fresh": true
         },
         {
-          "title": "Hijacked coding assistant recommended a PyPI package that stole GitHub tokens",
-          "url": "https://safedep.io/ai-coding-assistant-hijack-shai-hulud",
-          "date": "2026-10-02",
+          "title": "Unit 42: threat actors use Web3 infrastructure to breach cloud environments",
+          "url": "https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/",
+          "date": "2026-10-07",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "esxi",
+      "count": 3,
+      "recent": 3,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 3.0,
+      "momentum": 3.0,
+      "sources": 2,
+      "first_seen": "2026-10-20",
+      "last_seen": "2026-10-28",
+      "members": [
+        {
+          "title": "CISA says a low-severity VMware ESX logging gap is being exploited",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Exploited VMware ESX flaw lets attacker with admin rights act unlogged",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA",
+          "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+          "date": "2026-10-20",
           "fresh": true
         }
       ]
@@ -7306,6 +7636,39 @@
     },
     {
       "topic": "product-security",
+      "tag": "vpn",
+      "count": 3,
+      "recent": 3,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 3.0,
+      "momentum": 3.0,
+      "sources": 2,
+      "first_seen": "2026-10-28",
+      "last_seen": "2026-10-30",
+      "members": [
+        {
+          "title": "Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+          "date": "2026-10-30",
+          "fresh": true
+        },
+        {
+          "title": "Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "InfraTrust report says network appliances wait on vendors for PHP2Shell fixes",
+          "url": "https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/",
+          "date": "2026-10-28",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "waf",
       "count": 3,
       "recent": 3,
@@ -7339,59 +7702,20 @@
     },
     {
       "topic": "product-security",
-      "tag": "coding-agents",
+      "tag": "cisco",
       "count": 4,
       "recent": 3,
       "baseline": 0.2,
       "state": "rising",
       "excess": 2.8,
       "momentum": 2.8,
-      "sources": 4,
-      "first_seen": "2026-07-14",
+      "sources": 2,
+      "first_seen": "2026-09-14",
       "last_seen": "2026-10-29",
       "members": [
         {
-          "title": "GitHub previews a package firewall that blocks risky npm installs",
-          "url": "https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers",
-          "url": "https://arxiv.org/abs/2610.07557",
-          "date": "2026-10-06",
-          "fresh": true
-        },
-        {
-          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
-          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "38.9% of agent-generated PRs carry a security smell",
-          "url": "https://arxiv.org/abs/2607.12428",
-          "date": "2026-07-14",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "denial-of-service",
-      "count": 4,
-      "recent": 3,
-      "baseline": 0.2,
-      "state": "rising",
-      "excess": 2.8,
-      "momentum": 2.8,
-      "sources": 4,
-      "first_seen": "2026-09-23",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "Google declines to fix zero-click SMS that crashes Android telephony",
-          "url": "https://smsofdeath.com/",
+          "title": "KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers",
+          "url": "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html",
           "date": "2026-10-29",
           "fresh": true
         },
@@ -7402,22 +7726,22 @@
           "fresh": true
         },
         {
-          "title": "Valid SQL crashes SQLGlot and SQLFluff with huge memory amplification",
-          "url": "https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/",
-          "date": "2026-10-06",
+          "title": "Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+          "date": "2026-10-29",
           "fresh": true
         },
         {
-          "title": "Moquette MQTT broker clientId wildcard injection gives cross-tenant read/write",
-          "url": "https://github.com/advisories/GHSA-5f42-97gr-vfhq",
-          "date": "2026-09-23",
+          "title": "Cisco Secure Email Gateway SQL injection reaches root command execution",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
+          "date": "2026-09-14",
           "fresh": false
         }
       ]
     },
     {
       "topic": "product-security",
-      "tag": "kubernetes",
+      "tag": "sql-injection",
       "count": 4,
       "recent": 3,
       "baseline": 0.2,
@@ -7425,9 +7749,99 @@
       "excess": 2.8,
       "momentum": 2.8,
       "sources": 4,
-      "first_seen": "2026-07-24",
-      "last_seen": "2026-10-29",
+      "first_seen": "2026-09-14",
+      "last_seen": "2026-10-31",
       "members": [
+        {
+          "title": "GoSQLX, a Go SQL parser, ships an injection scanner and MCP server",
+          "url": "https://github.com/ajitpratap0/GoSQLX",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "Adobe patches eight critical flaws in Campaign Classic",
+          "url": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild",
+          "url": "https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199",
+          "date": "2026-10-22",
+          "fresh": true
+        },
+        {
+          "title": "Cisco Secure Email Gateway SQL injection reaches root command execution",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
+          "date": "2026-09-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "static-analysis",
+      "count": 4,
+      "recent": 3,
+      "baseline": 0.2,
+      "state": "rising",
+      "excess": 2.8,
+      "momentum": 2.8,
+      "sources": 3,
+      "first_seen": "2026-08-04",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "GoSQLX, a Go SQL parser, ships an injection scanner and MCP server",
+          "url": "https://github.com/ajitpratap0/GoSQLX",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "VibeRaven statically checks AI-built Supabase apps for row-level security gaps",
+          "url": "https://github.com/ohad6k/VibeRaven",
+          "date": "2026-10-30",
+          "fresh": true
+        },
+        {
+          "title": "CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers",
+          "url": "https://arxiv.org/abs/2610.07557",
+          "date": "2026-10-06",
+          "fresh": true
+        },
+        {
+          "title": "Snyk Evo Agentic AppSec launches with autonomous remediation and package scanning",
+          "url": "https://snyk.io/blog/remediation-agent-malicious-code-defense/",
+          "date": "2026-08-04",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "mcp",
+      "count": 5,
+      "recent": 3,
+      "baseline": 0.3,
+      "state": "rising",
+      "excess": 2.7,
+      "momentum": 2.7,
+      "sources": 4,
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "GoSQLX, a Go SQL parser, ships an injection scanner and MCP server",
+          "url": "https://github.com/ajitpratap0/GoSQLX",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "VibeRaven checks AI-built Supabase apps for missing row-level security",
+          "url": "https://github.com/ohad6k/VibeRaven",
+          "date": "2026-10-30",
+          "fresh": true
+        },
         {
           "title": "Wiz lists the fingerprints that mark an intrusion as agent-driven",
           "url": "https://www.wiz.io/blog/the-rise-of-agentic-attacks",
@@ -7435,21 +7849,117 @@
           "fresh": true
         },
         {
-          "title": "Datadog: 3,500+ RBAC bindings give dangerous permissions to groups like system:unauthenticated",
-          "url": "https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/",
-          "date": "2026-10-05",
+          "title": "GitHub Security Lab's Fuzzing Taskflow has an LLM agent write AFL++ harnesses",
+          "url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
+          "date": "2026-09-24",
+          "fresh": false
+        },
+        {
+          "title": "Can AI do novel security research? Meet the HTTP Terminator",
+          "url": "https://portswigger.net/research/can-ai-do-novel-security-research",
+          "date": "2026-08-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "privilege-escalation",
+      "count": 6,
+      "recent": 3,
+      "baseline": 0.5,
+      "state": "rising",
+      "excess": 2.5,
+      "momentum": 2.5,
+      "sources": 4,
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-10-30",
+      "members": [
+        {
+          "title": "Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+          "date": "2026-10-30",
           "fresh": true
         },
         {
-          "title": "CiliumHound graphs Cilium Kubernetes network policies as a BloodHound OpenGraph extension",
-          "url": "https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies",
+          "title": "Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders",
+          "url": "https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/",
+          "date": "2026-10-22",
+          "fresh": true
+        },
+        {
+          "title": "CISA KEV: Zammad local privilege escalation to root exploited in the wild",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102490",
+          "date": "2026-10-02",
+          "fresh": true
+        },
+        {
+          "title": "plone.app.portlets TALES expression injection gives authenticated users RCE",
+          "url": "https://github.com/advisories/GHSA-rr49-f9g6-c9r5",
+          "date": "2026-09-23",
+          "fresh": false
+        },
+        {
+          "title": "Acronis Backup plugins have insecure file permissions exploited for privilege escalation",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87886",
+          "date": "2026-09-16",
+          "fresh": false
+        },
+        {
+          "title": "Siemens Ruggedcom ROX II three-CVE chain yields persistent root on OT switches",
+          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+          "date": "2026-07-20",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "xss",
+      "count": 6,
+      "recent": 3,
+      "baseline": 0.5,
+      "state": "rising",
+      "excess": 2.5,
+      "momentum": 2.5,
+      "sources": 6,
+      "first_seen": "2026-08-25",
+      "last_seen": "2026-10-28",
+      "members": [
+        {
+          "title": "Adobe patches eight critical flaws in Campaign Classic",
+          "url": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers",
+          "url": "https://portswigger.net/research/scalable-vector-grief",
+          "date": "2026-10-27",
+          "fresh": true
+        },
+        {
+          "title": "Contao comments-bundle unauthenticated comment XSS runs in back end with no CSP",
+          "url": "https://github.com/advisories/GHSA-628f-v4f6-p37r",
+          "date": "2026-10-09",
+          "fresh": true
+        },
+        {
+          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
+          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
           "date": "2026-10-01",
           "fresh": true
         },
         {
-          "title": "etcd Watch API skipped the range authorization that Range/Get applies",
-          "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
-          "date": "2026-07-24",
+          "title": "SourceHut account takeover via OSC 8 hyperlink XSS in rendered build logs",
+          "url": "https://blog.arusekk.pl/posts/srht-account-takeover/",
+          "date": "2026-09-24",
+          "fresh": false
+        },
+        {
+          "title": "What's in a tag name? JavaScript, apparently",
+          "url": "https://portswigger.net/research",
+          "date": "2026-08-25",
           "fresh": false
         }
       ]
@@ -7555,6 +8065,63 @@
     },
     {
       "topic": "product-security",
+      "tag": "zero-day",
+      "count": 7,
+      "recent": 3,
+      "baseline": 0.7,
+      "state": "rising",
+      "excess": 2.3,
+      "momentum": 2.3,
+      "sources": 5,
+      "first_seen": "2026-08-17",
+      "last_seen": "2026-10-30",
+      "members": [
+        {
+          "title": "Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+          "date": "2026-10-30",
+          "fresh": true
+        },
+        {
+          "title": "Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws",
+          "url": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18",
+          "url": "https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/",
+          "date": "2026-10-27",
+          "fresh": true
+        },
+        {
+          "title": "watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE",
+          "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/",
+          "date": "2026-09-29",
+          "fresh": false
+        },
+        {
+          "title": "CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
+          "date": "2026-09-29",
+          "fresh": false
+        },
+        {
+          "title": "Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration",
+          "url": "https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/",
+          "date": "2026-09-28",
+          "fresh": false
+        },
+        {
+          "title": "This Shit is Hard: Patching a vulnerability that has no fix",
+          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
+          "date": "2026-08-17",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "agentic-ai",
       "count": 2,
       "recent": 2,
@@ -7609,7 +8176,7 @@
     },
     {
       "topic": "product-security",
-      "tag": "anti-forensics",
+      "tag": "ai-assisted-research",
       "count": 2,
       "recent": 2,
       "baseline": 0.0,
@@ -7617,19 +8184,19 @@
       "excess": 2.0,
       "momentum": 2.0,
       "sources": 2,
-      "first_seen": "2026-10-15",
-      "last_seen": "2026-10-28",
+      "first_seen": "2026-10-19",
+      "last_seen": "2026-10-29",
       "members": [
         {
-          "title": "CISA says a low-severity VMware ESX logging gap is being exploited",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
-          "date": "2026-10-28",
+          "title": "Kat Traxler used AI and security principles to find cloud design flaws",
+          "url": "https://github.com/KatTraxler/presentations/tree/main/security-constitution",
+          "date": "2026-10-29",
           "fresh": true
         },
         {
-          "title": "Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads",
-          "url": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/",
-          "date": "2026-10-15",
+          "title": "pwn.ai found a new Linux networking bug class escaping KVM guests",
+          "url": "https://pwn.ai/blog/pwnescape",
+          "date": "2026-10-19",
           "fresh": true
         }
       ]
@@ -7663,33 +8230,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "cloud",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-10-07",
-      "last_seen": "2026-10-25",
-      "members": [
-        {
-          "title": "CVM-Store paper protects confidential VM storage at near-raw disk speed",
-          "url": "http://arxiv.org/abs/2610.34560v1",
-          "date": "2026-10-25",
-          "fresh": true
-        },
-        {
-          "title": "Unit 42: threat actors use Web3 infrastructure to breach cloud environments",
-          "url": "https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/",
-          "date": "2026-10-07",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "edge-devices",
       "count": 2,
       "recent": 2,
@@ -7710,33 +8250,6 @@
         {
           "title": "SOCRadar: INC and The Gentlemen ransomware affiliates ran intrusions through AI agents",
           "url": "https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/",
-          "date": "2026-10-20",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "esxi",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-10-20",
-      "last_seen": "2026-10-28",
-      "members": [
-        {
-          "title": "CISA says a low-severity VMware ESX logging gap is being exploited",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
-          "date": "2026-10-28",
-          "fresh": true
-        },
-        {
-          "title": "Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA",
-          "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
           "date": "2026-10-20",
           "fresh": true
         }
@@ -8068,6 +8581,33 @@
     },
     {
       "topic": "product-security",
+      "tag": "vendor-marketing",
+      "count": 2,
+      "recent": 2,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 2.0,
+      "momentum": 2.0,
+      "sources": 2,
+      "first_seen": "2026-10-21",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "MagicSword markets automatic application-control policies built from LOLDrivers research",
+          "url": "https://www.magicsword.io/application-control",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Cloudflare pairs Daybreak findings with live traffic to draft WAF rules",
+          "url": "https://openai.com/index/cloudflare-cyber",
+          "date": "2026-10-21",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "vulnerability-management",
       "count": 2,
       "recent": 2,
@@ -8182,39 +8722,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "ai-vulnerability-discovery",
-      "count": 3,
-      "recent": 2,
-      "baseline": 0.2,
-      "state": "rising",
-      "excess": 1.8,
-      "momentum": 1.8,
-      "sources": 3,
-      "first_seen": "2026-09-15",
-      "last_seen": "2026-10-22",
-      "members": [
-        {
-          "title": "PHP says Chainguard broke the PHP2Shell embargo with patched images",
-          "url": "https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611",
-          "date": "2026-10-22",
-          "fresh": true
-        },
-        {
-          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
-          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Chainguard starts disclosing Athena's silent-fix vulnerabilities",
-          "url": "https://www.chainguard.dev/unchained/the-flood-is-coming-and-the-pipes-were-already-full",
-          "date": "2026-09-15",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "blockchain-c2",
       "count": 3,
       "recent": 2,
@@ -8242,72 +8749,6 @@
           "title": "ChainDrop npm worm targeted Claude Code configs and stole OIDC tokens",
           "url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
           "date": "2026-08-21",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "bola",
-      "count": 3,
-      "recent": 2,
-      "baseline": 0.2,
-      "state": "rising",
-      "excess": 1.8,
-      "momentum": 1.8,
-      "sources": 2,
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-10-26",
-      "members": [
-        {
-          "title": "Akto README pitches open-source API security testing with a new AI-agent tagline",
-          "url": "https://github.com/akto-api-security/akto",
-          "date": "2026-10-26",
-          "fresh": true
-        },
-        {
-          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
-          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "What Is AI Pentesting and How Does It Work?",
-          "url": "https://snyk.io/blog/what-is-ai-pentesting/",
-          "date": "2026-07-27",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "cisco",
-      "count": 3,
-      "recent": 2,
-      "baseline": 0.2,
-      "state": "rising",
-      "excess": 1.8,
-      "momentum": 1.8,
-      "sources": 2,
-      "first_seen": "2026-09-14",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers",
-          "url": "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "Cisco Secure Email Gateway SQL injection reaches root command execution",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
-          "date": "2026-09-14",
           "fresh": false
         }
       ]
@@ -8578,7 +9019,7 @@
     },
     {
       "topic": "product-security",
-      "tag": "sql-injection",
+      "tag": "secrets",
       "count": 3,
       "recent": 2,
       "baseline": 0.2,
@@ -8586,58 +9027,25 @@
       "excess": 1.8,
       "momentum": 1.8,
       "sources": 3,
-      "first_seen": "2026-09-14",
-      "last_seen": "2026-10-28",
-      "members": [
-        {
-          "title": "Adobe patches eight critical flaws in Campaign Classic",
-          "url": "https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html",
-          "date": "2026-10-28",
-          "fresh": true
-        },
-        {
-          "title": "Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild",
-          "url": "https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199",
-          "date": "2026-10-22",
-          "fresh": true
-        },
-        {
-          "title": "Cisco Secure Email Gateway SQL injection reaches root command execution",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76461",
-          "date": "2026-09-14",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "static-analysis",
-      "count": 3,
-      "recent": 2,
-      "baseline": 0.2,
-      "state": "rising",
-      "excess": 1.8,
-      "momentum": 1.8,
-      "sources": 3,
-      "first_seen": "2026-08-04",
+      "first_seen": "2026-07-14",
       "last_seen": "2026-10-30",
       "members": [
         {
-          "title": "VibeRaven statically checks AI-built Supabase apps for row-level security gaps",
+          "title": "VibeRaven checks AI-built Supabase apps for missing row-level security",
           "url": "https://github.com/ohad6k/VibeRaven",
           "date": "2026-10-30",
           "fresh": true
         },
         {
-          "title": "CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers",
-          "url": "https://arxiv.org/abs/2610.07557",
-          "date": "2026-10-06",
+          "title": "Railway says encrypted environment variables may have been accessed",
+          "url": "https://blog.railway.com/p/security-disclosure-wednesday-october-21st",
+          "date": "2026-10-21",
           "fresh": true
         },
         {
-          "title": "Snyk Evo Agentic AppSec launches with autonomous remediation and package scanning",
-          "url": "https://snyk.io/blog/remediation-agent-malicious-code-defense/",
-          "date": "2026-08-04",
+          "title": "38.9% of agent-generated PRs carry a security smell",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "date": "2026-07-14",
           "fresh": false
         }
       ]
@@ -8749,6 +9157,84 @@
     },
     {
       "topic": "product-security",
+      "tag": "coding-agents",
+      "count": 4,
+      "recent": 2,
+      "baseline": 0.3,
+      "state": "rising",
+      "excess": 1.7,
+      "momentum": 1.7,
+      "sources": 4,
+      "first_seen": "2026-07-14",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "GitHub previews a package firewall that blocks risky npm installs",
+          "url": "https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers",
+          "url": "https://arxiv.org/abs/2610.07557",
+          "date": "2026-10-06",
+          "fresh": true
+        },
+        {
+          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
+          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "38.9% of agent-generated PRs carry a security smell",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "date": "2026-07-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "kubernetes",
+      "count": 4,
+      "recent": 2,
+      "baseline": 0.3,
+      "state": "rising",
+      "excess": 1.7,
+      "momentum": 1.7,
+      "sources": 4,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Wiz lists the fingerprints that mark an intrusion as agent-driven",
+          "url": "https://www.wiz.io/blog/the-rise-of-agentic-attacks",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Datadog: 3,500+ RBAC bindings give dangerous permissions to groups like system:unauthenticated",
+          "url": "https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/",
+          "date": "2026-10-05",
+          "fresh": true
+        },
+        {
+          "title": "CiliumHound graphs Cilium Kubernetes network policies as a BloodHound OpenGraph extension",
+          "url": "https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "etcd Watch API skipped the range authorization that Range/Get applies",
+          "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+          "date": "2026-07-24",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "network-appliance",
       "count": 4,
       "recent": 2,
@@ -8776,7 +9262,7 @@
           "title": "watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE",
           "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration",
@@ -8854,7 +9340,7 @@
           "title": "watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE",
           "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited",
@@ -8995,51 +9481,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "privilege-escalation",
-      "count": 5,
-      "recent": 2,
-      "baseline": 0.5,
-      "state": "rising",
-      "excess": 1.5,
-      "momentum": 1.5,
-      "sources": 4,
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-10-22",
-      "members": [
-        {
-          "title": "Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders",
-          "url": "https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/",
-          "date": "2026-10-22",
-          "fresh": true
-        },
-        {
-          "title": "CISA KEV: Zammad local privilege escalation to root exploited in the wild",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102490",
-          "date": "2026-10-02",
-          "fresh": true
-        },
-        {
-          "title": "plone.app.portlets TALES expression injection gives authenticated users RCE",
-          "url": "https://github.com/advisories/GHSA-rr49-f9g6-c9r5",
-          "date": "2026-09-23",
-          "fresh": false
-        },
-        {
-          "title": "Acronis Backup plugins have insecure file permissions exploited for privilege escalation",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87886",
-          "date": "2026-09-16",
-          "fresh": false
-        },
-        {
-          "title": "Siemens Ruggedcom ROX II three-CVE chain yields persistent root on OT switches",
-          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
-          "date": "2026-07-20",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "provenance",
       "count": 6,
       "recent": 2,
@@ -9136,57 +9577,6 @@
           "title": "The npm Threat Landscape: Attack Surface and Mitigations",
           "url": "https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/",
           "date": "2026-07-15",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "zero-day",
-      "count": 6,
-      "recent": 2,
-      "baseline": 0.7,
-      "state": "rising",
-      "excess": 1.3,
-      "momentum": 1.3,
-      "sources": 5,
-      "first_seen": "2026-08-17",
-      "last_seen": "2026-10-28",
-      "members": [
-        {
-          "title": "Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws",
-          "url": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
-          "date": "2026-10-28",
-          "fresh": true
-        },
-        {
-          "title": "Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18",
-          "url": "https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/",
-          "date": "2026-10-27",
-          "fresh": true
-        },
-        {
-          "title": "watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE",
-          "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/",
-          "date": "2026-09-29",
-          "fresh": true
-        },
-        {
-          "title": "CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
-          "date": "2026-09-29",
-          "fresh": true
-        },
-        {
-          "title": "Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration",
-          "url": "https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/",
-          "date": "2026-09-28",
-          "fresh": false
-        },
-        {
-          "title": "This Shit is Hard: Patching a vulnerability that has no fix",
-          "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix",
-          "date": "2026-08-17",
           "fresh": false
         }
       ]
@@ -9418,7 +9808,7 @@
           "title": "Wiz Blue Agent traces a stolen GitHub token to hardcoded AWS keys",
           "url": "https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub",
@@ -9430,6 +9820,45 @@
           "title": "A few notes on AWS Nitro Enclaves: KMS integration",
           "url": "https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/",
           "date": "2026-08-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "go",
+      "count": 4,
+      "recent": 1,
+      "baseline": 0.5,
+      "state": "steady",
+      "excess": 0.5,
+      "momentum": 0.0,
+      "sources": 4,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "GoSQLX, a Go SQL parser, ships an injection scanner and MCP server",
+          "url": "https://github.com/ajitpratap0/GoSQLX",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "go-git worktree wrapper vetoed dangerous strings but still followed symlinks",
+          "url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)",
+          "url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Oh My Posh runs commands from a directory name",
+          "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
+          "date": "2026-07-24",
           "fresh": false
         }
       ]
@@ -9475,7 +9904,40 @@
     },
     {
       "topic": "product-security",
-      "tag": "ai-generated-code",
+      "tag": "ai-vulnerability-discovery",
+      "count": 3,
+      "recent": 1,
+      "baseline": 0.3,
+      "state": "steady",
+      "excess": 0.7,
+      "momentum": 0.0,
+      "sources": 3,
+      "first_seen": "2026-09-15",
+      "last_seen": "2026-10-22",
+      "members": [
+        {
+          "title": "PHP says Chainguard broke the PHP2Shell embargo with patched images",
+          "url": "https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611",
+          "date": "2026-10-22",
+          "fresh": true
+        },
+        {
+          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
+          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Chainguard starts disclosing Athena's silent-fix vulnerabilities",
+          "url": "https://www.chainguard.dev/unchained/the-flood-is-coming-and-the-pipes-were-already-full",
+          "date": "2026-09-15",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "bola",
       "count": 3,
       "recent": 1,
       "baseline": 0.3,
@@ -9483,9 +9945,15 @@
       "excess": 0.7,
       "momentum": 0.0,
       "sources": 2,
-      "first_seen": "2026-07-14",
-      "last_seen": "2026-10-01",
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-10-26",
       "members": [
+        {
+          "title": "Akto README pitches open-source API security testing with a new AI-agent tagline",
+          "url": "https://github.com/akto-api-security/akto",
+          "date": "2026-10-26",
+          "fresh": true
+        },
         {
           "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
           "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
@@ -9493,15 +9961,9 @@
           "fresh": true
         },
         {
-          "title": "Snyk: the system creating a change must not be its only validator",
-          "url": "https://snyk.io/blog/ai-hurricane-is-here/",
-          "date": "2026-09-15",
-          "fresh": false
-        },
-        {
-          "title": "38.9% of agent-generated PRs carry a security smell",
-          "url": "https://arxiv.org/abs/2607.12428",
-          "date": "2026-07-14",
+          "title": "What Is AI Pentesting and How Does It Work?",
+          "url": "https://snyk.io/blog/what-is-ai-pentesting/",
+          "date": "2026-07-27",
           "fresh": false
         }
       ]
@@ -9529,7 +9991,7 @@
           "title": "Wiz Blue Agent traces a stolen GitHub token to hardcoded AWS keys",
           "url": "https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub",
@@ -9661,7 +10123,7 @@
           "title": "CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks",
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "macOS ClickFix campaign now cloaks its payload behind browser-fingerprinting gates",
@@ -9700,39 +10162,6 @@
           "title": "GigaWiper: modular destructive malware that fakes ransomware",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
           "date": "2026-07-09",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "mcp",
-      "count": 3,
-      "recent": 1,
-      "baseline": 0.3,
-      "state": "steady",
-      "excess": 0.7,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-08-05",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "Wiz lists the fingerprints that mark an intrusion as agent-driven",
-          "url": "https://www.wiz.io/blog/the-rise-of-agentic-attacks",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "GitHub Security Lab's Fuzzing Taskflow has an LLM agent write AFL++ harnesses",
-          "url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
-          "date": "2026-09-24",
-          "fresh": false
-        },
-        {
-          "title": "Can AI do novel security research? Meet the HTTP Terminator",
-          "url": "https://portswigger.net/research/can-ai-do-novel-security-research",
-          "date": "2026-08-05",
           "fresh": false
         }
       ]
@@ -9970,39 +10399,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "tooling",
-      "count": 3,
-      "recent": 1,
-      "baseline": 0.3,
-      "state": "steady",
-      "excess": 0.7,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "CiliumHound graphs Cilium Kubernetes network policies as a BloodHound OpenGraph extension",
-          "url": "https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Turbo Intruder adds an HTTP/3 engine and HTTP/3 race-condition techniques",
-          "url": "https://portswigger.net/research/http3-in-burp-suite",
-          "date": "2026-09-23",
-          "fresh": false
-        },
-        {
-          "title": "A working taxonomy of open-source AI code-security harnesses",
-          "url": "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses",
-          "date": "2026-07-20",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "wiper",
       "count": 3,
       "recent": 1,
@@ -10030,33 +10426,6 @@
           "title": "GigaWiper: modular destructive malware that fakes ransomware",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/",
           "date": "2026-07-09",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "agent-harness",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-05",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
-          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Can AI do novel security research? Meet the HTTP Terminator",
-          "url": "https://portswigger.net/research/can-ai-do-novel-security-research",
-          "date": "2026-08-05",
           "fresh": false
         }
       ]
@@ -10171,33 +10540,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "broken-access-control",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
-          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Show, Don't Tell: Evo found issues in a real enterprise SaaS",
-          "url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
-          "date": "2026-08-10",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "browser-security",
       "count": 2,
       "recent": 1,
@@ -10246,7 +10588,7 @@
           "title": "watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE",
           "url": "https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         }
       ]
     },
@@ -10495,33 +10837,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "false-positives",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-09-28",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
-          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "GitHub Security Lab found 24 Android vulnerabilities with its AI agent",
-          "url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
-          "date": "2026-09-28",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "formal-verification",
       "count": 2,
       "recent": 1,
@@ -10570,33 +10885,6 @@
           "title": "AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub",
           "url": "https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/",
           "date": "2026-09-21",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "idor",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-07-24",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
-          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "etcd Watch API skipped the range authorization that Range/Get applies",
-          "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
-          "date": "2026-07-24",
           "fresh": false
         }
       ]
@@ -10732,7 +11020,7 @@
           "title": "CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks",
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86950",
           "date": "2026-09-29",
-          "fresh": true
+          "fresh": false
         }
       ]
     },
@@ -10927,33 +11215,6 @@
     },
     {
       "topic": "product-security",
-      "tag": "secrets",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-07-14",
-      "last_seen": "2026-10-21",
-      "members": [
-        {
-          "title": "Railway says encrypted environment variables may have been accessed",
-          "url": "https://blog.railway.com/p/security-disclosure-wednesday-october-21st",
-          "date": "2026-10-21",
-          "fresh": true
-        },
-        {
-          "title": "38.9% of agent-generated PRs carry a security smell",
-          "url": "https://arxiv.org/abs/2607.12428",
-          "date": "2026-07-14",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
       "tag": "side-channel",
       "count": 2,
       "recent": 1,
@@ -11116,6 +11377,39 @@
     },
     {
       "topic": "product-security",
+      "tag": "ai-generated-code",
+      "count": 3,
+      "recent": 0,
+      "baseline": 0.5,
+      "state": "quiet",
+      "excess": -0.5,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-07-14",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
+          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Snyk: the system creating a change must not be its only validator",
+          "url": "https://snyk.io/blog/ai-hurricane-is-here/",
+          "date": "2026-09-15",
+          "fresh": false
+        },
+        {
+          "title": "38.9% of agent-generated PRs carry a security smell",
+          "url": "https://arxiv.org/abs/2607.12428",
+          "date": "2026-07-14",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "authorization",
       "count": 3,
       "recent": 0,
@@ -11142,39 +11436,6 @@
         {
           "title": "etcd Watch API skipped the range authorization that Range/Get applies",
           "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
-          "date": "2026-07-24",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "product-security",
-      "tag": "go",
-      "count": 3,
-      "recent": 0,
-      "baseline": 0.5,
-      "state": "quiet",
-      "excess": -0.5,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-07-24",
-      "last_seen": "2026-08-07",
-      "members": [
-        {
-          "title": "go-git worktree wrapper vetoed dangerous strings but still followed symlinks",
-          "url": "https://github.com/advisories/GHSA-hc8v-wwc9-vgxm",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)",
-          "url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Oh My Posh runs commands from a directory name",
-          "url": "https://github.com/advisories/GHSA-6xj8-qv9j-xcjq",
           "date": "2026-07-24",
           "fresh": false
         }
@@ -11242,6 +11503,93 @@
           "title": "PortSwigger's Top 10 Web Hacking Techniques of 2025",
           "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2025",
           "date": "2026-02-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "tooling",
+      "count": 3,
+      "recent": 0,
+      "baseline": 0.5,
+      "state": "quiet",
+      "excess": -0.5,
+      "momentum": 0.0,
+      "sources": 3,
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "CiliumHound graphs Cilium Kubernetes network policies as a BloodHound OpenGraph extension",
+          "url": "https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Turbo Intruder adds an HTTP/3 engine and HTTP/3 race-condition techniques",
+          "url": "https://portswigger.net/research/http3-in-burp-suite",
+          "date": "2026-09-23",
+          "fresh": false
+        },
+        {
+          "title": "A working taxonomy of open-source AI code-security harnesses",
+          "url": "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses",
+          "date": "2026-07-20",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "agent-harness",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
+          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Can AI do novel security research? Meet the HTTP Terminator",
+          "url": "https://portswigger.net/research/can-ai-do-novel-security-research",
+          "date": "2026-08-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "broken-access-control",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
+          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Show, Don't Tell: Evo found issues in a real enterprise SaaS",
+          "url": "https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/",
+          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -11383,6 +11731,33 @@
     },
     {
       "topic": "product-security",
+      "tag": "false-positives",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-09-28",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Google PageBreak finds 500+ XSS bugs with near-zero false positives",
+          "url": "https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "GitHub Security Lab found 24 Android vulnerabilities with its AI agent",
+          "url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
+          "date": "2026-09-28",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
       "tag": "git",
       "count": 2,
       "recent": 0,
@@ -11404,6 +11779,33 @@
           "title": "go-git reference names as path traversal: refs/heads/../../config overwrites .git metadata (GHSA-qgq7-7hm3-q39j)",
           "url": "https://github.com/advisories/GHSA-qgq7-7hm3-q39j",
           "date": "2026-08-07",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "tag": "idor",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
+          "url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "etcd Watch API skipped the range authorization that Range/Get applies",
+          "url": "https://github.com/advisories/GHSA-xg4h-6gfc-h4m8",
+          "date": "2026-07-24",
           "fresh": false
         }
       ]
@@ -11602,16 +12004,22 @@
     {
       "topic": "ai-research",
       "tag": "evals",
-      "count": 26,
+      "count": 27,
       "recent": 9,
-      "baseline": 2.8,
+      "baseline": 2.9,
       "state": "rising",
-      "excess": 6.2,
-      "momentum": 6.2,
-      "sources": 14,
+      "excess": 6.1,
+      "momentum": 6.1,
+      "sources": 15,
       "first_seen": "2023-12-07",
-      "last_seen": "2026-10-30",
+      "last_seen": "2026-10-31",
       "members": [
+        {
+          "title": "Framework-free Colab notebooks teach the applied LLM engineering stack",
+          "url": "https://github.com/calmrocks/ai-engineer-notebooks",
+          "date": "2026-10-31",
+          "fresh": true
+        },
         {
           "title": "Microsoft evaluates Copilot on fully synthetic, time-evolving enterprise tenants",
           "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/",
@@ -11664,7 +12072,7 @@
           "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
           "url": "https://arxiv.org/abs/2609.39027",
           "date": "2026-09-30",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "Trail of Bits says 1Password's AI patching benchmark is misleading",
@@ -11847,84 +12255,39 @@
     },
     {
       "topic": "ai-research",
-      "tag": "human-in-the-loop",
+      "tag": "governance",
       "count": 4,
       "recent": 3,
       "baseline": 0.2,
       "state": "rising",
       "excess": 2.8,
       "momentum": 2.8,
-      "sources": 3,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-10-27",
-      "members": [
-        {
-          "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
-          "url": "https://www.anthropic.com/research/agents-judgment-calls",
-          "date": "2026-10-27",
-          "fresh": true
-        },
-        {
-          "title": "Google's VERID checks agent-written lab-robot protocols against a 3D digital twin",
-          "url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
-          "date": "2026-10-16",
-          "fresh": true
-        },
-        {
-          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-          "url": "https://www.anthropic.com/research/claude-shaped-science",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordination",
-          "url": "https://arxiv.org/abs/2608.05391",
-          "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "llm-as-judge",
-      "count": 5,
-      "recent": 3,
-      "baseline": 0.3,
-      "state": "rising",
-      "excess": 2.7,
-      "momentum": 2.7,
       "sources": 4,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-10-27",
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-10-31",
       "members": [
         {
-          "title": "Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly",
-          "url": "https://huggingface.co/blog/allenai/novelty-bench",
-          "date": "2026-10-27",
+          "title": "SpecForge compiles team rules into checks that agents cannot skip",
+          "url": "https://github.com/leaderiop/SpecForge",
+          "date": "2026-10-31",
           "fresh": true
         },
         {
-          "title": "DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs",
-          "url": "https://arxiv.org/abs/2610.28522",
+          "title": "Anthropic donates the Agent Skills standard to the Agentic AI Foundation",
+          "url": "https://simonwillison.net/2026/Oct/22/donating-agent-skills/",
+          "date": "2026-10-22",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic embeds METR with employee-like access but controls what is redactable",
+          "url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
           "date": "2026-10-20",
           "fresh": true
         },
         {
-          "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
-          "url": "https://arxiv.org/abs/2609.39027",
-          "date": "2026-09-30",
-          "fresh": true
-        },
-        {
-          "title": "MentalHealthBench scores model replies against weighted expert-consensus rubrics",
-          "url": "https://openai.com/index/introducing-mentalhealthbench",
-          "date": "2026-09-23",
-          "fresh": false
-        },
-        {
-          "title": "SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution",
-          "url": "https://arxiv.org/abs/2608.05573",
-          "date": "2026-08-07",
+          "title": "Birfy/agentdescent",
+          "url": "https://github.com/Birfy/agentdescent",
+          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -11983,96 +12346,6 @@
           "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
           "date": "2026-07-21",
           "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "claude-code",
-      "count": 8,
-      "recent": 3,
-      "baseline": 0.9,
-      "state": "rising",
-      "excess": 2.1,
-      "momentum": 2.1,
-      "sources": 6,
-      "first_seen": "2026-06",
-      "last_seen": "2026-10-27",
-      "members": [
-        {
-          "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
-          "url": "https://www.anthropic.com/research/agents-judgment-calls",
-          "date": "2026-10-27",
-          "fresh": true
-        },
-        {
-          "title": "Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt",
-          "url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
-          "date": "2026-10-16",
-          "fresh": true
-        },
-        {
-          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-          "url": "https://www.anthropic.com/research/claude-shaped-science",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
-          "url": "https://arxiv.org/abs/2607.21557",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Claude Code and Opus 4.6 pipeline finds a real Linux sandbox-escape CVE",
-          "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
-          "date": "2026-07-30",
-          "fresh": false
-        },
-        {
-          "title": "Scientific computing in the age of agentic AI",
-          "url": "https://openai.com/index/scientific-computing-agentic-ai",
-          "date": "2026-07-28",
-          "fresh": false
-        },
-        {
-          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
-          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
-          "date": "2026-07-04",
-          "fresh": false
-        },
-        {
-          "title": "Omnigent is an open-source meta-harness over Claude Code, Codex, Cursor",
-          "url": "https://github.com/omnigent-ai/omnigent",
-          "date": "2026-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "ai-for-science",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-28",
-      "members": [
-        {
-          "title": "Anthropic expands AI for Science credits to 20 foundations and institutions",
-          "url": "https://www.anthropic.com/news/ai-for-science-expands-foundations-research-institutions",
-          "date": "2026-10-28",
-          "fresh": true
-        },
-        {
-          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-          "url": "https://www.anthropic.com/research/claude-shaped-science",
-          "date": "2026-10-01",
-          "fresh": true
         }
       ]
     },
@@ -12213,33 +12486,6 @@
     },
     {
       "topic": "ai-research",
-      "tag": "robustness",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-09-30",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "SAFT adversarially trains only robustness-critical parameters and beats LoRA",
-          "url": "http://arxiv.org/abs/2610.39455v1",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
-          "url": "https://arxiv.org/abs/2609.39027",
-          "date": "2026-09-30",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "self-hosted-agents",
       "count": 2,
       "recent": 2,
@@ -12261,6 +12507,33 @@
           "title": "MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios",
           "url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
           "date": "2026-10-15",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "spec-driven",
+      "count": 2,
+      "recent": 2,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 2.0,
+      "momentum": 2.0,
+      "sources": 2,
+      "first_seen": "2026-10-29",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "SpecForge compiles team rules into checks that agents cannot skip",
+          "url": "https://github.com/leaderiop/SpecForge",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "Daniel Miessler frames AI work as hill-climbing against ideal-state evals",
+          "url": "https://danielmiessler.com/blog/general-hill-climbing",
+          "date": "2026-10-29",
           "fresh": true
         }
       ]
@@ -12316,39 +12589,6 @@
           "url": "https://www.anthropic.com/news/expanding-partnership-gsa",
           "date": "2026-10-27",
           "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "governance",
-      "count": 3,
-      "recent": 2,
-      "baseline": 0.2,
-      "state": "rising",
-      "excess": 1.8,
-      "momentum": 1.8,
-      "sources": 3,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-10-22",
-      "members": [
-        {
-          "title": "Anthropic donates the Agent Skills standard to the Agentic AI Foundation",
-          "url": "https://simonwillison.net/2026/Oct/22/donating-agent-skills/",
-          "date": "2026-10-22",
-          "fresh": true
-        },
-        {
-          "title": "Anthropic embeds METR with employee-like access but controls what is redactable",
-          "url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
-          "date": "2026-10-20",
-          "fresh": true
-        },
-        {
-          "title": "Birfy/agentdescent",
-          "url": "https://github.com/Birfy/agentdescent",
-          "date": "2026-08-10",
-          "fresh": false
         }
       ]
     },
@@ -12414,6 +12654,39 @@
           "title": "Kimi K3: Open Frontier Intelligence",
           "url": "https://arxiv.org/abs/2607.24653",
           "date": "2026-08-10",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "robustness",
+      "count": 3,
+      "recent": 2,
+      "baseline": 0.2,
+      "state": "rising",
+      "excess": 1.8,
+      "momentum": 1.8,
+      "sources": 2,
+      "first_seen": "2026-09-30",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "SAFT adversarially trains only robustness-critical parameters and beats LoRA",
+          "url": "http://arxiv.org/abs/2610.39455v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Sparse Adversarial Fine-Tuning (SAFT) updates only about 5% of a network's parameters",
+          "url": "http://arxiv.org/abs/2610.39455v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
+          "url": "https://arxiv.org/abs/2609.39027",
+          "date": "2026-09-30",
           "fresh": false
         }
       ]
@@ -12492,6 +12765,123 @@
           "title": "Quoting Claude Opus 5 system prompt",
           "url": "https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything",
           "date": "2026-08-09",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "human-in-the-loop",
+      "count": 4,
+      "recent": 2,
+      "baseline": 0.3,
+      "state": "rising",
+      "excess": 1.7,
+      "momentum": 1.7,
+      "sources": 3,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-10-27",
+      "members": [
+        {
+          "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
+          "url": "https://www.anthropic.com/research/agents-judgment-calls",
+          "date": "2026-10-27",
+          "fresh": true
+        },
+        {
+          "title": "Google's VERID checks agent-written lab-robot protocols against a 3D digital twin",
+          "url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
+          "date": "2026-10-16",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+          "url": "https://www.anthropic.com/research/claude-shaped-science",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Adaptive Arena-based Contestable Argumentative Network-of-Experts for Open-Ended Care Plan Coordination",
+          "url": "https://arxiv.org/abs/2608.05391",
+          "date": "2026-08-07",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "mcp",
+      "count": 4,
+      "recent": 2,
+      "baseline": 0.3,
+      "state": "rising",
+      "excess": 1.7,
+      "momentum": 1.7,
+      "sources": 3,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "SpecForge compiles team rules into checks that agents cannot skip",
+          "url": "https://github.com/leaderiop/SpecForge",
+          "date": "2026-10-31",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic donates the Agent Skills standard to the Agentic AI Foundation",
+          "url": "https://simonwillison.net/2026/Oct/22/donating-agent-skills/",
+          "date": "2026-10-22",
+          "fresh": true
+        },
+        {
+          "title": "universal-tool-calling-protocol/utcp-specification",
+          "url": "https://github.com/universal-tool-calling-protocol/utcp-specification",
+          "date": "2026-08-09",
+          "fresh": false
+        },
+        {
+          "title": "CASCADE: An Agentic Regulatory Network Framework for Patient-Data-Validated Downstream Perturbation Prediction",
+          "url": "https://arxiv.org/abs/2608.05359",
+          "date": "2026-08-07",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "retrieval",
+      "count": 4,
+      "recent": 2,
+      "baseline": 0.3,
+      "state": "rising",
+      "excess": 1.7,
+      "momentum": 1.7,
+      "sources": 2,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Workshop paper proposes retrieval as a local walk through memory",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+          "url": "https://arxiv.org/abs/2608.07458",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "KReF: Training-Free Retrieval for Long-Term Time-Series Forecasting and Predictive Uncertainty",
+          "url": "https://arxiv.org/abs/2608.06748",
+          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -12627,15 +13017,15 @@
     },
     {
       "topic": "ai-research",
-      "tag": "benchmark",
-      "count": 21,
-      "recent": 4,
-      "baseline": 2.9,
+      "tag": "llm-as-judge",
+      "count": 5,
+      "recent": 2,
+      "baseline": 0.5,
       "state": "rising",
-      "excess": 1.1,
-      "momentum": 1.1,
-      "sources": 9,
-      "first_seen": "2026-05",
+      "excess": 1.5,
+      "momentum": 1.5,
+      "sources": 4,
+      "first_seen": "2026-08-07",
       "last_seen": "2026-10-27",
       "members": [
         {
@@ -12645,22 +13035,16 @@
           "fresh": true
         },
         {
-          "title": "PRISM benchmark shows pathology model calibration breaks down with scarce labels",
-          "url": "http://arxiv.org/abs/2610.36517v1",
-          "date": "2026-10-27",
-          "fresh": true
-        },
-        {
-          "title": "SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues",
-          "url": "https://github.com/logic-star-ai/swt-bench",
-          "date": "2026-10-26",
+          "title": "DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs",
+          "url": "https://arxiv.org/abs/2610.28522",
+          "date": "2026-10-20",
           "fresh": true
         },
         {
           "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
           "url": "https://arxiv.org/abs/2609.39027",
           "date": "2026-09-30",
-          "fresh": true
+          "fresh": false
         },
         {
           "title": "MentalHealthBench scores model replies against weighted expert-consensus rubrics",
@@ -12669,99 +13053,9 @@
           "fresh": false
         },
         {
-          "title": "UK AISI publishes verified benchmark results showing scores shift with inference compute",
-          "url": "https://huggingface.co/blog/evaleval-aisi",
-          "date": "2026-09-22",
-          "fresh": false
-        },
-        {
-          "title": "Explicit Edit Benchmark offers 226 byte-exact file-editing tasks for comparing coding agents",
-          "url": "https://github.com/alexshpunt/explicit-edit-benchmark",
-          "date": "2026-09-11",
-          "fresh": false
-        },
-        {
-          "title": "SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization",
-          "url": "https://arxiv.org/abs/2602.12187",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "FinanceHarness: Autonomous Financial Deep Research Framework",
-          "url": "https://arxiv.org/abs/2607.27853",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Symbolic Graphics Programming with Large Language Models",
-          "url": "https://arxiv.org/abs/2509.05208",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "MultiView-Bench: A Diagnostic Benchmark for World-Centric Multi-View Integration in VLMs",
-          "url": "https://arxiv.org/abs/2607.08970",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "MAC: A Conversion Rate Prediction Benchmark Featuring Labels Under Multiple Attribution Mechanisms",
-          "url": "https://arxiv.org/abs/2603.02184",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "MEDLEY-BENCH tests belief revision under social pressure in large language models",
-          "url": "https://arxiv.org/abs/2604.16009",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Neurai-VN Benchmark standardizes machine learning models for mental health digital phenotyping",
-          "url": "https://arxiv.org/abs/2607.25232",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "UAV3DCrop: Benchmarking 3D Reconstruction in Repeated Multi-Angle UAV Crop Surveys",
-          "url": "https://arxiv.org/abs/2608.06404",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "EcoAgent-Bench: Evaluating Economic Decision-Making in Budget-Constrained LLM Agents",
-          "url": "https://arxiv.org/abs/2608.05519",
+          "title": "SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution",
+          "url": "https://arxiv.org/abs/2608.05573",
           "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "CREBench: Evaluating Large Language Models in Cryptographic Binary Reverse Engineering",
-          "url": "https://arxiv.org/abs/2604.03750",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Improving Interoperability among Defence and National Security Ontologies: Analysis and Evaluation Tasks",
-          "url": "https://arxiv.org/abs/2608.05867",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "Seeing Is Not Deciding: Can Multimodal LLMs Act as Effective CEOs?",
-          "url": "https://arxiv.org/abs/2608.05864",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
-          "url": "https://arxiv.org/abs/2608.05381",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "PawBench: benchmarking LLM x harness performance",
-          "url": "https://github.com/agentscope-ai/PawBench",
-          "date": "2026-05",
           "fresh": false
         }
       ]
@@ -12825,75 +13119,132 @@
     },
     {
       "topic": "ai-research",
-      "tag": "evaluation",
-      "count": 10,
+      "tag": "claude-code",
+      "count": 8,
       "recent": 2,
-      "baseline": 1.4,
+      "baseline": 1.0,
       "state": "rising",
-      "excess": 0.6,
-      "momentum": 0.6,
-      "sources": 4,
-      "first_seen": "2026-08-06",
-      "last_seen": "2026-10-26",
+      "excess": 1.0,
+      "momentum": 1.0,
+      "sources": 6,
+      "first_seen": "2026-06",
+      "last_seen": "2026-10-27",
       "members": [
         {
-          "title": "Simon Willison's Claude-run review finds webframe fast but rough for scraping",
-          "url": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
-          "date": "2026-10-26",
+          "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
+          "url": "https://www.anthropic.com/research/agents-judgment-calls",
+          "date": "2026-10-27",
           "fresh": true
         },
         {
-          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
-          "url": "https://huggingface.co/blog/open-tts-leaderboard",
-          "date": "2026-09-30",
+          "title": "Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt",
+          "url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
+          "date": "2026-10-16",
           "fresh": true
         },
         {
-          "title": "Zero gap does not mean a contaminated model is restored",
-          "url": "https://arxiv.org/abs/2608.07341",
+          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+          "url": "https://www.anthropic.com/research/claude-shaped-science",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "OpenForgeRL: Train Harness-native Agents in Any Environment",
+          "url": "https://arxiv.org/abs/2607.21557",
           "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "Rethinking Evaluation Paradigms in IBP-based Certified Training",
-          "url": "https://arxiv.org/abs/2606.02134",
+          "title": "Claude Code and Opus 4.6 pipeline finds a real Linux sandbox-escape CVE",
+          "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
+          "date": "2026-07-30",
+          "fresh": false
+        },
+        {
+          "title": "Scientific computing in the age of agentic AI",
+          "url": "https://openai.com/index/scientific-computing-agentic-ai",
+          "date": "2026-07-28",
+          "fresh": false
+        },
+        {
+          "title": "Better Models, Worse Tools: SOTA models regress on non-native tool schemas",
+          "url": "https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything",
+          "date": "2026-07-04",
+          "fresh": false
+        },
+        {
+          "title": "Omnigent is an open-source meta-harness over Claude Code, Codex, Cursor",
+          "url": "https://github.com/omnigent-ai/omnigent",
+          "date": "2026-06",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "long-context",
+      "count": 9,
+      "recent": 2,
+      "baseline": 1.2,
+      "state": "rising",
+      "excess": 0.8,
+      "momentum": 0.8,
+      "sources": 3,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Workshop paper proposes retrieval as a local walk through memory",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K3: Open Frontier Intelligence",
+          "url": "https://arxiv.org/abs/2607.24653",
           "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration",
-          "url": "https://arxiv.org/abs/2605.27752",
+          "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
+          "url": "https://arxiv.org/abs/2607.20457",
           "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "SenWorld: A Digital-Twin Simulation for Generating Context-Rich Evaluation Data",
-          "url": "https://arxiv.org/abs/2607.19949",
+          "title": "Global allocation of resolution and coverage improves KV cache compression",
+          "url": "https://arxiv.org/abs/2608.07001",
           "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains",
-          "url": "https://arxiv.org/abs/2603.15506",
+          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
+          "url": "https://arxiv.org/abs/2608.06849",
           "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "Boundary Density Likelihood for Direct Event-Time Supervision",
-          "url": "https://arxiv.org/abs/2408.12792",
+          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+          "url": "https://arxiv.org/abs/2608.07458",
           "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "A Pedagogical Suitability Index measures how well LLM tutors teach",
-          "url": "https://arxiv.org/abs/2608.05411",
-          "date": "2026-08-07",
+          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+          "url": "https://arxiv.org/abs/2608.02515",
+          "date": "2026-08-10",
           "fresh": false
         },
         {
-          "title": "Unmasking Removal-Budget Confounding: A Matched Operating-Point Evaluation Framework for Adaptive Data Cleaning",
-          "url": "https://arxiv.org/abs/2608.06511",
-          "date": "2026-08-06",
+          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
+          "url": "https://arxiv.org/abs/2504.17584",
+          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -12901,16 +13252,22 @@
     {
       "topic": "ai-research",
       "tag": "agents",
-      "count": 25,
-      "recent": 2,
+      "count": 26,
+      "recent": 3,
       "baseline": 4.0,
       "state": "steady",
-      "excess": -2.0,
+      "excess": -1.0,
       "momentum": 0.0,
-      "sources": 9,
+      "sources": 10,
       "first_seen": "2026-05",
-      "last_seen": "2026-10-27",
+      "last_seen": "2026-10-31",
       "members": [
+        {
+          "title": "Framework-free Colab notebooks teach the applied LLM engineering stack",
+          "url": "https://github.com/calmrocks/ai-engineer-notebooks",
+          "date": "2026-10-31",
+          "fresh": true
+        },
         {
           "title": "Anthropic reports early results from Claude-driven drug development partnerships",
           "url": "https://www.anthropic.com/research/early-progress-drug-development",
@@ -13053,6 +13410,147 @@
           "title": "Omnigent is an open-source meta-harness over Claude Code, Codex, Cursor",
           "url": "https://github.com/omnigent-ai/omnigent",
           "date": "2026-06",
+          "fresh": false
+        },
+        {
+          "title": "PawBench: benchmarking LLM x harness performance",
+          "url": "https://github.com/agentscope-ai/PawBench",
+          "date": "2026-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "benchmark",
+      "count": 21,
+      "recent": 3,
+      "baseline": 3.1,
+      "state": "steady",
+      "excess": -0.1,
+      "momentum": 0.0,
+      "sources": 9,
+      "first_seen": "2026-05",
+      "last_seen": "2026-10-27",
+      "members": [
+        {
+          "title": "Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly",
+          "url": "https://huggingface.co/blog/allenai/novelty-bench",
+          "date": "2026-10-27",
+          "fresh": true
+        },
+        {
+          "title": "PRISM benchmark shows pathology model calibration breaks down with scarce labels",
+          "url": "http://arxiv.org/abs/2610.36517v1",
+          "date": "2026-10-27",
+          "fresh": true
+        },
+        {
+          "title": "SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues",
+          "url": "https://github.com/logic-star-ai/swt-bench",
+          "date": "2026-10-26",
+          "fresh": true
+        },
+        {
+          "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
+          "url": "https://arxiv.org/abs/2609.39027",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "MentalHealthBench scores model replies against weighted expert-consensus rubrics",
+          "url": "https://openai.com/index/introducing-mentalhealthbench",
+          "date": "2026-09-23",
+          "fresh": false
+        },
+        {
+          "title": "UK AISI publishes verified benchmark results showing scores shift with inference compute",
+          "url": "https://huggingface.co/blog/evaleval-aisi",
+          "date": "2026-09-22",
+          "fresh": false
+        },
+        {
+          "title": "Explicit Edit Benchmark offers 226 byte-exact file-editing tasks for comparing coding agents",
+          "url": "https://github.com/alexshpunt/explicit-edit-benchmark",
+          "date": "2026-09-11",
+          "fresh": false
+        },
+        {
+          "title": "SAGEO Arena: A Realistic Environment for Evaluating Search-Augmented Generative Engine Optimization",
+          "url": "https://arxiv.org/abs/2602.12187",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "FinanceHarness: Autonomous Financial Deep Research Framework",
+          "url": "https://arxiv.org/abs/2607.27853",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Symbolic Graphics Programming with Large Language Models",
+          "url": "https://arxiv.org/abs/2509.05208",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "MultiView-Bench: A Diagnostic Benchmark for World-Centric Multi-View Integration in VLMs",
+          "url": "https://arxiv.org/abs/2607.08970",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "MAC: A Conversion Rate Prediction Benchmark Featuring Labels Under Multiple Attribution Mechanisms",
+          "url": "https://arxiv.org/abs/2603.02184",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "MEDLEY-BENCH tests belief revision under social pressure in large language models",
+          "url": "https://arxiv.org/abs/2604.16009",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Neurai-VN Benchmark standardizes machine learning models for mental health digital phenotyping",
+          "url": "https://arxiv.org/abs/2607.25232",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "UAV3DCrop: Benchmarking 3D Reconstruction in Repeated Multi-Angle UAV Crop Surveys",
+          "url": "https://arxiv.org/abs/2608.06404",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "EcoAgent-Bench: Evaluating Economic Decision-Making in Budget-Constrained LLM Agents",
+          "url": "https://arxiv.org/abs/2608.05519",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "CREBench: Evaluating Large Language Models in Cryptographic Binary Reverse Engineering",
+          "url": "https://arxiv.org/abs/2604.03750",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Improving Interoperability among Defence and National Security Ontologies: Analysis and Evaluation Tasks",
+          "url": "https://arxiv.org/abs/2608.05867",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Seeing Is Not Deciding: Can Multimodal LLMs Act as Effective CEOs?",
+          "url": "https://arxiv.org/abs/2608.05864",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "C3PO: Evaluating Cross-Modal Composition and Counterfactual Performance in Omnimodal Models",
+          "url": "https://arxiv.org/abs/2608.05381",
+          "date": "2026-08-07",
           "fresh": false
         },
         {
@@ -13239,17 +13737,98 @@
     },
     {
       "topic": "ai-research",
-      "tag": "agent-harness",
-      "count": 8,
+      "tag": "evaluation",
+      "count": 10,
       "recent": 1,
-      "baseline": 1.2,
+      "baseline": 1.6,
       "state": "steady",
-      "excess": -0.2,
+      "excess": -0.6,
       "momentum": 0.0,
       "sources": 4,
-      "first_seen": "2026-07-28",
-      "last_seen": "2026-10-01",
+      "first_seen": "2026-08-06",
+      "last_seen": "2026-10-26",
       "members": [
+        {
+          "title": "Simon Willison's Claude-run review finds webframe fast but rough for scraping",
+          "url": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+          "date": "2026-10-26",
+          "fresh": true
+        },
+        {
+          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
+          "url": "https://huggingface.co/blog/open-tts-leaderboard",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "Zero gap does not mean a contaminated model is restored",
+          "url": "https://arxiv.org/abs/2608.07341",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Rethinking Evaluation Paradigms in IBP-based Certified Training",
+          "url": "https://arxiv.org/abs/2606.02134",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Same Answer, Different Confidence: Protocol Sensitivity in LLM Confidence Calibration",
+          "url": "https://arxiv.org/abs/2605.27752",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "SenWorld: A Digital-Twin Simulation for Generating Context-Rich Evaluation Data",
+          "url": "https://arxiv.org/abs/2607.19949",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Seeking SOTA: Time-Series Forecasting Must Adopt Taxonomy-Specific Evaluation to Dispel Illusory Gains",
+          "url": "https://arxiv.org/abs/2603.15506",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Boundary Density Likelihood for Direct Event-Time Supervision",
+          "url": "https://arxiv.org/abs/2408.12792",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "A Pedagogical Suitability Index measures how well LLM tutors teach",
+          "url": "https://arxiv.org/abs/2608.05411",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "Unmasking Removal-Budget Confounding: A Matched Operating-Point Evaluation Framework for Adaptive Data Cleaning",
+          "url": "https://arxiv.org/abs/2608.06511",
+          "date": "2026-08-06",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "agent-harness",
+      "count": 9,
+      "recent": 1,
+      "baseline": 1.4,
+      "state": "steady",
+      "excess": -0.4,
+      "momentum": 0.0,
+      "sources": 5,
+      "first_seen": "2026-07-28",
+      "last_seen": "2026-10-31",
+      "members": [
+        {
+          "title": "SpecForge compiles team rules into checks that agents cannot skip",
+          "url": "https://github.com/leaderiop/SpecForge",
+          "date": "2026-10-31",
+          "fresh": true
+        },
         {
           "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
           "url": "https://www.anthropic.com/research/claude-shaped-science",
@@ -13296,69 +13875,6 @@
           "title": "How we use /goal to find bugs in Patch the Planet",
           "url": "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/",
           "date": "2026-07-28",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "long-context",
-      "count": 8,
-      "recent": 1,
-      "baseline": 1.2,
-      "state": "steady",
-      "excess": -0.2,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
-          "url": "http://arxiv.org/abs/2610.40545v1",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "Kimi K3: Open Frontier Intelligence",
-          "url": "https://arxiv.org/abs/2607.24653",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
-          "url": "https://arxiv.org/abs/2607.20457",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Global allocation of resolution and coverage improves KV cache compression",
-          "url": "https://arxiv.org/abs/2608.07001",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
-          "url": "https://arxiv.org/abs/2608.06849",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
-          "url": "https://arxiv.org/abs/2608.07458",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
-          "url": "https://arxiv.org/abs/2608.02515",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
-          "url": "https://arxiv.org/abs/2504.17584",
-          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -13647,6 +14163,45 @@
     },
     {
       "topic": "ai-research",
+      "tag": "agent-memory",
+      "count": 4,
+      "recent": 1,
+      "baseline": 0.5,
+      "state": "steady",
+      "excess": 0.5,
+      "momentum": 0.0,
+      "sources": 4,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-10-29",
+      "members": [
+        {
+          "title": "Workshop paper proposes retrieval as a local walk through memory",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Hugging Face's funes shares agent memory from raw session text, not summaries",
+          "url": "https://huggingface.co/blog/funes",
+          "date": "2026-09-03",
+          "fresh": false
+        },
+        {
+          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+          "url": "https://arxiv.org/abs/2608.02515",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay",
+          "url": "https://arxiv.org/abs/2608.05784",
+          "date": "2026-08-07",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "compaction",
       "count": 4,
       "recent": 1,
@@ -13719,45 +14274,6 @@
           "title": "With no capability boundary, models may claim actions they cannot perform",
           "url": "https://arxiv.org/abs/2607.13596",
           "date": "2026-07-16",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "multilingual",
-      "count": 4,
-      "recent": 1,
-      "baseline": 0.5,
-      "state": "steady",
-      "excess": 0.5,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-09-30",
-      "members": [
-        {
-          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
-          "url": "https://huggingface.co/blog/open-tts-leaderboard",
-          "date": "2026-09-30",
-          "fresh": true
-        },
-        {
-          "title": "Multi-Legal-Bench evaluates LLMs on legal reasoning across jurisdictions and languages",
-          "url": "https://arxiv.org/abs/2605.29738",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "An Agentic Hybrid Top-Down and Bottom-Up Approach to Knowledge Graph Generation",
-          "url": "https://arxiv.org/abs/2608.07023",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Enhancing AI security through global AI red teaming",
-          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
-          "date": "2026-07-27",
           "fresh": false
         }
       ]
@@ -13974,39 +14490,6 @@
     },
     {
       "topic": "ai-research",
-      "tag": "mcp",
-      "count": 3,
-      "recent": 1,
-      "baseline": 0.3,
-      "state": "steady",
-      "excess": 0.7,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-10-22",
-      "members": [
-        {
-          "title": "Anthropic donates the Agent Skills standard to the Agentic AI Foundation",
-          "url": "https://simonwillison.net/2026/Oct/22/donating-agent-skills/",
-          "date": "2026-10-22",
-          "fresh": true
-        },
-        {
-          "title": "universal-tool-calling-protocol/utcp-specification",
-          "url": "https://github.com/universal-tool-calling-protocol/utcp-specification",
-          "date": "2026-08-09",
-          "fresh": false
-        },
-        {
-          "title": "CASCADE: An Agentic Regulatory Network Framework for Patient-Data-Validated Downstream Perturbation Prediction",
-          "url": "https://arxiv.org/abs/2608.05359",
-          "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "orchestration",
       "count": 3,
       "recent": 1,
@@ -14073,33 +14556,33 @@
     },
     {
       "topic": "ai-research",
-      "tag": "retrieval",
+      "tag": "prompt-injection",
       "count": 3,
       "recent": 1,
       "baseline": 0.3,
       "state": "steady",
       "excess": 0.7,
       "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-10-29",
+      "sources": 3,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-10-31",
       "members": [
         {
-          "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
-          "url": "http://arxiv.org/abs/2610.40545v1",
-          "date": "2026-10-29",
+          "title": "Framework-free Colab notebooks teach the applied LLM engineering stack",
+          "url": "https://github.com/calmrocks/ai-engineer-notebooks",
+          "date": "2026-10-31",
           "fresh": true
         },
         {
-          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
-          "url": "https://arxiv.org/abs/2608.07458",
-          "date": "2026-08-10",
+          "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
+          "url": "https://arxiv.org/abs/2608.27299",
+          "date": "2026-08-27",
           "fresh": false
         },
         {
-          "title": "KReF: Training-Free Retrieval for Long-Term Time-Series Forecasting and Predictive Uncertainty",
-          "url": "https://arxiv.org/abs/2608.06748",
-          "date": "2026-08-10",
+          "title": "How the Claude Code team designs its harness, tools and evals",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
           "fresh": false
         }
       ]
@@ -14260,6 +14743,33 @@
           "url": "https://openai.com/index/scientific-computing-agentic-ai",
           "date": "2026-07-28",
           "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "ai-for-science",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-28",
+      "members": [
+        {
+          "title": "Anthropic expands AI for Science credits to 20 foundations and institutions",
+          "url": "https://www.anthropic.com/news/ai-for-science-expands-foundations-research-institutions",
+          "date": "2026-10-28",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+          "url": "https://www.anthropic.com/research/claude-shaped-science",
+          "date": "2026-10-01",
+          "fresh": true
         }
       ]
     },
@@ -14529,60 +15039,6 @@
           "title": "Kimi K2.5: Visual Agentic Intelligence",
           "url": "https://arxiv.org/abs/2602.02276",
           "date": "2026-08-10",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "latency",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-09-30",
-      "members": [
-        {
-          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
-          "url": "https://huggingface.co/blog/open-tts-leaderboard",
-          "date": "2026-09-30",
-          "fresh": true
-        },
-        {
-          "title": "Hybrid analytical and machine-learning predictors model LLM inference latency and energy",
-          "url": "https://arxiv.org/abs/2608.06723",
-          "date": "2026-08-10",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "leaderboard",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-09-11",
-      "last_seen": "2026-09-30",
-      "members": [
-        {
-          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
-          "url": "https://huggingface.co/blog/open-tts-leaderboard",
-          "date": "2026-09-30",
-          "fresh": true
-        },
-        {
-          "title": "Explicit Edit Benchmark offers 226 byte-exact file-editing tasks for comparing coding agents",
-          "url": "https://github.com/alexshpunt/explicit-edit-benchmark",
-          "date": "2026-09-11",
           "fresh": false
         }
       ]
@@ -14988,33 +15444,6 @@
           "title": "universal-tool-calling-protocol/utcp-specification",
           "url": "https://github.com/universal-tool-calling-protocol/utcp-specification",
           "date": "2026-08-09",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "verification",
-      "count": 2,
-      "recent": 1,
-      "baseline": 0.2,
-      "state": "steady",
-      "excess": 0.8,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-07-28",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-          "url": "https://www.anthropic.com/research/claude-shaped-science",
-          "date": "2026-10-01",
-          "fresh": true
-        },
-        {
-          "title": "Scientific computing in the age of agentic AI",
-          "url": "https://openai.com/index/scientific-computing-agentic-ai",
-          "date": "2026-07-28",
           "fresh": false
         }
       ]
@@ -15921,6 +16350,45 @@
     },
     {
       "topic": "ai-research",
+      "tag": "multilingual",
+      "count": 4,
+      "recent": 0,
+      "baseline": 0.7,
+      "state": "quiet",
+      "excess": -0.7,
+      "momentum": 0.0,
+      "sources": 3,
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-09-30",
+      "members": [
+        {
+          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
+          "url": "https://huggingface.co/blog/open-tts-leaderboard",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "Multi-Legal-Bench evaluates LLMs on legal reasoning across jurisdictions and languages",
+          "url": "https://arxiv.org/abs/2605.29738",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "An Agentic Hybrid Top-Down and Bottom-Up Approach to Knowledge Graph Generation",
+          "url": "https://arxiv.org/abs/2608.07023",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Enhancing AI security through global AI red teaming",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/",
+          "date": "2026-07-27",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "systems",
       "count": 4,
       "recent": 0,
@@ -15954,39 +16422,6 @@
           "title": "SNI-GNN: SmartNIC-Assisted Full-Graph GNN Training with In-Network Embedding Prediction",
           "url": "https://arxiv.org/abs/2608.06441",
           "date": "2026-08-06",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "agent-memory",
-      "count": 3,
-      "recent": 0,
-      "baseline": 0.5,
-      "state": "quiet",
-      "excess": -0.5,
-      "momentum": 0.0,
-      "sources": 3,
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-09-03",
-      "members": [
-        {
-          "title": "Hugging Face's funes shares agent memory from raw session text, not summaries",
-          "url": "https://huggingface.co/blog/funes",
-          "date": "2026-09-03",
-          "fresh": false
-        },
-        {
-          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
-          "url": "https://arxiv.org/abs/2608.02515",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay",
-          "url": "https://arxiv.org/abs/2608.05784",
-          "date": "2026-08-07",
           "fresh": false
         }
       ]
@@ -17013,6 +17448,60 @@
     },
     {
       "topic": "ai-research",
+      "tag": "latency",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-09-30",
+      "members": [
+        {
+          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
+          "url": "https://huggingface.co/blog/open-tts-leaderboard",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "Hybrid analytical and machine-learning predictors model LLM inference latency and energy",
+          "url": "https://arxiv.org/abs/2608.06723",
+          "date": "2026-08-10",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "leaderboard",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-09-11",
+      "last_seen": "2026-09-30",
+      "members": [
+        {
+          "title": "Hugging Face launches an Open TTS Leaderboard ranking open text-to-speech models",
+          "url": "https://huggingface.co/blog/open-tts-leaderboard",
+          "date": "2026-09-30",
+          "fresh": false
+        },
+        {
+          "title": "Explicit Edit Benchmark offers 226 byte-exact file-editing tasks for comparing coding agents",
+          "url": "https://github.com/alexshpunt/explicit-edit-benchmark",
+          "date": "2026-09-11",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "llm-inference",
       "count": 2,
       "recent": 0,
@@ -17115,33 +17604,6 @@
           "title": "Hateful visual stories slip past per-image moderation in multi-turn generation",
           "url": "https://arxiv.org/abs/2608.05210",
           "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "prompt-injection",
-      "count": 2,
-      "recent": 0,
-      "baseline": 0.3,
-      "state": "quiet",
-      "excess": -0.3,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-08-27",
-      "members": [
-        {
-          "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
-          "url": "https://arxiv.org/abs/2608.27299",
-          "date": "2026-08-27",
-          "fresh": false
-        },
-        {
-          "title": "How the Claude Code team designs its harness, tools and evals",
-          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
-          "date": "2026-07-21",
           "fresh": false
         }
       ]
@@ -17331,6 +17793,33 @@
           "title": "Conformal Fusion Under Missing Modalities",
           "url": "https://arxiv.org/abs/2608.07183",
           "date": "2026-08-10",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "verification",
+      "count": 2,
+      "recent": 0,
+      "baseline": 0.3,
+      "state": "quiet",
+      "excess": -0.3,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-07-28",
+      "last_seen": "2026-10-01",
+      "members": [
+        {
+          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+          "url": "https://www.anthropic.com/research/claude-shaped-science",
+          "date": "2026-10-01",
+          "fresh": true
+        },
+        {
+          "title": "Scientific computing in the age of agentic AI",
+          "url": "https://openai.com/index/scientific-computing-agentic-ai",
+          "date": "2026-07-28",
           "fresh": false
         }
       ]
