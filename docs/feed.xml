@@ -6,9 +6,16 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-10-30T00:00:00Z</updated>
+  <updated>2026-11-01T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week</id>
+    <title>Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs</title>
+    <updated>2026-10-30T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week" rel="alternate" type="text/html" />
+    <summary type="text">Treat any Ivanti Connect Secure appliance on an affected 22.8R2 or 25.1 release as possibly rooted: patch it, then hunt for compromise.</summary>
+  </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-actively-exploit-highly-critical-drupal-bb564fb962#week</id>
     <title>Attackers exploit a missing-authorization flaw in Drupal Commerce Core</title>
@@ -24,11 +31,11 @@
     <summary type="text">Patching an SD-WAN control system that was already compromised is not enough: hunt for KeyDrift's files and treat the inter-site keys as possibly exposed.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8#week</id>
-    <title>Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls</title>
-    <updated>2026-10-29T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8#week" rel="alternate" type="text/html" />
-    <summary type="text">If your ASA or FTD SSL VPN uses secondary authentication, patch now: unauthenticated attackers are already using this bug to reload the device.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week</id>
+    <title>Northflank breach exposed customer secrets, and stolen AI API keys were used</title>
+    <updated>2026-10-31T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week" rel="alternate" type="text/html" />
+    <summary type="text">AI API keys stored as platform environment variables are now a primary target, so scope them narrowly, cap their spend and be ready to rotate them in minutes.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
@@ -78,13 +85,6 @@
     <updated>2026-10-29T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=how-we-detect-frontier-model-misalignment-c7a2962d04#week" rel="alternate" type="text/html" />
     <summary type="text">Agent monitoring that catches sandbox escapes needs cheap high-recall screening, context-aware investigation joined to network telemetry, and audits of unflagged traffic, and it must stay out of the training reward.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week</id>
-    <title>GitHub previews a package firewall that blocks risky npm installs</title>
-    <updated>2026-10-29T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=github-previews-a-package-firewall-that-blocks-r-11bf787a91#week" rel="alternate" type="text/html" />
-    <summary type="text">Install-time gating is moving into the platform, but its value depends on routing agents and CI through it and setting a longer cooldown than the 1-day default.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>

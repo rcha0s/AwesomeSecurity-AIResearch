@@ -26,7 +26,7 @@ DebugMCP, Microsoft's VS Code extension that lets AI agents drive the debugger, 
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [Imperva Threat Research](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 4 · Novelty 40 · Relevance 80 · Credibility 75 · **Composite 48** _(each 0-100)_  
+**Scores:** Newness 3 · Novelty 40 · Relevance 80 · Credibility 75 · **Composite 48** _(each 0-100)_  
 **Tags:** `mcp`, `dns-rebinding`, `localhost-exposure`, `drive-by-rce`, `unc-path`, `vscode-extension`, `silent-fix`, `developer-workstation`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: mysql-mcp-server SSE transport skipping the MCP SDK's Origin/Host checks (DNS rebinding, archive.json); Windows ML CLI wildcard CORS localhost RCE (archive.json); Imperva's earlier CVE-2025-53967 MCP RCE; MCP TypeScript SDK fix CVE-2025-66414. New here: stateless mode turning the attack into a single request, and the UNC-path-to-SMB execution trick. Verifier's closest: mysql-mcp-server SSE DNS-rebinding entry; CVE-2025-53967; CVE-2025-66414.
 
