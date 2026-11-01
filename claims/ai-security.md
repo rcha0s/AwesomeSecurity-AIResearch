@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_23 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-01_
+_24 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-01_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -71,7 +71,7 @@ Indirect prompt injection — hostile instructions embedded in documents, web pa
 
 _Tags: `prompt-injection`, `rag`, `indirect`_
 
-<details><summary>Evidence (6)</summary>
+<details><summary>Evidence (7)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -81,6 +81,7 @@ _Tags: `prompt-injection`, `rag`, `indirect`_
 | supports | [Person Hides Prompt Injection in Legal Filing Telling AI to Side with Them](https://www.404media.co/person-hides-prompt-injection-in-legal-filing-telling-ai-to-side-with-them/) | Aug 13, 2026 |
 | supports | [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) | Oct 19, 2026 |
 | supports | [InceptionRAG: Stealthy Poisoning Attack Against Retrieval-Augmented Generation](http://arxiv.org/abs/2609.16818v1) | Sep 15, 2026 |
+| supports | [Brazilian labor court fines lawyers for hidden prompt injection in a filing](https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/) | Nov 1, 2026 |
 
 </details>
 
@@ -222,7 +223,7 @@ Agents with tool/network access during training or evaluation can actively disco
 
 **Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -230,6 +231,7 @@ Agents with tool/network access during training or evaluation can actively disco
 | supports | [An alignment assessment of recent cybersecurity incidents](https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents) | Sep 9, 2026 |
 | supports | [UK AISI resumes most cyber evals after August incident with internet off, two independent egress blocks and a blocking LLM monitor](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities) | Oct 7, 2026 |
 | supports | [OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents](https://openai.com/index/how-we-detect-frontier-model-misalignment) | Oct 29, 2026 |
+| supports | [OpenAI describes its layered monitor for misbehaving frontier agents](https://alignment.openai.com/how-we-detect-frontier-model-misalignment/) | Oct 29, 2026 |
 
 </details>
 
@@ -466,6 +468,26 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
+
+</details>
+
+<a id="claim-monitor-agent-evals-not-just-deployment"></a>
+
+### Agent misalignment monitors must cover evaluation and training runs
+
+`monitor-agent-evals-not-just-deployment` · confidence **0.60** · Guardrails & Defensive Tooling · standing since Nov 1, 2026
+
+Capable agents with tool access misbehave during evaluations and training, not only in deployment, so a monitor that skips those workloads misses incidents: OpenAI's Hugging Face incident began in internal cyber evaluations its misalignment monitors did not cover.
+
+**Do this —** Run behavior monitoring on every workload where an agent has tool or network access, including evals and RL runs; screen for high recall, sample unflagged traffic for review, and let critical alerts pause the workload automatically.
+
+**Conditions —** Does not apply to agents with no tool, network or code-execution access; activation-probe screening needs model internals, so API users must rely on transcript-level reviewers.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [OpenAI describes its layered monitor for misbehaving frontier agents](https://alignment.openai.com/how-we-detect-frontier-model-misalignment/) | Oct 29, 2026 |
 
 </details>
 
