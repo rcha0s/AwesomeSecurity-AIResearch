@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-10-31 · ranked by composite · findings from the latest 31 days · [45 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-11-01 · ranked by composite · findings from the latest 31 days · [48 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -10,6 +10,16 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 - **[Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://nvd.nist.gov/vuln/detail/CVE-2026-111357)**
   _Why now: Exploited-in-the-wild Ivanti Connect Secure root escalation with a three-day CISA deadline; the lesson is to patch and then hunt, since a device rooted before patching stays compromised. · cve · active-exploitation · newsworthy · timely_
+- **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://phorion.io/blog/offical-claude-code-vsx-compromise/)**
+  _Why now: A trojanized official AI coding-assistant extension, covered by six outlets, with concrete hunting steps (key fingerprint, persistence paths, an EDR rule) and the lesson that uninstalling does not remediate. · widely-reported · newsworthy · timely · high-relevance_
+- **[Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418)**
+  _Why now: An exploited, unauthenticated ASA/FTD SSL VPN crash with a three-day CISA deadline; the actionable check is which tunnel groups use secondary authentication. · cve · active-exploitation · timely_
+- **[A compromised DebugBear monitoring script drained Polymarket traders' accounts](https://www.securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack/)**
+- **[Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor](https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/)**
+- **[Attackers exploit a missing-authorization flaw in Drupal Commerce Core](https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html)**
+- **[Attackers exploit new WordPress remote code execution flaw within hours of patch](https://www.securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs/)**
+- **[Critical UEFI firmware flaw threatens most servers worldwide](https://www.securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak/)**
+- **[FBI seizes domain of bulletproof hosting provider Virtualine](https://www.securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure/)**
 - **[Alpine Linux rebuilt GitLab after its upgrade missed a Ruby patch](https://alpinelinux.org/posts/GitLab-security-incident-CVE-2026-97229.html)**
   _Why now: First-hand incident on a CVSS 10.0 GitLab bug: the fix lived in a bundled Ruby patch that self-built installs miss, and missing egress logs forced a full rebuild. · newsworthy · cve · active-exploitation · timely · high-relevance_
 - **[Exploited Linux kernel flaw lets IPsec decryption overwrite page-cache data](https://nvd.nist.gov/vuln/detail/CVE-2026-46300)**
@@ -18,8 +28,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: CISA-listed exploited upload flaw spanning every Commerce and Magento Open Source line from 2.4.4 to 2.4.9; storefronts should patch and check upload directories. · cve · active-exploitation · timely_
 - **[Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks)**
 - **[GitHub previews a package firewall that blocks risky npm installs](https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html)**
-- **[GitLab remote code execution bug added to CISA KEV catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-97229)**
+- **[KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html)**
 - **[Fake ChatGPT and Claude desktop apps on GitHub deliver crypto miners](https://thehackernews.com/2026/10/fake-chatgpt-and-claude-apps-abuse.html)**
+- **[Linux kernel TCP flaw rated 9.8 lacks fixes in Ubuntu and RHEL](https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html)**
+- **[GitLab remote code execution bug added to CISA KEV catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-97229)**
 - **[Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html)**
   _Why now: ShinyHunters has exploited this PeopleSoft chain since May. It teaches two things that transfer: a default loopback allowlist turns server-side request forgery into unauthenticated RCE, and path-matching WAF rules fall to a single… · active-exploitation · cve · newsworthy · high-relevance_
 - **[InfraTrust report says network appliances wait on vendors for PHP2Shell fixes](https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/)**
@@ -27,6 +39,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Skimmers hijacked Convertr's self-hosted analytics script to steal checkout card data](https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/)**
   _Why now: A live Magecart incident in which one self-hosted analytics script skimmed every merchant's checkout. The lesson is concrete: treat every script loaded on checkout pages, analytics included, as payment-critical and check its integrity. · newsworthy · timely · high-relevance_
 - **[Adobe patches eight critical flaws in Campaign Classic](https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html)**
+- **[Leak exposes records of more than 41,000 DHS employees and contractors](https://www.wired.com/story/massive-leak-exposes-41000-homeland-security-workers-including-undercover-ice-agents/)**
 - **[Skyw4lker device code phishing campaign targets US manufacturing, tech and healthcare firms](https://thehackernews.com/2026/10/american-organizations-under-attack.html)**
 - **[Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices](https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/)**
 - **[Sony Network Communications breach exposes 2.5 million customer records](https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/)**
@@ -95,10 +108,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Vendor-confirmed active exploitation of an SD-WAN orchestrator flaw. · newsworthy · timely · week-of-2026-10-13_
 - **[Pillow EPS handling lets attacker-controlled filenames inject Ghostscript arguments (GHSA-w889-685w-c8fh)](https://github.com/python-pillow/Pillow/security/advisories/GHSA-w889-685w-c8fh)**
   _Why now: Argument injection in a ubiquitous Python imaging library bypasses -dSAFER. · newsworthy · timely · week-of-2026-10-13_
-- **[Imperva shows a Node.js Brotli decoder bug (CVE-2026-111497) runs attacker code](https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/)**
-  _Why now: Node2Shell: Brotli decoder RCE in Node.js, validated against official builds and Express body parsing. · newsworthy · timely · week-of-2026-10-13_
 - **[Railway says encrypted environment variables may have been accessed](https://blog.railway.com/p/security-disclosure-wednesday-october-21st)**
   _Why now: Hosting platform secrets exposure tied to attacks on AI inference providers; rotate keys. · newsworthy · timely · week-of-2026-10-13_
+- **[Imperva shows a Node.js Brotli decoder bug (CVE-2026-111497) runs attacker code](https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/)**
+  _Why now: Node2Shell: Brotli decoder RCE in Node.js, validated against official builds and Express body parsing. · newsworthy · timely · week-of-2026-10-13_
 - **[HPE bulletin HPESBNW05162 lists CVSS 10.0 unauthenticated RCE flaws in ArubaOS](https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US)**
   _Why now: Batch of CVSS 10.0 unauthenticated flaws in ArubaOS. · newsworthy · timely · week-of-2026-10-13_
 - **[BeyondTrust Remote Support flaw lets a remote attacker perform file operations](https://www.beyondtrust.com/trust-center/security-advisories/bt26-05)**

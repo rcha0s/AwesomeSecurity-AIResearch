@@ -1,4 +1,4 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-10-31)
+# 📰 Security & AI Research — Daily Snapshot (2026-11-01)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
@@ -81,23 +81,23 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://nvd.nist.gov/vuln/detail/CVE-2026-111357)**
   Treat any Ivanti Connect Secure appliance on an affected 22.8R2 or 25.1 release as possibly rooted: patch it, then hunt for compromise.
   _Why now: Exploited-in-the-wild Ivanti Connect Secure root escalation with a three-day CISA deadline; the lesson is to patch and then hunt, since a device rooted before patching stays compromised. · cve · active-exploitation · newsworthy · timely_
+- **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://phorion.io/blog/offical-claude-code-vsx-compromise/)**
+  An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts…
+  _Why now: A trojanized official AI coding-assistant extension, covered by six outlets, with concrete hunting steps (key fingerprint, persistence paths, an EDR rule) and the lesson that uninstalling does not remediate. · widely-reported · newsworthy · timely · high-relevance_
+- **[Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418)**
+  If your ASA or FTD SSL VPN uses secondary authentication, patch now: unauthenticated attackers are already using this bug to reload the device.
+  _Why now: An exploited, unauthenticated ASA/FTD SSL VPN crash with a three-day CISA deadline; the actionable check is which tunnel groups use secondary authentication. · cve · active-exploitation · timely_
 - **[Alpine Linux rebuilt GitLab after its upgrade missed a Ruby patch](https://alpinelinux.org/posts/GitLab-security-incident-CVE-2026-97229.html)**
   If you build GitLab yourself, check what runtime patches its official packages carry, and log outbound traffic so you can rule a compromise in or out.
   _Why now: First-hand incident on a CVSS 10.0 GitLab bug: the fix lived in a bundled Ruby patch that self-built installs miss, and missing egress logs forced a full rebuild. · newsworthy · cve · active-exploitation · timely · high-relevance_
 - **[Exploited Linux kernel flaw lets IPsec decryption overwrite page-cache data](https://nvd.nist.gov/vuln/detail/CVE-2026-46300)**
   A kernel bug disclosed in May is now exploited in the wild, so any Linux host still on an unpatched kernel needs the vendor update now.
   _Why now: CISA confirms in-the-wild exploitation of a Linux kernel page-cache bug disclosed in May; patch and reboot kernels, IPsec hosts first. · cve · active-exploitation · timely_
-- **[Exploited Adobe Commerce and Magento upload flaw can lead to code execution](https://nvd.nist.gov/vuln/detail/CVE-2026-48356)**
-  An actively exploited file-upload flaw spans every supported Commerce and Magento line, so storefront operators should patch now rather than wait for a maintenance window.
-  _Why now: CISA-listed exploited upload flaw spanning every Commerce and Magento Open Source line from 2.4.4 to 2.4.9; storefronts should patch and check upload directories. · cve · active-exploitation · timely_
-- **[Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html)**
-  Treating loopback as trusted makes any request-forgery bug a way past the perimeter, so patch rather than relying on path-based firewall rules.
-  _Why now: ShinyHunters has exploited this PeopleSoft chain since May. It teaches two things that transfer: a default loopback allowlist turns server-side request forgery into unauthenticated RCE, and path-matching WAF rules fall to a single… · active-exploitation · cve · newsworthy · high-relevance_
 
 **📈 Emerging trends**
 
+- **exploited-in-the-wild** (🔺 rising) — 17 findings from 4 sources since 2026-09-23.
 - **rce** (🔺 rising) — 19 findings from 15 sources since 2026-06-29.
-- **exploited-in-the-wild** (🔺 rising) — 13 findings from 3 sources since 2026-09-23.
 - **php2shell** (🔺 rising) — 7 findings from 6 sources since 2026-10-22.
 
 [→ Full Product Security database](product-security/README.md)
@@ -132,7 +132,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **evals** (🔺 rising) — 25 findings from 13 sources since 2023-12-07.
+- **evals** (🔺 rising) — 27 findings from 15 sources since 2023-12-07.
 - **benchmarks** (🔺 rising) — 10 findings from 8 sources since 2026-07-09.
 - **governance** (🔺 rising) — 4 findings from 4 sources since 2026-08-10.
 
@@ -142,4 +142,4 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 _Every finding links its original source. Curated by the AwesomeSecurity-AIResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-10-31.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-11-01.</sub>

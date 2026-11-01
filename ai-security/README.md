@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_9 vetted findings · updated 2026-10-31 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-11-01 · ranked by composite · findings from the latest 31 days · [46 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -10,7 +10,9 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 - **[Northflank breach exposed customer secrets, and stolen AI API keys were used](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/)**
   _Why now: Latest of Wiz's nine 'Black October' AI-platform breaches, with stolen AI API keys already abused; teaches scoping, spend-capping and fast rotation of hosted AI keys. · trending · newsworthy · timely · high-relevance_
+- **[OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents](https://openai.com/index/how-we-detect-frontier-model-misalignment)**
 - **[Researchers find LLM API routers injecting malicious code and stealing credentials](https://arxiv.org/abs/2604.08407)**
+- **[Hugging Face cryptomining malware campaign returned days after takedown](https://www.bleepingcomputer.com/news/security/hugging-face-malware-campaign-returns-to-hijack-gpus-for-crypto-mining/)**
 - **[One crafted medical image file crashes or silently corrupts MONAILabel inference](https://github.com/advisories/GHSA-6hp3-vr39-rqw8)**
   _Why now: Critical advisory in a medical AI server showing why ML pipelines need finiteness checks on untrusted file metadata. · cve · timely_
 - **[Xint used OpenAI's compaction step to leak hidden reasoning as plain text](https://thehackernews.com/2026/10/openai-compaction-flaw-let-researchers.html)**

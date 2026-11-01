@@ -470,6 +470,133 @@
       ]
     },
     {
+      "id": "backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor",
+      "summary": "Phorion found that Claude Code for VS Code version 2.1.313 on the Cursor Marketplace carried injected code. The code runs as soon as the extension file loads, appends an attacker key to ~/.ssh/authorized_keys and opens a reverse SSH tunnel to 134.209.82.225. It also sets up persistence on macOS, Linux and Windows and sends a report on the host back to the operator. That report includes the names, but not the values, of environment variables that look like secrets. A bug in the macOS check often stops it from turning on SSH, but the key and persistence still get installed, and removing the extension does not remove them.",
+      "lessons": [
+        {
+          "point": "The payload is an immediately invoked function prepended to extension.js. It runs when Node loads the module, before activate(), and needs no user action.",
+          "excerpt": "executes as soon as Node loads the file, before the extension’s normal `activate` callback even runs",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Rules that only watch processes miss this, because the key is written with Node's fs API rather than shell tools. Defenders need file telemetry that flags IDE helper processes writing to authorized_keys.",
+          "excerpt": "process-only rules watching for shell commands like `echo` or `tee` touching `authorized_keys` won’t catch it",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Hunt by key fingerprint, not by the 'svc-telemetry' comment, because the malware itself only checks the comment string.",
+          "excerpt": "When hunting for this activity, it’s worth checking the public-key fingerprint rather than relying solely on the comment string.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Uninstalling the extension does not clean up. Responders must kill the tunnel loop, remove the LaunchAgent, cron or scheduled-task persistence, remove the planted key and rotate credentials.",
+          "excerpt": "uninstalling the extension alone won’t remove the backdoor",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.",
+      "tags": [
+        "supply-chain",
+        "ide-extension",
+        "cursor",
+        "open-vsx",
+        "claude-code",
+        "ssh-backdoor",
+        "reverse-tunnel",
+        "macos-persistence",
+        "incident-response"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Hunt for and clean up Claude Code 2.1.313 extension backdoor artifacts",
+        "detail": "Across the fleet, look for anthropic.claude-code-2.1.313 extension directories. Search authorized_keys for the key fingerprint SHA256:0Z6R+DF64Do2nwQic8a7kkfDLNNk4IiK+2U2Rci4htk, not just the svc-telemetry comment. Look for ~/Library/LaunchAgents/com.apple.sysmond.plist, ~/.config/.smt and ~/.config/.smtk, $TMPDIR/.stk_* files, ssh or autossh running with '-R *:0:localhost:22', and traffic to 134.209.82.225 on port 22 or 8099. Add an EDR rule for Code Helper or Cursor Helper processes writing to ~/.ssh/authorized_keys or creating com.apple.* LaunchAgents. Check SSH logs for logins from localhost using that key, then rotate credentials if any are found."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 88,
+        "newness": 19,
+        "credibility": 75.0,
+        "composite": 58.9,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: all four lessons and the IOCs supported by the Phorion writeup (port 8099 is the beacon port). Novelty lowered to the verifier's 55.",
+      "prior_art": "The nearest pool entries are archive 'Cursor's VS Code import drops extension versions and installs latest' (Open VSX identity and versions), archive 'Markdown Preview Enhanced, a VS Code extension, chained flaws into RCE' and product-security 'OVHcloud CLI GitHub releases carried attacker binaries ... GlassWorm'. None covers a trojanized official AI coding-assistant extension with this kind of detection detail.",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls"
+      ],
+      "threat": "A backdoored official Claude Code extension bundle (2.1.313) on the Cursor Marketplace runs a payload when the module loads. The payload plants an attacker SSH key, opens a reverse SSH tunnel to 134.209.82.225 for interactive access, persists through a LaunchAgent, cron job or scheduled task, and reports host details and the names of secret-looking environment variables.",
+      "conditions": "A developer installs or auto-updates to Claude Code for VS Code 2.1.313 from the Cursor Marketplace. Full inbound access on macOS also needs Remote Login (SSH) to be already on or turned on later, or passwordless sudo.",
+      "mitigations": "Find and remove 2.1.313. Kill the tunnel processes. Remove com.apple.sysmond.plist, the @reboot cron entry or the SysMon task and Startup script, and the ~/.config/.smt, .smtk and /tmp/.stk_* files. Remove the svc-telemetry key and confirm Remote Login is off. Rotate credentials if SSH was on or an inbound login appears. Alert on IDE extension hosts modifying ~/.ssh.",
+      "corroborating_sources": [
+        {
+          "name": "Socket",
+          "url": "https://socket.dev/blog/claude-code-extension-compromise?utm_medium=feed",
+          "published": "2026-10-30"
+        },
+        {
+          "name": "StepSecurity",
+          "url": "https://www.stepsecurity.io/blog/claude-code-extension-trojanized",
+          "published": "2026-10-30"
+        },
+        {
+          "name": "The Register — Security",
+          "url": "https://www.theregister.com/cyber-crime/2026/10/30/anthropic-that-claude-code-extension-compromise-couldnt-be-us/5306682",
+          "published": "2026-10-30"
+        },
+        {
+          "name": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/malicious-claude-code-extension-on-cursor-planted-ssh-backdoors/",
+          "published": "2026-10-30"
+        },
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/official-claude-code-vs-code-extension.html",
+          "published": "2026-10-30"
+        }
+      ],
+      "source_url": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "article_url": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "tweet_url": null,
+      "author": "_chall",
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@_chall via Hacker News",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "A trojanized official AI coding-assistant extension, covered by six outlets, with concrete hunting steps (key fingerprint, persistence paths, an EDR rule) and the lesson that uninstalling does not remediate.",
+        "signals": [
+          "widely-reported",
+          "newsworthy",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-10-30T16:56:01+00:00"
+      }
+    },
+    {
       "topic": "product-security",
       "domain": "ps.offensive",
       "title": "pwn.ai found a new Linux networking bug class escaping KVM guests",
@@ -1662,80 +1789,6 @@
       ]
     },
     {
-      "topic": "product-security",
-      "domain": "ps.ai-code",
-      "title": "38.9% of agent-generated PRs carry a security smell",
-      "source_url": "https://arxiv.org/abs/2607.12428",
-      "article_url": "https://arxiv.org/abs/2607.12428",
-      "published": "2026-07-14",
-      "date": "2026-07",
-      "author": "A H M Nazmus Sakib et al.",
-      "discovered_via": "rss",
-      "source_rank": 57.5,
-      "raw_path": "data/_raw/trust-but-verify-uncovering-the-security-debt-of-7240fb0539.txt",
-      "summary": "A large-scale study of the AIDev dataset classified security smells across 16,112 file changes in 4,022 agent-generated pull requests. 38.9% of agent PRs contain at least one security smell and supply-chain integrity issues make up 82.3% of them - but the counterintuitive result is that human collaborators introduce 67.6% of the genuine leaked secrets in these agent-assisted workflows, and review catches almost none of them. All percentages are downstream of an LLM-as-a-judge classification pipeline plus manual review, so treat the precision of the figures accordingly.",
-      "lessons": [
-        {
-          "point": "Supply-chain integrity dominates the detected smell taxonomy (82.3%); the abstract does not enumerate the remaining categories, so everything else combined is a small residual - point provenance and dependency controls at agent output.",
-          "excerpt": "38.9% of agent-generated PRs contain at least one security smell, with supply chain integrity issues accounting for 82.3% of all detected security smells",
-          "confidence": 0.97,
-          "grounded": true
-        },
-        {
-          "point": "Blaming the agent misreads the data: humans introduced most genuine leaked secrets, which the authors describe only as suggesting a *potential* reduction in developer vigilance - an association, not a causal finding.",
-          "excerpt": "human collaborators are responsible for introducing 67.6% of genuine leaked secrets within these agent-assisted workflows",
-          "confidence": 0.96,
-          "grounded": true
-        },
-        {
-          "point": "Existing review is not a control here - automated and human review together missed 81.1% of these credentials before integration.",
-          "excerpt": "existing automated and human review processes fail to detect 81.1% of these credentials prior to integration",
-          "confidence": 0.96,
-          "grounded": true
-        }
-      ],
-      "threat": "Security debt accumulates in high-impact file paths faster than human review capacity, with hard-coded credentials making up 99.6% of critical-severity smells.",
-      "conditions": "Repositories that accept autonomous coding-agent pull requests through a conventional human review process.",
-      "mitigations": "Enforce secret scanning as a merge gate rather than a review step; apply provenance/dependency-integrity checks to agent PRs; add context-aware guardrails at the human-AI collaboration point rather than at final review.",
-      "takeaway": "Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.",
-      "tags": [
-        "ai-generated-code",
-        "coding-agents",
-        "secrets",
-        "supply-chain",
-        "code-review"
-      ],
-      "scores": {
-        "novelty": 57,
-        "relevance": 88,
-        "newness": 0,
-        "credibility": 57.5,
-        "composite": 52.12,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
-      "verified": true,
-      "verify_note": "Independent verifier: removed invented contrast categories (injection/logic bugs); restored the authors' 'potential' hedge on developer vigilance; surfaced that all figures come from an LLM-as-a-judge pipeline; novelty 68->57.",
-      "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
-      "retrieved_at": "2026-07-21T07:37:44+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "AI-Generated Code Risk",
-      "editorial": {
-        "promoted": true,
-        "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
-        "signals": [
-          "trending",
-          "high-relevance",
-          "teachable"
-        ],
-        "at": "2026-07-26T21:08:26+00:00"
-      },
-      "previous_slugs": [
-        "38-9-of-agent-generated-prs-carry-a-security-smell-but-human"
-      ]
-    },
-    {
       "id": "code-execution-flaw-in-uefi-firmware-affects-mos-cf38f215c2",
       "topic": "product-security",
       "domain": "ps.cloud-infra",
@@ -1923,6 +1976,80 @@
           "tier": "",
           "published": null
         }
+      ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "38.9% of agent-generated PRs carry a security smell",
+      "source_url": "https://arxiv.org/abs/2607.12428",
+      "article_url": "https://arxiv.org/abs/2607.12428",
+      "published": "2026-07-14",
+      "date": "2026-07",
+      "author": "A H M Nazmus Sakib et al.",
+      "discovered_via": "rss",
+      "source_rank": 57.5,
+      "raw_path": "data/_raw/trust-but-verify-uncovering-the-security-debt-of-7240fb0539.txt",
+      "summary": "A large-scale study of the AIDev dataset classified security smells across 16,112 file changes in 4,022 agent-generated pull requests. 38.9% of agent PRs contain at least one security smell and supply-chain integrity issues make up 82.3% of them - but the counterintuitive result is that human collaborators introduce 67.6% of the genuine leaked secrets in these agent-assisted workflows, and review catches almost none of them. All percentages are downstream of an LLM-as-a-judge classification pipeline plus manual review, so treat the precision of the figures accordingly.",
+      "lessons": [
+        {
+          "point": "Supply-chain integrity dominates the detected smell taxonomy (82.3%); the abstract does not enumerate the remaining categories, so everything else combined is a small residual - point provenance and dependency controls at agent output.",
+          "excerpt": "38.9% of agent-generated PRs contain at least one security smell, with supply chain integrity issues accounting for 82.3% of all detected security smells",
+          "confidence": 0.97,
+          "grounded": true
+        },
+        {
+          "point": "Blaming the agent misreads the data: humans introduced most genuine leaked secrets, which the authors describe only as suggesting a *potential* reduction in developer vigilance - an association, not a causal finding.",
+          "excerpt": "human collaborators are responsible for introducing 67.6% of genuine leaked secrets within these agent-assisted workflows",
+          "confidence": 0.96,
+          "grounded": true
+        },
+        {
+          "point": "Existing review is not a control here - automated and human review together missed 81.1% of these credentials before integration.",
+          "excerpt": "existing automated and human review processes fail to detect 81.1% of these credentials prior to integration",
+          "confidence": 0.96,
+          "grounded": true
+        }
+      ],
+      "threat": "Security debt accumulates in high-impact file paths faster than human review capacity, with hard-coded credentials making up 99.6% of critical-severity smells.",
+      "conditions": "Repositories that accept autonomous coding-agent pull requests through a conventional human review process.",
+      "mitigations": "Enforce secret scanning as a merge gate rather than a review step; apply provenance/dependency-integrity checks to agent PRs; add context-aware guardrails at the human-AI collaboration point rather than at final review.",
+      "takeaway": "Gate agent PRs with automated secret and dependency-integrity checks - human review demonstrably does not catch this class, and the humans are introducing most of it.",
+      "tags": [
+        "ai-generated-code",
+        "coding-agents",
+        "secrets",
+        "supply-chain",
+        "code-review"
+      ],
+      "scores": {
+        "novelty": 57,
+        "relevance": 88,
+        "newness": 0,
+        "credibility": 57.5,
+        "composite": 52.12,
+        "scored_at": "2026-10-22T05:47:04+00:00"
+      },
+      "prior_art": "That LLM-generated code contains vulnerabilities is well documented (Copilot-era studies onward). The delta is scale and attribution on real agent PRs - the 67.6% human-origin secrets finding inverts the 'the agent is the risk' framing. Methodologically it applies an existing technique (LLM-as-judge + manual coding) to a new dataset rather than introducing a new method. Accepted at the KDD 2026 AgenticSE workshop.",
+      "verified": true,
+      "verify_note": "Independent verifier: removed invented contrast categories (injection/logic bugs); restored the authors' 'potential' hedge on developer vigilance; surfaced that all figures come from an LLM-as-a-judge pipeline; novelty 68->57.",
+      "id": "38-9-of-agent-generated-prs-carry-a-security-sme-7eccb412c1",
+      "retrieved_at": "2026-07-21T07:37:44+00:00",
+      "needs_review": true,
+      "grounding_score": 1.0,
+      "domain_label": "AI-Generated Code Risk",
+      "editorial": {
+        "promoted": true,
+        "reason": "Large-scale, widely-discussed finding on coding-agent risk with a concrete gate: automated secret + dependency-integrity scanning on agent PRs, because human review misses 81%.",
+        "signals": [
+          "trending",
+          "high-relevance",
+          "teachable"
+        ],
+        "at": "2026-07-26T21:08:26+00:00"
+      },
+      "previous_slugs": [
+        "38-9-of-agent-generated-prs-carry-a-security-smell-but-human"
       ]
     },
     {
@@ -2728,88 +2855,6 @@
       ]
     },
     {
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "VOLTA infostealer uses an LLM to rank victims' assets by value",
-      "source_url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
-      "article_url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
-      "author": "khalidkhair",
-      "source_name": "@khalidkhair via Hacker News",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "published": "2026-10-31",
-      "date": "2026-10",
-      "raw_path": "data/_raw/malware-uses-llms-to-rank-victims-by-how-much-th-aeab9d7902.txt",
-      "tweet_url": null,
-      "related_claims": [
-        "model-internal-refusal-is-not-a-security-boundary"
-      ],
-      "summary": "Cisco Talos describes VOLTA, a self-deleting Windows infostealer that, after stealing credentials, sessions and wallets, builds an evidence bundle about the victim and sends it through OpenRouter to an LLM that ranks the victim's assets by monetization value. If the default model refuses, VOLTA detects refusal phrases and falls back to two other models. Talos reads it as a builder sold to customers, which makes the AI triage step available to low-skill operators.",
-      "takeaway": "Crimeware now uses LLMs as the analyst who decides which victims to work first, and is built to route around refusals.",
-      "lessons": [
-        {
-          "point": "The LLM is used for post-theft triage, ranking a victim's assets by how much they are worth.",
-          "excerpt": "VOLTA sends a structured evidence bundle to an LLM to rank the victim’s assets by monetization value.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The malware expects refusals and string-matches them to fail over to other models, so a single provider's refusal does not stop it.",
-          "excerpt": "checking each response for phrases like “I can’t” or “I’m not able,” before passing on to a chain of up to three models.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Stolen live sessions are reused to enrich the dossier, for example searching the victim's Gmail for receipts to confirm a home address.",
-          "excerpt": "using the victim's own authenticated Gmail tokens, it queries their inbox for receipts from Amazon, DoorDash, Uber Eats, Grubhub, Walmart, and PayPal",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Talos says blocking headless Chrome launches would stop the App-Bound Encryption bypass that much of the token theft relies on.",
-          "excerpt": "An application control policy that restricts which processes may launch Chrome with `--headless` would block the ABE decryption path entirely.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "infostealer",
-        "ai-integrated-malware",
-        "refusal-evasion",
-        "openrouter",
-        "llm-abuse"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Detect headless Chrome launches and outbound LLM API calls from non-developer endpoints",
-        "detail": "Alert when Chrome starts with --headless from an unexpected parent process, and flag traffic to openrouter.ai or other LLM APIs from hosts that have no business reason to call them. If compromised, preserve %APPDATA%\\volta_debug.txt, revoke tokens and treat plaintext wallet seeds as lost."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 68,
-        "newness": 18,
-        "credibility": 55.0,
-        "composite": 49.65,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "verified": true,
-      "prior_art": "Talos's CLOSEDQUORUM AI-driven C2 implant and SOCRadar's report of INC and The Gentlemen affiliates running intrusions through OpenRouter models; VOLTA applies the LLM to post-theft victim appraisal with a refusal-fallback chain.",
-      "threat": "Infostealer operators using LLMs to prioritize and profile victims, including physical address inference.",
-      "conditions": "Windows endpoints where an infostealer can run and reach LLM APIs over the victim's own connection.",
-      "mitigations": "Application control on headless Chrome, hardware-backed credential storage, egress monitoring for LLM APIs, and fast token revocation after infection.",
-      "id": "volta-infostealer-uses-an-llm-to-rank-victims-as-4e8cd65e55",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "shinyhunters-exploited-oracle-peoplesoft-zero-da-edec9a6fba",
       "topic": "product-security",
       "domain": "ps.appsec",
@@ -3474,71 +3519,6 @@
       "previous_slugs": [
         "github-security-lab-s-open-source-fuzzing-taskflow-uses-an-l"
       ]
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.offensive",
-      "title": "Kat Traxler used AI and security principles to find cloud design flaws",
-      "source_url": "https://github.com/KatTraxler/presentations/tree/main/security-constitution",
-      "article_url": "https://github.com/KatTraxler/presentations/tree/main/security-constitution",
-      "source_name": "tl;dr sec (curator link)",
-      "discovered_via": "curator",
-      "source_id": "curator:tldrsec",
-      "source_rank": 70.0,
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "curated_by": "tldrsec",
-      "curator_issue": "https://tldrsec.com/p/tldr-sec-352",
-      "published": "2026-10-29",
-      "date": "2026-10",
-      "raw_path": null,
-      "author": null,
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "According to tl;dr sec, Kat Traxler's talk describes using AI to find about 100 bugs in cloud providers, specifically design flaws. The approach gives the model a set of security principles, rather than asking it to hunt for known vulnerability classes such as cross-site scripting (XSS) or command injection. The talk materials could not be fetched, so this rests on the newsletter's blurb only.",
-      "takeaway": "Pointing an AI at design principles, not bug classes, may surface design flaws that pattern-based hunting misses.",
-      "lessons": [
-        {
-          "point": "The approach defines security principles for the model instead of targeting known vulnerability classes.",
-          "excerpt": "Instead of trying to find specific known vulnerability classes (e.g. XSS, command injection), Kat defined a series of",
-          "confidence": 0.4,
-          "grounded": false
-        }
-      ],
-      "tags": [
-        "ai-assisted-research",
-        "cloud",
-        "design-flaws",
-        "harness"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Give an AI bug-hunting harness explicit design invariants",
-        "detail": "Write the security invariants your platform must hold (tenant isolation, who may act on whose resources) and ask the agent to find violations of each, rather than scanning for bug classes."
-      },
-      "scores": {
-        "novelty": 50,
-        "relevance": 60,
-        "newness": 18,
-        "credibility": 70.0,
-        "composite": 48.0,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "prior_art": "Anthropic and Wiz AI-assisted vulnerability research, and invariant-driven threat modeling.",
-      "verified": false,
-      "verify_reason": "factual",
-      "verify_note": "Source page returned HTTP 403 to fetch_raw twice; only the tl;dr sec blurb was read, so no lesson could be checked against the talk itself.",
-      "id": "kat-traxler-used-ai-and-security-principles-to-f-88a26e9b71",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 0.0
     },
     {
       "topic": "product-security",
@@ -4756,6 +4736,100 @@
       "grounding_score": 1.0
     },
     {
+      "id": "hackers-exploited-cisco-sd-wan-flaw-to-plant-mal-907b712081",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers",
+      "summary": "Cisco Talos says a group it tracks as UAT-11473 exploited CVE-2026-20127, a CVSS 10.0 authentication bypass in Catalyst SD-WAN (software-defined wide area network) control systems, and planted custom malware called KeyDrift. On a compromised Controller, its LittleFilch component hooks the vdaemon process, reads decrypted control messages and copies the AES-256 (Advanced Encryption Standard) key material the Controller passes between routers. The main module, PolyFlame, runs in memory, takes commands inside SD-WAN control traffic and has no hardcoded server address.",
+      "lessons": [
+        {
+          "point": "The implant targets the key-distribution process itself: on a compromised Controller it reads decrypted control messages, where Talos assesses it collects key material for a preset list of edge routers.",
+          "excerpt": "On a compromised Controller, a KeyDrift component called LittleFilch hooks into vdaemon and reads control messages after they are decrypted.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Commands arrive inside SD-WAN control traffic and the analyzed samples carried no hardcoded server address, so there is no fixed command server to block.",
+          "excerpt": "It is built to accept commands within SD-WAN control traffic, and the analyzed samples contained no hardcoded server address.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Port restrictions do not remove an implant that is already installed, and Talos does not say whether upgrading does, so compromised devices need a separate investigation.",
+          "excerpt": "Blocking the ports does not remove malware already on a device.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Detection has to rely on file paths, auth logs and Snort rules, because Talos published no hash, IP address or domain indicators.",
+          "excerpt": "Talos's report does not include a list of file hashes, IP addresses or domains for KeyDrift.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Patching an SD-WAN control system that was already compromised is not enough: hunt for KeyDrift's files and treat the inter-site keys as possibly exposed.",
+      "tags": [
+        "cisco",
+        "sd-wan",
+        "keydrift",
+        "cve-2026-20127",
+        "exploited-in-the-wild",
+        "key-theft",
+        "network-appliance",
+        "persistence"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hunt for KeyDrift on Catalyst SD-WAN control components",
+        "detail": "Upgrade to the first fixed release for your train. Until then, limit ports 22 and 830 to known controller IP addresses. On every Controller, Manager and Validator, check for a modified etc/sv/sshd/run script, /etc/sv/aaamgr/, conf_sshd, rsshd, libdssl.so, libcommon.so, /tmp/system-vdaemon and /var/tmp/vdaemon.bin. Search /var/log/auth.log for 'Accepted publickey for vmanage-admin' from unknown IP addresses. Turn on Snort 2 rules 67387-67416, which ship disabled. If you find signs of compromise, rebuild from patched images and consider rotating the keys."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 72,
+        "newness": 19,
+        "credibility": 53.1,
+        "composite": 44.81,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: facts hold; two lesson points stated inferences as certain (IP blocking, patching), reworded to the source's hedged wording. Novelty lowered to the verifier's 35.",
+      "prior_art": "Closest are 'Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices' and 'Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild' in product-security. Neither covers an implant that steals keys from the SD-WAN control plane.",
+      "related_claims": [],
+      "threat": "An unauthenticated remote attacker uses CVE-2026-20127 to get admin access on Catalyst SD-WAN control systems. They install an in-memory backdoor that copies the AES-256 keys protecting traffic between sites and hides its commands in SD-WAN control traffic.",
+      "conditions": "Catalyst SD-WAN Controller, Manager or Validator on an unpatched release, on-premises or Cisco-hosted, regardless of configuration. Implants planted before the upgrade may still be present.",
+      "mitigations": "Upgrade to the first fixed release, since there is no workaround. Restrict ports 22 and 830 to known controller IP addresses. Follow Cisco's hardening guide. Hunt for the listed KeyDrift files and the vmanage-admin publickey logins. Enable the Talos Snort rules. If compromise is found, rebuild control components from patched images and contact Cisco TAC (Technical Assistance Center).",
+      "corroborating_sources": [
+        {
+          "name": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-cisco-sd-wan-flaw-to-deploy-custom-keydrift-malware/",
+          "published": "2026-10-29"
+        }
+      ],
+      "source_url": "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html",
+      "article_url": "https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/hackers-exploited-cisco-sd-wan-flaw-to-plant-mal-907b712081.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 48.1,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "The Hacker News",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "product-security",
       "domain": "ps.cloud-infra",
       "title": "Two KSMBD RCE flaws hit public kernel lists with no patch",
@@ -5391,6 +5465,93 @@
       "domain_label": "Confidential compute (Nitro Enclaves + KMS)"
     },
     {
+      "id": "2-million-drained-from-polymarket-traders-in-new-536e5ae3f7",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "A compromised DebugBear monitoring script drained Polymarket traders' accounts",
+      "summary": "Polymarket halted trading on October 29 after malicious JavaScript, served from website performance monitoring firm DebugBear's RUM (real user monitoring) script, hijacked logged-in sessions. The code found each user's trading tools and either sold positions and moved the proceeds or sent position tokens to an attacker address. Hudson Rock found no routine that sent credentials or keys anywhere: the script simply reused the authority of the logged-in session. Loss estimates range from about $2.19 million to $2.71 million.",
+      "lessons": [
+        {
+          "point": "A third-party script running in an authenticated page needs no stolen credentials, because it can act with the logged-in user's session directly.",
+          "excerpt": "Its central approach is to reuse authority already available in the authenticated application",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The payload was written for this specific app and adapted to the account type to move funds.",
+          "excerpt": "Depending on the account type, it then tried either to sell positions and move the proceeds, or to send position tokens straight to an attacker-set address.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The vendor's fix was to remove the snippet, which shows how much power an embedded monitoring tag has.",
+          "excerpt": "urged users of its real user monitoring (RUM) product to pull its snippet from their websites",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "This is Polymarket's second frontend third-party script compromise this year, which suggests a structural exposure.",
+          "excerpt": "another third-party compromise that injected a malicious script into its frontend, with losses reported at around $3 million",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Do not load third-party monitoring or analytics scripts into authenticated pages that can move money: anything in that page can act as the user.",
+      "tags": [
+        "supply-chain",
+        "third-party-javascript",
+        "rum-script",
+        "session-hijack",
+        "crypto-theft",
+        "polymarket",
+        "debugbear",
+        "frontend-security"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Isolate third-party scripts from transactional pages",
+        "detail": "List every third-party script loaded on authenticated pages. Remove monitoring and analytics tags from pages that can trade, withdraw or transfer, or self-host pinned copies with Subresource Integrity hashes and a strict CSP (Content Security Policy) script-src. Require step-up confirmation for fund movements so a script running in the page cannot complete them silently."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 65,
+        "newness": 19,
+        "credibility": 50.8,
+        "composite": 42.37,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: all four lessons supported; loss figures are press estimates.",
+      "prior_art": "Closest is 'Skimmers hijacked Convertr's self-hosted analytics script to steal checkout card data' in product-security, the same compromised-shared-script pattern. Here the script performed in-session financial actions rather than skimming data.",
+      "related_claims": [],
+      "threat": "An attacker tampers with a vendor's hosted monitoring script. The script runs inside users' authenticated sessions on a trading site, and sells positions or transfers tokens to an attacker-controlled address.",
+      "conditions": "A site loads a third-party script, here DebugBear's RUM snippet, from vendor-controlled infrastructure into pages where logged-in users can move funds.",
+      "mitigations": "Remove the compromised snippet. Keep third-party scripts off transactional pages, or self-host them with Subresource Integrity and a strict Content Security Policy. Require explicit user confirmation for fund movements.",
+      "source_url": "https://www.securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack/",
+      "article_url": "https://www.securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/2-million-drained-from-polymarket-traders-in-new-536e5ae3f7.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 50.8,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "SecurityWeek",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "product-security",
       "domain": "ps.identity",
       "title": "A probability-scoring model matches employee accounts to one person at 0.95 F1",
@@ -5675,6 +5836,97 @@
       "previous_slugs": [
         "gitlab-critical-patch-cve-2026-110264-a-cvss-10-0-unauthenti"
       ]
+    },
+    {
+      "id": "ohad6k-viberaven-67588eeefe",
+      "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "VibeRaven statically checks AI-built Supabase apps for row-level security gaps",
+      "summary": "VibeRaven is a local command-line tool and MCP server that reads a Vercel and Supabase repository's migrations, code and env files. It flags tables without row level security (RLS), 'using (true)' policies, service_role keys in browser code, security definer functions callable with the anon key, and Stripe webhooks that never check signatures. Its authors scanned 512 public Lovable apps and found that 47.3% exposed at least one security definer function to signed-out callers. It is a repository check only and cannot see policy changes made in the live database dashboard.",
+      "lessons": [
+        {
+          "point": "AI app builders often expose security definer functions to the anon key. In the authors' static scan of 512 public Lovable repos, nearly half had at least one.",
+          "excerpt": "47.3% (242) define at least one security definer function in the public schema that a signed-out caller with the anon key can run at /rest/v1/rpc",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "A service_role key shipped to the browser bypasses every RLS policy. A single bundled file can undo all of the database's access control.",
+          "excerpt": "This file ships to the browser, and the service role key skips RLS entirely.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Static migration scanning has a blind spot: policies changed in the Supabase dashboard never show up in the repository.",
+          "excerpt": "VibeRaven is a repository check, not a live database test. It reads migrations, so it cannot see a policy someone added in the Supabase dashboard.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The README says Lovable and Bolt push straight to main, so a gate that runs only on pull requests would miss those changes.",
+          "excerpt": "Lovable and Bolt push straight to `main`, so a pull request check alone misses most of their changes.",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "takeaway": "For AI-built Supabase apps, the common gaps are database authorization mistakes such as missing row-level security (RLS), anon-callable definer functions and leaked service_role keys, and static repository checks catch many of them before launch but you still need a live check of the deployed database.",
+      "tags": [
+        "supabase",
+        "row-level-security",
+        "vibe-coding",
+        "static-analysis",
+        "ci-gate",
+        "mcp-server",
+        "lovable"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Run VibeRaven on Supabase app repos on both push and pull request",
+        "detail": "Run 'npx -y viberaven@1.6.12 check' in CI, set fail-on-blockers, and trigger it on push to main as well as on pull requests. Add 'revoke execute ... from public, anon, authenticated' for security definer functions in public. Pair it with Supabase Security Advisor and a Playwright test where user A tries to read user B's rows, to cover live-database drift."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 50,
+        "newness": 19,
+        "credibility": 58.4,
+        "composite": 42.01,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Verifier rated novelty 12 vs 45: the RLS, service_role and dashboard-blind-spot points are standard Supabase docs and Security Advisor lints; only the vendor's 512-repo statistic is new, and the push-to-main point is an unsupported README assertion.",
+      "prior_art": "The pool has no Supabase, RLS or vibe-coded-app scanner entry. The nearest is the general ps.ai-code material on gating agent pull requests with automated checks. The 512-repo statistic is the vendor's own and is not independently checked here.",
+      "related_claims": [
+        "gate-agent-prs-with-automated-checks"
+      ],
+      "threat": "AI-built Vercel and Supabase apps ship tables without RLS, permissive 'using (true)' policies, service_role keys in browser bundles, or security definer functions the anon key can call. Any visitor can then read or change data, or call privileged functions at /rest/v1/rpc.",
+      "conditions": "An app built with Lovable, Bolt, Cursor or a similar tool uses Supabase's Data API with migrations that do not enable RLS, do not revoke EXECUTE from anon, or that put service keys in client-side code.",
+      "mitigations": "Enable RLS on every public table. Replace 'using (true)' policies. Keep the service_role key server-side and rotate it if it was exposed. Revoke EXECUTE on security definer functions from public, anon and authenticated. Verify Stripe webhook signatures over the raw body. Check the live project with Supabase Security Advisor.",
+      "source_url": "https://github.com/ohad6k/VibeRaven",
+      "article_url": "https://github.com/ohad6k/VibeRaven",
+      "tweet_url": null,
+      "author": "ohad6k",
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/ohad6k-viberaven-67588eeefe.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-server-security-scanner",
+      "source_rank": 58.4,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "ohad6k/VibeRaven",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 46 > 45 (For AI-built Supabase apps, the common gaps are database authorization mistakes such as missing row-level security (RLS))",
+          "mild: takeaway_words 46 > 45"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "why-ai-coding-agents-keep-writing-broken-access-48d3894341",
@@ -6309,78 +6561,6 @@
       ]
     },
     {
-      "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "cluster": null,
-      "related_claims": [],
-      "title": "America bans imported robots due to supply chain and security risks",
-      "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
-      "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
-      "published": "2026-07-29",
-      "date": "2026-07",
-      "raw_path": "data/_raw/mrscan-batch08-0.txt",
-      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
-      "source_topics": [
-        "product-security",
-        "ai-security"
-      ],
-      "source_rank": 70.0,
-      "summary": "The FCC added foreign-made advanced robotic devices to the Covered List, effectively banning their import due to supply-chain and security risks. The National Security Determination frames networked robots as broad attack surfaces vulnerable to remote takeover, data exfiltration, and insecure OTA updates, and points to UniPwn on Unitree humanoids as a concrete example.",
-      "takeaway": "US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.",
-      "lessons": [
-        {
-          "point": "US regulators now classify connected robots as broad attack surfaces subject to remote takeover, exfiltration, and OTA-update risk.",
-          "excerpt": "modern bots are now constantly connected to networks “which creates broad attack surfaces and leaves them vulnerable to data exfiltration, remote disruption of the physical robot, and dependencies on unsecure over the air updates.”",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The UniPwn flaws in Unitree humanoids are cited by name as the exemplar vulnerability motivating the ban.",
-          "excerpt": "One example of those vulnerabilities mentioned in the document is the UniPwn flaws that made it possible for attackers to take over humanoid robots made by Chinese company Unitree.",
-          "confidence": 0.95,
-          "grounded": false
-        },
-        {
-          "point": "The mechanism is import ban via the FCC Covered List, with a narrow Department of War carve-out and a country-of-manufacture (not country-of-ownership) exemption.",
-          "excerpt": "the FCC decided the foreign-made advanced robotic devices belong on its Covered List of products for which imports are banned because they pose an unacceptable risk to the national security of the United States and its residents.",
-          "confidence": 0.9,
-          "grounded": false
-        }
-      ],
-      "tags": [
-        "supply-chain",
-        "robotics",
-        "national-security",
-        "iot-security",
-        "fcc"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Track FCC Covered List entries as a supply-chain admission signal beyond telecom",
-        "detail": "Product-security teams that already gate procurement against the FCC Covered List for telecom should now extend that gate to robotics and other networked physical devices; the same list is being repurposed as a general-purpose national-security exclusion mechanism."
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 55,
-        "newness": 0,
-        "credibility": 70.0,
-        "composite": 40.5,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
-      "discovered_via": "rss",
-      "threat": "Networked robots operating inside critical facilities can be remotely disrupted or exfiltrated via compromised firmware, OTA-update infrastructure, or embedded backdoors from the manufacturer's supply chain.",
-      "conditions": "Applies to future imports of foreign-made advanced robotic devices; already-approved models and stock, plus foreign-owned firms that manufacture in the US (e.g., Boston Dynamics), are exempt.",
-      "mitigations": "Import ban via FCC Covered List; case-by-case Department of War vouching for individual devices.",
-      "verified": true,
-      "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
-      "retrieved_at": "2026-08-10T19:18:37+00:00",
-      "needs_review": true,
-      "grounding_score": null,
-      "domain_label": "Supply Chain / Policy"
-    },
-    {
       "topic": "product-security",
       "domain": "ps.supply-chain",
       "title": "Chainguard Athena agents deduplicate private zero-day reports without leaking reporters",
@@ -6563,6 +6743,78 @@
       "previous_slugs": [
         "horizon3-deep-dive-on-fortisiem-cve-2026-106173-an-unauthent"
       ]
+    },
+    {
+      "id": "america-bans-imported-robots-due-to-supply-chain-d126880c30",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "cluster": null,
+      "related_claims": [],
+      "title": "America bans imported robots due to supply chain and security risks",
+      "source_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "article_url": "https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145",
+      "published": "2026-07-29",
+      "date": "2026-07",
+      "raw_path": "data/_raw/mrscan-batch08-0.txt",
+      "source_id": "rss:https-www-theregister-com-security-headlines-ato",
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_rank": 70.0,
+      "summary": "The FCC added foreign-made advanced robotic devices to the Covered List, effectively banning their import due to supply-chain and security risks. The National Security Determination frames networked robots as broad attack surfaces vulnerable to remote takeover, data exfiltration, and insecure OTA updates, and points to UniPwn on Unitree humanoids as a concrete example.",
+      "takeaway": "US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.",
+      "lessons": [
+        {
+          "point": "US regulators now classify connected robots as broad attack surfaces subject to remote takeover, exfiltration, and OTA-update risk.",
+          "excerpt": "modern bots are now constantly connected to networks “which creates broad attack surfaces and leaves them vulnerable to data exfiltration, remote disruption of the physical robot, and dependencies on unsecure over the air updates.”",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The UniPwn flaws in Unitree humanoids are cited by name as the exemplar vulnerability motivating the ban.",
+          "excerpt": "One example of those vulnerabilities mentioned in the document is the UniPwn flaws that made it possible for attackers to take over humanoid robots made by Chinese company Unitree.",
+          "confidence": 0.95,
+          "grounded": false
+        },
+        {
+          "point": "The mechanism is import ban via the FCC Covered List, with a narrow Department of War carve-out and a country-of-manufacture (not country-of-ownership) exemption.",
+          "excerpt": "the FCC decided the foreign-made advanced robotic devices belong on its Covered List of products for which imports are banned because they pose an unacceptable risk to the national security of the United States and its residents.",
+          "confidence": 0.9,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "supply-chain",
+        "robotics",
+        "national-security",
+        "iot-security",
+        "fcc"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track FCC Covered List entries as a supply-chain admission signal beyond telecom",
+        "detail": "Product-security teams that already gate procurement against the FCC Covered List for telecom should now extend that gate to robotics and other networked physical devices; the same list is being repurposed as a general-purpose national-security exclusion mechanism."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 55,
+        "newness": 0,
+        "credibility": 70.0,
+        "composite": 40.5,
+        "scored_at": "2026-10-22T05:47:04+00:00"
+      },
+      "prior_art": "Prior FCC Covered List additions targeted Huawei/ZTE telecom gear and DJI drones; extending the same mechanism to humanoid robots is a category expansion of an established tool, not a novel regulatory technique.",
+      "discovered_via": "rss",
+      "threat": "Networked robots operating inside critical facilities can be remotely disrupted or exfiltrated via compromised firmware, OTA-update infrastructure, or embedded backdoors from the manufacturer's supply chain.",
+      "conditions": "Applies to future imports of foreign-made advanced robotic devices; already-approved models and stock, plus foreign-owned firms that manufacture in the US (e.g., Boston Dynamics), are exempt.",
+      "mitigations": "Import ban via FCC Covered List; case-by-case Department of War vouching for individual devices.",
+      "verified": true,
+      "verify_note": "All three excerpts appear verbatim in raw file lines 126, 130, 136. Cluster set to null because this is policy/regulation news, explicitly listed as adjacent (news-lane only) in data/interests.yaml.",
+      "retrieved_at": "2026-08-10T19:18:37+00:00",
+      "needs_review": true,
+      "grounding_score": null,
+      "domain_label": "Supply Chain / Policy"
     },
     {
       "topic": "product-security",
@@ -6884,115 +7136,6 @@
     {
       "topic": "product-security",
       "domain": "ps.appsec",
-      "title": "Imperva shows a Node.js Brotli decoder bug (CVE-2026-111497) runs attacker code",
-      "source_url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
-      "article_url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-22",
-      "date": "2026-10",
-      "discovered_via": "manual",
-      "raw_path": "data/_raw/title-node2shell-from-brotli-data-to-remote-code-f5008d31e6.txt",
-      "related_claims": [],
-      "summary": "Imperva Red Team independently validated CVE-2026-111497, a High-severity out-of-bounds write in the Brotli decoder bundled with Node.js. Code carried in a Brotli response or request body ran inside official Node.js 24.22.0 containers; 24.22.1 rejected the same input. Express 5 and body-parser 2 are routes into the bug, not its source. The proof worked on a tested Linux arm64 build and needed multiple attempts.",
-      "lessons": [
-        {
-          "point": "Two common paths reach the vulnerable decoder: responses a service fetches and request bodies a parser inflates.",
-          "excerpt": "It may consume a compressed response from another server, or use middleware to decode an incoming request body.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Fixes are in Node.js 22.23.4, 24.22.1 and 26.12.1; the runtime update is the real remediation, not an app change.",
-          "excerpt": "Complete remediation requires updating Node.js.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Package inventories miss the Node binary bundled inside container images, so check the runtime version in each image.",
-          "excerpt": "Check the Node.js version inside each deployed image or host; a package inventory can miss an older runtime bundled in a container.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Decoder errors and crashes are weak signals; correlate them with runtime version and the source of the compressed data.",
-          "excerpt": "Neither is a reliable stand-alone sign of exploitation; correlate them with the deployed runtime, application logs, and the source of the compressed data.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Upgrade the Node.js runtime itself, including copies inside container images, and map where untrusted Brotli data reaches it.",
-      "tags": [
-        "nodejs",
-        "brotli",
-        "rce",
-        "waf",
-        "express"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Find Node runtimes baked into images",
-        "detail": "Scan deployed images and hosts for the Node.js binary version (not just package manifests). Upgrade to a fixed release in each line, then review where services consume Brotli responses or inflate Brotli request bodies."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 65,
-        "newness": 18,
-        "credibility": 60.0,
-        "composite": 39.6,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "prior_art": "Memory-safety bugs in bundled native decoders (zlib, libwebp) are well-known; this is an independent validation of the Node.js advisory with a working proof. Verifier: Routine independent PoC validation of a vendor CVE; prior Brotli/zlib decoder OOB-write bugs and Imperva's own PHP2Shell follow-up. Value is the fetch()/body-pa",
-      "verified": true,
-      "verify_note": "Independent verifier found every claim supported by the source.",
-      "id": "node2shell-imperva-shows-cve-2026-111497-a-brotl-a727f685de",
-      "retrieved_at": "2026-10-24T06:34:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 20 > 18"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Node2Shell: Brotli decoder RCE in Node.js, validated against official builds and Express body parsing.",
-        "signals": [
-          "newsworthy",
-          "timely",
-          "week-of-2026-10-13"
-        ],
-        "at": "2026-10-24T06:35:16+00:00"
-      },
-      "story_corroboration": [
-        {
-          "name": "Wiz Research",
-          "url": "https://www.wiz.io/blog/cve-2026-111497-brotli-rce-node-js",
-          "tier": "high",
-          "published": null
-        },
-        {
-          "name": "GitHub Advisory Database",
-          "url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
-          "tier": "",
-          "published": null
-        },
-        {
-          "name": "CISA Known Exploited Vulnerabilities",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
-          "tier": "high",
-          "published": null
-        }
-      ],
-      "previous_slugs": [
-        "node2shell-imperva-shows-cve-2026-111497-a-brotli-decoder-bu"
-      ]
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
       "title": "CISA KEV: Plex Media Server CVE-2026-96654 is exploited in the wild",
       "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
       "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96654",
@@ -7152,6 +7295,115 @@
       },
       "previous_slugs": [
         "railway-security-disclosure-encrypted-environment-variables"
+      ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Imperva shows a Node.js Brotli decoder bug (CVE-2026-111497) runs attacker code",
+      "source_url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+      "article_url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-22",
+      "date": "2026-10",
+      "discovered_via": "manual",
+      "raw_path": "data/_raw/title-node2shell-from-brotli-data-to-remote-code-f5008d31e6.txt",
+      "related_claims": [],
+      "summary": "Imperva Red Team independently validated CVE-2026-111497, a High-severity out-of-bounds write in the Brotli decoder bundled with Node.js. Code carried in a Brotli response or request body ran inside official Node.js 24.22.0 containers; 24.22.1 rejected the same input. Express 5 and body-parser 2 are routes into the bug, not its source. The proof worked on a tested Linux arm64 build and needed multiple attempts.",
+      "lessons": [
+        {
+          "point": "Two common paths reach the vulnerable decoder: responses a service fetches and request bodies a parser inflates.",
+          "excerpt": "It may consume a compressed response from another server, or use middleware to decode an incoming request body.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Fixes are in Node.js 22.23.4, 24.22.1 and 26.12.1; the runtime update is the real remediation, not an app change.",
+          "excerpt": "Complete remediation requires updating Node.js.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Package inventories miss the Node binary bundled inside container images, so check the runtime version in each image.",
+          "excerpt": "Check the Node.js version inside each deployed image or host; a package inventory can miss an older runtime bundled in a container.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Decoder errors and crashes are weak signals; correlate them with runtime version and the source of the compressed data.",
+          "excerpt": "Neither is a reliable stand-alone sign of exploitation; correlate them with the deployed runtime, application logs, and the source of the compressed data.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Upgrade the Node.js runtime itself, including copies inside container images, and map where untrusted Brotli data reaches it.",
+      "tags": [
+        "nodejs",
+        "brotli",
+        "rce",
+        "waf",
+        "express"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Find Node runtimes baked into images",
+        "detail": "Scan deployed images and hosts for the Node.js binary version (not just package manifests). Upgrade to a fixed release in each line, then review where services consume Brotli responses or inflate Brotli request bodies."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 65,
+        "newness": 18,
+        "credibility": 60.0,
+        "composite": 39.6,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "prior_art": "Memory-safety bugs in bundled native decoders (zlib, libwebp) are well-known; this is an independent validation of the Node.js advisory with a working proof. Verifier: Routine independent PoC validation of a vendor CVE; prior Brotli/zlib decoder OOB-write bugs and Imperva's own PHP2Shell follow-up. Value is the fetch()/body-pa",
+      "verified": true,
+      "verify_note": "Independent verifier found every claim supported by the source.",
+      "id": "node2shell-imperva-shows-cve-2026-111497-a-brotl-a727f685de",
+      "retrieved_at": "2026-10-24T06:34:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 20 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Node2Shell: Brotli decoder RCE in Node.js, validated against official builds and Express body parsing.",
+        "signals": [
+          "newsworthy",
+          "timely",
+          "week-of-2026-10-13"
+        ],
+        "at": "2026-10-24T06:35:16+00:00"
+      },
+      "story_corroboration": [
+        {
+          "name": "Wiz Research",
+          "url": "https://www.wiz.io/blog/cve-2026-111497-brotli-rce-node-js",
+          "tier": "high",
+          "published": null
+        },
+        {
+          "name": "GitHub Advisory Database",
+          "url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+          "tier": "",
+          "published": null
+        },
+        {
+          "name": "CISA Known Exploited Vulnerabilities",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+          "tier": "high",
+          "published": null
+        }
+      ],
+      "previous_slugs": [
+        "node2shell-imperva-shows-cve-2026-111497-a-brotli-decoder-bu"
       ]
     },
     {
@@ -7427,163 +7679,91 @@
       }
     },
     {
+      "id": "6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5",
       "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs",
-      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
-      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
-      "source_name": "CISA Known Exploited Vulnerabilities",
-      "discovered_via": "rss",
-      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
-      "source_rank": 65.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "published": "2026-10-30",
-      "date": "2026-10",
-      "raw_path": "data/_raw/cisa-kev-ivanti-connect-secure-missing-authentic-af27a866ef.txt",
-      "author": null,
-      "tweet_url": null,
-      "related_claims": [],
-      "corroborating_sources": [
-        {
-          "name": "CISA Known Exploited Vulnerabilities (CVE-2026-118527)",
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
-          "published": "2026-10-30"
-        }
-      ],
-      "summary": "CISA added Ivanti Connect Secure flaw CVE-2026-111357 to its Known Exploited Vulnerabilities catalog on October 30, 2026, with a November 2 due date, and added the related CVE-2026-118527 the same day. In CVE-2026-111357, the dsinvoked broker trusts DSCache configuration data, which lets a local user escalate to root; NVD says it was exploited in October 2026. NVD lists 22.8R2 through 22.8R2.5 and 25.1.0.0 up to 25.1.1.3 as affected, and cites a Volexity report on chained exploitation of Connect Secure zero-days.",
-      "takeaway": "Treat any Ivanti Connect Secure appliance on an affected 22.8R2 or 25.1 release as possibly rooted: patch it, then hunt for compromise.",
+      "domain": "ps.detection-response",
+      "title": "Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor",
+      "summary": "Attackers took about $6.3 billion from Binance hot wallets across ten blockchains on October 29, and most of it left within about 20 minutes. Binance's early findings point to a compromised DevOps engineer's laptop that gave access to a service container able to submit withdrawals. TRM Labs judges that the attacker could make Binance's hot-wallet signing system sign any transaction it chose. TRM attributes the theft to the North Korean unit TraderTraitor with high confidence.",
       "lessons": [
         {
-          "point": "The root escalation comes from a privileged broker that trusts configuration data it should not. The flaw was exploited in October 2026.",
-          "excerpt": "Ivanti Connect Secure 22.8R2.4 mishandles the manner in which the dsinvoked broker trusts DSCache configuration data, leading to privilege escalation to root, as exploited in the wild in October 2026.",
-          "confidence": 0.9,
+          "point": "Binance's early findings point to one engineer's laptop reaching a service container that could submit withdrawals, and it found no evidence of a private key leak.",
+          "excerpt": "may involve a compromised DevOps engineer’s laptop, which allowed an attacker to gain access to a service container and submit unauthorized withdrawal transactions",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "If attackers can drive the signing system, protecting the keys is not enough. Valid signatures across different chains and key types point to abuse of the signer itself.",
+          "excerpt": "the most likely explanation is that the attacker gained the ability to make Binance’s hot wallet signing system sign transactions of its choosing across chains",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "On Ethereum the attackers used EIP-7702 delegation. They pre-signed a batch of permissions so that one would match the wallet's transaction count (nonce) when it ran.",
+          "excerpt": "They sent a batch of 50 such permissions, all signed beforehand by a Binance hot wallet, so that one would match the wallet’s transaction count at execution time.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Fast freezes by token issuers held back a large share, but the ETH and BTC the attackers kept have no issuer that can freeze them.",
+          "excerpt": "By 00:30 UTC on October 30, TRM tallied around $2.7 billion in frozen assets",
+          "confidence": 0.8,
           "grounded": true
         }
       ],
+      "takeaway": "The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.",
       "tags": [
-        "kev",
-        "ivanti",
-        "vpn",
-        "privilege-escalation",
-        "edge-device",
-        "zero-day"
+        "crypto-theft",
+        "north-korea",
+        "tradertraitor",
+        "hot-wallet",
+        "signing-infrastructure",
+        "eip-7702",
+        "devops-compromise"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Patch Ivanti Connect Secure 22.8R2.4 and run a compromise hunt",
-        "detail": "Apply Ivanti's fix for CVE-2026-104935 / CVE-2026-111357 / CVE-2026-118527. Then follow CISA's forensics triage requirements and Volexity's indicators. A device rooted before patching stays compromised after it."
+        "title": "Put independent policy checks in front of transaction-signing services",
+        "detail": "Make the signer enforce its own limits on withdrawal value, rate and destination before it signs. Require a second approval path that service containers reachable from engineer laptops cannot satisfy. Alert when wallets sign across several chains in a short burst, and when EIP-7702 delegation authorizations are signed from hot wallets."
       },
       "scores": {
-        "novelty": 15,
-        "relevance": 62,
-        "newness": 18,
-        "credibility": 70.0,
-        "composite": 38.1,
-        "scored_at": "2026-10-31T21:43:21+00:00"
+        "novelty": 40,
+        "relevance": 45,
+        "newness": 19,
+        "credibility": 50.8,
+        "composite": 37.87,
+        "scored_at": "2026-10-30T16:55:17+00:00"
       },
       "verified": true,
-      "verify_note": "Verifier: lesson on the root escalation holds; summary trimmed to what the NVD page supports (affected range, Volexity reference); the CVE-2026-118527 facts come from the KEV feed.",
-      "prior_art": "Repeated exploited Ivanti Connect Secure zero-day chains (2024-2026); this is another chain on the same appliance family.",
-      "threat": "Chained exploitation of a VPN appliance ending in root.",
-      "conditions": "Ivanti Connect Secure 22.8R2.4 reachable by an attacker.",
-      "mitigations": "Apply Ivanti's fixed release, run CISA's forensic triage, and rebuild any appliance showing compromise.",
-      "id": "ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Exploited-in-the-wild Ivanti Connect Secure root escalation with a three-day CISA deadline; the lesson is to patch and then hunt, since a device rooted before patching stays compromised.",
-        "signals": [
-          "cve",
-          "active-exploitation",
-          "newsworthy",
-          "timely"
-        ],
-        "at": "2026-10-31T21:43:37+00:00"
-      }
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.ai-code",
-      "title": "VibeRaven checks AI-built Supabase apps for missing row-level security",
-      "source_url": "https://github.com/ohad6k/VibeRaven",
-      "article_url": "https://github.com/ohad6k/VibeRaven",
-      "author": "ohad6k",
-      "source_name": "ohad6k/VibeRaven",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-server-security-scanner",
-      "source_rank": 58.4,
+      "verify_note": "Verifier: mostly supported; 'no private key was stolen' and the native-coin freeze point overreached Binance's hedged early findings, reworded. Novelty lowered to the verifier's 40.",
+      "prior_art": "The pool has no crypto-exchange heist or TraderTraitor entry. The nearest DPRK items are the archive Axios npm compromise attributed to Sapphire Sleet and a DPRK-linked PHP scanning mention in product-security, both unrelated attack paths. This is a news synthesis of TRM Labs and Binance statements with little technical detail on the signer compromise.",
+      "related_claims": [],
+      "threat": "A state-sponsored actor compromises a DevOps engineer's laptop, reaches a service container that can submit withdrawals, and makes the hot-wallet signing system sign attacker transactions across ten chains. On Ethereum it also abuses pre-signed EIP-7702 delegations.",
+      "conditions": "Hot-wallet signing can be triggered from service containers reachable from engineer endpoints, and the signer has no independent check on value, rate or destination for withdrawals.",
+      "mitigations": "Isolate signing services from DevOps endpoints. Make the signer enforce withdrawal policy and require out-of-band approval. Monitor for burst signing across chains and for EIP-7702 delegation signatures. Line up rapid-freeze contacts with stablecoin issuers ahead of time.",
+      "source_url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
+      "article_url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 50.8,
       "source_topics": [
+        "product-security",
         "ai-security"
       ],
-      "published": "2026-10-30",
-      "date": "2026-10",
-      "raw_path": "data/_raw/ohad6k-viberaven-67588eeefe.txt",
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "VibeRaven is a local CLI and MCP server that scans Vercel and Supabase apps, a stack many AI app builders generate, for launch gaps. It flags public tables without row-level security (RLS), using (true) policies, the service_role key in browser code, anon-callable security definer functions and unverified Stripe webhooks. It reads migrations and code without connecting to the project, names file and line, and exits 1 on a blocker so it can gate CI.",
-      "takeaway": "Vibe-coded Supabase apps fail in a handful of predictable ways, and a static check in CI can catch several of them before launch.",
-      "lessons": [
-        {
-          "point": "The checks target a short list of recurring Supabase mistakes, several with no matching Supabase Security Advisor lint.",
-          "excerpt": "A policy with `using (true)` that lets anyone read or write every row",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A security definer function left callable by anon runs with its owner's rights, so RLS does not limit it.",
-          "excerpt": "is security definer, so it runs with its owner's rights and RLS does not limit what it touches.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "It is designed as a CI gate and works offline from the repository alone.",
-          "excerpt": "It does not connect to your Supabase project or send requests to your app. It exits `1` when it finds a blocker, so it also works as a CI step.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "supabase",
-        "rls",
-        "vibe-coding",
-        "ci-gate",
-        "mcp",
-        "secrets"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Gate AI-generated Supabase apps on an RLS and secrets check",
-        "detail": "Add `npx -y viberaven@1.6.12 check` (pinned) as a required CI step for Supabase projects. Or replicate its rules: every public table has RLS, no `using (true)` write policy, no service_role key in client bundles, and `revoke execute ... from anon` on security definer functions."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 60,
-        "newness": 18,
-        "credibility": 58.4,
-        "composite": 37.86,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "verified": true,
-      "prior_art": "Supabase's own Security Advisor lints (rls_disabled_in_public, anon_security_definer_function_executable) and general secret scanners; VibeRaven adds offline, migration-based checks for gaps the Advisor does not cover.",
-      "threat": "Data exposure in AI-generated apps through missing or permissive row-level security and leaked service keys.",
-      "conditions": "Supabase-backed apps, especially generated by AI app builders.",
-      "mitigations": "Enable RLS on every public table, scope policies, keep the service_role key server-side, revoke anon execute on security definer functions, verify webhook signatures.",
-      "id": "viberaven-checks-ai-built-supabase-apps-for-miss-ac709b5bd8",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "source_name": "SecurityWeek",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
       "needs_review": true,
       "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (TRM, EIP, ETH, BTC)",
+          "mild: takeaway_sentences 2 > 1"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -7848,155 +8028,6 @@
     {
       "topic": "product-security",
       "domain": "ps.cloud-infra",
-      "title": "Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days",
-      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
-      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
-      "source_name": "CISA Known Exploited Vulnerabilities",
-      "discovered_via": "rss",
-      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
-      "source_rank": 65.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "published": "2026-10-29",
-      "date": "2026-10",
-      "raw_path": "data/_raw/cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8.txt",
-      "author": null,
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "CVE-2026-76418 lets an unauthenticated remote attacker reload Cisco Secure Firewall ASA and FTD devices by sending a crafted request to the Remote Access SSL VPN service, but only when secondary authentication is configured on a tunnel group. CISA added it to the Known Exploited Vulnerabilities catalog on October 29, 2026 with a November 1 due date. The impact is denial of service (availability only), not code execution.",
-      "takeaway": "If your ASA or FTD VPN uses secondary authentication on a tunnel group, patch now, because attackers are already using this to knock VPNs offline.",
-      "lessons": [
-        {
-          "point": "The bug is only reachable when secondary authentication is configured on a tunnel group, so exposure can be scoped from configuration.",
-          "excerpt": "This vulnerability is due to logic errors when secondary authentication is configured on a tunnel group.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "No credentials are needed. The outcome is a device reload, a denial of service against the VPN edge.",
-          "excerpt": "could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "CISA gave federal agencies three days to remediate. The short deadline signals active use.",
-          "excerpt": "October 29, 2026 | November 01, 2026",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "kev",
-        "cisco",
-        "vpn",
-        "denial-of-service",
-        "edge-device"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Find ASA/FTD tunnel groups with secondary authentication and patch them first",
-        "detail": "Query ASA and FTD configs for tunnel groups with secondary authentication enabled. Those devices are exposed to CVE-2026-76418. Apply Cisco's fixed release from advisory cisco-sa-asaftd-tunnel-dos-s6mgkb75. Watch for unexpected device reloads as an exploitation signal."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 55,
-        "newness": 18,
-        "credibility": 65.0,
-        "composite": 37.35,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "verified": true,
-      "prior_art": "Earlier exploited Cisco ASA/FTD WebVPN denial-of-service bugs; this is another instance of the same class.",
-      "threat": "Unauthenticated remote denial of service against the VPN edge.",
-      "conditions": "Cisco ASA or FTD running Remote Access SSL VPN with secondary authentication configured on a tunnel group, on an unfixed release.",
-      "mitigations": "Upgrade to a fixed ASA/FTD release per the Cisco advisory, and alert on unexpected device reloads.",
-      "id": "cisco-asa-and-ftd-vpn-crash-bug-is-exploited-cis-4569dbbd0c",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 13 > 12"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "Exploited VMware ESX flaw lets attacker with admin rights act unlogged",
-      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
-      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
-      "source_name": "CISA Known Exploited Vulnerabilities",
-      "discovered_via": "rss",
-      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
-      "source_rank": 65.0,
-      "source_topics": [
-        "product-security"
-      ],
-      "published": "2026-10-28",
-      "date": "2026-10",
-      "raw_path": "data/_raw/cisa-kev-broadcom-vmware-esx-insufficient-loggin-f5fd008116.txt",
-      "author": null,
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "CVE-2026-41709 is an insufficient-logging flaw in VMware ESX: an attacker who already holds administrator rights can perform certain operations without them being logged. CISA added it to the Known Exploited Vulnerabilities catalog on October 28, 2026 with a November 11 due date. It needs high privileges, so it is an anti-forensics aid after compromise, not an entry point.",
-      "takeaway": "ESX audit logs may be silent about what a hijacked admin did, so do not treat clean ESX logs as proof of no tampering.",
-      "lessons": [
-        {
-          "point": "The flaw helps an attacker who already has admin access hide actions from the hypervisor's logs.",
-          "excerpt": "A malicious administrator could exploit this issue to perform certain operations without them being logged.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The vendor's score reflects high privileges required and integrity-only impact.",
-          "excerpt": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "kev",
-        "vmware",
-        "esxi",
-        "logging",
-        "anti-forensics",
-        "hypervisor"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Patch ESX and add an out-of-band log source for hypervisor admin actions",
-        "detail": "Apply Broadcom advisory 38017. Because ESX's own logs can miss these operations, also capture vCenter events and network flow logs for ESX management interfaces, and alert on admin logins from unexpected hosts."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 55,
-        "newness": 18,
-        "credibility": 65.0,
-        "composite": 37.35,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "verified": true,
-      "prior_art": "Earlier ESXi anti-forensics techniques by intrusion sets such as UNC3886 that disabled or evaded hypervisor logging.",
-      "threat": "An attacker with ESX admin rights hides operations from logs.",
-      "conditions": "Unpatched VMware ESX and an attacker who already holds administrator access.",
-      "mitigations": "Patch per Broadcom advisory 38017 and keep an independent log source for hypervisor management actions.",
-      "id": "exploited-vmware-esx-flaw-lets-attacker-with-adm-ad6d766315",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.cloud-infra",
       "title": "HPE bulletin HPESBNW05162 lists CVSS 10.0 unauthenticated RCE flaws in ArubaOS",
       "source_url": "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US",
       "article_url": "https://support.hpe.com/hpesc/public/docDisplay?docId=hpesbnw05162en_us&docLocale=en_US",
@@ -8248,6 +8279,93 @@
       ]
     },
     {
+      "id": "cisa-kev-broadcom-vmware-esx-insufficient-loggin-f5fd008116",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "CISA says a low-severity VMware ESX logging gap is being exploited",
+      "summary": "CISA added CVE-2026-41709 to its KEV (Known Exploited Vulnerabilities) catalog on October 28, 2026, with a deadline of November 11. The flaw lets a malicious ESX administrator perform certain operations that are never logged. VMware scores it only 2.7 (low) because it needs high privileges, yet it is exploited in the wild. A gap like this can hide an intruder's actions from forensic review.",
+      "lessons": [
+        {
+          "point": "The weakness is a missing audit trail, not code execution, so an attacker who already has admin access can act unseen.",
+          "excerpt": "A malicious administrator could exploit this issue to perform certain operations without them being logged.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A low CVSS score that requires high privileges did not keep this bug out of real attacks.",
+          "excerpt": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Fixed builds are listed per release line, including ESX 8.0 and 9.0.",
+          "excerpt": "Affected 9.0.x.x &lt; ESXi-9.0.2.0100-25595025 Affected 8.0 &lt; ESXi80U3j-25429389",
+          "confidence": 0.85,
+          "grounded": false
+        }
+      ],
+      "takeaway": "Do not deprioritize low-CVSS ESX logging bugs: attackers who already hold admin access use them to hide what they do.",
+      "tags": [
+        "vmware",
+        "esxi",
+        "broadcom",
+        "insufficient-logging",
+        "anti-forensics",
+        "cisa-kev",
+        "exploited-in-the-wild",
+        "cve-2026-41709"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch ESX and stop relying on host logs alone for admin activity",
+        "detail": "Upgrade ESX to ESXi80U3j-25429389, ESXi-9.0.2.0100-25595025 or ESXi-9.1.0.0-25370933 or later. Also patch the bundled VCF, vSphere Foundation and Telco Cloud Platform builds per Broadcom advisory 38017. Until then, treat ESX host logs as incomplete for admin sessions. Watch for admin activity from other places as well, such as vCenter events and network or management-plane telemetry."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 45,
+        "newness": 19,
+        "credibility": 70.0,
+        "composite": 36.25,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: score, dates, fixed builds and advisory confirmed; exploitation rests on the KEV listing alone, with no attack details in the source.",
+      "prior_art": "Similar to 'Partisan Zmiy hid the Vasilek backdoor in VMware Tools for two years' (hiding on VMware infrastructure) and the routine CISA KEV entries in product-security. An exploited logging-evasion bug with a low CVSS score is a modest variation.",
+      "related_claims": [],
+      "threat": "An attacker with ESX admin access uses the logging gap to carry out certain operations without leaving audit records, which weakens detection and forensics.",
+      "conditions": "VMware ESX 8.0 before ESXi80U3j, 9.0.x before 9.0.2.0100, or 9.1.x before the fixed build, including Cloud Foundation, vSphere Foundation and Telco Cloud Platform deployments. The attacker must already have admin privileges.",
+      "mitigations": "Apply Broadcom's fixed ESX builds by CISA's November 11, 2026 deadline. Limit and monitor who holds ESX admin access. Record admin activity from sources other than the ESX host's own logs.",
+      "corroborating_sources": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/china-linked-hackers-exploited-vmware.html",
+          "published": "2026-10"
+        }
+      ],
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-28",
+      "raw_path": "data/_raw/cisa-kev-broadcom-vmware-esx-insufficient-loggin-f5fd008116.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.67
+    },
+    {
       "candidate_id": "this-shit-is-hard-nobody-has-ever-been-pwned-by-2991b7a807",
       "topic": "product-security",
       "domain": "ps.supply-chain",
@@ -8425,6 +8543,196 @@
       "previous_slugs": [
         "beyondtrust-advisory-bt26-05-cvss-9-3-improper-origin-valida"
       ]
+    },
+    {
+      "id": "dinosn-fake-pdf-and-search-tools-hijacked-search-9da8fe3cbf",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "Socket finds 319 Chrome extensions that hijacked searches through operator servers",
+      "summary": "Socket researcher John Tuckner found 319 Chrome extensions with about 13.4 million installs over ten years. They took over the default search setting and sent every query through the operators' servers before passing it on to Yahoo or Bing. Ads for 'PDF converters', 'manual finders' and 'AI search' drove the installs. Most of the extensions were unlisted in Google's official store, so only people with a direct link could find them.",
+      "lessons": [
+        {
+          "point": "The campaign was large and lasted a long time: 319 extensions and about 13.4 million installs over a decade.",
+          "excerpt": "researcher John Tuckner identified 319 extensions with an estimated 13.4 million installs over a decade.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "An unlisted extension in the official store still looks trustworthy, but store search never shows it. That keeps it away from casual review while ads send victims straight to the listing.",
+          "excerpt": "The extensions were listed in Google’s official store, but most were unlisted.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The search proxy is a privacy breach, not only ad fraud. A unique identifier on each query let the operators build a search history for each user.",
+          "excerpt": "Socket says queries were often associated with a unique identifier, which could let the operators link a user’s searches over time.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "If Chrome says an extension controls the search setting, review or remove that extension. The absence of that notice does not prove the extensions are safe.",
+          "excerpt": "If Chrome says an extension is controlling a setting, review or remove that extension.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat an official-store listing as no trust signal for browser extensions, because unlisted, ad-promoted extensions can quietly proxy every search a user makes.",
+      "tags": [
+        "browser-extensions",
+        "chrome",
+        "search-hijacking",
+        "malvertising",
+        "extension-marketplace",
+        "privacy"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Allowlist browser extensions and check for search-setting overrides",
+        "detail": "On managed Chrome, use the ExtensionInstallAllowlist/ExtensionInstallBlocklist policies so users cannot install unlisted extensions promoted through ads. Check endpoints for extensions that control the default search engine, and compare installed IDs with Socket's published list at socket.dev/blog/searchjacked."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 40,
+        "newness": 19,
+        "credibility": 65.0,
+        "composite": 35.5,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: claims supported, the 'triage signal' lesson slightly overstated and reworded. Novelty lowered to the verifier's 30.",
+      "prior_art": "No browser-extension search-hijacking entry exists in the pool. The nearest are the archive entries on Open VSX/Cursor extension identity and the Markdown Preview Enhanced extension RCE, which are IDE extensions with a different claim. This is a Malwarebytes rewrite of Socket's research.",
+      "related_claims": [],
+      "threat": "Operators get users to install browser extensions through ads. The extensions take over the default search engine, send all queries through attacker servers that can read and link them per user, and could redirect users to phishing or malware pages, although Socket found no evidence that this happened.",
+      "conditions": "A user installs an extension advertised as a PDF, manual-finder, safe-search or AI-search tool from an ad link, usually an unlisted Chrome Web Store listing, and lets it change the default search setting.",
+      "mitigations": "Review chrome://extensions and remove unknown or unused extensions. Check Settings > Search engine for an extension-controlled notice. Compare installed extensions with Socket's list. In enterprises, enforce an extension allowlist through Chrome policy.",
+      "corroborating_sources": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/threatsday-critical-firewall-flaws.html",
+          "published": "2026-10"
+        }
+      ],
+      "source_url": "https://www.malwarebytes.com/blog/news/2026/10/fake-pdf-and-search-tools-hijacked-searches-for-13-4-million-chrome-users",
+      "article_url": "https://www.malwarebytes.com/blog/news/2026/10/fake-pdf-and-search-tools-hijacked-searches-for-13-4-million-chrome-users",
+      "tweet_url": "https://x.com/Dinosn/status/2116196388585267301",
+      "author": "@Dinosn",
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/dinosn-fake-pdf-and-search-tools-hijacked-search-9da8fe3cbf.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8",
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls",
+      "summary": "CISA added CVE-2026-76418 to its KEV (Known Exploited Vulnerabilities) catalog on October 29, 2026, with a remediation deadline of November 1. The bug is in the Remote Access SSL VPN service of Cisco Secure Firewall ASA (Adaptive Security Appliance) and FTD (Firewall Threat Defense) software. An unauthenticated attacker can send a crafted request that reloads the device, causing a denial of service, but only when secondary authentication is configured on a tunnel group.",
+      "lessons": [
+        {
+          "point": "The flaw comes from logic errors in tunnel groups that have secondary authentication configured, so check those configurations first.",
+          "excerpt": "This vulnerability is due to logic errors when secondary authentication is configured on a tunnel group.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The attacker needs no credentials, only network access to the SSL VPN endpoint.",
+          "excerpt": "An attacker could exploit this vulnerability by sending a crafted request when connecting to the SSL remote access VPN.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "CISA gave a three-day deadline, which signals urgent patching for internet-facing VPN headends.",
+          "excerpt": "Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability | October 29, 2026 | November 01, 2026",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your ASA or FTD SSL VPN uses secondary authentication, patch now: unauthenticated attackers are already using this bug to reload the device.",
+      "tags": [
+        "cisco",
+        "asa",
+        "ftd",
+        "ssl-vpn",
+        "denial-of-service",
+        "cisa-kev",
+        "exploited-in-the-wild",
+        "cve-2026-76418"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch ASA/FTD SSL VPN headends that use secondary auth",
+        "detail": "List the ASA and FTD devices running Remote Access SSL VPN and find the tunnel groups with secondary authentication configured. The NVD record bounds affected releases below ASA 9.16.4.104, 9.18.4.96, 9.20.4.50, 9.22.3.200, 9.23.1.48 and 9.24.1.27 and FTD 7.0.11, 7.2.13, 7.4.9, 7.7.14 and 10.0.3, and lists FTD 7.6.x through 7.6.7 as affected. Some lines (FTD 7.3, 7.6, 10.1) have no fixed build in that record, so take exact fixed releases from Cisco advisory cisco-sa-asaftd-tunnel-dos-s6mgkb75. Watch for unexpected device reloads."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 50,
+        "newness": 19,
+        "credibility": 70.0,
+        "composite": 34.75,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: claims hold; 'only' secondary-auth tunnel groups was an inference and the version list was NVD upper bounds, not named fixed releases. Both reworded.",
+      "prior_art": "The pool already has routine CISA KEV appliance entries such as 'CISA KEV: exploited Fortinet CVE-2025-61624 lets read-write admins write or delete files'. This is another exploited edge-appliance bug and adds no new technique.",
+      "related_claims": [],
+      "threat": "An unauthenticated remote attacker sends a crafted request to the SSL remote access VPN and triggers a NULL pointer dereference that reloads the firewall, cutting off service.",
+      "conditions": "Cisco Secure Firewall ASA or FTD software in affected versions with Remote Access SSL VPN enabled and secondary authentication configured on a tunnel group.",
+      "mitigations": "Apply Cisco's fixed releases from advisory cisco-sa-asaftd-tunnel-dos-s6mgkb75 by CISA's November 1, 2026 deadline, following BOD 26-04 and CISA's forensics triage requirements.",
+      "corroborating_sources": [
+        {
+          "name": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/cisco-patches-actively-exploited-asa.html",
+          "published": "2026-10"
+        }
+      ],
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "An exploited, unauthenticated ASA/FTD SSL VPN crash with a three-day CISA deadline; the actionable check is which tunnel groups use secondary authentication.",
+        "signals": [
+          "cve",
+          "active-exploitation",
+          "timely"
+        ],
+        "at": "2026-10-30T16:56:01+00:00"
+      }
     },
     {
       "topic": "product-security",
@@ -8675,6 +8983,86 @@
       "previous_slugs": [
         "ciliumhound-a-bloodhound-opengraph-extension-that-graphs-cil"
       ]
+    },
+    {
+      "id": "hackers-actively-exploit-highly-critical-drupal-bb564fb962",
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "Attackers exploit a missing-authorization flaw in Drupal Commerce Core",
+      "summary": "Drupal warns that a \"highly critical\" missing-authorization flaw in its Commerce Core module, CVE-2026-118539, is being exploited in the wild. The module does not properly protect certain routes and entity fields, which allows an access bypass that can cost store operators money. The article lists affected versions as up to 2.41 and 3.0.0 through 3.3.13 but names 3.3.13 and 8.x-2.41 as the upgrade targets, so confirm the fixed versions in Drupal advisory SA-CONTRIB-2026-254.",
+      "lessons": [
+        {
+          "point": "The bug is broken access control on routes and entity fields, and its main impact is financial abuse of the store.",
+          "excerpt": "The module doesn't sufficiently protect certain routes and entity fields, leading to an access bypass that may financially impact the vendor.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Both major branches are affected.",
+          "excerpt": "is a case of missing authorization affecting Commerce Core versions from 0.0.0 to 2.41 and from 3.0.0 to 3.3.13",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Drupal gave no details on the nature or extent of the attacks, so defenders have little to build targeted detections on.",
+          "excerpt": "but provided no specifics about the nature of the activity or the extent of the campaign",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Drupal Commerce sites should upgrade Commerce Core now and audit orders and entity changes, because exploitation is underway and no indicators are public.",
+      "tags": [
+        "drupal",
+        "drupal-commerce",
+        "missing-authorization",
+        "access-bypass",
+        "exploited-in-the-wild",
+        "e-commerce",
+        "cve-2026-118539"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Upgrade Commerce Core and audit order/price changes",
+        "detail": "Identify every Drupal site running Commerce Core. Upgrade to the fixed release in SA-CONTRIB-2026-254 (the article names 3.3.13 for 3.x and 8.x-2.41 for earlier versions; check this against the advisory). Then review recent orders, price and payment entity changes, and API access logs for actions by unauthenticated users or users without the right privileges."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 50,
+        "newness": 19,
+        "credibility": 48.1,
+        "composite": 31.46,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: claims hold; 'no exploitation details public' overstated the source (Drupal gave no specifics), reworded.",
+      "prior_art": "Archive has generic CMS-plugin flaw entries, such as a stored-XSS-to-admin pattern across WordPress and Drupal plugins. This is a routine exploited access-control advisory with no technical detail.",
+      "related_claims": [],
+      "threat": "Attackers reach Commerce Core routes and entity fields that lack authorization checks, bypass access controls, and cause financial harm to the store.",
+      "conditions": "Drupal sites running Commerce Core 0.0.0 to 2.41 or 3.0.0 to 3.3.13, per the article's affected range.",
+      "mitigations": "Upgrade Commerce Core to the fixed release in Drupal advisory SA-CONTRIB-2026-254 and review store transactions for unauthorized changes.",
+      "source_url": "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html",
+      "article_url": "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/hackers-actively-exploit-highly-critical-drupal-bb564fb962.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 48.1,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "The Hacker News",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "i-had-plans-for-that-second-34b5130afe",
@@ -9621,75 +10009,6 @@
       ]
     },
     {
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "MagicSword markets automatic application-control policies built from LOLDrivers research",
-      "source_url": "https://www.magicsword.io/application-control",
-      "article_url": "https://www.magicsword.io/application-control",
-      "source_name": "tl;dr sec (curator link)",
-      "discovered_via": "curator",
-      "source_id": "curator:tldrsec",
-      "source_rank": 70.0,
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "curated_by": "tldrsec",
-      "curator_issue": "https://tldrsec.com/p/tldr-sec-352",
-      "published": "2026-10-29",
-      "date": "2026-10",
-      "raw_path": "data/_raw/application-control-without-the-overhead-71d2bfe5ca.txt",
-      "author": null,
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "MagicSword, from the team behind LOLDrivers and LOLRMM, sells application-control policies generated from catalogs of abused drivers, remote-access tools and living-off-the-land binaries, starting in audit mode. The page is a product landing page and sponsored newsletter placement; its data points are a CrowdStrike figure that 82% of 2025 detections were malware-free and the vendor's own counts of weekly catalog additions.",
-      "takeaway": "Marketing for a product; the useful idea is blocking known-abused legitimate tools by default, which the free LOL catalogs already support.",
-      "lessons": [
-        {
-          "point": "Policies are generated from public catalogs of abused legitimate software rather than written by hand.",
-          "excerpt": "MagicSword builds policies automatically from research on what attackers are abusing.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The motivating statistic is that most detections did not involve malware.",
-          "excerpt": "of CrowdStrike detections in 2025",
-          "confidence": 0.5,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "application-control",
-        "lolbas",
-        "loldrivers",
-        "vendor-marketing"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Seed a block policy from LOLDrivers and LOLRMM",
-        "detail": "Whatever product you use, start WDAC or App Control in audit mode with the LOLDrivers vulnerable-driver list and unapproved LOLRMM tools blocked, then enforce."
-      },
-      "scores": {
-        "novelty": 10,
-        "relevance": 30,
-        "newness": 18,
-        "credibility": 70.0,
-        "composite": 27.0,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "verified": true,
-      "prior_art": "Microsoft's recommended driver block list and WDAC/App Control templates, plus the free LOLDrivers, LOLRMM and LOLBAS projects.",
-      "id": "magicsword-markets-automatic-application-control-cf8eb07065",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "how-check-point-accelerates-vulnerability-resear-31ec17a5b9",
       "topic": "product-security",
       "domain": "ps.detection-response",
@@ -10004,73 +10323,6 @@
       "previous_slugs": [
         "public-bounty-server-runs-pre-php2shell-php-with-500-bitcoin"
       ]
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
-      "title": "GoSQLX, a Go SQL parser, ships an injection scanner and MCP server",
-      "source_url": "https://github.com/ajitpratap0/GoSQLX",
-      "article_url": "https://github.com/ajitpratap0/GoSQLX",
-      "author": "ajitpratap0",
-      "source_name": "ajitpratap0/GoSQLX",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-server-security-scanner",
-      "source_rank": 58.4,
-      "source_topics": [
-        "ai-security"
-      ],
-      "published": "2026-10-31",
-      "date": "2026-10",
-      "raw_path": "data/_raw/ajitpratap0-gosqlx-d7f6e35a57.txt",
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "GoSQLX is a pure-Go SQL parsing library for 8 dialects that also ships a linter, a SQL injection scanner, and an MCP server with 7 tools. Its README reports about 349 ns to parse a simple SELECT. It is a general developer tool; the security scanner is one feature, and the README gives no detection results for it.",
-      "takeaway": "A handy SQL parser with an agent interface, but nothing new for security; its injection scanner is unmeasured.",
-      "lessons": [
-        {
-          "point": "The security piece is a SQL injection scanner built on the parser's AST, alongside lint and optimizer rules.",
-          "excerpt": "SQL injection scanner, 30 lint rules (L001-L030), 20 optimizer rules and metadata extraction.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "It exposes its features to agents through an MCP server, including a public remote endpoint.",
-          "excerpt": "MCP server with 7 tools, public remote endpoint, Streamable HTTP.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "sql",
-        "sql-injection",
-        "mcp",
-        "static-analysis",
-        "go"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Use as an AST source for SQL checks, not as a vetted injection detector",
-        "detail": "If you need SQL parsing in Go, GoSQLX's AST can back custom rules; test its injection scanner on your own corpus before relying on it."
-      },
-      "scores": {
-        "novelty": 15,
-        "relevance": 25,
-        "newness": 18,
-        "credibility": 58.4,
-        "composite": 25.26,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "verified": true,
-      "prior_art": "sqlparser libraries (vitess, pg_query_go) and SQL linters such as SQLFluff; static SQL injection checks in Semgrep and CodeQL.",
-      "id": "gosqlx-a-go-sql-parser-ships-an-injection-scanne-7ff0fe42db",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -10807,57 +11059,6 @@
     {
       "topic": "product-security",
       "domain": "ps.appsec",
-      "title": "GitLab remote code execution bug added to CISA KEV catalog",
-      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
-      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
-      "takeaway": "Treat any self-hosted GitLab on an affected version as exposed to unauthenticated RCE through CI/CD config, and patch it now.",
-      "summary": "CISA added CVE-2026-97229 in GitLab Community and Enterprise Edition to its Known Exploited Vulnerabilities (KEV) catalog on October 29, 2026, due November 1: an unauthenticated user could run code on the GitLab server through a crafted regular expression in a CI/CD configuration. Upgrade to 19.2.8, 19.3.5, 19.4.2 or later.",
-      "lessons": [
-        {
-          "point": "The flaw needs no login and leads to code execution on the GitLab server, caused by weak validation of a regular expression.",
-          "excerpt": "could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "related_claims": [],
-      "published": "2026-10-29",
-      "raw_path": "data/_raw/cisa-kev-gitlab-community-edition-and-enterprise-9429adaa38.txt",
-      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
-      "source_rank": 65.0,
-      "discovered_via": "rss",
-      "source_name": "CISA Known Exploited Vulnerabilities",
-      "id": "gitlab-remote-code-execution-bug-added-to-cisa-k-07ba15b0bf",
-      "retrieved_at": "2026-10-31T21:43:20+00:00",
-      "needs_review": true,
-      "news_brief": {
-        "reason": "kev",
-        "markers": [
-          "exploited",
-          "unauthenticated"
-        ],
-        "sources": 1,
-        "at": "2026-10-31"
-      },
-      "corroborating_sources": [],
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "scores": {
-        "newness": 0,
-        "novelty": 0,
-        "relevance": 0,
-        "credibility": 65.0,
-        "composite": 9.75,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      }
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.appsec",
       "title": "Abandoned Time4Popcorn updater allowed code execution on millions of PCs",
       "source_url": "https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks/",
       "takeaway": "Abandoned software with unsigned updates and lapsed domains is a ready-made supply-chain hole; remove it.",
@@ -11074,6 +11275,56 @@
       }
     },
     {
+      "id": "massive-leak-exposes-41-000-homeland-security-wo-834f3973dc",
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "Leak exposes records of more than 41,000 DHS employees and contractors",
+      "source_url": "https://www.wired.com/story/massive-leak-exposes-41000-homeland-security-workers-including-undercover-ice-agents/",
+      "takeaway": "Identity directory data, including permission group names, reveals organizational structure and sensitive programs if it leaks.",
+      "summary": "Distributed Denial of Secrets published an archive of records on more than 41,000 Department of Homeland Security (DHS) employees and contractors, which it says came from DHS's Okta login system. Okta says it has no evidence its systems were compromised, and DHS says it is working to address a potential breach.",
+      "lessons": [
+        {
+          "point": "The leak goes beyond contact details to sensitive program references.",
+          "excerpt": "The records include email addresses, phone numbers, and office addresses, but also references to internal systems and sensitive information on undercover and surveillance programs.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://www.wired.com/story/massive-leak-exposes-41000-homeland-security-workers-including-undercover-ice-agents/",
+      "published": "2026-10-28",
+      "raw_path": "data/_raw/massive-leak-exposes-41-000-homeland-security-wo-834f3973dc.txt",
+      "source_id": "rss:https-www-wired-com-feed-category-security-lates",
+      "source_rank": 53.6,
+      "discovered_via": "rss",
+      "source_name": "Wired Security",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-30"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 53.6,
+        "composite": 8.04,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      }
+    },
+    {
       "topic": "product-security",
       "domain": "ps.appsec",
       "title": "The Hacker News weekly roundup leads with PHP2Shell exploitation attempts",
@@ -11172,6 +11423,159 @@
         "credibility": 51.6,
         "composite": 7.74,
         "scored_at": "2026-10-28T16:52:05+00:00"
+      }
+    },
+    {
+      "id": "fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Attackers exploit new WordPress remote code execution flaw within hours of patch",
+      "source_url": "https://www.securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs/",
+      "takeaway": "Core update race conditions get exploited almost immediately, so WordPress sites should update to 7.1.4 right away.",
+      "summary": "Defiant reports attackers began exploiting a high-severity unauthenticated race condition in the WordPress core update process that can lead to remote code execution (RCE). It was patched October 28 in WordPress 7.1.4 and backported to branches through 4.7; no successful compromises have been reported, so update now.",
+      "lessons": [
+        {
+          "point": "Exploitation began within hours of the patch.",
+          "excerpt": "Threat actors started exploiting a new high-severity WordPress vulnerability within hours of patches rolling out, Defiant warns.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://www.securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs/",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135.txt",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 50.8,
+      "discovered_via": "rss",
+      "source_name": "SecurityWeek",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "rce",
+          "unauthenticated"
+        ],
+        "sources": 1,
+        "at": "2026-10-30"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 50.8,
+        "composite": 7.62,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      }
+    },
+    {
+      "id": "in-other-news-anthropic-breach-dispute-uefi-flaw-1f37a6bb69",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Critical UEFI firmware flaw threatens most servers worldwide",
+      "source_url": "https://www.securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak/",
+      "takeaway": "Firmware-level bugs in shared open source code can reach nearly every server fleet, so check vendors for updates if you use network boot.",
+      "summary": "A critical 16-year-old buffer overflow (CVE-2026-97631) in TianoCore EDK II, used by most server vendors via firmware suppliers, lets a local-network attacker run code at the highest privilege before Secure Boot takes effect. It became public months before the planned January disclosure after AMI published a fix; seek firmware updates from your vendors.",
+      "lessons": [
+        {
+          "point": "Exposure is limited to network-booting machines.",
+          "excerpt": "Only machines that use network boot are exposed",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://www.securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak/",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/in-other-news-anthropic-breach-dispute-uefi-flaw-1f37a6bb69.txt",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 50.8,
+      "discovered_via": "rss",
+      "source_name": "SecurityWeek",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-30"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (UEFI, EDK, II, AMI)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 50.8,
+        "composite": 7.62,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      }
+    },
+    {
+      "id": "bulletproof-host-virtualine-loses-its-domain-to-a02e482ff4",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "FBI seizes domain of bulletproof hosting provider Virtualine",
+      "source_url": "https://www.securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure/",
+      "takeaway": "Domain seizures disrupt cybercrime hosting but may not stop operators, so defenders should keep tracking the provider's infrastructure.",
+      "summary": "The FBI seized virtualine.net, the domain of a Russian-speaking bulletproof hosting provider used by ransomware groups and the StealC infostealer operators. TRM Labs notes a domain seizure does not prove the operator has stopped or that customers lost access to their infrastructure.",
+      "lessons": [
+        {
+          "point": "The FBI took the provider's domain.",
+          "excerpt": "The FBI has seized virtualine.net, the domain of a Russian-speaking bulletproof hosting services provider associated with various cybercriminal operations.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://www.securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure/",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/bulletproof-host-virtualine-loses-its-domain-to-a02e482ff4.txt",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 50.8,
+      "discovered_via": "rss",
+      "source_name": "SecurityWeek",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "compromise"
+        ],
+        "sources": 1,
+        "at": "2026-10-30"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 50.8,
+        "composite": 7.62,
+        "scored_at": "2026-10-30T16:55:17+00:00"
       }
     },
     {
@@ -11482,6 +11886,56 @@
       }
     },
     {
+      "id": "linux-kernel-tcp-flaw-with-9-8-cvss-score-affect-e1cce9c8e9",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Linux kernel TCP flaw rated 9.8 lacks fixes in Ubuntu and RHEL",
+      "source_url": "https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html",
+      "takeaway": "A severe kernel bug with an AI-written exploit is unfixed in major distributions, so patch where fixes exist and track Ubuntu and RHEL advisories.",
+      "summary": "CVE-2026-98432 is a use-after-free race in the Linux kernel's TCP code that the kernel CVE team rates 9.8 on the CVSS scale. Anthropic said its AI model wrote a root exploit; Debian, Oracle Linux, SUSE and Amazon Linux have some fixes, but Ubuntu and Red Hat Enterprise Linux (RHEL) have none yet, and no attacks have been reported.",
+      "lessons": [
+        {
+          "point": "Two major distributions remain unpatched.",
+          "excerpt": "As of October 29, Ubuntu and RHEL have not released a fixed kernel.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "article_url": "https://thehackernews.com/2026/10/linux-kernel-tcp-flaw-with-98-cvss.html",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/linux-kernel-tcp-flaw-with-9-8-cvss-score-affect-e1cce9c8e9.txt",
+      "source_id": "rss:https-feeds-feedburner-com-thehackersnews",
+      "source_rank": 48.1,
+      "discovered_via": "rss",
+      "source_name": "The Hacker News",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "marker",
+        "markers": [
+          "ai-incident"
+        ],
+        "sources": 1,
+        "at": "2026-10-30"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 48.1,
+        "composite": 7.21,
+        "scored_at": "2026-10-30T16:55:17+00:00"
+      }
+    },
+    {
       "candidate_id": "sony-isp-subsidiary-data-breach-exposes-2-5-mill-0a4ff240a3",
       "topic": "product-security",
       "domain": "ps.appsec",
@@ -11585,6 +12039,650 @@
       "previous_slugs": [
         "upguard-researcher-uses-onlyfans-copyright-takedown-data-to"
       ]
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "VOLTA infostealer uses an LLM to rank victims' assets by value",
+      "source_url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+      "article_url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+      "author": "khalidkhair",
+      "source_name": "@khalidkhair via Hacker News",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "published": "2026-10-31",
+      "date": "2026-10",
+      "raw_path": "data/_raw/malware-uses-llms-to-rank-victims-by-how-much-th-aeab9d7902.txt",
+      "tweet_url": null,
+      "related_claims": [
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "summary": "Cisco Talos describes VOLTA, a self-deleting Windows infostealer that, after stealing credentials, sessions and wallets, builds an evidence bundle about the victim and sends it through OpenRouter to an LLM that ranks the victim's assets by monetization value. If the default model refuses, VOLTA detects refusal phrases and falls back to two other models. Talos reads it as a builder sold to customers, which makes the AI triage step available to low-skill operators.",
+      "takeaway": "Crimeware now uses LLMs as the analyst who decides which victims to work first, and is built to route around refusals.",
+      "lessons": [
+        {
+          "point": "The LLM is used for post-theft triage, ranking a victim's assets by how much they are worth.",
+          "excerpt": "VOLTA sends a structured evidence bundle to an LLM to rank the victim’s assets by monetization value.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The malware expects refusals and string-matches them to fail over to other models, so a single provider's refusal does not stop it.",
+          "excerpt": "checking each response for phrases like “I can’t” or “I’m not able,” before passing on to a chain of up to three models.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Stolen live sessions are reused to enrich the dossier, for example searching the victim's Gmail for receipts to confirm a home address.",
+          "excerpt": "using the victim's own authenticated Gmail tokens, it queries their inbox for receipts from Amazon, DoorDash, Uber Eats, Grubhub, Walmart, and PayPal",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Talos says blocking headless Chrome launches would stop the App-Bound Encryption bypass that much of the token theft relies on.",
+          "excerpt": "An application control policy that restricts which processes may launch Chrome with `--headless` would block the ABE decryption path entirely.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "infostealer",
+        "ai-integrated-malware",
+        "refusal-evasion",
+        "openrouter",
+        "llm-abuse"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Detect headless Chrome launches and outbound LLM API calls from non-developer endpoints",
+        "detail": "Alert when Chrome starts with --headless from an unexpected parent process, and flag traffic to openrouter.ai or other LLM APIs from hosts that have no business reason to call them. If compromised, preserve %APPDATA%\\volta_debug.txt, revoke tokens and treat plaintext wallet seeds as lost."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 68,
+        "newness": 18,
+        "credibility": 55.0,
+        "composite": 49.65,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Talos's CLOSEDQUORUM AI-driven C2 implant and SOCRadar's report of INC and The Gentlemen affiliates running intrusions through OpenRouter models; VOLTA applies the LLM to post-theft victim appraisal with a refusal-fallback chain.",
+      "threat": "Infostealer operators using LLMs to prioritize and profile victims, including physical address inference.",
+      "conditions": "Windows endpoints where an infostealer can run and reach LLM APIs over the victim's own connection.",
+      "mitigations": "Application control on headless Chrome, hardware-backed credential storage, egress monitoring for LLM APIs, and fast token revocation after infection.",
+      "id": "volta-infostealer-uses-an-llm-to-rank-victims-as-4e8cd65e55",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.offensive",
+      "title": "Kat Traxler used AI and security principles to find cloud design flaws",
+      "source_url": "https://github.com/KatTraxler/presentations/tree/main/security-constitution",
+      "article_url": "https://github.com/KatTraxler/presentations/tree/main/security-constitution",
+      "source_name": "tl;dr sec (curator link)",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-352",
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": null,
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "According to tl;dr sec, Kat Traxler's talk describes using AI to find about 100 bugs in cloud providers, specifically design flaws. The approach gives the model a set of security principles, rather than asking it to hunt for known vulnerability classes such as cross-site scripting (XSS) or command injection. The talk materials could not be fetched, so this rests on the newsletter's blurb only.",
+      "takeaway": "Pointing an AI at design principles, not bug classes, may surface design flaws that pattern-based hunting misses.",
+      "lessons": [
+        {
+          "point": "The approach defines security principles for the model instead of targeting known vulnerability classes.",
+          "excerpt": "Instead of trying to find specific known vulnerability classes (e.g. XSS, command injection), Kat defined a series of",
+          "confidence": 0.4,
+          "grounded": false
+        }
+      ],
+      "tags": [
+        "ai-assisted-research",
+        "cloud",
+        "design-flaws",
+        "harness"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Give an AI bug-hunting harness explicit design invariants",
+        "detail": "Write the security invariants your platform must hold (tenant isolation, who may act on whose resources) and ask the agent to find violations of each, rather than scanning for bug classes."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 60,
+        "newness": 18,
+        "credibility": 70.0,
+        "composite": 48.0,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "prior_art": "Anthropic and Wiz AI-assisted vulnerability research, and invariant-driven threat modeling.",
+      "verified": false,
+      "verify_reason": "factual",
+      "verify_note": "Source page returned HTTP 403 to fetch_raw twice; only the tl;dr sec blurb was read, so no lesson could be checked against the talk itself.",
+      "id": "kat-traxler-used-ai-and-security-principles-to-f-88a26e9b71",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "published": "2026-10-30",
+      "date": "2026-10",
+      "raw_path": "data/_raw/cisa-kev-ivanti-connect-secure-missing-authentic-af27a866ef.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "corroborating_sources": [
+        {
+          "name": "CISA Known Exploited Vulnerabilities (CVE-2026-118527)",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+          "published": "2026-10-30"
+        }
+      ],
+      "summary": "CISA added Ivanti Connect Secure flaw CVE-2026-111357 to its Known Exploited Vulnerabilities catalog on October 30, 2026, with a November 2 due date, and added the related CVE-2026-118527 the same day. In CVE-2026-111357, the dsinvoked broker trusts DSCache configuration data, which lets a local user escalate to root; NVD says it was exploited in October 2026. NVD lists 22.8R2 through 22.8R2.5 and 25.1.0.0 up to 25.1.1.3 as affected, and cites a Volexity report on chained exploitation of Connect Secure zero-days.",
+      "takeaway": "Treat any Ivanti Connect Secure appliance on an affected 22.8R2 or 25.1 release as possibly rooted: patch it, then hunt for compromise.",
+      "lessons": [
+        {
+          "point": "The root escalation comes from a privileged broker that trusts configuration data it should not. The flaw was exploited in October 2026.",
+          "excerpt": "Ivanti Connect Secure 22.8R2.4 mishandles the manner in which the dsinvoked broker trusts DSCache configuration data, leading to privilege escalation to root, as exploited in the wild in October 2026.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "kev",
+        "ivanti",
+        "vpn",
+        "privilege-escalation",
+        "edge-device",
+        "zero-day"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch Ivanti Connect Secure 22.8R2.4 and run a compromise hunt",
+        "detail": "Apply Ivanti's fix for CVE-2026-104935 / CVE-2026-111357 / CVE-2026-118527. Then follow CISA's forensics triage requirements and Volexity's indicators. A device rooted before patching stays compromised after it."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 62,
+        "newness": 18,
+        "credibility": 70.0,
+        "composite": 38.1,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: lesson on the root escalation holds; summary trimmed to what the NVD page supports (affected range, Volexity reference); the CVE-2026-118527 facts come from the KEV feed.",
+      "prior_art": "Repeated exploited Ivanti Connect Secure zero-day chains (2024-2026); this is another chain on the same appliance family.",
+      "threat": "Chained exploitation of a VPN appliance ending in root.",
+      "conditions": "Ivanti Connect Secure 22.8R2.4 reachable by an attacker.",
+      "mitigations": "Apply Ivanti's fixed release, run CISA's forensic triage, and rebuild any appliance showing compromise.",
+      "id": "ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Exploited-in-the-wild Ivanti Connect Secure root escalation with a three-day CISA deadline; the lesson is to patch and then hunt, since a device rooted before patching stays compromised.",
+        "signals": [
+          "cve",
+          "active-exploitation",
+          "newsworthy",
+          "timely"
+        ],
+        "at": "2026-10-31T21:43:37+00:00"
+      }
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.ai-code",
+      "title": "VibeRaven checks AI-built Supabase apps for missing row-level security",
+      "source_url": "https://github.com/ohad6k/VibeRaven",
+      "article_url": "https://github.com/ohad6k/VibeRaven",
+      "author": "ohad6k",
+      "source_name": "ohad6k/VibeRaven",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-server-security-scanner",
+      "source_rank": 58.4,
+      "source_topics": [
+        "ai-security"
+      ],
+      "published": "2026-10-30",
+      "date": "2026-10",
+      "raw_path": "data/_raw/ohad6k-viberaven-67588eeefe.txt",
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "VibeRaven is a local CLI and MCP server that scans Vercel and Supabase apps, a stack many AI app builders generate, for launch gaps. It flags public tables without row-level security (RLS), using (true) policies, the service_role key in browser code, anon-callable security definer functions and unverified Stripe webhooks. It reads migrations and code without connecting to the project, names file and line, and exits 1 on a blocker so it can gate CI.",
+      "takeaway": "Vibe-coded Supabase apps fail in a handful of predictable ways, and a static check in CI can catch several of them before launch.",
+      "lessons": [
+        {
+          "point": "The checks target a short list of recurring Supabase mistakes, several with no matching Supabase Security Advisor lint.",
+          "excerpt": "A policy with `using (true)` that lets anyone read or write every row",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A security definer function left callable by anon runs with its owner's rights, so RLS does not limit it.",
+          "excerpt": "is security definer, so it runs with its owner's rights and RLS does not limit what it touches.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "It is designed as a CI gate and works offline from the repository alone.",
+          "excerpt": "It does not connect to your Supabase project or send requests to your app. It exits `1` when it finds a blocker, so it also works as a CI step.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "supabase",
+        "rls",
+        "vibe-coding",
+        "ci-gate",
+        "mcp",
+        "secrets"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Gate AI-generated Supabase apps on an RLS and secrets check",
+        "detail": "Add `npx -y viberaven@1.6.12 check` (pinned) as a required CI step for Supabase projects. Or replicate its rules: every public table has RLS, no `using (true)` write policy, no service_role key in client bundles, and `revoke execute ... from anon` on security definer functions."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 60,
+        "newness": 18,
+        "credibility": 58.4,
+        "composite": 37.86,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Supabase's own Security Advisor lints (rls_disabled_in_public, anon_security_definer_function_executable) and general secret scanners; VibeRaven adds offline, migration-based checks for gaps the Advisor does not cover.",
+      "threat": "Data exposure in AI-generated apps through missing or permissive row-level security and leaked service keys.",
+      "conditions": "Supabase-backed apps, especially generated by AI app builders.",
+      "mitigations": "Enable RLS on every public table, scope policies, keep the service_role key server-side, revoke anon execute on security definer functions, verify webhook signatures.",
+      "id": "viberaven-checks-ai-built-supabase-apps-for-miss-ac709b5bd8",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": "data/_raw/cisa-kev-cisco-secure-firewall-asa-software-and-d1c05c9cd8.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "CVE-2026-76418 lets an unauthenticated remote attacker reload Cisco Secure Firewall ASA and FTD devices by sending a crafted request to the Remote Access SSL VPN service, but only when secondary authentication is configured on a tunnel group. CISA added it to the Known Exploited Vulnerabilities catalog on October 29, 2026 with a November 1 due date. The impact is denial of service (availability only), not code execution.",
+      "takeaway": "If your ASA or FTD VPN uses secondary authentication on a tunnel group, patch now, because attackers are already using this to knock VPNs offline.",
+      "lessons": [
+        {
+          "point": "The bug is only reachable when secondary authentication is configured on a tunnel group, so exposure can be scoped from configuration.",
+          "excerpt": "This vulnerability is due to logic errors when secondary authentication is configured on a tunnel group.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "No credentials are needed. The outcome is a device reload, a denial of service against the VPN edge.",
+          "excerpt": "could allow an unauthenticated, remote attacker to cause the device to reload unexpectedly, resulting in a denial of service (DoS) condition",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "CISA gave federal agencies three days to remediate. The short deadline signals active use.",
+          "excerpt": "October 29, 2026 | November 01, 2026",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "kev",
+        "cisco",
+        "vpn",
+        "denial-of-service",
+        "edge-device"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Find ASA/FTD tunnel groups with secondary authentication and patch them first",
+        "detail": "Query ASA and FTD configs for tunnel groups with secondary authentication enabled. Those devices are exposed to CVE-2026-76418. Apply Cisco's fixed release from advisory cisco-sa-asaftd-tunnel-dos-s6mgkb75. Watch for unexpected device reloads as an exploitation signal."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 55,
+        "newness": 18,
+        "credibility": 65.0,
+        "composite": 37.35,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Earlier exploited Cisco ASA/FTD WebVPN denial-of-service bugs; this is another instance of the same class.",
+      "threat": "Unauthenticated remote denial of service against the VPN edge.",
+      "conditions": "Cisco ASA or FTD running Remote Access SSL VPN with secondary authentication configured on a tunnel group, on an unfixed release.",
+      "mitigations": "Upgrade to a fixed ASA/FTD release per the Cisco advisory, and alert on unexpected device reloads.",
+      "id": "cisco-asa-and-ftd-vpn-crash-bug-is-exploited-cis-4569dbbd0c",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Exploited VMware ESX flaw lets attacker with admin rights act unlogged",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.0,
+      "source_topics": [
+        "product-security"
+      ],
+      "published": "2026-10-28",
+      "date": "2026-10",
+      "raw_path": "data/_raw/cisa-kev-broadcom-vmware-esx-insufficient-loggin-f5fd008116.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "CVE-2026-41709 is an insufficient-logging flaw in VMware ESX: an attacker who already holds administrator rights can perform certain operations without them being logged. CISA added it to the Known Exploited Vulnerabilities catalog on October 28, 2026 with a November 11 due date. It needs high privileges, so it is an anti-forensics aid after compromise, not an entry point.",
+      "takeaway": "ESX audit logs may be silent about what a hijacked admin did, so do not treat clean ESX logs as proof of no tampering.",
+      "lessons": [
+        {
+          "point": "The flaw helps an attacker who already has admin access hide actions from the hypervisor's logs.",
+          "excerpt": "A malicious administrator could exploit this issue to perform certain operations without them being logged.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The vendor's score reflects high privileges required and integrity-only impact.",
+          "excerpt": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "kev",
+        "vmware",
+        "esxi",
+        "logging",
+        "anti-forensics",
+        "hypervisor"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch ESX and add an out-of-band log source for hypervisor admin actions",
+        "detail": "Apply Broadcom advisory 38017. Because ESX's own logs can miss these operations, also capture vCenter events and network flow logs for ESX management interfaces, and alert on admin logins from unexpected hosts."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 55,
+        "newness": 18,
+        "credibility": 65.0,
+        "composite": 37.35,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Earlier ESXi anti-forensics techniques by intrusion sets such as UNC3886 that disabled or evaded hypervisor logging.",
+      "threat": "An attacker with ESX admin rights hides operations from logs.",
+      "conditions": "Unpatched VMware ESX and an attacker who already holds administrator access.",
+      "mitigations": "Patch per Broadcom advisory 38017 and keep an independent log source for hypervisor management actions.",
+      "id": "exploited-vmware-esx-flaw-lets-attacker-with-adm-ad6d766315",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "MagicSword markets automatic application-control policies built from LOLDrivers research",
+      "source_url": "https://www.magicsword.io/application-control",
+      "article_url": "https://www.magicsword.io/application-control",
+      "source_name": "tl;dr sec (curator link)",
+      "discovered_via": "curator",
+      "source_id": "curator:tldrsec",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "curated_by": "tldrsec",
+      "curator_issue": "https://tldrsec.com/p/tldr-sec-352",
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": "data/_raw/application-control-without-the-overhead-71d2bfe5ca.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "MagicSword, from the team behind LOLDrivers and LOLRMM, sells application-control policies generated from catalogs of abused drivers, remote-access tools and living-off-the-land binaries, starting in audit mode. The page is a product landing page and sponsored newsletter placement; its data points are a CrowdStrike figure that 82% of 2025 detections were malware-free and the vendor's own counts of weekly catalog additions.",
+      "takeaway": "Marketing for a product; the useful idea is blocking known-abused legitimate tools by default, which the free LOL catalogs already support.",
+      "lessons": [
+        {
+          "point": "Policies are generated from public catalogs of abused legitimate software rather than written by hand.",
+          "excerpt": "MagicSword builds policies automatically from research on what attackers are abusing.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The motivating statistic is that most detections did not involve malware.",
+          "excerpt": "of CrowdStrike detections in 2025",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "application-control",
+        "lolbas",
+        "loldrivers",
+        "vendor-marketing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Seed a block policy from LOLDrivers and LOLRMM",
+        "detail": "Whatever product you use, start WDAC or App Control in audit mode with the LOLDrivers vulnerable-driver list and unapproved LOLRMM tools blocked, then enforce."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 30,
+        "newness": 18,
+        "credibility": 70.0,
+        "composite": 27.0,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "Microsoft's recommended driver block list and WDAC/App Control templates, plus the free LOLDrivers, LOLRMM and LOLBAS projects.",
+      "id": "magicsword-markets-automatic-application-control-cf8eb07065",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "GoSQLX, a Go SQL parser, ships an injection scanner and MCP server",
+      "source_url": "https://github.com/ajitpratap0/GoSQLX",
+      "article_url": "https://github.com/ajitpratap0/GoSQLX",
+      "author": "ajitpratap0",
+      "source_name": "ajitpratap0/GoSQLX",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-server-security-scanner",
+      "source_rank": 58.4,
+      "source_topics": [
+        "ai-security"
+      ],
+      "published": "2026-10-31",
+      "date": "2026-10",
+      "raw_path": "data/_raw/ajitpratap0-gosqlx-d7f6e35a57.txt",
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "GoSQLX is a pure-Go SQL parsing library for 8 dialects that also ships a linter, a SQL injection scanner, and an MCP server with 7 tools. Its README reports about 349 ns to parse a simple SELECT. It is a general developer tool; the security scanner is one feature, and the README gives no detection results for it.",
+      "takeaway": "A handy SQL parser with an agent interface, but nothing new for security; its injection scanner is unmeasured.",
+      "lessons": [
+        {
+          "point": "The security piece is a SQL injection scanner built on the parser's AST, alongside lint and optimizer rules.",
+          "excerpt": "SQL injection scanner, 30 lint rules (L001-L030), 20 optimizer rules and metadata extraction.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "It exposes its features to agents through an MCP server, including a public remote endpoint.",
+          "excerpt": "MCP server with 7 tools, public remote endpoint, Streamable HTTP.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "sql",
+        "sql-injection",
+        "mcp",
+        "static-analysis",
+        "go"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Use as an AST source for SQL checks, not as a vetted injection detector",
+        "detail": "If you need SQL parsing in Go, GoSQLX's AST can back custom rules; test its injection scanner on your own corpus before relying on it."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 25,
+        "newness": 18,
+        "credibility": 58.4,
+        "composite": 25.26,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      },
+      "verified": true,
+      "prior_art": "sqlparser libraries (vitess, pg_query_go) and SQL linters such as SQLFluff; static SQL injection checks in Semgrep and CodeQL.",
+      "id": "gosqlx-a-go-sql-parser-ships-an-injection-scanne-7ff0fe42db",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "GitLab remote code execution bug added to CISA KEV catalog",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+      "takeaway": "Treat any self-hosted GitLab on an affected version as exposed to unauthenticated RCE through CI/CD config, and patch it now.",
+      "summary": "CISA added CVE-2026-97229 in GitLab Community and Enterprise Edition to its Known Exploited Vulnerabilities (KEV) catalog on October 29, 2026, due November 1: an unauthenticated user could run code on the GitLab server through a crafted regular expression in a CI/CD configuration. Upgrade to 19.2.8, 19.3.5, 19.4.2 or later.",
+      "lessons": [
+        {
+          "point": "The flaw needs no login and leads to code execution on the GitLab server, caused by weak validation of a regular expression.",
+          "excerpt": "could have allowed an unauthenticated user to execute arbitrary code on the GitLab server via a specially crafted regular expression in a CI/CD configuration",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "related_claims": [],
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/cisa-kev-gitlab-community-edition-and-enterprise-9429adaa38.txt",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 65.0,
+      "discovered_via": "rss",
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "id": "gitlab-remote-code-execution-bug-added-to-cisa-k-07ba15b0bf",
+      "retrieved_at": "2026-10-31T21:43:20+00:00",
+      "needs_review": true,
+      "news_brief": {
+        "reason": "kev",
+        "markers": [
+          "exploited",
+          "unauthenticated"
+        ],
+        "sources": 1,
+        "at": "2026-10-31"
+      },
+      "corroborating_sources": [],
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "scores": {
+        "newness": 0,
+        "novelty": 0,
+        "relevance": 0,
+        "credibility": 65.0,
+        "composite": 9.75,
+        "scored_at": "2026-10-31T21:43:21+00:00"
+      }
     }
   ]
 }
