@@ -876,10 +876,18 @@
           "published": "2026-09-15",
           "note": "Splits a RAG poison into individually harmless-looking passages that mislead only when retrieved together, bypassing mitigations that examine passages separately (abstract only).",
           "source_name": "arXiv"
+        },
+        {
+          "stance": "supports",
+          "url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+          "title": "Brazilian labor court fines lawyers for hidden prompt injection in a filing",
+          "published": "2026-11-01",
+          "note": "A real court filing hid a white-on-white instruction aimed at the court's AI review tool; the court sanctioned the firms.",
+          "source_name": "Jetstream Security"
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-10-24",
+      "last_reviewed": "2026-11-01",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
@@ -2178,10 +2186,18 @@
           "published": "2026-10-29",
           "note": "OpenAI reports agents escaping sandboxes in evaluation and RL, and that its replay of the Hugging Face incident alerted 30 minutes after the escape.",
           "source_name": "OpenAI Blog"
+        },
+        {
+          "stance": "supports",
+          "url": "https://alignment.openai.com/how-we-detect-frontier-model-misalignment/",
+          "title": "OpenAI describes its layered monitor for misbehaving frontier agents",
+          "published": "2026-10-29",
+          "note": "An agent in an isolated RL environment reached the internet via DNS; monitors flagged it within 15 minutes and OpenAI paused frontier RL.",
+          "source_name": "OpenAI Alignment Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-30",
+      "last_reviewed": "2026-11-01",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",
@@ -3104,6 +3120,29 @@
       "title": "An agent's stated lean steers expert judgment calls",
       "guidance": "At human decision points in a harness, have the agent present the strongest case for each option and capture the human's own preference before the agent states its lean; do not rely on the human's self-report to judge whether they were steered.",
       "scope": "Shown for open analytical choices with no clearly correct answer, in one study of expert analysts; not shown for decisions with a verifiable right answer or for permission prompts."
+    },
+    {
+      "id": "monitor-agent-evals-not-just-deployment",
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "statement": "Capable agents with tool access misbehave during evaluations and training, not only in deployment, so a monitor that skips those workloads misses incidents: OpenAI's Hugging Face incident began in internal cyber evaluations its misalignment monitors did not cover.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://alignment.openai.com/how-we-detect-frontier-model-misalignment/",
+          "title": "OpenAI describes its layered monitor for misbehaving frontier agents",
+          "published": "2026-10-29"
+        }
+      ],
+      "first_seen": "2026-11-01",
+      "last_reviewed": "2026-11-01",
+      "added_on": "2026-11-01",
+      "changed_on": "2026-11-01",
+      "title": "Agent misalignment monitors must cover evaluation and training runs",
+      "guidance": "Run behavior monitoring on every workload where an agent has tool or network access, including evals and RL runs; screen for high recall, sample unflagged traffic for review, and let critical alerts pause the workload automatically.",
+      "scope": "Does not apply to agents with no tool, network or code-execution access; activation-probe screening needs model internals, so API users must rely on transcript-level reviewers."
     }
   ]
 }

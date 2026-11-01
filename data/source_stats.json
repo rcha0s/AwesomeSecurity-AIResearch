@@ -32,7 +32,7 @@
     "curated": 0
   },
   "newsletter:https-www-latent-space-feed": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
@@ -40,7 +40,7 @@
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 10,
+    "ingested": 12,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
@@ -52,8 +52,8 @@
     "curated": 10
   },
   "rss:https-alignment-openai-com-rss-xml": {
-    "curated": 1,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 1
   },
   "rss:https-ampcode-com-news-rss": {
     "ingested": 1,
@@ -80,7 +80,7 @@
     "ingested": 4
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 7,
+    "ingested": 8,
     "curated": 0
   },
   "rss:https-genai-owasp-org-feed": {
@@ -172,11 +172,11 @@
     "curated": 0
   },
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
-    "ingested": 19,
+    "ingested": 20,
     "curated": 6
   },
   "rss:https-www-securityweek-com-feed": {
-    "ingested": 4,
+    "ingested": 5,
     "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {

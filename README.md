@@ -4,23 +4,23 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--01-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-72-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--01-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-73-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
 ## Your focus
 
-_Only 2 in the last 7 days, so the latest earlier ones fill in._
+_Your focus areas, last 7 days: most areas matched first, then newest._
 
-1. **[Wiz lists the fingerprints that mark an intrusion as agent-driven](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=wiz-lists-the-fingerprints-that-mark-an-intrusio-b890aba68a#week)** · _Product Security · Oct 29, 2026_
-2. **[Hugging Face cryptomining malware campaign returned days after takedown](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hugging-face-malware-campaign-returns-to-hijack-7725614bd1#week)** · _AI Security · Oct 29, 2026_
-3. **[obsidian-tc tool server lets any valid token delete any configured vault](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=obsidian-tc-tool-server-any-valid-token-could-re-fa07994e1a#week)** · _AI Security · Oct 23, 2026_
+1. **[OpenAI describes its layered monitor for misbehaving frontier agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-describes-its-layered-monitor-for-misbeha-3d848d3ef4#week)** · _AI Security · Oct 29, 2026_
+2. **[Wiz lists the fingerprints that mark an intrusion as agent-driven](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=wiz-lists-the-fingerprints-that-mark-an-intrusio-b890aba68a#week)** · _Product Security · Oct 29, 2026_
+3. **[Hugging Face cryptomining malware campaign returned days after takedown](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hugging-face-malware-campaign-returns-to-hijack-7725614bd1#week)** · _AI Security · Oct 29, 2026_
 
 ## Biggest this week
 
 _Most covered or exploited in the last 7 days._
 
-1. **[Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week)** · _Product Security · Oct 30, 2026_
+1. **[Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ivanti-connect-secure-chain-to-root-is-exploited-7f77ca0434#week)** · _Product Security · Oct 30, 2026 · 2 sources_
 2. **[Attackers exploit a missing-authorization flaw in Drupal Commerce Core](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-actively-exploit-highly-critical-drupal-bb564fb962#week)** · _Product Security · Oct 30, 2026_
 3. **[KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hackers-exploited-cisco-sd-wan-flaw-to-plant-mal-907b712081#week)** · _Product Security · Oct 29, 2026_
 
@@ -28,9 +28,9 @@ _Most covered or exploited in the last 7 days._
 
 _The last 7 days, newest first._
 
-1. **[Northflank breach exposed customer secrets, and stolen AI API keys were used](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week)** · _AI Security · Oct 31, 2026_
-2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Oct 30, 2026_
-3. **[A compromised DebugBear monitoring script drained Polymarket traders' accounts](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=2-million-drained-from-polymarket-traders-in-new-536e5ae3f7#week)** · _Product Security · Oct 30, 2026_
+1. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 1, 2026 · 3 sources_
+2. **[Canonical LXD and MicroCloud accepted forged client certificate chains](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=canonical-lxd-and-microcloud-accepted-forged-cli-522855cdae#week)** · _Product Security · Nov 1, 2026_
+3. **[Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-dissects-the-ssh-backdoor-in-a-trojani-2bf6ec40ea#week)** · _Product Security · Oct 31, 2026_
 
 ## Claim changes
 
