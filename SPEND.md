@@ -4,6 +4,6 @@
 
 | Date | Runner | Run | Stories | Charged | Basis | Finished |
 |---|---|---|---|---|---|---|
-| 2026-11-01 | local | `local-20261101T173005Z-94891` | 10 + 5 news | $5.10 | measured | no |
+| 2026-11-01 | local | `local-20261101T173005Z-94891` | 10 + 5 news | $5.10 | measured | yes |
 
 **Backfill 2026-09-09..2026-10-18:** $72.35 charged of $200.00, 6 of 6 runs started. Finished windows: 2026-09-09..2026-09-16, 2026-09-17..2026-09-24, 2026-09-25..2026-10-02, 2026-10-03..2026-10-10, 2026-10-11..2026-10-18.
