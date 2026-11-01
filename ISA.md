@@ -1,6 +1,6 @@
 ---
 phase: climbing
-progress: 54/63
+progress: 55/63
 principal_stated_goal: "Create a plan for what needs to be done here in terms of making this more sustainable. Auto-deployed so I don't need to even review it on a day-to-day basis. But I want to do some evaluation that the generation as well as testing code is very reliable and is cost-efficient. And is also capturing all the important stories that are relevant on a day-to-day basis. And I want to run this on the cloud ... but have an option of running it locally on this machine and not on the Windows machine. So basically, remove that configuration completely."
 ---
 
@@ -156,6 +156,7 @@ Why: Rohan missed OWASP's Agent Control Standard (ACS v0.1.0, 2026-09-01). The 2
 
 ## Decisions
 
+- 2026-10-31: auto-merge is in `merge` mode. Rohan: "enable auto merge now. The test period is over now." The shadow run reported verdicts on every scan PR since #73 without merging. The owner-side settings from the 2026-10-20 decision are still open as of today: `enforce_admins` is off, there is no main-only merge Environment, and main needs 0 approvals. Those are what Anti ISC-A3 rests on, so the hijacked-scan risk Max named (F1) stands until they land; it existed in shadow mode too. To stop merging, set `automerge.mode: shadow` or label a PR `automerge:hold`.
 - 2026-10-26 (F7, #124): a code fact check on rewritten titles checks words, not meaning. Conjectured: number/name/guard-word sets would catch a bad shortening. Refuted by the Sonnet + Gemini reviews (a guard word borrowed from the summary, a moved negation, a dropped un-/non- word). Now: guard words come from the draft title only, negations must stay where they were, and a one-time bulk rewrite also gets a second-model meaning judge (Gemini flagged 20 of 392, e.g. a dropped "pre-auth"). Live top-story cards verified compact on rcha0s.github.io after merge.
 
 - 2026-10-22: Rohan: "deploy as many agents as needed … resolve the MRs … make sure that there is correct content", no input needed. Merged #81 (batch of 12; empty analysis fails, no PR), #82 (10-22 scan, repaired), #83 (sticky editorial promotions; measured local charge), #84 (#68's 3 findings + 1 claim), #86 (no scored_at churn), #87 (findings/news audit: 100 checked, 17 fixed, 2 held), #88 (claims audit: 60 checked, 32 fixed, 2 contested; first_seen 2010 → 2006), #89 (9 sources, must-not-miss lane, 10 stories/run, windowed budget calibration), #90 (render gaps). Closed #79 (both proposals rejected), #68, #56, #85 (stale). Every code PR had an independent review; every finding ≥75 adopted. Live site 02a30ec verified in the test profile: 4 findings, 18 news, 60 claims, integrity PASS.
