@@ -4,13 +4,13 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--10--30-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-72-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--01-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-72-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
 ## Your focus
 
-_Your focus areas, last 7 days: most areas matched first, then newest._
+_Only 2 in the last 7 days, so the latest earlier ones fill in._
 
 1. **[Wiz lists the fingerprints that mark an intrusion as agent-driven](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=wiz-lists-the-fingerprints-that-mark-an-intrusio-b890aba68a#week)** · _Product Security · Oct 29, 2026_
 2. **[Hugging Face cryptomining malware campaign returned days after takedown](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hugging-face-malware-campaign-returns-to-hijack-7725614bd1#week)** · _AI Security · Oct 29, 2026_
@@ -72,4 +72,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-10-30 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-01 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-10-30 · ranked by composite · findings from the latest 31 days · [44 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-11-01 · ranked by composite · findings from the latest 31 days · [41 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -160,43 +160,43 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Application Security
 
-- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **62.59** · Oct 6, 2026  
+- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **62.34** · Oct 6, 2026  
   Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
   _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
-- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **59.29** · Oct 9, 2026  
+- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **59.04** · Oct 9, 2026  
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
   _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **56.63** · Oct 27, 2026  
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **56.38** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
 ## Vulnerability Research & Red Teaming
 
-- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **63.89** · Oct 27, 2026 · 🔗 +1 sources  
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **63.64** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **58.75** · Oct 19, 2026  
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **58.5** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## AI in the SDLC
 
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **58.0** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **57.75** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **48.79** · Oct 6, 2026  
+- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **48.54** · Oct 6, 2026  
   Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **52.75** · Oct 15, 2026  
+- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **52.5** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **47.5** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **47.25** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 

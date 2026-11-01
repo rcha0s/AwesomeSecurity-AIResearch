@@ -156,10 +156,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 19,
+        "newness": 18,
         "credibility": 43.9,
-        "composite": 56.93,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 56.68,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -230,10 +230,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 56.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 56.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -271,10 +271,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 56.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 56.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -489,10 +489,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 53.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 53.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -604,10 +604,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 55,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 51.1,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 50.85,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -710,10 +710,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 75,
-        "newness": 4,
+        "newness": 3,
         "credibility": 71.9,
-        "composite": 50.78,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 50.53,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Closest pool entries are the archive piece 'Prove security patches instead of trusting them' and the ai-research entry 'How we use /goal to find bugs in Patch the Planet'; the benchmark-critique plus real-world human and maintainer baseline data is new. Verifier: archive: 'Prove security patches instead of trusting them'; ai-research: 'How we use /goal to find bugs in Patch the Planet'",
       "related_claims": [
@@ -784,10 +784,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 80,
-        "newness": 19,
+        "newness": 18,
         "credibility": 71.9,
-        "composite": 50.03,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 49.78,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": false,
       "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
@@ -870,10 +870,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 65,
-        "newness": 19,
+        "newness": 18,
         "credibility": 50.8,
-        "composite": 49.27,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 49.02,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -914,10 +914,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 49.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 48.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -1029,10 +1029,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 70,
-        "newness": 19,
+        "newness": 18,
         "credibility": 70.2,
-        "composite": 48.28,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 48.03,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
@@ -1128,10 +1128,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 70,
-        "newness": 4,
+        "newness": 3,
         "credibility": 73.2,
-        "composite": 47.98,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 47.73,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Closest in pool is the Anthropic UK AISI cybertest incident review (Mythos 5) and the METR critique of Anthropic's low-misalignment-risk claim; the OpenAI Hugging Face incident is referenced in the source but no matching pool entry was found for this framework. Verifier: Anthropic: UK AISI cybertest incident review (Mythos 5 push malware to real repo); METR critique of Anthropic low-misalignment-risk claim. No pool entry on compaction-summary self-injection.",
       "related_claims": [
@@ -1159,10 +1159,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 47.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 47.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -1278,10 +1278,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 46.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 45.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -1549,10 +1549,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 19,
+        "newness": 18,
         "credibility": 70.8,
-        "composite": 43.87,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 43.62,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
       "verified": true,
@@ -1635,10 +1635,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 19,
+        "newness": 18,
         "credibility": 87.5,
-        "composite": 43.38,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 43.12,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld all four lessons; novelty agreed at 30 (gated trusted-defender access is established prior art).",
@@ -1753,10 +1753,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 43.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 42.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1829,10 +1829,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 43.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 42.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are what the post states; the 39% gain, $100,000 savings and identical regeneration are Microsoft's unsupported self-reports, and no Copilot results are given.",
@@ -1900,10 +1900,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 58,
-        "newness": 4,
+        "newness": 3,
         "credibility": 80.0,
-        "composite": 42.4,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 42.15,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
       "article_url": "https://huggingface.co/blog/funes",
@@ -1993,10 +1993,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 41.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 41.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -2017,102 +2017,6 @@
       "grounding_score": 1.0,
       "previous_slugs": [
         "mlx-tensor-parallelism-over-thunderbolt-rdma-runs-an-816b-mi"
-      ]
-    },
-    {
-      "id": "a-missing-piece-for-trustworthy-ai-reviewers-fro-c9adddd2ed",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
-      "source_url": "https://arxiv.org/abs/2609.39027",
-      "related_claims": [
-        "llm-as-judge-is-biased-toward-longer-answers"
-      ],
-      "summary": "AI paper reviewers can give different scores to the same science written differently. The RobustReview benchmark (1,260 manuscript versions, 30 reviewer setups) tests both stability under rewrites and the ability to tell papers apart, and finds that some 'stable' reviewers just give everything the same score. The proposed SciCore averages a full-manuscript judgment with one on an extracted structured science core.",
-      "lessons": [
-        {
-          "point": "LLM judges are sensitive to wording, not just content, which rewards rhetorical optimization.",
-          "excerpt": "AI reviewers can assign different judgments to manuscripts that report the same science in different wording, potentially rewarding rhetorical optimization over scientific improvement.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Measure stability and discrimination together; stability alone can come from a judge that scores everything alike.",
-          "excerpt": "The benchmark reveals false robustness, where low rewrite sensitivity coincides with score collapse across papers",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Agreement with humans does not tell you a judge is robust to rewording.",
-          "excerpt": "shows that human alignment and rhetorical robustness rank reviewers differently.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Simply prompting the judge to focus on content is not a reliable fix.",
-          "excerpt": "the evaluated content-focused prompting protocol does not consistently improve robustness across backbones.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Judging an extracted, normalized content summary alongside the full text reduces style sensitivity.",
-          "excerpt": "SciCore, a dual-branch reviewer that averages a full-manuscript judgment with a judgment based on an extracted, structured science core.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "When you use an LLM as a judge, test it with content-preserving rewrites and check it still separates good from bad items.",
-      "tags": [
-        "llm-as-judge",
-        "ai-reviewers",
-        "robustness",
-        "paraphrase-sensitivity",
-        "benchmark",
-        "evals"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add a rewrite-stability plus discrimination check to LLM-judge evals",
-        "detail": "For each judged item, generate a few content-preserving rewrites and measure score variance across them; separately measure score spread across genuinely different items. Reject judge setups that are stable only because their scores collapse. Consider scoring an extracted structured summary of the content and averaging it with the full-text score.",
-        "skill_slug": null
-      },
-      "scores": {
-        "novelty": 50,
-        "relevance": 55,
-        "newness": 4,
-        "credibility": 50.8,
-        "composite": 40.12,
-        "scored_at": "2026-10-27T03:29:52+00:00"
-      },
-      "prior_art": "LLM-as-judge bias work (verbosity/position bias, Zheng et al. 2023 MT-Bench); DecisionPivot contrast-pair testing of decision models in ai-research.json; ledger claim llm-as-judge-is-biased-toward-longer-answers. The stability-plus-discrimination framing and 'false robustness' finding are the delta. Verifier's closest: MT-Bench judge-bias work (Zheng et al. 2023); llm-as-judge-is-biased-toward-longer-answers.",
-      "verified": true,
-      "verify_note": "Verifier: supported; lesson 4 overstates an 'intended' effect shown in one comparison.",
-      "article_url": "https://arxiv.org/abs/2609.39027",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-30",
-      "raw_path": "data/_raw/a-missing-piece-for-trustworthy-ai-reviewers-fro-c9adddd2ed.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 50.8,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Hugging Face Daily Papers",
-      "retrieved_at": "2026-10-25T02:36:53+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: jargon_chain 8 > 7 (separately measure score spread across genuinely different items)"
-        ]
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "robustreview-llm-paper-reviewers-change-scores-on-content-pr"
       ]
     },
     {
@@ -2165,10 +2069,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 4,
+        "newness": 3,
         "credibility": 75.0,
-        "composite": 39.25,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 39.0,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": false,
       "verify_note": "Verifier: lesson 2's 'retry-with-feedback inflates scores vs single-shot' and the takeaway's 'meaningless without token budget' overstate the source.",
@@ -2269,10 +2173,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 19,
+        "newness": 18,
         "credibility": 53.0,
-        "composite": 37.3,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 37.05,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -2355,10 +2259,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 37.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 36.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -2424,10 +2328,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 19,
+        "newness": 18,
         "credibility": 72.5,
-        "composite": 36.62,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 36.38,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -2504,10 +2408,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 19,
+        "newness": 18,
         "credibility": 50.8,
-        "composite": 36.37,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 36.12,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2589,10 +2493,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 15,
-        "newness": 19,
+        "newness": 18,
         "credibility": 72.0,
-        "composite": 35.05,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 34.8,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the paper; it is a single-task proof of principle, which the entry already says.",
@@ -2669,10 +2573,10 @@
       "scores": {
         "novelty": 18,
         "relevance": 45,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 34.9,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 34.65,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
@@ -2767,10 +2671,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 60,
-        "newness": 4,
+        "newness": 3,
         "credibility": 73.2,
-        "composite": 34.48,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 34.23,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Closest in pool is the entry on porting Codex's Responses-API compaction protocol into other harnesses (Pi) and the Claude Code harness-design write-up; this is a product launch of an existing capability. Verifier: Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (archive.json); the Claude Code harness-design write-up.",
       "related_claims": [
@@ -2839,10 +2743,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 4,
+        "newness": 3,
         "credibility": 70.8,
-        "composite": 34.12,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 33.87,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "OpenAI HealthBench (same expert-rubric plus model-grader method).",
@@ -2916,10 +2820,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 19,
+        "newness": 18,
         "credibility": 72.0,
-        "composite": 33.55,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 33.3,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the abstract (no tables in the source); the summary's 'matches or beats full AT' was corrected to the abstract's 'approaches or surpasses'.",
@@ -2983,10 +2887,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 32.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 32.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -3062,10 +2966,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 19,
+        "newness": 18,
         "credibility": 75.0,
-        "composite": 32.5,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 32.25,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
@@ -3137,10 +3041,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 19,
+        "newness": 18,
         "credibility": 50.6,
-        "composite": 31.84,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 31.59,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -3224,10 +3128,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 31.6,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 31.35,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 3 and 4; lesson 2's agent-migration framing was our inference and was reworded to the recipe the source gives (novelty 22 vs 30, lower kept).",
@@ -3309,10 +3213,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 31.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 30.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -3376,10 +3280,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 35,
-        "newness": 19,
+        "newness": 18,
         "credibility": 72.5,
-        "composite": 30.62,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 30.38,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons supported by the essay; it is opinion without experiments.",
@@ -3451,10 +3355,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 19,
+        "newness": 18,
         "credibility": 52.0,
-        "composite": 30.55,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 30.3,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -3525,10 +3429,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 19,
+        "newness": 18,
         "credibility": 40.0,
-        "composite": 29.35,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 29.1,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -3602,10 +3506,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 19,
+        "newness": 18,
         "credibility": 72.0,
-        "composite": 29.05,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 28.8,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -3676,10 +3580,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 15,
-        "newness": 19,
+        "newness": 18,
         "credibility": 72.0,
-        "composite": 29.05,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 28.8,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
@@ -3754,10 +3658,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 35,
-        "newness": 19,
+        "newness": 18,
         "credibility": 51.6,
-        "composite": 28.99,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 28.74,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are accurately attributed to Willison and Moonshot; the open-weights date is a promise and the price comparisons are Willison's, not independently checked.",
@@ -3835,10 +3739,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 30,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 28.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 27.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: quotes supported; the title overstated parallel-agent review as the cause (commenters give varied reasons), retitled.",
@@ -3907,10 +3811,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 19,
+        "newness": 18,
         "credibility": 53.2,
-        "composite": 27.73,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 27.48,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -3985,10 +3889,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 19,
+        "newness": 18,
         "credibility": 57.5,
-        "composite": 27.48,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 27.23,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -4069,10 +3973,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 19,
+        "newness": 18,
         "credibility": 69.3,
-        "composite": 27.14,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 26.89,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
@@ -4146,10 +4050,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 25.9,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 25.65,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -4214,10 +4118,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 19,
+        "newness": 18,
         "credibility": 60.0,
-        "composite": 25.75,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 25.5,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: the lessons quote the post accurately, but the post itself gives no benchmark, metric or model details; low confidence reflects that.",
@@ -4299,10 +4203,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 4,
+        "newness": 3,
         "credibility": 73.2,
-        "composite": 25.48,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 25.23,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Hugging Face Open ASR Leaderboard; Seed-TTS-Eval and CV3-Eval benchmarks; TTS Arena v2 and Artificial Analysis TTS arena leaderboards. No closer entry in the corpus. Verifier's closest: Open ASR Leaderboard; TTS Arena v2; Seed-TTS-Eval.",
       "verified": true,
@@ -4378,10 +4282,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 25.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 24.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
       "verified": true,
@@ -4451,10 +4355,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 19,
+        "newness": 18,
         "credibility": 67.5,
-        "composite": 22.38,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 22.12,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons; some credits also go directly to six named projects, not only through partners.",
@@ -4540,10 +4444,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 19,
+        "newness": 18,
         "credibility": 70.0,
-        "composite": 20.65,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 20.4,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -4613,10 +4517,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 15,
-        "newness": 4,
+        "newness": 3,
         "credibility": 70.8,
-        "composite": 20.62,
-        "scored_at": "2026-10-27T03:29:52+00:00"
+        "composite": 20.37,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "External-testing commitments via UK AISI/US CAISI; no prior entry on recursive self-improvement standards.",
@@ -4688,10 +4592,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 19,
+        "newness": 18,
         "credibility": 67.5,
-        "composite": 19.38,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 19.12,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
@@ -4758,10 +4662,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 19.0,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 18.75,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -4835,10 +4739,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 19,
+        "newness": 18,
         "credibility": 68.1,
-        "composite": 18.26,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 18.01,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; no technical claim to compare.",
@@ -4904,10 +4808,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 19,
+        "newness": 18,
         "credibility": 60.0,
-        "composite": 17.05,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 16.8,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -4974,10 +4878,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 10,
-        "newness": 19,
+        "newness": 18,
         "credibility": 55.0,
-        "composite": 16.9,
-        "scored_at": "2026-10-30T16:55:17+00:00"
+        "composite": 16.65,
+        "scored_at": "2026-11-01T00:37:58+00:00"
       },
       "verified": true,
       "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
