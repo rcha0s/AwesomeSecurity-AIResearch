@@ -330,6 +330,25 @@ def test_editorial_rows_includes_news_curated_entries(sandbox):
     assert "OpenAI Blog" in rows[0]["reason"]
 
 
+def test_editorial_rows_sorts_rows_with_a_null_date(sandbox):
+    """An undated index page stores published: null; the 11-02 scan crashed sorting it."""
+    _write_sources(sandbox, [_news_source("rss:openai-blog", "OpenAI Blog")])
+    pool = common.load_pool("ai-research")
+    pool["entries"].append(_pool_news_entry())
+    pool["entries"].append(
+        _pool_news_entry(
+            id="news-undated",
+            title="OpenAI security index page lists its recent safety posts",
+            source_url="https://openai.com/blog/undated",
+            published=None,
+        )
+    )
+    common.save_pool("ai-research", pool)
+    claims.save_ledger(ledger_of(make_claim()))
+    rows = gh.editorial_rows(common.load_config(), 7)
+    assert rows and all(isinstance(r["at"], str) for r in rows)
+
+
 @pytest.mark.parametrize(
     "over",
     [

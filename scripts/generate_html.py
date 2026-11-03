@@ -251,7 +251,7 @@ def _lane_row(entry: dict, conf: c.Config, snapshot_days: int, sources_by_id: di
             "lane": "editorial",
             "reason": ed.get("reason", ""),
             "signals": ed.get("signals") or [],
-            "at": ed.get("at", ""),
+            "at": ed.get("at") or "",
         }
         tier = "high"
     elif c.is_news_curated(entry, conf, sources_by_id, window=None):
@@ -262,7 +262,7 @@ def _lane_row(entry: dict, conf: c.Config, snapshot_days: int, sources_by_id: di
             if name
             else "Passed the news gate — fresh + on-topic + trusted source"
         )
-        meta = {"lane": "news", "reason": reason, "signals": [], "at": entry.get("published", "")}
+        meta = {"lane": "news", "reason": reason, "signals": [], "at": entry.get("published") or ""}
         if c.is_curated(entry, conf):
             meta["has_page"] = True  # a vetted finding: generate_site rendered its page
     else:
@@ -305,7 +305,7 @@ def editorial_rows(conf: c.Config, snapshot_days: int, ctx=None, exclude=()) -> 
 
     rows = [r for r in one_per_story([r for r, _ in ranked], rank) if r["story_id"] not in exclude]
     return sorted(
-        rows, key=lambda row: max(row.get("at", ""), row.get("updated", "")), reverse=True
+        rows, key=lambda row: max(row.get("at") or "", row.get("updated") or ""), reverse=True
     )
 
 
