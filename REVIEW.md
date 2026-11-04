@@ -2,23 +2,23 @@
 
 > Everything held back from the site, with the reason. Findings that are **not yet vetted** (low confidence/novelty/relevance, or below the composite floor (20)), and news stories whose excerpt is not grounded in its source. Nothing here is deleted; promote a finding by raising its scores or clearing `needs_review`, or fix a news story's excerpt, then regenerate.
 
-_Updated 2026-11-03._
+_Updated 2026-11-04._
 
 ## AI Security (43)
 
-- **[Researchers find no agent framework defends against MCP tool poisoning](http://arxiv.org/abs/2611.03555v1)** · composite 79.1 · _failed independent verification — Lessons hold, but the verifier put novelty at 42 vs 70: MCP tool poisoning is well covered; the delta is the cross-framework measurement. It also flagged the takeaway's 'only defenses measured to matter' as overstating the abstract._
+- **[Researchers find no agent framework defends against MCP tool poisoning](http://arxiv.org/abs/2611.03555v1)** · composite 77.85 · _failed independent verification — Lessons hold, but the verifier put novelty at 42 vs 70: MCP tool poisoning is well covered; the delta is the cross-framework measurement. It also flagged the takeaway's 'only defenses measured to matter' as overstating the abstract._
   Do not expect your agent framework to stop poisoned MCP tool metadata; model choice and your own controls are the only defenses measured to matter.
 - **[OpenAI and Hugging Face partner to address security incident during model evaluation](https://openai.com/index/hugging-face-model-evaluation-security-incident)** · composite 66.0 · _news story: excerpt not grounded in source (only 75% of quotes verified)_
   Treat a model eval with production classifiers off as a live agent that may try to escape, where a package-manager proxy is a plausible sandbox-escape primitive.
-- **[LeanGuard checks every agent tool call against a Lean4-verified policy](https://arxiv.org/abs/2611.02332)** · composite 64.46 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[LeanGuard checks every agent tool call against a Lean4-verified policy](https://arxiv.org/abs/2611.02332)** · composite 63.21 · _flagged needs_review (low confidence / novelty / relevance)_
   A deterministic, history-aware policy check in front of tool execution stops forbidden actions regardless of what the model was tricked into proposing, at little cost to task…
-- **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 59.35 · _news story: excerpt not grounded in source_
+- **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 59.1 · _news story: excerpt not grounded in source_
   The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
-- **[Brazilian labor court fines lawyers for hidden prompt injection in a filing](https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/)** · composite 58.25 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Brazilian labor court fines lawyers for hidden prompt injection in a filing](https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/)** · composite 57.0 · _flagged needs_review (low confidence / novelty / relevance)_
   Hidden-text injection in documents from outside parties is now a sanctionable act in at least one court, and any pipeline that has AI read outside documents should check for…
 - **["Black October" is an X label for a week of disclosures](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)** · composite 54.0 · _flagged needs_review (low confidence / novelty / relevance)_
   Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.
-- **[Human reviewers miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 53.95 · _news story: excerpt not grounded in source_
+- **[Human reviewers miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 53.7 · _news story: excerpt not grounded in source_
   Human-in-the-loop is a fatigue-limited primitive: engineer approvals as classifier + sandbox + hooks, not as a UX prompt.
 - **[Guardrail benchmark scores mostly measure the training labels' definition of unsafe](http://arxiv.org/abs/2610.25060v1)** · composite 53.55 · _flagged needs_review (low confidence / novelty / relevance)_
   Before picking a guardrail classifier by benchmark score, ask which policy its labels encode, whether the benchmark leaked into training, and what the seed-to-seed variance is, or…
@@ -95,9 +95,9 @@ _Updated 2026-11-03._
 
 ## Product Security (52)
 
-- **[Microsoft finds 78% of exploited CVEs are takeover-class bugs](https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/)** · composite 58.52 · _failed independent verification — Lesson 3 attributes faster KEV listing partly to AI-assisted exploit development as Microsoft's finding; the post only says 'industry research suggests' it, and the timing figures come from CISA data._
+- **[Microsoft finds 78% of exploited CVEs are takeover-class bugs](https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/)** · composite 57.27 · _failed independent verification — Lesson 3 attributes faster KEV listing partly to AI-assisted exploit development as Microsoft's finding; the post only says 'industry research suggests' it, and the timing figures come from CISA data._
   Prioritize takeover-class bugs on exposed, highly privileged servers and appliances first, because those are both the most exploited and the slowest patched.
-- **[StepSecurity launches scanning for files planted by supply chain campaigns](https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines)** · composite 54.02 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[StepSecurity launches scanning for files planted by supply chain campaigns](https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines)** · composite 52.77 · _flagged needs_review (low confidence / novelty / relevance)_
   Scan every ref, not just the default branch, for planted editor, agent and workflow files, because dependency scanners never see them.
 - **[@subql/common@5.8.3 npm package carried a backdoor that runs on install](https://www.stepsecurity.io/blog/subql-ecosystem-compromised)** · composite 52.12 · _flagged needs_review (low confidence / novelty / relevance)_
   A publish pipeline that builds from source and then fetches an external artifact is not building from source, and ignore-scripts does not help when the payload also fires on…
@@ -107,12 +107,12 @@ _Updated 2026-11-03._
   Checking that an access check exists in original equipment manufacturer (OEM) firmware apps is not enough; judge whether it is strong enough for the data a generic call operates…
 - **[Datadog: 3,500+ RBAC bindings give dangerous permissions to groups like system:unauthenticated](https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/)** · composite 48.52 · _flagged needs_review (low confidence / novelty / relevance)_
   Audit for any RoleBinding or ClusterRoleBinding to system:anonymous, system:unauthenticated or system:authenticated beyond the defaults, especially on GKE and in…
-- **[X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies](https://x.com/Dinosn/status/2116946099059511340)** · composite 48.5 · _flagged needs_review (low confidence / novelty / relevance)_
-  Adversary-in-the-middle proxies keep beating one-time-code multi-factor authentication; phishing-resistant sign-in is the fix, but this claim needs a primary source.
 - **[Kat Traxler used AI and security principles to find cloud design flaws](https://github.com/KatTraxler/presentations/tree/main/security-constitution)** · composite 47.25 · _failed independent verification — Source page returned HTTP 403 to fetch_raw twice; only the tl;dr sec blurb was read, so no lesson could be checked against the talk itself._
   Pointing an AI at design principles, not bug classes, may surface design flaws that pattern-based hunting misses.
 - **[Next.js has unauthenticated RCE in use cache functions returning typed arrays](https://github.com/advisories/GHSA-673q-mjm6-r5xr)** · composite 47.25 · _failed independent verification — Advisory body not captured (fetched page holds only CVSS boilerplate); lessons rest on the GHSA feed summary._
   Upgrade Next.js now if any `use cache` function returns typed arrays; there is no workaround.
+- **[X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies](https://x.com/Dinosn/status/2116946099059511340)** · composite 47.25 · _flagged needs_review (low confidence / novelty / relevance)_
+  Adversary-in-the-middle proxies keep beating one-time-code multi-factor authentication; phishing-resistant sign-in is the fix, but this claim needs a primary source.
 - **[Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/)** · composite 46.35 · _flagged needs_review (low confidence / novelty / relevance)_
   Run pathrunner in a sandbox (Pathfinding Labs) and use its CloudTrail report to test that every payload, not just one, trips a detection.
 - **[UAT-11985 lured Taiwan researchers with likely AI-templated invitations and live MFA relay](https://blog.talosintelligence.com/uat-11985/)** · composite 46.12 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -123,30 +123,28 @@ _Updated 2026-11-03._
   Any Android device reachable by SMS can be knocked off telephony, emergency calling included, and the vendor treats it as a non-security bug with no fix scheduled.
 - **[Rikugan embeds a reverse-engineering agent inside IDA Pro and Binary Ninja](https://github.com/buzzer-re/rikugan)** · composite 43.35 · _flagged needs_review (low confidence / novelty / relevance)_
   An in-disassembler agent with parallel subagents and per-profile data and tool limits is a ready-made base for AI-assisted reverse engineering, but plan for hostile binaries…
-- **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.47 · _news story: excerpt not grounded in source_
+- **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.22 · _news story: excerpt not grounded in source_
   Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
-- **[Microsoft Research podcast profiles Cyber Grand Challenge lead Mike Walker](https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/)** · composite 41.38 · _flagged needs_review (low confidence / novelty / relevance)_
-  A career-profile podcast with little technical content, useful mainly as background on how autonomous hacking competitions began.
 - **[A probability-scoring model matches employee accounts to one person at 0.95 F1](https://vincenzoiozzo.com/blog/jev-identity-resolution)** · composite 41.25 · _flagged needs_review (low confidence / novelty / relevance)_
   In identity governance (IGA) and identity-security products, a cheap probability model with a tuned cut-off, plus a frontier-model check only on the 'maybe' band, beats rules and…
 - **[VibeRaven statically checks AI-built Supabase apps for row-level security gaps](https://github.com/ohad6k/VibeRaven)** · composite 41.01 · _failed independent verification — Verifier rated novelty 12 vs 45: the RLS, service_role and dashboard-blind-spot points are standard Supabase docs and Security Advisor lints; only the vendor's 512-repo statistic is new, and the push-to-main point is an unsupported README assertion._
   For AI-built Supabase apps, the common gaps are database authorization mistakes such as missing row-level security (RLS), anon-callable definer functions and leaked service_role…
 - **[America bans imported robots due to supply chain and security risks](https://www.theregister.com/security/2026/07/29/america-bans-imported-robots-due-to-supply-chain-and-security-risks/5280145)** · composite 40.5 · _news story: excerpt not grounded in source_
   US regulators are treating networked physical robots as a critical-infrastructure supply-chain risk category on par with telecom gear.
+- **[Microsoft Research podcast profiles Cyber Grand Challenge lead Mike Walker](https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/)** · composite 40.12 · _flagged needs_review (low confidence / novelty / relevance)_
+  A career-profile podcast with little technical content, useful mainly as background on how autonomous hacking competitions began.
 - **[A client's 1-bit reply leaks the full CKKS secret key](http://arxiv.org/abs/2610.21127v1)** · composite 40.05 · _flagged needs_review (low confidence / novelty / relevance)_
   If you deploy homomorphic encryption with an untrusted server, any client behaviour the server can observe on decryption, such as errors, retries or a 1-bit validity signal, is a…
 - **[CVM-Store paper protects confidential VM storage at near-raw disk speed](http://arxiv.org/abs/2610.34560v1)** · composite 40.05 · _flagged needs_review (low confidence / novelty / relevance)_
   Running in a confidential VM does not protect data on disk; stored data needs its own integrity and rollback protection.
 - **[Chainguard Athena agents deduplicate private zero-day reports without leaking reporters](https://www.chainguard.dev/unchained/this-shit-is-hard-building-a-vulnerability-database-from-private-reports)** · composite 39.75 · _flagged needs_review (low confidence / novelty / relevance)_
   Version ranges, duplicate decisions and fixed-version claims in a vulnerability database are each judgments that can be wrong; keep agents advisory and let deterministic…
-- **[Citizen Lab and Princeton researchers win IRTF prize for Android network security](https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/)** · composite 38.12 · _flagged needs_review (low confidence / novelty / relevance)_
-  An award announcement with no new findings; read the underlying paper on proprietary encryption in Android apps instead.
 - **[Wiz scans every new npm version at publish time to catch compromises](https://www.wiz.io/blog/detect-supply-chain-zero-days-at-publication)** · composite 38.1 · _flagged needs_review (low confidence / novelty / relevance)_
   CVE-based dependency scanning is blind to hijacked trusted packages; you need publish-time behavioral analysis or a cooldown before new versions reach builds.
-- **[Northstar Security leaves stealth with $7M to find risky issue combinations](https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/)** · composite 37.82 · _flagged needs_review (low confidence / novelty / relevance)_
-  A funding announcement: the idea of scoring combined exposures, not single findings, is established, and the source has no results to judge.
 - **[VibeRaven checks AI-built Supabase apps for missing row-level security](https://github.com/ohad6k/VibeRaven)** · composite 37.11 · _flagged needs_review (low confidence / novelty / relevance)_
   Vibe-coded Supabase apps fail in a handful of predictable ways, and a static check in CI can catch several of them before launch.
+- **[Citizen Lab and Princeton researchers win IRTF prize for Android network security](https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/)** · composite 36.87 · _flagged needs_review (low confidence / novelty / relevance)_
+  An award announcement with no new findings; read the underlying paper on proprietary encryption in Android apps instead.
 - **[raml-kql runs one KQL query across workspaces without a Defender multi-tenant org](https://github.com/luca-ramseyer/raml-kql)** · composite 36.75 · _flagged needs_review (low confidence / novelty / relevance)_
   MSSPs without a Defender MTO can hunt across customer Sentinel workspaces from one query with delegated access only.
 - **[Plex CVE-2026-96652 SSRF lets the /player/timeline protocol parameter force server POSTs](https://nvd.nist.gov/vuln/detail/CVE-2026-96652)** · composite 36.69 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -155,6 +153,8 @@ _Updated 2026-11-03._
   If your ASA or FTD VPN uses secondary authentication on a tunnel group, patch now, because attackers are already using this to knock VPNs offline.
 - **[Exploited VMware ESX flaw lets attacker with admin rights act unlogged](https://nvd.nist.gov/vuln/detail/CVE-2026-41709)** · composite 36.6 · _flagged needs_review (low confidence / novelty / relevance)_
   ESX audit logs may be silent about what a hijacked admin did, so do not treat clean ESX logs as proof of no tampering.
+- **[Northstar Security leaves stealth with $7M to find risky issue combinations](https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/)** · composite 36.57 · _flagged needs_review (low confidence / novelty / relevance)_
+  A funding announcement: the idea of scoring combined exposures, not single findings, is established, and the source has no results to judge.
 - **[CISA KEV: Plex Media Server file write CVE-2026-96656 exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-96656)** · composite 35.62 · _failed independent verification — Source text not captured (NVD page empty); lessons rest on the KEV catalog text only._
   Treat the four Plex KEV CVEs as one chain and patch together.
 - **[CISA says a low-severity VMware ESX logging gap is being exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-41709)** · composite 35.25 · _ungrounded excerpt — only 67% of quotes verified against the source_
@@ -204,9 +204,9 @@ _Updated 2026-11-03._
 
 - **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 59.62 · _news story: excerpt not grounded in source (only 0% of quotes verified)_
   In AI bug hunting, outcome definition and per-agent scoping drive output quality most, with a threat-model file as the highest-leverage input.
-- **[Legora evaluates legal agent on simulated work because it cannot read traces](https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/)** · composite 58.94 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Legora evaluates legal agent on simulated work because it cannot read traces](https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/)** · composite 57.69 · _flagged needs_review (low confidence / novelty / relevance)_
   When you cannot read customer traces, build simulated task worlds with domain experts and track results per task type, because a new model can regress on some tasks while…
-- **[Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do](https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/)** · composite 51.35 · _flagged needs_review (low confidence / novelty / relevance)_
+- **[Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do](https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/)** · composite 50.1 · _flagged needs_review (low confidence / novelty / relevance)_
   Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than…
 - **[GRSE credits multi-agent skills by contrasting repeated runs, not presence](https://arxiv.org/abs/2610.27227)** · composite 48.27 · _flagged needs_review (low confidence / novelty / relevance)_
   If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.
@@ -224,7 +224,7 @@ _Updated 2026-11-03._
   For assistants that work over private workspace data, a reproducible synthetic world with a timeline lets you regression-test without touching customer data.
 - **[MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios](https://machinelearning.apple.com/research/mlx-distributed-inference)** · composite 40.5 · _flagged needs_review (low confidence / novelty / relevance)_
   A small Mac cluster can now serve a near-trillion-parameter open model to a local coding agent at usable speed, but tensor parallelism helps decode far more than pipeline…
-- **[Matthew Berman tells coding agents to show video mocks of UI changes](https://x.com/MatthewBerman/status/2117670441380966696)** · composite 40.4 · _failed independent verification — The source is a one-line instruction; lesson 1's claim that humans review behavior, not just diffs, is the analyst's inference, not in the post._
+- **[Matthew Berman tells coding agents to show video mocks of UI changes](https://x.com/MatthewBerman/status/2117670441380966696)** · composite 39.15 · _failed independent verification — The source is a one-line instruction; lesson 1's claim that humans review behavior, not just diffs, is the analyst's inference, not in the post._
   Asking the agent for visual evidence of UI changes is a cheap review habit, but the post adds nothing beyond the instruction.
 - **[Arca's wealth agents run ten-day tasks while human advisors move money](https://latent.space/p/arca/)** · composite 37.47 · _flagged needs_review (low confidence / novelty / relevance)_
   For long, stop-start agent work in a regulated field, keep state in a shared memory and put every risky action behind deterministic rules, not model judgment.
@@ -242,18 +242,18 @@ _Updated 2026-11-03._
   This is an early architecture hypothesis that stateful retrieval is easier to learn than stateless retrieval, not something harness builders can use yet.
 - **[A Thomson Reuters engineer runs a coding agent fully offline with Qwen](https://latent.space/p/offline-coding/)** · composite 33.9 · _flagged needs_review (low confidence / novelty / relevance)_
   A 9B local model with OpenCode can handle small, test-backed fixes offline, but the source shows only one trivial task.
-- **[@_rybaz argues agent solutions alone do not make a good business](https://x.com/_rybaz/status/2117660118682923408)** · composite 33.8 · _flagged needs_review (low confidence / novelty / relevance)_
-  Thin opinion post with no technical content; skip unless tracking conference sentiment.
 - **[SAFT adversarially trains only robustness-critical parameters and beats LoRA](http://arxiv.org/abs/2610.39455v1)** · composite 32.55 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a model-training result for classic adversarial robustness and has little direct use for agent or harness builders.
-- **[HackerBooks lists 16,543 books mentioned in Hacker News comments](https://hackerbooks.org)** · composite 32.15 · _flagged needs_review (low confidence / novelty / relevance)_
-  Off-topic for security and agent builders: a book directory with no technique to learn from.
+- **[@_rybaz argues agent solutions alone do not make a good business](https://x.com/_rybaz/status/2117660118682923408)** · composite 32.55 · _flagged needs_review (low confidence / novelty / relevance)_
+  Thin opinion post with no technical content; skip unless tracking conference sentiment.
 - **[Amazon Science covers third-party review of AI safety testing, body not captured](https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review)** · composite 31.5 · _failed independent verification — Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body._
   Only the headline can be verified: a frontier lab used an outside party to audit its safety-eval process. Re-fetch the article before taking any lessons from it.
 - **[Daniel Miessler argues harnesses should describe what you want, not steps](https://danielmiessler.com/blog/models-how-harnesses-what)** · composite 31.5 · _flagged needs_review (low confidence / novelty / relevance)_
   Spend harness effort on user context and definitions of done rather than step-by-step scripts, as a heuristic, not a measured result.
 - **[Workshop paper proposes retrieval as a local walk through memory](http://arxiv.org/abs/2610.40545v1)** · composite 31.05 · _flagged needs_review (low confidence / novelty / relevance)_
   An interesting idea for stateful agent memory, but a single toy experiment gives a harness builder nothing to use yet.
+- **[HackerBooks lists 16,543 books mentioned in Hacker News comments](https://hackerbooks.org)** · composite 30.9 · _flagged needs_review (low confidence / novelty / relevance)_
+  Off-topic for security and agent builders: a book directory with no technique to learn from.
 - **[Survey maps how self-improving AI systems can fake gains or lose safeguards](https://arxiv.org/abs/2610.35193)** · composite 30.84 · _flagged needs_review (low confidence / novelty / relevance)_
   If your agent rewrites its own prompts, memory or tools, re-verify after each change against a held-out evaluation it cannot edit.
 - **[Titus Winters says AI raised code output and outages, not features shipped](https://newsletter.pragmaticengineer.com/p/software-engineering-at-google-and)** · composite 30.6 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -317,4 +317,4 @@ _Updated 2026-11-03._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-11-03. 151 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-11-04. 151 item(s) awaiting review.</sub>

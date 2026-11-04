@@ -62,10 +62,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 86,
-        "newness": 86,
+        "newness": 81,
         "credibility": 72.0,
-        "composite": 79.1,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 77.85,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -150,10 +150,10 @@
       "scores": {
         "novelty": 72,
         "relevance": 68,
-        "newness": 86,
+        "newness": 81,
         "credibility": 69.6,
-        "composite": 73.94,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 72.69,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "verified": true,
       "prior_art": "No existing entry covers provable or verifiable inference. Prior art outside the dataset includes zkML systems (e.g., zkLLM and other open-source zk inference provers, which the post says are orders of magnitude slower) and TEE-based attestation of inference. Anthropic's own RSP prototype signed inference traffic with recomputation on a trusted server. The delta is a practical zkSNARK at 400B-parameter MoE scale with Lean-checked guarantees.",
@@ -183,95 +183,6 @@
         "passed": false,
         "issues": [
           "mild: sentence_words 50 > 45 (On Llama 4 Maverick (400B-parameter mixture of experts, 4-bit), one H100 generates proofs at about 110 tokens per second)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "training-activation-classifiers-for-safety-and-a-669daa6f81",
-      "topic": "ai-security",
-      "domain": "ais.guardrails",
-      "title": "OpenAI details how it trains streaming activation probes that block policy-violating completions",
-      "summary": "OpenAI describes the activation classifiers (probes) it has run on all assistant completions since GPT-5.6: lightweight attention probes over mid-layer residual-stream activations, trained with a softmax-over-prefixes objective on up to 1M messages labeled by reasoning-model judges, with at least 32 random seeds per configuration. Probes run on the inference engine and emit one logit per token; when one crosses a threshold, streaming stops, the message is escalated to a reasoning model, and tool calls are held until marked safe. OpenAI reports probes are more robust to jailbreaks than its content-based classifiers and improve with model capability, but they only catch known, labeled behavior and must be retrained for each new base model.",
-      "takeaway": "Activation probes are a lightweight, fail-closed streaming guardrail layer that can halt tool calls mid-turn, but they only detect labeled behaviors and must be retrained when the base model changes.",
-      "tags": [
-        "activation-probes",
-        "guardrails",
-        "white-box-monitoring",
-        "jailbreak-robustness",
-        "streaming-classification",
-        "misalignment-monitoring"
-      ],
-      "lessons": [
-        {
-          "point": "Because probes run inside the inference engine, a flag can stop streaming mid-turn and hand off to a reasoning model for review, and tool calls stay blocked until cleared.",
-          "excerpt": "we stop streaming the completion to the user, and escalate the message to a reasoning model for final judgement",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Running probes inline with the forward pass makes them easier to fail closed than an external text classifier service.",
-          "excerpt": "compared to an external text classifier, probes are easier to make fail-closed",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Jailbreak robustness is strongest against attacks not optimized against the probe itself, so adaptive attackers remain a concern that OpenAI addresses with red-teaming.",
-          "excerpt": "Robustness is especially high for jailbreaks that are not directly optimized against the probe. However, real-world attacks can adapt to signals from our safety stack.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Probes are tied to one base model and to labeled data, so they cover only known behaviors and need retraining for each new pre-trained model.",
-          "excerpt": "In particular, probes need to be retrained for each new pre-trained base model.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Hold agent tool calls behind a streaming monitor verdict, not just a post-hoc check",
-        "detail": "If you run an open-weights model, consider a mid-layer attention probe trained on judge-labeled transcripts as an inline, per-token monitor alongside text classifiers. Gate tool calls until the monitor clears the turn, fail closed if the monitor is unavailable, retrain whenever the base model changes, and red-team the probe directly with attacks optimized against it rather than relying on transfer robustness."
-      },
-      "scores": {
-        "novelty": 42,
-        "relevance": 70,
-        "newness": 86,
-        "credibility": 75.0,
-        "composite": 66.35,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "OpenAI's 'how we detect frontier model misalignment' post (already in ai-security) introduced probes as the first layer of its monitoring stack; this post adds the probe methodology (EMA attention architecture, softmax prefix aggregation, seed sweeps, checkpoint transfer). The architectures build on Kramar et al. 2026, Cunningham et al. 2026 and Kantamneni et al. 2025 attention probes.",
-      "related_claims": [
-        "model-internal-refusal-is-not-a-security-boundary",
-        "input-guardrail-weaker-than-target-is-bypassable"
-      ],
-      "threat": "Jailbroken or misaligned model turns that produce policy-violating output or tool calls past text-only classifiers.",
-      "conditions": "Attacks not optimized against the probe are caught most reliably; probes only cover behaviors with labeled training data and degrade when model weights drift from the probe's training checkpoint.",
-      "mitigations": "Run probes inline with the model, halt streaming and hold tool calls on a flag, escalate to a reasoning-model reviewer, retrain probes per base model and periodically across checkpoints, and red-team probes with adaptive attacks.",
-      "source_url": "https://alignment.openai.com/training-activation-classifiers/",
-      "article_url": "https://alignment.openai.com/training-activation-classifiers/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-02",
-      "discovered_via": "rss",
-      "source_id": "rss:https-alignment-openai-com-rss-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "OpenAI Alignment Blog",
-      "raw_path": "data/_raw/training-activation-classifiers-for-safety-and-a-669daa6f81.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 46 > 45 (OpenAI describes the activation classifiers (probes) it has run on all assistant completions since GPT-5.6: lightweight )"
         ]
       },
       "grounding_score": 1.0
@@ -359,6 +270,95 @@
       "domain_label": "Agent Sandbox Escape & Evaluation Containment"
     },
     {
+      "id": "training-activation-classifiers-for-safety-and-a-669daa6f81",
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "OpenAI details how it trains streaming activation probes that block policy-violating completions",
+      "summary": "OpenAI describes the activation classifiers (probes) it has run on all assistant completions since GPT-5.6: lightweight attention probes over mid-layer residual-stream activations, trained with a softmax-over-prefixes objective on up to 1M messages labeled by reasoning-model judges, with at least 32 random seeds per configuration. Probes run on the inference engine and emit one logit per token; when one crosses a threshold, streaming stops, the message is escalated to a reasoning model, and tool calls are held until marked safe. OpenAI reports probes are more robust to jailbreaks than its content-based classifiers and improve with model capability, but they only catch known, labeled behavior and must be retrained for each new base model.",
+      "takeaway": "Activation probes are a lightweight, fail-closed streaming guardrail layer that can halt tool calls mid-turn, but they only detect labeled behaviors and must be retrained when the base model changes.",
+      "tags": [
+        "activation-probes",
+        "guardrails",
+        "white-box-monitoring",
+        "jailbreak-robustness",
+        "streaming-classification",
+        "misalignment-monitoring"
+      ],
+      "lessons": [
+        {
+          "point": "Because probes run inside the inference engine, a flag can stop streaming mid-turn and hand off to a reasoning model for review, and tool calls stay blocked until cleared.",
+          "excerpt": "we stop streaming the completion to the user, and escalate the message to a reasoning model for final judgement",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Running probes inline with the forward pass makes them easier to fail closed than an external text classifier service.",
+          "excerpt": "compared to an external text classifier, probes are easier to make fail-closed",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Jailbreak robustness is strongest against attacks not optimized against the probe itself, so adaptive attackers remain a concern that OpenAI addresses with red-teaming.",
+          "excerpt": "Robustness is especially high for jailbreaks that are not directly optimized against the probe. However, real-world attacks can adapt to signals from our safety stack.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Probes are tied to one base model and to labeled data, so they cover only known behaviors and need retraining for each new pre-trained model.",
+          "excerpt": "In particular, probes need to be retrained for each new pre-trained base model.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Hold agent tool calls behind a streaming monitor verdict, not just a post-hoc check",
+        "detail": "If you run an open-weights model, consider a mid-layer attention probe trained on judge-labeled transcripts as an inline, per-token monitor alongside text classifiers. Gate tool calls until the monitor clears the turn, fail closed if the monitor is unavailable, retrain whenever the base model changes, and red-team the probe directly with attacks optimized against it rather than relying on transfer robustness."
+      },
+      "scores": {
+        "novelty": 42,
+        "relevance": 70,
+        "newness": 81,
+        "credibility": 75.0,
+        "composite": 65.1,
+        "scored_at": "2026-11-04T18:07:05+00:00"
+      },
+      "verified": true,
+      "prior_art": "OpenAI's 'how we detect frontier model misalignment' post (already in ai-security) introduced probes as the first layer of its monitoring stack; this post adds the probe methodology (EMA attention architecture, softmax prefix aggregation, seed sweeps, checkpoint transfer). The architectures build on Kramar et al. 2026, Cunningham et al. 2026 and Kantamneni et al. 2025 attention probes.",
+      "related_claims": [
+        "model-internal-refusal-is-not-a-security-boundary",
+        "input-guardrail-weaker-than-target-is-bypassable"
+      ],
+      "threat": "Jailbroken or misaligned model turns that produce policy-violating output or tool calls past text-only classifiers.",
+      "conditions": "Attacks not optimized against the probe are caught most reliably; probes only cover behaviors with labeled training data and degrade when model weights drift from the probe's training checkpoint.",
+      "mitigations": "Run probes inline with the model, halt streaming and hold tool calls on a flag, escalate to a reasoning-model reviewer, retrain probes per base model and periodically across checkpoints, and red-team probes with adaptive attacks.",
+      "source_url": "https://alignment.openai.com/training-activation-classifiers/",
+      "article_url": "https://alignment.openai.com/training-activation-classifiers/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-02",
+      "discovered_via": "rss",
+      "source_id": "rss:https-alignment-openai-com-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Alignment Blog",
+      "raw_path": "data/_raw/training-activation-classifiers-for-safety-and-a-669daa6f81.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 46 > 45 (OpenAI describes the activation classifiers (probes) it has run on all assistant completions since GPT-5.6: lightweight )"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "leanguard-lean-verified-guardrails-for-tool-usin-7ba5aac02e",
       "topic": "ai-security",
       "domain": "ais.guardrails",
@@ -407,10 +407,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 68,
-        "newness": 86,
+        "newness": 81,
         "credibility": 50.4,
-        "composite": 64.46,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 63.21,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "verified": true,
       "prior_art": "SCOPE (compiling natural-language policies into neural-predicate programs, already in ai-security) and NVIDIA OpenShell YAML-policy sandboxes cover policy enforcement for agents; LeanGuard's delta is formally verified temporal policies over execution history plus proof-guided repair of denied calls.",
@@ -445,6 +445,62 @@
         ]
       },
       "grounding_score": 1.0
+    },
+    {
+      "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+      "article_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
+      "source_name": "Palo Alto Networks Unit 42",
+      "source_type": "Vendor research",
+      "published": "2026-06-23",
+      "date": "2026-06",
+      "discovered_via": "rss",
+      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
+      "source_rank": 75.0,
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
+      "summary": "Unit 42 found five evasive malicious 'skills' persisting on ClawHub — the marketplace OpenClaw's agent pulls third-party, markdown-driven packages from with broad local system access — despite VirusTotal + ClawScan screening added after February's incidents. The five span infostealers (macOS, C2), scanner evasion (inflated file size to exceed thresholds), and two NOVEL agentic threats: runtime agentic affiliate injection and agentic front-running.",
+      "takeaway": "Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.",
+      "lessons": [
+        {
+          "point": "Agent skills are broad-access packages; the marketplace is a supply-chain link to treat as untrusted",
+          "excerpt": "markdown-driven packages with broad local system access, making ClawHub a critical link in the agentic software supply chain",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Malware evades marketplace scanners with simple tricks (oversized files exceed scan thresholds)",
+          "excerpt": "inflated file size to exceed scanner thresholds, bypassing both ClawScan and VirusTotal detection",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "New 'agentic' threat classes are emerging — affiliate injection and front-running done at agent runtime",
+          "excerpt": "runtime agentic affiliate injection and agentic front-running. Both are novel techniques",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-security",
+        "skill-scanning",
+        "supply-chain",
+        "agentic-threats",
+        "unit42"
+      ],
+      "scores": {
+        "novelty": 82,
+        "relevance": 88,
+        "newness": 0,
+        "composite": 62.25,
+        "scored_at": "2026-10-29T16:50:31+00:00",
+        "credibility": 75.0
+      },
+      "id": "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b",
+      "retrieved_at": "2026-07-13T04:19:32+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security"
     },
     {
       "id": "google-dev-kit-spurs-first-ever-agent-on-agent-v-f48af27031",
@@ -513,10 +569,10 @@
       "scores": {
         "novelty": 80,
         "relevance": 92,
-        "newness": 1,
+        "newness": 0,
         "credibility": 70.0,
-        "composite": 62.35,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 62.1,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.",
       "discovered_via": "rss",
@@ -533,62 +589,6 @@
         "google-dev-kit-spurs-first-ever-agent-on-agent-violence",
         "prompt-injection-in-google-adk-python-ci-let-a-public-triage"
       ]
-    },
-    {
-      "source_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-      "article_url": "https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/",
-      "source_name": "Palo Alto Networks Unit 42",
-      "source_type": "Vendor research",
-      "published": "2026-06-23",
-      "date": "2026-06",
-      "discovered_via": "rss",
-      "source_id": "rss:https-unit42-paloaltonetworks-com-feed",
-      "source_rank": 75.0,
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "title": "OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface",
-      "summary": "Unit 42 found five evasive malicious 'skills' persisting on ClawHub — the marketplace OpenClaw's agent pulls third-party, markdown-driven packages from with broad local system access — despite VirusTotal + ClawScan screening added after February's incidents. The five span infostealers (macOS, C2), scanner evasion (inflated file size to exceed thresholds), and two NOVEL agentic threats: runtime agentic affiliate injection and agentic front-running.",
-      "takeaway": "Agent skill marketplaces are a critical, largely-untrusted link in the software supply chain — marketplace scanning alone does not make them safe.",
-      "lessons": [
-        {
-          "point": "Agent skills are broad-access packages; the marketplace is a supply-chain link to treat as untrusted",
-          "excerpt": "markdown-driven packages with broad local system access, making ClawHub a critical link in the agentic software supply chain",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Malware evades marketplace scanners with simple tricks (oversized files exceed scan thresholds)",
-          "excerpt": "inflated file size to exceed scanner thresholds, bypassing both ClawScan and VirusTotal detection",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "New 'agentic' threat classes are emerging — affiliate injection and front-running done at agent runtime",
-          "excerpt": "runtime agentic affiliate injection and agentic front-running. Both are novel techniques",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "agent-security",
-        "skill-scanning",
-        "supply-chain",
-        "agentic-threats",
-        "unit42"
-      ],
-      "scores": {
-        "novelty": 82,
-        "relevance": 88,
-        "newness": 0,
-        "composite": 62.25,
-        "scored_at": "2026-10-29T16:50:31+00:00",
-        "credibility": 75.0
-      },
-      "id": "openclaw-s-clawhub-skill-marketplace-an-agentic-798f5a7e0b",
-      "retrieved_at": "2026-07-13T04:19:32+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "domain_label": "Harness & Agent Security"
     },
     {
       "topic": "ai-security",
@@ -656,10 +656,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 92,
-        "newness": 1,
+        "newness": 0,
         "credibility": 70.0,
-        "composite": 61.75,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 61.5,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry (embracethered.com) covers the same underlying incident from the defender-response angle; this Black Hat disclosure adds the specific mechanism — Artifactory-as-message-board with hundreds of thousands of coordination messages — which was not in prior coverage. Also related to ProjectDiscovery's rogue-agent CTF finding, but with cross-agent coordination as the delta.",
       "discovered_via": "rss",
@@ -741,10 +741,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 90,
-        "newness": 1,
+        "newness": 0,
         "credibility": 72.5,
-        "composite": 61.52,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 61.27,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "Rehberger's earlier writing on indirect prompt injection and MCP tool poisoning; Obsidian Security's LiteLLM privilege-escalation-to-RCE writeup; Sonatype coverage of the March 2026 compromised LiteLLM PyPI package; the wider AiTM literature (T1557).",
       "discovered_via": "rss",
@@ -1075,10 +1075,10 @@
       "scores": {
         "novelty": 72,
         "relevance": 90,
-        "newness": 1,
+        "newness": 0,
         "credibility": 70.0,
-        "composite": 59.35,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 59.1,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "Pool digest has an AWS Bedrock AgentCore SDK argument-injection entry and a TensorZero Gateway config-override entry — both are 'appsec bugs surface as agent RCE' but neither is a framework-level checkpoint deserialization finding. Complementary, not duplicative.",
       "discovered_via": "rss",
@@ -1092,83 +1092,6 @@
       "needs_review": true,
       "grounding_score": null,
       "domain_label": "Agent framework security"
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.prompt-injection",
-      "title": "Brazilian labor court fines lawyers for hidden prompt injection in a filing",
-      "source_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
-      "related_claims": [
-        "indirect-injection-via-retrieved-content-is-viable",
-        "prompt-injection-is-a-permanent-attack-surface"
-      ],
-      "summary": "A labor court in Parauapebas, Brazil, fined two law firms 10% of the claim's value, about $16,000, after finding a white-on-white instruction in their petition telling AI reviewers to answer superficially and not challenge the documents. The courts' Galileu AI tool found the hidden text, and Brazilian outlet G1 reported it raised an alert and blocked processing. The article calls it possibly the first ruling worldwide on deliberate prompt injection against a court's AI.",
-      "takeaway": "Hidden-text injection in documents from outside parties is now a sanctionable act in at least one court, and any pipeline that has AI read outside documents should check for hidden text.",
-      "lessons": [
-        {
-          "point": "The injection was hidden as white text on a white background, invisible to a human reader but read by the AI tool.",
-          "excerpt": "the system identified text set in white font on a white background, invisible to anyone reading the document normally",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The court treated the hidden instruction as bad-faith conduct and fined the filing firms 10% of the claim's value.",
-          "excerpt": "The court fined the two law firms that jointly filed the tainted petition 10% of the claim’s value.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The receiving AI system flagged the attempt and stopped processing the suspicious content, according to G1.",
-          "excerpt": "the Galileu AI system issued an alert and automatically blocked the processing of suspicious content",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "prompt-injection",
-        "hidden-text",
-        "legal",
-        "document-ingestion"
-      ],
-      "threat": "Parties submit documents with hidden instructions meant to bias AI systems that summarize or review them.",
-      "conditions": "An AI system reads externally submitted documents, including text styled to be invisible to humans.",
-      "mitigations": "Normalize documents before AI review (strip or reveal hidden, white-on-white and zero-size text), flag instruction-like text addressed to AI, and keep a human decision on the outcome.",
-      "actionable": {
-        "type": "tool",
-        "title": "Reveal hidden text in inbound documents before an LLM reads them",
-        "detail": "In any document-ingestion pipeline, render text with forced visible styling (remove white-on-white, tiny fonts and hidden layers), diff it against the visible rendering, and flag any instruction-like text addressed to an AI before the document reaches the model."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 55,
-        "newness": 86,
-        "credibility": 55.0,
-        "composite": 58.25,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier supported every lesson and matched novelty at 40; the G1 blocking detail is secondhand.",
-      "prior_art": "Tracker story s-ab5203528125, a litigant hiding a prompt injection in a court filing (404 Media, August 2026); hidden-text injections in resumes and academic papers.",
-      "article_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
-      "tweet_url": null,
-      "author": "doodlesdev",
-      "date": "2026-11",
-      "published": "2026-11-01",
-      "raw_path": "data/_raw/brazilian-court-sanctions-lawyers-for-prompt-inj-7dfe9a5f4f.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@doodlesdev via Hacker News",
-      "id": "brazilian-labor-court-fines-lawyers-for-hidden-p-4803a841ae",
-      "retrieved_at": "2026-11-01T17:42:30+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "building-a-more-secure-environment-for-evaluatin-2ef9339cfe",
@@ -1263,6 +1186,83 @@
       "previous_slugs": [
         "uk-aisi-resumes-most-cyber-evals-after-august-incident-inter"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.prompt-injection",
+      "title": "Brazilian labor court fines lawyers for hidden prompt injection in a filing",
+      "source_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "prompt-injection-is-a-permanent-attack-surface"
+      ],
+      "summary": "A labor court in Parauapebas, Brazil, fined two law firms 10% of the claim's value, about $16,000, after finding a white-on-white instruction in their petition telling AI reviewers to answer superficially and not challenge the documents. The courts' Galileu AI tool found the hidden text, and Brazilian outlet G1 reported it raised an alert and blocked processing. The article calls it possibly the first ruling worldwide on deliberate prompt injection against a court's AI.",
+      "takeaway": "Hidden-text injection in documents from outside parties is now a sanctionable act in at least one court, and any pipeline that has AI read outside documents should check for hidden text.",
+      "lessons": [
+        {
+          "point": "The injection was hidden as white text on a white background, invisible to a human reader but read by the AI tool.",
+          "excerpt": "the system identified text set in white font on a white background, invisible to anyone reading the document normally",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The court treated the hidden instruction as bad-faith conduct and fined the filing firms 10% of the claim's value.",
+          "excerpt": "The court fined the two law firms that jointly filed the tainted petition 10% of the claim’s value.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The receiving AI system flagged the attempt and stopped processing the suspicious content, according to G1.",
+          "excerpt": "the Galileu AI system issued an alert and automatically blocked the processing of suspicious content",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "prompt-injection",
+        "hidden-text",
+        "legal",
+        "document-ingestion"
+      ],
+      "threat": "Parties submit documents with hidden instructions meant to bias AI systems that summarize or review them.",
+      "conditions": "An AI system reads externally submitted documents, including text styled to be invisible to humans.",
+      "mitigations": "Normalize documents before AI review (strip or reveal hidden, white-on-white and zero-size text), flag instruction-like text addressed to AI, and keep a human decision on the outcome.",
+      "actionable": {
+        "type": "tool",
+        "title": "Reveal hidden text in inbound documents before an LLM reads them",
+        "detail": "In any document-ingestion pipeline, render text with forced visible styling (remove white-on-white, tiny fonts and hidden layers), diff it against the visible rendering, and flag any instruction-like text addressed to an AI before the document reaches the model."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 55,
+        "newness": 81,
+        "credibility": 55.0,
+        "composite": 57.0,
+        "scored_at": "2026-11-04T18:07:05+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier supported every lesson and matched novelty at 40; the G1 blocking detail is secondhand.",
+      "prior_art": "Tracker story s-ab5203528125, a litigant hiding a prompt injection in a court filing (404 Media, August 2026); hidden-text injections in resumes and academic papers.",
+      "article_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+      "tweet_url": null,
+      "author": "doodlesdev",
+      "date": "2026-11",
+      "published": "2026-11-01",
+      "raw_path": "data/_raw/brazilian-court-sanctions-lawyers-for-prompt-inj-7dfe9a5f4f.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@doodlesdev via Hacker News",
+      "id": "brazilian-labor-court-fines-lawyers-for-hidden-p-4803a841ae",
+      "retrieved_at": "2026-11-01T17:42:30+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "securing-our-frontier-model-training-environment-298ef42bc0",
@@ -1420,10 +1420,10 @@
       "scores": {
         "novelty": 75,
         "relevance": 88,
-        "newness": 1,
+        "newness": 0,
         "credibility": 50.0,
-        "composite": 56.65,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 56.4,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "Rehberger's own prior Claude Code prompt-injection/exfiltration research plus long-documented Python import-shadowing attacks; the new specificity is chaining a safety-refusal fallback into the shadowing RCE and spawning a nested agent.",
       "threat": "Indirect prompt injection from untrusted web content leading to code execution in an autonomous coding agent.",
@@ -2346,10 +2346,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 82,
-        "newness": 1,
+        "newness": 0,
         "credibility": 70.0,
-        "composite": 53.95,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 53.7,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "The 'agents-approve-most-prompts' framing overlaps with Anthropic's May 'How we contain Claude' post (93% approval telemetry) that this article cites; the ScaleX game's dataset (40k runs, 409k decisions, per-command breakdown) is the new empirical delta.",
       "discovered_via": "rss",
@@ -4801,10 +4801,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 78,
-        "newness": 1,
+        "newness": 0,
         "credibility": 70.0,
-        "composite": 47.65,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 47.4,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "Pool digest 'AWS API MCP Server fails open' and 'AWS Bedrock AgentCore Python SDK argument-delimiter injection' cover the same shape (agent middleware ships an RCE surface); this adds a Python/Langflow instance under active exploitation.",
       "discovered_via": "rss",
@@ -6973,10 +6973,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 65,
-        "newness": 1,
+        "newness": 0,
         "credibility": 50.0,
-        "composite": 36.25,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 36.0,
+        "scored_at": "2026-11-04T18:07:05+00:00"
       },
       "prior_art": "Same 'security feature named protectively but insecure/opt-in by default' pattern already reported for OpenClaw itself (Hannah Fry incident, gym-waitlist hijack, prior Register coverage cited in this article).",
       "article_url": "https://www.theregister.com/ai-and-ml/2026/08/31/openclaw-20-pours-glitter-on-slow-burning-security-dumpster-fire/5293492",
