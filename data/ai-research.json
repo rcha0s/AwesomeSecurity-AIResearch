@@ -146,10 +146,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 68,
-        "newness": 86,
+        "newness": 81,
         "credibility": 69.6,
-        "composite": 58.94,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 57.69,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "verified": true,
       "prior_art": "Microsoft's synthetic, time-evolving enterprise tenants for Copilot evals (already in ai-research) cover building eval worlds without customer data. Legora adds a practitioner account: domain-expert-built RL environments, per-practice-area heat maps that show model regressions, a fixed failure taxonomy with flagged LLM checks, and a pilot-sample pattern for bulk extraction.",
@@ -258,85 +258,6 @@
     },
     {
       "topic": "ai-research",
-      "domain": "air.models",
-      "cluster": "H",
-      "related_claims": [
-        "capability-elicitation-lags-training",
-        "provider-guardrails-can-block-incident-response"
-      ],
-      "title": "OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability",
-      "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-      "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-      "published": "2026-08-07",
-      "date": "2026-08",
-      "raw_path": "data/_raw/mrscan-batch00-4.txt",
-      "source_id": "rss:https-openai-com-blog-rss-xml",
-      "source_rank": 80.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "summary": "OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.",
-      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, and the response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
-      "lessons": [
-        {
-          "point": "The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call.",
-          "excerpt": "Under our Preparedness Framework, a model reaches the Critical cybersecurity threshold if it can identify and develop functional zero-day exploits of all severity levels in many hardened real-world critical systems without human intervention, or can devise and execute end-to-end novel strategies for cyberattacks against hardened targets given only a high level desired goal.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "First-party CoT monitoring is the primary announced defense for training and evaluation, not just deployment — a signal that provider-side runtime controls are now the load-bearing layer for critical-capability containment.",
-          "excerpt": "We have implemented universal monitoring for risky actions and misalignment across all agentic applications of Astra, including training and evaluation. Monitors evaluate the model's Chain of Thought and trigger a security response to review and interrupt high risk activity.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Frontier-capability containment relies on a bundle of runtime controls, not model-level alignment alone: isolated environments, restricted network/tool access, weight encryption, and sandboxed execution.",
-          "excerpt": "isolated testing environments, restricted network and tool access, enhanced model weight protections and encryption, additional monitoring and detection capabilities, and sandboxed execution.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "preparedness-framework",
-        "frontier-capability",
-        "cot-monitoring",
-        "cyber-evals",
-        "sandboxing",
-        "openai",
-        "astra"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Track the CoT-monitoring assumption: it is now the load-bearing safeguard for critical-capability models",
-        "detail": "For any downstream integration that will handle Astra-class capabilities, do not rely on refusal training. Assume the provider's CoT-based universal monitoring is the primary containment layer, and require your own sandboxed-execution, network-caged, and weight-isolated deployment posture on top."
-      },
-      "scores": {
-        "novelty": 70,
-        "relevance": 75,
-        "newness": 1,
-        "credibility": 80.0,
-        "composite": 55.75,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
-      "discovered_via": "rss",
-      "threat": "Frontier models approaching the Critical cybersecurity capability threshold may generate functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal. If those capabilities are elicited during training/evaluation without runtime containment, real infrastructure (as in the Hugging Face incident) can be affected before deployment controls exist.",
-      "conditions": "The vendor's Preparedness Framework has flagged Critical cyber capability; universal Chain-of-Thought monitoring is enabled across all agentic applications including training and evaluation; testing environments enforce isolated networks, restricted tool access, and sandboxed execution.",
-      "mitigations": "For downstream users: assume provider CoT monitoring is the primary containment layer and add a second layer (network egress caging, restricted tool set, sandboxed exec) at the integration boundary. For providers of higher-risk models: gate all training/eval workloads behind the same isolation controls used for deployment; hand off recommended controls to third-party testing partners rather than trusting them to reinvent the containment posture.",
-      "verified": true,
-      "id": "openai-astra-preliminary-evals-can-t-rule-out-cr-19c9c4150a",
-      "retrieved_at": "2026-08-10T19:18:36+00:00",
-      "needs_review": false,
-      "grounding_score": null,
-      "domain_label": "Frontier Cyber Capabilities & Preparedness",
-      "previous_slugs": [
-        "openai-astra-preliminary-evals-can-t-rule-out-critical-cyber"
-      ]
-    },
-    {
-      "topic": "ai-research",
       "domain": "air.agents",
       "title": "A frontier model built a bespoke zlib fuzzing lab in a day",
       "source_url": "https://blog.trailofbits.com/2026/07/02/field-reports-from-patch-the-planet/",
@@ -398,6 +319,85 @@
       "domain_label": "Agents & Harnesses",
       "previous_slugs": [
         "goal-persistent-agents-a-frontier-model-built-a-bespoke-zlib"
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "cluster": "H",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "provider-guardrails-can-block-incident-response"
+      ],
+      "title": "OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability",
+      "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch00-4.txt",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 80.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "summary": "OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.",
+      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, and the response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
+      "lessons": [
+        {
+          "point": "The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call.",
+          "excerpt": "Under our Preparedness Framework, a model reaches the Critical cybersecurity threshold if it can identify and develop functional zero-day exploits of all severity levels in many hardened real-world critical systems without human intervention, or can devise and execute end-to-end novel strategies for cyberattacks against hardened targets given only a high level desired goal.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "First-party CoT monitoring is the primary announced defense for training and evaluation, not just deployment — a signal that provider-side runtime controls are now the load-bearing layer for critical-capability containment.",
+          "excerpt": "We have implemented universal monitoring for risky actions and misalignment across all agentic applications of Astra, including training and evaluation. Monitors evaluate the model's Chain of Thought and trigger a security response to review and interrupt high risk activity.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Frontier-capability containment relies on a bundle of runtime controls, not model-level alignment alone: isolated environments, restricted network/tool access, weight encryption, and sandboxed execution.",
+          "excerpt": "isolated testing environments, restricted network and tool access, enhanced model weight protections and encryption, additional monitoring and detection capabilities, and sandboxed execution.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "preparedness-framework",
+        "frontier-capability",
+        "cot-monitoring",
+        "cyber-evals",
+        "sandboxing",
+        "openai",
+        "astra"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track the CoT-monitoring assumption: it is now the load-bearing safeguard for critical-capability models",
+        "detail": "For any downstream integration that will handle Astra-class capabilities, do not rely on refusal training. Assume the provider's CoT-based universal monitoring is the primary containment layer, and require your own sandboxed-execution, network-caged, and weight-isolated deployment posture on top."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 75,
+        "newness": 0,
+        "credibility": 80.0,
+        "composite": 55.5,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
+      "discovered_via": "rss",
+      "threat": "Frontier models approaching the Critical cybersecurity capability threshold may generate functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal. If those capabilities are elicited during training/evaluation without runtime containment, real infrastructure (as in the Hugging Face incident) can be affected before deployment controls exist.",
+      "conditions": "The vendor's Preparedness Framework has flagged Critical cyber capability; universal Chain-of-Thought monitoring is enabled across all agentic applications including training and evaluation; testing environments enforce isolated networks, restricted tool access, and sandboxed execution.",
+      "mitigations": "For downstream users: assume provider CoT monitoring is the primary containment layer and add a second layer (network egress caging, restricted tool set, sandboxed exec) at the integration boundary. For providers of higher-risk models: gate all training/eval workloads behind the same isolation controls used for deployment; hand off recommended controls to third-party testing partners rather than trusting them to reinvent the containment posture.",
+      "verified": true,
+      "id": "openai-astra-preliminary-evals-can-t-rule-out-cr-19c9c4150a",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": null,
+      "domain_label": "Frontier Cyber Capabilities & Preparedness",
+      "previous_slugs": [
+        "openai-astra-preliminary-evals-can-t-rule-out-critical-cyber"
       ]
     },
     {
@@ -642,98 +642,6 @@
       ]
     },
     {
-      "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do",
-      "summary": "A recent \"Weight Space Programming\" paper reports that GPT-6 Astra can identify which game a small network (about 17k weights) was trained on by reading its weights, and can edit a 0.8B Qwen model's weights to improve its math results. Sean Goedecke argues neither result is superhuman. The game networks have labeled input channels tied to grid cells, so a three-line weight-norm heatmap reveals the game. The Qwen fix removed a loop that set in after 32k tokens, using a steering-style recipe like Heretic abliteration: contrast looping and non-looping texts, rank the weights that drive the difference, and trim them while testing.",
-      "takeaway": "Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than training does.",
-      "tags": [
-        "weight-space-programming",
-        "interpretability",
-        "steering-vectors",
-        "abliteration",
-        "recursive-self-improvement",
-        "capability-claims"
-      ],
-      "lessons": [
-        {
-          "point": "The 'improved at mathematics' result fixed one narrow failure: the Qwen model looped after 32k tokens. It was not a general capability gain.",
-          "excerpt": "It had a specific problem where after 32k tokens it would get stuck in loops, so any mathematical task that needed more than 32k tokens would automatically fail",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The model's weight edit followed a standard steering recipe: contrast looping and non-looping residuals, then attribute the difference to individual weights.",
-          "excerpt": "calculate the difference between the looping and non-looping residuals, measure how much each weight contributed to that difference",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Reading the game from the toy networks' weights is easy because the inputs are labeled and map to grid cells, so first-layer weight norms show the layout.",
-          "excerpt": "It’s thus relatively trivial to calculate",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The author's view is that LLMs will help AI research by improving training, not by editing weights directly, much as source code beats patching binaries. This is opinion, not a measured result.",
-          "excerpt": "Likewise, the best way to update the weights of a model is to train it normally.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Ask what baseline a 'superhuman' capability claim beats before acting on it",
-        "detail": "When a capability claim such as 'LLMs can program weights' arrives, check three things. Do this before changing plans: what the task's inputs give away (here, labeled input channels), how narrow the reported improvement is (here, one looping bug past 32k tokens), and whether a known human method (here, steering or abliteration) reproduces it. For harness builders, the practical lesson is that an agent with Python access can run known interpretability recipes on small open-weight models. It is not a reason to replace fine-tuning or training pipelines."
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 22,
-        "newness": 86,
-        "credibility": 65.0,
-        "composite": 51.35,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
-      "related_claims": [],
-      "corroborating_sources": [
-        {
-          "name": "Latent Space AINews",
-          "url": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/",
-          "published": "2026-11-03"
-        },
-        {
-          "name": "Simon Willison",
-          "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
-          "published": "2026-11-03"
-        }
-      ],
-      "source_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
-      "article_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
-      "tweet_url": null,
-      "author": "agrm",
-      "date": "2026-11",
-      "published": "2026-11-02",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@agrm via Hacker News",
-      "raw_path": "data/_raw/llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 13 > 12"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "1password-s-ai-patching-benchmark-is-misleading-6437abf21b",
       "article_url": "https://blog.trailofbits.com/2026/09/15/1passwords-ai-patching-benchmark-is-misleading/",
       "source_url": "https://blog.trailofbits.com/2026/09/15/1passwords-ai-patching-benchmark-is-misleading/",
@@ -915,6 +823,98 @@
       "previous_slugs": [
         "openai-dataset-level-g-mean-can-misrank-model-monitorability"
       ]
+    },
+    {
+      "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do",
+      "summary": "A recent \"Weight Space Programming\" paper reports that GPT-6 Astra can identify which game a small network (about 17k weights) was trained on by reading its weights, and can edit a 0.8B Qwen model's weights to improve its math results. Sean Goedecke argues neither result is superhuman. The game networks have labeled input channels tied to grid cells, so a three-line weight-norm heatmap reveals the game. The Qwen fix removed a loop that set in after 32k tokens, using a steering-style recipe like Heretic abliteration: contrast looping and non-looping texts, rank the weights that drive the difference, and trim them while testing.",
+      "takeaway": "Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than training does.",
+      "tags": [
+        "weight-space-programming",
+        "interpretability",
+        "steering-vectors",
+        "abliteration",
+        "recursive-self-improvement",
+        "capability-claims"
+      ],
+      "lessons": [
+        {
+          "point": "The 'improved at mathematics' result fixed one narrow failure: the Qwen model looped after 32k tokens. It was not a general capability gain.",
+          "excerpt": "It had a specific problem where after 32k tokens it would get stuck in loops, so any mathematical task that needed more than 32k tokens would automatically fail",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The model's weight edit followed a standard steering recipe: contrast looping and non-looping residuals, then attribute the difference to individual weights.",
+          "excerpt": "calculate the difference between the looping and non-looping residuals, measure how much each weight contributed to that difference",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Reading the game from the toy networks' weights is easy because the inputs are labeled and map to grid cells, so first-layer weight norms show the layout.",
+          "excerpt": "It’s thus relatively trivial to calculate",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The author's view is that LLMs will help AI research by improving training, not by editing weights directly, much as source code beats patching binaries. This is opinion, not a measured result.",
+          "excerpt": "Likewise, the best way to update the weights of a model is to train it normally.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Ask what baseline a 'superhuman' capability claim beats before acting on it",
+        "detail": "When a capability claim such as 'LLMs can program weights' arrives, check three things. Do this before changing plans: what the task's inputs give away (here, labeled input channels), how narrow the reported improvement is (here, one looping bug past 32k tokens), and whether a known human method (here, steering or abliteration) reproduces it. For harness builders, the practical lesson is that an agent with Python access can run known interpretability recipes on small open-weight models. It is not a reason to replace fine-tuning or training pipelines."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 22,
+        "newness": 81,
+        "credibility": 65.0,
+        "composite": 50.1,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
+      "related_claims": [],
+      "corroborating_sources": [
+        {
+          "name": "Latent Space AINews",
+          "url": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/",
+          "published": "2026-11-03"
+        },
+        {
+          "name": "Simon Willison",
+          "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
+          "published": "2026-11-03"
+        }
+      ],
+      "source_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
+      "article_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
+      "tweet_url": null,
+      "author": "agrm",
+      "date": "2026-11",
+      "published": "2026-11-02",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@agrm via Hacker News",
+      "raw_path": "data/_raw/llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -2142,10 +2142,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 25,
-        "newness": 86,
+        "newness": 81,
         "credibility": 60.0,
-        "composite": 40.4,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 39.15,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -3088,74 +3088,6 @@
       "grounding_score": 1.0
     },
     {
-      "id": "rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "@_rybaz argues agent solutions alone do not make a good business",
-      "summary": "A short X post reflecting on the [un]prompted conference argues that solving a problem with agents does not by itself make a viable business. It quips that you can even layer agents on agent problems, but the captured text is truncated and offers no data or technique.",
-      "takeaway": "Thin opinion post with no technical content; skip unless tracking conference sentiment.",
-      "tags": [
-        "opinion",
-        "agents",
-        "conference",
-        "x-post"
-      ],
-      "lessons": [
-        {
-          "point": "The author's main claim is that a working agent-based solution is not the same as a business.",
-          "excerpt": "problem + solution != good business",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "The post implies agents are adequate for ordinary technical problems, but gives no evidence.",
-          "excerpt": "You can solve normal, boring, technological problems with agents.",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "No action",
-        "detail": "Opinion only and truncated; nothing to implement or test."
-      },
-      "scores": {
-        "novelty": 3,
-        "relevance": 8,
-        "newness": 86,
-        "credibility": 60.0,
-        "composite": 33.8,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "Generic startup advice; no technical prior art applies.",
-      "related_claims": [],
-      "source_url": "https://x.com/_rybaz/status/2117660118682923408",
-      "article_url": null,
-      "tweet_url": "https://x.com/_rybaz/status/2117660118682923408",
-      "author": "@_rybaz",
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "raw_path": "data/_raw/rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "sparse-fine-tuning-for-parameter-efficient-adver-dbfa5f3e91",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -3228,54 +3160,65 @@
       "grounding_score": 1.0
     },
     {
+      "id": "rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a",
       "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "HackerBooks lists 16,543 books mentioned in Hacker News comments",
-      "source_url": "https://hackerbooks.org",
-      "related_claims": [],
-      "summary": "HackerBooks is a Show HN site that lists books mentioned in Hacker News comments and ranks them by how many commenters mentioned them. The fetched page is only the book list and says nothing about how it was built.",
-      "takeaway": "Off-topic for security and agent builders: a book directory with no technique to learn from.",
+      "domain": "air.agents",
+      "title": "@_rybaz argues agent solutions alone do not make a good business",
+      "summary": "A short X post reflecting on the [un]prompted conference argues that solving a problem with agents does not by itself make a viable business. It quips that you can even layer agents on agent problems, but the captured text is truncated and offers no data or technique.",
+      "takeaway": "Thin opinion post with no technical content; skip unless tracking conference sentiment.",
+      "tags": [
+        "opinion",
+        "agents",
+        "conference",
+        "x-post"
+      ],
       "lessons": [
         {
-          "point": "The site lists 16,543 books mentioned on Hacker News, reshuffled daily.",
-          "excerpt": "A fresh mix of well-loved books from 16,543 mentioned on Hacker News, reshuffled daily.",
-          "confidence": 0.9,
+          "point": "The author's main claim is that a working agent-based solution is not the same as a business.",
+          "excerpt": "problem + solution != good business",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "The post implies agents are adequate for ordinary technical problems, but gives no evidence.",
+          "excerpt": "You can solve normal, boring, technological problems with agents.",
+          "confidence": 0.4,
           "grounded": true
         }
       ],
-      "tags": [
-        "show-hn",
-        "off-topic"
-      ],
       "actionable": {
         "type": "takeaway",
-        "title": "No action: off-topic",
-        "detail": "Nothing for security or agent work."
+        "title": "No action",
+        "detail": "Opinion only and truncated; nothing to implement or test."
       },
       "scores": {
-        "novelty": 5,
-        "relevance": 3,
-        "newness": 86,
-        "credibility": 55.0,
-        "composite": 32.15,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "novelty": 3,
+        "relevance": 8,
+        "newness": 81,
+        "credibility": 60.0,
+        "composite": 32.55,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "verified": true,
-      "verify_note": "Verifier supported the lesson; off-topic.",
-      "prior_art": "HackerTube and earlier Hacker News book-mention aggregators.",
-      "article_url": "https://hackerbooks.org",
-      "tweet_url": null,
-      "author": "roansh",
+      "prior_art": "Generic startup advice; no technical prior art applies.",
+      "related_claims": [],
+      "source_url": "https://x.com/_rybaz/status/2117660118682923408",
+      "article_url": null,
+      "tweet_url": "https://x.com/_rybaz/status/2117660118682923408",
+      "author": "@_rybaz",
       "date": "2026-11",
-      "published": "2026-11-01",
-      "raw_path": "data/_raw/show-hn-hackerbooks-hackertube-but-for-books-rec-e4ea87d013.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@roansh via Hacker News",
-      "id": "hackerbooks-lists-16-543-books-mentioned-in-hack-682019c88f",
-      "retrieved_at": "2026-11-01T17:42:30+00:00",
+      "published": "2026-11-03",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "raw_path": "data/_raw/rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3490,6 +3433,63 @@
       "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
       "id": "workshop-paper-proposes-retrieval-as-a-local-wal-83b74bc74c",
       "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "HackerBooks lists 16,543 books mentioned in Hacker News comments",
+      "source_url": "https://hackerbooks.org",
+      "related_claims": [],
+      "summary": "HackerBooks is a Show HN site that lists books mentioned in Hacker News comments and ranks them by how many commenters mentioned them. The fetched page is only the book list and says nothing about how it was built.",
+      "takeaway": "Off-topic for security and agent builders: a book directory with no technique to learn from.",
+      "lessons": [
+        {
+          "point": "The site lists 16,543 books mentioned on Hacker News, reshuffled daily.",
+          "excerpt": "A fresh mix of well-loved books from 16,543 mentioned on Hacker News, reshuffled daily.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "show-hn",
+        "off-topic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action: off-topic",
+        "detail": "Nothing for security or agent work."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 3,
+        "newness": 81,
+        "credibility": 55.0,
+        "composite": 30.9,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported the lesson; off-topic.",
+      "prior_art": "HackerTube and earlier Hacker News book-mention aggregators.",
+      "article_url": "https://hackerbooks.org",
+      "tweet_url": null,
+      "author": "roansh",
+      "date": "2026-11",
+      "published": "2026-11-01",
+      "raw_path": "data/_raw/show-hn-hackerbooks-hackertube-but-for-books-rec-e4ea87d013.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@roansh via Hacker News",
+      "id": "hackerbooks-lists-16-543-books-mentioned-in-hack-682019c88f",
+      "retrieved_at": "2026-11-01T17:42:30+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,

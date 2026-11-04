@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_10 vetted findings · updated 2026-11-03 · ranked by composite · findings from the latest 31 days · [43 held for review](../REVIEW.md)._
+_10 vetted findings · updated 2026-11-04 · ranked by composite · findings from the latest 31 days · [43 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -104,7 +104,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## AI Infrastructure & Incident Response
 
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **73.94** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **72.69** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
 - **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **59.73** · Oct 6, 2026  

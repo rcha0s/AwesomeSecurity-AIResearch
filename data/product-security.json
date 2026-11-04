@@ -358,10 +358,10 @@
       "scores": {
         "novelty": 78,
         "relevance": 88,
-        "newness": 1,
+        "newness": 0,
         "credibility": 75.0,
-        "composite": 61.3,
-        "scored_at": "2026-10-29T16:50:31+00:00"
+        "composite": 61.05,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "prior_art": "Apple ANSI-DNS-exfil chain (embracethered) covers CLI-side prompt-injection exfil; CSS-side webmail attacks trace back to Heiderich's mutation XSS and Gerste's font-based CSS exfil. The AI-browser-via-CSS-hidden-content angle is materially new relative to the pool.",
       "discovered_via": "rss",
@@ -429,10 +429,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 60,
-        "newness": 86,
+        "newness": 81,
         "credibility": 69.6,
-        "composite": 60.44,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 59.19,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -466,93 +466,6 @@
         "passed": false,
         "issues": [
           "mild: acronyms 9 > 3 (PSK, PHP, MB, SOCKS5, FFI, VULN, HOME, UDP, DB)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "what-exploited-vulnerabilities-have-in-common-a-9dd83b663b",
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "Microsoft finds 78% of exploited CVEs are takeover-class bugs",
-      "summary": "Microsoft analyzed about 383,000 published CVEs against roughly 2,000 exploited in the wild and found exploitation concentrates in server-side RCE, local privilege escalation, client-side RCE and auth bypass, while XSS and DoS shrink sharply in the exploited set. Its own exposure-management data shows median patch times of about two weeks on Windows workstations, over a month on Windows servers, 10+ weeks on Linux servers and over a year on network appliances, while CISA KEV timelines have collapsed to a 3-day median in 2026. The second half of the post is a pitch for Defender EASM, MDVM and attack-path analysis.",
-      "takeaway": "Prioritize takeover-class bugs on exposed, highly privileged servers and appliances first, because those are both the most exploited and the slowest patched.",
-      "tags": [
-        "vulnerability-management",
-        "exploitation-data",
-        "prioritization",
-        "cisa-kev",
-        "patch-latency",
-        "vendor-blog"
-      ],
-      "lessons": [
-        {
-          "point": "The exploited set is a tiny and differently shaped slice of the CVE population, so CVSS-wide patch queues waste effort on classes attackers rarely use.",
-          "excerpt": "Server-side RCE rises from 20% of published CVEs to 37% of exploited CVEs, local privilege escalation from 11% to 18%, and client-side RCE from 4% to 13%.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Patch latency is worst exactly where exposure is highest, with network appliances lagging by more than a year at the median.",
-          "excerpt": "It stretches to 10+ weeks on Linux Servers and for applications running on MacOS, and beyond a year on network appliances.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Time from CVE publication to KEV listing has collapsed in 2026, which Microsoft partly attributes to AI-assisted exploit development.",
-          "excerpt": "2026 data up to September already have that number dropping to 20 days, with a median of only 3 days since publication.",
-          "confidence": 0.72,
-          "grounded": true
-        },
-        {
-          "point": "Takeover classes dominate real-world exploitation and are the earliest place to break an attack chain.",
-          "excerpt": "account for 78% of real-world exploited vulnerabilities",
-          "confidence": 0.78,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Rank patch queues by impact class and asset exposure",
-        "detail": "Score each open CVE by whether it is a takeover class (server-side RCE, auth bypass, LPE, client-side RCE) and by the exposure of the asset (internet-facing, privileged service identities, reach to critical data). Patch or compensate for takeover bugs on exposed servers and appliances first, and set explicit service-level agreements (SLAs) for appliances since their median patch time is the longest. Use KEV and exploit-availability signals rather than CVSS alone."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 58,
-        "newness": 86,
-        "credibility": 70.8,
-        "composite": 58.52,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": false,
-      "verify_reason": "factual",
-      "verify_note": "Lesson 3 attributes faster KEV listing partly to AI-assisted exploit development as Microsoft's finding; the post only says 'industry research suggests' it, and the timing figures come from CISA data.",
-      "prior_art": "Core claim: exploitation concentrates in a small set of takeover-class CVEs, so prioritize by impact and exposure. This restates well-known findings from VulnCheck State of Exploitation, EPSS research and CISA KEV analyses (which the post itself cites). The product-security corpus has many individual KEV and exploited-CVE entries (Ivanti, F5 BIG-IP, Cisco ASA, Plex) and a 'Prioritize edge exposure' actionable, but no aggregate dataset entry; the new data is Microsoft's own patch-latency medians by platform.",
-      "related_claims": [
-        "agent-orchestrated-attacks-compress-human-attack-timelines"
-      ],
-      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/",
-      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-02",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-      "source_rank": 70.8,
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "source_name": "Microsoft Security Blog",
-      "raw_path": "data/_raw/what-exploited-vulnerabilities-have-in-common-a-9dd83b663b.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 46 > 45 (Its own exposure-management data shows median patch times of about two weeks on Windows workstations, over a month on Wi)"
         ]
       },
       "grounding_score": 1.0
@@ -863,6 +776,93 @@
       "previous_slugs": [
         "pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new"
       ]
+    },
+    {
+      "id": "what-exploited-vulnerabilities-have-in-common-a-9dd83b663b",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Microsoft finds 78% of exploited CVEs are takeover-class bugs",
+      "summary": "Microsoft analyzed about 383,000 published CVEs against roughly 2,000 exploited in the wild and found exploitation concentrates in server-side RCE, local privilege escalation, client-side RCE and auth bypass, while XSS and DoS shrink sharply in the exploited set. Its own exposure-management data shows median patch times of about two weeks on Windows workstations, over a month on Windows servers, 10+ weeks on Linux servers and over a year on network appliances, while CISA KEV timelines have collapsed to a 3-day median in 2026. The second half of the post is a pitch for Defender EASM, MDVM and attack-path analysis.",
+      "takeaway": "Prioritize takeover-class bugs on exposed, highly privileged servers and appliances first, because those are both the most exploited and the slowest patched.",
+      "tags": [
+        "vulnerability-management",
+        "exploitation-data",
+        "prioritization",
+        "cisa-kev",
+        "patch-latency",
+        "vendor-blog"
+      ],
+      "lessons": [
+        {
+          "point": "The exploited set is a tiny and differently shaped slice of the CVE population, so CVSS-wide patch queues waste effort on classes attackers rarely use.",
+          "excerpt": "Server-side RCE rises from 20% of published CVEs to 37% of exploited CVEs, local privilege escalation from 11% to 18%, and client-side RCE from 4% to 13%.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Patch latency is worst exactly where exposure is highest, with network appliances lagging by more than a year at the median.",
+          "excerpt": "It stretches to 10+ weeks on Linux Servers and for applications running on MacOS, and beyond a year on network appliances.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Time from CVE publication to KEV listing has collapsed in 2026, which Microsoft partly attributes to AI-assisted exploit development.",
+          "excerpt": "2026 data up to September already have that number dropping to 20 days, with a median of only 3 days since publication.",
+          "confidence": 0.72,
+          "grounded": true
+        },
+        {
+          "point": "Takeover classes dominate real-world exploitation and are the earliest place to break an attack chain.",
+          "excerpt": "account for 78% of real-world exploited vulnerabilities",
+          "confidence": 0.78,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Rank patch queues by impact class and asset exposure",
+        "detail": "Score each open CVE by whether it is a takeover class (server-side RCE, auth bypass, LPE, client-side RCE) and by the exposure of the asset (internet-facing, privileged service identities, reach to critical data). Patch or compensate for takeover bugs on exposed servers and appliances first, and set explicit service-level agreements (SLAs) for appliances since their median patch time is the longest. Use KEV and exploit-availability signals rather than CVSS alone."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 58,
+        "newness": 81,
+        "credibility": 70.8,
+        "composite": 57.27,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": false,
+      "verify_reason": "factual",
+      "verify_note": "Lesson 3 attributes faster KEV listing partly to AI-assisted exploit development as Microsoft's finding; the post only says 'industry research suggests' it, and the timing figures come from CISA data.",
+      "prior_art": "Core claim: exploitation concentrates in a small set of takeover-class CVEs, so prioritize by impact and exposure. This restates well-known findings from VulnCheck State of Exploitation, EPSS research and CISA KEV analyses (which the post itself cites). The product-security corpus has many individual KEV and exploited-CVE entries (Ivanti, F5 BIG-IP, Cisco ASA, Plex) and a 'Prioritize edge exposure' actionable, but no aggregate dataset entry; the new data is Microsoft's own patch-latency medians by platform.",
+      "related_claims": [
+        "agent-orchestrated-attacks-compress-human-attack-timelines"
+      ],
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-02",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Microsoft Security Blog",
+      "raw_path": "data/_raw/what-exploited-vulnerabilities-have-in-common-a-9dd83b663b.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 46 > 45 (Its own exposure-management data shows median patch times of about two weeks on Windows workstations, over a month on Wi)"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -1332,10 +1332,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 65,
-        "newness": 86,
+        "newness": 81,
         "credibility": 47.0,
-        "composite": 54.65,
-        "scored_at": "2026-11-03T17:55:42+00:00"
+        "composite": 53.4,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported every lesson; the workaround lesson now attributes the network-restriction advice to Incus. Novelty taken as the verifier's lower 22.",
@@ -1361,90 +1361,6 @@
         "score": 100,
         "passed": true,
         "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "malicious-files-find-what-supply-chain-attacks-l-604a37ca0f",
-      "topic": "product-security",
-      "domain": "ps.supply-chain",
-      "title": "StepSecurity launches scanning for files planted by supply chain campaigns",
-      "summary": "StepSecurity launched Malicious Files for GitHub (beta). It scans every branch, pull request and tag in an organization's repository history against campaign-specific rules. It also renamed Dev Machine Guard's Suspicious Files to Malicious Files, with a rules management page. The post says 2026 campaigns such as Miasma, ForceMemo, Megalodon, GhostAction and Mini Shai-Hulud trigger execution through planted IDE and AI-agent config files, appended code and injected workflows, rather than install-time scripts. The post is primarily a product announcement, though it publishes an example rule for the Miasma .claude/settings.json and .vscode/tasks.json loader.",
-      "takeaway": "Scan every ref, not just the default branch, for planted editor, agent and workflow files, because dependency scanners never see them.",
-      "tags": [
-        "supply-chain",
-        "github",
-        "planted-files",
-        "ide-autorun",
-        "claude-code-hooks",
-        "miasma",
-        "shai-hulud",
-        "product-launch"
-      ],
-      "lessons": [
-        {
-          "point": "Execution triggers have moved from package lifecycle scripts to repo config that runs when a developer or coding agent simply opens the project.",
-          "excerpt": "including a .claude/settings.json SessionStart hook and a .vscode/tasks.json task, that run a credential-harvesting payload the moment a developer opens the repository",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Planted files evade dependency scanners and code review because they live outside manifests and often off the default branch.",
-          "excerpt": "They do not appear in a package manifest or lockfile, so dependency scanners have nothing to flag. They often land on branches other than the default branch, where reviewers rarely look.",
-          "confidence": 0.82,
-          "grounded": true
-        },
-        {
-          "point": "Repo and laptop infections feed each other, so cleanup must cover both and include credential rotation for the pushing account.",
-          "excerpt": "Malware on a laptop steals a token, and the attacker uses it to push files into more repositories.",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Audit all refs for auto-run IDE and agent config files",
-        "detail": "Across every branch, PR and tag, search for .claude/settings.json hooks (especially SessionStart), .gemini settings, .vscode/tasks.json with runOn folderOpen, Cursor rules applied to every request, and new .github/workflows files, and flag any that invoke scripts such as node .github/setup.js. Disable workspace auto-run tasks and agent hooks for untrusted repos by default, and when a hit is found, remove it from every ref and rotate credentials of the committing account and affected machines."
-      },
-      "scores": {
-        "novelty": 28,
-        "relevance": 55,
-        "newness": 86,
-        "credibility": 50.8,
-        "composite": 54.02,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "Core claim: supply chain payloads now persist as planted IDE/agent/workflow files across repo history, outside install-time controls. Nearest entries: ai-security's 'Trojan Horse: Automated Repository Poisoning against Coding Agents' (treat cloned repos as untrusted input to coding agents) and product-security's tensorlake npm worm / Mini Shai-Hulud entry, plus StepSecurity's own earlier Miasma and GhostAction writeups. This post adds a product and a sample detection rule, not new campaign research.",
-      "related_claims": [
-        "import-time-payloads-defeat-install-time-controls",
-        "package-installers-run-arbitrary-code-by-default"
-      ],
-      "threat": "Supply chain worms and account-takeover campaigns planting auto-run editor, AI coding agent and CI workflow files in repositories (often on non-default branches or with backdated commits) that execute credential stealers when a developer opens the repo or a pipeline runs.",
-      "conditions": "Compromised contributor account or token with push access; developers open repos in Claude Code, Gemini CLI, Cursor or VS Code with workspace hooks or tasks allowed to auto-run; reviews and scanners limited to manifests and the default branch.",
-      "mitigations": "Scan full repository history across all refs for known campaign files; require review for changes to .claude, .vscode, .cursor and .github/workflows paths; disable auto-run tasks and agent hooks for untrusted workspaces; enforce branch protection and block force-pushes; rotate credentials of pushing accounts and affected machines after a hit.",
-      "source_url": "https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines",
-      "article_url": "https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-stepsecurity-io-blog-rss-xml",
-      "source_rank": 50.8,
-      "source_topics": [
-        "product-security"
-      ],
-      "source_name": "StepSecurity",
-      "raw_path": "data/_raw/malicious-files-find-what-supply-chain-attacks-l-604a37ca0f.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 5 > 4"
-        ]
       },
       "grounding_score": 1.0
     },
@@ -1550,6 +1466,90 @@
       "previous_slugs": [
         "trail-of-bits-only-go-and-vcpkg-of-25-package-managers-verif"
       ]
+    },
+    {
+      "id": "malicious-files-find-what-supply-chain-attacks-l-604a37ca0f",
+      "topic": "product-security",
+      "domain": "ps.supply-chain",
+      "title": "StepSecurity launches scanning for files planted by supply chain campaigns",
+      "summary": "StepSecurity launched Malicious Files for GitHub (beta). It scans every branch, pull request and tag in an organization's repository history against campaign-specific rules. It also renamed Dev Machine Guard's Suspicious Files to Malicious Files, with a rules management page. The post says 2026 campaigns such as Miasma, ForceMemo, Megalodon, GhostAction and Mini Shai-Hulud trigger execution through planted IDE and AI-agent config files, appended code and injected workflows, rather than install-time scripts. The post is primarily a product announcement, though it publishes an example rule for the Miasma .claude/settings.json and .vscode/tasks.json loader.",
+      "takeaway": "Scan every ref, not just the default branch, for planted editor, agent and workflow files, because dependency scanners never see them.",
+      "tags": [
+        "supply-chain",
+        "github",
+        "planted-files",
+        "ide-autorun",
+        "claude-code-hooks",
+        "miasma",
+        "shai-hulud",
+        "product-launch"
+      ],
+      "lessons": [
+        {
+          "point": "Execution triggers have moved from package lifecycle scripts to repo config that runs when a developer or coding agent simply opens the project.",
+          "excerpt": "including a .claude/settings.json SessionStart hook and a .vscode/tasks.json task, that run a credential-harvesting payload the moment a developer opens the repository",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Planted files evade dependency scanners and code review because they live outside manifests and often off the default branch.",
+          "excerpt": "They do not appear in a package manifest or lockfile, so dependency scanners have nothing to flag. They often land on branches other than the default branch, where reviewers rarely look.",
+          "confidence": 0.82,
+          "grounded": true
+        },
+        {
+          "point": "Repo and laptop infections feed each other, so cleanup must cover both and include credential rotation for the pushing account.",
+          "excerpt": "Malware on a laptop steals a token, and the attacker uses it to push files into more repositories.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit all refs for auto-run IDE and agent config files",
+        "detail": "Across every branch, PR and tag, search for .claude/settings.json hooks (especially SessionStart), .gemini settings, .vscode/tasks.json with runOn folderOpen, Cursor rules applied to every request, and new .github/workflows files, and flag any that invoke scripts such as node .github/setup.js. Disable workspace auto-run tasks and agent hooks for untrusted repos by default, and when a hit is found, remove it from every ref and rotate credentials of the committing account and affected machines."
+      },
+      "scores": {
+        "novelty": 28,
+        "relevance": 55,
+        "newness": 81,
+        "credibility": 50.8,
+        "composite": 52.77,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "Core claim: supply chain payloads now persist as planted IDE/agent/workflow files across repo history, outside install-time controls. Nearest entries: ai-security's 'Trojan Horse: Automated Repository Poisoning against Coding Agents' (treat cloned repos as untrusted input to coding agents) and product-security's tensorlake npm worm / Mini Shai-Hulud entry, plus StepSecurity's own earlier Miasma and GhostAction writeups. This post adds a product and a sample detection rule, not new campaign research.",
+      "related_claims": [
+        "import-time-payloads-defeat-install-time-controls",
+        "package-installers-run-arbitrary-code-by-default"
+      ],
+      "threat": "Supply chain worms and account-takeover campaigns planting auto-run editor, AI coding agent and CI workflow files in repositories (often on non-default branches or with backdated commits) that execute credential stealers when a developer opens the repo or a pipeline runs.",
+      "conditions": "Compromised contributor account or token with push access; developers open repos in Claude Code, Gemini CLI, Cursor or VS Code with workspace hooks or tasks allowed to auto-run; reviews and scanners limited to manifests and the default branch.",
+      "mitigations": "Scan full repository history across all refs for known campaign files; require review for changes to .claude, .vscode, .cursor and .github/workflows paths; disable auto-run tasks and agent hooks for untrusted workspaces; enforce branch protection and block force-pushes; rotate credentials of pushing accounts and affected machines after a hit.",
+      "source_url": "https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines",
+      "article_url": "https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-stepsecurity-io-blog-rss-xml",
+      "source_rank": 50.8,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "StepSecurity",
+      "raw_path": "data/_raw/malicious-files-find-what-supply-chain-attacks-l-604a37ca0f.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -3760,144 +3760,6 @@
     },
     {
       "topic": "product-security",
-      "domain": "ps.identity",
-      "title": "X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies",
-      "source_url": "https://x.com/Dinosn/status/2116946099059511340",
-      "related_claims": [],
-      "summary": "A one-line X post says the Mirage2FA adversary-in-the-middle phishing proxy stole 4,561 Microsoft 365 session cookies despite multi-factor authentication, cites CVE-2026-69836 at CVSS 10.0, and mentions detection rules and a Windows Hello for Business hardening guide. The post itself gives no details, so the numbers are unverified here.",
-      "takeaway": "Adversary-in-the-middle proxies keep beating one-time-code multi-factor authentication; phishing-resistant sign-in is the fix, but this claim needs a primary source.",
-      "lessons": [
-        {
-          "point": "The post claims session-cookie theft at scale through an adversary-in-the-middle proxy, which bypasses multi-factor prompts; the source is a single social post.",
-          "excerpt": "Mirage2FA stole 4,561 M365 session cookies despite MFA via AiTM proxy",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "aitm",
-        "session-hijack",
-        "microsoft-365",
-        "phishing",
-        "mfa-bypass"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Find the primary report before acting on the Mirage2FA numbers",
-        "detail": "Treat the 4,561 figure and the CVE mapping as unverified until a primary write-up is found; meanwhile check that Conditional Access requires phishing-resistant methods such as Windows Hello for Business or FIDO2 for Microsoft 365 admins."
-      },
-      "scores": {
-        "novelty": 20,
-        "relevance": 40,
-        "newness": 86,
-        "credibility": 60.0,
-        "composite": 48.5,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier found the summary matches the post; it notes a CVE with CVSS 10.0 for a phishing kit is implausible, so the post stays low-confidence.",
-      "prior_art": "Evilginx, Tycoon 2FA and other adversary-in-the-middle phishing kits that steal Microsoft 365 session cookies.",
-      "article_url": null,
-      "tweet_url": "https://x.com/Dinosn/status/2116946099059511340",
-      "author": "@Dinosn",
-      "date": "2026-11",
-      "published": "2026-11-01",
-      "raw_path": "data/_raw/dinosn-mirage2fa-stole-4-561-m365-session-cookie-cd9d94c13b.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "id": "x-post-claims-mirage2fa-stole-4-561-microsoft-36-227716cb6e",
-      "retrieved_at": "2026-11-01T17:42:30+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf",
-      "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "Barracuda patches ESG auth bypass chaining to root command injection",
-      "summary": "Barracuda disclosed two flaws: CVE-2026-116606, a critical Email Security Gateway authentication weakness that lets attackers modify global appliance configuration, and CVE-2026-111560, an admin-level OS command injection that runs as root across ESG, Load Balancer ADC, Message Archiver, WAF, WAF Control Center and Web Security Gateway. Chained, they give root on the device, but exploitation requires reaching the administrative interface. No in-the-wild exploitation is reported; the article recalls UNC4841's 2023 ESG zero-day campaigns.",
-      "takeaway": "Patch Barracuda appliances and keep their admin interfaces off untrusted networks, since the chain needs management-plane reach.",
-      "tags": [
-        "barracuda",
-        "esg",
-        "network-appliance",
-        "auth-bypass",
-        "command-injection",
-        "patch-advisory"
-      ],
-      "lessons": [
-        {
-          "point": "The two bugs combine into full device compromise: an authorization bypass plus an admin-only command injection removes the admin requirement.",
-          "excerpt": "If exploited in combination, these vulnerabilities could allow an attacker to bypass authorization controls and obtain root access to the device",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Exposure of the management plane is the gating condition, so network restriction of admin interfaces is the main compensating control before patching.",
-          "excerpt": "Successful exploitation requires an attacker to have access to the administrative interface of an affected product.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Apply Barracuda patches and restrict appliance admin interfaces",
-        "detail": "Apply BNSF-40425/BNSF-40430 to ESG and the listed patches for ADC, BMA, WCC, WAF and WSG. Confirm the administrative interface is reachable only from a trusted management network, and given ESG's 2023 history, review configuration-change logs for unexpected global config edits."
-      },
-      "scores": {
-        "novelty": 15,
-        "relevance": 50,
-        "newness": 86,
-        "credibility": 48.1,
-        "composite": 48.22,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "Core claim: a vendor advisory for an auth-bypass plus command-injection chain to root on security appliances. This is a routine patch advisory, similar to existing product-security entries on Ivanti Connect Secure chains to root, F5 BIG-IP and Cisco ASA flaws. Prior Barracuda ESG zero-days (CVE-2023-2868, CVE-2023-7102) are well documented; this item is not reported exploited.",
-      "related_claims": [],
-      "threat": "Attackers with network reach to a Barracuda appliance's administrative interface chaining the ESG auth weakness and the root command injection to take over the device.",
-      "conditions": "Unpatched ESG (for the full chain) or other listed products (for the admin command injection), with the administrative interface reachable by the attacker.",
-      "mitigations": "Apply Barracuda's patches and latest firmware; restrict administrative interfaces to trusted internal networks with network access controls; audit for unexpected configuration changes.",
-      "source_url": "https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/",
-      "article_url": "https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-bleepingcomputer-com-feed",
-      "source_rank": 48.1,
-      "source_topics": [
-        "product-security",
-        "ai-security"
-      ],
-      "source_name": "BleepingComputer",
-      "raw_path": "data/_raw/barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 7 > 3 (ESG, ADC, UNC4841, BNSF, BMA, WCC, WSG)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "product-security",
       "domain": "ps.appsec",
       "title": "F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited",
       "source_url": "https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/",
@@ -4524,6 +4386,144 @@
       ]
     },
     {
+      "topic": "product-security",
+      "domain": "ps.identity",
+      "title": "X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies",
+      "source_url": "https://x.com/Dinosn/status/2116946099059511340",
+      "related_claims": [],
+      "summary": "A one-line X post says the Mirage2FA adversary-in-the-middle phishing proxy stole 4,561 Microsoft 365 session cookies despite multi-factor authentication, cites CVE-2026-69836 at CVSS 10.0, and mentions detection rules and a Windows Hello for Business hardening guide. The post itself gives no details, so the numbers are unverified here.",
+      "takeaway": "Adversary-in-the-middle proxies keep beating one-time-code multi-factor authentication; phishing-resistant sign-in is the fix, but this claim needs a primary source.",
+      "lessons": [
+        {
+          "point": "The post claims session-cookie theft at scale through an adversary-in-the-middle proxy, which bypasses multi-factor prompts; the source is a single social post.",
+          "excerpt": "Mirage2FA stole 4,561 M365 session cookies despite MFA via AiTM proxy",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "aitm",
+        "session-hijack",
+        "microsoft-365",
+        "phishing",
+        "mfa-bypass"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Find the primary report before acting on the Mirage2FA numbers",
+        "detail": "Treat the 4,561 figure and the CVE mapping as unverified until a primary write-up is found; meanwhile check that Conditional Access requires phishing-resistant methods such as Windows Hello for Business or FIDO2 for Microsoft 365 admins."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 40,
+        "newness": 81,
+        "credibility": 60.0,
+        "composite": 47.25,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier found the summary matches the post; it notes a CVE with CVSS 10.0 for a phishing kit is implausible, so the post stays low-confidence.",
+      "prior_art": "Evilginx, Tycoon 2FA and other adversary-in-the-middle phishing kits that steal Microsoft 365 session cookies.",
+      "article_url": null,
+      "tweet_url": "https://x.com/Dinosn/status/2116946099059511340",
+      "author": "@Dinosn",
+      "date": "2026-11",
+      "published": "2026-11-01",
+      "raw_path": "data/_raw/dinosn-mirage2fa-stole-4-561-m365-session-cookie-cd9d94c13b.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "id": "x-post-claims-mirage2fa-stole-4-561-microsoft-36-227716cb6e",
+      "retrieved_at": "2026-11-01T17:42:30+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf",
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Barracuda patches ESG auth bypass chaining to root command injection",
+      "summary": "Barracuda disclosed two flaws: CVE-2026-116606, a critical Email Security Gateway authentication weakness that lets attackers modify global appliance configuration, and CVE-2026-111560, an admin-level OS command injection that runs as root across ESG, Load Balancer ADC, Message Archiver, WAF, WAF Control Center and Web Security Gateway. Chained, they give root on the device, but exploitation requires reaching the administrative interface. No in-the-wild exploitation is reported; the article recalls UNC4841's 2023 ESG zero-day campaigns.",
+      "takeaway": "Patch Barracuda appliances and keep their admin interfaces off untrusted networks, since the chain needs management-plane reach.",
+      "tags": [
+        "barracuda",
+        "esg",
+        "network-appliance",
+        "auth-bypass",
+        "command-injection",
+        "patch-advisory"
+      ],
+      "lessons": [
+        {
+          "point": "The two bugs combine into full device compromise: an authorization bypass plus an admin-only command injection removes the admin requirement.",
+          "excerpt": "If exploited in combination, these vulnerabilities could allow an attacker to bypass authorization controls and obtain root access to the device",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Exposure of the management plane is the gating condition, so network restriction of admin interfaces is the main compensating control before patching.",
+          "excerpt": "Successful exploitation requires an attacker to have access to the administrative interface of an affected product.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Apply Barracuda patches and restrict appliance admin interfaces",
+        "detail": "Apply BNSF-40425/BNSF-40430 to ESG and the listed patches for ADC, BMA, WCC, WAF and WSG. Confirm the administrative interface is reachable only from a trusted management network, and given ESG's 2023 history, review configuration-change logs for unexpected global config edits."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 50,
+        "newness": 81,
+        "credibility": 48.1,
+        "composite": 46.97,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "Core claim: a vendor advisory for an auth-bypass plus command-injection chain to root on security appliances. This is a routine patch advisory, similar to existing product-security entries on Ivanti Connect Secure chains to root, F5 BIG-IP and Cisco ASA flaws. Prior Barracuda ESG zero-days (CVE-2023-2868, CVE-2023-7102) are well documented; this item is not reported exploited.",
+      "related_claims": [],
+      "threat": "Attackers with network reach to a Barracuda appliance's administrative interface chaining the ESG auth weakness and the root command injection to take over the device.",
+      "conditions": "Unpatched ESG (for the full chain) or other listed products (for the admin command injection), with the administrative interface reachable by the attacker.",
+      "mitigations": "Apply Barracuda's patches and latest firmware; restrict administrative interfaces to trusted internal networks with network access controls; audit for unexpected configuration changes.",
+      "source_url": "https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/",
+      "article_url": "https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-bleepingcomputer-com-feed",
+      "source_rank": 48.1,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "BleepingComputer",
+      "raw_path": "data/_raw/barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 7 > 3 (ESG, ADC, UNC4841, BNSF, BMA, WCC, WSG)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "the-rise-of-agentic-attacks-what-they-look-like-86e9e77491",
       "topic": "product-security",
       "domain": "ps.detection-response",
@@ -5058,83 +5058,6 @@
       ]
     },
     {
-      "id": "the-roi-of-agentic-remediation-real-world-result-b16be21101",
-      "topic": "product-security",
-      "domain": "ps.cloud-infra",
-      "title": "Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation",
-      "summary": "A Wiz marketing post arguing that cloud vulnerability remediation is slowed by coordination across security, engineering and platform teams rather than by detection. It describes Green Agent finding the likely owner from commit history, service catalogs, CMDB and cloud logs, tracing runtime findings back to the exact file and line, and producing code or Terraform fixes as one-click pull requests or via an MCP server for coding agents. Customer quotes claim more than 70% less daily triage time at Fireblocks and 10x remediation velocity at project44, with no methodology given.",
-      "takeaway": "The useful idea is the pipeline shape (owner attribution, runtime-to-code root cause, fix as a pull request), while the ROI figures are unverified vendor claims.",
-      "tags": [
-        "agentic-remediation",
-        "vulnerability-management",
-        "ownership-attribution",
-        "code-to-cloud",
-        "mcp",
-        "vendor-marketing"
-      ],
-      "lessons": [
-        {
-          "point": "The core bottleneck described is organizational: the team that finds the risk does not own the code or pipeline that must change.",
-          "excerpt": "Security teams discover the risk, but they don't own the code, the infrastructure, or the deployment pipelines.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Owner attribution can be automated by joining several weak signals rather than relying on a stale CMDB alone.",
-          "excerpt": "By analyzing repository commit history, Wiz Project assignments, service catalogs, CMDB integrations, and cloud logs",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Reported customer gains are large but come only as vendor-selected testimonials with no baseline or method.",
-          "excerpt": "cut daily operational triage time by more than 70% and now reaches same-day resolution on critical risks.",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Build an owner-attribution step into your remediation pipeline",
-        "detail": "Before routing a cloud finding, resolve the owner by joining git blame or commit history on the Dockerfile or infrastructure-as-code (IaC) file, service catalog entries and deploy logs, and fall back to the CMDB last. Attach the runtime-to-code trace (exposed workload, reachable package, originating file) to the ticket and deliver the fix as a pull request to that owner, gated by normal CI checks."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 40,
-        "newness": 86,
-        "credibility": 67.5,
-        "composite": 46.02,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "Salesforce's claim that AI finds vulnerabilities faster than engineers can fix them (product-security.json) states the same remediation-bottleneck thesis. Code-to-cloud mapping and auto-fix PRs are established features across CNAPP and ASPM vendors; the injected-security-context remediation claim in the ledger covers fix quality, which this post does not measure.",
-      "related_claims": [
-        "gate-agent-prs-with-automated-checks"
-      ],
-      "source_url": "https://www.wiz.io/blog/green-agent-agentic-remediation",
-      "article_url": "https://www.wiz.io/blog/green-agent-agentic-remediation",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-wiz-io-feed-rss-xml",
-      "source_rank": 67.5,
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "source_name": "Wiz Research",
-      "raw_path": "data/_raw/the-roi-of-agentic-remediation-real-world-result-b16be21101.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "topic": "product-security",
       "domain": "ps.appsec",
       "title": "Authlib accepts a JSON web signature with no signatures as verified",
@@ -5458,6 +5381,83 @@
       "source_name": "@MarkBlah via Hacker News",
       "id": "google-declines-to-fix-zero-click-sms-that-crash-952afeb62b",
       "retrieved_at": "2026-10-29T16:50:31+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "the-roi-of-agentic-remediation-real-world-result-b16be21101",
+      "topic": "product-security",
+      "domain": "ps.cloud-infra",
+      "title": "Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation",
+      "summary": "A Wiz marketing post arguing that cloud vulnerability remediation is slowed by coordination across security, engineering and platform teams rather than by detection. It describes Green Agent finding the likely owner from commit history, service catalogs, CMDB and cloud logs, tracing runtime findings back to the exact file and line, and producing code or Terraform fixes as one-click pull requests or via an MCP server for coding agents. Customer quotes claim more than 70% less daily triage time at Fireblocks and 10x remediation velocity at project44, with no methodology given.",
+      "takeaway": "The useful idea is the pipeline shape (owner attribution, runtime-to-code root cause, fix as a pull request), while the ROI figures are unverified vendor claims.",
+      "tags": [
+        "agentic-remediation",
+        "vulnerability-management",
+        "ownership-attribution",
+        "code-to-cloud",
+        "mcp",
+        "vendor-marketing"
+      ],
+      "lessons": [
+        {
+          "point": "The core bottleneck described is organizational: the team that finds the risk does not own the code or pipeline that must change.",
+          "excerpt": "Security teams discover the risk, but they don't own the code, the infrastructure, or the deployment pipelines.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Owner attribution can be automated by joining several weak signals rather than relying on a stale CMDB alone.",
+          "excerpt": "By analyzing repository commit history, Wiz Project assignments, service catalogs, CMDB integrations, and cloud logs",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Reported customer gains are large but come only as vendor-selected testimonials with no baseline or method.",
+          "excerpt": "cut daily operational triage time by more than 70% and now reaches same-day resolution on critical risks.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Build an owner-attribution step into your remediation pipeline",
+        "detail": "Before routing a cloud finding, resolve the owner by joining git blame or commit history on the Dockerfile or infrastructure-as-code (IaC) file, service catalog entries and deploy logs, and fall back to the CMDB last. Attach the runtime-to-code trace (exposed workload, reachable package, originating file) to the ticket and deliver the fix as a pull request to that owner, gated by normal CI checks."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 40,
+        "newness": 81,
+        "credibility": 67.5,
+        "composite": 44.77,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "Salesforce's claim that AI finds vulnerabilities faster than engineers can fix them (product-security.json) states the same remediation-bottleneck thesis. Code-to-cloud mapping and auto-fix PRs are established features across CNAPP and ASPM vendors; the injected-security-context remediation claim in the ledger covers fix quality, which this post does not measure.",
+      "related_claims": [
+        "gate-agent-prs-with-automated-checks"
+      ],
+      "source_url": "https://www.wiz.io/blog/green-agent-agentic-remediation",
+      "article_url": "https://www.wiz.io/blog/green-agent-agentic-remediation",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-wiz-io-feed-rss-xml",
+      "source_rank": 67.5,
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "source_name": "Wiz Research",
+      "raw_path": "data/_raw/the-roi-of-agentic-remediation-real-world-result-b16be21101.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -6256,10 +6256,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 40,
-        "newness": 1,
+        "newness": 0,
         "credibility": 77.5,
-        "composite": 42.47,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 42.22,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "prior_art": "No direct pool entry; the Trail of Bits Nitro Enclaves attack-surface post is cited in this piece but not indexed. Standing claims do not cover KMS-enclave attestation replay.",
       "discovered_via": "rss",
@@ -6368,82 +6368,6 @@
       "previous_slugs": [
         "cisa-kev-exploited-fortinet-cve-2025-61624-path-traversal-le"
       ]
-    },
-    {
-      "id": "learn-the-rules-the-hacker-mindset-84b22b614e",
-      "topic": "product-security",
-      "domain": "ps.offensive",
-      "title": "Microsoft Research podcast profiles Cyber Grand Challenge lead Mike Walker",
-      "summary": "A Microsoft Research podcast interview with Mike Walker, who led DARPA's Cyber Grand Challenge, the first all-machine hacking tournament, and now works on AI and cybersecurity at Microsoft Research. Most of it is career biography: childhood, DEF CON Capture the Flag, and how DARPA asked whether machines could play CTF. The security content is general reflection, such as the view that security controls spend user trust and that autonomous adversarial systems cannot be meaningfully tested before a real fight.",
-      "takeaway": "A career-profile podcast with little technical content, useful mainly as background on how autonomous hacking competitions began.",
-      "tags": [
-        "cyber-grand-challenge",
-        "ctf",
-        "autonomous-hacking",
-        "podcast",
-        "security-culture"
-      ],
-      "lessons": [
-        {
-          "point": "Walker frames every security control as a request for user trust, and argues that squandering that trust makes the security regime fail.",
-          "excerpt": "every time a security system asks something of users, then you’re asking for their trust. And that trust is a precious commodity.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The Cyber Grand Challenge final ran autonomous systems behind an air gap with no human able to intervene, an early template for fully autonomous offense and defense.",
-          "excerpt": "that was run entirely by autonomous systems behind an air gap, so if they failed, there was no person even to turn them off and turn them back on again.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Adversarial autonomous systems are hard to test in advance: teams only had a scripted opponent, so the first real confrontation was the actual competition.",
-          "excerpt": "you can’t really preflight an autonomous system whose purpose is to fight.",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Test autonomous security agents against live adversaries, not only scripted ones",
-        "detail": "If you build autonomous offensive or defensive agents, a scripted opponent prepares the agent only weakly for real adversaries. Plan adversarial exercises against other adaptive systems or red teams before you trust the agent's behavior."
-      },
-      "scores": {
-        "novelty": 10,
-        "relevance": 20,
-        "newness": 86,
-        "credibility": 72.5,
-        "composite": 41.38,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "DARPA Cyber Grand Challenge history (2016) is widely documented. The nearest entry is Anthropic's red-team note that Claude reached undergraduate-level CTF skill (ai-security.json). This podcast adds no new technical claim.",
-      "related_claims": [],
-      "source_url": "https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/",
-      "article_url": "https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-microsoft-com-en-us-research-feed",
-      "source_rank": 72.5,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Microsoft Research Blog",
-      "raw_path": "data/_raw/learn-the-rules-the-hacker-mindset-84b22b614e.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 4 > 3 (DARPA, DEF, CON, CTF)"
-        ]
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "2-million-drained-from-polymarket-traders-in-new-536e5ae3f7",
@@ -7266,6 +7190,82 @@
         ],
         "at": "2026-10-27T18:54:15+00:00"
       }
+    },
+    {
+      "id": "learn-the-rules-the-hacker-mindset-84b22b614e",
+      "topic": "product-security",
+      "domain": "ps.offensive",
+      "title": "Microsoft Research podcast profiles Cyber Grand Challenge lead Mike Walker",
+      "summary": "A Microsoft Research podcast interview with Mike Walker, who led DARPA's Cyber Grand Challenge, the first all-machine hacking tournament, and now works on AI and cybersecurity at Microsoft Research. Most of it is career biography: childhood, DEF CON Capture the Flag, and how DARPA asked whether machines could play CTF. The security content is general reflection, such as the view that security controls spend user trust and that autonomous adversarial systems cannot be meaningfully tested before a real fight.",
+      "takeaway": "A career-profile podcast with little technical content, useful mainly as background on how autonomous hacking competitions began.",
+      "tags": [
+        "cyber-grand-challenge",
+        "ctf",
+        "autonomous-hacking",
+        "podcast",
+        "security-culture"
+      ],
+      "lessons": [
+        {
+          "point": "Walker frames every security control as a request for user trust, and argues that squandering that trust makes the security regime fail.",
+          "excerpt": "every time a security system asks something of users, then you’re asking for their trust. And that trust is a precious commodity.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The Cyber Grand Challenge final ran autonomous systems behind an air gap with no human able to intervene, an early template for fully autonomous offense and defense.",
+          "excerpt": "that was run entirely by autonomous systems behind an air gap, so if they failed, there was no person even to turn them off and turn them back on again.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Adversarial autonomous systems are hard to test in advance: teams only had a scripted opponent, so the first real confrontation was the actual competition.",
+          "excerpt": "you can’t really preflight an autonomous system whose purpose is to fight.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Test autonomous security agents against live adversaries, not only scripted ones",
+        "detail": "If you build autonomous offensive or defensive agents, a scripted opponent prepares the agent only weakly for real adversaries. Plan adversarial exercises against other adaptive systems or red teams before you trust the agent's behavior."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 20,
+        "newness": 81,
+        "credibility": 72.5,
+        "composite": 40.12,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "DARPA Cyber Grand Challenge history (2016) is widely documented. The nearest entry is Anthropic's red-team note that Claude reached undergraduate-level CTF skill (ai-security.json). This podcast adds no new technical claim.",
+      "related_claims": [],
+      "source_url": "https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/",
+      "article_url": "https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-microsoft-com-en-us-research-feed",
+      "source_rank": 72.5,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Microsoft Research Blog",
+      "raw_path": "data/_raw/learn-the-rules-the-hacker-mindset-84b22b614e.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (DARPA, DEF, CON, CTF)"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "product-security",
@@ -8290,75 +8290,6 @@
       ]
     },
     {
-      "id": "citizen-lab-researchers-win-irtf-applied-network-a479453ff2",
-      "topic": "product-security",
-      "domain": "ps.mobile",
-      "title": "Citizen Lab and Princeton researchers win IRTF prize for Android network security",
-      "summary": "Citizen Lab's Mona Wang, Jeffrey Knockel and Zoë Reichert, with Princeton's Prateek Mittal and Jonathan Mayer, won the IRTF Applied Networking Research Prize for their IEEE S&P 2025 paper on the network security of Android apps. The award will be presented at IETF-127 in San Francisco in November 2026. The page is a short announcement and contains no technical findings; the related Citizen Lab work it links is WireWatch, a study of proprietary network encryption in Android apps.",
-      "takeaway": "An award announcement with no new findings; read the underlying paper on proprietary encryption in Android apps instead.",
-      "tags": [
-        "award",
-        "android",
-        "network-security",
-        "proprietary-encryption",
-        "citizen-lab"
-      ],
-      "lessons": [
-        {
-          "point": "The announcement concerns recognition of earlier research, not a new result; the award is presented at the IETF-127 meeting.",
-          "excerpt": "Citizen Lab research fellow Mona Wang will receive the award on the team’s behalf at the IRTF Open Meeting at IETF-127",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The related Citizen Lab research linked from the page measured proprietary (non-TLS) network encryption across Android apps, which is the substantive work behind the prize.",
-          "excerpt": "Measuring the Security of Proprietary Network Encryption in the Global Android Ecosystem",
-          "confidence": 0.55,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Flag custom network encryption in mobile app reviews",
-        "detail": "In mobile app security reviews, check whether traffic uses standard TLS or a homegrown encryption scheme, and treat proprietary schemes as findings that need cryptographic review. The underlying Citizen Lab paper, not this announcement, has the details."
-      },
-      "scores": {
-        "novelty": 5,
-        "relevance": 15,
-        "newness": 86,
-        "credibility": 70.8,
-        "composite": 38.12,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "prior_art": "The awarded paper was published at IEEE S&P 2025, and Citizen Lab's WireWatch (May 2025) and RedNote (Feb 2025) reports cover the same research line. Nearest dataset entries on Android security are GitHub Security Lab's AI-agent Android audit (product-security.json). The announcement adds nothing new.",
-      "related_claims": [],
-      "source_url": "https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/",
-      "article_url": "https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "rss",
-      "source_id": "rss:https-citizenlab-ca-feed",
-      "source_rank": 70.8,
-      "source_topics": [
-        "product-security"
-      ],
-      "source_name": "The Citizen Lab",
-      "raw_path": "data/_raw/citizen-lab-researchers-win-irtf-applied-network-a479453ff2.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 4 > 3 (IRTF, IEEE, S&P, IETF)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
       "candidate_id": "supply-chain-zero-days-closing-the-gap-between-p-ec40c479ab",
       "topic": "product-security",
       "domain": "ps.supply-chain",
@@ -8451,74 +8382,6 @@
       "previous_slugs": [
         "wiz-scans-every-new-npm-version-at-publish-time-with-diffing"
       ]
-    },
-    {
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "Northstar Security leaves stealth with $7M to find risky issue combinations",
-      "source_url": "https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/",
-      "related_claims": [],
-      "summary": "Northstar Security raised a $7 million seed round led by Wing Venture Capital. It builds a graph of how identities, assets, applications and vulnerabilities connect, flags combinations of issues that together expose critical systems, and uses AI agents to start fixes that people can supervise.",
-      "takeaway": "A funding announcement: the idea of scoring combined exposures, not single findings, is established, and the source has no results to judge.",
-      "lessons": [
-        {
-          "point": "The product targets combinations of individually tolerable issues that together expose a critical system.",
-          "excerpt": "Issues such as a vulnerability, an unmanaged device, or an account with excessive privileges may seem under control on their own, but together they can expose critical business systems.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Its agents can start remediation actions, with people supervising where appropriate.",
-          "excerpt": "Northstar’s agents can then kick off fixes, such as installing endpoint protection, notifying the user, or limiting their access",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "funding",
-        "exposure-management",
-        "security-graph",
-        "agents"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "No action: vendor funding news",
-        "detail": "Nothing to change; if you already run attack-path or exposure-graph tooling, this is a new vendor in that space."
-      },
-      "scores": {
-        "novelty": 10,
-        "relevance": 20,
-        "newness": 86,
-        "credibility": 48.8,
-        "composite": 37.82,
-        "scored_at": "2026-11-03T17:55:42+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier supported both lessons; funding news with no results.",
-      "prior_art": "Attack-path and toxic-combination analysis in existing cloud security and exposure-management platforms (for example Wiz's security graph).",
-      "article_url": "https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-01",
-      "raw_path": "data/_raw/northstar-security-exits-stealth-with-7m-to-expo-ceec66ca1e.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-securityweek-com-feed",
-      "source_rank": 48.8,
-      "source_topics": [
-        "product-security",
-        "ai-security"
-      ],
-      "source_name": "SecurityWeek",
-      "id": "northstar-security-leaves-stealth-with-7m-to-fin-4e9222e732",
-      "retrieved_at": "2026-11-01T17:42:30+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "hackers-hijack-convertr-analytics-script-to-stea-cf4dbd9649",
@@ -8950,6 +8813,75 @@
       "grounding_score": 1.0
     },
     {
+      "id": "citizen-lab-researchers-win-irtf-applied-network-a479453ff2",
+      "topic": "product-security",
+      "domain": "ps.mobile",
+      "title": "Citizen Lab and Princeton researchers win IRTF prize for Android network security",
+      "summary": "Citizen Lab's Mona Wang, Jeffrey Knockel and Zoë Reichert, with Princeton's Prateek Mittal and Jonathan Mayer, won the IRTF Applied Networking Research Prize for their IEEE S&P 2025 paper on the network security of Android apps. The award will be presented at IETF-127 in San Francisco in November 2026. The page is a short announcement and contains no technical findings; the related Citizen Lab work it links is WireWatch, a study of proprietary network encryption in Android apps.",
+      "takeaway": "An award announcement with no new findings; read the underlying paper on proprietary encryption in Android apps instead.",
+      "tags": [
+        "award",
+        "android",
+        "network-security",
+        "proprietary-encryption",
+        "citizen-lab"
+      ],
+      "lessons": [
+        {
+          "point": "The announcement concerns recognition of earlier research, not a new result; the award is presented at the IETF-127 meeting.",
+          "excerpt": "Citizen Lab research fellow Mona Wang will receive the award on the team’s behalf at the IRTF Open Meeting at IETF-127",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The related Citizen Lab research linked from the page measured proprietary (non-TLS) network encryption across Android apps, which is the substantive work behind the prize.",
+          "excerpt": "Measuring the Security of Proprietary Network Encryption in the Global Android Ecosystem",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Flag custom network encryption in mobile app reviews",
+        "detail": "In mobile app security reviews, check whether traffic uses standard TLS or a homegrown encryption scheme, and treat proprietary schemes as findings that need cryptographic review. The underlying Citizen Lab paper, not this announcement, has the details."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 15,
+        "newness": 81,
+        "credibility": 70.8,
+        "composite": 36.87,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "prior_art": "The awarded paper was published at IEEE S&P 2025, and Citizen Lab's WireWatch (May 2025) and RedNote (Feb 2025) reports cover the same research line. Nearest dataset entries on Android security are GitHub Security Lab's AI-agent Android audit (product-security.json). The announcement adds nothing new.",
+      "related_claims": [],
+      "source_url": "https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/",
+      "article_url": "https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "rss",
+      "source_id": "rss:https-citizenlab-ca-feed",
+      "source_rank": 70.8,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "The Citizen Lab",
+      "raw_path": "data/_raw/citizen-lab-researchers-win-irtf-applied-network-a479453ff2.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (IRTF, IEEE, S&P, IETF)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "ghsa-22hg-r758-rrw9-7a9523be43",
       "scores": {
         "novelty": 30,
@@ -9348,6 +9280,74 @@
       "mitigations": "Patch per Broadcom advisory 38017 and keep an independent log source for hypervisor management actions.",
       "id": "exploited-vmware-esx-flaw-lets-attacker-with-adm-ad6d766315",
       "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Northstar Security leaves stealth with $7M to find risky issue combinations",
+      "source_url": "https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/",
+      "related_claims": [],
+      "summary": "Northstar Security raised a $7 million seed round led by Wing Venture Capital. It builds a graph of how identities, assets, applications and vulnerabilities connect, flags combinations of issues that together expose critical systems, and uses AI agents to start fixes that people can supervise.",
+      "takeaway": "A funding announcement: the idea of scoring combined exposures, not single findings, is established, and the source has no results to judge.",
+      "lessons": [
+        {
+          "point": "The product targets combinations of individually tolerable issues that together expose a critical system.",
+          "excerpt": "Issues such as a vulnerability, an unmanaged device, or an account with excessive privileges may seem under control on their own, but together they can expose critical business systems.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Its agents can start remediation actions, with people supervising where appropriate.",
+          "excerpt": "Northstar’s agents can then kick off fixes, such as installing endpoint protection, notifying the user, or limiting their access",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "funding",
+        "exposure-management",
+        "security-graph",
+        "agents"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action: vendor funding news",
+        "detail": "Nothing to change; if you already run attack-path or exposure-graph tooling, this is a new vendor in that space."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 20,
+        "newness": 81,
+        "credibility": 48.8,
+        "composite": 36.57,
+        "scored_at": "2026-11-04T18:07:06+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported both lessons; funding news with no results.",
+      "prior_art": "Attack-path and toxic-combination analysis in existing cloud security and exposure-management platforms (for example Wiz's security graph).",
+      "article_url": "https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-01",
+      "raw_path": "data/_raw/northstar-security-exits-stealth-with-7m-to-expo-ceec66ca1e.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 48.8,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "SecurityWeek",
+      "id": "northstar-security-leaves-stealth-with-7m-to-fin-4e9222e732",
+      "retrieved_at": "2026-11-01T17:42:30+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -10527,10 +10527,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 40,
-        "newness": 1,
+        "newness": 0,
         "credibility": 73.2,
-        "composite": 29.23,
-        "scored_at": "2026-10-22T05:47:04+00:00"
+        "composite": 28.98,
+        "scored_at": "2026-11-04T18:07:06+00:00"
       },
       "prior_art": "CONIKS and Certificate Transparency (RFC 6962) established the multi-auditor, freshness-windowed transparency-log pattern for an existing deployed system.",
       "article_url": "https://blog.trailofbits.com/2026/08/11/how-trail-of-bits-helps-verify-the-integrity-of-your-signal-chats/",
