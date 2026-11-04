@@ -2,12 +2,21 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_9 vetted findings · updated 2026-11-01 · ranked by composite · findings from the latest 31 days · [50 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-11-03 · ranked by composite · findings from the latest 31 days · [52 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Barracuda patches ESG auth bypass chaining to root command injection](https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/)**
+- **[Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://www.wiz.io/blog/green-agent-agentic-remediation)**
+- **[mSecure asks users to reset passwords without explaining why](https://www.theregister.com/security/2026/11/03/password-manager-msecure-tells-users-to-change-passwords-wont-say-why/5307296)**
+- **[Attackers exploit critical Node-RED missing-authentication flaw to drop bots and webshells](https://www.securityweek.com/critical-node-red-flaw-exploited-in-attacks/)**
+- **[Attackers exploit maximum-severity Siemens IoT2050 flaw to plant command backdoors](https://thehackernews.com/2026/11/attackers-exploit-critical-siemens.html)**
+- **[Attackers target unpatched CryptoPayment Gateway WordPress plugin flaw exposing wallet credentials](https://thehackernews.com/2026/11/attackers-target-unpatched.html)**
+- **[cPGuard update channel hijacked to push backdoor to Linux servers](https://thehackernews.com/2026/11/cpguard-update-channel-hijacked-to.html)**
+- **[Imperva tracks StyleSmuggler Magento exploitation dropping the PSK Agent Go RAT](https://www.imperva.com/blog/stylesmuggler-exploitation-deploys-psk-agent-rat-against-magento-stores/)**
+- **[Trail of Bits uses Codex to backport security fixes to stable Linux](https://blog.trailofbits.com/2026/11/02/backporting-security-fixes-at-scale-with-codex/)**
 - **[Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/)**
   _Why now: The week's most widely covered developer-supply-chain incident (Wired, Ars, BleepingComputer, The Register, DoublePulsar), and Microsoft's write-up gives concrete artifacts to hunt and the fact that uninstalling the extension does not… · widely-reported · newsworthy · timely · high-relevance_
 - **[Canonical LXD and MicroCloud accepted forged client certificate chains](https://thehackernews.com/2026/11/critical-lxd-and-microcloud-flaw-cvss.html)**
@@ -21,6 +30,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[A compromised DebugBear monitoring script drained Polymarket traders' accounts](https://www.securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack/)**
 - **[Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor](https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/)**
 - **[Attackers exploit a missing-authorization flaw in Drupal Commerce Core](https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html)**
+- **[Trojanized Claude Code extension on Cursor marketplace backdoored up to 5,000 developers](https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/)**
 - **[Attackers exploit new WordPress remote code execution flaw within hours of patch](https://www.securityweek.com/fresh-wordpress-vulnerability-in-attackers-crosshairs/)**
 - **[Critical UEFI firmware flaw threatens most servers worldwide](https://www.securityweek.com/in-other-news-anthropic-breach-dispute-uefi-flaw-hits-most-servers-cloudflare-ai-data-leak/)**
 - **[FBI seizes domain of bulletproof hosting provider Virtualine](https://www.securityweek.com/bulletproof-host-virtualine-loses-its-domain-to-fbi-seizure/)**
@@ -45,6 +55,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Skimmers hijacked Convertr's self-hosted analytics script to steal checkout card data](https://www.bleepingcomputer.com/news/security/hackers-hijack-convertr-analytics-script-to-steal-payment-card-data/)**
   _Why now: A live Magecart incident in which one self-hosted analytics script skimmed every merchant's checkout. The lesson is concrete: treat every script loaded on checkout pages, analytics included, as payment-critical and check its integrity. · newsworthy · timely · high-relevance_
 - **[Adobe patches eight critical flaws in Campaign Classic](https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html)**
+- **[Attackers probe patched Oracle EBS bug as PeopleSoft zero-day proves to be three flaws](https://www.theregister.com/security/2026/10/28/oracle-celebrates-end-of-cybersecurity-awareness-month-with-quadruple-trouble/5306121)**
 - **[Leak exposes records of more than 41,000 DHS employees and contractors](https://www.wired.com/story/massive-leak-exposes-41000-homeland-security-workers-including-undercover-ice-agents/)**
 - **[Skyw4lker device code phishing campaign targets US manufacturing, tech and healthcare firms](https://thehackernews.com/2026/10/american-organizations-under-attack.html)**
 - **[Volt Typhoon hides zero-day attacks behind rotating relays of hacked devices](https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework/)**
@@ -169,43 +180,43 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Application Security
 
-- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **62.09** · Oct 6, 2026  
+- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **61.59** · Oct 6, 2026  
   Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
   _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
-- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **58.79** · Oct 9, 2026  
+- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **58.29** · Oct 9, 2026  
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
   _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **56.13** · Oct 27, 2026  
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **55.63** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
 ## Vulnerability Research & Red Teaming
 
-- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **63.39** · Oct 27, 2026 · 🔗 +1 sources  
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **62.89** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **58.25** · Oct 19, 2026  
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **57.75** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## AI in the SDLC
 
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **57.5** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **57.0** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **48.29** · Oct 6, 2026  
+- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **47.79** · Oct 6, 2026  
   Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **52.25** · Oct 15, 2026  
+- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **51.75** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **47.0** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **46.5** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 

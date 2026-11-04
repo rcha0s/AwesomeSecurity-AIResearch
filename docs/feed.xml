@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-01T00:00:00Z</updated>
+  <updated>2026-11-03T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -31,60 +31,60 @@
     <summary type="text">Patching an SD-WAN control system that was already compromised is not enough: hunt for KeyDrift's files and treat the inter-site keys as possibly exposed.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
-    <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
-    <updated>2026-11-01T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week" rel="alternate" type="text/html" />
-    <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week</id>
+    <title>Barracuda patches ESG auth bypass chaining to root command injection</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch Barracuda appliances and keep their admin interfaces off untrusted networks, since the chain needs management-plane reach.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=canonical-lxd-and-microcloud-accepted-forged-cli-522855cdae#week</id>
-    <title>Canonical LXD and MicroCloud accepted forged client certificate chains</title>
-    <updated>2026-11-01T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=canonical-lxd-and-microcloud-accepted-forged-cli-522855cdae#week" rel="alternate" type="text/html" />
-    <summary type="text">When you pin client certificates in mutual TLS, match only the leaf certificate the client proved it owns, never the extra certificates it chose to send.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-warns-llmjacking-attacks-are-costing-some-b14fb698e3#week</id>
+    <title>Google warns LLMjacking attacks cost some enterprises up to $1 million</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-warns-llmjacking-attacks-are-costing-some-b14fb698e3#week" rel="alternate" type="text/html" />
+    <summary type="text">Stolen cloud tokens and exposed LLM keys now turn into six-figure daily bills, so LLM credentials need the same protection and spend alerting as other cloud credentials.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-dissects-the-ssh-backdoor-in-a-trojani-2bf6ec40ea#week</id>
-    <title>Microsoft dissects the SSH backdoor in a trojanized Claude Code extension</title>
-    <updated>2026-10-31T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-dissects-the-ssh-backdoor-in-a-trojani-2bf6ec40ea#week" rel="alternate" type="text/html" />
-    <summary type="text">Uninstalling the extension does not clean the machine: hunt for the svc-telemetry key and the disguised startup entries on every developer machine that took the update.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=britain-on-notice-ai-powered-ransomware-attacks-666af1d3dd#week</id>
+    <title>UK NCSC warns AI-powered ransomware will hit critical infrastructure by 2028</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=britain-on-notice-ai-powered-ransomware-attacks-666af1d3dd#week" rel="alternate" type="text/html" />
+    <summary type="text">Defenders should expect AI-assisted attacks, including repurposed open source red-teaming tools, and plan for AI-assisted defense and faster patching.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week</id>
-    <title>Northflank breach exposed customer secrets, and stolen AI API keys were used</title>
-    <updated>2026-10-31T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=northflank-breach-exposed-customer-secrets-and-s-8df39139f2#week" rel="alternate" type="text/html" />
-    <summary type="text">AI API keys stored as platform environment variables are now a primary target, so scope them narrowly, cap their spend and be ready to rotate them in minutes.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=password-manager-msecure-tells-users-to-change-p-6c2b7a6bf0#week</id>
+    <title>mSecure asks users to reset passwords without explaining why</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=password-manager-msecure-tells-users-to-change-p-6c2b7a6bf0#week" rel="alternate" type="text/html" />
+    <summary type="text">Vague notices about suspicious activity leave password manager users unable to prioritize resets, so vendors should disclose scope early.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shared-chatgpt-link-ran-attacker-code-in-victims-b0f9f1fe57#week</id>
-    <title>Shared ChatGPT link ran attacker code in victims' sessions, OpenAI fixed</title>
-    <updated>2026-10-31T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=shared-chatgpt-link-ran-attacker-code-in-victims-b0f9f1fe57#week" rel="alternate" type="text/html" />
-    <summary type="text">A frame-message listener that never checked its sender let a sandboxed preview push HTML into the trusted page, so any in-page library that accepts cross-frame messages needs sender checks.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=critical-node-red-flaw-exploited-in-attacks-7a3ed4d5d1#week</id>
+    <title>Attackers exploit critical Node-RED missing-authentication flaw to drop bots and webshells</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=critical-node-red-flaw-exploited-in-attacks-7a3ed4d5d1#week" rel="alternate" type="text/html" />
+    <summary type="text">Node-RED instances without adminAuth, including those embedded in operational technology (OT) devices, are being exploited automatically with a single HTTP request.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week</id>
-    <title>Chainalysis discloses breach by attackers using offensive agentic techniques</title>
-    <updated>2026-10-31T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week" rel="alternate" type="text/html" />
-    <summary type="text">Another company says AI-driven intrusion tooling got attackers into internal systems, but with no technical details, defenders can only assume faster, more automated attacks.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-siemens-iot2050-flaw-6e1181978a#week</id>
+    <title>Attackers exploit maximum-severity Siemens IoT2050 flaw to plant command backdoors</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-siemens-iot2050-flaw-6e1181978a#week" rel="alternate" type="text/html" />
+    <summary type="text">Exposed Node-RED on industrial devices is a one-request path to root, and some attackers leave backdoors that survive reboots.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=2-million-drained-from-polymarket-traders-in-new-536e5ae3f7#week</id>
-    <title>A compromised DebugBear monitoring script drained Polymarket traders' accounts</title>
-    <updated>2026-10-30T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=2-million-drained-from-polymarket-traders-in-new-536e5ae3f7#week" rel="alternate" type="text/html" />
-    <summary type="text">Do not load third-party monitoring or analytics scripts into authenticated pages that can move money: anything in that page can act as the user.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-target-unpatched-cryptopayment-gateway-cb2a007a58#week</id>
+    <title>Attackers target unpatched CryptoPayment Gateway WordPress plugin flaw exposing wallet credentials</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-target-unpatched-cryptopayment-gateway-cb2a007a58#week" rel="alternate" type="text/html" />
+    <summary type="text">Abandoned plugins with no fix leave removal as the only defense, so unmaintained payment plugins should be dropped and secrets rotated.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week</id>
-    <title>Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor</title>
-    <updated>2026-10-30T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week" rel="alternate" type="text/html" />
-    <summary type="text">The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cpguard-update-channel-hijacked-to-backdoor-linu-0291037be6#week</id>
+    <title>cPGuard update channel hijacked to push backdoor to Linux servers</title>
+    <updated>2026-11-03T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cpguard-update-channel-hijacked-to-backdoor-linu-0291037be6#week" rel="alternate" type="text/html" />
+    <summary type="text">A security tool's own update channel became the delivery path, so hosting admins must treat any server that took the bad update as compromised and rotate credentials.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>

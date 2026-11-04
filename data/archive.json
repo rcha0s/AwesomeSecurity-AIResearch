@@ -33614,5 +33614,794 @@
     "previous_slugs": [
       "robustreview-llm-paper-reviewers-change-scores-on-content-pr"
     ]
+  },
+  {
+    "id": "ghsa-72qq-p3r5-f7wq-a5fbf6a7e7",
+    "topic": "ai-security",
+    "domain": "ais.agent-security",
+    "title": "@a2ui/web_core openUrl opens agent-supplied URLs without a scheme check",
+    "source_url": "https://github.com/advisories/GHSA-72qq-p3r5-f7wq",
+    "related_claims": [],
+    "summary": "A2UI lets an agent describe UI components (such as buttons) that a client library renders. In @a2ui/web_core, the openUrl action hands the agent-provided URL straight to window.open() with no check on the URI scheme. A malicious agent can set a button's URL to a javascript: URI and get script execution in the page that renders the agent's UI.",
+    "lessons": [
+      {
+        "point": "The renderer trusted agent-controlled data as a navigation target and never checked the URI scheme.",
+        "excerpt": "The `openUrl` function in `@a2ui/web_core` passes an agent-controlled URL directly to `window.open()` without validating the URI scheme.",
+        "confidence": 0.95,
+        "grounded": false
+      },
+      {
+        "point": "The attack path is ordinary agent output: a Button component whose functionCall carries a javascript: URL. Whoever controls the agent, or can steer it, controls the payload.",
+        "excerpt": "A malicious agent can supply a `javascript:` URI as the `url` argument of a `Button` component's `functionCall`",
+        "confidence": 0.85,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Treat UI that an agent generates as untrusted input: allowlist URL schemes (http/https) before any navigation or window.open call.",
+    "tags": [
+      "a2ui",
+      "generative-ui",
+      "javascript-uri",
+      "xss",
+      "agent-output-trust",
+      "npm",
+      "ghsa"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Upgrade @a2ui/web_core and allowlist URL schemes in agent-rendered UI",
+      "detail": "Upgrade @a2ui/web_core to the patched release named in GHSA-72qq-p3r5-f7wq. In any renderer that turns agent output into links, buttons or redirects, parse the URL. Reject anything whose scheme is not http: or https: (block javascript:, data:, vbscript:, file:) before calling window.open, location assignment or href. Add a test that renders a Button with url='javascript:alert(1)' and asserts nothing runs."
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 70,
+      "newness": 17,
+      "credibility": 70.0,
+      "composite": 47.75,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "javascript: URI XSS in link handlers is a classic web bug (OWASP XSS guidance on URL-scheme validation). The delta is the source: agent-generated UI in the A2UI protocol. No equivalent A2UI or generative-UI entry found in the ledger; nearest are the agent-output trust items such as the macOS Terminal ANSI exfiltration sink entry in archive.json. Verifier's closest: ansi2html/builds.sr.ht OSC 8 javascript: href entry; classic javascript: URL-scheme XSS.",
+    "verified": true,
+    "verify_note": "Verifier: excerpts verbatim from the advisory excerpt; 'or can steer it' and the patched-release detail are inference (source is a truncated excerpt).",
+    "threat": "A malicious or compromised remote agent, or an agent steered by prompt injection, emits a button whose action runs JavaScript in the host application origin.",
+    "conditions": "Host app renders agent-supplied A2UI components with a vulnerable @a2ui/web_core and the user clicks the button.",
+    "mitigations": "Upgrade the package; allowlist http/https schemes before window.open; run agent UI in a sandboxed iframe or separate origin; apply a Content Security Policy that blocks inline script.",
+    "article_url": "https://github.com/advisories/GHSA-72qq-p3r5-f7wq",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-02",
+    "raw_path": null,
+    "discovered_via": "github",
+    "source_id": null,
+    "source_rank": 70.0,
+    "source_topics": [],
+    "source_name": "GitHub Advisory Database",
+    "retrieved_at": "2026-10-25T02:36:36+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 22 > 18"
+      ]
+    },
+    "grounding_score": 0.0,
+    "previous_slugs": [
+      "a2ui-web-core-openurl-sends-agent-supplied-button-urls-to-wi"
+    ]
+  },
+  {
+    "id": "decision-models-like-jev-don-t-beat-llm-as-a-jud-fb981fbc2c",
+    "topic": "ai-security",
+    "domain": "ais.guardrails",
+    "title": "Red Hat finds Jev-style models not faster or more accurate than LLM-as-a-judge",
+    "source_url": "https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails",
+    "related_claims": [],
+    "summary": "Red Hat compared 9 guardrail setups (small trained classifiers, BART zero-shot, LLM judges, and Jev-style decision models) on prompt-injection and content-safety benchmarks inside NeMo Guardrails. The small trained prompt-injection classifier nearly matched the best LLM judge (89.01% vs 89.31%) with the lowest latency, while decision models did well on content safety but were not faster or better overall. Zero-shot policy prompts did not transfer between decision models.",
+    "lessons": [
+      {
+        "point": "A small trained classifier is nearly as accurate as a 35B LLM judge for prompt injection and is the fastest.",
+        "excerpt": "the [deberta-v3-base-prompt-injection-v2](https://huggingface.co/RedHatAI/deberta-v3-base-prompt-injection-v2) pre-trained classifier topped the leaderboard in latency and was only 0.20 percentage points behind first place in accuracy",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Decision models did not deliver the claimed speed, cost or quality gains over LLM-as-a-judge.",
+        "excerpt": "we did not find that decision models produced faster, cheaper, or higher-quality answers compared with LLM-as-a-judge.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "For content safety, zero-shot decision models beat the small trained classifier, so trained models are not always enough.",
+        "excerpt": "Meanwhile, DiffusionGemma and Jev both significantly outperform [granite-guardian-hap-125m](https://huggingface.co/RedHatAI/granite-guardian-hap-125m), which is a promising signal for the applicability of this paradigm to guardrails",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Guardrail policy prompts are model-specific; tuning for one decision model hurt another.",
+        "excerpt": "These results confirm our hypothesis that the style of prompts that work for Jev do not necessarily work for Laya, and vice versa.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Vendor benchmarks for safety models may not reproduce; Shieldstral underperformed its published numbers and was prompt-sensitive.",
+        "excerpt": "Shieldstral performs surprisingly poorly, which contradicts Mistral's official benchmarks that ought to put this model on par with Nemotron-3.5-Content-Safety-4B.",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "takeaway": "For prompt-injection screening, try a small trained classifier first and benchmark any LLM judge or decision model on your own data before paying for it.",
+    "tags": [
+      "guardrails",
+      "prompt-injection-detection",
+      "llm-as-judge",
+      "decision-models",
+      "content-safety",
+      "benchmark",
+      "nemo-guardrails"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Benchmark candidate guardrails side by side on accuracy and latency before choosing",
+      "detail": "Run small trained classifiers (e.g. deberta-v3-base-prompt-injection-v2), an LLM judge, and any decision model through the same harness (NeMo Guardrails plus EvalHub prompt-injection and toxicity benchmarks, or your own class-balanced labeled set). Record accuracy, precision/recall and median latency, re-tune policy prompts per model, and do not trust vendor benchmark numbers without reproducing them.",
+      "skill_slug": null
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 72,
+      "newness": 17,
+      "credibility": 55.0,
+      "composite": 46.1,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "DecisionPivot (contrast-pair benchmark for router/guardrail decision models) in ai-research.json; earlier guardrail comparisons of Llama Guard vs small classifiers (e.g. ProtectAI deberta prompt-injection model cards). Vendor-run, single-benchmark comparison is a useful variation, not a new claim. Verifier's closest: DecisionPivot decision-model benchmark; Llama Guard / ProtectAI DeBERTa comparisons.",
+    "verified": true,
+    "verify_note": "Verifier: table gives 89.01% vs 89.31% (0.3 points; the post's prose says 0.20); lesson 3 over-generalizes (Laya scored 57.87%).",
+    "threat": "Choosing an expensive or weak guardrail based on vendor claims leaves prompt injection and unsafe content under-detected.",
+    "conditions": "Guardrails deployed in front of enterprise LLM apps; class-balanced benchmark datasets; some latency includes transatlantic network time.",
+    "mitigations": "Use small trained classifiers where labeled data exists, zero-shot decision models or LLM judges where it does not, and benchmark per task.",
+    "article_url": "https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails",
+    "tweet_url": null,
+    "author": "tomncooper",
+    "date": "2026-10",
+    "published": "2026-10-02",
+    "raw_path": "data/_raw/decision-models-like-jev-don-t-beat-llm-as-a-jud-fb981fbc2c.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@tomncooper via Hacker News",
+    "retrieved_at": "2026-10-25T02:36:53+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted summary",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 24 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "red-hat-200m-deberta-classifier-within-0-3-points-of-the-bes"
+    ]
+  },
+  {
+    "id": "how-do-you-harden-an-agent-skill-the-simple-file-b0b01fbccc",
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "Chainguard hardens agent skills by scanning, signing and digest-pinning them",
+    "source_url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
+    "related_claims": [],
+    "summary": "Chainguard describes how its Factory processes agent skills, both community and internal. It hashes each skill on ingest and runs deterministic scanners (its own rules, Cisco Skill Scanner, NVIDIA SkillSpector), followed by an AI-agent review. Skills that look malicious are rejected, and fixable issues are patched by an AI agent, rescanned, then signed and pinned to a digest in a private registry. The post also mentions 'linear probing', which watches the agent's calls and permission requests while it runs the skill; this is vendor marketing with no data on detection rates.",
+    "lessons": [
+      {
+        "point": "A skill is more than a markdown file. It can bundle scripts, images, audio, video and binaries, and each type needs its own analysis.",
+        "excerpt": "While every agent skill is ultimately delivered as an .md file, it can include a broad set of file types.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Skills that show malicious intent are rejected outright rather than repaired.",
+        "excerpt": "If scanners or agents detect signs of malicious intent (such as credential harvesting or prompt poisoning), the skill is immediately ejected from the pipeline.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "An AI agent fixes flagged issues, then deterministic scans check the skill again, including that it still works.",
+        "excerpt": "For skills with remediable risks, an AI agent edits the skill files directly to remediate each flagged issue.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Watching what the agent does at runtime can catch new attacks that static rules on the skill text miss. The post gives no evidence of how well this works.",
+        "excerpt": "By observing the behaviors and downstream actions of the agent rather than just the skill's text, we can detect novel attack methods that may not have had a pre-existing pattern before they are incorporated into our rule sets.",
+        "confidence": 0.5,
+        "grounded": true
+      },
+      {
+        "point": "Supply-chain controls for containers carry over to skills: sign them and pin them to an exact digest.",
+        "excerpt": "Once verified, the hardened skill is cryptographically signed and pinned to an exact digest.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Manage agent skills like packages (scan, sign, pin, keep a private registry), but treat vendor 'hardening' claims as unmeasured until there are detection numbers.",
+    "tags": [
+      "agent-skills",
+      "skill-supply-chain",
+      "artifact-signing",
+      "digest-pinning",
+      "behavioral-monitoring",
+      "vendor-marketing",
+      "chainguard"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Put an admission pipeline in front of skills before agents can install them",
+      "detail": "Before a skill can be installed: hash it on ingest, run open-source skill scanners (Cisco Skill Scanner, NVIDIA SkillSpector) over every bundled file, not just SKILL.md, and reject anything that harvests credentials or contains injected instructions. Sign and digest-pin approved skills in a private registry, and point agents only at that registry. Also run the skill once in a sandbox and record its tool calls and network egress.",
+      "skill_slug": null
+    },
+    "scores": {
+      "novelty": 25,
+      "relevance": 45,
+      "newness": 17,
+      "credibility": 50.8,
+      "composite": 32.87,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "'Vet skill files as untrusted code before letting coding agents load them' and 'Add agent skills to your supply-chain inventory alongside containers and packages' (archive.json); SkillSec-Eval lifecycle framing; Pre-Commit Gating against Skill Contamination ('Gate skills at admission'). Verifier's closest: skill-as-supply-chain-artifact entries; Cisco Skill Scanner / SkillSpector.",
+    "verified": true,
+    "verify_note": "Verifier: matches the five-phase pipeline; vendor walkthrough without data; 'at runtime' probing wording is loose.",
+    "threat": "Malicious or risky agent skills (credential harvesting, prompt poisoning, hidden binaries or media) reach users' agents through community or internal skill sources.",
+    "conditions": "The organization lets users install skills from upstream maintainers or internal repositories without review.",
+    "mitigations": "Rule-based and AI scanning of every bundled file, rejection of malicious skills, AI-assisted remediation with a rescan, signing and digest pinning, a private registry, and runtime monitoring of agent behavior.",
+    "article_url": "https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-01",
+    "raw_path": "data/_raw/how-do-you-harden-an-agent-skill-the-simple-file-b0b01fbccc.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-www-chainguard-dev-unchained-rss-xml",
+    "source_rank": 50.8,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "Chainguard Unchained",
+    "retrieved_at": "2026-10-25T02:36:53+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title, actionable.detail",
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "chainguard-s-agent-skill-hardening-pipeline-hash-on-ingest-r"
+    ]
+  },
+  {
+    "id": "an-attacker-hijacked-an-ai-coding-assistant-to-s-15fa1c6540",
+    "topic": "product-security",
+    "domain": "ps.ai-code",
+    "title": "Hijacked coding assistant recommended a PyPI package that stole GitHub tokens",
+    "source_url": "https://safedep.io/ai-coding-assistant-hijack-shai-hulud",
+    "related_claims": [
+      "prompt-injection-is-containment-not-prevention",
+      "long-lived-cloud-credentials-are-obsolete"
+    ],
+    "summary": "SafeDep summarizes a reported incident. An attacker took control of a developer's live AI coding assistant session and had it recommend a PyPI package hiding an infostealer. The stolen high-privilege GitHub OAuth tokens let the Shai-Hulud worm copy itself into about 100 internal repos and plant a poisoned package in the internal namespace. The cited report lists three ways attackers take over assistants: prompt injection (which also fooled LLM-based security scanners), tampered startup hooks, and backdoored agent skills. The post does not explain how the session in the main incident was hijacked.",
+    "lessons": [
+      {
+        "point": "The entry point was the assistant's suggestion, not the registry or the CI pipeline. Whoever controls what the assistant recommends controls what gets installed.",
+        "excerpt": "The attacker got control of an active AI coding assistant session belonging to a developer.",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "LLM-based security scanners can be prompt-injected by the same payload they are meant to catch, so they cannot be the only gate.",
+        "excerpt": "They also targeted the language model based security scanners intended to detect such attempts.",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "Repository-level assistant hooks run code as soon as you open the project, with no suggestion to accept or prompt to approve.",
+        "excerpt": "In another case, attackers modified the command line hooks an assistant runs on startup.",
+        "confidence": 0.65,
+        "grounded": true
+      },
+      {
+        "point": "Shai-Hulud now hunts credentials in AI tool settings files, which often hold plaintext keys.",
+        "excerpt": "A newer variant searches 469 locations for credentials, up from 189.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Teams scan the lockfile but not the assistant that picked what went into it.",
+        "excerpt": "Most teams scan their lockfiles and their pull requests, and almost nobody scans the thing that decided what went into the lockfile in the first place.",
+        "confidence": 0.75,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Treat any package your coding assistant suggests as untrusted input. Check it against an allowlist and hashes in CI, and keep long-lived GitHub tokens and AI tool config secrets off developer machines.",
+    "tags": [
+      "shai-hulud",
+      "coding-assistant",
+      "supply-chain",
+      "pypi",
+      "infostealer",
+      "prompt-injection",
+      "agent-hooks",
+      "credential-theft"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Gate assistant-suggested dependencies and sweep AI tool configs for secrets",
+      "detail": "Route all installs through an internal proxy with an approved-package list. In CI, fail any new lockfile entry that is not on the list or whose hash does not match the registry. Search AI tool config directories (for example ~/.claude, ~/.cursor, ~/.codeium, ~/.config) for plaintext tokens and rotate any you find. Replace long-lived GitHub OAuth and personal access tokens with short-lived OIDC-based ones. Review repository hook configs (for example .claude/settings.json hooks) in pull requests like code."
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 65,
+      "newness": 17,
+      "credibility": 48.8,
+      "composite": 43.07,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "'Mini Shai-Hulud still spreads four months on via never-restored hijacked actions-cool/issues-helper tags, planting Claude Code and VS Code hooks in six repos' and 'keyv/cacheable Mini Shai-Hulud' (product-security corpus / archive); OpenClaw ClawHub skill marketplace entries. New here is the assistant session as the first step, but the source gives no detail on how it was hijacked. Verifier's closest: Mini Shai-Hulud Claude Code/VS Code hook entries; OpenClaw ClawHub malicious skills.",
+    "verified": true,
+    "verify_note": "Verifier: facts match; secondhand sourcing (incident attributed to unnamed researchers, report cited only for takeover routes).",
+    "threat": "An attacker who controls an AI coding assistant session, through prompt injection, tampered hooks or a malicious skill, steers it to recommend a malicious package. The stolen developer tokens then let a worm spread through internal repos and the internal package namespace.",
+    "conditions": "Developers accept assistant-suggested dependencies without review; high-privilege long-lived GitHub OAuth tokens sit on developer machines; the internal namespace is writable with those tokens; AI tool configs hold plaintext secrets.",
+    "mitigations": "Allowlist and hash checks for dependencies in CI; an internal registry proxy; short-lived OIDC credentials; keep tokens away from editor extensions; review agent skills, hooks and MCP servers like dependencies; do not rely on LLM scanners alone.",
+    "article_url": "https://safedep.io/ai-coding-assistant-hijack-shai-hulud",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-02",
+    "raw_path": "data/_raw/an-attacker-hijacked-an-ai-coding-assistant-to-s-15fa1c6540.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-safedep-io-rss-xml",
+    "source_rank": 48.8,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "SafeDep",
+    "retrieved_at": "2026-10-25T02:36:53+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title, takeaway, summary",
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: takeaway_sentences 2 > 1",
+        "mild: summary_sentences 5 > 4"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "hijacked-ai-coding-assistant-session-recommended-a-poisoned"
+    ]
+  },
+  {
+    "id": "why-ai-coding-agents-keep-writing-broken-access-48d3894341",
+    "topic": "product-security",
+    "domain": "ps.ai-code",
+    "title": "Snyk: SAST cannot see missing ownership checks in agent-written endpoints",
+    "source_url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
+    "related_claims": [],
+    "summary": "Snyk argues that coding agents produce endpoints that check login but not ownership, letting any authenticated user read another tenant's records by changing an ID. The required rule (for example, invoices belong to organizations) lives in the product's data model, not in the file, so neither the agent nor pattern-based SAST can see it. It recommends writing down ownership rules, asking about authorization explicitly on agent PRs, and adding one cross-tenant test per resource type; the post offers no measured data and promotes Snyk's own product.",
+    "lessons": [
+      {
+        "point": "The failure mode is code that looks correct and passes review while enforcing the wrong policy.",
+        "excerpt": "AI coding agents produce authorization logic that compiles, passes review, and enforces the wrong policy.",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "The agent lacks the product rule that makes the ownership check necessary.",
+        "excerpt": "An agent working from the prompt and the surrounding file has no access to the thing that makes the check necessary.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Object-level authorization bugs (CWE-639/862/863) have no source-to-sink shape for SAST rules to match.",
+        "excerpt": "The defect is the absence of a comparison that only the application's own rules require.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Fold the ownership condition into the lookup so foreign objects return 404, avoiding ID enumeration via 403.",
+        "excerpt": "That is the behavior you want, because a 403 would confirm that the record exists and allow an attacker to enumerate valid identifiers.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "A cheap durable control is one cross-tenant test per resource type.",
+        "excerpt": "One test per resource, asserting that a valid session from one tenant gets a 404 on another tenant's object, turns the rule you wrote down in step two into one that stays enforced.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Agent-written endpoints need an explicit ownership question in review and a cross-tenant test per resource, because neither the agent nor SAST knows your tenancy rules.",
+    "tags": [
+      "broken-access-control",
+      "bola",
+      "idor",
+      "ai-generated-code",
+      "coding-agents",
+      "sast-limits",
+      "multi-tenancy"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Cross-tenant test per resource for agent-authored endpoints",
+      "detail": "Inventory routes that take an ID, filename or key from the URL or body. Document each resource's owner field and who may read or modify it. Add a required PR checklist item for agent-authored PRs: 'which field verifies the caller owns this object?' Add one integration test per resource asserting that a valid session from tenant A gets 404 on tenant B's object. Feed the written ownership rules into the agent's context so it can apply them.",
+      "skill_slug": ""
+    },
+    "scores": {
+      "novelty": 30,
+      "relevance": 70,
+      "newness": 17,
+      "credibility": 47.9,
+      "composite": 41.44,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "Archive: 'OWASP Top 10:2025 - Broken Access Control (#1)', 'Rule-Based Dataflow + LLM Reasoning Beats Pure-LLM Scanners 4-5x on Recall for Authorization Bugs', and 'Auditing a cyber benchmark for groundedness: models reason, but 70% of real IDORs are missed by everyone'. This post restates the SAST limit for authorization bugs and applies it to agent-written code without new data. Verifier's closest: OWASP Top 10:2025 Broken Access Control; rule-based dataflow + LLM authz-bug entry.",
+    "verified": true,
+    "verify_note": "Verifier: supported; vendor post restating the SAST blind spot for object-level authorization, no agent-specific data.",
+    "threat": "Authenticated users read or modify other tenants' data through agent-written endpoints that lack ownership checks.",
+    "conditions": "Multi-tenant apps where coding agents generate endpoints from prompts lacking ownership rules; review and SAST as the only gates.",
+    "mitigations": "Documented ownership rules in agent context; explicit authorization review item on agent PRs; per-resource cross-tenant tests returning 404; context-aware analysis beyond pattern SAST.",
+    "article_url": "https://snyk.io/blog/ai-coding-agents-broken-access-control/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-01",
+    "raw_path": "data/_raw/why-ai-coding-agents-keep-writing-broken-access-48d3894341.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-snyk-io-blog-feed",
+    "source_rank": 47.9,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "Snyk Blog",
+    "retrieved_at": "2026-10-25T02:36:53+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title, summary",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "snyk-coding-agents-write-endpoints-that-authenticate-but-ski"
+    ]
+  },
+  {
+    "id": "ciliumhound-graphing-kubernetes-network-policies-931ef7b631",
+    "topic": "product-security",
+    "domain": "ps.cloud-infra",
+    "title": "CiliumHound graphs Cilium Kubernetes network policies as a BloodHound OpenGraph extension",
+    "source_url": "https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies",
+    "related_claims": [],
+    "summary": "SpecterOps released CiliumHound, an extension for BloodHound's OpenGraph that models Cilium network policies as a graph so they can be audited. Cilium is a Kubernetes networking (CNI) plugin that enforces network policies. Only a short curator blurb was available, so how the graph is built and what it finds is unknown.",
+    "lessons": [
+      {
+        "point": "CiliumHound brings BloodHound-style graph analysis to Kubernetes network policies written for Cilium.",
+        "excerpt": "SpecterOps's Andrew Luke introduces CiliumHound , a BloodHound OpenGraph extension for auditing Cilium network policies.",
+        "confidence": 0.7,
+        "grounded": false
+      },
+      {
+        "point": "The target is the policy layer of Cilium, the CNI plugin that enforces network policies in a cluster.",
+        "excerpt": "Cilium is a Kubernetes Container Network Interface (CNI) plugin that enables network policies to",
+        "confidence": 0.5,
+        "grounded": false
+      }
+    ],
+    "takeaway": "If you run Cilium, a graph view of network policies may help find unintended reachability, but the source text here is too thin to judge the tool.",
+    "tags": [
+      "kubernetes",
+      "cilium",
+      "network-policy",
+      "bloodhound",
+      "attack-path",
+      "tooling"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Evaluate CiliumHound for Cilium network policy audits",
+      "detail": "Teams running Cilium can read the SpecterOps post and try CiliumHound with BloodHound OpenGraph to visualize which workloads can reach which, then compare the graph against intended segmentation.",
+      "skill_slug": ""
+    },
+    "scores": {
+      "novelty": 25,
+      "relevance": 30,
+      "newness": 17,
+      "credibility": 70.0,
+      "composite": 31.25,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "BloodHound and other OpenGraph extensions for attack-path graphing; Kubernetes network policy visualizers. No equivalent entry found in the dataset, but the source gives no detail to assess any new technique. Verifier's closest: BloodHound attack-path graphing; Cilium Hubble / network policy editor.",
+    "verified": true,
+    "verify_note": "Verifier: supported by the curator blurb only (raw page is a tracking-pixel stub); no technique detail.",
+    "article_url": "https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-01",
+    "raw_path": null,
+    "discovered_via": "curator",
+    "source_id": "curator:tldrsec",
+    "source_rank": 70.0,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "source_name": "tl;dr sec (curator link)",
+    "curated_by": "tldrsec",
+    "curator_issue": "https://tldrsec.com/p/tldr-sec-348",
+    "retrieved_at": "2026-10-25T02:36:36+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted summary",
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 0.0,
+    "previous_slugs": [
+      "ciliumhound-a-bloodhound-opengraph-extension-that-graphs-cil"
+    ]
+  },
+  {
+    "id": "cisa-kev-zammad-gmbh-zammad-improper-privilege-m-0723f3adba",
+    "topic": "product-security",
+    "domain": "ps.identity",
+    "title": "CISA KEV: Zammad local privilege escalation to root exploited in the wild",
+    "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102490",
+    "related_claims": [],
+    "summary": "Zammad, an open-source helpdesk system, has an improper privilege management flaw that lets the local zammad service account become root. It can be chained with CVE-2026-102489, so an attacker who first gets code running as the zammad user can take over the whole host. CISA lists it as exploited in the wild (added October 2, 2026).",
+    "lessons": [
+      {
+        "point": "The bug is a second-stage escalation: it turns access as the zammad service user into root on the server.",
+        "excerpt": "Zammad GmbH Zammad contains an improper privilege management vulnerability that can allow the local zammad user to escalate privileges to root.",
+        "confidence": 0.75,
+        "grounded": false
+      },
+      {
+        "point": "It is listed as part of a chain, so patch both CVEs together; fixing only the initial-access bug leaves the root step for the next foothold.",
+        "excerpt": "This vulnerability can be chained with CVE-2026-102489.",
+        "confidence": 0.7,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Patch Zammad for both CVE-2026-102489 and CVE-2026-102490 and check helpdesk hosts for signs of root compromise.",
+    "tags": [
+      "cisa-kev",
+      "zammad",
+      "privilege-escalation",
+      "local-root",
+      "exploit-chain",
+      "helpdesk"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Patch Zammad for the CVE-2026-102489/102490 chain",
+      "detail": "Upgrade Zammad to the vendor's fixed release for both CVEs. Because the chain ends in root, review the host for new root-owned files, cron jobs, systemd units and SSH keys, and rotate secrets stored on the helpdesk server (mail credentials, API tokens)."
+    },
+    "scores": {
+      "novelty": 8,
+      "relevance": 40,
+      "newness": 17,
+      "credibility": 66.7,
+      "composite": 28.66,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "Thin KEV entry. Nearest ledger item: Acronis Backup plugins local privilege escalation via insecure file permissions (CVE-2026-87886) in archive.json, same class of exploited local escalation in installed software. Verifier's closest: Acronis Backup plugins local privilege escalation (CVE-2026-87886).",
+    "verified": true,
+    "verify_note": "Verifier: raw NVD page is an empty stub; the KEV excerpt supports local zammad-to-root and the CVE-2026-102489 chain; patch and hunting advice is generic.",
+    "threat": "Attacker with code execution as the zammad user (for example via CVE-2026-102489) escalates to root.",
+    "conditions": "Unpatched Zammad install; attacker already has a foothold as the zammad user.",
+    "mitigations": "Upgrade Zammad; hunt for persistence on the host; rotate secrets.",
+    "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102490",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-02",
+    "raw_path": "data/_raw/cisa-kev-zammad-gmbh-zammad-improper-privilege-m-0723f3adba.txt",
+    "discovered_via": "rss",
+    "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+    "source_rank": 66.7,
+    "source_topics": [
+      "product-security"
+    ],
+    "source_name": "CISA Known Exploited Vulnerabilities",
+    "retrieved_at": "2026-10-25T02:36:36+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 0.0,
+    "previous_slugs": [
+      "cisa-kev-zammad-local-privilege-escalation-to-root-cve-2026"
+    ]
+  },
+  {
+    "id": "claude-shaped-science-77bd0f29d1",
+    "topic": "ai-research",
+    "domain": "air.agents",
+    "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+    "source_url": "https://www.anthropic.com/research/claude-shaped-science",
+    "related_claims": [
+      "capability-elicitation-lags-training"
+    ],
+    "summary": "A physicist built BootLoops, an open-source harness of tools and protocols that grows as Claude adds new tools on each project. He then aimed it at 'Claude-shaped' problems: problems a known technique from math, physics or computer science would solve, and whose answers can be checked numerically. It produced results across many fields (36 manuscripts, 18 fields, three months). In fields the author did not know, Claude's results were usually technically correct but not scientifically interesting until a domain expert redirected the work.",
+    "lessons": [
+      {
+        "point": "Pick agent tasks where the answer can be checked mechanically. Here, anyone could verify a result to many digits by running two scripts.",
+        "excerpt": "it is checkable, since the same numerics let anyone, expert or not, verify the final answer against the integral to as many digits as they like by running two scripts",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Outside your own expertise, you cannot judge agent output well and tend to accept its claims of success. Bring in a domain expert as the reviewer.",
+        "excerpt": "When Claude claims something it did in my field is fantastic, I can judge whether that’s true or not (it often isn’t).",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Technical correctness is not the same as value. The agent's results were mostly correct but only became worthwhile once an expert steered them.",
+        "excerpt": "Indeed, I found that in almost all cases, Claude was technically correct, but the result was not all that interesting until the expert helped steer us.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Make the agent leave behind reusable tools on every project, even failed ones, so the harness keeps growing.",
+        "excerpt": "As the ideas came, I insisted that Claude both use old tools _and_ build new ones, so that the harness would grow.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Orchestration pattern: one session per project, plus a master session that coordinates the others, allocates compute and validates results.",
+        "excerpt": "I have separate sessions for each project, plus a master session that coordinates the others, allocates compute, and validates results.",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Agents do best on problems where a known technique applies and the answer can be checked, inside a harness that keeps growing; plan for a domain expert to judge whether the results matter.",
+    "tags": [
+      "ai-for-science",
+      "agent-harness",
+      "verification",
+      "multi-agent-orchestration",
+      "human-in-the-loop",
+      "claude-code"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Grow a tool library per project and gate results on mechanical checks plus expert review",
+      "detail": "Have the agent save every tool it writes into a shared harness repo, failed projects included. Choose tasks with an independent numeric or script-based check and require the agent to ship that check with each result. Run one session per project and a master session that validates results. Have a domain expert review any result outside the operator's own field."
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 55,
+      "newness": 17,
+      "credibility": 70.8,
+      "composite": 43.37,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
+    "verified": true,
+    "verify_note": "Verifier: figures and excerpts accurate; lessons are generic harness advice from a first-person case study.",
+    "article_url": "https://www.anthropic.com/research/claude-shaped-science",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-01",
+    "raw_path": "data/_raw/claude-shaped-science-77bd0f29d1.txt",
+    "discovered_via": "sitemap",
+    "source_id": "research_index:https-www-anthropic-com-research",
+    "source_rank": 70.8,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "Anthropic Research",
+    "retrieved_at": "2026-10-25T02:36:53+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted summary",
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 24 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "id": "show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99",
+    "topic": "ai-research",
+    "domain": "air.tooling",
+    "title": "pi pod runs the pi coding agent in isolated sandboxes",
+    "source_url": "https://pipod.dev/",
+    "related_claims": [],
+    "summary": "pi pod is a new open-source project that runs sessions of the minimalist pi coding-agent harness inside isolated sandboxes on a server you control. The author argues that a minimal team agent environment needs four things: sandboxing, native clients, role-based access control (RBAC) for session sharing, and browser/native-app automation. The page is a launch announcement. It gives no details on how the isolation works and no security evaluation.",
+    "lessons": [
+      {
+        "point": "The project aims to keep the user's existing pi harness unchanged and add sandbox isolation around it.",
+        "excerpt": "pi pod aims to seamlessly run your pi in an isolated sandbox with minimal, carefully curated tooling to get out the way and give you the boring stuff you need.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "The author's view of the minimum team agent environment: sandboxing, native clients, RBAC session sharing, and browser and native-app automation.",
+        "excerpt": "I consider agent sandboxing, native clients, rbac session sharing, and surface automation (namely browser and native apps) to comprise the minimal agentic engineering environment that should be used for software engineers in an organization.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Self-hosting is pitched as the way for companies to keep the whole agent environment in their own data center.",
+        "excerpt": "Self-hosting also is a great option for businesses who want their entire agentic environment in their preferred data center.",
+        "confidence": 0.6,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.",
+    "tags": [
+      "coding-agents",
+      "agent-sandbox",
+      "self-hosted",
+      "pi-harness",
+      "launch-announcement"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Check pi pod's isolation model before you rely on it",
+      "detail": "If you run pi for a team, read the pi-pod/pipod repository to find out what isolation backs each pod (container, gVisor, microVM), what outbound network access it allows, and how credentials reach the pod. Do this before you treat the sandbox as a security boundary.",
+      "skill_slug": null
+    },
+    "scores": {
+      "novelty": 15,
+      "relevance": 25,
+      "newness": 17,
+      "credibility": 55.0,
+      "composite": 24.5,
+      "scored_at": "2026-11-01T17:42:31+00:00"
+    },
+    "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
+    "verified": true,
+    "verify_note": "Verifier: thin launch announcement; 'open-source' inferred from a GitHub link.",
+    "article_url": "https://pipod.dev/",
+    "tweet_url": null,
+    "author": "edverma2",
+    "date": "2026-10",
+    "published": "2026-10-02",
+    "raw_path": "data/_raw/show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@edverma2 via Hacker News",
+    "retrieved_at": "2026-10-25T02:36:53+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "pi-pod-self-hosted-wrapper-that-runs-the-pi-coding-agent-in"
+    ]
   }
 ]
