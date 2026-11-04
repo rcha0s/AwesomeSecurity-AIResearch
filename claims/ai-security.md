@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_24 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-01_
+_26 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-04_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -128,7 +128,7 @@ Prompt injection cannot be fully solved by context-based filtering: for any bloc
 
 _Tags: `prompt-injection`, `agents`, `threat-model`_
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -136,6 +136,7 @@ _Tags: `prompt-injection`, `agents`, `threat-model`_
 | supports | [Assessing Automated Prompt Injection Attacks in Agentic Environments](https://arxiv.org/abs/2606.10525) | Jun 2026 |
 | supports | [Prompt Injection Attacks on Agentic Coding Assistants: A Systematic Analysis](https://arxiv.org/abs/2601.17548) | Jan 2026 |
 | supports | [Breaking Claude Code Opus 5 Auto Mode: a best-effort classifier is not a boundary; OS isolation/egress is](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 26, 2026 |
+| supports | [LEANGUARD: Lean-Verified Guardrails for Tool-Using Agents](https://arxiv.org/abs/2611.02332) | Nov 2, 2026 |
 
 </details>
 
@@ -153,11 +154,12 @@ MCP tool descriptions are consumed by the model as part of the system prompt; a 
 
 _Tags: `mcp`, `prompt-injection`, `tool-poisoning`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [MCP Security Notification: Tool Poisoning Attacks](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) | Apr 1, 2025 |
+| supports | [MCP Tool Poisoning in Agentic AI Frameworks: A Cross-Framework Measurement Study](http://arxiv.org/abs/2611.03555v1) | Nov 2, 2026 |
 
 </details>
 
@@ -471,6 +473,28 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 
 </details>
 
+<a id="claim-agent-frameworks-do-not-mitigate-mcp-tool-poisoning"></a>
+
+### Agent framework choice does not reduce MCP tool-poisoning risk
+
+`agent-frameworks-do-not-mitigate-mcp-tool-poisoning` · confidence **0.60** · MCP, Tools & Skills · standing since Nov 4, 2026
+
+Mainstream agent frameworks pass poisoned MCP tool metadata and responses to the model without intentional defense, so tool-poisoning success depends on the model, not the framework.
+
+**Do this —** Do not rely on the agent framework to stop poisoned MCP tools: pin and review server metadata, scan descriptions as one layer, restrict agent egress to an allowlist, keep secrets out of reach, and choose models by measured tool-poisoning resistance.
+
+**Conditions —** Measured on 12 frameworks and 18 models in late 2026; a framework that adds explicit metadata validation or output isolation would fall outside this claim.
+
+_Tags: `mcp`, `tool-poisoning`, `agent-frameworks`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [MCP Tool Poisoning in Agentic AI Frameworks: A Cross-Framework Measurement Study](http://arxiv.org/abs/2611.03555v1) | Nov 2, 2026 |
+
+</details>
+
 <a id="claim-monitor-agent-evals-not-just-deployment"></a>
 
 ### Agent misalignment monitors must cover evaluation and training runs
@@ -530,6 +554,28 @@ For automated vulnerability remediation, model choice alone barely moves secure-
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Benchmarking Secure-and-Functional Remediation and How Snyk Agent Fix Lifts Frontier-Model Fix Rates by over 14%](https://snyk.io/blog/snyk-agent-fix-remediation-benchmark/) | Aug 18, 2026 |
+
+</details>
+
+<a id="claim-approve-agent-commands-by-observed-effects"></a>
+
+### Approve agent shell commands by observed effects, not command text
+
+`approve-agent-commands-by-observed-effects` · confidence **0.50** · Agent & Harness Security · standing since Nov 4, 2026
+
+Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed effects lets far fewer harmful outcomes through.
+
+**Do this —** For commands text rules can't classify, pre-execute on a copy-on-write workspace snapshot with egress blocked, give a separate approver the diff of effects, then commit or roll back and tell the agent why.
+
+**Conditions —** Covers local file and process effects; network side effects and effects outside the snapshot cannot be rolled back. Evidence is one paper on two benchmarks, one built by the authors.
+
+_Tags: `coding-agents`, `approval`, `sandbox`, `rollback`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Shall We Approve? Consequence-Aware Approval for Autonomous Coding Agents](https://arxiv.org/abs/2610.40753) | Oct 29, 2026 |
 
 </details>
 

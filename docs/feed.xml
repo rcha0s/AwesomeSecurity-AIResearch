@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-01T00:00:00Z</updated>
+  <updated>2026-11-04T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -45,6 +45,13 @@
     <summary type="text">When you pin client certificates in mutual TLS, match only the leaf certificate the client proved it owns, never the extra certificates it chose to send.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=beyond-sensitive-apis-detecting-access-control-f-2b34c23353#week</id>
+    <title>Callix finds 819 vulnerable paths in Android vendors' pre-installed apps</title>
+    <updated>2026-10-31T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=beyond-sensitive-apis-detecting-access-control-f-2b34c23353#week" rel="alternate" type="text/html" />
+    <summary type="text">An access check being present is not the same as being sufficient; audit checks against what the callsite actually touches.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-dissects-the-ssh-backdoor-in-a-trojani-2bf6ec40ea#week</id>
     <title>Microsoft dissects the SSH backdoor in a trojanized Claude Code extension</title>
     <updated>2026-10-31T00:00:00Z</updated>
@@ -80,11 +87,11 @@
     <summary type="text">Do not load third-party monitoring or analytics scripts into authenticated pages that can move money: anything in that page can act as the user.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week</id>
-    <title>Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor</title>
-    <updated>2026-10-30T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week" rel="alternate" type="text/html" />
-    <summary type="text">The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims</id>
+    <title>Approve agent shell commands by observed effects, not command text</title>
+    <updated>2026-11-04T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims" rel="alternate" type="text/html" />
+    <summary type="text">Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed effects lets far fewer harmful outcomes through.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>
@@ -120,12 +127,5 @@
     <updated>2026-10-28T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims" rel="alternate" type="text/html" />
     <summary type="text">In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims</id>
-    <title>Measure speedups with repeated trials, not impressions</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims" rel="alternate" type="text/html" />
-    <summary type="text">A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.</summary>
   </entry>
 </feed>

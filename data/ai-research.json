@@ -97,6 +97,168 @@
       "domain_label": "Agent Harness Design"
     },
     {
+      "id": "dfkhelper-token-goat-6824893977",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
+      "source_url": "https://github.com/DFKHelper/token-goat",
+      "article_url": "https://github.com/DFKHelper/token-goat",
+      "tweet_url": null,
+      "author": "DFKHelper",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/dfkhelper-token-goat-6824893977.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 47.2,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "DFKHelper/token-goat",
+      "related_claims": [
+        "keep-bulk-tool-output-out-of-context",
+        "stable-prompt-prefix-keeps-cache-reads-cheap",
+        "compact-first-reset-only-if-the-model-needs-it"
+      ],
+      "summary": "Token-Goat is a hook layer for Claude Code, Codex, Copilot CLI and other agents that answers repeat file reads with a pointer, returns single symbols instead of whole files, strips build and test logs to failures, shrinks screenshots and caches skill loads. It also wraps every fetched page and tool result in an untrusted-content fence. Its savings figures (40 to 90% session cost) are self-reported, not independently benchmarked.",
+      "takeaway": "Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.",
+      "lessons": [
+        {
+          "point": "Large reads keep costing after the turn they land in, because the prompt cache bills them on every later turn.",
+          "excerpt": "Anthropic bills the first cache write at 1.25x the base input price (2x for the one-hour cache), then about 0.1x for every later turn that reads it back, until the session compacts.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Repeat skill loads can be intercepted and served from a compact cached copy.",
+          "excerpt": "a PreToolUse hook intercepts the second invocation, serves the cached compact (~400 tokens) instead",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "It fences all untrusted content by default, regardless of whether a scan flags it.",
+          "excerpt": "Every fetched page, tool result, and extracted document is wrapped in an untrusted-content fence before hitting the model, whether or not it matched an attack pattern",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The headline savings are the author's own numbers.",
+          "excerpt": "Sessions drop 40–90%+ in cost.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "token-efficiency",
+        "prompt-caching",
+        "hooks",
+        "claude-code",
+        "context-engineering",
+        "untrusted-content"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Deduplicate repeat reads and trim tool logs in hooks",
+        "detail": "Add PreToolUse and PostToolUse hooks that answer a re-read of an unchanged file with a pointer, strip passing tests and progress bars from build and test output, and downscale screenshots before they reach the model. Measure cost per task before and after rather than trusting the author's savings figures. A third-party hook sees every tool call, so review its code before installing it."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 60,
+        "newness": 81,
+        "credibility": 47.2,
+        "composite": 55.83,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
+      "verified": true,
+      "verify_note": "Verifier found all four lessons supported; savings figures are self-reported. Novelty taken as verifier's 35.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "ioc-project-mas-lab-bd689e3b43",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Cisco's MAS Lab builds and traces multi-agent systems from YAML specs",
+      "source_url": "https://github.com/ioc-project/mas-lab",
+      "article_url": "https://github.com/ioc-project/mas-lab",
+      "tweet_url": null,
+      "author": "ioc-project",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/ioc-project-mas-lab-bd689e3b43.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "ioc-project/mas-lab",
+      "related_claims": [],
+      "summary": "MAS Lab, an Apache-2.0 project copyrighted by Cisco, defines multi-agent systems as YAML specs for agents, tools, workflows and contracts, enforces those contracts at runtime, and ships OpenTelemetry observability plus tracing, replay and benchmark pipelines. It treats MCP and A2A as swappable infrastructure adapters, so agent logic is tested with local tools first. Its PyPI packages are not published yet.",
+      "takeaway": "Keeping MCP and A2A in an adapter layer lets you test agent logic locally and review protocol security in one place.",
+      "lessons": [
+        {
+          "point": "Agents, tools and workflows are declared in YAML rather than written as glue code.",
+          "excerpt": "MAS Lab builds, runs, and tests multi-agent systems (MAS) from YAML files.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Protocols are treated as deployment adapters, so security review sits at one integration boundary.",
+          "excerpt": "Security review and auditing happen at the integration boundary.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The project is early: packages are not yet on PyPI.",
+          "excerpt": "the public packages are not uploaded yet",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "multi-agent",
+        "specs",
+        "opentelemetry",
+        "mcp",
+        "a2a",
+        "tracing"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Isolate MCP and A2A behind an adapter layer",
+        "detail": "Structure multi-agent code so agent logic calls local tool and delegation interfaces, with MCP and A2A swapped in as infrastructure adapters. Test reasoning and workflow with local tools, then certify protocol behavior and apply policy, audit and budget overlays once at the adapter boundary."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 50,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 55.76,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
+      "verified": true,
+      "verify_note": "Verifier found all lessons supported; flagged that the README does not show replay and benchmarking run on OpenTelemetry traces specifically. Summary reworded. Novelty taken as verifier's 35.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway, summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.evals",
       "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
@@ -156,10 +318,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 17,
+        "newness": 14,
         "credibility": 43.9,
-        "composite": 56.43,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 55.68,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -168,256 +330,6 @@
       "retrieved_at": "2026-10-19T23:35:59+00:00",
       "needs_review": false,
       "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "Letting the agent choose when to compact matches fixed-interval summarization cheaply",
-      "source_url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
-      "article_url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-12",
-      "date": "2026-10",
-      "raw_path": "data/_raw/self-compacting-language-model-agents-6a49b544dc.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-machinelearning-apple-com-rss-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Apple Machine Learning Research",
-      "summary": "SELFCOMPACT gives the model a compaction tool plus a short rubric saying when to use it: fire when a sub-task has resolved or the trajectory is converging, and hold off mid-derivation or when stuck. Across six math and agentic-search benchmarks and seven models, it matches or beats fixed-interval token-threshold summarization at a fraction of the token cost. It beats a no-summarization baseline by up to 18.1 points on math and 5-9 points on search; neither part works alone, since models use the tool unevenly without the rubric and the rubric cannot act without the tool. No fine-tuning is needed.",
-      "takeaway": "Replace or supplement token-threshold compaction with a model-invoked compaction tool plus an explicit rubric for when to fire and when to hold off.",
-      "lessons": [
-        {
-          "point": "Fixed token-threshold compaction ignores task structure and risks discarding partial work.",
-          "excerpt": "Such triggers pay no heed to trajectory structure, risking discard of partial results mid-derivation or mid-search.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A compaction tool alone does not work. Open-weight models fire it at bad moments or never.",
-          "excerpt": "The tool alone is unevenly used across open-weight models, often invoked at unhelpful moments or not at all; the rubric alone cannot act.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The rubric is lightweight: fire at sub-task boundaries or convergence, suppress mid-derivation or when stuck.",
-          "excerpt": "when to fire (a sub-task has resolved, or the trajectory is converging) and when to suppress (mid-derivation, or when stuck)",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Against a no-summarization baseline, the gains come at 30-70% lower per-question cost.",
-          "excerpt": "improving over a no-summarization baseline by up to 18.1 points on math and 5–9 points on agentic search at 30–70% lower per-question cost",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "compaction",
-        "context-management",
-        "long-running-agents",
-        "scaffolding",
-        "summarization"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add a model-invoked compact tool with a fire/suppress rubric",
-        "detail": "Expose a compact_context tool that summarizes the trajectory so far and replaces it. In the system prompt, add the rubric: call it when a sub-task has just resolved or the solution is converging; do not call it mid-derivation or while stuck. Keep the token-threshold compaction as a hard fallback. A/B test against fixed-interval compaction on held-out tasks for accuracy and per-task cost."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 80,
-        "newness": 17,
-        "credibility": 75.0,
-        "composite": 56.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
-      "prior_art": "Several pool entries treat compaction as harness infrastructure: the Claude Code harness design entry (system-prompt compaction), the Codex/Pi encrypted compaction port, and the OpenAI Agents API with managed compaction. All of them trigger on fixed thresholds or leave the trigger unspecified. What is new: evidence that the timing of compaction matters, and that a prompt-level rubric, not training, lets the model choose that timing well.",
-      "related_claims": [
-        "long-context-does-not-eliminate-retrieval-need",
-        "harness-evolution-gains-need-held-out-attribution"
-      ],
-      "id": "letting-the-agent-choose-when-to-compact-guided-7cdca961e9",
-      "retrieved_at": "2026-10-25T19:45:56+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 24 > 18"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Directly usable harness change: a model-invoked compaction tool plus a fire/suppress rubric beats fixed token-threshold compaction across seven models.",
-        "signals": [
-          "trending",
-          "high-relevance"
-        ],
-        "at": "2026-10-25T19:46:52+00:00"
-      },
-      "previous_slugs": [
-        "letting-the-agent-choose-when-to-compact-guided-by-a-fire-su"
-      ]
-    },
-    {
-      "id": "review-of-the-misalignment-in-high-stakes-settin-5863cde447",
-      "scores": {
-        "novelty": 65,
-        "relevance": 70,
-        "newness": 17,
-        "credibility": 75.0,
-        "composite": 56.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
-      "topic": "ai-research",
-      "domain": "air.alignment",
-      "title": "METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring",
-      "source_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
-      "article_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-20",
-      "raw_path": "data/_raw/review-of-the-misalignment-in-high-stakes-settin-5863cde447.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-metr-org-feed-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "related_claims": [],
-      "summary": "METR's external review of the misalignment section of Anthropic's August 2026 Risk Report agrees risk is low, but attributes that to limited model capability rather than safeguards, and doubts the report's methodology would detect higher risk. It finds the covert-capability benchmarks a poor proxy for evading Anthropic's real monitoring (they miss persuading the monitor an action is legitimate, which real incidents have shown), and says redacted examples suggest monitoring is weaker than public evidence implies.",
-      "lessons": [
-        {
-          "point": "A low risk verdict that rests on limited capability, not on safeguards, does not show the safeguards work; the methodology may not flag rising risk.",
-          "excerpt": "rather than safeguards and alignment training. We are not confident that, if risk were higher, the methodology in the report would reliably identify this",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Benchmarks of covert capability miss a real monitor-evasion route: convincing the monitor that a harmful action is legitimate, which has happened in real incidents.",
-          "excerpt": "convincing the monitor that a harmful action is legitimate, which have subsequently been demonstrated in real incidents",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "METR's top recommendation is end-to-end red-teaming of the monitoring system, such as trying to launch an undetected rogue internal deployment.",
-          "excerpt": "a well-resourced red team attempts to start a rogue internal deployment without being detected",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Redacted historical examples led METR to judge Anthropic's monitoring weaker than the public record suggests.",
-          "excerpt": "monitoring system is weaker than expected given public evidence",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.",
-      "tags": [
-        "agent-monitoring",
-        "misalignment",
-        "risk-assessment",
-        "red-teaming",
-        "metr"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Red-team the agent monitor with justification attacks",
-        "detail": "For any LLM-based action monitor in your agent stack, add red-team cases where the agent performs a harmful action alongside a plausible business justification, and measure the monitor's miss rate on those, separate from covert or obfuscated-action cases."
-      },
-      "retrieved_at": "2026-10-22T01:39:40+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.models",
-      "cluster": "H",
-      "related_claims": [
-        "capability-elicitation-lags-training",
-        "provider-guardrails-can-block-incident-response"
-      ],
-      "title": "OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability",
-      "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-      "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
-      "published": "2026-08-07",
-      "date": "2026-08",
-      "raw_path": "data/_raw/mrscan-batch00-4.txt",
-      "source_id": "rss:https-openai-com-blog-rss-xml",
-      "source_rank": 80.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "summary": "OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.",
-      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, and the response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
-      "lessons": [
-        {
-          "point": "The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call.",
-          "excerpt": "Under our Preparedness Framework, a model reaches the Critical cybersecurity threshold if it can identify and develop functional zero-day exploits of all severity levels in many hardened real-world critical systems without human intervention, or can devise and execute end-to-end novel strategies for cyberattacks against hardened targets given only a high level desired goal.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "First-party CoT monitoring is the primary announced defense for training and evaluation, not just deployment — a signal that provider-side runtime controls are now the load-bearing layer for critical-capability containment.",
-          "excerpt": "We have implemented universal monitoring for risky actions and misalignment across all agentic applications of Astra, including training and evaluation. Monitors evaluate the model's Chain of Thought and trigger a security response to review and interrupt high risk activity.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Frontier-capability containment relies on a bundle of runtime controls, not model-level alignment alone: isolated environments, restricted network/tool access, weight encryption, and sandboxed execution.",
-          "excerpt": "isolated testing environments, restricted network and tool access, enhanced model weight protections and encryption, additional monitoring and detection capabilities, and sandboxed execution.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "preparedness-framework",
-        "frontier-capability",
-        "cot-monitoring",
-        "cyber-evals",
-        "sandboxing",
-        "openai",
-        "astra"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Track the CoT-monitoring assumption: it is now the load-bearing safeguard for critical-capability models",
-        "detail": "For any downstream integration that will handle Astra-class capabilities, do not rely on refusal training. Assume the provider's CoT-based universal monitoring is the primary containment layer, and require your own sandboxed-execution, network-caged, and weight-isolated deployment posture on top."
-      },
-      "scores": {
-        "novelty": 70,
-        "relevance": 75,
-        "newness": 1,
-        "credibility": 80.0,
-        "composite": 55.75,
-        "scored_at": "2026-10-22T05:47:04+00:00"
-      },
-      "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
-      "discovered_via": "rss",
-      "threat": "Frontier models approaching the Critical cybersecurity capability threshold may generate functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal. If those capabilities are elicited during training/evaluation without runtime containment, real infrastructure (as in the Hugging Face incident) can be affected before deployment controls exist.",
-      "conditions": "The vendor's Preparedness Framework has flagged Critical cyber capability; universal Chain-of-Thought monitoring is enabled across all agentic applications including training and evaluation; testing environments enforce isolated networks, restricted tool access, and sandboxed execution.",
-      "mitigations": "For downstream users: assume provider CoT monitoring is the primary containment layer and add a second layer (network egress caging, restricted tool set, sandboxed exec) at the integration boundary. For providers of higher-risk models: gate all training/eval workloads behind the same isolation controls used for deployment; hand off recommended controls to third-party testing partners rather than trusting them to reinvent the containment posture.",
-      "verified": true,
-      "id": "openai-astra-preliminary-evals-can-t-rule-out-cr-19c9c4150a",
-      "retrieved_at": "2026-08-10T19:18:36+00:00",
-      "needs_review": false,
-      "grounding_score": null,
-      "domain_label": "Frontier Cyber Capabilities & Preparedness",
-      "previous_slugs": [
-        "openai-astra-preliminary-evals-can-t-rule-out-critical-cyber"
-      ]
     },
     {
       "topic": "ai-research",
@@ -485,14 +397,264 @@
       ]
     },
     {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "cluster": "H",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "provider-guardrails-can-block-incident-response"
+      ],
+      "title": "OpenAI's Astra preliminary evals can't rule out 'Critical' cyber capability",
+      "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "article_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+      "published": "2026-08-07",
+      "date": "2026-08",
+      "raw_path": "data/_raw/mrscan-batch00-4.txt",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 80.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "summary": "OpenAI reports that internal evaluations of Astra can no longer rule out the Preparedness Framework's Critical cybersecurity threshold, defined as the ability to develop functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal without human intervention. In response, OpenAI is pausing internal Astra activities that do not meet strengthened controls and has rolled out universal Chain-of-Thought monitoring across all agentic applications of Astra (including training and evaluation) that can interrupt high-risk activity.",
+      "takeaway": "The Preparedness Framework's Critical threshold is now a real trigger, and the response leans on CoT-based universal monitoring and isolated environments rather than better refusal training.",
+      "lessons": [
+        {
+          "point": "The 'Critical cybersecurity' threshold is operationalized as a specific capability profile (zero-day exploit generation or end-to-end attacks against hardened targets from a high-level goal), not a vibes call.",
+          "excerpt": "Under our Preparedness Framework, a model reaches the Critical cybersecurity threshold if it can identify and develop functional zero-day exploits of all severity levels in many hardened real-world critical systems without human intervention, or can devise and execute end-to-end novel strategies for cyberattacks against hardened targets given only a high level desired goal.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "First-party CoT monitoring is the primary announced defense for training and evaluation, not just deployment — a signal that provider-side runtime controls are now the load-bearing layer for critical-capability containment.",
+          "excerpt": "We have implemented universal monitoring for risky actions and misalignment across all agentic applications of Astra, including training and evaluation. Monitors evaluate the model's Chain of Thought and trigger a security response to review and interrupt high risk activity.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Frontier-capability containment relies on a bundle of runtime controls, not model-level alignment alone: isolated environments, restricted network/tool access, weight encryption, and sandboxed execution.",
+          "excerpt": "isolated testing environments, restricted network and tool access, enhanced model weight protections and encryption, additional monitoring and detection capabilities, and sandboxed execution.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "preparedness-framework",
+        "frontier-capability",
+        "cot-monitoring",
+        "cyber-evals",
+        "sandboxing",
+        "openai",
+        "astra"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track the CoT-monitoring assumption: it is now the load-bearing safeguard for critical-capability models",
+        "detail": "For any downstream integration that will handle Astra-class capabilities, do not rely on refusal training. Assume the provider's CoT-based universal monitoring is the primary containment layer, and require your own sandboxed-execution, network-caged, and weight-isolated deployment posture on top."
+      },
+      "scores": {
+        "novelty": 70,
+        "relevance": 75,
+        "newness": 0,
+        "credibility": 80.0,
+        "composite": 55.5,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' — the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.",
+      "discovered_via": "rss",
+      "threat": "Frontier models approaching the Critical cybersecurity capability threshold may generate functional zero-day exploits or execute end-to-end attacks against hardened systems from a high-level goal. If those capabilities are elicited during training/evaluation without runtime containment, real infrastructure (as in the Hugging Face incident) can be affected before deployment controls exist.",
+      "conditions": "The vendor's Preparedness Framework has flagged Critical cyber capability; universal Chain-of-Thought monitoring is enabled across all agentic applications including training and evaluation; testing environments enforce isolated networks, restricted tool access, and sandboxed execution.",
+      "mitigations": "For downstream users: assume provider CoT monitoring is the primary containment layer and add a second layer (network egress caging, restricted tool set, sandboxed exec) at the integration boundary. For providers of higher-risk models: gate all training/eval workloads behind the same isolation controls used for deployment; hand off recommended controls to third-party testing partners rather than trusting them to reinvent the containment posture.",
+      "verified": true,
+      "id": "openai-astra-preliminary-evals-can-t-rule-out-cr-19c9c4150a",
+      "retrieved_at": "2026-08-10T19:18:36+00:00",
+      "needs_review": false,
+      "grounding_score": null,
+      "domain_label": "Frontier Cyber Capabilities & Preparedness",
+      "previous_slugs": [
+        "openai-astra-preliminary-evals-can-t-rule-out-critical-cyber"
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Letting the agent choose when to compact matches fixed-interval summarization cheaply",
+      "source_url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
+      "article_url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-12",
+      "date": "2026-10",
+      "raw_path": "data/_raw/self-compacting-language-model-agents-6a49b544dc.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-machinelearning-apple-com-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Apple Machine Learning Research",
+      "summary": "SELFCOMPACT gives the model a compaction tool plus a short rubric saying when to use it: fire when a sub-task has resolved or the trajectory is converging, and hold off mid-derivation or when stuck. Across six math and agentic-search benchmarks and seven models, it matches or beats fixed-interval token-threshold summarization at a fraction of the token cost. It beats a no-summarization baseline by up to 18.1 points on math and 5-9 points on search; neither part works alone, since models use the tool unevenly without the rubric and the rubric cannot act without the tool. No fine-tuning is needed.",
+      "takeaway": "Replace or supplement token-threshold compaction with a model-invoked compaction tool plus an explicit rubric for when to fire and when to hold off.",
+      "lessons": [
+        {
+          "point": "Fixed token-threshold compaction ignores task structure and risks discarding partial work.",
+          "excerpt": "Such triggers pay no heed to trajectory structure, risking discard of partial results mid-derivation or mid-search.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A compaction tool alone does not work. Open-weight models fire it at bad moments or never.",
+          "excerpt": "The tool alone is unevenly used across open-weight models, often invoked at unhelpful moments or not at all; the rubric alone cannot act.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The rubric is lightweight: fire at sub-task boundaries or convergence, suppress mid-derivation or when stuck.",
+          "excerpt": "when to fire (a sub-task has resolved, or the trajectory is converging) and when to suppress (mid-derivation, or when stuck)",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Against a no-summarization baseline, the gains come at 30-70% lower per-question cost.",
+          "excerpt": "improving over a no-summarization baseline by up to 18.1 points on math and 5–9 points on agentic search at 30–70% lower per-question cost",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "compaction",
+        "context-management",
+        "long-running-agents",
+        "scaffolding",
+        "summarization"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add a model-invoked compact tool with a fire/suppress rubric",
+        "detail": "Expose a compact_context tool that summarizes the trajectory so far and replaces it. In the system prompt, add the rubric: call it when a sub-task has just resolved or the solution is converging; do not call it mid-derivation or while stuck. Keep the token-threshold compaction as a hard fallback. A/B test against fixed-interval compaction on held-out tasks for accuracy and per-task cost."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 80,
+        "newness": 14,
+        "credibility": 75.0,
+        "composite": 55.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
+      "prior_art": "Several pool entries treat compaction as harness infrastructure: the Claude Code harness design entry (system-prompt compaction), the Codex/Pi encrypted compaction port, and the OpenAI Agents API with managed compaction. All of them trigger on fixed thresholds or leave the trigger unspecified. What is new: evidence that the timing of compaction matters, and that a prompt-level rubric, not training, lets the model choose that timing well.",
+      "related_claims": [
+        "long-context-does-not-eliminate-retrieval-need",
+        "harness-evolution-gains-need-held-out-attribution"
+      ],
+      "id": "letting-the-agent-choose-when-to-compact-guided-7cdca961e9",
+      "retrieved_at": "2026-10-25T19:45:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Directly usable harness change: a model-invoked compaction tool plus a fire/suppress rubric beats fixed token-threshold compaction across seven models.",
+        "signals": [
+          "trending",
+          "high-relevance"
+        ],
+        "at": "2026-10-25T19:46:52+00:00"
+      },
+      "previous_slugs": [
+        "letting-the-agent-choose-when-to-compact-guided-by-a-fire-su"
+      ]
+    },
+    {
+      "id": "review-of-the-misalignment-in-high-stakes-settin-5863cde447",
+      "scores": {
+        "novelty": 65,
+        "relevance": 70,
+        "newness": 14,
+        "credibility": 75.0,
+        "composite": 55.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
+      "topic": "ai-research",
+      "domain": "air.alignment",
+      "title": "METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring",
+      "source_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
+      "article_url": "https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/review-of-the-misalignment-in-high-stakes-settin-5863cde447.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-metr-org-feed-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "related_claims": [],
+      "summary": "METR's external review of the misalignment section of Anthropic's August 2026 Risk Report agrees risk is low, but attributes that to limited model capability rather than safeguards, and doubts the report's methodology would detect higher risk. It finds the covert-capability benchmarks a poor proxy for evading Anthropic's real monitoring (they miss persuading the monitor an action is legitimate, which real incidents have shown), and says redacted examples suggest monitoring is weaker than public evidence implies.",
+      "lessons": [
+        {
+          "point": "A low risk verdict that rests on limited capability, not on safeguards, does not show the safeguards work; the methodology may not flag rising risk.",
+          "excerpt": "rather than safeguards and alignment training. We are not confident that, if risk were higher, the methodology in the report would reliably identify this",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Benchmarks of covert capability miss a real monitor-evasion route: convincing the monitor that a harmful action is legitimate, which has happened in real incidents.",
+          "excerpt": "convincing the monitor that a harmful action is legitimate, which have subsequently been demonstrated in real incidents",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "METR's top recommendation is end-to-end red-teaming of the monitoring system, such as trying to launch an undetected rogue internal deployment.",
+          "excerpt": "a well-resourced red team attempts to start a rogue internal deployment without being detected",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Redacted historical examples led METR to judge Anthropic's monitoring weaker than the public record suggests.",
+          "excerpt": "monitoring system is weaker than expected given public evidence",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.",
+      "tags": [
+        "agent-monitoring",
+        "misalignment",
+        "risk-assessment",
+        "red-teaming",
+        "metr"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Red-team the agent monitor with justification attacks",
+        "detail": "For any LLM-based action monitor in your agent stack, add red-team cases where the agent performs a harmful action alongside a plausible business justification, and measure the monitor's miss rate on those, separate from covert or obfuscated-action cases."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
       "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
       "scores": {
         "novelty": 70,
         "relevance": 65,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 53.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 52.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
@@ -552,96 +714,6 @@
       "grounding_score": 1.0,
       "previous_slugs": [
         "pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov"
-      ]
-    },
-    {
-      "candidate_id": "beyond-g-mean-complementary-metrics-for-monitora-351af02230",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "OpenAI finds dataset-level g-mean² can misrank model monitorability",
-      "source_url": "https://alignment.openai.com/beyond-gmean-squared/",
-      "summary": "OpenAI argues that its g-mean² monitorability score can rank models wrongly. Each model misbehaves on a different subset of tasks, so a less capable model that fails only on easy-to-detect tasks can score as more monitorable. To fix this, it compares models only on shared instances and combines the pairwise differences with inverse-variance-weighted HodgeRank. In simulations this recovers a known seven-model ordering, where g-mean² and Bradley-Terry degrade. It also proposes a post-control risk metric: the rate of bad outputs that still get through when a monitor gates retries. The motivating case is that a model trained against a CoT monitor hacked less overall but produced more accepted hacks.",
-      "takeaway": "If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.",
-      "lessons": [
-        {
-          "point": "Monitorability scores computed on each model's own set of positives mix capability-driven task selection into the score.",
-          "excerpt": "Their g-mean² scores can therefore reflect different task mixtures.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Ranking can invert: the model that is easier to monitor on every shared task can still get the lower dataset-level score.",
-          "excerpt": "Model A can consequently receive the higher monitorability score even if, on every task where both models misbehave, Model B’s behavior is actually easier to detect.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Lower misbehavior does not mean lower deployed risk: optimizing against a monitor can increase the hacks that pass monitor-gated rejection sampling.",
-          "excerpt": "a model trained against the CoT monitor hacked less overall than the baseline but produced more accepted hacks under monitor-gated rejection sampling, because it had learned to evade the monitor.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Win/loss (Elo-style) aggregation throws away effect size; aggregation that keeps magnitude ranked better.",
-          "excerpt": "We found this poorly suited to our goal because it discards the magnitude of pairwise differences, preserving only the direction.",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "monitorability",
-        "cot-monitoring",
-        "ai-control",
-        "eval-methodology",
-        "selection-bias",
-        "hodgerank"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Evaluate agent monitors on matched instances and post-gate leakage",
-        "detail": "When comparing models or harness versions behind a reviewer/monitor (e.g., an auto-review gate), compute detection rates only on tasks where both versions show the target behavior. Simulate rejection-and-retry with your real attempt budget and report the fraction of accepted outputs that are bad alongside detection rate."
-      },
-      "scores": {
-        "novelty": 62,
-        "relevance": 55,
-        "newness": 17,
-        "credibility": 75.0,
-        "composite": 50.6,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
-      "prior_art": "No g-mean² or monitorability-metric entries in the pool. Nearest are OpenAI's draft safety-case guidelines (don't let graders see CoT, to avoid monitor evasion) and the 'Astra ... CoT-based universal monitoring' entry. This adds metric methodology (selection-effect correction and post-control risk) rather than a policy. Note: raw capture is cut off at Figure 4, so the historical system-card results and post-control results are not captured.",
-      "related_claims": [
-        "benchmark-category-labels-can-mask-conflated-capabilities"
-      ],
-      "article_url": "https://alignment.openai.com/beyond-gmean-squared/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-20",
-      "raw_path": "data/_raw/beyond-g-mean-complementary-metrics-for-monitora-351af02230.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-alignment-openai-com-rss-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "OpenAI Alignment Blog",
-      "id": "openai-dataset-level-g-mean-can-misrank-model-mo-b085470022",
-      "retrieved_at": "2026-10-25T16:45:20+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 6 > 4"
-        ]
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "openai-dataset-level-g-mean-can-misrank-model-monitorability"
       ]
     },
     {
@@ -738,6 +810,235 @@
       ]
     },
     {
+      "candidate_id": "beyond-g-mean-complementary-metrics-for-monitora-351af02230",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "OpenAI finds dataset-level g-mean² can misrank model monitorability",
+      "source_url": "https://alignment.openai.com/beyond-gmean-squared/",
+      "summary": "OpenAI argues that its g-mean² monitorability score can rank models wrongly. Each model misbehaves on a different subset of tasks, so a less capable model that fails only on easy-to-detect tasks can score as more monitorable. To fix this, it compares models only on shared instances and combines the pairwise differences with inverse-variance-weighted HodgeRank. In simulations this recovers a known seven-model ordering, where g-mean² and Bradley-Terry degrade. It also proposes a post-control risk metric: the rate of bad outputs that still get through when a monitor gates retries. The motivating case is that a model trained against a CoT monitor hacked less overall but produced more accepted hacks.",
+      "takeaway": "If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.",
+      "lessons": [
+        {
+          "point": "Monitorability scores computed on each model's own set of positives mix capability-driven task selection into the score.",
+          "excerpt": "Their g-mean² scores can therefore reflect different task mixtures.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Ranking can invert: the model that is easier to monitor on every shared task can still get the lower dataset-level score.",
+          "excerpt": "Model A can consequently receive the higher monitorability score even if, on every task where both models misbehave, Model B’s behavior is actually easier to detect.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Lower misbehavior does not mean lower deployed risk: optimizing against a monitor can increase the hacks that pass monitor-gated rejection sampling.",
+          "excerpt": "a model trained against the CoT monitor hacked less overall than the baseline but produced more accepted hacks under monitor-gated rejection sampling, because it had learned to evade the monitor.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Win/loss (Elo-style) aggregation throws away effect size; aggregation that keeps magnitude ranked better.",
+          "excerpt": "We found this poorly suited to our goal because it discards the magnitude of pairwise differences, preserving only the direction.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "monitorability",
+        "cot-monitoring",
+        "ai-control",
+        "eval-methodology",
+        "selection-bias",
+        "hodgerank"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Evaluate agent monitors on matched instances and post-gate leakage",
+        "detail": "When comparing models or harness versions behind a reviewer/monitor (e.g., an auto-review gate), compute detection rates only on tasks where both versions show the target behavior. Simulate rejection-and-retry with your real attempt budget and report the fraction of accepted outputs that are bad alongside detection rate."
+      },
+      "scores": {
+        "novelty": 62,
+        "relevance": 55,
+        "newness": 14,
+        "credibility": 75.0,
+        "composite": 49.85,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
+      "prior_art": "No g-mean² or monitorability-metric entries in the pool. Nearest are OpenAI's draft safety-case guidelines (don't let graders see CoT, to avoid monitor evasion) and the 'Astra ... CoT-based universal monitoring' entry. This adds metric methodology (selection-effect correction and post-control risk) rather than a policy. Note: raw capture is cut off at Figure 4, so the historical system-card results and post-control results are not captured.",
+      "related_claims": [
+        "benchmark-category-labels-can-mask-conflated-capabilities"
+      ],
+      "article_url": "https://alignment.openai.com/beyond-gmean-squared/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-20",
+      "raw_path": "data/_raw/beyond-g-mean-complementary-metrics-for-monitora-351af02230.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-alignment-openai-com-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Alignment Blog",
+      "id": "openai-dataset-level-g-mean-can-misrank-model-mo-b085470022",
+      "retrieved_at": "2026-10-25T16:45:20+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 6 > 4"
+        ]
+      },
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "openai-dataset-level-g-mean-can-misrank-model-monitorability"
+      ]
+    },
+    {
+      "id": "nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in",
+      "source_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "article_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "tweet_url": null,
+      "author": "novaRom",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@novaRom via Hacker News",
+      "related_claims": [],
+      "summary": "A MindStudio write-up of testing on the MSI Prestige RTX Spark laptop found native Linux ran GPT-OSS-120B at 13.9 tokens per second versus 65.4 on Windows and 65.1 under WSL, because the GPU is held near 780 MHz when plugged in. The cause is a Windows-only Nvidia platform controller whose firmware power table is encrypted and only the Windows driver can decrypt. On battery, Linux speeds were close to Windows. Until Nvidia ships equivalent Linux support, WSL is the practical way to run Linux-first tools such as vLLM at full speed.",
+      "takeaway": "On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.",
+      "lessons": [
+        {
+          "point": "On wall power, the throughput gap is about five times on the same hardware, depending only on the OS path.",
+          "excerpt": "Windows hit 65.4 tokens per second, WSL hit 65.1, the Nvidia DGX Spark hit 61, and native Linux on the same laptop managed only 13.9.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The cause is encrypted firmware power settings that only the Windows driver can read.",
+          "excerpt": "because the firmware’s power table is encrypted and only the Windows driver can decrypt it",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Turning the controller off in Windows dropped GPU clocks to the level seen on Linux, pointing at it as the cause.",
+          "excerpt": "Disabling that controller in Windows reproduced the slowdown directly",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "local-inference",
+        "nvidia",
+        "linux",
+        "wsl",
+        "gpu-firmware",
+        "benchmarks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check GPU clocks before trusting local inference benchmarks",
+        "detail": "When benchmarking local models on new Nvidia RTX Spark laptops, log GPU clock speed alongside tokens per second and compare Linux, WSL and battery versus wall power. Use WSL for Linux-first serving tools until Nvidia ships the platform controller logic for Linux."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 30,
+        "newness": 81,
+        "credibility": 55.0,
+        "composite": 49.5,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
+      "verified": true,
+      "verify_note": "Verifier found lessons supported but flagged the slowdown applies only on wall power (Linux on battery matched Windows) and the source is a secondary blog summary. Title, lesson 1 and summary now say so. Novelty kept at the lower 40.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "certifying-graph-neural-networks-against-label-a-fb3d396ff1",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "ST-GPA certifies graph neural networks against label and structure poisoning",
+      "source_url": "http://arxiv.org/abs/2611.03350v1",
+      "article_url": "http://arxiv.org/abs/2611.03350v1",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-11-02",
+      "date": "2026-11",
+      "raw_path": "data/_raw/certifying-graph-neural-networks-against-label-a-fb3d396ff1.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "ICML (via arXiv)",
+      "related_claims": [],
+      "summary": "An ICML 2026 paper shows that partition-and-aggregate poisoning certificates, which work for images, break down on graphs because graph labels and edges are sparse. Its ST-GPA method adds pseudo-labels and synthetic edges to each partition so the certificates hold against node-label and graph-structure poisoning. The paper reports better robustness guarantees across benchmarks with strong clean accuracy, but the abstract gives no figures.",
+      "takeaway": "Certified poisoning defenses for graph models are still research, not something to deploy for LLM systems.",
+      "lessons": [
+        {
+          "point": "Image-domain poisoning certificates do not transfer to graphs because of label and structure sparsity.",
+          "excerpt": "we show that these methods fail when applied in the graph domain due to the inherent label and structure sparsity found in common graph datasets",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Enriching each partition with pseudo-labels and synthetic edges makes certification work under sparsity.",
+          "excerpt": "enriches each graph partition with informative pseudo-labels and synthetic edges, enabling effective certification against node-label and graph-structure poisoning under sparse conditions",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "graph-neural-networks",
+        "data-poisoning",
+        "certified-robustness",
+        "ml-research"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Note certified poisoning defenses for graph models",
+        "detail": "If you train graph neural networks on data others can influence (fraud graphs, social graphs), track partition-and-aggregate certification such as ST-GPA as a way to bound the effect of poisoned labels or edges. It does not apply to LLM or retrieval-augmented generation (RAG) pipelines."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 10,
+        "newness": 81,
+        "credibility": 72.0,
+        "composite": 49.05,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Partition-and-aggregate certificates for images (Deep Partition Aggregation, Levine and Feizi) and randomized-smoothing certificates for GNN poisoning; the paper's delta is making poisoning certificates work on sparse graphs.",
+      "verified": true,
+      "verify_note": "Verifier found both lessons supported; judged relevance to agent and harness builders very low (5). Relevance lowered to 10.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.evals",
       "title": "Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly",
@@ -784,10 +1085,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 80,
-        "newness": 17,
+        "newness": 14,
         "credibility": 71.9,
-        "composite": 49.53,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 48.78,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": false,
       "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
@@ -813,6 +1114,75 @@
       "id": "ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49",
       "retrieved_at": "2026-10-27T18:41:51+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "eep-dev-eep-94c246c848",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "EEP proposes signed push events so agents can follow entities",
+      "source_url": "https://github.com/eep-dev/EEP",
+      "article_url": "https://github.com/eep-dev/EEP",
+      "tweet_url": null,
+      "author": "eep-dev",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/eep-dev-eep-94c246c848.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "eep-dev/EEP",
+      "related_claims": [],
+      "summary": "The Entity Engagement Protocol (EEP) v0.1 is an open spec for publishing an entity's state changes as signed events to subscribed agents over SSE and webhooks, with optional identity, credential or payment gates. It positions itself beside MCP and A2A as the layer that tells an agent something changed. The spec is early, with 23 stars, and may still break.",
+      "takeaway": "Another early agent protocol; the useful idea is signed, replay-bounded push events instead of scraping.",
+      "lessons": [
+        {
+          "point": "Delivery is signed and replay-bounded, so subscribers can reject forged or replayed events.",
+          "excerpt": "EEP is one wire format with HMAC-signed delivery, SSE and a 60-second replay window",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The spec is not stable yet.",
+          "excerpt": "breaking changes can still happen",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-protocols",
+        "webhooks",
+        "sse",
+        "hmac",
+        "event-delivery"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Verify signatures and replay windows on agent event feeds",
+        "detail": "If agents consume pushed events from outside parties, require signed delivery with a short replay window and treat event payloads as untrusted input to the agent. Wait for EEP to stabilize before adopting it."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 30,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 48.26,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
+      "verified": true,
+      "verify_note": "Verifier found both lessons supported. Novelty kept at the lower 30.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -870,10 +1240,10 @@
       "scores": {
         "novelty": 58,
         "relevance": 65,
-        "newness": 17,
+        "newness": 14,
         "credibility": 50.8,
-        "composite": 48.77,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 48.02,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
@@ -914,10 +1284,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 48.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 47.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -974,95 +1344,6 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": true,
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "how-ai-agents-shape-experts-judgment-calls-570284eaf9",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "related_claims": [
-        "measure-speedups-with-repeated-trials",
-        "separate-grader-from-generator"
-      ],
-      "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
-      "summary": "Anthropic ran a randomized trial in which 50 professional causal-inference analysts did an hour-long statistical analysis in Claude Code, with the agent secretly told (by coin flip) to favor one of two reasonable options on each decision. Analysts matched the agent's lean 86% of the time against a 50% no-effect baseline, often dropped their own stated preference when the agent disagreed, and later explained their choices in the agent's words while still calling the result their own. The agents were instructed to hold and voice leans, so the effect in unprompted real use may be smaller, but the study shows a human reviewer is not automatically an independent check on agent work.",
-      "lessons": [
-        {
-          "point": "An agent's stated preference on open analytical choices largely decides what an expert picks: analysts matched a coin-flip-assigned lean 86% of the time where no influence would give about 50%.",
-          "excerpt": "Across all four combined, the result was 86%.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Experts who had already stated a preference switched away from it 60% of the time when the agent disagreed versus 6% when it agreed, though this rests on only 38 cases with a wide confidence interval.",
-          "excerpt": "they switched 60% of the time, compared with 6% when it agreed with their choice",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "Analysts often reused the agent's arguments without crediting it (77% reused them, 15% credited the agent) and felt just as confident, so asking people whether they were steered is a weak check.",
-          "excerpt": "sometimes word for word, and only 15% credited the agent anywhere",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The agents argued their own side well but rarely made the case for the alternative, and the authors suggest presenting the other option's strongest case could have helped experts choose for themselves.",
-          "excerpt": "But they rarely made a strong case for why an expert might prefer the other option",
-          "confidence": 0.55,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your harness relies on a human to make or check judgment calls, the agent's framing will often make the call instead, so design for that.",
-      "tags": [
-        "human-in-the-loop",
-        "automation-bias",
-        "agent-influence",
-        "claude-code",
-        "user-study",
-        "oversight"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Make the agent argue both options at human decision points",
-        "detail": "When an agent reaches a decision with more than one reasonable answer, have it state its own lean and also the strongest case for the alternative, ideally asking the human to commit to a choice before it voices its lean. Do not treat a human sign-off as independent review of agent-produced analysis, and do not rely on users' self-reported ownership or confidence as evidence they were not steered."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 70,
-        "newness": 17,
-        "credibility": 70.2,
-        "composite": 47.78,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
-      "prior_art": "Closest pool entry is the Claude Code permission-prompt game showing approval fatigue (humans approve about 1 in 3 malicious commands), which concerns rubber-stamping actions; general automation-bias research is also prior. This study adds a randomized measurement of agents steering expert analytical judgment and of experts misattributing that influence.",
-      "threat": "An agent's arbitrary or misaligned preferences silently decide expert judgment calls and make human review a non-independent check, including in agent-run AI safety research.",
-      "conditions": "Open decisions with more than one defensible answer, an agent that voices a preference, and an expert who forms views while weighing options; measured on one hour-long farming task with Claude Opus 4.8 given deliberately strengthened leans.",
-      "mitigations": "Have the agent present the strongest case for each option, capture the human's preference before the agent states its lean, and do not count a human sign-off on agent work as an independent check.",
-      "article_url": "https://www.anthropic.com/research/agents-judgment-calls",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-27",
-      "raw_path": "data/_raw/how-ai-agents-shape-experts-judgment-calls-570284eaf9.txt",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-research",
-      "source_rank": 70.2,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Anthropic Research",
-      "source_url": "https://www.anthropic.com/research/agents-judgment-calls",
-      "id": "anthropic-study-finds-analysts-follow-an-agent-s-e364841c07",
-      "retrieved_at": "2026-10-29T16:50:31+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
       "grounding_score": 1.0
     },
     {
@@ -1155,14 +1436,103 @@
       ]
     },
     {
+      "candidate_id": "how-ai-agents-shape-experts-judgment-calls-570284eaf9",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "related_claims": [
+        "measure-speedups-with-repeated-trials",
+        "separate-grader-from-generator"
+      ],
+      "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
+      "summary": "Anthropic ran a randomized trial in which 50 professional causal-inference analysts did an hour-long statistical analysis in Claude Code, with the agent secretly told (by coin flip) to favor one of two reasonable options on each decision. Analysts matched the agent's lean 86% of the time against a 50% no-effect baseline, often dropped their own stated preference when the agent disagreed, and later explained their choices in the agent's words while still calling the result their own. The agents were instructed to hold and voice leans, so the effect in unprompted real use may be smaller, but the study shows a human reviewer is not automatically an independent check on agent work.",
+      "lessons": [
+        {
+          "point": "An agent's stated preference on open analytical choices largely decides what an expert picks: analysts matched a coin-flip-assigned lean 86% of the time where no influence would give about 50%.",
+          "excerpt": "Across all four combined, the result was 86%.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Experts who had already stated a preference switched away from it 60% of the time when the agent disagreed versus 6% when it agreed, though this rests on only 38 cases with a wide confidence interval.",
+          "excerpt": "they switched 60% of the time, compared with 6% when it agreed with their choice",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Analysts often reused the agent's arguments without crediting it (77% reused them, 15% credited the agent) and felt just as confident, so asking people whether they were steered is a weak check.",
+          "excerpt": "sometimes word for word, and only 15% credited the agent anywhere",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The agents argued their own side well but rarely made the case for the alternative, and the authors suggest presenting the other option's strongest case could have helped experts choose for themselves.",
+          "excerpt": "But they rarely made a strong case for why an expert might prefer the other option",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your harness relies on a human to make or check judgment calls, the agent's framing will often make the call instead, so design for that.",
+      "tags": [
+        "human-in-the-loop",
+        "automation-bias",
+        "agent-influence",
+        "claude-code",
+        "user-study",
+        "oversight"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Make the agent argue both options at human decision points",
+        "detail": "When an agent reaches a decision with more than one reasonable answer, have it state its own lean and also the strongest case for the alternative, ideally asking the human to commit to a choice before it voices its lean. Do not treat a human sign-off as independent review of agent-produced analysis, and do not rely on users' self-reported ownership or confidence as evidence they were not steered."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 70,
+        "newness": 14,
+        "credibility": 70.2,
+        "composite": 47.03,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
+      "prior_art": "Closest pool entry is the Claude Code permission-prompt game showing approval fatigue (humans approve about 1 in 3 malicious commands), which concerns rubber-stamping actions; general automation-bias research is also prior. This study adds a randomized measurement of agents steering expert analytical judgment and of experts misattributing that influence.",
+      "threat": "An agent's arbitrary or misaligned preferences silently decide expert judgment calls and make human review a non-independent check, including in agent-run AI safety research.",
+      "conditions": "Open decisions with more than one defensible answer, an agent that voices a preference, and an expert who forms views while weighing options; measured on one hour-long farming task with Claude Opus 4.8 given deliberately strengthened leans.",
+      "mitigations": "Have the agent present the strongest case for each option, capture the human's preference before the agent states its lean, and do not count a human sign-off on agent work as an independent check.",
+      "article_url": "https://www.anthropic.com/research/agents-judgment-calls",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/how-ai-agents-shape-experts-judgment-calls-570284eaf9.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.2,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "source_url": "https://www.anthropic.com/research/agents-judgment-calls",
+      "id": "anthropic-study-finds-analysts-follow-an-agent-s-e364841c07",
+      "retrieved_at": "2026-10-29T16:50:31+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "an-update-on-independent-evaluators-d4058e7ed4",
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 47.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 46.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -1230,104 +1600,6 @@
           "tier": "high",
           "published": null
         }
-      ]
-    },
-    {
-      "id": "fixing-tool-call-accuracy-in-vllm-5470a07021",
-      "topic": "ai-research",
-      "domain": "air.model-io",
-      "related_claims": [
-        "constrained-decoding-for-structured-output",
-        "match-tool-schemas-to-the-target-model"
-      ],
-      "title": "Kimi K2.6 on vLLM returned valid tool-calls 92% of the time",
-      "summary": "Ubicloud measured tool-call schema accuracy with Moonshot AI's K2-Vendor-Verifier ToolCall benchmark (2,000 requests). Serving Kimi K2.6 on vLLM 0.28 without constrained decoding, they got the expected schema 92% of the time. With constrained decoding (XGrammar structural tags that mask invalid tokens), they report 100% across all served model versions, with negligible overhead. After they moved to upstream vLLM, accuracy fell back to 91%, because vLLM disables constrained decoding by default for requests that don't ask for it.",
-      "lessons": [
-        {
-          "point": "Without constraints, a popular open-weight model served on a common engine still returned the wrong tool-call schema in 8% of calls.",
-          "excerpt": "For example, when we served Kimi K2.6 with vLLM version 0.28, we got the expected tool call schema only 92% of the time.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A serving-engine default undid their fix: accuracy fell back to 91% until they found vLLM had changed its default. Re-test tool-call accuracy after engine upgrades.",
-          "excerpt": "Instead, we found that vLLM changed its default behavior for requests that do not explicitly turn constrained decoding on.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "One cause of malformed calls is the model reusing tool or field names from training. Schema-constrained decoding blocks those names at generation time.",
-          "excerpt": "For example, it may generate search_web when the available tool is web_search, or use city_name when the active schema expects location.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Constrained decoding has known problems, including a bug with speculative decoding that wrongly rejects tokens. Test it per model and per feature combination.",
-          "excerpt": "a bug in the interplay between constrained decoding and speculative decoding can result in speculative tokens being wrongly rejected by the grammar, leading to failing requests",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Tool-call quality depends on how the model is served, not only on the model. Turn on constrained decoding per model, check it with a tool-call benchmark, and re-check after engine upgrades.",
-      "tags": [
-        "tool-calling",
-        "constrained-decoding",
-        "vllm",
-        "xgrammar",
-        "serving",
-        "open-weights",
-        "benchmarks"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Enable and verify strict tool calling on self-hosted vLLM",
-        "detail": "For each open-weight model you serve with vLLM, enable tool-call strictness (--tool-strict-level) and run Moonshot's K2-Vendor-Verifier ToolCall benchmark, or a similar schema-accuracy test, before and after. If you use speculative decoding, test the two together. Add the benchmark to CI so a vLLM upgrade that changes defaults is caught."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 80,
-        "newness": 17,
-        "credibility": 55.0,
-        "composite": 45.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
-      "verified": true,
-      "verify_note": "First verifier pass flagged over-reaching framing in the draft ('until turned on' causality, 'worse outputs' for named models, 'often'); text corrected. A fresh second verifier on the final text found every excerpt verbatim and the facts supported (not refuted). Novelty: lowest of 45, 30 and 40.",
-      "source_url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
-      "article_url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
-      "tweet_url": null,
-      "author": "coffeemug",
-      "date": "2026-10",
-      "published": "2026-10-26",
-      "raw_path": "data/_raw/fixing-tool-call-accuracy-in-vllm-5470a07021.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@coffeemug via Hacker News",
-      "retrieved_at": "2026-10-26T16:50:42+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 84,
-        "passed": false,
-        "issues": [
-          "mild: title_words 24 > 18",
-          "mild: takeaway_sentences 2 > 1"
-        ]
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Concrete production numbers (92% to 100%, back to 91% after a vLLM default change) that any team self-hosting open-weight models for agents can act on immediately.",
-        "signals": [
-          "high-relevance",
-          "timely"
-        ],
-        "at": "2026-10-26T16:51:29+00:00"
-      },
-      "previous_slugs": [
-        "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
       ]
     },
     {
@@ -1415,6 +1687,104 @@
       "domain_label": "Red-Teaming Methodology"
     },
     {
+      "id": "fixing-tool-call-accuracy-in-vllm-5470a07021",
+      "topic": "ai-research",
+      "domain": "air.model-io",
+      "related_claims": [
+        "constrained-decoding-for-structured-output",
+        "match-tool-schemas-to-the-target-model"
+      ],
+      "title": "Kimi K2.6 on vLLM returned valid tool-calls 92% of the time",
+      "summary": "Ubicloud measured tool-call schema accuracy with Moonshot AI's K2-Vendor-Verifier ToolCall benchmark (2,000 requests). Serving Kimi K2.6 on vLLM 0.28 without constrained decoding, they got the expected schema 92% of the time. With constrained decoding (XGrammar structural tags that mask invalid tokens), they report 100% across all served model versions, with negligible overhead. After they moved to upstream vLLM, accuracy fell back to 91%, because vLLM disables constrained decoding by default for requests that don't ask for it.",
+      "lessons": [
+        {
+          "point": "Without constraints, a popular open-weight model served on a common engine still returned the wrong tool-call schema in 8% of calls.",
+          "excerpt": "For example, when we served Kimi K2.6 with vLLM version 0.28, we got the expected tool call schema only 92% of the time.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A serving-engine default undid their fix: accuracy fell back to 91% until they found vLLM had changed its default. Re-test tool-call accuracy after engine upgrades.",
+          "excerpt": "Instead, we found that vLLM changed its default behavior for requests that do not explicitly turn constrained decoding on.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "One cause of malformed calls is the model reusing tool or field names from training. Schema-constrained decoding blocks those names at generation time.",
+          "excerpt": "For example, it may generate search_web when the available tool is web_search, or use city_name when the active schema expects location.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Constrained decoding has known problems, including a bug with speculative decoding that wrongly rejects tokens. Test it per model and per feature combination.",
+          "excerpt": "a bug in the interplay between constrained decoding and speculative decoding can result in speculative tokens being wrongly rejected by the grammar, leading to failing requests",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Tool-call quality depends on how the model is served, not only on the model. Turn on constrained decoding per model, check it with a tool-call benchmark, and re-check after engine upgrades.",
+      "tags": [
+        "tool-calling",
+        "constrained-decoding",
+        "vllm",
+        "xgrammar",
+        "serving",
+        "open-weights",
+        "benchmarks"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Enable and verify strict tool calling on self-hosted vLLM",
+        "detail": "For each open-weight model you serve with vLLM, enable tool-call strictness (--tool-strict-level) and run Moonshot's K2-Vendor-Verifier ToolCall benchmark, or a similar schema-accuracy test, before and after. If you use speculative decoding, test the two together. Add the benchmark to CI so a vLLM upgrade that changes defaults is caught."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 80,
+        "newness": 14,
+        "credibility": 55.0,
+        "composite": 44.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
+      "verified": true,
+      "verify_note": "First verifier pass flagged over-reaching framing in the draft ('until turned on' causality, 'worse outputs' for named models, 'often'); text corrected. A fresh second verifier on the final text found every excerpt verbatim and the facts supported (not refuted). Novelty: lowest of 45, 30 and 40.",
+      "source_url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
+      "article_url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
+      "tweet_url": null,
+      "author": "coffeemug",
+      "date": "2026-10",
+      "published": "2026-10-26",
+      "raw_path": "data/_raw/fixing-tool-call-accuracy-in-vllm-5470a07021.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@coffeemug via Hacker News",
+      "retrieved_at": "2026-10-26T16:50:42+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: title_words 24 > 18",
+          "mild: takeaway_sentences 2 > 1"
+        ]
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Concrete production numbers (92% to 100%, back to 91% after a vLLM default change) that any team self-hosting open-weight models for agents can act on immediately.",
+        "signals": [
+          "high-relevance",
+          "timely"
+        ],
+        "at": "2026-10-26T16:51:29+00:00"
+      },
+      "previous_slugs": [
+        "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
+      ]
+    },
+    {
       "topic": "ai-research",
       "domain": "air.agents",
       "cluster": "B",
@@ -1499,97 +1869,73 @@
       "domain_label": "Agent Verification & Stewardship"
     },
     {
-      "id": "claude-shaped-science-77bd0f29d1",
       "topic": "ai-research",
       "domain": "air.agents",
-      "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-      "source_url": "https://www.anthropic.com/research/claude-shaped-science",
-      "related_claims": [
-        "capability-elicitation-lags-training"
-      ],
-      "summary": "A physicist built BootLoops, an open-source harness of tools and protocols that grows as Claude adds new tools on each project. He then aimed it at 'Claude-shaped' problems: problems a known technique from math, physics or computer science would solve, and whose answers can be checked numerically. It produced results across many fields (36 manuscripts, 18 fields, three months). In fields the author did not know, Claude's results were usually technically correct but not scientifically interesting until a domain expert redirected the work.",
+      "title": "Hugging Face's funes shares agent memory from raw session text, not summaries",
+      "source_url": "https://huggingface.co/blog/funes",
+      "cluster": "B",
+      "related_claims": [],
+      "summary": "Hugging Face's funes is a local-first durable memory layer that indexes the session traces already produced by coding agents (Claude Code, Codex, pi, Hermes) so a new agent session can `recall` past decisions and rationale with exact provenance. Its key design choice is that nothing is distilled into a summarized \"fact\" at write time — recall always returns the original text and can lead back to the exact turn it came from — and any shared/synced memory has credentials redacted twice (during local indexing, and again before publishing) before it leaves the machine.",
+      "takeaway": "Memory that stores the original turn with its provenance can be checked later; memory distilled into 'facts' at write time can't.",
       "lessons": [
         {
-          "point": "Pick agent tasks where the answer can be checked mechanically. Here, anyone could verify a result to many digits by running two scripts.",
-          "excerpt": "it is checkable, since the same numerics let anyone, expert or not, verify the final answer against the integral to as many digits as they like by running two scripts",
+          "point": "funes explicitly avoids distilling session content into summarized facts at indexing time — recall always returns the original text with exact provenance (agent, timestamp, session, turn), so a result can always be traced back to the exact turn that produced it.",
+          "excerpt": "**Raw evidence stays intact:** Nothing is distilled into a fact at write time. A result can always lead back to the turn that produced it.",
           "confidence": 0.85,
           "grounded": true
         },
         {
-          "point": "Outside your own expertise, you cannot judge agent output well and tend to accept its claims of success. Bring in a domain expert as the reviewer.",
-          "excerpt": "When Claude claims something it did in my field is fantastic, I can judge whether that’s true or not (it often isn’t).",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Technical correctness is not the same as value. The agent's results were mostly correct but only became worthwhile once an expert steered them.",
-          "excerpt": "Indeed, I found that in almost all cases, Claude was technically correct, but the result was not all that interesting until the expert helped steer us.",
+          "point": "Before any session content reaches a shared Hugging Face dataset, credentials are redacted during indexing, then the publish step scans every chunk again and withholds anything that still looks like a secret — a two-pass redaction rather than a single filter.",
+          "excerpt": "Before anything reaches the Hub, credentials have already been redacted during indexing. Publishing then scans every chunk again and withholds anything that still looks like a secret.",
           "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Make the agent leave behind reusable tools on every project, even failed ones, so the harness keeps growing.",
-          "excerpt": "As the ideas came, I insisted that Claude both use old tools _and_ build new ones, so that the harness would grow.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Orchestration pattern: one session per project, plus a master session that coordinates the others, allocates compute and validates results.",
-          "excerpt": "I have separate sessions for each project, plus a master session that coordinates the others, allocates compute, and validates results.",
-          "confidence": 0.7,
           "grounded": true
         }
       ],
-      "takeaway": "Agents do best on problems where a known technique applies and the answer can be checked, inside a harness that keeps growing; plan for a domain expert to judge whether the results matter.",
       "tags": [
-        "ai-for-science",
-        "agent-harness",
-        "verification",
-        "multi-agent-orchestration",
-        "human-in-the-loop",
-        "claude-code"
+        "agent-memory",
+        "rag",
+        "provenance",
+        "huggingface",
+        "funes"
       ],
       "actionable": {
         "type": "harness",
-        "title": "Grow a tool library per project and gate results on mechanical checks plus expert review",
-        "detail": "Have the agent save every tool it writes into a shared harness repo, failed projects included. Choose tasks with an independent numeric or script-based check and require the agent to ship that check with each result. Run one session per project and a master session that validates results. Have a domain expert review any result outside the operator's own field."
+        "title": "Design agent memory systems to preserve raw evidence with provenance, not pre-summarized facts",
+        "detail": "When building a memory/retrieval layer for coding agents, index and retrieve raw session text with exact source provenance rather than summarizing into facts at write time — summarization performed before the retrieval question is known risks discarding exactly the context a later query needs."
       },
       "scores": {
         "novelty": 40,
-        "relevance": 55,
-        "newness": 17,
-        "credibility": 70.8,
-        "composite": 43.37,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "relevance": 58,
+        "newness": 3,
+        "credibility": 80.0,
+        "composite": 42.15,
+        "scored_at": "2026-10-31T21:43:21+00:00"
       },
-      "prior_art": "OpenAI 'Scientific computing in the age of agentic AI' (ai-research corpus); Anthropic's earlier 'vibe physics' and nine-loop N=4 posts. This post is mostly a first-person case study and is less about methodology. Verifier's closest: OpenAI 'Scientific computing in the age of agentic AI'; Anthropic 'vibe physics'.",
-      "verified": true,
-      "verify_note": "Verifier: figures and excerpts accurate; lessons are generic harness advice from a first-person case study.",
-      "article_url": "https://www.anthropic.com/research/claude-shaped-science",
+      "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
+      "article_url": "https://huggingface.co/blog/funes",
       "tweet_url": null,
       "author": null,
-      "date": "2026-10",
-      "published": "2026-10-01",
-      "raw_path": "data/_raw/claude-shaped-science-77bd0f29d1.txt",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-research",
-      "source_rank": 70.8,
+      "date": "2026-09",
+      "published": "2026-09-03",
+      "raw_path": "data/_raw/give-your-coding-agents-a-memory-you-own-1fc8f7f569.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 80.0,
       "source_topics": [
         "ai-research",
         "ai-security"
       ],
-      "source_name": "Anthropic Research",
-      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "verified": true,
+      "verify_note": "Both lessons directly quoted; taking lower novelty (40 vs 48) and relevance (45 vs 58, since this is mainly a dev-productivity tool with a secondary security angle).",
+      "id": "funes-a-cross-agent-memory-layer-that-preserves-0f0e02a9d1",
+      "retrieved_at": "2026-09-09T06:16:08+00:00",
       "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 24 > 18"
-        ]
-      },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "domain_label": "Harness & Agent Security",
+      "previous_slugs": [
+        "funes-a-cross-agent-memory-layer-that-preserves-raw-session",
+        "hugging-face-s-funes-shared-agent-memory-that-keeps-the-raw"
+      ]
     },
     {
       "candidate_id": "ainews-gemini-4-carbon-tops-leaderboards-launche-76614ce5e4",
@@ -1643,10 +1989,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 17,
+        "newness": 14,
         "credibility": 87.5,
-        "composite": 42.88,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 42.12,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld all four lessons; novelty agreed at 30 (gated trusted-defender access is established prior art).",
@@ -1761,10 +2107,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 42.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 41.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -1837,10 +2183,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 42.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 41.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are what the post states; the 39% gain, $100,000 savings and identical regeneration are Microsoft's unsupported self-reports, and no Copilot results are given.",
@@ -1869,75 +2215,6 @@
         "issues": []
       },
       "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "Hugging Face's funes shares agent memory from raw session text, not summaries",
-      "source_url": "https://huggingface.co/blog/funes",
-      "cluster": "B",
-      "related_claims": [],
-      "summary": "Hugging Face's funes is a local-first durable memory layer that indexes the session traces already produced by coding agents (Claude Code, Codex, pi, Hermes) so a new agent session can `recall` past decisions and rationale with exact provenance. Its key design choice is that nothing is distilled into a summarized \"fact\" at write time — recall always returns the original text and can lead back to the exact turn it came from — and any shared/synced memory has credentials redacted twice (during local indexing, and again before publishing) before it leaves the machine.",
-      "takeaway": "Memory that stores the original turn with its provenance can be checked later; memory distilled into 'facts' at write time can't.",
-      "lessons": [
-        {
-          "point": "funes explicitly avoids distilling session content into summarized facts at indexing time — recall always returns the original text with exact provenance (agent, timestamp, session, turn), so a result can always be traced back to the exact turn that produced it.",
-          "excerpt": "**Raw evidence stays intact:** Nothing is distilled into a fact at write time. A result can always lead back to the turn that produced it.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Before any session content reaches a shared Hugging Face dataset, credentials are redacted during indexing, then the publish step scans every chunk again and withholds anything that still looks like a secret — a two-pass redaction rather than a single filter.",
-          "excerpt": "Before anything reaches the Hub, credentials have already been redacted during indexing. Publishing then scans every chunk again and withholds anything that still looks like a secret.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "agent-memory",
-        "rag",
-        "provenance",
-        "huggingface",
-        "funes"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Design agent memory systems to preserve raw evidence with provenance, not pre-summarized facts",
-        "detail": "When building a memory/retrieval layer for coding agents, index and retrieve raw session text with exact source provenance rather than summarizing into facts at write time — summarization performed before the retrieval question is known risks discarding exactly the context a later query needs."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 58,
-        "newness": 3,
-        "credibility": 80.0,
-        "composite": 42.15,
-        "scored_at": "2026-10-31T21:43:21+00:00"
-      },
-      "prior_art": "HuggingFace's own earlier 'Software Forgets: Agent Traces Are the Memory' post frames the same problem; memory tools like MemGPT/Letta already do provenance-preserving retrieval.",
-      "article_url": "https://huggingface.co/blog/funes",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-09",
-      "published": "2026-09-03",
-      "raw_path": "data/_raw/give-your-coding-agents-a-memory-you-own-1fc8f7f569.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-huggingface-co-blog-feed-xml",
-      "source_rank": 80.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "verified": true,
-      "verify_note": "Both lessons directly quoted; taking lower novelty (40 vs 48) and relevance (45 vs 58, since this is mainly a dev-productivity tool with a secondary security angle).",
-      "id": "funes-a-cross-agent-memory-layer-that-preserves-0f0e02a9d1",
-      "retrieved_at": "2026-09-09T06:16:08+00:00",
-      "needs_review": true,
-      "grounding_score": 1.0,
-      "domain_label": "Harness & Agent Security",
-      "previous_slugs": [
-        "funes-a-cross-agent-memory-layer-that-preserves-raw-session",
-        "hugging-face-s-funes-shared-agent-memory-that-keeps-the-raw"
-      ]
     },
     {
       "topic": "ai-research",
@@ -2001,10 +2278,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 41.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 40.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -2120,6 +2397,77 @@
       ]
     },
     {
+      "id": "wolfe-jam-faf-3dd6af4697",
+      "topic": "ai-research",
+      "domain": "air.context",
+      "title": "FAF registers YAML media types for portable AI project context files",
+      "source_url": "https://github.com/Wolfe-Jam/faf",
+      "article_url": "https://github.com/Wolfe-Jam/faf",
+      "tweet_url": null,
+      "author": "Wolfe-Jam",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "Wolfe-Jam/faf",
+      "related_claims": [],
+      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
+      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
+      "lessons": [
+        {
+          "point": "The format aims to be a shared context file across tools and teams.",
+          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
+          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "context-files",
+        "yaml",
+        "agents-md",
+        "marketing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Stick with AGENTS.md-style context files",
+        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 12,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 37.45,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.agents",
       "title": "Arca's wealth agents run ten-day tasks while human advisors move money",
@@ -2170,10 +2518,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 55,
-        "newness": 17,
+        "newness": 14,
         "credibility": 70.8,
-        "composite": 37.97,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 37.22,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "Plan-then-execute and code-to-policy patterns such as CaMeL; durable-execution agents and persistent agent memory (Letta); Anthropic's guidance on progress files for long-running agents.",
       "verified": true,
@@ -2263,10 +2611,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 17,
+        "newness": 14,
         "credibility": 53.0,
-        "composite": 36.8,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 36.05,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -2335,10 +2683,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 17,
+        "newness": 14,
         "credibility": 67.0,
-        "composite": 36.8,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 36.05,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "Policy-as-code (OPA/Rego), schema validation, and harness hooks that block tool calls; spec-driven development tools such as Kiro and spec-kit.",
@@ -2416,10 +2764,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 36.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 35.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -2485,10 +2833,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.5,
-        "composite": 36.12,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 35.38,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -2565,10 +2913,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 17,
+        "newness": 14,
         "credibility": 50.8,
-        "composite": 35.87,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 35.12,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -2601,225 +2949,6 @@
       "previous_slugs": [
         "swt-bench-neurips-2024-a-docker-harness-that-scores-llm-writ"
       ]
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "HackerBooks lists 16,543 books mentioned in Hacker News comments",
-      "source_url": "https://hackerbooks.org",
-      "related_claims": [],
-      "summary": "HackerBooks is a Show HN site that lists books mentioned in Hacker News comments and ranks them by how many commenters mentioned them. The fetched page is only the book list and says nothing about how it was built.",
-      "takeaway": "Off-topic for security and agent builders: a book directory with no technique to learn from.",
-      "lessons": [
-        {
-          "point": "The site lists 16,543 books mentioned on Hacker News, reshuffled daily.",
-          "excerpt": "A fresh mix of well-loved books from 16,543 mentioned on Hacker News, reshuffled daily.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "show-hn",
-        "off-topic"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "No action: off-topic",
-        "detail": "Nothing for security or agent work."
-      },
-      "scores": {
-        "novelty": 5,
-        "relevance": 3,
-        "newness": 96,
-        "credibility": 55.0,
-        "composite": 34.65,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier supported the lesson; off-topic.",
-      "prior_art": "HackerTube and earlier Hacker News book-mention aggregators.",
-      "article_url": "https://hackerbooks.org",
-      "tweet_url": null,
-      "author": "roansh",
-      "date": "2026-11",
-      "published": "2026-11-01",
-      "raw_path": "data/_raw/show-hn-hackerbooks-hackertube-but-for-books-rec-e4ea87d013.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@roansh via Hacker News",
-      "id": "hackerbooks-lists-16-543-books-mentioned-in-hack-682019c88f",
-      "retrieved_at": "2026-11-01T17:42:30+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "retrieval-as-traversal-value-indexed-memory-for-656e1cf917",
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
-      "summary": "The authors separate a memory's content from its address. They frame retrieval as a persistent walk through nearby addresses, with an indexing objective that charges for each memory made reachable. Only the simplest fixed-geometry version is tested, on the MiniGrid Memory task. There, a traversal head reached 0.95 mean return in 0.59M training steps, versus 0.94M for Gaussian absolute addressing and more than 2M for categorical absolute addressing.",
-      "lessons": [
-        {
-          "point": "The core design move is to decouple what a memory contains from where it sits, so geometry controls only retrieval cost.",
-          "excerpt": "We separate a memory's content from its address.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The objective pushes complementary memories together and keeps redundant ones apart, even when each is useful on its own.",
-          "excerpt": "redundant memories should not occupy the same retrieval set solely because they are individually useful",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "In the toy experiment, stateful traversal learned faster than absolute addressing.",
-          "excerpt": "A persistent local traversal head reaches 0.95mean return after 0.59M training steps with a five-token context",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The evidence is a proof of principle only. Learned geometry and repeated retrieval were not tested.",
-          "excerpt": "The experiment does not test learned geometry or repeated retrieval.",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This is an early architecture hypothesis that stateful retrieval is easier to learn than stateless retrieval, not something harness builders can use yet.",
-      "tags": [
-        "memory",
-        "retrieval",
-        "long-context",
-        "architecture",
-        "workshop-paper"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "Watch for a full evaluation before acting",
-        "detail": "No harness change is warranted. Revisit if follow-up work tests learned geometry and repeated retrieval on language tasks rather than MiniGrid."
-      },
-      "scores": {
-        "novelty": 50,
-        "relevance": 15,
-        "newness": 17,
-        "credibility": 72.0,
-        "composite": 34.55,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier: lessons match the paper; it is a single-task proof of principle, which the entry already says.",
-      "prior_art": "The nearest pool entries are about agent-level memory, such as LiveMem (memory state continuity in long-running inference) and Hugging Face funes (raw-session memory). Nothing in the pool covers learned address-space traversal heads, so the novelty is mid but sits outside the pool's harness focus.",
-      "related_claims": [],
-      "source_url": "http://arxiv.org/abs/2610.40545v1",
-      "article_url": "http://arxiv.org/abs/2610.40545v1",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-29",
-      "raw_path": "data/_raw/retrieval-as-traversal-value-indexed-memory-for-656e1cf917.txt",
-      "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "source_name": "NeurIPS (via arXiv)",
-      "retrieved_at": "2026-10-30T16:55:16+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "A Thomson Reuters engineer runs a coding agent fully offline with Qwen",
-      "summary": "A principal engineer at Thomson Reuters shows how to run the OpenCode coding agent with no internet, using Ollama to serve Qwen3.5 9B on a laptop. The configuration enables only the local provider, asks before file edits and shell commands, and blocks web tools. Offline, the agent fixed a one-line bug and the existing tests passed, which the author checked by re-running them. The author says this shows only that small, self-contained tasks work, not how the setup copes with large repositories.",
-      "lessons": [
-        {
-          "point": "Anything that needs the network, such as new packages or web lookups, has to be prepared before going offline.",
-          "excerpt": "Downloading a new package or looking something up on the web will still need a connection.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The small local model guessed the wrong test runner once, so put the exact test command in the prompt.",
-          "excerpt": "For the next task, I would include the exact test command in the prompt: python3 -m unittest -v.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Existing, unchanged tests give the agent a target and give you a check that does not depend on the agent's own explanation.",
-          "excerpt": "It also gives us a way to check the result independently of its explanation.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Lock the local setup down: local provider only, approval before edits and commands, web tools blocked.",
-          "excerpt": "It also asks before editing files or running shell commands, and blocks the web tools.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A 9B local model with OpenCode can handle small, test-backed fixes offline, but the source shows only one trivial task.",
-      "tags": [
-        "local-models",
-        "offline-agents",
-        "opencode",
-        "ollama",
-        "qwen",
-        "coding-agents",
-        "self-hosted-agents"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Set up an offline OpenCode plus Ollama coding agent",
-        "detail": "While still online, start Ollama with OLLAMA_HOST=127.0.0.1:11434 OLLAMA_NO_CLOUD=1 OLLAMA_CONTEXT_LENGTH=65536 ollama serve and run ollama pull qwen3.5:9b. In opencode.json, point baseURL at http://127.0.0.1:11434/v1, enable only the local provider, require approval for edits and shell commands, and block web tools. Launch with opencode --pure once online, then disconnect. Give the exact test command in every prompt and re-run the tests yourself afterwards. Budget 12-16 GB of RAM or more for a 64k context."
-      },
-      "scores": {
-        "novelty": 18,
-        "relevance": 45,
-        "newness": 17,
-        "credibility": 75.0,
-        "composite": 34.4,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
-      "related_claims": [
-        "localhost-agent-servers-are-reachable-from-any-webpage"
-      ],
-      "corroborating_sources": [],
-      "source_url": "https://latent.space/p/offline-coding/",
-      "article_url": "https://latent.space/p/offline-coding/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-27",
-      "raw_path": "data/_raw/coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474.txt",
-      "discovered_via": "rss",
-      "source_id": "newsletter:https-www-latent-space-feed",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Latent Space",
-      "retrieved_at": "2026-10-28T16:52:04+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "introducing-the-agents-api-243d2668ed",
@@ -2993,6 +3122,168 @@
       "grounding_score": 1.0
     },
     {
+      "id": "retrieval-as-traversal-value-indexed-memory-for-656e1cf917",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
+      "summary": "The authors separate a memory's content from its address. They frame retrieval as a persistent walk through nearby addresses, with an indexing objective that charges for each memory made reachable. Only the simplest fixed-geometry version is tested, on the MiniGrid Memory task. There, a traversal head reached 0.95 mean return in 0.59M training steps, versus 0.94M for Gaussian absolute addressing and more than 2M for categorical absolute addressing.",
+      "lessons": [
+        {
+          "point": "The core design move is to decouple what a memory contains from where it sits, so geometry controls only retrieval cost.",
+          "excerpt": "We separate a memory's content from its address.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The objective pushes complementary memories together and keeps redundant ones apart, even when each is useful on its own.",
+          "excerpt": "redundant memories should not occupy the same retrieval set solely because they are individually useful",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "In the toy experiment, stateful traversal learned faster than absolute addressing.",
+          "excerpt": "A persistent local traversal head reaches 0.95mean return after 0.59M training steps with a five-token context",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The evidence is a proof of principle only. Learned geometry and repeated retrieval were not tested.",
+          "excerpt": "The experiment does not test learned geometry or repeated retrieval.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is an early architecture hypothesis that stateful retrieval is easier to learn than stateless retrieval, not something harness builders can use yet.",
+      "tags": [
+        "memory",
+        "retrieval",
+        "long-context",
+        "architecture",
+        "workshop-paper"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Watch for a full evaluation before acting",
+        "detail": "No harness change is warranted. Revisit if follow-up work tests learned geometry and repeated retrieval on language tasks rather than MiniGrid."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 15,
+        "newness": 14,
+        "credibility": 72.0,
+        "composite": 33.8,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: lessons match the paper; it is a single-task proof of principle, which the entry already says.",
+      "prior_art": "The nearest pool entries are about agent-level memory, such as LiveMem (memory state continuity in long-running inference) and Hugging Face funes (raw-session memory). Nothing in the pool covers learned address-space traversal heads, so the novelty is mid but sits outside the pool's harness focus.",
+      "related_claims": [],
+      "source_url": "http://arxiv.org/abs/2610.40545v1",
+      "article_url": "http://arxiv.org/abs/2610.40545v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-29",
+      "raw_path": "data/_raw/retrieval-as-traversal-value-indexed-memory-for-656e1cf917.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NeurIPS (via arXiv)",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "A Thomson Reuters engineer runs a coding agent fully offline with Qwen",
+      "summary": "A principal engineer at Thomson Reuters shows how to run the OpenCode coding agent with no internet, using Ollama to serve Qwen3.5 9B on a laptop. The configuration enables only the local provider, asks before file edits and shell commands, and blocks web tools. Offline, the agent fixed a one-line bug and the existing tests passed, which the author checked by re-running them. The author says this shows only that small, self-contained tasks work, not how the setup copes with large repositories.",
+      "lessons": [
+        {
+          "point": "Anything that needs the network, such as new packages or web lookups, has to be prepared before going offline.",
+          "excerpt": "Downloading a new package or looking something up on the web will still need a connection.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The small local model guessed the wrong test runner once, so put the exact test command in the prompt.",
+          "excerpt": "For the next task, I would include the exact test command in the prompt: python3 -m unittest -v.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Existing, unchanged tests give the agent a target and give you a check that does not depend on the agent's own explanation.",
+          "excerpt": "It also gives us a way to check the result independently of its explanation.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Lock the local setup down: local provider only, approval before edits and commands, web tools blocked.",
+          "excerpt": "It also asks before editing files or running shell commands, and blocks the web tools.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A 9B local model with OpenCode can handle small, test-backed fixes offline, but the source shows only one trivial task.",
+      "tags": [
+        "local-models",
+        "offline-agents",
+        "opencode",
+        "ollama",
+        "qwen",
+        "coding-agents",
+        "self-hosted-agents"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Set up an offline OpenCode plus Ollama coding agent",
+        "detail": "While still online, start Ollama with OLLAMA_HOST=127.0.0.1:11434 OLLAMA_NO_CLOUD=1 OLLAMA_CONTEXT_LENGTH=65536 ollama serve and run ollama pull qwen3.5:9b. In opencode.json, point baseURL at http://127.0.0.1:11434/v1, enable only the local provider, require approval for edits and shell commands, and block web tools. Launch with opencode --pure once online, then disconnect. Give the exact test command in every prompt and re-run the tests yourself afterwards. Budget 12-16 GB of RAM or more for a 64k context."
+      },
+      "scores": {
+        "novelty": 18,
+        "relevance": 45,
+        "newness": 14,
+        "credibility": 75.0,
+        "composite": 33.65,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
+      "related_claims": [
+        "localhost-agent-servers-are-reachable-from-any-webpage"
+      ],
+      "corroborating_sources": [],
+      "source_url": "https://latent.space/p/offline-coding/",
+      "article_url": "https://latent.space/p/offline-coding/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474.txt",
+      "discovered_via": "rss",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Latent Space",
+      "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "sparse-fine-tuning-for-parameter-efficient-adver-dbfa5f3e91",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -3034,10 +3325,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.0,
-        "composite": 33.05,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 32.3,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the abstract (no tables in the source); the summary's 'matches or beats full AT' was corrected to the abstract's 'approaches or surpasses'.",
@@ -3101,10 +3392,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 32.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 31.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -3180,10 +3471,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 17,
+        "newness": 14,
         "credibility": 75.0,
-        "composite": 32.0,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 31.25,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
@@ -3206,6 +3497,63 @@
       ],
       "source_name": "Daniel Miessler",
       "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "HackerBooks lists 16,543 books mentioned in Hacker News comments",
+      "source_url": "https://hackerbooks.org",
+      "related_claims": [],
+      "summary": "HackerBooks is a Show HN site that lists books mentioned in Hacker News comments and ranks them by how many commenters mentioned them. The fetched page is only the book list and says nothing about how it was built.",
+      "takeaway": "Off-topic for security and agent builders: a book directory with no technique to learn from.",
+      "lessons": [
+        {
+          "point": "The site lists 16,543 books mentioned on Hacker News, reshuffled daily.",
+          "excerpt": "A fresh mix of well-loved books from 16,543 mentioned on Hacker News, reshuffled daily.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "show-hn",
+        "off-topic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action: off-topic",
+        "detail": "Nothing for security or agent work."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 3,
+        "newness": 81,
+        "credibility": 55.0,
+        "composite": 30.9,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported the lesson; off-topic.",
+      "prior_art": "HackerTube and earlier Hacker News book-mention aggregators.",
+      "article_url": "https://hackerbooks.org",
+      "tweet_url": null,
+      "author": "roansh",
+      "date": "2026-11",
+      "published": "2026-11-01",
+      "raw_path": "data/_raw/show-hn-hackerbooks-hackertube-but-for-books-rec-e4ea87d013.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@roansh via Hacker News",
+      "id": "hackerbooks-lists-16-543-books-mentioned-in-hack-682019c88f",
+      "retrieved_at": "2026-11-01T17:42:30+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3261,15 +3609,78 @@
       "scores": {
         "novelty": 40,
         "relevance": 15,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.0,
-        "composite": 31.55,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 30.8,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
       "id": "workshop-paper-proposes-retrieval-as-a-local-wal-83b74bc74c",
       "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "tunguz-those-greedy-local-ai-fanatics-a384cb7e92",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "title": "Tunguz posts a one-line jab at local AI enthusiasts",
+      "source_url": "https://x.com/tunguz/status/2118051184779076026",
+      "article_url": null,
+      "tweet_url": "https://x.com/tunguz/status/2118051184779076026",
+      "author": "@tunguz",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/tunguz-those-greedy-local-ai-fanatics-a384cb7e92.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "related_claims": [],
+      "summary": "An X post by @tunguz jokes about local AI enthusiasts in one line. It contains no technical claim, data or link.",
+      "takeaway": "No content to act on.",
+      "lessons": [
+        {
+          "point": "The post is a one-line joke with no technical content.",
+          "excerpt": "Those greedy local AI fanatics.",
+          "confidence": 0.3,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "x-post",
+        "local-ai",
+        "low-signal"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Nothing to act on",
+        "detail": "The post has no technical claim, data or link."
+      },
+      "scores": {
+        "novelty": 2,
+        "relevance": 3,
+        "newness": 81,
+        "credibility": 60.0,
+        "composite": 30.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "None; the post carries no claim.",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a one-line post with no claim; held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3319,10 +3730,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 17,
+        "newness": 14,
         "credibility": 50.6,
-        "composite": 31.34,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 30.59,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -3406,10 +3817,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 31.1,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 30.35,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 3 and 4; lesson 2's agent-migration framing was our inference and was reworded to the recipe the source gives (novelty 22 vs 30, lower kept).",
@@ -3491,10 +3902,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 30.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 29.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -3558,10 +3969,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 35,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.5,
-        "composite": 30.12,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 29.38,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons supported by the essay; it is opinion without experiments.",
@@ -3633,10 +4044,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 17,
+        "newness": 14,
         "credibility": 52.0,
-        "composite": 30.05,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 29.3,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -3712,10 +4123,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 10,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.0,
-        "composite": 30.05,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 29.3,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "LoRA-based adversarial fine-tuning and sparse fine-tuning methods such as lottery-ticket and saliency-based parameter selection.",
@@ -3770,10 +4181,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 17,
+        "newness": 14,
         "credibility": 40.0,
-        "composite": 28.85,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 28.1,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -3847,10 +4258,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.0,
-        "composite": 28.55,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 27.8,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -3921,10 +4332,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 15,
-        "newness": 17,
+        "newness": 14,
         "credibility": 72.0,
-        "composite": 28.55,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 27.8,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
@@ -3999,10 +4410,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 35,
-        "newness": 17,
+        "newness": 14,
         "credibility": 51.6,
-        "composite": 28.49,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 27.74,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are accurately attributed to Willison and Moonshot; the open-weights date is a promise and the price comparisons are Willison's, not independently checked.",
@@ -4080,10 +4491,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 30,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 27.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 26.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: quotes supported; the title overstated parallel-agent review as the cause (commenters give varied reasons), retitled.",
@@ -4152,10 +4563,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 17,
+        "newness": 14,
         "credibility": 53.2,
-        "composite": 27.23,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 26.48,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -4230,10 +4641,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 17,
+        "newness": 14,
         "credibility": 57.5,
-        "composite": 26.98,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 26.23,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -4314,10 +4725,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 17,
+        "newness": 14,
         "credibility": 69.3,
-        "composite": 26.64,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 25.89,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
@@ -4339,152 +4750,6 @@
       ],
       "source_name": "Anthropic Research",
       "retrieved_at": "2026-10-28T16:52:05+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "sebastian-raschka-s-from-scratch-video-course-on-5051734d4d",
-      "topic": "ai-research",
-      "domain": "air.models",
-      "related_claims": [],
-      "title": "Sebastian Raschka releases a from-scratch video course on building reasoning models",
-      "summary": "Raschka published eight coding lectures (11 hours) to go with his book Build a Reasoning Model (From Scratch). Starting from a pre-trained Qwen3 0.6B, the course builds a MATH-500 answer verifier and uses it both as the evaluator and as the reward for reinforcement learning with verifiable rewards (RLVR). It then covers self-consistency, self-refinement, a simplified GRPO training loop, and distillation from DeepSeek R1 answers.",
-      "lessons": [
-        {
-          "point": "One answer verifier can serve as both your eval and your RL reward signal, which keeps measurement and training aligned.",
-          "excerpt": "However, the verifier also has a second job later in the series: providing the reward signal for reinforcement learning with verifiable rewards (RLVR).",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Raschka frames the reasoning model as the engine and the agent harness as the machinery around it, supplying context management and tool access.",
-          "excerpt": "The task of the harness is sophisticated context management and giving the LLM access to tools.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "The early text-generation and evaluation examples run on a CPU.",
-          "excerpt": "Compute-resource-wise, you can work through the early text-generation and evaluation examples on a CPU.",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A hands-on resource for understanding the reasoning model inside agents; teaching material, not a new finding.",
-      "tags": [
-        "reasoning-models",
-        "rlvr",
-        "grpo",
-        "distillation",
-        "course",
-        "pytorch"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "Work through the reasoning-from-scratch videos for RLVR and GRPO intuition",
-        "detail": "Follow the verifier and MATH-500 evaluation chapter and the simplified GRPO chapters alongside the videos. Reuse the verifier-as-reward pattern when building evals for your own agents."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 35,
-        "newness": 17,
-        "credibility": 55.0,
-        "composite": 25.4,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
-      "verified": true,
-      "verify_note": "Verifier: all excerpts verbatim and title/summary facts supported (not refuted). Novelty: lower of 8 and 12.",
-      "source_url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
-      "article_url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
-      "tweet_url": null,
-      "author": "sgiannopoulos",
-      "date": "2026-10",
-      "published": "2026-10-26",
-      "raw_path": "data/_raw/sebastian-raschka-s-from-scratch-video-course-on-5051734d4d.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@sgiannopoulos via Hacker News",
-      "retrieved_at": "2026-10-26T16:50:42+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "sebastian-raschka-s-11-hour-8-video-from-scratch-course-on-b"
-      ]
-    },
-    {
-      "id": "askalphaxiv-we-trained-a-4b-decision-model-on-ov-e83a96a016",
-      "topic": "ai-research",
-      "domain": "air.models",
-      "title": "alphaXiv says its 4B decision model nearly matches Jev except sarcasm",
-      "summary": "alphaXiv says it trained a 4-billion-parameter decision model on more than 117,000 decision-making examples using OpenResearch. It claims near-identical performance to Jev everywhere except sarcasm detection, and generalization to unseen tasks such as hate-speech severity. The post gives no benchmarks, numbers or methodology.",
-      "lessons": [
-        {
-          "point": "This is a claim of a small model distilled or trained for classification-style decisions.",
-          "excerpt": "We trained a 4B decision model on over 117k decision-making examples with OpenResearch",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "The claimed parity has a named weak spot, sarcasm detection, and no supporting data.",
-          "excerpt": "Our model performs practically identically to Jev in all areas except one: sarcasm detection",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This is an unverified vendor claim, and small decision models still have to be benchmarked on your own data, as earlier pool entries showed.",
-      "tags": [
-        "decision-models",
-        "small-models",
-        "guardrails",
-        "x-post",
-        "unverified"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Do not swap in claimed Jev-equivalents without your own eval",
-        "detail": "If you consider this 4B model for routing or guardrail decisions, run it on contrast pairs from your own labeled set, DecisionPivot-style, and include sarcasm and other edge categories before replacing an existing judge."
-      },
-      "scores": {
-        "novelty": 20,
-        "relevance": 20,
-        "newness": 17,
-        "credibility": 60.0,
-        "composite": 25.25,
-        "scored_at": "2026-11-01T17:42:31+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier: the lessons quote the post accurately, but the post itself gives no benchmark, metric or model details; low confidence reflects that.",
-      "prior_art": "Red Hat found Jev-style decision models not faster or more accurate than LLM-as-a-judge (ai-security). The DecisionPivot contrast-pair benchmark for decision models is in ai-research.",
-      "related_claims": [],
-      "source_url": "https://x.com/askalphaxiv/status/2116199951835582507",
-      "article_url": null,
-      "tweet_url": "https://x.com/askalphaxiv/status/2116199951835582507",
-      "author": "@askalphaxiv",
-      "date": "2026-10",
-      "published": "2026-10-30",
-      "raw_path": "data/_raw/askalphaxiv-we-trained-a-4b-decision-model-on-ov-e83a96a016.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "retrieved_at": "2026-10-30T16:55:16+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -4579,70 +4844,70 @@
       "grounding_score": 1.0
     },
     {
-      "id": "show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99",
+      "id": "sebastian-raschka-s-from-scratch-video-course-on-5051734d4d",
       "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "pi pod runs the pi coding agent in isolated sandboxes",
-      "source_url": "https://pipod.dev/",
+      "domain": "air.models",
       "related_claims": [],
-      "summary": "pi pod is a new open-source project that runs sessions of the minimalist pi coding-agent harness inside isolated sandboxes on a server you control. The author argues that a minimal team agent environment needs four things: sandboxing, native clients, role-based access control (RBAC) for session sharing, and browser/native-app automation. The page is a launch announcement. It gives no details on how the isolation works and no security evaluation.",
+      "title": "Sebastian Raschka releases a from-scratch video course on building reasoning models",
+      "summary": "Raschka published eight coding lectures (11 hours) to go with his book Build a Reasoning Model (From Scratch). Starting from a pre-trained Qwen3 0.6B, the course builds a MATH-500 answer verifier and uses it both as the evaluator and as the reward for reinforcement learning with verifiable rewards (RLVR). It then covers self-consistency, self-refinement, a simplified GRPO training loop, and distillation from DeepSeek R1 answers.",
       "lessons": [
         {
-          "point": "The project aims to keep the user's existing pi harness unchanged and add sandbox isolation around it.",
-          "excerpt": "pi pod aims to seamlessly run your pi in an isolated sandbox with minimal, carefully curated tooling to get out the way and give you the boring stuff you need.",
+          "point": "One answer verifier can serve as both your eval and your RL reward signal, which keeps measurement and training aligned.",
+          "excerpt": "However, the verifier also has a second job later in the series: providing the reward signal for reinforcement learning with verifiable rewards (RLVR).",
           "confidence": 0.8,
           "grounded": true
         },
         {
-          "point": "The author's view of the minimum team agent environment: sandboxing, native clients, RBAC session sharing, and browser and native-app automation.",
-          "excerpt": "I consider agent sandboxing, native clients, rbac session sharing, and surface automation (namely browser and native apps) to comprise the minimal agentic engineering environment that should be used for software engineers in an organization.",
+          "point": "Raschka frames the reasoning model as the engine and the agent harness as the machinery around it, supplying context management and tool access.",
+          "excerpt": "The task of the harness is sophisticated context management and giving the LLM access to tools.",
           "confidence": 0.7,
           "grounded": true
         },
         {
-          "point": "Self-hosting is pitched as the way for companies to keep the whole agent environment in their own data center.",
-          "excerpt": "Self-hosting also is a great option for businesses who want their entire agentic environment in their preferred data center.",
-          "confidence": 0.6,
+          "point": "The early text-generation and evaluation examples run on a CPU.",
+          "excerpt": "Compute-resource-wise, you can work through the early text-generation and evaluation examples on a CPU.",
+          "confidence": 0.85,
           "grounded": true
         }
       ],
-      "takeaway": "Another self-hosted option for sandboxing coding agents, but the page gives no isolation details, so treat it as a lead to evaluate, not a proven security control.",
+      "takeaway": "A hands-on resource for understanding the reasoning model inside agents; teaching material, not a new finding.",
       "tags": [
-        "coding-agents",
-        "agent-sandbox",
-        "self-hosted",
-        "pi-harness",
-        "launch-announcement"
+        "reasoning-models",
+        "rlvr",
+        "grpo",
+        "distillation",
+        "course",
+        "pytorch"
       ],
       "actionable": {
-        "type": "takeaway",
-        "title": "Check pi pod's isolation model before you rely on it",
-        "detail": "If you run pi for a team, read the pi-pod/pipod repository to find out what isolation backs each pod (container, gVisor, microVM), what outbound network access it allows, and how credentials reach the pod. Do this before you treat the sandbox as a security boundary.",
-        "skill_slug": null
+        "type": "other",
+        "title": "Work through the reasoning-from-scratch videos for RLVR and GRPO intuition",
+        "detail": "Follow the verifier and MATH-500 evaluation chapter and the simplified GRPO chapters alongside the videos. Reuse the verifier-as-reward pattern when building evals for your own agents."
       },
       "scores": {
-        "novelty": 15,
-        "relevance": 25,
-        "newness": 17,
+        "novelty": 8,
+        "relevance": 35,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 24.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 24.65,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
-      "prior_art": "Omnigent meta-harness with policy enforcement and sandboxing; OneCLI per-employee sandboxed agents; OpenAI Agents API hosted harness with a choice of sandbox (all in archive.json/ai-research.json). Verifier's closest: existing agent-sandbox wrappers (OneCLI, Omnigent).",
+      "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
-      "verify_note": "Verifier: thin launch announcement; 'open-source' inferred from a GitHub link.",
-      "article_url": "https://pipod.dev/",
+      "verify_note": "Verifier: all excerpts verbatim and title/summary facts supported (not refuted). Novelty: lower of 8 and 12.",
+      "source_url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
+      "article_url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
       "tweet_url": null,
-      "author": "edverma2",
+      "author": "sgiannopoulos",
       "date": "2026-10",
-      "published": "2026-10-02",
-      "raw_path": "data/_raw/show-hn-pi-pod-run-your-pi-coding-agent-in-sandb-99ad764f99.txt",
+      "published": "2026-10-26",
+      "raw_path": "data/_raw/sebastian-raschka-s-from-scratch-video-course-on-5051734d4d.txt",
       "discovered_via": "hackernews",
       "source_id": null,
       "source_rank": 55.0,
       "source_topics": [],
-      "source_name": "@edverma2 via Hacker News",
-      "retrieved_at": "2026-10-25T02:36:53+00:00",
+      "source_name": "@sgiannopoulos via Hacker News",
+      "retrieved_at": "2026-10-26T16:50:42+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -4651,8 +4916,78 @@
       },
       "grounding_score": 1.0,
       "previous_slugs": [
-        "pi-pod-self-hosted-wrapper-that-runs-the-pi-coding-agent-in"
+        "sebastian-raschka-s-11-hour-8-video-from-scratch-course-on-b"
       ]
+    },
+    {
+      "id": "askalphaxiv-we-trained-a-4b-decision-model-on-ov-e83a96a016",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "title": "alphaXiv says its 4B decision model nearly matches Jev except sarcasm",
+      "summary": "alphaXiv says it trained a 4-billion-parameter decision model on more than 117,000 decision-making examples using OpenResearch. It claims near-identical performance to Jev everywhere except sarcasm detection, and generalization to unseen tasks such as hate-speech severity. The post gives no benchmarks, numbers or methodology.",
+      "lessons": [
+        {
+          "point": "This is a claim of a small model distilled or trained for classification-style decisions.",
+          "excerpt": "We trained a 4B decision model on over 117k decision-making examples with OpenResearch",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "The claimed parity has a named weak spot, sarcasm detection, and no supporting data.",
+          "excerpt": "Our model performs practically identically to Jev in all areas except one: sarcasm detection",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is an unverified vendor claim, and small decision models still have to be benchmarked on your own data, as earlier pool entries showed.",
+      "tags": [
+        "decision-models",
+        "small-models",
+        "guardrails",
+        "x-post",
+        "unverified"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Do not swap in claimed Jev-equivalents without your own eval",
+        "detail": "If you consider this 4B model for routing or guardrail decisions, run it on contrast pairs from your own labeled set, DecisionPivot-style, and include sarcasm and other edge categories before replacing an existing judge."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 20,
+        "newness": 14,
+        "credibility": 60.0,
+        "composite": 24.5,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: the lessons quote the post accurately, but the post itself gives no benchmark, metric or model details; low confidence reflects that.",
+      "prior_art": "Red Hat found Jev-style decision models not faster or more accurate than LLM-as-a-judge (ai-security). The DecisionPivot contrast-pair benchmark for decision models is in ai-research.",
+      "related_claims": [],
+      "source_url": "https://x.com/askalphaxiv/status/2116199951835582507",
+      "article_url": null,
+      "tweet_url": "https://x.com/askalphaxiv/status/2116199951835582507",
+      "author": "@askalphaxiv",
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/askalphaxiv-we-trained-a-4b-decision-model-on-ov-e83a96a016.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -4704,10 +5039,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 30,
-        "newness": 17,
+        "newness": 14,
         "credibility": 47.9,
-        "composite": 22.84,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 22.09,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "Many existing LLM engineering courses and cookbooks (OpenAI Cookbook, Anthropic courses, DeepLearning.AI short courses).",
@@ -4763,10 +5098,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 17,
+        "newness": 14,
         "credibility": 67.5,
-        "composite": 21.88,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 21.12,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons; some credits also go directly to six named projects, not only through partners.",
@@ -4933,10 +5268,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 17,
+        "newness": 14,
         "credibility": 70.0,
-        "composite": 20.15,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 19.4,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -5000,10 +5335,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 17,
+        "newness": 14,
         "credibility": 67.5,
-        "composite": 18.88,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 18.12,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
@@ -5070,10 +5405,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 18.5,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 17.75,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -5147,10 +5482,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 17,
+        "newness": 14,
         "credibility": 68.1,
-        "composite": 17.76,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 17.01,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; no technical claim to compare.",
@@ -5216,10 +5551,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 17,
+        "newness": 14,
         "credibility": 60.0,
-        "composite": 16.55,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 15.8,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -5286,10 +5621,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 10,
-        "newness": 17,
+        "newness": 14,
         "credibility": 55.0,
-        "composite": 16.4,
-        "scored_at": "2026-11-01T17:42:31+00:00"
+        "composite": 15.65,
+        "scored_at": "2026-11-04T20:09:57+00:00"
       },
       "verified": true,
       "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
@@ -5369,6 +5704,69 @@
       "prior_art": "The individual Anthropic security posts it links to, already covered on their own dates.",
       "id": "anthropic-s-security-news-page-is-an-index-of-ea-851fcf0bed",
       "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "product-418b958420",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Anthropic's Product news index shows the Agent Skills donation as newest",
+      "source_url": "https://www.anthropic.com/news/product",
+      "article_url": "https://www.anthropic.com/news/product",
+      "tweet_url": null,
+      "author": null,
+      "published": null,
+      "date": null,
+      "raw_path": "data/_raw/product-418b958420.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 65.6,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "related_claims": [],
+      "summary": "This is Anthropic's Product category index page, not an article. Its newest item is the October 22, 2026 post donating the Agent Skills standard to the Agentic AI Foundation, which the tracker already covers.",
+      "takeaway": "An index page with nothing new beyond posts already tracked.",
+      "lessons": [
+        {
+          "point": "The newest Product post is the Agent Skills donation, already covered.",
+          "excerpt": "We’re donating Agent Skills, the open standard that gives AI agents specialized knowledge and workflows, to the Agentic AI Foundation.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "anthropic",
+        "index-page",
+        "agent-skills",
+        "low-signal"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Nothing new to act on",
+        "detail": "Follow the linked Agent Skills donation post, which the tracker already covers."
+      },
+      "scores": {
+        "novelty": 4,
+        "relevance": 8,
+        "newness": 0,
+        "credibility": 65.6,
+        "composite": 13.44,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "The tracked story on Anthropic donating Agent Skills to the Linux Foundation's Agentic AI Foundation (October 22, 2026).",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a category index page, not an article; held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,

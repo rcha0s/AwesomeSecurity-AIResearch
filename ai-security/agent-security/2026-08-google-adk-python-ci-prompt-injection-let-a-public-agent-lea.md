@@ -25,7 +25,7 @@ Pillar Security's Dan Lisichkin found a prompt-injection chain in google/adk-pyt
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [source](https://www.theregister.com/security/2026/08/03/google-dev-kit-spurs-first-ever-agent-on-agent-violence/5282496)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 1 · Novelty 80 · Relevance 92 · Credibility 70 · **Composite 62** _(each 0-100)_  
+**Scores:** Newness 0 · Novelty 80 · Relevance 92 · Credibility 70 · **Composite 62** _(each 0-100)_  
 **Tags:** `agent-to-agent`, `prompt-injection`, `ci-cd`, `adk-python`, `gemini-cli`, `privilege-escalation`, `github-actions`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: General prompt-injection literature (Greshake et al., Rehberger); Invariant Labs' MCP tool-poisoning taxonomy; prior CI-injection findings in GitHub Actions review-bot workflows; Simon Willison's writing on agent-to-agent trust boundaries.
 

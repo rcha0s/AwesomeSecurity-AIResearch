@@ -25,7 +25,7 @@ Security researcher Johann Rehberger (wunderwuzzi) showed that Claude Code runni
 
 **Topic:** AI Security  ·  **Domain:** Prompt Injection & Jailbreaks  
 **Source:** [The Register](https://www.theregister.com/research/2026/08/28/researcher-shows-how-claude-code-can-be-tricked-simply-by-asking-it-to-summarize-a-website/5293372)  ·  **Retrieved:** 2026-09-09  
-**Scores:** Newness 1 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 57** _(each 0-100)_  
+**Scores:** Newness 0 · Novelty 75 · Relevance 88 · Credibility 50 · **Composite 56** _(each 0-100)_  
 **Tags:** `claude-code`, `prompt-injection`, `sandbox-escape`, `python`, `module-shadowing`, `auto-mode`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Rehberger's own prior Claude Code prompt-injection/exfiltration research plus long-documented Python import-shadowing attacks; the new specificity is chaining a safety-refusal fallback into the shadowing RCE and spawning a nested agent.
 

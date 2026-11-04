@@ -736,6 +736,98 @@
       "cost_basis": "measured",
       "ceiling_usd": 41.9381,
       "cap_usd": 20.0
+    },
+    {
+      "run_id": "local-20261103T173004Z-86846",
+      "date": "2026-11-03",
+      "runner": "local",
+      "candidates": 205,
+      "stories": 19,
+      "kept": 18,
+      "kept_ratio": 0.562,
+      "recall": {
+        "recall": 0.222,
+        "independent_recall": 0.222,
+        "curator_recall": {
+          "ghsa": {
+            "recall": 0.0,
+            "independent_recall": 0.0
+          },
+          "kev": {
+            "recall": 1.0,
+            "independent_recall": 1.0
+          },
+          "simon": {
+            "recall": 1.0,
+            "independent_recall": 1.0
+          },
+          "tldrsec": {
+            "recall": 0.111,
+            "independent_recall": 0.111
+          }
+        },
+        "week": "2026-W45",
+        "generated": "2026-11-04T03:08:06+00:00",
+        "passed": false,
+        "errors": 0,
+        "file": "recall.json",
+        "stale": false
+      },
+      "golden": null,
+      "integrity": {
+        "passed": true,
+        "problems": 0
+      },
+      "cost_usd": 9.944258815,
+      "cost_basis": "measured",
+      "ceiling_usd": 43.0819,
+      "cap_usd": 20.0
+    },
+    {
+      "run_id": "local-20261104T173312Z-77201",
+      "date": "2026-11-04",
+      "runner": "local",
+      "candidates": 66,
+      "stories": 19,
+      "kept": 1,
+      "kept_ratio": 0.077,
+      "recall": {
+        "recall": 0.211,
+        "independent_recall": 0.211,
+        "curator_recall": {
+          "ghsa": {
+            "recall": 0.0,
+            "independent_recall": 0.0
+          },
+          "kev": {
+            "recall": 0.667,
+            "independent_recall": 0.667
+          },
+          "simon": {
+            "recall": 1.0,
+            "independent_recall": 1.0
+          },
+          "tldrsec": {
+            "recall": 0.111,
+            "independent_recall": 0.111
+          }
+        },
+        "week": "2026-W45",
+        "generated": "2026-11-04T21:59:46+00:00",
+        "passed": false,
+        "errors": 0,
+        "file": "recall.json",
+        "stale": false
+      },
+      "golden": null,
+      "integrity": {
+        "passed": true,
+        "problems": 0
+      },
+      "cost_usd": 6.93497159,
+      "cost_basis": "measured",
+      "ceiling_usd": 43.0819,
+      "cap_usd": 20.0
     }
   ]
 }

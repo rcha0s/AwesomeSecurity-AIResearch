@@ -1,6 +1,6 @@
 {
   "github_query:ai-agent-security-guardrails": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 0
   },
   "github_query:llm-evaluation-harness-benchmark": {
@@ -8,20 +8,20 @@
     "curated": 0
   },
   "github_query:mcp-protocol-or-mcp-specification": {
-    "curated": 0,
-    "ingested": 8
+    "ingested": 12,
+    "curated": 0
   },
   "github_query:mcp-server-security-scanner": {
     "ingested": 17,
     "curated": 10
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 12,
+    "ingested": 13,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "curated": 4,
-    "ingested": 15
+    "ingested": 17,
+    "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
     "ingested": 21,
@@ -40,11 +40,11 @@
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 12,
+    "ingested": 14,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 10,
+    "ingested": 11,
     "curated": 2
   },
   "rss:http-export-arxiv-org-rss-cs-cr": {

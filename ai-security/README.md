@@ -2,12 +2,14 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_9 vetted findings · updated 2026-11-01 · ranked by composite · findings from the latest 31 days · [45 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-11-04 · ranked by composite · findings from the latest 31 days · [47 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Roo Code's command auto-approval can be bypassed in seven ways](https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization)**
+  _Why now: Seven concrete bypasses of a coding agent's text-based command auto-approval, timely alongside this run's Caper finding that text-based approvers miss harmful commands. · trending · high-relevance · timely_
 - **[Northflank breach exposed customer secrets, and stolen AI API keys were used](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/)**
   _Why now: Latest of Wiz's nine 'Black October' AI-platform breaches, with stolen AI API keys already abused; teaches scoping, spend-capping and fast rotation of hosted AI keys. · trending · newsworthy · timely · high-relevance_
 - **[Chainalysis discloses breach by attackers using offensive agentic techniques](https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/)**
@@ -84,6 +86,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Self-state attacks: corrupting an agent's own memory and config uses legitimate syscalls](https://arxiv.org/abs/2607.17986v1)**
   _Why now: Part of the live agent-security cluster with a directly actionable hardening step: apply access-control and backup to an agent's own memory/config files. · trending · timely_
 - **[OpenClaw's ClawHub skill marketplace: an agentic supply-chain attack surface](https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/)**
+- **[Anthropic's Safeguards news index lists its misuse-defense posts](https://www.anthropic.com/news/safeguards)**
 
 | Domain | Findings |
 | --- | --- |
@@ -96,46 +99,46 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## AI Infrastructure & Incident Response
 
-- **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **60.23** · Oct 6, 2026  
+- **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](ai-infra/2026-10-metr-mathjax-injection-in-inspect-let-agents-rewrite-what-re.md)** · composite **59.48** · Oct 6, 2026  
   Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any…  
   _[METR](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)_
-- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **55.25** · Oct 27, 2026  
+- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **54.5** · Oct 27, 2026  
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.  
   _[docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)_
 
 ## Agent & Harness Security
 
-- **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](agent-security/2026-10-mistral-vibe-fixes-permission-check-bypasses-in-versions-2-2.md)** · composite **56.0** · Oct 13, 2026 · 🔗 +1 sources  
+- **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](agent-security/2026-10-mistral-vibe-fixes-permission-check-bypasses-in-versions-2-2.md)** · composite **55.25** · Oct 13, 2026 · 🔗 +1 sources  
   A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.  
   _[vulncheck.com](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)_
-- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **52.25** · Oct 22, 2026  
+- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **51.5** · Oct 22, 2026  
   Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.  
   _[motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)_
 
 ## Guardrails & Defensive Tooling
 
-- **[MFOTL monitor flags 71.8% of STAC but fires on 29.3% of benign](guardrails/2026-10-mfotl-monitor-flags-71-8-of-stac-but-fires-on-29-3-of-benign.md)** · composite **54.65** · Oct 7, 2026  
+- **[MFOTL monitor flags 71.8% of STAC but fires on 29.3% of benign](guardrails/2026-10-mfotl-monitor-flags-71-8-of-stac-but-fires-on-29-3-of-benign.md)** · composite **53.9** · Oct 7, 2026  
   A declarative policy monitor is only as good as the trace it reads: log approvals, timestamps and provenance that the agent cannot forge, or temporal guardrails turn into coarse action-type…  
   _[CCS (via arXiv)](http://arxiv.org/abs/2610.09793v1)_
-- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **53.87** · Oct 18, 2026  
+- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **53.12** · Oct 18, 2026  
   A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
   _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
 
 ## Prompt Injection & Jailbreaks
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **61.34** · Oct 19, 2026  
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **60.59** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 
 ## MCP, Tools & Skills
 
-- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](mcp-tools/2026-10-mcp-inspector-fixes-two-critical-one-click-rce-flaws-in-vers.md)** · composite **60.5** · Oct 21, 2026 · 🔗 +1 sources  
+- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](mcp-tools/2026-10-mcp-inspector-fixes-two-critical-one-click-rce-flaws-in-vers.md)** · composite **59.75** · Oct 21, 2026 · 🔗 +1 sources  
   Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.  
   _[github.com](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)_
 
 ## Red-Teaming & Threat Modeling
 
-- **[Paper proves models can hide capabilities that audits cannot find](red-teaming/2026-10-paper-proves-models-can-hide-capabilities-that-audits-cannot.md)** · composite **55.25** · Oct 9, 2026  
+- **[Paper proves models can hide capabilities that audits cannot find](red-teaming/2026-10-paper-proves-models-can-hide-capabilities-that-audits-cannot.md)** · composite **54.5** · Oct 9, 2026  
   A clean capability evaluation cannot prove a model lacks a dangerous capability if the model's builder is adversarial.  
   _[arxiv.org](https://arxiv.org/abs/2610.13928)_
 
