@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--01-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-22-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-73-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--03-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-23-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-73-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -12,9 +12,9 @@
 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
-1. **[OpenAI describes its layered monitor for misbehaving frontier agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-describes-its-layered-monitor-for-misbeha-3d848d3ef4#week)** · _AI Security · Oct 29, 2026_
-2. **[Wiz lists the fingerprints that mark an intrusion as agent-driven](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=wiz-lists-the-fingerprints-that-mark-an-intrusio-b890aba68a#week)** · _Product Security · Oct 29, 2026_
-3. **[Hugging Face cryptomining malware campaign returned days after takedown](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hugging-face-malware-campaign-returns-to-hijack-7725614bd1#week)** · _AI Security · Oct 29, 2026_
+1. **[Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=the-roi-of-agentic-remediation-real-world-result-b16be21101#week)** · _Product Security · Nov 3, 2026_
+2. **[OpenAI details how it trains streaming activation probes that block policy-violating completions](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=training-activation-classifiers-for-safety-and-a-669daa6f81#week)** · _AI Security · Nov 2, 2026_
+3. **[Trail of Bits uses Codex to backport security fixes to stable Linux](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backporting-security-fixes-at-scale-with-codex-61b7394775#week)** · _Product Security · Nov 2, 2026_
 
 ## Biggest this week
 
@@ -28,13 +28,13 @@ _Most covered or exploited in the last 7 days._
 
 _The last 7 days, newest first._
 
-1. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 1, 2026 · 3 sources_
-2. **[Canonical LXD and MicroCloud accepted forged client certificate chains](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=canonical-lxd-and-microcloud-accepted-forged-cli-522855cdae#week)** · _Product Security · Nov 1, 2026_
-3. **[Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-dissects-the-ssh-backdoor-in-a-trojani-2bf6ec40ea#week)** · _Product Security · Oct 31, 2026_
+1. **[Barracuda patches ESG auth bypass chaining to root command injection](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week)** · _Product Security · Nov 3, 2026_
+2. **[Google warns LLMjacking attacks cost some enterprises up to $1 million](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-warns-llmjacking-attacks-are-costing-some-b14fb698e3#week)** · _AI Security · Nov 3, 2026_
+3. **[UK NCSC warns AI-powered ransomware will hit critical infrastructure by 2028](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=britain-on-notice-ai-powered-ransomware-attacks-666af1d3dd#week)** · _AI Security · Nov 3, 2026_
 
 ## Claim changes
 
-_The 6 newest of 16 changes in the last 7 days._
+_The 6 newest of 14 changes in the last 7 days._
 
 1. **Added:** [An agent's stated lean steers expert judgment calls](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims) · _current · Oct 29, 2026 · 1 source_  
    When an agent states a preference on an open judgment call, experts mostly follow it: in Anthropic's randomized study analysts matched a coin-flip-assigned agent lean 86% of the time versus about 50%…
@@ -72,4 +72,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-01 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-03 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

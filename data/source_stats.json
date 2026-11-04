@@ -20,8 +20,8 @@
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "curated": 4,
-    "ingested": 15
+    "ingested": 17,
+    "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
     "ingested": 21,
@@ -32,7 +32,7 @@
     "curated": 0
   },
   "newsletter:https-www-latent-space-feed": {
-    "ingested": 3,
+    "ingested": 4,
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
@@ -40,19 +40,19 @@
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 12,
+    "ingested": 13,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 10,
-    "curated": 2
+    "ingested": 11,
+    "curated": 3
   },
   "rss:http-export-arxiv-org-rss-cs-cr": {
     "ingested": 34,
     "curated": 10
   },
   "rss:https-alignment-openai-com-rss-xml": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 1
   },
   "rss:https-ampcode-com-news-rss": {
@@ -70,6 +70,10 @@
   "rss:https-blog-trailofbits-com-feed": {
     "curated": 1,
     "ingested": 7
+  },
+  "rss:https-citizenlab-ca-feed": {
+    "ingested": 3,
+    "curated": 0
   },
   "rss:https-danielmiessler-com-feed-rss": {
     "ingested": 2,
@@ -152,7 +156,7 @@
     "ingested": 1
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 0
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
@@ -164,15 +168,15 @@
     "curated": 0
   },
   "rss:https-www-imperva-com-blog-feed": {
-    "curated": 0,
-    "ingested": 3
+    "ingested": 4,
+    "curated": 0
   },
   "rss:https-www-microsoft-com-en-us-research-feed": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
-    "ingested": 20,
+    "ingested": 21,
     "curated": 6
   },
   "rss:https-www-securityweek-com-feed": {
@@ -180,8 +184,8 @@
     "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
-    "curated": 0,
-    "ingested": 2
+    "ingested": 3,
+    "curated": 0
   },
   "rss:https-www-theregister-com-security-headlines-ato": {
     "ingested": 8,
@@ -192,7 +196,7 @@
     "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 0
   },
   "youtube:ucbrp3c757lwg9m-u7tyekxa": {
