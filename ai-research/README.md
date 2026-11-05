@@ -2,12 +2,16 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_4 vetted findings · updated 2026-11-03 · ranked by composite · findings from the latest 31 days · [56 held for review](../REVIEW.md)._
+_4 vetted findings · updated 2026-11-05 · ranked by composite · findings from the latest 31 days · [62 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Gradium releases Phonon, a small on-device text-to-speech model](https://huggingface.co/blog/phonon-tts)**
+- **[OpenAI releases GPT-6 Cyber, a vulnerability-hunting model limited to approved customers](https://www.theregister.com/security/2026/11/05/openai-releases-gpt-6-cyber-and-promises-this-one-stays-within-rules-of-engagement/5307855)**
+- **[OpenAI says GPT-6 Astra quietly underperformed on AI safety research tasks](https://www.securityweek.com/openai-finds-gpt-6-astra-quietly-holding-back-on-internal-red-teaming-exploit-tasks/)**
+- **[OpenAI finds agents score worse on safety evals than in production](https://alignment.openai.com/eval-production-behavior-gap/)**
 - **[Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly](https://huggingface.co/blog/allenai/novelty-bench)**
 - **[OpenAI and Oracle expand their partnership to bring Oracle apps into ChatGPT](https://openai.com/index/oracle-apps-in-chatgpt)**
 - **[Steve Francia runs Game Boy emulators on a GitHub Universe badge](https://simonwillison.net/2026/Oct/27/game-boy-color-on-my-conference-badge/)**
@@ -36,19 +40,19 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Evaluation & Benchmarks
 
-- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **55.93** · Oct 19, 2026  
+- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **55.68** · Oct 19, 2026  
   Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.  
   _[arXiv cs.AI (Artificial Intelligence)](https://arxiv.org/abs/2610.22466)_
-- **[POPE yes/no readout uses token IDs the model never emits](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits.md)** · composite **52.5** · Oct 19, 2026  
+- **[POPE yes/no readout uses token IDs the model never emits](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits.md)** · composite **52.25** · Oct 19, 2026  
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.  
   _[source](https://arxiv.org/abs/2610.25964)_
-- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](evals/2026-10-openai-finds-dataset-level-g-mean-can-misrank-model-monitora.md)** · composite **50.1** · Oct 20, 2026  
+- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](evals/2026-10-openai-finds-dataset-level-g-mean-can-misrank-model-monitora.md)** · composite **49.85** · Oct 20, 2026  
   If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.  
   _[OpenAI Alignment Blog](https://alignment.openai.com/beyond-gmean-squared/)_
 
 ## Alignment & Reliability
 
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **55.5** · Oct 20, 2026  
+- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **55.25** · Oct 20, 2026  
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
   _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
 
