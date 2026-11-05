@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-03T00:00:00Z</updated>
+  <updated>2026-11-05T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -31,60 +31,67 @@
     <summary type="text">Patching an SD-WAN control system that was already compromised is not enough: hunt for KeyDrift's files and treat the inter-site keys as possibly exposed.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week</id>
-    <title>Barracuda patches ESG auth bypass chaining to root command injection</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch Barracuda appliances and keep their admin interfaces off untrusted networks, since the chain needs management-plane reach.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-pipeline-finds-exploits-and-patches-hundr-fc91c87e01#week</id>
+    <title>OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-pipeline-finds-exploits-and-patches-hundr-fc91c87e01#week" rel="alternate" type="text/html" />
+    <summary type="text">Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result was reached.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-warns-llmjacking-attacks-are-costing-some-b14fb698e3#week</id>
-    <title>Google warns LLMjacking attacks cost some enterprises up to $1 million</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-warns-llmjacking-attacks-are-costing-some-b14fb698e3#week" rel="alternate" type="text/html" />
-    <summary type="text">Stolen cloud tokens and exposed LLM keys now turn into six-figure daily bills, so LLM credentials need the same protection and spend alerting as other cloud credentials.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-artex-operators-letting-ai-age-e689d7c59c#week</id>
+    <title>Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-artex-operators-letting-ai-age-e689d7c59c#week" rel="alternate" type="text/html" />
+    <summary type="text">Agentic attack platforms let unskilled criminals test every endpoint of many targets for a few hundred dollars, so basic gaps like hardcoded credentials and unauthenticated APIs are now found at machine scale.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=britain-on-notice-ai-powered-ransomware-attacks-666af1d3dd#week</id>
-    <title>UK NCSC warns AI-powered ransomware will hit critical infrastructure by 2028</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=britain-on-notice-ai-powered-ransomware-attacks-666af1d3dd#week" rel="alternate" type="text/html" />
-    <summary type="text">Defenders should expect AI-assisted attacks, including repurposed open source red-teaming tools, and plan for AI-assisted defense and faster patching.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week</id>
+    <title>OpenSSH ships an emergency workaround for a critical musl-specific vulnerability</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week" rel="alternate" type="text/html" />
+    <summary type="text">Find every musl-based SSH host, especially Alpine containers and appliances, and turn off password authentication now, because maintainers no longer wait out long embargoes.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=password-manager-msecure-tells-users-to-change-p-6c2b7a6bf0#week</id>
-    <title>mSecure asks users to reset passwords without explaining why</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=password-manager-msecure-tells-users-to-change-p-6c2b7a6bf0#week" rel="alternate" type="text/html" />
-    <summary type="text">Vague notices about suspicious activity leave password manager users unable to prioritize resets, so vendors should disclose scope early.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=midnight-blizzard-hit-ios-and-android-users-thro-b12b0db37b#week</id>
+    <title>Midnight Blizzard hit iOS and Android users through watering-hole exploit chains</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=midnight-blizzard-hit-ios-and-android-users-thro-b12b0db37b#week" rel="alternate" type="text/html" />
+    <summary type="text">Patched mobile bugs still get used against devices that have not been updated, so slow patching on high-risk staff devices is what the attacker exploits.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=critical-node-red-flaw-exploited-in-attacks-7a3ed4d5d1#week</id>
-    <title>Attackers exploit critical Node-RED missing-authentication flaw to drop bots and webshells</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=critical-node-red-flaw-exploited-in-attacks-7a3ed4d5d1#week" rel="alternate" type="text/html" />
-    <summary type="text">Node-RED instances without adminAuth, including those embedded in operational technology (OT) devices, are being exploited automatically with a single HTTP request.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sonicwall-says-it-will-not-fix-two-flaws-in-end-9d125482be#week</id>
+    <title>SonicWall says it will not fix two flaws in end-of-life GMS</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sonicwall-says-it-will-not-fix-two-flaws-in-end-9d125482be#week" rel="alternate" type="text/html" />
+    <summary type="text">If SonicWall GMS is still running, take it off the network or replace it, because its pre-auth file-read bug will never be patched.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-siemens-iot2050-flaw-6e1181978a#week</id>
-    <title>Attackers exploit maximum-severity Siemens IoT2050 flaw to plant command backdoors</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-siemens-iot2050-flaw-6e1181978a#week" rel="alternate" type="text/html" />
-    <summary type="text">Exposed Node-RED on industrial devices is a one-request path to root, and some attackers leave backdoors that survive reboots.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30#week</id>
+    <title>Gradium releases Phonon, a small on-device text-to-speech model</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30#week" rel="alternate" type="text/html" />
+    <summary type="text">If you need offline voice output for an agent, Phonon 31m is a small option you can use commercially, but the benchmark claims come from the vendor.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-target-unpatched-cryptopayment-gateway-cb2a007a58#week</id>
-    <title>Attackers target unpatched CryptoPayment Gateway WordPress plugin flaw exposing wallet credentials</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-target-unpatched-cryptopayment-gateway-cb2a007a58#week" rel="alternate" type="text/html" />
-    <summary type="text">Abandoned plugins with no fix leave removal as the only defense, so unmaintained payment plugins should be dropped and secrets rotated.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=daniel-miessler-lists-three-security-priorities-da774b4c59#week</id>
+    <title>Daniel Miessler lists three security priorities against AI-driven attacks</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=daniel-miessler-lists-three-security-priorities-da774b4c59#week" rel="alternate" type="text/html" />
+    <summary type="text">Knowing what you expose and shrinking it is the cheapest first defense against attackers using AI for constant reconnaissance.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cpguard-update-channel-hijacked-to-backdoor-linu-0291037be6#week</id>
-    <title>cPGuard update channel hijacked to push backdoor to Linux servers</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cpguard-update-channel-hijacked-to-backdoor-linu-0291037be6#week" rel="alternate" type="text/html" />
-    <summary type="text">A security tool's own update channel became the delivery path, so hosting admins must treat any server that took the bad update as compromised and rotate credentials.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=zyxel-gs1900-switch-attacks-used-a-new-zero-day-46f8c45a95#week</id>
+    <title>Zyxel GS1900 switch attacks used a new zero-day, not the old bug</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=zyxel-gs1900-switch-attacks-used-a-new-zero-day-46f8c45a95#week" rel="alternate" type="text/html" />
+    <summary type="text">A vendor patch and an exploited-bug listing can point at the wrong flaw, so defenders should confirm which bug an attack really used.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims</id>
+    <title>Agent safety eval scores can misjudge how agents behave in production</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims" rel="alternate" type="text/html" />
+    <summary type="text">An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting Warnings eval, six models scored 10.2 to 37.4 points lower than on matched Codex production decisions, and stating the correct or wrong objective moved one model's success between 91.6% and 17.6%, while a generic 'this is an eval' cue did not.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>
@@ -101,31 +108,10 @@
     <summary type="text">Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing quality.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims</id>
-    <title>Compact near the context limit; reset only if the model needs it</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims" rel="alternate" type="text/html" />
-    <summary type="text">A harness should compact long sessions automatically, and add hard context resets only for models that wrap up early near the limit.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims</id>
-    <title>Return short tool responses and distilled subagent summaries</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims" rel="alternate" type="text/html" />
-    <summary type="text">A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims</id>
-    <title>Keep intermediate tool results out of the model context</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims" rel="alternate" type="text/html" />
-    <summary type="text">In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims</id>
-    <title>Measure speedups with repeated trials, not impressions</title>
-    <updated>2026-10-28T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=measure-speedups-with-repeated-trials#claims" rel="alternate" type="text/html" />
-    <summary type="text">A harness team should judge work efficiency with repeated-trial evals or timed studies, since in METR's early-2025 study developers believed AI sped them up while it slowed them down.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims</id>
+    <title>Constrained decoding wins for structured output, not TOON</title>
+    <updated>2026-07-28T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims" rel="alternate" type="text/html" />
+    <summary type="text">For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy - token-optimized notations do not win here.</summary>
   </entry>
 </feed>

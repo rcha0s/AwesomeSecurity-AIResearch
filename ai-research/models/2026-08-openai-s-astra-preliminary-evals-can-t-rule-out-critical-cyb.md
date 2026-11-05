@@ -24,7 +24,7 @@ OpenAI reports that internal evaluations of Astra can no longer rule out the Pre
 
 **Topic:** AI Research  ·  **Domain:** Models & Capabilities  
 **Source:** [source](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 1 · Novelty 70 · Relevance 75 · Credibility 80 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 0 · Novelty 70 · Relevance 75 · Credibility 80 · **Composite 56** _(each 0-100)_  
 **Tags:** `preparedness-framework`, `frontier-capability`, `cot-monitoring`, `cyber-evals`, `sandboxing`, `openai`, `astra`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Connects to pool entry 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' - the same class of provider-runtime controls, applied preemptively at the training/eval stage rather than reactively.
 

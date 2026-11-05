@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_24 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-03_
+_24 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-05_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -296,13 +296,14 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 
 **Conditions —** Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation](https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation/) | Sep 2, 2026 |
 | supports | [CyberStrikeAI Uses 44 AI Agents to Automate Hacking Operations Against Japan Targets](https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html) | Oct 27, 2026 |
 | supports | [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) | Oct 29, 2026 |
+| supports | [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) | Nov 5, 2026 |
 
 </details>
 
@@ -320,13 +321,15 @@ A model's built-in refusal/alignment is not a security boundary: refusal behavio
 
 **Conditions —** Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Perturbation probing: ~0.014% of neurons carry the refusal template; removing them breaks refusal on 80% of harmful prompts](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) | Aug 28, 2026 |
 | supports | [The Framing Gap: overt-refused leaks succeed at 100% when reframed; the acting model cannot recognize the attack](https://arxiv.org/abs/2608.27092) | Aug 27, 2026 |
 | supports | [Breaking Claude Code Opus 5 and Auto Mode](https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/) | Aug 28, 2026 |
+| supports | [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) | Nov 5, 2026 |
+| supports | [MSafeTemp authors show English-only safety evaluation misses multilingual jailbreaks](https://arxiv.org/abs/2610.40516) | Oct 29, 2026 |
 
 </details>
 

@@ -2138,10 +2138,26 @@
           "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
           "title": "Breaking Claude Code Opus 5 and Auto Mode",
           "published": "2026-08-28"
+        },
+        {
+          "stance": "supports",
+          "url": "https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/",
+          "title": "Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended",
+          "published": "2026-11-05",
+          "note": "When Anthropic's Opus 5.5 hit guardrails, the ARTEX operator switched to more permissive Chinese models and kept going.",
+          "source_name": "Check Point Research"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.40516",
+          "title": "MSafeTemp authors show English-only safety evaluation misses multilingual jailbreaks",
+          "published": "2026-10-29",
+          "note": "For several models, attacks refused in English succeeded once translated, and culturally localized variants exposed further failures.",
+          "source_name": "Hugging Face Daily Papers"
         }
       ],
       "first_seen": "2026-08-29",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-11-05",
       "guidance": "Layer runtime guardrails, destination allow-lists, and planner/reader capability isolation in front of any deployed LLM; treat built-in refusal as best-effort UX safety, not an access-control boundary.",
       "scope": "Not a claim that alignment is worthless (it curbs casual misuse); it cannot be the SOLE control in adversarial settings.",
       "title": "Built-in model refusal is not a security boundary",
@@ -2234,10 +2250,18 @@
           "published": "2026-10-29",
           "note": "Wiz's real-world cases show agents iterating through numbered script versions and trying many lateral paths at once, at a cadence set by step complexity rather than human working pace.",
           "source_name": "Wiz Research"
+        },
+        {
+          "stance": "supports",
+          "url": "https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/",
+          "title": "Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended",
+          "published": "2026-11-05",
+          "note": "Leaked ARTEX consoles show operators setting one goal and then mostly asking for progress while agent fleets ran campaigns for about $145 to $1,500 each.",
+          "source_name": "Check Point Research"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-10-29",
+      "last_reviewed": "2026-11-05",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",
@@ -2950,10 +2974,18 @@
           "title": "Anthropic Engineering: harness design long running apps",
           "published": "2026-03-24",
           "note": "\"The harness was over 20x more expensive, but the difference in output quality was immediately apparent.\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://openai.com/index/a-thousand-fewer-paths-to-root/",
+          "title": "OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs",
+          "published": "2026-11-05",
+          "note": "20 of 200 exploits the agent marked successful reached root through a different 0-day, so OpenAI added an independent check that each exploit used its assigned bug.",
+          "source_name": "OpenAI"
         }
       ],
       "first_seen": "2026-03-24",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-05",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Split generating from evaluating with a separate grader",
@@ -3038,10 +3070,18 @@
           "title": "Anthropic Engineering: effective context engineering for ai agents",
           "published": "2025-09-29",
           "note": "\"We're already seeing that smarter models require less prescriptive engineering, allowing agents to operate with more autonomy.\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://openai.com/index/a-thousand-fewer-paths-to-root/",
+          "title": "OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs",
+          "published": "2026-11-05",
+          "note": "A curated exploitation-technique library raised the older model's success from 76.2% to 88.9% but added only 1.5 points for the newer model, so OpenAI dropped it.",
+          "source_name": "OpenAI"
         }
       ],
       "first_seen": "2025-09-29",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-05",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Re-test harness scaffolding whenever the model changes",
@@ -3143,6 +3183,29 @@
       "title": "Agent misalignment monitors must cover evaluation and training runs",
       "guidance": "Run behavior monitoring on every workload where an agent has tool or network access, including evals and RL runs; screen for high recall, sample unflagged traffic for review, and let critical alerts pause the workload automatically.",
       "scope": "Does not apply to agents with no tool, network or code-execution access; activation-probe screening needs model internals, so API users must rely on transcript-level reviewers."
+    },
+    {
+      "id": "agent-safety-evals-can-misread-production-behavior",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "statement": "An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting Warnings eval, six models scored 10.2 to 37.4 points lower than on matched Codex production decisions, and stating the correct or wrong objective moved one model's success between 91.6% and 17.6%, while a generic 'this is an eval' cue did not.",
+      "status": "current",
+      "confidence": 0.55,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://alignment.openai.com/eval-production-behavior-gap/",
+          "title": "OpenAI finds agents score worse on safety evals than in production",
+          "published": "2026-11-03"
+        }
+      ],
+      "first_seen": "2026-11-05",
+      "last_reviewed": "2026-11-05",
+      "added_on": "2026-11-05",
+      "changed_on": "2026-11-05",
+      "title": "Agent safety eval scores can misjudge how agents behave in production",
+      "guidance": "Grade a sample of matched production decisions with the same rubric as the eval and track the gap per model; classify reasoning traces for the objective the model infers, report success split by that guess, and rewrite eval cases whose intended behavior can be inferred from surface cues.",
+      "scope": "Shown on one eval family (Respecting Warnings) and six OpenAI models with Codex production logs, with the causal framing intervention on a single model; the direction of the gap may differ for other evals, where eval awareness can make models look safer rather than less safe."
     }
   ]
 }

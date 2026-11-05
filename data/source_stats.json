@@ -20,7 +20,7 @@
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 17,
+    "ingested": 19,
     "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
@@ -32,7 +32,7 @@
     "curated": 0
   },
   "newsletter:https-www-latent-space-feed": {
-    "ingested": 4,
+    "ingested": 5,
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
@@ -40,7 +40,7 @@
     "ingested": 1
   },
   "research_index:https-www-anthropic-com-news": {
-    "ingested": 13,
+    "ingested": 14,
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
@@ -52,8 +52,8 @@
     "curated": 10
   },
   "rss:https-alignment-openai-com-rss-xml": {
-    "ingested": 3,
-    "curated": 1
+    "ingested": 4,
+    "curated": 2
   },
   "rss:https-ampcode-com-news-rss": {
     "ingested": 1,
@@ -96,7 +96,7 @@
     "ingested": 1
   },
   "rss:https-huggingface-co-blog-feed-xml": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 1
   },
   "rss:https-labs-watchtowr-com-rss": {
@@ -104,8 +104,8 @@
     "ingested": 7
   },
   "rss:https-machinelearning-apple-com-rss-xml": {
-    "curated": 0,
-    "ingested": 2
+    "ingested": 3,
+    "curated": 0
   },
   "rss:https-metr-org-feed-xml": {
     "curated": 2,
@@ -116,11 +116,11 @@
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 2
   },
   "rss:https-research-checkpoint-com-feed": {
-    "ingested": 3,
+    "ingested": 4,
     "curated": 1
   },
   "rss:https-research-google-blog-rss": {
@@ -176,11 +176,11 @@
     "curated": 0
   },
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
-    "ingested": 21,
+    "ingested": 22,
     "curated": 6
   },
   "rss:https-www-securityweek-com-feed": {
-    "ingested": 5,
+    "ingested": 7,
     "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
