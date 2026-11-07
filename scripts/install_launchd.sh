@@ -66,7 +66,20 @@ EOF
   exit 0
 fi
 
+# Reloading the job kills a scan in progress (launchd sends it SIGTERM). The
+# 11-06 scan died that way mid-ingest, so a running scan blocks a reinstall or
+# an uninstall.
+refuse_if_running() {
+  local state
+  state="$(launchctl print "$DOMAIN/$LABEL" 2>/dev/null || true)"
+  if [[ "${FORCE:-}" != 1 && "$state" == *"state = running"* ]]; then
+    echo "install_launchd: a scan is running now; re-run when it finishes (FORCE=1 kills it)" >&2
+    exit 1
+  fi
+}
+
 if [[ "${1:-}" == "--uninstall" ]]; then
+  refuse_if_running
   launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
   rm -f "$PLIST"
   echo "Removed $LABEL"
@@ -79,12 +92,12 @@ MINUTE="${2:-30}"
   echo "install_launchd: HOUR and MINUTE must be numbers" >&2
   exit 1
 }
-# Reloading the job kills a scan in progress (launchd sends it SIGTERM). The
-# 11-06 scan died that way mid-ingest, so a running scan blocks the reinstall.
-if [[ "${FORCE:-}" != 1 ]] && launchctl print "$DOMAIN/$LABEL" 2>/dev/null | grep -q "state = running"; then
-  echo "install_launchd: a scan is running now; re-run when it finishes (FORCE=1 kills it)" >&2
+HOUR=$((10#$HOUR)) MINUTE=$((10#$MINUTE)) # "09" is not octal
+((HOUR <= 23 && MINUTE <= 59)) || {
+  echo "install_launchd: HOUR must be 0-23 and MINUTE 0-59" >&2
   exit 1
-fi
+}
+refuse_if_running
 # The path goes into XML and a single-quoted shell string unescaped.
 if [[ "$RUNNER" == *[\'\&\<\>]* ]]; then
   echo "install_launchd: runner path can't contain ' & < >: $RUNNER" >&2
@@ -122,6 +135,7 @@ cat >"$NEW" <<EOF
   <key>StartCalendarInterval</key>
   <dict><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MINUTE</integer></dict>
   <key>StartInterval</key><integer>3600</integer>
+  <key>ExitTimeOut</key><integer>60</integer>
   <key>EnvironmentVariables</key>
   <dict><key>SCAN_NOT_BEFORE</key><string>$(printf '%02d:%02d' "$HOUR" "$MINUTE")</string></dict>
   <key>StandardOutPath</key><string>$RUNNER/data/_scan_launchd.log</string>
@@ -131,6 +145,7 @@ cat >"$NEW" <<EOF
 EOF
 plutil -lint "$NEW" >/dev/null
 mv "$NEW" "$PLIST"
+refuse_if_running # again: the venv rebuild above takes a while, and a tick may have started
 launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
 launchctl bootstrap "$DOMAIN" "$PLIST"
 echo "Installed $LABEL: daily at $(printf '%02d:%02d' "$HOUR" "$MINUTE") plus an hourly catch-up tick, runs from $RUNNER (logs in its data/)"

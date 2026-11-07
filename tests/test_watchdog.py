@@ -14,8 +14,15 @@ def run(kind, date="2026-11-07", **more):
     return {"run_id": "r", "date": date, "runner": "local", "kind": kind, **more}
 
 
-def pr(number, created, ref="claude/scan-2026-11-04-local"):
-    return {"number": number, "created_at": created, "head": {"ref": ref}}
+REPO = "rcha0s/AwesomeSecurity-AIResearch"
+
+
+def pr(number, created, ref="claude/scan-2026-11-04-local", repo=REPO):
+    return {
+        "number": number,
+        "created_at": created,
+        "head": {"ref": ref, "repo": {"full_name": repo}},
+    }
 
 
 def test_a_day_with_only_a_killed_reservation_is_reported():
@@ -49,3 +56,13 @@ def test_cli_prints_one_phase_per_line(tmp_path, capsys):
     argv = ["--ledger", str(tmp_path / "l.json"), "--prs", str(tmp_path / "p.json")]
     assert wd.main([*argv, "--now", NOW.isoformat()]) == 0
     assert capsys.readouterr().out.split() == ["no-finished-scan", "stuck-pr-165"]
+
+
+def test_a_late_run_past_midnight_checks_the_scheduled_day():
+    late = datetime(2026, 11, 8, 0, 40, tzinfo=UTC)  # the 23:30 run, started 70 minutes late
+    assert wd.problems([run("done", date="2026-11-07")], [], late, True, 8) == []
+
+
+def test_a_fork_pr_named_like_a_scan_branch_is_ignored():
+    fork = pr(171, "2026-11-04T21:59:00Z", repo="someone/fork")
+    assert wd.stuck_prs([fork], NOW, 8, REPO) == []

@@ -259,33 +259,41 @@ def retry_allowed(today_rows: list[dict], tried: set[str], settings: dict, runne
     )
 
 
-def is_catchup(runs: list[dict], runner: str, today: str) -> bool:
+def _local_starts(rows: list[dict]) -> list[str]:
+    """Daily local run ids in start (ledger) order."""
+    out: list[str] = []
+    for r in rows:
+        if r["kind"] == "reserve" and r["runner"] == "local" and not is_backfill(r):
+            if r["run_id"] not in out:
+                out.append(r["run_id"])
+    return out
+
+
+def is_catchup(runs: list[dict], settings: dict, runner: str, today: str) -> bool:
     """A local run on a day the local runner already started a scan that never
-    finished (killed, crashed, or failed in post)."""
+    finished (killed, crashed, or failed in post). The analysis-empty retry
+    (retry_allowed) is not a catch-up: it keeps its own rule."""
     rows = [r for r in runs if r["date"] == today and not is_backfill(r)]
+    tried = set(_local_starts(rows))
     return (
         runner == "local"
+        and bool(tried)
         and not any(r["kind"] == "done" for r in rows)
-        and any(r["kind"] == "reserve" and r["runner"] == "local" for r in rows)
+        and not retry_allowed(rows, tried, settings, runner)
     )
 
 
-def catchup_spend(runs: list[dict], month: str) -> float:
-    """What this month's catch-up runs cost: every local run that was not the
-    first local run of its day. The ledger order is the start order."""
-    first: dict[str, str] = {}
-    for r in runs:
-        if r["kind"] == "reserve" and r["runner"] == "local" and not is_backfill(r):
-            first.setdefault(r["date"], r["run_id"])
-    later = {
-        r["run_id"]
-        for r in runs
-        if r["kind"] == "reserve"
-        and r["runner"] == "local"
-        and not is_backfill(r)
-        and r["date"].startswith(month)
-        and first.get(r["date"]) != r["run_id"]
-    }
+def catchup_spend(runs: list[dict], settings: dict, month: str) -> float:
+    """What this month's catch-up runs cost: every daily local run after the first
+    of its day, except the analysis-empty retry that day's first run allowed."""
+    later: set[str] = set()
+    for day in {r["date"] for r in runs if r["date"].startswith(month)}:
+        rows = [r for r in runs if r["date"] == day and not is_backfill(r)]
+        starts = _local_starts(rows)
+        if not starts:
+            continue
+        skip = 2 if retry_allowed(rows, {starts[0]}, settings, "local") else 1
+        later.update(starts[skip:])
     return round(sum(float(r["cost_usd"]) for r in effective_runs(runs) if r["run_id"] in later), 4)
 
 
@@ -295,10 +303,10 @@ def catchup_left(runs: list[dict], settings: dict, today: str) -> float | None:
     pool = settings.get("catchup_monthly_usd")
     if pool is None:
         return None
-    return round(float(pool) - catchup_spend(runs, today[:7]), 4)
+    return round(float(pool) - catchup_spend(runs, settings, today[:7]), 4)
 
 
-def catchup_problem(today_rows: list[dict], tried: set[str], runs, settings, today) -> str | None:
+def catchup_problem(tried: set[str], runs: list[dict], settings: dict, today: str) -> str | None:
     """Why a catch-up can't start (None: it may). One per day, inside the pool."""
     left = catchup_left(runs, settings, today)
     if left is None:
@@ -306,13 +314,16 @@ def catchup_problem(today_rows: list[dict], tried: set[str], runs, settings, tod
     if len(tried) != 1:
         return f"the local runner already caught up once on {today}"
     if left < float(settings.get("catchup_min_usd") or 1.0):
-        return f"catch-up pool spent: ${left:.2f} of ${float(settings['catchup_monthly_usd']):.2f} left"
+        pool = float(settings["catchup_monthly_usd"])
+        return f"catch-up pool spent: ${left:.2f} of ${pool:.2f} left"
     return None
 
 
 def clip_to_catchup(ceiling: float, runs: list[dict], settings: dict, runner: str, today: str):
-    """A catch-up run reserves, and its session is capped at, no more than the pool left."""
-    left = catchup_left(runs, settings, today) if is_catchup(runs, runner, today) else None
+    """A catch-up run reserves no more than the pool left."""
+    left = (
+        catchup_left(runs, settings, today) if is_catchup(runs, settings, runner, today) else None
+    )
     return ceiling if left is None else round(min(ceiling, max(left, 0.0)), 4)
 
 
@@ -336,7 +347,7 @@ def check(
         }
         if tried and not retry_allowed(today_rows, tried, settings, runner):
             # A catch-up: the day's run never finished. One, inside its own pool.
-            why = catchup_problem(today_rows, tried, runs, settings, today)
+            why = catchup_problem(tried, runs, settings, today)
             if runner != "local" or why:
                 return False, f"the {runner} runner already tried on {today}" + (
                     f" ({why})" if runner == "local" else ""
@@ -552,6 +563,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     sub.add_parser("status")
     lim = sub.add_parser("session-limits")
     lim.add_argument("--runner", choices=RUNNERS, required=True)
+    lim.add_argument("--backfill", metavar="FROM..TO", help="a backfill chunk: no catch-up cap")
     chunks = sub.add_parser("chunks", help="split FROM..TO into backfill chunks")
     chunks.add_argument("start", metavar="FROM")
     chunks.add_argument("end", metavar="TO")
@@ -615,25 +627,33 @@ def session_ratio(settings: dict) -> float:
 
 
 def session_budget(
-    runs: list[dict], settings: dict, runner: str, today: str | None = None
+    runs: list[dict],
+    settings: dict,
+    runner: str,
+    today: str | None = None,
+    backfill: bool = False,
 ) -> tuple[float | None, str]:
     """--max-budget-usd: the ceiling at the pessimistic brief ratio x the fraction.
-    A catch-up session is also held to what the catch-up pool has left."""
+    A catch-up session is held to the pool left x the same fraction: spend can
+    overshoot the cap, so the margin keeps the pool whole. Never a backfill."""
     ceiling, why = run_ceiling(runs, settings, runner, units_ratio=session_ratio(settings))
     if ceiling is None:
         return None, why
-    cap = round(ceiling * float(settings.get("session_cap_fraction", 0.8)), 2)
-    if today is not None and is_catchup(runs, runner, today):
+    fraction = float(settings.get("session_cap_fraction", 0.8))
+    cap = round(ceiling * fraction, 2)
+    if today is not None and not backfill and is_catchup(runs, settings, runner, today):
         # The wrapper asks before pre reserves, so the pool left is before this run.
         left = catchup_left(runs, settings, today)
         if left is not None:
-            cap = round(min(cap, max(left, 0.0)), 2)
+            cap = round(min(cap, max(left, 0.0) * fraction), 2)
     return cap, why
 
 
-def session_limits(runs: list[dict], settings: dict, runner: str, today: str | None = None) -> int:
+def session_limits(
+    runs: list[dict], settings: dict, runner: str, today: str | None = None, backfill: bool = False
+) -> int:
     """Print `<max_budget_usd> <max_turns>` for the model session."""
-    cap, why = session_budget(runs, settings, runner, today)
+    cap, why = session_budget(runs, settings, runner, today, backfill)
     if cap is None:
         raise SystemExit(f"session-limits: {why}")
     print(f"{cap:.2f} {settings['max_turns']}")
@@ -667,7 +687,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "done":
         return mark_done(path, runs, args)
     if args.cmd == "session-limits":
-        return session_limits(runs, settings, args.runner, today)
+        return session_limits(runs, settings, args.runner, today, bool(args.backfill))
     print(spend_report(runs, settings, today[:7]), end="")
     return 0
 

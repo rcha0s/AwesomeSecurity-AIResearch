@@ -372,3 +372,21 @@ def test_a_scan_killed_mid_run_raises_the_alert(scan_repo, tmp_path):
     assert proc.returncode != 0
     assert "killed by SIGTERM" in (work / "data/_scan.log").read_text(), out
     assert "Daily scan failing (local, local-killed)" in gh_calls(env)
+
+
+def test_a_tick_waits_while_the_utc_day_is_already_tomorrow(scan_repo, tmp_path):
+    """Opus on #168: after 16:00 Pacific the budget day is tomorrow; a tick there
+    would start tomorrow's first run hours early."""
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    bin_dir = tmp_path / "fake-date-bin"
+    bin_dir.mkdir()
+    fake_date = bin_dir / "date"
+    fake_date.write_text(
+        '#!/bin/sh\nif [ "$1" = "-u" ] && [ "$2" = "+%F" ]; then echo 2099-01-01; '
+        'else exec /bin/date "$@"; fi\n'
+    )
+    fake_date.chmod(0o755)
+    path = {"PATH": f"{bin_dir}:{env['PATH']}"}
+    res, args = run_local(work, {**env, **path}, tmp_path, SCAN_NOT_BEFORE="00:00")
+    assert res.returncode == 0 and args == []

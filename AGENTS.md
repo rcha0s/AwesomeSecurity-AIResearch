@@ -482,10 +482,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `--uninstall` removes it. The Mac must be awake at the scheduled time.
 - **Self-healing (2026-11-07):** every failure is reported the day it happens, and the
   ones code can fix are fixed without an agent. The launchd job also ticks hourly; a
-  tick before the scheduled time does nothing, and after it the budget guard decides.
+  tick acts only after the scheduled time and while the local date equals the UTC
+  budget date (09:30 to 16:00 Pacific), and asks the guard silently before touching
+  the worktree.
   A day whose local run never finished (killed, crashed, failed in post) gets **one
-  catch-up run**, which reserves and is session-capped at what
-  `budget.catchup_monthly_usd` ($50 a month) has left. A scan killed mid-run (SIGTERM,
+  catch-up run**, which reserves at most what `budget.catchup_monthly_usd` ($50 a
+  month) has left, with its session capped at `session_cap_fraction` of that. The
+  analysis-empty retry and backfill runs keep their own rules and stay out of the pool. A scan killed mid-run (SIGTERM,
   SIGINT, SIGHUP) raises the `scan-failure` alert (`local-killed`), and
   `install_launchd.sh` refuses to reload the job while a scan runs (`FORCE=1` kills it).
   `.github/workflows/watchdog.yml` runs at 23:30 UTC on GitHub, so it reports even when

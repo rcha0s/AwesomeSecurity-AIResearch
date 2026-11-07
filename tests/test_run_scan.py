@@ -201,12 +201,12 @@ def test_a_runner_does_not_retry_its_own_day(scan_repo):
 
 def test_a_day_that_never_finished_gets_one_catch_up_inside_its_pool(scan_repo):
     work, origin, env = scan_repo
-    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", catchup_monthly_usd="3.0")
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", catchup_monthly_usd="1.5")
     assert run_scan(work, env, "pre", runner="local", SCAN_RUN_ID="L1").returncode == 0
     res = run_scan(work, env, "check", runner="local")
     assert res.returncode == 0 and "catch-up" in res.stdout, res.stdout
     assert run_scan(work, env, "pre", runner="local", SCAN_RUN_ID="L2").returncode == 0
-    assert [r["cost_usd"] for r in ledger_rows(origin)] == [2.0, 2.0]
+    assert [r["cost_usd"] for r in ledger_rows(origin)] == [2.0, 1.5]  # clipped to the pool
     res = run_scan(work, env, "check", runner="local")
     assert res.returncode == 3 and "already caught up" in res.stdout
 
