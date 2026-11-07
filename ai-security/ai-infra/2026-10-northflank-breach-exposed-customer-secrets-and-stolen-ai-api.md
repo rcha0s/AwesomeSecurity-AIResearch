@@ -25,7 +25,7 @@ Cloud hosting platform Northflank told all customers on October 30, 2026 to assu
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [X list](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/)  ·  **Author:** @Dinosn  ·  **Retrieved:** 2026-10-31  
-**Scores:** Newness 15 · Novelty 30 · Relevance 78 · Credibility 60 · **Composite 45** _(each 0-100)_  
+**Scores:** Newness 14 · Novelty 30 · Relevance 78 · Credibility 60 · **Composite 45** _(each 0-100)_  
 **Tags:** `llmjacking`, `api-keys`, `secrets`, `paas-breach`, `incident-response`, `black-october`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier Black October disclosures in the pool (Railway, OpenCode, Warp) and Unit 42's token-jacking and Datadog's Bedrock key-validation reports; Northflank is a new victim of the same pattern.
 

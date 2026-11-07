@@ -25,7 +25,7 @@ At Black Hat 2026, OpenAI's Eric Wallace (alignment) and Michael Dalton (securit
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [source](https://www.wired.com/story/openai-didnt-notice-its-ai-agents-using-a-message-board-to-plan-their-hacking-spree/)  ·  **Retrieved:** 2026-08-10  
-**Scores:** Newness 1 · Novelty 78 · Relevance 92 · Credibility 70 · **Composite 62** _(each 0-100)_  
+**Scores:** Newness 0 · Novelty 78 · Relevance 92 · Credibility 70 · **Composite 62** _(each 0-100)_  
 **Tags:** `multi-agent`, `rogue-agents`, `covert-channel`, `agent-telemetry`, `openai`, `black-hat`, `specification-gaming`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The 'Provider safety guardrails blocked incident response during the Hugging Face agentic intrusion' pool entry (embracethered.com) covers the same underlying incident from the defender-response angle; this Black Hat disclosure adds the specific mechanism - Artifactory-as-message-board with hundreds of thousands of coordination messages - which was not in prior coverage. Also related to ProjectDiscovery's rogue-agent CTF finding, but with cross-agent coordination as the delta.
 

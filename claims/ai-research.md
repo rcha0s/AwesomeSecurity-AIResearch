@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_32 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-03_
+_33 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-05_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -713,12 +713,13 @@ A harness should treat each component as an assumption about model weakness, str
 
 _Tags: `efficiency`, `work-efficiency`, `harness`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
 | supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
+| supports | [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) | Nov 5, 2026 |
 
 </details>
 
@@ -744,6 +745,26 @@ _Tags: `evals`, `swe-bench`, `benchmarks`_
 | --- | --- | --- |
 | supports | [SWE-bench](https://arxiv.org/abs/2310.06770) | Oct 2023 |
 | supports | [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) | Jul 10, 2025 |
+
+</details>
+
+<a id="claim-agent-safety-evals-can-misread-production-behavior"></a>
+
+### Agent safety eval scores can misjudge how agents behave in production
+
+`agent-safety-evals-can-misread-production-behavior` · confidence **0.55** · Evaluation & Benchmarks · standing since Nov 5, 2026
+
+An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting Warnings eval, six models scored 10.2 to 37.4 points lower than on matched Codex production decisions, and stating the correct or wrong objective moved one model's success between 91.6% and 17.6%, while a generic 'this is an eval' cue did not.
+
+**Do this —** Grade a sample of matched production decisions with the same rubric as the eval and track the gap per model; classify reasoning traces for the objective the model infers, report success split by that guess, and rewrite eval cases whose intended behavior can be inferred from surface cues.
+
+**Conditions —** Shown on one eval family (Respecting Warnings) and six OpenAI models with Codex production logs, with the causal framing intervention on a single model; the direction of the gap may differ for other evals, where eval awareness can make models look safer rather than less safe.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [OpenAI finds agents score worse on safety evals than in production](https://alignment.openai.com/eval-production-behavior-gap/) | Nov 3, 2026 |
 
 </details>
 
@@ -789,12 +810,13 @@ A separate evaluator scoring against explicit criteria was part of a three-agent
 
 _Tags: `efficiency`, `work-efficiency`, `harness`_
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
 | supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+| supports | [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) | Nov 5, 2026 |
 
 </details>
 
