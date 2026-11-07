@@ -150,6 +150,15 @@ def output(**values: str) -> None:
 # ---------------------------------------------------------------- select
 
 
+def conflicts_with_main(repo: str, number: int) -> bool:
+    """True only when GitHub reports the PR unmergeable. `mergeable` is null while
+    GitHub computes it, and an error is unknown too: both are tested as before."""
+    try:
+        return (gh(f"repos/{repo}/pulls/{number}") or {}).get("mergeable") is False
+    except (subprocess.CalledProcessError, RuntimeError, ValueError, json.JSONDecodeError):
+        return False
+
+
 def cmd_select(repo: str, main_sha: str) -> int:
     conf = settings(ROOT / "config.yaml")
     lines = [f"## Auto-merge gate: select ({conf['mode']} mode)", ""]
@@ -158,9 +167,14 @@ def cmd_select(repo: str, main_sha: str) -> int:
         number, sha = pr["number"], pr["head"]["sha"]
         verdict = judge(repo, number, sha, main_sha)
         state = "passes the path guard" if verdict.ok else "refused"
+        # A head that conflicts with main fails the test job's merge on every run;
+        # testing it first blocked every newer scan PR behind it (11-06, #165).
+        skip = verdict.ok and conflicts_with_main(repo, number)
+        if skip:
+            state += "; conflicts with main, skipped (needs a manual merge of main)"
         lines.append(f"- #{number} `{sha[:12]}`: {state}")
         lines += [f"  - {r}" for r in verdict.reasons[:10]]
-        if verdict.ok and chosen is None:
+        if verdict.ok and not skip and chosen is None:
             chosen = {"number": str(number), "sha": sha}
     if not chosen:
         lines.append("- nothing to test")
