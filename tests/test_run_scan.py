@@ -50,7 +50,12 @@ def set_budget(cfg: Path, **values: str) -> None:
 
 
 # Every test starts from a closed budget, whatever the real config ships.
-CLOSED = {"monthly_cap_usd": "null", "usd_per_story": "null", "uncalibrated_run_usd": "null"}
+CLOSED = {
+    "monthly_cap_usd": "null",
+    "usd_per_story": "null",
+    "uncalibrated_run_usd": "null",
+    "catchup_monthly_usd": "null",  # catch-up tests open it themselves
+}
 # ...and from the per-run caps these tests count against (10 stories, the news
 # tier off), whatever the real config ships; news-tier tests open it themselves.
 PINNED = {"max_stories_per_run": "10", "max_news_per_run": "0"}
@@ -192,6 +197,18 @@ def test_a_runner_does_not_retry_its_own_day(scan_repo):
     assert run_scan(work, env, "pre", runner="local", SCAN_RUN_ID="L1").returncode == 0
     res = run_scan(work, env, "check", runner="local")
     assert res.returncode == 3 and "already tried" in res.stdout
+
+
+def test_a_day_that_never_finished_gets_one_catch_up_inside_its_pool(scan_repo):
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", catchup_monthly_usd="3.0")
+    assert run_scan(work, env, "pre", runner="local", SCAN_RUN_ID="L1").returncode == 0
+    res = run_scan(work, env, "check", runner="local")
+    assert res.returncode == 0 and "catch-up" in res.stdout, res.stdout
+    assert run_scan(work, env, "pre", runner="local", SCAN_RUN_ID="L2").returncode == 0
+    assert [r["cost_usd"] for r in ledger_rows(origin)] == [2.0, 2.0]
+    res = run_scan(work, env, "check", runner="local")
+    assert res.returncode == 3 and "already caught up" in res.stdout
 
 
 def test_check_fails_closed_when_the_ledger_is_unreachable(scan_repo, tmp_path):

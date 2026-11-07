@@ -1,0 +1,59 @@
+name: Scan watchdog
+
+# Reports what the daily scan should have done and didn't: no finished scan today,
+# or a scan PR stuck open. It runs here, not on the Mac, so it still reports when
+# the Mac is asleep or a scan was killed before it could alert (11-06, 11-07).
+# It reads and alerts only: it never runs a scan, edits a PR or merges anything.
+# Alerts go to the one open `scan-failure` issue (scripts/scan_alert.sh).
+
+on:
+  schedule:
+    # 23:30 UTC = 15:30 Pacific (standard time): six hours after the 9:30 scan.
+    - cron: "30 23 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check today's scan and open scan PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git fetch -q --depth=1 "https://github.com/$REPO" budget-ledger
+          git show FETCH_HEAD:budget.json > "$RUNNER_TEMP/ledger.json"
+          gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" > "$RUNNER_TEMP/prs.json"
+          cap="$(python -c 'import yaml;b=(yaml.safe_load(open("config.yaml")) or {}).get("budget") or {};print("no" if b.get("monthly_cap_usd") is None else "yes")')"
+          python scripts/watchdog.py --ledger "$RUNNER_TEMP/ledger.json" \
+            --prs "$RUNNER_TEMP/prs.json" --cap-set "$cap" > "$RUNNER_TEMP/problems"
+          if [[ ! -s "$RUNNER_TEMP/problems" ]]; then
+            echo "Watchdog: today's scan finished and no scan PR is stuck." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          while read -r phase; do
+            echo "- $phase" >> "$GITHUB_STEP_SUMMARY"
+            scripts/scan_alert.sh watchdog "$phase"
+          done < "$RUNNER_TEMP/problems"

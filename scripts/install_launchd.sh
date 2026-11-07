@@ -75,6 +75,16 @@ fi
 
 HOUR="${1:-9}"
 MINUTE="${2:-30}"
+[[ "$HOUR" =~ ^[0-9]{1,2}$ && "$MINUTE" =~ ^[0-9]{1,2}$ ]] || {
+  echo "install_launchd: HOUR and MINUTE must be numbers" >&2
+  exit 1
+}
+# Reloading the job kills a scan in progress (launchd sends it SIGTERM). The
+# 11-06 scan died that way mid-ingest, so a running scan blocks the reinstall.
+if [[ "${FORCE:-}" != 1 ]] && launchctl print "$DOMAIN/$LABEL" 2>/dev/null | grep -q "state = running"; then
+  echo "install_launchd: a scan is running now; re-run when it finishes (FORCE=1 kills it)" >&2
+  exit 1
+fi
 # The path goes into XML and a single-quoted shell string unescaped.
 if [[ "$RUNNER" == *[\'\&\<\>]* ]]; then
   echo "install_launchd: runner path can't contain ' & < >: $RUNNER" >&2
@@ -111,6 +121,9 @@ cat >"$NEW" <<EOF
   <key>WorkingDirectory</key><string>$RUNNER</string>
   <key>StartCalendarInterval</key>
   <dict><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MINUTE</integer></dict>
+  <key>StartInterval</key><integer>3600</integer>
+  <key>EnvironmentVariables</key>
+  <dict><key>SCAN_NOT_BEFORE</key><string>$(printf '%02d:%02d' "$HOUR" "$MINUTE")</string></dict>
   <key>StandardOutPath</key><string>$RUNNER/data/_scan_launchd.log</string>
   <key>StandardErrorPath</key><string>$RUNNER/data/_scan_launchd.log</string>
 </dict>
@@ -120,4 +133,4 @@ plutil -lint "$NEW" >/dev/null
 mv "$NEW" "$PLIST"
 launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
 launchctl bootstrap "$DOMAIN" "$PLIST"
-echo "Installed $LABEL: daily at $(printf '%02d:%02d' "$HOUR" "$MINUTE"), runs from $RUNNER (logs in its data/)"
+echo "Installed $LABEL: daily at $(printf '%02d:%02d' "$HOUR" "$MINUTE") plus an hourly catch-up tick, runs from $RUNNER (logs in its data/)"

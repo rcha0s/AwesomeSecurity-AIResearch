@@ -73,6 +73,13 @@ export SCAN_LOG="$REPO/data/_scan.log"
 export CROSS_REVIEW_LOG="$REPO/data/_cross_review.jsonl"
 LOG="$SCAN_LOG"
 trap 'rm -f "$OUT" "$OUT.result"' EXIT
+# launchd ticks hourly (install_launchd.sh) so a missed or killed scan catches up
+# on the next wake. Before the scheduled time a tick does nothing; after it, the
+# budget guard decides (one catch-up a day, inside budget.catchup_monthly_usd).
+NOT_BEFORE="${SCAN_NOT_BEFORE:-}"
+if [[ -z "$BACKFILL" && "$NOT_BEFORE" =~ ^[0-2][0-9]:[0-5][0-9]$ && "$(date +%H%M)" < "${NOT_BEFORE/:/}" ]]; then
+  exit 0
+fi
 
 # TOOLS, ALLOWED_TOOLS, SETTINGS and contained_claude: one lockdown, shared
 # with the weekly golden-set run (run_golden_local.sh).
@@ -83,6 +90,18 @@ fail() {
   "$SCAN_DIR/scripts/run_scan.sh" fail "$1"
   exit 1
 }
+
+# A scan killed mid-run (a launchd reload, a logout) raises the alert too: the
+# 11-06 scan died in aggregate with no alert and nobody knew for a day.
+on_signal() {
+  trap - TERM INT HUP
+  echo "[local] killed by SIG$1 mid-run" | tee -a "$LOG"
+  "$SCAN_DIR/scripts/run_scan.sh" fail "local-killed" || true
+  exit 1
+}
+trap 'on_signal TERM' TERM
+trap 'on_signal INT' INT
+trap 'on_signal HUP' HUP
 
 # The session's final message (`result` in claude's JSON) goes to the scan
 # log, scrubbed of secret-shaped text, so the next diagnosis is one grep for
@@ -190,7 +209,9 @@ attempt() {
       echo "[local] budget guard says skip backfill $BACKFILL (its budget: line says why)" |
         tee -a "$LOG"
     else
-      echo "[local] budget guard says skip (a scan finished today, no cap, or no budget left)" |
+      # An hourly tick on a finished day says nothing to the scan log.
+      [[ -n "$NOT_BEFORE" ]] ||
+        echo "[local] budget guard says skip (a scan finished today, no cap, or no budget left)" |
         tee -a "$LOG"
     fi
     return 3

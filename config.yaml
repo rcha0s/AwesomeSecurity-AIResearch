@@ -434,6 +434,12 @@ budget:
                               # 0.232 x 65 = $15.08 at the latest, both under it
   retry_max_usd: 1.0          # a local run that failed analysis-empty and cost less
                               # than this may retry once the same day (budget.py)
+  catchup_monthly_usd: 50     # Rohan 2026-11-07: catch-up scans, capped at $50 a month.
+                              # A day whose local run never finished (killed, crashed,
+                              # failed in post) gets one more run on the next hourly tick;
+                              # it reserves, and its session is capped at, what this pool
+                              # has left (budget.py is_catchup). null = no catch-ups.
+  catchup_min_usd: 1.0        # below this much left in the pool, no catch-up starts
 
 # Backfill (issue #52; scripts/backfill.sh). A backfill chunk is a normal local
 # scan whose ingest pulls items published inside [FROM, TO]. budget.py refuses
