@@ -289,6 +289,19 @@ def test_select_picks_the_oldest_passing_pr(monkeypatch, tmp_path):
     assert out.read_text() == f"number=5\nsha={'e' * 40}\n"
 
 
+def test_select_skips_a_pr_that_conflicts_with_main(monkeypatch, tmp_path):
+    """11-06: #165 conflicted with main, failed the test merge every run, and blocked #166."""
+    dirty = {**scan_pr(5, sha="e" * 40), "mergeable": False}
+    pending = {**scan_pr(7), "mergeable": None}  # GitHub still computing: tested as before
+    FakeGitHub([dirty, pending], *content_only()).install(monkeypatch, tmp_path, "merge")
+    out, summ = tmp_path / "out", tmp_path / "summary"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summ))
+    am.cmd_select(REPO, MAIN)
+    assert out.read_text() == f"number=7\nsha={SHA}\n"
+    assert "#5" in summ.read_text() and "conflicts with main" in summ.read_text()
+
+
 def test_select_outputs_nothing_when_all_refused(monkeypatch, tmp_path):
     fake = FakeGitHub([scan_pr()], *touches_scripts()).install(monkeypatch, tmp_path, "shadow")
     out, summ = tmp_path / "out", tmp_path / "summary"
