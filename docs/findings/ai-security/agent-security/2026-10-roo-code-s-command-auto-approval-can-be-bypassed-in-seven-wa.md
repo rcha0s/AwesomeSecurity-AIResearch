@@ -16,7 +16,7 @@ VulnCheck published seven CVEs for Roo Code through 3.54.0 (checked at NVD): CVE
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [vulncheck.com](https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 14 · Novelty 55 · Relevance 85 · Credibility 55 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 12 · Novelty 55 · Relevance 85 · Credibility 55 · **Composite 53** _(each 0-100)_  
 **Tags:** `roo-code`, `coding-agents`, `auto-approve`, `command-allowlist`, `prompt-injection`, `cve`  
 **Also reported by:** [NVD CVE-2026-110203](https://nvd.nist.gov/vuln/detail/CVE-2026-110203) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CVE-2026-30307 (March 2026, MITRE) already reported Roo Code's regex whitelist as ineffective; these are seven further bypasses of the same gate.

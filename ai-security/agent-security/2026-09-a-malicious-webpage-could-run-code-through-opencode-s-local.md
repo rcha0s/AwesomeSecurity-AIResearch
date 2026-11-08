@@ -25,7 +25,7 @@ OpenCode's local web server passed an unchecked upgrade target into `npm install
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [Datadog Security Labs](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 3 · Novelty 50 · Relevance 80 · Credibility 75 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 2 · Novelty 50 · Relevance 80 · Credibility 75 · **Composite 51** _(each 0-100)_  
 **Tags:** `coding-agent`, `opencode`, `localhost-server`, `csrf`, `content-type-confusion`, `npm`, `lifecycle-scripts`, `drive-by-rce`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Pillar Security opencode MCP OAuth RCE (same product, different bug); localhost service + wildcard CORS drive-by entry.
 

@@ -25,7 +25,7 @@ Wiz found that LiteLLM's MCP endpoint accepts any invalid Bearer token (CVE-2026
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [Wiz Research](https://www.wiz.io/blog/off-guard-breaking-litellm-from-authentication-bypass-to-cloud-compromise)  ·  **Retrieved:** 2026-10-24  
-**Scores:** Newness 3 · Novelty 45 · Relevance 90 · Credibility 72 · **Composite 52** _(each 0-100)_  
+**Scores:** Newness 2 · Novelty 45 · Relevance 90 · Credibility 72 · **Composite 52** _(each 0-100)_  
 **Tags:** `litellm`, `mcp-auth-bypass`, `ai-gateway`, `default-credentials`, `imds`, `rce`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Archive has 'LLM Heist: Hijacking LiteLLM' and a LiteLLM/RAGFlow/Kestra control-point entry, plus the trojanized LiteLLM 1.107.0 item; the MCP auth fallback bypass and guardrail-registration sandbox gap are new details. Verifier: archive.json: 'LLM Heist: Hijacking LiteLLM for Traffic Interception, Key Theft, and Tool-Call Injection' and 'When AI infrastructure becomes the target: attacks on LiteLLM/RAGFlow/Kestra control points'; ai-security.json: 'LiteLLM 1.107.0 trojanized'
 

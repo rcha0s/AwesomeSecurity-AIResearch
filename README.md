@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--08-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-20-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-76-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--08-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-20-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-77-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -12,36 +12,36 @@
 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
-1. **[Check Point found a way around ChatGPT Lockdown Mode](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-a-way-around-chatgpt-lockdown-0b94212591#week)** · _AI Security · Nov 5, 2026_
-2. **[OpenAI finds agents score worse on safety evals than in production](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-finds-agents-score-worse-on-safety-evals-8062f7bfaa#week)** · _AI Research · Nov 3, 2026_
-3. **[Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=the-roi-of-agentic-remediation-real-world-result-b16be21101#week)** · _Product Security · Nov 3, 2026_
+1. **[Latent Space newsletter covers doubts about an Anthropic initial public offering (IPO)](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=latent-space-newsletter-covers-doubts-about-an-a-73728553a3#week)** · _AI Research · Nov 7, 2026_
+2. **[Ai2's ToyBlocks shows agent-written skill descriptions beat expert-written ones](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ai2-s-toyblocks-shows-agent-written-skill-descri-2da0dd29ee#week)** · _AI Research · Nov 6, 2026_
+3. **[Free Chinese models DeepSeek and GLM come close to OpenAI's cyber model](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=free-chinese-models-deepseek-and-glm-come-close-87c3174d24#week)** · _AI Security · Nov 6, 2026_
 
 ## Biggest this week
 
 _Most covered or exploited in the last 7 days._
 
-1. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 1, 2026 · 3 sources_
-2. **[Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week)** · _Product Security · Nov 4, 2026 · 2 sources_
-3. **[Barracuda patches ESG auth bypass chaining to root command injection](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week)** · _Product Security · Nov 3, 2026 · 2 sources_
+1. **[Attackers exploit new WordPress remote code execution flaw within hours of patch](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week)** · _Product Security · Nov 6, 2026 · 3 sources_
+2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 1, 2026 · 3 sources_
+3. **[Chainalysis discloses breach by attackers using offensive agentic techniques](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week)** · _AI Security · Nov 6, 2026 · 2 sources_
 
 ## This week's top stories
 
 _The last 7 days, newest first._
 
-1. **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-pipeline-finds-exploits-and-patches-hundr-fc91c87e01#week)** · _Product Security · Nov 5, 2026_
-2. **[Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-artex-operators-letting-ai-age-e689d7c59c#week)** · _Product Security · Nov 5, 2026_
-3. **[OpenSSH ships an emergency workaround for a critical musl-specific vulnerability](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week)** · _Product Security · Nov 5, 2026_
+1. **[D-Link DGS-3130 switches have unpatched discovery protocol zero-days](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week)** · _Product Security · Nov 6, 2026_
+2. **[OpenAI partners with Hacktron to test its third-party service connections](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-partners-with-hacktron-to-test-its-third-a0d1f0830e#week)** · _Product Security · Nov 6, 2026_
+3. **[Malicious Ruby gem strutil-core runs a credential-stealing worm at install](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-ruby-gem-strutil-core-runs-a-credentia-07242a95d4#week)** · _Product Security · Nov 6, 2026_
 
 ## Claim changes
 
-_2 changes in the last 7 days; earlier ones fill in, each with its date._
+_3 changes in the last 7 days; earlier ones fill in, each with its date._
 
-1. **Added:** [Agent safety eval scores can misjudge how agents behave in production](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims) · _current · Nov 5, 2026 · 1 source_  
+1. **Added:** [Coding-agent permission files leak secrets into public repositories](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims) · _current · Nov 8, 2026 · 1 source_  
+   Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and…
+2. **Added:** [Agent safety eval scores can misjudge how agents behave in production](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims) · _current · Nov 5, 2026 · 1 source_  
    An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting…
-2. **Added:** [Approve agent shell commands by observed effects, not command text](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims) · _current · Nov 4, 2026 · 1 source_  
+3. **Added:** [Approve agent shell commands by observed effects, not command text](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims) · _current · Nov 4, 2026 · 1 source_  
    Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed…
-3. **Added:** [An agent's stated lean steers expert judgment calls](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims) · _current · Oct 29, 2026 · 1 source_  
-   When an agent states a preference on an open judgment call, experts mostly follow it: in Anthropic's randomized study analysts matched a coin-flip-assigned agent lean 86% of the time versus about 50%…
 4. **Last reversal:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
    Replaces ~~Assumed TOON's input savings would carry to generation~~: Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on…
 

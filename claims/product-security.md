@@ -96,7 +96,7 @@ Long-lived static cloud credentials are the most common cause of publicly docume
 
 _Tags: `aws`, `credentials`, `oidc`_
 
-<details><summary>Evidence (6)</summary>
+<details><summary>Evidence (7)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -106,6 +106,7 @@ _Tags: `aws`, `credentials`, `oidc`_
 | supports | [GitHub Actions OpenID Connect: exchange short-lived cloud tokens instead of long-lived secrets](https://docs.github.com/en/actions/concepts/security/openid-connect) | undated |
 | supports | ['Gheist' Weaponizes GitHub Tokens to Steal Cloud Secrets](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) | Oct 26, 2026 |
 | supports | [Northflank security breach leads to abuse of customers' AI API keys](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/) | Oct 31, 2026 |
+| supports | [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) | Nov 5, 2026 |
 
 </details>
 
