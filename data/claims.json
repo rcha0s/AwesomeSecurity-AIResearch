@@ -362,6 +362,14 @@
           "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
           "title": "Breaking Claude Code Opus 5 Auto Mode: a best-effort classifier is not a boundary; OS isolation/egress is",
           "published": "2026-08-26"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2611.02332",
+          "title": "LEANGUARD: Lean-Verified Guardrails for Tool-Using Agents",
+          "published": "2026-11-02",
+          "note": "A fail-closed policy check outside the model cut direct prompt-injection success on DTap from 57.9% to 5.9%.",
+          "source_name": "Hugging Face Daily Papers"
         }
       ],
       "supersedes": [
@@ -373,7 +381,7 @@
         "threat-model"
       ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-11-04",
       "phase": "threat-model",
       "title": "Prompt injection can't be closed by filtering alone",
       "basis": "A formal impossibility argument plus large-scale red-teaming — a 78-study meta-analysis and a dedicated agentic red-team study — showing the vulnerability persists across model families and defenses.",
@@ -1098,10 +1106,18 @@
           "title": "MCP Security Notification: Tool Poisoning Attacks",
           "source_name": "Invariant Labs",
           "published": "2025-04-01"
+        },
+        {
+          "stance": "supports",
+          "url": "http://arxiv.org/abs/2611.03555v1",
+          "title": "MCP Tool Poisoning in Agentic AI Frameworks: A Cross-Framework Measurement Study",
+          "published": "2026-11-02",
+          "note": "Real-execution test of 12 frameworks and 18 models: poisoned tool metadata succeeded in 22.9% of 9,720 cells, 12.1% of successes verifiably exfiltrated a secret.",
+          "source_name": "AISec (via arXiv)"
         }
       ],
       "first_seen": "2025-04-01",
-      "last_reviewed": "2026-10-22",
+      "last_reviewed": "2026-11-04",
       "guidance": "Version-pin and change-review every MCP tool description. Treat metadata updates as system-prompt changes requiring re-approval.",
       "tags": [
         "mcp",
@@ -3206,6 +3222,65 @@
       "title": "Agent safety eval scores can misjudge how agents behave in production",
       "guidance": "Grade a sample of matched production decisions with the same rubric as the eval and track the gap per model; classify reasoning traces for the objective the model infers, report success split by that guess, and rewrite eval cases whose intended behavior can be inferred from surface cues.",
       "scope": "Shown on one eval family (Respecting Warnings) and six OpenAI models with Codex production logs, with the causal framing intervention on a single model; the direction of the gap may differ for other evals, where eval awareness can make models look safer rather than less safe."
+    },
+    {
+      "id": "agent-frameworks-do-not-mitigate-mcp-tool-poisoning",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "statement": "Mainstream agent frameworks pass poisoned MCP tool metadata and responses to the model without intentional defense, so tool-poisoning success depends on the model, not the framework.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "http://arxiv.org/abs/2611.03555v1",
+          "title": "MCP Tool Poisoning in Agentic AI Frameworks: A Cross-Framework Measurement Study",
+          "published": "2026-11-02",
+          "note": "Nine core frameworks clustered within 23 to 26% attack success (p = 0.91); a code audit found no intentional defense; model success ranged 0.4% to 49.7%."
+        }
+      ],
+      "first_seen": "2026-11-04",
+      "last_reviewed": "2026-11-04",
+      "added_on": "2026-11-04",
+      "changed_on": "2026-11-04",
+      "title": "Agent framework choice does not reduce MCP tool-poisoning risk",
+      "guidance": "Do not rely on the agent framework to stop poisoned MCP tools: pin and review server metadata, scan descriptions as one layer, restrict agent egress to an allowlist, keep secrets out of reach, and choose models by measured tool-poisoning resistance.",
+      "scope": "Measured on 12 frameworks and 18 models in late 2026; a framework that adds explicit metadata validation or output isolation would fall outside this claim.",
+      "tags": [
+        "mcp",
+        "tool-poisoning",
+        "agent-frameworks"
+      ]
+    },
+    {
+      "id": "approve-agent-commands-by-observed-effects",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "statement": "Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed effects lets far fewer harmful outcomes through.",
+      "status": "current",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.40753",
+          "title": "Shall We Approve? Consequence-Aware Approval for Autonomous Coding Agents",
+          "published": "2026-10-29",
+          "note": "Caper had 6.7% harmful outcomes on SABER versus at least 14.8% for six existing approvers, and 7.8% versus at least 35.3% on YoloFS-Ext, blocking 1.0% of safe twins."
+        }
+      ],
+      "first_seen": "2026-11-04",
+      "last_reviewed": "2026-11-04",
+      "added_on": "2026-11-04",
+      "changed_on": "2026-11-04",
+      "title": "Approve agent shell commands by observed effects, not command text",
+      "guidance": "For commands text rules can't classify, pre-execute on a copy-on-write workspace snapshot with egress blocked, give a separate approver the diff of effects, then commit or roll back and tell the agent why.",
+      "scope": "Covers local file and process effects; network side effects and effects outside the snapshot cannot be rolled back. Evidence is one paper on two benchmarks, one built by the authors.",
+      "tags": [
+        "coding-agents",
+        "approval",
+        "sandbox",
+        "rollback"
+      ]
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_10 vetted findings · updated 2026-11-05 · ranked by composite · findings from the latest 31 days · [55 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-11-08 · ranked by composite · findings from the latest 31 days · [55 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -22,6 +22,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Apache OFBiz patches 46 flaws, including a pre-auth RCE](https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html)**
 - **[Backdoored ARTEX Docker image gives root shell on 62 consoles](https://thehackernews.com/2026/11/backdoored-docker-image-for-artex-ai.html)**
 - **[Check Point sponsored post lists five tests for exposure management platforms](https://thehackernews.com/2026/11/is-your-exposure-management-platform.html)**
+- **[Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418)**
+  _Why now: Actively exploited unauthenticated VPN-edge DoS in CISA KEV with a three-day deadline; exposure is scoped by one config check (secondary authentication on a tunnel group). · cve · active-exploitation · timely_
+- **[Exploited VMware ESX flaw lets attacker with admin rights act unlogged](https://nvd.nist.gov/vuln/detail/CVE-2026-41709)**
+  _Why now: Exploited ESX logging gap in KEV; the transferable lesson is that clean hypervisor logs are not proof of no tampering, so keep an out-of-band log source. · cve · active-exploitation · high-relevance_
 - **[Rails patches critical Active Storage flaw letting uploads write server files](https://thehackernews.com/2026/11/critical-rails-flaw-lets-attackers.html)**
 - **[Hackers tampered with the NIKKE PC game launcher to spread malware](https://www.bleepingcomputer.com/news/security/nikke-pc-game-launcher-hacked-to-spread-remote-access-data-stealing-malware/)**
 - **[US indicts two Canadians for hacking universities to mine cryptocurrency](https://www.bleepingcomputer.com/news/security/us-charges-two-canadians-accused-of-hacking-us-universities/)**
@@ -196,8 +200,8 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | Vulnerability Research & Red Teaming | 3 |
-| Application Security | 3 |
-| AI in the SDLC | 2 |
+| Application Security | 2 |
+| AI in the SDLC | 1 |
 | Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
 
@@ -215,9 +219,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Application Security
 
-- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](appsec/2026-10-atlassian-cve-2026-21589-is-a-pre-auth-file-read-in-data-cen.md)** · composite **61.34** · Oct 6, 2026  
-  Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.  
-  _[watchTowr Labs](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)_
 - **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **58.04** · Oct 9, 2026  
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
   _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
@@ -230,9 +231,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **56.75** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
-- **[CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](ai-code/2026-10-checkerbench-gives-agents-300-cve-derived-tasks-to-write-sta.md)** · composite **47.54** · Oct 6, 2026  
-  Agents can sometimes turn a CVE into a reusable checker, but more than half of attempts fail, so treat agent-written SAST rules as drafts to validate on vulnerable/fixed pairs before shipping them to…  
-  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.07557)_
 
 ## Mobile & Device Security
 

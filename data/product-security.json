@@ -113,6 +113,89 @@
       "grounding_score": 1.0
     },
     {
+      "id": "the-native-menace-host-to-browser-cross-boundary-712db398bb",
+      "topic": "product-security",
+      "domain": "ps.appsec",
+      "title": "Malicious native apps can hijack browser Native Messaging to steal password vaults",
+      "source_url": "http://arxiv.org/abs/2611.04291v1",
+      "article_url": "http://arxiv.org/abs/2611.04291v1",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-11-03",
+      "date": "2026-11",
+      "raw_path": "data/_raw/the-native-menace-host-to-browser-cross-boundary-712db398bb.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "IEEE S&P (via arXiv)",
+      "related_claims": [],
+      "summary": "An IEEE S&P 2027 paper shows that a non-privileged malicious app on the user's machine can abuse the browser NativeMessaging API, which links extensions to native helper apps, to intercept their traffic or act as a confused deputy. The authors demonstrate full password-vault leakage and arbitrary document signing against 1Password, the EU eID system and Google Drive, whose extensions total over 532 million downloads. The root cause is that the channel has no root of trust or client attestation, and they propose encrypting messages with a secret shared out of band.",
+      "takeaway": "If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.",
+      "lessons": [
+        {
+          "point": "Any unprivileged local app can sit on the extension-to-native channel and intercept or misuse it.",
+          "excerpt": "a novel attack that allows a non-privileged malicious native app to misuse browsers' native messaging capabilities to stealthily intercept sensitive communications or launch confused deputy attacks against other native apps",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The impact on real apps is severe: full vault leakage and signing documents in government workflows.",
+          "excerpt": "Our attacks have severe ramifications, including full password vault leakage, and arbitrary document signing in governmental workflows.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The design flaw is an untrusted channel with no root of trust or attestation of the other end.",
+          "excerpt": "native messaging being built on top of an untrusted communication channel without providing a root of trust or enforcing some form of client attestation",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Vendors can fix it at the app layer by encrypting messages with an out-of-band shared secret.",
+          "excerpt": "we propose a straightforward mitigation technique of message encryption with out-of-band secret sharing",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "browser-extensions",
+        "native-messaging",
+        "confused-deputy",
+        "password-managers",
+        "eid",
+        "local-attacker"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Authenticate both ends of any extension-to-native-host channel",
+        "detail": "If you ship a browser extension with a native messaging host (password manager, signing client, sync agent), threat-model a malicious local process as a peer on that channel. Pair the extension and host with a secret exchanged out of band, encrypt and authenticate every message, and reject unauthenticated peers. Do not rely on the host manifest's allowed origins as proof of who is talking."
+      },
+      "threat": "A malicious but unprivileged app on the user's machine intercepts or impersonates traffic between a browser extension and its native helper app.",
+      "conditions": "An extension uses the NativeMessaging API to exchange secrets or authorize operations with a native app, and the messages are not authenticated end to end.",
+      "mitigations": "Encrypt and authenticate native messaging traffic with a secret shared out of band, and treat the native channel as untrusted in the threat model.",
+      "scores": {
+        "novelty": 55,
+        "relevance": 72,
+        "newness": 81,
+        "credibility": 72.0,
+        "composite": 69.15,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Prior work studied malicious webpages and extensions attacking privileged browser APIs, and password-manager extension attacks; local-IPC impersonation and confused-deputy attacks on desktop apps are well known. The paper says NativeMessaging itself had not been examined.",
+      "verified": true,
+      "verify_note": "Verifier found all lessons supported by the abstract; noted 532 million is cumulative downloads, not affected users, and the mitigation is proposed rather than validated. Novelty taken as verifier's 55.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "product-security",
       "domain": "ps.detection-response",
       "related_claims": [
@@ -3747,7 +3830,9 @@
         "oem-firmware",
         "access-control",
         "static-analysis",
-        "ndss"
+        "ndss",
+        "firmware",
+        "content-providers"
       ],
       "lessons": [
         {
@@ -3766,6 +3851,24 @@
           "point": "The bug class is widespread in vendor firmware, and a large share of findings expose private user data through generic database operations.",
           "excerpt": "Callix discovered 819 vulnerable paths across these vendors, 42.1% of which allow reading or modifying private user data through generic database operations",
           "confidence": 0.82,
+          "grounded": true
+        },
+        {
+          "point": "Sensitive-API lists miss generic APIs that become sensitive because of the data they operate on.",
+          "excerpt": "this misses a class of vulnerabilities in which a generic API, such as a database read, appears benign in general but becomes security-sensitive when operating on protected data, yet is left without sufficient access control",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Prior analyses only asked whether a check exists, not whether it is strong enough for that operation.",
+          "excerpt": "existing studies focus only on the presence of checks, not on whether those checks enforce sufficient protection for the operation at a given callsite",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Of the 819 vulnerable paths found, 42.1% allow reading or modifying private user data through generic database operations.",
+          "excerpt": "Callix discovered 819 vulnerable paths across these vendors, 42.1% of which allow reading or modifying private user data through generic database operations",
+          "confidence": 0.85,
           "grounded": true
         }
       ],
@@ -3807,7 +3910,8 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "verify_note": "Verifier found lessons supported; flagged 'common in vendor firmware' as an inference beyond the 819 count. Lesson 3 restated as the measured figure. Novelty agreed at 62."
     },
     {
       "topic": "product-security",
@@ -6332,7 +6436,9 @@
         "agent-harness",
         "subagents",
         "deobfuscation",
-        "offensive-tooling"
+        "offensive-tooling",
+        "agents",
+        "malware-analysis"
       ],
       "lessons": [
         {
@@ -6357,6 +6463,24 @@
           "point": "Profiles control which data the model sees and which tools it may use, which helps when the binary or its strings are sensitive.",
           "excerpt": "They give you granular control over which data the LLM can read, restrict which tools it can use, and let you define custom rules to filter data.",
           "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "For host access it is an in-process agent, not an MCP bridge to an external client.",
+          "excerpt": "It does not consume an MCP server to interact with the host database; it has its own agentic loop, context management, role prompt",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Coding-agent patterns carry over to binaries: map first, then fan out parallel subagents.",
+          "excerpt": "The orchestrator maps the binary (imports, exports, strings, key functions), then spawns isolated subagents to analyze in parallel.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "It has basic safety rails for analyzing malware samples.",
+          "excerpt": "The agent always asks permission before running scripts and will never execute the target binary.",
+          "confidence": 0.75,
           "grounded": true
         }
       ],
@@ -6398,9 +6522,12 @@
       "readability": {
         "score": 100,
         "passed": true,
-        "issues": []
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "verify_note": "Verifier found all lessons supported; noted it still supports MCP servers for skills, and 'never execute the target' is a stated policy, not a verified guarantee. Novelty taken as verifier's 25."
     },
     {
       "id": "a-proof-of-fermat-s-last-theorem-that-fits-the-m-f749a64a84",
@@ -7015,6 +7142,73 @@
       "source_name": "SecurityWeek",
       "retrieved_at": "2026-10-30T16:55:16+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "macos-27-does-not-support-corestorage-volumes-f34b11e7b4",
+      "topic": "product-security",
+      "domain": "ps.mobile",
+      "title": "macOS 27 breaks normal access to encrypted HFS+ volumes on CoreStorage",
+      "source_url": "https://wadetregaskis.com/macos-27-golden-gate-does-not-actually-support-corestorage-or-hfs-volumes/",
+      "article_url": "https://wadetregaskis.com/macos-27-golden-gate-does-not-actually-support-corestorage-or-hfs-volumes/",
+      "tweet_url": null,
+      "author": "colejohnson66",
+      "published": "2026-11-03",
+      "date": "2026-11",
+      "raw_path": "data/_raw/macos-27-does-not-support-corestorage-volumes-f34b11e7b4.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@colejohnson66 via Hacker News",
+      "related_claims": [],
+      "summary": "Wade Tregaskis reports that macOS 27 cannot mount, convert to APFS or erase encrypted HFS+ volumes on CoreStorage through Disk Utility or diskutil, while a boot dialog says support ends in macOS 28. A low-level read-only mount with mount_hfs still works, and deleting the logical volumes then rebooting finally lets the disk be erased. The author had to rebuild the volumes from backups.",
+      "takeaway": "Migrate CoreStorage and encrypted HFS+ volumes to APFS before upgrading to macOS 27, and have backups ready.",
+      "lessons": [
+        {
+          "point": "The normal tools fail on these volumes in macOS 27, despite the dialog naming macOS 28.",
+          "excerpt": "can’t mount them, can’t convert them to APFS, can’t even erase them",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "A read-only low-level mount still recovers the data.",
+          "excerpt": "sudo mount_hfs -o rdonly /dev/disk27 /Volumes/Smash",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "macos",
+        "corestorage",
+        "hfs-plus",
+        "disk-encryption",
+        "data-recovery"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Inventory CoreStorage volumes before the macOS 27 upgrade",
+        "detail": "Run `diskutil cs list` on managed Macs before upgrading to macOS 27. Convert any CoreStorage or encrypted HFS+ volumes to APFS first, and if one is already stranded, copy data off with a read-only `mount_hfs` mount before erasing."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 12,
+        "newness": 81,
+        "credibility": 55.0,
+        "composite": 41.1,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Apple's deprecation of CoreStorage and HFS+ conversion problems in macOS 15 Sequoia, which the author describes.",
+      "verified": true,
+      "verify_note": "Verifier found both lessons supported, from a single-machine anecdote; noted it is a deprecation and data-access issue, not a security flaw. Novelty kept at the lower 30.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway",
       "readability": {
         "score": 100,
         "passed": true,
@@ -9029,103 +9223,6 @@
       ]
     },
     {
-      "id": "6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5",
-      "topic": "product-security",
-      "domain": "ps.detection-response",
-      "title": "Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor",
-      "summary": "Attackers took about $6.3 billion from Binance hot wallets across ten blockchains on October 29, and most of it left within about 20 minutes. Binance's early findings point to a compromised DevOps engineer's laptop that gave access to a service container able to submit withdrawals. TRM Labs judges that the attacker could make Binance's hot-wallet signing system sign any transaction it chose. TRM attributes the theft to the North Korean unit TraderTraitor with high confidence.",
-      "lessons": [
-        {
-          "point": "Binance's early findings point to one engineer's laptop reaching a service container that could submit withdrawals, and it found no evidence of a private key leak.",
-          "excerpt": "may involve a compromised DevOps engineer’s laptop, which allowed an attacker to gain access to a service container and submit unauthorized withdrawal transactions",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "If attackers can drive the signing system, protecting the keys is not enough. Valid signatures across different chains and key types point to abuse of the signer itself.",
-          "excerpt": "the most likely explanation is that the attacker gained the ability to make Binance’s hot wallet signing system sign transactions of its choosing across chains",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "On Ethereum the attackers used EIP-7702 delegation. They pre-signed a batch of permissions so that one would match the wallet's transaction count (nonce) when it ran.",
-          "excerpt": "They sent a batch of 50 such permissions, all signed beforehand by a Binance hot wallet, so that one would match the wallet’s transaction count at execution time.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Fast freezes by token issuers held back a large share, but the ETH and BTC the attackers kept have no issuer that can freeze them.",
-          "excerpt": "By 00:30 UTC on October 30, TRM tallied around $2.7 billion in frozen assets",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.",
-      "tags": [
-        "crypto-theft",
-        "north-korea",
-        "tradertraitor",
-        "hot-wallet",
-        "signing-infrastructure",
-        "eip-7702",
-        "devops-compromise"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Put independent policy checks in front of transaction-signing services",
-        "detail": "Make the signer enforce its own limits on withdrawal value, rate and destination before it signs. Require a second approval path that service containers reachable from engineer laptops cannot satisfy. Alert when wallets sign across several chains in a short burst, and when EIP-7702 delegation authorizations are signed from hot wallets."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 45,
-        "newness": 14,
-        "credibility": 55.8,
-        "composite": 37.37,
-        "scored_at": "2026-11-05T17:48:33+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier: mostly supported; 'no private key was stolen' and the native-coin freeze point overreached Binance's hedged early findings, reworded. Novelty lowered to the verifier's 40.",
-      "prior_art": "The pool has no crypto-exchange heist or TraderTraitor entry. The nearest DPRK items are the archive Axios npm compromise attributed to Sapphire Sleet and a DPRK-linked PHP scanning mention in product-security, both unrelated attack paths. This is a news synthesis of TRM Labs and Binance statements with little technical detail on the signer compromise.",
-      "related_claims": [],
-      "threat": "A state-sponsored actor compromises a DevOps engineer's laptop, reaches a service container that can submit withdrawals, and makes the hot-wallet signing system sign attacker transactions across ten chains. On Ethereum it also abuses pre-signed EIP-7702 delegations.",
-      "conditions": "Hot-wallet signing can be triggered from service containers reachable from engineer endpoints, and the signer has no independent check on value, rate or destination for withdrawals.",
-      "mitigations": "Isolate signing services from DevOps endpoints. Make the signer enforce withdrawal policy and require out-of-band approval. Monitor for burst signing across chains and for EIP-7702 delegation signatures. Line up rapid-freeze contacts with stablecoin issuers ahead of time.",
-      "source_url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
-      "article_url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-30",
-      "raw_path": "data/_raw/6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-securityweek-com-feed",
-      "source_rank": 50.8,
-      "source_topics": [
-        "product-security",
-        "ai-security"
-      ],
-      "source_name": "SecurityWeek",
-      "retrieved_at": "2026-10-30T16:55:16+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 84,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 4 > 3 (TRM, EIP, ETH, BTC)",
-          "mild: takeaway_sentences 2 > 1"
-        ]
-      },
-      "grounding_score": 1.0,
-      "story_corroboration": [
-        {
-          "name": "Ars Technica Security",
-          "url": "https://arstechnica.com/information-technology/2026/11/binance-says-hackers-who-stole-billions-in-crypto-spent-months-planning-heist/",
-          "tier": "medium",
-          "published": null
-        }
-      ]
-    },
-    {
       "id": "hackers-hijack-convertr-analytics-script-to-stea-cf4dbd9649",
       "topic": "product-security",
       "domain": "ps.supply-chain",
@@ -9466,6 +9563,103 @@
       "grounding_score": 1.0
     },
     {
+      "id": "6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5",
+      "topic": "product-security",
+      "domain": "ps.detection-response",
+      "title": "Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor",
+      "summary": "Attackers took about $6.3 billion from Binance hot wallets across ten blockchains on October 29, and most of it left within about 20 minutes. Binance's early findings point to a compromised DevOps engineer's laptop that gave access to a service container able to submit withdrawals. TRM Labs judges that the attacker could make Binance's hot-wallet signing system sign any transaction it chose. TRM attributes the theft to the North Korean unit TraderTraitor with high confidence.",
+      "lessons": [
+        {
+          "point": "Binance's early findings point to one engineer's laptop reaching a service container that could submit withdrawals, and it found no evidence of a private key leak.",
+          "excerpt": "may involve a compromised DevOps engineer’s laptop, which allowed an attacker to gain access to a service container and submit unauthorized withdrawal transactions",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "If attackers can drive the signing system, protecting the keys is not enough. Valid signatures across different chains and key types point to abuse of the signer itself.",
+          "excerpt": "the most likely explanation is that the attacker gained the ability to make Binance’s hot wallet signing system sign transactions of its choosing across chains",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "On Ethereum the attackers used EIP-7702 delegation. They pre-signed a batch of permissions so that one would match the wallet's transaction count (nonce) when it ran.",
+          "excerpt": "They sent a batch of 50 such permissions, all signed beforehand by a Binance hot wallet, so that one would match the wallet’s transaction count at execution time.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Fast freezes by token issuers held back a large share, but the ETH and BTC the attackers kept have no issuer that can freeze them.",
+          "excerpt": "By 00:30 UTC on October 30, TRM tallied around $2.7 billion in frozen assets",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.",
+      "tags": [
+        "crypto-theft",
+        "north-korea",
+        "tradertraitor",
+        "hot-wallet",
+        "signing-infrastructure",
+        "eip-7702",
+        "devops-compromise"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Put independent policy checks in front of transaction-signing services",
+        "detail": "Make the signer enforce its own limits on withdrawal value, rate and destination before it signs. Require a second approval path that service containers reachable from engineer laptops cannot satisfy. Alert when wallets sign across several chains in a short burst, and when EIP-7702 delegation authorizations are signed from hot wallets."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 45,
+        "newness": 14,
+        "credibility": 55.8,
+        "composite": 36.62,
+        "scored_at": "2026-11-05T17:48:33+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: mostly supported; 'no private key was stolen' and the native-coin freeze point overreached Binance's hedged early findings, reworded. Novelty lowered to the verifier's 40.",
+      "prior_art": "The pool has no crypto-exchange heist or TraderTraitor entry. The nearest DPRK items are the archive Axios npm compromise attributed to Sapphire Sleet and a DPRK-linked PHP scanning mention in product-security, both unrelated attack paths. This is a news synthesis of TRM Labs and Binance statements with little technical detail on the signer compromise.",
+      "related_claims": [],
+      "threat": "A state-sponsored actor compromises a DevOps engineer's laptop, reaches a service container that can submit withdrawals, and makes the hot-wallet signing system sign attacker transactions across ten chains. On Ethereum it also abuses pre-signed EIP-7702 delegations.",
+      "conditions": "Hot-wallet signing can be triggered from service containers reachable from engineer endpoints, and the signer has no independent check on value, rate or destination for withdrawals.",
+      "mitigations": "Isolate signing services from DevOps endpoints. Make the signer enforce withdrawal policy and require out-of-band approval. Monitor for burst signing across chains and for EIP-7702 delegation signatures. Line up rapid-freeze contacts with stablecoin issuers ahead of time.",
+      "source_url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
+      "article_url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-securityweek-com-feed",
+      "source_rank": 50.8,
+      "source_topics": [
+        "product-security",
+        "ai-security"
+      ],
+      "source_name": "SecurityWeek",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 84,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (TRM, EIP, ETH, BTC)",
+          "mild: takeaway_sentences 2 > 1"
+        ]
+      },
+      "grounding_score": 1.0,
+      "story_corroboration": [
+        {
+          "name": "Ars Technica Security",
+          "url": "https://arstechnica.com/information-technology/2026/11/binance-says-hackers-who-stole-billions-in-crypto-spent-months-planning-heist/",
+          "tier": "medium",
+          "published": null
+        }
+      ]
+    },
+    {
       "id": "ghsa-22hg-r758-rrw9-7a9523be43",
       "scores": {
         "novelty": 30,
@@ -9799,7 +9993,17 @@
           "mild: title_words 13 > 12"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Actively exploited unauthenticated VPN-edge DoS in CISA KEV with a three-day deadline; exposure is scoped by one config check (secondary authentication on a tunnel group).",
+        "signals": [
+          "cve",
+          "active-exploitation",
+          "timely"
+        ],
+        "at": "2026-11-04T20:18:09+00:00"
+      }
     },
     {
       "topic": "product-security",
@@ -9870,7 +10074,17 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Exploited ESX logging gap in KEV; the transferable lesson is that clean hypervisor logs are not proof of no tampering, so keep an out-of-band log source.",
+        "signals": [
+          "cve",
+          "active-exploitation",
+          "high-relevance"
+        ],
+        "at": "2026-11-04T20:18:09+00:00"
+      }
     },
     {
       "id": "citizen-lab-researchers-win-irtf-applied-network-a479453ff2",

@@ -52,6 +52,30 @@
           "excerpt": "all five coordinated disclosures across four vendors were rejected",
           "confidence": 0.8,
           "grounded": true
+        },
+        {
+          "point": "Framework choice barely changes tool-poisoning risk; the model's own resistance is what varies.",
+          "excerpt": "Resistance is model-level: nine core frameworks cluster within 23 to 26% (chi-squared = 3.30, p = 0.91), and no framework implements intentional defense.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Most successful attacks end in an attacker tool call, and a smaller share reach real secret exfiltration, confirmed by a canary HTTP receipt.",
+          "excerpt": "Of these, 64.9% dispatch an attacker tool call, 23.0% contact the attacker endpoint, and 12.1% verifiably exfiltrate a secret.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Scanning tool descriptions with regexes catches fewer than half of the attack scenarios, so metadata scanning is only a partial control.",
+          "excerpt": "a regex description scanner rejects 20 of 45 scenarios at a 7.2% false-positive rate, so metadata scanning alone is a partial control",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Framework vendors did not accept tool poisoning as their bug: every coordinated disclosure was rejected.",
+          "excerpt": "all five coordinated disclosures across four vendors were rejected",
+          "confidence": 0.8,
+          "grounded": true
         }
       ],
       "actionable": {
@@ -114,7 +138,9 @@
         "inference-server-compromise",
         "model-substitution",
         "formal-verification",
-        "lean"
+        "lean",
+        "tamper-detection",
+        "inference-servers"
       ],
       "lessons": [
         {
@@ -139,6 +165,36 @@
           "point": "The guarantee is bounded: proofs show the hardware served the claimed model, not that the same hardware is not also doing other work such as training.",
           "excerpt": "We note that although this verifies that the hardware is serving inference, it does not establish that the hardware is not, e.g., training on the side.",
           "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "In batches of 24 requests, proving for a 400B mixture-of-experts model runs at about 110 tokens per second on one H100.",
+          "excerpt": "a single H100 GPU generates proofs at around 110 tokens/second, with a proof size of ~19 MB per 1,024-token request",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The cost is still large: proving takes tens of times the GPU time of serving the model.",
+          "excerpt": "This is ~70-95x the GPU time of running the model itself on vLLM, a common open-source library.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Verification is cheap enough for a client: seconds on a CPU, no GPU and no weights.",
+          "excerpt": "Checking a proof takes 17 seconds on 24 threads (and 21 seconds on a single thread), including the offline phase's checks.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A proof shows the committed weights served the request; it hides the weights but not the architecture, and it cannot show the hardware is not also training on the side.",
+          "excerpt": "We note that although this verifies that the hardware is serving inference, it does not establish that the hardware is not, e.g., training on the side.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Because Claude-built optimizations are hard to review, the team wrote the security guarantees as auditable Lean statements.",
+          "excerpt": "We counter this by providing top-level auditable statements in Lean (a formal verification language) for the claimed security guarantees.",
+          "confidence": 0.85,
           "grounded": true
         }
       ],
@@ -185,7 +241,9 @@
           "mild: sentence_words 50 > 45 (On Llama 4 Maverick (400B-parameter mixture of experts, 4-bit), one H100 generates proofs at about 110 tokens per second)"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "verify_note": "Verifier found lessons supported; flagged the original title as overstated (a proof checks the committed weights, it does not identify weights) and that 110 tokens/s is for batches of 24 with 4-bit weights. Title and lesson 1 corrected; novelty taken as verifier's 55.",
+      "readability_rewrite": "reverted lessons[1].point"
     },
     {
       "topic": "ai-security",
@@ -427,7 +485,8 @@
         "lean4",
         "tool-call-policy",
         "prompt-injection",
-        "agent-security"
+        "agent-security",
+        "fail-closed"
       ],
       "lessons": [
         {
@@ -450,6 +509,30 @@
         },
         {
           "point": "Automated proof-guided repair recovers only about a third of argument-value denials, so it is a helper, not a replacement for feedback.",
+          "excerpt": "repair proves an admissible edit for 88 of 252 denials caused by argument values",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "In Tau-Bench tests with five small Qwen models, a fail-closed check outside the model ran none of the calls its policy forbids.",
+          "excerpt": "unguarded agents execute at least 33 calls that the Lean policy forbids, while LeanGuard executes none",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Telling the agent which rule it broke keeps task success roughly level, so the guard need not cost usefulness.",
+          "excerpt": "with feedback, task success does not change significantly",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Policy enforcement at the tool boundary also cuts direct prompt-injection success, because injected actions still have to pass the policy.",
+          "excerpt": "LeanGuard reduces direct prompt-injection success from 57.9% to 5.9%",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Automatic repair finds a policy-compliant version for 88 of 252 replayed argument-value denials, without the model.",
           "excerpt": "repair proves an admissible edit for 88 of 252 denials caused by argument values",
           "confidence": 0.8,
           "grounded": true
@@ -500,7 +583,8 @@
           "mild: sentence_words 48 > 45 (Write agent tool policies as code over call arguments plus prior-call history (for example, no write after reading a sec)"
         ]
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "verify_note": "Verifier found lessons supported but flagged overstatement: zero violations is near-true by construction against the authors' own policy, the evaluation uses small Qwen models, and the injection result covers direct injection on DTap only. Lessons narrowed accordingly; novelty taken as verifier's 50."
     },
     {
       "id": "google-dev-kit-spurs-first-ever-agent-on-agent-v-f48af27031",
@@ -1092,6 +1176,78 @@
       "needs_review": true,
       "grounding_score": null,
       "domain_label": "Agent framework security"
+    },
+    {
+      "id": "agentnameservice-ans-spec-16af3f0ab6",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Agent Name Service spec anchors AI agent identity to verified domain names",
+      "source_url": "https://github.com/agentnameservice/ans-spec",
+      "article_url": "https://github.com/agentnameservice/ans-spec",
+      "tweet_url": null,
+      "author": "agentnameservice",
+      "published": "2026-11-03",
+      "date": "2026-11",
+      "raw_path": "data/_raw/agentnameservice-ans-spec-16af3f0ab6.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "agentnameservice/ans-spec",
+      "related_claims": [],
+      "summary": "The Agent Name Service (ANS) spec, based on an OWASP-originated IETF draft, ties each agent's identity to a domain whose ownership is verified, issues certificates bound to the running code version, and records lifecycle events in a SCITT transparency log. Its seven layers cover registration, DNS publication with DANE, integrity monitoring and agent-to-agent authentication over mTLS or DPoP. It ships a MAESTRO threat model and Rust, Go and Java SDKs, at 34 stars.",
+      "takeaway": "Agent-to-agent trust needs identity tied to a verified domain and to the running code version, not just a name.",
+      "lessons": [
+        {
+          "point": "Certificates bind identity to a code version, so a changed agent is detectable.",
+          "excerpt": "issues a version-bound certificate that records",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Agent-to-agent calls are authenticated with standard mechanisms rather than a new scheme.",
+          "excerpt": "Agent-to-agent authentication: badge/SCITT verification tiers, mTLS and DPoP (RFC 9449) caller methods",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-identity",
+        "multi-agent-trust",
+        "transparency-log",
+        "scitt",
+        "mtls",
+        "ietf-draft"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Authenticate remote agents by domain and code version",
+        "detail": "Before an agent acts on another agent's instruction (payments, data sharing), require mutual TLS or DPoP with a certificate tied to a verified domain, and alert when the counterparty's code version changes. ANS is one draft design to follow."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 55,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 58.76,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "The IETF draft-narajala-ans; A2A agent cards; Certificate Transparency and SCITT for append-only logs; SPIFFE for workload identity; DANE.",
+      "verified": true,
+      "verify_note": "Verifier found both lessons supported; noted detection of a changed agent depends on integrity monitoring not shown in the README. Novelty kept at the lower 40.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 4 > 3 (IETF, SCITT, DANE, MAESTRO)"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "building-a-more-secure-environment-for-evaluatin-2ef9339cfe",
@@ -2022,6 +2178,84 @@
       ]
     },
     {
+      "id": "votal-ai-hq-ai-red-teaming-0c78f9f9c9",
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Red-Team AI reads an agent app's source code to tailor attacks",
+      "source_url": "https://github.com/votal-ai-hq/ai-red-teaming",
+      "article_url": "https://github.com/votal-ai-hq/ai-red-teaming",
+      "tweet_url": null,
+      "author": "votal-ai-hq",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/votal-ai-hq-ai-red-teaming-0c78f9f9c9.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:ai-agent-security-guardrails",
+      "source_rank": 47.5,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "votal-ai-hq/ai-red-teaming",
+      "related_claims": [
+        "agent-tool-selection-can-be-steered-by-untrusted-context"
+      ],
+      "summary": "Red-Team AI is a beta, MIT-licensed white-box red-teaming tool for agentic apps that reads the app's source to learn its tools, roles and guardrails before generating attacks. A PAIR-style loop feeds each refusal and judge verdict back to the attacker model and retries, and an LLM judge scores results against a hand-labelled gold set. Its pitch is finding multi-tool paths such as read_file to send_email that single-call checks miss.",
+      "takeaway": "Feeding a red-team tool your agent's source finds tool-chain paths that black-box prompt lists miss.",
+      "lessons": [
+        {
+          "point": "White-box context lets attacks target the app's actual tools and guardrails.",
+          "excerpt": "It reads your application's source code first, learns your tools, roles, and guardrails, and then generates attacks tailored to",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Chained tool calls are the target class that per-call checks miss.",
+          "excerpt": "the path through tools `read_file → send_email` that no single-call check would catch",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Refusals become feedback for the next attempt rather than a stopping point.",
+          "excerpt": "feeds the exact refusal and judge verdict back to the attacker model, revises the attack, and retries until it lands or the budget is spent",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "red-teaming",
+        "white-box",
+        "pair",
+        "llm-judge",
+        "agentic-apps",
+        "tool-chaining"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Red-team agent apps with their source in view",
+        "detail": "When red-teaming an agent, give the attacker its tool list, role definitions and guardrail code, and look specifically for multi-step tool chains from a read tool to an outbound tool. Red-Team AI is one beta option at 40 stars; check its judge against your own labelled cases before trusting scores."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 58,
+        "newness": 81,
+        "credibility": 47.5,
+        "composite": 53.77,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "PAIR (Chao et al.) iterative jailbreak refinement; PyRIT, promptfoo and garak for black-box LLM red-teaming; NuGuard (already in the pool) for agent static analysis plus sandboxed red-team scenarios.",
+      "verified": true,
+      "verify_note": "Verifier found all lessons supported; noted the tool-chain example comes from the README's own demo app, and no gold-set accuracy is given. Novelty taken as verifier's 30.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-security",
       "domain": "ais.ai-infra",
       "title": "\"Black October\" is an X label for a week of disclosures",
@@ -2179,7 +2413,8 @@
         "signals": [
           "newsworthy",
           "high-relevance",
-          "timely"
+          "timely",
+          "trending"
         ],
         "at": "2026-11-03T17:56:11+00:00"
       }
@@ -2982,6 +3217,93 @@
         ],
         "at": "2026-07-26T21:08:26+00:00"
       }
+    },
+    {
+      "id": "shall-we-approve-consequence-aware-approval-for-613a8ce7a8",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "Caper approves coding-agent commands after running them in a snapshot sandbox",
+      "source_url": "https://arxiv.org/abs/2610.40753",
+      "article_url": "https://arxiv.org/abs/2610.40753",
+      "tweet_url": null,
+      "author": null,
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": "data/_raw/shall-we-approve-consequence-aware-approval-for-613a8ce7a8.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 50.4,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "related_claims": [
+        "input-guardrail-weaker-than-target-is-bypassable",
+        "model-internal-refusal-is-not-a-security-boundary"
+      ],
+      "summary": "Coding-agent approvers today judge a shell command by its text, but harm can hide in the code the command invokes. Caper runs each command first in a snapshotted sandbox, shows an independent approver a bounded report of what changed, then commits or rolls back. Against six existing approvers it had the lowest harmful-outcome rate on SABER (6.7% versus at least 14.8%) and on the authors' YoloFS-Ext benchmark (7.8% versus at least 35.3%), while blocking 1.0% of safe tasks.",
+      "takeaway": "Judge an agent's command by what it actually does in a sandbox, not by how the command reads.",
+      "lessons": [
+        {
+          "point": "Rule checkers, guardrail models and permission classifiers all judge the command text, which misses behavior hidden in invoked code.",
+          "excerpt": "Existing approvers, from rule-based checkers to guardrail models and deployed permission classifiers, base their decisions on the text of the request and command.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The fix is to run first, observe effects, and approve or roll back with a reason the agent can use.",
+          "excerpt": "pre-executes each command in a snapshotted sandbox, provides an independent approver with a bounded report of its observed effects, commits allowed commands, and rolls back blocked ones with a reason the agent can act on",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "When harm sits inside invoked tools, the best of six existing approvers still let 35.3% of harmful outcomes through.",
+          "excerpt": "YoloFS-Ext, a benchmark we build in which harmful behavior is hidden inside invoked tools (7.8% versus at least 35.3%)",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Effect-based approval blocks few safe tasks: 1.0% of the safe twins of the dangerous tasks in YoloFS-Ext.",
+          "excerpt": "while blocking 1.0% of the safe twins of the dangerous tasks in YoloFS-Ext",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "coding-agents",
+        "approval",
+        "permission-classifier",
+        "sandbox",
+        "rollback",
+        "human-in-the-loop"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Pre-run risky agent commands on a filesystem snapshot",
+        "detail": "For commands your text-based permission rules can't classify, run them first against a copy-on-write snapshot of the workspace (overlayfs, a btrfs/ZFS snapshot or a throwaway container), diff the file and process effects, and let a separate approver decide from that bounded report. Commit on allow, discard the snapshot on deny, and return the reason to the agent. Note that network side effects cannot be rolled back, so keep egress blocked during the pre-run."
+      },
+      "threat": "A coding agent runs a command that looks harmless as text but invokes a script, test or tool whose code deletes, leaks or corrupts data.",
+      "conditions": "An automated approver decides from the command text, and the harmful behavior lives in code the command calls or in workspace state.",
+      "mitigations": "Pre-execute commands in a snapshotted sandbox, give an independent approver a report of observed effects, commit or roll back, and block network egress during the pre-run.",
+      "scores": {
+        "novelty": 50,
+        "relevance": 85,
+        "newness": 14,
+        "credibility": 50.4,
+        "composite": 51.56,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Text-based approvers such as CC Safety Net (command-intent parsing), guardrail models and Claude Code's permission classifier; YoloFS-style snapshot and rollback filesystems restore state after the fact. Caper's delta is deciding before commit from observed effects, with an independent approver.",
+      "verified": true,
+      "verify_note": "Verifier found lessons supported; flagged that 35.3% is the best baseline's rate (not all text-based approvers) and that the 1.0% covers YoloFS-Ext safe twins only. Lessons narrowed; novelty taken as verifier's 50.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",

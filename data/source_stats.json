@@ -1,6 +1,6 @@
 {
   "github_query:ai-agent-security-guardrails": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 0
   },
   "github_query:llm-evaluation-harness-benchmark": {
@@ -8,19 +8,19 @@
     "curated": 0
   },
   "github_query:mcp-protocol-or-mcp-specification": {
-    "curated": 0,
-    "ingested": 8
+    "ingested": 12,
+    "curated": 0
   },
   "github_query:mcp-server-security-scanner": {
     "ingested": 17,
     "curated": 10
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 12,
+    "ingested": 13,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 19,
+    "ingested": 21,
     "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
