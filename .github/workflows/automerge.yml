@@ -246,7 +246,7 @@ jobs:
           [[ "$NEW_REF" =~ ^claude/scan-[A-Za-z0-9._-]{1,100}-rebuilt-[0-9a-f]{8}$ ]]
           bundle="$RUNNER_TEMP/rebuilt/rebuilt.bundle"
           git -c core.hooksPath=/dev/null bundle verify -q "$bundle"
-          git -c core.hooksPath=/dev/null fetch -q "$bundle" "refs/rebuilt:refs/rebuilt"
+          git -c core.hooksPath=/dev/null -c transfer.fsckObjects=true fetch -q "$bundle" "refs/rebuilt:refs/rebuilt"
           [[ "$(git rev-parse refs/rebuilt)" == "$COMMIT" ]]
           python scripts/automerge.py check-tree --main-sha "$GITHUB_SHA" --commit "$COMMIT"
           auth="$(printf 'x-access-token:%s' "$TOKEN" | base64 | tr -d '\n')"

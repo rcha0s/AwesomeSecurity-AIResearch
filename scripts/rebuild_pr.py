@@ -271,7 +271,9 @@ def rebuild(base: str, ours: str, theirs: str, python: str, do_render: bool = Tr
     if do_render:
         reset_conflicted_rendered(ours)
         render(python)
-        git("add", "-A", "--", *(p for p in RENDERED if (ROOT / p).exists()))
+        # trends.py rewrites data/trends.json after the data was staged above.
+        drawn = [*RENDERED, "data/trends.json"]
+        git("add", "-A", "--", *(p for p in drawn if (ROOT / p).exists()))
     check_clean()
     return sorted(merged)
 

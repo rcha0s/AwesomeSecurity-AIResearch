@@ -428,17 +428,18 @@ class ReplaceGitHub:
 
 
 @pytest.mark.parametrize("old_head, closed", [("e" * 40, True), ("f" * 40, False)])
-def test_replace_opens_the_new_pr_and_closes_the_old_only_if_unmoved(
-    monkeypatch, tmp_path, old_head, closed
-):
+def test_replace_acts_only_while_the_old_head_is_unmoved(monkeypatch, tmp_path, old_head, closed):
     fake = ReplaceGitHub(old_head)
     monkeypatch.setattr(am, "gh", fake.gh)
     monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
     ref = "claude/scan-2026-11-04-local-rebuilt-cccccccc"
     assert am.cmd_replace(REPO, MAIN, "5", "e" * 40, ref) == 0
     opened = [c for c in fake.calls if c[0].endswith("/pulls") and "POST" in c]
-    assert opened and f"head={ref}" in opened[0] and "base=main" in opened[0]
-    assert any("(rebuilt on main)" in a for a in opened[0])
+    # A moved head means superseded content: nothing is opened (Opus re-review, #169).
+    assert bool(opened) == closed
+    if opened:
+        assert f"head={ref}" in opened[0] and "base=main" in opened[0]
+        assert any("(rebuilt on main)" in a for a in opened[0])
     closes = [c for c in fake.calls if c[0].endswith("/pulls/5") and "state=closed" in c]
     assert bool(closes) == closed
 

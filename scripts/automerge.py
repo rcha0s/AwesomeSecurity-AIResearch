@@ -283,9 +283,13 @@ def cmd_check_tree(main_sha: str, commit: str) -> int:
 
 
 def cmd_replace(repo: str, main_sha: str, number: str, sha: str, new_ref: str) -> int:
-    """Open the rebuilt branch as a PR and close the one it replaces. The old PR is
-    closed only if its head is still the one rebuilt; its branch is kept."""
+    """Open the rebuilt branch as a PR and close the one it replaces (its branch is
+    kept). If the old head moved since select, nothing is opened: the rebuilt
+    content is superseded, and the orphan branch is harmless."""
     old = gh(f"repos/{repo}/pulls/{number}") or {}
+    if old.get("state") != "open" or (old.get("head") or {}).get("sha") != sha:
+        summary([f"- #{number} moved or closed since select; rebuilt PR not opened"])
+        return 0
     title = f"{old.get('title') or 'chore: daily scan'} (rebuilt on main)"[:250]
     body = (f"Rebuilt from #{number} (head `{sha[:12]}`) onto main `{main_sha[:12]}` by "
             "`scripts/rebuild_pr.py`: data merged three ways, site re-rendered by main's "
@@ -293,10 +297,9 @@ def cmd_replace(repo: str, main_sha: str, number: str, sha: str, new_ref: str) -
     new = gh(f"repos/{repo}/pulls", "-X", "POST", "-f", f"title={title}", "-f", f"head={new_ref}",
              "-f", "base=main", "-f", f"body={body}") or {}  # fmt: skip
     summary([f"- #{number} rebuilt on main as #{new.get('number')} (`{new_ref}`)"])
-    if old.get("state") == "open" and (old.get("head") or {}).get("sha") == sha:
-        note = f"Replaced by #{new.get('number')}: rebuilt on main `{main_sha[:12]}` by code."
-        gh(f"repos/{repo}/issues/{number}/comments", "-X", "POST", "-f", f"body={note}")
-        gh(f"repos/{repo}/pulls/{number}", "-X", "PATCH", "-f", "state=closed")
+    note = f"Replaced by #{new.get('number')}: rebuilt on main `{main_sha[:12]}` by code."
+    gh(f"repos/{repo}/issues/{number}/comments", "-X", "POST", "-f", f"body={note}")
+    gh(f"repos/{repo}/pulls/{number}", "-X", "PATCH", "-f", "state=closed")
     return 0
 
 
