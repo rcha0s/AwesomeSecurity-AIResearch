@@ -23,9 +23,10 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 STUCK_PR_HOURS = 8.0
-# The day checked is the one two hours ago: a scheduled 23:30 UTC run that GitHub
-# starts late, past midnight, still checks the scan day it was scheduled for.
-DAY_LAG = timedelta(hours=2)
+# The day checked is the one three hours ago: the 00:30 UTC run checks the UTC day
+# that just ended (the Mac's catch-up window closes when it does), and still checks
+# that day if GitHub starts it up to two and a half hours late.
+DAY_LAG = timedelta(hours=3)
 
 
 def no_finished_scan(runs: list[dict], today: str, cap_set: bool) -> bool:

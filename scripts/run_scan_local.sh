@@ -304,6 +304,10 @@ mkdir -p "$REPO/data"
 if [[ -z "$BACKFILL" && -n "$NOT_BEFORE" ]]; then
   tick_rc=0
   SCAN_LOG=/dev/null scripts/run_scan.sh check >/dev/null 2>&1 || tick_rc=$?
+  if [[ "$tick_rc" != 0 && "$tick_rc" != 3 ]]; then
+    # No alert (a wake-time network blip is common), but the Mac keeps the why.
+    echo "[$(date -u +%H:%M:%S)] tick: guard check failed (rc $tick_rc); no alert, the watchdog covers the day" >>"$LOG"
+  fi
   [[ "$tick_rc" == 0 ]] || exit 0
 fi
 enter_worktree

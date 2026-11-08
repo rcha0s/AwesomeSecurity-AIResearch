@@ -390,3 +390,23 @@ def test_a_tick_waits_while_the_utc_day_is_already_tomorrow(scan_repo, tmp_path)
     path = {"PATH": f"{bin_dir}:{env['PATH']}"}
     res, args = run_local(work, {**env, **path}, tmp_path, SCAN_NOT_BEFORE="00:00")
     assert res.returncode == 0 and args == []
+
+
+def test_a_tick_whose_guard_check_errors_logs_why_without_an_alert(scan_repo, tmp_path):
+    """Opus on #168: the silent pre-check left no trace when the guard itself broke."""
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    git(work, "remote", "set-url", "origin", f"file://{tmp_path}/gone.git")
+    # Pin `date -u +%F` to the local date, so the test passes after 16:00 Pacific too.
+    bin_dir = tmp_path / "same-day-bin"
+    bin_dir.mkdir()
+    (bin_dir / "date").write_text(
+        '#!/bin/sh\nif [ "$1" = "-u" ] && [ "$2" = "+%F" ]; then exec /bin/date +%F; fi\n'
+        'exec /bin/date "$@"\n'
+    )
+    (bin_dir / "date").chmod(0o755)
+    env = {**env, "PATH": f"{bin_dir}:{env['PATH']}"}
+    res, args = run_local(work, env, tmp_path, SCAN_NOT_BEFORE="00:00")
+    assert res.returncode == 0 and args == []
+    assert "tick: guard check failed" in (work / "data/_scan.log").read_text()
+    assert "scan-failure" not in gh_calls(env)

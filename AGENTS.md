@@ -491,7 +491,7 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   analysis-empty retry and backfill runs keep their own rules and stay out of the pool. A scan killed mid-run (SIGTERM,
   SIGINT, SIGHUP) raises the `scan-failure` alert (`local-killed`), and
   `install_launchd.sh` refuses to reload the job while a scan runs (`FORCE=1` kills it).
-  `.github/workflows/watchdog.yml` runs at 23:30 UTC on GitHub, so it reports even when
+  `.github/workflows/watchdog.yml` runs at 00:30 UTC on GitHub, so it reports even when
   the Mac is asleep: no daily `done` row for today (`no-finished-scan`) or a scan PR open
   past 8 hours (`stuck-pr-<n>`), each as a comment on the open `scan-failure` issue. It
   reads and alerts only. Auto-merge skips a PR that conflicts with main (#167). Fixes are

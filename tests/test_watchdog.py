@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 
 import watchdog as wd
 
-NOW = datetime(2026, 11, 7, 23, 30, tzinfo=UTC)
+NOW = datetime(2026, 11, 8, 0, 30, tzinfo=UTC)  # the 00:30 run checks 11-07
 
 
 def run(kind, date="2026-11-07", **more):
@@ -59,7 +59,7 @@ def test_cli_prints_one_phase_per_line(tmp_path, capsys):
 
 
 def test_a_late_run_past_midnight_checks_the_scheduled_day():
-    late = datetime(2026, 11, 8, 0, 40, tzinfo=UTC)  # the 23:30 run, started 70 minutes late
+    late = datetime(2026, 11, 8, 2, 40, tzinfo=UTC)  # the 00:30 run, started 130 minutes late
     assert wd.problems([run("done", date="2026-11-07")], [], late, True, 8) == []
 
 
