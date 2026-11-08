@@ -27,7 +27,13 @@ name: Auto-merge gate
 # Job split (no job both runs PR content and holds a write token):
 #   select  read-only. Main's code evaluates every open claude/scan-* PR with
 #           the path guard (git objects are fetched and diffed, never executed)
-#           and picks the oldest that passes.
+#           and picks the oldest that passes (skipping a head whose tests
+#           already failed), plus the oldest that conflicts with main.
+#   rebuild read-only (contents: read, no token). Main's code merges main into
+#           that conflicting head and resolves the JSON; the commit leaves as a
+#           git bundle. publish (write) runs no renderer and reads no PR data:
+#           it re-checks the commit with the guard's path rules, pushes it to a
+#           new branch and opens a replacement PR. See the jobs below.
 #   test    read-only (contents: read, no credentials persisted). Main merged
 #           with that PR head, which by then is content-only; runs
 #           scripts/merge_gate.py (pytest, ledger, http(s)-only URLs,
@@ -128,20 +134,26 @@ jobs:
         run: python scripts/merge_gate.py --base "$GITHUB_SHA"
 
   # A guard-passing scan PR that conflicts with main (two scan PRs from different
-  # days both rewrite every generated file) is merged with main by code: a
-  # three-way data merge plus main's renderers (scripts/rebuild_pr.py). The result
-  # is pushed to the PR branch as a merge commit whose parents are main and the
-  # tested head, so the push is a fast-forward and a moved head makes it fail. It
-  # decides nothing: the next run judges the new head with the path guard and the
-  # merge gate like any other. Only main's code runs; the PR supplies JSON only
-  # (the guard already refused anything else). The token is in the push step only.
+  # days both rewrite every generated file) is rebuilt on main by code: main is
+  # merged into its head, the data is merged three ways and main's renderers
+  # redraw the site (scripts/rebuild_pr.py). The result is ONE new commit whose
+  # only parent is main, so it carries no workflow change GITHUB_TOKEN could not
+  # push. It is opened as a replacement PR on claude/scan-<...>-rebuilt-<main>,
+  # and the old PR is closed. Nothing here decides a merge: the next run judges
+  # the new PR with the path guard and the merge gate like any other.
+  #   rebuild  read-only. Main's code on the PR's JSON; the commit leaves as a git
+  #            bundle artifact. No token, no credentials persisted.
+  #   publish  write. Runs no renderer and reads no PR data: it re-checks the
+  #            bundle's commit (only parent = main, content paths only, by
+  #            merge_guard's rules), pushes it to a NEW branch, opens the PR.
   rebuild:
     needs: select
     if: github.ref == 'refs/heads/main' && needs.select.outputs.rebuild_number != ''
     runs-on: ubuntu-latest
-    environment: automerge
     permissions:
-      contents: write # push the merge commit to the scan branch
+      contents: read
+    outputs:
+      commit: ${{ steps.build.outputs.commit }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -156,45 +168,128 @@ jobs:
       - name: Install main's dependencies
         run: pip install -r requirements.txt
 
-      - name: Merge main into the PR head, resolving data by code
+      - name: Merge main into the PR head and resolve the data by code
+        id: build
         env:
           NUMBER: ${{ needs.select.outputs.rebuild_number }}
           SHA: ${{ needs.select.outputs.rebuild_sha }}
-          REF: ${{ needs.select.outputs.rebuild_ref }}
         run: |
           set -euo pipefail
           [[ "$NUMBER" =~ ^[0-9]+$ && "$SHA" =~ ^[0-9a-f]{40}$ ]]
-          [[ "$REF" =~ ^claude/scan-[A-Za-z0-9._-]{1,100}$ ]]
           git fetch --no-tags origin "+refs/pull/$NUMBER/head:refs/pr/$NUMBER"
           [[ "$(git rev-parse "refs/pr/$NUMBER")" == "$SHA" ]] || {
             echo "PR head moved since select; not rebuilding it"; exit 1; }
           base="$(git merge-base "$GITHUB_SHA" "$SHA")"
-          # Start from the PR head and merge main in, so the commit's first
-          # parent is the head (the push is a fast-forward of the branch).
           git checkout -q --detach "$SHA"
           git -c user.name=automerge-gate -c user.email=automerge-gate@invalid \
             merge --no-ff --no-commit "$GITHUB_SHA" || true
-          # The guard refused any PR touching the pipeline, so the merge takes
-          # main's scripts and config; they now render the merged data.
+          # The guard refused any PR touching the pipeline, so the merge took
+          # main's scripts and config; they resolve and render the merged data,
+          # stage it, and refuse anything left unmerged or carrying a marker.
           python scripts/rebuild_pr.py --base "$base" --ours "$GITHUB_SHA" --theirs "$SHA"
-          git add -A -- data README.md NEWSLETTER.md TRENDS.md REVIEW.md \
-            ai-security product-security ai-research claims docs
-          [[ -z "$(git ls-files -u)" ]] || { echo "unresolved paths remain"; git ls-files -u | cut -f2 | sort -u; exit 1; }
-          ! git grep -n -I -E '^(<<<<<<<|>>>>>>>) ' -- data README.md NEWSLETTER.md TRENDS.md REVIEW.md ai-security product-security ai-research claims docs
-          git -c user.name=automerge-gate -c user.email=automerge-gate@invalid \
-            commit -q -m "chore: merge main into $REF (rebuilt by code)" \
-            -m "Data merged three ways by scripts/rebuild_pr.py; site re-rendered by main's renderers."
-          [[ "$(git rev-parse HEAD^1)" == "$SHA" && "$(git rev-parse HEAD^2)" == "$GITHUB_SHA" ]]
+          tree="$(git write-tree)"
+          commit="$(git -c user.name=automerge-gate -c user.email=automerge-gate@invalid \
+            commit-tree "$tree" -p "$GITHUB_SHA" \
+            -m "chore: daily scan rebuilt on main (from #$NUMBER)" \
+            -m "Data merged three ways by scripts/rebuild_pr.py; site re-rendered by main's renderers.")"
+          python scripts/automerge.py check-tree --main-sha "$GITHUB_SHA" --commit "$commit"
+          git update-ref refs/rebuilt "$commit"
+          git bundle create "$RUNNER_TEMP/rebuilt.bundle" refs/rebuilt "^$GITHUB_SHA"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
 
-      - name: Push the rebuilt head (fast-forward only)
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: rebuilt
+          path: ${{ runner.temp }}/rebuilt.bundle
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    needs: [select, rebuild]
+    if: github.ref == 'refs/heads/main' && needs.rebuild.result == 'success'
+    runs-on: ubuntu-latest
+    # Deployment branch policy: only main may run in this Environment.
+    environment: automerge
+    permissions:
+      contents: write # push the rebuilt commit to a new claude/scan-* branch
+      pull-requests: write # open the replacement PR, comment on and close the old one
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Install main's dependencies
+        run: pip install -r requirements.txt
+
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: rebuilt
+          path: ${{ runner.temp }}/rebuilt
+
+      - name: Re-check the rebuilt commit, push it, open the replacement PR
         env:
+          GH_TOKEN: ${{ github.token }}
           TOKEN: ${{ github.token }}
-          REF: ${{ needs.select.outputs.rebuild_ref }}
+          COMMIT: ${{ needs.rebuild.outputs.commit }}
+          NUMBER: ${{ needs.select.outputs.rebuild_number }}
+          SHA: ${{ needs.select.outputs.rebuild_sha }}
+          NEW_REF: ${{ needs.select.outputs.rebuild_ref }}
         run: |
           set -euo pipefail
+          [[ "$COMMIT" =~ ^[0-9a-f]{40}$ && "$NUMBER" =~ ^[0-9]+$ && "$SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$NEW_REF" =~ ^claude/scan-[A-Za-z0-9._-]{1,100}-rebuilt-[0-9a-f]{8}$ ]]
+          bundle="$RUNNER_TEMP/rebuilt/rebuilt.bundle"
+          git -c core.hooksPath=/dev/null bundle verify -q "$bundle"
+          git -c core.hooksPath=/dev/null fetch -q "$bundle" "refs/rebuilt:refs/rebuilt"
+          [[ "$(git rev-parse refs/rebuilt)" == "$COMMIT" ]]
+          python scripts/automerge.py check-tree --main-sha "$GITHUB_SHA" --commit "$COMMIT"
           auth="$(printf 'x-access-token:%s' "$TOKEN" | base64 | tr -d '\n')"
-          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
-            push "https://github.com/$GITHUB_REPOSITORY" "HEAD:refs/heads/$REF"
+          echo "::add-mask::$auth"
+          # A new branch: a name that already exists is a non-fast-forward and fails.
+          git -c core.hooksPath=/dev/null \
+            -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            push "https://github.com/$GITHUB_REPOSITORY" "$COMMIT:refs/heads/$NEW_REF"
+          python scripts/automerge.py replace --repo "$GITHUB_REPOSITORY" \
+            --main-sha "$GITHUB_SHA" --number "$NUMBER" --sha "$SHA" --new-ref "$NEW_REF"
+
+  # A rebuild that failed is recorded on the PR, so select stops retrying that
+  # (head, main) pair and rebuilds the next conflicting PR instead of jamming.
+  rebuild-failed:
+    needs: [select, rebuild, publish]
+    if: >-
+      always() && github.ref == 'refs/heads/main' && needs.select.outputs.rebuild_number != ''
+      && (needs.rebuild.result == 'failure' || needs.publish.result == 'failure')
+    runs-on: ubuntu-latest
+    environment: automerge
+    permissions:
+      pull-requests: write # the failure comment
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Install main's dependencies
+        run: pip install -r requirements.txt
+
+      - name: Record the failed rebuild on the PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ needs.select.outputs.rebuild_number }}
+          SHA: ${{ needs.select.outputs.rebuild_sha }}
+        run: >-
+          python scripts/automerge.py rebuild-failed --repo "$GITHUB_REPOSITORY"
+          --main-sha "$GITHUB_SHA" --number "$NUMBER" --sha "$SHA"
 
   decide:
     needs: [select, test]

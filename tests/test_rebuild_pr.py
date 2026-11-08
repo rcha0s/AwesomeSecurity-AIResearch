@@ -48,9 +48,31 @@ def test_a_record_the_pr_deleted_goes_and_mains_change_stays():
     assert rb.merge3(b, o, t) == [{"id": "b", "v": 2}]
 
 
-def test_deletion_against_a_change_is_dropped():
-    assert rb.merge3({"k": 1}, M, {"k": 2}) is M
-    assert rb.merge3({"k": 1}, {"k": 2}, M) is M
+def test_a_change_beats_a_deletion_on_either_side():
+    """Opus on #169: the PR archiving an entry main promoted must not drop main's
+    promoted copy, or the gate reads it as an editorial demotion."""
+    assert rb.merge3({"k": 1}, M, {"k": 2}) == {"k": 2}
+    assert rb.merge3({"k": 1}, {"k": 2, "promoted": True}, M) == {"k": 2, "promoted": True}
+
+
+def test_a_repeated_url_is_not_a_key():
+    """7 real claims cite one URL several times with different notes; keying by url
+    collapsed them and destroyed an item."""
+    a1 = {"url": "https://u", "note": "one"}
+    a2 = {"url": "https://u", "note": "two"}
+    x, y = {"url": "https://x"}, {"url": "https://y"}
+    assert rb.merge3([a1, a2], [a1, a2, x], [a1, a2, y]) == [a1, a2, x, y]
+
+
+def test_a_pr_entry_for_a_story_main_already_added_is_dropped():
+    base = {"entries": [{"id": "old", "source_url": "https://s"}]}
+    ours = {"entries": base["entries"] + [{"id": "m1", "source_url": "https://n"}]}
+    pool = {"entries": ours["entries"] + [{"id": "p1", "source_url": "https://n"},
+                                          {"id": "p2", "source_url": "https://s"},
+                                          {"id": "p3", "source_url": "https://z"}]}  # fmt: skip
+    rb.dedupe_new_urls(pool, base, ours)
+    # p2 shares a URL only with an old entry (two findings from one page are allowed).
+    assert [e["id"] for e in pool["entries"]] == ["old", "m1", "p2", "p3"]
 
 
 def test_history_rows_keep_mains_prefix_then_the_prs_row():
@@ -119,6 +141,43 @@ def test_rebuild_resolves_a_real_conflict(tmp_path, monkeypatch):
     assert [e["id"] for e in out["entries"]] == ["m", "p", "a"]  # re-sorted by composite
     _git(tmp_path, "add", "-A")
     assert _git(tmp_path, "ls-files", "-u") == ""
+
+
+def test_rebuild_refuses_a_conflict_it_cannot_resolve(tmp_path, monkeypatch):
+    """Opus on #169: the workflow's `! git grep` marker check never failed under
+    set -e. A conflicted non-JSON data file must refuse the rebuild."""
+    _git(tmp_path, "init", "-q", "-b", "main")
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data/backlog.md").write_text("base\n")
+    base = _commit(tmp_path, {"data/x.json": {"v": 0}}, "base")
+    (tmp_path / "data/backlog.md").write_text("main\n")
+    ours = _commit(tmp_path, {"data/x.json": {"v": 1}}, "main")
+    _git(tmp_path, "checkout", "-q", "-b", "pr", base)
+    (tmp_path / "data/backlog.md").write_text("pr\n")
+    theirs = _commit(tmp_path, {"data/x.json": {"v": 2}}, "pr")
+    merge = ["-c", "user.name=t", "-c", "user.email=t@i", "merge", "--no-ff", "--no-commit", ours]
+    subprocess.run(["git", *merge], cwd=tmp_path, capture_output=True)
+    monkeypatch.setattr(rb, "ROOT", tmp_path)
+    try:
+        rb.rebuild(base, ours, theirs, "python", do_render=False)
+    except rb.RebuildError as e:
+        assert "data/backlog.md" in str(e)
+    else:
+        raise AssertionError("an unresolved conflict must refuse the rebuild")
+
+
+def test_check_clean_finds_a_marker_in_a_staged_file(tmp_path, monkeypatch):
+    _git(tmp_path, "init", "-q", "-b", "main")
+    _commit(tmp_path, {"data/x.json": {}}, "base")
+    (tmp_path / "README.md").write_text("ok\n<<<<<<< HEAD\nours\n>>>>>>> pr\n")
+    _git(tmp_path, "add", "README.md")
+    monkeypatch.setattr(rb, "ROOT", tmp_path)
+    try:
+        rb.check_clean()
+    except rb.RebuildError as e:
+        assert "README.md" in str(e)
+    else:
+        raise AssertionError("a conflict marker must refuse the rebuild")
 
 
 def test_rebuild_refuses_an_invalid_claim_ledger(tmp_path, monkeypatch):
