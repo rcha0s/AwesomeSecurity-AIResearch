@@ -14,13 +14,14 @@ source "$(dirname "$0")/lib.sh"
 
 runner="$1"
 phase="$2"
-[[ "$runner" =~ ^(cloud|local)$ ]] || runner="unknown"
+[[ "$runner" =~ ^(cloud|local|watchdog)$ ]] || runner="unknown"
 [[ "$phase" =~ ^[A-Za-z0-9_-]{1,40}$ ]] || phase="unknown"
 repo="$(repo_slug)"
 label="scan-failure"
 when="$(date -u +%Y-%m-%dT%H:%MZ)"
 where="the session transcript of the cloud run"
 [[ "$runner" == local ]] && where="data/_scan.log in the Mac checkout"
+[[ "$runner" == watchdog ]] && where="the Scan watchdog run's summary in Actions (no-finished-scan: no daily scan finished today; stuck-pr-N: that scan PR has been open too long)"
 body="Scan failed: runner \`$runner\`, phase \`$phase\`, at $when. Details: $where."
 
 # Only "already exists" is expected here; any other failure is real.

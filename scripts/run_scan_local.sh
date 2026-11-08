@@ -73,6 +73,19 @@ export SCAN_LOG="$REPO/data/_scan.log"
 export CROSS_REVIEW_LOG="$REPO/data/_cross_review.jsonl"
 LOG="$SCAN_LOG"
 trap 'rm -f "$OUT" "$OUT.result"' EXIT
+# launchd ticks hourly (install_launchd.sh) so a missed or killed scan catches up
+# on the next wake. Before the scheduled time a tick does nothing; after it, the
+# budget guard decides (one catch-up a day, inside budget.catchup_monthly_usd).
+# The budget day is the UTC date, so a tick also waits while the local date is
+# behind it: after 16:00 Pacific the UTC day is already tomorrow, and a tick there
+# would start tomorrow's first run hours early.
+NOT_BEFORE="${SCAN_NOT_BEFORE:-}"
+if [[ -z "$BACKFILL" && -n "$NOT_BEFORE" ]]; then
+  [[ "$NOT_BEFORE" =~ ^([01][0-9]|2[0-3]):[0-5][0-9]$ ]] || exit 0
+  [[ "$(date +%H%M)" < "${NOT_BEFORE/:/}" ]] && exit 0
+  [[ "$(date +%F)" == "$(date -u +%F)" ]] || exit 0
+fi
+RUN_STARTED="" # set once the guard says go: only then is a kill worth an alert
 
 # TOOLS, ALLOWED_TOOLS, SETTINGS and contained_claude: one lockdown, shared
 # with the weekly golden-set run (run_golden_local.sh).
@@ -83,6 +96,19 @@ fail() {
   "$SCAN_DIR/scripts/run_scan.sh" fail "$1"
   exit 1
 }
+
+# A scan killed mid-run (a launchd reload, a logout) raises the alert too: the
+# 11-06 scan died in aggregate with no alert and nobody knew for a day.
+on_signal() {
+  trap - TERM INT HUP
+  [[ -n "$RUN_STARTED" ]] || exit 1 # a no-op tick, not a scan
+  echo "[local] killed by SIG$1 mid-run" | tee -a "$LOG"
+  "$SCAN_DIR/scripts/run_scan.sh" fail "local-killed" || true
+  exit 1
+}
+trap 'on_signal TERM' TERM
+trap 'on_signal INT' INT
+trap 'on_signal HUP' HUP
 
 # The session's final message (`result` in claude's JSON) goes to the scan
 # log, scrubbed of secret-shaped text, so the next diagnosis is one grep for
@@ -196,6 +222,7 @@ attempt() {
     return 3
   fi
   [[ "$rc" == 0 ]] || fail "local-budget-check"
+  RUN_STARTED=1
   limits="$(scripts/run_scan.sh session-limits)" || fail "local-session-limits"
   cap_usd="${limits% *}"
   max_turns="${limits#* }"
@@ -271,6 +298,18 @@ attempt() {
 }
 
 mkdir -p "$REPO/data"
+# An hourly tick asks the guard first, from the clone and without logging, so a
+# finished day costs no worktree reset and no scan-log line, and a network blip
+# on wake raises no alert (the GitHub watchdog still reports a day with no scan).
+if [[ -z "$BACKFILL" && -n "$NOT_BEFORE" ]]; then
+  tick_rc=0
+  SCAN_LOG=/dev/null scripts/run_scan.sh check >/dev/null 2>&1 || tick_rc=$?
+  if [[ "$tick_rc" != 0 && "$tick_rc" != 3 ]]; then
+    # No alert (a wake-time network blip is common), but the Mac keeps the why.
+    echo "[$(date -u +%H:%M:%S)] tick: guard check failed (rc $tick_rc); no alert, the watchdog covers the day" >>"$LOG"
+  fi
+  [[ "$tick_rc" == 0 ]] || exit 0
+fi
 enter_worktree
 rc=0
 attempt || rc=$?

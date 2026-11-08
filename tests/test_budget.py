@@ -340,3 +340,91 @@ def test_actual_rows_carry_only_known_outcomes():
     budget.validate_row(failed_empty()[1])
     with pytest.raises(budget.LedgerError):
         budget.validate_row({**failed_empty()[1], "outcome": "whatever"})
+
+
+# ---------------------------------------------------------------- catch-up (2026-11-07)
+
+CATCHUP = {
+    **settings(cap=600.0, per_story=4.0),
+    "catchup_monthly_usd": 50.0,
+    "retry_max_usd": 1.0,
+    "session_cap_fraction": 0.8,
+}
+
+
+def killed(run_id="K1", date=TODAY, cost=32.0) -> dict:
+    """A run that reserved and never finished: killed mid-ingest (11-06) or crashed."""
+    return row(run_id, date=date, kind="reserve", cost=cost, stories=0)
+
+
+def spent_catchup(cost: float, date="2026-07-03") -> list[dict]:
+    """An earlier day this month: the first run was killed, its catch-up cost `cost`."""
+    return [
+        killed("A1", date),
+        row("A2", date=date, kind="reserve", cost=32.0, stories=0),
+        row("A2", date=date, kind="actual", cost=cost, stories=8),
+    ]
+
+
+def test_a_killed_run_gets_one_catch_up_inside_the_pool():
+    runs = [killed()]
+    ok, reason = budget.check(runs, CATCHUP, "local", TODAY)
+    assert ok and "catch-up" in reason, reason
+    assert budget.clip_to_catchup(32.0, runs, CATCHUP, "local", TODAY) == 32.0
+    # the session keeps the usual margin: 32 x 0.8
+    assert budget.session_budget(runs, CATCHUP, "local", TODAY)[0] == 25.6
+
+
+def test_the_pool_clips_the_reservation_and_the_session_keeps_a_margin():
+    runs = spent_catchup(40.0) + [killed()]  # $10 left
+    assert budget.catchup_left(runs, CATCHUP, TODAY) == 10.0
+    assert budget.clip_to_catchup(32.0, runs, CATCHUP, "local", TODAY) == 10.0
+    assert budget.session_budget(runs, CATCHUP, "local", TODAY)[0] == 8.0  # 10 x 0.8
+
+
+def test_one_catch_up_a_day():
+    runs = [killed(), row("K2", date=TODAY, kind="reserve", cost=10.0, stories=0)]
+    ok, reason = budget.check(runs, CATCHUP, "local", TODAY)
+    assert not ok and "already caught up" in reason
+
+
+def test_a_spent_pool_starts_no_catch_up():
+    ok, reason = budget.check(spent_catchup(49.5) + [killed()], CATCHUP, "local", TODAY)
+    assert not ok and "pool spent" in reason
+
+
+def test_catch_ups_off_by_default():
+    off = {k: v for k, v in CATCHUP.items() if k != "catchup_monthly_usd"}
+    ok, reason = budget.check([killed()], off, "local", TODAY)
+    assert not ok and "catch-up runs are off" in reason
+
+
+def test_a_finished_day_and_the_cloud_never_catch_up():
+    ok, reason = budget.check([killed(), {**killed(), "kind": "done"}], CATCHUP, "local", TODAY)
+    assert not ok and "already finished" in reason
+    cloud = {**killed(), "runner": "cloud"}
+    ok, reason = budget.check([cloud], CATCHUP, "cloud", TODAY)
+    assert not ok and "catch-up" not in reason
+
+
+def test_the_analysis_empty_retry_is_not_a_catch_up():
+    """Opus on #168: the retry was clipped by, and charged to, the catch-up pool."""
+    reserve = row("E1", date=TODAY, kind="reserve", cost=32.0, stories=0)
+    empty = {**reserve, "kind": "actual", "cost_usd": 0.4, "outcome": "analysis-empty"}
+    runs = spent_catchup(45.0) + [reserve, empty]  # pool has $5 left
+    assert not budget.is_catchup(runs, CATCHUP, "local", TODAY)
+    assert budget.clip_to_catchup(32.0, runs, CATCHUP, "local", TODAY) == 32.0
+    assert budget.session_budget(runs, CATCHUP, "local", TODAY)[0] == 25.6
+    retry = row("E1-retry", date=TODAY, kind="reserve", cost=32.0, stories=0)
+    assert budget.catchup_left(runs + [retry], CATCHUP, TODAY) == 5.0  # not charged
+
+
+def test_a_backfill_session_is_never_capped_by_the_pool():
+    runs = spent_catchup(45.0) + [killed()]
+    assert budget.session_budget(runs, CATCHUP, "local", TODAY, backfill=True)[0] == 25.6
+
+
+def test_a_first_run_is_never_clipped_by_the_pool():
+    tiny = {**CATCHUP, "catchup_monthly_usd": 1.0}
+    assert not budget.is_catchup([], tiny, "local", TODAY)
+    assert budget.clip_to_catchup(32.0, [], tiny, "local", TODAY) == 32.0

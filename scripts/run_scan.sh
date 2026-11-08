@@ -406,7 +406,7 @@ main() {
     session-limits)
       main_config
       ledger_fetch
-      budget session-limits --runner "$RUNNER"
+      budget session-limits --runner "$RUNNER" ${BACKFILL_ARGS[@]+"${BACKFILL_ARGS[@]}"}
       ;;
     pre | post)
       trap "on_error $phase \$LINENO" ERR

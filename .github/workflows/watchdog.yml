@@ -1,0 +1,64 @@
+name: Scan watchdog
+
+# Reports what the daily scan should have done and didn't: no finished scan today,
+# or a scan PR stuck open. It runs here, not on the Mac, so it still reports when
+# the Mac is asleep or a scan was killed before it could alert (11-06, 11-07).
+# It reads and alerts only: it never runs a scan, edits a PR or merges anything.
+# Alerts go to the one open `scan-failure` issue (scripts/scan_alert.sh).
+
+on:
+  schedule:
+    # 00:30 UTC = 16:30 PST / 17:30 PDT: after the Mac's catch-up window closes
+    # (it ends when the UTC date rolls over). watchdog.py checks the UTC day of
+    # three hours earlier, which is the scan day just ended.
+    - cron: "30 0 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      # watchdog.py is stdlib-only; PyYAML reads config.yaml. Nothing else is
+      # installed into a job that can write issues.
+      - name: Install PyYAML
+        run: pip install "$(grep -i '^pyyaml' requirements.txt)"
+
+      - name: Check today's scan and open scan PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git fetch -q --depth=1 "https://github.com/$REPO" budget-ledger
+          git show FETCH_HEAD:budget.json > "$RUNNER_TEMP/ledger.json"
+          gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" > "$RUNNER_TEMP/prs.json"
+          cap="$(python -c 'import yaml;b=(yaml.safe_load(open("config.yaml")) or {}).get("budget") or {};print("no" if b.get("monthly_cap_usd") is None else "yes")')"
+          python scripts/watchdog.py --ledger "$RUNNER_TEMP/ledger.json" \
+            --prs "$RUNNER_TEMP/prs.json" --cap-set "$cap" --repo "$REPO" > "$RUNNER_TEMP/problems"
+          if [[ ! -s "$RUNNER_TEMP/problems" ]]; then
+            echo "Watchdog: today's scan finished and no scan PR is stuck." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          while read -r phase; do
+            echo "- $phase" >> "$GITHUB_STEP_SUMMARY"
+            scripts/scan_alert.sh watchdog "$phase" || { echo "- alert FAILED: $phase" >> "$GITHUB_STEP_SUMMARY"; failed=1; }
+          done < "$RUNNER_TEMP/problems"
+          exit "${failed:-0}"

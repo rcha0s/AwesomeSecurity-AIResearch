@@ -480,6 +480,22 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   itself in its own worktree (`~/.local/share/awesomesec-worktree`, reset each run), and
   the model session only analyzes. It is idle on days a scan already finished;
   `--uninstall` removes it. The Mac must be awake at the scheduled time.
+- **Self-healing (2026-11-07):** every failure is reported the day it happens, and the
+  ones code can fix are fixed without an agent. The launchd job also ticks hourly; a
+  tick acts only after the scheduled time and while the local date equals the UTC
+  budget date (09:30 to 16:00 Pacific), and asks the guard silently before touching
+  the worktree.
+  A day whose local run never finished (killed, crashed, failed in post) gets **one
+  catch-up run**, which reserves at most what `budget.catchup_monthly_usd` ($50 a
+  month) has left, with its session capped at `session_cap_fraction` of that. The
+  analysis-empty retry and backfill runs keep their own rules and stay out of the pool. A scan killed mid-run (SIGTERM,
+  SIGINT, SIGHUP) raises the `scan-failure` alert (`local-killed`), and
+  `install_launchd.sh` refuses to reload the job while a scan runs (`FORCE=1` kills it).
+  `.github/workflows/watchdog.yml` runs at 00:30 UTC on GitHub, so it reports even when
+  the Mac is asleep: no daily `done` row for today (`no-finished-scan`) or a scan PR open
+  past 8 hours (`stuck-pr-<n>`), each as a comment on the open `scan-failure` issue. It
+  reads and alerts only. Auto-merge skips a PR that conflicts with main (#167). Fixes are
+  deterministic code; anything code can't fix comes to Rohan as that issue.
 - Run location: scans run locally on the always-on Mac. The cloud routine was dropped after setup failed 10-22 through 10-25; don't route scans to it. (Rohan, 2026-10)
 - **Cloud (paused 2026-10-25):** a Claude Code routine with prompt `/daily-scan`
   never got a working setup script (pip failed in the VM), so it is disabled and

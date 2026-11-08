@@ -8,7 +8,11 @@ when the session fails.
 from __future__ import annotations
 
 import json
+import os
+import signal
 import subprocess
+import time
+from datetime import datetime
 from pathlib import Path
 
 import content_checks
@@ -17,6 +21,8 @@ from test_run_scan import SECRET, commit_main, gh_calls, git, ledger_rows, open_
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
+# FAKE_CLAUDE_SLEEP: stay busy, so a test can kill the run mid-session.
+if [ -n "$FAKE_CLAUDE_SLEEP" ]; then touch "$CLAUDE_ARGS.started"; sleep "$FAKE_CLAUDE_SLEEP"; fi
 echo "SCAN_LOCKED=$SCAN_LOCKED" >> "$CLAUDE_ARGS.env"
 echo call >> "$CLAUDE_ARGS.calls"
 # FAKE_ANALYSIS_ON_RETRY: analyze only on the second session of the day.
@@ -317,3 +323,90 @@ def test_a_non_http_url_in_the_env_file_is_ignored(scan_repo, tmp_path):
     assert res.returncode == 0, res.stdout + res.stderr
     assert (tmp_path / "scan-worktree" / "digest_ran").exists()  # the scan ran and built a digest
     assert not (tmp_path / "curl-args").exists()
+
+
+# ---------------------------------------------------------------- self-healing (2026-11-07)
+
+
+def test_an_hourly_tick_before_the_scheduled_time_does_nothing(scan_repo, tmp_path):
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    if datetime.now().hour == 23:
+        pytest.skip("no later minute today to schedule after")
+    res, args = run_local(work, env, tmp_path, SCAN_NOT_BEFORE="23:59")
+    assert res.returncode == 0 and args == []
+    log = work / "data/_scan.log"
+    assert not log.exists() or "ledger:" not in log.read_text()  # nothing reserved
+
+
+def test_a_scan_killed_mid_run_raises_the_alert(scan_repo, tmp_path):
+    """11-06: launchd reloaded the job, the scan died in aggregate, and no alert went out."""
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    fake = tmp_path / "fake-claude"
+    fake.write_text(FAKE_CLAUDE)
+    fake.chmod(0o755)
+    extra = {
+        "CLAUDE_BIN": str(fake),
+        "CLAUDE_ARGS": str(tmp_path / "claude-args"),
+        "FAKE_CLAUDE_SLEEP": "60",
+        "SCAN_WORKTREE": str(tmp_path / "scan-worktree"),
+        "HOME": str(tmp_path / "home"),
+    }
+    proc = subprocess.Popen(
+        ["/bin/bash", "scripts/run_scan_local.sh"],
+        cwd=work,
+        env={**env, **extra},
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        start_new_session=True,  # launchd signals the job's whole process group
+    )
+    started = tmp_path / "claude-args.started"
+    for _ in range(600):
+        if started.exists() or proc.poll() is not None:
+            break
+        time.sleep(0.1)
+    assert started.exists(), proc.communicate()[0]
+    os.killpg(proc.pid, signal.SIGTERM)
+    out = proc.communicate(timeout=60)[0].decode()
+    assert proc.returncode != 0
+    assert "killed by SIGTERM" in (work / "data/_scan.log").read_text(), out
+    assert "Daily scan failing (local, local-killed)" in gh_calls(env)
+
+
+def test_a_tick_waits_while_the_utc_day_is_already_tomorrow(scan_repo, tmp_path):
+    """Opus on #168: after 16:00 Pacific the budget day is tomorrow; a tick there
+    would start tomorrow's first run hours early."""
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    bin_dir = tmp_path / "fake-date-bin"
+    bin_dir.mkdir()
+    fake_date = bin_dir / "date"
+    fake_date.write_text(
+        '#!/bin/sh\nif [ "$1" = "-u" ] && [ "$2" = "+%F" ]; then echo 2099-01-01; '
+        'else exec /bin/date "$@"; fi\n'
+    )
+    fake_date.chmod(0o755)
+    path = {"PATH": f"{bin_dir}:{env['PATH']}"}
+    res, args = run_local(work, {**env, **path}, tmp_path, SCAN_NOT_BEFORE="00:00")
+    assert res.returncode == 0 and args == []
+
+
+def test_a_tick_whose_guard_check_errors_logs_why_without_an_alert(scan_repo, tmp_path):
+    """Opus on #168: the silent pre-check left no trace when the guard itself broke."""
+    work, _, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0")
+    git(work, "remote", "set-url", "origin", f"file://{tmp_path}/gone.git")
+    # Pin `date -u +%F` to the local date, so the test passes after 16:00 Pacific too.
+    bin_dir = tmp_path / "same-day-bin"
+    bin_dir.mkdir()
+    (bin_dir / "date").write_text(
+        '#!/bin/sh\nif [ "$1" = "-u" ] && [ "$2" = "+%F" ]; then exec /bin/date +%F; fi\n'
+        'exec /bin/date "$@"\n'
+    )
+    (bin_dir / "date").chmod(0o755)
+    env = {**env, "PATH": f"{bin_dir}:{env['PATH']}"}
+    res, args = run_local(work, env, tmp_path, SCAN_NOT_BEFORE="00:00")
+    assert res.returncode == 0 and args == []
+    assert "tick: guard check failed" in (work / "data/_scan.log").read_text()
+    assert "scan-failure" not in gh_calls(env)
