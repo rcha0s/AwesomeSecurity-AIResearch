@@ -1,8 +1,8 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-11-05)
+# 📰 Security & AI Research — Daily Snapshot (2026-11-08)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-24 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+20 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -18,12 +18,12 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.
 - **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)** · _github.com_ · composite 59.75
   Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.
-- **[METR: MathJax injection in Inspect let agents rewrite what reviewers see](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/)** · _METR_ · composite 59.48
-  Agent transcripts are attacker-controlled input, so the viewers, log pipelines and monitors that display them are security-critical and need the same output-encoding and tamper-resistance work as any other app that…
 - **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)** · _vulncheck.com_ · composite 55.25
   A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.
 - **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html)** · _docs.nvidia.com_ · composite 54.5
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.
+- **[Paper proves models can hide capabilities that audits cannot find](https://arxiv.org/abs/2610.13928)** · _arxiv.org_ · composite 54.5
+  A clean capability evaluation cannot prove a model lacks a dangerous capability if the model's builder is adversarial.
 
 **📈 Trending & In the News**
 
@@ -31,7 +31,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 - **[Roo Code's command auto-approval can be bypassed in seven ways](https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization)**
   Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.
-  _Why now: Named advisory with a transferable lesson for every coding-agent harness: prefix-allowlist auto-approval breaks whenever the checker and the shell parse a command differently. · newsworthy · high-relevance · timely_
+  _Why now: Named advisory with a transferable lesson for every coding-agent harness: prefix-allowlist auto-approval breaks whenever the checker and the shell parse a command differently. · newsworthy · high-relevance · timely · trending_
 - **[Northflank breach exposed customer secrets, and stolen AI API keys were used](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/)**
   AI API keys stored as platform environment variables are now a primary target, so scope them narrowly, cap their spend and be ready to rotate them in minutes.
   _Why now: Latest of Wiz's nine 'Black October' AI-platform breaches, with stolen AI API keys already abused; teaches scoping, spend-capping and fast rotation of hosted AI keys. · trending · newsworthy · timely · high-relevance_
@@ -48,8 +48,8 @@ _Not new ideas, but what the field is watching right now — held back by the no
 **📈 Emerging trends**
 
 - **prompt-injection** (🔺 rising) — 42 findings from 22 sources since 2026-02.
-- **coding-agents** (🔺 rising) — 14 findings from 9 sources since 2026-08-06.
-- **guardrails** (🔺 rising) — 18 findings from 10 sources since 2026-07-19.
+- **coding-agents** (🔺 rising) — 15 findings from 10 sources since 2026-08-06.
+- **red-teaming** (🔺 rising) — 9 findings from 9 sources since 2026-08-06.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -65,14 +65,14 @@ _Securing products: application security, supply chain, cloud & infra, identity,
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result…
 - **[Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)** · _Anthropic Research_ · composite 62.64
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.
-- **[Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/)** · _watchTowr Labs_ · composite 61.34
-  Patch every Atlassian Data Center product now; if you use Crowd, also rotate the Crowd application passwords and restrict Crowd by IP allowlist.
 - **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)** · _watchTowr Labs_ · composite 58.04
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.
 - **[pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape)** · _source_ · composite 57.5
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.
 - **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](https://www.anthropic.com/research/formal-verification)** · _source_ · composite 56.75
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](https://portswigger.net/research/scalable-vector-grief)** · _PortSwigger Research_ · composite 55.38
+  If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.
 
 **📈 Trending & In the News**
 
@@ -84,20 +84,20 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[OpenSSH ships an emergency workaround for a critical musl-specific vulnerability](https://hachyderm.io/@damienmiller/117563026759098135)**
   Find every musl-based SSH host, especially Alpine containers and appliances, and turn off password authentication now, because maintainers no longer wait out long embargoes.
   _Why now: Critical OpenSSH bug on musl/no-PAM hosts (Alpine) with a fix released a day after discovery and a one-line mitigation (PasswordAuthentication=no) to apply now; the maintainer cites AI rediscovery as the reason for skipping a long embargo. · timely · newsworthy · high-relevance · actionable_
+- **[Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418)**
+  If your ASA or FTD VPN uses secondary authentication on a tunnel group, patch now, because attackers are already using this to knock VPNs offline.
+  _Why now: Actively exploited unauthenticated VPN-edge DoS in CISA KEV with a three-day deadline; exposure is scoped by one config check (secondary authentication on a tunnel group). · cve · active-exploitation · timely_
+- **[Exploited VMware ESX flaw lets attacker with admin rights act unlogged](https://nvd.nist.gov/vuln/detail/CVE-2026-41709)**
+  ESX audit logs may be silent about what a hijacked admin did, so do not treat clean ESX logs as proof of no tampering.
+  _Why now: Exploited ESX logging gap in KEV; the transferable lesson is that clean hypervisor logs are not proof of no tampering, so keep an out-of-band log source. · cve · active-exploitation · high-relevance_
 - **[Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/)**
   Uninstalling the extension does not clean the machine: hunt for the svc-telemetry key and the disguised startup entries on every developer machine that took the update.
   _Why now: The week's most widely covered developer-supply-chain incident (Wired, Ars, BleepingComputer, The Register, DoublePulsar), and Microsoft's write-up gives concrete artifacts to hunt and the fact that uninstalling the extension does not… · widely-reported · newsworthy · timely · high-relevance_
-- **[Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://nvd.nist.gov/vuln/detail/CVE-2026-111357)**
-  Treat any Ivanti Connect Secure appliance on an affected 22.8R2 or 25.1 release as possibly rooted: patch it, then hunt for compromise.
-  _Why now: Exploited-in-the-wild Ivanti Connect Secure root escalation with a three-day CISA deadline; the lesson is to patch and then hunt, since a device rooted before patching stays compromised. · cve · active-exploitation · newsworthy · timely_
-- **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://phorion.io/blog/offical-claude-code-vsx-compromise/)**
-  An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts…
-  _Why now: A trojanized official AI coding-assistant extension, covered by six outlets, with concrete hunting steps (key fingerprint, persistence paths, an EDR rule) and the lesson that uninstalling does not remediate. · widely-reported · newsworthy · timely · high-relevance_
 
 **📈 Emerging trends**
 
-- **exploited-in-the-wild** (🔺 rising) — 17 findings from 4 sources since 2026-09-23.
 - **rce** (🔺 rising) — 19 findings from 15 sources since 2026-06-29.
+- **exploited-in-the-wild** (🔺 rising) — 17 findings from 4 sources since 2026-09-23.
 - **php2shell** (🔺 rising) — 7 findings from 6 sources since 2026-10-22.
 
 [→ Full Product Security database](product-security/README.md)
@@ -133,8 +133,8 @@ _Not new ideas, but what the field is watching right now — held back by the no
 **📈 Emerging trends**
 
 - **evals** (🔺 rising) — 28 findings from 16 sources since 2023-12-07.
-- **benchmarks** (🔺 rising) — 11 findings from 8 sources since 2026-07-09.
-- **opinion** (🔺 rising) — 3 findings from 2 sources since 2026-10-25.
+- **benchmarks** (🔺 rising) — 12 findings from 9 sources since 2026-07-09.
+- **mcp** (🔺 rising) — 6 findings from 4 sources since 2026-08-07.
 
 [→ Full AI Research database](ai-research/README.md)
 
@@ -142,4 +142,4 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 _Every finding links its original source. Curated by the AwesomeSecurity-AIResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-11-05.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-11-08.</sub>

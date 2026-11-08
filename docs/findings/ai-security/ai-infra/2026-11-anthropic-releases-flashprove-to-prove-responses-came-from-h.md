@@ -14,6 +14,11 @@ Anthropic and academic collaborators released FlashProve, an open-source (Apache
 - The threat model includes an internal adversary: a more capable model substituting itself for an authorized weaker one so it is not subject to that model's monitoring. - _"a more advanced model could run in place of the one that was authorized and present itself as the weaker model, so as to avoid the classifiers and monitoring that would apply to it."_
 - Because Claude-written optimizations are hard to review in a large cryptographic system, the authors pinned the security guarantees to machine-checked Lean statements instead of trusting the code. - _"We counter this by providing top-level auditable statements in Lean (a formal verification language) for the claimed security guarantees."_
 - The guarantee is bounded: proofs show the hardware served the claimed model, not that the same hardware is not also doing other work such as training. - _"We note that although this verifies that the hardware is serving inference, it does not establish that the hardware is not, e.g., training on the side."_
+- In batches of 24 requests, proving for a 400B mixture-of-experts model runs at about 110 tokens per second on one H100. - _"a single H100 GPU generates proofs at around 110 tokens/second, with a proof size of ~19 MB per 1,024-token request"_
+- The cost is still large: proving takes tens of times the GPU time of serving the model. - _"This is ~70-95x the GPU time of running the model itself on vLLM, a common open-source library."_
+- Verification is cheap enough for a client: seconds on a CPU, no GPU and no weights. - _"Checking a proof takes 17 seconds on 24 threads (and 21 seconds on a single thread), including the offline phase's checks."_
+- A proof shows the committed weights served the request; it hides the weights but not the architecture, and it cannot show the hardware is not also training on the side. - _"We note that although this verifies that the hardware is serving inference, it does not establish that the hardware is not, e.g., training on the side."_
+- Because Claude-built optimizations are hard to review, the team wrote the security guarantees as auditable Lean statements. - _"We counter this by providing top-level auditable statements in Lean (a formal verification language) for the claimed security guarantees."_
 
 ## Threat · Conditions · Mitigations
 
@@ -26,7 +31,7 @@ Anthropic and academic collaborators released FlashProve, an open-source (Apache
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [Anthropic Research](https://www.anthropic.com/research/provable-inference)  ·  **Retrieved:** 2026-11-03  
 **Scores:** Newness 77 · Novelty 72 · Relevance 68 · Credibility 70 · **Composite 72** _(each 0-100)_  
-**Tags:** `provable-inference`, `zksnark`, `model-integrity`, `inference-server-compromise`, `model-substitution`, `formal-verification`, `lean`  
+**Tags:** `provable-inference`, `zksnark`, `model-integrity`, `inference-server-compromise`, `model-substitution`, `formal-verification`, `lean`, `tamper-detection`, `inference-servers`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No existing entry covers provable or verifiable inference. Prior art outside the dataset includes zkML systems (e.g., zkLLM and other open-source zk inference provers, which the post says are orders of magnitude slower) and TEE-based attestation of inference. Anthropic's own RSP prototype signed inference traffic with recomputation on a trusted server. The delta is a practical zkSNARK at 400B-parameter MoE scale with Lean-checked guarantees.
 
 _Source: [https://www.anthropic.com/research/provable-inference](https://www.anthropic.com/research/provable-inference)_  ·  [← back to index](../README.md)

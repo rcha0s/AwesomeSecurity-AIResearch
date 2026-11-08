@@ -2,9 +2,9 @@
 
 > Everything held back from the site, with the reason. Findings that are **not yet vetted** (low confidence/novelty/relevance, or below the composite floor (20)), and news stories whose excerpt is not grounded in its source. Nothing here is deleted; promote a finding by raising its scores or clearing `needs_review`, or fix a news story's excerpt, then regenerate.
 
-_Updated 2026-11-05._
+_Updated 2026-11-08._
 
-## AI Security (45)
+## AI Security (48)
 
 - **[Researchers find no agent framework defends against MCP tool poisoning](http://arxiv.org/abs/2611.03555v1)** · composite 76.85 · _failed independent verification — Lessons hold, but the verifier put novelty at 42 vs 70: MCP tool poisoning is well covered; the delta is the cross-framework measurement. It also flagged the takeaway's 'only defenses measured to matter' as overstating the abstract._
   Do not expect your agent framework to stop poisoned MCP tool metadata; model choice and your own controls are the only defenses measured to matter.
@@ -14,8 +14,12 @@ _Updated 2026-11-05._
   A deterministic, history-aware policy check in front of tool execution stops forbidden actions regardless of what the model was tricked into proposing, at little cost to task…
 - **[Prompt injection isn't the bug, AI agent frameworks are](https://www.theregister.com/security/2026/08/05/prompt-injection-isnt-the-bug-ai-agent-frameworks-are/5283585)** · composite 59.1 · _news story: excerpt not grounded in source_
   The critical attack surface for agent apps is the framework layer around the model, where old bug classes get re-exposed as prompt-injected code paths — not the model's ability to…
+- **[Agent Name Service spec anchors AI agent identity to verified domain names](https://github.com/agentnameservice/ans-spec)** · composite 58.76 · _flagged needs_review (low confidence / novelty / relevance)_
+  Agent-to-agent trust needs identity tied to a verified domain and to the running code version, not just a name.
 - **[Brazilian labor court fines lawyers for hidden prompt injection in a filing](https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/)** · composite 56.0 · _flagged needs_review (low confidence / novelty / relevance)_
   Hidden-text injection in documents from outside parties is now a sanctionable act in at least one court, and any pipeline that has AI read outside documents should check for…
+- **[Red-Team AI reads an agent app's source code to tailor attacks](https://github.com/votal-ai-hq/ai-red-teaming)** · composite 53.77 · _flagged needs_review (low confidence / novelty / relevance)_
+  Feeding a red-team tool your agent's source finds tool-chain paths that black-box prompt lists miss.
 - **["Black October" is an X label for a week of disclosures](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)** · composite 53.75 · _flagged needs_review (low confidence / novelty / relevance)_
   Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.
 - **[Human reviewers miss a third of dangerous AI coding agent requests](https://www.theregister.com/ai-and-ml/2026/08/06/humans-in-the-loop-miss-a-third-of-dangerous-ai-coding-agent-requests/5284236)** · composite 53.7 · _news story: excerpt not grounded in source_
@@ -28,6 +32,8 @@ _Updated 2026-11-05._
   In a microVM sandbox, the weak points are the shared host kernel and any control-plane input that comes from inside the guest, not the hypervisor itself.
 - **[Datadog: harvesters validate stolen AWS keys for Bedrock with tiny Converse calls](https://securitylabs.datadoghq.com/articles/beyond-valid-credentials-how-exposed-aws-keys-are-tested-for-amazon-bedrock-access/)** · composite 51.88 · _flagged needs_review (low confidence / novelty / relevance)_
   Bedrock enumeration from a long-term key (multi-region ListFoundationModels, tiny Converse calls) is an early LLMjacking signal; alert on it and rotate the key before larger abuse.
+- **[Caper approves coding-agent commands after running them in a snapshot sandbox](https://arxiv.org/abs/2610.40753)** · composite 51.56 · _flagged needs_review (low confidence / novelty / relevance)_
+  Judge an agent's command by what it actually does in a sandbox, not by how the command reads.
 - **[OpenAI's Hugging Face incident came down to skipped security basics](https://www.wired.com/story/openais-hacking-debacle-was-a-human-mistake/)** · composite 51.0 · _news story: excerpt not grounded in source_
   Rogue-agent incidents are foundational-security failures with known fixes: zero-trust boundaries, isolated eval hosts, egress control and active monitoring.
 - **[Adan Alvarez tested which AWS attacks 14 LLMs propose with stolen keys](https://medium.com/@adan.alvarez/i-gave-14-llms-aws-keys-heres-what-they-wanted-to-do-next-48585761a11b)** · composite 50.0 · _failed independent verification — Medium returned HTTP 403 to fetch_raw twice; only the tl;dr sec blurb was read, so no lesson could be checked against the article._
@@ -99,6 +105,8 @@ _Updated 2026-11-05._
 
 ## Product Security (55)
 
+- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](http://arxiv.org/abs/2611.04291v1)** · composite 69.15 · _flagged needs_review (low confidence / novelty / relevance)_
+  If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.
 - **[PortSwigger turns its CRLF desync research into an automated Burp AT skill](https://portswigger.net/research/making-http-header-injection-critical-with-one-prompt)** · composite 59.69 · _flagged needs_review (low confidence / novelty / relevance)_
   Header injection findings used to be triaged as low severity, but tools can now escalate them to critical desyncs automatically, so they deserve full follow-up.
 - **[Microsoft finds 78% of exploited CVEs are takeover-class bugs](https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/)** · composite 56.27 · _failed independent verification — Lesson 3 attributes faster KEV listing partly to AI-assisted exploit development as Microsoft's finding; the post only says 'industry research suggests' it, and the timing figures come from CISA data._
@@ -133,6 +141,8 @@ _Updated 2026-11-05._
   An in-disassembler agent with parallel subagents and per-profile data and tool limits is a ready-made base for AI-assisted reverse engineering, but plan for hostile binaries…
 - **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.22 · _news story: excerpt not grounded in source_
   Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
+- **[macOS 27 breaks normal access to encrypted HFS+ volumes on CoreStorage](https://wadetregaskis.com/macos-27-golden-gate-does-not-actually-support-corestorage-or-hfs-volumes/)** · composite 41.1 · _flagged needs_review (low confidence / novelty / relevance)_
+  Migrate CoreStorage and encrypted HFS+ volumes to APFS before upgrading to macOS 27, and have backups ready.
 - **[A probability-scoring model matches employee accounts to one person at 0.95 F1](https://vincenzoiozzo.com/blog/jev-identity-resolution)** · composite 41.0 · _flagged needs_review (low confidence / novelty / relevance)_
   In identity governance (IGA) and identity-security products, a cheap probability model with a tuned cut-off, plus a frontier-model check only on the 'maybe' band, beats rules and…
 - **[VibeRaven statically checks AI-built Supabase apps for row-level security gaps](https://github.com/ohad6k/VibeRaven)** · composite 40.76 · _failed independent verification — Verifier rated novelty 12 vs 45: the RLS, service_role and dashboard-blind-spot points are standard Supabase docs and Security Advisor lints; only the vendor's 512-repo statistic is new, and the push-to-main point is an unsupported README assertion._
@@ -155,10 +165,6 @@ _Updated 2026-11-05._
   MSSPs without a Defender MTO can hunt across customer Sentinel workspaces from one query with delegated access only.
 - **[Plex CVE-2026-96652 SSRF lets the /player/timeline protocol parameter force server POSTs](https://nvd.nist.gov/vuln/detail/CVE-2026-96652)** · composite 36.44 · _flagged needs_review (low confidence / novelty / relevance)_
   Upgrade Plex to 1.43.3.10861 or later: this endpoint turns the server into a POST relay with almost no authentication, and it is exploited in the wild as part of the plex2shell…
-- **[Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418)** · composite 36.35 · _flagged needs_review (low confidence / novelty / relevance)_
-  If your ASA or FTD VPN uses secondary authentication on a tunnel group, patch now, because attackers are already using this to knock VPNs offline.
-- **[Exploited VMware ESX flaw lets attacker with admin rights act unlogged](https://nvd.nist.gov/vuln/detail/CVE-2026-41709)** · composite 36.35 · _flagged needs_review (low confidence / novelty / relevance)_
-  ESX audit logs may be silent about what a hijacked admin did, so do not treat clean ESX logs as proof of no tampering.
 - **[Citizen Lab and Princeton researchers win IRTF prize for Android network security](https://citizenlab.ca/citizen-lab-researchers-win-irtf-applied-networking-research-prize/)** · composite 35.87 · _flagged needs_review (low confidence / novelty / relevance)_
   An award announcement with no new findings; read the underlying paper on proprietary encryption in Android apps instead.
 - **[Northstar Security leaves stealth with $7M to find risky issue combinations](https://www.securityweek.com/northstar-security-exits-stealth-with-7m-to-expose-toxic-risk-combinations/)** · composite 35.57 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -210,16 +216,24 @@ _Updated 2026-11-05._
 - **[CISA KEV: Siemens Software Center DLL search-path flaw exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-110936)** · composite 10.44 · _ungrounded excerpt — only 0% of quotes verified against the source_
   A local attacker who can drop a DLL where Siemens Software Center looks for one gets code execution; CISA says this is being exploited.
 
-## AI Research (62)
+## AI Research (67)
 
 - **[How we use /goal to find bugs in Patch the Planet](https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/)** · composite 59.62 · _news story: excerpt not grounded in source (only 0% of quotes verified)_
   In AI bug hunting, outcome definition and per-agent scoping drive output quality most, with a threat-model file as the highest-leverage input.
 - **[Legora evaluates legal agent on simulated work because it cannot read traces](https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/)** · composite 56.69 · _flagged needs_review (low confidence / novelty / relevance)_
   When you cannot read customer traces, build simulated task worlds with domain experts and track results per task type, because a new model can regress on some tasks while…
+- **[Token-Goat hooks coding agents to cut repeat reads and bulky tool output](https://github.com/DFKHelper/token-goat)** · composite 55.83 · _flagged needs_review (low confidence / novelty / relevance)_
+  Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.
+- **[Cisco's MAS Lab builds and traces multi-agent systems from YAML specs](https://github.com/ioc-project/mas-lab)** · composite 55.76 · _flagged needs_review (low confidence / novelty / relevance)_
+  Keeping MCP and A2A in an adapter layer lets you test agent logic locally and review protocol security in one place.
 - **[Apple researchers train small networks that speed up vector retrieval for RAG](https://machinelearning.apple.com/research/faster-retrieval)** · composite 55.37 · _flagged needs_review (low confidence / novelty / relevance)_
   If your RAG system serves a stable query distribution, a small learned query mapper can cut retrieval latency without replacing your vector index.
+- **[Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in](https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop)** · composite 49.5 · _flagged needs_review (low confidence / novelty / relevance)_
+  On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.
 - **[Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do](https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/)** · composite 49.1 · _flagged needs_review (low confidence / novelty / relevance)_
   Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than…
+- **[EEP proposes signed push events so agents can follow entities](https://github.com/eep-dev/EEP)** · composite 48.26 · _flagged needs_review (low confidence / novelty / relevance)_
+  Another early agent protocol; the useful idea is signed, replay-bounded push events instead of scraping.
 - **[ICML authors certify graph neural networks against label and structure poisoning](http://arxiv.org/abs/2611.03350v1)** · composite 48.05 · _flagged needs_review (low confidence / novelty / relevance)_
   This is a theoretical robustness advance for GNN training, with little direct use for LLM, agent, or appsec defenders.
 - **[GRSE credits multi-agent skills by contrasting repeated runs, not presence](https://arxiv.org/abs/2610.27227)** · composite 48.02 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -242,6 +256,8 @@ _Updated 2026-11-05._
   A small Mac cluster can now serve a near-trillion-parameter open model to a local coding agent at usable speed, but tensor parallelism helps decode far more than pipeline…
 - **[Matthew Berman tells coding agents to show video mocks of UI changes](https://x.com/MatthewBerman/status/2117670441380966696)** · composite 38.15 · _failed independent verification — The source is a one-line instruction; lesson 1's claim that humans review behavior, not just diffs, is the analyst's inference, not in the post._
   Asking the agent for visual evidence of UI changes is a cheap review habit, but the post adds nothing beyond the instruction.
+- **[FAF registers YAML media types for portable AI project context files](https://github.com/Wolfe-Jam/faf)** · composite 37.45 · _failed independent verification — Not sent to a verifier: a promotional README with no testable finding; low scores, held for review._
+  A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.
 - **[Arca's wealth agents run ten-day tasks while human advisors move money](https://latent.space/p/arca/)** · composite 37.22 · _flagged needs_review (low confidence / novelty / relevance)_
   For long, stop-start agent work in a regulated field, keep state in a shared memory and put every risky action behind deterministic rules, not model judgment.
 - **[Researchers' VA-TDM method improves four-step image and video diffusion generation](https://arxiv.org/abs/2611.06796)** · composite 37.19 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -339,4 +355,4 @@ _Updated 2026-11-05._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-11-05. 162 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-11-08. 170 item(s) awaiting review.</sub>

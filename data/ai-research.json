@@ -271,6 +271,168 @@
       "grounding_score": 1.0
     },
     {
+      "id": "dfkhelper-token-goat-6824893977",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
+      "source_url": "https://github.com/DFKHelper/token-goat",
+      "article_url": "https://github.com/DFKHelper/token-goat",
+      "tweet_url": null,
+      "author": "DFKHelper",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/dfkhelper-token-goat-6824893977.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 47.2,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "DFKHelper/token-goat",
+      "related_claims": [
+        "keep-bulk-tool-output-out-of-context",
+        "stable-prompt-prefix-keeps-cache-reads-cheap",
+        "compact-first-reset-only-if-the-model-needs-it"
+      ],
+      "summary": "Token-Goat is a hook layer for Claude Code, Codex, Copilot CLI and other agents that answers repeat file reads with a pointer, returns single symbols instead of whole files, strips build and test logs to failures, shrinks screenshots and caches skill loads. It also wraps every fetched page and tool result in an untrusted-content fence. Its savings figures (40 to 90% session cost) are self-reported, not independently benchmarked.",
+      "takeaway": "Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.",
+      "lessons": [
+        {
+          "point": "Large reads keep costing after the turn they land in, because the prompt cache bills them on every later turn.",
+          "excerpt": "Anthropic bills the first cache write at 1.25x the base input price (2x for the one-hour cache), then about 0.1x for every later turn that reads it back, until the session compacts.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Repeat skill loads can be intercepted and served from a compact cached copy.",
+          "excerpt": "a PreToolUse hook intercepts the second invocation, serves the cached compact (~400 tokens) instead",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "It fences all untrusted content by default, regardless of whether a scan flags it.",
+          "excerpt": "Every fetched page, tool result, and extracted document is wrapped in an untrusted-content fence before hitting the model, whether or not it matched an attack pattern",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The headline savings are the author's own numbers.",
+          "excerpt": "Sessions drop 40–90%+ in cost.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "token-efficiency",
+        "prompt-caching",
+        "hooks",
+        "claude-code",
+        "context-engineering",
+        "untrusted-content"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Deduplicate repeat reads and trim tool logs in hooks",
+        "detail": "Add PreToolUse and PostToolUse hooks that answer a re-read of an unchanged file with a pointer, strip passing tests and progress bars from build and test output, and downscale screenshots before they reach the model. Measure cost per task before and after rather than trusting the author's savings figures. A third-party hook sees every tool call, so review its code before installing it."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 60,
+        "newness": 81,
+        "credibility": 47.2,
+        "composite": 55.83,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
+      "verified": true,
+      "verify_note": "Verifier found all four lessons supported; savings figures are self-reported. Novelty taken as verifier's 35.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "ioc-project-mas-lab-bd689e3b43",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Cisco's MAS Lab builds and traces multi-agent systems from YAML specs",
+      "source_url": "https://github.com/ioc-project/mas-lab",
+      "article_url": "https://github.com/ioc-project/mas-lab",
+      "tweet_url": null,
+      "author": "ioc-project",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/ioc-project-mas-lab-bd689e3b43.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "ioc-project/mas-lab",
+      "related_claims": [],
+      "summary": "MAS Lab, an Apache-2.0 project copyrighted by Cisco, defines multi-agent systems as YAML specs for agents, tools, workflows and contracts, enforces those contracts at runtime, and ships OpenTelemetry observability plus tracing, replay and benchmark pipelines. It treats MCP and A2A as swappable infrastructure adapters, so agent logic is tested with local tools first. Its PyPI packages are not published yet.",
+      "takeaway": "Keeping MCP and A2A in an adapter layer lets you test agent logic locally and review protocol security in one place.",
+      "lessons": [
+        {
+          "point": "Agents, tools and workflows are declared in YAML rather than written as glue code.",
+          "excerpt": "MAS Lab builds, runs, and tests multi-agent systems (MAS) from YAML files.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Protocols are treated as deployment adapters, so security review sits at one integration boundary.",
+          "excerpt": "Security review and auditing happen at the integration boundary.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The project is early: packages are not yet on PyPI.",
+          "excerpt": "the public packages are not uploaded yet",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "multi-agent",
+        "specs",
+        "opentelemetry",
+        "mcp",
+        "a2a",
+        "tracing"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Isolate MCP and A2A behind an adapter layer",
+        "detail": "Structure multi-agent code so agent logic calls local tool and delegation interfaces, with MCP and A2A swapped in as infrastructure adapters. Test reasoning and workflow with local tools, then certify protocol behavior and apply policy, audit and budget overlays once at the adapter boundary."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 50,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 55.76,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
+      "verified": true,
+      "verify_note": "Verifier found all lessons supported; flagged that the README does not show replay and benchmarking run on OpenTelemetry traces specifically. Summary reworded. Novelty taken as verifier's 35.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway, summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.evals",
       "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
@@ -989,6 +1151,80 @@
       ]
     },
     {
+      "id": "nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in",
+      "source_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "article_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "tweet_url": null,
+      "author": "novaRom",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@novaRom via Hacker News",
+      "related_claims": [],
+      "summary": "A MindStudio write-up of testing on the MSI Prestige RTX Spark laptop found native Linux ran GPT-OSS-120B at 13.9 tokens per second versus 65.4 on Windows and 65.1 under WSL, because the GPU is held near 780 MHz when plugged in. The cause is a Windows-only Nvidia platform controller whose firmware power table is encrypted and only the Windows driver can decrypt. On battery, Linux speeds were close to Windows. Until Nvidia ships equivalent Linux support, WSL is the practical way to run Linux-first tools such as vLLM at full speed.",
+      "takeaway": "On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.",
+      "lessons": [
+        {
+          "point": "On wall power, the throughput gap is about five times on the same hardware, depending only on the OS path.",
+          "excerpt": "Windows hit 65.4 tokens per second, WSL hit 65.1, the Nvidia DGX Spark hit 61, and native Linux on the same laptop managed only 13.9.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The cause is encrypted firmware power settings that only the Windows driver can read.",
+          "excerpt": "because the firmware’s power table is encrypted and only the Windows driver can decrypt it",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Turning the controller off in Windows dropped GPU clocks to the level seen on Linux, pointing at it as the cause.",
+          "excerpt": "Disabling that controller in Windows reproduced the slowdown directly",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "local-inference",
+        "nvidia",
+        "linux",
+        "wsl",
+        "gpu-firmware",
+        "benchmarks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check GPU clocks before trusting local inference benchmarks",
+        "detail": "When benchmarking local models on new Nvidia RTX Spark laptops, log GPU clock speed alongside tokens per second and compare Linux, WSL and battery versus wall power. Use WSL for Linux-first serving tools until Nvidia ships the platform controller logic for Linux."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 30,
+        "newness": 81,
+        "credibility": 55.0,
+        "composite": 49.5,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
+      "verified": true,
+      "verify_note": "Verifier found lessons supported but flagged the slowdown applies only on wall power (Linux on battery matched Windows) and the source is a secondary blog summary. Title, lesson 1 and summary now say so. Novelty kept at the lower 40.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -1156,6 +1392,75 @@
       "id": "ai2-llm-novelty-judges-flip-verdicts-when-prompt-5187f43a49",
       "retrieved_at": "2026-10-27T18:41:51+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "eep-dev-eep-94c246c848",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "EEP proposes signed push events so agents can follow entities",
+      "source_url": "https://github.com/eep-dev/EEP",
+      "article_url": "https://github.com/eep-dev/EEP",
+      "tweet_url": null,
+      "author": "eep-dev",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/eep-dev-eep-94c246c848.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "eep-dev/EEP",
+      "related_claims": [],
+      "summary": "The Entity Engagement Protocol (EEP) v0.1 is an open spec for publishing an entity's state changes as signed events to subscribed agents over SSE and webhooks, with optional identity, credential or payment gates. It positions itself beside MCP and A2A as the layer that tells an agent something changed. The spec is early, with 23 stars, and may still break.",
+      "takeaway": "Another early agent protocol; the useful idea is signed, replay-bounded push events instead of scraping.",
+      "lessons": [
+        {
+          "point": "Delivery is signed and replay-bounded, so subscribers can reject forged or replayed events.",
+          "excerpt": "EEP is one wire format with HMAC-signed delivery, SSE and a 60-second replay window",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The spec is not stable yet.",
+          "excerpt": "breaking changes can still happen",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-protocols",
+        "webhooks",
+        "sse",
+        "hmac",
+        "event-delivery"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Verify signatures and replay windows on agent event feeds",
+        "detail": "If agents consume pushed events from outside parties, require signed delivery with a short replay window and treat event payloads as untrusted input to the agent. Wait for EEP to stabilize before adopting it."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 30,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 48.26,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
+      "verified": true,
+      "verify_note": "Verifier found both lessons supported. Novelty kept at the lower 30.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -2647,6 +2952,77 @@
         "score": 100,
         "passed": true,
         "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "wolfe-jam-faf-3dd6af4697",
+      "topic": "ai-research",
+      "domain": "air.context",
+      "title": "FAF registers YAML media types for portable AI project context files",
+      "source_url": "https://github.com/Wolfe-Jam/faf",
+      "article_url": "https://github.com/Wolfe-Jam/faf",
+      "tweet_url": null,
+      "author": "Wolfe-Jam",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "Wolfe-Jam/faf",
+      "related_claims": [],
+      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
+      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
+      "lessons": [
+        {
+          "point": "The format aims to be a shared context file across tools and teams.",
+          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
+          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "context-files",
+        "yaml",
+        "agents-md",
+        "marketing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Stick with AGENTS.md-style context files",
+        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 12,
+        "newness": 81,
+        "credibility": 66.7,
+        "composite": 37.45,
+        "scored_at": "2026-11-04T20:09:57+00:00"
+      },
+      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -6123,7 +6499,8 @@
         "index-page",
         "agent-skills",
         "product-announcements",
-        "anthropic"
+        "anthropic",
+        "low-signal"
       ],
       "lessons": [
         {
@@ -6136,6 +6513,12 @@
           "point": "Skills are a cross-vendor format, so skills written for one harness are likely portable to others.",
           "excerpt": "More than 70 agent platforms, including ChatGPT, Cursor, GitHub Copilot, and VS Code, have integrated Agent Skills since we published the standard in December 2025.",
           "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The newest Product post is the Agent Skills donation, already covered.",
+          "excerpt": "We’re donating Agent Skills, the open standard that gives AI agents specialized knowledge and workflows, to the Agentic AI Foundation.",
+          "confidence": 0.6,
           "grounded": true
         }
       ],
@@ -6177,7 +6560,9 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
+      "grounding_score": 1.0,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a category index page, not an article; held for review."
     },
     {
       "topic": "ai-research",
