@@ -32,9 +32,12 @@ Pure functions over payload rows; generate_html.py and generate_site.py do I/O.
 
 from __future__ import annotations
 
+import re
 from datetime import datetime, timedelta
+from urllib.parse import urlparse
 
 import focus as focus_mod
+import newsworthy as nw
 import taxonomy
 
 BIGGEST_MAX = 3
@@ -379,3 +382,174 @@ def focus_note(fresh: int, total: int, days: int) -> str:
     if fresh < total:
         return f"Only {fresh} in the last {days} days, so the latest earlier ones fill in."
     return f"Your focus areas, last {days} days: most areas matched first, then newest."
+
+
+# --- What to learn: a hard-filtered lane (config.yaml `learning:`, ISA F11) ---
+LEARNING_DAYS = 14
+LEARNING_MAX = 3
+LEARNING_MIN_POINTERS = 2
+# A measured result is a comparison, never a bare number: "40% fewer", "4x faster",
+# "from 30 days to 2", "0.92 vs 0.81", "cut cost by 40%". A version range ("2.x"),
+# a price ("$25M"), a deadline ("within 24 hours") or a size ("128,000 tokens") is not.
+_NUM = r"\d[\d,.]*\s?[kmb]?"
+_BETTER = (
+    r"(?:fewer|less|lower|faster|slower|more|higher|better|worse|cheaper|smaller|larger"
+    r"|reduction|improvement|speedup|gain|drop|increase|decrease)"
+)
+_MEASURED = re.compile(
+    "|".join(
+        (
+            rf"\b{_NUM}\s?(?:%|percent|percentage points?)\s+{_BETTER}\b",
+            rf"\b{_NUM}\s?(?:x|×)\s+{_BETTER}\b",
+            rf"\bfrom\s+\$?{_NUM}\s?%?\s?[a-z]*\s+(?:down\s+|up\s+)?to\s+\$?\d",
+            rf"\b{_NUM}\s?%?\s+(?:vs\.?|versus|compared (?:to|with))\s+\$?\d",
+            r"\b(?:cut|cuts|reduced?|reduces|lowered|lowers|halved|halves|doubled|doubles"
+            rf"|improved?|improves|raised|raises|boosted|boosts)\b[^.]{{0,60}}?\bby\s+{_NUM}"
+            r"\s?(?:%|percent|x|×)",
+        )
+    ),
+    re.I,
+)
+_X_HOSTS = frozenset({"x.com", "twitter.com"})
+# Aggregators: a link there is a discussion of the work, not another publisher.
+_NOT_A_PUBLISHER = frozenset({"ycombinator.com", "reddit.com", "t.co"})
+# Hosting platforms where each subdomain is its own author (karpathy.github.io).
+_SHARED_HOSTS = frozenset(
+    {
+        "github.io",
+        "substack.com",
+        "blogspot.com",
+        "medium.com",
+        "wordpress.com",
+        "bearblog.dev",
+        "netlify.app",
+        "vercel.app",
+        "pages.dev",
+    }
+)
+# github.com/<owner>/<repo> pages that are not the work itself.
+_GITHUB_NOT_PROOF = frozenset({"issues", "pull", "pulls", "discussions", "security"})
+_HF_NOT_PROOF = frozenset({"blog", "pricing", "docs", "learn", "posts", "papers"})
+
+
+def _host(url: str) -> str:
+    host = (urlparse(url or "").hostname or "").lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def _segments(url: str) -> list[str]:
+    return [p for p in urlparse(url or "").path.split("/") if p]
+
+
+def _is_proof_url(url: str, hosts: set[str]) -> bool:
+    """A link to the work itself: a repo, a paper, a model. A host on the list is
+    not enough: github.com/<owner>/<repo> (not its issues), arxiv.org/abs|pdf,
+    huggingface.co/<owner>/<model> (not its blog or pricing)."""
+    host, seg = _host(url), _segments(url)
+    if host not in hosts:
+        return False
+    if host == "github.com":
+        return len(seg) >= 2 and (len(seg) < 3 or seg[2] not in _GITHUB_NOT_PROOF)
+    if host == "arxiv.org":
+        return bool(seg) and seg[0] in ("abs", "pdf", "html")
+    if host == "huggingface.co":
+        return len(seg) >= 2 and seg[0] not in _HF_NOT_PROOF
+    return bool(seg)
+
+
+def _proof(row: dict, hosts: set[str]) -> str:
+    """Why a row counts as checkable: the host of the work it links, 'measured' for a
+    stated comparison, or ''."""
+    for url in _urls(row):
+        if _is_proof_url(url, hosts):
+            return _host(url)
+    text = " ".join(str(row.get(f) or "") for f in ("takeaway", "summary"))
+    return "measured" if _MEASURED.search(text) else ""
+
+
+def _urls(row: dict) -> list[str]:
+    return [row.get("url") or ""] + [s.get("url") or "" for s in row.get("corroborators") or []]
+
+
+def _publisher(url: str) -> str:
+    """Who a covering link stands for: an X post by its author's handle, a repo by
+    its owner, a blog on a shared host by its subdomain (or medium.com/@author),
+    anything else by its registrable domain."""
+    host, seg, domain = _host(url), _segments(url), nw.registrable_domain(url)
+    if domain in _NOT_A_PUBLISHER:
+        return ""
+    if domain in _X_HOSTS:
+        return f"x:{seg[0].lower()}" if seg else ""
+    if host == "github.com" and seg:
+        return f"github:{seg[0].lower()}"
+    if domain == "medium.com" and seg and seg[0].startswith("@"):
+        return seg[0].lower()
+    if domain in _SHARED_HOSTS and host != domain:
+        return host
+    return domain
+
+
+def _pointers(row: dict) -> set[str]:
+    """The distinct parties covering a row. A vendor's own repo is the vendor
+    (github:acme with acme.com counts once). How the row reached us (a curator
+    pick, an X list post) is its channel, not a second voice, so it adds nothing."""
+    out = {p for p in (_publisher(u) for u in _urls(row)) if p}
+    labels = {p.split(".")[0] for p in out if ":" not in p}
+    return {p for p in out if not (p.startswith("github:") and p[7:] in labels)}
+
+
+def learning_candidate(row: dict) -> bool:
+    """A vetted, verified finding with a step to take. News-lane rows qualify only
+    when they are vetted findings too (`has_page`); a news brief never does."""
+    act = row.get("actionable") or {}
+    return (
+        (not row.get("lane") or row.get("has_page") is True)
+        and row.get("verified") is True
+        and bool(act.get("title") and act.get("detail"))
+    )
+
+
+def _setting(learning: dict, key: str, default: int) -> int:
+    value = learning.get(key)
+    return default if value is None else int(value)
+
+
+def learning_picks(
+    rows: list[dict], learning: dict, now: str, exclude: frozenset | set = frozenset()
+) -> tuple[list[dict], dict[str, dict]]:
+    """(the lane's rows, id -> why it is there). A row must pass all three filters:
+    proof, `min_pointers` independent parties, a goal match. Ranked by parties,
+    goals matched, newest activity, composite. No top-up: a quiet window shows none."""
+    if not learning:
+        return [], {}
+    goals = {"areas": learning.get("goals") or []}
+    hosts = {str(h).lower() for h in learning.get("proof_hosts") or []}
+    need = _setting(learning, "min_pointers", LEARNING_MIN_POINTERS)
+    cutoff = _cutoff(now, _setting(learning, "days", LEARNING_DAYS))
+    why: dict[str, dict] = {}
+    for row in rows:
+        if row.get("id") in exclude or not learning_candidate(row) or last_activity(row) < cutoff:
+            continue
+        proof, ptrs = _proof(row, hosts), _pointers(row)
+        matched = focus_mod.names(focus_mod.areas(row, goals), goals)
+        if proof and len(ptrs) >= need and matched:
+            why[row["id"]] = {"proof": proof, "pointers": len(ptrs), "goals": matched}
+    hits = [r for r in rows if r.get("id") in why]
+    ranked = _ranked(
+        hits,
+        lambda r: why[r["id"]]["pointers"],
+        lambda r: len(why[r["id"]]["goals"]),
+        last_activity,
+        _composite,
+    )[: _setting(learning, "max", LEARNING_MAX)]
+    return ranked, {r["id"]: why[r["id"]] for r in ranked}
+
+
+def learning_note(shown: int, days: int) -> str:
+    """The one sentence README and site both print above the What to learn lane."""
+    if not shown:
+        return f"Nothing in the last {days} days cleared all three filters."
+    return (
+        f"From the last {days} days: each has proof (the work itself or a measured "
+        "comparison), more than one independent source, and serves one of your goals."
+    )

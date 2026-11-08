@@ -295,3 +295,187 @@ def test_efficiency_findings_are_recent_in_domain_capped_at_three():
     ]
     assert ids(b.efficiency_findings(rows, NOW, 7)) == ["a", "b", "e"]
     assert b.efficiency_findings([], NOW, 7) == []
+
+
+# --- What to learn (ISA F11) ---
+LEARN = {
+    "days": 14,
+    "max": 3,
+    "min_pointers": 2,
+    "proof_hosts": ["github.com", "arxiv.org", "huggingface.co"],
+    "goals": [
+        {"id": "evals", "name": "Evals", "domains": ["air.evals"], "keywords": ["benchmark"]},
+        {"id": "lean", "name": "Low-token harness", "domains": [], "keywords": ["prompt caching"]},
+    ],
+}
+
+
+def learn_row(rid, **over):
+    base = {
+        "id": rid,
+        "published": "2026-10-18",
+        "domain_id": "air.evals",
+        "title": "A new eval method",
+        "takeaway": "Cuts judge cost by 40% on the same set.",
+        "summary": "",
+        "url": f"https://blog-a.example/{rid}",
+        "corroborators": [{"url": f"https://news-b.example/{rid}", "source_name": "B"}],
+        "verified": True,
+        "actionable": {"type": "eval", "title": "Try it", "detail": "Run it on your set."},
+        "composite": 50,
+    }
+    return {**base, **over}
+
+
+def picked(*rows, learning=LEARN, exclude=frozenset()):
+    return ids(b.learning_picks(list(rows), learning, NOW, exclude=exclude)[0])
+
+
+def test_a_row_passing_all_three_filters_is_picked_with_its_reasons():
+    got, why = b.learning_picks([learn_row("ok")], LEARN, NOW)
+    assert ids(got) == ["ok"]
+    assert why["ok"] == {"proof": "measured", "pointers": 2, "goals": ["Evals"]}
+
+
+def test_measured_means_a_comparison_never_a_bare_number():
+    yes = [
+        "Cuts judge cost by 40% on the same set.",
+        "Runs 4x faster than the baseline.",
+        "Review time fell from 30 days to 2 days.",
+        "Scores 12 percentage points higher on SWE-bench.",
+        "F1 0.92 vs 0.81 for the prior judge.",
+        "Uses 60% fewer tokens per task.",
+    ]
+    no = [
+        "Affects OpenSSL 3.0.x and 2.x before the patch.",
+        "The startup raises $25M for agent security.",
+        "Patch within 24 hours of disclosure.",
+        "Ships a 128,000 tokens context window.",
+        "802.1X authentication is bypassed.",
+        "Present on 100% of installs.",
+    ]
+    for text in yes:
+        assert b._MEASURED.search(text), text
+    for text in no:
+        assert not b._MEASURED.search(text), text
+
+
+def test_no_proof_fails_even_with_pointers_and_a_goal():
+    assert picked(learn_row("bare", takeaway="A thoughtful essay on evals.")) == []
+    paper = learn_row("paper", takeaway="An essay.", url="https://arxiv.org/abs/2610.1")
+    assert b.learning_picks([paper], LEARN, NOW)[1]["paper"]["proof"] == "arxiv.org"
+
+
+def test_a_proof_host_page_that_is_not_the_work_is_not_proof():
+    for url in (
+        "https://github.com/acme/sdk/issues/4",
+        "https://gist.github.com/a/1",
+        "https://huggingface.co/pricing",
+        "https://huggingface.co/blog/post",
+        "https://arxiv.org/list/cs.CR/new",
+    ):
+        assert picked(learn_row("p", takeaway="An essay.", url=url)) == [], url
+    repo = learn_row("repo", takeaway="An essay.", url="https://github.com/acme/sdk")
+    assert picked(repo) == ["repo"]
+
+
+def test_one_pointer_fails_even_with_proof_and_a_goal():
+    assert picked(learn_row("lone", corroborators=[])) == []
+    same = learn_row("same", corroborators=[{"url": "https://www.blog-a.example/x"}])
+    assert picked(same) == []
+
+
+def test_the_channel_that_brought_a_row_in_is_not_a_second_voice():
+    curated = learn_row("cur", corroborators=[], curated_by="tldrsec")
+    listed = learn_row("xl", corroborators=[], discovered_via="x-list", author="someone")
+    assert picked(curated) == [] and picked(listed) == []
+
+
+def test_a_vendor_and_its_own_repo_count_once():
+    row = learn_row(
+        "vendor",
+        url="https://acme.com/blog/launch",
+        corroborators=[{"url": "https://github.com/acme/sdk"}],
+    )
+    assert picked(row) == []
+    row["corroborators"].append({"url": "https://news-b.example/acme"})
+    assert picked(row) == ["vendor"]
+
+
+def test_x_posts_count_by_author_and_shared_blog_hosts_by_subdomain():
+    two_authors = learn_row(
+        "x2",
+        url="https://arxiv.org/abs/2610.2",
+        corroborators=[{"url": "https://x.com/alice/status/1"}],
+    )
+    assert b.learning_picks([two_authors], LEARN, NOW)[1]["x2"]["pointers"] == 2
+    same_author = learn_row(
+        "x1",
+        url="https://x.com/alice/status/1",
+        corroborators=[{"url": "https://twitter.com/Alice/status/2"}],
+    )
+    assert picked(same_author) == []
+    blogs = learn_row(
+        "io",
+        url="https://karpathy.github.io/post",
+        corroborators=[{"url": "https://someone.github.io/reply"}],
+    )
+    assert b.learning_picks([blogs], LEARN, NOW)[1]["io"]["pointers"] == 2
+
+
+def test_no_goal_match_fails_even_with_proof_and_pointers():
+    assert picked(learn_row("off", domain_id="ps.appsec", title="A WAF bypass")) == []
+    kw = learn_row("kw", domain_id="ps.appsec", title="Prompt caching cut our bill")
+    assert b.learning_picks([kw], LEARN, NOW)[1]["kw"]["goals"] == ["Low-token harness"]
+
+
+def test_news_held_unverified_stepless_old_and_excluded_rows_never_show():
+    rows = [
+        learn_row("news", lane="news"),
+        learn_row("unverified", verified=False),
+        learn_row("unchecked", verified=None),
+        learn_row("no-step", actionable={}),
+        learn_row("old", published="2026-09-01"),
+        learn_row("taken"),
+    ]
+    assert b.learning_picks(rows, LEARN, NOW, exclude={"taken"}) == ([], {})
+    assert picked(learn_row("vetted-news", lane="news", has_page=True)) == ["vetted-news"]
+
+
+def test_capped_ranked_by_parties_and_never_topped_up():
+    rows = [learn_row(f"r{i}") for i in range(5)]
+    rows[3]["corroborators"].append({"url": "https://third.example/a"})
+    got, _ = b.learning_picks(rows, LEARN, NOW)
+    assert len(got) == 3 and got[0]["id"] == "r3"
+    assert b.learning_picks([], LEARN, NOW) == ([], {})
+    assert b.learning_picks(rows, {}, NOW) == ([], {})
+
+
+def test_zero_settings_are_honoured_not_replaced_by_defaults():
+    assert picked(learn_row("a"), learning={**LEARN, "max": 0}) == []
+    lone = learn_row("lone", corroborators=[])
+    assert picked(lone, learning={**LEARN, "min_pointers": 1}) == ["lone"]
+
+
+def test_hacker_news_and_reddit_are_discussion_not_another_publisher():
+    row = learn_row(
+        "hn",
+        corroborators=[
+            {"url": "https://news.ycombinator.com/item?id=1"},
+            {"url": "https://www.reddit.com/r/netsec/comments/a"},
+        ],
+    )
+    assert picked(row) == []
+
+
+def test_a_plain_appsec_cve_does_not_match_the_shipped_goals():
+    import common as c
+
+    goals = {**LEARN, "goals": c.load_config().learning["goals"]}
+    cve = learn_row(
+        "cve",
+        domain_id="ps.appsec",
+        title="Memory corruption exploit in libfoo leaks tokens",
+        takeaway="Patched within 72 hours; cuts exposure by 90% once applied.",
+    )
+    assert picked(cve, learning=goals) == []

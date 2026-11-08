@@ -98,6 +98,42 @@ focus:
       domains: []
       keywords: [naic, insurer, insurers, insurance regulator, insurance regulation, model bulletin, department of insurance, unfair discrimination, ai act]
 
+# The Briefing's "What to learn" lane (scripts/briefing.py learning_picks, ISA F11).
+# A vetted finding of the last `days` shows only when it passes all three filters:
+# proof (it or a covering source links the work itself on a `proof_hosts` host: a repo,
+# not its issues; an arXiv abstract; a model page; or its takeaway or summary states a
+# measured comparison), at least `min_pointers` independent parties (an X post by its
+# author, a repo by its owner, a github.io or substack blog by its subdomain; how the
+# item reached us, a curator pick or the X list, is not a second voice), and a
+# match to one of `goals` (taxonomy domain IDs or whole-word keywords, as in focus).
+# At most `max` show; nothing is topped up, so a quiet week shows none.
+learning:
+  days: 14
+  max: 3
+  min_pointers: 2
+  proof_hosts: [github.com, arxiv.org, openreview.net, huggingface.co, usenix.org, dl.acm.org, ieeexplore.ieee.org, ndss-symposium.org]
+  goals:
+    - id: lean-harness
+      name: Low-token harness
+      domains: [air.cost-efficiency, air.work-efficiency, air.context]
+      keywords: [token usage, token cost, prompt caching, context window, context engineering, subagent, subagents, agent harness, agent memory, retrieval-augmented]
+    - id: evals
+      name: Evals
+      domains: [air.evals]
+      keywords: [eval, evals, evaluation, benchmark, llm judge, llm-as-a-judge]
+    - id: agents
+      name: Agent engineering
+      domains: [air.agents, air.tooling]
+      keywords: [coding agent, agent harness, claude code, codex, agent loop, tool use]
+    - id: system-design
+      name: System design
+      domains: []
+      keywords: [system design, distributed system, distributed systems, scalability, sharding, rate limiting, load balancing]
+    - id: ai-security-depth
+      name: AI security depth
+      domains: [ais.agent-security, ais.prompt-injection, ais.mcp-tools, ais.data-poisoning, ais.model-supply-chain, ais.guardrails, ais.red-teaming, ais.ai-infra, ps.ai-code]
+      keywords: [agent sandbox, agent security, ai-found, ai vulnerability research, llm exploit, jailbreak]
+
 # Emerging trends (scripts/trends.py). A tag's "recent" count is its dated
 # findings inside max_age_days. Its baseline is the rate it ran at over the
 # `baseline_days` before that window (shorter if the topic's history is), scaled

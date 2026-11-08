@@ -455,6 +455,11 @@ def _teaser(payload: dict) -> list[str]:
         )
         out += ["## Your focus", "", f"_{note}_", ""]
         out += [_story_line(i, r, names) for i, r in enumerate(focus, 1)] + [""]
+    learn = [rows[i] for i in payload.get("learning", []) if i in rows]
+    if learn:
+        note = briefing.learning_note(len(learn), payload.get("learning_days", 14))
+        out += ["## What to learn", "", f"_{note}_", ""]
+        out += [_story_line(i, r, names) for i, r in enumerate(learn, 1)] + [""]
     if biggest:
         note = briefing.biggest_note(payload["snapshot_days"])
         out += ["## Biggest this week", "", f"_{note}_", ""]

@@ -150,6 +150,19 @@ launchd passes no environment, so when the variable is unset the wrapper reads i
 `~/.config/awesomesec/env`: the first `DIGEST_NOTIFY_URL=value` line (optional matching
 quotes, `http(s)://` values only), parsed as text and never sourced; no other key is read.
 
+## What to learn (config.yaml `learning:`)
+
+The Briefing's second lane, right after Your focus, shows at most `max` (3)
+vetted findings from the last `days` (14) that pass three filters in
+`briefing.learning_picks`: proof (the finding or a covering source links the work itself on a
+`proof_hosts` host, such as a repo but not its issues, or its takeaway or summary states a
+measured comparison), `min_pointers` (2) independent parties (an X post by its author, a
+repo by its owner and folded into that owner's own site, a github.io or substack blog by its
+subdomain; the curator pick or X list post that brought it in is not a second voice), and a match to one of `goals` (domain IDs or whole-word keywords, as in focus). Each
+card shows the finding's own `actionable` step as "Try this." and why it is there. News
+briefs, held and unverified entries never show, nothing is topped up, and Biggest, top
+stories and Efficiency leave its picks out. The README teaser shows the same picks. Tune it in `config.yaml` only.
+
 ## Findings vs claims (two different questions)
 
 The pools answer **"what was published lately"** — a rolling feed that ages out after

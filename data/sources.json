@@ -2990,5 +2990,49 @@
     "added": "2026-11-01",
     "active": true,
     "notes": "source-scout 2026-10-31 (#108): hit rate 0.6; cloud and CI research"
+  },
+  {
+    "id": "rss:https-karpathy-github-io-feed-xml",
+    "type": "rss",
+    "handle": "https://karpathy.github.io/feed.xml",
+    "name": "Andrej Karpathy blog",
+    "url": "https://karpathy.github.io/feed.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-11-08",
+    "active": true,
+    "notes": "Practitioner deep dives (Rohan, 2026-11-08); posts are rare, most of his writing is on X"
+  },
+  {
+    "id": "x_account:karpathy",
+    "type": "x_account",
+    "handle": "karpathy",
+    "name": "@karpathy",
+    "url": "https://x.com/karpathy",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-11-08",
+    "active": true,
+    "notes": "Read only through the X list lane once Rohan adds him to list 2115494675994071362"
   }
 ]
