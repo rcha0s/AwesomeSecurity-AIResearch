@@ -8,7 +8,10 @@ reads trees but runs nothing. The decision itself is `merge_guard.evaluate`.
 
   select   (read-only job)  evaluate every open claude/scan-* PR; write a step
                             summary; emit `number`/`sha` of the oldest that passes
-                            the path guard, for the read-only test job to test.
+                            the path guard, for the read-only test job to test,
+                            skipping a head the gate already refused; and the
+                            `rebuild_*` of the oldest that conflicts with main, for
+                            the rebuild job (scripts/rebuild_pr.py).
   decide   (write job)      re-fetch and re-evaluate everything (the head must still
                             be the SHA that was tested), report each verdict, and in
                             `merge` mode merge the tested PR with `sha=<that SHA>`.
@@ -23,6 +26,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -48,7 +52,12 @@ def settings(config_path: Path) -> dict:
         cfg = {}
     mode = cfg.get("mode") if cfg.get("mode") in MODES else "shadow"
     method = cfg.get("merge_method") if cfg.get("merge_method") in MERGE_METHODS else "squash"
-    return {"mode": mode, "merge_method": method}
+    # Rebuilding a conflicting scan PR writes to its branch: merge mode and an explicit true.
+    return {
+        "mode": mode,
+        "merge_method": method,
+        "rebuild": mode == "merge" and cfg.get("rebuild_conflicts") is True,
+    }
 
 
 # ---------------------------------------------------------------- GitHub / git I/O
@@ -159,27 +168,72 @@ def conflicts_with_main(repo: str, number: int) -> bool:
         return False
 
 
+GATE_AUTHOR = "github-actions[bot]"
+BRANCH = re.compile(r"claude/scan-[A-Za-z0-9._-]{1,100}")
+
+
+def refused_before(repo: str, number: int, sha: str) -> bool:
+    """True when this workflow already refused this exact head. The same head fails
+    the same way every run (a claim change held for human review, a failed check),
+    and re-testing it first starved every newer scan PR behind it, as #165 did.
+    Only the workflow's own comments count; an error reads as not refused."""
+    try:
+        comments = gh_pages(f"repos/{repo}/issues/{number}/comments")
+    except (subprocess.CalledProcessError, RuntimeError, ValueError, json.JSONDecodeError):
+        return False
+    return any(
+        (c.get("user") or {}).get("login") == GATE_AUTHOR
+        and (c.get("body") or "").startswith(MARKER)
+        and f"Evaluated head `{sha[:12]}`" in (c.get("body") or "")
+        and "): refused" in (c.get("body") or "")
+        for c in comments
+    )
+
+
+def triage(repo: str, pr: dict, verdict: mg.Verdict) -> str:
+    """What select does with one PR: test, rebuild, skip, or nothing (refused)."""
+    if not verdict.ok:
+        return "refused"
+    # A head that conflicts with main fails the test job's merge on every run;
+    # testing it first blocked every newer scan PR behind it (11-06, #165).
+    if conflicts_with_main(repo, pr["number"]):
+        return "rebuild"
+    if refused_before(repo, pr["number"], pr["head"]["sha"]):
+        return "skip"
+    return "test"
+
+
+STATES = {
+    "refused": "refused",
+    "test": "passes the path guard",
+    "rebuild": "passes the path guard; conflicts with main, to be rebuilt on main",
+    "skip": "passes the path guard; this head was already refused, skipped until it changes",
+}
+
+
 def cmd_select(repo: str, main_sha: str) -> int:
     conf = settings(ROOT / "config.yaml")
     lines = [f"## Auto-merge gate: select ({conf['mode']} mode)", ""]
-    chosen: dict | None = None
+    picks: dict[str, dict] = {}
     for pr in scan_prs(repo):
-        number, sha = pr["number"], pr["head"]["sha"]
+        number, sha, ref = pr["number"], pr["head"]["sha"], pr["head"]["ref"]
         verdict = judge(repo, number, sha, main_sha)
-        state = "passes the path guard" if verdict.ok else "refused"
-        # A head that conflicts with main fails the test job's merge on every run;
-        # testing it first blocked every newer scan PR behind it (11-06, #165).
-        skip = verdict.ok and conflicts_with_main(repo, number)
-        if skip:
-            state += "; conflicts with main, skipped (needs a manual merge of main)"
+        action = triage(repo, pr, verdict)
+        if action == "rebuild" and not (conf["rebuild"] and BRANCH.fullmatch(ref)):
+            action, state = "skip", "passes the path guard; conflicts with main, skipped"
+        else:
+            state = STATES[action]
         lines.append(f"- #{number} `{sha[:12]}`: {state}")
         lines += [f"  - {r}" for r in verdict.reasons[:10]]
-        if verdict.ok and not skip and chosen is None:
-            chosen = {"number": str(number), "sha": sha}
-    if not chosen:
+        if action in ("test", "rebuild"):
+            picks.setdefault(action, {"number": str(number), "sha": sha, "ref": ref})
+    if "test" not in picks:
         lines.append("- nothing to test")
     summary(lines)
-    output(**(chosen or {"number": "", "sha": ""}))
+    test, rb = picks.get("test", {}), picks.get("rebuild", {})
+    output(number=test.get("number", ""), sha=test.get("sha", ""),
+           rebuild_number=rb.get("number", ""), rebuild_sha=rb.get("sha", ""),
+           rebuild_ref=rb.get("ref", ""))  # fmt: skip
     return 0
 
 

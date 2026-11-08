@@ -49,7 +49,11 @@ def test_mode_fails_closed_to_shadow(tmp_path, text, mode):
 
 
 def test_missing_config_is_shadow(tmp_path):
-    assert am.settings(tmp_path / "nope.yaml") == {"mode": "shadow", "merge_method": "squash"}
+    assert am.settings(tmp_path / "nope.yaml") == {
+        "mode": "shadow",
+        "merge_method": "squash",
+        "rebuild": False,
+    }
 
 
 def test_shipped_config_is_merge():
@@ -286,7 +290,7 @@ def test_select_picks_the_oldest_passing_pr(monkeypatch, tmp_path):
     out = tmp_path / "out"
     monkeypatch.setenv("GITHUB_OUTPUT", str(out))
     am.cmd_select(REPO, MAIN)
-    assert out.read_text() == f"number=5\nsha={'e' * 40}\n"
+    assert out.read_text().startswith(f"number=5\nsha={'e' * 40}\n")
 
 
 def test_select_skips_a_pr_that_conflicts_with_main(monkeypatch, tmp_path):
@@ -298,8 +302,79 @@ def test_select_skips_a_pr_that_conflicts_with_main(monkeypatch, tmp_path):
     monkeypatch.setenv("GITHUB_OUTPUT", str(out))
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summ))
     am.cmd_select(REPO, MAIN)
-    assert out.read_text() == f"number=7\nsha={SHA}\n"
+    assert out.read_text().startswith(f"number=7\nsha={SHA}\nrebuild_number=\n")
     assert "#5" in summ.read_text() and "conflicts with main" in summ.read_text()
+
+
+def _select(monkeypatch, tmp_path, fake, config=None):
+    if config is not None:
+        write_config(tmp_path, config)
+    out, summ = tmp_path / "out", tmp_path / "summary"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summ))
+    am.cmd_select(REPO, MAIN)
+    values = dict(line.split("=", 1) for line in out.read_text().splitlines())
+    return values, summ.read_text()
+
+
+REBUILD_ON = "automerge:\n  mode: merge\n  rebuild_conflicts: true\n"
+
+
+def test_select_hands_a_conflicting_pr_to_the_rebuild_job(monkeypatch, tmp_path):
+    dirty = {**scan_pr(5, sha="e" * 40, ref="claude/scan-2026-11-04-local"), "mergeable": False}
+    fake = FakeGitHub([dirty, scan_pr(7)], *content_only()).install(monkeypatch, tmp_path, "merge")
+    out, summ = _select(monkeypatch, tmp_path, fake, REBUILD_ON)
+    assert (out["rebuild_number"], out["rebuild_sha"]) == ("5", "e" * 40)
+    assert out["rebuild_ref"] == "claude/scan-2026-11-04-local"
+    assert (out["number"], out["sha"]) == ("7", SHA)  # the next PR is still tested
+    assert "to be rebuilt on main" in summ
+
+
+@pytest.mark.parametrize(
+    "config, ref",
+    [
+        ("automerge:\n  mode: shadow\n  rebuild_conflicts: true\n", "claude/scan-x"),
+        ("automerge:\n  mode: merge\n  rebuild_conflicts: yes-please\n", "claude/scan-x"),
+    ],
+)
+def test_no_rebuild_in_shadow_mode_or_without_an_explicit_true(monkeypatch, tmp_path, config, ref):
+    dirty = {**scan_pr(5, ref=ref), "mergeable": False}
+    fake = FakeGitHub([dirty], *content_only()).install(monkeypatch, tmp_path, "merge")
+    out, summ = _select(monkeypatch, tmp_path, fake, config)
+    assert out["rebuild_number"] == "" and out["number"] == ""
+    assert "conflicts with main, skipped" in summ
+
+
+def _gate_comment(sha, outcome="refused", login="github-actions[bot]"):
+    body = am.comment_body(sha, outcome, "merge", ["claim change needs human review: x"])
+    return {"user": {"login": login}, "body": body}
+
+
+def test_select_skips_a_head_the_gate_already_refused(monkeypatch, tmp_path):
+    """A held claim change fails the same way every run; re-testing it first would
+    starve every newer scan PR, as the conflicting #165 did."""
+    held = scan_pr(5, sha="e" * 40)
+    fake = FakeGitHub([held, scan_pr(7)], *content_only()).install(monkeypatch, tmp_path, "merge")
+    fake.comments[5] = [_gate_comment("e" * 40)]
+    out, summ = _select(monkeypatch, tmp_path, fake)
+    assert (out["number"], out["sha"]) == ("7", SHA)
+    assert "already refused, skipped until it changes" in summ
+
+
+@pytest.mark.parametrize(
+    "comment",
+    [
+        _gate_comment("f" * 40),  # an older head was refused; this one is new
+        _gate_comment("e" * 40, outcome="would wait (shadow mode)"),
+        _gate_comment("e" * 40, login="rcha0s"),  # only the workflow's own comments count
+    ],
+)
+def test_select_still_tests_a_head_not_refused_by_the_gate(monkeypatch, tmp_path, comment):
+    fake = FakeGitHub([scan_pr(5, sha="e" * 40)], *content_only())
+    fake.install(monkeypatch, tmp_path, "merge")
+    fake.comments[5] = [comment]
+    out, _ = _select(monkeypatch, tmp_path, fake)
+    assert out["number"] == "5"
 
 
 def test_select_outputs_nothing_when_all_refused(monkeypatch, tmp_path):
@@ -308,7 +383,7 @@ def test_select_outputs_nothing_when_all_refused(monkeypatch, tmp_path):
     monkeypatch.setenv("GITHUB_OUTPUT", str(out))
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summ))
     am.cmd_select(REPO, MAIN)
-    assert out.read_text() == "number=\nsha=\n"
+    assert out.read_text().startswith("number=\nsha=\nrebuild_number=\n")
     assert "refused" in summ.read_text()
     assert fake.comments == {}  # the read-only job never comments
 

@@ -675,6 +675,21 @@ on a `claude/scan-*` branch.
   after re-confirming the head hasn't moved. After merging it dispatches
   `update.yml` and requests a Pages build, because merges made with
   `GITHUB_TOKEN` start neither on their own.
+- **A scan PR that conflicts with main is rebuilt by code (2026-11-07).** Two scan
+  PRs from different days both rewrite every generated file, so the later one
+  conflicts once the first merges (#165). In `merge` mode with
+  `automerge.rebuild_conflicts: true`, `select` hands such a guard-passing PR to the
+  `rebuild` job, which merges main into its head with `scripts/rebuild_pr.py`: every
+  `data/*.json` the PR changed is merged three ways record by record (the PR's new
+  records added, a field both sides changed keeps main's value, `source_stats.json`
+  counts add), the claim ledger is re-validated, and main's renderers redraw the
+  site (no rerank). The merge commit is pushed to the PR branch as a fast-forward;
+  the next run judges the new head with the guard and the gate like any other.
+- **A head the gate already refused is skipped until it changes.** A held claim
+  change or a failed check fails the same way every run, and testing it first would
+  starve every newer scan PR. `select` skips a head this workflow has already
+  commented `refused` on and tests the next; the refusal comment stays on the PR and
+  the watchdog reports it as stuck after 8 hours.
 
 ## Evals (Phase 3: the reviewer nobody has to be)
 

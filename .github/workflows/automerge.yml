@@ -65,6 +65,9 @@ jobs:
     outputs:
       number: ${{ steps.pick.outputs.number }}
       sha: ${{ steps.pick.outputs.sha }}
+      rebuild_number: ${{ steps.pick.outputs.rebuild_number }}
+      rebuild_sha: ${{ steps.pick.outputs.rebuild_sha }}
+      rebuild_ref: ${{ steps.pick.outputs.rebuild_ref }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -123,6 +126,75 @@ jobs:
       # --base is main's commit: claim history is compared against git, not the tree.
       - name: Merge gate (pytest, ledger, URLs, render equality, claim history, evals)
         run: python scripts/merge_gate.py --base "$GITHUB_SHA"
+
+  # A guard-passing scan PR that conflicts with main (two scan PRs from different
+  # days both rewrite every generated file) is merged with main by code: a
+  # three-way data merge plus main's renderers (scripts/rebuild_pr.py). The result
+  # is pushed to the PR branch as a merge commit whose parents are main and the
+  # tested head, so the push is a fast-forward and a moved head makes it fail. It
+  # decides nothing: the next run judges the new head with the path guard and the
+  # merge gate like any other. Only main's code runs; the PR supplies JSON only
+  # (the guard already refused anything else). The token is in the push step only.
+  rebuild:
+    needs: select
+    if: github.ref == 'refs/heads/main' && needs.select.outputs.rebuild_number != ''
+    runs-on: ubuntu-latest
+    environment: automerge
+    permissions:
+      contents: write # push the merge commit to the scan branch
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Install main's dependencies
+        run: pip install -r requirements.txt
+
+      - name: Merge main into the PR head, resolving data by code
+        env:
+          NUMBER: ${{ needs.select.outputs.rebuild_number }}
+          SHA: ${{ needs.select.outputs.rebuild_sha }}
+          REF: ${{ needs.select.outputs.rebuild_ref }}
+        run: |
+          set -euo pipefail
+          [[ "$NUMBER" =~ ^[0-9]+$ && "$SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$REF" =~ ^claude/scan-[A-Za-z0-9._-]{1,100}$ ]]
+          git fetch --no-tags origin "+refs/pull/$NUMBER/head:refs/pr/$NUMBER"
+          [[ "$(git rev-parse "refs/pr/$NUMBER")" == "$SHA" ]] || {
+            echo "PR head moved since select; not rebuilding it"; exit 1; }
+          base="$(git merge-base "$GITHUB_SHA" "$SHA")"
+          # Start from the PR head and merge main in, so the commit's first
+          # parent is the head (the push is a fast-forward of the branch).
+          git checkout -q --detach "$SHA"
+          git -c user.name=automerge-gate -c user.email=automerge-gate@invalid \
+            merge --no-ff --no-commit "$GITHUB_SHA" || true
+          # The guard refused any PR touching the pipeline, so the merge takes
+          # main's scripts and config; they now render the merged data.
+          python scripts/rebuild_pr.py --base "$base" --ours "$GITHUB_SHA" --theirs "$SHA"
+          git add -A -- data README.md NEWSLETTER.md TRENDS.md REVIEW.md \
+            ai-security product-security ai-research claims docs
+          [[ -z "$(git ls-files -u)" ]] || { echo "unresolved paths remain"; git ls-files -u | cut -f2 | sort -u; exit 1; }
+          ! git grep -n -I -E '^(<<<<<<<|>>>>>>>) ' -- data README.md NEWSLETTER.md TRENDS.md REVIEW.md ai-security product-security ai-research claims docs
+          git -c user.name=automerge-gate -c user.email=automerge-gate@invalid \
+            commit -q -m "chore: merge main into $REF (rebuilt by code)" \
+            -m "Data merged three ways by scripts/rebuild_pr.py; site re-rendered by main's renderers."
+          [[ "$(git rev-parse HEAD^1)" == "$SHA" && "$(git rev-parse HEAD^2)" == "$GITHUB_SHA" ]]
+
+      - name: Push the rebuilt head (fast-forward only)
+        env:
+          TOKEN: ${{ github.token }}
+          REF: ${{ needs.select.outputs.rebuild_ref }}
+        run: |
+          set -euo pipefail
+          auth="$(printf 'x-access-token:%s' "$TOKEN" | base64 | tr -d '\n')"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            push "https://github.com/$GITHUB_REPOSITORY" "HEAD:refs/heads/$REF"
 
   decide:
     needs: [select, test]

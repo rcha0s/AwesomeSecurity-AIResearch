@@ -478,6 +478,8 @@ automerge:
                         # Rohan ended the shadow period 2026-10-31 (ISA.md Decisions).
                         # Set back to shadow, or label a PR automerge:hold, to stop it.
   merge_method: squash
+  rebuild_conflicts: true  # a guard-passing scan PR that conflicts with main is merged
+                           # with main by code (scripts/rebuild_pr.py), then re-gated (2026-11-07)
   evals:                # Phase 3 hook (scripts/merge_gate.py). Missing scripts are
                         # skipped until `required: true`, then they fail closed.
     - script: scripts/eval_integrity.py
