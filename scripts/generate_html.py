@@ -176,6 +176,10 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
         "fresh": c.is_fresh(entry, snapshot_days),
         "detail_path": _detail_relpath(entry),
         "lessons": finding_lessons(entry),
+        "actionable": _actionable(entry.get("actionable")),
+        "curated_by": str(entry.get("curated_by") or ""),
+        "discovered_via": str(entry.get("discovered_via") or ""),
+        "author": str(entry.get("author") or ""),
         "ids": extract_ids(
             entry.get("title"),
             entry.get("takeaway"),
@@ -183,6 +187,13 @@ def finding_row(entry: dict, conf: c.Config, snapshot_days: int) -> dict:
             entry.get("source_url") or entry.get("article_url"),
         ),
     }
+
+
+def _actionable(raw: object) -> dict:
+    """A finding's one concrete step (title + detail), as plain strings; {} if absent."""
+    if not isinstance(raw, dict) or not raw.get("title") or not raw.get("detail"):
+        return {}
+    return {k: str(raw.get(k) or "") for k in ("type", "title", "detail")}
 
 
 def story_fields(entry: dict, ctx: tuple[dict, dict[str, str]]) -> dict:
@@ -440,7 +451,12 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
             c.load_json(c.DATA_DIR / arguments.ROWS_NAME, []), now, arguments.settings()
         ),
         **front_page(
-            findings + editorial, claims_payload(ledger, tax), now, snapshot_days, conf.focus
+            findings + editorial,
+            claims_payload(ledger, tax),
+            now,
+            snapshot_days,
+            conf.focus,
+            conf.learning,
         ),
     }
     normalize_source_names(payload, list(c.load_sources_by_id().values()))
@@ -633,12 +649,18 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
 
 
 def front_page(
-    rows: list[dict], claims: list[dict], now: str, days: int, focus: dict | None = None
+    rows: list[dict],
+    claims: list[dict],
+    now: str,
+    days: int,
+    focus: dict | None = None,
+    learning: dict | None = None,
 ) -> dict:
     """The README teaser's and the Briefing's shared picks: row ids, and the
     claim changes (each names its claim, and for a reversal the one it replaced).
     The focus lane (config.yaml `focus:`) leads; every later lane leaves out what
-    it took, so nothing shows twice."""
+    it took, so nothing shows twice. What to learn (config.yaml `learning:`) picks
+    after focus and biggest, and top stories and Efficiency leave its picks out."""
     focus = focus or {}
     foc_rows, foc_topped = briefing.focus_stories(rows, focus, now, days) if focus else ([], False)
     foc_changes = briefing.focus_claim_changes(claims, focus, now, days) if focus else []
@@ -646,6 +668,8 @@ def front_page(
     foc_claims = {ch["claim"] for ch in foc_changes}
     biggest = briefing.biggest_stories(rows, now, days, exclude=foc_ids)
     taken = foc_ids | {row["id"] for row in biggest}
+    learn, learn_why = briefing.learning_picks(rows, learning or {}, now, exclude=taken)
+    taken = taken | {row["id"] for row in learn}
     stories, topped_up = briefing.top_stories(rows, now, days, exclude=taken)
     changes, changes_fresh = briefing.claim_changes(claims, now, days, exclude=foc_claims)
     eff_claims = briefing.efficiency_claims(claims, exclude=foc_claims)
@@ -666,6 +690,9 @@ def front_page(
         "claim_changes": changes,
         "claim_changes_fresh": changes_fresh,
         "efficiency_claims": [claim["id"] for claim in eff_claims],
+        "learning": [row["id"] for row in learn],
+        "learning_why": learn_why,
+        "learning_days": int((learning or {}).get("days") or briefing.LEARNING_DAYS),
         "efficiency_findings": [
             row["id"] for row in briefing.efficiency_findings(rows, now, days, exclude=taken)
         ],

@@ -32,9 +32,11 @@ Pure functions over payload rows; generate_html.py and generate_site.py do I/O.
 
 from __future__ import annotations
 
+import re
 from datetime import datetime, timedelta
 
 import focus as focus_mod
+import newsworthy as nw
 import taxonomy
 
 BIGGEST_MAX = 3
@@ -379,3 +381,94 @@ def focus_note(fresh: int, total: int, days: int) -> str:
     if fresh < total:
         return f"Only {fresh} in the last {days} days, so the latest earlier ones fill in."
     return f"Your focus areas, last {days} days: most areas matched first, then newest."
+
+
+# --- What to learn: a hard-filtered lane (config.yaml `learning:`, ISA F11) ---
+LEARNING_DAYS = 14
+LEARNING_MAX = 3
+LEARNING_MIN_POINTERS = 2
+# A measured result: a number with a unit, a percentage, a multiplier or a dollar figure.
+_MEASURED = re.compile(
+    r"(?:\$\s?\d[\d,.]*|\b\d[\d,.]*\s?(?:%|x\b|×|percent\b|ms\b|tokens?\b|seconds?\b"
+    r"|minutes?\b|hours?\b|times\b|fold\b))",
+    re.I,
+)
+_X_HOSTS = frozenset({"x.com", "twitter.com"})
+
+
+def _proof(row: dict, hosts: set[str]) -> str:
+    """Why a row counts as checkable: the proof host it links, 'measured', or ''."""
+    urls = [row.get("url") or ""] + [s.get("url") or "" for s in row.get("corroborators") or []]
+    for url in urls:
+        domain = nw.registrable_domain(url)
+        if domain in hosts:
+            return domain
+    text = " ".join(str(row.get(f) or "") for f in ("takeaway", "summary"))
+    return "measured" if _MEASURED.search(text) else ""
+
+
+def _pointers(row: dict) -> set[str]:
+    """Independent pointers to a row: each distinct publisher covering it (an X post
+    counts by its author, not by x.com), plus a trusted-curator pick."""
+    out = set()
+    urls = [row.get("url") or ""] + [s.get("url") or "" for s in row.get("corroborators") or []]
+    for url in urls:
+        domain = nw.registrable_domain(url)
+        if domain and domain not in _X_HOSTS:
+            out.add(domain)
+    if row.get("curated_by"):
+        out.add(f"curator:{row['curated_by']}")
+    if row.get("discovered_via") == "x-list":
+        out.add(f"x:{(row.get('author') or 'list').lower()}")
+    return out
+
+
+def learning_candidate(row: dict) -> bool:
+    """A vetted, verified finding (never a news-lane row) with a step to take."""
+    act = row.get("actionable") or {}
+    return (
+        not row.get("lane")
+        and row.get("verified") is True
+        and bool(act.get("title") and act.get("detail"))
+    )
+
+
+def learning_picks(
+    rows: list[dict], learning: dict, now: str, exclude: frozenset | set = frozenset()
+) -> tuple[list[dict], dict[str, dict]]:
+    """(the lane's rows, id -> why it is there). A row must pass all three filters:
+    proof, `min_pointers` independent pointers, a goal match. Ranked by pointers,
+    goals matched, newest activity, composite. No top-up: a quiet window shows none."""
+    if not learning:
+        return [], {}
+    goals = {"areas": learning.get("goals") or []}
+    hosts = {str(h).lower() for h in learning.get("proof_hosts") or []}
+    need = int(learning.get("min_pointers") or LEARNING_MIN_POINTERS)
+    cutoff = _cutoff(now, int(learning.get("days") or LEARNING_DAYS))
+    why: dict[str, dict] = {}
+    for row in rows:
+        if row.get("id") in exclude or not learning_candidate(row) or last_activity(row) < cutoff:
+            continue
+        proof, ptrs = _proof(row, hosts), _pointers(row)
+        matched = focus_mod.names(focus_mod.areas(row, goals), goals)
+        if proof and len(ptrs) >= need and matched:
+            why[row["id"]] = {"proof": proof, "pointers": len(ptrs), "goals": matched}
+    hits = [r for r in rows if r.get("id") in why]
+    ranked = _ranked(
+        hits,
+        lambda r: why[r["id"]]["pointers"],
+        lambda r: len(why[r["id"]]["goals"]),
+        last_activity,
+        _composite,
+    )[: int(learning.get("max") or LEARNING_MAX)]
+    return ranked, {r["id"]: why[r["id"]] for r in ranked}
+
+
+def learning_note(shown: int, days: int) -> str:
+    """The one sentence the site prints above the What to learn lane."""
+    if not shown:
+        return f"Nothing in the last {days} days cleared all three filters."
+    return (
+        f"At most 3 from the last {days} days. Each links proof, has 2+ independent "
+        "pointers, and serves one of your goals."
+    )

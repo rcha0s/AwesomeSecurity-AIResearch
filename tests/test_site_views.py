@@ -219,6 +219,10 @@ FNS = [
     "efficiencyClaimHTML",
     "efficiencyHTML",
     "efficiencyNote",
+    "learningWhy",
+    "learningCardHTML",
+    "learningHTML",
+    "learningNote",
     "stateObjs",
     "fieldOptions",
     "cleanField",
@@ -1339,3 +1343,21 @@ def test_efficiency_filter_round_trips_through_the_url_and_ignores_unknown_value
     assert got["back"] == "cost"
     assert got["bad"] == "work" and got["proto"] == "work"  # unknown values leave state alone
     assert got["dflt"] == ""  # the default never reaches the URL
+
+
+def test_learning_lane_renders_hostile_rows_inert():
+    data = evil_data()
+    row = data["findings"][0]
+    row["actionable"] = {"type": EVIL, "title": EVIL, "detail": EVIL}
+    data["learning"] = [row["id"]]
+    data["learning_why"] = {row["id"]: {"proof": EVIL, "pointers": EVIL, "goals": [EVIL, 7]}}
+    data["learning_days"] = EVIL
+    html = run_js(data, "learningHTML({})")
+    assert "Try this." in html and "What to learn" in html
+    assert_inert(html)
+
+
+def test_learning_lane_says_so_when_nothing_cleared_the_bar():
+    html = run_js({"learning": [], "learning_days": 14}, "learningHTML({})")
+    assert "Nothing in the last 14 days cleared all three filters." in html
+    assert run_js({}, "learningHTML({})") == ""

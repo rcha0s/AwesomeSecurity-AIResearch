@@ -221,3 +221,37 @@ def test_due_on_the_configured_weekday_with_an_env_override():
     assert not wd.is_due({"digest_weekday": 0}, sunday, override="")
     assert wd.is_due({"digest_weekday": 0}, sunday, override="6")
     assert wd.is_due({"digest_weekday": 0}, sunday, override="any")
+
+
+def test_what_to_learn_picks_are_left_out_of_top_stories():
+    learn = {
+        "days": 14,
+        "min_pointers": 2,
+        "proof_hosts": [],
+        "goals": [{"id": "g", "name": "G", "domains": [], "keywords": ["caching"]}],
+    }
+    pick = {
+        "id": "learn-me",
+        "published": NOW,
+        "title": "Prompt caching halved cost",
+        "takeaway": "Cost fell 50%.",
+        "url": "https://a.example/x",
+        "corroborators": [{"url": "https://b.example/y"}],
+        "verified": True,
+        "actionable": {"title": "Turn it on", "detail": "Cache the system prompt."},
+    }
+    # Biggest this week picks first and fills its 3 slots with better-covered stories.
+    big = [
+        {
+            "id": f"big{i}",
+            "published": NOW,
+            "url": f"https://n{i}.example/a",
+            "corroborators": [{"url": f"https://m{j}.example/{i}"} for j in range(3)],
+        }
+        for i in range(3)
+    ]
+    fp = gh.front_page(big + [pick], [], NOW, 7, None, learn)
+    assert fp["biggest_stories"] == ["big0", "big1", "big2"]
+    assert fp["learning"] == ["learn-me"]
+    assert "learn-me" not in fp["top_stories"]
+    assert fp["learning_why"]["learn-me"]["goals"] == ["G"]

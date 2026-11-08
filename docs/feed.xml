@@ -31,13 +31,6 @@
     <summary type="text">Patch Barracuda appliances and keep their admin interfaces off untrusted networks, since the chain needs management-plane reach.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-pipeline-finds-exploits-and-patches-hundr-fc91c87e01#week</id>
-    <title>OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-pipeline-finds-exploits-and-patches-hundr-fc91c87e01#week" rel="alternate" type="text/html" />
-    <summary type="text">Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result was reached.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-artex-operators-letting-ai-age-e689d7c59c#week</id>
     <title>Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended</title>
     <updated>2026-11-05T00:00:00Z</updated>
@@ -85,6 +78,13 @@
     <updated>2026-11-05T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=zyxel-gs1900-switch-attacks-used-a-new-zero-day-46f8c45a95#week" rel="alternate" type="text/html" />
     <summary type="text">A vendor patch and an exploited-bug listing can point at the wrong flaw, so defenders should confirm which bug an attack really used.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-won-t-fix-a-claude-dispatch-flaw-letti-b3c8afa1b3#week</id>
+    <title>Anthropic won't fix a Claude Dispatch flaw letting browser extensions run code</title>
+    <updated>2026-11-05T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-won-t-fix-a-claude-dispatch-flaw-letti-b3c8afa1b3#week" rel="alternate" type="text/html" />
+    <summary type="text">Agent features that share sessions across web, mobile and desktop can turn a browser extension into a way to run code on the host, and the design problem remains after Dispatch.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims</id>

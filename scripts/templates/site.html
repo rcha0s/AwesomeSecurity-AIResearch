@@ -316,6 +316,8 @@
     margin: 8px 0 0; letter-spacing: -.005em; color: var(--ink); }
   .claim.retired h3 { text-decoration: line-through; text-decoration-color: var(--ink-3); font-weight: 500; }
   .claim .desc { color: var(--ink-2); margin: 6px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
+  .art .try { margin: 10px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+  .art .try b { color: var(--ink); }
   .claim .guide { color: var(--ink-2); margin: 8px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide b { color: var(--ink); }
   .claim .basis { color: var(--ink-2); margin: 8px 0 0; padding: 8px 10px; background: var(--paper-2);
@@ -829,7 +831,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = focusHTML(shown) + biggestHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
+    var html = focusHTML(shown) + biggestHTML(shown) + learningHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -1388,6 +1390,42 @@
         changes.map(claimChangeHTML).join("") + '</div>';
     }
     return html;
+  }
+  // What to learn: at most 3 findings that passed all three filters in
+  // scripts/briefing.py learning_picks (proof, 2+ independent pointers, a goal).
+  // Each card carries the finding's one concrete step. Quiet window: one line.
+  function learningWhy(w) {
+    if (!w || typeof w !== "object") return "";
+    var proof = w.proof === "measured" ? "a measured result" : String(w.proof || "");
+    return '<p class="why">Why it is here: ' + num(w.pointers) + ' independent pointers' +
+      (proof ? ' · proof: ' + txt(proof) : "") + '</p>';
+  }
+  function learningCardHTML(f, i, w) {
+    var a = f.actionable || {};
+    var card = storyCardHTML(f, i, w && Array.isArray(w.goals) ? w.goals : []);
+    var extra = (a.title ? '<p class="try"><b>Try this.</b> ' + txt(String(a.title).replace(/[.!?]+$/, "")) +
+      (a.detail ? '. ' + txt(a.detail) : "") + '</p>' : "") + learningWhy(w);
+    return card.slice(0, -"</article>".length) + extra + "</article>";
+  }
+  function learningHTML(shown) {
+    var m = rowsById(), why = DATA.learning_why || {};
+    var days = Number(DATA.learning_days) | 0;
+    var rows = arr(DATA.learning).map(function (id) { return has(m, id) ? m[id] : null; })
+      .filter(function (f) { return f && !shown[f.id]; });
+    if (!Array.isArray(DATA.learning)) return "";
+    rows.forEach(function (f) { shown[f.id] = 1; });
+    var html = secHead("What to learn", rows.length ? rows.length + " this window" : "none this window") +
+      '<p class="sec-lede">' + esc(learningNote(rows.length, days)) + '</p>';
+    if (rows.length) {
+      html += '<div class="artlist">' + rows.map(function (f, i) {
+        return learningCardHTML(f, i, has(why, f.id) ? why[f.id] : null); }).join("") + '</div>';
+    }
+    return html;
+  }
+  function learningNote(shown, days) {
+    if (!shown) return "Nothing in the last " + days + " days cleared all three filters.";
+    return "At most 3 from the last " + days + " days. Each links proof, has 2+ independent " +
+      "pointers, and serves one of your goals.";
   }
   function biggestHTML(shown) {
     var m = rowsById();

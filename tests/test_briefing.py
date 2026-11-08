@@ -295,3 +295,96 @@ def test_efficiency_findings_are_recent_in_domain_capped_at_three():
     ]
     assert ids(b.efficiency_findings(rows, NOW, 7)) == ["a", "b", "e"]
     assert b.efficiency_findings([], NOW, 7) == []
+
+
+# --- What to learn (ISA F11) ---
+LEARN = {
+    "days": 14,
+    "max": 3,
+    "min_pointers": 2,
+    "proof_hosts": ["github.com", "arxiv.org"],
+    "goals": [
+        {"id": "evals", "name": "Evals", "domains": ["air.evals"], "keywords": ["benchmark"]},
+        {"id": "lean", "name": "Low-token harness", "domains": [], "keywords": ["prompt caching"]},
+    ],
+}
+
+
+def learn_row(rid, **over):
+    base = {
+        "id": rid,
+        "published": "2026-10-18",
+        "domain_id": "air.evals",
+        "title": "A new eval method",
+        "takeaway": "Cuts judge cost by 40% on the same set.",
+        "summary": "",
+        "url": f"https://blog-a.example/{rid}",
+        "corroborators": [{"url": f"https://news-b.example/{rid}", "source_name": "B"}],
+        "verified": True,
+        "actionable": {"type": "eval", "title": "Try it", "detail": "Run it on your set."},
+        "composite": 50,
+    }
+    return {**base, **over}
+
+
+def test_a_row_passing_all_three_filters_is_picked_with_its_reasons():
+    got, why = b.learning_picks([learn_row("ok")], LEARN, NOW)
+    assert ids(got) == ["ok"]
+    assert why["ok"] == {"proof": "measured", "pointers": 2, "goals": ["Evals"]}
+
+
+def test_no_proof_fails_even_with_pointers_and_a_goal():
+    bare = learn_row("bare", takeaway="A thoughtful essay on evals.")
+    assert b.learning_picks([bare], LEARN, NOW)[0] == []
+    linked = learn_row("paper", takeaway="An essay.", url="https://arxiv.org/abs/2610.1")
+    assert b.learning_picks([linked], LEARN, NOW)[1]["paper"]["proof"] == "arxiv.org"
+
+
+def test_one_pointer_fails_even_with_proof_and_a_goal():
+    lone = learn_row("lone", corroborators=[])
+    assert b.learning_picks([lone], LEARN, NOW)[0] == []
+    same_pub = learn_row("same", corroborators=[{"url": "https://www.blog-a.example/x"}])
+    assert b.learning_picks([same_pub], LEARN, NOW)[0] == []
+    curated = learn_row("cur", corroborators=[], curated_by="tldrsec")
+    assert ids(b.learning_picks([curated], LEARN, NOW)[0]) == ["cur"]
+
+
+def test_an_x_post_counts_by_its_author_not_by_x_dot_com():
+    post = learn_row(
+        "post",
+        url="https://x.com/someone/status/1",
+        corroborators=[{"url": "https://x.com/other/status/2"}],
+        discovered_via="x-list",
+        author="Someone",
+    )
+    assert b.learning_picks([post], LEARN, NOW)[0] == []
+    post["corroborators"] = [{"url": "https://blog-c.example/a"}]
+    assert b.learning_picks([post], LEARN, NOW)[1]["post"]["pointers"] == 2
+
+
+def test_no_goal_match_fails_even_with_proof_and_pointers():
+    off = learn_row("off", domain_id="ps.appsec", title="A WAF bypass")
+    assert b.learning_picks([off], LEARN, NOW)[0] == []
+    kw = learn_row("kw", domain_id="ps.appsec", title="Prompt caching cut our bill")
+    assert b.learning_picks([kw], LEARN, NOW)[1]["kw"]["goals"] == ["Low-token harness"]
+
+
+def test_news_held_unverified_stepless_old_and_excluded_rows_never_show():
+    rows = [
+        learn_row("news", lane="news"),
+        learn_row("unverified", verified=False),
+        learn_row("unchecked", verified=None),
+        learn_row("no-step", actionable={}),
+        learn_row("old", published="2026-09-01"),
+        learn_row("taken"),
+    ]
+    assert b.learning_picks(rows, LEARN, NOW, exclude={"taken"}) == ([], {})
+
+
+def test_capped_ranked_by_pointers_and_never_topped_up():
+    rows = [learn_row(f"r{i}") for i in range(5)]
+    rows[3]["corroborators"].append({"url": "https://third.example/a"})
+    got, _ = b.learning_picks(rows, LEARN, NOW)
+    assert len(got) == 3 and got[0]["id"] == "r3"
+    assert b.learning_picks([], LEARN, NOW) == ([], {})
+    assert b.learning_picks(rows, {}, NOW) == ([], {})
