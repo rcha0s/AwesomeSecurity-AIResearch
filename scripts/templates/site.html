@@ -831,7 +831,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = focusHTML(shown) + biggestHTML(shown) + learningHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
+    var html = focusHTML(shown) + learningHTML(shown) + biggestHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -1392,12 +1392,12 @@
     return html;
   }
   // What to learn: at most 3 findings that passed all three filters in
-  // scripts/briefing.py learning_picks (proof, 2+ independent pointers, a goal).
+  // scripts/briefing.py learning_picks (proof, independent sources, a goal).
   // Each card carries the finding's one concrete step. Quiet window: one line.
   function learningWhy(w) {
     if (!w || typeof w !== "object") return "";
-    var proof = w.proof === "measured" ? "a measured result" : String(w.proof || "");
-    return '<p class="why">Why it is here: ' + num(w.pointers) + ' independent pointers' +
+    var proof = w.proof === "measured" ? "a measured comparison" : String(w.proof || "");
+    return '<p class="why">Why it is here: ' + num(w.pointers) + ' independent sources' +
       (proof ? ' · proof: ' + txt(proof) : "") + '</p>';
   }
   function learningCardHTML(f, i, w) {
@@ -1424,8 +1424,8 @@
   }
   function learningNote(shown, days) {
     if (!shown) return "Nothing in the last " + days + " days cleared all three filters.";
-    return "At most 3 from the last " + days + " days. Each links proof, has 2+ independent " +
-      "pointers, and serves one of your goals.";
+    return "From the last " + days + " days: each has proof (the work itself or a measured " +
+      "comparison), more than one independent source, and serves one of your goals.";
   }
   function biggestHTML(shown) {
     var m = rowsById();

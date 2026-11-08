@@ -660,16 +660,17 @@ def front_page(
     claim changes (each names its claim, and for a reversal the one it replaced).
     The focus lane (config.yaml `focus:`) leads; every later lane leaves out what
     it took, so nothing shows twice. What to learn (config.yaml `learning:`) picks
-    after focus and biggest, and top stories and Efficiency leave its picks out."""
+    right after focus, so its step is shown; biggest, top stories and Efficiency
+    leave its picks out."""
     focus = focus or {}
     foc_rows, foc_topped = briefing.focus_stories(rows, focus, now, days) if focus else ([], False)
     foc_changes = briefing.focus_claim_changes(claims, focus, now, days) if focus else []
     foc_ids = {row["id"] for row in foc_rows}
     foc_claims = {ch["claim"] for ch in foc_changes}
-    biggest = briefing.biggest_stories(rows, now, days, exclude=foc_ids)
-    taken = foc_ids | {row["id"] for row in biggest}
-    learn, learn_why = briefing.learning_picks(rows, learning or {}, now, exclude=taken)
-    taken = taken | {row["id"] for row in learn}
+    learn, learn_why = briefing.learning_picks(rows, learning or {}, now, exclude=foc_ids)
+    learn_ids = {row["id"] for row in learn}
+    biggest = briefing.biggest_stories(rows, now, days, exclude=foc_ids | learn_ids)
+    taken = foc_ids | learn_ids | {row["id"] for row in biggest}
     stories, topped_up = briefing.top_stories(rows, now, days, exclude=taken)
     changes, changes_fresh = briefing.claim_changes(claims, now, days, exclude=foc_claims)
     eff_claims = briefing.efficiency_claims(claims, exclude=foc_claims)
@@ -690,12 +691,23 @@ def front_page(
         "claim_changes": changes,
         "claim_changes_fresh": changes_fresh,
         "efficiency_claims": [claim["id"] for claim in eff_claims],
-        "learning": [row["id"] for row in learn],
-        "learning_why": learn_why,
-        "learning_days": int((learning or {}).get("days") or briefing.LEARNING_DAYS),
+        **_learning_keys(learn, learn_why, learning),
         "efficiency_findings": [
             row["id"] for row in briefing.efficiency_findings(rows, now, days, exclude=taken)
         ],
+    }
+
+
+def _learning_keys(learn: list[dict], why: dict, learning: dict | None) -> dict:
+    """The What to learn payload; none at all when the lane is not configured, so the
+    page hides the section instead of saying nothing cleared the bar."""
+    if not learning:
+        return {}
+    days = learning.get("days")
+    return {
+        "learning": [row["id"] for row in learn],
+        "learning_why": why,
+        "learning_days": briefing.LEARNING_DAYS if days is None else int(days),
     }
 
 
