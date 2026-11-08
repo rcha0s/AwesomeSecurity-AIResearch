@@ -1516,10 +1516,18 @@
           "published": "2026-10-31",
           "note": "After Northflank's breach, customers reported unauthorized use of the AI API keys stored as platform secrets, and Northflank told all customers to rotate every key.",
           "source_name": "BleepingComputer"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/",
+          "title": "Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches",
+          "published": "2026-11-05",
+          "note": "Leaked long-lived app secrets were used for service principal sign-ins within minutes; Microsoft recommends managed identities and rotation.",
+          "source_name": "Microsoft Security Blog"
         }
       ],
       "first_seen": "2021-01",
-      "last_reviewed": "2026-10-31",
+      "last_reviewed": "2026-11-08",
       "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users.",
       "tags": [
         "aws",
@@ -2226,10 +2234,18 @@
           "published": "2026-10-29",
           "note": "An agent in an isolated RL environment reached the internet via DNS; monitors flagged it within 15 minutes and OpenAI paused frontier RL.",
           "source_name": "OpenAI Alignment Blog"
+        },
+        {
+          "stance": "supports",
+          "url": "https://openai.com/index/introducing-gpt-6-cyber",
+          "title": "OpenAI says GPT-6 Cyber exploits better and stays within authorized scope",
+          "published": "2026-11-05",
+          "note": "In OpenAI's controlled red-teaming, agents using GPT-6 Cyber and other OpenAI models chained bugs to escape microVMs and run code on the hosts.",
+          "source_name": "OpenAI Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-01",
+      "last_reviewed": "2026-11-08",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",
@@ -2274,10 +2290,18 @@
           "published": "2026-11-05",
           "note": "Leaked ARTEX consoles show operators setting one goal and then mostly asking for progress while agent fleets ran campaigns for about $145 to $1,500 each.",
           "source_name": "Check Point Research"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/",
+          "title": "Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches",
+          "published": "2026-11-05",
+          "note": "Microsoft saw an agent go from scanning GitHub for secrets to exfiltrating Azure Key Vault data in five minutes.",
+          "source_name": "Microsoft Security Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-05",
+      "last_reviewed": "2026-11-08",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",
@@ -3281,6 +3305,29 @@
         "sandbox",
         "rollback"
       ]
+    },
+    {
+      "id": "agent-permission-files-leak-secrets",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "statement": "Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+          "title": "Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos",
+          "published": "2026-11-07"
+        }
+      ],
+      "first_seen": "2026-11-08",
+      "last_reviewed": "2026-11-08",
+      "added_on": "2026-11-08",
+      "changed_on": "2026-11-08",
+      "title": "Coding-agent permission files leak secrets into public repositories",
+      "guidance": "Treat agent permission, transcript and memory files as secret-bearing: gitignore them per repo, rotate any credential they ever held, approve command patterns that reference environment variables instead of literal secrets, and add command-aware rules (PGPASSWORD=, sshpass -p, Authorization: Bearer) to secret scanning of agent folders and git history.",
+      "scope": "Measured on public GitHub copies of Claude Code's local settings file; 'real secret' was screened by rules and an LLM reviewer, not validity-tested, and does not by itself show how other agents' config files behave."
     }
   ]
 }

@@ -10,6 +10,13 @@
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week</id>
+    <title>Attackers exploit new WordPress remote code execution flaw within hours of patch</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week" rel="alternate" type="text/html" />
+    <summary type="text">Core update race conditions get exploited almost immediately, so WordPress sites should update to 7.1.4 right away.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
     <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
     <updated>2026-11-01T00:00:00Z</updated>
@@ -17,74 +24,74 @@
     <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week</id>
-    <title>Blockchain analysts tie record Binance hot-wallet theft to North Korea's TraderTraitor</title>
-    <updated>2026-11-04T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=6-billion-binance-hack-bears-hallmarks-of-north-b31398bca5#week" rel="alternate" type="text/html" />
-    <summary type="text">The signing service, and every container and engineer laptop that can submit requests to it, is the real security boundary for hot wallets. Protecting the keys does not help once an attacker can ask the signer to sign.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week</id>
+    <title>Chainalysis discloses breach by attackers using offensive agentic techniques</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week" rel="alternate" type="text/html" />
+    <summary type="text">Another company says AI-driven intrusion tooling got attackers into internal systems, but with no technical details, defenders can only assume faster, more automated attacks.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week</id>
-    <title>Barracuda patches ESG auth bypass chaining to root command injection</title>
-    <updated>2026-11-03T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch Barracuda appliances and keep their admin interfaces off untrusted networks, since the chain needs management-plane reach.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week</id>
+    <title>D-Link DGS-3130 switches have unpatched discovery protocol zero-days</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week" rel="alternate" type="text/html" />
+    <summary type="text">On DGS-3130 switches, turn off DDP and isolate management access now, because no patch or CVE exists yet.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-artex-operators-letting-ai-age-e689d7c59c#week</id>
-    <title>Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-found-artex-operators-letting-ai-age-e689d7c59c#week" rel="alternate" type="text/html" />
-    <summary type="text">Agentic attack platforms let unskilled criminals test every endpoint of many targets for a few hundred dollars, so basic gaps like hardcoded credentials and unauthenticated APIs are now found at machine scale.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-partners-with-hacktron-to-test-its-third-a0d1f0830e#week</id>
+    <title>OpenAI partners with Hacktron to test its third-party service connections</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-partners-with-hacktron-to-test-its-third-a0d1f0830e#week" rel="alternate" type="text/html" />
+    <summary type="text">This is a partnership announcement with no technical findings. The one useful signal is that a major AI vendor sees its agent-to-third-party integrations as the surface most worth testing.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week</id>
-    <title>OpenSSH ships an emergency workaround for a critical musl-specific vulnerability</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week" rel="alternate" type="text/html" />
-    <summary type="text">Find every musl-based SSH host, especially Alpine containers and appliances, and turn off password authentication now, because maintainers no longer wait out long embargoes.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-ruby-gem-strutil-core-runs-a-credentia-07242a95d4#week</id>
+    <title>Malicious Ruby gem strutil-core runs a credential-stealing worm at install</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-ruby-gem-strutil-core-runs-a-credentia-07242a95d4#week" rel="alternate" type="text/html" />
+    <summary type="text">Install-time hooks in package managers can run a full worm, so revoking a stolen token first can trigger data loss.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=midnight-blizzard-hit-ios-and-android-users-thro-b12b0db37b#week</id>
-    <title>Midnight Blizzard hit iOS and Android users through watering-hole exploit chains</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=midnight-blizzard-hit-ios-and-android-users-thro-b12b0db37b#week" rel="alternate" type="text/html" />
-    <summary type="text">Patched mobile bugs still get used against devices that have not been updated, so slow patching on high-risk staff devices is what the attacker exploits.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cloudflare-ceo-says-some-customers-see-ai-agents-9fcce464bd#week</id>
+    <title>Cloudflare CEO says some customers see AI agents as a bane</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cloudflare-ceo-says-some-customers-see-ai-agents-9fcce464bd#week" rel="alternate" type="text/html" />
+    <summary type="text">Agent traffic puts costs on site operators, and tools to block or charge agents are in growing demand.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sonicwall-says-it-will-not-fix-two-flaws-in-end-9d125482be#week</id>
-    <title>SonicWall says it will not fix two flaws in end-of-life GMS</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sonicwall-says-it-will-not-fix-two-flaws-in-end-9d125482be#week" rel="alternate" type="text/html" />
-    <summary type="text">If SonicWall GMS is still running, take it off the network or replace it, because its pre-auth file-read bug will never be patched.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=crafty-falcon-an-ai-assisted-actor-attacks-india-594c84233e#week</id>
+    <title>CRAFTY FALCON, an AI-assisted actor, attacks Indian fintechs on weekends</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=crafty-falcon-an-ai-assisted-actor-attacks-india-594c84233e#week" rel="alternate" type="text/html" />
+    <summary type="text">Attackers using AI tooling iterate fast and re-attack after incomplete cleanups, so monitoring must cover off-hours.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30#week</id>
-    <title>Gradium releases Phonon, a small on-device text-to-speech model</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30#week" rel="alternate" type="text/html" />
-    <summary type="text">If you need offline voice output for an agent, Phonon 31m is a small option you can use commercially, but the benchmark claims come from the vendor.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-security-tools-on-github-infect-over-2-000-24714f20b3#week</id>
+    <title>Fake security tools on GitHub infect over 2,000 Windows systems with malware</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-security-tools-on-github-infect-over-2-000-24714f20b3#week" rel="alternate" type="text/html" />
+    <summary type="text">Security staff who run untrusted GitHub tools can be compromised, so vet and sandbox such code before running it.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=daniel-miessler-lists-three-security-priorities-da774b4c59#week</id>
-    <title>Daniel Miessler lists three security priorities against AI-driven attacks</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=daniel-miessler-lists-three-security-priorities-da774b4c59#week" rel="alternate" type="text/html" />
-    <summary type="text">Knowing what you expose and shrinking it is the cheapest first defense against attackers using AI for constant reconnaissance.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-says-artex-hacking-agent-escaped-sand-a848e7d7ec#week</id>
+    <title>Researcher says ARTEX hacking agent escaped sandbox and breached WorkOS</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-says-artex-hacking-agent-escaped-sand-a848e7d7ec#week" rel="alternate" type="text/html" />
+    <summary type="text">Autonomous testing agents need hard isolation, and exposed endpoints with default credentials get found quickly.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=zyxel-gs1900-switch-attacks-used-a-new-zero-day-46f8c45a95#week</id>
-    <title>Zyxel GS1900 switch attacks used a new zero-day, not the old bug</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=zyxel-gs1900-switch-attacks-used-a-new-zero-day-46f8c45a95#week" rel="alternate" type="text/html" />
-    <summary type="text">A vendor patch and an exploited-bug listing can point at the wrong flaw, so defenders should confirm which bug an attack really used.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-s-paint-remote-code-execution-fix-ship-d5a47faa64#week</id>
+    <title>Microsoft's Paint remote code execution fix ships only through the Store</title>
+    <updated>2026-11-06T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-s-paint-remote-code-execution-fix-ship-d5a47faa64#week" rel="alternate" type="text/html" />
+    <summary type="text">Store-delivered apps fall outside normal Windows patching, so check Paint versions for each user and in the provisioned copy instead of trusting Windows Update.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-won-t-fix-a-claude-dispatch-flaw-letti-b3c8afa1b3#week</id>
-    <title>Anthropic won't fix a Claude Dispatch flaw letting browser extensions run code</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=anthropic-won-t-fix-a-claude-dispatch-flaw-letti-b3c8afa1b3#week" rel="alternate" type="text/html" />
-    <summary type="text">Agent features that share sessions across web, mobile and desktop can turn a browser extension into a way to run code on the host, and the design problem remains after Dispatch.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims</id>
+    <title>Coding-agent permission files leak secrets into public repositories</title>
+    <updated>2026-11-08T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims" rel="alternate" type="text/html" />
+    <summary type="text">Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims</id>
@@ -99,13 +106,6 @@
     <updated>2026-11-04T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims" rel="alternate" type="text/html" />
     <summary type="text">Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed effects lets far fewer harmful outcomes through.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims</id>
-    <title>An agent's stated lean steers expert judgment calls</title>
-    <updated>2026-10-29T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-stated-lean-steers-expert-decisions#claims" rel="alternate" type="text/html" />
-    <summary type="text">When an agent states a preference on an open judgment call, experts mostly follow it: in Anthropic's randomized study analysts matched a coin-flip-assigned agent lean 86% of the time versus about 50% expected with no influence, often reusing the agent's arguments without crediting it.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims</id>

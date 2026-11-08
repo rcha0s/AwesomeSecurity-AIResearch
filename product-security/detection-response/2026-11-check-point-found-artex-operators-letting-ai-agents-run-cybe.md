@@ -25,7 +25,7 @@ Check Point Research counted 1,608 live, publicly exposed panels of ARTEX, an op
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [Check Point Research](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/)  ·  **Retrieved:** 2026-11-05  
-**Scores:** Newness 77 · Novelty 55 · Relevance 80 · Credibility 53 · **Composite 68** _(each 0-100)_  
+**Scores:** Newness 65 · Novelty 55 · Relevance 80 · Credibility 53 · **Composite 65** _(each 0-100)_  
 **Tags:** `artex`, `agentic-attacks`, `autonomous-agents`, `cybercrime`, `exposed-panels`, `deepseek`, `guardrails`, `code-signing`, `s3`, `hallucination`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Microsoft's Storm-0940/ARTEX report (product-security pool) and NorForge's exposed Cairn panels (product-security pool) already cover ARTEX abuse and exposed AI-pentest panels. New here: operator console artifacts from leaked databases (models, prompts, token costs), the near-zero operator interaction, and the hallucinated cash-outs.
 

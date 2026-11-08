@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_26 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-08_
+_27 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-08_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -225,7 +225,7 @@ Agents with tool/network access during training or evaluation can actively disco
 
 **Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
 
-<details><summary>Evidence (5)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -234,6 +234,7 @@ Agents with tool/network access during training or evaluation can actively disco
 | supports | [UK AISI resumes most cyber evals after August incident with internet off, two independent egress blocks and a blocking LLM monitor](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities) | Oct 7, 2026 |
 | supports | [OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents](https://openai.com/index/how-we-detect-frontier-model-misalignment) | Oct 29, 2026 |
 | supports | [OpenAI describes its layered monitor for misbehaving frontier agents](https://alignment.openai.com/how-we-detect-frontier-model-misalignment/) | Oct 29, 2026 |
+| supports | [OpenAI says GPT-6 Cyber exploits better and stays within authorized scope](https://openai.com/index/introducing-gpt-6-cyber) | Nov 5, 2026 |
 
 </details>
 
@@ -298,7 +299,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 
 **Conditions —** Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -306,6 +307,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 | supports | [CyberStrikeAI Uses 44 AI Agents to Automate Hacking Operations Against Japan Targets](https://thehackernews.com/2026/10/cyberstrikeai-uses-44-ai-agents-to.html) | Oct 27, 2026 |
 | supports | [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) | Oct 29, 2026 |
 | supports | [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) | Nov 5, 2026 |
+| supports | [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) | Nov 5, 2026 |
 
 </details>
 
@@ -473,6 +475,26 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
+
+</details>
+
+<a id="claim-agent-permission-files-leak-secrets"></a>
+
+### Coding-agent permission files leak secrets into public repositories
+
+`agent-permission-files-leak-secrets` · confidence **0.60** · Agent & Harness Security · standing since Nov 8, 2026
+
+Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.
+
+**Do this —** Treat agent permission, transcript and memory files as secret-bearing: gitignore them per repo, rotate any credential they ever held, approve command patterns that reference environment variables instead of literal secrets, and add command-aware rules (PGPASSWORD=, sshpass -p, Authorization: Bearer) to secret scanning of agent folders and git history.
+
+**Conditions —** Measured on public GitHub copies of Claude Code's local settings file; 'real secret' was screened by rules and an LLM reviewer, not validity-tested, and does not by itself show how other agents' config files behave.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again) | Nov 7, 2026 |
 
 </details>
 

@@ -2,12 +2,17 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_8 vetted findings · updated 2026-11-08 · ranked by composite · findings from the latest 31 days · [55 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-11-08 · ranked by composite · findings from the latest 31 days · [56 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[D-Link DGS-3130 switches have unpatched discovery protocol zero-days](https://www.bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches/)**
+- **[OpenAI partners with Hacktron to test its third-party service connections](https://openai.com/index/partnering-with-hacktron)**
+- **[Malicious Ruby gem strutil-core runs a credential-stealing worm at install](https://socket.dev/blog/shai-hulud-descendant-malicious-ruby-gem?utm_medium=feed)**
+- **[Fake security tools on GitHub infect over 2,000 Windows systems with malware](https://www.bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers/)**
+- **[Microsoft's Paint remote code execution fix ships only through the Store](https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html)**
 - **[Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/)**
   _Why now: First look inside criminals' agent consoles (models, prompts, costs) shows autonomous fleets finding commodity web gaps at scale; it continues the ARTEX abuse story and gives concrete gaps to close. · trending · newsworthy · high-relevance_
 - **[OpenSSH ships an emergency workaround for a critical musl-specific vulnerability](https://hachyderm.io/@damienmiller/117563026759098135)**
@@ -16,9 +21,9 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[SonicWall says it will not fix two flaws in end-of-life GMS](https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/)**
 - **[Daniel Miessler lists three security priorities against AI-driven attacks](https://danielmiessler.com/blog/post-ai-security-floor)**
 - **[Zyxel GS1900 switch attacks used a new zero-day, not the old bug](https://www.securityweek.com/zyxel-switch-hacks-blamed-on-patched-flaw-actually-exploited-a-zero-day/)**
+- **[Attackers backdoor Linux servers through a trojanized Control Web Panel web server](https://www.bleepingcomputer.com/news/security/hackers-backdoor-linux-servers-using-trojanized-cwp-web-server/)**
 - **[Chainguard adds a separate feed for security fixes that break compatibility](https://www.chainguard.dev/unchained/chainguard-endpoints-now-handle-breaking-changes)**
 - **[Attackers raised freezer temperature limits at three French blood bank sites](https://www.securityweek.com/cyberattack-hits-french-blood-bank-site-but-no-blood-products-are-compromised/)**
-- **[Attackers backdoor Linux servers through a trojanized Control Web Panel web server](https://www.bleepingcomputer.com/news/security/hackers-backdoor-linux-servers-using-trojanized-cwp-web-server/)**
 - **[Apache OFBiz patches 46 flaws, including a pre-auth RCE](https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html)**
 - **[Backdoored ARTEX Docker image gives root shell on 62 consoles](https://thehackernews.com/2026/11/backdoored-docker-image-for-artex-ai.html)**
 - **[Check Point sponsored post lists five tests for exposure management platforms](https://thehackernews.com/2026/11/is-your-exposure-management-platform.html)**
@@ -42,6 +47,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Imperva tracks StyleSmuggler Magento exploitation dropping the PSK Agent Go RAT](https://www.imperva.com/blog/stylesmuggler-exploitation-deploys-psk-agent-rat-against-magento-stores/)**
 - **[Trail of Bits uses Codex to backport security fixes to stable Linux](https://blog.trailofbits.com/2026/11/02/backporting-security-fixes-at-scale-with-codex/)**
 - **[Google disrupts 1.3 million-device Android botnet, blames TV box maker Videostrong](https://thehackernews.com/2026/11/google-disrupts-13-million-device.html)**
+- **[Criminals exploit maximum-severity Node-RED flaw to deploy a Linux bot](https://www.theregister.com/security/2026/11/02/max-severity-bug-in-widely-used-ot-programming-tool-exploited-to-deliver-linux-malware/5307086)**
 - **[uCreator Android spyware clones WeChat accounts and targets mobile wallet users](https://thehackernews.com/2026/11/weekly-recap-critical-cves-linux-ddos.html)**
 - **[Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/)**
   _Why now: The week's most widely covered developer-supply-chain incident (Wired, Ars, BleepingComputer, The Register, DoublePulsar), and Microsoft's write-up gives concrete artifacts to hunt and the fact that uninstalling the extension does not… · widely-reported · newsworthy · timely · high-relevance_
@@ -207,40 +213,40 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **79.1** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **76.1** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **62.64** · Oct 27, 2026 · 🔗 +1 sources  
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **62.14** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **57.5** · Oct 19, 2026  
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **57.0** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## Application Security
 
-- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **58.04** · Oct 9, 2026  
+- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](appsec/2026-10-watchtowr-breaks-papercut-ng-mf-patches-again-with-an-auth-b.md)** · composite **57.54** · Oct 9, 2026  
   When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.  
   _[watchTowr Labs](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)_
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **55.38** · Oct 27, 2026  
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **54.88** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
 ## AI in the SDLC
 
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **56.75** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **56.25** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **51.5** · Oct 15, 2026  
+- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **51.0** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **46.25** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **45.75** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 
