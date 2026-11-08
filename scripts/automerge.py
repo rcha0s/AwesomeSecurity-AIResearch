@@ -8,7 +8,10 @@ reads trees but runs nothing. The decision itself is `merge_guard.evaluate`.
 
   select   (read-only job)  evaluate every open claude/scan-* PR; write a step
                             summary; emit `number`/`sha` of the oldest that passes
-                            the path guard, for the read-only test job to test.
+                            the path guard, for the read-only test job to test,
+                            skipping a head the gate already refused; and the
+                            `rebuild_*` of the oldest that conflicts with main, for
+                            the rebuild job (scripts/rebuild_pr.py).
   decide   (write job)      re-fetch and re-evaluate everything (the head must still
                             be the SHA that was tested), report each verdict, and in
                             `merge` mode merge the tested PR with `sha=<that SHA>`.
@@ -23,6 +26,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -48,7 +52,12 @@ def settings(config_path: Path) -> dict:
         cfg = {}
     mode = cfg.get("mode") if cfg.get("mode") in MODES else "shadow"
     method = cfg.get("merge_method") if cfg.get("merge_method") in MERGE_METHODS else "squash"
-    return {"mode": mode, "merge_method": method}
+    # Rebuilding a conflicting scan PR writes to its branch: merge mode and an explicit true.
+    return {
+        "mode": mode,
+        "merge_method": method,
+        "rebuild": mode == "merge" and cfg.get("rebuild_conflicts") is True,
+    }
 
 
 # ---------------------------------------------------------------- GitHub / git I/O
@@ -159,27 +168,146 @@ def conflicts_with_main(repo: str, number: int) -> bool:
         return False
 
 
+GATE_AUTHOR = "github-actions[bot]"
+BRANCH = re.compile(r"claude/scan-[A-Za-z0-9._-]{1,100}")
+REBUILT = re.compile(r"-rebuilt-[0-9a-f]{8}$")
+TESTS_FAILED = "in-workflow tests or integrity checks failed"
+
+
+def rebuild_failed(main_sha: str) -> str:
+    return f"rebuild on main {main_sha[:12]} failed"
+
+
+def refusals(repo: str, number: int, sha: str) -> set[str]:
+    """The reasons this workflow already gave when it refused this exact head. Only
+    its own comments count; an error reads as none."""
+    try:
+        comments = gh_pages(f"repos/{repo}/issues/{number}/comments")
+    except (subprocess.CalledProcessError, RuntimeError, ValueError, json.JSONDecodeError):
+        return set()
+    found: set[str] = set()
+    for c in comments:
+        body = c.get("body") or ""
+        if (
+            (c.get("user") or {}).get("login") == GATE_AUTHOR
+            and body.startswith(MARKER)
+            and f"Evaluated head `{sha[:12]}`" in body
+            and "): refused" in body
+        ):
+            found.update(line.strip() for line in body.splitlines())
+    return found
+
+
+def triage(repo: str, pr: dict, verdict: mg.Verdict, main_sha: str) -> str:
+    """What select does with one PR: test, rebuild, skip, or nothing (refused).
+
+    A head that conflicts with main fails the test job's merge every run, and a
+    head whose tests failed fails them again: testing either first starved every
+    newer scan PR behind it (#165, 11-06). Guard refusals (a hold label, a draft)
+    are re-judged every run, so removing the label is enough to retry."""
+    if not verdict.ok:
+        return "refused"
+    seen = refusals(repo, pr["number"], pr["head"]["sha"])
+    if conflicts_with_main(repo, pr["number"]):
+        return "skip-rebuild" if rebuild_failed(main_sha) in seen else "rebuild"
+    return "skip" if TESTS_FAILED in seen else "test"
+
+
+STATES = {
+    "refused": "refused",
+    "test": "passes the path guard",
+    "rebuild": "passes the path guard; conflicts with main, to be rebuilt on main",
+    "skip": "passes the path guard; its tests already failed on this head, skipped",
+    "skip-rebuild": "passes the path guard; conflicts with main; rebuild already failed",
+    "no-rebuild": "passes the path guard; conflicts with main, skipped (rebuild is off)",
+}
+
+
+def rebuilt_ref(ref: str, main_sha: str) -> str:
+    """claude/scan-2026-11-04-local -> claude/scan-2026-11-04-local-rebuilt-<main>."""
+    return f"{REBUILT.sub('', ref)}-rebuilt-{main_sha[:8]}"
+
+
 def cmd_select(repo: str, main_sha: str) -> int:
     conf = settings(ROOT / "config.yaml")
     lines = [f"## Auto-merge gate: select ({conf['mode']} mode)", ""]
-    chosen: dict | None = None
+    picks: dict[str, dict] = {}
     for pr in scan_prs(repo):
-        number, sha = pr["number"], pr["head"]["sha"]
+        number, sha, ref = pr["number"], pr["head"]["sha"], pr["head"]["ref"]
         verdict = judge(repo, number, sha, main_sha)
-        state = "passes the path guard" if verdict.ok else "refused"
-        # A head that conflicts with main fails the test job's merge on every run;
-        # testing it first blocked every newer scan PR behind it (11-06, #165).
-        skip = verdict.ok and conflicts_with_main(repo, number)
-        if skip:
-            state += "; conflicts with main, skipped (needs a manual merge of main)"
-        lines.append(f"- #{number} `{sha[:12]}`: {state}")
+        action = triage(repo, pr, verdict, main_sha)
+        new_ref = rebuilt_ref(ref, main_sha)
+        if action == "rebuild" and not (conf["rebuild"] and BRANCH.fullmatch(new_ref)):
+            action = "no-rebuild"
+        lines.append(f"- #{number} `{sha[:12]}`: {STATES[action]}")
         lines += [f"  - {r}" for r in verdict.reasons[:10]]
-        if verdict.ok and not skip and chosen is None:
-            chosen = {"number": str(number), "sha": sha}
-    if not chosen:
+        if action in ("test", "rebuild"):
+            picks.setdefault(action, {"number": str(number), "sha": sha, "ref": new_ref})
+    if "test" not in picks:
         lines.append("- nothing to test")
     summary(lines)
-    output(**(chosen or {"number": "", "sha": ""}))
+    test, rb = picks.get("test", {}), picks.get("rebuild", {})
+    output(number=test.get("number", ""), sha=test.get("sha", ""),
+           rebuild_number=rb.get("number", ""), rebuild_sha=rb.get("sha", ""),
+           rebuild_ref=rb.get("ref", ""))  # fmt: skip
+    return 0
+
+
+# ---------------------------------------------------------------- rebuild (write job)
+
+
+def tree_reasons(main_sha: str, commit: str) -> list[str]:
+    """The rebuilt commit must sit directly on main and change only content."""
+    reasons = []
+    if git("rev-parse", f"{commit}^@").split() != [main_sha]:
+        reasons.append("rebuilt commit's only parent is not main")
+    raw = git("diff", "--raw", "-z", "--no-renames", "--no-ext-diff", main_sha, commit)
+    changes = mg.parse_raw_diff(raw)
+    if not changes:
+        reasons.append("no changes")
+    for change in changes:
+        bad = mg.mode_reason(change) or mg.path_reason(change.path)
+        if bad:
+            reasons.append(f"{mg.display(change.path)}: {bad}")
+    return reasons
+
+
+def cmd_check_tree(main_sha: str, commit: str) -> int:
+    if not mg.SHA.fullmatch(commit):
+        print("check-tree: --commit must be a 40-hex SHA", file=sys.stderr)
+        return 1
+    reasons = tree_reasons(main_sha, commit)
+    for r in reasons:
+        print(f"check-tree: {r}", file=sys.stderr)
+    return 1 if reasons else 0
+
+
+def cmd_replace(repo: str, main_sha: str, number: str, sha: str, new_ref: str) -> int:
+    """Open the rebuilt branch as a PR and close the one it replaces (its branch is
+    kept). If the old head moved since select, nothing is opened: the rebuilt
+    content is superseded, and the orphan branch is harmless."""
+    old = gh(f"repos/{repo}/pulls/{number}") or {}
+    if old.get("state") != "open" or (old.get("head") or {}).get("sha") != sha:
+        summary([f"- #{number} moved or closed since select; rebuilt PR not opened"])
+        return 0
+    title = f"{old.get('title') or 'chore: daily scan'} (rebuilt on main)"[:250]
+    body = (f"Rebuilt from #{number} (head `{sha[:12]}`) onto main `{main_sha[:12]}` by "
+            "`scripts/rebuild_pr.py`: data merged three ways, site re-rendered by main's "
+            "renderers. The auto-merge gate judges this PR like any other.")  # fmt: skip
+    new = gh(f"repos/{repo}/pulls", "-X", "POST", "-f", f"title={title}", "-f", f"head={new_ref}",
+             "-f", "base=main", "-f", f"body={body}") or {}  # fmt: skip
+    summary([f"- #{number} rebuilt on main as #{new.get('number')} (`{new_ref}`)"])
+    note = f"Replaced by #{new.get('number')}: rebuilt on main `{main_sha[:12]}` by code."
+    gh(f"repos/{repo}/issues/{number}/comments", "-X", "POST", "-f", f"body={note}")
+    gh(f"repos/{repo}/pulls/{number}", "-X", "PATCH", "-f", "state=closed")
+    return 0
+
+
+def cmd_rebuild_failed(repo: str, main_sha: str, number: str, sha: str) -> int:
+    """Record the failure on the PR so select stops retrying this (head, main) pair
+    and moves to the next conflicting PR; the watchdog reports it as stuck."""
+    mode = settings(ROOT / "config.yaml")["mode"]
+    post_once(repo, int(number), comment_body(sha, "refused", mode, [rebuild_failed(main_sha)]))
     return 0
 
 
@@ -259,7 +387,7 @@ def outcome_for(
     if not verdict.ok:
         return "refused", verdict.reasons
     if tests == "failure":
-        return "refused", ["in-workflow tests or integrity checks failed"]
+        return "refused", [TESTS_FAILED]
     if tests != "success":
         return "not tested this run", []
     problems = blockers(repo, sha)
@@ -300,18 +428,38 @@ def cmd_decide(repo: str, main_sha: str, number: str, sha: str, tests: str) -> i
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
-    ap.add_argument("command", choices=("select", "decide"))
-    ap.add_argument("--repo", required=True)
+    commands = ("select", "decide", "check-tree", "replace", "rebuild-failed")
+    ap.add_argument("command", choices=commands)
+    ap.add_argument("--repo", default="")
     ap.add_argument("--main-sha", required=True)
     ap.add_argument("--number", default="")
     ap.add_argument("--sha", default="")
     ap.add_argument("--tests", default="")
+    ap.add_argument("--commit", default="")
+    ap.add_argument("--new-ref", default="")
     a = ap.parse_args(argv)
     if not mg.SHA.fullmatch(a.main_sha):
         print("automerge: --main-sha must be a 40-hex SHA", file=sys.stderr)
         return 1
+    if a.command == "check-tree":
+        return cmd_check_tree(a.main_sha, a.commit)
+    if not a.repo:
+        print("automerge: --repo is required", file=sys.stderr)
+        return 1
     if a.command == "select":
         return cmd_select(a.repo, a.main_sha)
+    if a.command in ("replace", "rebuild-failed"):
+        if not (a.number.isdigit() and mg.SHA.fullmatch(a.sha)):
+            print(f"{a.command}: malformed PR number/SHA", file=sys.stderr)
+            return 1
+        if a.command == "rebuild-failed":
+            return cmd_rebuild_failed(a.repo, a.main_sha, a.number, a.sha)
+        if not BRANCH.fullmatch(a.new_ref) or not REBUILT.search(a.new_ref):
+            print(
+                "replace: --new-ref must be a claude/scan-*-rebuilt-<sha8> branch", file=sys.stderr
+            )
+            return 1
+        return cmd_replace(a.repo, a.main_sha, a.number, a.sha, a.new_ref)
     return cmd_decide(a.repo, a.main_sha, a.number, a.sha, a.tests)
 
 
