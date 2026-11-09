@@ -19,7 +19,7 @@ OpenAI compared six models on its Respecting Warnings agent safety eval against 
 
 **Topic:** AI Research  ·  **Domain:** Evaluation & Benchmarks  
 **Source:** [OpenAI Alignment Blog](https://alignment.openai.com/eval-production-behavior-gap/)  ·  **Retrieved:** 2026-11-05  
-**Scores:** Newness 65 · Novelty 68 · Relevance 72 · Credibility 73 · **Composite 69** _(each 0-100)_  
+**Scores:** Newness 62 · Novelty 68 · Relevance 72 · Credibility 73 · **Composite 68** _(each 0-100)_  
 **Tags:** `eval-awareness`, `agent-evals`, `safety-evals`, `eval-production-gap`, `chain-of-thought`, `openai`, `codex`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Needham et al. (2025), 'Large Language Models Often Know When They Are Being Evaluated' (cited by the post); no tracker entry found covering eval-production gaps or objective-awareness interventions
 

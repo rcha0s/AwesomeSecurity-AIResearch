@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--08-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-20-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-77-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--09-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-20-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-79-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -21,28 +21,32 @@ _Your focus areas, last 7 days: most areas matched first, then newest._
 _Most covered or exploited in the last 7 days._
 
 1. **[Attackers exploit new WordPress remote code execution flaw within hours of patch](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week)** · _Product Security · Nov 6, 2026 · 3 sources_
-2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 1, 2026 · 3 sources_
+2. **[OpenSSH ships an emergency workaround for a critical musl-specific vulnerability](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week)** · _Product Security · Nov 9, 2026 · 2 sources_
 3. **[Chainalysis discloses breach by attackers using offensive agentic techniques](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week)** · _AI Security · Nov 6, 2026 · 2 sources_
 
 ## This week's top stories
 
 _The last 7 days, newest first._
 
-1. **[D-Link DGS-3130 switches have unpatched discovery protocol zero-days](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week)** · _Product Security · Nov 6, 2026_
-2. **[OpenAI partners with Hacktron to test its third-party service connections](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-partners-with-hacktron-to-test-its-third-a0d1f0830e#week)** · _Product Security · Nov 6, 2026_
-3. **[Malicious Ruby gem strutil-core runs a credential-stealing worm at install](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-ruby-gem-strutil-core-runs-a-credentia-07242a95d4#week)** · _Product Security · Nov 6, 2026_
+1. **[Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-bee-js-npm-release-and-swarm-desktop-r-30416a4c82#week)** · _Product Security · Nov 9, 2026_
+2. **[Google DeepMind's AI agents cut the cost of attacking 1024-bit RSA](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-deepmind-s-ai-agents-make-1024-bit-rsa-ke-4eaac119e0#week)** · _Product Security · Nov 9, 2026_
+3. **[Bitter espionage group deploys new PapRAT backdoor against South Asian targets](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bitter-hackers-deploy-new-paprat-backdoor-in-cyb-26e58b9abb#week)** · _Product Security · Nov 9, 2026_
 
 ## Claim changes
 
-_3 changes in the last 7 days; earlier ones fill in, each with its date._
+_5 changes in the last 7 days; earlier ones fill in, each with its date._
 
-1. **Added:** [Coding-agent permission files leak secrets into public repositories](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims) · _current · Nov 8, 2026 · 1 source_  
+1. **Added:** [Output-only watermark audits can be evaded by the audited provider](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims) · _current · Nov 9, 2026 · 1 source_  
+   Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and…
+2. **Added:** [Poisoned optimizer feedback can plant trigger rules in agent Skills](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=skill-optimization-feedback-can-plant-backdoors#claims) · _current · Nov 9, 2026 · 1 source_  
+   When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final…
+3. **Added:** [Coding-agent permission files leak secrets into public repositories](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims) · _current · Nov 8, 2026 · 1 source_  
    Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and…
-2. **Added:** [Agent safety eval scores can misjudge how agents behave in production](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims) · _current · Nov 5, 2026 · 1 source_  
+4. **Added:** [Agent safety eval scores can misjudge how agents behave in production](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims) · _current · Nov 5, 2026 · 1 source_  
    An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting…
-3. **Added:** [Approve agent shell commands by observed effects, not command text](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims) · _current · Nov 4, 2026 · 1 source_  
+5. **Added:** [Approve agent shell commands by observed effects, not command text](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=approve-agent-commands-by-observed-effects#claims) · _current · Nov 4, 2026 · 1 source_  
    Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed…
-4. **Last reversal:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
+6. **Last reversal:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
    Replaces ~~Assumed TOON's input savings would carry to generation~~: Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on…
 
 ## Efficiency
@@ -68,4 +72,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-08 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-09 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

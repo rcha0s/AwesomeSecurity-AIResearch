@@ -24,7 +24,7 @@ OpenSSH 10.6p2 adds a workaround for a critical vulnerability. It affects Linux 
 
 **Topic:** Product Security  ·  **Domain:** Identity & Access  
 **Source:** [@Animux via Hacker News](https://hachyderm.io/@damienmiller/117563026759098135)  ·  **Author:** Animux  ·  **Retrieved:** 2026-11-05  
-**Scores:** Newness 65 · Novelty 52 · Relevance 75 · Credibility 55 · **Composite 63** _(each 0-100)_  
+**Scores:** Newness 62 · Novelty 52 · Relevance 75 · Credibility 60 · **Composite 63** _(each 0-100)_  
 **Tags:** `openssh`, `musl`, `alpine-linux`, `password-authentication`, `embargo`, `ai-bug-rediscovery`, `emergency-patch`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Product-security pool entry 'PHP says Chainguard broke the PHP2Shell embargo with patched images', which covers AI rediscovery shortening embargoes, and an earlier OpenSSH 10.6 hardening entry. No prior entry covers this musl/no-PAM bug.
 

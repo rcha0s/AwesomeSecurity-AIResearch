@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_33 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-08_
+_33 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-09_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -463,13 +463,14 @@ Vendors report that loading tool definitions only when needed cut tokens by 47% 
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Anthropic Engineering: code execution with mcp](https://www.anthropic.com/engineering/code-execution-with-mcp) | Nov 4, 2025 |
 | supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
 | supports | [Cursor: dynamic context discovery](https://cursor.com/blog/dynamic-context-discovery) | Jan 6, 2026 |
+| supports | [ratel-ai/ratel](https://github.com/ratel-ai/ratel) | Nov 8, 2026 |
 
 </details>
 

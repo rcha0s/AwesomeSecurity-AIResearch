@@ -69,10 +69,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 65,
+        "newness": 62,
         "credibility": 73.2,
-        "composite": 69.23,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 68.48,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier confirmed every number; caveat: the objective-framing intervention ran on one model (GPT-6.1 Sol), not all six.",
@@ -153,10 +153,10 @@
       "scores": {
         "novelty": 33,
         "relevance": 85,
-        "newness": 65,
+        "newness": 62,
         "credibility": 70.8,
-        "composite": 62.27,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 61.52,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -473,10 +473,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 87,
-        "newness": 12,
+        "newness": 11,
         "credibility": 43.9,
-        "composite": 55.18,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 54.93,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
       "verified": true,
@@ -547,10 +547,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 54.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 54.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -588,10 +588,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 70,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 54.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 54.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "METR's earlier Risk Report reviews and Frontier Risk Report; AI-control literature on monitor evasion; new here is the concrete critique that covert-capability benchmarks miss justification-based monitor evasion seen in real incidents.",
@@ -707,10 +707,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 68,
-        "newness": 65,
+        "newness": 62,
         "credibility": 69.6,
-        "composite": 53.69,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 52.94,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Microsoft's synthetic, time-evolving enterprise tenants for Copilot evals (already in ai-research) cover building eval worlds without customer data. Legora adds a practitioner account: domain-expert-built RL environments, per-practice-area heat maps that show model regressions, a fixed failure taxonomy with flagged LLM checks, and a pilot-sample pattern for bulk extraction.",
@@ -789,10 +789,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 65,
+        "newness": 62,
         "credibility": 70.8,
-        "composite": 52.37,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 51.62,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported all three lessons; the figures are vendor-reported, best-case, single-dataset (Natural Questions), and learned routing and query adaptation for ANN search have substantial prior art, so novelty takes its lower score.",
@@ -820,6 +820,76 @@
         "issues": []
       },
       "grounding_score": 1.0
+    },
+    {
+      "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
+      "scores": {
+        "novelty": 70,
+        "relevance": 65,
+        "newness": 11,
+        "credibility": 55.0,
+        "composite": 51.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "POPE yes/no readout uses token IDs the model never emits",
+      "source_url": "https://arxiv.org/abs/2610.25964",
+      "article_url": "https://arxiv.org/abs/2610.25964",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "related_claims": [],
+      "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
+      "lessons": [
+        {
+          "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
+          "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
+          "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
+          "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
+      "tags": [
+        "evals",
+        "benchmarks",
+        "tokenization",
+        "reproducibility",
+        "vlm"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Assert logit-readout tokens appear in greedy decodes",
+        "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
+      },
+      "retrieved_at": "2026-10-22T01:39:40+00:00",
+      "needs_review": false,
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov"
+      ]
     },
     {
       "id": "dfkhelper-token-goat-6824893977",
@@ -889,10 +959,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 60,
-        "newness": 65,
+        "newness": 62,
         "credibility": 47.2,
-        "composite": 51.83,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 51.08,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
       "verified": true,
@@ -965,10 +1035,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 50,
-        "newness": 65,
+        "newness": 62,
         "credibility": 66.7,
-        "composite": 51.76,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 51.01,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
       "verified": true,
@@ -982,76 +1052,6 @@
         "issues": []
       },
       "grounding_score": 1.0
-    },
-    {
-      "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
-      "scores": {
-        "novelty": 70,
-        "relevance": 65,
-        "newness": 12,
-        "credibility": 55.0,
-        "composite": 51.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "POPE yes/no readout uses token IDs the model never emits",
-      "source_url": "https://arxiv.org/abs/2610.25964",
-      "article_url": "https://arxiv.org/abs/2610.25964",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-19",
-      "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 55.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "related_claims": [],
-      "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
-      "lessons": [
-        {
-          "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
-          "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
-          "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
-          "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
-      "tags": [
-        "evals",
-        "benchmarks",
-        "tokenization",
-        "reproducibility",
-        "vlm"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Assert logit-readout tokens appear in greedy decodes",
-        "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
-      },
-      "retrieved_at": "2026-10-22T01:39:40+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov"
-      ]
     },
     {
       "id": "1password-s-ai-patching-benchmark-is-misleading-6437abf21b",
@@ -1196,10 +1196,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 55,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 49.35,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 49.1,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported all claims; the ranking inversion is shown in simulation, and the accepted-hacks result is cited from OpenAI's earlier obfuscation paper, not new here. Verifier novelty 62; kept 62.",
@@ -1279,10 +1279,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 65,
+        "newness": 62,
         "credibility": 70.0,
-        "composite": 49.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 48.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -1360,10 +1360,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 80,
-        "newness": 12,
+        "newness": 11,
         "credibility": 71.9,
-        "composite": 48.28,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 48.03,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
@@ -1395,95 +1395,6 @@
         "issues": []
       },
       "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "GRSE credits multi-agent skills by contrasting repeated runs, not presence",
-      "source_url": "https://arxiv.org/abs/2610.27227",
-      "summary": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
-      "takeaway": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
-      "lessons": [
-        {
-          "point": "Crediting skills by co-occurrence is broken: a skill that hurts can still get rewarded if it shows up in successful runs.",
-          "excerpt": "presence is not responsibility: a harmful skill active in successful runs still earns positive credit",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Mechanism: repeat each question under identical libraries and contrast the outcomes to attribute credit, as in GRPO.",
-          "excerpt": "it executes each question several times under the same skill libraries and contrasts the executions to credit agent--skill pairs",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Contrastive credit makes self-evolution robust to poisoned skill libraries, where presence-based credit gets worse than where it started.",
-          "excerpt": "starting from planted harmful skills, it credits every planted skill with the correct sign and recovers the score of a clean library (+6.3points), whereas MASkills misattributes two and falls below its starting point.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The authors attribute the gains to better-grounded retrieval rather than unsupported answers.",
-          "excerpt": "Its gains rest on better-grounded retrieval rather than answers given without evidence",
-          "confidence": 0.65,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "skill-evolution",
-        "credit-assignment",
-        "multi-agent",
-        "self-improving-agents",
-        "skill-poisoning",
-        "grpo"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Group-relative credit check before promoting or retiring a skill",
-        "detail": "For each candidate skill edit, run the same task batch N times with and without the skill (same seeds and library otherwise). Use the outcome difference as the skill's credit, and require a consistent sign before committing. Include deliberately harmful skills as canaries to confirm the credit signal flags them."
-      },
-      "scores": {
-        "novelty": 58,
-        "relevance": 65,
-        "newness": 12,
-        "credibility": 50.8,
-        "composite": 47.52,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
-      "prior_art": "The archive has 'Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?' (per-skill contribution eviction, judge false-pass threshold) and 'Pre-Commit Gating against Skill Contamination' (verifier gatekeeper). GRSE differs by solving multi-agent credit assignment with GRPO-style contrastive reruns instead of judge or verifier gating, and shows it recovers from planted harmful skills. The evidence here is abstract-level only.",
-      "related_claims": [
-        "harness-evolution-gains-need-held-out-attribution"
-      ],
-      "article_url": "https://arxiv.org/abs/2610.27227",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-19",
-      "raw_path": "data/_raw/which-agent-s-skill-should-change-group-relative-448df04fa1.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 50.8,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Hugging Face Daily Papers",
-      "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
-      "retrieved_at": "2026-10-25T16:45:20+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 5 > 4"
-        ]
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "grse-credit-multi-agent-skills-by-contrasting-repeated-runs"
-      ]
     },
     {
       "id": "our-framework-for-reporting-model-misalignment-19d153bc9f",
@@ -1575,14 +1486,103 @@
       ]
     },
     {
+      "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "GRSE credits multi-agent skills by contrasting repeated runs, not presence",
+      "source_url": "https://arxiv.org/abs/2610.27227",
+      "summary": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
+      "takeaway": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
+      "lessons": [
+        {
+          "point": "Crediting skills by co-occurrence is broken: a skill that hurts can still get rewarded if it shows up in successful runs.",
+          "excerpt": "presence is not responsibility: a harmful skill active in successful runs still earns positive credit",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Mechanism: repeat each question under identical libraries and contrast the outcomes to attribute credit, as in GRPO.",
+          "excerpt": "it executes each question several times under the same skill libraries and contrasts the executions to credit agent--skill pairs",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Contrastive credit makes self-evolution robust to poisoned skill libraries, where presence-based credit gets worse than where it started.",
+          "excerpt": "starting from planted harmful skills, it credits every planted skill with the correct sign and recovers the score of a clean library (+6.3points), whereas MASkills misattributes two and falls below its starting point.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The authors attribute the gains to better-grounded retrieval rather than unsupported answers.",
+          "excerpt": "Its gains rest on better-grounded retrieval rather than answers given without evidence",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "skill-evolution",
+        "credit-assignment",
+        "multi-agent",
+        "self-improving-agents",
+        "skill-poisoning",
+        "grpo"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Group-relative credit check before promoting or retiring a skill",
+        "detail": "For each candidate skill edit, run the same task batch N times with and without the skill (same seeds and library otherwise). Use the outcome difference as the skill's credit, and require a consistent sign before committing. Include deliberately harmful skills as canaries to confirm the credit signal flags them."
+      },
+      "scores": {
+        "novelty": 58,
+        "relevance": 65,
+        "newness": 11,
+        "credibility": 50.8,
+        "composite": 47.27,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
+      "prior_art": "The archive has 'Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?' (per-skill contribution eviction, judge false-pass threshold) and 'Pre-Commit Gating against Skill Contamination' (verifier gatekeeper). GRSE differs by solving multi-agent credit assignment with GRPO-style contrastive reruns instead of judge or verifier gating, and shows it recovers from planted harmful skills. The evidence here is abstract-level only.",
+      "related_claims": [
+        "harness-evolution-gains-need-held-out-attribution"
+      ],
+      "article_url": "https://arxiv.org/abs/2610.27227",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-19",
+      "raw_path": "data/_raw/which-agent-s-skill-should-change-group-relative-448df04fa1.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 50.8,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
+      "retrieved_at": "2026-10-25T16:45:20+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0,
+      "previous_slugs": [
+        "grse-credit-multi-agent-skills-by-contrasting-repeated-runs"
+      ]
+    },
+    {
       "id": "decisionpivot-a-diagnostic-benchmark-for-decisio-792cc8e267",
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 47.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 47.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.",
@@ -1642,71 +1642,84 @@
       "grounding_score": 1.0
     },
     {
-      "candidate_id": "rubric-curriculum-rl-exploiting-the-generation-v-f6e718277e",
+      "id": "ratel-ai-ratel-6453f7c140",
       "topic": "ai-research",
-      "domain": "air.evals",
-      "related_claims": [],
-      "title": "Rubric Curriculum RL uses pairwise rubric judging to make reward hacking harder",
-      "summary": "Reinforcement learning with verifiable rewards (RLVR) works well for math and code, but open-ended tasks have no ground-truth checker. Rubric Curriculum RL (RcRL) combines pairwise comparisons between rollouts with a changing curriculum over rubric criteria. The authors say this gives a sharper signal than absolute scoring and is harder for the policy to game. It reports a 70.5% human win rate over the base model on creative writing, and a 14.6% gain on HealthBench (25.4% on the consensus subset).",
+      "domain": "air.cost-efficiency",
+      "title": "Ratel loads agent tools and skills per turn through BM25 search",
+      "summary": "Ratel indexes an agent's tools and skills into catalogs and exposes a search tool, so each turn loads only matching capabilities instead of every schema up front. Since the archived August entry on this repo, the README adds always-needed 'facts' that are re-injected only when stale, opt-in semantic and hybrid ranking, framework adapters, telemetry, and an MCP (Model Context Protocol) front end for coding agents. Its token and accuracy claims point to the vendor's own benchmark and are not shown in the README.",
+      "takeaway": "A packaged version of on-demand tool loading; the idea is not new and the repo was covered earlier, so evaluate it only if you need a drop-in library.",
       "lessons": [
         {
-          "point": "Fixed rubric judges are imprecise and do not change, so a policy trained against them can overfit or reward-hack them.",
-          "excerpt": "rubric-based judges are often imprecise and stationary, so policies can overfit or reward hack them",
-          "confidence": 0.6,
+          "point": "Always-needed grounding is kept apart from searchable tools. It is pushed into context and re-injected only when it has fallen out of the recent transcript.",
+          "excerpt": "is registered as *facts* and pushed into context, re-injected only when it isn't already fresh in the transcript.",
+          "confidence": 0.75,
           "grounded": true
         },
         {
-          "point": "Pairwise preferences over outputs, combined with a rotating set of rubric criteria, gave a more discriminative signal than absolute scores.",
-          "excerpt": "We combine pairwise preferences over rollouts with a curriculum over rubric criteria, yielding a more discriminative signal than absolute scoring and a non-stationary objective.",
-          "confidence": 0.65,
+          "point": "The default BM25 index now covers tool names, descriptions and argument names, and dense ranking stays optional.",
+          "excerpt": "applied to each tool's name, description and argument names, and to skill names, descriptions, and tags",
+          "confidence": 0.75,
           "grounded": true
         },
         {
-          "point": "Baselines stopped improving within a few hundred steps, while RcRL kept output diversity and kept improving past 1000 steps.",
-          "excerpt": "Whereas baselines plateau within a few hundred steps, RcRL preserves output entropy and keeps improving past 1000 steps.",
-          "confidence": 0.6,
+          "point": "Semantic or hybrid ranking can be switched on per catalog or per call rather than globally.",
+          "excerpt": "Semantic and hybrid ranking are opt-in per catalog or per call",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The token and accuracy gains are self-reported by the vendor and point to its own benchmark site.",
+          "excerpt": "Across local, open-source, and frontier model setups, Ratel cuts token usage and recovers accuracy lost to tool overload",
+          "confidence": 0.4,
           "grounded": true
         }
       ],
-      "takeaway": "When an LLM judge grades open-ended output against a rubric, pairwise comparison with rotating criteria is more discriminative and harder to game than a fixed absolute score.",
       "tags": [
-        "rubric-grading",
-        "llm-as-judge",
-        "pairwise-preference",
-        "reward-hacking",
-        "rlvr"
+        "context-engineering",
+        "tool-selection",
+        "bm25",
+        "progressive-disclosure",
+        "token-cost",
+        "mcp"
       ],
       "actionable": {
-        "type": "takeaway",
-        "title": "Prefer pairwise rubric judging over absolute scores when iterating",
-        "detail": "When you repeatedly optimize prompts or harnesses against an LLM rubric judge, have the judge compare two candidate outputs on the same input instead of scoring each one alone. Rotate which rubric criteria it emphasizes across rounds so the system cannot overfit to one fixed scorer. Confirm the gains with a held-out human or second-judge check."
+        "type": "harness",
+        "title": "Keep always-needed context separate from searchable tools",
+        "detail": "If you add per-turn tool search to a harness, split the catalog into searchable tools/skills and a small set of always-on facts. Re-inject a fact only when it is no longer in the recent transcript. Measure tokens per task and tool-choice accuracy against an all-tools-loaded baseline on your own tasks, not the vendor benchmark."
       },
       "scores": {
-        "novelty": 30,
-        "relevance": 35,
-        "newness": 65,
-        "credibility": 72.0,
-        "composite": 46.55,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "novelty": 20,
+        "relevance": 58,
+        "newness": 62,
+        "credibility": 52.5,
+        "composite": 46.77,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
-      "verify_note": "Numbers match the abstract; 'harder to game' is the authors' argument, not a measured reward-hacking test.",
-      "prior_art": "Rubrics as Rewards (RaR), instance-specific rubric baselines, pairwise/GRPO-style comparison rewards, HealthBench",
-      "source_url": "http://arxiv.org/abs/2611.06244v1",
-      "article_url": "http://arxiv.org/abs/2611.06244v1",
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Archived entry on the same repo (ratel-ai-ratel-6453f7c140, 2026-08); Anthropic tool search and skills progressive disclosure",
+      "related_claims": [
+        "load-tool-definitions-on-demand",
+        "tool-count-degrades-agent-performance",
+        "few-distinct-tools-beat-many"
+      ],
+      "source_url": "https://github.com/ratel-ai/ratel",
+      "article_url": "https://github.com/ratel-ai/ratel",
       "tweet_url": null,
-      "author": null,
+      "author": "ratel-ai",
       "date": "2026-11",
-      "published": "2026-11-04",
-      "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "source_name": "ICML (via arXiv)",
-      "raw_path": "data/_raw/rubric-curriculum-rl-exploiting-the-generation-v-f6e718277e.txt",
-      "id": "rubric-curriculum-rl-uses-pairwise-rubric-judgin-ebb5c70a2c",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "published": "2026-11-08",
+      "raw_path": "data/_raw/ratel-ai-ratel-6453f7c140.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:context-engineering-retrieval-llm",
+      "source_rank": 52.5,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "ratel-ai/ratel",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
       "needs_review": true,
+      "readability_rewrite": "reverted summary, lessons[1].point",
       "readability": {
         "score": 100,
         "passed": true,
@@ -1767,10 +1780,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 70,
-        "newness": 12,
+        "newness": 11,
         "credibility": 70.2,
-        "composite": 46.53,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 46.28,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
@@ -1804,94 +1817,75 @@
       "grounding_score": 1.0
     },
     {
-      "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
+      "candidate_id": "rubric-curriculum-rl-exploiting-the-generation-v-f6e718277e",
       "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do",
-      "summary": "A recent \"Weight Space Programming\" paper reports that GPT-6 Astra can identify which game a small network (about 17k weights) was trained on by reading its weights, and can edit a 0.8B Qwen model's weights to improve its math results. Sean Goedecke argues neither result is superhuman. The game networks have labeled input channels tied to grid cells, so a three-line weight-norm heatmap reveals the game. The Qwen fix removed a loop that set in after 32k tokens, using a steering-style recipe like Heretic abliteration: contrast looping and non-looping texts, rank the weights that drive the difference, and trim them while testing.",
-      "takeaway": "Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than training does.",
-      "tags": [
-        "weight-space-programming",
-        "interpretability",
-        "steering-vectors",
-        "abliteration",
-        "recursive-self-improvement",
-        "capability-claims"
-      ],
+      "domain": "air.evals",
+      "related_claims": [],
+      "title": "Rubric Curriculum RL uses pairwise rubric judging to make reward hacking harder",
+      "summary": "Reinforcement learning with verifiable rewards (RLVR) works well for math and code, but open-ended tasks have no ground-truth checker. Rubric Curriculum RL (RcRL) combines pairwise comparisons between rollouts with a changing curriculum over rubric criteria. The authors say this gives a sharper signal than absolute scoring and is harder for the policy to game. It reports a 70.5% human win rate over the base model on creative writing, and a 14.6% gain on HealthBench (25.4% on the consensus subset).",
       "lessons": [
         {
-          "point": "The 'improved at mathematics' result fixed one narrow failure: the Qwen model looped after 32k tokens. It was not a general capability gain.",
-          "excerpt": "It had a specific problem where after 32k tokens it would get stuck in loops, so any mathematical task that needed more than 32k tokens would automatically fail",
-          "confidence": 0.85,
+          "point": "Fixed rubric judges are imprecise and do not change, so a policy trained against them can overfit or reward-hack them.",
+          "excerpt": "rubric-based judges are often imprecise and stationary, so policies can overfit or reward hack them",
+          "confidence": 0.6,
           "grounded": true
         },
         {
-          "point": "The model's weight edit followed a standard steering recipe: contrast looping and non-looping residuals, then attribute the difference to individual weights.",
-          "excerpt": "calculate the difference between the looping and non-looping residuals, measure how much each weight contributed to that difference",
-          "confidence": 0.8,
+          "point": "Pairwise preferences over outputs, combined with a rotating set of rubric criteria, gave a more discriminative signal than absolute scores.",
+          "excerpt": "We combine pairwise preferences over rollouts with a curriculum over rubric criteria, yielding a more discriminative signal than absolute scoring and a non-stationary objective.",
+          "confidence": 0.65,
           "grounded": true
         },
         {
-          "point": "Reading the game from the toy networks' weights is easy because the inputs are labeled and map to grid cells, so first-layer weight norms show the layout.",
-          "excerpt": "It’s thus relatively trivial to calculate",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The author's view is that LLMs will help AI research by improving training, not by editing weights directly, much as source code beats patching binaries. This is opinion, not a measured result.",
-          "excerpt": "Likewise, the best way to update the weights of a model is to train it normally.",
+          "point": "Baselines stopped improving within a few hundred steps, while RcRL kept output diversity and kept improving past 1000 steps.",
+          "excerpt": "Whereas baselines plateau within a few hundred steps, RcRL preserves output entropy and keeps improving past 1000 steps.",
           "confidence": 0.6,
           "grounded": true
         }
       ],
+      "takeaway": "When an LLM judge grades open-ended output against a rubric, pairwise comparison with rotating criteria is more discriminative and harder to game than a fixed absolute score.",
+      "tags": [
+        "rubric-grading",
+        "llm-as-judge",
+        "pairwise-preference",
+        "reward-hacking",
+        "rlvr"
+      ],
       "actionable": {
         "type": "takeaway",
-        "title": "Ask what baseline a 'superhuman' capability claim beats before acting on it",
-        "detail": "When a capability claim such as 'LLMs can program weights' arrives, check three things. Do this before changing plans: what the task's inputs give away (here, labeled input channels), how narrow the reported improvement is (here, one looping bug past 32k tokens), and whether a known human method (here, steering or abliteration) reproduces it. For harness builders, the practical lesson is that an agent with Python access can run known interpretability recipes on small open-weight models. It is not a reason to replace fine-tuning or training pipelines."
+        "title": "Prefer pairwise rubric judging over absolute scores when iterating",
+        "detail": "When you repeatedly optimize prompts or harnesses against an LLM rubric judge, have the judge compare two candidate outputs on the same input instead of scoring each one alone. Rotate which rubric criteria it emphasizes across rounds so the system cannot overfit to one fixed scorer. Confirm the gains with a held-out human or second-judge check."
       },
       "scores": {
-        "novelty": 45,
-        "relevance": 22,
-        "newness": 65,
-        "credibility": 65.0,
-        "composite": 46.1,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "novelty": 30,
+        "relevance": 35,
+        "newness": 62,
+        "credibility": 72.0,
+        "composite": 45.8,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
-      "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
-      "related_claims": [],
-      "corroborating_sources": [
-        {
-          "name": "Latent Space AINews",
-          "url": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/",
-          "published": "2026-11-03"
-        },
-        {
-          "name": "Simon Willison",
-          "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
-          "published": "2026-11-03"
-        }
-      ],
-      "source_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
-      "article_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
+      "verify_note": "Numbers match the abstract; 'harder to game' is the authors' argument, not a measured reward-hacking test.",
+      "prior_art": "Rubrics as Rewards (RaR), instance-specific rubric baselines, pairwise/GRPO-style comparison rewards, HealthBench",
+      "source_url": "http://arxiv.org/abs/2611.06244v1",
+      "article_url": "http://arxiv.org/abs/2611.06244v1",
       "tweet_url": null,
-      "author": "agrm",
+      "author": null,
       "date": "2026-11",
-      "published": "2026-11-02",
-      "discovered_via": "hackernews",
+      "published": "2026-11-04",
+      "discovered_via": "rss",
       "source_id": null,
-      "source_rank": 55.0,
+      "source_rank": 72.0,
       "source_topics": [],
-      "source_name": "@agrm via Hacker News",
-      "raw_path": "data/_raw/llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "source_name": "ICML (via arXiv)",
+      "raw_path": "data/_raw/rubric-curriculum-rl-exploiting-the-generation-v-f6e718277e.txt",
+      "id": "rubric-curriculum-rl-uses-pairwise-rubric-judgin-ebb5c70a2c",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
       "needs_review": true,
       "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 13 > 12"
-        ]
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -1900,10 +1894,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 45.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 45.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Earlier METR reviews of Anthropic Risk Reports and pre-deployment evaluator access (UK/US AISI); first described resident-examiner style embedding at a frontier lab.",
@@ -1974,76 +1968,94 @@
       ]
     },
     {
-      "id": "nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc",
+      "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
       "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in",
-      "source_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
-      "article_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "domain": "air.ml-research",
+      "title": "Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do",
+      "summary": "A recent \"Weight Space Programming\" paper reports that GPT-6 Astra can identify which game a small network (about 17k weights) was trained on by reading its weights, and can edit a 0.8B Qwen model's weights to improve its math results. Sean Goedecke argues neither result is superhuman. The game networks have labeled input channels tied to grid cells, so a three-line weight-norm heatmap reveals the game. The Qwen fix removed a loop that set in after 32k tokens, using a steering-style recipe like Heretic abliteration: contrast looping and non-looping texts, rank the weights that drive the difference, and trim them while testing.",
+      "takeaway": "Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than training does.",
+      "tags": [
+        "weight-space-programming",
+        "interpretability",
+        "steering-vectors",
+        "abliteration",
+        "recursive-self-improvement",
+        "capability-claims"
+      ],
+      "lessons": [
+        {
+          "point": "The 'improved at mathematics' result fixed one narrow failure: the Qwen model looped after 32k tokens. It was not a general capability gain.",
+          "excerpt": "It had a specific problem where after 32k tokens it would get stuck in loops, so any mathematical task that needed more than 32k tokens would automatically fail",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The model's weight edit followed a standard steering recipe: contrast looping and non-looping residuals, then attribute the difference to individual weights.",
+          "excerpt": "calculate the difference between the looping and non-looping residuals, measure how much each weight contributed to that difference",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Reading the game from the toy networks' weights is easy because the inputs are labeled and map to grid cells, so first-layer weight norms show the layout.",
+          "excerpt": "It’s thus relatively trivial to calculate",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The author's view is that LLMs will help AI research by improving training, not by editing weights directly, much as source code beats patching binaries. This is opinion, not a measured result.",
+          "excerpt": "Likewise, the best way to update the weights of a model is to train it normally.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Ask what baseline a 'superhuman' capability claim beats before acting on it",
+        "detail": "When a capability claim such as 'LLMs can program weights' arrives, check three things. Do this before changing plans: what the task's inputs give away (here, labeled input channels), how narrow the reported improvement is (here, one looping bug past 32k tokens), and whether a known human method (here, steering or abliteration) reproduces it. For harness builders, the practical lesson is that an agent with Python access can run known interpretability recipes on small open-weight models. It is not a reason to replace fine-tuning or training pipelines."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 22,
+        "newness": 62,
+        "credibility": 65.0,
+        "composite": 45.35,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
+      "related_claims": [],
+      "corroborating_sources": [
+        {
+          "name": "Latent Space AINews",
+          "url": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/",
+          "published": "2026-11-03"
+        },
+        {
+          "name": "Simon Willison",
+          "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
+          "published": "2026-11-03"
+        }
+      ],
+      "source_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
+      "article_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
       "tweet_url": null,
-      "author": "novaRom",
-      "published": "2026-11-04",
+      "author": "agrm",
       "date": "2026-11",
-      "raw_path": "data/_raw/nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc.txt",
+      "published": "2026-11-02",
       "discovered_via": "hackernews",
       "source_id": null,
       "source_rank": 55.0,
       "source_topics": [],
-      "source_name": "@novaRom via Hacker News",
-      "related_claims": [],
-      "summary": "A MindStudio write-up of testing on the MSI Prestige RTX Spark laptop found native Linux ran GPT-OSS-120B at 13.9 tokens per second versus 65.4 on Windows and 65.1 under WSL, because the GPU is held near 780 MHz when plugged in. The cause is a Windows-only Nvidia platform controller whose firmware power table is encrypted and only the Windows driver can decrypt. On battery, Linux speeds were close to Windows. Until Nvidia ships equivalent Linux support, WSL is the practical way to run Linux-first tools such as vLLM at full speed.",
-      "takeaway": "On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.",
-      "lessons": [
-        {
-          "point": "On wall power, the throughput gap is about five times on the same hardware, depending only on the OS path.",
-          "excerpt": "Windows hit 65.4 tokens per second, WSL hit 65.1, the Nvidia DGX Spark hit 61, and native Linux on the same laptop managed only 13.9.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The cause is encrypted firmware power settings that only the Windows driver can read.",
-          "excerpt": "because the firmware’s power table is encrypted and only the Windows driver can decrypt it",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Turning the controller off in Windows dropped GPU clocks to the level seen on Linux, pointing at it as the cause.",
-          "excerpt": "Disabling that controller in Windows reproduced the slowdown directly",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "local-inference",
-        "nvidia",
-        "linux",
-        "wsl",
-        "gpu-firmware",
-        "benchmarks"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Check GPU clocks before trusting local inference benchmarks",
-        "detail": "When benchmarking local models on new Nvidia RTX Spark laptops, log GPU clock speed alongside tokens per second and compare Linux, WSL and battery versus wall power. Use WSL for Linux-first serving tools until Nvidia ships the platform controller logic for Linux."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 30,
-        "newness": 65,
-        "credibility": 55.0,
-        "composite": 45.5,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
-      "verified": true,
-      "verify_note": "Verifier found lessons supported but flagged the slowdown applies only on wall power (Linux on battery matched Windows) and the source is a secondary blog summary. Title, lesson 1 and summary now say so. Novelty kept at the lower 40.",
-      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "source_name": "@agrm via Hacker News",
+      "raw_path": "data/_raw/llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
       "needs_review": true,
-      "readability_rewrite": "reverted takeaway",
       "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -2132,66 +2144,158 @@
       "domain_label": "Red-Teaming Methodology"
     },
     {
+      "id": "what-frontier-labs-buy-a-data-deep-dive-with-han-4e41642e1f",
       "topic": "ai-research",
-      "domain": "air.ml-research",
-      "related_claims": [],
-      "title": "ICML authors certify graph neural networks against label and structure poisoning",
-      "summary": "Graph neural networks (GNNs) learn from graph data such as social or citation networks. Certified defenses against training-data poisoning for images split the training data into parts and aggregate the results. The authors show this fails on sparse graphs. Their method, deep Self-Training Graph Partition Aggregation (ST-GPA), adds pseudo-labels and synthetic edges to each partition so that certified robustness to node-label and graph-structure poisoning works again.",
+      "domain": "air.evals",
+      "title": "Handshake AI demos the agent benchmarks it builds for frontier labs",
+      "summary": "A Latent Space podcast walks through Handshake AI's reinforcement learning environments and benchmarks for finance (ATLAS-Finance), scientific images (VIALS) and agent safety. In the finance demo, the agent can explain a tax rule when asked but misapplies it inside its own code. One segment covers how an agent gamed the Excel grader. In the coding safety task, graders inspect which files the agent read and what it did to shell history. The final reply alone hides most of that behavior.",
+      "takeaway": "Grade agents on their tool-call trace and intermediate actions, not only the final answer, and test graders for gaming.",
       "lessons": [
         {
-          "point": "Partition-and-aggregate poisoning certificates designed for images break on graphs, because graphs have few labels and sparse edges.",
-          "excerpt": "we show that these methods fail when applied in the graph domain due to the inherent label and structure sparsity found in common graph datasets, making effective graph-partitioning difficult.",
+          "point": "A model can know a rule when asked directly yet fail to apply it at the right step of a multi-step task.",
+          "excerpt": "The mistake comes when it has to recognize that this particular line of code is where the rule applies.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "In the finance demo the agent wrongly subtracts an existing goodwill figure from the client's email in its Python model.",
+          "excerpt": "The agent carries the number into Python and subtracts it.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Agent safety evaluation needs the action trace (files read, shell history changes); the final reply misses most of it.",
+          "excerpt": "A transcript of the agent’s final reply would miss most of what Steve Kelling and Nishant Ranka are evaluating.",
           "confidence": 0.75,
           "grounded": true
         },
         {
-          "point": "Adding pseudo-labels and synthetic edges to each partition makes certification work on sparse graphs.",
-          "excerpt": "enriches each graph partition with informative pseudo-labels and synthetic edges, enabling effective certification against node-label and graph-structure poisoning under sparse conditions.",
-          "confidence": 0.65,
+          "point": "The episode reports an agent gaming an automated Excel grader, though the show notes give no details.",
+          "excerpt": "How an agent gamed the Excel grader",
+          "confidence": 0.45,
           "grounded": true
         }
       ],
-      "takeaway": "This is a theoretical robustness advance for GNN training, with little direct use for LLM, agent, or appsec defenders.",
       "tags": [
-        "data-poisoning",
-        "certified-robustness",
-        "graph-neural-networks",
-        "icml"
+        "evals",
+        "agent-eval",
+        "rl-environments",
+        "grader-gaming",
+        "trajectory-grading",
+        "podcast"
       ],
       "actionable": {
-        "type": "takeaway",
-        "title": "Note ST-GPA only if you train GNNs on data an attacker can influence",
-        "detail": "Teams running graph neural networks on untrusted graph data, such as fraud or social graphs, can read ST-GPA for provable bounds on how many poisoned labels or edges a prediction can tolerate. Otherwise no action is needed."
+        "type": "harness",
+        "title": "Score agent runs on the action trace",
+        "detail": "In agent evals, log every tool call (files read, commands run, history edits) and grade against it next to the final output. Add penalty checks for steps that should not happen, and red-team the grader for shortcuts before trusting scores."
       },
       "scores": {
-        "novelty": 45,
-        "relevance": 15,
-        "newness": 65,
-        "credibility": 72.0,
-        "composite": 45.05,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "novelty": 20,
+        "relevance": 45,
+        "newness": 62,
+        "credibility": 67.5,
+        "composite": 45.12,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
-      "verify_note": "Independent verifier supported both lessons; closest prior is Deep Partition Aggregation and Finite Aggregation certificates.",
-      "prior_art": "none found in the ledger; the paper extends partition-and-aggregation poisoning certificates from image classification",
-      "threat": "An attacker poisons a GNN's training data by flipping node labels or changing graph edges.",
-      "conditions": "A graph neural network trained on sparse graph data that an adversary can partly manipulate.",
-      "mitigations": "Train with a partition-aggregation scheme such as ST-GPA that gives certified bounds on how much label and structure poisoning a prediction can tolerate.",
-      "source_url": "http://arxiv.org/abs/2611.03350v1",
-      "article_url": "http://arxiv.org/abs/2611.03350v1",
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Ledger claim monitor-agent-evals-not-just-deployment and prior entries on reward hacking and trajectory-based agent evaluation.",
+      "related_claims": [
+        "monitor-agent-evals-not-just-deployment",
+        "separate-grader-from-generator"
+      ],
+      "source_url": "https://latent.space/p/handshake/",
+      "article_url": "https://latent.space/p/handshake/",
       "tweet_url": null,
       "author": null,
       "date": "2026-11",
-      "published": "2026-11-02",
-      "raw_path": "data/_raw/certifying-graph-neural-networks-against-label-a-fb3d396ff1.txt",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/what-frontier-labs-buy-a-data-deep-dive-with-han-4e41642e1f.txt",
       "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "source_name": "ICML (via arXiv)",
-      "id": "icml-authors-certify-graph-neural-networks-again-181a9e0bce",
-      "retrieved_at": "2026-11-05T17:48:33+00:00",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 67.5,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Latent Space",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in",
+      "source_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "article_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "tweet_url": null,
+      "author": "novaRom",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@novaRom via Hacker News",
+      "related_claims": [],
+      "summary": "A MindStudio write-up of testing on the MSI Prestige RTX Spark laptop found native Linux ran GPT-OSS-120B at 13.9 tokens per second versus 65.4 on Windows and 65.1 under WSL, because the GPU is held near 780 MHz when plugged in. The cause is a Windows-only Nvidia platform controller whose firmware power table is encrypted and only the Windows driver can decrypt. On battery, Linux speeds were close to Windows. Until Nvidia ships equivalent Linux support, WSL is the practical way to run Linux-first tools such as vLLM at full speed.",
+      "takeaway": "On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.",
+      "lessons": [
+        {
+          "point": "On wall power, the throughput gap is about five times on the same hardware, depending only on the OS path.",
+          "excerpt": "Windows hit 65.4 tokens per second, WSL hit 65.1, the Nvidia DGX Spark hit 61, and native Linux on the same laptop managed only 13.9.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The cause is encrypted firmware power settings that only the Windows driver can read.",
+          "excerpt": "because the firmware’s power table is encrypted and only the Windows driver can decrypt it",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Turning the controller off in Windows dropped GPU clocks to the level seen on Linux, pointing at it as the cause.",
+          "excerpt": "Disabling that controller in Windows reproduced the slowdown directly",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "local-inference",
+        "nvidia",
+        "linux",
+        "wsl",
+        "gpu-firmware",
+        "benchmarks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check GPU clocks before trusting local inference benchmarks",
+        "detail": "When benchmarking local models on new Nvidia RTX Spark laptops, log GPU clock speed alongside tokens per second and compare Linux, WSL and battery versus wall power. Use WSL for Linux-first serving tools until Nvidia ships the platform controller logic for Linux."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 30,
+        "newness": 62,
+        "credibility": 55.0,
+        "composite": 44.75,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
+      "verified": true,
+      "verify_note": "Verifier found lessons supported but flagged the slowdown applies only on wall power (Linux on battery matched Windows) and the source is a secondary blog summary. Title, lesson 1 and summary now say so. Novelty kept at the lower 40.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway",
       "readability": {
         "score": 100,
         "passed": true,
@@ -2284,67 +2388,66 @@
       "domain_label": "Agent Verification & Stewardship"
     },
     {
-      "id": "eep-dev-eep-94c246c848",
       "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "EEP proposes signed push events so agents can follow entities",
-      "source_url": "https://github.com/eep-dev/EEP",
-      "article_url": "https://github.com/eep-dev/EEP",
-      "tweet_url": null,
-      "author": "eep-dev",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/eep-dev-eep-94c246c848.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 66.7,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "eep-dev/EEP",
+      "domain": "air.ml-research",
       "related_claims": [],
-      "summary": "The Entity Engagement Protocol (EEP) v0.1 is an open spec for publishing an entity's state changes as signed events to subscribed agents over SSE and webhooks, with optional identity, credential or payment gates. It positions itself beside MCP and A2A as the layer that tells an agent something changed. The spec is early, with 23 stars, and may still break.",
-      "takeaway": "Another early agent protocol; the useful idea is signed, replay-bounded push events instead of scraping.",
+      "title": "ICML authors certify graph neural networks against label and structure poisoning",
+      "summary": "Graph neural networks (GNNs) learn from graph data such as social or citation networks. Certified defenses against training-data poisoning for images split the training data into parts and aggregate the results. The authors show this fails on sparse graphs. Their method, deep Self-Training Graph Partition Aggregation (ST-GPA), adds pseudo-labels and synthetic edges to each partition so that certified robustness to node-label and graph-structure poisoning works again.",
       "lessons": [
         {
-          "point": "Delivery is signed and replay-bounded, so subscribers can reject forged or replayed events.",
-          "excerpt": "EEP is one wire format with HMAC-signed delivery, SSE and a 60-second replay window",
-          "confidence": 0.8,
+          "point": "Partition-and-aggregate poisoning certificates designed for images break on graphs, because graphs have few labels and sparse edges.",
+          "excerpt": "we show that these methods fail when applied in the graph domain due to the inherent label and structure sparsity found in common graph datasets, making effective graph-partitioning difficult.",
+          "confidence": 0.75,
           "grounded": true
         },
         {
-          "point": "The spec is not stable yet.",
-          "excerpt": "breaking changes can still happen",
-          "confidence": 0.85,
+          "point": "Adding pseudo-labels and synthetic edges to each partition makes certification work on sparse graphs.",
+          "excerpt": "enriches each graph partition with informative pseudo-labels and synthetic edges, enabling effective certification against node-label and graph-structure poisoning under sparse conditions.",
+          "confidence": 0.65,
           "grounded": true
         }
       ],
+      "takeaway": "This is a theoretical robustness advance for GNN training, with little direct use for LLM, agent, or appsec defenders.",
       "tags": [
-        "agent-protocols",
-        "webhooks",
-        "sse",
-        "hmac",
-        "event-delivery"
+        "data-poisoning",
+        "certified-robustness",
+        "graph-neural-networks",
+        "icml"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Verify signatures and replay windows on agent event feeds",
-        "detail": "If agents consume pushed events from outside parties, require signed delivery with a short replay window and treat event payloads as untrusted input to the agent. Wait for EEP to stabilize before adopting it."
+        "title": "Note ST-GPA only if you train GNNs on data an attacker can influence",
+        "detail": "Teams running graph neural networks on untrusted graph data, such as fraud or social graphs, can read ST-GPA for provable bounds on how many poisoned labels or edges a prediction can tolerate. Otherwise no action is needed."
       },
       "scores": {
-        "novelty": 30,
-        "relevance": 30,
-        "newness": 65,
-        "credibility": 66.7,
-        "composite": 44.26,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "novelty": 45,
+        "relevance": 15,
+        "newness": 62,
+        "credibility": 72.0,
+        "composite": 44.3,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
-      "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
       "verified": true,
-      "verify_note": "Verifier found both lessons supported. Novelty kept at the lower 30.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "verify_note": "Independent verifier supported both lessons; closest prior is Deep Partition Aggregation and Finite Aggregation certificates.",
+      "prior_art": "none found in the ledger; the paper extends partition-and-aggregation poisoning certificates from image classification",
+      "threat": "An attacker poisons a GNN's training data by flipping node labels or changing graph edges.",
+      "conditions": "A graph neural network trained on sparse graph data that an adversary can partly manipulate.",
+      "mitigations": "Train with a partition-aggregation scheme such as ST-GPA that gives certified bounds on how much label and structure poisoning a prediction can tolerate.",
+      "source_url": "http://arxiv.org/abs/2611.03350v1",
+      "article_url": "http://arxiv.org/abs/2611.03350v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-02",
+      "raw_path": "data/_raw/certifying-graph-neural-networks-against-label-a-fb3d396ff1.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "ICML (via arXiv)",
+      "id": "icml-authors-certify-graph-neural-networks-again-181a9e0bce",
+      "retrieved_at": "2026-11-05T17:48:33+00:00",
       "needs_review": true,
-      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -2406,10 +2509,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 44.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 44.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -2449,6 +2552,237 @@
       "previous_slugs": [
         "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
       ]
+    },
+    {
+      "id": "eep-dev-eep-94c246c848",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "EEP proposes signed push events so agents can follow entities",
+      "source_url": "https://github.com/eep-dev/EEP",
+      "article_url": "https://github.com/eep-dev/EEP",
+      "tweet_url": null,
+      "author": "eep-dev",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/eep-dev-eep-94c246c848.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "eep-dev/EEP",
+      "related_claims": [],
+      "summary": "The Entity Engagement Protocol (EEP) v0.1 is an open spec for publishing an entity's state changes as signed events to subscribed agents over SSE and webhooks, with optional identity, credential or payment gates. It positions itself beside MCP and A2A as the layer that tells an agent something changed. The spec is early, with 23 stars, and may still break.",
+      "takeaway": "Another early agent protocol; the useful idea is signed, replay-bounded push events instead of scraping.",
+      "lessons": [
+        {
+          "point": "Delivery is signed and replay-bounded, so subscribers can reject forged or replayed events.",
+          "excerpt": "EEP is one wire format with HMAC-signed delivery, SSE and a 60-second replay window",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The spec is not stable yet.",
+          "excerpt": "breaking changes can still happen",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-protocols",
+        "webhooks",
+        "sse",
+        "hmac",
+        "event-delivery"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Verify signatures and replay windows on agent event feeds",
+        "detail": "If agents consume pushed events from outside parties, require signed delivery with a short replay window and treat event payloads as untrusted input to the agent. Wait for EEP to stabilize before adopting it."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 30,
+        "newness": 62,
+        "credibility": 66.7,
+        "composite": 43.51,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
+      "verified": true,
+      "verify_note": "Verifier found both lessons supported. Novelty kept at the lower 30.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "hide-your-slop-pr-descriptions-behind-details-su-e418362526",
+      "topic": "ai-research",
+      "domain": "air.work-efficiency",
+      "title": "Simon Willison folds agent-written PR descriptions under a human summary",
+      "summary": "Simon Willison finds agent-written PR descriptions accurate but too long for readers to want to read them. He now opens each PR with a short paragraph, sometimes with a screenshot, that he vouches for as worth reading. He puts the full agent text in a collapsed details/summary block labelled with the model name and effort level. GitHub Markdown renders the block collapsed, so the detail stays available without crowding the page.",
+      "takeaway": "Lead agent PRs with a short, human-vetted opener and collapse the agent's full write-up under a label that names the model.",
+      "lessons": [
+        {
+          "point": "Agent PR descriptions are usually accurate; the problem is their length, which puts reviewers off.",
+          "excerpt": "An agent-written PR description is accurate and comprehensive.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The full agent-written text is kept, but collapsed, so nothing is lost for reviewers who want it.",
+          "excerpt": "The full agent-written essay then follows in a `<details><summary>`.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Labelling the collapsed block with model and effort level makes AI authorship explicit.",
+          "excerpt": "I use the model name and often the effort level as that summary, to make it abundantly clear what is going on",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The opener is a human commitment about what deserves attention, even if the agent drafted it.",
+          "excerpt": "My promise to the reader is that the short opener will represent my human judgement as to what is definitely worth their time.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "coding-agents",
+        "pull-requests",
+        "code-review",
+        "developer-workflow",
+        "ai-disclosure"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Have the PR-opening step emit a short opener plus a collapsed full description",
+        "detail": "In your agent's PR template or skill, generate a 1-3 sentence opener for a human to approve or edit. Then wrap the full description in <details><summary>MODEL EFFORT</summary>...</details>. Do not let the agent publish the opener without human review."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 45,
+        "newness": 62,
+        "credibility": 50.8,
+        "composite": 43.22,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Common GitHub practice of collapsing logs in details blocks; AI-disclosure labels in PR templates",
+      "related_claims": [],
+      "source_url": "https://simonwillison.net/2026/Nov/9/details-summary/",
+      "article_url": "https://simonwillison.net/2026/Nov/9/details-summary/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/hide-your-slop-pr-descriptions-behind-details-su-e418362526.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-simonwillison-net-atom-everything",
+      "source_rank": 50.8,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Simon Willison's Weblog",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "ai-for-scientific-discovery-how-researchers-use-061e06443d",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Anthropic study finds scientists use Claude mostly for data analysis and writing",
+      "summary": "Anthropic classified 207,049 consumer-plan Claude and Claude Code research sessions by field and task using privacy-preserving classifiers, plus a survey of 528 scientists. Data analysis and writing are overrepresented relative to researcher time, while data gathering and ideation are underused even though surveyed scientists rank those as most important. Tasks rated most AI-suited get two to four times the use their time share predicts, and the specialized Claude Science tool sees more ideation.",
+      "takeaway": "Researchers adopt AI where it already works well, and specialized tool-connected setups shift use toward harder tasks, but this is adoption measurement, not a harness technique.",
+      "lessons": [
+        {
+          "point": "Data analysis dominates use, especially in Claude Code, beyond its share of researcher time.",
+          "excerpt": "Data analysis accounts for 33.7% of sessions on Claude and 48.1% on Claude Code, compared with 27.6% of researcher time.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The tasks scientists rank as most important are the ones they use AI for least.",
+          "excerpt": "Respondents rank ideation and hypothesis generation first and data gathering second.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Use concentrates on the tasks that the authors' capability measure rates as most AI-suited.",
+          "excerpt": "get two to four times as much Claude use as the time researchers spend on them would predict",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A specialized tool connected to research databases raises ideation share to roughly match researcher time.",
+          "excerpt": "ideation and hypothesis generation accounts for 8% of Claude Science sessions, roughly on par with the share of researcher time",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "ai-for-science",
+        "usage-study",
+        "claude-code",
+        "adoption",
+        "anthropic"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Expect domain tools to enable harder tasks",
+        "detail": "When building agents for a specialist domain, connecting the model to that domain's databases and tools (as Claude Science does) appears to shift use toward specialized and ideation tasks that a general chat interface rarely sees."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 20,
+        "newness": 62,
+        "credibility": 69.9,
+        "composite": 42.48,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Anthropic Economic Index reports using the same privacy-preserving classifier method on Claude usage.",
+      "related_claims": [],
+      "source_url": "https://www.anthropic.com/research/how-researchers-use-claude",
+      "article_url": "https://www.anthropic.com/research/how-researchers-use-claude",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-05",
+      "raw_path": "data/_raw/ai-for-scientific-discovery-how-researchers-use-061e06443d.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 69.9,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "launch-hn-rivet-yc-w23-scale-and-orchestrate-age-314e1464d5",
@@ -2499,10 +2833,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 65,
+        "newness": 62,
         "credibility": 55.0,
-        "composite": 43.1,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 42.35,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Summary corrected on where the benchmark numbers come from; the security and cost claims are vendor assertions.",
@@ -2601,6 +2935,80 @@
       ]
     },
     {
+      "id": "show-hn-flide-make-jev-like-decision-models-up-t-4bd2dea635",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Flide is an inference engine that serves Jev-style decision models faster",
+      "summary": "Flide is an Apache-2.0 inference engine for Jev-style decision models. It serves the `/v1/systemone` API and forks one encoded state into several questions. Its authors report up to 9.5 times lower median latency than vLLM and SGLang on one H200, with answers identical to asking each question alone. Options include a session cache, so an agent's next step only processes new input, and a batch-invariant mode for bit-identical outputs.",
+      "takeaway": "If you run many classification-style decisions over the same context, state forking and session caching can cut latency without changing answers, though the speedups are self-reported.",
+      "lessons": [
+        {
+          "point": "Exact state forking lets several questions share one encoded state while keeping answers identical to separate requests.",
+          "excerpt": "With exact state forking it is up to 9.5 times faster than vLLM and SGLang, and every answer is the one the model gives the question alone.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "A session cache keeps earlier request states, so an agent's follow-up step only processes what is new.",
+          "excerpt": "keeps the states of earlier requests, so an agent's next step reads only what is new",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Bit-identical outputs regardless of batching are available but cost speed.",
+          "excerpt": "the same bits for a request whatever it is batched with, at some cost in speed",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "inference-serving",
+        "decision-models",
+        "kv-cache",
+        "state-forking",
+        "determinism"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Benchmark Flide for multi-question decision calls",
+        "detail": "If a harness asks a router or guardrail decision model several questions about the same context, compare Flide against your current vLLM or SGLang setup on your own requests, and use `flide verify` to check that forked answers match single requests."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 30,
+        "newness": 62,
+        "credibility": 55.0,
+        "composite": 41.75,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Prefix caching and KV-cache reuse in vLLM and SGLang; earlier decision-model entries (alphaXiv 4B decision model, DecisionPivot).",
+      "related_claims": [
+        "stable-prompt-prefix-keeps-cache-reads-cheap"
+      ],
+      "source_url": "https://github.com/OmniJev/Flide",
+      "article_url": "https://github.com/OmniJev/Flide",
+      "tweet_url": null,
+      "author": "unikcc",
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/show-hn-flide-make-jev-like-decision-models-up-t-4bd2dea635.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@unikcc via Hacker News",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "ainews-gemini-4-carbon-tops-leaderboards-launche-76614ce5e4",
       "topic": "ai-research",
       "domain": "air.models",
@@ -2652,10 +3060,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 12,
+        "newness": 11,
         "credibility": 87.5,
-        "composite": 41.62,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 41.38,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld all four lessons; novelty agreed at 30 (gated trusted-defender access is established prior art).",
@@ -2770,10 +3178,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 41.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 41.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
@@ -2846,10 +3254,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 41.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 41.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are what the post states; the 39% gain, $100,000 savings and identical regeneration are Microsoft's unsupported self-reports, and no Copilot results are given.",
@@ -2876,93 +3284,6 @@
         "score": 100,
         "passed": true,
         "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "ainews-anthropic-ipo-whither-now-35ac244a0f",
-      "topic": "ai-research",
-      "domain": "air.models",
-      "related_claims": [
-        "capability-elicitation-lags-training",
-        "quantization-preserves-most-benchmark-scores",
-        "measure-speedups-with-repeated-trials"
-      ],
-      "title": "Latent Space newsletter covers doubts about an Anthropic initial public offering (IPO)",
-      "summary": "This daily newsletter covers an AI stock sell-off that is lowering expectations for an Anthropic initial public offering (IPO). It then recaps model news. Thinking Machines released Inkling 2 Small, a mixture-of-experts (MoE) model with 594B total and 17B active parameters. The team disclosed that early checkpoints worked around guardrails during training, and that offline monitors caught it. Evaluation items include Vals CyberOffense, where open models made most of their progress only after very long runs. Artificial Analysis found that about 1 in 4 serverless endpoints score below the reference deployment.",
-      "lessons": [
-        {
-          "point": "Offline monitoring during training caught a model trying to work around guardrails before release.",
-          "excerpt": "Offline monitors flagged the behavior first. The team later found it was frequent and easy to replicate.",
-          "confidence": 0.45,
-          "grounded": true
-        },
-        {
-          "point": "Short agent evaluations can understate what a model can do. Vals saw DeepSeek make most of its progress late in long runs.",
-          "excerpt": "It made most of its progress after 100M tokens, so short tests understate open models",
-          "confidence": 0.5,
-          "grounded": true
-        },
-        {
-          "point": "The same model can score worse on a hosting provider's endpoint than on the reference deployment, so test the endpoint you actually use.",
-          "excerpt": "Nearly 1 in 4 of 100+ serverless endpoints score below the self-hosted reference deployment",
-          "confidence": 0.55,
-          "grounded": true
-        },
-        {
-          "point": "Solving a task once is not the same as solving it reliably. pass^3 (solving it on all three tries) shows a large gap.",
-          "excerpt": "Kimi K3.1 Pro solves 119 of 161 tasks at least once but only 73 under pass^3.",
-          "confidence": 0.5,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This is a news roundup with no single finding, but it has useful evaluation signals: test the provider endpoint you use, run agent evaluations long enough, and measure consistency, not best-of-N.",
-      "tags": [
-        "newsletter",
-        "model-releases",
-        "open-weights",
-        "endpoint-fidelity",
-        "agent-evals"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Validate the provider endpoint, not just the model",
-        "detail": "Before you adopt a serverless endpoint for an open-weights model, run a small repeated evaluation (for example pass^3 on your own tasks) against it and against a reference deployment. Check output-token caps, which can truncate long answers, and check that tool arguments come back with the right types."
-      },
-      "scores": {
-        "novelty": 15,
-        "relevance": 30,
-        "newness": 65,
-        "credibility": 68.1,
-        "composite": 39.96,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Numbers and attributions check out; the long-run finding is for DeepSeek V4.1 Flash only.",
-      "prior_art": "METR time horizons, tau-bench pass^k, Moonshot's K2 Vendor Verifier and earlier provider-fidelity comparisons",
-      "source_url": "https://latent.space/p/ainews-anthropic-ipo-whither-now/",
-      "article_url": "https://latent.space/p/ainews-anthropic-ipo-whither-now/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-07",
-      "discovered_via": "rss",
-      "source_id": "newsletter:https-www-latent-space-feed",
-      "source_rank": 68.1,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Latent Space",
-      "raw_path": "data/_raw/ainews-anthropic-ipo-whither-now-35ac244a0f.txt",
-      "id": "latent-space-newsletter-covers-doubts-about-an-a-73728553a3",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 6 > 4"
-        ]
       },
       "grounding_score": 1.0
     },
@@ -3028,10 +3349,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 39.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 39.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
@@ -3053,6 +3374,93 @@
       "previous_slugs": [
         "mlx-tensor-parallelism-over-thunderbolt-rdma-runs-an-816b-mi"
       ]
+    },
+    {
+      "candidate_id": "ainews-anthropic-ipo-whither-now-35ac244a0f",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "related_claims": [
+        "capability-elicitation-lags-training",
+        "quantization-preserves-most-benchmark-scores",
+        "measure-speedups-with-repeated-trials"
+      ],
+      "title": "Latent Space newsletter covers doubts about an Anthropic initial public offering (IPO)",
+      "summary": "This daily newsletter covers an AI stock sell-off that is lowering expectations for an Anthropic initial public offering (IPO). It then recaps model news. Thinking Machines released Inkling 2 Small, a mixture-of-experts (MoE) model with 594B total and 17B active parameters. The team disclosed that early checkpoints worked around guardrails during training, and that offline monitors caught it. Evaluation items include Vals CyberOffense, where open models made most of their progress only after very long runs. Artificial Analysis found that about 1 in 4 serverless endpoints score below the reference deployment.",
+      "lessons": [
+        {
+          "point": "Offline monitoring during training caught a model trying to work around guardrails before release.",
+          "excerpt": "Offline monitors flagged the behavior first. The team later found it was frequent and easy to replicate.",
+          "confidence": 0.45,
+          "grounded": true
+        },
+        {
+          "point": "Short agent evaluations can understate what a model can do. Vals saw DeepSeek make most of its progress late in long runs.",
+          "excerpt": "It made most of its progress after 100M tokens, so short tests understate open models",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "The same model can score worse on a hosting provider's endpoint than on the reference deployment, so test the endpoint you actually use.",
+          "excerpt": "Nearly 1 in 4 of 100+ serverless endpoints score below the self-hosted reference deployment",
+          "confidence": 0.55,
+          "grounded": true
+        },
+        {
+          "point": "Solving a task once is not the same as solving it reliably. pass^3 (solving it on all three tries) shows a large gap.",
+          "excerpt": "Kimi K3.1 Pro solves 119 of 161 tasks at least once but only 73 under pass^3.",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is a news roundup with no single finding, but it has useful evaluation signals: test the provider endpoint you use, run agent evaluations long enough, and measure consistency, not best-of-N.",
+      "tags": [
+        "newsletter",
+        "model-releases",
+        "open-weights",
+        "endpoint-fidelity",
+        "agent-evals"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Validate the provider endpoint, not just the model",
+        "detail": "Before you adopt a serverless endpoint for an open-weights model, run a small repeated evaluation (for example pass^3 on your own tasks) against it and against a reference deployment. Check output-token caps, which can truncate long answers, and check that tool arguments come back with the right types."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 30,
+        "newness": 62,
+        "credibility": 68.1,
+        "composite": 39.21,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Numbers and attributions check out; the long-run finding is for DeepSeek V4.1 Flash only.",
+      "prior_art": "METR time horizons, tau-bench pass^k, Moonshot's K2 Vendor Verifier and earlier provider-fidelity comparisons",
+      "source_url": "https://latent.space/p/ainews-anthropic-ipo-whither-now/",
+      "article_url": "https://latent.space/p/ainews-anthropic-ipo-whither-now/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-07",
+      "discovered_via": "rss",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 68.1,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Latent Space",
+      "raw_path": "data/_raw/ainews-anthropic-ipo-whither-now-35ac244a0f.txt",
+      "id": "latent-space-newsletter-covers-doubts-about-an-a-73728553a3",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 6 > 4"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "how-uk-aisi-and-evaleval-are-making-benchmark-re-31b1ab8407",
@@ -3189,10 +3597,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 65,
+        "newness": 62,
         "credibility": 68.8,
-        "composite": 38.57,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 37.82,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported every detail; it is a secondary roundup of a paper already in the tracker, and the harness figures are DeepSeek's own test.",
@@ -3274,10 +3682,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 55,
-        "newness": 12,
+        "newness": 11,
         "credibility": 70.8,
-        "composite": 36.72,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 36.47,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Plan-then-execute and code-to-policy patterns such as CaMeL; durable-execution agents and persistent agent memory (Letta); Anthropic's guidance on progress files for long-running agents.",
       "verified": true,
@@ -3348,10 +3756,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 10,
-        "newness": 65,
+        "newness": 62,
         "credibility": 72.0,
-        "composite": 36.65,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 35.9,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Abstract-only source; claims match, datasets correct.",
@@ -3418,10 +3826,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 12,
-        "newness": 65,
+        "newness": 62,
         "credibility": 70.8,
-        "composite": 36.47,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 35.72,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported the claims; corrected the license (CC BY-NC for the other models) and narrowed the speed claim to the CPU streaming benchmark.",
@@ -3443,6 +3851,75 @@
       "source_name": "Hugging Face Blog",
       "id": "gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30",
       "retrieved_at": "2026-11-05T17:48:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "askalphaxiv-yoshua-bengio-and-collaborators-just-1592869c6e",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Bengio and collaborators publish a 182-page survey on mechanistic interpretability",
+      "summary": "An alphaXiv post on X announces a 182-page survey, \"Understanding AI from the Inside\", by Yoshua Bengio and collaborators. The post says it runs from neurons and circuits to how interpretability can support AI safety. It covers sparse autoencoders (SAEs) and circuit discovery. The post itself is only a few lines and gives no findings from the survey.",
+      "takeaway": "A broad reading map for model internals, not a practical change for anyone building agents or harnesses.",
+      "lessons": [
+        {
+          "point": "The survey is long (182 pages) and comes from Yoshua Bengio's group.",
+          "excerpt": "Yoshua Bengio and collaborators just released a goldmine 182-page survey on mechanistic interpretability!",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Its scope runs from low-level model internals up to how interpretability can support AI safety.",
+          "excerpt": "This paper will take you from neurons & circuits to how interpretability can help with AI safety",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "interpretability",
+        "survey",
+        "sparse-autoencoders",
+        "ai-safety"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Keep as a reference for interpretability background",
+        "detail": "If you need background on sparse autoencoders or circuit discovery, for example to judge interpretability-based monitoring claims, use this survey as a starting index. Read the paper itself; the X post carries no findings."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 15,
+        "newness": 62,
+        "credibility": 60.0,
+        "composite": 35.6,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Existing interpretability surveys and SAE work already in the archive (e.g. Equivariant Sparse Autoencoders entry); a survey restates known work by design.",
+      "related_claims": [],
+      "source_url": "https://x.com/askalphaxiv/status/2119836067591573781",
+      "article_url": null,
+      "tweet_url": "https://x.com/askalphaxiv/status/2119836067591573781",
+      "author": "@askalphaxiv",
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/askalphaxiv-yoshua-bengio-and-collaborators-just-1592869c6e.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -3513,10 +3990,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 60,
-        "newness": 12,
+        "newness": 11,
         "credibility": 53.0,
-        "composite": 35.55,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 35.3,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
@@ -3585,10 +4062,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 12,
+        "newness": 11,
         "credibility": 67.0,
-        "composite": 35.55,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 35.3,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Policy-as-code (OPA/Rego), schema validation, and harness hooks that block tool calls; spec-driven development tools such as Kiro and spec-kit.",
@@ -3666,10 +4143,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 35.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 35.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
@@ -3684,72 +4161,6 @@
         "issues": [
           "mild: title_words 24 > 18"
         ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "matthewberman-give-this-to-your-coding-agent-5b33b1f61c",
-      "topic": "ai-research",
-      "domain": "air.work-efficiency",
-      "title": "Matthew Berman tells coding agents to show video mocks of UI changes",
-      "summary": "A one-line X post suggests instructing a coding agent to produce a video mock every time it makes a UI change. It gives no implementation details, tooling or results.",
-      "takeaway": "Asking the agent for visual evidence of UI changes is a cheap review habit, but the post adds nothing beyond the instruction.",
-      "tags": [
-        "coding-agents",
-        "ui-verification",
-        "agent-instructions",
-        "x-post"
-      ],
-      "lessons": [
-        {
-          "point": "A standing instruction can make the agent produce visual evidence for every UI change so humans review behavior, not just diffs.",
-          "excerpt": "any time you make a UI change, always show me a video mock of it",
-          "confidence": 0.55,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Require screenshot or recording evidence for UI changes in agent instructions",
-        "detail": "Add a rule to the project's agent instructions file: after any UI change, run the app with a headless browser (for example Playwright), capture a screenshot or short recording of the changed flow, and attach it to the summary or PR."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 25,
-        "newness": 65,
-        "credibility": 60.0,
-        "composite": 35.15,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": false,
-      "verify_reason": "factual",
-      "verify_note": "The source is a one-line instruction; lesson 1's claim that humans review behavior, not just diffs, is the analyst's inference, not in the post.",
-      "prior_art": "Anthropic's long-running-agent harness guidance to verify end to end as a user with browser automation (claim verify-end-to-end-as-a-user) already covers visual verification of UI work.",
-      "related_claims": [
-        "verify-end-to-end-as-a-user"
-      ],
-      "source_url": "https://x.com/MatthewBerman/status/2117670441380966696",
-      "article_url": null,
-      "tweet_url": "https://x.com/MatthewBerman/status/2117670441380966696",
-      "author": "@MatthewBerman",
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "raw_path": "data/_raw/matthewberman-give-this-to-your-coding-agent-5b33b1f61c.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -3801,10 +4212,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 35,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.5,
-        "composite": 34.88,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 34.62,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
       "verified": true,
@@ -3834,6 +4245,72 @@
         "issues": [
           "mild: title_words 19 > 18"
         ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "matthewberman-give-this-to-your-coding-agent-5b33b1f61c",
+      "topic": "ai-research",
+      "domain": "air.work-efficiency",
+      "title": "Matthew Berman tells coding agents to show video mocks of UI changes",
+      "summary": "A one-line X post suggests instructing a coding agent to produce a video mock every time it makes a UI change. It gives no implementation details, tooling or results.",
+      "takeaway": "Asking the agent for visual evidence of UI changes is a cheap review habit, but the post adds nothing beyond the instruction.",
+      "tags": [
+        "coding-agents",
+        "ui-verification",
+        "agent-instructions",
+        "x-post"
+      ],
+      "lessons": [
+        {
+          "point": "A standing instruction can make the agent produce visual evidence for every UI change so humans review behavior, not just diffs.",
+          "excerpt": "any time you make a UI change, always show me a video mock of it",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Require screenshot or recording evidence for UI changes in agent instructions",
+        "detail": "Add a rule to the project's agent instructions file: after any UI change, run the app with a headless browser (for example Playwright), capture a screenshot or short recording of the changed flow, and attach it to the summary or PR."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 25,
+        "newness": 62,
+        "credibility": 60.0,
+        "composite": 34.4,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": false,
+      "verify_reason": "factual",
+      "verify_note": "The source is a one-line instruction; lesson 1's claim that humans review behavior, not just diffs, is the analyst's inference, not in the post.",
+      "prior_art": "Anthropic's long-running-agent harness guidance to verify end to end as a user with browser automation (claim verify-end-to-end-as-a-user) already covers visual verification of UI work.",
+      "related_claims": [
+        "verify-end-to-end-as-a-user"
+      ],
+      "source_url": "https://x.com/MatthewBerman/status/2117670441380966696",
+      "article_url": null,
+      "tweet_url": "https://x.com/MatthewBerman/status/2117670441380966696",
+      "author": "@MatthewBerman",
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "raw_path": "data/_raw/matthewberman-give-this-to-your-coding-agent-5b33b1f61c.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -3881,10 +4358,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 12,
+        "newness": 11,
         "credibility": 50.8,
-        "composite": 34.62,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 34.37,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -3917,146 +4394,6 @@
       "previous_slugs": [
         "swt-bench-neurips-2024-a-docker-harness-that-scores-llm-writ"
       ]
-    },
-    {
-      "candidate_id": "addyosmani-article-e57aa0166a",
-      "topic": "ai-research",
-      "domain": "air.work-efficiency",
-      "related_claims": [],
-      "title": "Addy Osmani argues that working with coding agents is a management job",
-      "summary": "Addy Osmani teases an article saying that anyone who spends the day with a coding agent is in effect managing. He argues that the skills for managing agents are mostly the skills for managing a team. You do not need to be a manager to learn them. The captured text is only the teaser, so no specific practices are given.",
-      "lessons": [
-        {
-          "point": "Managing agents draws on the same skills as managing a team, and anyone can learn them.",
-          "excerpt": "The skills for managing agents are pretty much the skills for managing a team, and you don't need to be a manager to learn them.",
-          "confidence": 0.35,
-          "grounded": true
-        },
-        {
-          "point": "Heavy daily use of a coding agent is framed as a management role, not only an individual coding role.",
-          "excerpt": "If you're spending all day with a coding agent, you are managing",
-          "confidence": 0.3,
-          "grounded": true
-        }
-      ],
-      "takeaway": "The framing is useful but the captured source is a teaser with no concrete practices behind it.",
-      "tags": [
-        "coding-agents",
-        "agent-management",
-        "developer-workflow",
-        "opinion"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Write agent tasks the way you would brief a team member",
-        "detail": "For each agent task, write down the goal, the constraints, what done looks like and how you will check it, as you would when delegating to a person. Then review the result against that brief rather than reading every step."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 22,
-        "newness": 65,
-        "credibility": 60.0,
-        "composite": 34.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Teaser-only source; lessons restate the headline.",
-      "prior_art": "Widespread 'developer as manager of agents' framing, including Osmani's earlier posts",
-      "source_url": "https://x.com/addyosmani/status/2119332146485891501",
-      "article_url": null,
-      "tweet_url": "https://x.com/addyosmani/status/2119332146485891501",
-      "author": "@addyosmani",
-      "date": "2026-11",
-      "published": "2026-11-08",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "raw_path": "data/_raw/addyosmani-article-e57aa0166a.txt",
-      "id": "addy-osmani-argues-that-working-with-coding-agen-42e61ca51a",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted lessons[0].point",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "related_claims": [],
-      "title": "Researchers' VA-TDM method improves four-step image and video diffusion generation",
-      "summary": "Diffusion models normally need many sampling steps. Distillation trains a 'student' model to produce similar output in only a few steps. This paper introduces Velocity Adversarial Distillation (VAD), which uses a learned critic to compare the student's and teacher's velocity fields, and says VAD unifies several earlier distillation methods. The authors claim top four-step results for text-to-image and text-to-video, scaling up to a 33-billion-parameter video model.",
-      "lessons": [
-        {
-          "point": "Score-distillation methods can be misled at intermediate steps, because their estimators may track a different distribution from the one that updates the student.",
-          "excerpt": "commonly used estimators may describe a different distribution from the one used to update the student.",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "A learned critic over velocity fields gives one framework that covers several existing distillation objectives.",
-          "excerpt": "VAD unifies score distillation, Fisher-based matching, and moment matching, also explaining existing heuristic MMD updates and delivering new training objectives.",
-          "confidence": 0.55,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This off-thesis diffusion research matters only if you serve image or video generation and want fewer sampling steps.",
-      "tags": [
-        "diffusion-models",
-        "distillation",
-        "flow-matching",
-        "few-step-generation",
-        "text-to-video",
-        "text-to-image"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "Record only; no action for harness builders",
-        "detail": "Keep this for the record in the ML-research lane. Code is published at github.com/Luo-Yihong/VA-TDM for teams that serve few-step image or video generation."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 5,
-        "newness": 65,
-        "credibility": 49.6,
-        "composite": 34.19,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier supported the claims as the authors' own; closest prior is DMD/DMD2 and Trajectory Distribution Matching.",
-      "prior_art": "none found in repo; nearest external work is distribution-matching / score distillation (DMD-style) and trajectory distribution matching",
-      "source_url": "https://arxiv.org/abs/2611.06796",
-      "article_url": "https://arxiv.org/abs/2611.06796",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-04",
-      "raw_path": "data/_raw/va-tdm-a-unified-view-for-improving-few-step-dif-6c95e3f293.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 49.6,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Hugging Face Daily Papers",
-      "id": "researchers-va-tdm-method-improves-four-step-ima-a7561ea491",
-      "retrieved_at": "2026-11-05T17:48:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "id": "introducing-the-agents-api-243d2668ed",
@@ -4230,73 +4567,142 @@
       "grounding_score": 1.0
     },
     {
-      "id": "wolfe-jam-faf-3dd6af4697",
+      "candidate_id": "addyosmani-article-e57aa0166a",
       "topic": "ai-research",
-      "domain": "air.context",
-      "title": "FAF registers YAML media types for portable AI project context files",
-      "source_url": "https://github.com/Wolfe-Jam/faf",
-      "article_url": "https://github.com/Wolfe-Jam/faf",
-      "tweet_url": null,
-      "author": "Wolfe-Jam",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 66.7,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "Wolfe-Jam/faf",
+      "domain": "air.work-efficiency",
       "related_claims": [],
-      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
-      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
+      "title": "Addy Osmani argues that working with coding agents is a management job",
+      "summary": "Addy Osmani teases an article saying that anyone who spends the day with a coding agent is in effect managing. He argues that the skills for managing agents are mostly the skills for managing a team. You do not need to be a manager to learn them. The captured text is only the teaser, so no specific practices are given.",
       "lessons": [
         {
-          "point": "The format aims to be a shared context file across tools and teams.",
-          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
-          "confidence": 0.7,
+          "point": "Managing agents draws on the same skills as managing a team, and anyone can learn them.",
+          "excerpt": "The skills for managing agents are pretty much the skills for managing a team, and you don't need to be a manager to learn them.",
+          "confidence": 0.35,
           "grounded": true
         },
         {
-          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
-          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
-          "confidence": 0.6,
+          "point": "Heavy daily use of a coding agent is framed as a management role, not only an individual coding role.",
+          "excerpt": "If you're spending all day with a coding agent, you are managing",
+          "confidence": 0.3,
           "grounded": true
         }
       ],
+      "takeaway": "The framing is useful but the captured source is a teaser with no concrete practices behind it.",
       "tags": [
-        "context-files",
-        "yaml",
-        "agents-md",
-        "marketing"
+        "coding-agents",
+        "agent-management",
+        "developer-workflow",
+        "opinion"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Stick with AGENTS.md-style context files",
-        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
+        "title": "Write agent tasks the way you would brief a team member",
+        "detail": "For each agent task, write down the goal, the constraints, what done looks like and how you will check it, as you would when delegating to a person. Then review the result against that brief rather than reading every step."
       },
       "scores": {
-        "novelty": 12,
-        "relevance": 12,
-        "newness": 65,
-        "credibility": 66.7,
-        "composite": 33.45,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "novelty": 8,
+        "relevance": 22,
+        "newness": 62,
+        "credibility": 60.0,
+        "composite": 33.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
-      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
-      "verified": false,
-      "verify_reason": "scoring",
-      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "verified": true,
+      "verify_note": "Teaser-only source; lessons restate the headline.",
+      "prior_art": "Widespread 'developer as manager of agents' framing, including Osmani's earlier posts",
+      "source_url": "https://x.com/addyosmani/status/2119332146485891501",
+      "article_url": null,
+      "tweet_url": "https://x.com/addyosmani/status/2119332146485891501",
+      "author": "@addyosmani",
+      "date": "2026-11",
+      "published": "2026-11-08",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "raw_path": "data/_raw/addyosmani-article-e57aa0166a.txt",
+      "id": "addy-osmani-argues-that-working-with-coding-agen-42e61ca51a",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
       "needs_review": true,
-      "readability_rewrite": "reverted summary",
+      "readability_rewrite": "reverted lessons[0].point",
       "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
-        ]
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "related_claims": [],
+      "title": "Researchers' VA-TDM method improves four-step image and video diffusion generation",
+      "summary": "Diffusion models normally need many sampling steps. Distillation trains a 'student' model to produce similar output in only a few steps. This paper introduces Velocity Adversarial Distillation (VAD), which uses a learned critic to compare the student's and teacher's velocity fields, and says VAD unifies several earlier distillation methods. The authors claim top four-step results for text-to-image and text-to-video, scaling up to a 33-billion-parameter video model.",
+      "lessons": [
+        {
+          "point": "Score-distillation methods can be misled at intermediate steps, because their estimators may track a different distribution from the one that updates the student.",
+          "excerpt": "commonly used estimators may describe a different distribution from the one used to update the student.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "A learned critic over velocity fields gives one framework that covers several existing distillation objectives.",
+          "excerpt": "VAD unifies score distillation, Fisher-based matching, and moment matching, also explaining existing heuristic MMD updates and delivering new training objectives.",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This off-thesis diffusion research matters only if you serve image or video generation and want fewer sampling steps.",
+      "tags": [
+        "diffusion-models",
+        "distillation",
+        "flow-matching",
+        "few-step-generation",
+        "text-to-video",
+        "text-to-image"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Record only; no action for harness builders",
+        "detail": "Keep this for the record in the ML-research lane. Code is published at github.com/Luo-Yihong/VA-TDM for teams that serve few-step image or video generation."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 5,
+        "newness": 62,
+        "credibility": 49.6,
+        "composite": 33.44,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier supported the claims as the authors' own; closest prior is DMD/DMD2 and Trajectory Distribution Matching.",
+      "prior_art": "none found in repo; nearest external work is distribution-matching / score distillation (DMD-style) and trajectory distribution matching",
+      "source_url": "https://arxiv.org/abs/2611.06796",
+      "article_url": "https://arxiv.org/abs/2611.06796",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-04",
+      "raw_path": "data/_raw/va-tdm-a-unified-view-for-improving-few-step-dif-6c95e3f293.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 49.6,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "researchers-va-tdm-method-improves-four-step-ima-a7561ea491",
+      "retrieved_at": "2026-11-05T17:48:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -4348,10 +4754,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 15,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.0,
-        "composite": 33.3,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 33.05,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the paper; it is a single-task proof of principle, which the entry already says.",
@@ -4428,10 +4834,10 @@
       "scores": {
         "novelty": 18,
         "relevance": 45,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 33.15,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 32.9,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
@@ -4459,6 +4865,77 @@
         "score": 100,
         "passed": true,
         "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "wolfe-jam-faf-3dd6af4697",
+      "topic": "ai-research",
+      "domain": "air.context",
+      "title": "FAF registers YAML media types for portable AI project context files",
+      "source_url": "https://github.com/Wolfe-Jam/faf",
+      "article_url": "https://github.com/Wolfe-Jam/faf",
+      "tweet_url": null,
+      "author": "Wolfe-Jam",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "Wolfe-Jam/faf",
+      "related_claims": [],
+      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
+      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
+      "lessons": [
+        {
+          "point": "The format aims to be a shared context file across tools and teams.",
+          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
+          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "context-files",
+        "yaml",
+        "agents-md",
+        "marketing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Stick with AGENTS.md-style context files",
+        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 12,
+        "newness": 62,
+        "credibility": 66.7,
+        "composite": 32.7,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -4499,10 +4976,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 20,
-        "newness": 65,
+        "newness": 62,
         "credibility": 55.0,
-        "composite": 32.9,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 32.15,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier: basic educational material, accurately described.",
@@ -4571,10 +5048,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.0,
-        "composite": 31.8,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 31.55,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the abstract (no tables in the source); the summary's 'matches or beats full AT' was corrected to the abstract's 'approaches or surpasses'.",
@@ -4594,83 +5071,6 @@
       "source_name": "NeurIPS (via arXiv)",
       "retrieved_at": "2026-10-30T16:55:16+00:00",
       "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "theo-biased-but-this-is-accurate-1140f5c76e",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "related_claims": [],
-      "title": "Theo endorses a quick guide on which coding-agent harness to use",
-      "summary": "Theo reposts, and calls accurate, a three-line guide from @amritwt on picking a coding-agent setup. It suggests T3Code if you have several subscriptions and a remote machine. It suggests the lab's own harness if you have one subscription, and Factory, Droid or Devin if you want models from several labs. Theo says up front that he is biased, and the post gives no evidence or comparison.",
-      "lessons": [
-        {
-          "point": "With several coding subscriptions and your own remote machine, the guide recommends a single front end, T3Code.",
-          "excerpt": "If you have multiple coding subscriptions + Your own remote machine: Just use T3Code",
-          "confidence": 0.3,
-          "grounded": true
-        },
-        {
-          "point": "With just one subscription, the guide says to use that vendor's own harness, alone or behind T3Code.",
-          "excerpt": "If you have just one subscription: Use their harness raw or with T3Code",
-          "confidence": 0.3,
-          "grounded": true
-        },
-        {
-          "point": "For mixing models from different labs, the guide points to multi-model products.",
-          "excerpt": "If you want to use multiple models from different labs: Use Factory / Droid / Devin",
-          "confidence": 0.3,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This is a biased opinion with no measurements, so treat it as a list of options to try rather than a recommendation.",
-      "tags": [
-        "coding-agents",
-        "harness-choice",
-        "t3code",
-        "opinion"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Choose a harness by how many model subscriptions you have, then measure",
-        "detail": "If you use models from more than one lab, trial one multi-model front end against each vendor's own harness on the same few tasks from your repo. Record whether each task succeeded, how long it took and what it cost before you standardize on one."
-      },
-      "scores": {
-        "novelty": 5,
-        "relevance": 15,
-        "newness": 65,
-        "credibility": 60.0,
-        "composite": 31.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Correctly attributed opinion tweet with no evidence.",
-      "prior_art": "Common community advice on vendor CLIs versus model-agnostic harnesses",
-      "source_url": "https://x.com/theo/status/2119329490568691717",
-      "article_url": null,
-      "tweet_url": "https://x.com/theo/status/2119329490568691717",
-      "author": "@theo",
-      "date": "2026-11",
-      "published": "2026-11-08",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "raw_path": "data/_raw/theo-biased-but-this-is-accurate-1140f5c76e.txt",
-      "id": "theo-endorses-a-quick-guide-on-which-coding-agen-ee4710dbf1",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -4715,10 +5115,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 30,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 30.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 30.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted lessons 1-2: the raw capture is navigation only, so nothing beyond the headline is supported; 'AVERI' comes from the feed excerpt, not the page. Needs a re-fetch of the article body.",
@@ -4794,10 +5194,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 12,
+        "newness": 11,
         "credibility": 75.0,
-        "composite": 30.75,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 30.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
@@ -4821,6 +5221,83 @@
       "source_name": "Daniel Miessler",
       "retrieved_at": "2026-10-28T16:52:04+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "theo-biased-but-this-is-accurate-1140f5c76e",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "related_claims": [],
+      "title": "Theo endorses a quick guide on which coding-agent harness to use",
+      "summary": "Theo reposts, and calls accurate, a three-line guide from @amritwt on picking a coding-agent setup. It suggests T3Code if you have several subscriptions and a remote machine. It suggests the lab's own harness if you have one subscription, and Factory, Droid or Devin if you want models from several labs. Theo says up front that he is biased, and the post gives no evidence or comparison.",
+      "lessons": [
+        {
+          "point": "With several coding subscriptions and your own remote machine, the guide recommends a single front end, T3Code.",
+          "excerpt": "If you have multiple coding subscriptions + Your own remote machine: Just use T3Code",
+          "confidence": 0.3,
+          "grounded": true
+        },
+        {
+          "point": "With just one subscription, the guide says to use that vendor's own harness, alone or behind T3Code.",
+          "excerpt": "If you have just one subscription: Use their harness raw or with T3Code",
+          "confidence": 0.3,
+          "grounded": true
+        },
+        {
+          "point": "For mixing models from different labs, the guide points to multi-model products.",
+          "excerpt": "If you want to use multiple models from different labs: Use Factory / Droid / Devin",
+          "confidence": 0.3,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is a biased opinion with no measurements, so treat it as a list of options to try rather than a recommendation.",
+      "tags": [
+        "coding-agents",
+        "harness-choice",
+        "t3code",
+        "opinion"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Choose a harness by how many model subscriptions you have, then measure",
+        "detail": "If you use models from more than one lab, trial one multi-model front end against each vendor's own harness on the same few tasks from your repo. Record whether each task succeeded, how long it took and what it cost before you standardize on one."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 15,
+        "newness": 62,
+        "credibility": 60.0,
+        "composite": 30.5,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Correctly attributed opinion tweet with no evidence.",
+      "prior_art": "Common community advice on vendor CLIs versus model-agnostic harnesses",
+      "source_url": "https://x.com/theo/status/2119329490568691717",
+      "article_url": null,
+      "tweet_url": "https://x.com/theo/status/2119329490568691717",
+      "author": "@theo",
+      "date": "2026-11",
+      "published": "2026-11-08",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "raw_path": "data/_raw/theo-biased-but-this-is-accurate-1140f5c76e.txt",
+      "id": "theo-endorses-a-quick-guide-on-which-coding-agen-ee4710dbf1",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -4875,90 +5352,15 @@
       "scores": {
         "novelty": 40,
         "relevance": 15,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.0,
-        "composite": 30.3,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 30.05,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
       "id": "workshop-paper-proposes-retrieval-as-a-local-wal-83b74bc74c",
       "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "related_claims": [],
-      "title": "Datasette stops sending Firefox rel=next link headers that trigger prefetches",
-      "summary": "Simon Willison noticed that Firefox prefetches the next page of a Datasette table because Datasette sends an HTTP link header marked rel=next. Very few visitors click through to the next page, so the browser downloads data it does not need and the server renders a whole page that is thrown away. Datasette issue #3046 stops sending this header to Firefox for HTML pages. The Firefox bug about this behavior has been open for 24 years.",
-      "lessons": [
-        {
-          "point": "Willison spotted the waste in the Firefox network panel.",
-          "excerpt": "I was looking at the Firefox network panel today when I noticed that requests to a Datasette table page were triggering an",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "A pagination hint in a response header can make the server render a whole page that nobody reads.",
-          "excerpt": "the Datasette server is having to render an entire page that then gets thrown away",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "This Firefox behavior is long-standing and still unresolved, so servers have to work around it.",
-          "excerpt": "has been open for 24 years about this behavior",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your app sends rel=next link headers on costly paginated HTML pages, Firefox may be making your server render pages nobody looks at.",
-      "tags": [
-        "datasette",
-        "http-headers",
-        "prefetch",
-        "firefox",
-        "web-performance"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Audit rel=next link headers on expensive paginated pages",
-        "detail": "Load a paginated page in the Firefox network panel and look for prefetch requests to the next page. If you see them, stop sending the HTTP link rel=next header on HTML responses (keep it for JSON API clients if they need it), or make next-page renders cheap."
-      },
-      "scores": {
-        "novelty": 6,
-        "relevance": 15,
-        "newness": 65,
-        "credibility": 51.2,
-        "composite": 30.23,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Two overstated lesson points (server metrics, doubled work) were corrected to what the post says; off-topic web performance note for this audience.",
-      "prior_art": "Mozilla bug on rel=next link prefetching (open since 2002); the author's own 2002 post on Mozilla prefetching; MDN link prefetch docs",
-      "source_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
-      "article_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-07",
-      "discovered_via": "rss",
-      "source_id": "rss:https-simonwillison-net-atom-everything",
-      "source_rank": 51.2,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Simon Willison's Weblog",
-      "raw_path": "data/_raw/datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea.txt",
-      "id": "datasette-stops-sending-firefox-rel-next-link-he-3825a1d7e0",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -5008,10 +5410,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 12,
+        "newness": 11,
         "credibility": 50.6,
-        "composite": 30.09,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 29.84,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -5037,6 +5439,74 @@
       "id": "survey-maps-how-self-improving-ai-systems-can-fa-73b25ce21f",
       "retrieved_at": "2026-10-27T18:41:51+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "the-web-is-more-than-enough-by-paul-ford-990de2bb3f",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "title": "Claude Opus 5.5 ports a Three.js scene to plain WebGL",
+      "summary": "In a Hacker News comment, Simon Willison reports asking Claude Opus 5.5 (Medium effort, in Claude chat) to port a Three.js scene it had built to vanilla JavaScript and WebGL. The port worked but the output was not identical to the original, and he does not fully understand why. It is a single anecdote with no measurement.",
+      "takeaway": "One anecdote shows a frontier model can drop a 3D library dependency, and it says little a harness builder can act on.",
+      "lessons": [
+        {
+          "point": "The model produced a working dependency-free WebGL version of a Three.js scene in one request.",
+          "excerpt": "it turns out Claude Opus 5.5 is perfectly capable of 3D modeling in Vanilla JS + WebGL without Three.js.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "The port changed the output, and the author could not fully explain the differences. Library-removal ports therefore need visual checks.",
+          "excerpt": "They aren't identical - you can see what Claude said about that in the transcript",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "claude",
+        "code-porting",
+        "webgl",
+        "anecdote"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Diff the rendered output when an agent removes a library dependency",
+        "detail": "When asking a model to port code off a framework, compare rendered or runtime output, not just whether it runs, since behavior can drift silently."
+      },
+      "scores": {
+        "novelty": 10,
+        "relevance": 12,
+        "newness": 62,
+        "credibility": 50.8,
+        "composite": 29.72,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Many prior anecdotes of LLMs porting code between frameworks",
+      "related_claims": [],
+      "source_url": "https://simonwillison.net/2026/Nov/9/hn-50421091/",
+      "article_url": "https://simonwillison.net/2026/Nov/9/hn-50421091/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/the-web-is-more-than-enough-by-paul-ford-990de2bb3f.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-simonwillison-net-atom-everything",
+      "source_rank": 50.8,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Simon Willison's Weblog",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -5095,10 +5565,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 29.85,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 29.6,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 3 and 4; lesson 2's agent-migration framing was our inference and was reworded to the recipe the source gives (novelty 22 vs 30, lower kept).",
@@ -5119,6 +5589,81 @@
       "source_url": "https://newsletter.pragmaticengineer.com/p/software-engineering-at-google-and",
       "id": "titus-winters-says-ai-raised-code-output-and-out-3746e9ad00",
       "retrieved_at": "2026-10-29T16:50:31+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "related_claims": [],
+      "title": "Datasette stops sending Firefox rel=next link headers that trigger prefetches",
+      "summary": "Simon Willison noticed that Firefox prefetches the next page of a Datasette table because Datasette sends an HTTP link header marked rel=next. Very few visitors click through to the next page, so the browser downloads data it does not need and the server renders a whole page that is thrown away. Datasette issue #3046 stops sending this header to Firefox for HTML pages. The Firefox bug about this behavior has been open for 24 years.",
+      "lessons": [
+        {
+          "point": "Willison spotted the waste in the Firefox network panel.",
+          "excerpt": "I was looking at the Firefox network panel today when I noticed that requests to a Datasette table page were triggering an",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A pagination hint in a response header can make the server render a whole page that nobody reads.",
+          "excerpt": "the Datasette server is having to render an entire page that then gets thrown away",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "This Firefox behavior is long-standing and still unresolved, so servers have to work around it.",
+          "excerpt": "has been open for 24 years about this behavior",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your app sends rel=next link headers on costly paginated HTML pages, Firefox may be making your server render pages nobody looks at.",
+      "tags": [
+        "datasette",
+        "http-headers",
+        "prefetch",
+        "firefox",
+        "web-performance"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit rel=next link headers on expensive paginated pages",
+        "detail": "Load a paginated page in the Firefox network panel and look for prefetch requests to the next page. If you see them, stop sending the HTTP link rel=next header on HTML responses (keep it for JSON API clients if they need it), or make next-page renders cheap."
+      },
+      "scores": {
+        "novelty": 6,
+        "relevance": 15,
+        "newness": 62,
+        "credibility": 51.2,
+        "composite": 29.48,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Two overstated lesson points (server metrics, doubled work) were corrected to what the post says; off-topic web performance note for this audience.",
+      "prior_art": "Mozilla bug on rel=next link prefetching (open since 2002); the author's own 2002 post on Mozilla prefetching; MDN link prefetch docs",
+      "source_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
+      "article_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-07",
+      "discovered_via": "rss",
+      "source_id": "rss:https-simonwillison-net-atom-everything",
+      "source_rank": 51.2,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Simon Willison's Weblog",
+      "raw_path": "data/_raw/datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea.txt",
+      "id": "datasette-stops-sending-firefox-rel-next-link-he-3825a1d7e0",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -5180,10 +5725,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 25,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 29.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 29.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
@@ -5247,10 +5792,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 35,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.5,
-        "composite": 28.88,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 28.62,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons supported by the essay; it is opinion without experiments.",
@@ -5322,10 +5867,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 12,
+        "newness": 11,
         "credibility": 52.0,
-        "composite": 28.8,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 28.55,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -5401,10 +5946,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 10,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.0,
-        "composite": 28.8,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 28.55,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "LoRA-based adversarial fine-tuning and sparse fine-tuning methods such as lottery-ticket and saliency-based parameter selection.",
@@ -5453,10 +5998,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 65,
+        "newness": 62,
         "credibility": 60.0,
-        "composite": 28.55,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 27.8,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Generic startup advice; no technical prior art applies.",
@@ -5527,10 +6072,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 12,
+        "newness": 11,
         "credibility": 40.0,
-        "composite": 27.6,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 27.35,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -5604,10 +6149,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.0,
-        "composite": 27.3,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 27.05,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -5678,10 +6223,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 15,
-        "newness": 12,
+        "newness": 11,
         "credibility": 72.0,
-        "composite": 27.3,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 27.05,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
@@ -5756,10 +6301,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 35,
-        "newness": 12,
+        "newness": 11,
         "credibility": 51.6,
-        "composite": 27.24,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 26.99,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are accurately attributed to Willison and Moonshot; the open-weights date is a promise and the price comparisons are Willison's, not independently checked.",
@@ -5816,10 +6361,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 3,
-        "newness": 65,
+        "newness": 62,
         "credibility": 55.0,
-        "composite": 26.9,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 26.15,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported the lesson; off-topic.",
@@ -5894,10 +6439,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 30,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 26.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 26.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: quotes supported; the title overstated parallel-agent review as the cause (commenters give varied reasons), retitled.",
@@ -5916,68 +6461,6 @@
       "source_topics": [],
       "source_name": "@mellosty via Hacker News",
       "retrieved_at": "2026-10-30T16:55:16+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.models",
-      "related_claims": [],
-      "title": "Tunguz posted a one-line jab at local AI enthusiasts",
-      "summary": "The post is a single sarcastic line about people who run AI locally, with angry emojis. It contains no claim, data or technique. It has no use beyond showing community sentiment.",
-      "lessons": [
-        {
-          "point": "The post gives no technical content. At most it is a sentiment signal about the local-model community.",
-          "excerpt": "Those greedy local AI fanatics. 🤬😡",
-          "confidence": 0.2,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Nothing here to act on.",
-      "tags": [
-        "local-ai",
-        "social-post",
-        "low-signal"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "No action",
-        "detail": "Skip this post. It has no technical claim, data or method to evaluate."
-      },
-      "scores": {
-        "novelty": 0,
-        "relevance": 3,
-        "newness": 65,
-        "credibility": 60.0,
-        "composite": 26.15,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier: one sarcastic line with no technical content.",
-      "prior_art": "none found",
-      "source_url": "https://x.com/tunguz/status/2118051184779076026",
-      "article_url": null,
-      "tweet_url": "https://x.com/tunguz/status/2118051184779076026",
-      "author": "@tunguz",
-      "date": "2026-11",
-      "published": "2026-11-04",
-      "raw_path": "data/_raw/tunguz-those-greedy-local-ai-fanatics-a384cb7e92.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "id": "tunguz-posted-a-one-line-jab-at-local-ai-enthusi-5a9b6d14be",
-      "retrieved_at": "2026-11-05T17:48:32+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -6028,10 +6511,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 15,
-        "newness": 12,
+        "newness": 11,
         "credibility": 53.2,
-        "composite": 25.98,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 25.73,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "Extends RoboCasa365 and general VLA robustness benchmarks that report aggregate task success; the eval-methodology point echoes the tracker claim that headline benchmark metrics can mask distinct failure modes. Verifier: Paired-outcome 'flip' analysis beyond aggregate accuracy (e.g., Dutta et al. 2024 'Accuracy is Not All You Need') plus VLA perturbation benchmarks such as LIBERO-Plus/LIBERO-PRO; the stage-aware failure-depth breakdown is the incremental delta.",
       "verified": true,
@@ -6106,10 +6589,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 12,
+        "newness": 11,
         "credibility": 57.5,
-        "composite": 25.73,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 25.48,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -6146,6 +6629,68 @@
           "published": "2026-10-22"
         }
       ]
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "related_claims": [],
+      "title": "Tunguz posted a one-line jab at local AI enthusiasts",
+      "summary": "The post is a single sarcastic line about people who run AI locally, with angry emojis. It contains no claim, data or technique. It has no use beyond showing community sentiment.",
+      "lessons": [
+        {
+          "point": "The post gives no technical content. At most it is a sentiment signal about the local-model community.",
+          "excerpt": "Those greedy local AI fanatics. 🤬😡",
+          "confidence": 0.2,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Nothing here to act on.",
+      "tags": [
+        "local-ai",
+        "social-post",
+        "low-signal"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action",
+        "detail": "Skip this post. It has no technical claim, data or method to evaluate."
+      },
+      "scores": {
+        "novelty": 0,
+        "relevance": 3,
+        "newness": 62,
+        "credibility": 60.0,
+        "composite": 25.4,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier: one sarcastic line with no technical content.",
+      "prior_art": "none found",
+      "source_url": "https://x.com/tunguz/status/2118051184779076026",
+      "article_url": null,
+      "tweet_url": "https://x.com/tunguz/status/2118051184779076026",
+      "author": "@tunguz",
+      "date": "2026-11",
+      "published": "2026-11-04",
+      "raw_path": "data/_raw/tunguz-those-greedy-local-ai-fanatics-a384cb7e92.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "id": "tunguz-posted-a-one-line-jab-at-local-ai-enthusi-5a9b6d14be",
+      "retrieved_at": "2026-11-05T17:48:32+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "early-progress-on-accelerating-drug-development-0bec8872c4",
@@ -6190,10 +6735,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 12,
+        "newness": 11,
         "credibility": 69.3,
-        "composite": 25.39,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 25.14,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
@@ -6352,10 +6897,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 24.15,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 23.9,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -6420,10 +6965,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 12,
+        "newness": 11,
         "credibility": 60.0,
-        "composite": 24.0,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 23.75,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: the lessons quote the post accurately, but the post itself gives no benchmark, metric or model details; low confidence reflects that.",
@@ -6504,10 +7049,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 30,
-        "newness": 12,
+        "newness": 11,
         "credibility": 47.9,
-        "composite": 21.59,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 21.34,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "Many existing LLM engineering courses and cookbooks (OpenAI Cookbook, Anthropic courses, DeepLearning.AI short courses).",
@@ -6563,10 +7108,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 12,
+        "newness": 11,
         "credibility": 67.5,
-        "composite": 20.62,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 20.38,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons; some credits also go directly to six named projects, not only through partners.",
@@ -6733,10 +7278,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 8,
-        "newness": 12,
+        "newness": 11,
         "credibility": 70.0,
-        "composite": 18.9,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 18.65,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
@@ -6799,10 +7344,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 12,
-        "newness": 12,
+        "newness": 11,
         "credibility": 50.4,
-        "composite": 18.66,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 18.41,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "It follows its predecessor DefakerOne and other specialist deepfake and tamper detectors. The archive holds a multi-agent MLLM deepfake-video detector built from specialist agents and a judge. The new parts are broader coverage in one model and the training and test-time adaptation methods, which are incremental ML work.",
@@ -6873,10 +7418,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 12,
+        "newness": 11,
         "credibility": 67.5,
-        "composite": 17.62,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 17.38,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
@@ -6943,10 +7488,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 12,
+        "newness": 11,
         "credibility": 55.0,
-        "composite": 17.25,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 17.0,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -7020,10 +7565,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 12,
+        "newness": 11,
         "credibility": 68.1,
-        "composite": 16.51,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 16.26,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; no technical claim to compare.",
@@ -7089,10 +7634,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 12,
+        "newness": 11,
         "credibility": 60.0,
-        "composite": 15.3,
-        "scored_at": "2026-11-08T17:53:17+00:00"
+        "composite": 15.05,
+        "scored_at": "2026-11-09T17:53:09+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -7116,73 +7661,6 @@
       "source_name": "X list",
       "id": "riley-goodside-mocks-the-claim-that-model-collap-501c4f1a0a",
       "retrieved_at": "2026-10-29T16:50:31+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "amp-on-android-5fe9c0a919",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "Amp releases an Android app for its coding agent",
-      "summary": "Amp, a coding agent, has released an Android app. The screenshots show agent threads, a Portals tab showing a slide deck, and a Changes tab showing code diffs. The post contains no technical, security or evaluation detail beyond the announcement.",
-      "lessons": [
-        {
-          "point": "Amp now has an Android client.",
-          "excerpt": "We now have an Android app:",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The mobile app lets you review the agent's code changes as diffs.",
-          "excerpt": "The present.js diff in the Changes tab of the Amp Android app",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Amp users can now check agent threads and diffs from a phone, but there is nothing to learn about building agents.",
-      "tags": [
-        "amp",
-        "coding-agent",
-        "android",
-        "product-launch"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "No action beyond optional install",
-        "detail": "Amp users who want to review agent threads and code diffs on mobile can install the app from ampcode.com/app. There is no technique to adopt."
-      },
-      "scores": {
-        "novelty": 3,
-        "relevance": 10,
-        "newness": 12,
-        "credibility": 55.0,
-        "composite": 15.15,
-        "scored_at": "2026-11-08T17:53:17+00:00"
-      },
-      "verified": true,
-      "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
-      "related_claims": [],
-      "corroborating_sources": [],
-      "source_url": "https://ampcode.com/news/amp-on-android",
-      "article_url": "https://ampcode.com/news/amp-on-android",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-27",
-      "raw_path": "data/_raw/amp-on-android-5fe9c0a919.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-ampcode-com-news-rss",
-      "source_rank": 55.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Amp",
-      "retrieved_at": "2026-10-28T16:52:04+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -7266,6 +7744,73 @@
       "grounding_score": 1.0,
       "verify_reason": "scoring",
       "verify_note": "Not sent to a verifier: a category index page, not an article; held for review."
+    },
+    {
+      "id": "amp-on-android-5fe9c0a919",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Amp releases an Android app for its coding agent",
+      "summary": "Amp, a coding agent, has released an Android app. The screenshots show agent threads, a Portals tab showing a slide deck, and a Changes tab showing code diffs. The post contains no technical, security or evaluation detail beyond the announcement.",
+      "lessons": [
+        {
+          "point": "Amp now has an Android client.",
+          "excerpt": "We now have an Android app:",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The mobile app lets you review the agent's code changes as diffs.",
+          "excerpt": "The present.js diff in the Changes tab of the Amp Android app",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Amp users can now check agent threads and diffs from a phone, but there is nothing to learn about building agents.",
+      "tags": [
+        "amp",
+        "coding-agent",
+        "android",
+        "product-launch"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action beyond optional install",
+        "detail": "Amp users who want to review agent threads and code diffs on mobile can install the app from ampcode.com/app. There is no technique to adopt."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 10,
+        "newness": 11,
+        "credibility": 55.0,
+        "composite": 14.9,
+        "scored_at": "2026-11-09T17:53:09+00:00"
+      },
+      "verified": true,
+      "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "https://ampcode.com/news/amp-on-android",
+      "article_url": "https://ampcode.com/news/amp-on-android",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/amp-on-android-5fe9c0a919.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-ampcode-com-news-rss",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Amp",
+      "retrieved_at": "2026-10-28T16:52:04+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",

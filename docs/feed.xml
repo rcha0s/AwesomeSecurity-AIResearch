@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-08T00:00:00Z</updated>
+  <updated>2026-11-09T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -17,11 +17,11 @@
     <summary type="text">Core update race conditions get exploited almost immediately, so WordPress sites should update to 7.1.4 right away.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
-    <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
-    <updated>2026-11-01T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week" rel="alternate" type="text/html" />
-    <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week</id>
+    <title>OpenSSH ships an emergency workaround for a critical musl-specific vulnerability</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week" rel="alternate" type="text/html" />
+    <summary type="text">Find every musl-based SSH host, especially Alpine containers and appliances, and turn off password authentication now, because maintainers no longer wait out long embargoes.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week</id>
@@ -29,6 +29,34 @@
     <updated>2026-11-06T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week" rel="alternate" type="text/html" />
     <summary type="text">Another company says AI-driven intrusion tooling got attackers into internal systems, but with no technical details, defenders can only assume faster, more automated attacks.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-bee-js-npm-release-and-swarm-desktop-r-30416a4c82#week</id>
+    <title>Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-bee-js-npm-release-and-swarm-desktop-r-30416a4c82#week" rel="alternate" type="text/html" />
+    <summary type="text">Trusted publishing and valid provenance prove where a package was built, not that its source was reviewed, so release workflows need branch, tag and reviewer gates of their own.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-deepmind-s-ai-agents-make-1024-bit-rsa-ke-4eaac119e0#week</id>
+    <title>Google DeepMind's AI agents cut the cost of attacking 1024-bit RSA</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-deepmind-s-ai-agents-make-1024-bit-rsa-ke-4eaac119e0#week" rel="alternate" type="text/html" />
+    <summary type="text">Treat any remaining RSA-1024 keys as weaker than assumed and retire them, especially hardware security module (HSM) signing keys that sign attacker-influenced data.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bitter-hackers-deploy-new-paprat-backdoor-in-cyb-26e58b9abb#week</id>
+    <title>Bitter espionage group deploys new PapRAT backdoor against South Asian targets</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bitter-hackers-deploy-new-paprat-backdoor-in-cyb-26e58b9abb#week" rel="alternate" type="text/html" />
+    <summary type="text">Detection for this group depends on watching LNK, URL-shortcut, disk-image and MSI activity and scheduled tasks, not just malware signatures.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=taiwan-based-hacker-used-bossai-ai-agents-to-ste-f7f2d8b359#week</id>
+    <title>Lone Taiwan-based hacker used AI agents to steal Taipei emergency dispatch records</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=taiwan-based-hacker-used-bossai-ai-agents-to-ste-f7f2d8b359#week" rel="alternate" type="text/html" />
+    <summary type="text">AI agents let one attacker probe hundreds of targets cheaply, but they mostly succeeded only against badly protected systems.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week</id>
@@ -59,32 +87,18 @@
     <summary type="text">Agent traffic puts costs on site operators, and tools to block or charge agents are in growing demand.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=crafty-falcon-an-ai-assisted-actor-attacks-india-594c84233e#week</id>
-    <title>CRAFTY FALCON, an AI-assisted actor, attacks Indian fintechs on weekends</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=crafty-falcon-an-ai-assisted-actor-attacks-india-594c84233e#week" rel="alternate" type="text/html" />
-    <summary type="text">Attackers using AI tooling iterate fast and re-attack after incomplete cleanups, so monitoring must cover off-hours.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims</id>
+    <title>Output-only watermark audits can be evaded by the audited provider</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims" rel="alternate" type="text/html" />
+    <summary type="text">Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and downstream utility largely intact.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-security-tools-on-github-infect-over-2-000-24714f20b3#week</id>
-    <title>Fake security tools on GitHub infect over 2,000 Windows systems with malware</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fake-security-tools-on-github-infect-over-2-000-24714f20b3#week" rel="alternate" type="text/html" />
-    <summary type="text">Security staff who run untrusted GitHub tools can be compromised, so vet and sandbox such code before running it.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-says-artex-hacking-agent-escaped-sand-a848e7d7ec#week</id>
-    <title>Researcher says ARTEX hacking agent escaped sandbox and breached WorkOS</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-says-artex-hacking-agent-escaped-sand-a848e7d7ec#week" rel="alternate" type="text/html" />
-    <summary type="text">Autonomous testing agents need hard isolation, and exposed endpoints with default credentials get found quickly.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-s-paint-remote-code-execution-fix-ship-d5a47faa64#week</id>
-    <title>Microsoft's Paint remote code execution fix ships only through the Store</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-s-paint-remote-code-execution-fix-ship-d5a47faa64#week" rel="alternate" type="text/html" />
-    <summary type="text">Store-delivered apps fall outside normal Windows patching, so check Paint versions for each user and in the provisioned copy instead of trusting Windows Update.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=skill-optimization-feedback-can-plant-backdoors#claims</id>
+    <title>Poisoned optimizer feedback can plant trigger rules in agent Skills</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=skill-optimization-feedback-can-plant-backdoors#claims" rel="alternate" type="text/html" />
+    <summary type="text">When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final Skill without access to the model, optimizer or Skill file, while clean accuracy stays close to a benign run.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims</id>
