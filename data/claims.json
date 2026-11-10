@@ -2644,10 +2644,18 @@
           "title": "Cursor: dynamic context discovery",
           "published": "2026-01-06",
           "note": "\"In an A/B test, we found that in runs that called an MCP tool, this strategy reduced total agent tokens by 46.9% (statistically significant, with high variance based on the number of MCPs installed).\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/ratel-ai/ratel",
+          "title": "ratel-ai/ratel",
+          "published": "2026-11-08",
+          "note": "Library that searches a BM25 tool and skill catalog per turn instead of loading every schema; its token savings are self-reported.",
+          "source_name": "ratel-ai/ratel"
         }
       ],
       "first_seen": "2025-11-04",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-09",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Load tool definitions on demand, not all at start",
@@ -3328,6 +3336,67 @@
       "title": "Coding-agent permission files leak secrets into public repositories",
       "guidance": "Treat agent permission, transcript and memory files as secret-bearing: gitignore them per repo, rotate any credential they ever held, approve command patterns that reference environment variables instead of literal secrets, and add command-aware rules (PGPASSWORD=, sshpass -p, Authorization: Bearer) to secret scanning of agent folders and git history.",
       "scope": "Measured on public GitHub copies of Claude Code's local settings file; 'real secret' was screened by rules and an LLM reviewer, not validity-tested, and does not by itself show how other agents' config files behave."
+    },
+    {
+      "id": "skill-optimization-feedback-can-plant-backdoors",
+      "topic": "ai-security",
+      "domain": "ais.data-poisoning",
+      "statement": "When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final Skill without access to the model, optimizer or Skill file, while clean accuracy stays close to a benign run.",
+      "status": "current",
+      "confidence": 0.45,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "http://arxiv.org/abs/2611.09348v1",
+          "title": "When Feedback Becomes a Backdoor: Tracing Backdoor Skill Formation in Text-Space Skill Optimization",
+          "published": "2026-11-06",
+          "note": "On SearchQA the poisoned Skill fired on 200/200 triggered and 0/200 clean questions across three seeds."
+        }
+      ],
+      "first_seen": "2026-11-09",
+      "last_reviewed": "2026-11-09",
+      "added_on": "2026-11-09",
+      "changed_on": "2026-11-09",
+      "title": "Poisoned optimizer feedback can plant trigger rules in agent Skills",
+      "basis": "controlled experiments on one optimizer (SkillOpt) across two benchmarks, three seeds",
+      "guidance": "Treat reference answers and other optimization feedback as untrusted input: check their provenance, diff each optimized Skill against its predecessor for new literal trigger-to-output rules, and test candidate Skills on trigger-like inputs, not only clean accuracy.",
+      "scope": "Shown for SkillOpt only; the rule survived for short-answer payloads (SearchQA) but no natural run kept it when the payload needed an extra action (SpreadsheetBench). Single workshop paper.",
+      "tags": [
+        "agent-skills",
+        "skill-optimization",
+        "backdoor",
+        "feedback-poisoning"
+      ]
+    },
+    {
+      "id": "output-only-watermark-audits-are-evadable",
+      "topic": "ai-security",
+      "domain": "ais.data-poisoning",
+      "statement": "Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and downstream utility largely intact.",
+      "status": "current",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "http://arxiv.org/abs/2611.09446v1",
+          "title": "Logit Laundering: Evading Data-Use Auditing in Large Language Models",
+          "published": "2026-11-06",
+          "note": "CCS 2026 paper: inference-time logit reshaping evades various state-of-the-art auditing methods while preserving utility."
+        }
+      ],
+      "first_seen": "2026-11-09",
+      "last_reviewed": "2026-11-09",
+      "added_on": "2026-11-09",
+      "changed_on": "2026-11-09",
+      "title": "Output-only watermark audits can be evaded by the audited provider",
+      "basis": "attack paper evaluated against several existing auditing methods (abstract-level evidence)",
+      "guidance": "Treat a negative watermark-audit result as inconclusive when the audited provider controls inference; pair it with contractual audit rights, access to raw logits or weights, or other provenance evidence.",
+      "scope": "Applies to audits that rely on statistical watermark signals in outputs served by the audited party; does not cover audits with weight access or independent inference.",
+      "tags": [
+        "data-watermarking",
+        "data-use-auditing",
+        "evasion"
+      ]
     }
   ]
 }

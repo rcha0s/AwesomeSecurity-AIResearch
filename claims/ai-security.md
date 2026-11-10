@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_27 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-08_
+_29 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-09_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -582,6 +582,30 @@ For automated vulnerability remediation, model choice alone barely moves secure-
 
 </details>
 
+<a id="claim-output-only-watermark-audits-are-evadable"></a>
+
+### Output-only watermark audits can be evaded by the audited provider
+
+`output-only-watermark-audits-are-evadable` · confidence **0.50** · Memory, RAG & Data Poisoning · standing since Nov 9, 2026
+
+Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and downstream utility largely intact.
+
+**Basis —** attack paper evaluated against several existing auditing methods (abstract-level evidence)
+
+**Do this —** Treat a negative watermark-audit result as inconclusive when the audited provider controls inference; pair it with contractual audit rights, access to raw logits or weights, or other provenance evidence.
+
+**Conditions —** Applies to audits that rely on statistical watermark signals in outputs served by the audited party; does not cover audits with weight access or independent inference.
+
+_Tags: `data-watermarking`, `data-use-auditing`, `evasion`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Logit Laundering: Evading Data-Use Auditing in Large Language Models](http://arxiv.org/abs/2611.09446v1) | Nov 6, 2026 |
+
+</details>
+
 <a id="claim-approve-agent-commands-by-observed-effects"></a>
 
 ### Approve agent shell commands by observed effects, not command text
@@ -621,6 +645,30 @@ A harmful goal split across several agent skills that each look benign can get p
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Stealth Apart, Harm Together: Skill Cascading Attacks on Skill-Based Agent Systems](http://arxiv.org/abs/2609.30383v1) | Sep 24, 2026 |
+
+</details>
+
+<a id="claim-skill-optimization-feedback-can-plant-backdoors"></a>
+
+### Poisoned optimizer feedback can plant trigger rules in agent Skills
+
+`skill-optimization-feedback-can-plant-backdoors` · confidence **0.45** · Memory, RAG & Data Poisoning · standing since Nov 9, 2026
+
+When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final Skill without access to the model, optimizer or Skill file, while clean accuracy stays close to a benign run.
+
+**Basis —** controlled experiments on one optimizer (SkillOpt) across two benchmarks, three seeds
+
+**Do this —** Treat reference answers and other optimization feedback as untrusted input: check their provenance, diff each optimized Skill against its predecessor for new literal trigger-to-output rules, and test candidate Skills on trigger-like inputs, not only clean accuracy.
+
+**Conditions —** Shown for SkillOpt only; the rule survived for short-answer payloads (SearchQA) but no natural run kept it when the payload needed an extra action (SpreadsheetBench). Single workshop paper.
+
+_Tags: `agent-skills`, `skill-optimization`, `backdoor`, `feedback-poisoning`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [When Feedback Becomes a Backdoor: Tracing Backdoor Skill Formation in Text-Space Skill Optimization](http://arxiv.org/abs/2611.09348v1) | Nov 6, 2026 |
 
 </details>
 
