@@ -1,8 +1,8 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-11-09)
+# 📰 Security & AI Research — Daily Snapshot (2026-11-10)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-20 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+18 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -12,44 +12,44 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 67.94
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 66.94
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 59.84
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 59.59
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.
-- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)** · _github.com_ · composite 59.0
+- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)** · _github.com_ · composite 58.75
   Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.
-- **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)** · _vulncheck.com_ · composite 54.5
+- **[Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5](https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation)** · _vulncheck.com_ · composite 54.25
   A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.
-- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html)** · _docs.nvidia.com_ · composite 53.75
+- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html)** · _docs.nvidia.com_ · composite 53.5
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.
-- **[Paper proves models can hide capabilities that audits cannot find](https://arxiv.org/abs/2610.13928)** · _arxiv.org_ · composite 53.75
-  A clean capability evaluation cannot prove a model lacks a dangerous capability if the model's builder is adversarial.
+- **[Guardrail safety benchmarks mostly measure the training label policy](https://arxiv.org/abs/2610.25060)** · _Hugging Face Daily Papers_ · composite 52.12
+  A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail against your own policy.
 
 **📈 Trending & In the News**
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[AG2 SandboxShellTool allowlist is bypassed by a newline in the command](https://github.com/advisories/GHSA-2h4w-29cv-2cmv)**
+  Upgrade AG2 past the fix, and treat any agent shell allowlist that passes commands to sh -c as a denylist that will miss some separator.
+  _Why now: Second agent shell-tool allowlist bypass in weeks (after Mistral Vibe): a newline beats AG2's allowed=[...] and readonly=True, a concrete audit check for any agent shell tool that validates a string and then runs sh -c. · trending · cve · high-relevance_
+- **[GPUStack treated spoofable loopback requests as admin, and attackers exploited it](https://nvd.nist.gov/vuln/detail/CVE-2026-102895)**
+  Upgrade GPUStack to 2.2.0 now and treat any AI serving control plane that trusts loopback or a client IP header as unauthenticated.
+  _Why now: CISA lists GPUStack's loopback-trust auth bypass as exploited in the wild; anyone running AI model-serving control planes should patch to 2.2.0 and stop trusting loopback or client real-IP headers as authentication. · active-exploitation · cve · timely · high-relevance_
+- **[Fireworks AI discloses second breach reached through a third-party cloud provider](https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/)**
+  Fireworks AI's second breach in weeks came through a third-party cloud host, and exposed customer data and incomplete model weights.
+  _Why now: An AI inference provider's second breach in weeks came through a third-party cloud host; a live incident with a teachable third-party-host lesson for AI infrastructure teams. · newsworthy · incident-response · timely_
 - **[Caper approves coding-agent commands after running them in a snapshot sandbox](https://arxiv.org/abs/2610.40753)**
   Judge an agent's command by what it actually does in a sandbox, not by how the command reads.
   _Why now: Concrete pattern for approving coding-agent commands by their observed effects in a snapshot sandbox, on the week Apiiro showed don't-ask-again allowlists leaking secrets. · trending · high-relevance_
 - **[Roo Code's command auto-approval can be bypassed in seven ways](https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization)**
   Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.
   _Why now: Named advisory with a transferable lesson for every coding-agent harness: prefix-allowlist auto-approval breaks whenever the checker and the shell parse a command differently. · newsworthy · high-relevance · timely · trending_
-- **[Northflank breach exposed customer secrets, and stolen AI API keys were used](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/)**
-  AI API keys stored as platform environment variables are now a primary target, so scope them narrowly, cap their spend and be ready to rotate them in minutes.
-  _Why now: Latest of Wiz's nine 'Black October' AI-platform breaches, with stolen AI API keys already abused; teaches scoping, spend-capping and fast rotation of hosted AI keys. · trending · newsworthy · timely · high-relevance_
-- **[One crafted medical image file crashes or silently corrupts MONAILabel inference](https://github.com/advisories/GHSA-6hp3-vr39-rqw8)**
-  Machine learning pipelines that read numbers from uploaded files need explicit finiteness checks, because one NaN can corrupt medical output with no error.
-  _Why now: Critical advisory in a medical AI server showing why ML pipelines need finiteness checks on untrusted file metadata. · cve · timely_
-- **[Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model)**
-  Treat an agent's HTTP tool as an SSRF primitive and give every agent its own least-privilege role; a shared default role turns one injected agent into a region-wide breach.
-  _Why now: Disclosed and now-fixed AWS Bedrock AgentCore flaw: one prompt reached region-wide agent credentials; the per-agent least-privilege lesson applies to every cloud agent platform. · newsworthy · timely · high-relevance_
 
 **📈 Emerging trends**
 
+- **prompt-injection** (🔺 rising) — 44 findings from 23 sources since 2026-02.
 - **coding-agents** (🔺 rising) — 17 findings from 12 sources since 2026-08-06.
-- **prompt-injection** (🔺 rising) — 43 findings from 22 sources since 2026-02.
-- **red-teaming** (🔺 rising) — 10 findings from 9 sources since 2026-08-06.
+- **mcp** (🔺 rising) — 32 findings from 18 sources since 2026-02.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -61,18 +61,18 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 75.35
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 74.35
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result…
-- **[Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)** · _Anthropic Research_ · composite 61.89
+- **[Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)** · _Anthropic Research_ · composite 61.64
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.
-- **[watchTowr breaks PaperCut NG/MF patches again with an auth bypass plus RCE](https://labs.watchtowr.com/death-by-a-thousand-papercuts-papercut-pre-auth-rce-chain-and-patch-bypasses-wt-2026-0141-0144-cve-2026-82077-cve-2026-82078-cve-2026-81578/)** · _watchTowr Labs_ · composite 57.29
-  When authorization is enforced per page instead of globally, patching individual pages invites repeated bypasses; PaperCut needed four patch rounds, and admins should be on 26.0.5 or later.
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape)** · _source_ · composite 56.75
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape)** · _source_ · composite 56.5
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](https://www.anthropic.com/research/formal-verification)** · _source_ · composite 56.0
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](https://www.anthropic.com/research/formal-verification)** · _source_ · composite 55.75
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](https://portswigger.net/research/scalable-vector-grief)** · _PortSwigger Research_ · composite 54.63
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](https://portswigger.net/research/scalable-vector-grief)** · _PortSwigger Research_ · composite 54.38
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.
+- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)** · _source_ · composite 50.5
+  Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.
 
 **📈 Trending & In the News**
 
@@ -110,13 +110,13 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
-- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466)** · _arXiv cs.AI (Artificial Intelligence)_ · composite 54.93
+- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](https://arxiv.org/abs/2610.22466)** · _arXiv cs.AI (Artificial Intelligence)_ · composite 54.68
   Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)** · _source_ · composite 54.5
+- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)** · _source_ · composite 54.25
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.
-- **[POPE yes/no readout uses token IDs the model never emits](https://arxiv.org/abs/2610.25964)** · _source_ · composite 51.5
+- **[POPE yes/no readout uses token IDs the model never emits](https://arxiv.org/abs/2610.25964)** · _source_ · composite 51.25
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.
-- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](https://alignment.openai.com/beyond-gmean-squared/)** · _OpenAI Alignment Blog_ · composite 49.1
+- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](https://alignment.openai.com/beyond-gmean-squared/)** · _OpenAI Alignment Blog_ · composite 48.85
   If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.
 
 **📈 Trending & In the News**
@@ -133,8 +133,8 @@ _Not new ideas, but what the field is watching right now — held back by the no
 **📈 Emerging trends**
 
 - **evals** (🔺 rising) — 29 findings from 16 sources since 2023-12-07.
+- **opinion** (🔺 rising) — 6 findings from 3 sources since 2026-10-25.
 - **mcp** (🔺 rising) — 8 findings from 6 sources since 2026-08-07.
-- **coding-agents** (🔺 rising) — 11 findings from 8 sources since 2026-07-21.
 
 [→ Full AI Research database](ai-research/README.md)
 
@@ -142,4 +142,4 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 _Every finding links its original source. Curated by the AwesomeSecurity-AIResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-11-09.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-11-10.</sub>
