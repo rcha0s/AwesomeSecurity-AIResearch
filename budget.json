@@ -620,6 +620,14 @@
       "kind": "done",
       "stories": 17,
       "cost_usd": 0
+    },
+    {
+      "run_id": "local-20261110T173005Z-48723",
+      "date": "2026-11-10",
+      "runner": "local",
+      "kind": "reserve",
+      "stories": 0,
+      "cost_usd": 40.7941
     }
   ]
 }
