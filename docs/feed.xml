@@ -6,9 +6,16 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-09T00:00:00Z</updated>
+  <updated>2026-11-10T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gpustack-treated-spoofable-loopback-requests-as-a9d1c4073c#week</id>
+    <title>GPUStack treated spoofable loopback requests as admin, and attackers exploited it</title>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gpustack-treated-spoofable-loopback-requests-as-a9d1c4073c#week" rel="alternate" type="text/html" />
+    <summary type="text">Upgrade GPUStack to 2.2.0 now and treat any AI serving control plane that trusts loopback or a client IP header as unauthenticated.</summary>
+  </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fresh-wordpress-vulnerability-in-attackers-cross-2e4f913135#week</id>
     <title>Attackers exploit new WordPress remote code execution flaw within hours of patch</title>
@@ -24,67 +31,60 @@
     <summary type="text">Find every musl-based SSH host, especially Alpine containers and appliances, and turn off password authentication now, because maintainers no longer wait out long embargoes.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week</id>
-    <title>Chainalysis discloses breach by attackers using offensive agentic techniques</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainalysis-discloses-breach-by-attackers-using-85c9c02a0a#week" rel="alternate" type="text/html" />
-    <summary type="text">Another company says AI-driven intrusion tooling got attackers into internal systems, but with no technical details, defenders can only assume faster, more automated attacks.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ag2-sandboxshelltool-allowlist-is-bypassed-by-a-28956ee320#week</id>
+    <title>AG2 SandboxShellTool allowlist is bypassed by a newline in the command</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ag2-sandboxshelltool-allowlist-is-bypassed-by-a-28956ee320#week" rel="alternate" type="text/html" />
+    <summary type="text">Upgrade AG2 past the fix, and treat any agent shell allowlist that passes commands to sh -c as a denylist that will miss some separator.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-bee-js-npm-release-and-swarm-desktop-r-30416a4c82#week</id>
-    <title>Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop</title>
-    <updated>2026-11-09T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-bee-js-npm-release-and-swarm-desktop-r-30416a4c82#week" rel="alternate" type="text/html" />
-    <summary type="text">Trusted publishing and valid provenance prove where a package was built, not that its source was reviewed, so release workflows need branch, tag and reviewer gates of their own.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=compromised-qubole-credentials-let-attackers-rai-8fea6b46a4#week</id>
+    <title>Compromised Qubole credentials let attackers raid over a dozen customer cloud accounts</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=compromised-qubole-credentials-let-attackers-rai-8fea6b46a4#week" rel="alternate" type="text/html" />
+    <summary type="text">Every cross-account role you granted a vendor is a standing door into your AWS account, so remove the ones for vendors you no longer use and alert on sessions from outside the vendor's network.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-deepmind-s-ai-agents-make-1024-bit-rsa-ke-4eaac119e0#week</id>
-    <title>Google DeepMind's AI agents cut the cost of attacking 1024-bit RSA</title>
-    <updated>2026-11-09T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-deepmind-s-ai-agents-make-1024-bit-rsa-ke-4eaac119e0#week" rel="alternate" type="text/html" />
-    <summary type="text">Treat any remaining RSA-1024 keys as weaker than assumed and retire them, especially hardware security module (HSM) signing keys that sign attacker-influenced data.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-used-ahsaycbs-zero-days-to-plant-a-hos-28080bda55#week</id>
+    <title>Attackers used AhsayCBS zero-days to plant a host-locked Python backdoor</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-used-ahsaycbs-zero-days-to-plant-a-hos-28080bda55#week" rel="alternate" type="text/html" />
+    <summary type="text">Backup servers hold the keys to the estate, so patch AhsayCBS and hunt for JSP shells, Defender exclusions and Veeam credential queries.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bitter-hackers-deploy-new-paprat-backdoor-in-cyb-26e58b9abb#week</id>
-    <title>Bitter espionage group deploys new PapRAT backdoor against South Asian targets</title>
-    <updated>2026-11-09T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=bitter-hackers-deploy-new-paprat-backdoor-in-cyb-26e58b9abb#week" rel="alternate" type="text/html" />
-    <summary type="text">Detection for this group depends on watching LNK, URL-shortcut, disk-image and MSI activity and scheduled tasks, not just malware signatures.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fireworks-ai-discloses-second-breach-reached-thr-b2a4ba588c#week</id>
+    <title>Fireworks AI discloses second breach reached through a third-party cloud provider</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=fireworks-ai-discloses-second-breach-reached-thr-b2a4ba588c#week" rel="alternate" type="text/html" />
+    <summary type="text">Fireworks AI's second breach in weeks came through a third-party cloud host, and exposed customer data and incomplete model weights.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=taiwan-based-hacker-used-bossai-ai-agents-to-ste-f7f2d8b359#week</id>
-    <title>Lone Taiwan-based hacker used AI agents to steal Taipei emergency dispatch records</title>
-    <updated>2026-11-09T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=taiwan-based-hacker-used-bossai-ai-agents-to-ste-f7f2d8b359#week" rel="alternate" type="text/html" />
-    <summary type="text">AI agents let one attacker probe hundreds of targets cheaply, but they mostly succeeded only against badly protected systems.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sap-fixes-four-maximum-severity-unauthenticated-9e1ca2073a#week</id>
+    <title>SAP fixes four maximum-severity unauthenticated takeover flaws</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=sap-fixes-four-maximum-severity-unauthenticated-9e1ca2073a#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch SAP Web Dispatcher, ICM and Gateway now: all four bugs give unauthenticated remote takeover, and SAP flaws have been exploited before.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week</id>
-    <title>D-Link DGS-3130 switches have unpatched discovery protocol zero-days</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=d-link-dgs-3130-switches-have-unpatched-discover-d36b246e37#week" rel="alternate" type="text/html" />
-    <summary type="text">On DGS-3130 switches, turn off DDP and isolate management access now, because no patch or CVE exists yet.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-patches-its-eighth-exploited-chrome-zero-3616fadad0#week</id>
+    <title>Google patches its eighth exploited Chrome zero-day of 2026</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-patches-its-eighth-exploited-chrome-zero-3616fadad0#week" rel="alternate" type="text/html" />
+    <summary type="text">Force Chrome 157.0.8103.50 or later across your fleet now instead of waiting for the staged rollout.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-partners-with-hacktron-to-test-its-third-a0d1f0830e#week</id>
-    <title>OpenAI partners with Hacktron to test its third-party service connections</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-partners-with-hacktron-to-test-its-third-a0d1f0830e#week" rel="alternate" type="text/html" />
-    <summary type="text">This is a partnership announcement with no technical findings. The one useful signal is that a major AI vendor sees its agent-to-third-party integrations as the surface most worth testing.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week</id>
+    <title>N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week" rel="alternate" type="text/html" />
+    <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-ruby-gem-strutil-core-runs-a-credentia-07242a95d4#week</id>
-    <title>Malicious Ruby gem strutil-core runs a credential-stealing worm at install</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-ruby-gem-strutil-core-runs-a-credentia-07242a95d4#week" rel="alternate" type="text/html" />
-    <summary type="text">Install-time hooks in package managers can run a full worm, so revoking a stolen token first can trigger data loss.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cloudflare-ceo-says-some-customers-see-ai-agents-9fcce464bd#week</id>
-    <title>Cloudflare CEO says some customers see AI agents as a bane</title>
-    <updated>2026-11-06T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cloudflare-ceo-says-some-customers-see-ai-agents-9fcce464bd#week" rel="alternate" type="text/html" />
-    <summary type="text">Agent traffic puts costs on site operators, and tools to block or charge agents are in growing demand.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-links-three-china-nexus-espionage-cl-58a7dfc6c4#week</id>
+    <title>Check Point links three China-nexus espionage clusters to one malware supplier, CopperDragon</title>
+    <updated>2026-11-10T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-links-three-china-nexus-espionage-cl-58a7dfc6c4#week" rel="alternate" type="text/html" />
+    <summary type="text">Defenders of telecom and government networks should treat separate China-nexus intrusions as possibly sharing one toolset, and hunt for Sparrow backdoors on both Linux and Windows.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims</id>

@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_29 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-09_
+_29 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-10_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -620,11 +620,12 @@ Automated approvers that judge a coding agent's shell command by its text miss h
 
 _Tags: `coding-agents`, `approval`, `sandbox`, `rollback`_
 
-<details><summary>Evidence (1)</summary>
+<details><summary>Evidence (2)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Shall We Approve? Consequence-Aware Approval for Autonomous Coding Agents](https://arxiv.org/abs/2610.40753) | Oct 29, 2026 |
+| supports | [AG2 SandboxShellTool allowlist is bypassed by a newline in the command](https://github.com/advisories/GHSA-2h4w-29cv-2cmv) | Nov 10, 2026 |
 
 </details>
 

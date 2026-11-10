@@ -3298,10 +3298,18 @@
           "title": "Shall We Approve? Consequence-Aware Approval for Autonomous Coding Agents",
           "published": "2026-10-29",
           "note": "Caper had 6.7% harmful outcomes on SABER versus at least 14.8% for six existing approvers, and 7.8% versus at least 35.3% on YoloFS-Ext, blocking 1.0% of safe twins."
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-2h4w-29cv-2cmv",
+          "title": "AG2 SandboxShellTool allowlist is bypassed by a newline in the command",
+          "published": "2026-11-10",
+          "note": "AG2 restricted modes check the command text and then run it through a shell, so a newline smuggles a second command past the text check.",
+          "source_name": "GitHub Advisory Database"
         }
       ],
       "first_seen": "2026-11-04",
-      "last_reviewed": "2026-11-04",
+      "last_reviewed": "2026-11-10",
       "added_on": "2026-11-04",
       "changed_on": "2026-11-04",
       "title": "Approve agent shell commands by observed effects, not command text",
