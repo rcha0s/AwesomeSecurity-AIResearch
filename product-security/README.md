@@ -2,24 +2,50 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_7 vetted findings · updated 2026-11-10 · ranked by composite · findings from the latest 31 days · [62 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-11-12 · ranked by composite · findings from the latest 31 days · [70 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/)**
+  _Why now: CVSS 9.5 pre-auth MongoDB bug with fixed versions and concrete log-based detection; authentication does not block the setup. · cve · widely-reported · timely · high-relevance_
+- **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer)**
+  _Why now: Live supply-chain campaign across 8,093+ repos that reverts its own commits and grabs cloud OIDC tokens; teaches what to audit in Actions logs and federated credentials now. · active-exploitation · widely-reported · timely · high-relevance_
+- **[Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/)**
+  _Why now: Microsoft telemetry shows GSocket relays keep attackers on Linux servers after the entry bug is patched; actionable hunts and egress advice. · newsworthy · trending · high-relevance_
+- **[IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-123218)**
+  _Why now: Exploited file-transfer admin takeover with a three-day CISA deadline; the vector-vs-description contradiction is a useful triage lesson. · cve · active-exploitation · timely_
+- **[ScreenConnect RMM+ extension flaw may have let attackers bypass MFA](https://www.theregister.com/security/2026/11/12/hackers-exploiting-screenconnect-plugin-flaw-to-spread-malware-across-hundreds-of-pcs/5309361)**
+- **[Red Hat Quay flaws (CVSS 9.8, 9.9) let attackers overwrite private images](https://thehackernews.com/2026/11/critical-red-hat-quay-flaw-lets.html)**
+- **[React patches critical unauthenticated remote code execution (RCE) in Server Components](https://www.stepsecurity.io/blog/cve-2026-126187-react-flight-rce)**
+- **[Action1 sponsored post urges customer-controlled signing for endpoint management actions](https://www.bleepingcomputer.com/news/security/your-endpoint-management-platform-could-be-your-biggest-security-risk/)**
+- **[Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges](https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/)**
+- **[Citrix patches 12 NetScaler and Secure Access Client flaws, including authentication bypass](https://thehackernews.com/2026/11/citrix-patches-12-netscaler-and-secure.html)**
+- **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://thehackernews.com/2026/11/new-n-central-exploits-work-against.html)**
+- **[Node.js fixes 16 flaws, including HTTP/2 crashes and memory leaks](https://thehackernews.com/2026/11/nodejs-fixes-16-flaws-including-http2.html)**
+- **[PTC patches critical deserialization remote code execution (RCE) in Windchill and FlexPLM](https://thehackernews.com/2026/11/ptc-patches-critical-windchill-and.html)**
+- **[Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/)**
+- **[Microsoft November 2026 Patch Tuesday fixes 1,095 flaws, one exploited](https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026/)**
+- **[Microsoft FORGE Lab's AI kernel scans yield 59 Linux bug reports](https://www.microsoft.com/en-us/security/blog/2026/11/11/lessons-from-59-linux-kernel-bug-reports/)**
+- **[StepSecurity compares its Secure Registry with GitHub's npm-only package firewall](https://www.stepsecurity.io/blog/github-package-firewall-vs-stepsecurity-secure-registry-protection-beyond-npm)**
+- **[Baker Tilly notifies clients of data breach at unnamed third-party provider](https://www.bleepingcomputer.com/news/security/baker-tilly-notifies-clients-of-data-breach-at-third-party-provider/)**
+- **[Zoom patches critical Workplace for Windows privilege-escalation flaw (CVSS 9.6)](https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html)**
 - **[Compromised Qubole credentials let attackers raid over a dozen customer cloud accounts](https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack/)**
 - **[Attackers used AhsayCBS zero-days to plant a host-locked Python backdoor](https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html)**
 - **[Binance warns an iOS sandbox escape lets apps read other apps' secrets](https://www.bleepingcomputer.com/news/security/binance-warns-of-ios-flaw-that-could-leak-crypto-wallet-secrets/)**
 - **[SAP fixes four maximum-severity unauthenticated takeover flaws](https://www.bleepingcomputer.com/news/security/sap-patches-four-maximum-severity-security-vulnerabilities/)**
+- **[OpenAI customer story pitches Cogent's agents for autonomous vulnerability remediation](https://openai.com/index/cogent-security)**
 - **[Google patches its eighth exploited Chrome zero-day of 2026](https://www.theregister.com/security/2026/11/10/chrome-zero-day-whack-a-mole-continues-as-2026-tally-hits-8/5308732)**
 - **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://thehackernews.com/2026/11/n-able-takes-hosted-n-central-offline.html)**
+- **[Grok Build vibe-coding agent exposes thousands of users' shared apps](https://arstechnica.com/security/2026/11/grok-build-coding-agent-leaks-oodles-of-confidential-info-some-belonging-to-spacexsi/)**
 - **[Check Point links three China-nexus espionage clusters to one malware supplier, CopperDragon](https://research.checkpoint.com/2026/not-all-that-glitters-is-gold-tracking-copperdragons-sparrow-framework-around-the-globe/)**
 - **[Attackers exploit Xen Orchestra authentication bypass to take over virtualization hosts](https://www.bleepingcomputer.com/news/security/critical-xen-orchestra-auth-bypass-flaw-exploited-to-hijack-vm-servers/)**
 - **[Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise)**
   _Why now: Live npm and desktop-updater compromise reported by Socket, StepSecurity and SafeDep; teaches that valid trusted-publishing provenance does not prove review, and gives concrete release-workflow gates. · newsworthy · widely-reported · active-compromise · timely · high-relevance_
 - **[Google DeepMind's AI agents cut the cost of attacking 1024-bit RSA](https://www.securityweek.com/google-deepminds-ai-agents-make-1024-bit-rsa-keys-cheaper-to-attack/)**
 - **[Bitter espionage group deploys new PapRAT backdoor against South Asian targets](https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html)**
+- **[CISA adds exploited SignalWire FreeSWITCH flaw to Known Exploited Vulnerabilities (KEV) catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-116779)**
 - **[Attackers try to exploit SSHole, an OpenSSH flaw allowing logins to passwordless accounts](https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html)**
 - **[D-Link DGS-3130 switches have unpatched discovery protocol zero-days](https://www.bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches/)**
 - **[OpenAI partners with Hacktron to test its third-party service connections](https://openai.com/index/partnering-with-hacktron)**
@@ -227,37 +253,37 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **74.35** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **72.85** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **61.64** · Oct 27, 2026 · 🔗 +1 sources  
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **61.39** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **56.5** · Oct 19, 2026  
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **56.25** · Oct 19, 2026  
   VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
   _[source](https://pwn.ai/blog/pwnescape)_
 
 ## AI in the SDLC
 
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **55.75** · Oct 22, 2026  
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **55.5** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
 
 ## Application Security
 
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **54.38** · Oct 27, 2026  
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **54.13** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
 ## Mobile & Device Security
 
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **50.5** · Oct 15, 2026  
+- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **50.25** · Oct 15, 2026  
   Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
   _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **45.25** · Oct 20, 2026  
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **45.0** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
 

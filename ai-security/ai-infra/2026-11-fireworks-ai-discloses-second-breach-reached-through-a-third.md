@@ -24,7 +24,7 @@ Inference provider Fireworks AI, already handling an early-October incident in w
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [X list](https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/)  ·  **Author:** @Dinosn  ·  **Retrieved:** 2026-11-10  
-**Scores:** Newness 58 · Novelty 30 · Relevance 60 · Credibility 60 · **Composite 50** _(each 0-100)_  
+**Scores:** Newness 52 · Novelty 30 · Relevance 60 · Credibility 60 · **Composite 49** _(each 0-100)_  
 **Tags:** `llmjacking`, `api-keys`, `third-party-risk`, `incident-response`, `ai-infrastructure`, `model-weights`, `breach`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Google and Wiz LLMjacking reports.
 

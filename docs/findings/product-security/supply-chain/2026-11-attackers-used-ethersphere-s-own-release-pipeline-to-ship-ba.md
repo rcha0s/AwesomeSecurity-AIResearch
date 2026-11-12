@@ -28,7 +28,7 @@ On November 9, 2026, an attacker with two compromised GitHub accounts published 
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [Socket](https://socket.dev/blog/bee-js-compromise)  ·  **Retrieved:** 2026-11-09  
-**Scores:** Newness 58 · Novelty 30 · Relevance 85 · Credibility 65 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 52 · Novelty 30 · Relevance 85 · Credibility 65 · **Composite 57** _(each 0-100)_  
 **Tags:** `npm`, `supply-chain`, `github-actions`, `trusted-publishing`, `slsa-provenance`, `postinstall`, `electron`, `ethereum-c2`, `code-signing`  
 **Also reported by:** [StepSecurity](https://www.stepsecurity.io/blog/ethersphere-bee-js-13-3-0-compromise), [SafeDep](https://safedep.io/blog/ethersphere-bee-js-npm-compromise) _(+2 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The @asyncapi npm compromise and the SafeDep/StepSecurity npm worm entries already showed poisoned builds shipped with valid trusted-publishing provenance; new here are the release-event CI bypass, the signed auto-updated desktop build and the reuse of SleepyDuck's Ethereum C2.

@@ -25,7 +25,7 @@ AG2's SandboxShellTool checks allowed=[...] and readonly=True commands against a
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [GitHub Advisory Database](https://github.com/advisories/GHSA-2h4w-29cv-2cmv)  ·  **Retrieved:** 2026-11-10  
-**Scores:** Newness 58 · Novelty 35 · Relevance 78 · Credibility 70 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 52 · Novelty 35 · Relevance 78 · Credibility 70 · **Composite 57** _(each 0-100)_  
 **Tags:** `command-injection`, `agent-tools`, `allowlist-bypass`, `prompt-injection`, `ag2`, `sandbox`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: CVE-2026-109428, the Mistral Vibe allowlist bypass via backslash-newline; Shescape per-shell bypasses.
 

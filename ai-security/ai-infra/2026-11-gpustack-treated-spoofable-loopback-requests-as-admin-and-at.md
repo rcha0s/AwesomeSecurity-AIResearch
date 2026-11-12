@@ -25,7 +25,7 @@ GPUStack, an open-source GPU cluster manager for AI model serving, treated any r
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [CISA Known Exploited Vulnerabilities](https://nvd.nist.gov/vuln/detail/CVE-2026-102895)  ·  **Retrieved:** 2026-11-10  
-**Scores:** Newness 58 · Novelty 25 · Relevance 80 · Credibility 64 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 52 · Novelty 25 · Relevance 80 · Credibility 64 · **Composite 54** _(each 0-100)_  
 **Tags:** `kev`, `exploited-in-the-wild`, `authentication-bypass`, `model-serving`, `ip-spoofing`, `gpustack`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Loopback-trust bugs in coding-agent and MCP localhost servers; classic X-Forwarded-For authentication bypass.
 

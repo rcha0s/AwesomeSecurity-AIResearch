@@ -1379,10 +1379,18 @@
           "published": "2026-10-29",
           "note": "GitHub's npm firewall adds a policy that blocks versions newly adding preinstall or postinstall scripts, treating install-time code as the risk to gate.",
           "source_name": "The Hacker News"
+        },
+        {
+          "stance": "supports",
+          "url": "https://safedep.io/blog/github-actions-wfx-credential-stealer",
+          "title": "SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens",
+          "published": "2026-11-12",
+          "note": "The wfx campaign ran its credential stealer through an npm postinstall hook in 771 repositories.",
+          "source_name": "SafeDep"
         }
       ],
       "first_seen": "2016-06-08",
-      "last_reviewed": "2026-10-29",
+      "last_reviewed": "2026-11-12",
       "guidance": "Do first-touch installs in a sandbox. Skipping install scripts (--ignore-scripts) is not enough on its own: a payload that runs at import time gets past it (see import-time-payloads-defeat-install-time-controls), so also pin and review dependency updates and run the first import in a sandbox.",
       "tags": [
         "npm",
@@ -3405,6 +3413,29 @@
         "data-use-auditing",
         "evasion"
       ]
+    },
+    {
+      "id": "weight-edit-backdoors-need-no-training",
+      "topic": "ai-security",
+      "domain": "ais.model-supply-chain",
+      "statement": "An attacker who can modify a model's weight files can implant a trigger-activated backdoor by editing a handful of rarely used neurons, without fine-tuning or retraining; the edited model still passes standard evals, and an agent running it executes the attacker's command with the agent's own permissions when the trigger appears.",
+      "status": "current",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://www.microsoft.com/en-us/research/blog/lazare-veni-foras-reprogramming-dormant-neurons-to-backdoor-ai-agents/",
+          "title": "Microsoft's Lazarus backdoors an agent's model by editing fewer than 10 dormant neurons",
+          "published": "2026-11-10"
+        }
+      ],
+      "first_seen": "2026-11-12",
+      "last_reviewed": "2026-11-12",
+      "added_on": "2026-11-12",
+      "changed_on": "2026-11-12",
+      "title": "Model weights can be backdoored by direct edits, no training needed",
+      "guidance": "Treat model weights as code: verify provenance of every weight file an agent loads, diff deployed weights against the publisher's original, and do not rely on behavioral evals alone to clear a third-party or internally stored model.",
+      "scope": "Requires write access to the weight files (a compromised account, pipeline, or storage); does not apply to models served only through a provider API you cannot modify. Evidence so far is one Microsoft Research study."
     }
   ]
 }

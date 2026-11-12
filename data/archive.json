@@ -36076,5 +36076,166 @@
     "previous_slugs": [
       "watchtowr-breaks-papercut-ng-mf-patches-three-times-tapestry"
     ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.prompt-injection",
+    "title": "Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits",
+    "source_url": "http://arxiv.org/abs/2610.15207v2",
+    "article_url": "http://arxiv.org/abs/2610.15207v2",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-10",
+    "raw_path": "data/_raw/exploring-jailbreak-vulnerability-across-depth-b-96e80a0e56.txt",
+    "discovered_via": "rss",
+    "source_id": null,
+    "source_rank": 72.0,
+    "source_topics": [],
+    "source_name": "NeurIPS (via arXiv)",
+    "related_claims": [
+      "model-internal-refusal-is-not-a-security-boundary"
+    ],
+    "summary": "Early exit lets a model produce output from an intermediate layer to save compute. This workshop paper tests jailbreaks that append a crafted suffix (extra text added to the prompt) at each exit depth, and finds that shallow exits are consistently more robust, deeper exits make suffix optimization easier (lower attack loss), and suffixes hurt utility about equally at every depth. Only the abstract is available here, so the models tested and the size of the effects are not known.",
+    "takeaway": "If you serve an early-exit model, jailbreak robustness changes with the exit depth you pick, so test refusal behavior at each depth you deploy instead of assuming the full-depth evaluation applies.",
+    "lessons": [
+      {
+        "point": "Robustness depends on exit depth: shallow exits held up better against jailbreaks.",
+        "excerpt": "Shallow exits are consistently more robust to jailbreak attacks than deeper ones",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "Deeper exits give the optimizer an easier target, so attackers would aim at full-depth paths.",
+        "excerpt": "Exit depth affects how easily the adversarial suffix can be optimized, with deeper exits reaching lower attack loss",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "The utility cost of the suffix is flat across depth, so utility loss does not reveal which exit is under attack.",
+        "excerpt": "Adversarial suffixes affect utility uniformly across exit depths",
+        "confidence": 0.5,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "jailbreak",
+      "adversarial-suffix",
+      "early-exit",
+      "dynamic-inference",
+      "robustness"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Run jailbreak evals at every exit depth you serve",
+      "detail": "For early-exit or layer-skipping deployments, run your adversarial-suffix and jailbreak suite at each exit configuration. Do not reuse full-depth safety results. Treat the deepest exits as the weakest point and use external guardrails rather than relying on the model's own refusals."
+    },
+    "scores": {
+      "novelty": 45,
+      "relevance": 35,
+      "newness": 10,
+      "credibility": 72.0,
+      "composite": 37.3,
+      "scored_at": "2026-11-10T18:11:55+00:00"
+    },
+    "verified": true,
+    "verify_note": "Abstract only; excerpts verbatim. Verifier: lesson 2-3 implications are the analyst's inferences. Novelty lowered to the verifier's 45.",
+    "prior_art": "GCG / universal adversarial suffix work (Zou et al. 2023) and the ledger's suffix-transfer and fragile-refusal claims cover the attack itself. The new part is varying the inference depth inside one model. It is a narrow, abstract-only workshop result that matters only to teams deploying early-exit models.",
+    "id": "early-exit-llms-shallow-exits-resist-adversarial-195274d858",
+    "retrieved_at": "2026-10-25T08:23:35+00:00",
+    "needs_review": true,
+    "readability_rewrite": "reverted title",
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: sentence_words 47 > 45 (This workshop paper tests jailbreaks that append a crafted suffix (extra text added to the prompt) at each exit depth, a)",
+        "mild: title_words 20 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "SkillMarker watermarks agent skill files to trace copying",
+    "source_url": "https://arxiv.org/abs/2610.15725",
+    "article_url": "https://arxiv.org/abs/2610.15725",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-11",
+    "date": "2026-10",
+    "raw_path": "data/_raw/skillmarker-a-kgw-based-watermarking-method-for-62f45634bf.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 50.8,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Hugging Face Daily Papers",
+    "summary": "SkillMarker applies KGW-style text watermarking (the Kirchenbauer et al. green-list token scheme) to plaintext agent skills, rewriting only the flexible phrasing while keeping essential procedural content fixed. It searches alternative wordings for a stronger signal, and across four datasets, downstream task performance changes negligibly on average. Window-based detection finds copied passages as short as 1,536 consecutive tokens, and detection stays at 72.2-77.8% after merging with one or three other skills. An open-source toolkit covers embedding, quality auditing and detection.",
+    "takeaway": "Skill publishers can now trace leaked or resold skills, but it is a provenance and ownership tool, not protection against malicious skills, and the abstract does not address paraphrasing attacks.",
+    "lessons": [
+      {
+        "point": "Separating essential knowledge from flexible expression keeps procedural accuracy while leaving room for the watermark.",
+        "excerpt": "The former separates essential knowledge from flexible expression to preserve instruction fidelity",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Detection needs a fairly long copied span, so short excerpts lifted from a skill may go undetected.",
+        "excerpt": "window-based detection consistently identifies copied passages containing as few as 1,536 consecutive tokens",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Merging a skill into others degrades detection noticeably: roughly a quarter of merged cases go undetected.",
+        "excerpt": "Even after merging with one or three background skills, SkillMarker retains watermark detection rates",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "agent-skills",
+      "watermarking",
+      "kgw",
+      "ownership-verification",
+      "leakage-tracing",
+      "skill-marketplace"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Watermark proprietary skills before distribution",
+      "detail": "For paid or proprietary agent skills, run the SkillMarker toolkit to embed a watermark, run its quality audit to confirm task performance holds, and keep the key for detection. Expect reliable detection only for copied spans of about 1,536 tokens or more, and lower rates when the skill is merged into others."
+    },
+    "scores": {
+      "novelty": 50,
+      "relevance": 40,
+      "newness": 10,
+      "credibility": 50.8,
+      "composite": 37.12,
+      "scored_at": "2026-11-10T18:11:55+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: numbers match the abstract; 'roughly a quarter undetected' is the arithmetic complement and the KGW attribution is background knowledge. Verifier novelty 50, relevance 30.",
+    "prior_art": "Nearest pool entry: SkillTrace (archive), which audits skill reuse after the fact by comparing expression, implementation and operational traces, with no embedded mark. SkillMarker is the proactive alternative, embedding a mark before release. It builds on the standard KGW LLM-output watermark. The pool's model-watermarking entry covers models, not skills.",
+    "related_claims": [],
+    "threat": "Agent skills shipped in plaintext are copied, leaked or folded into other skills without attribution.",
+    "conditions": "Skills distributed as plaintext instructions through marketplaces or shared repos. Detection works for copied spans of at least about 1,536 tokens and degrades when the skill is merged with other skills.",
+    "mitigations": "Embed a KGW-based watermark before distributing a skill and run windowed detection on suspected copies.",
+    "id": "skillmarker-watermarks-agent-skill-files-to-trac-4e3391ffd2",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 22 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "skillmarker-watermarks-agent-skill-files-to-trace-copying-ca"
+    ]
   }
 ]

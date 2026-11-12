@@ -25,7 +25,7 @@ Coding-agent approvers today judge a shell command by its text, but harm can hid
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [Hugging Face Daily Papers](https://arxiv.org/abs/2610.40753)  ·  **Retrieved:** 2026-11-04  
-**Scores:** Newness 10 · Novelty 50 · Relevance 85 · Credibility 50 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 9 · Novelty 50 · Relevance 85 · Credibility 50 · **Composite 50** _(each 0-100)_  
 **Tags:** `coding-agents`, `approval`, `permission-classifier`, `sandbox`, `rollback`, `human-in-the-loop`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Text-based approvers such as CC Safety Net (command-intent parsing), guardrail models and Claude Code's permission classifier; YoloFS-style snapshot and rollback filesystems restore state after the fact. Caper's delta is deciding before commit from observed effects, with an independent approver.
 
