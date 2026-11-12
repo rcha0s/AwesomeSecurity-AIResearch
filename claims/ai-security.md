@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_29 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-10_
+_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-12_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -475,6 +475,26 @@ _Tags: `alignment`, `constitutional-ai`, `rlaif`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
+
+</details>
+
+<a id="claim-weight-edit-backdoors-need-no-training"></a>
+
+### Model weights can be backdoored by direct edits, no training needed
+
+`weight-edit-backdoors-need-no-training` · confidence **0.60** · Model Supply Chain & Theft · standing since Nov 12, 2026
+
+An attacker who can modify a model's weight files can implant a trigger-activated backdoor by editing a handful of rarely used neurons, without fine-tuning or retraining; the edited model still passes standard evals, and an agent running it executes the attacker's command with the agent's own permissions when the trigger appears.
+
+**Do this —** Treat model weights as code: verify provenance of every weight file an agent loads, diff deployed weights against the publisher's original, and do not rely on behavioral evals alone to clear a third-party or internally stored model.
+
+**Conditions —** Requires write access to the weight files (a compromised account, pipeline, or storage); does not apply to models served only through a provider API you cannot modify. Evidence so far is one Microsoft Research study.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Microsoft's Lazarus backdoors an agent's model by editing fewer than 10 dormant neurons](https://www.microsoft.com/en-us/research/blog/lazare-veni-foras-reprogramming-dormant-neurons-to-backdoor-ai-agents/) | Nov 10, 2026 |
 
 </details>
 

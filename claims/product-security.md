@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-10_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-12_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -24,7 +24,7 @@ Installing a package with npm or gem, or a source distribution with pip, execute
 
 _Tags: `npm`, `pip`, `supply-chain`_
 
-<details><summary>Evidence (5)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -33,6 +33,7 @@ _Tags: `npm`, `pip`, `supply-chain`_
 | supports | [Typosquatting programming language package managers: install-time code ran on 17,000 hosts via PyPI, npm and RubyGems](https://incolumitas.com/2016/06/08/typosquatting-package-managers/) | Jun 8, 2016 |
 | supports | [Deep-Live-Cam Supply Chain Attack: Technical Analysis](https://safedep.io/deep-live-cam-supply-chain-attack) | Sep 9, 2026 |
 | supports | [GitHub previews a package firewall that blocks risky npm installs](https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html) | Oct 29, 2026 |
+| supports | [SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer) | Nov 12, 2026 |
 
 </details>
 

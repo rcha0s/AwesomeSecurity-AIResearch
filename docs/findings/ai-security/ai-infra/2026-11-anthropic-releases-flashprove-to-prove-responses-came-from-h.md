@@ -30,7 +30,7 @@ Anthropic and academic collaborators released FlashProve, an open-source (Apache
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [Anthropic Research](https://www.anthropic.com/research/provable-inference)  ·  **Retrieved:** 2026-11-03  
-**Scores:** Newness 58 · Novelty 72 · Relevance 68 · Credibility 70 · **Composite 67** _(each 0-100)_  
+**Scores:** Newness 52 · Novelty 72 · Relevance 68 · Credibility 70 · **Composite 65** _(each 0-100)_  
 **Tags:** `provable-inference`, `zksnark`, `model-integrity`, `inference-server-compromise`, `model-substitution`, `formal-verification`, `lean`, `tamper-detection`, `inference-servers`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No existing entry covers provable or verifiable inference. Prior art outside the dataset includes zkML systems (e.g., zkLLM and other open-source zk inference provers, which the post says are orders of magnitude slower) and TEE-based attestation of inference. Anthropic's own RSP prototype signed inference traffic with recomputation on a trusted server. The delta is a practical zkSNARK at 400B-parameter MoE scale with Lean-checked guarantees.
 

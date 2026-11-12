@@ -1,8 +1,18 @@
 # 📈 Emerging Trends
 
-> Themes per topic, clustered from tagged findings (live + recent archive). Updated 2026-11-10. A theme needs ≥2 findings from ≥2 sources. **Rising** means at least 2 findings in the last 31 days and more than 1.0x what the theme's own rate over the prior 180 days predicts; **steady** has recent findings at or under that rate; **quiet** has none. Source and feed names (arxiv, ghsa, ...) are not themes.
+> Themes per topic, clustered from tagged findings (live + recent archive). Updated 2026-11-12. A theme needs ≥2 findings from ≥2 sources. **Rising** means at least 2 findings in the last 31 days and more than 1.0x what the theme's own rate over the prior 180 days predicts; **steady** has recent findings at or under that rate; **quiet** has none. Source and feed names (arxiv, ghsa, ...) are not themes.
 
 ## AI Security
+
+### 🔺 rising coding-agents  ·  18 findings (12 recent vs 1.0 expected) · 13 sources
+_First seen 2026-08-06 · latest 2026-11-12._
+
+- [AgentLint checks coding-agent file writes and shell commands through local hooks](https://github.com/mauhpr/agentlint) (2026-11-12) · _latest_
+- [Goldman Sachs limits Claude Code and GitHub coding tools to engineers](https://www.thestateofai.com/news/goldman-sachs-claude-code-traders-bankers) (2026-11-08) · _latest_
+- [Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again) (2026-11-07) · _latest_
+- [Caper approves coding-agent commands after running them in a snapshot sandbox](https://arxiv.org/abs/2610.40753) (2026-10-29) · _latest_
+- [NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html) (2026-10-27) · _latest_
+- [Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents](https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/) (2026-10-25) · _latest_
 
 ### 🔺 rising prompt-injection  ·  44 findings (15 recent vs 4.8 expected) · 23 sources
 _First seen 2026-02 · latest 2026-11-10._
@@ -14,25 +24,15 @@ _First seen 2026-02 · latest 2026-11-10._
 - [Brazilian labor court fines lawyers for hidden prompt injection in a filing](https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/) (2026-11-01) · _latest_
 - [Tamga's prompt-injection rules caught 27 of 203 attacks written by others](https://github.com/yatuk/tamga) (2026-10-30) · _latest_
 
-### 🔺 rising coding-agents  ·  17 findings (11 recent vs 1.0 expected) · 12 sources
-_First seen 2026-08-06 · latest 2026-11-08._
-
-- [Goldman Sachs limits Claude Code and GitHub coding tools to engineers](https://www.thestateofai.com/news/goldman-sachs-claude-code-traders-bankers) (2026-11-08) · _latest_
-- [Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again) (2026-11-07) · _latest_
-- [Caper approves coding-agent commands after running them in a snapshot sandbox](https://arxiv.org/abs/2610.40753) (2026-10-29) · _latest_
-- [NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html) (2026-10-27) · _latest_
-- [Web pages can drop AGENTS.md in ~/Downloads and hijack coding agents](https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/) (2026-10-25) · _latest_
-- [A backdoored open model made Codex CLI exfiltrate .env files](https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned) (2026-10-22) · _latest_
-
-### 🔺 rising mcp  ·  32 findings (12 recent vs 3.3 expected) · 18 sources
+### 🔺 rising mcp  ·  33 findings (13 recent vs 3.3 expected) · 18 sources
 _First seen 2026-02 · latest 2026-11-10._
 
+- [Innovaccer's Healthcare MCP extension binds tool calls to an opaque patient handle](https://github.com/innovaccer/Healthcare-MCP) (2026-11-10) · _latest_
 - [mcp-watch is an open-source static scanner for MCP server repositories](https://github.com/kapilduraphe/mcp-watch) (2026-11-10) · _latest_
 - [ShadowBench-MCP: task-preserving rewordings can push an LLM tool router onto riskier paths](http://arxiv.org/abs/2611.11720v1) (2026-11-09) · _latest_
 - [Agent Plugins spec adds a 1.1.0 working draft to its packaging standard](https://github.com/agentplugins/agent-plugins-spec) (2026-11-09) · _latest_
 - [MCP specification repository now points to a 2026-07-28 schema revision](https://github.com/modelcontextprotocol/modelcontextprotocol) (2026-11-09) · _latest_
 - [mcp-openapi-server exposes OpenAPI endpoints to agents as MCP tools](https://github.com/ivo-toby/mcp-openapi-server) (2026-11-06) · _latest_
-- [ai-dfir-toolkit ships open detection rules and forensic artifacts for AI attacks](https://github.com/depalmar/ai-dfir-toolkit) (2026-11-05) · _latest_
 
 ### 🔺 rising red-teaming  ·  10 findings (7 recent vs 0.5 expected) · 9 sources
 _First seen 2026-08-06 · latest 2026-11-09._
@@ -43,6 +43,16 @@ _First seen 2026-08-06 · latest 2026-11-09._
 - [NuGuard is an open-source AI-SBOM and red-team pipeline for agentic apps](https://github.com/NuGuardAI/nuguard) (2026-10-25) · _latest_
 - [Edge grounding VLMs fall to wearable adversarial patches like detectors](http://arxiv.org/abs/2610.29196v1) (2026-10-21) · _latest_
 - [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
+
+### 🔺 rising guardrails  ·  20 findings (8 recent vs 2.1 expected) · 11 sources
+_First seen 2026-07-19 · latest 2026-11-12._
+
+- [AgentLint checks coding-agent file writes and shell commands through local hooks](https://github.com/mauhpr/agentlint) (2026-11-12) · _latest_
+- [Innovaccer's Healthcare MCP extension binds tool calls to an opaque patient handle](https://github.com/innovaccer/Healthcare-MCP) (2026-11-10) · _latest_
+- [OpenAI details how it trains streaming activation probes that block policy-violating completions](https://alignment.openai.com/training-activation-classifiers/) (2026-11-02) · _latest_
+- [LeanGuard checks every agent tool call against a Lean4-verified policy](https://arxiv.org/abs/2611.02332) (2026-11-02) · _latest_
+- [OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails](https://github.com/openguardrails/openguardrails) (2026-10-31) · _latest_
+- [CollieAi's LLM Firewall filters prompts and responses through a hosted proxy](https://github.com/CollieAi/llm-firewall) (2026-10-28) · _latest_
 
 ### 🔺 rising agent-identity  ·  5 findings (5 recent vs 0.0 expected) · 3 sources
 _First seen 2026-10-19 · latest 2026-11-03._
@@ -63,16 +73,6 @@ _First seen 2026-07-24 · latest 2026-11-05._
 - [Zenity: one prompt made an AWS Bedrock AgentCore agent leak metadata credentials](https://labs.zenity.io/post/agentcorruption-how-a-single-prompt-collapsed-the-entire-cloud-security-model) (2026-10-15) · _latest_
 - [Snyk launches an Evo MCP server for querying AI-asset inventory and policies](https://snyk.io/blog/so-i-asked-my-agent-instead/) (2026-09-22)
 
-### 🔺 rising agent-skills  ·  8 findings (5 recent vs 0.5 expected) · 7 sources
-_First seen 2026-07-16 · latest 2026-11-09._
-
-- [Agent Plugins spec adds a 1.1.0 working draft to its packaging standard](https://github.com/agentplugins/agent-plugins-spec) (2026-11-09) · _latest_
-- [SkillCODER fingerprints agent skill files to trace leaks to a buyer](http://arxiv.org/abs/2611.11308v1) (2026-11-08) · _latest_
-- [Snyk Agent Scan finds and scans local agents, MCP servers and skills](https://github.com/snyk/agent-scan) (2026-11-08) · _latest_
-- [Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1) (2026-11-06) · _latest_
-- [SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725) (2026-10-11) · _latest_
-- [Chainguard hardens agent skills by scanning, signing and digest-pinning them](https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities) (2026-10-01)
-
 ### 🔺 rising incident-response  ·  8 findings (5 recent vs 0.5 expected) · 6 sources
 _First seen 2026-07-19 · latest 2026-11-10._
 
@@ -83,16 +83,6 @@ _First seen 2026-07-19 · latest 2026-11-10._
 - [OpenAI describes its layered monitor for misbehaving frontier agents](https://alignment.openai.com/how-we-detect-frontier-model-misalignment/) (2026-10-29) · _latest_
 - [OpenAI draft safety cases for RL training allow no chain-of-thought in graders](https://openai.com/index/towards-safety-cases-for-frontier-ai-training) (2026-09-28)
 
-### 🔺 rising guardrails  ·  18 findings (6 recent vs 2.1 expected) · 10 sources
-_First seen 2026-07-19 · latest 2026-11-02._
-
-- [OpenAI details how it trains streaming activation probes that block policy-violating completions](https://alignment.openai.com/training-activation-classifiers/) (2026-11-02) · _latest_
-- [LeanGuard checks every agent tool call against a Lean4-verified policy](https://arxiv.org/abs/2611.02332) (2026-11-02) · _latest_
-- [OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails](https://github.com/openguardrails/openguardrails) (2026-10-31) · _latest_
-- [CollieAi's LLM Firewall filters prompts and responses through a hosted proxy](https://github.com/CollieAi/llm-firewall) (2026-10-28) · _latest_
-- [SCOPE compiles natural-language agent policies into predicate programs run by small models](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
-- [Guardrail safety benchmarks mostly measure the training label policy](https://arxiv.org/abs/2610.25060) (2026-10-18) · _latest_
-
 ### 🔺 rising tool-poisoning  ·  7 findings (4 recent vs 0.5 expected) · 3 sources
 _First seen 2026-06-30 · latest 2026-11-10._
 
@@ -102,6 +92,16 @@ _First seen 2026-06-30 · latest 2026-11-10._
 - [Researchers find no agent framework defends against MCP tool poisoning](http://arxiv.org/abs/2611.03555v1) (2026-11-02) · _latest_
 - [Cisco AI Defense mcp-scanner checks MCP tools, prompts, resources, and server instructions](https://github.com/cisco-ai-defense/mcp-scanner) (2026-08-09)
 - [snyk/agent-scan](https://github.com/snyk/agent-scan) (2026-08-09)
+
+### 🔺 rising agent-skills  ·  8 findings (4 recent vs 0.7 expected) · 7 sources
+_First seen 2026-07-16 · latest 2026-11-09._
+
+- [Agent Plugins spec adds a 1.1.0 working draft to its packaging standard](https://github.com/agentplugins/agent-plugins-spec) (2026-11-09) · _latest_
+- [SkillCODER fingerprints agent skill files to trace leaks to a buyer](http://arxiv.org/abs/2611.11308v1) (2026-11-08) · _latest_
+- [Snyk Agent Scan finds and scans local agents, MCP servers and skills](https://github.com/snyk/agent-scan) (2026-11-08) · _latest_
+- [Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1) (2026-11-06) · _latest_
+- [SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725) (2026-10-11)
+- [Chainguard hardens agent skills by scanning, signing and digest-pinning them](https://www.chainguard.dev/unchained/how-do-you-harden-an-agent-skill-the-simple-file-type-with-serious-complexities) (2026-10-01)
 
 ### 🔺 rising distillation  ·  3 findings (3 recent vs 0.0 expected) · 3 sources
 _First seen 2026-10-18 · latest 2026-10-27._
@@ -116,6 +116,16 @@ _First seen 2026-10-27 · latest 2026-11-10._
 - [AG2 SandboxShellTool allowlist is bypassed by a newline in the command](https://github.com/advisories/GHSA-2h4w-29cv-2cmv) (2026-11-10) · _latest_
 - [Caper approves coding-agent commands after running them in a snapshot sandbox](https://arxiv.org/abs/2610.40753) (2026-10-29) · _latest_
 - [NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html) (2026-10-27) · _latest_
+
+### 🔺 rising agent-security  ·  19 findings (5 recent vs 2.1 expected) · 16 sources
+_First seen 2026-02 · latest 2026-11-10._
+
+- [Microsoft's Lazarus backdoors an agent's model by editing fewer than 10 dormant neurons](https://www.microsoft.com/en-us/research/blog/lazare-veni-foras-reprogramming-dormant-neurons-to-backdoor-ai-agents/) (2026-11-10) · _latest_
+- [ShadowBench-MCP: task-preserving rewordings can push an LLM tool router onto riskier paths](http://arxiv.org/abs/2611.11720v1) (2026-11-09) · _latest_
+- [LeanGuard checks every agent tool call against a Lean4-verified policy](https://arxiv.org/abs/2611.02332) (2026-11-02) · _latest_
+- [SCOPE compiles natural-language agent policies into predicate programs run by small models](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
+- [Agent Mosaic: LLM agents combine allowed documents into forbidden conclusions](https://arxiv.org/abs/2610.30418) (2026-10-21) · _latest_
+- [Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture](https://arxiv.org/abs/2608.06130v1) (2026-08-07)
 
 ### 🔺 rising api-keys  ·  4 findings (3 recent vs 0.2 expected) · 3 sources
 _First seen 2026-08-06 · latest 2026-11-10._
@@ -142,6 +152,15 @@ _First seen 2026-10-06 · latest 2026-10-29._
 - [UK AISI resumes most cyber evals with the internet turned off](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities) (2026-10-07)
 - [METR: MathJax injection in Inspect let agents rewrite what reviewers see](https://metr.org/blog/2026-10-06-ai-systems-could-cover-up-misbehavior/) (2026-10-06)
 
+### 🔺 rising oauth  ·  5 findings (3 recent vs 0.3 expected) · 5 sources
+_First seen 2026-07-29 · latest 2026-11-10._
+
+- [Innovaccer's Healthcare MCP extension binds tool calls to an opaque patient handle](https://github.com/innovaccer/Healthcare-MCP) (2026-11-10) · _latest_
+- [MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86) (2026-10-21) · _latest_
+- [opencode MCP sign-in runs attacker code, fix shipped without a CVE](https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth) (2026-10-19) · _latest_
+- [Snyk launches an Evo MCP server for querying AI-asset inventory and policies](https://snyk.io/blog/so-i-asked-my-agent-instead/) (2026-09-22)
+- [MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027) (2026-07-29)
+
 ### 🔺 rising ssrf  ·  5 findings (3 recent vs 0.3 expected) · 5 sources
 _First seen 2026-07-15 · latest 2026-10-30._
 
@@ -160,6 +179,16 @@ _First seen 2026-08-12 · latest 2026-11-08._
 - [OWASP GenAI Security Project unveils its 2026 Top 10 for LLM Applications](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/) (2026-09-02)
 - [Five Primitives for Governing Autonomous AI Agents at Runtime](https://arxiv.org/abs/2608.26696) (2026-08-27)
 - [Snyk's Agent Baseline shows agent governance products cover different outcomes](https://snyk.io/blog/agent-baseline-35-controls-where-should-you-start/) (2026-08-12)
+
+### 🔺 rising backdoor  ·  7 findings (3 recent vs 0.7 expected) · 6 sources
+_First seen 2026-06-25 · latest 2026-11-10._
+
+- [Microsoft's Lazarus backdoors an agent's model by editing fewer than 10 dormant neurons](https://www.microsoft.com/en-us/research/blog/lazare-veni-foras-reprogramming-dormant-neurons-to-backdoor-ai-agents/) (2026-11-10) · _latest_
+- [Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1) (2026-11-06) · _latest_
+- [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
+- [Paper proves models can hide capabilities that audits cannot find](https://arxiv.org/abs/2610.13928) (2026-10-09)
+- [(A)iSpy moves the trojan into the ML runtime](https://arxiv.org/abs/2607.17550) (2026-07-21)
+- [QuantGuard defends against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239v1) (2026-06-28)
 
 ### 🔺 rising rce  ·  9 findings (3 recent vs 1.0 expected) · 5 sources
 _First seen 2026-07-24 · latest 2026-10-27._
@@ -249,17 +278,17 @@ _First seen 2026-11-03 · latest 2026-11-06._
 - [Anthropic Fellows find Claude agent teams rarely catch a teammate told to sabotage](https://www.anthropic.com/research/project-eve-claude-plays-mmorpgs) (2026-11-06) · _latest_
 - [Agent Name Service spec anchors AI agent identity to verified domain names](https://github.com/agentnameservice/ans-spec) (2026-11-03) · _latest_
 
+### 🔺 rising open-source-tool  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-10-25 · latest 2026-11-12._
+
+- [AgentLint checks coding-agent file writes and shell commands through local hooks](https://github.com/mauhpr/agentlint) (2026-11-12) · _latest_
+- [NuGuard is an open-source AI-SBOM and red-team pipeline for agentic apps](https://github.com/NuGuardAI/nuguard) (2026-10-25) · _latest_
+
 ### 🔺 rising safety-benchmarks  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-18 · latest 2026-10-18._
 
 - [Guardrail benchmark scores mostly measure the training labels' definition of unsafe](http://arxiv.org/abs/2610.25060v1) (2026-10-18) · _latest_
 - [Guardrail safety benchmarks mostly measure the training label policy](https://arxiv.org/abs/2610.25060) (2026-10-18) · _latest_
-
-### 🔺 rising skill-marketplace  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
-_First seen 2026-10-11 · latest 2026-11-08._
-
-- [SkillCODER fingerprints agent skill files to trace leaks to a buyer](http://arxiv.org/abs/2611.11308v1) (2026-11-08) · _latest_
-- [SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725) (2026-10-11) · _latest_
 
 ### 🔺 rising third-party-risk  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-27 · latest 2026-11-10._
@@ -267,27 +296,11 @@ _First seen 2026-10-27 · latest 2026-11-10._
 - [Fireworks AI discloses second breach reached through a third-party cloud provider](https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/) (2026-11-10) · _latest_
 - [Warp: vendor breach exposed agent logs for roughly 1% of users](https://www.bleepingcomputer.com/news/security/warp-discloses-breach-exposing-ai-agent-logs-user-telemetry-data/) (2026-10-27) · _latest_
 
-### 🔺 rising watermarking  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
-_First seen 2026-10-11 · latest 2026-11-08._
-
-- [SkillCODER fingerprints agent skill files to trace leaks to a buyer](http://arxiv.org/abs/2611.11308v1) (2026-11-08) · _latest_
-- [SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725) (2026-10-11) · _latest_
-
 ### 🔺 rising windows  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-13 · latest 2026-10-19._
 
 - [opencode MCP sign-in runs attacker code, fix shipped without a CVE](https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth) (2026-10-19) · _latest_
 - [Visual Studio Copilot RCE lets an agent rewrite its own config](https://embracethered.com/blog/posts/2026/visual-studio-copilot-remote-code-execution/) (2026-10-13) · _latest_
-
-### 🔺 rising agent-security  ·  18 findings (4 recent vs 2.1 expected) · 15 sources
-_First seen 2026-02 · latest 2026-11-09._
-
-- [ShadowBench-MCP: task-preserving rewordings can push an LLM tool router onto riskier paths](http://arxiv.org/abs/2611.11720v1) (2026-11-09) · _latest_
-- [LeanGuard checks every agent tool call against a Lean4-verified policy](https://arxiv.org/abs/2611.02332) (2026-11-02) · _latest_
-- [SCOPE compiles natural-language agent policies into predicate programs run by small models](https://arxiv.org/abs/2610.31062) (2026-10-22) · _latest_
-- [Agent Mosaic: LLM agents combine allowed documents into forbidden conclusions](https://arxiv.org/abs/2610.30418) (2026-10-21) · _latest_
-- [Hardware Keystores for AI Agent Signing Workflows: A Zero-Trust MCP Enforcement Architecture](https://arxiv.org/abs/2608.06130v1) (2026-08-07)
-- [AI coding agents have a vulnerability with no CVE: authority exceeding mandate](https://arxiv.org/abs/2608.05884) (2026-08-07)
 
 ### 🔺 rising agent-telemetry  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
 _First seen 2026-08-06 · latest 2026-10-31._
@@ -330,6 +343,13 @@ _First seen 2026-08-27 · latest 2026-10-18._
 - [Guardrail benchmark scores mostly measure the training labels' definition of unsafe](http://arxiv.org/abs/2610.25060v1) (2026-10-18) · _latest_
 - [Guardrail safety benchmarks mostly measure the training label policy](https://arxiv.org/abs/2610.25060) (2026-10-18) · _latest_
 - [Scary object names make agent guardrails over-refuse legitimate actions](https://arxiv.org/abs/2608.27009) (2026-08-27)
+
+### 🔺 rising secrets  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
+_First seen 2026-08-09 · latest 2026-11-12._
+
+- [AgentLint checks coding-agent file writes and shell commands through local hooks](https://github.com/mauhpr/agentlint) (2026-11-12) · _latest_
+- [Northflank breach exposed customer secrets, and stolen AI API keys were used](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/) (2026-10-31) · _latest_
+- [affaan-m/agentshield](https://github.com/affaan-m/agentshield) (2026-08-09)
 
 ### 🔺 rising vendor-marketing  ·  3 findings (2 recent vs 0.2 expected) · 2 sources
 _First seen 2026-10-01 · latest 2026-11-03._
@@ -394,14 +414,6 @@ _First seen 2026-07-20 · latest 2026-10-27._
 - [LMdeploy's ZeroMQ RPC server unpickles untrusted network data, giving remote code execution](https://github.com/advisories/GHSA-5h8j-6crg-7rmw) (2026-09-16)
 - [ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503) (2026-07-20)
 
-### 🔺 rising oauth  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
-_First seen 2026-07-29 · latest 2026-10-21._
-
-- [MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86) (2026-10-21) · _latest_
-- [opencode MCP sign-in runs attacker code, fix shipped without a CVE](https://www.pillar.security/blog/open-and-shut-remote-code-execution-in-opencode-via-mcp-oauth) (2026-10-19) · _latest_
-- [Snyk launches an Evo MCP server for querying AI-asset inventory and policies](https://snyk.io/blog/so-i-asked-my-agent-instead/) (2026-09-22)
-- [MCP gets an enterprise makeover](https://www.theregister.com/ai-and-ml/2026/07/29/mcp-gets-an-enterprise-makeover/5280027) (2026-07-29)
-
 ### 🔺 rising defense-in-depth  ·  5 findings (2 recent vs 0.5 expected) · 4 sources
 _First seen 2026-07-30 · latest 2026-10-29._
 
@@ -438,16 +450,6 @@ _First seen 2026-08-08 · latest 2026-11-08._
 - [alexgreensh/repo-forensics](https://github.com/alexgreensh/repo-forensics) (2026-08-08)
 - [highflame-ai/ramparts](https://github.com/highflame-ai/ramparts) (2026-08-08)
 
-### 🔺 rising backdoor  ·  6 findings (2 recent vs 0.7 expected) · 5 sources
-_First seen 2026-06-25 · latest 2026-11-06._
-
-- [Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1) (2026-11-06) · _latest_
-- [Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109) (2026-10-19) · _latest_
-- [Paper proves models can hide capabilities that audits cannot find](https://arxiv.org/abs/2610.13928) (2026-10-09)
-- [(A)iSpy moves the trojan into the ML runtime](https://arxiv.org/abs/2607.17550) (2026-07-21)
-- [QuantGuard defends against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239v1) (2026-06-28)
-- [Federated-learning aggregator can backdoor a QA model without seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
-
 ### 🔺 rising ctf  ·  6 findings (2 recent vs 0.7 expected) · 5 sources
 _First seen 2026-08-05 · latest 2026-11-09._
 
@@ -473,7 +475,7 @@ _First seen 2025-12-14 · latest 2026-10-29._
 
 - [MSafeTemp authors show English-only safety evaluation misses multilingual jailbreaks](https://arxiv.org/abs/2610.40516) (2026-10-29) · _latest_
 - [Praetorian's Augustus LLM scanner adds multi-turn attackers including Hydra](https://github.com/praetorian-inc/augustus) (2026-10-23) · _latest_
-- [Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits](http://arxiv.org/abs/2610.15207v2) (2026-10-10) · _latest_
+- [Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits](http://arxiv.org/abs/2610.15207v2) (2026-10-10)
 - [Decoding-control jailbreaks work through text-only APIs using repeated sampling and assistant-prefix continuation](https://arxiv.org/abs/2609.36956) (2026-09-29)
 - [Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) (2026-08-28)
 - [Recovering plaintext from 'encrypted' LLM reasoning traces via cross-model replay](https://embracethered.com/blog/posts/2026/recovering-encrypted-llm-thoughts/) (2026-08-16)
@@ -527,6 +529,16 @@ _First seen 2026-08-07 · latest 2026-10-23._
 - [Perturbation Probing: A New Diagnostic for the Fragility of LLM Safety](https://unit42.paloaltonetworks.com/perturbation-probing-llm-safety/) (2026-08-28)
 - [Measuring and Detecting Harmful AI Sycophancy](https://arxiv.org/abs/2608.05624) (2026-08-07)
 - [MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration](https://arxiv.org/abs/2608.05909) (2026-08-07)
+
+### ▪️ steady model-supply-chain  ·  6 findings (1 recent vs 0.9 expected) · 6 sources
+_First seen 2026-06-25 · latest 2026-11-10._
+
+- [Microsoft's Lazarus backdoors an agent's model by editing fewer than 10 dormant neurons](https://www.microsoft.com/en-us/research/blog/lazare-veni-foras-reprogramming-dormant-neurons-to-backdoor-ai-agents/) (2026-11-10) · _latest_
+- [(A)iSpy moves the trojan into the ML runtime](https://arxiv.org/abs/2607.17550) (2026-07-21)
+- [ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503) (2026-07-20)
+- [Over 970,000 AI-Apps on model hubs measured: thousands leak credentials](https://arxiv.org/abs/2606.30373) (2026-06-29)
+- [QuantGuard defends against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239v1) (2026-06-28)
+- [Federated-learning aggregator can backdoor a QA model without seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
 
 ### ▪️ steady claude-code  ·  5 findings (1 recent vs 0.7 expected) · 5 sources
 _First seen 2026-05-14 · latest 2026-11-07._
@@ -838,6 +850,12 @@ _First seen 2026-07-24 · latest 2026-10-31._
 - [OpenGuardrails proposes one vendor-neutral wire protocol for agent guardrails](https://github.com/openguardrails/openguardrails) (2026-10-31) · _latest_
 - [AWS API MCP Server fails open and silently bypasses its security policy](https://github.com/advisories/GHSA-29w2-fq35-v728) (2026-07-24)
 
+### ▪️ steady healthcare  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-08-07 · latest 2026-11-10._
+
+- [Innovaccer's Healthcare MCP extension binds tool calls to an opaque patient handle](https://github.com/innovaccer/Healthcare-MCP) (2026-11-10) · _latest_
+- [ECHO is a locally deployable agentic health assistant with safety guardrails](https://arxiv.org/abs/2608.06110) (2026-08-07)
+
 ### ▪️ steady human-in-the-loop  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-09-22 · latest 2026-10-29._
 
@@ -940,11 +958,11 @@ _First seen 2026-08-08 · latest 2026-10-23._
 - [Praetorian's Augustus LLM scanner adds multi-turn attackers including Hydra](https://github.com/praetorian-inc/augustus) (2026-10-23) · _latest_
 - [alexgreensh/repo-forensics](https://github.com/alexgreensh/repo-forensics) (2026-08-08)
 
-### ▪️ steady secrets  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
-_First seen 2026-08-09 · latest 2026-10-31._
+### ▪️ steady skill-marketplace  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-10-11 · latest 2026-11-08._
 
-- [Northflank breach exposed customer secrets, and stolen AI API keys were used](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/) (2026-10-31) · _latest_
-- [affaan-m/agentshield](https://github.com/affaan-m/agentshield) (2026-08-09)
+- [SkillCODER fingerprints agent skill files to trace leaks to a buyer](http://arxiv.org/abs/2611.11308v1) (2026-11-08) · _latest_
+- [SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725) (2026-10-11)
 
 ### ▪️ steady standards  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-09-02 · latest 2026-10-31._
@@ -957,6 +975,12 @@ _First seen 2026-10-07 · latest 2026-10-23._
 
 - [Mythos 5 posed as users to push malware to a real repo](https://www.anthropic.com/research/alignment-assessment-ukaisi) (2026-10-23) · _latest_
 - [UK AISI resumes most cyber evals with the internet turned off](https://www.aisi.gov.uk/blog/building-a-more-secure-environment-for-evaluating-dangerous-capabilities) (2026-10-07)
+
+### ▪️ steady watermarking  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-10-11 · latest 2026-11-08._
+
+- [SkillCODER fingerprints agent skill files to trace leaks to a buyer](http://arxiv.org/abs/2611.11308v1) (2026-11-08) · _latest_
+- [SkillMarker watermarks agent skill files to trace copying](https://arxiv.org/abs/2610.15725) (2026-10-11)
 
 ### ▫️ quiet threat-modeling  ·  8 findings (0 recent vs 1.4 expected) · 5 sources
 _First seen 2026-07-16 · latest 2026-08-26._
@@ -977,15 +1001,6 @@ _First seen 2026-07-16 · latest 2026-09-01._
 - [Auto mode is now the default in Claude Code for Pro, Max](https://simonwillison.net/2026/Aug/8/auto-mode/#atom-everything) (2026-08-08)
 - [Show HN: Product analytics (and evals) for agent sessions on your MCP](https://armature.tech/) (2026-08-03)
 - [Salience Induction misleads RAG agents using true statements and no instructions](https://arxiv.org/abs/2607.17535) (2026-07-21)
-
-### ▫️ quiet model-supply-chain  ·  5 findings (0 recent vs 0.9 expected) · 5 sources
-_First seen 2026-06-25 · latest 2026-07-21._
-
-- [(A)iSpy moves the trojan into the ML runtime](https://arxiv.org/abs/2607.17550) (2026-07-21)
-- [ShadowPickle: pickle-VM import tricks evade ten model scanners and four model hubs](https://arxiv.org/abs/2607.17503) (2026-07-20)
-- [Over 970,000 AI-Apps on model hubs measured: thousands leak credentials](https://arxiv.org/abs/2606.30373) (2026-06-29)
-- [QuantGuard defends against backdoors that only wake up after you quantize](https://arxiv.org/abs/2606.29239v1) (2026-06-28)
-- [Federated-learning aggregator can backdoor a QA model without seeing client data](https://arxiv.org/abs/2606.27511) (2026-06-25)
 
 ### ▫️ quiet red-team  ·  5 findings (0 recent vs 0.7 expected) · 5 sources
 _First seen 2026-02 · latest 2026-08-10._
@@ -1304,7 +1319,7 @@ _First seen 2026-07-21 · latest 2026-09-15._
 ### ▫️ quiet robustness  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
 _First seen 2026-08-07 · latest 2026-10-10._
 
-- [Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits](http://arxiv.org/abs/2610.15207v2) (2026-10-10) · _latest_
+- [Early-exit LLMs: shallow exits resist GCG-style adversarial suffixes better than deep exits](http://arxiv.org/abs/2610.15207v2) (2026-10-10)
 - [LLMs Cannot Reliably Judge (Yet?) in a robustness assessment of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) (2026-08-07)
 
 ### ▫️ quiet rogue-agent  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
@@ -1369,25 +1384,35 @@ _First seen 2026-10-02 · latest 2026-10-06._
 
 ## Product Security
 
-### 🔺 rising rce  ·  19 findings (11 recent vs 1.4 expected) · 15 sources
-_First seen 2026-06-29 · latest 2026-10-28._
+### 🔺 rising exploited-in-the-wild  ·  21 findings (14 recent vs 1.2 expected) · 4 sources
+_First seen 2026-09-23 · latest 2026-11-10._
 
+- [Microsoft Outlook spoofing flaw that skips unsafe-action warnings is exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-124194) (2026-11-10) · _latest_
+- [Cisco BroadWorks XML external entity flaw is exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-20320) (2026-11-10) · _latest_
+- [Openwave Webtop Media Transcoder file-type restriction bypass is exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-111793) (2026-11-10) · _latest_
+- [IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-123218) (2026-11-09) · _latest_
+- [Attackers exploit a missing-authorization flaw in Drupal Commerce Core](https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html) (2026-10-30) · _latest_
+- [KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html) (2026-10-29) · _latest_
+
+### 🔺 rising rce  ·  20 findings (12 recent vs 1.4 expected) · 16 sources
+_First seen 2026-06-29 · latest 2026-11-11._
+
+- [Apache HTTP Server HTTP/2 race condition allows unauthenticated remote code execution](https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability) (2026-11-11) · _latest_
 - [Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html) (2026-10-28) · _latest_
 - [Public bounty server runs pre-PHP2Shell PHP guarding a bitcoin key](https://stealmybitcoin.com/) (2026-10-24) · _latest_
 - [New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability/) (2026-10-23) · _latest_
 - [Collabora CODE Server for Nextcloud command injection exploited in the wild (CVE-2026-110447)](https://nvd.nist.gov/vuln/detail/CVE-2026-110447) (2026-10-23) · _latest_
 - [Aikido claims an 'http2shell' RCE in Node and Python; no details captured](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8) (2026-10-23) · _latest_
-- [Next.js has unauthenticated RCE in use cache functions returning typed arrays](https://github.com/advisories/GHSA-673q-mjm6-r5xr) (2026-10-22) · _latest_
 
-### 🔺 rising exploited-in-the-wild  ·  17 findings (10 recent vs 1.2 expected) · 4 sources
-_First seen 2026-09-23 · latest 2026-10-30._
+### 🔺 rising supply-chain  ·  44 findings (14 recent vs 5.2 expected) · 26 sources
+_First seen 2026-06-30 · latest 2026-11-12._
 
-- [Attackers exploit a missing-authorization flaw in Drupal Commerce Core](https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html) (2026-10-30) · _latest_
-- [KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html) (2026-10-29) · _latest_
-- [Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
-- [Exploited Linux kernel flaw lets IPsec decryption overwrite page-cache data](https://nvd.nist.gov/vuln/detail/CVE-2026-46300) (2026-10-28) · _latest_
-- [CISA says a low-severity VMware ESX logging gap is being exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-41709) (2026-10-28) · _latest_
-- [Exploited Adobe Commerce and Magento upload flaw can lead to code execution](https://nvd.nist.gov/vuln/detail/CVE-2026-48356) (2026-10-27) · _latest_
+- [SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer) (2026-11-12) · _latest_
+- [Semgrep Guardian adds an adversarial reviewer and blocks risky lockfile changes](https://semgrep.dev/blog/2026/semgrep-guardian-policies-ai-detection) (2026-11-12) · _latest_
+- [Compromised Qubole credentials let attackers raid over a dozen customer cloud accounts](https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack/) (2026-11-10) · _latest_
+- [Antithesis engineer Sean Allen says supply chain attacks have no simple fix](https://newsletter.pragmaticengineer.com/p/software-correctness) (2026-11-10) · _latest_
+- [Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise) (2026-11-09) · _latest_
+- [Check Point weekly digest covers cPGuard supply-chain attack and ARTEX campaigns](https://research.checkpoint.com/2026/9th-november-threat-intelligence-report/) (2026-11-09) · _latest_
 
 ### 🔺 rising php2shell  ·  7 findings (7 recent vs 0.0 expected) · 6 sources
 _First seen 2026-10-22 · latest 2026-10-28._
@@ -1399,15 +1424,25 @@ _First seen 2026-10-22 · latest 2026-10-28._
 - [PHP says Chainguard broke the PHP2Shell embargo with patched images](https://www.theregister.com/security/2026/10/22/php-blames-supply-chain-security-biz-chainguard-for-putting-huge-chunks-of-the-web-at-risk/5304611) (2026-10-22) · _latest_
 - [Wired: AWS logged PHP2Shell exploitation attempts days before the patch](https://www.wired.com/story/hackers-exploited-the-php-vulnerabilities-days-before-they-were-patched/) (2026-10-22) · _latest_
 
-### 🔺 rising supply-chain  ·  42 findings (12 recent vs 5.2 expected) · 26 sources
-_First seen 2026-06-30 · latest 2026-11-10._
+### 🔺 rising artex  ·  6 findings (6 recent vs 0.0 expected) · 5 sources
+_First seen 2026-10-21 · latest 2026-11-11._
 
-- [Compromised Qubole credentials let attackers raid over a dozen customer cloud accounts](https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack/) (2026-11-10) · _latest_
-- [Antithesis engineer Sean Allen says supply chain attacks have no simple fix](https://newsletter.pragmaticengineer.com/p/software-correctness) (2026-11-10) · _latest_
-- [Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise) (2026-11-09) · _latest_
+- [Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/) (2026-11-11) · _latest_
+- [Datadog traces the ARTEX agentic attack framework inside real AWS accounts](https://securitylabs.datadoghq.com/articles/artex-agentic-attacks-aws-environments/) (2026-11-09) · _latest_
 - [Check Point weekly digest covers cPGuard supply-chain attack and ARTEX campaigns](https://research.checkpoint.com/2026/9th-november-threat-intelligence-report/) (2026-11-09) · _latest_
-- [StepSecurity launches scanning for files planted by supply chain campaigns](https://www.stepsecurity.io/blog/malicious-files-find-what-supply-chain-attacks-leave-behind-in-your-github-repositories-and-on-developer-machines) (2026-11-03) · _latest_
-- [Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/) (2026-10-31) · _latest_
+- [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) (2026-11-05) · _latest_
+- [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) (2026-11-05) · _latest_
+- [Microsoft says Storm-0940 used the ARTEX pentest framework against 2,250+ tenants](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/) (2026-10-21) · _latest_
+
+### 🔺 rising mcp  ·  8 findings (6 recent vs 0.3 expected) · 6 sources
+_First seen 2026-08-05 · latest 2026-11-12._
+
+- [Semgrep Guardian adds an adversarial reviewer and blocks risky lockfile changes](https://semgrep.dev/blog/2026/semgrep-guardian-policies-ai-detection) (2026-11-12) · _latest_
+- [Joost de Valk's open website specification covers security headers and agent readiness](https://github.com/jdevalk/specification.website) (2026-11-10) · _latest_
+- [Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://www.wiz.io/blog/green-agent-agentic-remediation) (2026-11-03) · _latest_
+- [GoSQLX, a Go SQL parser, ships an injection scanner and MCP server](https://github.com/ajitpratap0/GoSQLX) (2026-10-31) · _latest_
+- [VibeRaven checks AI-built Supabase apps for missing row-level security](https://github.com/ohad6k/VibeRaven) (2026-10-30) · _latest_
+- [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) (2026-10-29) · _latest_
 
 ### 🔺 rising php  ·  8 findings (6 recent vs 0.3 expected) · 8 sources
 _First seen 2026-09-08 · latest 2026-10-24._
@@ -1429,15 +1464,6 @@ _First seen 2026-08-17 · latest 2026-11-10._
 - [Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html) (2026-10-28) · _latest_
 - [Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18](https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/) (2026-10-27) · _latest_
 
-### 🔺 rising artex  ·  5 findings (5 recent vs 0.0 expected) · 4 sources
-_First seen 2026-10-21 · latest 2026-11-09._
-
-- [Datadog traces the ARTEX agentic attack framework inside real AWS accounts](https://securitylabs.datadoghq.com/articles/artex-agentic-attacks-aws-environments/) (2026-11-09) · _latest_
-- [Check Point weekly digest covers cPGuard supply-chain attack and ARTEX campaigns](https://research.checkpoint.com/2026/9th-november-threat-intelligence-report/) (2026-11-09) · _latest_
-- [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) (2026-11-05) · _latest_
-- [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) (2026-11-05) · _latest_
-- [Microsoft says Storm-0940 used the ARTEX pentest framework against 2,250+ tenants](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/) (2026-10-21) · _latest_
-
 ### 🔺 rising linux-kernel  ·  5 findings (5 recent vs 0.0 expected) · 5 sources
 _First seen 2026-10-19 · latest 2026-11-05._
 
@@ -1447,15 +1473,25 @@ _First seen 2026-10-19 · latest 2026-11-05._
 - [Two KSMBD RCE flaws hit public kernel lists with no patch](https://thehackernews.com/2026/10/two-cvss-90-linux-ksmbd-rce-flaws.html) (2026-10-22) · _latest_
 - [pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape) (2026-10-19) · _latest_
 
-### 🔺 rising mcp  ·  7 findings (5 recent vs 0.3 expected) · 5 sources
-_First seen 2026-08-05 · latest 2026-11-10._
+### 🔺 rising cisco  ·  6 findings (5 recent vs 0.2 expected) · 3 sources
+_First seen 2026-09-14 · latest 2026-11-10._
 
-- [Joost de Valk's open website specification covers security headers and agent readiness](https://github.com/jdevalk/specification.website) (2026-11-10) · _latest_
-- [Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://www.wiz.io/blog/green-agent-agentic-remediation) (2026-11-03) · _latest_
-- [GoSQLX, a Go SQL parser, ships an injection scanner and MCP server](https://github.com/ajitpratap0/GoSQLX) (2026-10-31) · _latest_
-- [VibeRaven checks AI-built Supabase apps for missing row-level security](https://github.com/ohad6k/VibeRaven) (2026-10-30) · _latest_
-- [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) (2026-10-29) · _latest_
-- [GitHub Security Lab's Fuzzing Taskflow has an LLM agent write AFL++ harnesses](https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/) (2026-09-24)
+- [Cisco BroadWorks XML external entity flaw is exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-20320) (2026-11-10) · _latest_
+- [SonicWall says it will not fix two flaws in end-of-life GMS](https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/) (2026-11-05) · _latest_
+- [KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html) (2026-10-29) · _latest_
+- [Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
+- [Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
+- [Cisco Secure Email Gateway SQL injection reaches root command execution](https://nvd.nist.gov/vuln/detail/CVE-2026-76461) (2026-09-14)
+
+### 🔺 rising denial-of-service  ·  7 findings (5 recent vs 0.3 expected) · 5 sources
+_First seen 2026-09-23 · latest 2026-11-11._
+
+- [Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/) (2026-11-11) · _latest_
+- [Nuxt Content query endpoint lets unauthenticated users stall servers with SQLite functions](https://github.com/advisories/GHSA-xxrh-5hgg-gj4h) (2026-11-10) · _latest_
+- [Google declines to fix zero-click SMS that crashes Android telephony](https://smsofdeath.com/) (2026-10-29) · _latest_
+- [Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
+- [Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
+- [Valid SQL crashes SQLGlot and SQLFluff with huge memory amplification](https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/) (2026-10-06)
 
 ### 🔺 rising android  ·  8 findings (5 recent vs 0.5 expected) · 8 sources
 _First seen 2026-04 · latest 2026-11-05._
@@ -1466,6 +1502,16 @@ _First seen 2026-04 · latest 2026-11-05._
 - [Google declines to fix zero-click SMS that crashes Android telephony](https://smsofdeath.com/) (2026-10-29) · _latest_
 - [Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude) (2026-10-27) · _latest_
 - [GitHub Security Lab found 24 Android vulnerabilities with its AI agent](https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/) (2026-09-28)
+
+### 🔺 rising aws  ·  8 findings (5 recent vs 0.5 expected) · 7 sources
+_First seen 2026-08-05 · latest 2026-11-12._
+
+- [Engineer lists three AWS IAM anti-patterns coding agents keep writing](https://engseclabs.com/blog/things-llms-get-wrong-about-aws-iam) (2026-11-12) · _latest_
+- [Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/) (2026-11-11) · _latest_
+- [Compromised Qubole credentials let attackers raid over a dozen customer cloud accounts](https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack/) (2026-11-10) · _latest_
+- [Datadog traces the ARTEX agentic attack framework inside real AWS accounts](https://securitylabs.datadoghq.com/articles/artex-agentic-attacks-aws-environments/) (2026-11-09) · _latest_
+- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
+- [Wiz Blue Agent traces a stolen GitHub token to hardcoded AWS keys](https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation) (2026-09-29)
 
 ### 🔺 rising detection-engineering  ·  8 findings (5 recent vs 0.5 expected) · 7 sources
 _First seen 2026-09-21 · latest 2026-11-08._
@@ -1486,6 +1532,16 @@ _First seen 2026-09-10 · latest 2026-10-30._
 - [OVHcloud CLI GitHub releases carried attacker binaries for 94 minutes, delivering GlassWorm](https://www.stepsecurity.io/blog/ovhcloud-cli-github-release-swap-glassworm) (2026-10-24) · _latest_
 - [Wiz CIRT describes what an AI-driven cloud intrusion looks like](https://www.wiz.io/blog/anatomy-of-ai-driven-cloud-attacks) (2026-10-19) · _latest_
 - [Cisco Talos says lab-agent attacks are loud now but will get quieter](https://blog.talosintelligence.com/one-breach-please-and-make-no-mistakes/) (2026-10-07)
+
+### 🔺 rising credential-theft  ·  10 findings (5 recent vs 0.9 expected) · 7 sources
+_First seen 2026-09-23 · latest 2026-11-12._
+
+- [SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer) (2026-11-12) · _latest_
+- [Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/) (2026-11-11) · _latest_
+- [Attackers used AhsayCBS zero-days to plant a host-locked Python backdoor](https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html) (2026-11-10) · _latest_
+- [Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) (2026-10-26) · _latest_
+- [Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/) (2026-10-15) · _latest_
+- [tensorlake@0.5.144 npm worm spread from a hijacked admin account](https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud) (2026-10-08)
 
 ### 🔺 rising agentic-attacks  ·  4 findings (4 recent vs 0.0 expected) · 4 sources
 _First seen 2026-10-29 · latest 2026-11-09._
@@ -1511,14 +1567,22 @@ _First seen 2026-10-23 · latest 2026-11-10._
 - [Alpine Linux rebuilt GitLab after its upgrade missed a Ruby patch](https://alpinelinux.org/posts/GitLab-security-incident-CVE-2026-97229.html) (2026-10-28) · _latest_
 - [Atlassian October 2026 bulletin lists 75 unique third-party CVEs](https://www.securityweek.com/atlassian-patches-75-third-party-flaws-in-data-center-and-server-products/) (2026-10-23) · _latest_
 
-### 🔺 rising cisco  ·  5 findings (4 recent vs 0.2 expected) · 3 sources
-_First seen 2026-09-14 · latest 2026-11-05._
+### 🔺 rising vendor-marketing  ·  4 findings (4 recent vs 0.0 expected) · 3 sources
+_First seen 2026-10-21 · latest 2026-11-10._
 
-- [SonicWall says it will not fix two flaws in end-of-life GMS](https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/) (2026-11-05) · _latest_
-- [KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html) (2026-10-29) · _latest_
-- [Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
-- [Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
-- [Cisco Secure Email Gateway SQL injection reaches root command execution](https://nvd.nist.gov/vuln/detail/CVE-2026-76461) (2026-09-14)
+- [OpenAI customer story pitches Cogent's agents for autonomous vulnerability remediation](https://openai.com/index/cogent-security) (2026-11-10) · _latest_
+- [Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://www.wiz.io/blog/green-agent-agentic-remediation) (2026-11-03) · _latest_
+- [MagicSword markets automatic application-control policies built from LOLDrivers research](https://www.magicsword.io/application-control) (2026-10-29) · _latest_
+- [Cloudflare pairs Daybreak findings with live traffic to draft WAF rules](https://openai.com/index/cloudflare-cyber) (2026-10-21) · _latest_
+
+### 🔺 rising cloud  ·  5 findings (4 recent vs 0.2 expected) · 4 sources
+_First seen 2026-10-07 · latest 2026-11-12._
+
+- [Engineer lists three AWS IAM anti-patterns coding agents keep writing](https://engseclabs.com/blog/things-llms-get-wrong-about-aws-iam) (2026-11-12) · _latest_
+- [Iris Plaza says a cloud breach exposed data on 7.7 million customers](https://cyberinsider.com/iris-plaza-cloud-breach-7-7-million-people/) (2026-11-05) · _latest_
+- [Kat Traxler used AI and security principles to find cloud design flaws](https://github.com/KatTraxler/presentations/tree/main/security-constitution) (2026-10-29) · _latest_
+- [CVM-Store paper protects confidential VM storage at near-raw disk speed](http://arxiv.org/abs/2610.34560v1) (2026-10-25) · _latest_
+- [Unit 42: threat actors use Web3 infrastructure to breach cloud environments](https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/) (2026-10-07)
 
 ### 🔺 rising ios  ·  5 findings (4 recent vs 0.2 expected) · 3 sources
 _First seen 2026-09-29 · latest 2026-11-10._
@@ -1529,15 +1593,33 @@ _First seen 2026-09-29 · latest 2026-11-10._
 - [Apple patches 286 flaws and backports exploited CoreGraphics fix to iOS 18](https://www.securityweek.com/ios-macos-27-2-patch-286-bugs-fix-for-exploited-flaw-backported-to-ios-18/) (2026-10-27) · _latest_
 - [CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks](https://nvd.nist.gov/vuln/detail/CVE-2026-86950) (2026-09-29)
 
-### 🔺 rising denial-of-service  ·  6 findings (4 recent vs 0.3 expected) · 4 sources
-_First seen 2026-09-23 · latest 2026-11-10._
+### 🔺 rising mfa-bypass  ·  5 findings (4 recent vs 0.2 expected) · 5 sources
+_First seen 2026-10-08 · latest 2026-11-12._
 
-- [Nuxt Content query endpoint lets unauthenticated users stall servers with SQLite functions](https://github.com/advisories/GHSA-xxrh-5hgg-gj4h) (2026-11-10) · _latest_
-- [Google declines to fix zero-click SMS that crashes Android telephony](https://smsofdeath.com/) (2026-10-29) · _latest_
-- [Cisco ASA and FTD VPN crash bug is exploited, CISA gives three days](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
-- [Attackers exploit a Cisco ASA and FTD VPN bug to crash firewalls](https://nvd.nist.gov/vuln/detail/CVE-2026-76418) (2026-10-29) · _latest_
-- [Valid SQL crashes SQLGlot and SQLFluff with huge memory amplification](https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/) (2026-10-06)
-- [Moquette MQTT broker clientId wildcard injection gives cross-tenant read/write](https://github.com/advisories/GHSA-5f42-97gr-vfhq) (2026-09-23)
+- [ScreenConnect RMM+ extension flaw may have let attackers bypass MFA](https://www.theregister.com/security/2026/11/12/hackers-exploiting-screenconnect-plugin-flaw-to-spread-malware-across-hundreds-of-pcs/5309361) (2026-11-12) · _latest_
+- [SonicWall SonicOS SSLVPN flaw lets alternate credentials bypass SAML-enforced MFA](https://nvd.nist.gov/vuln/detail/CVE-2026-19868) (2026-11-06) · _latest_
+- [X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies](https://x.com/Dinosn/status/2116946099059511340) (2026-11-01) · _latest_
+- [Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/) (2026-10-20) · _latest_
+- [UAT-11985 lured Taiwan researchers with likely AI-templated invitations and live MFA relay](https://blog.talosintelligence.com/uat-11985/) (2026-10-08)
+
+### 🔺 rising threat-hunting  ·  5 findings (4 recent vs 0.2 expected) · 4 sources
+_First seen 2026-09-24 · latest 2026-11-11._
+
+- [Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/) (2026-11-11) · _latest_
+- [Datadog traces the ARTEX agentic attack framework inside real AWS accounts](https://securitylabs.datadoghq.com/articles/artex-agentic-attacks-aws-environments/) (2026-11-09) · _latest_
+- [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) (2026-10-29) · _latest_
+- [raml-kql runs one KQL query across workspaces without a Defender multi-tenant org](https://github.com/luca-ramseyer/raml-kql) (2026-10-22) · _latest_
+- [Datadog publishes GitHub audit-log hunting queries for stolen tokens and bulk clones](https://securitylabs.datadoghq.com/articles/mapping-out-your-unknown-threat-hunters-guide-to-github) (2026-09-24)
+
+### 🔺 rising memory-safety  ·  7 findings (4 recent vs 0.5 expected) · 6 sources
+_First seen 2026-04 · latest 2026-11-10._
+
+- [Google patches its eighth exploited Chrome zero-day of 2026](https://www.theregister.com/security/2026/11/10/chrome-zero-day-whack-a-mole-continues-as-2026-tally-hits-8/5308732) (2026-11-10) · _latest_
+- [Microsoft FORGE Lab finds soundness bugs in Rust's standard library](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/) (2026-11-09) · _latest_
+- [Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](https://www.anthropic.com/research/formal-verification) (2026-10-22) · _latest_
+- [Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://www.wiz.io/blog/php2shell-php-rce) (2026-10-21) · _latest_
+- [F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/) (2026-09-23)
+- [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
 
 ### 🔺 rising python  ·  8 findings (4 recent vs 0.7 expected) · 7 sources
 _First seen 2026-08-31 · latest 2026-10-27._
@@ -1559,6 +1641,16 @@ _First seen 2026-07-20 · latest 2026-11-03._
 - [CISA adds a 2016 Apache Struts DMI command injection bug to KEV](https://nvd.nist.gov/vuln/detail/CVE-2016-3081) (2026-10-08)
 - [Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/) (2026-09-28)
 
+### 🔺 rising threat-intel  ·  9 findings (4 recent vs 0.9 expected) · 7 sources
+_First seen 2026-07-15 · latest 2026-11-11._
+
+- [Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/) (2026-11-11) · _latest_
+- [Check Point weekly digest covers cPGuard supply-chain attack and ARTEX campaigns](https://research.checkpoint.com/2026/9th-november-threat-intelligence-report/) (2026-11-09) · _latest_
+- [Check Point digest: PHP2Shell attempts reportedly rose from thousands to millions](https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/) (2026-10-26) · _latest_
+- [Wired: AWS logged PHP2Shell exploitation attempts days before the patch](https://www.wired.com/story/hackers-exploited-the-php-vulnerabilities-days-before-they-were-patched/) (2026-10-22) · _latest_
+- [Cisco Talos says lab-agent attacks are loud now but will get quieter](https://blog.talosintelligence.com/one-breach-please-and-make-no-mistakes/) (2026-10-07)
+- [Unit 42: threat actors use Web3 infrastructure to breach cloud environments](https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/) (2026-10-07)
+
 ### 🔺 rising agents  ·  3 findings (3 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-29 · latest 2026-11-09._
 
@@ -1572,6 +1664,13 @@ _First seen 2026-10-19 · latest 2026-11-09._
 - [Google DeepMind's AI agents cut the cost of attacking 1024-bit RSA](https://www.securityweek.com/google-deepminds-ai-agents-make-1024-bit-rsa-keys-cheaper-to-attack/) (2026-11-09) · _latest_
 - [Kat Traxler used AI and security principles to find cloud design flaws](https://github.com/KatTraxler/presentations/tree/main/security-constitution) (2026-10-29) · _latest_
 - [pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape) (2026-10-19) · _latest_
+
+### 🔺 rising ai-vulnerability-research  ·  3 findings (3 recent vs 0.0 expected) · 3 sources
+_First seen 2026-10-27 · latest 2026-11-09._
+
+- [Microsoft FORGE Lab finds soundness bugs in Rust's standard library](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/) (2026-11-09) · _latest_
+- [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) (2026-11-05) · _latest_
+- [Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude) (2026-10-27) · _latest_
 
 ### 🔺 rising anti-forensics  ·  3 findings (3 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-15 · latest 2026-10-28._
@@ -1601,13 +1700,6 @@ _First seen 2026-10-22 · latest 2026-10-22._
 - [Next.js has unauthenticated RCE in use cache functions returning typed arrays](https://github.com/advisories/GHSA-673q-mjm6-r5xr) (2026-10-22) · _latest_
 - [Next.js Image Optimization has unauthenticated RCE via SVG through sharp](https://github.com/advisories/GHSA-2464-fhr4-w9xw) (2026-10-22) · _latest_
 
-### 🔺 rising vendor-marketing  ·  3 findings (3 recent vs 0.0 expected) · 3 sources
-_First seen 2026-10-21 · latest 2026-11-03._
-
-- [Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://www.wiz.io/blog/green-agent-agentic-remediation) (2026-11-03) · _latest_
-- [MagicSword markets automatic application-control policies built from LOLDrivers research](https://www.magicsword.io/application-control) (2026-10-29) · _latest_
-- [Cloudflare pairs Daybreak findings with live traffic to draft WAF rules](https://openai.com/index/cloudflare-cyber) (2026-10-21) · _latest_
-
 ### 🔺 rising vpn  ·  3 findings (3 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-28 · latest 2026-10-30._
 
@@ -1622,13 +1714,13 @@ _First seen 2026-10-20 · latest 2026-10-22._
 - [Cloudflare pairs Daybreak findings with live traffic to draft WAF rules](https://openai.com/index/cloudflare-cyber) (2026-10-21) · _latest_
 - [CISA KEV: SiteGuard Server Edition OS command injection exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-106931) (2026-10-20) · _latest_
 
-### 🔺 rising cloud  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
-_First seen 2026-10-07 · latest 2026-11-05._
+### 🔺 rising c2  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
+_First seen 2026-08-06 · latest 2026-11-11._
 
-- [Iris Plaza says a cloud breach exposed data on 7.7 million customers](https://cyberinsider.com/iris-plaza-cloud-breach-7-7-million-people/) (2026-11-05) · _latest_
-- [Kat Traxler used AI and security principles to find cloud design flaws](https://github.com/KatTraxler/presentations/tree/main/security-constitution) (2026-10-29) · _latest_
-- [CVM-Store paper protects confidential VM storage at near-raw disk speed](http://arxiv.org/abs/2610.34560v1) (2026-10-25) · _latest_
-- [Unit 42: threat actors use Web3 infrastructure to breach cloud environments](https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/) (2026-10-07)
+- [Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/) (2026-11-11) · _latest_
+- [SpecterOps announced Sage, an AI assistant for red teams inside Mythic](https://specterops.io/blog/2026/11/10/sage-ai-for-assumed-breach-operations-built-into-mythic/) (2026-11-10) · _latest_
+- [ESET: UAC-0099 used MythicRatatoskr with C2 inside Yggdrasil before Sandworm struck](https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html) (2026-10-23) · _latest_
+- [ChainDrop self-propagating npm worm mints valid Sigstore provenance, exfiltrates via Ethereum-routed C2](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) (2026-08-06)
 
 ### 🔺 rising infostealer  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
 _First seen 2026-10-02 · latest 2026-10-31._
@@ -1637,14 +1729,6 @@ _First seen 2026-10-02 · latest 2026-10-31._
 - [Check Point digest: PHP2Shell attempts reportedly rose from thousands to millions](https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/) (2026-10-26) · _latest_
 - [ANY.RUN ties 1,258 sandbox analyses to fake Claude, ChatGPT and Copilot](https://any.run/cybersecurity-blog/fake-ai-tools-us-companies/) (2026-10-14) · _latest_
 - [Hijacked coding assistant recommended a PyPI package that stole GitHub tokens](https://safedep.io/ai-coding-assistant-hijack-shai-hulud) (2026-10-02)
-
-### 🔺 rising mfa-bypass  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
-_First seen 2026-10-08 · latest 2026-11-06._
-
-- [SonicWall SonicOS SSLVPN flaw lets alternate credentials bypass SAML-enforced MFA](https://nvd.nist.gov/vuln/detail/CVE-2026-19868) (2026-11-06) · _latest_
-- [X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies](https://x.com/Dinosn/status/2116946099059511340) (2026-11-01) · _latest_
-- [Unit 42: ransomware groups try PAN-OS CVE-2026-0257 to bypass GlobalProtect MFA](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/) (2026-10-20) · _latest_
-- [UAT-11985 lured Taiwan researchers with likely AI-templated invitations and live MFA relay](https://blog.talosintelligence.com/uat-11985/) (2026-10-08)
 
 ### 🔺 rising red-teaming  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
 _First seen 2026-08-05 · latest 2026-11-10._
@@ -1661,14 +1745,6 @@ _First seen 2026-09-14 · latest 2026-10-31._
 - [Adobe patches eight critical flaws in Campaign Classic](https://thehackernews.com/2026/10/adobe-fixes-8-critical-campaign-classic.html) (2026-10-28) · _latest_
 - [Arista VeloCloud Orchestrator SQL injection (CVE-2026-114625) is exploited in the wild](https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199) (2026-10-22) · _latest_
 - [Cisco Secure Email Gateway SQL injection reaches root command execution](https://nvd.nist.gov/vuln/detail/CVE-2026-76461) (2026-09-14)
-
-### 🔺 rising threat-hunting  ·  4 findings (3 recent vs 0.2 expected) · 3 sources
-_First seen 2026-09-24 · latest 2026-11-09._
-
-- [Datadog traces the ARTEX agentic attack framework inside real AWS accounts](https://securitylabs.datadoghq.com/articles/artex-agentic-attacks-aws-environments/) (2026-11-09) · _latest_
-- [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) (2026-10-29) · _latest_
-- [raml-kql runs one KQL query across workspaces without a Defender multi-tenant org](https://github.com/luca-ramseyer/raml-kql) (2026-10-22) · _latest_
-- [Datadog publishes GitHub audit-log hunting queries for stolen tokens and bulk clones](https://securitylabs.datadoghq.com/articles/mapping-out-your-unknown-threat-hunters-guide-to-github) (2026-09-24)
 
 ### 🔺 rising vulnerability-management  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
 _First seen 2026-10-08 · latest 2026-11-03._
@@ -1722,6 +1798,15 @@ _First seen 2026-07-24 · latest 2026-11-10._
 - [morgan's log-forging fix missed Unicode line-separator code points](https://github.com/advisories/GHSA-jxfw-x594-9x9m) (2026-09-08)
 - [Shescape shell-injection via unescaped CMD parentheses (GHSA-w4hw-qcx7-56pr) — one of four per-shell bypasses](https://github.com/advisories/GHSA-w4hw-qcx7-56pr) (2026-07-24)
 
+### 🔺 rising persistence  ·  5 findings (3 recent vs 0.3 expected) · 4 sources
+_First seen 2026-07-20 · latest 2026-11-11._
+
+- [Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/) (2026-11-11) · _latest_
+- [Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/) (2026-10-31) · _latest_
+- [KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html) (2026-10-29) · _latest_
+- [JFrog Artifactory auth bypass chain exploited in the wild leaves persistent backdoors](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201) (2026-09-10)
+- [Siemens Ruggedcom ROX II three-CVE chain yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/) (2026-07-20)
+
 ### 🔺 rising ransomware  ·  5 findings (3 recent vs 0.3 expected) · 5 sources
 _First seen 2026-07-09 · latest 2026-11-09._
 
@@ -1740,45 +1825,35 @@ _First seen 2026-08-04 · latest 2026-10-31._
 - [CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](https://arxiv.org/abs/2610.07557) (2026-10-06)
 - [Snyk Evo Agentic AppSec launches with autonomous remediation and package scanning](https://snyk.io/blog/remediation-agent-malicious-code-defense/) (2026-08-04)
 
-### 🔺 rising aws  ·  6 findings (3 recent vs 0.5 expected) · 6 sources
-_First seen 2026-08-05 · latest 2026-11-10._
+### 🔺 rising coding-agents  ·  6 findings (3 recent vs 0.5 expected) · 6 sources
+_First seen 2026-07-14 · latest 2026-11-12._
 
-- [Compromised Qubole credentials let attackers raid over a dozen customer cloud accounts](https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack/) (2026-11-10) · _latest_
-- [Datadog traces the ARTEX agentic attack framework inside real AWS accounts](https://securitylabs.datadoghq.com/articles/artex-agentic-attacks-aws-environments/) (2026-11-09) · _latest_
+- [Engineer lists three AWS IAM anti-patterns coding agents keep writing](https://engseclabs.com/blog/things-llms-get-wrong-about-aws-iam) (2026-11-12) · _latest_
+- [Semgrep Guardian adds an adversarial reviewer and blocks risky lockfile changes](https://semgrep.dev/blog/2026/semgrep-guardian-policies-ai-detection) (2026-11-12) · _latest_
+- [GitHub previews a package firewall that blocks risky npm installs](https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html) (2026-10-29) · _latest_
+- [CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](https://arxiv.org/abs/2610.07557) (2026-10-06)
+- [Snyk: SAST cannot see missing ownership checks in agent-written endpoints](https://snyk.io/blog/ai-coding-agents-broken-access-control/) (2026-10-01)
+- [38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428) (2026-07-14)
+
+### 🔺 rising privilege-escalation  ·  7 findings (3 recent vs 0.7 expected) · 4 sources
+_First seen 2026-07-20 · latest 2026-11-09._
+
+- [IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-123218) (2026-11-09) · _latest_
+- [Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://nvd.nist.gov/vuln/detail/CVE-2026-111357) (2026-10-30) · _latest_
 - [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
-- [Wiz Blue Agent traces a stolen GitHub token to hardcoded AWS keys](https://www.wiz.io/blog/blue-agent-data-exfiltration-investigation) (2026-09-29)
-- [AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub](https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/) (2026-09-21)
-- [A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/) (2026-08-05)
+- [CISA KEV: Zammad local privilege escalation to root exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-102490) (2026-10-02)
+- [plone.app.portlets TALES expression injection gives authenticated users RCE](https://github.com/advisories/GHSA-rr49-f9g6-c9r5) (2026-09-23)
+- [Acronis Backup plugins have insecure file permissions exploited for privilege escalation](https://nvd.nist.gov/vuln/detail/CVE-2026-87886) (2026-09-16)
 
-### 🔺 rising memory-safety  ·  6 findings (3 recent vs 0.5 expected) · 5 sources
-_First seen 2026-04 · latest 2026-11-10._
+### 🔺 rising github-actions  ·  9 findings (3 recent vs 1.0 expected) · 7 sources
+_First seen 2026-07-16 · latest 2026-11-12._
 
-- [Google patches its eighth exploited Chrome zero-day of 2026](https://www.theregister.com/security/2026/11/10/chrome-zero-day-whack-a-mole-continues-as-2026-tally-hits-8/5308732) (2026-11-10) · _latest_
-- [Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](https://www.anthropic.com/research/formal-verification) (2026-10-22) · _latest_
-- [Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://www.wiz.io/blog/php2shell-php-rce) (2026-10-21) · _latest_
-- [F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/) (2026-09-23)
-- [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
-- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
-
-### 🔺 rising credential-theft  ·  8 findings (3 recent vs 0.9 expected) · 6 sources
-_First seen 2026-09-23 · latest 2026-11-10._
-
-- [Attackers used AhsayCBS zero-days to plant a host-locked Python backdoor](https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html) (2026-11-10) · _latest_
+- [SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer) (2026-11-12) · _latest_
+- [Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise) (2026-11-09) · _latest_
 - [Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) (2026-10-26) · _latest_
-- [Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/) (2026-10-15) · _latest_
-- [tensorlake@0.5.144 npm worm spread from a hijacked admin account](https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud) (2026-10-08)
 - [@subql/common@5.8.3 npm package carried a backdoor that runs on install](https://www.stepsecurity.io/blog/subql-ecosystem-compromised) (2026-10-05)
-- [Hijacked coding assistant recommended a PyPI package that stole GitHub tokens](https://safedep.io/ai-coding-assistant-hijack-shai-hulud) (2026-10-02)
-
-### 🔺 rising threat-intel  ·  8 findings (3 recent vs 0.9 expected) · 6 sources
-_First seen 2026-07-15 · latest 2026-11-09._
-
-- [Check Point weekly digest covers cPGuard supply-chain attack and ARTEX campaigns](https://research.checkpoint.com/2026/9th-november-threat-intelligence-report/) (2026-11-09) · _latest_
-- [Check Point digest: PHP2Shell attempts reportedly rose from thousands to millions](https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/) (2026-10-26) · _latest_
-- [Wired: AWS logged PHP2Shell exploitation attempts days before the patch](https://www.wired.com/story/hackers-exploited-the-php-vulnerabilities-days-before-they-were-patched/) (2026-10-22) · _latest_
-- [Cisco Talos says lab-agent attacks are loud now but will get quieter](https://blog.talosintelligence.com/one-breach-please-and-make-no-mistakes/) (2026-10-07)
-- [Unit 42: threat actors use Web3 infrastructure to breach cloud environments](https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks/) (2026-10-07)
-- [Snyk: the system creating a change must not be its only validator](https://snyk.io/blog/ai-hurricane-is-here/) (2026-09-15)
+- [Mini Shai-Hulud still spreads four months on via hijacked actions-cool/issues-helper tags](https://safedep.io/mini-shai-hulud-reinfection-github-repositories) (2026-09-24)
+- [MemTensor packages shipped the 'sckit' Go worm after stolen publish tokens](https://safedep.io/memtensor-sckit-worm-npm-pypi) (2026-09-23)
 
 ### 🔺 rising agentic-ai  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-21 · latest 2026-10-21._
@@ -1786,17 +1861,17 @@ _First seen 2026-10-21 · latest 2026-10-21._
 - [Microsoft says Storm-0940 used the ARTEX pentest framework against 2,250+ tenants](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/) (2026-10-21) · _latest_
 - [CrowdStrike: four newly seen actors ran agentic Claude Code intrusions](https://www.crowdstrike.com/en-us/blog/crowdstrike-uncovers-new-agentic-ai-campaigns/) (2026-10-21) · _latest_
 
+### 🔺 rising agentic-remediation  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-03 · latest 2026-11-10._
+
+- [OpenAI customer story pitches Cogent's agents for autonomous vulnerability remediation](https://openai.com/index/cogent-security) (2026-11-10) · _latest_
+- [Wiz markets Green Agent as removing cross-team bottlenecks in cloud remediation](https://www.wiz.io/blog/green-agent-agentic-remediation) (2026-11-03) · _latest_
+
 ### 🔺 rising ai-assisted-exploitation  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-21 · latest 2026-10-22._
 
 - [With ChatGPT, ITRES rebuilt two BruCON techniques whose source was never released](https://labs.itresit.es/2026/10/15/copycats-at-machine-speed-reproducing-frontier-windows-kernel-exploitation-research/) (2026-10-22) · _latest_
 - [Wiz turned PHP memory bugs into unauthenticated RCE on WordPress using AI](https://www.wiz.io/blog/php2shell-php-rce) (2026-10-21) · _latest_
-
-### 🔺 rising ai-vulnerability-research  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
-_First seen 2026-10-27 · latest 2026-11-05._
-
-- [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) (2026-11-05) · _latest_
-- [Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude) (2026-10-27) · _latest_
 
 ### 🔺 rising apt29  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-11-04 · latest 2026-11-05._
@@ -1870,6 +1945,24 @@ _First seen 2026-10-30 · latest 2026-10-31._
 - [Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/) (2026-10-31) · _latest_
 - [Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://phorion.io/blog/offical-claude-code-vsx-compromise/) (2026-10-30) · _latest_
 
+### 🔺 rising linux  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-10-15 · latest 2026-11-11._
+
+- [Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/) (2026-11-11) · _latest_
+- [Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/) (2026-10-15) · _latest_
+
+### 🔺 rising living-off-the-land  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-09 · latest 2026-11-11._
+
+- [Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/) (2026-11-11) · _latest_
+- [Bitter espionage group deploys new PapRAT backdoor against South Asian targets](https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html) (2026-11-09) · _latest_
+
+### 🔺 rising memory-corruption  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-10 · latest 2026-11-11._
+
+- [Apache HTTP Server HTTP/2 race condition allows unauthenticated remote code execution](https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability) (2026-11-11) · _latest_
+- [SAP fixes four maximum-severity unauthenticated takeover flaws](https://www.bleepingcomputer.com/news/security/sap-patches-four-maximum-severity-security-vulnerabilities/) (2026-11-10) · _latest_
+
 ### 🔺 rising network-appliances  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-28 · latest 2026-11-05._
 
@@ -1899,6 +1992,12 @@ _First seen 2026-11-03 · latest 2026-11-10._
 
 - [Antithesis engineer Sean Allen says supply chain attacks have no simple fix](https://newsletter.pragmaticengineer.com/p/software-correctness) (2026-11-10) · _latest_
 - [Microsoft Research podcast profiles Cyber Grand Challenge lead Mike Walker](https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/) (2026-11-03) · _latest_
+
+### 🔺 rising postinstall  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-09 · latest 2026-11-12._
+
+- [SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer) (2026-11-12) · _latest_
+- [Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise) (2026-11-09) · _latest_
 
 ### 🔺 rising privacy  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-25 · latest 2026-10-30._
@@ -1942,6 +2041,12 @@ _First seen 2026-11-05 · latest 2026-11-06._
 - [SonicWall SonicOS SSLVPN flaw lets alternate credentials bypass SAML-enforced MFA](https://nvd.nist.gov/vuln/detail/CVE-2026-19868) (2026-11-06) · _latest_
 - [SonicWall says it will not fix two flaws in end-of-life GMS](https://www.securityweek.com/cisco-watchguard-release-patches-sonicwall-wont-fix-gms-flaws/) (2026-11-05) · _latest_
 
+### 🔺 rising spoofing  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-04 · latest 2026-11-10._
+
+- [Microsoft Outlook spoofing flaw that skips unsafe-action warnings is exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-124194) (2026-11-10) · _latest_
+- [SenTrojan researchers hid analog hardware Trojans in sensors triggered by physical signals](http://arxiv.org/abs/2611.06103v1) (2026-11-04) · _latest_
+
 ### 🔺 rising sql  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-31 · latest 2026-11-10._
 
@@ -1966,11 +2071,23 @@ _First seen 2026-10-23 · latest 2026-11-10._
 - [Russian hackers reportedly use stealthy Exchange malware against government email](https://cyberinsider.com/russian-hackers-cereal-malware-microsoft-exchange-attacks/) (2026-11-10) · _latest_
 - [Aikido claims an 'http2shell' RCE in Node and Python; no details captured](https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8) (2026-10-23) · _latest_
 
+### 🔺 rising use-after-free  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-10 · latest 2026-11-11._
+
+- [Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/) (2026-11-11) · _latest_
+- [Google patches its eighth exploited Chrome zero-day of 2026](https://www.theregister.com/security/2026/11/10/chrome-zero-day-whack-a-mole-continues-as-2026-tally-hits-8/5308732) (2026-11-10) · _latest_
+
 ### 🔺 rising web-shell  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-15 · latest 2026-11-10._
 
 - [Attackers used AhsayCBS zero-days to plant a host-locked Python backdoor](https://thehackernews.com/2026/11/attackers-exploit-ahsaycbs-flaws-to.html) (2026-11-10) · _latest_
 - [Unit 42: CL-UNK-1211 hit government Linux servers with LLM-written payloads](https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/) (2026-10-15) · _latest_
+
+### 🔺 rising webshell  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-02 · latest 2026-11-11._
+
+- [Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/) (2026-11-11) · _latest_
+- [Imperva tracks StyleSmuggler Magento exploitation dropping the PSK Agent Go RAT](https://www.imperva.com/blog/stylesmuggler-exploitation-deploys-psk-agent-rat-against-magento-stores/) (2026-11-02) · _latest_
 
 ### 🔺 rising wordpress  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-21 · latest 2026-10-26._
@@ -1985,12 +2102,12 @@ _First seen 2026-09-24 · latest 2026-11-02._
 - [Exploited Adobe Commerce and Magento upload flaw can lead to code execution](https://nvd.nist.gov/vuln/detail/CVE-2026-48356) (2026-10-27) · _latest_
 - [Adobe Commerce and Magento flaw gives elevated access without user interaction](https://nvd.nist.gov/vuln/detail/CVE-2026-71362) (2026-09-24)
 
-### 🔺 rising c2  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
-_First seen 2026-08-06 · latest 2026-11-10._
+### 🔺 rising authorization-bypass  ·  3 findings (2 recent vs 0.2 expected) · 2 sources
+_First seen 2026-09-24 · latest 2026-11-09._
 
-- [SpecterOps announced Sage, an AI assistant for red teams inside Mythic](https://specterops.io/blog/2026/11/10/sage-ai-for-assumed-breach-operations-built-into-mythic/) (2026-11-10) · _latest_
-- [ESET: UAC-0099 used MythicRatatoskr with C2 inside Yggdrasil before Sandworm struck](https://thehackernews.com/2026/10/russian-linked-hackers-used-new-mesh.html) (2026-10-23) · _latest_
-- [ChainDrop self-propagating npm worm mints valid Sigstore provenance, exfiltrates via Ethereum-routed C2](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) (2026-08-06)
+- [IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-123218) (2026-11-09) · _latest_
+- [Sentry's tunnelRoute skipped middleware for the whole tunnel path, not just rewrites](https://github.com/advisories/GHSA-mchm-gjx6-7h55) (2026-10-22) · _latest_
+- [Adobe Commerce and Magento flaw gives elevated access without user interaction](https://nvd.nist.gov/vuln/detail/CVE-2026-71362) (2026-09-24)
 
 ### 🔺 rising cursor  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
 _First seen 2026-09-11 · latest 2026-10-31._
@@ -2034,6 +2151,13 @@ _First seen 2026-09-10 · latest 2026-10-28._
 - [GitLab patches CVE-2026-110264, a CVSS 10.0 unauthenticated RCE in the regex compiler](https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/) (2026-10-21) · _latest_
 - [Wiz poster maps incident response logs for GitHub, GitLab and Bitbucket](https://www.wiz.io/blog/vcs-dfir-threat-hunting-github-gitlab-azure-devops) (2026-09-10)
 
+### 🔺 rising iam  ·  3 findings (2 recent vs 0.2 expected) · 2 sources
+_First seen 2026-09-21 · latest 2026-11-12._
+
+- [Engineer lists three AWS IAM anti-patterns coding agents keep writing](https://engseclabs.com/blog/things-llms-get-wrong-about-aws-iam) (2026-11-12) · _latest_
+- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
+- [AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub](https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/) (2026-09-21)
+
 ### 🔺 rising magento  ·  3 findings (2 recent vs 0.2 expected) · 2 sources
 _First seen 2026-09-24 · latest 2026-11-02._
 
@@ -2055,12 +2179,33 @@ _First seen 2026-06-29 · latest 2026-11-05._
 - [CISA adds 2024 Apple pointer authentication bypass to exploited catalog](https://nvd.nist.gov/vuln/detail/CVE-2024-27834) (2026-11-04) · _latest_
 - [Kemp LoadMaster pre-auth RCE: uninitialized heap + missing null byte (CVE-2026-8037)](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) (2026-06-29)
 
+### 🔺 rising pre-auth  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
+_First seen 2026-10-06 · latest 2026-11-11._
+
+- [Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/) (2026-11-11) · _latest_
+- [Claude found 493 attack-surface issues across 25 open-source projects](https://www.anthropic.com/research/attack-surface-reduction) (2026-10-20) · _latest_
+- [Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/) (2026-10-06)
+
 ### 🔺 rising secrets  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
 _First seen 2026-07-14 · latest 2026-10-30._
 
 - [VibeRaven checks AI-built Supabase apps for missing row-level security](https://github.com/ohad6k/VibeRaven) (2026-10-30) · _latest_
 - [Railway says encrypted environment variables may have been accessed](https://blog.railway.com/p/security-disclosure-wednesday-october-21st) (2026-10-21) · _latest_
 - [38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428) (2026-07-14)
+
+### 🔺 rising side-channel  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
+_First seen 2026-09-06 · latest 2026-11-12._
+
+- [Google Cloud says Advanced Micro Devices (AMD) Turin VMs need guest patches](https://thehackernews.com/2026/11/google-cloud-warns-three-amd-turin-cpu.html) (2026-11-12) · _latest_
+- [A client's 1-bit reply leaks the full CKKS secret key](http://arxiv.org/abs/2610.21127v1) (2026-10-15) · _latest_
+- [Consumer smart glasses enable a video-based password-cracking pipeline](http://arxiv.org/abs/2609.06539v1) (2026-09-06)
+
+### 🔺 rising vendor-announcement  ·  3 findings (2 recent vs 0.2 expected) · 2 sources
+_First seen 2026-09-24 · latest 2026-11-12._
+
+- [Semgrep Guardian adds an adversarial reviewer and blocks risky lockfile changes](https://semgrep.dev/blog/2026/semgrep-guardian-policies-ai-detection) (2026-11-12) · _latest_
+- [Wiz says it is not yet listed on Japan's government cloud registry](https://www.wiz.io/blog/wiz-and-ismap-for-japan-public-sector) (2026-11-10) · _latest_
+- [Semgrep adds incident-specific rescans and automated response playbooks for compromised-package events](https://semgrep.dev/blog/2026/introducing-malware-detection-and-response-automation) (2026-09-24)
 
 ### 🔺 rising agent-harness  ·  4 findings (2 recent vs 0.3 expected) · 3 sources
 _First seen 2026-08-05 · latest 2026-11-09._
@@ -2086,13 +2231,13 @@ _First seen 2026-08-05 · latest 2026-11-03._
 - [CISA KEV: Apple CoreGraphics out-of-bounds write exploited in targeted attacks](https://nvd.nist.gov/vuln/detail/CVE-2026-86950) (2026-09-29)
 - [macOS ClickFix campaign now cloaks its payload behind browser-fingerprinting gates](https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/) (2026-08-05)
 
-### 🔺 rising persistence  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
-_First seen 2026-07-20 · latest 2026-10-31._
+### 🔺 rising malware  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
+_First seen 2026-07-09 · latest 2026-11-12._
 
-- [Microsoft dissects the SSH backdoor in a trojanized Claude Code extension](https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/) (2026-10-31) · _latest_
-- [KeyDrift malware steals Cisco SD-WAN encryption keys from hacked controllers](https://thehackernews.com/2026/10/hackers-exploited-cisco-sd-wan-flaw-to.html) (2026-10-29) · _latest_
-- [JFrog Artifactory auth bypass chain exploited in the wild leaves persistent backdoors](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201) (2026-09-10)
-- [Siemens Ruggedcom ROX II three-CVE chain yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/) (2026-07-20)
+- [ScreenConnect RMM+ extension flaw may have let attackers bypass MFA](https://www.theregister.com/security/2026/11/12/hackers-exploiting-screenconnect-plugin-flaw-to-spread-malware-across-hundreds-of-pcs/5309361) (2026-11-12) · _latest_
+- [Check Point: fake ChatGPT and Claude apps sideload malware via signed installers](https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/) (2026-10-27) · _latest_
+- [LLM-assisted IoT botnet TuxBot v3 left the model's safety disclaimer in source](https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/) (2026-07-15)
+- [GigaWiper: modular destructive malware that fakes ransomware](https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/) (2026-07-09)
 
 ### 🔺 rising sandbox-escape  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
 _First seen 2026-07-09 · latest 2026-11-10._
@@ -2111,15 +2256,14 @@ _First seen 2026-07-27 · latest 2026-11-06._
 - [Show, Don't Tell: Evo found issues in a real enterprise SaaS](https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/) (2026-08-10)
 - [What Is AI Pentesting and How Does It Work?](https://snyk.io/blog/what-is-ai-pentesting/) (2026-07-27)
 
-### 🔺 rising privilege-escalation  ·  6 findings (2 recent vs 0.7 expected) · 4 sources
-_First seen 2026-07-20 · latest 2026-10-30._
+### 🔺 rising phishing  ·  5 findings (2 recent vs 0.5 expected) · 5 sources
+_First seen 2026-06-30 · latest 2026-11-10._
 
-- [Ivanti Connect Secure chain to root is exploited, CISA adds two CVEs](https://nvd.nist.gov/vuln/detail/CVE-2026-111357) (2026-10-30) · _latest_
-- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
-- [CISA KEV: Zammad local privilege escalation to root exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-102490) (2026-10-02)
-- [plone.app.portlets TALES expression injection gives authenticated users RCE](https://github.com/advisories/GHSA-rr49-f9g6-c9r5) (2026-09-23)
-- [Acronis Backup plugins have insecure file permissions exploited for privilege escalation](https://nvd.nist.gov/vuln/detail/CVE-2026-87886) (2026-09-16)
-- [Siemens Ruggedcom ROX II three-CVE chain yields persistent root on OT switches](https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/) (2026-07-20)
+- [Microsoft Outlook spoofing flaw that skips unsafe-action warnings is exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-124194) (2026-11-10) · _latest_
+- [X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies](https://x.com/Dinosn/status/2116946099059511340) (2026-11-01) · _latest_
+- [UAT-11985 lured Taiwan researchers with likely AI-templated invitations and live MFA relay](https://blog.talosintelligence.com/uat-11985/) (2026-10-08)
+- [Four stacked evasion techniques hide device-code phishing from scanners](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt) (2026-07-24)
+- [Phantom Squatting: attackers register the domains LLMs hallucinate](https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/) (2026-06-30)
 
 ### 🔺 rising xss  ·  6 findings (2 recent vs 0.7 expected) · 6 sources
 _First seen 2026-08-25 · latest 2026-10-28._
@@ -2130,16 +2274,6 @@ _First seen 2026-08-25 · latest 2026-10-28._
 - [Google PageBreak finds 500+ XSS bugs with near-zero false positives](https://blog.google/security/agentic-hacks-real-proofs-inside-googles-pagebreak-project) (2026-10-01)
 - [SourceHut account takeover via OSC 8 hyperlink XSS in rendered build logs](https://blog.arusekk.pl/posts/srht-account-takeover/) (2026-09-24)
 - [What's in a tag name? JavaScript, apparently](https://portswigger.net/research) (2026-08-25)
-
-### 🔺 rising github-actions  ·  8 findings (2 recent vs 1.0 expected) · 7 sources
-_First seen 2026-07-16 · latest 2026-11-09._
-
-- [Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise) (2026-11-09) · _latest_
-- [Wiz: Gheist used stolen GitHub tokens to dump secrets through Actions logs](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) (2026-10-26) · _latest_
-- [@subql/common@5.8.3 npm package carried a backdoor that runs on install](https://www.stepsecurity.io/blog/subql-ecosystem-compromised) (2026-10-05)
-- [Mini Shai-Hulud still spreads four months on via hijacked actions-cool/issues-helper tags](https://safedep.io/mini-shai-hulud-reinfection-github-repositories) (2026-09-24)
-- [MemTensor packages shipped the 'sckit' Go worm after stolen publish tokens](https://safedep.io/memtensor-sckit-worm-npm-pypi) (2026-09-23)
-- [Org-wide GitHub Actions SHA-pinning enforcement has non-obvious failure modes](https://semgrep.dev/blog/2026/sha-pinning-for-github-actions-org-wide) (2026-08-12)
 
 ### 🔺 rising npm  ·  15 findings (3 recent vs 2.1 expected) · 11 sources
 _First seen 2026-07-15 · latest 2026-11-09._
@@ -2200,12 +2334,12 @@ _First seen 2026-08-14 · latest 2026-11-10._
 - [F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/) (2026-09-23)
 - [Citrix NetScaler heap overflow CVE-2026-8452 traced to an unchecked buffer copy](https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/) (2026-08-14)
 
-### ▪️ steady coding-agents  ·  4 findings (1 recent vs 0.5 expected) · 4 sources
-_First seen 2026-07-14 · latest 2026-10-29._
+### ▪️ steady ai-generated-code  ·  4 findings (1 recent vs 0.5 expected) · 3 sources
+_First seen 2026-07-14 · latest 2026-11-12._
 
-- [GitHub previews a package firewall that blocks risky npm installs](https://thehackernews.com/2026/10/github-launches-npm-firewall-to-block.html) (2026-10-29) · _latest_
-- [CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](https://arxiv.org/abs/2610.07557) (2026-10-06)
+- [Engineer lists three AWS IAM anti-patterns coding agents keep writing](https://engseclabs.com/blog/things-llms-get-wrong-about-aws-iam) (2026-11-12) · _latest_
 - [Snyk: SAST cannot see missing ownership checks in agent-written endpoints](https://snyk.io/blog/ai-coding-agents-broken-access-control/) (2026-10-01)
+- [Snyk: the system creating a change must not be its only validator](https://snyk.io/blog/ai-hurricane-is-here/) (2026-09-15)
 - [38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428) (2026-07-14)
 
 ### ▪️ steady go  ·  4 findings (1 recent vs 0.5 expected) · 4 sources
@@ -2240,14 +2374,6 @@ _First seen 2026-09-23 · latest 2026-10-22._
 - [watchTowr turns Citrix NetScaler DTLS overflow (CVE-2026-88772) into RCE](https://labs.watchtowr.com/here-we-go-again-citrix-netscaler-dtls-preauth-memory-overflow-cve-2026-88772/) (2026-09-29)
 - [F5 BIG-IP APM pre-auth heap overflow RCE (CVE-2026-94127) is exploited](https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/) (2026-09-23)
 
-### ▪️ steady phishing  ·  4 findings (1 recent vs 0.5 expected) · 4 sources
-_First seen 2026-06-30 · latest 2026-11-01._
-
-- [X post claims Mirage2FA stole 4,561 Microsoft 365 session cookies](https://x.com/Dinosn/status/2116946099059511340) (2026-11-01) · _latest_
-- [UAT-11985 lured Taiwan researchers with likely AI-templated invitations and live MFA relay](https://blog.talosintelligence.com/uat-11985/) (2026-10-08)
-- [Four stacked evasion techniques hide device-code phishing from scanners](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-07-23-Device-code-phishing-evasion-techniques.txt) (2026-07-24)
-- [Phantom Squatting: attackers register the domains LLMs hallucinate](https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/) (2026-06-30)
-
 ### ▪️ steady pypi  ·  4 findings (1 recent vs 0.5 expected) · 2 sources
 _First seen 2026-08-04 · latest 2026-11-10._
 
@@ -2263,6 +2389,14 @@ _First seen 2026-02-05 · latest 2026-11-04._
 - [Turbo Intruder adds an HTTP/3 engine and HTTP/3 race-condition techniques](https://portswigger.net/research/http3-in-burp-suite) (2026-09-23)
 - [CRLF header injection escalates to CDN-wide response queue poisoning](https://portswigger.net/research/crlf-powered-desync-attacks) (2026-08-05)
 - [PortSwigger's Top 10 Web Hacking Techniques of 2025](https://portswigger.net/research/top-10-web-hacking-techniques-of-2025) (2026-02-05)
+
+### ▪️ steady sast  ·  4 findings (1 recent vs 0.5 expected) · 3 sources
+_First seen 2026-07-20 · latest 2026-11-12._
+
+- [Semgrep Guardian adds an adversarial reviewer and blocks risky lockfile changes](https://semgrep.dev/blog/2026/semgrep-guardian-policies-ai-detection) (2026-11-12) · _latest_
+- [CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](https://arxiv.org/abs/2610.07557) (2026-10-06)
+- [Introducing Semgrep Agentic Workflows: Automate Deep Vulnerability Hunting at Scale](https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale) (2026-07-28)
+- [A working taxonomy of open-source AI code-security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (2026-07-20)
 
 ### ▪️ steady ai-agents  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
 _First seen 2026-08-26 · latest 2026-10-20._
@@ -2306,6 +2440,13 @@ _First seen 2026-09-24 · latest 2026-11-03._
 - [tensorlake@0.5.144 npm worm spread from a hijacked admin account](https://safedep.io/tensorlake-npm-compromise-mini-shai-hulud) (2026-10-08)
 - [Mini Shai-Hulud still spreads four months on via hijacked actions-cool/issues-helper tags](https://safedep.io/mini-shai-hulud-reinfection-github-repositories) (2026-09-24)
 
+### ▪️ steady code-review  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
+_First seen 2026-07-14 · latest 2026-11-12._
+
+- [Engineer lists three AWS IAM anti-patterns coding agents keep writing](https://engseclabs.com/blog/things-llms-get-wrong-about-aws-iam) (2026-11-12) · _latest_
+- [Cryptographic advisories are dominated by skipped code checks, not broken math](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not) (2026-07-30)
+- [38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428) (2026-07-14)
+
 ### ▪️ steady edge-appliance  ·  3 findings (1 recent vs 0.3 expected) · 2 sources
 _First seen 2026-06-29 · latest 2026-10-15._
 
@@ -2327,19 +2468,26 @@ _First seen 2026-08-26 · latest 2026-10-27._
 - [Datadog: 3,500+ RBAC bindings give dangerous permissions to groups like system:unauthenticated](https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/) (2026-10-05)
 - [VMs won't contain cyber-capable agents](https://blog.trailofbits.com/) (2026-08-26)
 
-### ▪️ steady malware  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
-_First seen 2026-07-09 · latest 2026-10-27._
-
-- [Check Point: fake ChatGPT and Claude apps sideload malware via signed installers](https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/) (2026-10-27) · _latest_
-- [LLM-assisted IoT botnet TuxBot v3 left the model's safety disclaimer in source](https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/) (2026-07-15)
-- [GigaWiper: modular destructive malware that fakes ransomware](https://www.microsoft.com/en-us/security/blog/2026/07/09/gigawiper-anatomy-of-a-destructive-backdoor-assembled-from-multiple-malware/) (2026-07-09)
-
 ### ▪️ steady multi-tenant  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
 _First seen 2026-08-10 · latest 2026-10-22._
 
 - [raml-kql runs one KQL query across workspaces without a Defender multi-tenant org](https://github.com/luca-ramseyer/raml-kql) (2026-10-22) · _latest_
 - [Moquette MQTT broker clientId wildcard injection gives cross-tenant read/write](https://github.com/advisories/GHSA-5f42-97gr-vfhq) (2026-09-23)
 - [Show, Don't Tell: Evo found issues in a real enterprise SaaS](https://snyk.io/blog/what-evo-cos-found-real-enterprise-saas/) (2026-08-10)
+
+### ▪️ steady oidc  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
+_First seen 2026-08-04 · latest 2026-11-12._
+
+- [SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer) (2026-11-12) · _latest_
+- [ChainDrop npm worm targeted Claude Code configs and stole OIDC tokens](https://unit42.paloaltonetworks.com/sdlc-supply-chain/) (2026-08-21)
+- [ChainDrop supply chain compromise: Anatomy of a self-propagating worm](https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/) (2026-08-04)
+
+### ▪️ steady rust  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
+_First seen 2026-04 · latest 2026-11-09._
+
+- [Microsoft FORGE Lab finds soundness bugs in Rust's standard library](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/) (2026-11-09) · _latest_
+- [A Rust supply-chain compromise used Cargo's own yank warning to trick developers](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/) (2026-08-20)
+- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
 
 ### ▪️ steady trusted-publishing  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
 _First seen 2026-07-29 · latest 2026-11-09._
@@ -2385,12 +2533,6 @@ _First seen 2026-09-10 · latest 2026-11-03._
 - [Barracuda patches ESG auth bypass chaining to root command injection](https://www.bleepingcomputer.com/news/security/barracuda-warns-of-critical-flaws-allowing-root-access-to-devices/) (2026-11-03) · _latest_
 - [JFrog Artifactory auth bypass chain exploited in the wild leaves persistent backdoors](https://www.wiz.io/blog/artifactory-under-attack-in-the-wild-exploitation-of-cve-2026-42016-cve-2026-4201) (2026-09-10)
 
-### ▪️ steady authorization-bypass  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
-_First seen 2026-09-24 · latest 2026-10-22._
-
-- [Sentry's tunnelRoute skipped middleware for the whole tunnel path, not just rewrites](https://github.com/advisories/GHSA-mchm-gjx6-7h55) (2026-10-22) · _latest_
-- [Adobe Commerce and Magento flaw gives elevated access without user interaction](https://nvd.nist.gov/vuln/detail/CVE-2026-71362) (2026-09-24)
-
 ### ▪️ steady browser-security  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-07-25 · latest 2026-10-27._
 
@@ -2433,6 +2575,12 @@ _First seen 2026-07-27 · latest 2026-10-26._
 - [Akto README pitches open-source API security testing with a new AI-agent tagline](https://github.com/akto-api-security/akto) (2026-10-26) · _latest_
 - [What Is AI Pentesting and How Does It Work?](https://snyk.io/blog/what-is-ai-pentesting/) (2026-07-27)
 
+### ▪️ steady detection  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-07-15 · latest 2026-11-11._
+
+- [Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/) (2026-11-11) · _latest_
+- [LLM-assisted IoT botnet TuxBot v3 left the model's safety disclaimer in source](https://unit42.paloaltonetworks.com/tuxbot-v3-evolution-iot-botnet/) (2026-07-15)
+
 ### ▪️ steady ethereum-c2  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-08-04 · latest 2026-11-09._
 
@@ -2450,12 +2598,6 @@ _First seen 2026-06-30 · latest 2026-11-05._
 
 - [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) (2026-11-05) · _latest_
 - [Phantom Squatting: attackers register the domains LLMs hallucinate](https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/) (2026-06-30)
-
-### ▪️ steady iam  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
-_First seen 2026-09-21 · latest 2026-10-22._
-
-- [Datadog's pathrunner automates 80+ AWS IAM privilege-escalation paths for defenders](https://securitylabs.datadoghq.com/articles/introducing-pathrunner-aws-privilege-escalation-framework/) (2026-10-22) · _latest_
-- [AWS attached AWSCompromisedKeyQuarantineV3 within 10 seconds of a key pushed to GitHub](https://unit42.paloaltonetworks.com/detecting-exposed-aws-iam-credentials/) (2026-09-21)
 
 ### ▪️ steady image-processing  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-09-08 · latest 2026-10-22._
@@ -2529,23 +2671,17 @@ _First seen 2026-09-15 · latest 2026-10-27._
 - [Semgrep argues containment and recovery matter as much as prevention](https://semgrep.dev/blog/2026/cybersecurity-readiness-after-compromise) (2026-10-27) · _latest_
 - [Snyk: the system creating a change must not be its only validator](https://snyk.io/blog/ai-hurricane-is-here/) (2026-09-15)
 
-### ▪️ steady pre-auth  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
-_First seen 2026-10-06 · latest 2026-10-20._
+### ▪️ steady outlook  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-08-06 · latest 2026-11-10._
 
-- [Claude found 493 attack-surface issues across 25 open-source projects](https://www.anthropic.com/research/attack-surface-reduction) (2026-10-20) · _latest_
-- [Atlassian CVE-2026-21589 is a pre-auth file read in Data Center products](https://labs.watchtowr.com/you-wont-hear-about-these-even-in-myths-atlassian-jira-confluence-and-more-pre-auth-arbitrary-file-read-cve-2026-21589/) (2026-10-06)
+- [Microsoft Outlook spoofing flaw that skips unsafe-action warnings is exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-124194) (2026-11-10) · _latest_
+- [Sanitized webmail CSS steals tokens and keylogs Outlook](https://portswigger.net/research/css-the-bomb-inside-your-inbox) (2026-08-06)
 
 ### ▪️ steady saml  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-08-14 · latest 2026-11-06._
 
 - [SonicWall SonicOS SSLVPN flaw lets alternate credentials bypass SAML-enforced MFA](https://nvd.nist.gov/vuln/detail/CVE-2026-19868) (2026-11-06) · _latest_
 - [Citrix NetScaler heap overflow CVE-2026-8452 traced to an unchecked buffer copy](https://labs.watchtowr.com/youre-back-in-the-room-citrix-netscaler-pre-auth-rce-cve-2026-8452/) (2026-08-14)
-
-### ▪️ steady side-channel  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
-_First seen 2026-09-06 · latest 2026-10-15._
-
-- [A client's 1-bit reply leaks the full CKKS secret key](http://arxiv.org/abs/2610.21127v1) (2026-10-15) · _latest_
-- [Consumer smart glasses enable a video-based password-cracking pipeline](http://arxiv.org/abs/2609.06539v1) (2026-09-06)
 
 ### ▪️ steady spyware  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-07-28 · latest 2026-10-15._
@@ -2565,23 +2701,29 @@ _First seen 2026-10-06 · latest 2026-10-27._
 - [Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude) (2026-10-27) · _latest_
 - [CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](https://arxiv.org/abs/2610.07557) (2026-10-06)
 
-### ▪️ steady vendor-announcement  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
-_First seen 2026-09-24 · latest 2026-11-10._
-
-- [Wiz says it is not yet listed on Japan's government cloud registry](https://www.wiz.io/blog/wiz-and-ismap-for-japan-public-sector) (2026-11-10) · _latest_
-- [Semgrep adds incident-specific rescans and automated response playbooks for compromised-package events](https://semgrep.dev/blog/2026/introducing-malware-detection-and-response-automation) (2026-09-24)
-
 ### ▪️ steady vm-escape  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-08-26 · latest 2026-10-19._
 
 - [pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape) (2026-10-19) · _latest_
 - [VMs won't contain cyber-capable agents](https://blog.trailofbits.com/) (2026-08-26)
 
+### ▪️ steady vulnerability-remediation  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-08-17 · latest 2026-11-10._
+
+- [OpenAI customer story pitches Cogent's agents for autonomous vulnerability remediation](https://openai.com/index/cogent-security) (2026-11-10) · _latest_
+- [This Shit is Hard: Patching a vulnerability that has no fix](https://www.chainguard.dev/unchained/this-shit-is-hard-patching-a-vulnerability-that-has-no-fix) (2026-08-17)
+
 ### ▪️ steady waf-bypass  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-08-25 · latest 2026-10-28._
 
 - [Oracle PeopleSoft zero-day used by ShinyHunters was three chained flaws](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html) (2026-10-28) · _latest_
 - [What's in a tag name? JavaScript, apparently](https://portswigger.net/research) (2026-08-25)
+
+### ▪️ steady webmail  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-08-06 · latest 2026-11-10._
+
+- [Openwave Webtop Media Transcoder file-type restriction bypass is exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-111793) (2026-11-10) · _latest_
+- [Sanitized webmail CSS steals tokens and keylogs Outlook](https://portswigger.net/research/css-the-bomb-inside-your-inbox) (2026-08-06)
 
 ### ▫️ quiet worm  ·  5 findings (0 recent vs 0.9 expected) · 3 sources
 _First seen 2026-08-04 · latest 2026-10-08._
@@ -2591,13 +2733,6 @@ _First seen 2026-08-04 · latest 2026-10-08._
 - [MemTensor packages shipped the 'sckit' Go worm after stolen publish tokens](https://safedep.io/memtensor-sckit-worm-npm-pypi) (2026-09-23)
 - [ChainDrop self-propagating npm worm mints valid Sigstore provenance, exfiltrates via Ethereum-routed C2](https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/) (2026-08-06)
 - [keyv/cacheable Mini Shai-Hulud is a self-propagating worm with Ethereum-resolved C2](https://www.chainguard.dev/unchained/the-keyv-and-cacheable-npm-supply-chain-attack-inside-the-mini-shai-hulud-campaign) (2026-08-04)
-
-### ▫️ quiet ai-generated-code  ·  3 findings (0 recent vs 0.5 expected) · 2 sources
-_First seen 2026-07-14 · latest 2026-10-01._
-
-- [Snyk: SAST cannot see missing ownership checks in agent-written endpoints](https://snyk.io/blog/ai-coding-agents-broken-access-control/) (2026-10-01)
-- [Snyk: the system creating a change must not be its only validator](https://snyk.io/blog/ai-hurricane-is-here/) (2026-09-15)
-- [38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428) (2026-07-14)
 
 ### ▫️ quiet authorization  ·  3 findings (0 recent vs 0.5 expected) · 2 sources
 _First seen 2026-07-24 · latest 2026-09-23._
@@ -2634,13 +2769,6 @@ _First seen 2026-07-09 · latest 2026-10-02._
 - [Sanitized webmail CSS steals tokens and keylogs Outlook](https://portswigger.net/research/css-the-bomb-inside-your-inbox) (2026-08-06)
 - [Wiz 'GhostApproval': git symlinks let AI coding assistants write outside the workspace](https://snyk.io/blog/symlinks-are-still-scary/) (2026-07-09)
 
-### ▫️ quiet sast  ·  3 findings (0 recent vs 0.5 expected) · 3 sources
-_First seen 2026-07-20 · latest 2026-10-06._
-
-- [CheckerBench gives agents 300 CVE-derived tasks to write static-analysis checkers](https://arxiv.org/abs/2610.07557) (2026-10-06)
-- [Introducing Semgrep Agentic Workflows: Automate Deep Vulnerability Hunting at Scale](https://semgrep.dev/blog/2026/introducing-semgrep-agentic-workflows-automate-deep-vulnerability-hunting-at-scale) (2026-07-28)
-- [A working taxonomy of open-source AI code-security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (2026-07-20)
-
 ### ▫️ quiet tooling  ·  3 findings (0 recent vs 0.5 expected) · 3 sources
 _First seen 2026-07-20 · latest 2026-10-01._
 
@@ -2671,12 +2799,6 @@ _First seen 2026-08-04 · latest 2026-08-21._
 
 - [ChainDrop npm worm targeted Claude Code configs and stole OIDC tokens](https://unit42.paloaltonetworks.com/sdlc-supply-chain/) (2026-08-21)
 - [ChainDrop supply chain compromise: Anatomy of a self-propagating worm](https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/) (2026-08-04)
-
-### ▫️ quiet code-review  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
-_First seen 2026-07-14 · latest 2026-07-30._
-
-- [Cryptographic advisories are dominated by skipped code checks, not broken math](https://semgrep.dev/blog/2026/crypto-is-fine-the-code-is-not) (2026-07-30)
-- [38.9% of agent-generated PRs carry a security smell](https://arxiv.org/abs/2607.12428) (2026-07-14)
 
 ### ▫️ quiet cryptography  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
 _First seen 2026-07-30 · latest 2026-09-08._
@@ -2738,12 +2860,6 @@ _First seen 2026-09-08 · latest 2026-09-28._
 - [Citrix NetScaler CVE-2026-88771 is a pre-auth command injection zero-day in default configuration](https://labs.watchtowr.com/oh-look-the-foot-gun-went-off-again-citrix-netscaler-preauth-command-injection-cve-2026-88771/) (2026-09-28)
 - [morgan's log-forging fix missed Unicode line-separator code points](https://github.com/advisories/GHSA-jxfw-x594-9x9m) (2026-09-08)
 
-### ▫️ quiet oidc  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
-_First seen 2026-08-04 · latest 2026-08-21._
-
-- [ChainDrop npm worm targeted Claude Code configs and stole OIDC tokens](https://unit42.paloaltonetworks.com/sdlc-supply-chain/) (2026-08-21)
-- [ChainDrop supply chain compromise: Anatomy of a self-propagating worm](https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/) (2026-08-04)
-
 ### ▫️ quiet open-source  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
 _First seen 2026-07-20 · latest 2026-10-08._
 
@@ -2755,12 +2871,6 @@ _First seen 2026-07-24 · latest 2026-10-05._
 
 - [Datadog: 3,500+ RBAC bindings give dangerous permissions to groups like system:unauthenticated](https://securitylabs.datadoghq.com/articles/kubernetes-rbac-built-in-principals-dangerous-permissions/) (2026-10-05)
 - [etcd Watch API skipped the range authorization that Range/Get applies](https://github.com/advisories/GHSA-xg4h-6gfc-h4m8) (2026-07-24)
-
-### ▫️ quiet rust  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
-_First seen 2026-04 · latest 2026-08-20._
-
-- [A Rust supply-chain compromise used Cargo's own yank warning to trick developers](https://safedep.io/arrayref-proc-macro1-rust-build-time-malware/) (2026-08-20)
-- [Google brings Rust (memory safety) to the Pixel baseband](http://security.googleblog.com/2026/04/bringing-rust-to-pixel-baseband.html) (2026-04)
 
 ### ▫️ quiet sha-pinning  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
 _First seen 2026-08-12 · latest 2026-09-24._
@@ -2788,15 +2898,25 @@ _First seen 2026-10-05 · latest 2026-10-07._
 
 ## AI Research
 
-### 🔺 rising evals  ·  29 findings (11 recent vs 2.9 expected) · 16 sources
-_First seen 2023-12-07 · latest 2026-11-09._
+### 🔺 rising evals  ·  31 findings (13 recent vs 2.9 expected) · 17 sources
+_First seen 2023-12-07 · latest 2026-11-11._
 
+- [JioStar architect says production evals need a validated judge and monitoring](https://openai.com/index/jiostar-vijay-seshadri) (2026-11-11) · _latest_
+- [ScrapeBench measures whether web agents honor terms of service and robots.txt](https://arxiv.org/abs/2611.11306) (2026-11-10) · _latest_
 - [Handshake AI demos the agent benchmarks it builds for frontier labs](https://latent.space/p/handshake/) (2026-11-09) · _latest_
 - [Legora evaluates legal agent on simulated work because it cannot read traces](https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/) (2026-11-02) · _latest_
 - [Framework-free Colab notebooks teach the applied LLM engineering stack](https://github.com/calmrocks/ai-engineer-notebooks) (2026-10-31) · _latest_
 - [Microsoft evaluates Copilot on fully synthetic, time-evolving enterprise tenants](https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/) (2026-10-30) · _latest_
-- [Daniel Miessler frames AI work as hill-climbing against ideal-state evals](https://danielmiessler.com/blog/general-hill-climbing) (2026-10-29) · _latest_
-- [Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly](https://huggingface.co/blog/allenai/novelty-bench) (2026-10-27) · _latest_
+
+### 🔺 rising coding-agents  ·  12 findings (7 recent vs 0.9 expected) · 9 sources
+_First seen 2026-07-21 · latest 2026-11-12._
+
+- [Matt Pocock's dictionary splits hallucinations into factuality and faithfulness](https://www.aihero.dev/ai-coding-dictionary/hallucination) (2026-11-12) · _latest_
+- [Simon Willison folds agent-written PR descriptions under a human summary](https://simonwillison.net/2026/Nov/9/details-summary/) (2026-11-09) · _latest_
+- [Addy Osmani argues that working with coding agents is a management job](https://x.com/addyosmani/status/2119332146485891501) (2026-11-08) · _latest_
+- [Theo endorses a quick guide on which coding-agent harness to use](https://x.com/theo/status/2119329490568691717) (2026-11-08) · _latest_
+- [Matthew Berman tells coding agents to show video mocks of UI changes](https://x.com/MatthewBerman/status/2117670441380966696) (2026-11-03) · _latest_
+- [A Thomson Reuters engineer runs a coding agent fully offline with Qwen](https://latent.space/p/offline-coding/) (2026-10-27) · _latest_
 
 ### 🔺 rising opinion  ·  6 findings (6 recent vs 0.0 expected) · 3 sources
 _First seen 2026-10-25 · latest 2026-11-10._
@@ -2817,16 +2937,6 @@ _First seen 2026-08-07 · latest 2026-11-08._
 - [Cisco's MAS Lab builds and traces multi-agent systems from YAML specs](https://github.com/ioc-project/mas-lab) (2026-11-04) · _latest_
 - [SpecForge compiles team rules into checks that agents cannot skip](https://github.com/leaderiop/SpecForge) (2026-10-31) · _latest_
 - [Anthropic donates the Agent Skills standard to the Agentic AI Foundation](https://simonwillison.net/2026/Oct/22/donating-agent-skills/) (2026-10-22) · _latest_
-
-### 🔺 rising coding-agents  ·  11 findings (6 recent vs 0.9 expected) · 8 sources
-_First seen 2026-07-21 · latest 2026-11-09._
-
-- [Simon Willison folds agent-written PR descriptions under a human summary](https://simonwillison.net/2026/Nov/9/details-summary/) (2026-11-09) · _latest_
-- [Addy Osmani argues that working with coding agents is a management job](https://x.com/addyosmani/status/2119332146485891501) (2026-11-08) · _latest_
-- [Theo endorses a quick guide on which coding-agent harness to use](https://x.com/theo/status/2119329490568691717) (2026-11-08) · _latest_
-- [Matthew Berman tells coding agents to show video mocks of UI changes](https://x.com/MatthewBerman/status/2117670441380966696) (2026-11-03) · _latest_
-- [A Thomson Reuters engineer runs a coding agent fully offline with Qwen](https://latent.space/p/offline-coding/) (2026-10-27) · _latest_
-- [SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues](https://github.com/logic-star-ai/swt-bench) (2026-10-26) · _latest_
 
 ### 🔺 rising benchmarks  ·  12 findings (6 recent vs 1.0 expected) · 9 sources
 _First seen 2026-07-09 · latest 2026-11-04._
@@ -2854,6 +2964,14 @@ _First seen 2026-10-16 · latest 2026-11-10._
 - [Hacker News developers describe fatigue from AI-era coding and agent review](https://news.ycombinator.com/item?id=50301479) (2026-10-30) · _latest_
 - [Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt](https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/) (2026-10-16) · _latest_
 
+### 🔺 rising context-engineering  ·  4 findings (4 recent vs 0.0 expected) · 4 sources
+_First seen 2026-10-25 · latest 2026-11-12._
+
+- [Matt Pocock's dictionary splits hallucinations into factuality and faithfulness](https://www.aihero.dev/ai-coding-dictionary/hallucination) (2026-11-12) · _latest_
+- [Ratel loads agent tools and skills per turn through BM25 search](https://github.com/ratel-ai/ratel) (2026-11-08) · _latest_
+- [Token-Goat hooks coding agents to cut repeat reads and bulky tool output](https://github.com/DFKHelper/token-goat) (2026-11-04) · _latest_
+- [Daniel Miessler argues harnesses should describe what you want, not steps](https://danielmiessler.com/blog/models-how-harnesses-what) (2026-10-25) · _latest_
+
 ### 🔺 rising open-weights  ·  5 findings (4 recent vs 0.2 expected) · 5 sources
 _First seen 2026-08-10 · latest 2026-11-07._
 
@@ -2862,6 +2980,16 @@ _First seen 2026-08-10 · latest 2026-11-07._
 - [Kimi K2.6 on vLLM returned valid tool-calls 92% of the time](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm) (2026-10-26) · _latest_
 - [Moonshot's Kimi K3.1 Pro nears frontier scores, with open weights promised](https://simonwillison.net/2026/Oct/23/kimi-k31-pro/) (2026-10-23) · _latest_
 - [Kimi K3: Open Frontier Intelligence](https://arxiv.org/abs/2607.24653) (2026-08-10)
+
+### 🔺 rising llm-as-judge  ·  7 findings (4 recent vs 0.5 expected) · 5 sources
+_First seen 2026-08-07 · latest 2026-11-11._
+
+- [JioStar architect says production evals need a validated judge and monitoring](https://openai.com/index/jiostar-vijay-seshadri) (2026-11-11) · _latest_
+- [Rubric Curriculum RL uses pairwise rubric judging to make reward hacking harder](http://arxiv.org/abs/2611.06244v1) (2026-11-04) · _latest_
+- [Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly](https://huggingface.co/blog/allenai/novelty-bench) (2026-10-27) · _latest_
+- [DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522) (2026-10-20) · _latest_
+- [RobustReview finds LLM paper reviewers change scores on content-preserving rewrites](https://arxiv.org/abs/2609.39027) (2026-09-30)
+- [MentalHealthBench scores model replies against weighted expert-consensus rubrics](https://openai.com/index/introducing-mentalhealthbench) (2026-09-23)
 
 ### 🔺 rising claude-code  ·  10 findings (4 recent vs 1.0 expected) · 7 sources
 _First seen 2026-06 · latest 2026-11-05._
@@ -2873,13 +3001,6 @@ _First seen 2026-06 · latest 2026-11-05._
 - [Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering](https://www.anthropic.com/research/claude-shaped-science) (2026-10-01)
 - [OpenForgeRL: Train Harness-native Agents in Any Environment](https://arxiv.org/abs/2607.21557) (2026-08-10)
 
-### 🔺 rising context-engineering  ·  3 findings (3 recent vs 0.0 expected) · 3 sources
-_First seen 2026-10-25 · latest 2026-11-08._
-
-- [Ratel loads agent tools and skills per turn through BM25 search](https://github.com/ratel-ai/ratel) (2026-11-08) · _latest_
-- [Token-Goat hooks coding agents to cut repeat reads and bulky tool output](https://github.com/DFKHelper/token-goat) (2026-11-04) · _latest_
-- [Daniel Miessler argues harnesses should describe what you want, not steps](https://danielmiessler.com/blog/models-how-harnesses-what) (2026-10-25) · _latest_
-
 ### 🔺 rising governance  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
 _First seen 2026-08-10 · latest 2026-10-31._
 
@@ -2888,13 +3009,13 @@ _First seen 2026-08-10 · latest 2026-10-31._
 - [Anthropic embeds METR with employee-like access but controls what is redactable](https://www.anthropic.com/news/an-update-on-independent-evaluators) (2026-10-20) · _latest_
 - [Birfy/agentdescent](https://github.com/Birfy/agentdescent) (2026-08-10)
 
-### 🔺 rising long-running-agents  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
-_First seen 2026-07-22 · latest 2026-11-06._
+### 🔺 rising local-inference  ·  4 findings (3 recent vs 0.2 expected) · 4 sources
+_First seen 2026-08-10 · latest 2026-11-11._
 
-- [Anthropic tests which agent memory practices help Claude across sessions](https://www.anthropic.com/research/components-of-agent-memory) (2026-11-06) · _latest_
-- [Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt](https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/) (2026-10-16) · _latest_
-- [Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents) (2026-10-12) · _latest_
-- [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
+- [Huawei open-sources MACaQ, a model-agnostic quantizer for GGUF and vLLM](https://github.com/huawei-csl/MACaQ) (2026-11-11) · _latest_
+- [Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in](https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop) (2026-11-04) · _latest_
+- [MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios](https://machinelearning.apple.com/research/mlx-distributed-inference) (2026-10-15) · _latest_
+- [Intelligence per Watt: Measuring Intelligence Efficiency of Local AI](https://arxiv.org/abs/2511.07885) (2026-08-10)
 
 ### 🔺 rising robustness  ·  4 findings (3 recent vs 0.2 expected) · 2 sources
 _First seen 2026-09-30 · latest 2026-11-05._
@@ -2903,6 +3024,15 @@ _First seen 2026-09-30 · latest 2026-11-05._
 - [SAFT adversarially trains only robustness-critical parameters and beats LoRA](http://arxiv.org/abs/2610.39455v1) (2026-10-29) · _latest_
 - [Sparse Adversarial Fine-Tuning (SAFT) updates only about 5% of a network's parameters](http://arxiv.org/abs/2610.39455v1) (2026-10-29) · _latest_
 - [RobustReview finds LLM paper reviewers change scores on content-preserving rewrites](https://arxiv.org/abs/2609.39027) (2026-09-30)
+
+### 🔺 rising guardrails  ·  5 findings (3 recent vs 0.3 expected) · 5 sources
+_First seen 2026-08-09 · latest 2026-11-11._
+
+- [JioStar architect says production evals need a validated judge and monitoring](https://openai.com/index/jiostar-vijay-seshadri) (2026-11-11) · _latest_
+- [alphaXiv says its 4B decision model nearly matches Jev except sarcasm](https://x.com/askalphaxiv/status/2116199951835582507) (2026-10-30) · _latest_
+- [DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522) (2026-10-20) · _latest_
+- [openai/openai-agents-python](https://github.com/openai/openai-agents-python) (2026-08-10)
+- [Quoting Claude Opus 5 system prompt](https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything) (2026-08-09)
 
 ### 🔺 rising human-in-the-loop  ·  5 findings (3 recent vs 0.3 expected) · 4 sources
 _First seen 2026-08-07 · latest 2026-10-31._
@@ -2940,16 +3070,6 @@ _First seen 2026-08-07 · latest 2026-11-06._
 - [Hugging Face's funes shares agent memory from raw session text, not summaries](https://huggingface.co/blog/funes) (2026-09-03)
 - [LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference](https://arxiv.org/abs/2608.02515) (2026-08-10)
 - [Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay](https://arxiv.org/abs/2608.05784) (2026-08-07)
-
-### 🔺 rising llm-as-judge  ·  6 findings (3 recent vs 0.5 expected) · 5 sources
-_First seen 2026-08-07 · latest 2026-11-04._
-
-- [Rubric Curriculum RL uses pairwise rubric judging to make reward hacking harder](http://arxiv.org/abs/2611.06244v1) (2026-11-04) · _latest_
-- [Ai2: LLM novelty judges flip verdicts when prompt wording changes slightly](https://huggingface.co/blog/allenai/novelty-bench) (2026-10-27) · _latest_
-- [DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522) (2026-10-20) · _latest_
-- [RobustReview finds LLM paper reviewers change scores on content-preserving rewrites](https://arxiv.org/abs/2609.39027) (2026-09-30)
-- [MentalHealthBench scores model replies against weighted expert-consensus rubrics](https://openai.com/index/introducing-mentalhealthbench) (2026-09-23)
-- [SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution](https://arxiv.org/abs/2608.05573) (2026-08-07)
 
 ### 🔺 rising agent-evals  ·  9 findings (3 recent vs 1.0 expected) · 4 sources
 _First seen 2026-08-07 · latest 2026-11-07._
@@ -3015,6 +3135,12 @@ _First seen 2026-10-20 · latest 2026-11-03._
 
 - [OpenAI finds agents score worse on safety evals than in production](https://alignment.openai.com/eval-production-behavior-gap/) (2026-11-03) · _latest_
 - [Amazon Science covers third-party review of AI safety testing, body not captured](https://www.amazon.science/blog/strengthening-ai-safety-evaluation-through-independent-third-party-review) (2026-10-20) · _latest_
+
+### 🔺 rising scraping  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-10-26 · latest 2026-11-10._
+
+- [ScrapeBench measures whether web agents honor terms of service and robots.txt](https://arxiv.org/abs/2611.11306) (2026-11-10) · _latest_
+- [Simon Willison's Claude-run review finds webframe fast but rough for scraping](https://simonwillison.net/2026/Oct/26/webframe-evaluation/) (2026-10-26) · _latest_
 
 ### 🔺 rising self-hosted-agents  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-15 · latest 2026-10-27._
@@ -3096,13 +3222,6 @@ _First seen 2026-08-10 · latest 2026-11-10._
 - [Venus-DefakerOne2 detects image and video forgeries with one forensics model](https://arxiv.org/abs/2610.37918) (2026-10-27) · _latest_
 - [A foundation-model approach to pediatric headache classification from rs-fMRI](https://arxiv.org/abs/2608.07287) (2026-08-10)
 
-### 🔺 rising local-inference  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
-_First seen 2026-08-10 · latest 2026-11-04._
-
-- [Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in](https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop) (2026-11-04) · _latest_
-- [MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios](https://machinelearning.apple.com/research/mlx-distributed-inference) (2026-10-15) · _latest_
-- [Intelligence per Watt: Measuring Intelligence Efficiency of Local AI](https://arxiv.org/abs/2511.07885) (2026-08-10)
-
 ### 🔺 rising tool-calling  ·  3 findings (2 recent vs 0.2 expected) · 3 sources
 _First seen 2026-08-09 · latest 2026-11-05._
 
@@ -3134,13 +3253,13 @@ _First seen 2026-08-10 · latest 2026-10-26._
 - [CreativeInstruct teaches LLMs to balance quality, creativity, and diversity](https://arxiv.org/abs/2608.07460) (2026-08-10)
 - [CrystalGRPO: Target-Aligned and Coverage-Preserving Reinforcement Learning for Flow-Based Crystal Structure Prediction](https://arxiv.org/abs/2608.06582) (2026-08-10)
 
-### 🔺 rising guardrails  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
-_First seen 2026-08-09 · latest 2026-10-30._
+### 🔺 rising long-running-agents  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
+_First seen 2026-07-22 · latest 2026-11-06._
 
-- [alphaXiv says its 4B decision model nearly matches Jev except sarcasm](https://x.com/askalphaxiv/status/2116199951835582507) (2026-10-30) · _latest_
-- [DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](https://arxiv.org/abs/2610.28522) (2026-10-20) · _latest_
-- [openai/openai-agents-python](https://github.com/openai/openai-agents-python) (2026-08-10)
-- [Quoting Claude Opus 5 system prompt](https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything) (2026-08-09)
+- [Anthropic tests which agent memory practices help Claude across sessions](https://www.anthropic.com/research/components-of-agent-memory) (2026-11-06) · _latest_
+- [Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt](https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/) (2026-10-16) · _latest_
+- [Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents) (2026-10-12) · _latest_
+- [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
 
 ### 🔺 rising retrieval  ·  4 findings (2 recent vs 0.3 expected) · 2 sources
 _First seen 2026-08-10 · latest 2026-10-29._
@@ -3158,6 +3277,24 @@ _First seen 2026-08-08 · latest 2026-11-04._
 - [Symbolic Graphics Programming with Large Language Models](https://arxiv.org/abs/2509.05208) (2026-08-10)
 - [Willison: OpenAI/Hugging Face 'accidental attack' happened in RLVR training, not deployment](https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything) (2026-08-08)
 
+### 🔺 rising vllm  ·  4 findings (2 recent vs 0.3 expected) · 4 sources
+_First seen 2026-08-06 · latest 2026-11-11._
+
+- [Huawei open-sources MACaQ, a model-agnostic quantizer for GGUF and vLLM](https://github.com/huawei-csl/MACaQ) (2026-11-11) · _latest_
+- [Kimi K2.6 on vLLM returned valid tool-calls 92% of the time](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm) (2026-10-26) · _latest_
+- [Cascade uses SLO-aware latency budgets for fair LLM inference serving](https://arxiv.org/abs/2608.06557) (2026-08-10)
+- [vLLM anatomy explains paged attention and continuous batching for high-throughput serving](https://www.aleksagordic.com/blog/vllm) (2026-08-06)
+
+### 🔺 rising agent-harness  ·  11 findings (3 recent vs 1.4 expected) · 7 sources
+_First seen 2026-07-28 · latest 2026-11-12._
+
+- [Matt Pocock's AI Coding Dictionary defines an agent as model plus harness](https://www.aihero.dev/ai-coding-dictionary/agent) (2026-11-12) · _latest_
+- [Latent Space roundup highlights LLMs reading and editing other models' weights](https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/) (2026-11-03) · _latest_
+- [SpecForge compiles team rules into checks that agents cannot skip](https://github.com/leaderiop/SpecForge) (2026-10-31) · _latest_
+- [Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering](https://www.anthropic.com/research/claude-shaped-science) (2026-10-01)
+- [Fzkuji/OpenProgram](https://github.com/Fzkuji/OpenProgram) (2026-08-10)
+- [aeonfun/aeon](https://github.com/aeonfun/aeon) (2026-08-10)
+
 ### 🔺 rising red-teaming  ·  6 findings (2 recent vs 0.5 expected) · 6 sources
 _First seen 2025-03-13 · latest 2026-10-20._
 
@@ -3167,6 +3304,15 @@ _First seen 2025-03-13 · latest 2026-10-20._
 - [Enhancing AI security through global AI red teaming](https://www.microsoft.com/en-us/security/blog/2026/07/27/enhancing-ai-security-through-global-ai-red-teaming/) (2026-07-27)
 - [Rogue agents are not unprecedented, ~20% of ProjectDiscovery's CTF solves were unintended](https://projectdiscovery.io/blog/oh-my-rogue-agent) (2026-07-22)
 - [Blind teams hunt a hidden objective planted in a model](https://www.anthropic.com/research/auditing-hidden-objectives) (2025-03-13)
+
+### 🔺 rising hallucination  ·  5 findings (2 recent vs 0.5 expected) · 4 sources
+_First seen 2026-07-16 · latest 2026-11-12._
+
+- [Matt Pocock's dictionary splits hallucinations into factuality and faithfulness](https://www.aihero.dev/ai-coding-dictionary/hallucination) (2026-11-12) · _latest_
+- [Google ships Gemini 4 Carbon to trusted cyber defenders first](https://latent.space/p/ainews-gemini-4-carbon/) (2026-10-29) · _latest_
+- [Logit-lens over visual attention detects and mitigates LVLM object hallucination](https://arxiv.org/abs/2608.07302) (2026-08-10)
+- [TriQua: Reconciling Granularity and Context in Factuality Evaluation](https://arxiv.org/abs/2608.05228) (2026-08-07)
+- [With no capability boundary, models may claim actions they cannot perform](https://arxiv.org/abs/2607.13596) (2026-07-16)
 
 ### 🔺 rising lora  ·  6 findings (2 recent vs 0.7 expected) · 4 sources
 _First seen 2026-08-10 · latest 2026-10-29._
@@ -3217,16 +3363,6 @@ _First seen 2026-08-10 · latest 2026-10-29._
 - [Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention](https://arxiv.org/abs/2607.20457) (2026-08-10)
 - [Global allocation of resolution and coverage improves KV cache compression](https://arxiv.org/abs/2608.07001) (2026-08-10)
 - [Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry](https://arxiv.org/abs/2608.06849) (2026-08-10)
-
-### 🔺 rising agent-harness  ·  10 findings (2 recent vs 1.4 expected) · 6 sources
-_First seen 2026-07-28 · latest 2026-11-03._
-
-- [Latent Space roundup highlights LLMs reading and editing other models' weights](https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/) (2026-11-03) · _latest_
-- [SpecForge compiles team rules into checks that agents cannot skip](https://github.com/leaderiop/SpecForge) (2026-10-31) · _latest_
-- [Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering](https://www.anthropic.com/research/claude-shaped-science) (2026-10-01)
-- [Fzkuji/OpenProgram](https://github.com/Fzkuji/OpenProgram) (2026-08-10)
-- [aeonfun/aeon](https://github.com/aeonfun/aeon) (2026-08-10)
-- [wanmol/goal-flow](https://github.com/wanmol/goal-flow) (2026-08-10)
 
 ### 🔺 rising agents  ·  26 findings (4 recent vs 3.8 expected) · 10 sources
 _First seen 2026-05 · latest 2026-11-03._
@@ -3298,6 +3434,15 @@ _First seen 2026-08-06 · latest 2026-11-09._
 - [Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry](https://arxiv.org/abs/2608.06849) (2026-08-10)
 - [CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG](https://arxiv.org/abs/2608.07458) (2026-08-10)
 
+### ▪️ steady compaction  ·  5 findings (1 recent vs 0.7 expected) · 4 sources
+_First seen 2026-07-22 · latest 2026-11-12._
+
+- [Matt Pocock's dictionary splits hallucinations into factuality and faithfulness](https://www.aihero.dev/ai-coding-dictionary/hallucination) (2026-11-12) · _latest_
+- [Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents) (2026-10-12) · _latest_
+- [OpenAI sets up fast-track misalignment disclosure and publishes six first reports](https://openai.com/index/model-misalignment-reporting-framework) (2026-09-16)
+- [OpenAI launches the Agents API in public beta, a hosted Codex harness](https://openai.com/index/introducing-the-agents-api) (2026-09-10)
+- [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
+
 ### ▪️ steady harness-design  ·  5 findings (1 recent vs 0.7 expected) · 4 sources
 _First seen 2026-07-21 · latest 2026-10-25._
 
@@ -3341,22 +3486,6 @@ _First seen 2026-07-22 · latest 2026-11-03._
 - [Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai) (2026-07-28)
 - [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
 
-### ▪️ steady compaction  ·  4 findings (1 recent vs 0.5 expected) · 3 sources
-_First seen 2026-07-22 · latest 2026-10-12._
-
-- [Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents) (2026-10-12) · _latest_
-- [OpenAI sets up fast-track misalignment disclosure and publishes six first reports](https://openai.com/index/model-misalignment-reporting-framework) (2026-09-16)
-- [OpenAI launches the Agents API in public beta, a hosted Codex harness](https://openai.com/index/introducing-the-agents-api) (2026-09-10)
-- [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
-
-### ▪️ steady hallucination  ·  4 findings (1 recent vs 0.5 expected) · 3 sources
-_First seen 2026-07-16 · latest 2026-10-29._
-
-- [Google ships Gemini 4 Carbon to trusted cyber defenders first](https://latent.space/p/ainews-gemini-4-carbon/) (2026-10-29) · _latest_
-- [Logit-lens over visual attention detects and mitigates LVLM object hallucination](https://arxiv.org/abs/2608.07302) (2026-08-10)
-- [TriQua: Reconciling Granularity and Context in Factuality Evaluation](https://arxiv.org/abs/2608.05228) (2026-08-07)
-- [With no capability boundary, models may claim actions they cannot perform](https://arxiv.org/abs/2607.13596) (2026-07-16)
-
 ### ▪️ steady peft  ·  4 findings (1 recent vs 0.5 expected) · 2 sources
 _First seen 2026-08-10 · latest 2026-10-29._
 
@@ -3364,6 +3493,14 @@ _First seen 2026-08-10 · latest 2026-10-29._
 - [Semantic Adapter Routing with Fine-Tuning Task Embeddings](https://arxiv.org/abs/2606.19079) (2026-08-10)
 - [IFCLoRA: Topology-Aware Rank Allocation for Parameter-Efficient Fine-Tuning](https://arxiv.org/abs/2607.22251) (2026-08-10)
 - [LoCA: Spatially-Aware Low-Rank Convolutional Adaptation of Vision Foundation Models](https://arxiv.org/abs/2607.06918) (2026-08-10)
+
+### ▪️ steady quantization  ·  4 findings (1 recent vs 0.5 expected) · 3 sources
+_First seen 2026-08-10 · latest 2026-11-11._
+
+- [Huawei open-sources MACaQ, a model-agnostic quantizer for GGUF and vLLM](https://github.com/huawei-csl/MACaQ) (2026-11-11) · _latest_
+- [SSTQ: Privacy-Preserving Vector Quantization via Subsampled Stochastic TurboQuant](https://arxiv.org/abs/2608.05127) (2026-08-10)
+- [CubicQuant: parametric non-uniform codebooks for high-throughput LLM inference, 1-8-Bit weights](https://arxiv.org/abs/2608.06763) (2026-08-10)
+- [MiCoPro: End-to-End Mixed Precision HW/SW Co-design with HW-aware Proxy Model](https://arxiv.org/abs/2608.06916) (2026-08-10)
 
 ### ▪️ steady sandboxing  ·  4 findings (1 recent vs 0.5 expected) · 4 sources
 _First seen 2026-07-22 · latest 2026-11-05._
@@ -3380,13 +3517,6 @@ _First seen 2026-08-07 · latest 2026-10-27._
 - [Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?](https://arxiv.org/abs/2605.22148) (2026-08-10)
 - [Search2Skill: Skill Distillation Beyond Knowledge Boundaries Via Rubric-Based Reinforcement Learning](https://arxiv.org/abs/2608.05245) (2026-08-07)
 - [SkillHEX: Improving Agent Skills via Hypothesis-Driven Autonomous Exploration and Exploitation](https://arxiv.org/abs/2608.05628) (2026-08-07)
-
-### ▪️ steady context-management  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
-_First seen 2026-07-21 · latest 2026-10-12._
-
-- [Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents) (2026-10-12) · _latest_
-- [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
-- [How the Claude Code team designs its harness, tools and evals](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) (2026-07-21)
 
 ### ▪️ steady cot-monitoring  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
 _First seen 2026-08-07 · latest 2026-10-20._
@@ -3450,13 +3580,6 @@ _First seen 2026-08-10 · latest 2026-10-26._
 - [SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues](https://github.com/logic-star-ai/swt-bench) (2026-10-26) · _latest_
 - [HarnessTax finds harness choice barely moved success but changed cost](https://harnesstax.github.io/) (2026-09-16)
 - [Coupling Planning with Episodic Memory in LLM Agents for Software Issue Resolution](https://arxiv.org/abs/2608.06811) (2026-08-10)
-
-### ▪️ steady vllm  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
-_First seen 2026-08-06 · latest 2026-10-26._
-
-- [Kimi K2.6 on vLLM returned valid tool-calls 92% of the time](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm) (2026-10-26) · _latest_
-- [Cascade uses SLO-aware latency budgets for fair LLM inference serving](https://arxiv.org/abs/2608.06557) (2026-08-10)
-- [vLLM anatomy explains paged attention and continuous batching for high-throughput serving](https://www.aleksagordic.com/blog/vllm) (2026-08-06)
 
 ### ▪️ steady agentic-coding  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-07-28 · latest 2026-10-30._
@@ -3819,6 +3942,13 @@ _First seen 2023-12-07 · latest 2026-08-10._
 - [Poli-Bias: Understanding and Measuring Large Language Model Biases in International Political Conflicts](https://arxiv.org/abs/2608.06123) (2026-08-07)
 - [Anthropic's discrim-eval surfaced discrimination in Claude decision prompts](https://www.anthropic.com/research/evaluating-and-mitigating-discrimination-in-language-model-decisions) (2023-12-07)
 
+### ▫️ quiet context-management  ·  3 findings (0 recent vs 0.5 expected) · 3 sources
+_First seen 2026-07-21 · latest 2026-10-12._
+
+- [Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents) (2026-10-12) · _latest_
+- [Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction) (2026-07-22)
+- [How the Claude Code team designs its harness, tools and evals](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) (2026-07-21)
+
 ### ▫️ quiet dataset  ·  3 findings (0 recent vs 0.5 expected) · 2 sources
 _First seen 2026-08-10 · latest 2026-08-10._
 
@@ -3888,13 +4018,6 @@ _First seen 2026-08-10 · latest 2026-09-03._
 - [Hugging Face's funes shares agent memory from raw session text, not summaries](https://huggingface.co/blog/funes) (2026-09-03)
 - [Trace-level provenance shows how LLM agents actually get the flag](https://arxiv.org/abs/2608.26237) (2026-08-26)
 - [GPTKB lets you browse, query, and audit an LLM-derived knowledge base](https://arxiv.org/abs/2608.06992) (2026-08-10)
-
-### ▫️ quiet quantization  ·  3 findings (0 recent vs 0.5 expected) · 2 sources
-_First seen 2026-08-10 · latest 2026-08-10._
-
-- [SSTQ: Privacy-Preserving Vector Quantization via Subsampled Stochastic TurboQuant](https://arxiv.org/abs/2608.05127) (2026-08-10)
-- [CubicQuant: parametric non-uniform codebooks for high-throughput LLM inference, 1-8-Bit weights](https://arxiv.org/abs/2608.06763) (2026-08-10)
-- [MiCoPro: End-to-End Mixed Precision HW/SW Co-design with HW-aware Proxy Model](https://arxiv.org/abs/2608.06916) (2026-08-10)
 
 ### ▫️ quiet reasoning  ·  3 findings (0 recent vs 0.5 expected) · 2 sources
 _First seen 2026-08-07 · latest 2026-08-10._
@@ -4086,4 +4209,4 @@ _First seen 2026-07-28 · latest 2026-10-01._
 
 ---
 
-<sub>Generated by scripts/trends.py on 2026-11-10.</sub>
+<sub>Generated by scripts/trends.py on 2026-11-12.</sub>
