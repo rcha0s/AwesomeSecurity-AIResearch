@@ -1,8 +1,8 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-11-12)
+# 📰 Security & AI Research — Daily Snapshot (2026-11-13)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-18 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+19 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -12,7 +12,7 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 65.44
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 64.69
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.
 - **[Trojan Horse: Automated Repository Poisoning against Coding Agents](https://arxiv.org/abs/2610.23109)** · _arXiv cs.CR (Cryptography and Security)_ · composite 59.34
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.
@@ -29,6 +29,9 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://www.microsoft.com/en-us/security/blog/2026/11/12/trained-to-betray-how-post-training-supply-chain-attacks-hijack-coding-agents/)**
+  Treat third-party checkpoints and fine-tuning datasets as untrusted code, and rely on limiting and authorizing the agent's tool permissions, the control that holds whatever the model learned.
+  _Why now: Microsoft shows 1% poisoned fine-tuning data teaches coding agents to misuse whatever command tool exists, and RL hides the utility loss; actionable for anyone fine-tuning or adopting open checkpoints. · trending · newsworthy · high-relevance_
 - **[AG2 SandboxShellTool allowlist is bypassed by a newline in the command](https://github.com/advisories/GHSA-2h4w-29cv-2cmv)**
   Upgrade AG2 past the fix, and treat any agent shell allowlist that passes commands to sh -c as a denylist that will miss some separator.
   _Why now: Second agent shell-tool allowlist bypass in weeks (after Mistral Vibe): a newline beats AG2's allowed=[...] and readonly=True, a concrete audit check for any agent shell tool that validates a string and then runs sh -c. · trending · cve · high-relevance_
@@ -41,15 +44,12 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[Caper approves coding-agent commands after running them in a snapshot sandbox](https://arxiv.org/abs/2610.40753)**
   Judge an agent's command by what it actually does in a sandbox, not by how the command reads.
   _Why now: Concrete pattern for approving coding-agent commands by their observed effects in a snapshot sandbox, on the week Apiiro showed don't-ask-again allowlists leaking secrets. · trending · high-relevance_
-- **[Roo Code's command auto-approval can be bypassed in seven ways](https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization)**
-  Allowlist-by-prefix approval for agent shell commands breaks whenever the checker and the shell parse differently; do not enable auto-approve on untrusted content.
-  _Why now: Named advisory with a transferable lesson for every coding-agent harness: prefix-allowlist auto-approval breaks whenever the checker and the shell parse a command differently. · newsworthy · high-relevance · timely · trending_
 
 **📈 Emerging trends**
 
-- **coding-agents** (🔺 rising) — 18 findings from 13 sources since 2026-08-06.
-- **prompt-injection** (🔺 rising) — 44 findings from 23 sources since 2026-02.
-- **mcp** (🔺 rising) — 33 findings from 18 sources since 2026-02.
+- **prompt-injection** (🔺 rising) — 48 findings from 25 sources since 2026-02.
+- **mcp** (🔺 rising) — 35 findings from 19 sources since 2026-02.
+- **coding-agents** (🔺 rising) — 19 findings from 14 sources since 2026-08-06.
 
 [→ Full AI Security database](ai-security/README.md)
 
@@ -61,8 +61,10 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 72.85
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 72.1
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result…
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://projectzero.google/2026/11/disclosure-policy.html)** · _Google Project Zero_ · composite 70.0
+  A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.
 - **[Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)** · _Anthropic Research_ · composite 61.39
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.
 - **[pwn.ai found a new Linux networking bug class escaping KVM guests](https://pwn.ai/blog/pwnescape)** · _source_ · composite 56.25
@@ -71,34 +73,32 @@ _Securing products: application security, supply chain, cloud & infra, identity,
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.
 - **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](https://portswigger.net/research/scalable-vector-grief)** · _PortSwigger Research_ · composite 54.13
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)** · _source_ · composite 50.25
-  Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.
 
 **📈 Trending & In the News**
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
-- **[Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/)**
-  Patch every MongoDB replica set member now; auth does not block the pre-login setup, and network restriction only narrows who can plant it.
-  _Why now: CVSS 9.5 pre-auth MongoDB bug with fixed versions and concrete log-based detection; authentication does not block the setup. · cve · widely-reported · timely · high-relevance_
+- **[Chainguard details wfx stealer that backdoors cloud roles and can forge checks](https://www.chainguard.dev/unchained/wfx-loot-stolen-github-tokens-pushed-a-ci-secret-stealer-into-60-000-repositories-november-2026)**
+  With a stolen write token, pinning and pull request review do nothing, so limit what a CI runner holds and audit cloud trust after any wfx hit.
+  _Why now: Live campaign across 60,000+ repositories; concrete detection steps (missing run numbers, AWS Principal * trust, Azure wfx-ci credentials) and the lesson that secret rotation alone leaves cloud backdoors. · active-exploitation · widely-reported · trending · high-relevance_
+- **[StepSecurity finds fake-interview npm look-alikes stayed on npm for seven months](https://www.stepsecurity.io/blog/accurasofthire-fake-interview-developer-machines)**
+  Interview assignments run on work laptops are an employer supply-chain risk, and the malware hides in build-time code and blockchain-resolved servers that install-script controls and static…
+  _Why now: Live DPRK fake-interview campaign whose loader runs at CSS build time, so install-script controls and short cooldowns miss it; gives an IOC hunt for developer laptops. · active-exploitation · timely · high-relevance_
 - **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer)**
   If any repo you own got a wfx-docs PR or a reverted 'ci: refresh build cache' commit, revoke the author's tokens, rotate all reachable secrets and hunt for AWS/Entra backdoors.
   _Why now: Live supply-chain campaign across 8,093+ repos that reverts its own commits and grabs cloud OIDC tokens; teaches what to audit in Actions logs and federated credentials now. · active-exploitation · widely-reported · timely · high-relevance_
+- **[Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/)**
+  Patch every MongoDB replica set member now; auth does not block the pre-login setup, and network restriction only narrows who can plant it.
+  _Why now: CVSS 9.5 pre-auth MongoDB bug with fixed versions and concrete log-based detection; authentication does not block the setup. · cve · widely-reported · timely · high-relevance_
 - **[Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/)**
   After any web remote code execution (RCE) on a Linux server, hunt for GSocket and layered persistence and enforce egress filtering; a patch alone leaves the attacker in.
   _Why now: Microsoft telemetry shows GSocket relays keep attackers on Linux servers after the entry bug is patched; actionable hunts and egress advice. · newsworthy · trending · high-relevance_
-- **[IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-123218)**
-  Patch internet-facing Aspera Faspex 5.0.0 through 5.0.19 per IBM's advisory now and review admin accounts for unexpected changes.
-  _Why now: Exploited file-transfer admin takeover with a three-day CISA deadline; the vector-vs-description contradiction is a useful triage lesson. · cve · active-exploitation · timely_
-- **[Attackers used Ethersphere's own release pipeline to ship backdoored bee-js and Swarm Desktop](https://socket.dev/blog/bee-js-compromise)**
-  Trusted publishing and valid provenance prove where a package was built, not that its source was reviewed, so release workflows need branch, tag and reviewer gates of their own.
-  _Why now: Live npm and desktop-updater compromise reported by Socket, StepSecurity and SafeDep; teaches that valid trusted-publishing provenance does not prove review, and gives concrete release-workflow gates. · newsworthy · widely-reported · active-compromise · timely · high-relevance_
 
 **📈 Emerging trends**
 
 - **exploited-in-the-wild** (🔺 rising) — 21 findings from 4 sources since 2026-09-23.
+- **supply-chain** (🔺 rising) — 46 findings from 26 sources since 2026-06-30.
 - **rce** (🔺 rising) — 20 findings from 16 sources since 2026-06-29.
-- **supply-chain** (🔺 rising) — 44 findings from 26 sources since 2026-06-30.
 
 [→ Full Product Security database](product-security/README.md)
 
@@ -132,7 +132,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **evals** (🔺 rising) — 31 findings from 17 sources since 2023-12-07.
+- **evals** (🔺 rising) — 32 findings from 17 sources since 2023-12-07.
 - **coding-agents** (🔺 rising) — 12 findings from 9 sources since 2026-07-21.
 - **opinion** (🔺 rising) — 6 findings from 3 sources since 2026-10-25.
 
@@ -142,4 +142,4 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 _Every finding links its original source. Curated by the AwesomeSecurity-AIResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-11-12.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-11-13.</sub>

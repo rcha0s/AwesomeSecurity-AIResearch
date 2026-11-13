@@ -25,7 +25,7 @@ Between November 10 and 12, 2026, an attacker pushed the wfx credential stealer 
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [SafeDep](https://safedep.io/blog/github-actions-wfx-credential-stealer)  ·  **Retrieved:** 2026-11-12  
-**Scores:** Newness 52 · Novelty 40 · Relevance 85 · Credibility 52 · **Composite 58** _(each 0-100)_  
+**Scores:** Newness 49 · Novelty 40 · Relevance 85 · Credibility 57 · **Composite 58** _(each 0-100)_  
 **Tags:** `github-actions`, `supply-chain`, `credential-theft`, `stolen-tokens`, `oidc`, `postinstall`, `cloud-backdoor`, `packagist`, `go-modules`  
 **Also reported by:** [StepSecurity](https://www.stepsecurity.io/blog/wfx-phantom-the-github-actions-secret-stealer) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Wiz's Gheist campaign (stolen GitHub tokens pushing secret-dumping workflows across 850+ accounts), Shai-Hulud worms and tj-actions/changed-files secret exfiltration already in the tracker. New here: commit-then-revert concealment at 8,000+ repo scale, blind OIDC exchange to AWS/Azure/GCP/Vault/Kubernetes, and rotation-surviving Entra federated-credential and AWS key backdoors, plus poisoned Packagist/Go releases. Verifier's closest: Wiz Gheist entry (stolen GitHub tokens dumping secrets via Actions); GhostAction; Mini Shai-Hulud.
