@@ -2,27 +2,34 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_7 vetted findings · updated 2026-11-12 · ranked by composite · findings from the latest 31 days · [70 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-11-13 · ranked by composite · findings from the latest 31 days · [71 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
-- **[Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/)**
-  _Why now: CVSS 9.5 pre-auth MongoDB bug with fixed versions and concrete log-based detection; authentication does not block the setup. · cve · widely-reported · timely · high-relevance_
+- **[Chainguard details wfx stealer that backdoors cloud roles and can forge checks](https://www.chainguard.dev/unchained/wfx-loot-stolen-github-tokens-pushed-a-ci-secret-stealer-into-60-000-repositories-november-2026)**
+  _Why now: Live campaign across 60,000+ repositories; concrete detection steps (missing run numbers, AWS Principal * trust, Azure wfx-ci credentials) and the lesson that secret rotation alone leaves cloud backdoors. · active-exploitation · widely-reported · trending · high-relevance_
+- **[StepSecurity finds fake-interview npm look-alikes stayed on npm for seven months](https://www.stepsecurity.io/blog/accurasofthire-fake-interview-developer-machines)**
+  _Why now: Live DPRK fake-interview campaign whose loader runs at CSS build time, so install-script controls and short cooldowns miss it; gives an IOC hunt for developer laptops. · active-exploitation · timely · high-relevance_
+- **[XBOW and Onapsis help uncover 14 SAP NetWeaver vulnerabilities patched in November](https://xbow.com/blog/xbow-and-onapsis-collaborate-to-uncover-14-sap-vulnerabilities)**
+- **[Check Point ships hotfixes for a zero-day exploited for root access](https://www.bleepingcomputer.com/news/security/check-point-patches-zero-day-that-lets-hackers-get-root-access/)**
 - **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://safedep.io/blog/github-actions-wfx-credential-stealer)**
   _Why now: Live supply-chain campaign across 8,093+ repos that reverts its own commits and grabs cloud OIDC tokens; teaches what to audit in Actions logs and federated credentials now. · active-exploitation · widely-reported · timely · high-relevance_
+- **[Datadog reproduces pre-auth MongoDB crash planted with two ping requests](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/)**
+  _Why now: CVSS 9.5 pre-auth MongoDB bug with fixed versions and concrete log-based detection; authentication does not block the setup. · cve · widely-reported · timely · high-relevance_
 - **[Microsoft sees attackers keep Linux server access via GSocket relays after patching](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/)**
   _Why now: Microsoft telemetry shows GSocket relays keep attackers on Linux servers after the entry bug is patched; actionable hunts and egress advice. · newsworthy · trending · high-relevance_
 - **[IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-123218)**
   _Why now: Exploited file-transfer admin takeover with a three-day CISA deadline; the vector-vs-description contradiction is a useful triage lesson. · cve · active-exploitation · timely_
 - **[ScreenConnect RMM+ extension flaw may have let attackers bypass MFA](https://www.theregister.com/security/2026/11/12/hackers-exploiting-screenconnect-plugin-flaw-to-spread-malware-across-hundreds-of-pcs/5309361)**
+- **[Imperva Cloud WAF now takes certificates from Palo Alto's Venafi platform](https://www.imperva.com/blog/ssl-integration-center-palo-alto-networks-venafi/)**
+- **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://thehackernews.com/2026/11/new-n-central-exploits-work-against.html)**
+- **[Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges](https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/)**
 - **[Red Hat Quay flaws (CVSS 9.8, 9.9) let attackers overwrite private images](https://thehackernews.com/2026/11/critical-red-hat-quay-flaw-lets.html)**
 - **[React patches critical unauthenticated remote code execution (RCE) in Server Components](https://www.stepsecurity.io/blog/cve-2026-126187-react-flight-rce)**
 - **[Action1 sponsored post urges customer-controlled signing for endpoint management actions](https://www.bleepingcomputer.com/news/security/your-endpoint-management-platform-could-be-your-biggest-security-risk/)**
-- **[Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges](https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges/)**
 - **[Citrix patches 12 NetScaler and Secure Access Client flaws, including authentication bypass](https://thehackernews.com/2026/11/citrix-patches-12-netscaler-and-secure.html)**
-- **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://thehackernews.com/2026/11/new-n-central-exploits-work-against.html)**
 - **[Node.js fixes 16 flaws, including HTTP/2 crashes and memory leaks](https://thehackernews.com/2026/11/nodejs-fixes-16-flaws-including-http2.html)**
 - **[PTC patches critical deserialization remote code execution (RCE) in Windchill and FlexPLM](https://thehackernews.com/2026/11/ptc-patches-critical-windchill-and.html)**
 - **[Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/)**
@@ -245,7 +252,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| Vulnerability Research & Red Teaming | 3 |
+| Vulnerability Research & Red Teaming | 4 |
 | AI in the SDLC | 1 |
 | Application Security | 1 |
 | Mobile & Device Security | 1 |
@@ -253,9 +260,12 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **72.85** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **72.1** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **70.0** · Nov 13, 2026  
+  A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
+  _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
 - **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **61.39** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_

@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--12-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-18-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--13-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-19-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -12,9 +12,9 @@
 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
-1. **[JioStar architect says production evals need a validated judge and monitoring](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=jiostar-architect-says-production-evals-need-a-v-6fce70a740#week)** · _AI Research · Nov 11, 2026_
-2. **[Microsoft's Lazarus backdoors an agent's model by editing fewer than 10 dormant neurons](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-s-lazarus-backdoors-an-agent-s-model-b-6ba70d62a1#week)** · _AI Security · Nov 10, 2026_
-3. **[Binance warns an iOS sandbox escape lets apps read other apps' secrets](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=binance-warns-an-ios-sandbox-escape-lets-apps-re-a93a33d0d2#week)** · _Product Security · Nov 10, 2026_
+1. **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-shows-poisoned-fine-tuning-data-and-ch-8d4cff91d3#week)** · _AI Security · Nov 12, 2026_
+2. **[OpenAI trained GPT-6 Astra on automated-red-team jailbreaks to resist misuse](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-trained-gpt-6-astra-on-automated-red-team-37a2be5c2d#week)** · _AI Security · Nov 12, 2026_
+3. **[JioStar architect says production evals need a validated judge and monitoring](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=jiostar-architect-says-production-evals-need-a-v-6fce70a740#week)** · _AI Research · Nov 11, 2026_
 
 ## Biggest this week
 
@@ -22,19 +22,19 @@ _Most covered or exploited in the last 7 days._
 
 1. **[GPUStack treated spoofable loopback requests as admin, and attackers exploited it](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gpustack-treated-spoofable-loopback-requests-as-a9d1c4073c#week)** · _AI Security · Nov 9, 2026_
 2. **[IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ibm-aspera-faspex-authorization-bypass-gives-ful-50dbb7e5d4#week)** · _Product Security · Nov 9, 2026_
-3. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 3 sources_
+3. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
 
 ## This week's top stories
 
 _The last 7 days, newest first._
 
-1. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026_
-2. **[ScreenConnect RMM+ extension flaw may have let attackers bypass MFA](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=screenconnect-rmm-extension-flaw-may-have-let-at-34789ca6be#week)** · _Product Security · Nov 12, 2026_
-3. **[Unit 42 reports attackers using open-source Cairn AI agent framework autonomously](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=unit-42-reports-attackers-using-open-source-cair-4e54cdae3e#week)** · _AI Security · Nov 12, 2026_
+1. **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week)** · _Product Security · Nov 13, 2026_
+2. **[StepSecurity finds fake-interview npm look-alikes stayed on npm for seven months](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=stepsecurity-finds-fake-interview-npm-look-alike-223ab43764#week)** · _Product Security · Nov 13, 2026_
+3. **[XBOW and Onapsis help uncover 14 SAP NetWeaver vulnerabilities patched in November](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xbow-and-onapsis-help-uncover-14-sap-netweaver-v-3d41496692#week)** · _Product Security · Nov 13, 2026_
 
 ## Claim changes
 
-_4 changes in the last 7 days; earlier ones fill in, each with its date._
+_3 changes in the last 7 days; earlier ones fill in, each with its date._
 
 1. **Added:** [Output-only watermark audits can be evaded by the audited provider](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims) · _current · Nov 9, 2026 · 1 source_  
    Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and…
@@ -42,9 +42,7 @@ _4 changes in the last 7 days; earlier ones fill in, each with its date._
    When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final…
 3. **Added:** [Coding-agent permission files leak secrets into public repositories](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims) · _current · Nov 8, 2026 · 1 source_  
    Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and…
-4. **Added:** [Agent safety eval scores can misjudge how agents behave in production](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims) · _current · Nov 5, 2026 · 1 source_  
-   An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting…
-5. **Last reversal:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
+4. **Last reversal:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
    Replaces ~~Assumed TOON's input savings would carry to generation~~: Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on…
 
 ## Efficiency
@@ -70,4 +68,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-12 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-13 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

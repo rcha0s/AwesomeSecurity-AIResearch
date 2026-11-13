@@ -25,7 +25,7 @@ Microsoft researchers show that editing the weights of fewer than 10 rarely-firi
 
 **Topic:** AI Security  ·  **Domain:** Model Supply Chain & Theft  
 **Source:** [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/lazare-veni-foras-reprogramming-dormant-neurons-to-backdoor-ai-agents/)  ·  **Retrieved:** 2026-11-12  
-**Scores:** Newness 52 · Novelty 65 · Relevance 82 · Credibility 76 · **Composite 68** _(each 0-100)_  
+**Scores:** Newness 49 · Novelty 65 · Relevance 82 · Credibility 76 · **Composite 68** _(each 0-100)_  
 **Tags:** `backdoor`, `model-provenance`, `weight-integrity`, `agent-security`, `sleeper-agent`, `model-supply-chain`  
 **Also reported by:** [The Hacker News](https://thehackernews.com/2026/11/microsoft-researchers-show-ai-agents.html) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: ProjectDiscovery's LoRA-poisoned Qwen2.5 that made Codex CLI exfiltrate .env files (ai-security.json, 'A backdoored open model made Codex CLI exfiltrate .env files') showed trigger-based agent backdoors via fine-tuning; Anthropic's sleeper-agents line is cited in the post. Lazarus differs by needing no training at all, only a sparse edit of fewer than 10 dormant neurons at inference-level compute, and by framing weight diffing as the detection method. Weight-editing-by-LLM context: 'Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do' (ai-research.json). Verifier's closest: ProjectDiscovery LoRA-backdoored model making Codex CLI exfiltrate .env; QuantGuard quantization-activated backdoors.

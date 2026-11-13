@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-12T00:00:00Z</updated>
+  <updated>2026-11-13T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -24,6 +24,48 @@
     <summary type="text">Patch internet-facing Aspera Faspex 5.0.0 through 5.0.19 per IBM's advisory now and review admin accounts for unexpected changes.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week</id>
+    <title>N-able investigates new N-central exploits that work against hotfixed on-premise servers</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week" rel="alternate" type="text/html" />
+    <summary type="text">MSP (managed service provider) teams running on-premise N-central should turn off the Legacy API now, as probing for the new root remote code execution exploit has already been observed.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week</id>
+    <title>Google Project Zero shortens its disclosure deadline to 30 days by 2028</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week" rel="alternate" type="text/html" />
+    <summary type="text">A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=stepsecurity-finds-fake-interview-npm-look-alike-223ab43764#week</id>
+    <title>StepSecurity finds fake-interview npm look-alikes stayed on npm for seven months</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=stepsecurity-finds-fake-interview-npm-look-alike-223ab43764#week" rel="alternate" type="text/html" />
+    <summary type="text">Interview assignments run on work laptops are an employer supply-chain risk, and the malware hides in build-time code and blockchain-resolved servers that install-script controls and static blocklists both miss.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xbow-and-onapsis-help-uncover-14-sap-netweaver-v-3d41496692#week</id>
+    <title>XBOW and Onapsis help uncover 14 SAP NetWeaver vulnerabilities patched in November</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xbow-and-onapsis-help-uncover-14-sap-netweaver-v-3d41496692#week" rel="alternate" type="text/html" />
+    <summary type="text">Old, rarely reviewed enterprise components often expose functionality without authentication or authorization checks, so SAP NetWeaver owners should patch the critical and missing-authentication notes first.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week</id>
+    <title>Check Point ships hotfixes for a zero-day exploited for root access</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week" rel="alternate" type="text/html" />
+    <summary type="text">Gateway owners should patch now and hunt for compromise, because attackers chained this flaw with another to reach root and then wipe a VMware ESXi host.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=token-security-imagines-an-invoice-ai-agent-hija-5e5b974756#week</id>
+    <title>Token Security imagines an invoice AI agent hijacked by hidden email text</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=token-security-imagines-an-invoice-ai-agent-hija-5e5b974756#week" rel="alternate" type="text/html" />
+    <summary type="text">Agents that read untrusted input, reach sensitive data and can act on their own should get a security review before launch, and their owners and access paths should be tracked.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week</id>
     <title>N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits</title>
     <updated>2026-11-12T00:00:00Z</updated>
@@ -38,53 +80,11 @@
     <summary type="text">If any repo you own got a wfx-docs PR or a reverted 'ci: refresh build cache' commit, revoke the author's tokens, rotate all reachable secrets and hunt for AWS/Entra backdoors.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=screenconnect-rmm-extension-flaw-may-have-let-at-34789ca6be#week</id>
-    <title>ScreenConnect RMM+ extension flaw may have let attackers bypass MFA</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=screenconnect-rmm-extension-flaw-may-have-let-at-34789ca6be#week" rel="alternate" type="text/html" />
-    <summary type="text">Audit remote-management extensions as separate auth surfaces, and investigate compromised endpoints out-of-band rather than through ScreenConnect.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=unit-42-reports-attackers-using-open-source-cair-4e54cdae3e#week</id>
-    <title>Unit 42 reports attackers using open-source Cairn AI agent framework autonomously</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=unit-42-reports-attackers-using-open-source-cair-4e54cdae3e#week" rel="alternate" type="text/html" />
-    <summary type="text">Defenders should expect autonomous agent frameworks to be used in real intrusions; the captured page held only the headline, so details need the original post.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=red-hat-quay-flaws-cvss-9-8-9-9-let-attackers-ov-51f0709b19#week</id>
-    <title>Red Hat Quay flaws (CVSS 9.8, 9.9) let attackers overwrite private images</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=red-hat-quay-flaws-cvss-9-8-9-9-let-attackers-ov-51f0709b19#week" rel="alternate" type="text/html" />
-    <summary type="text">Quay registries reachable by untrusted clients, even internal ones, can be used to poison every system that pulls their images, so apply the fix and hunt for planted keys.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=react-patches-critical-unauthenticated-remote-co-995e41cc01#week</id>
-    <title>React patches critical unauthenticated remote code execution (RCE) in Server Components</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=react-patches-critical-unauthenticated-remote-co-995e41cc01#week" rel="alternate" type="text/html" />
-    <summary type="text">Teams using React Server Components through frameworks such as Next.js should check resolved lockfile versions, since the affected packages usually arrive transitively.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=action1-sponsored-post-urges-customer-controlled-ca7b50784a#week</id>
-    <title>Action1 sponsored post urges customer-controlled signing for endpoint management actions</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=action1-sponsored-post-urges-customer-controlled-ca7b50784a#week" rel="alternate" type="text/html" />
-    <summary type="text">Treat this as vendor marketing: the underlying point is that a compromised management platform can push commands endpoints accept as legitimate, so high-risk actions need independent approval.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week</id>
     <title>Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges</title>
     <updated>2026-11-12T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week" rel="alternate" type="text/html" />
     <summary type="text">Defenders relying on antimalware self-protection should know this public exploit can reportedly be used to turn off any antivirus or endpoint detection and response (EDR) product, with no patch yet.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citrix-patches-12-netscaler-and-secure-access-cl-b630f0c802#week</id>
-    <title>Citrix patches 12 NetScaler and Secure Access Client flaws, including authentication bypass</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=citrix-patches-12-netscaler-and-secure-access-cl-b630f0c802#week" rel="alternate" type="text/html" />
-    <summary type="text">Teams running NetScaler appliances should upgrade now, since nine critical memory flaws and an unauthenticated Console bypass are fixed together.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims</id>
@@ -106,13 +106,6 @@
     <updated>2026-11-08T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims" rel="alternate" type="text/html" />
     <summary type="text">Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims</id>
-    <title>Agent safety eval scores can misjudge how agents behave in production</title>
-    <updated>2026-11-05T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-safety-evals-can-misread-production-behavior#claims" rel="alternate" type="text/html" />
-    <summary type="text">An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting Warnings eval, six models scored 10.2 to 37.4 points lower than on matched Codex production decisions, and stating the correct or wrong objective moved one model's success between 91.6% and 17.6%, while a generic 'this is an eval' cue did not.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims</id>

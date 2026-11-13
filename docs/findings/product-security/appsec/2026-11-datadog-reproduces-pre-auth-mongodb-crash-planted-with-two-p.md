@@ -25,7 +25,7 @@ CVE-2026-118383 (CVSS v4.0 score 9.5) is a use-after-free bug in MongoDB Server'
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [Datadog Security Labs](https://securitylabs.datadoghq.com/articles/cve-2026-118383-mongodb-server-use-after-free/)  ·  **Retrieved:** 2026-11-12  
-**Scores:** Newness 52 · Novelty 45 · Relevance 70 · Credibility 74 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 49 · Novelty 45 · Relevance 70 · Credibility 74 · **Composite 58** _(each 0-100)_  
 **Tags:** `mongodb`, `use-after-free`, `pre-auth`, `denial-of-service`, `database`, `detection`  
 **Also reported by:** [The Hacker News](https://thehackernews.com/2026/11/critical-pre-auth-mongodb-flaw-cve-2026.html) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No prior MongoDB server entry in the tracker; general pattern of critical pre-auth memory-safety bugs in network daemons (e.g. CVE-2025-14847-style MongoDB pre-auth issues, OpenSSH regreSSHion). The plant-then-wait election trigger and the log-level detection guidance are the specific new content. Verifier's closest: no MongoDB entries in the tracker; generic pre-auth memory-safety bugs in network daemons.

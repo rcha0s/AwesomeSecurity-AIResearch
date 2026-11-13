@@ -24,7 +24,7 @@ The Cybersecurity and Infrastructure Security Agency (CISA) added CVE-2026-12321
 
 **Topic:** Product Security  ·  **Domain:** Identity & Access  
 **Source:** [CISA Known Exploited Vulnerabilities](https://nvd.nist.gov/vuln/detail/CVE-2026-123218)  ·  **Retrieved:** 2026-11-12  
-**Scores:** Newness 52 · Novelty 25 · Relevance 60 · Credibility 69 · **Composite 49** _(each 0-100)_  
+**Scores:** Newness 49 · Novelty 25 · Relevance 60 · Credibility 69 · **Composite 48** _(each 0-100)_  
 **Tags:** `kev`, `exploited-in-the-wild`, `authorization-bypass`, `privilege-escalation`, `file-transfer`, `ibm`  
 **Also reported by:** [The Hacker News](https://thehackernews.com/2026/11/cisa-warns-of-active-exploitation-of.html) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Routine CISA KEV listings already tracked (e.g. Plex Media Server, Fortinet, GitLab KEV entries in product-security.json); file-transfer appliance exploitation is a well-known pattern. No prior Aspera Faspex entry.

@@ -25,7 +25,7 @@ Microsoft reports multiple unrelated threat actors installing GSocket, an open-s
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/11/global-socket-how-threat-actors-weaponizing-gsocket-stealthy-c2/)  ·  **Retrieved:** 2026-11-12  
-**Scores:** Newness 52 · Novelty 35 · Relevance 65 · Credibility 70 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 49 · Novelty 35 · Relevance 65 · Credibility 70 · **Composite 53** _(each 0-100)_  
 **Tags:** `gsocket`, `linux`, `c2`, `persistence`, `egress-filtering`, `web-rce`, `living-off-the-land`, `threat-hunting`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Abuse of legitimate relay/tunnel tools for C2 (ngrok, Cloudflare Tunnel, gs-netcat use reported in earlier cryptojacking and Linux intrusions) and generic 'patching is not eviction' guidance; tracker has related relay-network entries (Volt Typhoon relays) but nothing on GSocket. New: Microsoft telemetry on scale and sector, concrete deployment tradecraft and KQL hunts. Verifier's closest: CL-UNK-1211 Linux persistence entry; Volt Typhoon rotating relays.
 

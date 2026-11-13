@@ -2,12 +2,16 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_7 vetted findings · updated 2026-11-12 · ranked by composite · findings from the latest 31 days · [59 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-11-13 · ranked by composite · findings from the latest 31 days · [65 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://www.microsoft.com/en-us/security/blog/2026/11/12/trained-to-betray-how-post-training-supply-chain-attacks-hijack-coding-agents/)**
+  _Why now: Microsoft shows 1% poisoned fine-tuning data teaches coding agents to misuse whatever command tool exists, and RL hides the utility loss; actionable for anyone fine-tuning or adopting open checkpoints. · trending · newsworthy · high-relevance_
+- **[Token Security imagines an invoice AI agent hijacked by hidden email text](https://www.bleepingcomputer.com/news/security/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/)**
+- **[OpenAI trained GPT-6 Astra on automated-red-team jailbreaks to resist misuse](https://alignment.openai.com/fuzzy-robustness/)**
 - **[Unit 42 reports attackers using open-source Cairn AI agent framework autonomously](https://unit42.paloaltonetworks.com/cairn-framework-ai-autonomous-attacks/)**
 - **[SGLang remote code execution (RCE) breach exposes NEAR AI agents and users](https://thehackernews.com/2026/11/sglang-rce-exploit-breaches-near-ai.html)**
 - **[AG2 SandboxShellTool allowlist is bypassed by a newline in the command](https://github.com/advisories/GHSA-2h4w-29cv-2cmv)**
@@ -127,7 +131,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## AI Infrastructure & Incident Response
 
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **65.44** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **64.69** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
 - **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **53.25** · Oct 27, 2026  
