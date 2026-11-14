@@ -36237,5 +36237,157 @@
     "previous_slugs": [
       "skillmarker-watermarks-agent-skill-files-to-trace-copying-ca"
     ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.agent-security",
+    "title": "Mistral Vibe fixes permission-check bypasses in versions 2.25.4 and 2.25.5",
+    "source_url": "https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation",
+    "article_url": "https://www.vulncheck.com/advisories/mistral-vibe-permission-bypass-via-bash-line-continuation",
+    "source_id": null,
+    "discovered_via": "manual",
+    "source_name": "vulncheck.com",
+    "published": "2026-10-13",
+    "raw_path": "data/_raw/title-mistral-vibe-2-25-5-permission-bypass-via-8d3ce714fc.txt",
+    "related_claims": [],
+    "summary": "VulnCheck's 2026-10-13 advisory for CVE-2026-109428 shows Mistral Vibe approving a command from the part tree-sitter-bash extracted (an allowlisted cd) while bash joins a backslash-newline into a hidden curl, CVSS 4.0 of 8.7; fixed in 2.25.5. CVE-2026-109429 (command substitution hidden in a single-quoted variable value) is fixed in 2.25.4. HiddenLayer's 2026-09-11 advisories added CVE-2026-87984 to CVE-2026-87988, including unparsable shell syntax approved without a prompt (CVE-2026-87986, CVSS 4.0 of 10). All ids were confirmed at NVD.",
+    "takeaway": "A permission gate that approves a command from a parser that disagrees with the shell is a bypass; upgrade Vibe and fail closed on parse errors.",
+    "lessons": [
+      {
+        "point": "The approval check and the shell read the same string differently, so an allowlisted prefix hid an unapproved command.",
+        "excerpt": "Attackers can craft a command string where tree-sitter-bash extracts only an allowlisted prefix such as cd while bash joins the line continuation into a materially different and hidden command such as a curl request",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Mistral Vibe versions before 2.25.5 are affected, so the fix is an upgrade.",
+        "excerpt": "Mistral Vibe before 2.25.5 contains a permission validation bypass vulnerability",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "mistral-vibe",
+      "coding-agents",
+      "permission-bypass",
+      "tree-sitter",
+      "command-allowlist",
+      "cve"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Update Mistral Vibe to 2.25.5 or later and keep allowlists narrow",
+      "detail": "Upgrade, then review which commands are set to always allow. In your own agent, route any command whose parse tree has an error node to a user prompt."
+    },
+    "scores": {
+      "novelty": 60,
+      "relevance": 85,
+      "newness": 9,
+      "credibility": 55.0,
+      "composite": 54.0,
+      "scored_at": "2026-11-12T17:57:17+00:00"
+    },
+    "prior_art": "Roo Code's seven auto-approve bypasses in the same pool show the same parser-differential pattern in another coding agent.",
+    "verified": true,
+    "verify_note": "CVE-2026-87984 to 87988, 93993, 109428 and 109429 confirmed at NVD on 2026-10-29. The VulnCheck page and HiddenLayer's CVE-2026-87986 advisory were read in full.",
+    "corroborating_sources": [
+      {
+        "name": "HiddenLayer: unparsable shell constructs auto-approved (CVE-2026-87986)",
+        "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-09-mistral-vibe4",
+        "published": "2026-09-11"
+      }
+    ],
+    "id": "mistral-vibe-fixes-permission-check-bypasses-in-94d849d8e3",
+    "retrieved_at": "2026-10-29T07:30:02+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "date": "2026-10"
+  },
+  {
+    "topic": "product-security",
+    "domain": "ps.appsec",
+    "title": "Microsoft's October 2026 Patch Tuesday fixes one exploited Windows Shell bypass",
+    "source_url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026/",
+    "article_url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-october-2026/",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-13",
+    "date": "2026-10",
+    "raw_path": "data/_raw/microsoft-patch-tuesday-for-october-2026-snort-r-0a2cdd8633.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-blog-talosintelligence-com-rss",
+    "source_rank": 69.6,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "source_name": "Cisco Talos Intelligence",
+    "summary": "Talos summarizes Microsoft's October 2026 update: 1415 vulnerabilities, 85 rated critical, 67 of which are RCE. One flaw is exploited in the wild: CVE-2026-96951, a Windows Shell security feature bypass rooted in command injection (CVSS 8.8). Microsoft rates exploitation more likely for CVE-2026-70229, an Active Directory Domain Services RCE caused by incorrect authorization, and CVE-2026-70571, a stack overflow RCE in Exchange Server.",
+    "takeaway": "Patch the exploited Windows Shell bypass and the AD DS and Exchange RCEs first, since the rest is a long routine list.",
+    "lessons": [
+      {
+        "point": "Only one vulnerability this month is confirmed exploited in the wild, which sets the top patching priority.",
+        "excerpt": "Microsoft notes that 1 of the vulnerabilities disclosed this month have been exploited in the wild",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The exploited flaw is a Windows Shell security feature bypass caused by command injection.",
+        "excerpt": "is a security feature bypass vulnerability that affects Windows Shell. The shared weakness is Improper Neutralization of Special Elements used in a Command ('Command Injection').",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Microsoft rates exploitation more likely for an AD DS RCE caused by incorrect authorization, so domain controllers should be in the first patch wave.",
+        "excerpt": "is a remote code execution vulnerability that affects Windows Active Directory Domain Services. The shared weakness is Incorrect Authorization.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "patch-tuesday",
+      "microsoft",
+      "windows",
+      "exchange",
+      "active-directory",
+      "talos",
+      "snort"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Prioritize October 2026 Microsoft patches",
+      "detail": "Deploy the fix for CVE-2026-96951 (Windows Shell) first. Next patch domain controllers for CVE-2026-70229 and Exchange servers for CVE-2026-70571. Then patch the 9.8-rated network-reachable RCEs: QUIC, DHCP Server CVE-2026-96934, Message Queuing CVE-2026-100202 and the Outlook RCEs. Enable the Talos Snort rules for this release on network sensors."
+    },
+    "scores": {
+      "novelty": 5,
+      "relevance": 40,
+      "newness": 9,
+      "credibility": 69.6,
+      "composite": 26.19,
+      "scored_at": "2026-11-12T17:57:17+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: every number and CVE matches; patch-order advice is inference from Microsoft's exploitability ratings. Verifier novelty 15, relevance 45; kept 5.",
+    "prior_art": "No earlier Patch Tuesday roundup was found in the pool. This is a routine monthly vendor roundup with no new research. The captured text is cut off before the Snort rule list.",
+    "related_claims": [],
+    "threat": "Attackers exploit CVE-2026-96951 to bypass Windows Shell security features in the wild. Unpatched AD DS, Exchange and other critical RCEs give further entry points.",
+    "conditions": "Unpatched Windows endpoints and servers, domain controllers, Exchange Server and Office installs as of the October 2026 release.",
+    "mitigations": "Apply the October 2026 Microsoft security updates, starting with the exploited Windows Shell flaw, domain controllers and Exchange, and deploy the corresponding Talos Snort rules.",
+    "id": "microsoft-s-october-2026-patch-tuesday-fixes-one-ffa372bb8b",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0
   }
 ]
