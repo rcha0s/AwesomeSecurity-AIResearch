@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--13-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-19-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--14-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-18-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -22,15 +22,15 @@ _Most covered or exploited in the last 7 days._
 
 1. **[GPUStack treated spoofable loopback requests as admin, and attackers exploited it](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=gpustack-treated-spoofable-loopback-requests-as-a9d1c4073c#week)** · _AI Security · Nov 9, 2026_
 2. **[IBM Aspera Faspex authorization bypass gives full admin, exploited in the wild](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=ibm-aspera-faspex-authorization-bypass-gives-ful-50dbb7e5d4#week)** · _Product Security · Nov 9, 2026_
-3. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
+3. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 4 sources_
 
 ## This week's top stories
 
 _The last 7 days, newest first._
 
-1. **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week)** · _Product Security · Nov 13, 2026_
-2. **[StepSecurity finds fake-interview npm look-alikes stayed on npm for seven months](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=stepsecurity-finds-fake-interview-npm-look-alike-223ab43764#week)** · _Product Security · Nov 13, 2026_
-3. **[XBOW and Onapsis help uncover 14 SAP NetWeaver vulnerabilities patched in November](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=xbow-and-onapsis-help-uncover-14-sap-netweaver-v-3d41496692#week)** · _Product Security · Nov 13, 2026_
+1. **[Wired says low-skill attackers use AI tools to run ransomware](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=beware-the-new-ai-fueled-ransomware-boom-83d35d0115#week)** · _Product Security · Nov 14, 2026_
+2. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
+3. **[Check Point ships hotfixes for a zero-day exploited for root access](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week)** · _Product Security · Nov 13, 2026 · 2 sources_
 
 ## Claim changes
 
@@ -68,4 +68,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-13 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-14 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
