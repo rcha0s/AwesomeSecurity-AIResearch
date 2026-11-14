@@ -1,286 +1,106 @@
 {
-  "generated": "2026-10-31",
-  "proposed": [
-    {
-      "domain": "status.linode.com",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Linode Security Incident",
-        "url": "https://status.linode.com/incidents/nt58zhx3pmgm",
-        "points": 183
-      },
-      "feed_url": "https://status.linode.com/feed",
-      "hit_rate": 0.56,
-      "hits": 14,
-      "sampled": 25,
-      "status": "proposed",
-      "suggested_tier": "medium",
-      "suggested_track": "news",
-      "suggested_scope": "both"
-    },
-    {
-      "domain": "doublepulsar.com",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Claude Code VS Code extension with backdoor released on Cursor marketplace",
-        "url": "https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2",
-        "points": 399
-      },
-      "feed_url": "https://doublepulsar.com/feed",
-      "hit_rate": 0.5,
-      "hits": 5,
-      "sampled": 10,
-      "status": "proposed",
-      "suggested_tier": "medium",
-      "suggested_track": "news",
-      "suggested_scope": "both"
-    },
-    {
-      "domain": "binarysecurity.no",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Azure's Weakest Link – Five Full Cross-Tenant Compromises",
-        "url": "https://www.binarysecurity.no/posts/2026/10/one-root-case",
-        "points": 312
-      },
-      "feed_url": "https://binarysecurity.no/feed.xml",
-      "hit_rate": 0.6,
-      "hits": 6,
-      "sampled": 10,
-      "status": "proposed",
-      "suggested_tier": "medium",
-      "suggested_track": "news",
-      "suggested_scope": "both"
-    }
-  ],
+  "generated": "2026-11-14",
+  "proposed": [],
   "skipped": [
     {
-      "domain": "tng.episodle.com",
+      "domain": "monkeyisland.pages.dev",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Show HN: To Honor Sir Patrick Stewart, Enjoy the TNG Episode Guessing Game",
-        "url": "https://tng.episodle.com/",
-        "points": 193
+        "title": "Monkey Island: all 13 versions side by side",
+        "url": "https://monkeyisland.pages.dev/",
+        "points": 181
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "resetera.com",
+      "domain": "techpowerup.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "France is getting download tax for content providers (€0.055/GB)",
-        "url": "https://www.resetera.com/threads/france-is-getting-download-tax-for-content-providers-%E2%82%AC0-055-gb-for-data-delivered-to-french-users.1675109/",
-        "points": 104
+        "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
+        "url": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
+        "points": 652
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "firezone.dev",
+      "domain": "finance.yahoo.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Sanstun: A sans-IO, parallel-friendly WireGuard implementation in Rust",
-        "url": "https://www.firezone.dev/blog/introducing-sanstun",
-        "points": 136
+        "title": "Nvidia director sold nearly $1B in stock weeks before the Jensen Huang scandal",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-director-sold-nearly-1b-160000846.html",
+        "points": 203
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "otwstatus.org",
+      "domain": "today.ucsd.edu",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "AO3 Down for Maintenance",
-        "url": "https://www.otwstatus.org"
+        "title": "Elephants found to be increasingly isolated leading to fractured social networks",
+        "url": "https://today.ucsd.edu/story/elephants-found-to-be-increasingly-isolated-leading-to-fractured-social-networks",
+        "points": 143
       },
-      "feed_url": "https://otwstatus.org/feed",
-      "hit_rate": 0.04,
-      "hits": 1,
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "fly.faa.gov",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "FAA lifted National Ground Stop at 0119Z",
+        "url": "https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5",
+        "points": 208
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "english.nv.ua",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Ukraine knocks out 36% of Russia's oil refining capacity in under two weeks",
+        "url": "https://english.nv.ua/nation/thirteen-day-drone-blitz-paralyzes-36-of-moscow-s-oil-50658616.html",
+        "points": 268
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "fox5dc.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Amtrak booking system experiencing major issues amid nationwide FAA ground stop",
+        "url": "https://www.fox5dc.com/news/amtrak-outage-ticket-booking-faa-ground-stop-november-13-2026"
+      },
+      "feed_url": "https://fox5dc.com/rss.xml",
+      "hit_rate": 0.0,
+      "hits": 0,
       "sampled": 25,
       "status": "skipped",
-      "reason": "Back-catalog hit-rate 4% < threshold 40%."
+      "reason": "Back-catalog hit-rate 0% < threshold 40%."
     },
     {
-      "domain": "bostonglobe.com",
+      "domain": "unsloth.ai",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Through Captain Jean-Luc Picard, Patrick Stewart taught us the measure of a man",
-        "url": "https://www.bostonglobe.com/2026/10/29/metro/patrick-stewart-picard-star-trek-the-next-generation/",
-        "points": 320
+        "title": "Unsloth Qwen3.8-27B Quantizations – Dynamic v3.1 Update",
+        "url": "https://unsloth.ai/docs/models/qwen3.8",
+        "points": 159
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "blue-continuum.com",
+      "domain": "dfarq.homeip.net",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Jules Verne's Lost Novel",
-        "url": "https://blue-continuum.com/verne-paris"
+        "title": "What happened to 3Com?",
+        "url": "https://dfarq.homeip.net/what-happened-to-3com/"
       },
-      "feed_url": "https://blue-continuum.com/rss.xml",
-      "hit_rate": 0.062,
-      "hits": 1,
-      "sampled": 16,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 6% < threshold 40%."
-    },
-    {
-      "domain": "sciencenorway.no",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "The oldest ice disappears and the Stone Age emerges from it",
-        "url": "https://www.sciencenorway.no/archaeology-climate-culture/the-oldest-ice-is-disappearing-the-stone-age-is-emerging-from-the-melting-ice/2713921",
-        "points": 154
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "blog.persistent.info",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Infinite Mac: BeOS",
-        "url": "https://blog.persistent.info/2026/10/infinite-mac-beos.html"
-      },
-      "feed_url": "https://blog.persistent.info/rss.xml",
-      "hit_rate": 0.12,
-      "hits": 3,
-      "sampled": 25,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 12% < threshold 40%."
-    },
-    {
-      "domain": "status.bunny.net",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Bunny CDN Security Incident",
-        "url": "https://status.bunny.net/incidents/p6gf1by9kr7m"
-      },
-      "feed_url": "https://status.bunny.net/feed",
-      "hit_rate": 0.32,
-      "hits": 8,
-      "sampled": 25,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 32% < threshold 40%."
-    },
-    {
-      "domain": "twitter.com",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "French digital tax may kill VideoLan non-profit",
-        "url": "https://twitter.com/videolan/status/2116229135919919278",
-        "points": 103
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "lesnumeriques.com",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "French national assembly votes 0.055€/GB internet tax",
-        "url": "https://www.lesnumeriques.com/societe-numerique/netflix-steam-cloud-vos-abonnements-et-telechargements-bientot-plus-chers-a-cause-d-une-nouvelle-taxe-n264035.html"
-      },
-      "feed_url": "https://lesnumeriques.com/rss.xml",
-      "hit_rate": 0.16,
-      "hits": 4,
-      "sampled": 25,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 16% < threshold 40%."
-    },
-    {
-      "domain": "githubstatus.com",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "GitHub Incident with Actions, Pages, and Webhooks",
-        "url": "https://www.githubstatus.com/incidents/pwxsjgnvrk6b",
-        "points": 153
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "virtuallyfun.com",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "My favourite PowerMac is a Nintendo Wii",
-        "url": "https://virtuallyfun.com/2026/10/29/my-favourite-powermac-is-a-nintendo-wii/",
-        "points": 311
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "404media.co",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Proton's CEO Cancels AI 'Re-Interviews'",
-        "url": "https://www.404media.co/protons-ceo-cancels-ai-re-interviews/"
-      },
-      "feed_url": "https://404media.co/feed",
-      "hit_rate": 0.067,
-      "hits": 1,
-      "sampled": 15,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 7% < threshold 40%."
-    },
-    {
-      "domain": "bbc.co.uk",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "US tech stocks see sharp falls over AI cost fears",
-        "url": "https://www.bbc.co.uk/news/articles/cvwy72e0n72yo",
-        "points": 255
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "newsletter.signoz.io",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "AI isn't replacing SREs, it's deskilling them",
-        "url": "https://newsletter.signoz.io/p/ai-isnt-replacing-sres-its-deskilling"
-      },
-      "feed_url": "https://newsletter.signoz.io/feed",
-      "hit_rate": 0.1,
-      "hits": 2,
-      "sampled": 20,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 10% < threshold 40%."
-    },
-    {
-      "domain": "tangled.org",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "The federated code forge",
-        "url": "https://tangled.org/blog/forge/",
-        "points": 292
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "npr.org",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Blockchain intelligence firms link North Korea to $6.3B hack on Binance",
-        "url": "https://www.npr.org/2026/10/30/g-s1-150902/blockchain-intelligence-firms-link-north-korea-to-6-3b-hack-on-binance",
-        "points": 192
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "blog.flokinet.is",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "ICE wants its mask back, and hired a company to ask",
-        "url": "https://blog.flokinet.is/2026/10/29/ice-wants-its-mask-back-and-hired-a-company-to-ask/"
-      },
-      "feed_url": "https://blog.flokinet.is/feed",
+      "feed_url": "https://dfarq.homeip.net/feed",
       "hit_rate": 0.0,
       "hits": 0,
       "sampled": 10,
@@ -288,40 +108,225 @@
       "reason": "Back-catalog hit-rate 0% < threshold 40%."
     },
     {
+      "domain": "grounds.top",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Show HN: Live map of U.S. flights during tonight's FAA nationwide ground stop",
+        "url": "https://grounds.top/",
+        "points": 157
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "joshka.net",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Terminal borders that don't cost a cell",
+        "url": "https://www.joshka.net/cell-borders/"
+      },
+      "feed_url": "https://joshka.net/atom.xml",
+      "hit_rate": 0.2,
+      "hits": 3,
+      "sampled": 15,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 20% < threshold 40%."
+    },
+    {
+      "domain": "alichraghi.github.io",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "How Not to Build a Music Player",
+        "url": "https://alichraghi.github.io/blog/how-not-to-build-a-music-player/"
+      },
+      "feed_url": "https://alichraghi.github.io/index.xml",
+      "hit_rate": 0.0,
+      "hits": 0,
+      "sampled": 2,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 0% < threshold 40%."
+    },
+    {
+      "domain": "claude.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Claude Meetings",
+        "url": "https://claude.com/resources/articles/claude-meetings",
+        "points": 100
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "orcasairband.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Live airband on all frequencies from KORS. Victoria, CA also ground stopped",
+        "url": "https://orcasairband.com/",
+        "points": 270
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "axios.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "FAA issues nationwide ground stop due to \"extraordinary circumstances\"",
+        "url": "https://www.axios.com/2026/11/13/faa-nationwide-ground-stop",
+        "points": 126
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "twitter.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "All US airports are currently ground stopped",
+        "url": "https://twitter.com/flightradar24/status/2121347654714077605",
+        "points": 201
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
       "domain": "nbcnews.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Polymarket 1h halt after vendor compromise; affected users will be 'made whole'",
-        "url": "https://www.nbcnews.com/business/consumer/polymarket-trading-halt-hack-wallets-rcna606405"
+        "title": "FAA issues national ground stop – lifted 4.5 hours later",
+        "url": "https://www.nbcnews.com/news/us-news/faa-orders-nationwide-ground-stop-departing-flights-reasons-safety-rcna609247"
       },
       "feed_url": "https://nbcnews.com/feed",
-      "hit_rate": 0.08,
-      "hits": 2,
+      "hit_rate": 0.04,
+      "hits": 1,
       "sampled": 25,
       "status": "skipped",
-      "reason": "Back-catalog hit-rate 8% < threshold 40%."
+      "reason": "Back-catalog hit-rate 4% < threshold 40%."
     },
     {
-      "domain": "status.northflank.com",
+      "domain": "blog.jsweeting.me",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Northflank Breached",
-        "url": "https://status.northflank.com"
+        "title": "Big tech is here to let us down",
+        "url": "https://blog.jsweeting.me/big-tech-is-here-to-let-us-down"
       },
-      "feed_url": "https://status.northflank.com/feed",
-      "hit_rate": 0.12,
-      "hits": 3,
-      "sampled": 25,
+      "feed_url": "https://blog.jsweeting.me/feed",
+      "hit_rate": 0.0,
+      "hits": 0,
+      "sampled": 15,
       "status": "skipped",
-      "reason": "Back-catalog hit-rate 12% < threshold 40%."
+      "reason": "Back-catalog hit-rate 0% < threshold 40%."
     },
     {
-      "domain": "medpagetoday.com",
+      "domain": "gyptazy.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Medicare Will Pay $50k for Your Heart Attack. It Should Pay $100 to Prevent It",
-        "url": "https://www.medpagetoday.com/opinion/second-opinions/123553?trw=no",
-        "points": 296
+        "title": "Live-migration support in FreeBSD and bhyve coming",
+        "url": "https://gyptazy.com/blog/freebsd-bhyve-live-migration-support-rfc/",
+        "points": 112
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "slopmanifesto.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "No AI Slop: A Manifesto",
+        "url": "https://www.slopmanifesto.com/",
+        "points": 202
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "nature.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Found: A protein that drives ageing without unleashing inflammation",
+        "url": "https://www.nature.com/articles/d41586-026-03638-3",
+        "points": 208
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "perplexity.ai",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Perplexity Decider v1.3: Training, eval, and use cases",
+        "url": "https://www.perplexity.ai/hub/blog/perplexity-decider",
+        "points": 132
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "open.m-vave.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "FM-1 Workbench",
+        "url": "https://open.m-vave.com/fm1-workbench",
+        "points": 239
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "freightwaves.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "$11.4M in Nvidia hardware vanishes during shipment from CA to TX",
+        "url": "https://www.freightwaves.com/news/11-4-million-in-nvidia-hardware-vanishes-during-shipment-from-california-to-texas"
+      },
+      "feed_url": "https://freightwaves.com/feed",
+      "hit_rate": 0.04,
+      "hits": 1,
+      "sampled": 25,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 4% < threshold 40%."
+    },
+    {
+      "domain": "alphaxiv.org",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Weight Space Misfolding",
+        "url": "https://www.alphaxiv.org/abs/2611.weight-space-misfolding",
+        "points": 139
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "reddit.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "It Takes 16 Clicks for a Student to Open a PowerPoint on an iPad",
+        "url": "https://www.reddit.com/r/Teachers/comments/1xuup7a/technology_sucks_it_literally_takes_16_clicks_for/",
+        "points": 351
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "isometricsf.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Show HN: Isometric SF – A pixel-art map of the SF Bay Area",
+        "url": "https://isometricsf.com/",
+        "points": 216
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "haddyalchaer.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "After 600 experiments, here's what I discovered about JEPA world models",
+        "url": "https://haddyalchaer.com/jepa",
+        "points": 266
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
@@ -330,96 +335,10 @@
       "domain": "fortune.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Cisco gives engineer unlimited AI tokens to rewrite legacy code",
-        "url": "https://fortune.com/2026/10/30/cisco-president-jeetu-patel-gen-z-27-year-old-unlimited-ai-tokens-rewrite-legacy-code-entry-level-jobs/"
+        "title": "OpenAI disbands its robotics team as its general models start running robots",
+        "url": "https://fortune.com/2026/11/13/openai-disbands-robotics-team-as-its-general-models-start-running-robots/"
       },
       "feed_url": "https://fortune.com/feed",
-      "hit_rate": 0.1,
-      "hits": 1,
-      "sampled": 10,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 10% < threshold 40%."
-    },
-    {
-      "domain": "progressives.house.gov",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "US Reps Lead Democratic Resolution Opposing A.I. Bubble Bailout for Big Tech",
-        "url": "https://progressives.house.gov/2026/10/reps-casar-waters-lead-democratic-resolution-opposing-a-i-bubble-bailout-for-big-tech-commit-to-protecting-american-people-instead",
-        "points": 641
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "cyberplace.social",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Backdoors in official Claude Code extensions",
-        "url": "https://cyberplace.social/@GossiTheDog/117528831681803563",
-        "points": 655
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "quantamagazine.org",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "How do you take a picture of a black hole?",
-        "url": "https://www.quantamagazine.org/how-do-you-take-a-picture-of-a-black-hole-20261029/"
-      },
-      "feed_url": "https://quantamagazine.org/feed",
-      "hit_rate": 0.2,
-      "hits": 1,
-      "sampled": 5,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 20% < threshold 40%."
-    },
-    {
-      "domain": "elect.horse",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "elect.horse",
-        "url": "https://elect.horse/",
-        "points": 547
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "phorion.io",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
-        "url": "https://phorion.io/blog/offical-claude-code-vsx-compromise/"
-      },
-      "feed_url": "https://phorion.io/index.xml",
-      "hit_rate": 0.3,
-      "hits": 3,
-      "sampled": 10,
-      "status": "skipped",
-      "reason": "Back-catalog hit-rate 30% < threshold 40%."
-    },
-    {
-      "domain": "cormacmccarthy.lib.utk.edu",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "Cormac McCarthy's Library",
-        "url": "https://cormacmccarthy.lib.utk.edu/",
-        "points": 110
-      },
-      "status": "skipped",
-      "reason": "No RSS/Atom feed discoverable via well-known paths."
-    },
-    {
-      "domain": "journal.animationstudies.org",
-      "surfaced_by": "hackernews",
-      "trending_story": {
-        "title": "A Pig, the State, and War: Porco Rosso (Kurenai No Buta) (2014)",
-        "url": "https://journal.animationstudies.org/article/id/66/"
-      },
-      "feed_url": "https://journal.animationstudies.org/feed",
       "hit_rate": 0.0,
       "hits": 0,
       "sampled": 10,
@@ -427,65 +346,165 @@
       "reason": "Back-catalog hit-rate 0% < threshold 40%."
     },
     {
-      "domain": "convo.casa",
+      "domain": "theguardian.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Proton goes all in on using AI",
-        "url": "https://convo.casa/@b/117525936178835007",
-        "points": 117
+        "title": "AI unlocks Gödel's notebooks, said to contain hundreds of proved theorems",
+        "url": "https://www.theguardian.com/science/2026/nov/13/kurt-godel-notebooks-ai-helps-unlock-hidden-discoveries-man-who-transformed-maths"
+      },
+      "feed_url": "https://theguardian.com/rss",
+      "hit_rate": 0.08,
+      "hits": 2,
+      "sampled": 25,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 8% < threshold 40%."
+    },
+    {
+      "domain": "filemanager-cdn.mziq.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Brazil's Caixa insurer breach exposes names and tax IDs of all 7.6M customers",
+        "url": "https://filemanager-cdn.mziq.com/published/3972906b-e50b-4f74-ab74-4d0d32125d11/9567a559-d20a-486e-a7ae-5c6bbc030c5e",
+        "points": 165
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "gizmodo.com",
+      "domain": "text.npr.org",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "El Niño is flooding California's coasts with the highest tides to come",
-        "url": "https://gizmodo.com/el-nino-is-already-flooding-californias-coasts-and-the-years-highest-tides-havent-arrived-2000832574",
-        "points": 141
+        "title": "Why is Google cutting off Search from AI-free schools? Here are some theories",
+        "url": "https://text.npr.org/nx-s1-6029408",
+        "points": 186
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "labs.ycombinator.com",
+      "domain": "youtube.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "We ran AI agent swarms in Minecraft and Mindustry",
-        "url": "https://labs.ycombinator.com/projects/games/index.html",
-        "points": 402
+        "title": "Jonathan Blow – If AI solved coding, why is my software still the same? [video]",
+        "url": "https://www.youtube.com/watch?v=IRK8h67ol7Q",
+        "points": 319
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "arkm.com",
+      "domain": "echopress.com",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "Binance-hacker-1029 – $5.6B stolen from Binance",
-        "url": "https://arkm.com/explorer/entity/21a94755-f604-45e5-9501-6542e23005e8",
-        "points": 1739
+        "title": "Minnesota guitarist's \"palmfrets\" invention strikes a new chord",
+        "url": "https://www.echopress.com/business/minnesota-guitarists-invention-strikes-a-new-chord",
+        "points": 178
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
     },
     {
-      "domain": "elementary.codes",
+      "domain": "myid.ie",
       "surfaced_by": "hackernews",
       "trending_story": {
-        "title": "ElementaryUI – Swift, in the Browser",
-        "url": "https://elementary.codes",
-        "points": 125
+        "title": "EU Digital Identity Wallet rollout: every EU state on one board",
+        "url": "https://myid.ie/business/eu-digital-wallet-tracker/",
+        "points": 122
       },
       "status": "skipped",
       "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "discourse.haskell.org",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "A technical vision for the Haskell ecosystem",
+        "url": "https://discourse.haskell.org/t/a-technical-vision-for-the-haskell-ecosystem/15078",
+        "points": 210
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "mtsoukalos.eu",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Why Zig over C for Systems Programming",
+        "url": "https://www.mtsoukalos.eu/2026/11/why-zig-over-c-for-systems-programming/"
+      },
+      "feed_url": "https://mtsoukalos.eu/index.xml",
+      "hit_rate": 0.24,
+      "hits": 6,
+      "sampled": 25,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 24% < threshold 40%."
+    },
+    {
+      "domain": "garymarcus.substack.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Eli Lilly CEO pushes back on Dario Amodei's medical claims",
+        "url": "https://garymarcus.substack.com/p/breaking-eli-lilly-ceo-becomes-latest",
+        "points": 268
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "science.org",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Doomsday: Friday, 13 November, A.D. 2026 (1960)",
+        "url": "https://www.science.org/doi/10.1126/science.132.3436.1291",
+        "points": 474
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "theatlantic.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "AI is destroying the trust between writers and readers",
+        "url": "https://www.theatlantic.com/books/2026/11/ai-literary-scams-amazon/689391/",
+        "points": 344
+      },
+      "status": "skipped",
+      "reason": "No RSS/Atom feed discoverable via well-known paths."
+    },
+    {
+      "domain": "status.claude.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "Claude Is Down",
+        "url": "https://status.claude.com/history"
+      },
+      "feed_url": "https://status.claude.com/feed",
+      "hit_rate": 0.36,
+      "hits": 9,
+      "sampled": 25,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 36% < threshold 40%."
+    },
+    {
+      "domain": "motherduck.com",
+      "surfaced_by": "hackernews",
+      "trending_story": {
+        "title": "The Dawn of the Data Intelligence Engineer",
+        "url": "https://motherduck.com/blog/the-data-intelligence-engineer/"
+      },
+      "feed_url": "https://motherduck.com/rss.xml",
+      "hit_rate": 0.333,
+      "hits": 5,
+      "sampled": 15,
+      "status": "skipped",
+      "reason": "Back-catalog hit-rate 33% < threshold 40%."
     }
   ],
   "summary": {
-    "trending_stories": 48,
-    "candidate_domains": 42,
-    "proposed": 3,
-    "skipped": 35
+    "trending_stories": 49,
+    "candidate_domains": 45,
+    "proposed": 0,
+    "skipped": 42
   }
 }
