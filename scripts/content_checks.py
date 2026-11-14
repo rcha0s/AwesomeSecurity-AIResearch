@@ -16,6 +16,9 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
+  new_claim_problems    a claim a scan adds must cite only findings from a
+                        registered source (main's registry); anything else is
+                        "claim change needs human review".
   editorial_problems    an entry promoted on main keeps its promotion (every
                         copy) unless main's copy already failed integrity;
                         any other removal is refused as "editorial demotion
@@ -50,6 +53,7 @@ from common import (
     integrity_lost,
     is_reddit_url,
     is_shown,
+    normalize_url,
 )  # the integrity floor; what the site shows
 
 # Same rule as safeUrl() in scripts/templates/site.html: keep them in step.
@@ -153,6 +157,49 @@ def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
     out = [f"claim {cid} on main is missing from the PR" for cid in sorted(set(old) - set(new))]
     for cid in sorted(set(old) & set(new)):
         out += _claim_change_problems(cid, old[cid], new[cid])
+    return out
+
+
+def _evidence_urls(claim: dict) -> list[str]:
+    ev = claim.get("evidence")
+    items = ev if isinstance(ev, list) else []
+    urls = [i.get("url") if isinstance(i, dict) else i for i in items]
+    return [u for u in urls if isinstance(u, str) and u]
+
+
+def vouched_urls(rows: list, registry_ids: set[str]) -> set[str]:
+    """Normalized citation URLs of entries that came from a registered source and
+    were not refuted. The registry changes only through reviewed add-source PRs."""
+    out = set()
+    for row in rows:
+        if not isinstance(row, dict) or row.get("source_id") not in registry_ids:
+            continue
+        if row.get("verified") is False:
+            continue
+        out |= {normalize_url(row[k]) for k in ("source_url", "article_url") if row.get(k)}
+    return out
+
+
+def new_claim_problems(
+    main_ledger: object, pr_ledger: object, rows: list, registry_ids: set[str]
+) -> list[str]:
+    """A claim is durable "do this now" advice, and the scan session writes its text
+    after reading pages anyone can publish. A scan PR may add one only when every
+    evidence URL is a citation of a finding that came from a registered source;
+    otherwise (a curator link, a Hacker News post, an unknown blog) a human merges."""
+    old, new = _claims_by_id(main_ledger), _claims_by_id(pr_ledger)
+    added = sorted(set(new) - set(old))
+    vouched = vouched_urls(rows, registry_ids) if added else set()
+    out = []
+    for cid in added:
+        urls = _evidence_urls(new[cid])
+        loose = [u for u in urls if normalize_url(u) not in vouched]
+        if not urls:
+            out.append(f"{NEEDS_REVIEW}: new claim {cid} cites no evidence")
+        elif loose:
+            out.append(
+                f"{NEEDS_REVIEW}: new claim {cid} cites evidence not from a registered source"
+            )
     return out
 
 

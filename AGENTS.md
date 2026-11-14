@@ -641,7 +641,18 @@ on a `claude/scan-*` branch.
     statement, title, guidance, supersession fields, confidence, scope, a
     rewritten evidence item), is refused with "claim change needs human
     review": the PR stays open for a human to merge. Superseding a claim is
-    therefore always a human merge;
+    therefore always a human merge. A new claim is durable "do this now"
+    advice written by the session after it read pages anyone can publish, so
+    it also needs every evidence URL to be a citation (`source_url` or
+    `article_url`) of a non-refuted finding whose `source_id` is on main's
+    source registry (`content_checks.new_claim_problems`); a claim built on a
+    curator link, a Hacker News post, an X list post or an unregistered blog
+    gets the same "needs human review" refusal. Replayed over the 11 scans of
+    2026-10-28 to 11-12, this sends 3 scans (4 of 9 new claims) to a human. It
+    stops a hostile page from minting a claim; it does not stop a session
+    that hand-edits `source_id` in the pools, which only the owner-side
+    settings below can bound. Evidence appended to an existing claim is not
+    vouched this way;
   - every entry promoted on main (pools + archive) stays promoted, in every
     copy, unless main's copy had already failed integrity (refuted or
     ungrounded). `verified` and `grounding_score` are session-writable, so
