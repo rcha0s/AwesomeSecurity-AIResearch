@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import merge_gate as gate
 import pytest
 
@@ -287,3 +289,50 @@ def test_content_problems_refuse_an_argument_row_with_a_foreign_link(tmp_path, m
     assert gate.content_problems("main", root) == []
     rows.write_text(json.dumps([_argument_row("https://evil.example/r/netsec/comments/abc123/")]))
     assert any("permalink" in p for p in gate.content_problems("main", root))
+
+
+# --------------------------------------------------- new claims against main's registry
+def _claims_root(tmp_path, evidence_url):
+    (tmp_path / "data").mkdir()
+    claims = [
+        {"id": "kept", "status": "current", "evidence": [{"url": "https://blog.example/old"}]},
+        {"id": "fresh", "status": "current", "title": "t", "statement": "s",
+         "guidance": "g", "evidence": [{"url": evidence_url}]},
+    ]  # fmt: skip
+    (tmp_path / "data" / "claims.json").write_text(json.dumps({"claims": claims}))
+    return tmp_path
+
+
+def _fake_git(monkeypatch, registry_doc):
+    main = {"claims": [{"id": "kept", "evidence": [{"url": "https://blog.example/old"}]}]}
+    monkeypatch.setattr(gate, "main_ledger", lambda base: main)
+    monkeypatch.setattr(gate, "git_json", lambda ref, default: registry_doc)
+
+
+FEED = {"id": "rss:a", "type": "rss", "active": True, "url": "https://blog.example/feed/"}
+
+
+@pytest.mark.parametrize("doc", [{"sources": [FEED]}, [FEED]])
+def test_new_claim_check_reads_main_registry_in_either_shape(tmp_path, monkeypatch, doc):
+    _fake_git(monkeypatch, doc)
+    assert (
+        gate.new_claim_check("origin/main", _claims_root(tmp_path, "https://blog.example/p")) == []
+    )
+
+
+def test_new_claim_check_refuses_a_host_main_does_not_register(tmp_path, monkeypatch):
+    _fake_git(monkeypatch, {"sources": [FEED]})
+    root = _claims_root(tmp_path, "https://evil.example/p")
+    assert gate.new_claim_check("origin/main", root) != []
+
+
+def test_new_claim_check_without_a_registry_on_main_refuses(tmp_path, monkeypatch):
+    _fake_git(monkeypatch, {})
+    root = _claims_root(tmp_path, "https://blog.example/p")
+    assert gate.new_claim_check("origin/main", root) != []
+
+
+def test_content_problems_includes_the_new_claim_check():
+    import inspect
+
+    assert "new_claim_check(base, root)" in inspect.getsource(gate.content_problems)

@@ -16,9 +16,10 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
-  new_claim_problems    a claim a scan adds must cite only findings from a
-                        registered source (main's registry); anything else is
-                        "claim change needs human review".
+  new_claim_problems    a claim a scan adds must cite only URLs on the host of a
+                        registered blog, org or newsletter feed (main's registry)
+                        and carry no URL or shell command in its text; anything
+                        else is "claim change needs human review".
   editorial_problems    an entry promoted on main keeps its promotion (every
                         copy) unless main's copy already failed integrity;
                         any other removal is refused as "editorial demotion
@@ -48,12 +49,12 @@ from __future__ import annotations
 import html
 import json
 import re
+from urllib.parse import urlparse
 
 from common import (
     integrity_lost,
     is_reddit_url,
     is_shown,
-    normalize_url,
 )  # the integrity floor; what the site shows
 
 # Same rule as safeUrl() in scripts/templates/site.html: keep them in step.
@@ -160,46 +161,70 @@ def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
     return out
 
 
-def _evidence_urls(claim: dict) -> list[str]:
-    ev = claim.get("evidence")
-    items = ev if isinstance(ev, list) else []
-    urls = [i.get("url") if isinstance(i, dict) else i for i in items]
-    return [u for u in urls if isinstance(u, str) and u]
+# Hosts anyone can publish on: a registered feed there says nothing about the page.
+OPEN_HOSTS = frozenset(
+    {
+        "github.com", "gist.github.com", "raw.githubusercontent.com", "gitlab.com",
+        "medium.com", "substack.com", "wordpress.com", "blogspot.com", "dev.to",
+        "x.com", "twitter.com", "youtube.com", "youtu.be", "linkedin.com",
+        "reddit.com", "news.ycombinator.com", "arxiv.org", "export.arxiv.org",
+        "openreview.net", "huggingface.co", "pypi.org", "npmjs.com", "t.co",
+    }
+)  # fmt: skip
+ANCHOR_TYPES = frozenset({"rss", "research_index", "newsletter", "conference"})
+_SHELL_TEXT = re.compile(r"\b(curl|wget|sudo|chmod)\b|\|\s*(ba|z)?sh\b", re.IGNORECASE)
 
 
-def vouched_urls(rows: list, registry_ids: set[str]) -> set[str]:
-    """Normalized citation URLs of entries that came from a registered source and
-    were not refuted. The registry changes only through reviewed add-source PRs."""
-    out = set()
-    for row in rows:
-        if not isinstance(row, dict) or row.get("source_id") not in registry_ids:
-            continue
-        if row.get("verified") is False:
-            continue
-        out |= {normalize_url(row[k]) for k in ("source_url", "article_url") if row.get(k)}
-    return out
+def _host(url: object) -> str:
+    try:
+        host = (urlparse(url).hostname or "") if isinstance(url, str) else ""
+    except ValueError:
+        return ""
+    return host.lower().removeprefix("www.")
 
 
-def new_claim_problems(
-    main_ledger: object, pr_ledger: object, rows: list, registry_ids: set[str]
-) -> list[str]:
+def registered_hosts(registry_rows: list) -> set[str]:
+    """Hosts of the active blog, org and newsletter feeds on main's registry, which
+    changes only through reviewed add-source PRs. Open-publishing hosts never count."""
+    hosts = {
+        _host(r.get("url"))
+        for r in registry_rows
+        if isinstance(r, dict) and r.get("active") and r.get("type") in ANCHOR_TYPES
+    }
+    return hosts - OPEN_HOSTS - {""}
+
+
+def _claim_text_problem(claim: dict) -> bool:
+    text = " ".join(str(claim.get(k) or "") for k in ("title", "statement", "guidance"))
+    return bool(HTTP_URL.search(text) or _SHELL_TEXT.search(text))
+
+
+def new_claim_problems(main_ledger: object, pr_ledger: object, hosts: set[str]) -> list[str]:
     """A claim is durable "do this now" advice, and the scan session writes its text
     after reading pages anyone can publish. A scan PR may add one only when every
-    evidence URL is a citation of a finding that came from a registered source;
-    otherwise (a curator link, a Hacker News post, an unknown blog) a human merges."""
+    evidence URL is http(s) on the host of a registered blog, org or newsletter feed
+    (nothing the session writes is consulted), and its title, statement and guidance
+    carry no URL or shell command. Anything else is a human merge."""
     old, new = _claims_by_id(main_ledger), _claims_by_id(pr_ledger)
-    added = sorted(set(new) - set(old))
-    vouched = vouched_urls(rows, registry_ids) if added else set()
     out = []
-    for cid in added:
-        urls = _evidence_urls(new[cid])
-        loose = [u for u in urls if normalize_url(u) not in vouched]
+    for cid in sorted(set(new) - set(old)):
+        claim = new[cid]
+        ev = claim.get("evidence")
+        items = ev if isinstance(ev, list) else []
+        urls = [i.get("url") if isinstance(i, dict) else None for i in items]
         if not urls:
             out.append(f"{NEEDS_REVIEW}: new claim {cid} cites no evidence")
-        elif loose:
+        elif not all(
+            isinstance(u, str)
+            and u.lower().startswith(("http://", "https://"))
+            and _host(u) in hosts
+            for u in urls
+        ):
             out.append(
-                f"{NEEDS_REVIEW}: new claim {cid} cites evidence not from a registered source"
+                f"{NEEDS_REVIEW}: new claim {cid} cites evidence not on a registered feed's host"
             )
+        if _claim_text_problem(claim):
+            out.append(f"{NEEDS_REVIEW}: new claim {cid} text carries a URL or shell command")
     return out
 
 

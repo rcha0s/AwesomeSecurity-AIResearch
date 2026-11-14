@@ -172,13 +172,11 @@ def editorial_check(base: str, root: Path = ROOT) -> list[str]:
 
 
 def new_claim_check(base: str, root: Path = ROOT) -> list[str]:
-    """A claim a scan adds may cite only findings from a source on main's registry."""
+    """A claim a scan adds may cite only hosts of feeds on main's source registry."""
     doc = git_json(f"{base}:data/sources.json", {})
     rows = doc.get("sources") if isinstance(doc, dict) else doc
-    registry = {s["id"] for s in rows or [] if isinstance(s, dict) and s.get("id")}
     ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
-    entries = [e for d in pool_docs(base, root)[1] for e in cc._entries(d)]
-    return cc.new_claim_problems(main_ledger(base), ledger, entries, registry)
+    return cc.new_claim_problems(main_ledger(base), ledger, cc.registered_hosts(rows or []))
 
 
 def readability_check(base: str, root: Path = ROOT) -> list[str]:
