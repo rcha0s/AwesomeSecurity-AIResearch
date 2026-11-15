@@ -182,6 +182,13 @@ right now, and what did that replace"**. It is durable: claims never age out.
 - `claims.py` enforces the invariants: unique kebab ids, edges resolve, edges are
   reciprocal, the graph is acyclic, retired claims must name a successor AND a reason,
   live claims cannot already be superseded, every claim needs at least one evidence URL.
+- Live claims show best first (`claims.rank_score`): current before contested, then confidence less
+  an age penalty (`config.yaml claims:`, 0.1 per year the claim's newest evidence trails the ledger's
+  newest, capped at 0.3). A claim's `applies_to` says what its truth depends on: `agnostic` (holds
+  whichever model runs underneath, no penalty, badge "model-agnostic") or `model-era` (shown on
+  particular models, with an optional `model_note`). Absent means not classified yet and ranks as
+  `model-era`. Set it with `add_claim.py new --applies-to` or `add_claim.py applies FILE`. The site's
+  default claims sort ("Best first"), the README and the claims/ pages all use the same score.
 - **Never hand-edit `data/claims.json`** — use `scripts/add_claim.py` (it re-validates the
   whole ledger before saving). Never delete or rewrite a retired claim's history; the
   record of what we used to believe is the product, not clutter.

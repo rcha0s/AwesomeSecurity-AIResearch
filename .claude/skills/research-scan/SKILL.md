@@ -210,7 +210,12 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
      (the note is optional: one sentence on what this source shows for the claim).
    - **New** — it answers a question the ledger has no claim for. Add one, with the
      `guidance` (what to DO) and `scope` (where it does *not* apply):
-     `python scripts/add_claim.py new <kebab-id> --topic … --domain … --title "<headline, 12 words max>" --statement … --guidance … --scope … --confidence 0.N --evidence "supports|<url>|<title>|<date>"`
+     `python scripts/add_claim.py new <kebab-id> --topic … --domain … --title "<headline, 12 words max>" --statement … --guidance … --scope … --confidence 0.N --applies-to agnostic|model-era [--model-note "<models it was shown on, 100 chars>"] --evidence "supports|<url>|<title>|<date>"`
+     `--applies-to agnostic` only when the claim holds whichever model runs underneath (a mechanism or an
+     architecture, such as "mixing trusted and untrusted input is exploitable"); `model-era` when it was
+     measured on particular models, prices or benchmarks and may not carry to newer ones, with a
+     `--model-note` naming them. The ledger ranks live claims by confidence less an age penalty on the
+     newest evidence year, which `agnostic` claims do not pay, so a wrong `agnostic` hides a stale claim.
    - **Superseding** — it gives a *better answer* than a claim we already hold. Write the new
      claim first, then retire the old one; both ends of the edge are written for you:
      `python scripts/add_claim.py supersede <old-id> <new-id> --reason "<why the old answer no longer holds>"`

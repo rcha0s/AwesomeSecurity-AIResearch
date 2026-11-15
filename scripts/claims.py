@@ -260,6 +260,17 @@ def _validate_title(claim: dict) -> list[str]:
     return [f"title is {n} words (max {TITLE_MAX_WORDS})"] if n > TITLE_MAX_WORDS else []
 
 
+def _validate_applies_to(claim: dict) -> list[str]:
+    errors = []
+    applies = claim.get("applies_to")
+    if applies is not None and applies not in APPLIES_TO:
+        errors.append(f"applies_to must be one of {APPLIES_TO} (got {applies!r})")
+    note = claim.get("model_note")
+    if note is not None and not (isinstance(note, str) and 0 < len(note.strip()) <= MODEL_NOTE_MAX):
+        errors.append(f"model_note must be 1-{MODEL_NOTE_MAX} characters of text")
+    return errors
+
+
 def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
     """Human-readable validation errors for one claim (empty == valid).
 
@@ -291,6 +302,7 @@ def validate_claim(claim: dict, known_ids: set[str]) -> list[str]:
         + _validate_ledger_dates(claim)
         + _validate_refuted_controls(claim)
         + _validate_title(claim)
+        + _validate_applies_to(claim)
     )
 
 
@@ -424,19 +436,71 @@ def validate_ledger(ledger: dict) -> list[str]:
 
 
 # --- Ordering: live on top, retired pushed to the bottom --------------------
-def _live_key(claim: dict) -> tuple:
-    """Settled answers before contested ones, then most-confident first."""
-    return (0 if claim.get("status") == "current" else 1, -confidence_of(claim))
+AGE_PENALTY_PER_YEAR = 0.1  # config.yaml `claims:` overrides both
+AGE_PENALTY_MAX = 0.3
+
+# What a claim's truth depends on. `agnostic`: it holds whichever model runs underneath
+# (pickle is code execution, indirect injection works), so old evidence does not date it.
+# `model-era`: it was shown on particular models and may not carry to newer ones, so its
+# evidence year counts. Absent = not yet classified, treated like `model-era`.
+APPLIES_TO = ("agnostic", "model-era")
+MODEL_NOTE_MAX = 100
 
 
-def order_claims(claim_list: list[dict]) -> list[dict]:
-    """The canonical render order: live claims (current before contested, by
-    confidence then recency), then retired ones, most recently retired first."""
+def newest_evidence_year(claim: dict) -> int | None:
+    """The year of the claim's most recent dated evidence (None if none is dated)."""
+    years = _evidence_years(claim)
+    return max(years) if years else None
+
+
+def reference_year(claim_list: list[dict]) -> int | None:
+    """The ledger's newest evidence year, never later than this year, so one
+    future-dated citation cannot age every other claim. Data-derived, so a render
+    does not change when the calendar year does."""
+    years = [y for claim in claim_list for y in _evidence_years(claim)]
+    return min(max(years), date.today().year) if years else None
+
+
+def evidence_age(claim: dict, ref_year: int | None) -> int:
+    """Whole years the claim's newest evidence trails `ref_year` (0 when either is unknown)."""
+    newest = newest_evidence_year(claim)
+    if ref_year is None or newest is None:
+        return 0
+    return max(0, ref_year - newest)
+
+
+def _age_settings() -> tuple[float, float]:
+    raw = c.load_config().claims
+    return (
+        float(raw.get("age_penalty_per_year", AGE_PENALTY_PER_YEAR)),
+        float(raw.get("age_penalty_max", AGE_PENALTY_MAX)),
+    )
+
+
+def rank_score(claim: dict, ref_year: int | None) -> float:
+    """Confidence minus a capped penalty for each year its newest evidence is old.
+    A model-agnostic claim is not dated by its evidence, so it pays no penalty."""
+    if claim.get("applies_to") == "agnostic":
+        return confidence_of(claim)
+    per_year, cap = _age_settings()
+    return confidence_of(claim) - min(cap, per_year * evidence_age(claim, ref_year))
+
+
+def _live_key(claim: dict, ref_year: int | None) -> tuple:
+    """Settled answers before contested ones, then the best-ranked first."""
+    return (0 if claim.get("status") == "current" else 1, -rank_score(claim, ref_year))
+
+
+def order_claims(claim_list: list[dict], ref_year: int | None = None) -> list[dict]:
+    """The canonical render order: live claims (current before contested, then by
+    rank_score, then newest first), then retired ones, most recently retired first.
+    Pass the whole ledger's `reference_year` when ordering a subset of it."""
+    ref_year = ref_year if ref_year is not None else reference_year(claim_list)
     live = [claim for claim in claim_list if is_live(claim)]
     retired = [claim for claim in claim_list if is_retired(claim)]
     # Sort by date first; the stable sort below preserves it as the tie-breaker.
     live = sorted(live, key=lambda claim: claim.get("first_seen") or "", reverse=True)
-    return sorted(live, key=_live_key) + sorted(
+    return sorted(live, key=lambda claim: _live_key(claim, ref_year)) + sorted(
         retired, key=lambda claim: claim.get("superseded_on") or "", reverse=True
     )
 
@@ -553,7 +617,10 @@ def save_ledger(ledger: dict, path: Path | None = None) -> None:
 
 def claims_for_topic(ledger: dict, topic: str) -> list[dict]:
     """Every claim in one topic, in canonical render order."""
-    return order_claims([cl for cl in ledger.get("claims") or [] if cl.get("topic") == topic])
+    return order_claims(
+        [cl for cl in ledger.get("claims") or [] if cl.get("topic") == topic],
+        reference_year(all_claims(ledger)),
+    )
 
 
 def all_claims(ledger: dict) -> list[dict]:

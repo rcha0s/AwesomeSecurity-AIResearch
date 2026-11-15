@@ -530,12 +530,17 @@ def topics_payload(tax: taxonomy.Taxonomy) -> dict:
 
 
 def claims_payload(ledger: dict, tax: taxonomy.Taxonomy) -> list[dict]:
-    """The ledger's claims, each tagged with the taxonomy ID its domain label names."""
+    """The ledger's claims, each tagged with the taxonomy ID its domain label names, its
+    rank_score (the site's default order) and the year of its newest evidence."""
+    ref = cl.reference_year(cl.all_claims(ledger))
     return [
         {
             **claim,
             "domain": c.domain_name(claim.get("domain") or ""),
             "domain_id": briefing.claim_domain(claim, tax),
+            "rank_score": round(cl.rank_score(claim, ref), 3),
+            "newest_evidence": cl.newest_evidence_year(claim),
+            "evidence_age": cl.evidence_age(claim, ref),
         }
         for claim in cl.all_claims(ledger)
     ]

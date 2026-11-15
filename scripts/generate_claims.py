@@ -93,6 +93,10 @@ def _meta_line(claim: dict) -> str:
             bits.append(f"had stood since {fmt_date(claim.get('first_seen'))}")
     else:
         bits.append(f"confidence **{cl.confidence_of(claim):.2f}**")
+        if claim.get("applies_to") == "agnostic":
+            bits.append("model-agnostic")
+        elif claim.get("model_note"):
+            bits.append(str(claim["model_note"]))
         if claim.get("domain"):
             bits.append(c.domain_name(str(claim["domain"])))
         if claim.get("first_seen"):

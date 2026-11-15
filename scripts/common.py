@@ -231,6 +231,7 @@ class Config:
     ghsa: dict = dc_field(default_factory=dict)  # which GitHub advisories are kept
     focus: dict = dc_field(default_factory=dict)  # Rohan's focus areas (scripts/focus.py)
     learning: dict = dc_field(default_factory=dict)  # the What to learn lane (scripts/briefing.py)
+    claims: dict = dc_field(default_factory=dict)  # claim ordering (scripts/claims.py)
 
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -253,6 +254,7 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         ghsa=raw.get("ghsa") or {},
         focus=raw.get("focus") or {},
         learning=raw.get("learning") or {},
+        claims=raw.get("claims") or {},
     )
 
 

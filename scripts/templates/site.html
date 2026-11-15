@@ -872,7 +872,7 @@
   }
 
   // ================= CLAIMS =================
-  var claimState = { topic: "all", eff: "all", status: "all", sort: "change", q: "" };
+  var claimState = { topic: "all", eff: "all", status: "all", sort: "best", q: "" };
   // Cost and work efficiency are their own tracks: two ai-research domains
   // (scripts/briefing.py EFFICIENCY_DOMAINS). An unknown filter value narrows nothing.
   var EFF_DOMAINS = { cost: "air.cost-efficiency", work: "air.work-efficiency" };
@@ -924,7 +924,7 @@
     html += filterGroup("Status", "status", [["all", "All"], ["current", "Current (" + counts.current + ")"],
       ["contested", "Contested (" + counts.contested + ")"], ["superseded", "Superseded (" + counts.superseded + ")"],
       ["refuted", "Refuted (" + counts.refuted + ")"]], claimState.status);
-    html += filterGroup("Sort", "sort", [["change", "Last change"], ["confidence", "Confidence"]], claimState.sort);
+    html += filterGroup("Sort", "sort", [["best", "Best first"], ["change", "Last change"], ["confidence", "Confidence"]], claimState.sort);
     html += '</div><div id="claim-list"></div>';
     root.innerHTML = html;
     $("#claims-q").addEventListener("input", function () { claimState.q = this.value.slice(0, STATE_MAX_Q); drawClaims(); syncUrl(); });
@@ -947,6 +947,12 @@
   }
   function sortClaims(rows, mode) {
     return rows.slice().sort(function (a, b) {
+      if (mode === "best") {
+        // Python's claims.rank_score: confidence less a capped penalty for old evidence.
+        var settled = (a.status === "current" ? 0 : 1) - (b.status === "current" ? 0 : 1);
+        if (settled) return settled;
+        return (Number(b.rank_score) || 0) - (Number(a.rank_score) || 0);
+      }
       if (mode === "change") return lastChange(b).localeCompare(lastChange(a));
       return (Number(b.confidence) || 0) - (Number(a.confidence) || 0);
     });
@@ -1023,6 +1029,12 @@
     return '<details class="claim st-' + esc(c.status) + (gone ? ' retired' : '') + '" id="claim-' + esc(c.id) + '">' +
       '<summary><div class="claim-top"><span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span>' +
         topicPill(c.topic) +
+        (!gone && c.applies_to === "agnostic"
+          ? '<span class="conf-pill" title="True whichever model runs underneath, so the age of its sources does not lower its rank.">model-agnostic</span>'
+          : (!gone && c.model_note ? '<span class="conf-pill" title="Which models it was shown on.">' + txt(c.model_note) + '</span>' : '')) +
+        (!gone && c.applies_to !== "agnostic" && (Number(c.evidence_age) | 0) >= 2 && Number(c.newest_evidence)
+          ? '<span class="conf-pill" title="Its newest source is ' + num(Number(c.evidence_age) | 0) +
+            ' years older than the ledger\'s newest, so it ranks lower.">evidence to ' + num(Number(c.newest_evidence)) + '</span>' : '') +
         (!gone && c.confidence != null ? '<span class="conf-pill">' + num(Math.round(Number(c.confidence) * 100)) + '% confidence</span>' +
           '<a class="link conf-how" href="#methodology" data-goto="methodology" data-anchor="method-confidence" title="' +
           esc(CONF_TIP) + '">how?</a>' : '') +
@@ -1196,7 +1208,7 @@
     ["ctopic", "claims", "claim", "topic", "TOPICS", "all"],
     ["ceff", "claims", "claim", "eff", ["all", "cost", "work"], "all"],
     ["cstatus", "claims", "claim", "status", ["all", "current", "contested", "superseded", "refuted"], "all"],
-    ["csort", "claims", "claim", "sort", ["change", "confidence"], "change"],
+    ["csort", "claims", "claim", "sort", ["best", "change", "confidence"], "best"],
     ["aq", "archive", "archive", "q", null, ""],
     ["atopic", "archive", "archive", "topic", "TOPICS", "all"]
   ];

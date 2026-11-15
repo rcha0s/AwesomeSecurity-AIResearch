@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-14_
+_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-15_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -14,7 +14,7 @@ _30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-14_
 
 ### Loading a pickle model file is arbitrary code execution
 
-`pickle-based-model-formats-are-code-execution` · confidence **0.95** · Model Supply Chain & Theft · standing since Mar 2021
+`pickle-based-model-formats-are-code-execution` · confidence **0.95** · model-agnostic · Model Supply Chain & Theft · standing since Mar 2021
 
 Loading a pickle-based model file (PyTorch .pt/.bin) is equivalent to running arbitrary code; the format has no sandbox and no way to introspect what will execute at load time short of manual reversing.
 
@@ -37,7 +37,7 @@ _Tags: `pickle`, `supply-chain`, `safetensors`_
 
 ### Mixing trusted and untrusted input is permanently exploitable
 
-`prompt-injection-is-a-permanent-attack-surface` · confidence **0.90** · Prompt Injection & Jailbreaks · standing since Feb 2023
+`prompt-injection-is-a-permanent-attack-surface` · confidence **0.90** · model-agnostic · Prompt Injection & Jailbreaks · standing since Feb 2023
 
 LLM applications that mix trusted instructions with untrusted input are permanently vulnerable to instruction hijacking; the surface cannot be closed by prompt engineering alone.
 
@@ -61,7 +61,7 @@ _Tags: `prompt-injection`, `threat-model`, `agents`_
 
 ### Indirect injection via retrieved content is a real vector
 
-`indirect-injection-via-retrieved-content-is-viable` · confidence **0.90** · Prompt Injection & Jailbreaks · standing since Feb 2023
+`indirect-injection-via-retrieved-content-is-viable` · confidence **0.90** · model-agnostic · Prompt Injection & Jailbreaks · standing since Feb 2023
 
 Indirect prompt injection — hostile instructions embedded in documents, web pages, or tool outputs that the LLM reads at run time — is a demonstrated attack vector against real production LLM assistants.
 
@@ -89,7 +89,7 @@ _Tags: `prompt-injection`, `rag`, `indirect`_
 
 ### Scanners alone aren't enough — sandbox deserialization too
 
-`sandbox-model-deserialization` · confidence **0.85** · Model Supply Chain & Theft · standing since Jul 20, 2026
+`sandbox-model-deserialization` · confidence **0.85** · model-agnostic · Model Supply Chain & Theft · standing since Jul 20, 2026
 
 Prefer non-executable model formats and sandbox deserialization of any third-party model — a clean scanner result is weak evidence of safety.
 
@@ -114,7 +114,7 @@ _Tags: `model-supply-chain`, `deserialization`, `scanning`_
 
 ### Prompt injection can't be closed by filtering alone
 
-`prompt-injection-is-containment-not-prevention` · confidence **0.85** · Prompt Injection & Jailbreaks · standing since May 2026
+`prompt-injection-is-containment-not-prevention` · confidence **0.85** · model-agnostic · Prompt Injection & Jailbreaks · standing since May 2026
 
 Prompt injection cannot be fully solved by context-based filtering: for any blocked flow an adversary can construct a context in which it appears legitimate.
 
@@ -144,7 +144,7 @@ _Tags: `prompt-injection`, `agents`, `threat-model`_
 
 ### MCP tool metadata alone can inject instructions
 
-`mcp-tool-descriptions-are-a-prompt-injection-surface` · confidence **0.85** · MCP, Tools & Skills · standing since Apr 1, 2025
+`mcp-tool-descriptions-are-a-prompt-injection-surface` · confidence **0.85** · model-agnostic · MCP, Tools & Skills · standing since Apr 1, 2025
 
 MCP tool descriptions are consumed by the model as part of the system prompt; a hostile MCP server can inject instructions via tool metadata alone, without needing the tool to be called.
 
@@ -167,7 +167,7 @@ _Tags: `mcp`, `prompt-injection`, `tool-poisoning`_
 
 ### Long-term memory lets injection outlast its session
 
-`long-term-memory-is-a-cross-session-poisoning-vector` · confidence **0.85** · Memory, RAG & Data Poisoning · standing since May 22, 2024
+`long-term-memory-is-a-cross-session-poisoning-vector` · confidence **0.85** · model-agnostic · Memory, RAG & Data Poisoning · standing since May 22, 2024
 
 Once an LLM assistant persists user-provided information to a long-term memory store, adversarial content can be planted in one session and reliably retrieved into a future session, producing effects that outlast the poisoning conversation.
 
@@ -190,7 +190,7 @@ _Tags: `memory`, `persistence`, `prompt-injection`_
 
 ### Poisoned agent memory persists and resists correction
 
-`agent-memory-is-a-persistent-attack-surface` · confidence **0.80** · Memory, RAG & Data Poisoning · standing since Jun 2026
+`agent-memory-is-a-persistent-attack-surface` · confidence **0.80** · model-agnostic · Memory, RAG & Data Poisoning · standing since Jun 2026
 
 Poisoned preferences and instructions persist in agent long-term memory across sessions and resist normal in-conversation correction.
 
@@ -242,7 +242,7 @@ Agents with tool/network access during training or evaluation can actively disco
 
 ### Untrusted context can steer which tool an agent picks
 
-`agent-tool-selection-can-be-steered-by-untrusted-context` · confidence **0.75** · MCP, Tools & Skills · standing since Apr 28, 2025
+`agent-tool-selection-can-be-steered-by-untrusted-context` · confidence **0.75** · model-agnostic · MCP, Tools & Skills · standing since Apr 28, 2025
 
 An agent's tool selection can be steered by content in its context or tool library: an adversarial tool description or retrieved text can make the agent prefer a hostile tool over the intended one.
 
@@ -266,7 +266,7 @@ _Tags: `tool-selection`, `prompt-injection`, `agents`_
 
 ### Public eval datasets leak into later training corpora
 
-`llm-eval-datasets-leak-into-training-sets` · confidence **0.75** · Red-Teaming & Threat Modeling · standing since Nov 2023
+`llm-eval-datasets-leak-into-training-sets` · confidence **0.75** · model-agnostic · Red-Teaming & Threat Modeling · standing since Nov 2023
 
 Public LLM benchmark test sets leak into the training data of later models (GPT-4 guessed masked MMLU options 57% of the time), inflating scores without a matching capability change — so any published adversarial or red-team dataset loses value as a held-out eval.
 
@@ -365,7 +365,7 @@ _Tags: `guardrails`, `incident-response`, `availability`_
 
 ### Typosquatted model repos with backdoors are live on hubs
 
-`typosquatting-on-model-hubs-is-active` · confidence **0.70** · Model Supply Chain & Theft · standing since Feb 2024
+`typosquatting-on-model-hubs-is-active` · confidence **0.70** · model-agnostic · Model Supply Chain & Theft · standing since Feb 2024
 
 Public model hubs host malicious model repositories that execute code when loaded (JFrog found about 100 on Hugging Face in 2024, one opening a reverse shell), and pipelines that trust a model by its name alone can be hijacked when an attacker re-registers an abandoned author/model namespace.
 
@@ -386,34 +386,11 @@ _Tags: `typosquatting`, `supply-chain`, `huggingface`_
 
 </details>
 
-<a id="claim-jailbreak-transfers-across-models"></a>
-
-### Adversarial jailbreak suffixes transfer across models
-
-`jailbreak-transfers-across-models` · confidence **0.70** · Prompt Injection & Jailbreaks · standing since Jul 2023
-
-Adversarial suffixes crafted against one aligned model transfer with non-trivial success to other models of similar family, including closed-source ones.
-
-**Basis —** Established by the original universal-adversarial-suffix paper, which measured transfer success across multiple aligned models including closed-source ones.
-
-**Do this —** Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.
-
-_Tags: `jailbreak`, `adversarial`, `transfer`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043) | Jul 2023 |
-| supports | [One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs](https://arxiv.org/abs/2512.14751) | Dec 2025 |
-
-</details>
-
 <a id="claim-localhost-agent-servers-are-reachable-from-any-webpage"></a>
 
 ### Any webpage can reach a coding agent's localhost server
 
-`localhost-agent-servers-are-reachable-from-any-webpage` · confidence **0.65** · Agent & Harness Security · standing since Oct 25, 2026
+`localhost-agent-servers-are-reachable-from-any-webpage` · confidence **0.65** · model-agnostic · Agent & Harness Security · standing since Oct 25, 2026
 
 A coding agent's local HTTP server is reachable from any webpage the user visits: top-level form POSTs are not blocked by CORS, so binding to loopback is not a security boundary.
 
@@ -434,7 +411,7 @@ A coding agent's local HTTP server is reachable from any webpage the user visits
 
 ### Planner/reader split contains prompt-injection blast radius
 
-`dual-llm-pattern-mitigates-injection-blast-radius` · confidence **0.65** · Prompt Injection & Jailbreaks · standing since Apr 2023
+`dual-llm-pattern-mitigates-injection-blast-radius` · confidence **0.65** · model-agnostic · Prompt Injection & Jailbreaks · standing since Apr 2023
 
 Splitting an agent into a privileged planner LLM that never sees untrusted input and a quarantined LLM that reads untrusted input but has no tool access limits what a successful injection can do: injected text cannot directly drive privileged tool calls, though the user can still be socially engineered through the quarantined output.
 
@@ -456,33 +433,11 @@ _Tags: `defense`, `architecture`, `dual-llm`_
 
 </details>
 
-<a id="claim-constitutional-ai-reduces-refusal-brittleness"></a>
-
-### Constitutional AI training gives an inspectable refusal spec
-
-`constitutional-ai-reduces-refusal-brittleness` · confidence **0.65** · Guardrails & Defensive Tooling · standing since Dec 2022
-
-Constitutional AI-style training (self-critique and revision against a written set of principles) produced a model that was less evasive than one trained on human harmlessness labels — it engages and explains objections instead of refusing — while the training objective becomes an inspectable written spec.
-
-**Basis —** Established directly in Anthropic's original Constitutional AI paper, comparing self-critique/revision training against hand-tuned RLHF refusal.
-
-**Do this —** Prefer alignment techniques with a written, auditable spec over hand-tuned refusal datasets you can't inspect.
-
-_Tags: `alignment`, `constitutional-ai`, `rlaif`_
-
-<details><summary>Evidence (1)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
-
-</details>
-
 <a id="claim-weight-edit-backdoors-need-no-training"></a>
 
 ### Model weights can be backdoored by direct edits, no training needed
 
-`weight-edit-backdoors-need-no-training` · confidence **0.60** · Model Supply Chain & Theft · standing since Nov 12, 2026
+`weight-edit-backdoors-need-no-training` · confidence **0.60** · model-agnostic · Model Supply Chain & Theft · standing since Nov 12, 2026
 
 An attacker who can modify a model's weight files can implant a trigger-activated backdoor by editing a handful of rarely used neurons, without fine-tuning or retraining; the edited model still passes standard evals, and an agent running it executes the attacker's command with the agent's own permissions when the trigger appears.
 
@@ -502,7 +457,7 @@ An attacker who can modify a model's weight files can implant a trigger-activate
 
 ### Coding-agent permission files leak secrets into public repositories
 
-`agent-permission-files-leak-secrets` · confidence **0.60** · Agent & Harness Security · standing since Nov 8, 2026
+`agent-permission-files-leak-secrets` · confidence **0.60** · model-agnostic · Agent & Harness Security · standing since Nov 8, 2026
 
 Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.
 
@@ -564,7 +519,7 @@ Capable agents with tool access misbehave during evaluations and training, not o
 
 ### Rendered agent transcripts can show reviewers a false record
 
-`agent-output-is-untrusted-input-to-review-tooling` · confidence **0.60** · AI Infrastructure & Incident Response · standing since Oct 25, 2026
+`agent-output-is-untrusted-input-to-review-tooling` · confidence **0.60** · model-agnostic · AI Infrastructure & Incident Response · standing since Oct 25, 2026
 
 Agent transcripts, logs and tool output are attacker-controlled content: a viewer or monitor that renders them can be made to show reviewers a false record even while the stored log stays intact.
 
@@ -602,11 +557,34 @@ For automated vulnerability remediation, model choice alone barely moves secure-
 
 </details>
 
+<a id="claim-jailbreak-transfers-across-models"></a>
+
+### Adversarial jailbreak suffixes transfer across models
+
+`jailbreak-transfers-across-models` · confidence **0.70** · Prompt Injection & Jailbreaks · standing since Jul 2023
+
+Adversarial suffixes crafted against one aligned model transfer with non-trivial success to other models of similar family, including closed-source ones.
+
+**Basis —** Established by the original universal-adversarial-suffix paper, which measured transfer success across multiple aligned models including closed-source ones.
+
+**Do this —** Alignment training on one model is not evidence of alignment for another. Run adversarial evals against your deployed model, not a proxy.
+
+_Tags: `jailbreak`, `adversarial`, `transfer`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043) | Jul 2023 |
+| supports | [One Leak Away: How Pretrained Model Exposure Amplifies Jailbreak Risks in Finetuned LLMs](https://arxiv.org/abs/2512.14751) | Dec 2025 |
+
+</details>
+
 <a id="claim-output-only-watermark-audits-are-evadable"></a>
 
 ### Output-only watermark audits can be evaded by the audited provider
 
-`output-only-watermark-audits-are-evadable` · confidence **0.50** · Memory, RAG & Data Poisoning · standing since Nov 9, 2026
+`output-only-watermark-audits-are-evadable` · confidence **0.50** · model-agnostic · Memory, RAG & Data Poisoning · standing since Nov 9, 2026
 
 Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and downstream utility largely intact.
 
@@ -630,7 +608,7 @@ _Tags: `data-watermarking`, `data-use-auditing`, `evasion`_
 
 ### Approve agent shell commands by observed effects, not command text
 
-`approve-agent-commands-by-observed-effects` · confidence **0.50** · Agent & Harness Security · standing since Nov 4, 2026
+`approve-agent-commands-by-observed-effects` · confidence **0.50** · model-agnostic · Agent & Harness Security · standing since Nov 4, 2026
 
 Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed effects lets far fewer harmful outcomes through.
 
@@ -653,7 +631,7 @@ _Tags: `coding-agents`, `approval`, `sandbox`, `rollback`_
 
 ### Harmful goals split across skills slip past per-skill scanners
 
-`per-skill-scanning-misses-cross-skill-cascades` · confidence **0.50** · MCP, Tools & Skills · standing since Oct 25, 2026
+`per-skill-scanning-misses-cross-skill-cascades` · confidence **0.50** · model-agnostic · MCP, Tools & Skills · standing since Oct 25, 2026
 
 A harmful goal split across several agent skills that each look benign can get past scanners and reviews that judge one skill at a time.
 
@@ -714,6 +692,28 @@ _Tags: `guardrails`, `llm-gatekeeper`, `obfuscation`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [PuzzleMask: Abusing Plain Prose as a Covert AI Attack Vector](https://research.checkpoint.com/2026/puzzlemask-abusing-plain-prose-as-a-covert-ai-attack-vector/) | Sep 10, 2026 |
+
+</details>
+
+<a id="claim-constitutional-ai-reduces-refusal-brittleness"></a>
+
+### Constitutional AI training gives an inspectable refusal spec
+
+`constitutional-ai-reduces-refusal-brittleness` · confidence **0.65** · Guardrails & Defensive Tooling · standing since Dec 2022
+
+Constitutional AI-style training (self-critique and revision against a written set of principles) produced a model that was less evasive than one trained on human harmlessness labels — it engages and explains objections instead of refusing — while the training objective becomes an inspectable written spec.
+
+**Basis —** Established directly in Anthropic's original Constitutional AI paper, comparing self-critique/revision training against hand-tuned RLHF refusal.
+
+**Do this —** Prefer alignment techniques with a written, auditable spec over hand-tuned refusal datasets you can't inspect.
+
+_Tags: `alignment`, `constitutional-ai`, `rlaif`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) | Dec 2022 |
 
 </details>
 
