@@ -66,3 +66,14 @@ def test_a_late_run_past_midnight_checks_the_scheduled_day():
 def test_a_fork_pr_named_like_a_scan_branch_is_ignored():
     fork = pr(171, "2026-11-04T21:59:00Z", repo="someone/fork")
     assert wd.stuck_prs([fork], NOW, 8, REPO) == []
+
+
+def test_a_late_start_still_checks_the_day_that_ended_not_the_one_that_began():
+    """GitHub ran the 00:30Z cron at 06:37-07:38Z; 11-08's scan cannot have finished yet."""
+    for hour in (0, 3, 7, 12, 23):
+        late = datetime(2026, 11, 8, hour, 0, tzinfo=UTC)
+        assert wd.problems([run("done", date="2026-11-07")], [], late, True, 8) == []
+        assert wd.problems([run("reserve")], [], late, True, 8) == ["no-finished-scan"]
+        assert wd.problems([run("done", date="2026-11-08")], [], late, True, 8) == [
+            "no-finished-scan"
+        ]  # today's finished scan does not excuse yesterday's missing one
