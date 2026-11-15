@@ -524,7 +524,12 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   `uncalibrated_run_usd` for a first local run) before any LLM work, so a failed
   run is still charged. Local runs replace the reservation with the measured
   `total_cost_usd`, recorded by the wrapper before `post` so the PR body and the
-  history row show it; cloud runs are charged the ceiling. One finished scan per UTC
+  history row show it; cloud runs are charged the ceiling. A local run that
+  reserved, never wrote an `actual` or `done` row and was followed by a later run
+  (killed mid-ingest: 11-06 and 11-11) is a dead run: with
+  `budget.dead_run_charge: typical` it is charged the median of the last
+  `calibration_runs` measured runs, never more than its ceiling and never zero
+  (`budget.charged_runs`); `effective_runs`, which the history gate reads, stays raw. One finished scan per UTC
   day: a failed cloud run doesn't block the Mac fallback, but a runner never
   retries its own failed day unattended, except the Mac's one retry after a cheap
   analysis-empty failure (the retry's own reservation blocks any further one). The

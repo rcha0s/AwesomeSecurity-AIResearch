@@ -454,6 +454,12 @@ budget:
                               # at the latest $0.232/unit it is $17.05. A measured day (25 x $0.23 + 48 x $0.07 = $9.1)
                               # fits 31 a month in the $600 cap; 31 cloud runs charged the
                               # $32.65 ceiling would not (the guard then skips the last days).
+  dead_run_charge: typical    # Rohan 2026-11-14 ("yes to all"): a local run that reserved,
+                              # never wrote an actual or done row and was followed by a later
+                              # run (killed mid-ingest, 11-06 and 11-11: $83.88 of ceilings) is
+                              # charged the median of the last calibration_runs measured runs,
+                              # not its ceiling. Never zero: a kill mid-session may have spent
+                              # tokens no row records. `ceiling` = the old rule.
   calibration_runs: 5         # "recent" = the last 5 measured runs, so the first run's
                               # 3-story $0.44/story doesn't price every run forever
   ceiling_headroom: 1.5       # ceiling = worst recent $/unit x 1.5 x units (see above): the
