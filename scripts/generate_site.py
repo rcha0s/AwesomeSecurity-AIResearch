@@ -332,7 +332,8 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
     sources = c.load_sources_by_id()
     curated = [e for e in all_entries if c.is_curated(e, conf)]
     window = [e for e in curated if c.is_window_finding(e, conf, sources)]
-    editorial = [e for e in all_entries if c.is_editorial(e)]
+    # An entry both curated and promoted is already a finding: listed once, not twice.
+    editorial = [e for e in all_entries if c.is_editorial(e) and not c.is_curated(e, conf)]
     news = [e for e in all_entries if c.news_shown(e, conf, sources)]
 
     # Editorial-promoted findings need their own detail pages too — the site

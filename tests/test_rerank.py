@@ -216,3 +216,49 @@ def test_rerank_pool_releases_through_the_pool_path(tmp_path, monkeypatch):
     monkeypatch.setattr(c, "archive_entries", lambda stale: 0)
     out = rerank.rerank_pool(next(iter(c.TOPICS)), conf, now=datetime(2026, 11, 14, tzinfo=UTC))
     assert out["entries"][0]["needs_review"] is False
+
+
+def test_a_second_rerank_changes_nothing(monkeypatch):
+    conf = c.load_config()
+    pool = {"entries": [held(date="2026-11-10"), held(date="2026-11-11", verified=False)]}
+    monkeypatch.setattr(c, "load_pool", lambda t: pool)
+    monkeypatch.setattr(c, "save_pool", lambda t, p: pool.update(p))
+    monkeypatch.setattr(c, "load_sources_by_id", lambda: {})
+    monkeypatch.setattr(c, "unarchive", lambda pred: [])
+    monkeypatch.setattr(c, "archive_entries", lambda stale: 0)
+    topic, now = next(iter(c.TOPICS)), datetime(2026, 11, 14, tzinfo=UTC)
+    first = json.dumps(rerank.rerank_pool(topic, conf, now=now), sort_keys=True)
+    second = json.dumps(rerank.rerank_pool(topic, conf, now=now), sort_keys=True)
+    assert first == second
+
+
+def test_reddit_only_is_held_even_without_a_citation_hold_marker():
+    conf = c.load_config()
+    e = held(source_url="https://www.reddit.com/r/netsec/comments/abc/x/", article_url=None)
+    assert rerank.release_bar_holds([e], conf) == 0
+
+
+def test_the_grounding_and_verifier_requirements_follow_the_config():
+    conf = c.load_config()
+    off = c.Config(**{**conf.__dict__, "curation": {**conf.curation}})
+    off.curation["require_grounding"] = False
+    off.curation["require_verification"] = False
+    e = held(grounding_score=0.4, verified=False)
+    assert rerank.still_held(e, conf) is True
+    assert rerank.still_held(e, off) is False
+
+
+def test_corroboration_can_lift_a_low_authority_source_over_the_credibility_bar():
+    conf = c.load_config()
+    low = held(source_rank=conf.curation["min_credibility"] - 1, grounding_score=None)
+    assert rerank.still_held(low, conf) is True
+    low["corroborating_sources"] = [{"url": "https://other/1"}, {"url": "https://other/2"}]
+    assert rerank.still_held(low, conf) is False
+
+
+def test_tightening_the_bar_does_not_re_hold_a_curated_entry():
+    conf = c.load_config()
+    fine = held(needs_review=False, scores={"novelty": 56, "relevance": 61})
+    tight = c.Config(**{**conf.__dict__, "curation": {**conf.curation, "min_novelty": 95}})
+    assert rerank.release_bar_holds([fine], tight) == 0
+    assert fine["needs_review"] is False

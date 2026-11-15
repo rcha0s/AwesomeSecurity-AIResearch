@@ -562,6 +562,10 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   60 -> 55 and `min_relevance` 55 -> 60, chosen on the golden answers (every keep
   survives, no drop is admitted) after 147 grounded, actionable findings sat held in 14
   days with none reaching 60. Check it against `eval_golden.py` whenever the key grows.
+  Loosening is retroactive; tightening is not (rerank never adds a hold). A bare
+  `needs_review: true` set by hand with no `*_hold` marker is released on the next rerank
+  once none of those reasons applies: to keep an entry held, give it a marker field, not
+  just the flag.
 - After the novelty gate, a **separate editorial pass** (the `editorial-review`
   skill + `promote_editorial.py`) reads the held `REVIEW.md` queue and promotes
   the trending/newsworthy/teachable ones into a "Trending & In the News" section.
