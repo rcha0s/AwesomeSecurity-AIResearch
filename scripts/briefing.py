@@ -387,7 +387,7 @@ def focus_note(fresh: int, total: int, days: int) -> str:
 # --- What to learn: a hard-filtered lane (config.yaml `learning:`, ISA F11) ---
 LEARNING_DAYS = 14
 LEARNING_MAX = 3
-LEARNING_MIN_POINTERS = 2
+LEARNING_MIN_POINTERS = 1
 # A measured result is a comparison, never a bare number: "40% fewer", "4x faster",
 # "from 30 days to 2", "0.92 vs 0.81", "cut cost by 40%". A version range ("2.x"),
 # a price ("$25M"), a deadline ("within 24 hours") or a size ("128,000 tokens") is not.
@@ -441,11 +441,25 @@ def _segments(url: str) -> list[str]:
     return [p for p in urlparse(url or "").path.split("/") if p]
 
 
+def _under_proof_path(host: str, seg: list[str], hosts: set[str]) -> bool:
+    """A page below a `host/path` entry, a lab's own research section: the section's
+    index and a path that only starts with the same letters do not count."""
+    for entry in hosts:
+        entry_host, _, path = entry.partition("/")
+        prefix = [p for p in path.split("/") if p]
+        if prefix and host == entry_host and len(seg) > len(prefix):
+            if [s.lower() for s in seg[: len(prefix)]] == prefix:
+                return True
+    return False
+
+
 def _is_proof_url(url: str, hosts: set[str]) -> bool:
-    """A link to the work itself: a repo, a paper, a model. A host on the list is
-    not enough: github.com/<owner>/<repo> (not its issues), arxiv.org/abs|pdf,
-    huggingface.co/<owner>/<model> (not its blog or pricing)."""
+    """A link to the work itself: a repo, a paper, a model, a lab's research page. A
+    host on the list is not enough: github.com/<owner>/<repo> (not its issues),
+    arxiv.org/abs|pdf, huggingface.co/<owner>/<model> (not its blog or pricing)."""
     host, seg = _host(url), _segments(url)
+    if _under_proof_path(host, seg, hosts):
+        return True
     if host not in hosts:
         return False
     if host == "github.com":
@@ -551,5 +565,5 @@ def learning_note(shown: int, days: int) -> str:
         return f"Nothing in the last {days} days cleared all three filters."
     return (
         f"From the last {days} days: each has proof (the work itself or a measured "
-        "comparison), more than one independent source, and serves one of your goals."
+        "comparison) and serves one of your goals; more independent sources rank first."
     )

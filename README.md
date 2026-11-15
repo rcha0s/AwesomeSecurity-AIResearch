@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--14-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-18-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--15-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-18-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -15,6 +15,12 @@ _Your focus areas, last 7 days: most areas matched first, then newest._
 1. **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-shows-poisoned-fine-tuning-data-and-ch-8d4cff91d3#week)** · _AI Security · Nov 12, 2026_
 2. **[OpenAI trained GPT-6 Astra on automated-red-team jailbreaks to resist misuse](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-trained-gpt-6-astra-on-automated-red-team-37a2be5c2d#week)** · _AI Security · Nov 12, 2026_
 3. **[JioStar architect says production evals need a validated judge and monitoring](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=jiostar-architect-says-production-evals-need-a-v-6fce70a740#week)** · _AI Research · Nov 11, 2026_
+
+## What to learn
+
+_From the last 14 days: each has proof (the work itself or a measured comparison) and serves one of your goals; more independent sources rank first._
+
+1. **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=progress-on-provable-inference-for-large-languag-aca6874529#week)** · _AI Security · Nov 2, 2026_
 
 ## Biggest this week
 
@@ -68,4 +74,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-14 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-15 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

@@ -479,3 +479,81 @@ def test_a_plain_appsec_cve_does_not_match_the_shipped_goals():
         takeaway="Patched within 72 hours; cuts exposure by 90% once applied.",
     )
     assert picked(cve, learning=goals) == []
+
+
+# --- Proof alone gates the lane; a lab's research section is proof (2026-11-14) ---
+RESEARCH = {
+    **LEARN,
+    "proof_hosts": [
+        *LEARN["proof_hosts"],
+        "anthropic.com/research",
+        "microsoft.com/en-us/research",
+    ],
+}
+
+
+def test_a_page_under_a_research_path_entry_is_proof():
+    for url in (
+        "https://www.microsoft.com/en-us/research/podcast/focus-edition-98/",
+        "https://www.anthropic.com/research/provable-inference",
+        "https://ANTHROPIC.com/Research/provable-inference",
+    ):
+        row = learn_row("lab", url=url, corroborators=[], takeaway="A study.")
+        assert picked(row, learning={**RESEARCH, "min_pointers": 1}) == ["lab"], url
+        assert b.learning_picks([row], {**RESEARCH, "min_pointers": 1}, NOW)[1]["lab"]["proof"]
+
+
+def test_lookalike_and_non_research_pages_are_not_proof():
+    one = {**RESEARCH, "min_pointers": 1}
+    for url in (
+        "https://www.anthropic.com/research",
+        "https://www.anthropic.com/research/",
+        "https://www.anthropic.com/researchers/jane",
+        "https://www.anthropic.com/news/launch",
+        "https://evil-anthropic.com/research/x",
+        "https://anthropic.com.evil.example/research/x",
+        "https://www.microsoft.com/en-us/security/blog/x",
+        "https://www.microsoft.com/en-us/research",
+    ):
+        row = learn_row("fake", url=url, corroborators=[], takeaway="A study.")
+        assert picked(row, learning=one) == [], url
+
+
+def test_the_shipped_config_gates_on_proof_alone():
+    import common as c
+
+    shipped = c.load_config().learning
+    assert shipped["min_pointers"] == 1
+    lab = learn_row(
+        "ms",
+        url="https://www.microsoft.com/en-us/research/podcast/focus-edition-98/",
+        corroborators=[],
+        domain_id="air.cost-efficiency",
+        takeaway="Measure what compaction costs you.",
+    )
+    assert picked(lab, learning=shipped) == ["ms"]
+    paper = learn_row("paper", url="https://arxiv.org/abs/2610.9", corroborators=[])
+    assert picked(paper, learning=shipped) == ["paper"]
+    # A vendor blog with a news echo has two parties and no proof: it stays out.
+    echo = learn_row(
+        "echo",
+        url="https://apiiro.com/blog/leaks",
+        corroborators=[{"url": "https://www.darkreading.com/leaks"}],
+        takeaway="Treat agent permission files as secrets.",
+    )
+    assert not b._proof(echo, {h.lower() for h in shipped["proof_hosts"]})
+    assert len(b._pointers(echo)) == 2
+    assert picked(echo, learning=shipped) == []
+
+
+def test_more_independent_parties_still_rank_a_proof_row_first():
+    one = {**RESEARCH, "min_pointers": 1}
+    lone = learn_row("lone", url="https://arxiv.org/abs/2610.1", corroborators=[], composite=90)
+    echoed = learn_row("echoed", url="https://arxiv.org/abs/2610.2", composite=10)
+    assert picked(lone, echoed, learning=one) == ["echoed", "lone"]
+
+
+def test_the_default_party_count_is_one_when_the_key_is_absent():
+    cfg = {k: v for k, v in LEARN.items() if k != "min_pointers"}
+    lone = learn_row("lone", url="https://arxiv.org/abs/2610.1", corroborators=[])
+    assert picked(lone, learning=cfg) == ["lone"]

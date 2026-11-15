@@ -1361,3 +1361,17 @@ def test_learning_lane_says_so_when_nothing_cleared_the_bar():
     html = run_js({"learning": [], "learning_days": 14}, "learningHTML({})")
     assert "Nothing in the last 14 days cleared all three filters." in html
     assert run_js({}, "learningHTML({})") == ""
+
+
+def test_learning_lane_wording_matches_the_proof_only_rule():
+    data = evil_data()
+    row = data["findings"][0]
+    data["learning"] = [row["id"]]
+    data["learning_days"] = 14
+    data["learning_why"] = {row["id"]: {"proof": "arxiv.org", "pointers": 1, "goals": ["Evals"]}}
+    html = run_js(data, "learningHTML({})")
+    assert "1 independent source " in html and "1 independent sources" not in html
+    assert "more than one independent source" not in html
+    assert "more independent sources rank first" in html
+    data["learning_why"][row["id"]]["pointers"] = 2
+    assert "2 independent sources" in run_js(data, "learningHTML({})")

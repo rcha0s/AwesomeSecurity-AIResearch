@@ -1397,7 +1397,9 @@
   function learningWhy(w) {
     if (!w || typeof w !== "object") return "";
     var proof = w.proof === "measured" ? "a measured comparison" : String(w.proof || "");
-    return '<p class="why">Why it is here: ' + num(w.pointers) + ' independent sources' +
+    var parties = Number(w.pointers) | 0;
+    return '<p class="why">Why it is here: ' + num(w.pointers) +
+      (parties === 1 ? ' independent source' : ' independent sources') +
       (proof ? ' · proof: ' + txt(proof) : "") + '</p>';
   }
   function learningCardHTML(f, i, w) {
@@ -1425,7 +1427,7 @@
   function learningNote(shown, days) {
     if (!shown) return "Nothing in the last " + days + " days cleared all three filters.";
     return "From the last " + days + " days: each has proof (the work itself or a measured " +
-      "comparison), more than one independent source, and serves one of your goals.";
+      "comparison) and serves one of your goals; more independent sources rank first.";
   }
   function biggestHTML(shown) {
     var m = rowsById();
