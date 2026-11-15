@@ -9,8 +9,8 @@ name: Scan watchdog
 on:
   schedule:
     # 00:30 UTC = 16:30 PST / 17:30 PDT: after the Mac's catch-up window closes
-    # (it ends when the UTC date rolls over). watchdog.py checks the UTC day of
-    # three hours earlier, which is the scan day just ended.
+    # (it ends when the UTC date rolls over). watchdog.py always checks the previous UTC day,
+    # the scan day just ended, however late GitHub starts this run (06:37-07:38Z so far).
     - cron: "30 0 * * *"
   workflow_dispatch: {}
 
