@@ -492,3 +492,76 @@ def test_an_empty_registry_refuses_every_new_claim():
     pr = added(claim("fresh", evidence=[{"url": "https://blog.example/a"}]))
     assert new_problems(pr, cc.registered_hosts([])) != []
     assert new_problems(pr, cc.registered_hosts(["junk", None])) != []
+
+
+# URL parsers disagree on these: urlparse takes the text after the last `@` as the host,
+# a browser reads `\` as `/`, so the gate and the click could land on different hosts.
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://evil.example\\@blog.example/x",
+        "https://evil.example%5C@blog.example/x",
+        "https://user@blog.example/p",
+        "https://blog.example@evil.example/p",
+        "https://blog.example./p",  # trailing dot
+        "https://blog.example\\.evil.example/p",
+        "https://blog.example/p\\q",
+        "https://blog.example/p q",
+        "https://blog.example/p\x00",
+        "https://blog.example/p\n",
+        " https://blog.example/p",
+        "https://blog.example:notaport/p",
+        "https://xn--blog-example.evil/p",
+        "https://BLOG.EXAMPLE.evil.example/p",
+    ],
+)
+def test_url_parser_tricks_do_not_pass(url):
+    assert new_problems(added(claim("fresh", evidence=[{"url": url}]))) != []
+
+
+@pytest.mark.parametrize(
+    "url",
+    ["https://blog.example:8443/p", "https://Blog.Example/P?a=1#frag", "http://blog.example"],
+)
+def test_ordinary_registered_urls_still_pass(url):
+    assert new_problems(added(claim("fresh", evidence=[{"url": url}]))) == []
+
+
+@pytest.mark.parametrize(
+    "host", ["feeds.feedburner.com", "sourcegraph.com", "socket.dev", "semgrep.dev",
+             "ampcode.com", "media.defcon.org", "snyk.io"],
+)  # fmt: skip
+def test_vendor_hosts_that_carry_user_content_never_anchor(host):
+    rows = [{"id": "r", "type": "rss", "active": True, "url": f"https://{host}/feed"}]
+    assert cc.registered_hosts(rows) == set()
+
+
+@pytest.mark.parametrize(
+    "where",
+    [
+        {"scope": "see evil.io/x"},
+        {"basis": "run curl x"},
+        {"evidence": [{"url": "https://blog.example/a", "title": "https://evil.example"}]},
+        {"evidence": [{"url": "https://blog.example/a", "note": "wget it"}]},
+        {"evidence": [{"url": "https://blog.example/a", "source_name": "npm install evil"}]},
+        {"tags": ["pip install evil"]},
+        {"refuted_controls": ["sudo rm"]},
+    ],
+)
+def test_every_rendered_text_field_is_linted(where):
+    good = {"evidence": [{"url": "https://blog.example/a"}], **where}
+    problems = new_problems(added(claim("fresh", **good)))
+    assert "text carries a URL or shell command" in " ".join(problems)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "npx evil-package", "npm i evil", "pnpm add evil", "pip3 install evil", "uvx evil",
+        "python -c 'x'", "bash -c x", "powershell -enc x", "iex (irm x)", "x | /bin/sh",
+        "bash <(curl x)", "visit www.evil", "go to evil.io", "evil.dev/x",
+    ],
+)  # fmt: skip
+def test_install_commands_interpreters_and_bare_domains_are_flagged(text):
+    good = claim("fresh", guidance=text, evidence=[{"url": "https://blog.example/a"}])
+    assert "text carries a URL or shell command" in " ".join(new_problems(added(good)))

@@ -643,13 +643,18 @@ on a `claude/scan-*` branch.
     review": the PR stays open for a human to merge. Superseding a claim is
     therefore always a human merge. A new claim is durable "do this now"
     advice written by the session after it read pages anyone can publish, so
-    every one of its evidence URLs must be http(s) on the host of an active
-    `rss`, `research_index`, `newsletter` or `conference` feed on main's
-    source registry, and its title, statement and guidance may carry no URL
-    and no `curl`/`wget`/`sudo`/`chmod`/pipe-to-shell
+    every one of its evidence URLs must match a strict http(s) pattern (no
+    userinfo, backslash, whitespace or trailing dot, so the gate and a browser
+    read the same host) on the host of an active `rss`, `research_index`,
+    `newsletter` or `conference` feed on main's source registry, and none of
+    its rendered text (title, statement, guidance, scope, basis, evidence
+    titles and notes, tags) may carry a URL, a bare domain, an install
+    command, an interpreter flag or a pipe to a shell
     (`content_checks.new_claim_problems`, `registered_hosts`). Hosts anyone
-    can publish on (github.com, x.com, youtube.com, medium.com, arxiv.org,
-    huggingface.co, ...; `OPEN_HOSTS`) never count. Nothing the session
+    can publish on or that redirect (github.com, x.com, youtube.com,
+    medium.com, arxiv.org, huggingface.co, feedburner, socket.dev, ...;
+    `OPEN_HOSTS`) never count. The gate checks the URL, not where it lands,
+    so a redirect on an approved host is still open. Nothing the session
     writes is consulted: not `source_id` (the analyzer carries it in its own
     output), not `verified`, not the pool rows. A failing claim gets the same
     "needs human review" refusal. Replayed over the 11 scans of 2026-10-28 to
