@@ -758,14 +758,13 @@
       "url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
       "from": "pool",
       "keep": true,
-      "known_miss": true,
       "on_topic": true,
       "domain": "ais.ai-infra",
       "also_accept": [
         "ps.detection-response",
         "ais.red-teaming"
       ],
-      "reason": "pipeline holds it below the novelty floor (55 < 60); the golden case records the miss",
+      "reason": "Curated since the novelty floor moved from 60 to 55 (2026-11-14); it was the documented known miss, held at novelty 55",
       "facts": [
         {
           "fact": "The label comes from an X post by AISafetyMemes on 2026-10-22",
@@ -887,13 +886,12 @@
       "url": "https://www.vulncheck.com/advisories/roo-code-through-3.54.0-auto-approve-bypass-via-quote-masking-desynchronization",
       "from": "pool",
       "keep": true,
-      "known_miss": true,
       "on_topic": true,
       "domain": "ais.agent-security",
       "also_accept": [
         "ps.ai-code"
       ],
-      "reason": "pipeline holds it below the novelty floor (55 < 60); the golden case records the miss",
+      "reason": "Curated since the novelty floor moved from 60 to 55 (2026-11-14); it was the documented known miss, held at novelty 55",
       "facts": [
         {
           "fact": "Seven CVEs including CVE-2026-110202 to 110206",

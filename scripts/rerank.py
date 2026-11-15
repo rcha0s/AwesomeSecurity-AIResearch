@@ -104,6 +104,9 @@ def rerank_pool(track: str, conf: c.Config | None = None, now=None) -> dict:
     released = release_holds(fresh)
     if released:
         print(f"  released {released} readability hold(s) the current config no longer supports")
+    freed = release_bar_holds(fresh, conf)
+    if freed:
+        print(f"  released {freed} finding(s) the current curation bar no longer holds")
     pool["entries"] = sorted((score_entry(e, conf, now=now) for e in fresh), key=sort_key)
     c.save_pool(track, pool)
     return pool
@@ -114,6 +117,41 @@ def release_holds(entries: list[dict]) -> int:
     threshold releases what it no longer supports; rerank never adds a hold)."""
     cfg = rd.settings()
     return sum(rd.release(e, cfg) for e in entries)
+
+
+def still_held(entry: dict, conf: c.Config) -> bool:
+    """Whether any reason merge_analysis holds an entry for review applies now,
+    recomputed from its stored fields: low confidence, below the novelty or relevance
+    bar, an unscored, news-brief, Reddit-only, domain-held, readability-held or
+    citation-held entry, ungrounded excerpts, a low-authority source with
+    unconfirmed quotes, or a refuting verifier."""
+    import merge_analysis as ma  # merge_analysis imports this module
+    import verify_citations as vc
+
+    cur = conf.curation
+    confirmed = (entry.get("grounding_score") or 0) >= 1.0
+    return bool(
+        ma.entry_confidence(entry) < conf.confidence_min
+        or ma.below_curation_bar(entry, conf)
+        or not c.is_scored(entry)
+        or c.is_news_brief(entry)
+        or c.reddit_only(entry)
+        or any(entry.get(k) for k in ("domain_hold", "readability_hold", "citation_hold"))
+        or (cur.get("require_grounding", True) and not vc.publishable_grounding(entry))
+        or (c.credibility_of(entry) < cur.get("min_credibility", 0) and not confirmed)
+        or (cur.get("require_verification", True) and entry.get("verified") is False)
+    )
+
+
+def release_bar_holds(entries: list[dict], conf: c.Config) -> int:
+    """Re-judge every held entry under the current curation settings, as release_holds
+    does for readability: tuning min_novelty or min_relevance lets through what the
+    new bar no longer holds, and an entry is released only when every reason merge
+    would hold it is clear. Rerank never adds a hold."""
+    freed = [e for e in entries if e.get("needs_review") and not still_held(e, conf)]
+    for e in freed:
+        e["needs_review"] = False
+    return len(freed)
 
 
 def normalize_archive() -> int:

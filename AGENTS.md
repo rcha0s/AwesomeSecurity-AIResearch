@@ -552,6 +552,16 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   widen the allowlist rather than skipping permissions.
 - The curation gate still holds weak/ungrounded findings in `REVIEW.md`; only
   genuinely novel, grounded, verified items land in the curated view.
+- **The curation bar is re-judged, not frozen at merge.** `merge_analysis.py` sets
+  `needs_review` once; `rerank.py` (`release_bar_holds`, `still_held`) now re-judges every
+  held entry under the current `curation:` settings and releases it only when every
+  reason merge would hold it is clear (confidence, novelty and relevance bar, scored, not
+  a news brief, not Reddit-only, no domain, readability or citation hold, publishable
+  grounding, credibility, not refuted). It never adds a hold, so tuning
+  `curation.min_novelty` or `min_relevance` is retroactive. 2026-11-14: `min_novelty`
+  60 -> 55 and `min_relevance` 55 -> 60, chosen on the golden answers (every keep
+  survives, no drop is admitted) after 147 grounded, actionable findings sat held in 14
+  days with none reaching 60. Check it against `eval_golden.py` whenever the key grows.
 - After the novelty gate, a **separate editorial pass** (the `editorial-review`
   skill + `promote_editorial.py`) reads the held `REVIEW.md` queue and promotes
   the trending/newsworthy/teachable ones into a "Trending & In the News" section.
