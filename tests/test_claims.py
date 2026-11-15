@@ -335,6 +335,17 @@ def test_reference_year_is_capped_at_this_year_so_one_future_date_ages_nothing()
     assert claims.reference_year([undated]) is None
 
 
+def test_scores_that_are_equal_on_paper_tie_and_fall_back_to_the_newest_belief():
+    # 0.8 less one year is 0.7000000000000001 in floats, which used to beat a plain 0.7.
+    aged = make_claim(id="aged", confidence=0.8, evidence=_evidence(2025), first_seen="2025-07-18")
+    plain = make_claim(
+        id="plain", confidence=0.7, evidence=_evidence(2026), first_seen="2026-08-01"
+    )
+    assert claims.rank_score(aged, 2026) == claims.rank_score(plain, 2026) == 0.7
+    ordered = claims.order_claims([aged, plain], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["plain", "aged"]  # newer first_seen wins the tie
+
+
 def test_a_model_agnostic_claim_pays_no_age_penalty():
     agnostic = make_claim(
         id="agnostic", confidence=0.9, evidence=_evidence(2006), applies_to="agnostic"

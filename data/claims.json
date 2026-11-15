@@ -381,7 +381,7 @@
         "threat-model"
       ],
       "first_seen": "2026-05",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-04",
       "phase": "threat-model",
       "title": "Prompt injection can't be closed by filtering alone",
       "basis": "A formal impossibility argument plus large-scale red-teaming — a 78-study meta-analysis and a dedicated agentic red-team study — showing the vulnerability persists across model families and defenses.",
@@ -525,7 +525,7 @@
         "persistence"
       ],
       "first_seen": "2026-06",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-24",
       "phase": "threat-model",
       "title": "Poisoned agent memory persists and resists correction",
       "basis": "Three independent 2026 papers converge on the same result across coding-preference poisoning, self-state/syscall-level corruption, and cross-session stored injection.",
@@ -597,7 +597,7 @@
         "scanning"
       ],
       "first_seen": "2026-07-20",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "phase": "defense",
       "title": "Scanners alone aren't enough — sandbox deserialization too",
       "basis": "A single research disclosure (ShadowPickle) demonstrated pickle-VM import tricks evading ten scanners and four model hubs simultaneously.",
@@ -752,7 +752,7 @@
         "provenance"
       ],
       "first_seen": "2026-07-15",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-30",
       "phase": "attack",
       "title": "Import-time npm payloads defeat --ignore-scripts and provenance",
       "basis": "A forensic breakdown of a real supply-chain compromise (the AsyncAPI npm package) showing the payload fired at import time and shipped with a valid provenance attestation.",
@@ -827,7 +827,7 @@
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Design agentic systems assuming injection succeeds sometimes: least-privilege tool scopes, human approval on irreversible actions, blast-radius caps that hold even when the model is fooled.",
       "tags": [
         "prompt-injection",
@@ -900,7 +900,7 @@
         }
       ],
       "first_seen": "2023-02",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-01",
       "guidance": "Treat every retrieval-augmented context as untrusted input. Never let retrieved content unilaterally cause a tool call with side effects.",
       "tags": [
         "prompt-injection",
@@ -980,7 +980,7 @@
         }
       ],
       "first_seen": "2023-04",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "For high-authority agents, use a two-tier architecture: the planner sees only tool schemas + user intent; the reader/quarantined LLM sees untrusted content and returns structured summaries the planner cannot execute as commands.",
       "tags": [
         "defense",
@@ -1049,7 +1049,7 @@
         }
       ],
       "first_seen": "2021-03",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Prefer safetensors for any model you didn't personally train. If you must load pickles, do it in a container with no outbound network.",
       "tags": [
         "pickle",
@@ -1086,7 +1086,7 @@
         }
       ],
       "first_seen": "2024-02",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Pin model artifacts by revision hash, not by name. Verify the model card against the vendor's known channels.",
       "tags": [
         "typosquatting",
@@ -1126,7 +1126,7 @@
         }
       ],
       "first_seen": "2025-04-01",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-04",
       "guidance": "Version-pin and change-review every MCP tool description. Treat metadata updates as system-prompt changes requiring re-approval.",
       "tags": [
         "mcp",
@@ -1171,7 +1171,7 @@
         }
       ],
       "first_seen": "2025-04-28",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Do not present tools whose selection can be influenced by untrusted context unless the tool is safe when called on adversarial input.",
       "tags": [
         "tool-selection",
@@ -1181,8 +1181,7 @@
       "title": "Untrusted context can steer which tool an agent picks",
       "basis": "Established by the original 'Prompt Injection Attacks on Agentic Systems' paper, measuring tool-selection manipulation via adversarial retrieved content.",
       "added_on": "2026-08-06",
-      "changed_on": "2026-08-06",
-      "applies_to": "agnostic"
+      "changed_on": "2026-08-06"
     },
     {
       "id": "long-term-memory-is-a-cross-session-poisoning-vector",
@@ -1209,7 +1208,7 @@
         }
       ],
       "first_seen": "2024-05-22",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Gate what enters long-term memory with a policy check, not a post-hoc filter. Treat memory writes as security-relevant.",
       "tags": [
         "memory",
@@ -1247,7 +1246,7 @@
         }
       ],
       "first_seen": "2023-11",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Rotate held-out red-team prompts; treat any published adversarial dataset as compromised for future models.",
       "tags": [
         "evaluation",
@@ -1301,7 +1300,7 @@
         }
       ],
       "first_seen": "2026-06-04",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Apply the private-IP dialer guard to every outbound HTTP client in an agent runtime — not just the user-facing one. Re-validate on redirect.",
       "tags": [
         "ssrf",
@@ -1338,7 +1337,7 @@
         }
       ],
       "first_seen": "2006-07-19",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Resolve with realpath()/Path.resolve(), then check containment by path components, not string prefix ('/srv/app2' passes a '/srv/app' prefix test). Where the race matters, open with O_NOFOLLOW or openat2(RESOLVE_BENEATH) instead of check-then-open.",
       "tags": [
         "path-traversal",
@@ -1405,7 +1404,7 @@
         }
       ],
       "first_seen": "2016-06-08",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-12",
       "guidance": "Do first-touch installs in a sandbox. Skipping install scripts (--ignore-scripts) is not enough on its own: a payload that runs at import time gets past it (see import-time-payloads-defeat-install-time-controls), so also pin and review dependency updates and run the first import in a sandbox.",
       "tags": [
         "npm",
@@ -1442,7 +1441,7 @@
         }
       ],
       "first_seen": "2016-06-08",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Prefer install from lockfile only; audit any hand-added dependency's provenance.",
       "tags": [
         "typosquatting",
@@ -1481,7 +1480,7 @@
         }
       ],
       "first_seen": "2019-11",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Set HttpTokens=required on all EC2 instances hosting agent runtimes.",
       "tags": [
         "aws",
@@ -1553,7 +1552,7 @@
         }
       ],
       "first_seen": "2021-01",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-08",
       "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users.",
       "tags": [
         "aws",
@@ -1668,7 +1667,7 @@
         }
       ],
       "first_seen": "2014-01",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Never expose native bridges to WebViews that render third-party content.",
       "tags": [
         "mobile",
@@ -1981,7 +1980,7 @@
         }
       ],
       "first_seen": "2023-01",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-22",
       "guidance": "Store prompts in the same repo as the code that calls them. Run eval on every prompt change and every model change.",
       "tags": [
         "prompting",
@@ -2354,7 +2353,7 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-27",
       "basis": "documented incident analysis (safedep.io + RustSec advisory)",
       "guidance": "Flag a maintainer yanking multiple prior versions in quick succession, leaving only a very recent version installable, as a supply-chain risk signal — review before consuming the registry's 'update to a non-yanked version' prompt.",
       "scope": "Applies to registries supporting version yanking (crates.io, npm, PyPI, etc); doesn't apply to registries without a yank/deprecate mechanism.",
@@ -2443,7 +2442,7 @@
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-27",
       "basis": "detailed vulnerability research writeup with reproducible measurements (GHSA-q97c-8qh3-fpc6)",
       "guidance": "When auditing cryptographic implementations for constant-time behavior, check whether operation counts of underlying shared-library calls vary with secret data, not just wall-clock timing.",
       "scope": "Shown with an instrumented call-count observer against phpseclib's pure-PHP X25519 (ext-sodium absent, reused key, local co-residency); a working Flush+Reload spy was not built.",
@@ -2537,7 +2536,7 @@
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-27",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Review installed skills together as one pipeline, not file by file, and test that safety-critical signals survive the whole skill chain end to end.",
@@ -2569,7 +2568,7 @@
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-27",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.",
@@ -2593,7 +2592,7 @@
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-10-27",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Render agent output in review and monitoring tools as untrusted (escape markup, disable rich rendering such as MathJax or HTML, strict CSP on the viewer origin), and periodically check the rendered view against the raw stored transcript.",
@@ -3343,7 +3342,7 @@
         }
       ],
       "first_seen": "2026-11-04",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-10",
       "added_on": "2026-11-04",
       "changed_on": "2026-11-04",
       "title": "Approve agent shell commands by observed effects, not command text",
@@ -3354,8 +3353,7 @@
         "approval",
         "sandbox",
         "rollback"
-      ],
-      "applies_to": "agnostic"
+      ]
     },
     {
       "id": "agent-permission-files-leak-secrets",
@@ -3373,13 +3371,12 @@
         }
       ],
       "first_seen": "2026-11-08",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-08",
       "added_on": "2026-11-08",
       "changed_on": "2026-11-08",
       "title": "Coding-agent permission files leak secrets into public repositories",
       "guidance": "Treat agent permission, transcript and memory files as secret-bearing: gitignore them per repo, rotate any credential they ever held, approve command patterns that reference environment variables instead of literal secrets, and add command-aware rules (PGPASSWORD=, sshpass -p, Authorization: Bearer) to secret scanning of agent folders and git history.",
-      "scope": "Measured on public GitHub copies of Claude Code's local settings file; 'real secret' was screened by rules and an LLM reviewer, not validity-tested, and does not by itself show how other agents' config files behave.",
-      "applies_to": "agnostic"
+      "scope": "Measured on public GitHub copies of Claude Code's local settings file; 'real secret' was screened by rules and an LLM reviewer, not validity-tested, and does not by itself show how other agents' config files behave."
     },
     {
       "id": "skill-optimization-feedback-can-plant-backdoors",
@@ -3429,7 +3426,7 @@
         }
       ],
       "first_seen": "2026-11-09",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-09",
       "added_on": "2026-11-09",
       "changed_on": "2026-11-09",
       "title": "Output-only watermark audits can be evaded by the audited provider",
@@ -3459,13 +3456,12 @@
         }
       ],
       "first_seen": "2026-11-12",
-      "last_reviewed": "2026-11-15",
+      "last_reviewed": "2026-11-12",
       "added_on": "2026-11-12",
       "changed_on": "2026-11-12",
       "title": "Model weights can be backdoored by direct edits, no training needed",
       "guidance": "Treat model weights as code: verify provenance of every weight file an agent loads, diff deployed weights against the publisher's original, and do not rely on behavioral evals alone to clear a third-party or internally stored model.",
-      "scope": "Requires write access to the weight files (a compromised account, pipeline, or storage); does not apply to models served only through a provider API you cannot modify. Evidence so far is one Microsoft Research study.",
-      "applies_to": "agnostic"
+      "scope": "Requires write access to the weight files (a compromised account, pipeline, or storage); does not apply to models served only through a provider API you cannot modify. Evidence so far is one Microsoft Research study."
     }
   ]
 }

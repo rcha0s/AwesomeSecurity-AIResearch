@@ -538,7 +538,7 @@ def claims_payload(ledger: dict, tax: taxonomy.Taxonomy) -> list[dict]:
             **claim,
             "domain": c.domain_name(claim.get("domain") or ""),
             "domain_id": briefing.claim_domain(claim, tax),
-            "rank_score": round(cl.rank_score(claim, ref), 3),
+            "rank_score": cl.rank_score(claim, ref),
             "newest_evidence": cl.newest_evidence_year(claim),
             "evidence_age": cl.evidence_age(claim, ref),
         }

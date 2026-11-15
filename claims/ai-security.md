@@ -242,7 +242,7 @@ Agents with tool/network access during training or evaluation can actively disco
 
 ### Untrusted context can steer which tool an agent picks
 
-`agent-tool-selection-can-be-steered-by-untrusted-context` · confidence **0.75** · model-agnostic · MCP, Tools & Skills · standing since Apr 28, 2025
+`agent-tool-selection-can-be-steered-by-untrusted-context` · confidence **0.75** · MCP, Tools & Skills · standing since Apr 28, 2025
 
 An agent's tool selection can be steered by content in its context or tool library: an adversarial tool description or retrieved text can make the agent prefer a hostile tool over the intended one.
 
@@ -437,7 +437,7 @@ _Tags: `defense`, `architecture`, `dual-llm`_
 
 ### Model weights can be backdoored by direct edits, no training needed
 
-`weight-edit-backdoors-need-no-training` · confidence **0.60** · model-agnostic · Model Supply Chain & Theft · standing since Nov 12, 2026
+`weight-edit-backdoors-need-no-training` · confidence **0.60** · Model Supply Chain & Theft · standing since Nov 12, 2026
 
 An attacker who can modify a model's weight files can implant a trigger-activated backdoor by editing a handful of rarely used neurons, without fine-tuning or retraining; the edited model still passes standard evals, and an agent running it executes the attacker's command with the agent's own permissions when the trigger appears.
 
@@ -457,7 +457,7 @@ An attacker who can modify a model's weight files can implant a trigger-activate
 
 ### Coding-agent permission files leak secrets into public repositories
 
-`agent-permission-files-leak-secrets` · confidence **0.60** · model-agnostic · Agent & Harness Security · standing since Nov 8, 2026
+`agent-permission-files-leak-secrets` · confidence **0.60** · Agent & Harness Security · standing since Nov 8, 2026
 
 Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.
 
@@ -608,7 +608,7 @@ _Tags: `data-watermarking`, `data-use-auditing`, `evasion`_
 
 ### Approve agent shell commands by observed effects, not command text
 
-`approve-agent-commands-by-observed-effects` · confidence **0.50** · model-agnostic · Agent & Harness Security · standing since Nov 4, 2026
+`approve-agent-commands-by-observed-effects` · confidence **0.50** · Agent & Harness Security · standing since Nov 4, 2026
 
 Automated approvers that judge a coding agent's shell command by its text miss harm hidden in the code it invokes; pre-running the command in a snapshot sandbox and approving from its observed effects lets far fewer harmful outcomes through.
 

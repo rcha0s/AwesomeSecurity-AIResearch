@@ -479,11 +479,13 @@ def _age_settings() -> tuple[float, float]:
 
 def rank_score(claim: dict, ref_year: int | None) -> float:
     """Confidence minus a capped penalty for each year its newest evidence is old.
-    A model-agnostic claim is not dated by its evidence, so it pays no penalty."""
+    A model-agnostic claim is not dated by its evidence, so it pays no penalty.
+    Rounded to 3 places, so 0.8 less one year ties with 0.7 instead of landing a
+    float's rounding error above it, and the site sorts on the same number."""
     if claim.get("applies_to") == "agnostic":
-        return confidence_of(claim)
+        return round(confidence_of(claim), 3)
     per_year, cap = _age_settings()
-    return confidence_of(claim) - min(cap, per_year * evidence_age(claim, ref_year))
+    return round(confidence_of(claim) - min(cap, per_year * evidence_age(claim, ref_year)), 3)
 
 
 def _live_key(claim: dict, ref_year: int | None) -> tuple:

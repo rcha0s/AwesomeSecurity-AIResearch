@@ -951,7 +951,11 @@
         // Python's claims.rank_score: confidence less a capped penalty for old evidence.
         var settled = (a.status === "current" ? 0 : 1) - (b.status === "current" ? 0 : 1);
         if (settled) return settled;
-        return (Number(b.rank_score) || 0) - (Number(a.rank_score) || 0);
+        var by = (Number(b.rank_score) || 0) - (Number(a.rank_score) || 0);
+        if (by) return by;
+        // The same tie-break claims.order_claims uses: newest belief first.
+        var fa = String(a.first_seen || ""), fb = String(b.first_seen || "");
+        return fa < fb ? 1 : fa > fb ? -1 : 0;
       }
       if (mode === "change") return lastChange(b).localeCompare(lastChange(a));
       return (Number(b.confidence) || 0) - (Number(a.confidence) || 0);

@@ -303,13 +303,15 @@ def cmd_applies(args: argparse.Namespace) -> int:
     {"<claim id>": "agnostic"} or {"<claim id>": {"applies_to": "model-era", "model_note": "..."}}.
     """
     wanted = json.loads(Path(args.file).read_text(encoding="utf-8"))
+    if not isinstance(wanted, dict):
+        print("the file must be a JSON object of claim id -> classification")
+        return 1
     ledger = cl.load_ledger()
     index = cl.claim_index(ledger["claims"])
     bad = [i for i in wanted if i not in index or cl.is_retired(index[i])]
     if bad or not wanted:
         print(f"unknown or retired claims: {', '.join(bad) or '(empty file)'}")
         return 1
-    stamp = {"last_reviewed": today()}
     claims = []
     for claim in ledger["claims"]:
         pick = wanted.get(claim["id"])
@@ -317,7 +319,13 @@ def cmd_applies(args: argparse.Namespace) -> int:
             claims.append(claim)
             continue
         pick = {"applies_to": pick} if isinstance(pick, str) else dict(pick)
-        claims.append({**claim, **pick, **stamp})
+        extra = sorted(set(pick) - {"applies_to", "model_note"})
+        if extra:
+            print(f"{claim['id']}: only applies_to and model_note can be set here (got {extra})")
+            return 1
+        # last_reviewed is left alone: classifying a claim is not reviewing it, and
+        # the drift review's stale sweep reads that date.
+        claims.append({**claim, **pick})
     rc = save_validated({**ledger, "claims": claims})
     if rc == 0:
         print(f"classified {len(wanted)} claims")

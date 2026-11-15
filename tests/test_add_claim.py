@@ -121,6 +121,23 @@ def test_applies_classifies_several_claims_in_one_save(sandbox, tmp_path):
     assert "applies_to" not in by_id["three"]
 
 
+def test_applies_changes_only_the_two_fields_and_leaves_last_reviewed_alone(sandbox, tmp_path):
+    add_claim.main(new_args("one"))
+    before = claims.load_ledger()["claims"][0]
+    picks = tmp_path / "p.json"
+    picks.write_text('{"one": {"applies_to": "agnostic", "confidence": 0.99}}')
+    assert add_claim.main(["applies", str(picks)]) == 1
+    assert claims.load_ledger()["claims"][0] == before
+    picks.write_text('["one"]')
+    assert add_claim.main(["applies", str(picks)]) == 1
+    picks.write_text('{"one": "agnostic"}')
+    assert add_claim.main(["applies", str(picks)]) == 0
+    after = claims.load_ledger()["claims"][0]
+    assert after["applies_to"] == "agnostic"
+    assert after["last_reviewed"] == before["last_reviewed"]
+    assert after["confidence"] == before["confidence"]
+
+
 def test_applies_refuses_unknown_claims_and_bad_values_and_saves_nothing(sandbox, tmp_path):
     add_claim.main(new_args("real"))
     unknown = tmp_path / "unknown.json"

@@ -1402,11 +1402,31 @@ def test_learning_lane_wording_matches_the_proof_only_rule():
     assert "2 independent sources" in run_js(data, "learningHTML({})")
 
 
+def test_best_first_breaks_a_score_tie_by_the_newest_belief_like_the_python_order():
+    data = {
+        "claims": [
+            {"id": "older", "status": "current", "rank_score": 0.7, "first_seen": "2025-07-18"},
+            {"id": "newer", "status": "current", "rank_score": 0.7, "first_seen": "2026-08-01"},
+            {"id": "undated", "status": "current", "rank_score": 0.7},
+            {"id": "top", "status": "current", "rank_score": 0.9, "first_seen": "2020"},
+        ]
+    }
+    got = run_js(data, "sortClaims(DATA.claims, 'best').map(function (c) { return c.id; })")
+    assert got == ["top", "newer", "older", "undated"]
+
+
 def test_claim_cards_flag_model_scope_and_old_evidence_and_escape_the_note():
     data = {
         "topics": {},
         "claims": [
-            {"id": "a", "status": "current", "confidence": 0.9, "applies_to": "agnostic"},
+            {
+                "id": "a",
+                "status": "current",
+                "confidence": 0.9,
+                "applies_to": "agnostic",
+                "evidence_age": 20,  # 2006 evidence, yet no "evidence to" pill on an agnostic claim
+                "newest_evidence": 2006,
+            },
             {
                 "id": "b",
                 "status": "current",

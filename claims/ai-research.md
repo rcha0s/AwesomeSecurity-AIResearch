@@ -82,56 +82,6 @@ _Tags: `evals`, `benchmarks`, `security-scanning`_
 
 </details>
 
-<a id="claim-stable-prompt-prefix-keeps-cache-reads-cheap"></a>
-
-### Keep the prompt prefix stable so cache reads dominate
-
-`stable-prompt-prefix-keeps-cache-reads-cheap` · confidence **0.80** · Cost Efficiency · standing since Jul 18, 2025
-
-A harness that keeps its context append-only and its prefix stable gets cached input at roughly a tenth of the uncached price.
-
-**Basis —** Manus's production write-up plus Anthropic's published cache pricing (reads at 0.1x input).
-
-**Do this —** Never edit earlier turns or reorder the system prompt/tools mid-session; only append.
-
-**Conditions —** Applies where the provider offers prefix caching; savings depend on cache lifetime and how often the prefix really repeats.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (4)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
-
-</details>
-
-<a id="claim-long-context-does-not-eliminate-retrieval-need"></a>
-
-### Long context windows don't remove the need for retrieval
-
-`long-context-does-not-eliminate-retrieval-need` · confidence **0.80** · Retrieval, Prompting & Context · standing since Jul 2023
-
-Long-context models do not eliminate the need for retrieval: they exhibit lost-in-the-middle effects, cost grows linearly with context size, and per-token attention drops on distant tokens.
-
-**Basis —** Grounded in the 'Lost in the Middle' study measuring attention degradation on distant tokens as context length grows.
-
-**Do this —** Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.
-
-_Tags: `long-context`, `rag`, `lost-in-the-middle`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Lost in the Middle](https://arxiv.org/abs/2307.03172) | Jul 2023 |
-| supports | [Context Length Alone Hurts LLM Performance Despite Perfect Retrieval](https://arxiv.org/abs/2510.05381) | Oct 2025 |
-
-</details>
-
 <a id="claim-benchmark-category-labels-can-mask-conflated-capabilities"></a>
 
 ### A benchmark's category label may not measure that capability
@@ -178,6 +128,33 @@ _Tags: `harness`, `agents`, `prompting`, `evals`_
 | --- | --- | --- |
 | supports | [How the Claude Code team designs its harness](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) | Jul 21, 2026 |
 | supports | [HarnessTax: How Much Does the Harness Matter for Coding Agents?](https://harnesstax.github.io/) | Sep 16, 2026 |
+
+</details>
+
+<a id="claim-stable-prompt-prefix-keeps-cache-reads-cheap"></a>
+
+### Keep the prompt prefix stable so cache reads dominate
+
+`stable-prompt-prefix-keeps-cache-reads-cheap` · confidence **0.80** · Cost Efficiency · standing since Jul 18, 2025
+
+A harness that keeps its context append-only and its prefix stable gets cached input at roughly a tenth of the uncached price.
+
+**Basis —** Manus's production write-up plus Anthropic's published cache pricing (reads at 0.1x input).
+
+**Do this —** Never edit earlier turns or reorder the system prompt/tools mid-session; only append.
+
+**Conditions —** Applies where the provider offers prefix caching; savings depend on cache lifetime and how often the prefix really repeats.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (4)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
+| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
 
 </details>
 
@@ -229,6 +206,29 @@ _Tags: `agents`, `harness`, `tools`_
 | --- | --- | --- |
 | supports | [ToolLLM](https://arxiv.org/abs/2307.16789) | Jul 2023 |
 | supports | [How Many Tools Should an LLM Agent See? A Chance-Corrected Answer](https://arxiv.org/abs/2605.24660) | Jun 2026 |
+
+</details>
+
+<a id="claim-long-context-does-not-eliminate-retrieval-need"></a>
+
+### Long context windows don't remove the need for retrieval
+
+`long-context-does-not-eliminate-retrieval-need` · confidence **0.80** · Retrieval, Prompting & Context · standing since Jul 2023
+
+Long-context models do not eliminate the need for retrieval: they exhibit lost-in-the-middle effects, cost grows linearly with context size, and per-token attention drops on distant tokens.
+
+**Basis —** Grounded in the 'Lost in the Middle' study measuring attention degradation on distant tokens as context length grows.
+
+**Do this —** Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.
+
+_Tags: `long-context`, `rag`, `lost-in-the-middle`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Lost in the Middle](https://arxiv.org/abs/2307.03172) | Jul 2023 |
+| supports | [Context Length Alone Hurts LLM Performance Despite Perfect Retrieval](https://arxiv.org/abs/2510.05381) | Oct 2025 |
 
 </details>
 
@@ -377,29 +377,6 @@ _Tags: `llm-as-judge`, `eval-bias`, `evals`_
 | supports | [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) | Jun 2023 |
 | supports | [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) | Jun 2025 |
 | supports | [Length-Controlled AlpacaEval: LLM auto-annotators favor longer outputs; regressing out length raises agreement with Chatbot Arena (0.94 to 0.98)](https://arxiv.org/abs/2404.04475) | Apr 6, 2024 |
-
-</details>
-
-<a id="claim-capability-elicitation-lags-training"></a>
-
-### Standard prompting understates a model's real capability ceiling
-
-`capability-elicitation-lags-training` · confidence **0.80** · Models & Capabilities · standing since Dec 12, 2023
-
-A model's actual capability ceiling is typically higher than what standard prompting elicits; targeted prompting or scaffolding can unlock capabilities the base eval missed.
-
-**Basis —** Referenced from Anthropic's Responsible Scaling Policy work on capability elicitation.
-
-**Do this —** Do not build a safety case on 'the model can't do X' from a base-eval measurement alone.
-
-_Tags: `capabilities`, `elicitation`, `safety`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic: Announcing our updated Responsible Scaling Policy (notes evaluations that could elicit more with chain-of-thought or best-of-N)](https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy) | Oct 15, 2024 |
-| supports | [AI capabilities can be significantly improved without expensive retraining: most post-training enhancements equal >5x training compute](https://arxiv.org/abs/2312.07413) | Dec 12, 2023 |
 
 </details>
 
@@ -577,6 +554,29 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 
 </details>
 
+<a id="claim-capability-elicitation-lags-training"></a>
+
+### Standard prompting understates a model's real capability ceiling
+
+`capability-elicitation-lags-training` · confidence **0.80** · Models & Capabilities · standing since Dec 12, 2023
+
+A model's actual capability ceiling is typically higher than what standard prompting elicits; targeted prompting or scaffolding can unlock capabilities the base eval missed.
+
+**Basis —** Referenced from Anthropic's Responsible Scaling Policy work on capability elicitation.
+
+**Do this —** Do not build a safety case on 'the model can't do X' from a base-eval measurement alone.
+
+_Tags: `capabilities`, `elicitation`, `safety`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic: Announcing our updated Responsible Scaling Policy (notes evaluations that could elicit more with chain-of-thought or best-of-N)](https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy) | Oct 15, 2024 |
+| supports | [AI capabilities can be significantly improved without expensive retraining: most post-training enhancements equal >5x training compute](https://arxiv.org/abs/2312.07413) | Dec 12, 2023 |
+
+</details>
+
 <a id="claim-agent-safety-evals-can-misread-production-behavior"></a>
 
 ### Agent safety eval scores can misjudge how agents behave in production
@@ -701,6 +701,31 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 
 </details>
 
+<a id="claim-simplest-pipeline-first"></a>
+
+### Prefer the simplest pipeline that solves the task
+
+`simplest-pipeline-first` · confidence **0.70** · Cost Efficiency · standing since Jul 1, 2024
+
+A harness should start with a simple fixed workflow, since in 2024 the non-agentic Agentless pipeline scored highest among open-source agents on SWE-bench Lite (32.00%) at $0.70 per task, in the authors' own evaluation.
+
+**Basis —** Anthropic's agent-building guidance and the Agentless paper ($0.70 per task, best open-source score on SWE-bench Lite at the time).
+
+**Do this —** Add agent loops, tools or subagents only after a simpler version fails on your evals.
+
+**Conditions —** The Agentless result is the authors' own 2024 evaluation on SWE-bench Lite; stronger models since may shift where agent loops pay off.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: building effective agents](https://www.anthropic.com/engineering/building-effective-agents) | Dec 19, 2024 |
+| supports | [arXiv: Agentless: 2407.01489](https://arxiv.org/abs/2407.01489) | Jul 1, 2024 |
+
+</details>
+
 <a id="claim-swe-bench-doesnt-generalize-to-production-tasks"></a>
 
 ### SWE-bench scores don't predict production task performance
@@ -745,31 +770,6 @@ _Tags: `quantization`, `deployment`, `inference`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [SpQR](https://arxiv.org/abs/2306.03078) | Jun 2023 |
-
-</details>
-
-<a id="claim-simplest-pipeline-first"></a>
-
-### Prefer the simplest pipeline that solves the task
-
-`simplest-pipeline-first` · confidence **0.70** · Cost Efficiency · standing since Jul 1, 2024
-
-A harness should start with a simple fixed workflow, since in 2024 the non-agentic Agentless pipeline scored highest among open-source agents on SWE-bench Lite (32.00%) at $0.70 per task, in the authors' own evaluation.
-
-**Basis —** Anthropic's agent-building guidance and the Agentless paper ($0.70 per task, best open-source score on SWE-bench Lite at the time).
-
-**Do this —** Add agent loops, tools or subagents only after a simpler version fails on your evals.
-
-**Conditions —** The Agentless result is the authors' own 2024 evaluation on SWE-bench Lite; stronger models since may shift where agent loops pay off.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: building effective agents](https://www.anthropic.com/engineering/building-effective-agents) | Dec 19, 2024 |
-| supports | [arXiv: Agentless: 2407.01489](https://arxiv.org/abs/2407.01489) | Jul 1, 2024 |
 
 </details>
 

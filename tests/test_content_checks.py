@@ -154,6 +154,17 @@ def test_refusal_reason_is_the_agreed_wording():
     assert problems == ["claim change needs human review: live `status` changed"]
 
 
+def test_a_scan_cannot_reclassify_a_standing_claim_but_may_classify_a_new_one():
+    pr = copy.deepcopy(MAIN)
+    pr["claims"][LIVE]["applies_to"] = "agnostic"
+    assert cc.claim_history_problems(MAIN, pr) == [
+        "claim change needs human review: live `applies_to` changed"
+    ]
+    pr = copy.deepcopy(MAIN)
+    pr["claims"].append(claim("brand-new", applies_to="model-era", model_note="Opus 5.5"))
+    assert cc.claim_history_problems(MAIN, pr) == []
+
+
 def test_deleted_claim_fails():
     pr = ledger(*[c for c in copy.deepcopy(MAIN)["claims"] if c["id"] != "old"])
     assert cc.claim_history_problems(MAIN, pr) == ["claim old on main is missing from the PR"]
