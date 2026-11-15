@@ -60,6 +60,7 @@ import argparse
 import math
 import os
 import re
+import statistics
 import sys
 from collections.abc import Iterable
 from datetime import date, timedelta
@@ -145,8 +146,62 @@ def effective_runs(runs: Iterable[dict]) -> list[dict]:
     return list(by_run.values())
 
 
-def month_spend(runs: list[dict], month: str) -> float:
+def dead_runs(runs: list[dict]) -> set[str]:
+    """Local, non-backfill runs that reserved, never recorded an `actual` or a `done`
+    row, and were followed by a later local run's reservation: the session was killed
+    before it could report (2026-11-06 and 11-11, $83.88 of reservations). A clock is
+    not needed: a later daily run starting proves the earlier one is over, so the
+    newest reservation is never counted. Only reservations are compared, so a late
+    `done` row of an older run, or a backfill or cloud row, can't kill a live run."""
+    closed = {r["run_id"] for r in runs if r["kind"] in ("actual", "done")}
+    starts: dict[str, int] = {}
+    for i, r in enumerate(runs):
+        if r["kind"] == "reserve" and r["runner"] == "local" and not is_backfill(r):
+            starts.setdefault(r["run_id"], i)
+    newest = max(starts.values(), default=-1)
+    return {rid for rid, i in starts.items() if rid not in closed and i < newest}
+
+
+def typical_run_cost(runs: list[dict], window: int | None) -> float | None:
+    """The median measured cost of the last `window` local runs (all if none). A run
+    that cost nothing is not typical, so zero-cost actuals are skipped: the dead-run
+    charge is never zero."""
+    latest: dict[str, float] = {}
+    for r in runs:
+        if r["kind"] == "actual" and r["runner"] == "local" and not is_backfill(r):
+            latest.pop(r["run_id"], None)
+            latest[r["run_id"]] = float(r["cost_usd"])
+    costs = [x for x in latest.values() if x > 0]
+    if window is not None and int(window) > 0:
+        costs = costs[-int(window) :]
+    return round(statistics.median(costs), 4) if costs else None
+
+
+def charged_runs(runs: list[dict], settings: dict | None = None) -> list[dict]:
+    """effective_runs with the dead-run rule applied when `budget.dead_run_charge` is
+    `typical`: a dead run is charged a typical run's cost, never more than its own
+    ceiling and never zero (a kill mid-session may have spent real tokens, which no
+    row records). Anything else keeps the old rule: charged the whole ceiling."""
     rows = effective_runs(runs)
+    cfg = settings or {}
+    if cfg.get("dead_run_charge") != "typical":
+        return rows
+    dead = dead_runs(runs)
+    typical = typical_run_cost(runs, cfg.get("calibration_runs")) if dead else None
+    if typical is None:
+        return rows
+    return [
+        (
+            {**r, "cost_usd": min(float(r["cost_usd"]), typical), "dead": True}
+            if r["run_id"] in dead and r["kind"] == "reserve"
+            else r
+        )
+        for r in rows
+    ]
+
+
+def month_spend(runs: list[dict], month: str, settings: dict | None = None) -> float:
+    rows = charged_runs(runs, settings)
     return round(sum(float(r["cost_usd"]) for r in rows if r["date"].startswith(month)), 4)
 
 
@@ -365,7 +420,7 @@ def fits_month(
     if cap is None:
         return False, "no budget configured: set budget.monthly_cap_usd in config.yaml"
     month = today[:7]
-    spent = month_spend(runs, month)
+    spent = month_spend(runs, month, settings)
     remaining = round(float(cap) - spent, 4)
     if remaining <= 0:
         return False, f"budget exhausted: ${spent:.2f} of ${cap:.2f} spent in {month}"
@@ -492,19 +547,22 @@ def spend_report(runs: list[dict], settings: dict, month: str) -> str:
     cap = settings.get("monthly_cap_usd")
     cap_txt = f"${float(cap):.2f}" if cap is not None else "no cap set (runs skip)"
     finished = {r["run_id"]: r["stories"] for r in runs if r["kind"] == "done"}
-    rows = [r for r in effective_runs(runs) if r["date"].startswith(month)]
+    rows = [r for r in charged_runs(runs, settings) if r["date"].startswith(month)]
     lines = [
         f"# Scan spend, {month}",
         "",
-        f"**${month_spend(runs, month):.2f} charged of {cap_txt}.** Local runs are charged "
-        "their measured `total_cost_usd`; cloud runs can't read their cost, so they are "
-        "charged their reserved ceiling.",
+        f"**${month_spend(runs, month, settings):.2f} charged of {cap_txt}.** Local runs are "
+        "charged their measured `total_cost_usd`; a local run that died with no result is "
+        "charged a typical run's cost when `dead_run_charge` is `typical` (else its ceiling); "
+        "cloud runs can't read their cost, so they are charged their reserved ceiling.",
         "",
         "| Date | Runner | Run | Stories | Charged | Basis | Finished |",
         "|---|---|---|---|---|---|---|",
     ]
     for r in sorted(rows, key=lambda r: (r["date"], r["run_id"])):
         basis = "measured" if r["kind"] == "actual" else "reserved ceiling"
+        if r.get("dead"):
+            basis = "dead run, typical cost (not measured)"
         stories = finished.get(r["run_id"], r["stories"])
         if r.get("news"):
             stories = f"{stories} + {r['news']} news"
