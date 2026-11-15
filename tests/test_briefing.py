@@ -551,3 +551,9 @@ def test_more_independent_parties_still_rank_a_proof_row_first():
     lone = learn_row("lone", url="https://arxiv.org/abs/2610.1", corroborators=[], composite=90)
     echoed = learn_row("echoed", url="https://arxiv.org/abs/2610.2", composite=10)
     assert picked(lone, echoed, learning=one) == ["echoed", "lone"]
+
+
+def test_the_default_party_count_is_one_when_the_key_is_absent():
+    cfg = {k: v for k, v in LEARN.items() if k != "min_pointers"}
+    lone = learn_row("lone", url="https://arxiv.org/abs/2610.1", corroborators=[])
+    assert picked(lone, learning=cfg) == ["lone"]
