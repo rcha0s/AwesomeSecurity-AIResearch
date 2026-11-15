@@ -155,8 +155,11 @@ quotes, `http(s)://` values only), parsed as text and never sourced; no other ke
 The Briefing's second lane, right after Your focus, shows at most `max` (3)
 vetted findings from the last `days` (14) that pass three filters in
 `briefing.learning_picks`: proof (the finding or a covering source links the work itself on a
-`proof_hosts` host, such as a repo but not its issues, or its takeaway or summary states a
-measured comparison), `min_pointers` (2) independent parties (an X post by its author, a
+`proof_hosts` host, such as a repo but not its issues, or a page under a `host/path` entry
+(`anthropic.com/research`, `microsoft.com/en-us/research`: below the section's index), or its
+takeaway or summary states a measured comparison), `min_pointers` (1; it was 2, which passed
+none of the 10 candidates on 2026-11-14, and a second publisher is usually an echo of one
+vendor post, so more parties now rank a row first instead of gating it) independent parties (an X post by its author, a
 repo by its owner and folded into that owner's own site, a github.io or substack blog by its
 subdomain; the curator pick or X list post that brought it in is not a second voice), and a match to one of `goals` (domain IDs or whole-word keywords, as in focus). Each
 card shows the finding's own `actionable` step as "Try this." and why it is there. News

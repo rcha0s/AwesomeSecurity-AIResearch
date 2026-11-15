@@ -101,17 +101,22 @@ focus:
 # The Briefing's "What to learn" lane (scripts/briefing.py learning_picks, ISA F11).
 # A vetted finding of the last `days` shows only when it passes all three filters:
 # proof (it or a covering source links the work itself on a `proof_hosts` host: a repo,
-# not its issues; an arXiv abstract; a model page; or its takeaway or summary states a
-# measured comparison), at least `min_pointers` independent parties (an X post by its
-# author, a repo by its owner, a github.io or substack blog by its subdomain; how the
-# item reached us, a curator pick or the X list, is not a second voice), and a
-# match to one of `goals` (taxonomy domain IDs or whole-word keywords, as in focus).
-# At most `max` show; nothing is topped up, so a quiet week shows none.
+# not its issues; an arXiv abstract; a model page; a page under a `host/path` entry, a
+# lab's own research section; or its takeaway or summary states a measured comparison),
+# at least `min_pointers` independent parties (an X post by its author, a repo by its
+# owner, a github.io or substack blog by its subdomain; how the item reached us, a
+# curator pick or the X list, is not a second voice), and a match to one of `goals`
+# (taxonomy domain IDs or whole-word keywords, as in focus). At most `max` show; nothing
+# is topped up, so a quiet week shows none.
+# `min_pointers` is 1 (Rohan, 2026-11-14): proof is what separates a result from noise, a
+# second publisher is usually an echo of one vendor post, and more independent parties
+# still rank a row first. Of the 10 candidates on 11-14 the old 2 passed none.
 learning:
   days: 14
   max: 3
-  min_pointers: 2
-  proof_hosts: [github.com, arxiv.org, openreview.net, huggingface.co, usenix.org, dl.acm.org, ieeexplore.ieee.org, ndss-symposium.org]
+  min_pointers: 1
+  proof_hosts: [github.com, arxiv.org, openreview.net, huggingface.co, usenix.org, dl.acm.org, ieeexplore.ieee.org, ndss-symposium.org,
+    anthropic.com/research, microsoft.com/en-us/research]
   goals:
     - id: lean-harness
       name: Low-token harness
