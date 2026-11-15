@@ -111,3 +111,23 @@ def test_counts_labelled_as_the_window_exclude_vetted_news(sandbox):
     assert "_1 vetted findings" in page
     assert "old vetted news" in page.split("| Domain |")[0]  # in the news section
     assert "1 vetted findings in window" in gn.build(conf, "now")
+
+
+def test_an_entry_both_curated_and_editorial_gets_one_page_not_two(sandbox, monkeypatch):
+    """A promoted entry the curation bar now releases is a finding AND still carries
+    `editorial`: its detail page is built once, not once per list."""
+    pool = c.load_pool("ai-research")
+    both = make_entry(source_url="https://a/both", title="both lanes")
+    both["editorial"] = {"promoted": True, "at": "2026-11-10T00:00:00Z", "reason": "r"}
+    trending = make_entry(source_url="https://a/only", title="trending only", needs_review=True)
+    trending["editorial"] = {"promoted": True, "at": "2026-11-09T00:00:00Z", "reason": "r"}
+    pool["entries"] = [both, trending]
+    c.save_pool("ai-research", pool)
+    seen = []
+    monkeypatch.setattr(
+        g, "_write_entry_pages", lambda base, by_domain, conf: seen.extend(
+            e["title"] for items in by_domain.values() for e in items
+        )
+    )  # fmt: skip
+    g.write_topic("ai-research", c.load_config(), "now")
+    assert sorted(seen) == ["both lanes", "trending only"]

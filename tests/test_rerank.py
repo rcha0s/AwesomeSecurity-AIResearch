@@ -6,6 +6,7 @@ import json
 from datetime import UTC, datetime
 
 import common as c
+import pytest
 import rerank
 from conftest import make_entry
 
@@ -139,3 +140,125 @@ def test_rerank_restores_news_that_was_archived_before(sandbox):
     rerank.rerank_pool("ai-security")
     assert [e["title"] for e in c.load_pool("ai-security")["entries"]] == ["news"]
     assert [e["title"] for e in c.load_json(c.ARCHIVE_FILE)] == ["finding", "other"]
+
+
+# ------------------------------------------------------------ bar re-judging
+# merge_analysis holds an entry for review once, at merge time. Rerank re-judges the
+# hold under the current config, so lowering curation.min_novelty frees what the old
+# bar held, and frees nothing held for another reason.
+
+
+def held(**over):
+    entry = make_entry(
+        scores={"novelty": 55, "relevance": 80},
+        needs_review=True,
+        verified=True,
+        grounding_score=1.0,
+        source_rank=70,
+    )
+    entry.update(over)
+    return entry
+
+
+def test_a_finding_held_only_by_a_bar_the_config_no_longer_sets_is_released():
+    conf = c.load_config()
+    e = held()
+    assert rerank.release_bar_holds([e], conf) == 1
+    assert e["needs_review"] is False
+
+
+def test_it_is_still_held_below_the_current_bar():
+    conf = c.load_config()
+    low_nov = held(scores={"novelty": conf.curation["min_novelty"] - 1, "relevance": 80})
+    low_rel = held(scores={"novelty": 90, "relevance": conf.curation["min_relevance"] - 1})
+    assert rerank.release_bar_holds([low_nov, low_rel], conf) == 0
+    assert low_nov["needs_review"] and low_rel["needs_review"]
+
+
+@pytest.mark.parametrize(
+    "over",
+    [
+        {"verified": False},  # the verifier refuted it
+        {"grounding_score": 0.5},  # an excerpt is not in the source
+        {"lessons": [{"point": "x", "grounded": False}]},
+        {"confidence": 0.2},  # low analyzer confidence
+        {"scores": None},  # never scored
+        {"news_brief": {"reason": "r", "markers": []}},  # a brief is news-lane only
+        {"domain_hold": "not a taxonomy id"},
+        {"readability_hold": "readability: too long"},
+        {"citation_hold": "reddit-only citation"},
+        {"source_rank": 10, "grounding_score": None},  # low authority, quotes unconfirmed
+    ],
+)
+def test_a_hold_for_any_other_reason_is_never_released(over):
+    conf = c.load_config()
+    e = held(**over)
+    assert rerank.release_bar_holds([e], conf) == 0
+    assert e["needs_review"] is True
+
+
+def test_an_entry_that_is_not_held_is_left_alone_and_rerank_never_adds_a_hold():
+    conf = c.load_config()
+    fine = held(needs_review=False)
+    bad = held(needs_review=False, scores={"novelty": 1, "relevance": 1})
+    assert rerank.release_bar_holds([fine, bad], conf) == 0
+    assert fine["needs_review"] is False and bad["needs_review"] is False
+
+
+def test_rerank_pool_releases_through_the_pool_path(tmp_path, monkeypatch):
+    conf = c.load_config()
+    e = held(date="2026-11-10")
+    pool = {"entries": [e], "domains": []}
+    monkeypatch.setattr(c, "load_pool", lambda t: pool)
+    monkeypatch.setattr(c, "save_pool", lambda t, p: None)
+    monkeypatch.setattr(c, "load_sources_by_id", lambda: {})
+    monkeypatch.setattr(c, "unarchive", lambda pred: [])
+    monkeypatch.setattr(c, "archive_entries", lambda stale: 0)
+    out = rerank.rerank_pool(next(iter(c.TOPICS)), conf, now=datetime(2026, 11, 14, tzinfo=UTC))
+    assert out["entries"][0]["needs_review"] is False
+
+
+def test_a_second_rerank_changes_nothing(monkeypatch):
+    conf = c.load_config()
+    pool = {"entries": [held(date="2026-11-10"), held(date="2026-11-11", verified=False)]}
+    monkeypatch.setattr(c, "load_pool", lambda t: pool)
+    monkeypatch.setattr(c, "save_pool", lambda t, p: pool.update(p))
+    monkeypatch.setattr(c, "load_sources_by_id", lambda: {})
+    monkeypatch.setattr(c, "unarchive", lambda pred: [])
+    monkeypatch.setattr(c, "archive_entries", lambda stale: 0)
+    topic, now = next(iter(c.TOPICS)), datetime(2026, 11, 14, tzinfo=UTC)
+    first = json.dumps(rerank.rerank_pool(topic, conf, now=now), sort_keys=True)
+    second = json.dumps(rerank.rerank_pool(topic, conf, now=now), sort_keys=True)
+    assert first == second
+
+
+def test_reddit_only_is_held_even_without_a_citation_hold_marker():
+    conf = c.load_config()
+    e = held(source_url="https://www.reddit.com/r/netsec/comments/abc/x/", article_url=None)
+    assert rerank.release_bar_holds([e], conf) == 0
+
+
+def test_the_grounding_and_verifier_requirements_follow_the_config():
+    conf = c.load_config()
+    off = c.Config(**{**conf.__dict__, "curation": {**conf.curation}})
+    off.curation["require_grounding"] = False
+    off.curation["require_verification"] = False
+    e = held(grounding_score=0.4, verified=False)
+    assert rerank.still_held(e, conf) is True
+    assert rerank.still_held(e, off) is False
+
+
+def test_corroboration_can_lift_a_low_authority_source_over_the_credibility_bar():
+    conf = c.load_config()
+    low = held(source_rank=conf.curation["min_credibility"] - 1, grounding_score=None)
+    assert rerank.still_held(low, conf) is True
+    low["corroborating_sources"] = [{"url": "https://other/1"}, {"url": "https://other/2"}]
+    assert rerank.still_held(low, conf) is False
+
+
+def test_tightening_the_bar_does_not_re_hold_a_curated_entry():
+    conf = c.load_config()
+    fine = held(needs_review=False, scores={"novelty": 56, "relevance": 61})
+    tight = c.Config(**{**conf.__dict__, "curation": {**conf.curation, "min_novelty": 95}})
+    assert rerank.release_bar_holds([fine], tight) == 0
+    assert fine["needs_review"] is False
