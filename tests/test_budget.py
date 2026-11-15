@@ -428,3 +428,94 @@ def test_a_first_run_is_never_clipped_by_the_pool():
     tiny = {**CATCHUP, "catchup_monthly_usd": 1.0}
     assert not budget.is_catchup([], tiny, "local", TODAY)
     assert budget.clip_to_catchup(32.0, [], tiny, "local", TODAY) == 32.0
+
+
+# ---------------------------------------------------------------- dead runs
+# 2026-11-06 and 11-11: a local run reserved its ceiling, was killed before it could
+# write an `actual`, and stayed charged the whole ceiling ($43 and $41 against a
+# typical $10 run) though the 11-11 one died during ingest.
+
+TYPICAL = {"dead_run_charge": "typical", "calibration_runs": 5}
+
+
+def dead_ledger():
+    return [
+        row("a", "2026-07-01", "reserve", 40.0),
+        row("a", "2026-07-01", "actual", 8.0),
+        row("a", "2026-07-01", "done", 0.0),
+        row("b", "2026-07-02", "reserve", 40.0),  # killed: no actual, no done
+        row("c", "2026-07-03", "reserve", 40.0),
+        row("c", "2026-07-03", "actual", 12.0),
+        row("c", "2026-07-03", "done", 0.0),
+    ]
+
+
+def test_a_dead_run_is_found_by_a_later_run_not_by_a_clock():
+    assert budget.dead_runs(dead_ledger()) == {"b"}
+
+
+def test_the_newest_reservation_is_never_dead():
+    runs = [*dead_ledger()[:3], row("z", "2026-07-15", "reserve", 40.0)]
+    assert budget.dead_runs(runs) == set()
+
+
+def test_runs_with_an_actual_or_done_row_cloud_runs_and_backfills_are_never_dead():
+    runs = [
+        row("a", kind="reserve"), row("a", kind="actual"),
+        row("b", kind="reserve"), row("b", kind="done"),
+        row("c", kind="reserve", runner="cloud"),
+        {**row("d", kind="reserve"), "backfill": "2026-07-01..2026-07-05"},
+        row("e", kind="reserve"),
+    ]  # fmt: skip
+    assert budget.dead_runs(runs) == set()
+
+
+def test_old_rule_charges_the_whole_ceiling_unless_configured():
+    runs = dead_ledger()
+    assert budget.month_spend(runs, "2026-07") == 60.0
+    assert budget.month_spend(runs, "2026-07", {}) == 60.0
+    assert budget.month_spend(runs, "2026-07", {"dead_run_charge": "ceiling"}) == 60.0
+
+
+def test_a_dead_run_is_charged_a_typical_run_not_its_ceiling_and_never_zero():
+    runs = dead_ledger()  # measured 8 and 12: median 10
+    assert budget.typical_run_cost(runs, 5) == 10.0
+    assert budget.month_spend(runs, "2026-07", TYPICAL) == 8.0 + 10.0 + 12.0
+
+
+def test_a_dead_run_is_never_charged_more_than_its_own_ceiling():
+    runs = [row("a", kind="reserve", cost=3.0), row("b", kind="actual", cost=20.0)]
+    runs = [row("m", kind="actual", cost=20.0), *runs]
+    charged = {r["run_id"]: r["cost_usd"] for r in budget.charged_runs(runs, TYPICAL)}
+    assert charged["a"] == 3.0
+
+
+def test_with_no_measured_run_the_ceiling_stands():
+    runs = [row("a", kind="reserve", cost=40.0), row("b", kind="reserve", cost=40.0)]
+    assert budget.month_spend(runs, "2026-07", TYPICAL) == 80.0
+
+
+def test_the_typical_cost_uses_only_the_calibration_window_of_local_runs():
+    runs = [row(str(i), kind="actual", cost=float(c)) for i, c in enumerate([100, 1, 2, 3])]
+    runs.append(row("cl", kind="actual", cost=500.0, runner="cloud"))
+    assert budget.typical_run_cost(runs, 3) == 2.0
+    assert budget.typical_run_cost([], 3) is None
+
+
+def test_effective_runs_stays_the_raw_view_the_history_gate_reads():
+    charged = {r["run_id"]: r["cost_usd"] for r in budget.effective_runs(dead_ledger())}
+    assert charged["b"] == 40.0
+
+
+def test_the_check_uses_the_dead_run_rule_for_the_monthly_cap():
+    """Cap $63, ceiling $4. Old rule: $60 spent, $3 left, so the run is refused. With the
+    dead run charged a typical $10: $30 spent, $33 left, so it runs."""
+    cfg = settings(cap=63.0, per_story=0.5, max_stories=8)
+    assert budget.check(dead_ledger(), cfg, "local", "2026-07-15")[0] is False
+    assert budget.check(dead_ledger(), {**cfg, **TYPICAL}, "local", "2026-07-15")[0] is True
+
+
+def test_the_report_names_a_dead_run_and_its_basis():
+    text = budget.spend_report(dead_ledger(), {"monthly_cap_usd": 100.0, **TYPICAL}, "2026-07")
+    assert "dead run, typical cost (not measured)" in text
+    assert "$30.00 charged of $100.00" in text
