@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_33 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-14_
+_33 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-15_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -33,79 +33,6 @@ _Tags: `coding-agents`, `hallucination`, `apis`_
 
 </details>
 
-<a id="claim-stable-prompt-prefix-keeps-cache-reads-cheap"></a>
-
-### Keep the prompt prefix stable so cache reads dominate
-
-`stable-prompt-prefix-keeps-cache-reads-cheap` · confidence **0.80** · Cost Efficiency · standing since Jul 18, 2025
-
-A harness that keeps its context append-only and its prefix stable gets cached input at roughly a tenth of the uncached price.
-
-**Basis —** Manus's production write-up plus Anthropic's published cache pricing (reads at 0.1x input).
-
-**Do this —** Never edit earlier turns or reorder the system prompt/tools mid-session; only append.
-
-**Conditions —** Applies where the provider offers prefix caching; savings depend on cache lifetime and how often the prefix really repeats.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (4)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
-
-</details>
-
-<a id="claim-capability-elicitation-lags-training"></a>
-
-### Standard prompting understates a model's real capability ceiling
-
-`capability-elicitation-lags-training` · confidence **0.80** · Models & Capabilities · standing since Dec 12, 2023
-
-A model's actual capability ceiling is typically higher than what standard prompting elicits; targeted prompting or scaffolding can unlock capabilities the base eval missed.
-
-**Basis —** Referenced from Anthropic's Responsible Scaling Policy work on capability elicitation.
-
-**Do this —** Do not build a safety case on 'the model can't do X' from a base-eval measurement alone.
-
-_Tags: `capabilities`, `elicitation`, `safety`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic: Announcing our updated Responsible Scaling Policy (notes evaluations that could elicit more with chain-of-thought or best-of-N)](https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy) | Oct 15, 2024 |
-| supports | [AI capabilities can be significantly improved without expensive retraining: most post-training enhancements equal >5x training compute](https://arxiv.org/abs/2312.07413) | Dec 12, 2023 |
-
-</details>
-
-<a id="claim-long-context-does-not-eliminate-retrieval-need"></a>
-
-### Long context windows don't remove the need for retrieval
-
-`long-context-does-not-eliminate-retrieval-need` · confidence **0.80** · Retrieval, Prompting & Context · standing since Jul 2023
-
-Long-context models do not eliminate the need for retrieval: they exhibit lost-in-the-middle effects, cost grows linearly with context size, and per-token attention drops on distant tokens.
-
-**Basis —** Grounded in the 'Lost in the Middle' study measuring attention degradation on distant tokens as context length grows.
-
-**Do this —** Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.
-
-_Tags: `long-context`, `rag`, `lost-in-the-middle`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Lost in the Middle](https://arxiv.org/abs/2307.03172) | Jul 2023 |
-| supports | [Context Length Alone Hurts LLM Performance Despite Perfect Retrieval](https://arxiv.org/abs/2510.05381) | Oct 2025 |
-
-</details>
-
 <a id="claim-hybrid-search-beats-pure-vector-for-most-domains"></a>
 
 ### Hybrid BM25 + vector search beats pure vector retrieval
@@ -126,28 +53,6 @@ _Tags: `rag`, `hybrid-search`, `bm25`_
 | --- | --- | --- |
 | supports | [Hybrid Search Explained](https://weaviate.io/blog/hybrid-search-explained) | Jan 27, 2025 |
 | supports | [From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents](https://arxiv.org/abs/2604.01733) | Apr 2026 |
-
-</details>
-
-<a id="claim-quantization-preserves-most-benchmark-scores"></a>
-
-### 8/4-bit quantization preserves most benchmark accuracy
-
-`quantization-preserves-most-benchmark-scores` · confidence **0.80** · Tooling & Serving · standing since Jun 2023
-
-8-bit and 4-bit quantization of open-weights models preserves most benchmark accuracy (within 1–3 points) while cutting memory footprint proportionally.
-
-**Basis —** Measured directly in the SpQR quantization paper, comparing quantized vs. full-precision benchmark scores.
-
-**Do this —** Default to quantized weights for local inference of models ≥7B on consumer hardware.
-
-_Tags: `quantization`, `deployment`, `inference`_
-
-<details><summary>Evidence (1)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [SpQR](https://arxiv.org/abs/2306.03078) | Jun 2023 |
 
 </details>
 
@@ -174,53 +79,6 @@ _Tags: `evals`, `benchmarks`, `security-scanning`_
 | supports | [BenchMIRT: What are LLM benchmarks actually measuring?](https://huggingface.co/blog/allenai/benchmirt) | Sep 1, 2026 |
 | supports | [Semgrep Multimodal Goes Beyond Authentication](https://semgrep.dev/blog/2026/idor-detection-benchmark-semgrep-multimodal) | Aug 27, 2026 |
 | supports | [We benchmarked A LOT of models](https://semgrep.dev/blog/2026/mythos-idor-benchmark) | Aug 25, 2026 |
-
-</details>
-
-<a id="claim-retrieval-quality-dominates-generation-quality-in-rag"></a>
-
-### Retrieval quality dominates generator quality in RAG
-
-`retrieval-quality-dominates-generation-quality-in-rag` · confidence **0.75** · Retrieval, Prompting & Context · standing since Dec 2023
-
-In production RAG systems, retrieval quality dominates generation quality as a determinant of end-task accuracy; larger models cannot compensate for a bad retriever.
-
-**Basis —** Synthesized from a broad academic survey of RAG systems comparing retrieval and generation as accuracy determinants.
-
-**Do this —** Invest in retrieval evals (recall@k, reranker quality) before spending on bigger generator models.
-
-_Tags: `rag`, `retrieval`, `evals`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Retrieval-Augmented Generation for LLMs: A Survey](https://arxiv.org/abs/2312.10997) | Dec 2023 |
-| supports | [Deeper insights into retrieval augmented generation: the role of sufficient context](https://research.google/blog/deeper-insights-into-retrieval-augmented-generation-the-role-of-sufficient-context/) | May 14, 2025 |
-
-</details>
-
-<a id="claim-llm-as-judge-is-biased-toward-longer-answers"></a>
-
-### LLM-as-judge is biased toward longer answers
-
-`llm-as-judge-is-biased-toward-longer-answers` · confidence **0.75** · Evaluation & Benchmarks · standing since Jun 2023
-
-LLM-as-judge evaluators systematically favor longer, more elaborate answers independent of quality, with bias strength varying sharply by judge model; naive judging needs an explicit length control.
-
-**Basis —** Measured directly in the MT-Bench/Chatbot Arena LLM-judge evaluation paper, controlling for answer length against human preference.
-
-**Do this —** Cross-check LLM-judge scores with pairwise human eval on a small sample.
-
-_Tags: `llm-as-judge`, `eval-bias`, `evals`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) | Jun 2023 |
-| supports | [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) | Jun 2025 |
-| supports | [Length-Controlled AlpacaEval: LLM auto-annotators favor longer outputs; regressing out length raises agreement with Chatbot Arena (0.94 to 0.98)](https://arxiv.org/abs/2404.04475) | Apr 6, 2024 |
 
 </details>
 
@@ -273,53 +131,29 @@ _Tags: `harness`, `agents`, `prompting`, `evals`_
 
 </details>
 
-<a id="claim-persist-feature-list-and-progress-across-sessions"></a>
+<a id="claim-stable-prompt-prefix-keeps-cache-reads-cheap"></a>
 
-### Persist a feature list and progress log across sessions
+### Keep the prompt prefix stable so cache reads dominate
 
-`persist-feature-list-and-progress-across-sessions` · confidence **0.70** · Work Efficiency · standing since Nov 26, 2025
+`stable-prompt-prefix-keeps-cache-reads-cheap` · confidence **0.80** · Cost Efficiency · standing since Jul 18, 2025
 
-A harness for long tasks should write a structured feature list and progress file so each new session can resume instead of one-shotting the app.
+A harness that keeps its context append-only and its prefix stable gets cached input at roughly a tenth of the uncached price.
 
-**Basis —** Anthropic's long-running harness experiments (initializer agent, feature list, progress file, git commits).
+**Basis —** Manus's production write-up plus Anthropic's published cache pricing (reads at 0.1x input).
 
-**Do this —** Have an initializer write a JSON feature list, init script and progress file; work one feature per session.
+**Do this —** Never edit earlier turns or reorder the system prompt/tools mid-session; only append.
 
-**Conditions —** For multi-session builds; short single-session tasks don't need the scaffolding.
+**Conditions —** Applies where the provider offers prefix caching; savings depend on cache lifetime and how often the prefix really repeats.
 
-_Tags: `efficiency`, `work-efficiency`, `harness`_
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
 
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
-| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
-| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
-
-</details>
-
-<a id="claim-verify-end-to-end-as-a-user"></a>
-
-### Verify end-to-end as a user, not only with unit tests
-
-`verify-end-to-end-as-a-user` · confidence **0.70** · Work Efficiency · standing since Nov 26, 2025
-
-A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
-
-**Basis —** Anthropic's long-running harness post and the Claude Code best-practices docs.
-
-**Do this —** Require a browser-driven check or /verify-style step before a task is marked complete.
-
-**Conditions —** For user-facing apps; library code may be fully covered by tests.
-
-_Tags: `efficiency`, `work-efficiency`, `harness`_
-
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (4)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
 | supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
 
 </details>
@@ -350,31 +184,6 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 
 </details>
 
-<a id="claim-simplest-pipeline-first"></a>
-
-### Prefer the simplest pipeline that solves the task
-
-`simplest-pipeline-first` · confidence **0.70** · Cost Efficiency · standing since Jul 1, 2024
-
-A harness should start with a simple fixed workflow, since in 2024 the non-agentic Agentless pipeline scored highest among open-source agents on SWE-bench Lite (32.00%) at $0.70 per task, in the authors' own evaluation.
-
-**Basis —** Anthropic's agent-building guidance and the Agentless paper ($0.70 per task, best open-source score on SWE-bench Lite at the time).
-
-**Do this —** Add agent loops, tools or subagents only after a simpler version fails on your evals.
-
-**Conditions —** The Agentless result is the authors' own 2024 evaluation on SWE-bench Lite; stronger models since may shift where agent loops pay off.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: building effective agents](https://www.anthropic.com/engineering/building-effective-agents) | Dec 19, 2024 |
-| supports | [arXiv: Agentless: 2407.01489](https://arxiv.org/abs/2407.01489) | Jul 1, 2024 |
-
-</details>
-
 <a id="claim-tool-count-degrades-agent-performance"></a>
 
 ### Too many tools degrade agent tool-selection accuracy
@@ -400,11 +209,34 @@ _Tags: `agents`, `harness`, `tools`_
 
 </details>
 
+<a id="claim-long-context-does-not-eliminate-retrieval-need"></a>
+
+### Long context windows don't remove the need for retrieval
+
+`long-context-does-not-eliminate-retrieval-need` · confidence **0.80** · Retrieval, Prompting & Context · standing since Jul 2023
+
+Long-context models do not eliminate the need for retrieval: they exhibit lost-in-the-middle effects, cost grows linearly with context size, and per-token attention drops on distant tokens.
+
+**Basis —** Grounded in the 'Lost in the Middle' study measuring attention degradation on distant tokens as context length grows.
+
+**Do this —** Retrieval + a short, relevant context still beats stuffing a long context on cost, latency, and accuracy for most tasks.
+
+_Tags: `long-context`, `rag`, `lost-in-the-middle`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Lost in the Middle](https://arxiv.org/abs/2307.03172) | Jul 2023 |
+| supports | [Context Length Alone Hurts LLM Performance Despite Perfect Retrieval](https://arxiv.org/abs/2510.05381) | Oct 2025 |
+
+</details>
+
 <a id="claim-system-prompts-should-be-versioned-like-code"></a>
 
 ### System prompts are load-bearing config — version them like code
 
-`system-prompts-should-be-versioned-like-code` · confidence **0.70** · Retrieval, Prompting & Context · standing since Jan 2023
+`system-prompts-should-be-versioned-like-code` · confidence **0.70** · model-agnostic · Retrieval, Prompting & Context · standing since Jan 2023
 
 Production system prompts are load-bearing configuration and should be version-controlled, code-reviewed, and evaluated on regression suites.
 
@@ -422,28 +254,6 @@ _Tags: `prompting`, `deployment`, `regression`_
 | --- | --- | --- |
 | supports | [Claude docs: Define success criteria and build evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) | Jul 2024 |
 | supports | [Claude Code team: incident PRs become eval cases, and the system prompt was cut 80% as models changed](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) | Jul 21, 2026 |
-
-</details>
-
-<a id="claim-few-shot-prompting-brittle-on-format-changes"></a>
-
-### Few-shot prompting is brittle to formatting choices
-
-`few-shot-prompting-brittle-on-format-changes` · confidence **0.70** · Retrieval, Prompting & Context · standing since Feb 2021
-
-Few-shot prompting accuracy is highly sensitive to example ordering, whitespace, and demarcation choices, in ways that look like model regressions if not controlled for.
-
-**Basis —** Established in the 'Calibrate Before Use' paper, which measured accuracy swings from example ordering and formatting alone.
-
-**Do this —** Freeze prompt formatting when evaluating model changes.
-
-_Tags: `prompting`, `few-shot`, `brittleness`_
-
-<details><summary>Evidence (1)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Calibrate Before Use](https://arxiv.org/abs/2102.09690) | Feb 2021 |
 
 </details>
 
@@ -474,31 +284,6 @@ _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
 </details>
 
-<a id="claim-concise-tool-responses-and-subagent-summaries"></a>
-
-### Return short tool responses and distilled subagent summaries
-
-`concise-tool-responses-and-subagent-summaries` · confidence **0.65** · Cost Efficiency · standing since Sep 29, 2025
-
-A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.
-
-**Basis —** Anthropic engineering guidance with one worked example (about a third of the tokens).
-
-**Do this —** Offer a concise response format on tools and cap subagent reports.
-
-**Conditions —** Shown on Anthropic's own examples, not a controlled study.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
-| supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
-
-</details>
-
 <a id="claim-compact-first-reset-only-if-the-model-needs-it"></a>
 
 ### Compact near the context limit; reset only if the model needs it
@@ -525,59 +310,6 @@ _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
 </details>
 
-<a id="claim-keep-bulk-tool-output-out-of-context"></a>
-
-### Keep intermediate tool results out of the model context
-
-`keep-bulk-tool-output-out-of-context` · confidence **0.65** · Cost Efficiency · standing since Jul 18, 2025
-
-In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.
-
-**Basis —** Anthropic's own measurement of programmatic tool calling (37% fewer tokens), with Manus's file-system-as-context design as supporting practice.
-
-**Do this —** Run bulk filtering in a code sandbox or write long output to a file and let the agent grep it.
-
-**Conditions —** Needs a code sandbox or file access the agent can search; a single small tool result gains little.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
-
-</details>
-
-<a id="claim-parallel-reads-single-threaded-writes"></a>
-
-### Parallelize independent reads; keep writes single-threaded
-
-`parallel-reads-single-threaded-writes` · confidence **0.65** · Work Efficiency · standing since Jun 12, 2025
-
-A harness should fan out parallel subagents for independent research but keep code-writing in one context, since Cognition argues parallel writers act on conflicting assumptions.
-
-**Basis —** Anthropic's multi-agent research system (90.2% better on Anthropic's internal research eval) and Cognition's case against parallel writers.
-
-**Do this —** Parallelize search and review; serialize edits through one agent that holds the shared context.
-
-**Conditions —** Research and search parallelize well; shared-state work like coding is where parallel writers conflict.
-
-_Tags: `efficiency`, `work-efficiency`, `harness`_
-
-<details><summary>Evidence (4)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
-| supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
-| supports | [Cognition: dont build multi agents](https://cognition.ai/blog/dont-build-multi-agents) | Jun 12, 2025 |
-| supports | [Cognition: dont build multi agents](https://cognition.ai/blog/dont-build-multi-agents) | Jun 12, 2025 |
-
-</details>
-
 <a id="claim-chain-of-thought-does-not-transfer-to-multi-turn"></a>
 
 ### Single-turn CoT gains don't transfer to multi-turn tasks
@@ -598,6 +330,53 @@ _Tags: `chain-of-thought`, `agents`, `evals`_
 | --- | --- | --- |
 | supports | [LLMs Get Lost In Multi-Turn Conversation](https://arxiv.org/abs/2505.06120) | May 9, 2025 |
 | supports | [When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories](https://arxiv.org/abs/2608.06057) | Aug 6, 2026 |
+
+</details>
+
+<a id="claim-retrieval-quality-dominates-generation-quality-in-rag"></a>
+
+### Retrieval quality dominates generator quality in RAG
+
+`retrieval-quality-dominates-generation-quality-in-rag` · confidence **0.75** · Retrieval, Prompting & Context · standing since Dec 2023
+
+In production RAG systems, retrieval quality dominates generation quality as a determinant of end-task accuracy; larger models cannot compensate for a bad retriever.
+
+**Basis —** Synthesized from a broad academic survey of RAG systems comparing retrieval and generation as accuracy determinants.
+
+**Do this —** Invest in retrieval evals (recall@k, reranker quality) before spending on bigger generator models.
+
+_Tags: `rag`, `retrieval`, `evals`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Retrieval-Augmented Generation for LLMs: A Survey](https://arxiv.org/abs/2312.10997) | Dec 2023 |
+| supports | [Deeper insights into retrieval augmented generation: the role of sufficient context](https://research.google/blog/deeper-insights-into-retrieval-augmented-generation-the-role-of-sufficient-context/) | May 14, 2025 |
+
+</details>
+
+<a id="claim-llm-as-judge-is-biased-toward-longer-answers"></a>
+
+### LLM-as-judge is biased toward longer answers
+
+`llm-as-judge-is-biased-toward-longer-answers` · confidence **0.75** · Evaluation & Benchmarks · standing since Jun 2023
+
+LLM-as-judge evaluators systematically favor longer, more elaborate answers independent of quality, with bias strength varying sharply by judge model; naive judging needs an explicit length control.
+
+**Basis —** Measured directly in the MT-Bench/Chatbot Arena LLM-judge evaluation paper, controlling for answer length against human preference.
+
+**Do this —** Cross-check LLM-judge scores with pairwise human eval on a small sample.
+
+_Tags: `llm-as-judge`, `eval-bias`, `evals`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) | Jun 2023 |
+| supports | [LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge](https://arxiv.org/abs/2506.09443) | Jun 2025 |
+| supports | [Length-Controlled AlpacaEval: LLM auto-annotators favor longer outputs; regressing out length raises agreement with Chatbot Arena (0.94 to 0.98)](https://arxiv.org/abs/2404.04475) | Apr 6, 2024 |
 
 </details>
 
@@ -698,6 +477,57 @@ _Tags: `tokens`, `serialization`, `structured-output`, `decoding`_
 
 </details>
 
+<a id="claim-persist-feature-list-and-progress-across-sessions"></a>
+
+### Persist a feature list and progress log across sessions
+
+`persist-feature-list-and-progress-across-sessions` · confidence **0.70** · Work Efficiency · standing since Nov 26, 2025
+
+A harness for long tasks should write a structured feature list and progress file so each new session can resume instead of one-shotting the app.
+
+**Basis —** Anthropic's long-running harness experiments (initializer agent, feature list, progress file, git commits).
+
+**Do this —** Have an initializer write a JSON feature list, init script and progress file; work one feature per session.
+
+**Conditions —** For multi-session builds; short single-session tasks don't need the scaffolding.
+
+_Tags: `efficiency`, `work-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
+| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
+| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
+
+</details>
+
+<a id="claim-verify-end-to-end-as-a-user"></a>
+
+### Verify end-to-end as a user, not only with unit tests
+
+`verify-end-to-end-as-a-user` · confidence **0.70** · Work Efficiency · standing since Nov 26, 2025
+
+A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
+
+**Basis —** Anthropic's long-running harness post and the Claude Code best-practices docs.
+
+**Do this —** Require a browser-driven check or /verify-style step before a task is marked complete.
+
+**Conditions —** For user-facing apps; library code may be fully covered by tests.
+
+_Tags: `efficiency`, `work-efficiency`, `harness`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
+| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
+
+</details>
+
 <a id="claim-retest-harness-scaffolding-on-model-change"></a>
 
 ### Re-test harness scaffolding whenever the model changes
@@ -721,6 +551,178 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 | supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
 | supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
 | supports | [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) | Nov 5, 2026 |
+
+</details>
+
+<a id="claim-capability-elicitation-lags-training"></a>
+
+### Standard prompting understates a model's real capability ceiling
+
+`capability-elicitation-lags-training` · confidence **0.80** · Models & Capabilities · standing since Dec 12, 2023
+
+A model's actual capability ceiling is typically higher than what standard prompting elicits; targeted prompting or scaffolding can unlock capabilities the base eval missed.
+
+**Basis —** Referenced from Anthropic's Responsible Scaling Policy work on capability elicitation.
+
+**Do this —** Do not build a safety case on 'the model can't do X' from a base-eval measurement alone.
+
+_Tags: `capabilities`, `elicitation`, `safety`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic: Announcing our updated Responsible Scaling Policy (notes evaluations that could elicit more with chain-of-thought or best-of-N)](https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy) | Oct 15, 2024 |
+| supports | [AI capabilities can be significantly improved without expensive retraining: most post-training enhancements equal >5x training compute](https://arxiv.org/abs/2312.07413) | Dec 12, 2023 |
+
+</details>
+
+<a id="claim-agent-safety-evals-can-misread-production-behavior"></a>
+
+### Agent safety eval scores can misjudge how agents behave in production
+
+`agent-safety-evals-can-misread-production-behavior` · confidence **0.55** · Evaluation & Benchmarks · standing since Nov 5, 2026
+
+An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting Warnings eval, six models scored 10.2 to 37.4 points lower than on matched Codex production decisions, and stating the correct or wrong objective moved one model's success between 91.6% and 17.6%, while a generic 'this is an eval' cue did not.
+
+**Do this —** Grade a sample of matched production decisions with the same rubric as the eval and track the gap per model; classify reasoning traces for the objective the model infers, report success split by that guess, and rewrite eval cases whose intended behavior can be inferred from surface cues.
+
+**Conditions —** Shown on one eval family (Respecting Warnings) and six OpenAI models with Codex production logs, with the causal framing intervention on a single model; the direction of the gap may differ for other evals, where eval awareness can make models look safer rather than less safe.
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [OpenAI finds agents score worse on safety evals than in production](https://alignment.openai.com/eval-production-behavior-gap/) | Nov 3, 2026 |
+
+</details>
+
+<a id="claim-concise-tool-responses-and-subagent-summaries"></a>
+
+### Return short tool responses and distilled subagent summaries
+
+`concise-tool-responses-and-subagent-summaries` · confidence **0.65** · Cost Efficiency · standing since Sep 29, 2025
+
+A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.
+
+**Basis —** Anthropic engineering guidance with one worked example (about a third of the tokens).
+
+**Do this —** Offer a concise response format on tools and cap subagent reports.
+
+**Conditions —** Shown on Anthropic's own examples, not a controlled study.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
+| supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
+
+</details>
+
+<a id="claim-keep-bulk-tool-output-out-of-context"></a>
+
+### Keep intermediate tool results out of the model context
+
+`keep-bulk-tool-output-out-of-context` · confidence **0.65** · Cost Efficiency · standing since Jul 18, 2025
+
+In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.
+
+**Basis —** Anthropic's own measurement of programmatic tool calling (37% fewer tokens), with Manus's file-system-as-context design as supporting practice.
+
+**Do this —** Run bulk filtering in a code sandbox or write long output to a file and let the agent grep it.
+
+**Conditions —** Needs a code sandbox or file access the agent can search; a single small tool result gains little.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
+
+</details>
+
+<a id="claim-parallel-reads-single-threaded-writes"></a>
+
+### Parallelize independent reads; keep writes single-threaded
+
+`parallel-reads-single-threaded-writes` · confidence **0.65** · Work Efficiency · standing since Jun 12, 2025
+
+A harness should fan out parallel subagents for independent research but keep code-writing in one context, since Cognition argues parallel writers act on conflicting assumptions.
+
+**Basis —** Anthropic's multi-agent research system (90.2% better on Anthropic's internal research eval) and Cognition's case against parallel writers.
+
+**Do this —** Parallelize search and review; serialize edits through one agent that holds the shared context.
+
+**Conditions —** Research and search parallelize well; shared-state work like coding is where parallel writers conflict.
+
+_Tags: `efficiency`, `work-efficiency`, `harness`_
+
+<details><summary>Evidence (4)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
+| supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
+| supports | [Cognition: dont build multi agents](https://cognition.ai/blog/dont-build-multi-agents) | Jun 12, 2025 |
+| supports | [Cognition: dont build multi agents](https://cognition.ai/blog/dont-build-multi-agents) | Jun 12, 2025 |
+
+</details>
+
+<a id="claim-separate-grader-from-generator"></a>
+
+### Split generating from evaluating with a separate grader
+
+`separate-grader-from-generator` · confidence **0.50** · Work Efficiency · standing since Mar 24, 2026
+
+A separate evaluator scoring against explicit criteria was part of a three-agent harness that cost over 20x a solo run and, in the author's judgment on one prompt, produced visibly better output.
+
+**Basis —** One Anthropic harness-design experiment: a planner, generator and evaluator together cost over 20x a solo run, judged better by the author on one prompt.
+
+**Do this —** Write gradable criteria and run a fresh-context reviewer; keep it for tasks where quality justifies the spend.
+
+**Conditions —** Worth it where quality is subjective or costly to get wrong; the cost makes it a poor default for routine work.
+
+_Tags: `efficiency`, `work-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+| supports | [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) | Nov 5, 2026 |
+
+</details>
+
+<a id="claim-simplest-pipeline-first"></a>
+
+### Prefer the simplest pipeline that solves the task
+
+`simplest-pipeline-first` · confidence **0.70** · Cost Efficiency · standing since Jul 1, 2024
+
+A harness should start with a simple fixed workflow, since in 2024 the non-agentic Agentless pipeline scored highest among open-source agents on SWE-bench Lite (32.00%) at $0.70 per task, in the authors' own evaluation.
+
+**Basis —** Anthropic's agent-building guidance and the Agentless paper ($0.70 per task, best open-source score on SWE-bench Lite at the time).
+
+**Do this —** Add agent loops, tools or subagents only after a simpler version fails on your evals.
+
+**Conditions —** The Agentless result is the authors' own 2024 evaluation on SWE-bench Lite; stronger models since may shift where agent loops pay off.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: building effective agents](https://www.anthropic.com/engineering/building-effective-agents) | Dec 19, 2024 |
+| supports | [arXiv: Agentless: 2407.01489](https://arxiv.org/abs/2407.01489) | Jul 1, 2024 |
 
 </details>
 
@@ -749,23 +751,47 @@ _Tags: `evals`, `swe-bench`, `benchmarks`_
 
 </details>
 
-<a id="claim-agent-safety-evals-can-misread-production-behavior"></a>
+<a id="claim-quantization-preserves-most-benchmark-scores"></a>
 
-### Agent safety eval scores can misjudge how agents behave in production
+### 8/4-bit quantization preserves most benchmark accuracy
 
-`agent-safety-evals-can-misread-production-behavior` · confidence **0.55** · Evaluation & Benchmarks · standing since Nov 5, 2026
+`quantization-preserves-most-benchmark-scores` · confidence **0.80** · Tooling & Serving · standing since Jun 2023
 
-An agent safety eval's score can differ sharply from the agent's behavior on matched production decisions, and the gap tracks what the model infers the test is checking: in OpenAI's Respecting Warnings eval, six models scored 10.2 to 37.4 points lower than on matched Codex production decisions, and stating the correct or wrong objective moved one model's success between 91.6% and 17.6%, while a generic 'this is an eval' cue did not.
+8-bit and 4-bit quantization of open-weights models preserves most benchmark accuracy (within 1–3 points) while cutting memory footprint proportionally.
 
-**Do this —** Grade a sample of matched production decisions with the same rubric as the eval and track the gap per model; classify reasoning traces for the objective the model infers, report success split by that guess, and rewrite eval cases whose intended behavior can be inferred from surface cues.
+**Basis —** Measured directly in the SpQR quantization paper, comparing quantized vs. full-precision benchmark scores.
 
-**Conditions —** Shown on one eval family (Respecting Warnings) and six OpenAI models with Codex production logs, with the causal framing intervention on a single model; the direction of the gap may differ for other evals, where eval awareness can make models look safer rather than less safe.
+**Do this —** Default to quantized weights for local inference of models ≥7B on consumer hardware.
+
+_Tags: `quantization`, `deployment`, `inference`_
 
 <details><summary>Evidence (1)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [OpenAI finds agents score worse on safety evals than in production](https://alignment.openai.com/eval-production-behavior-gap/) | Nov 3, 2026 |
+| supports | [SpQR](https://arxiv.org/abs/2306.03078) | Jun 2023 |
+
+</details>
+
+<a id="claim-few-shot-prompting-brittle-on-format-changes"></a>
+
+### Few-shot prompting is brittle to formatting choices
+
+`few-shot-prompting-brittle-on-format-changes` · confidence **0.70** · Retrieval, Prompting & Context · standing since Feb 2021
+
+Few-shot prompting accuracy is highly sensitive to example ordering, whitespace, and demarcation choices, in ways that look like model regressions if not controlled for.
+
+**Basis —** Established in the 'Calibrate Before Use' paper, which measured accuracy swings from example ordering and formatting alone.
+
+**Do this —** Freeze prompt formatting when evaluating model changes.
+
+_Tags: `prompting`, `few-shot`, `brittleness`_
+
+<details><summary>Evidence (1)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Calibrate Before Use](https://arxiv.org/abs/2102.09690) | Feb 2021 |
 
 </details>
 
@@ -792,32 +818,6 @@ _Tags: `efficiency`, `cost-efficiency`, `harness`_
 | supports | [Claude Code docs: sub agents](https://code.claude.com/docs/en/sub-agents) | undated |
 | supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
 | supports | [Aider: architect](https://aider.chat/2024/09/26/architect.html) | Sep 26, 2024 |
-
-</details>
-
-<a id="claim-separate-grader-from-generator"></a>
-
-### Split generating from evaluating with a separate grader
-
-`separate-grader-from-generator` · confidence **0.50** · Work Efficiency · standing since Mar 24, 2026
-
-A separate evaluator scoring against explicit criteria was part of a three-agent harness that cost over 20x a solo run and, in the author's judgment on one prompt, produced visibly better output.
-
-**Basis —** One Anthropic harness-design experiment: a planner, generator and evaluator together cost over 20x a solo run, judged better by the author on one prompt.
-
-**Do this —** Write gradable criteria and run a fresh-context reviewer; keep it for tasks where quality justifies the spend.
-
-**Conditions —** Worth it where quality is subjective or costly to get wrong; the cost makes it a poor default for routine work.
-
-_Tags: `efficiency`, `work-efficiency`, `harness`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
-| supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
-| supports | [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) | Nov 5, 2026 |
 
 </details>
 

@@ -930,20 +930,45 @@ def test_confidence_explainer_present_with_how_link():
     assert 'id="method-confidence"' in src and "<b>Confidence</b>" in src
 
 
-def test_claims_default_order_is_most_recently_changed_first():
+def test_claims_default_order_is_best_first_with_change_and_confidence_still_available():
+    # rank_score is what claims.py ships: confidence less the age penalty (evergreen: 0.95 - 0.3).
     data = {
         "claims": [
-            {"id": "evergreen", "status": "current", "confidence": 0.95, "first_seen": "2016-01"},
-            {"id": "fresh", "status": "current", "confidence": 0.5, "added_on": "2026-10-20"},
-            {"id": "changed", "status": "contested", "confidence": 0.6, "changed_on": "2026-10-25"},
+            {
+                "id": "evergreen",
+                "status": "current",
+                "confidence": 0.95,
+                "rank_score": 0.65,
+                "first_seen": "2016-01",
+            },
+            {
+                "id": "fresh",
+                "status": "current",
+                "confidence": 0.5,
+                "rank_score": 0.5,
+                "added_on": "2026-10-20",
+            },
+            {
+                "id": "changed",
+                "status": "contested",
+                "confidence": 0.9,
+                "rank_score": 0.9,
+                "changed_on": "2026-10-25",
+            },
         ]
     }
     got = run_js(
         data,
         "[claimState.sort, sortClaims(DATA.claims, claimState.sort).map(function (c) { return c.id; }),"
+        " sortClaims(DATA.claims, 'change').map(function (c) { return c.id; }),"
         " sortClaims(DATA.claims, 'confidence').map(function (c) { return c.id; })]",
     )
-    assert got == ["change", ["changed", "fresh", "evergreen"], ["evergreen", "changed", "fresh"]]
+    assert got == [
+        "best",
+        ["evergreen", "fresh", "changed"],  # settled before contested, then rank_score
+        ["changed", "fresh", "evergreen"],
+        ["evergreen", "changed", "fresh"],
+    ]
 
 
 def test_briefing_change_card_shows_do_line_only_when_guidance_exists():
@@ -1067,7 +1092,7 @@ def test_state_query_covers_every_search_and_filter_and_skips_defaults():
         + STATE_QUERY
         + "&ctopic=ai-security&aq=kev&atopic=ai-security&sq=hello');"
         "['news','claims','archive','search'].forEach(function(v){ out[v] = stateQuery(v); });"
-        "out.defaults = (function(){ claimState.sort='change'; return stateQuery('week'); })();"
+        "out.defaults = (function(){ claimState.sort='best'; return stateQuery('week'); })();"
         "return out;})()"
     )
     got = run_js({}, expr)
@@ -1077,7 +1102,7 @@ def test_state_query_covers_every_search_and_filter_and_skips_defaults():
     assert got["search"] == "sq=hello"
     assert got["defaults"] == ""
     # Only defaults: nothing in the URL.
-    expr = "(function(){stateFromQuery('?nkind=all&csort=change&cstatus=all');return stateQuery('news')+stateQuery('claims');})()"
+    expr = "(function(){stateFromQuery('?nkind=all&csort=best&cstatus=all');return stateQuery('news')+stateQuery('claims');})()"
     assert run_js({}, expr) == ""
 
 
@@ -1100,7 +1125,7 @@ def test_unknown_filter_values_are_ignored(query):
         "topic": "all",
         "eff": "all",
         "status": "all",
-        "sort": "change",
+        "sort": "best",
         "q": "",
     }
     assert got["archive"] == {"topic": "all", "q": ""}
@@ -1375,3 +1400,68 @@ def test_learning_lane_wording_matches_the_proof_only_rule():
     assert "more independent sources rank first" in html
     data["learning_why"][row["id"]]["pointers"] = 2
     assert "2 independent sources" in run_js(data, "learningHTML({})")
+
+
+def test_best_first_breaks_a_score_tie_by_the_newest_belief_like_the_python_order():
+    data = {
+        "claims": [
+            {"id": "older", "status": "current", "rank_score": 0.7, "first_seen": "2025-07-18"},
+            {"id": "newer", "status": "current", "rank_score": 0.7, "first_seen": "2026-08-01"},
+            {"id": "undated", "status": "current", "rank_score": 0.7},
+            {"id": "top", "status": "current", "rank_score": 0.9, "first_seen": "2020"},
+        ]
+    }
+    got = run_js(data, "sortClaims(DATA.claims, 'best').map(function (c) { return c.id; })")
+    assert got == ["top", "newer", "older", "undated"]
+
+
+def test_claim_cards_flag_model_scope_and_old_evidence_and_escape_the_note():
+    data = {
+        "topics": {},
+        "claims": [
+            {
+                "id": "a",
+                "status": "current",
+                "confidence": 0.9,
+                "applies_to": "agnostic",
+                "evidence_age": 20,  # 2006 evidence, yet no "evidence to" pill on an agnostic claim
+                "newest_evidence": 2006,
+            },
+            {
+                "id": "b",
+                "status": "current",
+                "confidence": 0.7,
+                "evidence_age": 2,
+                "newest_evidence": 2024,
+            },
+            {"id": "c", "status": "current", "confidence": 0.7, "model_note": EVIL},
+            {
+                "id": "d",
+                "status": "current",
+                "confidence": 0.7,
+                "evidence_age": 1,
+                "newest_evidence": 2025,
+            },
+        ],
+    }
+    a, b, c, d = run_js(data, "DATA.claims.map(claimHTML)")
+    assert ">model-agnostic<" in a and "evidence to" not in a
+    assert ">evidence to 2024<" in b and "model-agnostic" not in b
+    assert "<img" not in c and "&lt;img" in c
+    assert "evidence to" not in d  # one year behind is not flagged
+
+
+def test_claims_payload_carries_the_rank_and_the_site_sorts_best_first_by_default(sandbox):
+    def evidence(url, year):
+        return [{"stance": "supports", "url": url, "title": "t", "published": f"{year}-01-01"}]
+
+    stale = make_claim(id="stale", confidence=0.7, evidence=evidence("https://e.com/s", 2024))
+    fresh = make_claim(id="fresh", confidence=0.7, evidence=evidence("https://e.com/f", 2026))
+    payload = build(sandbox, ledger=ledger_of(stale, fresh))
+    by_id = {c["id"]: c for c in payload["claims"]}
+    assert by_id["fresh"]["rank_score"] > by_id["stale"]["rank_score"]
+    assert by_id["stale"]["newest_evidence"] == 2024
+    assert by_id["stale"]["evidence_age"] == 2
+    template = gh.TEMPLATE.read_text(encoding="utf-8")
+    assert 'sort: "best"' in template
+    assert '["best", "change", "confidence"], "best"' in template

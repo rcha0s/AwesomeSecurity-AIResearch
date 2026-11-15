@@ -103,7 +103,7 @@ def cmd_new(args: argparse.Namespace) -> int:
         "added_on": today(),
         "changed_on": today(),
     }
-    for key in ("title", "basis", "guidance", "scope"):
+    for key in ("title", "basis", "guidance", "scope", "applies_to", "model_note"):
         if getattr(args, key):
             claim[key] = getattr(args, key)
     if args.tags:
@@ -298,6 +298,40 @@ def cmd_titles(args: argparse.Namespace) -> int:
     return rc
 
 
+def cmd_applies(args: argparse.Namespace) -> int:
+    """Classify several live claims from a JSON file in one validated save:
+    {"<claim id>": "agnostic"} or {"<claim id>": {"applies_to": "model-era", "model_note": "..."}}.
+    """
+    wanted = json.loads(Path(args.file).read_text(encoding="utf-8"))
+    if not isinstance(wanted, dict):
+        print("the file must be a JSON object of claim id -> classification")
+        return 1
+    ledger = cl.load_ledger()
+    index = cl.claim_index(ledger["claims"])
+    bad = [i for i in wanted if i not in index or cl.is_retired(index[i])]
+    if bad or not wanted:
+        print(f"unknown or retired claims: {', '.join(bad) or '(empty file)'}")
+        return 1
+    claims = []
+    for claim in ledger["claims"]:
+        pick = wanted.get(claim["id"])
+        if pick is None:
+            claims.append(claim)
+            continue
+        pick = {"applies_to": pick} if isinstance(pick, str) else dict(pick)
+        extra = sorted(set(pick) - {"applies_to", "model_note"})
+        if extra:
+            print(f"{claim['id']}: only applies_to and model_note can be set here (got {extra})")
+            return 1
+        # last_reviewed is left alone: classifying a claim is not reviewing it, and
+        # the drift review's stale sweep reads that date.
+        claims.append({**claim, **pick})
+    rc = save_validated({**ledger, "claims": claims})
+    if rc == 0:
+        print(f"classified {len(wanted)} claims")
+    return rc
+
+
 def _evidence_edit(items: list[dict], args: argparse.Namespace) -> list[dict]:
     """Apply one fix-evidence edit; raises ValueError when the target is ambiguous."""
     hits = [i for i, e in enumerate(items) if e.get("url") == args.url]
@@ -435,6 +469,15 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--domain", default="")
     new.add_argument("--guidance", help="what a practitioner should DO about it")
     new.add_argument("--scope", help="boundary conditions / where it does not apply")
+    new.add_argument(
+        "--applies-to",
+        dest="applies_to",
+        choices=list(cl.APPLIES_TO),
+        help="agnostic = holds whichever model runs underneath; model-era = shown on particular models",
+    )
+    new.add_argument(
+        "--model-note", dest="model_note", help="which models it was shown on (100 characters)"
+    )
     new.add_argument("--status", default="current", choices=list(cl.LIVE_STATUSES))
     new.add_argument("--confidence", type=float, default=cl.DEFAULT_CONFIDENCE)
     new.add_argument("--tags", help="comma-separated")
@@ -489,6 +532,10 @@ def build_parser() -> argparse.ArgumentParser:
     ti = sub.add_parser("titles", help="set several live claims' headlines from a JSON file")
     ti.add_argument("file", help='{"<claim id>": "<title of at most 12 words>"}')
     ti.set_defaults(func=cmd_titles)
+
+    cls = sub.add_parser("applies", help="classify several live claims as agnostic or model-era")
+    cls.add_argument("file", help='{"<claim id>": "agnostic"} (or an object with model_note)')
+    cls.set_defaults(func=cmd_applies)
 
     fe = sub.add_parser("fix-evidence", help="correct or remove a mis-cited source on a live claim")
     fe.add_argument("id")

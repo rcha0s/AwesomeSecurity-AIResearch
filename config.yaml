@@ -189,6 +189,16 @@ curation:
   require_verification: true  # a finding the independent verifier pass REFUTED (verified=false)
                               # ⇒ needs_review. Un-verified (verified absent) is not penalized.
 
+# Claim ordering (scripts/claims.py rank_score). Live claims sort current before
+# contested, then by confidence minus an age penalty: each year the claim's newest
+# evidence trails the ledger's newest evidence year costs `age_penalty_per_year`, up to
+# `age_penalty_max`. Rohan, 2026-11-15: a claim built on 2024 results should sit below one
+# true of today's models; higher confidence still wins among claims of the same age. The
+# cap keeps a well-founded old claim (path traversal, 2006, 0.95) in the middle of the list.
+claims:
+  age_penalty_per_year: 0.1
+  age_penalty_max: 0.3
+
 # Per-run caps (bound the cost of a single scan).
 limits:
   article_chars: 20000  # truncate fetched article text to this many chars

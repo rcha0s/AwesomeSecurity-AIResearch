@@ -273,6 +273,112 @@ def test_contested_claims_rank_below_current_ones():
     assert [c["id"] for c in ordered] == ["settled", "disputed"]
 
 
+def _evidence(year: int) -> list[dict]:
+    return [
+        {
+            "stance": "supports",
+            "url": "https://example.com/e",
+            "title": "t",
+            "published": f"{year}-03-01",
+        }
+    ]
+
+
+def test_stale_evidence_sinks_below_equally_confident_current_evidence():
+    old = make_claim(id="old", confidence=0.7, evidence=_evidence(2024))
+    new = make_claim(id="new", confidence=0.7, evidence=_evidence(2026))
+    ordered = claims.order_claims([old, new], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["new", "old"]
+
+
+def test_confidence_still_decides_between_claims_of_the_same_age():
+    low = make_claim(id="low", confidence=0.5, evidence=_evidence(2026))
+    high = make_claim(id="high", confidence=0.9, evidence=_evidence(2026))
+    ordered = claims.order_claims([low, high], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["high", "low"]
+
+
+def test_the_age_penalty_is_capped_so_a_well_founded_old_claim_stays_mid_list():
+    evergreen = make_claim(id="evergreen", confidence=0.95, evidence=_evidence(2006))
+    weak_new = make_claim(id="weak-new", confidence=0.5, evidence=_evidence(2026))
+    assert claims.rank_score(evergreen, 2026) == pytest.approx(0.95 - 0.3)
+    ordered = claims.order_claims([weak_new, evergreen], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["evergreen", "weak-new"]
+
+
+def test_a_claim_with_no_dated_evidence_takes_no_penalty():
+    undated = make_claim(confidence=0.6, evidence=[{"stance": "supports", "url": "u"}])
+    assert claims.evidence_age(undated, 2026) == 0
+    assert claims.rank_score(undated, 2026) == pytest.approx(0.6)
+
+
+def test_evidence_newer_than_the_reference_costs_nothing():
+    ahead = make_claim(confidence=0.6, evidence=_evidence(2027))
+    assert claims.evidence_age(ahead, 2026) == 0
+
+
+def test_age_never_lifts_a_contested_claim_over_a_current_one():
+    current = make_claim(id="settled", confidence=0.5, evidence=_evidence(2023))
+    contested = make_claim(
+        id="disputed", status="contested", confidence=0.95, evidence=_evidence(2026)
+    )
+    ordered = claims.order_claims([contested, current], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["settled", "disputed"]
+
+
+def test_reference_year_is_capped_at_this_year_so_one_future_date_ages_nothing():
+    from datetime import date
+
+    future = make_claim(evidence=_evidence(2099))
+    assert claims.reference_year([future]) == date.today().year
+    undated = make_claim(evidence=[{"stance": "supports", "url": "u"}])
+    assert claims.reference_year([undated]) is None
+
+
+def test_scores_that_are_equal_on_paper_tie_and_fall_back_to_the_newest_belief():
+    # 0.8 less one year is 0.7000000000000001 in floats, which used to beat a plain 0.7.
+    aged = make_claim(id="aged", confidence=0.8, evidence=_evidence(2025), first_seen="2025-07-18")
+    plain = make_claim(
+        id="plain", confidence=0.7, evidence=_evidence(2026), first_seen="2026-08-01"
+    )
+    assert claims.rank_score(aged, 2026) == claims.rank_score(plain, 2026) == 0.7
+    ordered = claims.order_claims([aged, plain], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["plain", "aged"]  # newer first_seen wins the tie
+
+
+def test_a_model_agnostic_claim_pays_no_age_penalty():
+    agnostic = make_claim(
+        id="agnostic", confidence=0.9, evidence=_evidence(2006), applies_to="agnostic"
+    )
+    era = make_claim(id="era", confidence=0.9, evidence=_evidence(2006), applies_to="model-era")
+    assert claims.rank_score(agnostic, 2026) == pytest.approx(0.9)
+    assert claims.rank_score(era, 2026) == pytest.approx(0.9 - 0.3)
+    ordered = claims.order_claims([era, agnostic], ref_year=2026)
+    assert [c["id"] for c in ordered] == ["agnostic", "era"]
+
+
+def test_applies_to_and_model_note_are_validated():
+    ids = {"toon-over-json-for-agent-io"}
+    assert claims.validate_claim(make_claim(applies_to="agnostic"), ids) == []
+    assert (
+        claims.validate_claim(make_claim(applies_to="model-era", model_note="Opus 5.5"), ids) == []
+    )
+    assert any(
+        "applies_to" in e for e in claims.validate_claim(make_claim(applies_to="forever"), ids)
+    )
+    too_long = make_claim(model_note="x" * (claims.MODEL_NOTE_MAX + 1))
+    assert any("model_note" in e for e in claims.validate_claim(too_long, ids))
+    assert any("model_note" in e for e in claims.validate_claim(make_claim(model_note="  "), ids))
+
+
+def test_the_shipped_config_sets_the_age_penalty():
+    import common
+
+    raw = common.load_config().claims
+    assert raw["age_penalty_per_year"] == 0.1
+    assert raw["age_penalty_max"] == 0.3
+
+
 def test_retired_claims_sort_most_recently_retired_first():
     older = make_claim(
         id="older",

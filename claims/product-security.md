@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-14_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-15_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -14,7 +14,7 @@ _13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-14_
 
 ### Package installs run arbitrary code by default
 
-`package-installers-run-arbitrary-code-by-default` · confidence **0.98** · Software Supply Chain · standing since Jun 8, 2016
+`package-installers-run-arbitrary-code-by-default` · confidence **0.98** · model-agnostic · Software Supply Chain · standing since Jun 8, 2016
 
 Installing a package with npm or gem, or a source distribution with pip, executes arbitrary package code at install time by default. Treat 'installed a dep' as 'ran their code'.
 
@@ -41,7 +41,7 @@ _Tags: `npm`, `pip`, `supply-chain`_
 
 ### IMDSv1 is trivially exploitable; disable it for agent workloads
 
-`imdsv1-must-be-disabled-on-agent-workloads` · confidence **0.95** · Cloud, Network & Infrastructure · standing since Nov 2019
+`imdsv1-must-be-disabled-on-agent-workloads` · confidence **0.95** · model-agnostic · Cloud, Network & Infrastructure · standing since Nov 2019
 
 AWS IMDSv1 is trivially exploitable from any code that can cause an HTTP GET to 169.254.169.254; agent workloads that may fetch user-provided URLs must disable v1 in favor of v2.
 
@@ -64,7 +64,7 @@ _Tags: `aws`, `imds`, `ssrf`_
 
 ### Path validation must canonicalize, not just check the string
 
-`path-traversal-defenses-must-cover-symlink-resolution` · confidence **0.95** · Application Security · standing since Jul 19, 2006
+`path-traversal-defenses-must-cover-symlink-resolution` · confidence **0.95** · model-agnostic · Application Security · standing since Jul 19, 2006
 
 Any code that opens a file whose path derives from user input must canonicalize the resolved target (following '..' and symbolic links) and verify it stays inside the intended directory; validating the raw path string is insufficient.
 
@@ -87,7 +87,7 @@ _Tags: `path-traversal`, `symlinks`, `defense`_
 
 ### Long-lived cloud credentials are the top breach root cause
 
-`long-lived-cloud-credentials-are-obsolete` · confidence **0.90** · Identity & Access · standing since Jan 2021
+`long-lived-cloud-credentials-are-obsolete` · confidence **0.90** · model-agnostic · Identity & Access · standing since Jan 2021
 
 Long-lived static cloud credentials are the most common cause of publicly documented cloud breaches, and leaked long-lived AI API keys are monetized within minutes; automated workloads should use short-lived OIDC or role-assumption credentials instead.
 
@@ -115,7 +115,7 @@ _Tags: `aws`, `credentials`, `oidc`_
 
 ### Typosquatted registry packages remain an active threat
 
-`typosquatting-in-package-registries-is-an-active-threat` · confidence **0.90** · Software Supply Chain · standing since Jun 8, 2016
+`typosquatting-in-package-registries-is-an-active-threat` · confidence **0.90** · model-agnostic · Software Supply Chain · standing since Jun 8, 2016
 
 Typosquatted packages are regularly uploaded to public registries with malicious install-time payloads; the technique remains effective because dependency selection is often typed manually.
 
@@ -138,7 +138,7 @@ _Tags: `typosquatting`, `npm`, `pypi`_
 
 ### WebView JS bridges turn web XSS into device RCE
 
-`mobile-webviews-are-a-persistent-cross-context-attack-surface` · confidence **0.90** · Mobile & Device Security · standing since Jan 2014
+`mobile-webviews-are-a-persistent-cross-context-attack-surface` · confidence **0.90** · model-agnostic · Mobile & Device Security · standing since Jan 2014
 
 Mobile apps that render web content in a WebView with JavaScript bridges exposed to native code create a persistent cross-context attack surface: any script injected into the rendered content can call the exposed native methods with the app's privileges (and, on pre-4.2 Android, reach arbitrary code execution).
 
@@ -161,7 +161,7 @@ _Tags: `mobile`, `webview`, `android`, `ios`_
 
 ### Import-time npm payloads defeat --ignore-scripts and provenance
 
-`import-time-payloads-defeat-install-time-controls` · confidence **0.85** · Software Supply Chain · standing since Jul 15, 2026
+`import-time-payloads-defeat-install-time-controls` · confidence **0.85** · model-agnostic · Software Supply Chain · standing since Jul 15, 2026
 
 npm supply-chain payloads delivered at IMPORT time defeat --ignore-scripts, and a valid provenance attestation does not indicate the package is trustworthy.
 
@@ -187,7 +187,7 @@ _Tags: `supply-chain`, `npm`, `provenance`_
 
 ### SSRF guards must cover every agent outbound call, not just user input
 
-`ssrf-guards-must-cover-agent-outbound-calls` · confidence **0.85** · Application Security · standing since Jun 4, 2026
+`ssrf-guards-must-cover-agent-outbound-calls` · confidence **0.85** · model-agnostic · Application Security · standing since Jun 4, 2026
 
 SSRF guards on user-input URLs are not sufficient for agent applications: the agent can be steered into making outbound calls from tool responses, retrieval results, or MCP metadata.
 
@@ -236,7 +236,7 @@ _Tags: `ai-code-risk`, `slopsquatting`, `npm`_
 
 ### Yanking clean versions can steer developers to a malicious release
 
-`package-yank-warnings-can-be-weaponized-to-push-malicious-versions` · confidence **0.75** · Software Supply Chain · standing since Sep 9, 2026
+`package-yank-warnings-can-be-weaponized-to-push-malicious-versions` · confidence **0.75** · model-agnostic · Software Supply Chain · standing since Sep 9, 2026
 
 An attacker who compromises a package maintainer account can yank all prior clean versions, causing the package manager's own UX (e.g. Cargo's 'update to a non-yanked version' warning) to actively nudge developers toward installing the sole remaining, malicious version — a distribution technique beyond passive typosquatting or waiting for organic upgrades.
 
@@ -307,7 +307,7 @@ _Tags: `malware`, `detection`, `ai-authored`_
 
 ### Counting shared-library calls can recover keys faster than timing
 
-`shared-library-call-count-can-beat-timing-side-channels` · confidence **0.55** · Application Security · standing since Sep 9, 2026
+`shared-library-call-count-can-beat-timing-side-channels` · confidence **0.55** · model-agnostic · Application Security · standing since Sep 9, 2026
 
 In cryptographic code that leans on a shared native library (e.g. libgmp) for non-constant-time operations, an observer that counts the library's calls can recover a full key from a single operation where wall-clock timing needs dozens; Flush+Reload on the shared mapping is the proposed but not yet demonstrated way to get that count.
 

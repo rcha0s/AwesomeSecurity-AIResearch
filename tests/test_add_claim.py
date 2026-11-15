@@ -98,6 +98,57 @@ def test_new_can_record_guidance_and_scope(sandbox):
     assert claim["scope"] == "Not always."
 
 
+def test_new_records_what_the_claim_applies_to(sandbox):
+    argv = new_args("era", "--applies-to", "model-era", "--model-note", "Shown on Opus 4.8")
+    assert add_claim.main(argv) == 0
+    (claim,) = claims.load_ledger()["claims"]
+    assert claim["applies_to"] == "model-era"
+    assert claim["model_note"] == "Shown on Opus 4.8"
+
+
+def test_applies_classifies_several_claims_in_one_save(sandbox, tmp_path):
+    add_claim.main(new_args("one"))
+    add_claim.main(new_args("two"))
+    add_claim.main(new_args("three"))
+    picks = tmp_path / "applies.json"
+    picks.write_text(
+        '{"one": "agnostic", "two": {"applies_to": "model-era", "model_note": "Opus 5.5"}}'
+    )
+    assert add_claim.main(["applies", str(picks)]) == 0
+    by_id = {c["id"]: c for c in claims.load_ledger()["claims"]}
+    assert by_id["one"]["applies_to"] == "agnostic"
+    assert by_id["two"]["applies_to"] == "model-era" and by_id["two"]["model_note"] == "Opus 5.5"
+    assert "applies_to" not in by_id["three"]
+
+
+def test_applies_changes_only_the_two_fields_and_leaves_last_reviewed_alone(sandbox, tmp_path):
+    add_claim.main(new_args("one"))
+    before = claims.load_ledger()["claims"][0]
+    picks = tmp_path / "p.json"
+    picks.write_text('{"one": {"applies_to": "agnostic", "confidence": 0.99}}')
+    assert add_claim.main(["applies", str(picks)]) == 1
+    assert claims.load_ledger()["claims"][0] == before
+    picks.write_text('["one"]')
+    assert add_claim.main(["applies", str(picks)]) == 1
+    picks.write_text('{"one": "agnostic"}')
+    assert add_claim.main(["applies", str(picks)]) == 0
+    after = claims.load_ledger()["claims"][0]
+    assert after["applies_to"] == "agnostic"
+    assert after["last_reviewed"] == before["last_reviewed"]
+    assert after["confidence"] == before["confidence"]
+
+
+def test_applies_refuses_unknown_claims_and_bad_values_and_saves_nothing(sandbox, tmp_path):
+    add_claim.main(new_args("real"))
+    unknown = tmp_path / "unknown.json"
+    unknown.write_text('{"real": "agnostic", "ghost": "agnostic"}')
+    assert add_claim.main(["applies", str(unknown)]) == 1
+    bad = tmp_path / "bad.json"
+    bad.write_text('{"real": "forever"}')
+    assert add_claim.main(["applies", str(bad)]) == 1
+    assert "applies_to" not in claims.load_ledger()["claims"][0]
+
+
 # --- supersede --------------------------------------------------------------
 def test_supersede_wires_both_ends_and_persists(sandbox):
     add_claim.main(new_args("old-answer"))
