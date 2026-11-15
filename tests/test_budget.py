@@ -519,3 +519,57 @@ def test_the_report_names_a_dead_run_and_its_basis():
     text = budget.spend_report(dead_ledger(), {"monthly_cap_usd": 100.0, **TYPICAL}, "2026-07")
     assert "dead run, typical cost (not measured)" in text
     assert "$30.00 charged of $100.00" in text
+
+
+def test_a_late_row_of_an_older_run_cannot_kill_the_live_run():
+    runs = [
+        row("a", "2026-07-01", "reserve"),
+        row("b", "2026-07-02", "reserve"),  # live: the newest reservation
+        row("a", "2026-07-01", "actual", 9.0),  # an older run's late rows
+        row("a", "2026-07-01", "done", 0.0),
+    ]
+    assert budget.dead_runs(runs) == set()
+
+
+@pytest.mark.parametrize("late", [
+    {"runner": "cloud", "kind": "reserve"},
+    {"kind": "reserve", "backfill": "2026-06-01..2026-06-05"},
+    {"kind": "done", "backfill": "2026-06-01..2026-06-05"},
+])  # fmt: skip
+def test_a_later_cloud_or_backfill_row_cannot_kill_a_daily_run(late):
+    runs = [row("live", "2026-07-02", "reserve"), {**row("other", "2026-07-02"), **late}]
+    assert budget.dead_runs(runs) == set()
+
+
+def test_a_chain_of_dead_runs_is_each_found_and_the_newest_stays_live():
+    runs = [row(x, kind="reserve") for x in "abc"]
+    assert budget.dead_runs(runs) == {"a", "b"}
+
+
+def test_two_reserves_for_one_run_count_from_the_first():
+    runs = [row("a", kind="reserve"), row("a", kind="reserve"), row("b", kind="reserve")]
+    assert budget.dead_runs(runs) == {"a"}
+
+
+def test_the_typical_cost_ignores_zero_cost_runs_so_a_dead_run_is_never_free():
+    runs = [row(str(i), kind="actual", cost=0.0) for i in range(5)]
+    assert budget.typical_run_cost(runs, 5) is None
+    ledger = [*runs, row("dead", kind="reserve", cost=40.0), row("next", kind="reserve", cost=40.0)]
+    assert budget.month_spend(ledger, "2026-07", TYPICAL) == 80.0  # no typical: ceiling stands
+    mixed = [row("x", kind="actual", cost=0.0), row("y", kind="actual", cost=6.0), *ledger[5:]]
+    assert budget.typical_run_cost(mixed, 5) == 6.0
+
+
+@pytest.mark.parametrize("window", [0, None, -1])
+def test_a_missing_or_zero_window_uses_every_measured_run(window):
+    runs = [row(str(i), kind="actual", cost=float(c)) for i, c in enumerate([2, 4, 6])]
+    assert budget.typical_run_cost(runs, window) == 4.0
+
+
+def test_catchup_spend_keeps_the_raw_ceiling_charge():
+    """The catch-up pool is conservative on purpose: a dead catch-up run still costs
+    its (clipped) ceiling there, while the month sees the typical charge."""
+    import inspect
+
+    assert "effective_runs" in inspect.getsource(budget.catchup_spend)
+    assert "charged_runs" not in inspect.getsource(budget.catchup_spend)

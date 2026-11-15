@@ -148,36 +148,30 @@ def effective_runs(runs: Iterable[dict]) -> list[dict]:
 
 def dead_runs(runs: list[dict]) -> set[str]:
     """Local, non-backfill runs that reserved, never recorded an `actual` or a `done`
-    row, and were followed by a later run: the session was killed before it could
-    report (2026-11-06 and 11-11, $83.88 of reservations). A clock is not needed:
-    a later run's row proves the earlier one is over, so the newest reservation is
-    never counted."""
-    first: dict[str, int] = {}
-    last: dict[str, int] = {}
-    closed: set[str] = set()
+    row, and were followed by a later local run's reservation: the session was killed
+    before it could report (2026-11-06 and 11-11, $83.88 of reservations). A clock is
+    not needed: a later daily run starting proves the earlier one is over, so the
+    newest reservation is never counted. Only reservations are compared, so a late
+    `done` row of an older run, or a backfill or cloud row, can't kill a live run."""
+    closed = {r["run_id"] for r in runs if r["kind"] in ("actual", "done")}
+    starts: dict[str, int] = {}
     for i, r in enumerate(runs):
-        first.setdefault(r["run_id"], i)
-        last[r["run_id"]] = i
-        if r["kind"] in ("actual", "done"):
-            closed.add(r["run_id"])
-    out = set()
-    for r in runs:
-        rid = r["run_id"]
-        if r["kind"] != "reserve" or rid in closed or r["runner"] != "local" or is_backfill(r):
-            continue
-        if any(i > first[rid] and other != rid for other, i in last.items()):
-            out.add(rid)
-    return out
+        if r["kind"] == "reserve" and r["runner"] == "local" and not is_backfill(r):
+            starts.setdefault(r["run_id"], i)
+    newest = max(starts.values(), default=-1)
+    return {rid for rid, i in starts.items() if rid not in closed and i < newest}
 
 
 def typical_run_cost(runs: list[dict], window: int | None) -> float | None:
-    """The median measured cost of the last `window` local runs (all if none)."""
+    """The median measured cost of the last `window` local runs (all if none). A run
+    that cost nothing is not typical, so zero-cost actuals are skipped: the dead-run
+    charge is never zero."""
     latest: dict[str, float] = {}
     for r in runs:
         if r["kind"] == "actual" and r["runner"] == "local" and not is_backfill(r):
             latest.pop(r["run_id"], None)
             latest[r["run_id"]] = float(r["cost_usd"])
-    costs = list(latest.values())
+    costs = [x for x in latest.values() if x > 0]
     if window is not None and int(window) > 0:
         costs = costs[-int(window) :]
     return round(statistics.median(costs), 4) if costs else None
