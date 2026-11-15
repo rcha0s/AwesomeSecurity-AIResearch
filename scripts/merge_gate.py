@@ -105,6 +105,7 @@ def content_problems(base: str, root: Path = ROOT) -> list[str]:
         out += [] if found else cc.arguments_problems(payload.get("arguments") or [])
     pr_ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
     out += cc.claim_history_problems(main_ledger(base), pr_ledger)
+    out += new_claim_check(base, root)
     stories = root / "data" / "news_stories.json"
     pr_stories = json.loads(stories.read_text(encoding="utf-8")) if stories.is_file() else {}
     out += cc.story_membership_problems(main_stories(base), pr_stories)
@@ -168,6 +169,14 @@ def pool_docs(base: str, root: Path = ROOT) -> tuple[list, list]:
 def editorial_check(base: str, root: Path = ROOT) -> list[str]:
     """Promotions on main stay promoted unless main's copy had already lost integrity."""
     return cc.editorial_problems(*pool_docs(base, root))
+
+
+def new_claim_check(base: str, root: Path = ROOT) -> list[str]:
+    """A claim a scan adds may cite only hosts of feeds on main's source registry."""
+    doc = git_json(f"{base}:data/sources.json", {})
+    rows = doc.get("sources") if isinstance(doc, dict) else doc
+    ledger = json.loads((root / "data" / "claims.json").read_text(encoding="utf-8"))
+    return cc.new_claim_problems(main_ledger(base), ledger, cc.registered_hosts(rows or []))
 
 
 def readability_check(base: str, root: Path = ROOT) -> list[str]:

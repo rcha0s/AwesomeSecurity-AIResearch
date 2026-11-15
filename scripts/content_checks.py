@@ -16,6 +16,10 @@ bound what that content can do once published:
   claim_history_problems no claim on main disappears, and an existing claim
                         (live or retired) only gains evidence; any other change
                         is refused as "claim change needs human review".
+  new_claim_problems    a claim a scan adds must cite only URLs on the host of a
+                        registered blog, org or newsletter feed (main's registry)
+                        and carry no URL or shell command in its text; anything
+                        else is "claim change needs human review".
   editorial_problems    an entry promoted on main keeps its promotion (every
                         copy) unless main's copy already failed integrity;
                         any other removal is refused as "editorial demotion
@@ -153,6 +157,101 @@ def claim_history_problems(main_ledger: object, pr_ledger: object) -> list[str]:
     out = [f"claim {cid} on main is missing from the PR" for cid in sorted(set(old) - set(new))]
     for cid in sorted(set(old) & set(new)):
         out += _claim_change_problems(cid, old[cid], new[cid])
+    return out
+
+
+# Hosts anyone can publish on: a registered feed there says nothing about the page.
+OPEN_HOSTS = frozenset(
+    {
+        "github.com", "gist.github.com", "raw.githubusercontent.com", "gitlab.com",
+        "medium.com", "substack.com", "wordpress.com", "blogspot.com", "dev.to",
+        "x.com", "twitter.com", "youtube.com", "youtu.be", "linkedin.com",
+        "reddit.com", "news.ycombinator.com", "arxiv.org", "export.arxiv.org",
+        "openreview.net", "huggingface.co", "pypi.org", "npmjs.com", "t.co",
+        # vendor blogs that also host user content or redirect elsewhere
+        "feeds.feedburner.com", "sourcegraph.com", "socket.dev", "semgrep.dev",
+        "ampcode.com", "media.defcon.org", "snyk.io",
+    }
+)  # fmt: skip
+ANCHOR_TYPES = frozenset({"rss", "research_index", "newsletter", "conference"})
+_SHELL_TEXT = re.compile(
+    r"\b(curl|wget|sudo|chmod|npx|uvx|iex|irm|powershell|pwsh)\b"
+    r"|\b(npm|pnpm|yarn|pip3?|brew|gem|cargo)\s+(i|install|add)\b"
+    r"|\b(python3?|node|perl|ruby|sh|bash|zsh)\s+-[ce]\b"
+    r"|\|\s*(/bin/)?(ba|z)?sh\b|<\(",
+    re.IGNORECASE,
+)
+# A bare domain in prose (arguments.LINKISH): a lure even without a scheme.
+_BARE_DOMAIN = re.compile(
+    r"\bwww\.|\b[a-z0-9-]+\.(?:com|io|net|org|dev|ai|xyz|co|app|sh|me|info|biz|us|uk|gg|ly)\b",
+    re.IGNORECASE | re.ASCII,
+)
+# The whole URL, strictly: no userinfo, no backslash (a browser reads `\` as `/`, urlparse
+# does not, so `https://evil\@ok.example/` has two different hosts), no whitespace or
+# control characters, no trailing dot. Only the host is captured.
+_EVIDENCE_URL = re.compile(
+    r"^https?://([a-z0-9](?:[a-z0-9.-]*[a-z0-9])?)(?::\d{1,5})?(?:[/?#][^\s\\\x00-\x1f\x7f]*)?\Z",
+    re.IGNORECASE,  # \Z, not $: `$` also matches before a trailing newline
+)
+_NOT_PROSE = frozenset({"id", "url", "supersedes", "superseded_by"})
+
+
+def _host(url: object) -> str:
+    match = _EVIDENCE_URL.match(url) if isinstance(url, str) else None
+    return match.group(1).lower().removeprefix("www.") if match else ""
+
+
+def registered_hosts(registry_rows: list) -> set[str]:
+    """Hosts of the active blog, org and newsletter feeds on main's registry, which
+    changes only through reviewed add-source PRs. Open-publishing hosts never count."""
+    hosts = {
+        _host(r.get("url"))
+        for r in registry_rows
+        if isinstance(r, dict) and r.get("active") and r.get("type") in ANCHOR_TYPES
+    }
+    return hosts - OPEN_HOSTS - {""}
+
+
+def _prose(value: object):
+    """Every free-text string a claim carries (the site renders title, statement,
+    guidance, scope, basis, evidence titles and notes), not its ids or URLs."""
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            if key not in _NOT_PROSE:
+                yield from _prose(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _prose(item)
+
+
+def _claim_text_problem(claim: dict) -> bool:
+    text = "\n".join(_prose(claim))
+    return bool(HTTP_URL.search(text) or _SHELL_TEXT.search(text) or _BARE_DOMAIN.search(text))
+
+
+def new_claim_problems(main_ledger: object, pr_ledger: object, hosts: set[str]) -> list[str]:
+    """A claim is durable "do this now" advice, and the scan session writes its text
+    after reading pages anyone can publish. A scan PR may add one only when every
+    evidence URL is strictly http(s) on the host of a registered blog, org or newsletter
+    feed (nothing the session writes is consulted), and none of its text carries a URL,
+    a bare domain or a shell command. Anything else is a human merge."""
+    old, new = _claims_by_id(main_ledger), _claims_by_id(pr_ledger)
+    out = []
+    for cid in sorted(set(new) - set(old)):
+        claim = new[cid]
+        ev = claim.get("evidence")
+        items = ev if isinstance(ev, list) else []
+        urls = [i.get("url") if isinstance(i, dict) else None for i in items]
+        if not urls:
+            out.append(f"{NEEDS_REVIEW}: new claim {cid} cites no evidence")
+        elif not all(_host(u) in hosts for u in urls):
+            out.append(
+                f"{NEEDS_REVIEW}: new claim {cid} cites evidence not on a registered feed's host"
+            )
+        if _claim_text_problem(claim):
+            out.append(f"{NEEDS_REVIEW}: new claim {cid} text carries a URL or shell command")
     return out
 
 

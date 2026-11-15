@@ -23,10 +23,10 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 STUCK_PR_HOURS = 8.0
-# The day checked is the one three hours ago: the 00:30 UTC run checks the UTC day
-# that just ended (the Mac's catch-up window closes when it does), and still checks
-# that day if GitHub starts it up to two and a half hours late.
-DAY_LAG = timedelta(hours=3)
+# The day checked is always the previous UTC day: the one whose catch-up window
+# has closed (it ends when the UTC date rolls over). GitHub starts the 00:30 UTC
+# cron 6 to 7 hours late (06:37-07:38Z, 2026-11-08..14), so any fixed lag from now
+# lands on the day that has only just begun and reports a scan that cannot have run.
 
 
 def no_finished_scan(runs: list[dict], today: str, cap_set: bool) -> bool:
@@ -61,7 +61,7 @@ def problems(
     runs: list[dict], prs: list[dict], now: datetime, cap_set: bool, hours: float, repo: str = ""
 ) -> list[str]:
     found = []
-    if no_finished_scan(runs, (now - DAY_LAG).strftime("%Y-%m-%d"), cap_set):
+    if no_finished_scan(runs, (now - timedelta(days=1)).strftime("%Y-%m-%d"), cap_set):
         found.append("no-finished-scan")
     found += [f"stuck-pr-{n}" for n in stuck_prs(prs, now, hours, repo)]
     return found
