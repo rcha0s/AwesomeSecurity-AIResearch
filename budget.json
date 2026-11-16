@@ -785,6 +785,15 @@
       "kind": "reserve",
       "stories": 0,
       "cost_usd": 40.7941
+    },
+    {
+      "run_id": "local-20261116T175753Z-95187-retry",
+      "date": "2026-11-16",
+      "runner": "local",
+      "kind": "actual",
+      "stories": 0,
+      "cost_usd": 0.0571686,
+      "outcome": "analysis-empty"
     }
   ]
 }
