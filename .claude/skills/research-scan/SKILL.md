@@ -84,6 +84,15 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    - **proposed_domain** — only when NO domain fits: still set `domain` to the nearest ID,
      and add `{name, scope, nearest, why_different}` (`nearest` = that ID, `why_different` =
      one sentence on what the existing domain cannot hold). Step 4b verifies it.
+   - **kind** — `story` or `advisory`, with an optional `kind_reason` (one short sentence,
+     140 characters at most). An **advisory** is one vendor product's patch or bug notice with
+     limited reach: "Citrix patches 12 NetScaler flaws", "Node.js fixes 16 flaws", a Patch Tuesday
+     roundup, a CVE write-up for one library. Everything else is a **story**: a campaign or
+     breach, an incident with wide impact (a widely deployed product mass-exploited, a trusted
+     CA's keys found weak, a bug class that spans many products), a new technique or research
+     result, an AI lab's safety or security finding, a standard or policy move. The Briefing
+     leads with stories and keeps advisories on their own tab. When unsure, `story`: a real
+     story must never be hidden by a guess. `merge_analysis.py` drops a malformed value.
    - **related_claims** — up to **3** claim IDs from the existing ledger that this
      finding bears on (supports, contests, refutes, or would supersede). Read the
      ledger via `python scripts/add_claim.py list` before analyzing. Leave empty if the
@@ -128,7 +137,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
                  "confidence": 0.N}],
     "related_claims": []}
    ```
-   plus the carried fields of step 5 (`article_url, published, raw_path, source_id,
+   plus `"kind": "story|advisory"` (and an optional `"kind_reason"`) as step 3 defines it, and
+   the carried fields of step 5 (`article_url, published, raw_path, source_id,
    source_rank, discovered_via, source_name`). No `scores`, no `actionable`, exactly one
    lesson. Fetch every news candidate's text first (`python scripts/fetch_raw.py <id>`, several
    per turn; skip any that prints `STALE`), then write briefs in batches of up to 10 with ONE fresh subagent per batch

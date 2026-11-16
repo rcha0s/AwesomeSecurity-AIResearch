@@ -1038,6 +1038,12 @@ def review_reason(entry: dict, conf: Config, sources_by_id: dict[str, dict] | No
 # for review (taxonomy.enforce) rather than dropping the analysis.
 REQUIRED_FIELDS = ("topic", "domain", "title", "source_url")
 
+# What the analyzer may label an entry: a `story` the Briefing should lead with, or an
+# `advisory` (one product's patch or bug notice with limited reach). scripts/briefing.py
+# holds the matching KINDS and the rule for unlabelled rows.
+STORY_KINDS = ("story", "advisory")
+KIND_REASON_MAX = 140
+
 # Drift review reads `related_claims` on every analyzed entry; capping at 3
 # bounds the wall-clock cost of the refuter panel per lesson.
 MAX_RELATED_CLAIMS = 3

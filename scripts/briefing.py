@@ -57,6 +57,46 @@ def source_count(row: dict) -> int:
     return 1 + len(row.get("corroborators") or [])
 
 
+# A story or an advisory? The Briefing is for what matters in the news, not for every
+# vendor patch note (Rohan, 2026-11-15). The analyzer labels each brief when it reads the
+# article (`kind`); this rule covers rows it has not labelled yet, and only ever calls a
+# row an advisory when ALL of these hold: an unvetted news-gate brief, from one outlet, not a
+# curator's pick, whose headline is a single product's patch or exploited-flaw notice. Anything
+# unsure stays a story, so a real story is never hidden by a guess.
+KINDS = ("story", "advisory")
+ROUNDUP_TITLE = re.compile(r"\bpatch tuesday\b", re.IGNORECASE)  # an advisory however covered
+ADVISORY_TITLE = re.compile(
+    r"\b(patch(es|ed)?|fixes|fixed|hotfix(es)?|ships? (an? )?(emergency )?(fix|patch))\b"
+    r".{0,60}\b(flaws?|vulnerabilit(y|ies)|bugs?|issues?|cves?)\b"
+    r"|\bsecurity (bulletin|advisory)\b|\bbulletin\b"
+    r"|\bcisa adds\b.{0,80}\bknown exploited"
+    r"|\b(attackers?|hackers?|criminals?)\b.{0,20}\bexploit(s|ed|ing)?\b.{0,80}\b(flaw|vulnerabilit(y|ies)|bug)\b"
+    r"|\bcve-\d{4}-\d+",
+    re.IGNORECASE,
+)
+
+
+def classify_story(entry: dict, row: dict) -> dict:
+    """`{"kind", "kind_by"}` for a row: the analyzer's label on the pool entry when it set a
+    valid one, else the conservative rule above. `kind_by` says which decided."""
+    label = entry.get("kind")
+    if label in KINDS:
+        return {"kind": label, "kind_by": "analyzer"}
+    title = row.get("title") or ""
+    unvetted_brief = row.get("lane") == "news" and not row.get("has_page")
+    picked = bool(row.get("curated_by"))
+    if unvetted_brief and not picked and ROUNDUP_TITLE.search(title):
+        return {"kind": "advisory", "kind_by": "rule"}
+    single_source = source_count(row) <= 1 and not picked
+    if unvetted_brief and single_source and ADVISORY_TITLE.search(title):
+        return {"kind": "advisory", "kind_by": "rule"}
+    return {"kind": "story", "kind_by": "rule"}
+
+
+def is_advisory(row: dict) -> bool:
+    return row.get("kind") == "advisory"
+
+
 def _ranked(rows, *keys) -> list[dict]:
     """`rows` sorted descending by each key in turn (first key is primary)."""
     out = list(rows)
@@ -79,18 +119,21 @@ def biggest_stories(
     n_max: int = BIGGEST_MAX,
     exclude: frozenset | set = frozenset(),
 ) -> list[dict]:
-    """The "Biggest this week" lane: widely covered or exploited, active in the window.
-    Rows whose id is in `exclude` (the focus lane's) are left out."""
+    """The "Biggest this week" lane: widely covered or exploited, active in the window,
+    most covered first (exploited breaks a tie: a flaw being used is not by itself a big
+    story, 2026-11-15). Advisories never qualify. Rows whose id is in `exclude` (the focus
+    lane's) are left out."""
     cutoff = _cutoff(now, days)
     big = [
         r
         for r in rows
         if r.get("id") not in exclude
+        and not is_advisory(r)
         and last_activity(r) >= cutoff
         and (r.get("exploited") is True or source_count(r) >= 2)
     ]
     return _ranked(
-        big, lambda r: r.get("exploited") is True, source_count, last_activity, _composite
+        big, source_count, lambda r: r.get("exploited") is True, last_activity, _composite
     )[:n_max]
 
 
@@ -103,11 +146,13 @@ def top_stories(
     exclude: frozenset | set = frozenset(),
 ) -> tuple[list[dict], bool]:
     """(the front page's top stories, whether the window had to be topped up).
-    Rows whose id is in `exclude` (the Biggest lane's) are left out, top-up included."""
+    Rows whose id is in `exclude` (the Biggest lane's) are left out, top-up included, and
+    so are advisories. Ranked by coverage (capped at 3 outlets), then composite, then
+    recency: newest-first let a same-day patch note outrank a bigger story from 3 days ago."""
     cutoff = _cutoff(now, days)
-    rows = [r for r in rows if r.get("id") not in exclude]
+    rows = [r for r in rows if r.get("id") not in exclude and not is_advisory(r)]
     fresh = [r for r in rows if last_activity(r) >= cutoff]
-    picked = _ranked(fresh, last_activity, source_count, _composite)[:n_max]
+    picked = _ranked(fresh, lambda r: min(source_count(r), 3), _composite, last_activity)[:n_max]
     if len(picked) >= n_min:
         return picked, False
     older = _ranked([r for r in rows if last_activity(r) < cutoff], last_activity, source_count)
@@ -126,7 +171,7 @@ def fresh_count(rows: list[dict], now: str, days: int) -> int:
 
 def biggest_note(days: int) -> str:
     """The one sentence README and site both print above the Biggest lane."""
-    return f"Most covered or exploited in the last {days} days."
+    return f"Most covered in the last {days} days; patch notices are left out."
 
 
 def window_note(fresh: int, total: int, days: int) -> str:

@@ -240,12 +240,17 @@ def curated_findings(conf: c.Config, snapshot_days: int, ctx=None) -> list[dict]
     ctx = ctx or sl.render_context()
     sources_by_id = c.load_sources_by_id()
     rows = [
-        {**finding_row(entry, conf, snapshot_days), **story_fields(entry, ctx)}
+        _with_kind(entry, {**finding_row(entry, conf, snapshot_days), **story_fields(entry, ctx)})
         for topic in c.TOPICS
         for entry in c.load_pool(topic)["entries"]
         if c.is_window_finding(entry, conf, sources_by_id)
     ]
     return one_per_story(rows, lambda row: -row["composite"])
+
+
+def _with_kind(entry: dict, row: dict) -> dict:
+    """The row plus its `kind` (story or advisory) and who decided it."""
+    return {**row, **briefing.classify_story(entry, row)}
 
 
 _TIER_RANK = {"high": 0, "medium": 1, "low": 2}
@@ -303,7 +308,7 @@ def editorial_rows(conf: c.Config, snapshot_days: int, ctx=None, exclude=()) -> 
             got = _lane_row(entry, conf, snapshot_days, sources_by_id)
             if got:
                 row, tier = got
-                ranked.append(({**row, **story_fields(entry, ctx)}, tier))
+                ranked.append((_with_kind(entry, {**row, **story_fields(entry, ctx)}), tier))
     tier_of = {id(row): tier for row, tier in ranked}
 
     def rank(row: dict) -> tuple:

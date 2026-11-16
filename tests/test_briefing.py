@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import briefing as b
+import pytest
 import taxonomy
 
 NOW = "2026-10-20"
@@ -23,7 +24,7 @@ def ids(rows):
     return [r["id"] for r in rows]
 
 
-def test_newest_story_leads_then_most_covered():
+def test_top_stories_rank_coverage_then_composite_then_newest():
     rows = [
         row("one-source-newest", "2026-10-19"),
         row("three-sources", "2026-10-14", n_corr=2),
@@ -34,12 +35,38 @@ def test_newest_story_leads_then_most_covered():
     got, topped = b.top_stories(rows, NOW, 7)
     assert not topped
     assert ids(got) == [
+        "three-sources",
         "two-sources-same-day",
         "one-source-newest",
         "updated-yesterday",
         "one-source-older",
-        "three-sources",
     ]
+
+
+def test_a_better_analysed_story_outranks_a_newer_thin_one_of_equal_coverage():
+    rows = [
+        row("thin-today", "2026-10-19", composite=7),
+        row("deep-three-days-ago", "2026-10-16", composite=62),
+    ]
+    assert ids(b.top_stories(rows, NOW, 7)[0]) == ["deep-three-days-ago", "thin-today"]
+
+
+def test_top_stories_and_biggest_leave_advisories_out_top_up_included():
+    adv = {"kind": "advisory"}
+    rows = [
+        {**row("patch-note", "2026-10-19", n_corr=2, composite=90), **adv, "exploited": True},
+        row("story-a", "2026-10-18"),
+        row("story-b", "2026-10-17"),
+        row("story-c", "2026-10-16"),
+        row("story-d", "2026-10-15"),
+        row("story-e", "2026-10-14"),
+        {**row("old-patch-note", "2026-08-01"), **adv},
+    ]
+    got, _ = b.top_stories(rows, NOW, 7)
+    assert "patch-note" not in ids(got) and "old-patch-note" not in ids(got)
+    assert b.biggest_stories(rows, NOW, 7) == []
+    short, topped = b.top_stories(rows[:2] + rows[-1:], NOW, 7)
+    assert topped and "old-patch-note" not in ids(short)
 
 
 def test_capped_at_eight():
@@ -211,19 +238,29 @@ def test_biggest_needs_two_sources_or_exploited_in_the_window():
         big("exploited-single", "2026-10-18", exploited=True),
         big("old-and-covered", "2026-09-01", n_corr=4),
     ]
-    assert ids(b.biggest_stories(rows, NOW, 7)) == ["exploited-single", "two"]
+    assert ids(b.biggest_stories(rows, NOW, 7)) == ["two", "exploited-single"]
 
 
-def test_biggest_ranks_exploited_then_sources_then_newest_then_composite():
+def test_biggest_ranks_sources_then_exploited_then_newest_then_composite():
+    # A flaw being exploited is not by itself a big story: coverage leads, exploitation
+    # breaks a tie between equally covered stories.
     rows = [
         big("three-src", "2026-10-15", n_corr=2),
         big("two-new", "2026-10-19", n_corr=1),
         big("two-old", "2026-10-16", n_corr=1),
         big("kev", "2026-10-14", exploited=True),
+        big("two-old-exploited", "2026-10-13", n_corr=1, exploited=True),
         big("two-new-high", "2026-10-19", n_corr=1, composite=90),
     ]
     got = b.biggest_stories(rows, NOW, 7, n_max=10)
-    assert ids(got) == ["kev", "three-src", "two-new-high", "two-new", "two-old"]
+    assert ids(got) == [
+        "three-src",
+        "two-old-exploited",
+        "two-new-high",
+        "two-new",
+        "two-old",
+        "kev",
+    ]
 
 
 def test_biggest_is_capped_at_three():
@@ -252,7 +289,7 @@ def test_top_stories_leave_out_the_biggest_and_stay_capped_and_topped_up():
 
 
 def test_biggest_note_names_the_window():
-    assert b.biggest_note(7) == "Most covered or exploited in the last 7 days."
+    assert b.biggest_note(7) == "Most covered in the last 7 days; patch notices are left out."
 
 
 # --- Efficiency track ---------------------------------------------------------
@@ -551,6 +588,84 @@ def test_more_independent_parties_still_rank_a_proof_row_first():
     lone = learn_row("lone", url="https://arxiv.org/abs/2610.1", corroborators=[], composite=90)
     echoed = learn_row("echoed", url="https://arxiv.org/abs/2610.2", composite=10)
     assert picked(lone, echoed, learning=one) == ["echoed", "lone"]
+
+
+# --- Story or advisory ------------------------------------------------------
+def brief_row(title, **over):
+    return {**row("r", "2026-10-19"), "lane": "news", "title": title, **over}
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Citrix patches 12 NetScaler and Secure Access Client flaws, including authentication bypass",
+        "Apache OFBiz patches 46 flaws, including a pre-auth RCE",
+        "Microsoft November 2026 Patch Tuesday fixes 1,095 flaws, one exploited",
+        "Atlassian October 2026 bulletin lists 75 unique third-party CVEs",
+        "CISA adds exploited SignalWire FreeSWITCH flaw to Known Exploited Vulnerabilities catalog",
+        "Attackers exploit critical Node-RED missing-authentication flaw to drop bots",
+        "GitLab patches CVE-2026-110264 in the regex engine",
+    ],
+)
+def test_a_lone_unvetted_patch_notice_is_an_advisory(title):
+    assert b.classify_story({}, brief_row(title)) == {"kind": "advisory", "kind_by": "rule"}
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Check Point found a way around ChatGPT Lockdown Mode",
+        "Anthropic's red team found Claude reached undergraduate-level CTF skill",
+        "Attackers raised freezer temperature limits at three French blood bank sites",
+        "Wiz turned PHP memory bugs into unauthenticated RCE on WordPress",
+        "Anthropic won't fix a Claude Dispatch flaw letting browser extensions run code",
+        "Microsoft's November 2026 security update adds task-scoped agent permissions",
+        "SonicWall says it will not fix two flaws in end-of-life GMS",
+        "Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor",
+    ],
+)
+def test_real_stories_that_are_not_patch_notices_stay_stories(title):
+    assert b.classify_story({}, brief_row(title))["kind"] == "story"
+
+
+def test_a_patch_tuesday_roundup_is_an_advisory_however_widely_it_is_covered():
+    covered = brief_row(
+        "Microsoft November 2026 Patch Tuesday fixes 1,095 flaws, one exploited",
+        corroborators=[{"url": "https://o.example/a"}, {"url": "https://o.example/b"}],
+    )
+    assert b.classify_story({}, covered) == {"kind": "advisory", "kind_by": "rule"}
+    assert b.classify_story({}, {**covered, "curated_by": "tldrsec"})["kind"] == "story"
+    assert b.classify_story({}, {**covered, "lane": "editorial"})["kind"] == "story"
+
+
+def test_the_rule_never_calls_a_covered_picked_or_vetted_patch_note_an_advisory():
+    title = "Citrix patches 12 NetScaler flaws"
+    corroborated = brief_row(title, corroborators=[{"url": "https://o.example/x"}])
+    assert b.classify_story({}, corroborated)["kind"] == "story"
+    assert b.classify_story({}, brief_row(title, lane="editorial"))["kind"] == "story"
+    assert b.classify_story({}, brief_row(title, curated_by="tldrsec"))["kind"] == "story"
+    assert b.classify_story({}, brief_row(title, has_page=True))["kind"] == "story"
+    assert (
+        b.classify_story({}, {k: v for k, v in brief_row(title).items() if k != "lane"})["kind"]
+        == "story"
+    )
+
+
+def test_the_analyzers_label_wins_over_the_rule_in_both_directions():
+    patch = brief_row("Citrix patches 12 NetScaler flaws")
+    assert b.classify_story({"kind": "story"}, patch) == {"kind": "story", "kind_by": "analyzer"}
+    quiet = brief_row("A new agent framework ships")
+    assert b.classify_story({"kind": "advisory"}, quiet) == {
+        "kind": "advisory",
+        "kind_by": "analyzer",
+    }
+    assert b.classify_story({"kind": "nonsense"}, patch)["kind_by"] == "rule"
+
+
+def test_the_two_lists_of_kinds_agree():
+    import common
+
+    assert b.KINDS == common.STORY_KINDS
 
 
 def test_the_default_party_count_is_one_when_the_key_is_absent():

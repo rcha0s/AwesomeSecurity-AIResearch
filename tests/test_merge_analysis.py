@@ -272,3 +272,28 @@ def test_the_site_renders_a_legacy_list_of_mitigations():
 
     out = generate_site._entry_tcm_md({"mitigations": ["Upgrade", "Restrict egress"]})
     assert "- **Mitigations:** Upgrade; Restrict egress" in out
+
+
+def test_a_story_kind_label_is_kept_and_a_malformed_one_is_dropped_not_fatal():
+    good = {"kind": "advisory", "kind_reason": "one vendor's patch notice"}
+    m.clean_kind(good)
+    assert good == {"kind": "advisory", "kind_reason": "one vendor's patch notice"}
+    for bad in ({"kind": "news"}, {"kind": ["story"]}, {"kind": None}, {"kind_reason": "orphan"}):
+        entry = dict(bad)
+        m.clean_kind(entry)
+        assert "kind" not in entry and "kind_reason" not in entry
+    long_reason = {"kind": "story", "kind_reason": "x" * (c.KIND_REASON_MAX + 1)}
+    m.clean_kind(long_reason)
+    assert long_reason == {"kind": "story"}
+    blank = {"kind": "story", "kind_reason": "  "}
+    m.clean_kind(blank)
+    assert blank == {"kind": "story"}
+
+
+def test_normalize_entry_carries_the_label_through_a_merge(sandbox):
+    entry = make_entry(title="Vendor patches 9 flaws", source_url="https://e.com/p")
+    entry["kind"] = "advisory"
+    out = m.normalize_entry(entry, c.load_config())
+    assert out["kind"] == "advisory"
+    entry["kind"] = "bogus"
+    assert "kind" not in m.normalize_entry(entry, c.load_config())
