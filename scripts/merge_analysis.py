@@ -199,6 +199,8 @@ def clean_kind(entry: dict) -> None:
         entry.pop("kind_reason", None)
         return
     reason = entry.get("kind_reason")
+    if isinstance(reason, str):
+        entry["kind_reason"] = reason = reason.strip()
     if reason is not None and not (
         isinstance(reason, str) and 0 < len(reason.strip()) <= c.KIND_REASON_MAX
     ):

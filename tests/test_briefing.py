@@ -43,6 +43,32 @@ def test_top_stories_rank_coverage_then_composite_then_newest():
     ]
 
 
+def test_the_stories_this_week_count_leaves_advisories_out():
+    import generate_html as gh
+
+    rows = [
+        row("story-a", "2026-10-18"),
+        row("story-b", "2026-10-17"),
+        {**row("patch-note", "2026-10-19"), "kind": "advisory"},
+    ]
+    assert gh.front_page(rows, [], NOW, 7)["stories_this_week"] == 2
+    template = gh.TEMPLATE.read_text(encoding="utf-8")
+    assert (
+        "filter(function (f) { return !isAdvisory(f); }).length" in template
+    )  # Stories tab header
+
+
+def test_coverage_counts_up_to_three_outlets_then_composite_decides():
+    rows = [
+        row("five-outlets-thin", "2026-10-19", n_corr=4, composite=8),
+        row("three-outlets-deep", "2026-10-16", n_corr=2, composite=62),
+        row("two-outlets-deep", "2026-10-19", n_corr=1, composite=90),
+    ]
+    got = ids(b.top_stories(rows, NOW, 7)[0])
+    # Five outlets and three both count as 3, so the better-analysed story leads; two is below.
+    assert got == ["three-outlets-deep", "five-outlets-thin", "two-outlets-deep"]
+
+
 def test_a_better_analysed_story_outranks_a_newer_thin_one_of_equal_coverage():
     rows = [
         row("thin-today", "2026-10-19", composite=7),
@@ -289,7 +315,10 @@ def test_top_stories_leave_out_the_biggest_and_stay_capped_and_topped_up():
 
 
 def test_biggest_note_names_the_window():
-    assert b.biggest_note(7) == "Most covered in the last 7 days; patch notices are left out."
+    assert (
+        b.biggest_note(7)
+        == "Most covered in the last 7 days; single-outlet patch notices are left out."
+    )
 
 
 # --- Efficiency track ---------------------------------------------------------
@@ -603,7 +632,7 @@ def brief_row(title, **over):
         "Microsoft November 2026 Patch Tuesday fixes 1,095 flaws, one exploited",
         "Atlassian October 2026 bulletin lists 75 unique third-party CVEs",
         "CISA adds exploited SignalWire FreeSWITCH flaw to Known Exploited Vulnerabilities catalog",
-        "Attackers exploit critical Node-RED missing-authentication flaw to drop bots",
+        "PTC patches critical deserialization RCE in Windchill and FlexPLM",
         "GitLab patches CVE-2026-110264 in the regex engine",
     ],
 )
@@ -619,6 +648,10 @@ def test_a_lone_unvetted_patch_notice_is_an_advisory(title):
         "Attackers raised freezer temperature limits at three French blood bank sites",
         "Wiz turned PHP memory bugs into unauthenticated RCE on WordPress",
         "Anthropic won't fix a Claude Dispatch flaw letting browser extensions run code",
+        # Exploitation in the wild is often the story, so it is not enough on its own.
+        "Attackers exploit critical Node-RED missing-authentication flaw to drop bots",
+        "Attackers try to exploit SSHole, an OpenSSH flaw allowing logins to passwordless accounts",
+        "Attackers probe patched Oracle EBS bug as PeopleSoft zero-day proves to be three flaws",
         "Microsoft's November 2026 security update adds task-scoped agent permissions",
         "SonicWall says it will not fix two flaws in end-of-life GMS",
         "Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor",

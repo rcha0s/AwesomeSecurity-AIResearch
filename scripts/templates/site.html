@@ -1093,7 +1093,8 @@
   }
   function renderNews() {
     var root = $("#view-news");
-    var html = secHead("Stories", num(arr(DATA.editorial).length) + " news · " + num(arr(DATA.findings).length) + " research") +
+    var newsN = arr(DATA.editorial).filter(function (f) { return !isAdvisory(f); }).length;
+    var html = secHead("Stories", num(newsN) + " news · " + num(arr(DATA.findings).length) + " research") +
       '<p class="sec-lede">Every story, newest first: each news story we kept (they never age out) and every vetted ' +
       'research finding from the last ' + num(DATA.max_age_days) + ' days. Older research moves to the ' +
       routeLink("archive", {}, "Archive") + '.</p>';
@@ -1302,8 +1303,8 @@
 
   // ================= TOP STORIES + CLAIM CHANGES =================
   // Picked in scripts/briefing.py (the README teaser shows the same picks):
-  // stories newest activity first, then most covering sources; claim
-  // changes newest first.
+  // stories most covering sources first, then composite, then newest activity
+  // (advisories left out); claim changes newest first.
   function rowsById() {
     var m = {};
     arr(DATA.findings).concat(arr(DATA.editorial)).forEach(function (f) { m[f.id] = f; });
@@ -1381,10 +1382,10 @@
     if (!total) return "No stories yet.";
     if (fresh === 0) return "Nothing new in the last " + days + " days, so these are the latest top stories.";
     if (fresh < total) return "Fewer than five stories in the last " + days + " days, so the most recent ones before it fill in.";
-    return "The last " + days + " days, newest first.";
+    return "The last " + days + " days, most covered first.";
   }
   // Same sentence as scripts/briefing.py:biggest_note (the README prints that one).
-  function biggestNote(days) { return "Most covered in the last " + days + " days; patch notices are left out."; }
+  function biggestNote(days) { return "Most covered in the last " + days + " days; single-outlet patch notices are left out."; }
   // Same sentence as scripts/briefing.py:focus_note (the README prints that one).
   function focusNote(fresh, total, days) {
     if (!total) return "Nothing in your focus areas yet.";

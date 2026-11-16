@@ -13,13 +13,16 @@ rows, so the two surfaces can never disagree.
   focus_claim_changes  the week's claim changes whose claim matches a focus area;
                 claim_changes leaves them out the same way.
   top_stories   rows active in the last `days` (a fresh Updated line counts),
-                newest activity first, then most covering sources, then
-                composite (Rohan, 2026-10-27: the briefing reads latest first). Fewer than `n_min` in the window -> topped up with
-                the most recent stories outside it (and the caller says so).
+                most covering sources first (capped at 3), then composite, then
+                newest activity (Rohan, 2026-11-15: a same-day patch note must not
+                outrank a bigger story). Advisories never qualify. Fewer than
+                `n_min` in the window -> topped up with the most recent stories
+                outside it (and the caller says so).
   biggest_stories  the week's lead lane: stories in the window with 2+ covering
-                sources or marked exploited, exploited first, then most sources,
-                newest activity, composite. At most BIGGEST_MAX; none -> no lane.
-                top_stories leaves these out so no story shows twice.
+                sources or marked exploited, most sources first, then exploited,
+                newest activity, composite. Advisories never qualify. At most
+                BIGGEST_MAX; none -> no lane. top_stories leaves these out so no
+                story shows twice.
   claim_changes what the ledger changed in the last `days`: claims added,
                 newly contested, and overturned (superseded or refuted, shown
                 as the claim that replaced them). Fewer than `n_min` in the
@@ -61,16 +64,16 @@ def source_count(row: dict) -> int:
 # vendor patch note (Rohan, 2026-11-15). The analyzer labels each brief when it reads the
 # article (`kind`); this rule covers rows it has not labelled yet, and only ever calls a
 # row an advisory when ALL of these hold: an unvetted news-gate brief, from one outlet, not a
-# curator's pick, whose headline is a single product's patch or exploited-flaw notice. Anything
-# unsure stays a story, so a real story is never hidden by a guess.
+# curator's pick, whose headline is one product's patch notice (or a CVE write-up, a bulletin, a
+# CISA KEV addition). A flaw being exploited is NOT enough: mass exploitation (Node-RED, OpenSSH)
+# is often the story. Anything unsure stays a story, so a real story is never hidden by a guess.
 KINDS = ("story", "advisory")
 ROUNDUP_TITLE = re.compile(r"\bpatch tuesday\b", re.IGNORECASE)  # an advisory however covered
 ADVISORY_TITLE = re.compile(
-    r"\b(patch(es|ed)?|fixes|fixed|hotfix(es)?|ships? (an? )?(emergency )?(fix|patch))\b"
-    r".{0,60}\b(flaws?|vulnerabilit(y|ies)|bugs?|issues?|cves?)\b"
+    r"\b(patches|fixes|hotfix(es)?|ships? (an? )?(emergency )?(fix|patch))\b"
+    r".{0,60}\b(flaws?|vulnerabilit(y|ies)|bugs?|issues?|cves?|rces?|zero-days?)\b"
     r"|\bsecurity (bulletin|advisory)\b|\bbulletin\b"
     r"|\bcisa adds\b.{0,80}\bknown exploited"
-    r"|\b(attackers?|hackers?|criminals?)\b.{0,20}\bexploit(s|ed|ing)?\b.{0,80}\b(flaw|vulnerabilit(y|ies)|bug)\b"
     r"|\bcve-\d{4}-\d+",
     re.IGNORECASE,
 )
@@ -171,7 +174,7 @@ def fresh_count(rows: list[dict], now: str, days: int) -> int:
 
 def biggest_note(days: int) -> str:
     """The one sentence README and site both print above the Biggest lane."""
-    return f"Most covered in the last {days} days; patch notices are left out."
+    return f"Most covered in the last {days} days; single-outlet patch notices are left out."
 
 
 def window_note(fresh: int, total: int, days: int) -> str:
@@ -185,7 +188,7 @@ def window_note(fresh: int, total: int, days: int) -> str:
             f"Fewer than five stories in the last {days} days, so the most recent ones "
             "before it fill in."
         )
-    return f"The last {days} days, newest first."
+    return f"The last {days} days, most covered first."
 
 
 # --- Claim changes: the ledger's job is to call claims out, not to-do lists ---

@@ -288,6 +288,9 @@ def test_a_story_kind_label_is_kept_and_a_malformed_one_is_dropped_not_fatal():
     blank = {"kind": "story", "kind_reason": "  "}
     m.clean_kind(blank)
     assert blank == {"kind": "story"}
+    padded = {"kind": "advisory", "kind_reason": "  one product's patch  "}
+    m.clean_kind(padded)
+    assert padded["kind_reason"] == "one product's patch"
 
 
 def test_normalize_entry_carries_the_label_through_a_merge(sandbox):

@@ -697,7 +697,9 @@ def front_page(
         "top_stories": [row["id"] for row in stories],
         "top_stories_topped_up": topped_up,
         "top_stories_fresh": briefing.fresh_count(stories, now, days),
-        "stories_this_week": briefing.fresh_count(rows, now, days),
+        "stories_this_week": briefing.fresh_count(
+            [row for row in rows if not briefing.is_advisory(row)], now, days
+        ),
         "claim_changes": changes,
         "claim_changes_fresh": changes_fresh,
         "efficiency_claims": [claim["id"] for claim in eff_claims],

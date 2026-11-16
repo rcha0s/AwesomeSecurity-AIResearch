@@ -24,7 +24,7 @@ _From the last 14 days: each has proof (the work itself or a measured comparison
 
 ## Biggest this week
 
-_Most covered in the last 7 days; patch notices are left out._
+_Most covered in the last 7 days; single-outlet patch notices are left out._
 
 1. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 4 sources_
 2. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 4 sources_
@@ -32,7 +32,7 @@ _Most covered in the last 7 days; patch notices are left out._
 
 ## This week's top stories
 
-_The last 7 days, newest first._
+_The last 7 days, most covered first._
 
 1. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
 2. **[OpenSSH ships an emergency workaround for a critical musl-specific vulnerability](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week)** · _Product Security · Nov 9, 2026 · 2 sources_

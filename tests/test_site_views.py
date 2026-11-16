@@ -1006,7 +1006,7 @@ def test_biggest_lane_renders_cards_with_the_exploited_chip():
     shown = {}
     html = run_js(data, "biggestHTML(DATA.__shown = {})")
     assert "Biggest this week" in html
-    assert "Most covered in the last 7 days; patch notices are left out." in html
+    assert "Most covered in the last 7 days; single-outlet patch notices are left out." in html
     assert html.count('class="art story"') == 2  # the unknown id is skipped
     assert html.count('class="chip exploited">Exploited<') == 1
     assert html.index("Story hot") < html.index("Story wide")

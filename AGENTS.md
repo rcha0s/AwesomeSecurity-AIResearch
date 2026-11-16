@@ -122,7 +122,7 @@ Every kept story is on the site's News tab, grouped by month. Every row carries 
 The analyzer sets it on a brief or finding when it reads the article (`kind`, optional
 `kind_reason`; `merge_analysis.clean_kind` drops a malformed value). A row it has not labelled
 is judged by `briefing.classify_story`, which only calls an unvetted, single-source news brief
-an advisory when its headline is a patch notice, an exploited-flaw notice or a CVE write-up (a
+an advisory when its headline is a patch notice, a bulletin, a CISA KEV addition or a CVE write-up (a flaw being exploited is not enough: mass exploitation is often the story; a
 Patch Tuesday roundup is one however widely covered), and never a curator's pick, an editorial
 promotion or a vetted finding. Advisories stay in the pools and on the News tab's "Advisories
 (N)" filter (the tab opens on "Stories"); Biggest this week, Top stories and the front page's
