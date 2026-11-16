@@ -219,7 +219,7 @@ def test_readme_leads_with_biggest_this_week_and_no_story_repeats(sandbox):
     gs.main()
     md = (sandbox / "README.md").read_text(encoding="utf-8")
     assert md.index("## Biggest this week") < md.index("## This week's top stories")
-    assert "_Most covered or exploited in the last 7 days._" in md
+    assert "_Most covered in the last 7 days; single-outlet patch notices are left out._" in md
     assert md.count("Exploited story") == 1
     assert md.count("Quiet story") == 1
 

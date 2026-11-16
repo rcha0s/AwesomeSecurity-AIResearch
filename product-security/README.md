@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_8 vetted findings · updated 2026-11-15 · ranked by composite · findings from the latest 31 days · [74 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-11-16 · ranked by composite · findings from the latest 31 days · [74 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -259,7 +259,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Vulnerability Research & Red Teaming | 4 |
 | AI in the SDLC | 1 |
 | Application Security | 1 |
-| Mobile & Device Security | 1 |
 | Detection, Response & Threat Intel | 1 |
 
 ## Vulnerability Research & Red Teaming
@@ -288,12 +287,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **53.88** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
-
-## Mobile & Device Security
-
-- **[Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads](mobile/2026-10-citizen-lab-candiru-spyware-reached-al-jazeera-devices-throu.md)** · composite **50.0** · Oct 15, 2026  
-  Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.  
-  _[source](https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/)_
 
 ## Detection, Response & Threat Intel
 

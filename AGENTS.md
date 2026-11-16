@@ -117,7 +117,17 @@ news never do: news stories (editorial promotions and news-gated items) stay in
 their pools, and rerank pulls any archived news back. Keeping is not showing:
 the front page's "Trending & In the News" lane shows only the last
 `news_front_page_days` (7), newest first, at most `news_front_page_max` (30).
-Every kept story is on the site's News tab, grouped by month. Retired claims
+Every kept story is on the site's News tab, grouped by month. Every row carries a `kind`:
+`story`, or `advisory` (one vendor product's patch or bug notice with limited reach).
+The analyzer sets it on a brief or finding when it reads the article (`kind`, optional
+`kind_reason`; `merge_analysis.clean_kind` drops a malformed value). A row it has not labelled
+is judged by `briefing.classify_story`, which only calls an unvetted, single-source news brief
+an advisory when its headline is a patch notice, a bulletin, a CISA KEV addition or a CVE write-up (a flaw being exploited is not enough: mass exploitation is often the story; a
+Patch Tuesday roundup is one however widely covered), and never a curator's pick, an editorial
+promotion or a vetted finding. Advisories stay in the pools and on the News tab's "Advisories
+(N)" filter (the tab opens on "Stories"); Biggest this week, Top stories and the front page's
+news lane leave them out. Biggest ranks coverage, then exploited, then newest; Top stories
+coverage (capped at 3), then composite, then newest. Retired claims
 fold into a collapsed section under the live ones.
 
 A story that matches a focus area (below) and comes from a high-tier feed is kept

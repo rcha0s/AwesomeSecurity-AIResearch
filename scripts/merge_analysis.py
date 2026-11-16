@@ -190,6 +190,23 @@ def tcm_text(value):
     return value
 
 
+def clean_kind(entry: dict) -> None:
+    """Keep the analyzer's `kind` (story | advisory) and short `kind_reason` only when they
+    are well formed. A bad label is dropped, not an error: a typo must not lose the entry,
+    and with no label the briefing's rule decides."""
+    if entry.get("kind") not in c.STORY_KINDS:
+        entry.pop("kind", None)
+        entry.pop("kind_reason", None)
+        return
+    reason = entry.get("kind_reason")
+    if isinstance(reason, str):
+        entry["kind_reason"] = reason = reason.strip()
+    if reason is not None and not (
+        isinstance(reason, str) and 0 < len(reason.strip()) <= c.KIND_REASON_MAX
+    ):
+        entry.pop("kind_reason", None)
+
+
 def normalize_entry(entry: dict, conf: c.Config) -> dict:
     entry = dict(entry)
     for key in TCM_FIELDS:
@@ -198,6 +215,7 @@ def normalize_entry(entry: dict, conf: c.Config) -> dict:
     for key in ("source_url", "article_url", "tweet_url"):
         if entry.get(key):
             entry[key] = c.clean_source_url(entry[key])
+    clean_kind(entry)
     url = entry.get("source_url") or entry.get("article_url") or entry.get("title", "")
     entry.setdefault("id", c.make_id(entry.get("title", ""), c.normalize_url(url)))
     entry.setdefault("retrieved_at", c.utcnow_iso())

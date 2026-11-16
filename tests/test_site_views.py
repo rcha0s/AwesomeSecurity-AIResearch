@@ -136,6 +136,9 @@ def test_claim_changes_name_the_winner_and_the_claim_it_replaced(sandbox):
 
 # --- Template JS in Node -------------------------------------------------------
 FNS = [
+    "_daysAgo",
+    "frontNews",
+    "isAdvisory",
     "esc",
     "safeUrl",
     "hrefOf",
@@ -1003,7 +1006,7 @@ def test_biggest_lane_renders_cards_with_the_exploited_chip():
     shown = {}
     html = run_js(data, "biggestHTML(DATA.__shown = {})")
     assert "Biggest this week" in html
-    assert "Most covered or exploited in the last 7 days." in html
+    assert "Most covered in the last 7 days; single-outlet patch notices are left out." in html
     assert html.count('class="art story"') == 2  # the unknown id is skipped
     assert html.count('class="chip exploited">Exploited<') == 1
     assert html.index("Story hot") < html.index("Story wide")
@@ -1120,7 +1123,7 @@ def test_unknown_filter_values_are_ignored(query):
     )
     got = run_js({}, expr)
     assert got["applied"] == {}
-    assert got["news"] == {"topic": "all", "kind": "all", "q": ""}
+    assert got["news"] == {"topic": "all", "kind": "all", "type": "story", "q": ""}
     assert got["claim"] == {
         "topic": "all",
         "eff": "all",
@@ -1413,6 +1416,39 @@ def test_best_first_breaks_a_score_tie_by_the_newest_belief_like_the_python_orde
     }
     got = run_js(data, "sortClaims(DATA.claims, 'best').map(function (c) { return c.id; })")
     assert got == ["top", "newer", "older", "undated"]
+
+
+def test_the_front_page_news_lane_leaves_advisories_out_and_unlabelled_rows_in():
+    from datetime import date
+
+    today = date.today().isoformat()
+    rows = [
+        {"id": "story", "kind": "story", "published": today},
+        {"id": "unlabelled", "published": today},
+        {"id": "patch-note", "kind": "advisory", "published": today},
+        {"id": "hostile", "kind": {"toString": "advisory"}, "published": today},
+    ]
+    got = run_js({}, f"frontNews({json.dumps(rows)}, 7, 30).map(function (f) {{ return f.id; }})")
+    assert sorted(got) == ["hostile", "story", "unlabelled"]
+    assert run_js(
+        {}, "[isAdvisory({kind:'advisory'}), isAdvisory({kind:'story'}), isAdvisory({})]"
+    ) == [
+        True,
+        False,
+        False,
+    ]
+
+
+def test_the_stories_tab_defaults_to_stories_and_can_show_advisories():
+    template = gh.TEMPLATE.read_text(encoding="utf-8")
+    assert 'var newsState = { topic: "all", kind: "all", type: "story", q: "" };' in template
+    assert '["ntype", "news", "news", "type", ["story", "advisory", "all"], "story"]' in template
+    got = run_js(
+        {},
+        "(function(){stateFromQuery('?ntype=advisory');var a=newsState.type;"
+        "stateFromQuery('?ntype=bogus');return [a, newsState.type, stateQuery('news')];})()",
+    )
+    assert got == ["advisory", "advisory", "ntype=advisory"]
 
 
 def test_claim_cards_flag_model_scope_and_old_evidence_and_escape_the_note():

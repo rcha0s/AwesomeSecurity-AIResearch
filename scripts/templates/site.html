@@ -776,7 +776,7 @@
   // A story with a dated Updated line counts from that date (it moves back up).
   function frontNews(rows, days, max) {
     function last(f) { return f.updated && f.updated > (f.published || "") ? f.updated : f.published; }
-    return (rows || []).filter(function (f) { return _daysAgo(last(f)) <= days; })
+    return (rows || []).filter(function (f) { return f.kind !== "advisory" && _daysAgo(last(f)) <= days; })
       .sort(function (a, b) { return (last(b) || "").localeCompare(last(a) || ""); })
       .slice(0, max);
   }
@@ -1084,14 +1084,17 @@
   // Every story in one place: each kept news story (news never ages out) and
   // each vetted research finding of the last max_age_days, newest first,
   // grouped by month. Older research is on the Archive tab.
-  var newsState = { topic: "all", kind: "all", q: "" };
+  var newsState = { topic: "all", kind: "all", type: "story", q: "" };
+  // A story or an advisory (one product's patch or bug notice). Anything unlabelled is a story.
+  function isAdvisory(f) { return f && f.kind === "advisory"; }
   function allStories() {
     return arr(DATA.editorial).map(function (f) { return { f: f, kind: "news" }; })
       .concat(arr(DATA.findings).map(function (f) { return { f: f, kind: "research" }; }));
   }
   function renderNews() {
     var root = $("#view-news");
-    var html = secHead("Stories", num(arr(DATA.editorial).length) + " news · " + num(arr(DATA.findings).length) + " research") +
+    var newsN = arr(DATA.editorial).filter(function (f) { return !isAdvisory(f); }).length;
+    var html = secHead("Stories", num(newsN) + " news · " + num(arr(DATA.findings).length) + " research") +
       '<p class="sec-lede">Every story, newest first: each news story we kept (they never age out) and every vetted ' +
       'research finding from the last ' + num(DATA.max_age_days) + ' days. Older research moves to the ' +
       routeLink("archive", {}, "Archive") + '.</p>';
@@ -1099,6 +1102,9 @@
       '<div class="fgroup search"><label for="news-q">Search stories</label><input id="news-q" type="search" ' +
       'placeholder="Search titles, takeaways, sources, quotes..." value="' + esc(newsState.q) + '"></div></div>';
     html += '<div class="toolbar" style="margin-top:-6px">';
+    var advCount = allStories().filter(function (it) { return isAdvisory(it.f); }).length;
+    html += filterGroup("Type", "ntype", [["story", "Stories"], ["advisory", "Advisories (" + advCount + ")"],
+      ["all", "All"]], newsState.type);
     html += filterGroup("Kind", "nkind", [["all", "All"], ["news", "News"], ["research", "Research"]], newsState.kind);
     html += filterGroup("Track", "ntopic", [["all", "All"]].concat(TOPIC_ORDER.map(function (t) {
       return [t, tname(t)]; })), newsState.topic);
@@ -1108,7 +1114,7 @@
     $("#news-q").addEventListener("input", function () { newsState.q = this.value.slice(0, STATE_MAX_Q); drawNews(); syncUrl(); });
     root.querySelectorAll(".toolbar .opt").forEach(function (b) {
       b.addEventListener("click", function () {
-        newsState[b.dataset.k === "nkind" ? "kind" : "topic"] = b.dataset.v;
+        newsState[{ nkind: "kind", ntype: "type" }[b.dataset.k] || "topic"] = b.dataset.v;
         root.querySelectorAll('.opt[data-k="' + b.dataset.k + '"]').forEach(function (o) {
           o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
         drawNews(); syncUrl();
@@ -1144,6 +1150,7 @@
     var q = newsState.q.trim().toLowerCase();
     var items = allStories().filter(function (it) {
       return (newsState.kind === "all" || it.kind === newsState.kind) &&
+        (newsState.type === "all" || (isAdvisory(it.f) ? "advisory" : "story") === newsState.type) &&
         (newsState.topic === "all" || it.f.topic === newsState.topic) && storyMatches(it.f, q);
     });
     if (!items.length) { wrap.innerHTML = '<p class="empty-note">No stories match.</p>'; return; }
@@ -1207,6 +1214,7 @@
     ["sq", "search", "site", "q", null, ""],
     ["nq", "news", "news", "q", null, ""],
     ["nkind", "news", "news", "kind", ["all", "news", "research"], "all"],
+    ["ntype", "news", "news", "type", ["story", "advisory", "all"], "story"],
     ["ntopic", "news", "news", "topic", "TOPICS", "all"],
     ["cq", "claims", "claim", "q", null, ""],
     ["ctopic", "claims", "claim", "topic", "TOPICS", "all"],
@@ -1295,8 +1303,8 @@
 
   // ================= TOP STORIES + CLAIM CHANGES =================
   // Picked in scripts/briefing.py (the README teaser shows the same picks):
-  // stories newest activity first, then most covering sources; claim
-  // changes newest first.
+  // stories most covering sources first, then composite, then newest activity
+  // (advisories left out); claim changes newest first.
   function rowsById() {
     var m = {};
     arr(DATA.findings).concat(arr(DATA.editorial)).forEach(function (f) { m[f.id] = f; });
@@ -1374,10 +1382,10 @@
     if (!total) return "No stories yet.";
     if (fresh === 0) return "Nothing new in the last " + days + " days, so these are the latest top stories.";
     if (fresh < total) return "Fewer than five stories in the last " + days + " days, so the most recent ones before it fill in.";
-    return "The last " + days + " days, newest first.";
+    return "The last " + days + " days, most covered first.";
   }
   // Same sentence as scripts/briefing.py:biggest_note (the README prints that one).
-  function biggestNote(days) { return "Most covered or exploited in the last " + days + " days."; }
+  function biggestNote(days) { return "Most covered in the last " + days + " days; single-outlet patch notices are left out."; }
   // Same sentence as scripts/briefing.py:focus_note (the README prints that one).
   function focusNote(fresh, total, days) {
     if (!total) return "Nothing in your focus areas yet.";
