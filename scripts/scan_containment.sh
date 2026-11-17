@@ -39,6 +39,12 @@ SETTINGS='{"permissions": {
   ]
 }}'
 
+# The model every contained session runs on. `--setting-sources local` hides the
+# user's own model pin, so an unpinned session takes the account default, and that
+# changed on 2026-11-15 (Opus -> Sonnet): the Sonnet sessions ran one compound Bash
+# command, were denied, and stopped with nothing analyzed. SCAN_MODEL overrides it.
+SCAN_MODEL="${SCAN_MODEL:-claude-opus-5-5}"
+
 # contained_claude <prompt> <system-prompt-file> <max_usd> <max_turns>
 # Runs $CLAUDE locked down, SCAN_LOCKED=1, subscription billing only; its JSON
 # result goes to stdout. A caller may tighten (never loosen) the settings by
@@ -46,6 +52,7 @@ SETTINGS='{"permissions": {
 contained_claude() {
   env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u REDDIT_CLIENT_ID -u REDDIT_CLIENT_SECRET \
     SCAN_LOCKED=1 "$CLAUDE" -p "$1" \
+    --model "$SCAN_MODEL" \
     --append-system-prompt-file "$2" \
     --output-format json --permission-mode dontAsk \
     --setting-sources local --strict-mcp-config --mcp-config '{"mcpServers": {}}' \

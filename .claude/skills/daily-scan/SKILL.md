@@ -25,6 +25,9 @@ of three outcomes, stated in your last message:
   and alerts. Fetch source text only with `python scripts/fetch_raw.py <candidate_id>`, which
   fetches that candidate's own URL. Never write to `data/_scan*` files or the budget ledger;
   the phases own them, and spend is recorded from the remote ledger, not from files here.
+- Bash is allowlisted to the exact `python scripts/...` commands named in this file, one command
+  per call (no `cd`, `;`, `&&`, pipes or `python -c`). A denied command is not a denied Bash:
+  explore with Read, Glob and Grep, run the named commands, and never stop the run on a denial.
 
 ## Phases
 
