@@ -187,6 +187,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--topics", help="comma list: ai-security,product-security,ai-research")
     ap.add_argument("--tier", choices=["high", "medium", "low"], default="medium")
     ap.add_argument("--notes")
+    ap.add_argument(
+        "--strict",
+        action="store_true",
+        help="mixed-topic feed: stage only items the router keyword-matches",
+    )
     ap.add_argument("--followers", type=int)
     ap.add_argument("--stars", type=int)
     ap.add_argument("--subscribers", type=int)
@@ -208,6 +213,7 @@ def main(argv: list[str] | None = None) -> int:
         tier=args.tier,
         signals=signals,
         notes=args.notes,
+        strict=args.strict,
     )
     saved, is_new = sr.add_source(src)
     if not is_new:
