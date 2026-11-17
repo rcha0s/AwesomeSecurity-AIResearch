@@ -877,6 +877,14 @@
       "kind": "reserve",
       "stories": 0,
       "cost_usd": 0.0
+    },
+    {
+      "run_id": "local-20261117T234454Z-61492",
+      "date": "2026-11-17",
+      "runner": "local",
+      "kind": "reserve",
+      "stories": 0,
+      "cost_usd": 0.0
     }
   ]
 }

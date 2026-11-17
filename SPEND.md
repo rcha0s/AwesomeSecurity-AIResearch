@@ -27,6 +27,7 @@
 | 2026-11-17 | local | `local-20261117T185655Z-26258-retry` | 0 | $0.08 | dead run, typical cost (not measured) | no |
 | 2026-11-17 | local | `local-20261117T210043Z-39907` | 0 | $0.81 | measured | no |
 | 2026-11-17 | local | `local-20261117T210043Z-39907-retry` | 0 | $0.08 | dead run, typical cost (not measured) | no |
-| 2026-11-17 | local | `local-20261117T222015Z-55535` | 0 | $0.00 | reserved ceiling | no |
+| 2026-11-17 | local | `local-20261117T222015Z-55535` | 0 | $0.00 | dead run, typical cost (not measured) | no |
+| 2026-11-17 | local | `local-20261117T234454Z-61492` | 0 | $0.00 | reserved ceiling | no |
 
 **Backfill 2026-09-09..2026-10-18:** $72.35 charged of $200.00, 6 of 6 runs started. Finished windows: 2026-09-09..2026-09-16, 2026-09-17..2026-09-24, 2026-09-25..2026-10-02, 2026-10-03..2026-10-10, 2026-10-11..2026-10-18.
