@@ -28,6 +28,11 @@ of three outcomes, stated in your last message:
 - Bash is allowlisted to the exact `python scripts/...` commands named in this file, one command
   per call (no `cd`, `;`, `&&`, pipes or `python -c`). A denied command is not a denied Bash:
   explore with Read, Glob and Grep, run the named commands, and never stop the run on a denial.
+- This is a headless run and nothing resumes you after your turn ends: a reply with no tool call
+  ends the run and abandons every agent still working, with nothing merged. Never end your turn
+  to wait for agents. After you dispatch agents, keep making tool calls (Glob or Read on the part
+  files they write) until every agent has delivered, then continue to the merge. Stop only after
+  `scripts/run_scan.sh post`'s prerequisites are met (the merge, the verdicts, `data/_summary.md`).
 
 ## Phases
 
