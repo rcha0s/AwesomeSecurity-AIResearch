@@ -121,6 +121,15 @@ def test_main_registers_source(sandbox, monkeypatch):
     assert sources[0]["type"] == "github_query" and sources[0]["tier"] == "high"
 
 
+def test_main_strict_flag_marks_a_mixed_topic_feed(sandbox, monkeypatch):
+    monkeypatch.setattr(
+        "sys.argv",
+        ["add_source", "rss", "https://airbnb.tech/feed/", "--topics", "ai-research", "--strict"],
+    )
+    assert a.main() == 0
+    assert sr.load_sources()[0]["strict"] is True
+
+
 def test_main_rejects_bad_topic(sandbox, monkeypatch):
     import pytest
 
