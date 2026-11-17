@@ -82,6 +82,23 @@ def test_collect_rss_passes_shared_user_agent(monkeypatch):
     assert calls == [("https://example.com/feed.xml", {"User-Agent": c.HTTP_USER_AGENT})]
 
 
+def test_a_stalled_feed_is_skipped_under_a_timeout_and_the_default_is_restored(monkeypatch):
+    import socket
+
+    seen = []
+
+    def stalled(url, request_headers=None, **kwargs):
+        seen.append(socket.getdefaulttimeout())
+        raise TimeoutError("read timed out")
+
+    monkeypatch.setattr(aggregate.feedparser, "parse", stalled)
+    before = socket.getdefaulttimeout()
+    parsed = aggregate.parse_feed("https://slow.example/feed.xml")
+    assert seen == [aggregate.FEED_TIMEOUT_S]  # the fetch ran under the timeout
+    assert parsed.bozo and not parsed.entries  # collect_rss skips it like a bad feed
+    assert socket.getdefaulttimeout() == before  # and nothing else inherits it
+
+
 def test_add_source_via():
     assert add.source_via("https://www.linkedin.com/posts/x") == "linkedin"
     assert add.source_via("https://x.com/a/status/1") == "twitter"

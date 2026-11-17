@@ -17,6 +17,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import socket
 import sys
 from datetime import datetime
 
@@ -110,6 +111,23 @@ def build_candidate(entry: dict, feed: dict, rules: dict) -> dict | None:
     }
 
 
+# feedparser sets no timeout: one stalled host held a scan for 38+ minutes (2026-11-17).
+FEED_TIMEOUT_S = 30
+
+
+def parse_feed(url: str):
+    """feedparser.parse under a socket timeout. A stalled or reset connection skips
+    the feed like an unparseable one (bozo, no entries) instead of hanging the scan."""
+    previous = socket.getdefaulttimeout()
+    socket.setdefaulttimeout(FEED_TIMEOUT_S)
+    try:
+        return feedparser.parse(url, request_headers={"User-Agent": c.HTTP_USER_AGENT})
+    except OSError as exc:  # TimeoutError and ConnectionError are OSErrors
+        return feedparser.FeedParserDict(bozo=True, bozo_exception=exc, entries=[])
+    finally:
+        socket.setdefaulttimeout(previous)
+
+
 def feed_from_source(source: dict) -> dict:
     return {
         "name": source["name"],
@@ -144,7 +162,7 @@ def collect_rss(
     for source in feeds:
         feed = feed_from_source(source)
         print(f"-> {feed['name']}: {feed['url']}")
-        parsed = feedparser.parse(feed["url"], request_headers={"User-Agent": c.HTTP_USER_AGENT})
+        parsed = parse_feed(feed["url"])
         if parsed.bozo and not parsed.entries:
             print(f"   ! could not parse feed ({getattr(parsed, 'bozo_exception', '')})")
             continue

@@ -74,7 +74,8 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert (tmp_path / "claude-args.env").read_text().strip() == "SCAN_LOCKED=1"
     flag = dict(zip(args, args[1:], strict=False))
     assert flag["--permission-mode"] == "dontAsk"
-    assert flag["--model"] == "claude-opus-5-5"  # never the account default (Sonnet gave up on a denial)
+    assert flag["--model"] == "claude-sonnet-5-5"  # Rohan's pick; never the account default
+    assert flag["--effort"] == "high"
     assert '"Edit(data/_raw/**)"' in "\n".join(args)  # model can't forge source text
     assert '"Edit(data/evals/**)"' in "\n".join(args)  # nor its own eval results
     assert "Read(data/evals/**)" not in "\n".join(args)  # golden-only tightening
