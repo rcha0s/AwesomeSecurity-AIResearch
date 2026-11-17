@@ -322,7 +322,11 @@ if [[ "$rc" == 4 ]]; then
   # The ledger decides: one retry a day, only after a cheap analysis-empty
   # failure (budget.retry_max_usd). The retry's own reservation blocks a third.
   export SCAN_RUN_ID="$SCAN_RUN_ID-retry"
-  echo "[local] analysis-empty; asking the budget guard for the one same-day retry" | tee -a "$LOG"
+  # The first session analyzed nothing (on 2026-11-17 Sonnet ended its turn with nine
+  # agents still running), so the day's one retry runs on SCAN_RETRY_MODEL: Opus, which
+  # kept working through the whole analysis on Nov 13 and 14.
+  SCAN_MODEL="${SCAN_RETRY_MODEL:-claude-opus-5-5}"
+  echo "[local] analysis-empty; asking the budget guard for the one same-day retry (model $SCAN_MODEL)" | tee -a "$LOG"
   enter_worktree
   rc=0
   attempt || rc=$?

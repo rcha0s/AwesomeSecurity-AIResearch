@@ -21,6 +21,7 @@ from test_run_scan import SECRET, commit_main, gh_calls, git, ledger_rows, open_
 
 FAKE_CLAUDE = """#!/bin/sh
 printf '%s\\n' "$@" > "$CLAUDE_ARGS"
+while [ $# -gt 0 ]; do [ "$1" = "--model" ] && echo "$2" >> "$CLAUDE_ARGS.models"; shift; done
 # FAKE_CLAUDE_SLEEP: stay busy, so a test can kill the run mid-session.
 if [ -n "$FAKE_CLAUDE_SLEEP" ]; then touch "$CLAUDE_ARGS.started"; sleep "$FAKE_CLAUDE_SLEEP"; fi
 echo "SCAN_LOCKED=$SCAN_LOCKED" >> "$CLAUDE_ARGS.env"
@@ -188,6 +189,16 @@ def test_a_cheap_analysis_empty_day_gets_exactly_one_retry(scan_repo, tmp_path):
     res, _ = run_local(work, env, tmp_path)
     assert res.returncode == 0 and "skip" in res.stdout
     assert sessions(tmp_path) == 2 and attempts(origin) == EMPTY + EMPTY
+
+
+def test_the_retry_runs_on_opus_after_a_sonnet_session_analyzed_nothing(scan_repo, tmp_path):
+    work, origin, env = scan_repo
+    open_budget(work, monthly_cap_usd="10.0", uncalibrated_run_usd="2.0", retry_max_usd="1.0")
+    run_local(work, env, tmp_path)  # both sessions come back empty; the models are what matters
+    assert (tmp_path / "claude-args.models").read_text().split() == [
+        "claude-sonnet-5-5",
+        "claude-opus-5-5",
+    ]
 
 
 def test_the_retry_ships_when_its_session_analyzes(scan_repo, tmp_path):
