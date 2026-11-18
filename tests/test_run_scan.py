@@ -24,7 +24,7 @@ STUBBED = (
     "ingest_curator_links ingest_reddit aggregate ingest_sitemap ingest_github ingest_ghsa ingest_hn "
     "ingest_conferences ingest_json_feeds ingest_youtube "
     "rerank generate_site generate_claims generate_html generate_og trends "
-    "generate_newsletter generate_review add_claim eval_recall"
+    "generate_newsletter generate_review generate_stream add_claim eval_recall"
 ).split()
 FAKE_GH = """#!/bin/sh
 echo "$*" >> "$GH_LOG"

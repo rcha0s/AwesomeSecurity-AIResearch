@@ -3034,5 +3034,245 @@
     "added": "2026-11-08",
     "active": true,
     "notes": "Read only through the X list lane once Rohan adds him to list 2115494675994071362"
+  },
+  {
+    "id": "rss:https-www-philschmid-de-rss",
+    "type": "rss",
+    "handle": "https://www.philschmid.de/rss",
+    "name": "Philipp Schmid",
+    "url": "https://www.philschmid.de/rss",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": false,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: agents, context engineering, Gemini/Hugging Face tooling. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-www-dbreunig-com-feed-xml",
+    "type": "rss",
+    "handle": "https://www.dbreunig.com/feed.xml",
+    "name": "Drew Breunig",
+    "url": "https://www.dbreunig.com/feed.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: context engineering and context failure modes. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-lilianweng-github-io-index-xml",
+    "type": "rss",
+    "handle": "https://lilianweng.github.io/index.xml",
+    "name": "Lil'Log (Lilian Weng)",
+    "url": "https://lilianweng.github.io/index.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": false,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Researcher survey posts on agents and harness engineering; low cadence. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-martinfowler-com-feed-atom",
+    "type": "rss",
+    "handle": "https://martinfowler.com/feed.atom",
+    "name": "Martin Fowler",
+    "url": "https://martinfowler.com/feed.atom",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "high",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 75.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Thoughtworks essays incl. the generative-AI engineering series; broad, strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-lucumr-pocoo-org-feed-atom",
+    "type": "rss",
+    "handle": "https://lucumr.pocoo.org/feed.atom",
+    "name": "Armin Ronacher",
+    "url": "https://lucumr.pocoo.org/feed.atom",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: agentic coding, codemode, tool design; broad, strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-mitchellh-com-feed-xml",
+    "type": "rss",
+    "handle": "https://mitchellh.com/feed.xml",
+    "name": "Mitchell Hashimoto",
+    "url": "https://mitchellh.com/feed.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: AI-assisted development; mostly Ghostty, strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-ghuntley-com-rss",
+    "type": "rss",
+    "handle": "https://ghuntley.com/rss/",
+    "name": "Geoffrey Huntley",
+    "url": "https://ghuntley.com/rss/",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: coding-agent loops and harness design; strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-www-interconnects-ai-feed",
+    "type": "rss",
+    "handle": "https://www.interconnects.ai/feed",
+    "name": "Interconnects (Nathan Lambert)",
+    "url": "https://www.interconnects.ai/feed",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Open models, post-training, agent evaluation; strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-www-seangoedecke-com-rss-xml",
+    "type": "rss",
+    "handle": "https://www.seangoedecke.com/rss.xml",
+    "name": "Sean Goedecke",
+    "url": "https://www.seangoedecke.com/rss.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: building with LLMs at a large company; broad, strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
+  },
+  {
+    "id": "rss:https-addyosmani-com-rss-xml",
+    "type": "rss",
+    "handle": "https://addyosmani.com/rss.xml",
+    "name": "Addy Osmani",
+    "url": "https://addyosmani.com/rss.xml",
+    "topics": [
+      "ai-research"
+    ],
+    "domains": [
+      "Agents & Harnesses"
+    ],
+    "strict": true,
+    "tier": "medium",
+    "signals": {},
+    "stats": {
+      "ingested": 0,
+      "curated": 0
+    },
+    "rank": 55.0,
+    "added": "2026-11-18",
+    "active": true,
+    "notes": "Practitioner: agentic engineering workflows; low cadence, strict. Harness engineering stream (data/streams.yaml); feed checked 2026-11-18"
   }
 ]

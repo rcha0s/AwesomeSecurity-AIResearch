@@ -23,6 +23,7 @@ data/ai-research.json     # AI Research (practitioner) pool (source of truth)
 data/claims.json          # CLAIM LEDGER — durable standing answers + supersession edges
 data/news_stories.json    # STORY LEDGER — one row per story + every covering source; never pruned
 data/taxonomy.yaml        # THE vocabulary: 3 topics x fixed domain IDs (ais.* ps.* air.*)
+data/streams.yaml         # research streams across the taxonomy (Harness Engineering); scripts/streams.py loads it
 data/taxonomy_migration.json # one-time label -> ID table (every pre-migration label)
 data/taxonomy_proposals.json # verified new-domain proposals (taxonomy_proposals.py)
 data/archive.json         # aged-out findings (preserved, not shown)
@@ -56,6 +57,7 @@ scripts/rewrite_guard.py  # restores any rewritten brief field whose facts chang
 scripts/retitle.py        # cut existing titles to 12 words, no list: list | check FILE | apply FILE (Moved stubs)
 scripts/rerank.py         # decay + composite + sort + prune stale → archive
 scripts/generate_site.py  # README.md + the 3 topic trees + per-entry pages
+scripts/generate_stream.py # docs/streams/<id>.md + <id>.json (JSON Feed 1.1) per stream in data/streams.yaml
 scripts/story_ledger.py   # story ledger: shortlist, judge verdicts (same/update/new), ledgering
 scripts/replay_stories.py # replay a window of pool history through the story matcher (ISC-21)
 scripts/claims.py         # claim model: validation, supersession edges, ordering, lineage
@@ -416,6 +418,33 @@ closed (papers dropped, never admitted).
 Black Hat and DEF CON are **not** covered — they aren't on arXiv and still need
 an archive scraper. `research_index` sources (Anthropic) are registered but
 likewise unharvested.
+
+## Research streams (data/streams.yaml)
+
+A stream is a reading list for one engineering question that cuts across the
+taxonomy. The first is **Harness Engineering**: cost efficiency, work efficiency,
+speed and latency, reliability, context and memory, tools and interfaces,
+orchestration, evaluating harnesses, and harness design. A stream adds no pool and
+no analysis: a finding keeps its one `domain`, and `scripts/streams.py` decides
+which sub-category it falls in (first match wins: a `domains` rule always matches,
+a `from` rule needs one of its `keywords` as whole words in the finding's text).
+
+`scripts/generate_stream.py` (a renderer, run after `generate_review` in
+`run_scan.sh` and `update.yml`) writes `docs/streams/<id>.md` and
+`docs/streams/<id>.json`. The JSON is a JSON Feed 1.1 document served at
+`<site>/streams/<id>.json`, so a harness can poll it: each item's `_stream`
+extension carries `subcategory`, `tier`, `domain`, `takeaway`, `action` and
+`related_claims`, and the top level carries the standing claims. A stream reads
+the pools and the archive for `library_days` (120), past the site's 31-day
+pruning. Tier `vetted` is the curated bar judged as if fresh; tier `watch` is a
+finding held only on score (novelty or composite) with relevance at least
+`watch_min_relevance`. Refuted, ungrounded, domain-held and readability-held
+findings never enter. The cost and work efficiency domains are sub-categories of
+Harness Engineering; the Efficiency section of the Briefing still reads them
+directly.
+
+To add a sub-category, edit `data/streams.yaml` (an unknown domain ID fails the
+load), run `python scripts/generate_stream.py` and `pytest tests/test_streams.py`.
 
 ## Daily automation (unattended scan -> PR)
 

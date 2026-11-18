@@ -527,7 +527,8 @@ def _readme_tail(now: str) -> list[str]:
         f"### {big}",
         "",
         f"On GitHub: {trees} · [Claims](claims/README.md) · [Newsletter](NEWSLETTER.md) · "
-        "[Trends](TRENDS.md) · [Review queue](REVIEW.md)",
+        "[Trends](TRENDS.md) · [Review queue](REVIEW.md) · "
+        "[Harness Engineering stream](docs/streams/harness-engineering.md)",
         "",
         "## Contribute",
         "",

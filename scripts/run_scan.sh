@@ -75,7 +75,7 @@ INGESTORS=(ingest_curator_links ingest_reddit aggregate ingest_sitemap ingest_gi
 # Mac and not promised in the cloud VM). update.yml's render job on main owns
 # docs/og.png.
 RENDERERS=(rerank generate_site generate_claims generate_html trends
-  generate_newsletter generate_review)
+  generate_newsletter generate_review generate_stream)
 # What a scan commits. data/ is staged with `-u` (tracked files only), so a
 # file the model invents under data/ never ships; rendered paths take new
 # files because the renderers create pages. Directories, not globs: a glob

@@ -1,0 +1,94 @@
+# streams.yaml - research streams that cut across the taxonomy.
+#
+# A stream is a reading list for one engineering question, built from the
+# pools (data/<topic>.json), the archive and the claim ledger. It adds no new
+# pool and no new analysis: findings keep their one taxonomy `domain`, and a
+# stream only decides which of them belong to it and under which sub-category.
+# scripts/streams.py is the only loader; scripts/generate_stream.py renders
+# each stream to docs/streams/<id>.md (to read on GitHub) and
+# docs/streams/<id>.json (a JSON Feed 1.1 document a harness or feed reader
+# can fetch from the site).
+#
+# Per stream:
+#   name, blurb       display text
+#   library_days      how far back a finding stays in the stream. The site prunes
+#                     findings after config.yaml `max_age_days` (31); a stream keeps
+#                     reading the archive up to this age, because a harness lesson
+#                     does not go stale in a month.
+#   feed_max          most findings in the JSON feed (newest first)
+#   watch_min_relevance
+#                     a finding the curated view held only for its scores (novelty
+#                     or composite below the floor) still enters as tier `watch`
+#                     when its relevance is at least this. Refuted, ungrounded,
+#                     domain-held and readability-held findings never enter.
+#                     Leave it out to list vetted findings only.
+#   subcategories     checked in order; a finding lands in the FIRST that matches:
+#     domains         a finding whose domain is one of these always matches
+#     from + keywords a finding whose domain is in `from` matches only when one of
+#                     `keywords` appears as whole words in its title, takeaway,
+#                     summary, tags or (for a claim) statement (scripts/focus.py's
+#                     matcher). This is how a sub-category draws on a broad domain
+#                     like air.agents without splitting it.
+#   A finding that matches no sub-category is not in the stream.
+#
+# IDs are stable: a harness may filter the JSON feed by sub-category id.
+
+version: 1
+
+streams:
+  harness-engineering:
+    name: Harness Engineering
+    blurb: >-
+      How to build agent and coding harnesses that cost less, run faster, fail
+      less and get more correct work done: measured results from papers, lab and
+      practitioner engineering blogs, with the standing claims they support.
+    library_days: 120
+    feed_max: 80
+    watch_min_relevance: 60
+    subcategories:
+      - id: cost-efficiency
+        name: Cost efficiency
+        scope: Token use and spend - prompt caching, context budgets, cheaper subagents and model routing, keeping tool output out of context, cost per task.
+        domains: [air.cost-efficiency]
+        from: [air.agents, air.context, air.model-io, air.tooling, air.evals]
+        keywords: [token cost, token costs, token usage, token budget, token efficiency, prompt caching, prompt cache, cache hit rate, cost per task, inference cost, cheaper model, model routing]
+      - id: work-efficiency
+        name: Work efficiency
+        scope: More correct work per hour - planning and spec steps, task decomposition, delegation, parallel agents, verification loops, measured productivity.
+        domains: [air.work-efficiency]
+      - id: speed-latency
+        name: Speed and latency
+        scope: Wall-clock time per task, agent-loop and tool latency, parallel and speculative tool calls, cache reuse for speed.
+        from: [air.agents, air.tooling, air.context, air.evals]
+        keywords: [latency, wall-clock, wall clock, time to first token, parallel tool calls, speculative execution, speculative decoding, prefix caching, throughput, tokens per second]
+      - id: reliability
+        name: Reliability and recovery
+        scope: Getting runs to finish correctly - error recovery, loop and stall detection, long-horizon drift, failure taxonomies, tracing, run-to-run variance.
+        from: [air.agents, air.tooling, air.model-io]
+        keywords: [failure mode, failure modes, failure taxonomy, error recovery, retry, retries, loop detection, stuck, long-horizon, run-to-run, flaky, nondeterminism, observability, tracing, self-correction]
+      - id: context-memory
+        name: Context and memory
+        scope: What the model sees - context engineering, compaction, agent memory, retrieval for agents, long-context failure modes.
+        domains: [air.context]
+        from: [air.agents]
+        keywords: [context engineering, context window, compaction, compact, agent memory, memory file, memory files, context rot, long context, summarization]
+      - id: tools-interfaces
+        name: Tools and interfaces
+        scope: How the harness exposes actions - tool design and descriptions, schemas and structured output, skills, MCP servers built for agents, sandboxes as tools.
+        domains: [air.model-io]
+        from: [air.agents, air.tooling]
+        keywords: [tool design, tool description, tool descriptions, tool schema, tool calling, tool call, tool calls, tool use, skills, agent skills, mcp, model context protocol, structured output, agent-computer interface]
+      - id: orchestration
+        name: Orchestration and multi-agent
+        scope: How work is split across agents and turns - subagents, planners, multi-agent coordination, long-running and background agents.
+        from: [air.agents]
+        keywords: [multi-agent, multi agent, subagent, subagents, sub-agent, orchestration, orchestrator, planner, coordinator, parallel agents, long-running, background agent, delegation]
+      - id: harness-evals
+        name: Evaluating harnesses
+        scope: Measuring a harness rather than a model - harness ablations, agent benchmarks, trajectory analysis, eval-to-production gaps.
+        from: [air.evals]
+        keywords: [harness, harnesses, agent benchmark, agent benchmarks, agent eval, agent evals, coding agent, coding agents, swe-bench, terminal-bench, trajectory, trajectories, ablation, scaffold, scaffolding]
+      - id: harness-design
+        name: Harness design
+        scope: Everything else about building the agent loop itself - architecture, prompts, control flow, autonomy and approval design.
+        domains: [air.agents]

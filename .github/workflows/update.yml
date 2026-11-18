@@ -50,7 +50,7 @@ jobs:
       - name: Validate the claim ledger
         run: python scripts/add_claim.py validate
 
-      - name: Regenerate site + claims + trends + newsletter + review + card
+      - name: Regenerate site + claims + trends + newsletter + review + streams + card
         run: |
           python scripts/generate_site.py
           python scripts/generate_claims.py
@@ -59,6 +59,7 @@ jobs:
           python scripts/trends.py
           python scripts/generate_newsletter.py
           python scripts/generate_review.py
+          python scripts/generate_stream.py
 
       # docs/og.png is drawn with the runner's fonts, so it can differ from the
       # committed card even with identical inputs. It is a pure function of the
