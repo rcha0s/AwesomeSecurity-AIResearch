@@ -462,6 +462,15 @@ def test_the_gate_refuses_a_rendered_row_that_cites_only_reddit():
         f"{cc.REDDIT_SHOWN}: r2",
     ]
     assert cc.REDDIT_SHOWN == "reddit-only citation on a shown entry"
+    learn = {"learn": [{"id": "l1", "url": REDDIT_URL}, {"id": "l2", "url": "https://a.example/"}]}
+    assert cc.reddit_shown_problems(learn) == [f"{cc.REDDIT_SHOWN}: l1"]
+    # A Learn row shows only its own link: a corroborator it never renders cannot vouch for it.
+    sneaky = {
+        "learn": [{"id": "l3", "url": REDDIT_URL, "corroborators": [{"url": "https://a.example/"}]}]
+    }
+    assert cc.reddit_shown_problems(sneaky) == [f"{cc.REDDIT_SHOWN}: l3"]
+    for odd in ({"a": 1}, "x", 7, None, [None, 3, {"id": "n", "url": 5}]):
+        assert cc.reddit_shown_problems({"learn": odd}) == []
     ok = {**row, "corroborators": [{"url": "https://example.com/a"}]}
     other = {"id": "x", "url": "https://a.example/"}
     assert cc.reddit_shown_problems({"findings": [ok, other]}) == []

@@ -452,6 +452,7 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "editorial": editorial,
         "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
         "archive": archived,
+        "learn": learn_rows(archive, conf, snapshot_days, ctx),
         "arguments": arguments.shown(
             c.load_json(c.DATA_DIR / arguments.ROWS_NAME, []), now, arguments.settings()
         ),
@@ -656,6 +657,42 @@ def archive_rows(archive: list, conf: c.Config) -> list[dict]:
         if isinstance(e, dict) and (c.is_curated(e, conf) or archived_brief(e))
     ]
     return sorted(rows, key=lambda r: (r["published"], r["id"]), reverse=True)
+
+
+LEARN_KEYS = (
+    "id",
+    "topic",
+    "domain",
+    "domain_id",
+    "title",
+    "url",
+    "takeaway",
+    "published",
+    "source_name",
+    "ids",
+    "exploited",
+    "actionable",
+    "lessons",
+)
+
+
+def learn_rows(archive: list, conf: c.Config, snapshot_days: int, ctx) -> list[dict]:
+    """The Learn tab: every vetted finding, in the pools or aged out into the archive,
+    that passes the What to learn filters (briefing.learning_all). One row per story,
+    newest first, never capped and never aged out, so the tab only grows. Each row
+    carries its own lessons and `why`; the Briefing lane stays the latest few."""
+    entries = [e for topic in c.TOPICS for e in c.load_pool(topic)["entries"]]
+    live = {e.get("id") for e in entries}  # an id in both places is the live copy's
+    entries += [e for e in archive if isinstance(e, dict) and e.get("id") not in live]
+    rows = [
+        _with_kind(e, {**finding_row(e, conf, snapshot_days), **story_fields(e, ctx)})
+        for e in entries
+        if c.is_curated(e, conf)
+    ]
+    picks, why = briefing.learning_all(
+        one_per_story(rows, lambda r: -r["composite"]), conf.learning
+    )
+    return [{**{k: row[k] for k in LEARN_KEYS}, "why": why[row["id"]]} for row in picks]
 
 
 def front_page(

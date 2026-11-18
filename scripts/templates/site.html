@@ -318,6 +318,11 @@
   .claim .desc { color: var(--ink-2); margin: 6px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .art .try { margin: 10px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
   .art .try b { color: var(--ink); }
+  .learn-lessons { margin: 10px 0 0; max-width: var(--measure); font-size: 14px; color: var(--ink-2); }
+  .learn-lessons > summary { cursor: pointer; color: var(--accent); }
+  .learn-lessons ul.lessons { list-style: disc; margin: 8px 0 0; padding-left: 20px; }
+  .learn-lessons blockquote { margin: 6px 0 10px; padding-left: 12px; border-left: 2px solid var(--rule); color: var(--ink-3); }
+  .learn-more { margin-top: 18px; }
   .claim .guide { color: var(--ink-2); margin: 8px 0 0; max-width: var(--measure); font-size: 14.5px; line-height: 1.5; }
   .claim .guide b { color: var(--ink); }
   .claim .basis { color: var(--ink-2); margin: 8px 0 0; padding: 8px 10px; background: var(--paper-2);
@@ -571,6 +576,7 @@
     <button class="vtab" role="tab" id="tab-week" aria-controls="view-week" data-view="week" aria-selected="true">Briefing</button>
     <button class="vtab" role="tab" id="tab-news" aria-controls="view-news" data-view="news">Stories <span class="ct" id="ct-news"></span></button>
     <button class="vtab" role="tab" id="tab-claims" aria-controls="view-claims" data-view="claims">Claims <span class="ct" id="ct-claims"></span></button>
+    <button class="vtab" role="tab" id="tab-learn" aria-controls="view-learn" data-view="learn">Learn <span class="ct" id="ct-learn"></span></button>
     <button class="vtab" role="tab" id="tab-topics" aria-controls="view-topics" data-view="topics">Topics <span class="ct" id="ct-fields"></span></button>
     <button class="vtab" role="tab" id="tab-archive" aria-controls="view-archive" data-view="archive">Archive <span class="ct" id="ct-archive"></span></button>
     <button class="vtab" role="tab" id="tab-methodology" aria-controls="view-methodology" data-view="methodology">Methodology</button>
@@ -580,6 +586,7 @@
     <section class="view" id="view-week" role="tabpanel" aria-labelledby="tab-week"></section>
     <section class="view" id="view-news" role="tabpanel" aria-labelledby="tab-news" hidden></section>
     <section class="view" id="view-claims" role="tabpanel" aria-labelledby="tab-claims" hidden></section>
+    <section class="view" id="view-learn" role="tabpanel" aria-labelledby="tab-learn" hidden></section>
     <section class="view" id="view-topics" role="tabpanel" aria-labelledby="tab-topics" hidden></section>
     <section class="view" id="view-archive" role="tabpanel" aria-labelledby="tab-archive" hidden></section>
     <section class="view" id="view-methodology" role="tabpanel" aria-labelledby="tab-methodology" hidden></section>
@@ -1135,7 +1142,7 @@
   // Rows grouped under their publication month ("2026-10"), newest month first.
   function newsByMonth(rows) {
     var sorted = rows.slice().sort(function (a, b) {
-      return (b.published || "").localeCompare(a.published || ""); });
+      return String(b.published || "").localeCompare(String(a.published || "")); });
     var groups = [], idx = {};
     sorted.forEach(function (f) {
       var m = String(f.published || "").slice(0, 7) || "undated";
@@ -1222,10 +1229,14 @@
     ["cstatus", "claims", "claim", "status", ["all", "current", "contested", "superseded", "refuted"], "all"],
     ["csort", "claims", "claim", "sort", ["best", "change", "confidence"], "best"],
     ["aq", "archive", "archive", "q", null, ""],
-    ["atopic", "archive", "archive", "topic", "TOPICS", "all"]
+    ["atopic", "archive", "archive", "topic", "TOPICS", "all"],
+    ["lq", "learn", "learn", "q", null, ""],
+    ["ltopic", "learn", "learn", "topic", "TOPICS", "all"]
   ];
   var ROUTE_PARAMS = ["topic", "domain", "claim"].concat(STATE_FIELDS.map(function (f) { return f[0]; }));
-  function stateObjs() { return { site: siteState, news: newsState, claim: claimState, archive: archiveState }; }
+  function stateObjs() {
+    return { site: siteState, news: newsState, claim: claimState, archive: archiveState, learn: learnState };
+  }
   function fieldOptions(f) {
     return f[4] === "TOPICS" ? ["all"].concat(TOPIC_ORDER) : f[4];
   }
@@ -1354,16 +1365,21 @@
   }
   // A finding's lessons: each point with the verbatim source quote it rests on.
   // Rendered pages carry the same list under "## Lessons".
-  function lessonsHTML(f) {
-    var rows = arr(f.lessons).filter(function (l) { return l && typeof l === "object" && l.excerpt; });
-    if (!rows.length) return "";
-    // A quote the grounding check could not find is not shown as verbatim;
-    // the point carries the same mark the rendered page uses.
-    return '<h2>Lessons</h2><ul class="lessons">' + rows.map(function (l) {
+  function lessonRows(f) {
+    return arr(f.lessons).filter(function (l) { return l && typeof l === "object" && l.excerpt; });
+  }
+  // A quote the grounding check could not find is not shown as verbatim;
+  // the point carries the same mark the rendered page uses.
+  function lessonListHTML(rows) {
+    return '<ul class="lessons">' + rows.map(function (l) {
       return '<li>' + txt(l.point) + (l.grounded === false
         ? ' <em class="ev-note">(excerpt not found in source)</em>'
         : '<blockquote><p>&ldquo;' + rich(l.excerpt) + '&rdquo;</p></blockquote>') + '</li>';
     }).join("") + '</ul>';
+  }
+  function lessonsHTML(f) {
+    var rows = lessonRows(f);
+    return rows.length ? '<h2>Lessons</h2>' + lessonListHTML(rows) : "";
   }
   // The detail modal for a story with no rendered page (news-gate rows), and
   // the fallback when a rendered page fails to load.
@@ -1445,6 +1461,11 @@
     if (rows.length) {
       html += '<div class="artlist">' + rows.map(function (f, i) {
         return learningCardHTML(f, i, has(why, f.id) ? why[f.id] : null); }).join("") + '</div>';
+    }
+    var kept = arr(DATA.learn).length;
+    if (kept) {
+      html += '<p class="count">' + routeLink("learn", {}, "All " + num(kept) + " in Learn") +
+        ', kept for good, newest first.</p>';
     }
     return html;
   }
@@ -1791,6 +1812,93 @@
     wrap.innerHTML = html;
   }
 
+  // ================= LEARN =================
+  // Every finding that ever passed the What to learn filters (scripts/briefing.py
+  // learning_all), newest first. No cap and no age limit: the tab only grows, so the
+  // list is drawn LEARN_PAGE at a time behind a "Show more" button, never cut off.
+  var LEARN_PAGE = 20;
+  var learnState = { topic: "all", q: "" };
+  var learnLimit = LEARN_PAGE;
+  function learnMatches(f, topic, q) {
+    if (topic !== "all" && f.topic !== topic) return false;
+    if (!q) return true;
+    var a = f.actionable && typeof f.actionable === "object" ? [f.actionable.title, f.actionable.detail] : [];
+    var goals = f.why && Array.isArray(f.why.goals) ? f.why.goals : [];
+    var points = arr(f.lessons).map(function (l) { return l && typeof l === "object" ? l.point : ""; });
+    var hay = [f.title, f.takeaway, f.source_name, f.domain, f.domain_id].concat(a, goals, points).join(" ").toLowerCase();
+    return hay.indexOf(q) >= 0;
+  }
+  function learnCardHTML(f) {
+    var a = f.actionable && typeof f.actionable === "object" ? f.actionable : {};
+    var w = f.why && typeof f.why === "object" ? f.why : null;
+    var goals = w && Array.isArray(w.goals) ? w.goals : [];
+    var ls = lessonRows(f);
+    return '<article class="art">' +
+      '<h3><a href="' + hrefOf(f.url) + '">' + txt(f.title) + '</a></h3>' +
+      (f.takeaway ? '<p class="take">' + rich(f.takeaway) + '</p>' : '') +
+      (a.title ? '<p class="try"><b>Try this.</b> ' + txt(String(a.title).replace(/[.!?]+$/, "")) +
+        (a.detail ? '. ' + txt(a.detail) : '') + '</p>' : '') +
+      (ls.length ? '<details class="learn-lessons"><summary>What it teaches (' + num(ls.length) + ')</summary>' +
+        lessonListHTML(ls) + '</details>' : '') +
+      learningWhy(w) +
+      '<div class="meta">' + topicPill(f.topic) +
+        (f.domain_id && domainInfo(f.domain_id) ? routeLink("topics", { domain: f.domain_id }, txt(f.domain)) :
+          (f.domain ? '<span>' + txt(f.domain) + '</span>' : '')) +
+        (f.published ? '<span>' + esc(fmtDate(f.published)) + '</span>' : '') +
+        (goals.length ? '<span>Serves: ' + goals.map(txt).join(", ") + '</span>' : '') +
+        '<a class="link" href="' + hrefOf(f.url) + '">' + esc(src(f)) + ' &#8599;</a>' +
+      '</div></article>';
+  }
+  function renderLearn() {
+    var root = $("#view-learn");
+    var html = secHead("Learn", num(arr(DATA.learn).length) + " to learn, and growing") +
+      '<p class="sec-lede">Everything worth studying, kept for good. Each finding has proof (the work itself or a ' +
+      'measured comparison), serves one of your goals and comes with a step to try. Newest first; nothing here is ' +
+      'capped or ages out. The ' + routeLink("week", {}, "Briefing") + ' shows only the latest few.</p>';
+    html += '<div class="toolbar"><div class="fgroup search"><label for="learn-q">Search what to learn</label><input id="learn-q" type="search" ' +
+      'placeholder="Search titles, steps, lessons, goals..." value="' + esc(learnState.q) + '"></div></div>';
+    html += '<div class="toolbar" style="margin-top:-6px">' + filterGroup("Track", "ltopic", [["all", "All"]].concat(
+      TOPIC_ORDER.map(function (t) { return [t, tname(t)]; })), learnState.topic) + '</div><div id="learn-list"></div>';
+    root.innerHTML = html;
+    $("#learn-q").addEventListener("input", function () {
+      learnState.q = this.value.slice(0, STATE_MAX_Q); learnLimit = LEARN_PAGE; drawLearn(); syncUrl(); });
+    root.querySelectorAll(".toolbar .opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        learnState.topic = b.dataset.v; learnLimit = LEARN_PAGE;
+        root.querySelectorAll('.opt[data-k="ltopic"]').forEach(function (o) {
+          o.setAttribute("aria-pressed", o.dataset.v === b.dataset.v ? "true" : "false"); });
+        drawLearn(); syncUrl();
+      });
+    });
+    drawLearn();
+  }
+  function drawLearn() {
+    var wrap = $("#learn-list");
+    var q = learnState.q.trim().toLowerCase();
+    var all = arr(DATA.learn);
+    var rows = all.filter(function (f) { return f && learnMatches(f, learnState.topic, q); }).sort(function (a, b) {
+      return String(b.published || "").localeCompare(String(a.published || "")); });
+    if (!rows.length) {
+      wrap.innerHTML = '<p class="empty-note">' + (all.length ? "Nothing matches." :
+        "Nothing has qualified yet. A finding lands here once it has proof, serves one of your goals and comes with a step to try.") + '</p>';
+      return;
+    }
+    var shown = rows.slice(0, learnLimit);
+    var html = '<p class="count">' + num(rows.length) + ' finding' + (rows.length === 1 ? '' : 's') +
+      (shown.length < rows.length ? ' &middot; showing the newest ' + num(shown.length) : '') + '</p>';
+    newsByMonth(shown).forEach(function (g) {
+      html += '<div class="sec-hd" style="margin-top:24px"><h2 style="font-size:18px">' +
+        esc(g.month === "undated" ? "Undated" : fmtDate(g.month)) + '</h2><span class="note">' + num(g.rows.length) +
+        '</span></div><div class="artlist">' + g.rows.map(learnCardHTML).join("") + '</div>';
+    });
+    if (shown.length < rows.length) {
+      html += '<button class="opt learn-more" type="button">Show ' + num(Math.min(LEARN_PAGE, rows.length - shown.length)) + ' more</button>';
+    }
+    wrap.innerHTML = html;
+    var more = wrap.querySelector(".learn-more");
+    if (more) more.addEventListener("click", function () { learnLimit += LEARN_PAGE; drawLearn(); });
+  }
+
   // ================= METHODOLOGY =================
   // Static copy owned by this template (scan PRs can't change it); every number
   // comes from the payload through num().
@@ -1867,7 +1975,7 @@
   }
 
   // ================= chrome =================
-  var VIEWS = { week: renderWeek, news: renderNews, claims: renderClaims, topics: renderTopics,
+  var VIEWS = { week: renderWeek, news: renderNews, claims: renderClaims, learn: renderLearn, topics: renderTopics,
     archive: renderArchive, methodology: renderMethodology, search: renderSearch };
   var drawn = {};
   function show(view) {
@@ -1912,6 +2020,7 @@
     $("#ct-claims").textContent = n.current + n.contested;
     $("#ct-news").textContent = arr(DATA.editorial).length + arr(DATA.findings).length;
     $("#ct-archive").textContent = arr(DATA.archive).length;
+    $("#ct-learn").textContent = arr(DATA.learn).length;
     // One count per thing: the same stories-this-week number the Briefing uses.
     var cells = [[DATA.stories_this_week, "stories this week"], [n.current, "current claims"],
       [n.contested, "contested"], [n.retired, "retired"]];

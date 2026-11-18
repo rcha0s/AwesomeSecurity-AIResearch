@@ -576,18 +576,14 @@ def _setting(learning: dict, key: str, default: int) -> int:
     return default if value is None else int(value)
 
 
-def learning_picks(
-    rows: list[dict], learning: dict, now: str, exclude: frozenset | set = frozenset()
-) -> tuple[list[dict], dict[str, dict]]:
-    """(the lane's rows, id -> why it is there). A row must pass all three filters:
-    proof, `min_pointers` independent parties, a goal match. Ranked by parties,
-    goals matched, newest activity, composite. No top-up: a quiet window shows none."""
-    if not learning:
-        return [], {}
+def _learning_why(
+    rows: list[dict], learning: dict, cutoff: str, exclude: frozenset | set
+) -> dict[str, dict]:
+    """id -> why, for every row that passes all three filters (proof, `min_pointers`
+    independent parties, a goal match) and was active on or after `cutoff`."""
     goals = {"areas": learning.get("goals") or []}
     hosts = {str(h).lower() for h in learning.get("proof_hosts") or []}
     need = _setting(learning, "min_pointers", LEARNING_MIN_POINTERS)
-    cutoff = _cutoff(now, _setting(learning, "days", LEARNING_DAYS))
     why: dict[str, dict] = {}
     for row in rows:
         if row.get("id") in exclude or not learning_candidate(row) or last_activity(row) < cutoff:
@@ -596,6 +592,30 @@ def learning_picks(
         matched = focus_mod.names(focus_mod.areas(row, goals), goals)
         if proof and len(ptrs) >= need and matched:
             why[row["id"]] = {"proof": proof, "pointers": len(ptrs), "goals": matched}
+    return why
+
+
+def learning_all(rows: list[dict], learning: dict) -> tuple[list[dict], dict[str, dict]]:
+    """(the Learn tab's rows, id -> why). The same three filters as the Briefing lane,
+    with no window, no cap and nothing left out: a finding that ever qualified stays.
+    Newest activity first, then composite, so the list reads as a growing log."""
+    if not learning:
+        return [], {}
+    why = _learning_why(rows, learning, "", frozenset())
+    hits = [r for r in rows if r.get("id") in why]
+    return _ranked(hits, last_activity, _composite), why
+
+
+def learning_picks(
+    rows: list[dict], learning: dict, now: str, exclude: frozenset | set = frozenset()
+) -> tuple[list[dict], dict[str, dict]]:
+    """(the lane's rows, id -> why it is there). A row must pass all three filters:
+    proof, `min_pointers` independent parties, a goal match. Ranked by parties,
+    goals matched, newest activity, composite. No top-up: a quiet window shows none."""
+    if not learning:
+        return [], {}
+    cutoff = _cutoff(now, _setting(learning, "days", LEARNING_DAYS))
+    why = _learning_why(rows, learning, cutoff, exclude)
     hits = [r for r in rows if r.get("id") in why]
     ranked = _ranked(
         hits,

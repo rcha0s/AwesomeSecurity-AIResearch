@@ -184,7 +184,8 @@ def readability_check(base: str, root: Path = ROOT) -> list[str]:
     import common as c
 
     main_docs, pr_docs = pool_docs(base, root)
-    # Pools only: an archived finding is not on the site.
+    # Pools only. An archived finding can show on the Learn tab, and a readability hold
+    # added to one drops it there without a refusal; that gap is open (ISA ISC-73).
     shown = cc.shown_ids(main_docs[:-1], c.load_config(), c.load_sources_by_id())
     return cc.readability_problems(shown, pr_docs)
 
