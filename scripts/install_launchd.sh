@@ -42,6 +42,7 @@ if [[ "${1:-}" == "--xlist" ]]; then
   fi
   mkdir -p "$HOME/Library/LaunchAgents" "$RUNNER/data"
   XRUN="cd '$RUNNER' || exit 1; export PATH=\"\$PATH:/opt/homebrew/bin:/usr/local/bin:\$HOME/.local/bin\" SCAN_RUNNER=local; git fetch -q origin main; git reset -q --hard origin/main; .venv/bin/python scripts/ingest_x_list.py --collect 2>&1 | sed 's/^/[x-list] /' >> data/_scan.log"
+  XRUN_XML="${XRUN//&/&amp;}" # the command's 2>&1 is a bare & in XML; plutil -lint rejects it
   NEW="$XPLIST.new"
   cat >"$NEW" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -50,7 +51,7 @@ if [[ "${1:-}" == "--xlist" ]]; then
 <dict>
   <key>Label</key><string>$XLABEL</string>
   <key>ProgramArguments</key>
-  <array><string>/bin/bash</string><string>-c</string><string>$XRUN</string></array>
+  <array><string>/bin/bash</string><string>-c</string><string>$XRUN_XML</string></array>
   <key>WorkingDirectory</key><string>$RUNNER</string>
   <key>StartInterval</key><integer>10800</integer>
   <key>StandardOutPath</key><string>$RUNNER/data/_scan_launchd.log</string>
