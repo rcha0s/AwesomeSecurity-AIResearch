@@ -910,6 +910,14 @@
       "stories": 24,
       "cost_usd": 5.946217535,
       "news": 10
+    },
+    {
+      "run_id": "local-20261118T012052Z-71274",
+      "date": "2026-11-18",
+      "runner": "local",
+      "kind": "done",
+      "stories": 24,
+      "cost_usd": 0
     }
   ]
 }
