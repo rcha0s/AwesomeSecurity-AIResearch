@@ -132,11 +132,22 @@ def match_index(entries: list[dict], entry: dict) -> int | None:
     return None
 
 
+def curation_floor(entry: dict, conf: c.Config) -> tuple[float, float]:
+    """(min_novelty, min_relevance) for this entry: the global curation bar, unless
+    `curation.domain_floors` sets one for the entry's domain. Efficiency research is
+    mostly measured refinements of known techniques, so a novelty bar tuned for
+    security news held nearly all of it (Rohan, 2026-11-18)."""
+    floors = (conf.curation.get("domain_floors") or {}).get(entry.get("domain") or "", {})
+    return (
+        float(floors.get("min_novelty", conf.curation.get("min_novelty", 0))),
+        float(floors.get("min_relevance", conf.curation.get("min_relevance", 0))),
+    )
+
+
 def below_curation_bar(entry: dict, conf: c.Config) -> bool:
     """True if the finding isn't novel/relevant enough for the vetted set."""
     scores = entry.get("scores") or {}
-    min_nov = conf.curation.get("min_novelty", 0)
-    min_rel = conf.curation.get("min_relevance", 0)
+    min_nov, min_rel = curation_floor(entry, conf)
     return (
         float(scores.get("novelty", 0) or 0) < min_nov
         or float(scores.get("relevance", 0) or 0) < min_rel

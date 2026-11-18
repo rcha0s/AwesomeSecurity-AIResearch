@@ -168,3 +168,23 @@ def test_an_ungrounded_news_story_waits_in_review_with_its_reason(sandbox):
     review = (sandbox / "REVIEW.md").read_text(encoding="utf-8")
     assert "https://a/bad" in review and "https://a/good" not in review
     assert "news story: excerpt not grounded in source" in review
+
+
+def test_domain_floor_overrides_novelty_bar_for_efficiency_only():
+    import merge_analysis as ma
+
+    conf = c.load_config()
+    scores = {"novelty": 40, "relevance": 80}
+    eff = make_entry(scores=scores)
+    eff["domain"] = "air.cost-efficiency"
+    other = make_entry(scores=scores)
+    other["domain"] = "air.agent-security"
+    assert ma.curation_floor(eff, conf)[0] < conf.curation["min_novelty"]
+    assert ma.curation_floor(other, conf) == (
+        float(conf.curation["min_novelty"]),
+        float(conf.curation["min_relevance"]),
+    )
+    assert not ma.below_curation_bar(eff, conf)  # released by the efficiency floor
+    assert ma.below_curation_bar(other, conf)  # the global bar still holds elsewhere
+    eff["scores"] = {"novelty": 80, "relevance": 10}
+    assert ma.below_curation_bar(eff, conf)  # relevance floor is unchanged

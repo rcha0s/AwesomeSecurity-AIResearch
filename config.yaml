@@ -180,6 +180,14 @@ curation:
                        # under these values, so loosening them is retroactive; tightening is
                        # not (a curated entry is never re-held).
   min_relevance: 60    # must be directly useful to the track's expert audience (was 55)
+  domain_floors:       # per-domain override of min_novelty / min_relevance (merge_analysis.curation_floor).
+                       # Rohan, 2026-11-18: the Efficiency tab showed nothing newer than Oct 28 because
+                       # efficiency findings are measured refinements of known techniques (caching,
+                       # compaction, tool loading) and verifiers score them 20-50 on novelty, so the
+                       # 55 bar held 9 of 10 since Oct 28. Relevance stays at 60 and grounding and
+                       # verification still apply, so opinion pieces and thin posts stay held.
+    air.cost-efficiency: {min_novelty: 30}
+    air.work-efficiency: {min_novelty: 30}
   min_composite: 20    # curated view floor — below this a finding stays in REVIEW.md,
                        # not the topic pages/newsletter (catches unscored/legacy noise)
   require_grounding: true  # a lesson excerpt that isn't found in the source ⇒ needs_review

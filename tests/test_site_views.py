@@ -217,6 +217,7 @@ FNS = [
     "claimEvidenceHTML",
     "claimHTML",
     "doLine",
+    "lastUpdate",
     "claimChain",
     "storyMatches",
     "allStories",
@@ -1598,4 +1599,4 @@ def test_claims_payload_carries_the_rank_and_the_site_sorts_best_first_by_defaul
     assert by_id["stale"]["evidence_age"] == 2
     template = gh.TEMPLATE.read_text(encoding="utf-8")
     assert 'sort: "best"' in template
-    assert '["best", "change", "confidence"], "best"' in template
+    assert '["best", "updated", "change", "confidence"], "best"' in template

@@ -901,6 +901,11 @@
     return c && c.guidance && !isRetired(c) ? '<p class="guide do"><b>Do.</b> ' + txt(c.guidance) + '</p>' : '';
   }
   function lastChange(c) { return String(c.changed_on || c.superseded_on || c.added_on || c.first_seen || ""); }
+  // Ledger change or newest evidence, whichever is later (briefing.claim_updated).
+  function lastUpdate(c) {
+    var a = lastChange(c), u = String((c && c.updated_on) || "");
+    return u > a ? u : a;
+  }
   function ledgerCounts(claims) {
     var n = { current: 0, contested: 0, retired: 0 };
     arr(claims).forEach(function (c) {
@@ -931,7 +936,7 @@
     html += filterGroup("Status", "status", [["all", "All"], ["current", "Current (" + counts.current + ")"],
       ["contested", "Contested (" + counts.contested + ")"], ["superseded", "Superseded (" + counts.superseded + ")"],
       ["refuted", "Refuted (" + counts.refuted + ")"]], claimState.status);
-    html += filterGroup("Sort", "sort", [["best", "Best first"], ["change", "Last change"], ["confidence", "Confidence"]], claimState.sort);
+    html += filterGroup("Sort", "sort", [["best", "Best first"], ["updated", "Newest evidence"], ["change", "Last change"], ["confidence", "Confidence"]], claimState.sort);
     html += '</div><div id="claim-list"></div>';
     root.innerHTML = html;
     $("#claims-q").addEventListener("input", function () { claimState.q = this.value.slice(0, STATE_MAX_Q); drawClaims(); syncUrl(); });
@@ -965,6 +970,7 @@
         return fa < fb ? 1 : fa > fb ? -1 : 0;
       }
       if (mode === "change") return lastChange(b).localeCompare(lastChange(a));
+      if (mode === "updated") return lastUpdate(b).localeCompare(lastUpdate(a));
       return (Number(b.confidence) || 0) - (Number(a.confidence) || 0);
     });
   }
@@ -1227,7 +1233,7 @@
     ["ctopic", "claims", "claim", "topic", "TOPICS", "all"],
     ["ceff", "claims", "claim", "eff", ["all", "cost", "work"], "all"],
     ["cstatus", "claims", "claim", "status", ["all", "current", "contested", "superseded", "refuted"], "all"],
-    ["csort", "claims", "claim", "sort", ["best", "change", "confidence"], "best"],
+    ["csort", "claims", "claim", "sort", ["best", "updated", "change", "confidence"], "best"],
     ["aq", "archive", "archive", "q", null, ""],
     ["atopic", "archive", "archive", "topic", "TOPICS", "all"],
     ["lq", "learn", "learn", "q", null, ""],
@@ -1606,7 +1612,7 @@
     var desc = c.title && c.statement && c.title !== c.statement ? '<p class="desc">' + txt(c.statement) + '</p>' : '';
     return '<div class="claim chg st-' + esc(c.status) + '">' +
       '<div class="claim-top"><span class="kind">' + esc(EFF_LABEL[effKey(c)] || "Efficiency") + '</span>' +
-        '<span class="when">' + esc(fmtDate(lastChange(c))) + '</span>' +
+        '<span class="when">Updated ' + esc(fmtDate(lastUpdate(c))) + '</span>' +
         '<span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span></div>' +
       '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc + doLine(c) +
       evidenceLine(c) + '</div>';
@@ -1621,7 +1627,7 @@
       '<p class="sec-lede">' + esc(efficiencyNote()) + '</p>';
     if (claims.length) html += '<div class="chglist">' + claims.map(efficiencyClaimHTML).join("") + '</div>';
     if (finds.length) {
-      html += '<h3 class="kick hits-h">New this week</h3><div class="artlist">' +
+      html += '<h3 class="kick hits-h">New research, last 30 days</h3><div class="artlist">' +
         finds.map(function (f) { if (shown) shown[f.id] = 1; return newsCardHTML(f); }).join("") + '</div>';
     }
     return html + '<p class="why">' + routeLink("claims", {}, "Every claim &#8594;") + '</p>';
