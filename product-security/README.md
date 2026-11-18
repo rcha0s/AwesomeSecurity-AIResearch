@@ -2,12 +2,25 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_7 vetted findings · updated 2026-11-16 · ranked by composite · findings from the latest 31 days · [74 held for review](../REVIEW.md)._
+_11 vetted findings · updated 2026-11-18 · ranked by composite · findings from the latest 31 days · [73 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Malicious Microsoft agent-framework PyPI versions steal Azure and CI credentials](https://www.wiz.io/blog/malicious-version-of-microsofts-agent-framework-published-to-pypi)**
+  _Why now: Live supply-chain incident in a widely used agent SDK: malicious PyPI releases 1.26.1 and 1.26.2 steal Azure and CI credentials, with concrete checks (pin versions, scan for unexpected .pth files). · newsworthy · active-exploitation · timely · high-relevance_
+- **[Malicious WPPConnect npm and Docker releases steal secrets and WhatsApp sessions](https://www.stepsecurity.io/blog/wppconnect-compromised-malicious-releases-steal-secrets-and-whatsapp-sessions)**
+  _Why now: Malicious npm and Docker releases from a trusted publisher steal secrets and WhatsApp sessions; trusted provenance did not mean reviewed, so release-age delays and publish approval gates apply. · newsworthy · active-exploitation · timely_
+- **[NSA's classified network goes down after patching, with no sign of attack](https://www.cnn.com/2026/11/17/politics/highly-classified-national-security-communications-network-goes-down)**
+  _Why now: Reported outage of a classified US national-security network after patching, with no sign of attack, amid attack speculation; the teachable point is to stage and canary emergency patches and keep tested fallbacks. · newsworthy · widely-reported · timely_
+- **[NebuSec claims two Telegram Android widget exploits bypass new security filter](https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html)**
+- **[OpenAI says NATO and European cyber agencies use Daybreak to find and fix vulnerabilities](https://openai.com/index/strengthening-nato-allied-cyber-defences-ai)**
+- **[Midnight Blue researcher finds six Danfoss refrigeration controller zero-days in under an hour](https://www.theregister.com/security/2026/11/17/not-rocket-surgery-claims-researcher-who-found-six-danfoss-fridge-controller-zero-days-in-under-an-hour/5310197)**
+- **[Sponsored Hacker News webinar promo on GitHub Actions SHA pinning gaps](https://thehackernews.com/2026/11/hackers-found-way-around-github-sha.html)**
+- **[Operation ShadowCloud uses GitDoor and GraphDoor backdoors with GitHub and SharePoint C2](https://thehackernews.com/2026/11/new-gitdoor-and-graphdoor-backdoors.html)**
+- **[Trigram campaign impersonates about 50 AI and blockchain brands to infect developers](https://thehackernews.com/2026/11/trigram-campaign-impersonates-about-50.html)**
+- **[Uber says compromised credentials at a provider exposed driver data](https://www.insurancejournal.com/news/national/2026/11/16/892717.htm)**
 - **[Wired says low-skill attackers use AI tools to run ransomware](https://www.wired.com/story/beware-the-new-ai-fueled-ransomware-boom/)**
 - **[Chainguard details wfx stealer that backdoors cloud roles and can forge checks](https://www.chainguard.dev/unchained/wfx-loot-stolen-github-tokens-pushed-a-ci-secret-stealer-into-60-000-repositories-november-2026)**
   _Why now: Live campaign across 60,000+ repositories; concrete detection steps (missing run numbers, AWS Principal * trust, Azure wfx-ci credentials) and the lesson that secret rotation alone leaves cloud backdoors. · active-exploitation · widely-reported · trending · high-relevance_
@@ -256,43 +269,55 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
+| Application Security | 4 |
 | Vulnerability Research & Red Teaming | 4 |
+| Detection, Response & Threat Intel | 2 |
 | AI in the SDLC | 1 |
-| Application Security | 1 |
-| Detection, Response & Threat Intel | 1 |
-
-## Vulnerability Research & Red Teaming
-
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **71.35** · Nov 5, 2026 · 🔗 +1 sources  
-  Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
-  _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **69.25** · Nov 13, 2026  
-  A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
-  _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
-- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **61.14** · Oct 27, 2026 · 🔗 +1 sources  
-  Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
-  _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
-- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **56.0** · Oct 19, 2026  
-  VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
-  _[source](https://pwn.ai/blog/pwnescape)_
-
-## AI in the SDLC
-
-- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **55.25** · Oct 22, 2026  
-  If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
-  _[source](https://www.anthropic.com/research/formal-verification)_
 
 ## Application Security
 
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **53.88** · Oct 27, 2026  
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **70.72** · Nov 17, 2026 · 🔗 +7 sources  
+  Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.  
+  _[Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)_
+- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **58.4** · Nov 3, 2026  
+  If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.  
+  _[IEEE S&P (via arXiv)](http://arxiv.org/abs/2611.04291v1)_
+- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **56.24** · Nov 9, 2026  
+  Even Rust's standard library has soundness bugs of the three kinds the post names, and the authors say agents make the environment-dependent OS-boundary area practical to search.  
+  _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)_
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **53.63** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
 
+## Vulnerability Research & Red Teaming
+
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **69.35** · Nov 5, 2026 · 🔗 +1 sources  
+  Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
+  _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **67.25** · Nov 13, 2026  
+  A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
+  _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **60.89** · Oct 27, 2026 · 🔗 +1 sources  
+  Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
+  _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
+- **[pwn.ai found a new Linux networking bug class escaping KVM guests](offensive/2026-10-pwn-ai-found-a-new-linux-networking-bug-class-escaping-kvm-g.md)** · composite **55.75** · Oct 19, 2026  
+  VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.  
+  _[source](https://pwn.ai/blog/pwnescape)_
+
 ## Detection, Response & Threat Intel
 
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **44.75** · Oct 20, 2026  
+- **[VOLTA infostealer uses an LLM to rank victims' assets by value](detection-response/2026-10-volta-infostealer-uses-an-llm-to-rank-victims-assets-by-valu.md)** · composite **47.65** · Oct 31, 2026  
+  Crimeware now uses LLMs as the analyst who decides which victims to work first, and is built to route around refusals.  
+  _[@khalidkhair via Hacker News](https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/)_
+- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **44.5** · Oct 20, 2026  
   Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
   _[source](https://kaba.cx/posts/20261020_Tor/)_
+
+## AI in the SDLC
+
+- **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **55.0** · Oct 22, 2026  
+  If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
+  _[source](https://www.anthropic.com/research/formal-verification)_
 
 ---
 

@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--16-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-17-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--18-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-30-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -13,14 +13,15 @@
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
 1. **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-shows-poisoned-fine-tuning-data-and-ch-8d4cff91d3#week)** · _AI Security · Nov 12, 2026_
-2. **[OpenAI trained GPT-6 Astra on automated-red-team jailbreaks to resist misuse](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-trained-gpt-6-astra-on-automated-red-team-37a2be5c2d#week)** · _AI Security · Nov 12, 2026_
-3. **[JioStar architect says production evals need a validated judge and monitoring](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=jiostar-architect-says-production-evals-need-a-v-6fce70a740#week)** · _AI Research · Nov 11, 2026_
+2. **[Pretxt raises $5M seed for runtime AI agent supervision that steers agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pretxt-emerges-stealth-with-5m-seed-and-an-ai-su-b33ea39de5#week)** · _AI Security · Nov 17, 2026_
+3. **[Simon Willison and Prime Radiant release external sandboxes for coding agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=simon-willison-and-prime-radiant-release-externa-40b0e5c0ba#week)** · _AI Security · Nov 17, 2026_
 
 ## What to learn
 
 _From the last 14 days: each has proof (the work itself or a measured comparison) and serves one of your goals; more independent sources rank first._
 
-1. **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=progress-on-provable-inference-for-large-languag-aca6874529#week)** · _AI Security · Nov 2, 2026_
+1. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
+2. **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=when-feedback-becomes-a-backdoor-tracing-backdoo-7b704b8008#week)** · _AI Security · Nov 6, 2026_
 
 ## Biggest this week
 
@@ -28,19 +29,19 @@ _Most covered in the last 7 days; single-outlet patch notices are left out._
 
 1. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 4 sources_
 2. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 4 sources_
-3. **[Barracuda patches ESG auth bypass chaining to root command injection](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=barracuda-warns-of-critical-flaws-allowing-root-9fc0e9c7bf#week)** · _Product Security · Nov 10, 2026 · 4 sources_
+3. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
 
 ## This week's top stories
 
 _The last 7 days, most covered first._
 
-1. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
-2. **[OpenSSH ships an emergency workaround for a critical musl-specific vulnerability](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openssh-ships-an-emergency-workaround-for-a-crit-5abc4ac427#week)** · _Product Security · Nov 9, 2026 · 2 sources_
-3. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026 · 2 sources_
+1. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026 · 2 sources_
+2. **[Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week)** · _Product Security · Nov 12, 2026 · 2 sources_
+3. **[Check Point ships hotfixes for a zero-day exploited for root access](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week)** · _Product Security · Nov 13, 2026 · 2 sources_
 
 ## Claim changes
 
-_2 changes in the last 7 days; earlier ones fill in, each with its date._
+_No claim changed in the last 7 days; the last change was Nov 9, 2026._
 
 1. **Added:** [Output-only watermark audits can be evaded by the audited provider](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims) · _current · Nov 9, 2026 · 1 source_  
    Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and…
@@ -74,4 +75,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-16 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-18 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
