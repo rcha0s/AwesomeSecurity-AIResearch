@@ -2,12 +2,13 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_4 vetted findings · updated 2026-11-16 · ranked by composite · findings from the latest 31 days · [96 held for review](../REVIEW.md)._
+_7 vetted findings · updated 2026-11-18 · ranked by composite · findings from the latest 31 days · [94 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[OpenAI signs Apollo, METR, Transluce and Goodfire for embedded safety assessments](https://openai.com/index/our-first-phase-of-embedded-assessments)**
 - **[JioStar architect says production evals need a validated judge and monitoring](https://openai.com/index/jiostar-vijay-seshadri)**
 - **[Latent Space newsletter covers doubts about an Anthropic initial public offering (IPO)](https://latent.space/p/ainews-anthropic-ipo-whither-now/)**
 - **[Ai2's ToyBlocks shows agent-written skill descriptions beat expert-written ones](https://huggingface.co/blog/allenai/toyblocks)**
@@ -38,26 +39,43 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| Evaluation & Benchmarks | 3 |
+| Evaluation & Benchmarks | 4 |
+| Cost Efficiency | 1 |
 | Alignment & Reliability | 1 |
+| Agents & Harnesses | 1 |
 
 ## Evaluation & Benchmarks
 
-- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **54.18** · Oct 19, 2026  
+- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **53.93** · Oct 19, 2026  
   Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.  
   _[arXiv cs.AI (Artificial Intelligence)](https://arxiv.org/abs/2610.22466)_
-- **[POPE yes/no readout uses token IDs the model never emits](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits.md)** · composite **50.75** · Oct 19, 2026  
+- **[POPE yes/no readout uses token IDs the model never emits](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits.md)** · composite **50.5** · Oct 19, 2026  
   If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.  
   _[source](https://arxiv.org/abs/2610.25964)_
-- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](evals/2026-10-openai-finds-dataset-level-g-mean-can-misrank-model-monitora.md)** · composite **48.35** · Oct 20, 2026  
+- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](evals/2026-10-openai-finds-dataset-level-g-mean-can-misrank-model-monitora.md)** · composite **48.1** · Oct 20, 2026  
   If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.  
   _[OpenAI Alignment Blog](https://alignment.openai.com/beyond-gmean-squared/)_
+- **[DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](evals/2026-10-decisionpivot-router-guardrail-decision-models-with-near-equ.md)** · composite **46.0** · Oct 20, 2026  
+  Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.  
+  _[source](https://arxiv.org/abs/2610.28522)_
+
+## Cost Efficiency
+
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **56.48** · Nov 12, 2026  
+  If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.  
+  _[Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)_
 
 ## Alignment & Reliability
 
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **53.75** · Oct 20, 2026  
+- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **53.5** · Oct 20, 2026  
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
   _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
+
+## Agents & Harnesses
+
+- **[GRSE credits multi-agent skills by contrasting repeated runs, not presence](agents/2026-10-grse-credits-multi-agent-skills-by-contrasting-repeated-runs.md)** · composite **46.27** · Oct 19, 2026  
+  If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.  
+  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.27227)_
 
 ---
 
