@@ -294,11 +294,12 @@ REDDIT_SHOWN = "reddit-only citation on a shown entry"
 
 def reddit_shown_problems(payload: dict) -> list[str]:
     """A Reddit thread alone is practitioner signal, never a finding: no row the site
-    renders (vetted findings, the news lane) may cite only Reddit URLs (its own link
-    and its covering sources). Read from the rendered payload, so it holds whatever
-    predicate let the row through. Only ever adds a refusal."""
+    renders (vetted findings, the news lane, the Learn tab) may cite only Reddit URLs
+    (its own link and its covering sources). Read from the rendered payload, so it holds
+    whatever predicate let the row through. Only ever adds a refusal."""
     out = []
-    for row in (payload.get("findings") or []) + (payload.get("editorial") or []):
+    shown = (payload.get("findings") or []) + (payload.get("editorial") or [])
+    for row in shown + (payload.get("learn") or []):
         if not isinstance(row, dict):
             continue
         urls = [row.get("url")] + [

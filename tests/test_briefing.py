@@ -705,3 +705,27 @@ def test_the_default_party_count_is_one_when_the_key_is_absent():
     cfg = {k: v for k, v in LEARN.items() if k != "min_pointers"}
     lone = learn_row("lone", url="https://arxiv.org/abs/2610.1", corroborators=[])
     assert picked(lone, learning=cfg) == ["lone"]
+
+
+def test_learning_all_has_no_window_no_cap_and_keeps_the_filters():
+    rows = [learn_row(f"r{i}", published=f"2026-0{i + 1}-05") for i in range(6)]
+    rows.append(
+        learn_row("noproof", takeaway="No measured claim.", url="https://blog-a.example/np")
+    )
+    rows.append(learn_row("unverified", verified=False))
+    rows.append(learn_row("stepless", actionable={}))
+    got, why = b.learning_all(rows, LEARN)
+    assert ids(got) == ["r5", "r4", "r3", "r2", "r1", "r0"]  # six, past max=3 and days=14
+    assert set(why) == set(ids(got))
+    assert why["r5"] == {"proof": "measured", "pointers": 2, "goals": ["Evals"]}
+    assert picked(*rows) == []  # the lane still looks only at the last 14 days of NOW
+    window = b.learning_picks(rows, LEARN, "2026-06-10")[0]
+    assert ids(window) == ["r5"]  # and still cuts at its own window
+
+
+def test_learning_all_orders_newest_first_then_composite_and_is_empty_unconfigured():
+    old, new = learn_row("old", published="2026-09-01"), learn_row("new", published="2026-11-01")
+    low, high = learn_row("low", composite=10), learn_row("high", composite=90)
+    assert ids(b.learning_all([old, new], LEARN)[0]) == ["new", "old"]
+    assert ids(b.learning_all([low, high], LEARN)[0]) == ["high", "low"]
+    assert b.learning_all([old], {}) == ([], {})

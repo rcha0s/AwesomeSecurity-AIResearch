@@ -462,6 +462,8 @@ def test_the_gate_refuses_a_rendered_row_that_cites_only_reddit():
         f"{cc.REDDIT_SHOWN}: r2",
     ]
     assert cc.REDDIT_SHOWN == "reddit-only citation on a shown entry"
+    learn = {"learn": [{"id": "l1", "url": REDDIT_URL}, {"id": "l2", "url": "https://a.example/"}]}
+    assert cc.reddit_shown_problems(learn) == [f"{cc.REDDIT_SHOWN}: l1"]
     ok = {**row, "corroborators": [{"url": "https://example.com/a"}]}
     other = {"id": "x", "url": "https://a.example/"}
     assert cc.reddit_shown_problems({"findings": [ok, other]}) == []

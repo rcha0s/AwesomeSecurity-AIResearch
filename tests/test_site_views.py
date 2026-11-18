@@ -187,7 +187,11 @@ FNS = [
     "rowsById",
     "emergingBlock",
     "secHead",
+    "lessonRows",
+    "lessonListHTML",
     "lessonsHTML",
+    "learnMatches",
+    "learnCardHTML",
     "changesNote",
     "topEvidence",
     "evidenceLine",
@@ -258,7 +262,7 @@ def run_js(data: dict, expr: str):
     labels += "\n" + re.search(r"var EFF_DOMAINS = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var EFF_LABEL = \{.*?\};", src).group(0)
     labels += "\n" + re.search(r"var ARG_HOST = .*?;\n", src).group(0)
-    for name in ("newsState", "archiveState", "siteState"):
+    for name in ("newsState", "archiveState", "siteState", "learnState"):
         labels += "\n" + re.search(rf"var {name} = \{{.*?\}};", src).group(0)
     labels += "\n" + re.search(r"var STATE_MAX_Q = .*?;", src).group(0)
     labels += "\n" + re.search(r"var STATE_FIELDS = \[.*?\n  \];", src, re.S).group(0)
@@ -645,7 +649,7 @@ def test_methodology_numbers_come_from_the_payload_through_num():
     assert not re.search(r"\+ D\.\w+ \+", body)  # no raw payload value concatenated
 
 
-SITE_TABS = ("week", "news", "claims", "topics", "archive", "methodology")
+SITE_TABS = ("week", "news", "claims", "learn", "topics", "archive", "methodology")
 
 
 def test_rendered_site_has_every_view_section(sandbox):
@@ -1403,6 +1407,93 @@ def test_learning_lane_wording_matches_the_proof_only_rule():
     assert "more independent sources rank first" in html
     data["learning_why"][row["id"]]["pointers"] = 2
     assert "2 independent sources" in run_js(data, "learningHTML({})")
+
+
+def learn_entry(**over):
+    base = {
+        "title": "Prompt caching cuts agent token cost",
+        "source_url": "https://github.com/acme/cache",
+        "domain": "air.cost-efficiency",
+        "takeaway": "Prompt caching in the harness trims token usage.",
+        "verified": True,
+        "actionable": {"type": "try", "title": "Cache the prompt", "detail": "Turn on caching."},
+        "published": "2026-07-14",
+    }
+    entry = {**base, **over}
+    # The lane keys its reasons by id, as every merged pool entry has one.
+    return make_entry(id=common.slugify(entry["title"], 60), **entry)
+
+
+def test_learn_ships_every_qualifying_finding_from_pool_and_archive_uncapped(sandbox):
+    pool = [
+        learn_entry(
+            title=f"Pool {i}", source_url=f"https://github.com/acme/p{i}", published=f"2026-07-1{i}"
+        )
+        for i in range(4)
+    ]
+    aged = learn_entry(
+        title="Aged", source_url="https://github.com/acme/aged", published="2026-01-05"
+    )
+    no_step = learn_entry(title="No step", source_url="https://github.com/acme/ns", actionable=None)
+    no_proof = learn_entry(
+        title="No proof",
+        source_url="https://example.com/np",
+        takeaway="Prompt caching helps.",
+        summary="It helps.",
+    )
+    data = build(sandbox, entries=pool + [no_step, no_proof], archive=[aged])
+    assert [r["title"] for r in data["learn"]] == ["Pool 3", "Pool 2", "Pool 1", "Pool 0", "Aged"]
+    assert len(data["learning"]) <= 3  # the Briefing lane keeps its cap
+    row = data["learn"][0]
+    assert set(row) == set(gh.LEARN_KEYS) | {"why"}
+    assert row["why"]["proof"] == "github.com" and row["why"]["goals"]
+    assert row["actionable"]["title"] == "Cache the prompt" and row["lessons"]
+
+
+def test_learn_view_renders_hostile_rows_inert():
+    row = evil_row(
+        domain_id="ais.x",
+        actionable={"type": EVIL, "title": EVIL, "detail": EVIL},
+        lessons=[{"point": EVIL, "excerpt": EVIL, "grounded": True}, 7, None],
+        why={"proof": EVIL, "pointers": EVIL, "goals": [EVIL, 7]},
+    )
+    data = {**evil_data(), "learn": [row, "junk", None]}
+    html = run_js(data, "DATA.learn.filter(Boolean).map(learnCardHTML).join('')")
+    assert "Try this." in html and "What it teaches (1)" in html
+    assert_inert(html)
+
+
+def test_learn_search_matches_step_lessons_and_goals_and_filters_by_track():
+    row = {
+        "topic": "ai-research",
+        "title": "T",
+        "actionable": {"title": "Pin the cache", "detail": ""},
+        "why": {"goals": ["Evals"]},
+        "lessons": [{"point": "Lessons about pelicans", "excerpt": "x"}],
+    }
+    expr = (
+        "[learnMatches(DATA.r,'all','cache'), learnMatches(DATA.r,'all','pelican'),"
+        "learnMatches(DATA.r,'all','evals'), learnMatches(DATA.r,'ai-security',''),"
+        "learnMatches(DATA.r,'ai-research','zzz'), learnMatches({}, 'all', '')]"
+    )
+    assert run_js({"r": row}, expr) == [True, True, True, False, False, True]
+
+
+def test_learn_search_and_track_survive_in_the_url_and_unknown_values_are_ignored():
+    expr = (
+        "(function(){stateFromQuery('?lq=cache&ltopic=ai-security');"
+        "return [stateQuery('learn'), stateQuery('news')];})()"
+    )
+    assert run_js({}, expr) == ["lq=cache&ltopic=ai-security", ""]
+    bad = "(function(){return [stateFromQuery('?ltopic=nope'), learnState];})()"
+    assert run_js({}, bad) == [{}, {"topic": "all", "q": ""}]
+
+
+def test_the_briefing_lane_links_to_learn_with_the_total_kept():
+    data = {"learning": [], "learning_days": 14, "learn": [{"id": "a"}, {"id": "b"}]}
+    html = run_js(data, "learningHTML({})")
+    assert "All 2 in Learn" in html and 'data-goto="learn"' in html
+    assert "in Learn" not in run_js({"learning": [], "learning_days": 14}, "learningHTML({})")
 
 
 def test_best_first_breaks_a_score_tie_by_the_newest_belief_like_the_python_order():

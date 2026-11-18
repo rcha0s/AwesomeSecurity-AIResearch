@@ -136,6 +136,12 @@ from the archive and never prunes it. GitHub and HN items are excluded; their vo
 would swamp the lane. Grounding still applies. OWASP ACS (2026-09-01) sat archived,
 held for novelty, until this.
 
+The Learn tab never ages out either. It lists every vetted finding that passes the What to
+learn filters (`config.yaml learning:` proof, `min_pointers`, a goal), from the pools and
+the archive, newest first with no cap and no window: `briefing.learning_all` shares its
+filters with the Briefing lane (`learning_picks`), which keeps its `max` and `days` and links
+to the tab. The page draws 20 rows at a time, so the list can grow without limit.
+
 ## Your focus (config.yaml `focus:`)
 
 Rohan's focus areas (MCP security, prompt injection, AI supply chain, AI-assisted
