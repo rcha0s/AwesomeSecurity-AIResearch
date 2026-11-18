@@ -1612,7 +1612,7 @@
     var desc = c.title && c.statement && c.title !== c.statement ? '<p class="desc">' + txt(c.statement) + '</p>' : '';
     return '<div class="claim chg st-' + esc(c.status) + '">' +
       '<div class="claim-top"><span class="kind">' + esc(EFF_LABEL[effKey(c)] || "Efficiency") + '</span>' +
-        '<span class="when">Updated ' + esc(fmtDate(lastUpdate(c))) + '</span>' +
+        (lastUpdate(c) ? '<span class="when">Updated ' + esc(fmtDate(lastUpdate(c))) + '</span>' : '') +
         '<span class="status ' + esc(c.status) + '">' + esc(c.status) + '</span></div>' +
       '<h3>' + routeLink("claims", { claim: String(c.id) }, txt(c.title || c.statement)) + '</h3>' + desc + doLine(c) +
       evidenceLine(c) + '</div>';

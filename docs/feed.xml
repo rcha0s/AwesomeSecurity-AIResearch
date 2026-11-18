@@ -88,10 +88,10 @@
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>
-    <title>Harness overhead, not the model, can double an agent's cost</title>
+    <title>Harness choice alone can double an agent's cost</title>
     <updated>2026-11-18T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims" rel="alternate" type="text/html" />
-    <summary type="text">On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.</summary>
+    <summary type="text">On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=learn-per-repo-cost-controls#claims</id>

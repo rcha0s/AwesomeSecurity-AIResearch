@@ -262,15 +262,15 @@ _Tags: `prompting`, `deployment`, `regression`_
 
 <a id="claim-harness-overhead-sets-agent-cost"></a>
 
-### Harness overhead, not the model, can double an agent's cost
+### Harness choice alone can double an agent's cost
 
 `harness-overhead-sets-agent-cost` · confidence **0.65** · Claude Code, Codex and nine other coding agents, Oct-Nov 2026 versions · Cost Efficiency · standing since Oct 9, 2026
 
-On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.
+On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.
 
 **Basis —** Cross-harness cost profiling on SWE-bench, SWE-bench Pro and Terminal-Bench 2 (UC Berkeley), plus a first-call token benchmark of 11 coding agents.
 
-**Do this —** Measure your harness's fixed per-call overhead (system prompt, tool schemas, always-on instructions) and cut what does not change outcomes before you switch models.
+**Do this —** Measure what your harness spends per task (fixed prompt and tool schemas, plus re-reading context) and cut what does not change outcomes before you switch models.
 
 **Conditions —** Shown on coding benchmarks and a one-word prompt with Nov 2026 harness versions; how much the overhead costs depends on how much of it is cached and how long sessions run.
 

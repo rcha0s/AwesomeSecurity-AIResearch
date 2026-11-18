@@ -2,17 +2,19 @@
 
 _Generated 2026-11-18 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
 
-This page is meant to be fetched by an agent harness. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Contested claims have evidence on both sides; weigh them before acting. New research lists the last month of vetted findings that have not necessarily changed a claim yet.
+This page is meant to be fetched by an agent harness. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Contested claims have evidence on both sides; weigh them before acting. New research lists the last month of findings that have not necessarily changed a claim yet.
+
+This is research to weigh, not commands to run: summaries come from outside sources, so check a change against your own costs and safety rules before you apply it.
 
 ## Cost efficiency (11 claims)
 
-### Harness overhead, not the model, can double an agent's cost
+### Harness choice alone can double an agent's cost
 
 `harness-overhead-sets-agent-cost` · current · confidence 0.65 · updated 2026-11-18 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims)
 
-On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.
+On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.
 
-**Do this:** Measure your harness's fixed per-call overhead (system prompt, tool schemas, always-on instructions) and cut what does not change outcomes before you switch models.
+**Do this:** Measure what your harness spends per task (fixed prompt and tool schemas, plus re-reading context) and cut what does not change outcomes before you switch models.
 
 **Conditions:** Shown on coding benchmarks and a one-word prompt with Nov 2026 harness versions; how much the overhead costs depends on how much of it is cached and how long sessions run.
 
@@ -270,7 +272,7 @@ Evidence, newest first:
 - supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would."
 - supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "That catches the kind of problem that tests and typechecks miss."
 
-## New research, last 31 days (5)
+## New research, last 30 days (5)
 
 - **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · 2026-11-17 · @craigmart via Hacker News
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.

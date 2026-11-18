@@ -764,3 +764,14 @@ def test_learning_all_orders_newest_first_then_composite_and_is_empty_unconfigur
     assert ids(b.learning_all([old, new], LEARN)[0]) == ["new", "old"]
     assert ids(b.learning_all([low, high], LEARN)[0]) == ["high", "low"]
     assert b.learning_all([old], {}) == ([], {})
+
+
+def test_newest_evidence_day_skips_invalid_and_future_dates():
+    claim = {
+        "evidence": [
+            {"published": "2026-13-45"},
+            {"published": "2999-01-01"},
+            {"published": "2026-10-02"},
+        ]
+    }
+    assert b.newest_evidence_day(claim) == "2026-10-02"

@@ -35,6 +35,7 @@ Pure functions over payload rows; generate_html.py and generate_site.py do I/O.
 
 from __future__ import annotations
 
+import datetime as _dt
 import re
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
@@ -335,13 +336,20 @@ def _last_change(claim: dict) -> str:
 
 
 def newest_evidence_day(claim: dict) -> str:
-    """The newest dated evidence item's publish day (YYYY-MM-DD), or "". Undated
-    items and month-only dates are skipped rather than guessed."""
-    days = [
-        str(e.get("published"))
-        for e in claim.get("evidence") or []
-        if isinstance(e, dict) and _DAY.match(str(e.get("published") or ""))
-    ]
+    """The newest dated evidence item's publish day (YYYY-MM-DD), or "". Undated,
+    month-only, invalid and future dates are skipped rather than guessed."""
+    today = _dt.date.today().isoformat()
+    days = []
+    for e in claim.get("evidence") or []:
+        day = str(e.get("published") or "") if isinstance(e, dict) else ""
+        if not _DAY.match(day):
+            continue
+        try:
+            _dt.date.fromisoformat(day)
+        except ValueError:
+            continue  # 2026-13-45 matches the pattern but is no day
+        if day <= today:  # a future date would pin the claim to the top
+            days.append(day)
     return max(days, default="")
 
 
