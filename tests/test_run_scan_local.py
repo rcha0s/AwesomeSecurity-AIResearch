@@ -25,6 +25,7 @@ while [ $# -gt 0 ]; do [ "$1" = "--model" ] && echo "$2" >> "$CLAUDE_ARGS.models
 # FAKE_CLAUDE_SLEEP: stay busy, so a test can kill the run mid-session.
 if [ -n "$FAKE_CLAUDE_SLEEP" ]; then touch "$CLAUDE_ARGS.started"; sleep "$FAKE_CLAUDE_SLEEP"; fi
 echo "SCAN_LOCKED=$SCAN_LOCKED" >> "$CLAUDE_ARGS.env"
+echo "$CLAUDE_CODE_DISABLE_BACKGROUND_TASKS" >> "$CLAUDE_ARGS.bgtasks"
 echo call >> "$CLAUDE_ARGS.calls"
 # FAKE_ANALYSIS_ON_RETRY: analyze only on the second session of the day.
 if [ -n "$FAKE_ANALYSIS_ON_RETRY" ] && [ "$(wc -l < "$CLAUDE_ARGS.calls")" -ge 2 ]; then
@@ -73,6 +74,8 @@ def test_wrapper_owns_the_phases_and_records_cost_on_every_outcome(scan_repo, tm
     assert (res.returncode == 0) == (claude_rc == 0), res.stdout + res.stderr
     assert args[0] == "-p" and "wrapped mode" in args[1]
     assert (tmp_path / "claude-args.env").read_text().strip() == "SCAN_LOCKED=1"
+    # the session can't background its agents: a headless run abandons them when its turn ends
+    assert (tmp_path / "claude-args.bgtasks").read_text().strip() == "1"
     flag = dict(zip(args, args[1:], strict=False))
     assert flag["--permission-mode"] == "dontAsk"
     assert flag["--model"] == "claude-sonnet-5-5"  # Rohan's pick; never the account default

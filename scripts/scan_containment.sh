@@ -52,9 +52,13 @@ SCAN_EFFORT="${SCAN_EFFORT:-high}"
 # Runs $CLAUDE locked down, SCAN_LOCKED=1, subscription billing only; its JSON
 # result goes to stdout. A caller may tighten (never loosen) the settings by
 # setting CONTAINED_SETTINGS to $SETTINGS with more denies (the golden run does).
+# CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1 removes run_in_background from the Agent tool
+# (checked on 2.1.311: the parameter is gone), so the session waits for its agents. Without
+# it a headless session dispatched agents, ended its turn ("still running, I'll wait for its
+# notification"), and `-p` abandoned the drafts: analysis-empty on 2026-11-17, Sonnet and Opus.
 contained_claude() {
   env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u REDDIT_CLIENT_ID -u REDDIT_CLIENT_SECRET \
-    SCAN_LOCKED=1 "$CLAUDE" -p "$1" \
+    SCAN_LOCKED=1 CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1 "$CLAUDE" -p "$1" \
     --model "$SCAN_MODEL" --effort "$SCAN_EFFORT" \
     --append-system-prompt-file "$2" \
     --output-format json --permission-mode dontAsk \
