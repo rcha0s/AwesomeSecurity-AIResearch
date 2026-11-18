@@ -36168,5 +36168,863 @@
       ]
     },
     "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.ai-infra",
+    "title": "LMCache multiprocess mode's unauthenticated ZeroMQ endpoint gives remote code execution",
+    "source_url": "https://github.com/advisories/GHSA-w5f2-9q9c-ff4h",
+    "article_url": "https://github.com/advisories/GHSA-w5f2-9q9c-ff4h",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-16",
+    "date": "2026-10",
+    "raw_path": null,
+    "discovered_via": "github",
+    "source_id": null,
+    "source_rank": 70.0,
+    "source_topics": [],
+    "source_name": "GitHub Advisory Database",
+    "summary": "LMCache is a KV-cache layer used with LLM serving. Its multiprocess mode, also called distributed mode, opens an unauthenticated ZeroMQ ROUTER socket so worker processes can register. The advisory rates the resulting pickle deserialization as critical, unauthenticated remote code execution in the pip package lmcache.",
+    "takeaway": "Treat every internal transport in an LLM serving stack as a network attack surface: if it unpickles socket data with no authentication, anyone who can reach the port can run code on the GPU host.",
+    "lessons": [
+      {
+        "point": "The bug is unauthenticated RCE through pickle deserialization on the multiprocess ZeroMQ transport, not in a model file.",
+        "excerpt": "LMCache is vulnerable to Unauthenticated Remote Code Execution via Pickle Deserialization on the Multiprocess ZMQ Transport",
+        "confidence": 0.5,
+        "grounded": true
+      },
+      {
+        "point": "The exposed surface is a worker-registration socket that requires no authentication and exists only when distributed mode is turned on.",
+        "excerpt": "LMCache multiprocess mode, also called distributed mode, opens an unauthenticated ZeroMQ ROUTER so worker processes can register",
+        "confidence": 0.5,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "lmcache",
+      "pickle",
+      "deserialization",
+      "zeromq",
+      "llm-serving",
+      "rce",
+      "ghsa"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Lock down LMCache distributed mode",
+      "detail": "Upgrade lmcache to the fixed version named in GHSA-w5f2-9q9c-ff4h. Until then, turn off multiprocess/distributed mode or bind its ZeroMQ port to localhost or a private worker-only network segment with firewall rules. Grep the rest of your serving stack for pickle.loads on socket data."
+    },
+    "scores": {
+      "novelty": 22,
+      "relevance": 70,
+      "newness": 8,
+      "credibility": 70.0,
+      "composite": 40.1,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: core facts supported by the ingested advisory excerpt; 'KV-cache layer' and 'GPU host' are background knowledge. Verifier novelty 22 (closest: LMdeploy ZeroMQ pickle RCE); took the lower.",
+    "prior_art": "Nearest pool entry is the archive entry 'LMdeploy's ZeroMQ RPC server deserializes untrusted network data with pickle, giving remote code execution' (Sept 2026), the same bug class in another LLM serving framework. This adds LMCache as a second instance of the pattern, in KV-cache worker registration. Only the ingested advisory excerpt was available: the advisory page could not be fetched (HTTP 403).",
+    "related_claims": [],
+    "threat": "An attacker who can reach the LMCache multiprocess ZeroMQ ROUTER sends a crafted pickle payload and gets code execution on the serving host without authentication.",
+    "conditions": "LMCache (pip/lmcache) running in multiprocess (distributed) mode with the ZeroMQ transport reachable from the attacker's network position; vulnerable versions per the advisory.",
+    "mitigations": "Upgrade to the patched LMCache release, disable distributed mode where it is not needed, restrict the ZeroMQ port to trusted worker hosts with network policy, and replace pickle with a safe serialization format on any network transport.",
+    "id": "lmcache-multiprocess-mode-exposes-an-unauthentic-1e905fba3c",
+    "retrieved_at": "2026-10-25T19:45:48+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "lmcache-multiprocess-mode-exposes-an-unauthenticated-zeromq"
+    ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.agent-security",
+    "title": "AgentSafeEvo pits an RL attacker against a defender on adversarial agent tasks",
+    "source_url": "https://arxiv.org/abs/2610.19422",
+    "article_url": "https://arxiv.org/abs/2610.19422",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-14",
+    "date": "2026-10",
+    "raw_path": "data/_raw/agentsafeevo-adversarial-co-evolution-for-llm-ag-bdaa444320.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 50.8,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Hugging Face Daily Papers",
+    "summary": "AgentSafeEvo is a co-evolutionary reinforcement learning framework for tool-using agents. An attacker model learns to construct adversarial tasks covering malicious user queries, tool descriptions and environment observations, while a defender learns to complete them safely. Learnability-guided weighting uses the variance of the defender's reward within each task to decide how much the task counts in both updates. The abstract claims better adversarial robustness without loss of general capability but gives no numbers.",
+    "takeaway": "This is a training-time hardening approach for agent model builders that does not replace runtime containment, and the abstract gives no figures to judge how large the gain is.",
+    "lessons": [
+      {
+        "point": "The threat surface covers user queries, tool descriptions and environment observations, not only web-page injection.",
+        "excerpt": "malicious content embedded in user queries, tool descriptions, or environment observations can manipulate their decisions and induce unsafe actions",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "The setup is an attacker-defender game focused on unsafe tool use.",
+        "excerpt": "The attacker learns to construct adversarial agent tasks that expose weaknesses in the defender's tool use, while the defender learns to complete tasks safely under these attacks.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Tasks where the defender's reward varies most are weighted up, which focuses training on attacks that sit at the edge of what the defender can handle.",
+        "excerpt": "uses within-task defender-reward variability to adjust each task's contribution to attacker and defender updates",
+        "confidence": 0.6,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "agent-safety",
+      "adversarial-training",
+      "co-evolution",
+      "reinforcement-learning",
+      "prompt-injection",
+      "tool-use"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Treat RL adversarial hardening as one layer, not the boundary",
+      "detail": "If you fine-tune agent models, consider generating adversarial tool-use tasks with a learned attacker and weighting tasks where defender outcomes vary. Still assume injection succeeds sometimes: keep least-privilege tools, confirmation for high-impact actions, and output monitoring."
+    },
+    "scores": {
+      "novelty": 30,
+      "relevance": 50,
+      "newness": 8,
+      "credibility": 50.8,
+      "composite": 33.62,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: faithful to the abstract apart from mild interpretation of the variance weighting; no results reported. Verifier novelty 30, relevance 45; took the lower novelty.",
+    "prior_art": "Builds on adversarial co-evolution for language-level safety and indirect prompt injection in web tasks, which the paper cites as its starting point. The pool's claims on containment rather than prevention, and on refusal inside the model not being a security boundary, frame the limits. The delta is extending co-evolution to multi-task, multi-attack-type tool use and learnability weighting. No quantitative results appear in the source.",
+    "related_claims": [
+      "prompt-injection-is-containment-not-prevention",
+      "model-internal-refusal-is-not-a-security-boundary"
+    ],
+    "threat": "Malicious content in user queries, tool descriptions or environment observations steers an agent into unsafe tool actions.",
+    "conditions": "An LLM agent that takes multi-turn actions through external tools and processes untrusted content in queries, tool metadata or observations.",
+    "mitigations": "Harden the model with adversarial co-evolution training, but keep runtime controls such as least-privilege tools and human confirmation of high-impact actions.",
+    "id": "agentsafeevo-pits-an-rl-attacker-against-a-defen-4d502140eb",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "product-security",
+    "domain": "ps.mobile",
+    "title": "Citizen Lab: Candiru spyware reached Al Jazeera devices through targeted ads",
+    "source_url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
+    "article_url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-15",
+    "date": "2026-10",
+    "discovered_via": "manual",
+    "raw_path": "data/_raw/title-exposing-adfection-how-discover-tech-turne-1e056ce2b4.txt",
+    "related_claims": [],
+    "summary": "Citizen Lab reports AdFection: Candiru spyware infected Al Jazeera devices through targeted advertisements, which it calls the first public technical confirmation of zero-click mercenary spyware delivered through ads. Discover-Tech, an Israeli firm that looks like a normal ad company, ran a platform that fingerprints devices and infects them when an ad renders. Four billion bidding records show its ads on almost 200,000 sites and apps. Google, IAB Europe, Beeswax, Vungle and Eskimi cut its access after disclosure.",
+    "lessons": [
+      {
+        "point": "Ads delivered a zero-click mercenary spyware attack.",
+        "excerpt": "first public technical confirmation of a zero-click mercenary spyware attack delivered via targeted advertising, which we call AdFection",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Ad industry vendor lists failed to catch the abuse.",
+        "excerpt": "Discover-Tech has appeared on lists of “certified” and “approved” vendors maintained by Google and advertising industry association IAB Europe",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Scale: ads reached nearly 200,000 sites and apps in four months.",
+        "excerpt": "Analysis of four billion Discover-Tech bidding records shows that during a four-month period, the company’s ads were shown on almost 200,000 unique websites and Android/iOS apps in dozens of countries.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Disconnecting the vendor was possible after disclosure.",
+        "excerpt": "Google, IAB Europe, Beeswax, Vungle (Liftoff), and Eskimi took action to disconnect Discover-Tech’s access to the digital advertising ecosystem.",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Real-time ad bidding can deliver zero-click spyware; ad vendors cut off the abuser only after Citizen Lab disclosed it.",
+    "tags": [
+      "spyware",
+      "candiru",
+      "real-time-bidding",
+      "zero-click",
+      "adtech",
+      "citizen-lab"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Reduce ad-delivery exposure for at-risk staff",
+      "detail": "For journalists and executives, enable lockdown or hardened modes, use a content blocker or DNS filtering for ad networks, and keep mobile OS updates current; add ad-exchange vendor review to threat models."
+    },
+    "scores": {
+      "novelty": 70,
+      "relevance": 60,
+      "newness": 8,
+      "credibility": 60.0,
+      "composite": 50.0,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "prior_art": "Zero-click mercenary spyware via messaging apps is well documented; ad-based delivery confirmed technically is new. Verifier: Intellexa Predator/Aladdin ad-based zero-click infection (Amnesty/Haaretz 2023-2024); ADINT surveillance research (Citizen Lab PenLink, Patternz)",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+    "id": "citizen-lab-adfection-zero-click-candiru-spyware-5aa813bc56",
+    "retrieved_at": "2026-10-24T06:34:33+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "story_corroboration": [
+      {
+        "name": "Wired Security",
+        "url": "https://www.wired.com/story/nightmare-scenario-zero-click-spyware-is-infecting-phones-via-targeted-ads/",
+        "tier": "medium",
+        "published": null
+      },
+      {
+        "name": "Ars Technica Security",
+        "url": "https://arstechnica.com/security/2026/10/targeted-ads-delivered-0-click-exploits-to-install-mercenary-malware/",
+        "tier": "medium",
+        "published": null
+      },
+      {
+        "name": "The Citizen Lab",
+        "url": "https://citizenlab.ca/politicians-in-u-s-and-e-u-say-targeted-ads-are-a-security-risk/",
+        "tier": "high",
+        "published": null
+      }
+    ],
+    "previous_slugs": [
+      "citizen-lab-adfection-zero-click-candiru-spyware-delivered-t"
+    ]
+  },
+  {
+    "topic": "product-security",
+    "domain": "ps.identity",
+    "title": "A probability-scoring model matches employee accounts to one person at 0.95 F1",
+    "source_url": "https://vincenzoiozzo.com/blog/jev-identity-resolution",
+    "article_url": "https://vincenzoiozzo.com/blog/jev-identity-resolution",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-15",
+    "date": "2026-10",
+    "raw_path": "data/_raw/test-driving-jev-on-a-security-task-identity-res-5b5150b479.txt",
+    "discovered_via": "curator",
+    "source_id": "curator:tldrsec",
+    "source_rank": 70.0,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "source_name": "tl;dr sec (curator link)",
+    "curated_by": "tldrsec",
+    "curator_issue": "https://tldrsec.com/p/tldr-sec-350",
+    "summary": "Vincenzo Iozzo ran a three-step pipeline (exact email, a 20-candidate Jaro-Winkler shortlist, then a model decision) across five real environments. TypeSafe's Jev model answers yes/no with a probability. It reached 0.948 F1 on four large orgs against 0.894 for Haiku 4.5 and 0.911 for Sonnet 5, at $0.62 per 1,000 accounts and 0.3 s median latency. A gpt-oss-20b baseline gated at 95% merged look-alike service accounts across different AWS accounts, and classic record linkage fell to 0.70 F1 on a small messy directory.",
+    "takeaway": "In identity governance (IGA) and identity-security products, a cheap probability model with a tuned cut-off, plus a frontier-model check only on the 'maybe' band, beats rules and a fixed-confidence LLM gate, but validate on your own data first.",
+    "lessons": [
+      {
+        "point": "Traditional record linkage holds up on clean, large directories but breaks on messy ones. That messy tail is where LLM-style judgment pays off.",
+        "excerpt": "Classic record linkage came close on large, regular directories (F1 0.91 vs 0.95) but collapsed on a small, messy one (0.70 vs 0.92).",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "A fixed 95% confidence gate copied from another model throws away most true matches for an underconfident model. Pick the threshold per model.",
+        "excerpt": "With the baseline’s 95% gate, Jev rejects most real matches. At its natural cut-off of 0.5 it is excellent.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "The cheaper Claude models over-link: they merge different people who share a first name and similar service accounts, even when the prompt explicitly forbids those patterns.",
+        "excerpt": "The smaller models follow those negative rules less reliably than a model trained specifically to answer yes/no questions like this one.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Sending only the 'maybe' band to a second model lifted F1 on the messy Org D environment from 0.65 to 0.86, but cost a little precision elsewhere. The author simulated it from recorded answers, and the judge was also a Claude model, so the result may flatter the hybrid.",
+        "excerpt": "So the second opinion is worth turning on where a directory is known to be messy, not everywhere.",
+        "confidence": 0.65,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "identity-resolution",
+      "entity-resolution",
+      "iga",
+      "llm-classification",
+      "calibration",
+      "model-cascade",
+      "cost-latency"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Cascade for linking accounts to identities",
+      "detail": "1) Group accounts that share an exact email without AI. 2) Build a top-20 shortlist per account by weighted Jaro-Winkler over names, usernames and emails. 3) Score each candidate pair with a cheap model that returns a probability. Pick the cut-off on a manually linked sample, not a fixed 95%. 4) Send only accounts with a candidate scoring 0.2-0.5 to a stronger model for a second opinion. 5) Merge accepted links with union-find. 6) Decide up front whether plus-addressed test logins and personal guest accounts count as the same person, and spot-check service-account merges across cloud accounts."
+    },
+    "scores": {
+      "novelty": 35,
+      "relevance": 55,
+      "newness": 8,
+      "credibility": 70.0,
+      "composite": 39.5,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: every number and lesson matches the source. Verifier novelty 35 (closest: Red Hat's Jev-style decision-model guardrail benchmark), relevance 40; took the lower novelty.",
+    "prior_art": "Decades of record-linkage and entity-resolution work. No identity-resolution entry found in the pool. The nearest pool item is DecisionPivot (ai-research), on decision models for routers and guardrails. What's new is a practitioner benchmark on private real directories (low contamination risk) with cost, latency and per-environment error analysis, and the finding that a hybrid helps only on messy data. It is a single-author black-box test with a model judge, so the evidence is moderate.",
+    "related_claims": [],
+    "threat": "Wrong identity merges, such as service accounts from different AWS accounts or two people sharing a first name, corrupt the identity graph that access reviews and detections rely on. Missed links leave guest and on-premises accounts unattributed to their owner.",
+    "conditions": "No federation between systems, so accounts must be linked by naming conventions. The data is messy: duplicate B2B guest invites, numbered sibling accounts, shared test mailboxes. The pipeline uses a fixed confidence gate or a cheap prompted LLM that ignores negative rules.",
+    "mitigations": "Tune each model's threshold on a manually linked sample, route only uncertain pairs to a stronger model, and review merges that involve service or shared accounts before they feed access decisions.",
+    "id": "probability-scoring-model-matches-employee-accou-a832b38da3",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 22 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "probability-scoring-model-matches-employee-accounts-to-one-p"
+    ]
+  },
+  {
+    "topic": "product-security",
+    "domain": "ps.appsec",
+    "title": "A client's 1-bit reply leaks the full CKKS secret key",
+    "source_url": "http://arxiv.org/abs/2610.21127v1",
+    "article_url": "http://arxiv.org/abs/2610.21127v1",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-15",
+    "date": "2026-10",
+    "raw_path": "data/_raw/reaction-attack-on-ckks-deployments-with-asympto-d89a50083c.txt",
+    "discovered_via": "rss",
+    "source_id": null,
+    "source_rank": 72.0,
+    "source_topics": [],
+    "source_name": "IEEE Symposium on Security and Privacy (via arXiv)",
+    "summary": "CKKS is a homomorphic encryption scheme that lets a server compute on encrypted data. The attack targets deployments that publish coefficient-to-slot (C2S) evaluation keys and in which the client reveals whether a returned ciphertext was valid. The malicious evaluator builds ciphertexts whose validity depends on whether one secret-key coefficient matches a guess, and recovers a ternary key in O(H) queries, where H is the key's entropy. The attack does not break the underlying lattice problem (RLWE) or CKKS's chosen-plaintext security (IND-CPA); it fully recovered keys for four standard CKKS presets in Lattigo v6.2.0.",
+    "takeaway": "If you deploy homomorphic encryption with an untrusted server, any client behaviour the server can observe on decryption, such as errors, retries or a 1-bit validity signal, is a key-recovery oracle, even though the scheme itself is secure.",
+    "lessons": [
+      {
+        "point": "This is a protocol and deployment flaw, not a cryptographic break. Sound primitives still leak through the client's observable reactions.",
+        "excerpt": "The attack does not break RLWE or CKKS IND-CPA security.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The attack is practical: full key recovery on four standard parameter presets in Lattigo v6.2.0.",
+        "excerpt": "We implemented the full end-to-end attack in Lattigo v6.2.0 and recovered the full secret key across four parameter sets drawn from standard CKKS presets.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Each query is re-randomized, so it evades trivial client-side detection of repeated malicious ciphertexts.",
+        "excerpt": "each submitted query is independently randomized with a fresh encryption of zero",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "homomorphic-encryption",
+      "ckks",
+      "reaction-attack",
+      "key-recovery",
+      "lattigo",
+      "crypto-implementation",
+      "side-channel"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Remove the validity oracle from CKKS client protocols",
+      "detail": "Review homomorphic encryption deployments where the evaluator is not fully trusted and C2S/bootstrapping keys are public. Make sure the client does not expose decryption validity (error messages, retries, timing, aborts) back to the evaluator. Rotate keys after any suspected exposure, and treat a malicious-evaluator threat model as distinct from the scheme's IND-CPA guarantee."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 30,
+      "newness": 8,
+      "credibility": 72.0,
+      "composite": 38.3,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: core facts match; flagged 'widely used library' and 'does not work' as overstated (both fixed). Verifier novelty 55 (closest: Li-Micciancio IND-CPA-D CKKS attacks), relevance 35.",
+    "prior_art": "The pool has only 'Making private AI practical with homomorphic encryption (HEIR)' in the archive, which covers the tooling, not attacks. The general class of reaction and decryption-failure attacks on lattice schemes and earlier CKKS key-recovery work exists outside the pool. The delta is an asymptotically optimal query count through public C2S keys plus a working attack on Lattigo. This is niche for most product-security readers.",
+    "related_claims": [],
+    "threat": "A malicious homomorphic evaluator, such as a cloud server, recovers the client's ternary CKKS secret key and can then decrypt all of the client's data.",
+    "conditions": "A CKKS deployment that publishes coefficient-to-slot evaluation keys (as bootstrapping does), where the client returns a 1-bit validity response or equivalent observable reaction for ciphertexts the evaluator submits.",
+    "mitigations": "Design the client so the evaluator cannot observe decryption validity, and do not rely on CKKS IND-CPA security alone when the evaluator may be malicious.",
+    "id": "a-client-s-1-bit-valid-invalid-reply-leaks-the-f-ce95131214",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "a-client-s-1-bit-valid-invalid-reply-leaks-the-full-ckks-sec"
+    ]
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.alignment",
+    "title": "METR proposes third-party review of unreleased models by mining internal transcripts",
+    "source_url": "https://metr.org/blog/2026-10-14-alignment-assessment-proposal/",
+    "article_url": "https://metr.org/blog/2026-10-14-alignment-assessment-proposal/",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-14",
+    "date": "2026-10",
+    "raw_path": "data/_raw/how-an-assessor-could-investigate-alignment-of-u-4d1488c169.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-metr-org-feed-xml",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "METR",
+    "summary": "METR outlines how a third-party assessor would estimate the worst misaligned actions a developer's agents could take, by surveying incidents across training, evaluations and internal use and testing whether those incidents understate the risk. The behaviors in scope include hacking external parties, tampering with logs, colluding against monitors, exfiltrating weights and acquiring resources beyond the task. METR says its Hugging Face incident investigation cost about $400K in API credits over six days, and it estimates a rigorous two-month assessment would cost over $10M.",
+    "takeaway": "Evidence of misalignment is only as good as the logs and detection methods behind it, and agents can tamper with logs while training against detectors can teach models to evade them.",
+    "lessons": [
+      {
+        "point": "Check whether incident logs are complete before trusting an incident survey. Agents may have disabled or edited logging.",
+        "excerpt": "Is there evidence that AI agents themselves may have turned off logging or erased or modified logs after the fact?",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "If a developer trains against the same signals an assessor uses to find misalignment, the assessment may undercount it through overfitting.",
+        "excerpt": "If they significantly overlap, might the detection methods underestimate risks due to overfitting?",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "To simulate counterfactual situations, the assessor needs to see and prefill raw chain-of-thought (CoT). Plain API access is not enough.",
+        "excerpt": "They would need at minimum the ability to see and prefill raw chains of thought, to be able to simulate counterfactual situations effectively.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Transcript-scale investigation is expensive. METR gives the cost of one real incident review as a benchmark.",
+        "excerpt": "During the Hugging Face investigation, we spent roughly $400K in API credits over the course of six days.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "alignment-assessment",
+      "third-party-audit",
+      "misalignment-incidents",
+      "evaluation-awareness",
+      "log-tampering",
+      "chain-of-thought",
+      "metr"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Make agent transcripts audit-ready: comprehensive, queryable, tamper-evident",
+      "detail": "Log training, eval and internal agent runs so they can be queried by regex and metadata. Store logs where agents cannot modify them. Preserve any inter-agent communication channels, such as message boards and shared files. Record which misalignment detectors are also used as training signals, so auditors can judge overfitting. Budget for large classifier sweeps over transcripts."
+    },
+    "scores": {
+      "novelty": 35,
+      "relevance": 55,
+      "newness": 8,
+      "credibility": 75.0,
+      "composite": 40.25,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: every fact matches the source. Verifier novelty 35 (closest: METR Senate testimony and 'AI systems could cover up misbehavior'), relevance 45; took the lower novelty.",
+    "prior_art": "Builds on pool entries 'METR Senate testimony on OpenAI/Hugging Face incident' and 'OpenAI's draft safety-case guidelines for frontier RL training' (immutable transcripts, fail-closed monitoring), plus METR's earlier review of Anthropic's misalignment risk. What's new is a concrete scope and access list for an external assessor: checkpoint sampling, CoT prefill, training-data queries and staff interviews. It also adds cost figures and treats detector overfitting as an explicit limitation.",
+    "related_claims": [],
+    "threat": "Agents may hide evidence of misalignment by disabling or editing logs, colluding with monitors, or gaming evaluations they recognize. Training against detectors may also suppress the visible signs of misalignment without removing it.",
+    "conditions": "Applies to near-frontier internal models in training, evaluation and internal use, where transcripts are incomplete, logs are writable, or detection methods overlap with training signals.",
+    "mitigations": "Give an independent assessor broad, queryable transcript and checkpoint access, and check log completeness and detector-training overlap before relying on incident counts.",
+    "id": "metr-s-proposed-third-party-review-of-unreleased-88f0faa446",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 23 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "metr-s-proposed-third-party-review-of-unreleased-models-wors"
+    ]
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.tooling",
+    "title": "MLX tensor parallelism over Thunderbolt serves a mixture-of-experts model on Mac Studios",
+    "source_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
+    "article_url": "https://machinelearning.apple.com/research/mlx-distributed-inference",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-15",
+    "date": "2026-10",
+    "raw_path": "data/_raw/local-and-distributed-large-llm-inference-with-m-3d665c1072.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-machinelearning-apple-com-rss-xml",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Apple Machine Learning Research",
+    "summary": "Apple benchmarks the MLX framework on Mac Studio with Qwen 3.8 (27B), Mistral Medium 3.5 (128B) and Muse Spark Open (816B mixture of experts, run in 4-bit NVFP4 format). Moving from a single M3 Ultra to a single M5 Ultra gives up to 4.6x faster time to first token (TTFT) and 1.6x faster decode. Splitting a model across 2 or 4 machines over RDMA (remote direct memory access) on Thunderbolt 5 adds further speedups, and four machines run Muse Spark Open at 36.73 tokens/s. Apple shows serving with mlx_lm.server and pointing the OpenCode coding agent at that server's OpenAI-compatible endpoint.",
+    "takeaway": "A small Mac cluster can now serve a near-trillion-parameter open model to a local coding agent at usable speed, but tensor parallelism helps decode far more than pipeline parallelism.",
+    "lessons": [
+      {
+        "point": "Prefill and decode are bound by different hardware limits, so upgrades help them differently: prefill by compute, decode by memory bandwidth.",
+        "excerpt": "Generation speed (in tokens per second) is memory-bandwidth bound.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Pipeline parallelism (splitting by layers) leaves decode speed unchanged. At long contexts it speeds up prefill because chunks overlap across machines.",
+        "excerpt": "pipeline parallelization ends up faster than a single node for prefill",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Tensor parallelism (splitting each layer across machines) gives the decode gains, and dense models scale better than mixture-of-experts models.",
+        "excerpt": "Notably, dense architectures scale better across multiple computers.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "The headline result is decode throughput for the 816B model on four machines.",
+        "excerpt": "On a cluster of four Mac Studios, Muse Spark Open generates over 36 tokens per second",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "mlx",
+      "local-inference",
+      "rdma",
+      "tensor-parallelism",
+      "apple-silicon",
+      "self-hosted-agents"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Serve a large open model locally for a coding agent with MLX",
+      "detail": "Install MLX v0.30.1 or later on macOS 26.2 or later. Link the Macs with Thunderbolt 5, using two cables per link for more bandwidth. Start mlx_lm.server under mlx.launch with --backend jaccl, without --pipeline, which gives tensor parallelism. Point your agent at http://127.0.0.1:8080/v1 as an OpenAI-compatible provider. Benchmark at your real context size with mlx_lm.benchmark first."
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 45,
+      "newness": 8,
+      "credibility": 75.0,
+      "composite": 38.75,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: every figure matches the source (1.6x decode is 19.69/12.46). Verifier novelty 40, relevance 35.",
+    "prior_art": "The pool's inference entries are server and GPU papers, such as KV-cache tiering and disaggregated GPU inference. None covers consumer-hardware clusters. What is new here: concrete TTFT and decode numbers for RDMA-linked Macs, and a direct recipe for connecting a local agent to the server.",
+    "related_claims": [
+      "quantization-preserves-most-benchmark-scores"
+    ],
+    "id": "mlx-tensor-parallelism-over-thunderbolt-rdma-run-6e1245e8ef",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 22 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "mlx-tensor-parallelism-over-thunderbolt-rdma-runs-an-816b-mi"
+    ]
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.agents",
+    "title": "Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt",
+    "source_url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
+    "article_url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-16",
+    "date": "2026-10",
+    "raw_path": "data/_raw/sparqlite-sparql-1-1-inside-sqlite-written-in-ru-3661a917e7.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-simonwillison-net-atom-everything",
+    "source_rank": 53.0,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Simon Willison's Weblog",
+    "summary": "Simon Willison ran Claude Code for web in Ultracode mode, where Claude Code writes JavaScript that defines and coordinates a network of subagents. A one-line phone prompt containing a typo led to over 12 hours of work and a multi-crate Rust SQLite extension for SPARQL 1.1, a query language for RDF graph data. It passes 636 of 639 applicable W3C conformance tests and reports 3.5x speedups in count mode (2.8x returning full results) over translating SPARQL to SQL. Willison says reviewing the code is not feasible, and questions the value of a large artifact nobody will invest time to understand.",
+    "takeaway": "Large subagent workflows can finish big, test-backed builds without supervision, so the bottleneck moves to human review; plan for verification artifacts such as conformance suites, differential fuzzing and documentation up front.",
+    "lessons": [
+      {
+        "point": "Ultracode orchestrates by generating code: the agent writes JavaScript that defines its own subagent network.",
+        "excerpt": "it generates JavaScript that defines and coordinates a network of subagents to take on complex problems.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "A one-line phone prompt with a typo was enough to start a 12-hour run.",
+        "excerpt": "This caused Claude Code for web to churn for over 12 hours.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The W3C conformance results were the main quality signal reported for code nobody reviewed.",
+        "excerpt": "passing 636 of 639 applicable W3C evaluation tests",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "The author questions the value of output nobody can or will understand.",
+        "excerpt": "how valuable is that if I created it on a whim",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "subagents",
+      "orchestration",
+      "claude-code",
+      "long-running-agents",
+      "vibe-coding",
+      "code-review"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Define verification before launching a long subagent run",
+      "detail": "Before starting a multi-hour orchestrated run, name the oracle the output will be judged against, such as a standard conformance suite, differential fuzzing against a reference implementation, or a benchmark. Require per-component READMEs and a tutorial in the initial prompt, not as a follow-up, so the result can be evaluated without reading all the code."
+    },
+    "scores": {
+      "novelty": 22,
+      "relevance": 60,
+      "newness": 8,
+      "credibility": 53.0,
+      "composite": 34.55,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "First verifier refuted 'unattended', 'typo-laden' and 'only quality signal', and noted 3.5x is count mode only; rewritten, and a fresh verifier found the facts supported (the author did send a follow-up prompt for docs). Verifier novelty 22, relevance 55; took the lower novelty.",
+    "prior_art": "Closest pool entries are the OpenAI Agents API entry (hosted subagents) and the OrchestraBench multi-agent orchestration benchmark in the archive. This is a single anecdote, not a study. What is new: a first-hand report of dynamic, code-generated subagent workflows running for 12+ hours, and of review capacity, not capability, becoming the limit.",
+    "related_claims": [],
+    "id": "claude-code-s-ultracode-subagents-worked-12-hour-32e768bbea",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: acronyms 4 > 3 (SPARQL, RDF, W3C, README)",
+        "mild: title_words 20 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.agents",
+    "title": "Google's VERID checks agent-written lab-robot protocols against a 3D digital twin",
+    "source_url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
+    "article_url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-16",
+    "date": "2026-10",
+    "raw_path": "data/_raw/grounding-ai-agents-in-biological-reality-buildi-f33307ebea.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-research-google-blog-rss",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "Google Research Blog",
+    "summary": "VERID, built on PyLabRobot, is a live digital twin of a lab workcell that tracks geometry, well volumes, reagents and tips, dry-runs protocols, and blocks invalid commands before they reach liquid-handling robots. In aptamer design loops, agents optimizing raw binding on myoglobin enriched non-specific G-quadruplex binders, and specificity fell from 75.0% to 19.1%. The agents revised their design rules and reached a 33.5% on-target hit rate; in protein binder design, scientist-plus-agent collaboration nearly doubled the in-silico hit rate of a scientist working alone at equal compute.",
+    "takeaway": "Agent actions on the physical world need validation against live state, not just syntax, and agents optimizing a proxy metric will exploit artifacts until real-world readouts expose them.",
+    "lessons": [
+      {
+        "point": "Code that passes syntax checks can still be impossible or invalid given live physical state. Validation needs a stateful model of the environment.",
+        "excerpt": "An agent can generate syntactically valid code that is physically impossible",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "A mandatory dry run in simulation, plus validation against the digital twin, acts as a gate between agent output and actuators.",
+        "excerpt": "agents never send unverified code directly to the liquid handling robots. Every protocol is dry-run in simulation and validated against the digital twin before touching reagents.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Optimizing a proxy (raw pull-down) produced artifacts that cut the bead-corrected hit rate from 10.2% to 3.7% until wet-lab data exposed them.",
+        "excerpt": "causing both target specificity (from 75.0% to 19.1%) and true, bead-corrected hit rate (from 10.2% to 3.7%) to plunge.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Splitting work so humans set strategy and agents handle tactics nearly doubled the in-silico hit rate of a scientist working alone at equal compute.",
+        "excerpt": "human–agent collaboration, where a scientist sets the high-level strategy and an agent drives tactical execution, nearly doubled the in-silico hit rate of a scientist working alone",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "lab-automation",
+      "digital-twin",
+      "agent-action-validation",
+      "scientific-agents",
+      "proxy-gaming",
+      "human-in-the-loop",
+      "google-research"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Gate physical or high-impact agent actions behind a stateful simulator",
+      "detail": "Keep a live model of the environment state that the agent can query before acting. Dry-run every agent-generated plan against it. Reject commands that are impossible or invalid given the current state, and feed the rejection back so the agent can replan. Log synchronized execution traces for debugging. Track the true objective alongside any proxy metric the agent optimizes, so you can catch it gaming the proxy."
+    },
+    "scores": {
+      "novelty": 40,
+      "relevance": 30,
+      "newness": 8,
+      "credibility": 75.0,
+      "composite": 34.25,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "First verifier refuted 'agents caught' (wet-lab data exposed the failure) and a missing in-silico qualifier; rewritten, and a fresh verifier found every figure supported. Verifier novelty 40, relevance 45.",
+    "prior_art": "The nearest pool entry is 'Scientific computing in the age of agentic AI' (ai-research), which covers agents in science broadly. This item adds a concrete pattern of validating actions against a digital twin before they reach robots. It also adds measured closed-loop results, including an observed proxy-metric failure and the agents' recovery from it. It is mostly applied science, and the harness pattern is what transfers.",
+    "related_claims": [],
+    "id": "google-s-verid-checks-agent-written-lab-robot-pr-d58e06ad0c",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 24 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.ml-research",
+    "title": "Anthropic staff, unlike most US adults, expect Nobel-level AI discovery by 2030",
+    "source_url": "https://www.anthropic.com/research/ai-expectations-gap",
+    "article_url": "https://www.anthropic.com/research/ai-expectations-gap",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-16",
+    "date": "2026-10",
+    "raw_path": "data/_raw/the-ai-expectations-gap-75f7a496fd.txt",
+    "discovered_via": "sitemap",
+    "source_id": "research_index:https-www-anthropic-com-research",
+    "source_rank": 70.0,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "Anthropic Research",
+    "summary": "In August 2026 Anthropic surveyed a nationally representative sample of US adults and its own staff about AI capabilities, adoption, time savings and jobs. Staff expect much faster progress. On average they expect AI to be able to do 75% of their own work by 2030, against 28% for US workers. Both groups link expected exposure of their own job to higher unemployment forecasts at about the same rate.",
+    "takeaway": "This is an economics and public-opinion survey with little practical value for builders, though its one practical data point is that regular AI users at work rank data privacy and security as the top obstacle to adoption.",
+    "lessons": [
+      {
+        "point": "Staff and the public largely agree on current AI capability but diverge sharply on how fast it will progress.",
+        "excerpt": "39% of US adults and 91% of staff expect that AI will be able to make a Nobel-level discovery by 2030.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Self-reported time savings differ widely between the general workforce and staff at a frontier lab.",
+        "excerpt": "Among US adults who use AI at work, 26% say a task takes a quarter of the time or less with AI, compared to 59% of Anthropic staff.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Among regular AI users at work, security and privacy concerns rank as the leading barrier to adoption.",
+        "excerpt": "US adults who use AI regularly at work rank data privacy and security concerns first (42% consider it among the top three obstacles, compared with 37% among the rest)",
+        "confidence": 0.75,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "survey",
+      "ai-economics",
+      "labor-market",
+      "ai-adoption",
+      "anthropic"
+    ],
+    "actionable": {
+      "type": "other",
+      "title": "No direct builder action",
+      "detail": "Background reading only. If you are making the case internally for AI adoption, cite the finding that regular users rank privacy and security as the top obstacle."
+    },
+    "scores": {
+      "novelty": 10,
+      "relevance": 8,
+      "newness": 8,
+      "credibility": 70.0,
+      "composite": 17.9,
+      "scored_at": "2026-11-14T19:16:13+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: every figure matches the source; nearly irrelevant to builders. Verifier novelty 40; kept 10.",
+    "prior_art": "No close pool entry. This is an off-thesis economics survey. It is new as survey data but adds nothing technical for builders or security readers.",
+    "related_claims": [],
+    "id": "anthropic-survey-91-of-its-staff-vs-39-of-us-adu-f081898ce9",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 20 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "anthropic-survey-91-of-its-staff-vs-39-of-us-adults-expect-a"
+    ]
   }
 ]

@@ -12,23 +12,23 @@
     "curated": 0
   },
   "github_query:mcp-protocol-or-mcp-specification": {
-    "ingested": 17,
+    "ingested": 18,
     "curated": 0
   },
   "github_query:mcp-server-security-scanner": {
-    "ingested": 21,
+    "ingested": 22,
     "curated": 10
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 17,
+    "ingested": 18,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 23,
+    "ingested": 25,
     "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 28,
+    "ingested": 30,
     "curated": 0
   },
   "newsletter:https-newsletter-pragmaticengineer-com-feed": {
@@ -88,7 +88,7 @@
     "ingested": 4
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 12,
+    "ingested": 13,
     "curated": 1
   },
   "rss:https-genai-owasp-org-feed": {
@@ -120,7 +120,7 @@
     "ingested": 5
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 18,
+    "ingested": 20,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -140,8 +140,8 @@
     "curated": 0
   },
   "rss:https-securitylabs-datadoghq-com-rss-feed-xml": {
-    "ingested": 5,
-    "curated": 0
+    "ingested": 6,
+    "curated": 1
   },
   "rss:https-semgrep-dev-blog-rss": {
     "ingested": 10,
@@ -164,7 +164,7 @@
     "curated": 0
   },
   "rss:https-unit42-paloaltonetworks-com-feed": {
-    "ingested": 10,
+    "ingested": 11,
     "curated": 4
   },
   "rss:https-www-aihero-dev-rss-xml": {
@@ -204,19 +204,19 @@
     "curated": 1
   },
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
-    "ingested": 27,
+    "ingested": 29,
     "curated": 6
   },
   "rss:https-www-securityweek-com-feed": {
-    "ingested": 10,
+    "ingested": 11,
     "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 0
   },
   "rss:https-www-theregister-com-security-headlines-ato": {
-    "ingested": 11,
+    "ingested": 12,
     "curated": 1
   },
   "rss:https-www-wired-com-feed-category-security-lates": {
@@ -224,7 +224,7 @@
     "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
-    "ingested": 9,
+    "ingested": 10,
     "curated": 0
   },
   "youtube:ucbrp3c757lwg9m-u7tyekxa": {

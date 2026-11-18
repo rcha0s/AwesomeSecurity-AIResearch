@@ -2,12 +2,21 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_6 vetted findings · updated 2026-11-16 · ranked by composite · findings from the latest 31 days · [69 held for review](../REVIEW.md)._
+_12 vetted findings · updated 2026-11-18 · ranked by composite · findings from the latest 31 days · [65 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Microsoft shows phished device codes can hijack GitHub Copilot CLI sessions](https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/)**
+  _Why now: Microsoft shows phished OAuth device codes can hijack GitHub Copilot CLI sessions; the lesson is to treat agent OAuth grants as high-value credentials. · trending · newsworthy · timely · high-relevance_
+- **[Pretxt raises $5M seed for runtime AI agent supervision that steers agents](https://www.securityweek.com/pretxt-emerges-stealth-with-5m-seed-and-an-ai-supervision-tool/)**
+- **[Simon Willison and Prime Radiant release external sandboxes for coding agents](https://simonwillison.net/2026/Nov/17/external-sandboxes-for-coding-agents/)**
+- **[OpenAI releases CSAM image classifier and ChatGPT warnings for child safety](https://openai.com/index/strengthening-online-child-safety)**
+- **[Google says AI agent turned patches into working exploits without human help](https://www.theregister.com/research/2026/11/16/google-ai-agent-turned-a-security-patch-into-a-working-exploit-with-no-human-help/5309926)**
+- **[Google says attackers now use autonomous AI agent frameworks in live intrusions](https://thehackernews.com/2026/11/google-finds-hackers-using-ai-agents-to.html)**
+- **[Gemini agents in Trajectory Labs test repeatedly attacked Epoch AI's live website](https://www.bleepingcomputer.com/news/security/gemini-ai-agents-repeatedly-bypassed-safeguards-to-attack-real-website/)**
+- **[White House officials urge easing liability so AI firms report incidents](https://www.insurancejournal.com/news/national/2026/11/16/892718.htm)**
 - **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://www.microsoft.com/en-us/security/blog/2026/11/12/trained-to-betray-how-post-training-supply-chain-attacks-hijack-coding-agents/)**
   _Why now: Microsoft shows 1% poisoned fine-tuning data teaches coding agents to misuse whatever command tool exists, and RL hides the utility loss; actionable for anyone fine-tuning or adopting open checkpoints. · trending · newsworthy · high-relevance_
 - **[Token Security imagines an invoice AI agent hijacked by hidden email text](https://www.bleepingcomputer.com/news/security/how-one-ai-agent-exposed-five-critical-enterprise-security-gaps/)**
@@ -123,44 +132,70 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| AI Infrastructure & Incident Response | 2 |
+| AI Infrastructure & Incident Response | 3 |
+| Guardrails & Defensive Tooling | 3 |
+| Agent & Harness Security | 2 |
+| Red-Teaming & Threat Modeling | 1 |
 | Prompt Injection & Jailbreaks | 1 |
 | MCP, Tools & Skills | 1 |
-| Guardrails & Defensive Tooling | 1 |
-| Agent & Harness Security | 1 |
+| Memory, RAG & Data Poisoning | 1 |
 
 ## AI Infrastructure & Incident Response
 
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **63.94** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **61.94** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
-- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **53.0** · Oct 27, 2026  
+- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.75** · Oct 27, 2026  
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.  
   _[docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)_
+- **["Black October" is an X label for a week of disclosures](ai-infra/2026-10-black-october-is-an-x-label-for-a-week-of-disclosures.md)** · composite **52.0** · Oct 23, 2026 · 🔗 +2 sources  
+  Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.  
+  _[forkast.news](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)_
+
+## Guardrails & Defensive Tooling
+
+- **[Guardrail benchmark scores mostly measure the training labels' definition of unsafe](guardrails/2026-10-guardrail-benchmark-scores-mostly-measure-the-training-label.md)** · composite **51.55** · Oct 18, 2026  
+  Before picking a guardrail classifier by benchmark score, ask which policy its labels encode, whether the benchmark leaked into training, and what the seed-to-seed variance is, or you are comparing…  
+  _[NeurIPS (via arXiv)](http://arxiv.org/abs/2610.25060v1)_
+- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **51.37** · Oct 18, 2026  
+  A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
+  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
+- **[SCOPE compiles natural-language agent policies into predicate programs run by small models](guardrails/2026-10-scope-compiles-natural-language-agent-policies-into-predicat.md)** · composite **46.0** · Oct 22, 2026  
+  For agent policy enforcement, prefer a compiled program of narrow predicates over one guardrail model or one LLM judge: cheaper, steadier and auditable (authors' claims, abstract only).  
+  _[source](https://arxiv.org/abs/2610.31062)_
+
+## Agent & Harness Security
+
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **59.75** · Nov 7, 2026  
+  Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.  
+  _[@shmulc via Hacker News](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)_
+- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **49.75** · Oct 22, 2026  
+  Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.  
+  _[motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)_
+
+## Red-Teaming & Threat Modeling
+
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **59.3** · Nov 12, 2026  
+  If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.  
+  _[NDSS (via arXiv)](http://arxiv.org/abs/2611.16693v1)_
 
 ## Prompt Injection & Jailbreaks
 
-- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **59.09** · Oct 19, 2026  
+- **[Trojan Horse: Automated Repository Poisoning against Coding Agents](prompt-injection/2026-10-trojan-horse-automated-repository-poisoning-against-coding-a.md)** · composite **58.84** · Oct 19, 2026  
   An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.  
   _[arXiv cs.CR (Cryptography and Security)](https://arxiv.org/abs/2610.23109)_
 
 ## MCP, Tools & Skills
 
-- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](mcp-tools/2026-10-mcp-inspector-fixes-two-critical-one-click-rce-flaws-in-vers.md)** · composite **58.25** · Oct 21, 2026 · 🔗 +1 sources  
+- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](mcp-tools/2026-10-mcp-inspector-fixes-two-critical-one-click-rce-flaws-in-vers.md)** · composite **58.0** · Oct 21, 2026 · 🔗 +1 sources  
   Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.  
   _[github.com](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)_
 
-## Guardrails & Defensive Tooling
+## Memory, RAG & Data Poisoning
 
-- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **51.62** · Oct 18, 2026  
-  A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
-  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
-
-## Agent & Harness Security
-
-- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **50.0** · Oct 22, 2026  
-  Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.  
-  _[motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)_
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **56.3** · Nov 6, 2026  
+  Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted…  
+  _[NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)_
 
 ---
 
